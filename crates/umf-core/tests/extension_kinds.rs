@@ -135,6 +135,38 @@ fn catalogs_are_exact_sorted_copied_and_atomic() {
 }
 
 #[test]
+fn empty_kind_queries_require_the_shared_runtime() {
+    let registry = Registry::new();
+    assert_eq!(
+        registry
+            .list_kinds(&mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "EXTENSION_KIND_RUNTIME_REQUIRED"
+    );
+    let reference = value(json!({"extension":"example","version":"1.0.0","kind":"dashboard"}));
+    assert_eq!(
+        registry
+            .get_kind(&reference, &mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "EXTENSION_KIND_RUNTIME_REQUIRED"
+    );
+    let engine = engine();
+    let registry = engine.registry(&mut Context::catalog()).unwrap();
+    let listing = json_value(&registry.list_kinds(&mut Context::ordinary()).unwrap());
+    assert_eq!(listing["definitions"], json!([]));
+    assert_eq!(listing["packages"], json!([]));
+    assert_eq!(listing["complete"], true);
+    assert_eq!(
+        registry
+            .get_kind(&reference, &mut Context::ordinary())
+            .unwrap(),
+        None
+    );
+}
+
+#[test]
 fn ordinary_validation_checks_tags_and_scope_before_callbacks() {
     let e = engine();
     let mut r = e.registry(&mut Context::catalog()).unwrap();

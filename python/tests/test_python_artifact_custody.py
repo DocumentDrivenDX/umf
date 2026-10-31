@@ -25,7 +25,7 @@ def _set_up_rebuild(monkeypatch, tmp_path, *, manifests=None, expected_pkg_info=
     source_root = tmp_path / "synthetic-source"
     source_root.mkdir()
     (source_root / "pyproject.toml").write_text(
-        '[project]\nname = "umf-core"\nversion = "0.10.3"\n', encoding="utf-8"
+        '[project]\nname = "umf-core"\nversion = "0.11.0"\n', encoding="utf-8"
     )
     repository = tmp_path / "checkout"
     repository.mkdir()
@@ -40,7 +40,7 @@ def _set_up_rebuild(monkeypatch, tmp_path, *, manifests=None, expected_pkg_info=
 
     def verify_inputs(extracted, checkout, *, expected_version, expected_pkg_info):
         calls.append((extracted, checkout, expected_version, expected_pkg_info))
-        if expected_pkg_info != b"Name: umf-core\nVersion: 0.10.3\n\n":
+        if expected_pkg_info != b"Name: umf-core\nVersion: 0.11.0\n\n":
             raise ValueError("fixture rejected wheel metadata mismatch")
         return manifest_values[min(len(calls) - 1, len(manifest_values) - 1)]
 
@@ -54,6 +54,24 @@ def _set_up_rebuild(monkeypatch, tmp_path, *, manifests=None, expected_pkg_info=
         verifier, "_sdist_helper", lambda _repository: (helper, helper_path)
     )
     return verifier, source_root, repository, helper_path, calls
+
+
+def test_extracted_sdist_helper_pin_accepts_exact_source_and_rejects_drift(
+    tmp_path: Path,
+):
+    verifier = _verifier()
+    repository = tmp_path / "checkout"
+    helper_path = repository / "tools/_python_sdist.py"
+    helper_path.parent.mkdir(parents=True)
+    source = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
+    shutil.copyfile(source, helper_path)
+
+    _, pinned_path = verifier._sdist_helper(repository)
+    assert pinned_path == helper_path
+
+    helper_path.write_bytes(helper_path.read_bytes() + b"\n# drift\n")
+    with pytest.raises(ValueError, match="differs from its source pin"):
+        verifier._sdist_helper(repository)
 
 
 def test_wrong_wheel_metadata_stops_before_build_and_retains_no_wheel(
@@ -72,9 +90,9 @@ def test_wrong_wheel_metadata_stops_before_build_and_retains_no_wheel(
         verifier._rebuild_sdist_wheel(
             tmp_path / "input.tar.gz",
             output,
-            "0.10.3",
+            "0.11.0",
             repository,
-            b"Name: umf-core\nVersion: 0.10.3\nSummary: altered\n\n",
+            b"Name: umf-core\nVersion: 0.11.0\nSummary: altered\n\n",
         )
 
     assert len(calls) == 1
@@ -95,7 +113,7 @@ def test_source_map_is_rechecked_after_build_before_retaining_wheel(
     def fake_build(command, *, check, timeout, env):
         build_calls.append((command, check, timeout, env))
         wheel_dir = Path(command[command.index("--outdir") + 1])
-        (wheel_dir / "umf_core-0.10.3-py3-none-any.whl").write_bytes(b"wheel")
+        (wheel_dir / "umf_core-0.11.0-py3-none-any.whl").write_bytes(b"wheel")
 
     monkeypatch.setattr(verifier.subprocess, "run", fake_build)
     output = tmp_path / "retained"
@@ -104,9 +122,9 @@ def test_source_map_is_rechecked_after_build_before_retaining_wheel(
         verifier._rebuild_sdist_wheel(
             tmp_path / "input.tar.gz",
             output,
-            "0.10.3",
+            "0.11.0",
             repository,
-            b"Name: umf-core\nVersion: 0.10.3\n\n",
+            b"Name: umf-core\nVersion: 0.11.0\n\n",
         )
 
     assert len(calls) == 2
@@ -123,7 +141,7 @@ def test_stable_source_map_is_returned_only_after_both_checks(monkeypatch, tmp_p
 
     def fake_build(command, *, check, timeout, env):
         wheel_dir = Path(command[command.index("--outdir") + 1])
-        (wheel_dir / "umf_core-0.10.3-py3-none-any.whl").write_bytes(b"wheel")
+        (wheel_dir / "umf_core-0.11.0-py3-none-any.whl").write_bytes(b"wheel")
 
     monkeypatch.setattr(verifier.subprocess, "run", fake_build)
     output = tmp_path / "retained"
@@ -131,9 +149,9 @@ def test_stable_source_map_is_returned_only_after_both_checks(monkeypatch, tmp_p
     wheel, manifest = verifier._rebuild_sdist_wheel(
         tmp_path / "input.tar.gz",
         output,
-        "0.10.3",
+        "0.11.0",
         repository,
-        b"Name: umf-core\nVersion: 0.10.3\n\n",
+        b"Name: umf-core\nVersion: 0.11.0\n\n",
     )
 
     assert wheel.read_bytes() == b"wheel"

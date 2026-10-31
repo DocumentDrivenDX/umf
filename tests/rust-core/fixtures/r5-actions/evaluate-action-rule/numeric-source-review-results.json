@@ -1,0 +1,580 @@
+{
+  "cases": [
+    {
+      "id": "negative-zero-canonicalizes",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "fractional-trailing-zero-normalizes",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "positive-exponent-normalizes",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "negative-exponent-with-trailing-zero-normalizes",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "fractional-nonzero-refuses-rounding",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric value would require rounding",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "zero-bypasses-oversized-exponent-spelling",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "nonzero-oversized-exponent-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric exponent exceeds bounded domain",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "precision-check-after-coefficient-normalization",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric value exceeds precision/resource limit",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "positive-scale-normalizes-fraction",
+      "outcome": {
+        "value": "123"
+      }
+    },
+    {
+      "id": "negative-scale-normalizes-trailing-zeroes",
+      "outcome": {
+        "value": "12"
+      }
+    },
+    {
+      "id": "precision-check-after-scale-normalization",
+      "outcome": {
+        "value": "12"
+      }
+    },
+    {
+      "id": "zero-short-circuits-before-precision",
+      "outcome": {
+        "value": "0"
+      }
+    },
+    {
+      "id": "exponent-spelling-refusal-precedes-resource-and-precision",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric exponent exceeds bounded domain",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "resource-check-precedes-precision-after-exponent-expansion",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric value exceeds precision/resource limit",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "opposite-sign-cancellation-produces-zero",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "addition-carry-crosses-all-decimal-digits",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "subtraction-borrow-crosses-all-decimal-digits",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "subtraction-produces-negative-result",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "equality-across-signs-is-false",
+      "outcome": {
+        "value": false
+      }
+    },
+    {
+      "id": "less-than-across-signs",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "less-than-zero-versus-negative-is-false",
+      "outcome": {
+        "value": false
+      }
+    },
+    {
+      "id": "less-than-or-equal-equal-negative-magnitudes",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "greater-than-or-equal-different-digit-lengths",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "greater-than-across-signs",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "greater-than-shorter-positive-is-false",
+      "outcome": {
+        "value": false
+      }
+    },
+    {
+      "id": "less-than-or-equal-positive-equal",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "signed-eight-bit-minimum-is-admitted",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "signed-eight-bit-underflow-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Integer outside width/signedness",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-00-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-00-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-01-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-01-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-02-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-02-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-03-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-03-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-04-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-04-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-05-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-05-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-06-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-06-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-07-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-07-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-08-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-08-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-09-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-09-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-10-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-10-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-11-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-11-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-12-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-12-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-13-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-13-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-14-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-14-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-15-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-15-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-16-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-16-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-17-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-17-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-18-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-18-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-19-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-19-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-20-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-20-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-21-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-21-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-22-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-22-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-23-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-23-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-24-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-24-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-25-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-25-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-26-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-26-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-27-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-27-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-28-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-28-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-29-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-29-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-30-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-30-sub",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-31-add",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-31-sub",
+      "outcome": {
+        "value": true
+      }
+    }
+  ]
+}

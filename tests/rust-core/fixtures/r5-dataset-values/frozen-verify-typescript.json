@@ -1,0 +1,44 @@
+{
+  "schema": "umf-r5-dataset-values-verify-index/1",
+  "cases": {
+    "valid_commerce": {
+      "file": "frozen-verify-valid_commerce.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "stale_source": {
+      "file": "frozen-verify-stale_source.json",
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Invalid/stale original dataset receipt",
+          "code": "CORE_DATASET_RECEIPT"
+        }
+      }
+    },
+    "stale_input": {
+      "file": "frozen-verify-stale_input.json",
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Invalid/stale original dataset receipt",
+          "code": "CORE_DATASET_RECEIPT"
+        }
+      }
+    },
+    "forged_result": {
+      "file": "frozen-verify-forged_result.json",
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Dataset receipt differs from complete recomputation",
+          "code": "CORE_DATASET_RECEIPT"
+        }
+      }
+    }
+  }
+}

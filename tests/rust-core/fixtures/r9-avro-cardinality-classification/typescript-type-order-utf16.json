@@ -1,0 +1,1249 @@
+{
+  "scope": "Complete TypeScript outcomes captured by the six-case bounded review probe before the Rust repair",
+  "oracle": {
+    "src/core-ideals/cardinality-avro.ts": "433c55c02e83d87ae1328d4ddad02e1391a4aafbc79d9313e3283ec220d6e8a1",
+    "src/core-ideals/avro-cardinality-type.ts": "199d01f5c27a5a1bed9561ec992bbc83306bf47c7d0caf4729364d235952c91b",
+    "scripts/core-ideals/nullability-avro-cases.ts": "47461a3493dbb7c30d71862bef818ef2a4a7e89ad928ab6e67a24d7493405848"
+  },
+  "cases": [
+    {
+      "id": "duplicate-then-unresolved",
+      "op": "classifyAvroCardinality",
+      "args": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "Missing"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "column": "[null,\"/fields/0\"]",
+          "nativeSource": "{\"type\":\"record\",\"name\":\"cardinality.Example\",\"fields\":[{\"name\":\"value\",\"type\":[\"long\",\"long\",\"Missing\"]}]}",
+          "dependencies": [],
+          "identity": {
+            "module": "logical",
+            "element": "value"
+          },
+          "profile": "present-non-null-schema",
+          "mode": "report"
+        }
+      },
+      "result": {
+        "operation": "classify-avro-cardinality",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "Missing"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "column": "[null,\"/fields/0\"]",
+          "nativeSource": "{\"type\":\"record\",\"name\":\"cardinality.Example\",\"fields\":[{\"name\":\"value\",\"type\":[\"long\",\"long\",\"Missing\"]}]}",
+          "dependencies": [],
+          "identity": {
+            "module": "logical",
+            "element": "value"
+          },
+          "profile": "present-non-null-schema",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.avro.cardinality",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"
+        },
+        "mapping": {
+          "origin": "classified",
+          "cardinality": "unspecified",
+          "outcome": "not-expressible",
+          "basis": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+          "nodes": [
+            {
+              "identity": {
+                "module": "logical",
+                "element": "value"
+              },
+              "location": {
+                "path": "/fields/0/type"
+              },
+              "nativeFragment": {
+                "kind": "array",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "long"
+                  },
+                  {
+                    "kind": "string",
+                    "value": "long"
+                  },
+                  {
+                    "kind": "string",
+                    "value": "Missing"
+                  }
+                ]
+              },
+              "cardinality": "unspecified",
+              "interpretation": "unsupported",
+              "nativeAllowsNull": null,
+              "definitions": []
+            }
+          ]
+        },
+        "residuals": [
+          {
+            "path": "/fields/0/type",
+            "value": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "long"
+                },
+                {
+                  "kind": "string",
+                  "value": "long"
+                },
+                {
+                  "kind": "string",
+                  "value": "Missing"
+                }
+              ]
+            },
+            "reason": "Native structural type is unresolved: undefined type name: cardinality.Missing",
+            "recovery": "Retain original native archive and author assertions; classification does not replace native meaning"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "AVRO_CARDINALITY_RESIDUAL",
+            "path": "/fields/0/type",
+            "message": "Native structural type is unresolved: undefined type name: cardinality.Missing",
+            "severity": "warning"
+          }
+        ],
+        "target": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "umf.avro.cardinality": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "Missing"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "logical",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "name": "value",
+                  "cardinality": "unspecified",
+                  "extensions": {
+                    "umf.avro.cardinality": {
+                      "origin": "classified",
+                      "nativeColumn": "[null,\"/fields/0\"]",
+                      "binding": {
+                        "id": "umf.avro.cardinality",
+                        "version": "1.0.0"
+                      },
+                      "profile": "present-non-null-schema",
+                      "basis": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+                      "location": {
+                        "path": "/fields/0/type"
+                      },
+                      "nativeFragment": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "long"
+                          },
+                          {
+                            "kind": "string",
+                            "value": "long"
+                          },
+                          {
+                            "kind": "string",
+                            "value": "Missing"
+                          }
+                        ]
+                      },
+                      "interpretation": "unsupported",
+                      "nativeAllowsNull": null,
+                      "definitions": []
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "unresolved-utf16",
+      "op": "classifyAvroCardinality",
+      "args": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "\ud800"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "column": "[null,\"/fields/0\"]",
+          "nativeSource": "{\"type\":\"record\",\"name\":\"cardinality.Example\",\"fields\":[{\"name\":\"value\",\"type\":\"\\ud800\"}]}",
+          "dependencies": [],
+          "identity": {
+            "module": "logical",
+            "element": "value"
+          },
+          "profile": "present-non-null-schema",
+          "mode": "report"
+        }
+      },
+      "result": {
+        "operation": "classify-avro-cardinality",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "\ud800"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "column": "[null,\"/fields/0\"]",
+          "nativeSource": "{\"type\":\"record\",\"name\":\"cardinality.Example\",\"fields\":[{\"name\":\"value\",\"type\":\"\\ud800\"}]}",
+          "dependencies": [],
+          "identity": {
+            "module": "logical",
+            "element": "value"
+          },
+          "profile": "present-non-null-schema",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.avro.cardinality",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"
+        },
+        "mapping": {
+          "origin": "classified",
+          "cardinality": "unspecified",
+          "outcome": "not-expressible",
+          "basis": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+          "nodes": [
+            {
+              "identity": {
+                "module": "logical",
+                "element": "value"
+              },
+              "location": {
+                "path": "/fields/0/type"
+              },
+              "nativeFragment": {
+                "kind": "string",
+                "value": "\ud800"
+              },
+              "cardinality": "unspecified",
+              "interpretation": "unsupported",
+              "nativeAllowsNull": null,
+              "definitions": []
+            }
+          ]
+        },
+        "residuals": [
+          {
+            "path": "/fields/0/type",
+            "value": {
+              "kind": "string",
+              "value": "\ud800"
+            },
+            "reason": "Native structural type is unresolved: invalid name: \"cardinality.\\ud800\"",
+            "recovery": "Retain original native archive and author assertions; classification does not replace native meaning"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "AVRO_CARDINALITY_RESIDUAL",
+            "path": "/fields/0/type",
+            "message": "Native structural type is unresolved: invalid name: \"cardinality.\\ud800\"",
+            "severity": "warning"
+          }
+        ],
+        "target": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "umf.avro.cardinality": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "\ud800"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "logical",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "name": "value",
+                  "cardinality": "unspecified",
+                  "extensions": {
+                    "umf.avro.cardinality": {
+                      "origin": "classified",
+                      "nativeColumn": "[null,\"/fields/0\"]",
+                      "binding": {
+                        "id": "umf.avro.cardinality",
+                        "version": "1.0.0"
+                      },
+                      "profile": "present-non-null-schema",
+                      "basis": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+                      "location": {
+                        "path": "/fields/0/type"
+                      },
+                      "nativeFragment": {
+                        "kind": "string",
+                        "value": "\ud800"
+                      },
+                      "interpretation": "unsupported",
+                      "nativeAllowsNull": null,
+                      "definitions": []
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "field-name-utf16",
+      "op": "classifyAvroCardinality",
+      "args": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "record"
+                                      },
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "Inner"
+                                      },
+                                      "fields": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "object",
+                                            "members": {
+                                              "name": {
+                                                "kind": "string",
+                                                "value": "\ud800"
+                                              },
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "long"
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                },
+                {
+                  "id": "[null,\"/fields/0/type/fields/0\"]",
+                  "name": "\ud800",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "column": "[null,\"/fields/0\"]",
+          "nativeSource": "{\"type\":\"record\",\"name\":\"cardinality.Example\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"record\",\"name\":\"Inner\",\"fields\":[{\"name\":\"\\ud800\",\"type\":\"long\"}]}}]}",
+          "dependencies": [],
+          "identity": {
+            "module": "logical",
+            "element": "value"
+          },
+          "profile": "present-non-null-schema",
+          "mode": "report"
+        }
+      },
+      "result": {
+        "operation": "classify-avro-cardinality",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "record"
+                                      },
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "Inner"
+                                      },
+                                      "fields": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "object",
+                                            "members": {
+                                              "name": {
+                                                "kind": "string",
+                                                "value": "\ud800"
+                                              },
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "long"
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                },
+                {
+                  "id": "[null,\"/fields/0/type/fields/0\"]",
+                  "name": "\ud800",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "column": "[null,\"/fields/0\"]",
+          "nativeSource": "{\"type\":\"record\",\"name\":\"cardinality.Example\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"record\",\"name\":\"Inner\",\"fields\":[{\"name\":\"\\ud800\",\"type\":\"long\"}]}}]}",
+          "dependencies": [],
+          "identity": {
+            "module": "logical",
+            "element": "value"
+          },
+          "profile": "present-non-null-schema",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.avro.cardinality",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"
+        },
+        "mapping": {
+          "origin": "classified",
+          "cardinality": "unspecified",
+          "outcome": "not-expressible",
+          "basis": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+          "nodes": [
+            {
+              "identity": {
+                "module": "logical",
+                "element": "value"
+              },
+              "location": {
+                "path": "/fields/0/type"
+              },
+              "nativeFragment": {
+                "kind": "object",
+                "members": {
+                  "type": {
+                    "kind": "string",
+                    "value": "record"
+                  },
+                  "name": {
+                    "kind": "string",
+                    "value": "Inner"
+                  },
+                  "fields": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "\ud800"
+                          },
+                          "type": {
+                            "kind": "string",
+                            "value": "long"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "cardinality": "unspecified",
+              "interpretation": "unsupported",
+              "nativeAllowsNull": null,
+              "definitions": []
+            }
+          ]
+        },
+        "residuals": [
+          {
+            "path": "/fields/0/type",
+            "value": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "record"
+                },
+                "name": {
+                  "kind": "string",
+                  "value": "Inner"
+                },
+                "fields": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "\ud800"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "long"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "reason": "Native structural type is unresolved: invalid field name: \ud800",
+            "recovery": "Retain original native archive and author assertions; classification does not replace native meaning"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "AVRO_CARDINALITY_RESIDUAL",
+            "path": "/fields/0/type",
+            "message": "Native structural type is unresolved: invalid field name: \ud800",
+            "severity": "warning"
+          }
+        ],
+        "target": {
+          "umf": "0.10.0",
+          "id": "availability",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "umf.avro.cardinality": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "cardinality.Example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "record"
+                                      },
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "Inner"
+                                      },
+                                      "fields": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "object",
+                                            "members": {
+                                              "name": {
+                                                "kind": "string",
+                                                "value": "\ud800"
+                                              },
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "long"
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": []
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                },
+                {
+                  "id": "[null,\"/fields/0/type/fields/0\"]",
+                  "name": "\ud800",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "logical",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "name": "value",
+                  "cardinality": "unspecified",
+                  "extensions": {
+                    "umf.avro.cardinality": {
+                      "origin": "classified",
+                      "nativeColumn": "[null,\"/fields/0\"]",
+                      "binding": {
+                        "id": "umf.avro.cardinality",
+                        "version": "1.0.0"
+                      },
+                      "profile": "present-non-null-schema",
+                      "basis": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+                      "location": {
+                        "path": "/fields/0/type"
+                      },
+                      "nativeFragment": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Inner"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "\ud800"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "interpretation": "unsupported",
+                      "nativeAllowsNull": null,
+                      "definitions": []
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

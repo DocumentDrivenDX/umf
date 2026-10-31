@@ -1180,4 +1180,3 @@ def _verify_approval_available(connection: Any, bundle: dict[str, Any]) -> None:
 
     if not _verify_approval_relation(connection, bundle):
         raise CatalogError("approval-required")
-

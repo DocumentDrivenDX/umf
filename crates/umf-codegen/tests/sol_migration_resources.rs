@@ -92,7 +92,7 @@ fn sol_migration_and_discovery_preserve_late_semantic_looking_host_failures() {
     let resources = resources();
     let engine = CodegenEngine::new(&resources);
     let fixture = load(
-        "docs/helix/04-build/evidence/rust-migration/r3/sol-implementation-closure/frozen.json",
+        "tests/rust-core/fixtures/r3/sol-implementation-closure/frozen.json",
     );
     let cases =
         umf_codegen::value::array_items(umf_codegen::value::member(&fixture, "cases").unwrap())

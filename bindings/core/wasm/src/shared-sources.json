@@ -1,0 +1,144 @@
+{
+  "sources": [
+    {
+      "source": "bindings/core/node/src/wire.js",
+      "generated": "bindings/core/wasm/src/wire.js",
+      "sha256": "affd43c822f69037c8792990f62179d06a9bb23f0779feefda650df13353f97a"
+    },
+    {
+      "source": "bindings/core/node/src/arrow-ipc.js",
+      "generated": "bindings/core/wasm/src/arrow-ipc.js",
+      "sha256": "5b27f07019589cfd984265656fb8241059344103565fd46a12138863c3a5d21c"
+    },
+    {
+      "source": "bindings/core/node/src/parquet-capture.js",
+      "generated": "bindings/core/wasm/src/parquet-capture.js",
+      "sha256": "d2c33f98dffc682b64ae9ddb2bd4075059a26bad28a435a6802a96e30bf5527c"
+    },
+    {
+      "source": "bindings/core/node/src/dbt.js",
+      "generated": "bindings/core/wasm/src/dbt.js",
+      "sha256": "95f4088193aae8cbab8d96a3d87c1289ccfcdb932f870a77759afef9b49926a3"
+    },
+    {
+      "source": "bindings/core/node/src/rdf.js",
+      "generated": "bindings/core/wasm/src/rdf.js",
+      "sha256": "1495ce6a5a75d090498c1f3ab14c4ef0215d30122ff704eaf009dc07ce1ec443"
+    },
+    {
+      "source": "bindings/core/node/src/graphql.js",
+      "generated": "bindings/core/wasm/src/graphql.js",
+      "sha256": "868ad7bcb0cfd6c30d76929484f1f1d3c45295e1e7e793d43aea1bb4381e5033"
+    },
+    {
+      "source": "bindings/core/node/src/native-family.js",
+      "generated": "bindings/core/wasm/src/native-family.js",
+      "sha256": "2ffda59d2b4d170eee047121204f7abe9e190fb02907176e630eae409be3e86f"
+    },
+    {
+      "source": "bindings/core/node/src/jsonld.js",
+      "generated": "bindings/core/wasm/src/jsonld.js",
+      "sha256": "80c7dac5057b507a56db038801416280335a0653886ea4398ffa276571bb58ba"
+    },
+    {
+      "source": "bindings/core/node/src/access-rrf.js",
+      "generated": "bindings/core/wasm/src/access-rrf.js",
+      "sha256": "9bc5a20dd98af70eb32d91339079c5b592c27f4d84afd722033e9a8aeaa9b416"
+    },
+    {
+      "source": "bindings/core/node/src/javascript-numeric.js",
+      "generated": "bindings/core/wasm/src/javascript-numeric.js",
+      "sha256": "8355ddb54985270b396e78a2cd5cab25574cdf5d4c5384df5f34798d50e2654f"
+    },
+    {
+      "source": "bindings/core/node/src/security-logic.js",
+      "generated": "bindings/core/wasm/src/security-logic.js",
+      "sha256": "5d2f5e273b38a271b3ab7c771073da23db2c5b422065a095be79d374533468f0"
+    },
+    {
+      "source": "bindings/core/node/src/security-functions.js",
+      "generated": "bindings/core/wasm/src/security-functions.js",
+      "sha256": "e306ea52f0ef682b43cf752a50798169093d5a50b0fe6d45b205276581648638"
+    },
+    {
+      "source": "bindings/core/node/src/security-protection-source.js",
+      "generated": "bindings/core/wasm/src/security-protection-source.js",
+      "sha256": "be148feb96f65f7bc2b1fc7efd49602a1dd75a7ac1270a4eab856b5a8059d474"
+    },
+    {
+      "source": "bindings/core/node/src/security-query-properties.js",
+      "generated": "bindings/core/wasm/src/security-query-properties.js",
+      "sha256": "a89de04fd1376135831220f5896ceb2e076466fce9013783756d10a68ac27020"
+    },
+    {
+      "source": "bindings/core/node/src/security-protection-parameters.js",
+      "generated": "bindings/core/wasm/src/security-protection-parameters.js",
+      "sha256": "cc9db6061dfb805678585ea35c57e8c1ca95318f72fa7ab1ca6887ba6c6bf01c"
+    },
+    {
+      "source": "bindings/core/node/src/bit128.js",
+      "generated": "bindings/core/wasm/src/bit128.js",
+      "sha256": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a"
+    },
+    {
+      "source": "bindings/core/node/src/json-number.js",
+      "generated": "bindings/core/wasm/src/json-number.js",
+      "sha256": "27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141"
+    },
+    {
+      "source": "bindings/core/node/src/json-schema.js",
+      "generated": "bindings/core/wasm/src/json-schema.js",
+      "sha256": "cc403722baa33823f5637f1e834203567db44124179281fe88271ecbea950a78"
+    },
+    {
+      "source": "bindings/core/node/src/json-schema-import-source.js",
+      "generated": "bindings/core/wasm/src/json-schema-import-source.js",
+      "sha256": "a880ce70c0dba2fe3958c63635090f03c0a91128fb2117706b32be52bb14af36"
+    },
+    {
+      "source": "bindings/core/node/src/core-key-tuple.js",
+      "generated": "bindings/core/wasm/src/core-key-tuple.js",
+      "sha256": "fec83f9857b2cb3d955ba0e35c63b471bf3e8bda98d2adddf65fe452e90ad290"
+    },
+    {
+      "source": "bindings/core/node/src/core-keys.js",
+      "generated": "bindings/core/wasm/src/core-keys.js",
+      "sha256": "50351782e285d3ca7e9cadc1a571e5409df4af7f58f0f00b670bd5c284e57bec"
+    },
+    {
+      "source": "bindings/core/node/src/dataset-values-compact.js",
+      "generated": "bindings/core/wasm/src/dataset-values-compact.js",
+      "sha256": "15df4fb19f25a443e4c102bfa1a9fd606b853f0aa232f4c61ccbca7b2788b94b"
+    },
+    {
+      "source": "bindings/core/node/src/dataset-values.js",
+      "generated": "bindings/core/wasm/src/dataset-values.js",
+      "sha256": "dbcde410ba098a6fabb95d194aeb23840c7937a6c5fc4abca0aef3a91ce9f3cc"
+    },
+    {
+      "source": "bindings/core/node/src/core-relationships.js",
+      "generated": "bindings/core/wasm/src/core-relationships.js",
+      "sha256": "ded6c56efbed6b9309d23c2880b62fe04abfa2c26325ec8c4423811fce033c04"
+    },
+    {
+      "source": "bindings/core/node/src/core-evolution.js",
+      "generated": "bindings/core/wasm/src/core-evolution.js",
+      "sha256": "d72a448cc854c9483a6a3456f770a33a1d67d35aa04075ce674ee5ea61ff7967"
+    },
+    {
+      "source": "bindings/core/node/src/csv-boolean-lexical.js",
+      "generated": "bindings/core/wasm/src/csv-boolean-lexical.js",
+      "sha256": "0a2a15ad53bcff578251d77d890776b0a6b101bcd3584d4619d4e9bd72857ce6"
+    },
+    {
+      "source": "bindings/core/node/src/document-comparison.js",
+      "generated": "bindings/core/wasm/src/document-comparison.js",
+      "sha256": "f1e68fde7c5b0db957e44b790abc3d3f74866f706ea96550a3591bca266fa4c4"
+    },
+    {
+      "source": "bindings/core/node/src/host-json.js",
+      "generated": "bindings/core/wasm/src/host-json.js",
+      "sha256": "8bf12c4775f7ec09b2f691a889a523180da1bdbd02f0bba1d2bd6406f1d77a62"
+    }
+  ]
+}

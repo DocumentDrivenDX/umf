@@ -4,7 +4,8 @@ import {getLinkmlDocumentNode,importLinkmlDocument} from './index';
 import {copyJson} from '../../model/json';
 import {renderTree,type NativeJson} from '../../model/native-json';
 import {pointer,UmfError,type Document,type Diagnostic} from '../../model/types';
-export const LINKML_MERGE_COLLECTIONS=['prefixes','classes','slots','enums','subsets','types'] as const;
+import { LINKML_MERGE_COLLECTIONS } from './package';
+export { LINKML_MERGE_COLLECTIONS };
 export interface LinkmlImportMergeReport {
  context:LinkmlImportContext;mode:'view'|'merge-imports';status:'candidate'|'blocked';complete:false;
  closure:string[];selections:{collection:string;name:string;winner:string;shadowed:string[]}[];

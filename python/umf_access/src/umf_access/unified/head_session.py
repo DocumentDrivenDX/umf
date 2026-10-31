@@ -105,9 +105,9 @@ def observe_table_head(session: SyncSession, identity: SessionIdentity,
 async def observe_table_head_async(session: AsyncSession, identity: SessionIdentity,
                                   bundle: dict[str, object], reference: dict[str, object]) -> dict[str, Any]:
     """Async counterpart; cancellation propagates after shielded lease cleanup."""
-    # The bounded embedded V8 verifier is synchronous and disallows its timeout
-    # API inside an event loop. Preparation has no driver/lease access; cancelled
-    # preparation cannot later acquire a connection. All database IO stays async.
+    # Source preparation invokes the synchronous native bundle verifier. Run it
+    # off the event loop; it has no driver/lease access, so cancelled preparation
+    # cannot later acquire a connection. All database IO stays async.
     probe = await asyncio.to_thread(_prepare,session,identity,bundle,reference)
     try:
         async with session.open(identity,read_only=True) as native:

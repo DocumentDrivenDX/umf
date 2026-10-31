@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Declarative action inspection used by portable generators.
 
+pub mod evaluation;
 pub mod saga;
 pub mod single_set;
 
@@ -4557,7 +4558,7 @@ mod action_closure_tests {
     }
     #[test]
     fn unified_action_admission_uses_the_explicit_action_definition() {
-        let packet=parse(include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-unified-action-admission/analysis.json"));
+        let packet=parse(include_str!("../../../../tests/rust-core/fixtures/r3/sol-unified-action-admission/analysis.json"));
         let action = av(aa(&packet, "cases").last().unwrap(), "raw");
         assert!(admit_unified_action(&resources(), action, &mut Context::ordinary()).is_ok());
         let altered = resources_with(|actions, _| {
@@ -4635,7 +4636,7 @@ mod action_closure_tests {
     #[test]
     fn unified_action_helpers_retain_late_control_origin_and_depth_scope() {
         let resources = resources();
-        let corpus=parse(include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/qualified-analysis.json"));
+        let corpus=parse(include_str!("../../../../tests/rust-core/fixtures/r3/sol-action-closure/qualified-analysis.json"));
         let case = &aa(&corpus, "cases")[0];
         let action = av(case, "action");
         let document = av(case, "document");
@@ -4684,7 +4685,7 @@ mod action_closure_tests {
     fn unified_action_admission_matches_standalone_predecessor_schema_errors() {
         let resources = resources();
         let mut mismatches = Vec::new();
-        for source in [include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-unified-action-admission/analysis.json"),include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-unified-action-admission/bounds/analysis.json")] {
+        for source in [include_str!("../../../../tests/rust-core/fixtures/r3/sol-unified-action-admission/analysis.json"),include_str!("../../../../tests/rust-core/fixtures/r3/sol-unified-action-admission/bounds/analysis.json")] {
         let packet=parse(source);
         for case in aa(&packet, "cases") {
             let actual =
@@ -4832,7 +4833,7 @@ mod action_closure_tests {
     }
     #[test]
     fn action_late_control_failures_keep_host_provenance() {
-        let corpus=parse(include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/qualified-analysis.json"));
+        let corpus=parse(include_str!("../../../../tests/rust-core/fixtures/r3/sol-action-closure/qualified-analysis.json"));
         let case = &aa(&corpus, "cases")[0];
         let document = av(case, "document");
         let mut action = admit_json(av(case, "action"), &mut Context::ordinary()).unwrap();
@@ -4894,7 +4895,7 @@ mod action_closure_tests {
     fn action_ordered_analysis_matches_fifty_eight_admitted_predecessor_vectors() {
         let resources = resources();
         let mut failures = Vec::new();
-        for corpus_text in [include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/qualified-analysis.json"),include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/expression-analysis.json"),include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/selector-analysis.json"),include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-independent-action-review/analysis.json"),include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/parser-analysis.json"),include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-independent-action-review/parser-order.json")] {let corpus=parse(corpus_text);
+        for corpus_text in [include_str!("../../../../tests/rust-core/fixtures/r3/sol-action-closure/qualified-analysis.json"),include_str!("../../../../tests/rust-core/fixtures/r3/sol-action-closure/expression-analysis.json"),include_str!("../../../../tests/rust-core/fixtures/r3/sol-action-closure/selector-analysis.json"),include_str!("../../../../tests/rust-core/fixtures/r3/sol-independent-action-review/analysis.json"),include_str!("../../../../tests/rust-core/fixtures/r3/sol-action-closure/parser-analysis.json"),include_str!("../../../../tests/rust-core/fixtures/r3/sol-independent-action-review/parser-order.json")] {let corpus=parse(corpus_text);
         for case in aa(&corpus,"cases") {let doc=av(case,"document");
             let raw_action=string_member(case,"rawActionText").map(|text|parse(&text.to_utf8().unwrap()));
             let action=raw_action.as_ref().unwrap_or(av(case,"action"));

@@ -35,7 +35,11 @@ UMF owns logical Record/Field/Key and supplied relationship validation. Consumer
 own original wire-byte custody, CSV or graph-literal conversion, storage bindings,
 source authority and native execution. Compact receipts MUST NOT imply accepted
 catalog IDs, physical coverage, uniqueness enforcement, publication or source ACK.
-The source remains valid declared core 0.8.0; implicit version conversion is forbidden.
+The current compact operation requires a valid declared core 0.10.0 source,
+matching its versioned request schema and live implementation; implicit version
+conversion is forbidden. CONTRACT-049's original core 0.8.0 passage records
+the historical operation profile and does not authorize 0.8.0 input for this
+current compact operation.
 
 ## Normative Surface
 

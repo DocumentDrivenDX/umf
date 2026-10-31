@@ -2,7 +2,7 @@
 use crate::{
     context::Context,
     error::EngineError,
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
 use std::collections::BTreeSet;
 fn k(s: &str) -> Utf16 {

@@ -1,10 +1,14 @@
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
+use num_bigint::BigInt;
 use pyo3::{
-    exceptions::PyValueError,
+    basic::CompareOp,
+    create_exception,
+    exceptions::{PyException, PyTypeError, PyValueError},
     prelude::*,
-    types::{PyBytes, PyDict, PyList, PyTuple},
+    types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyIterator, PyList, PyString, PyTuple},
 };
+use umf_core::target_pin::{PlatformComponent, PlatformPin, TargetIdentity, TargetPin};
 use umf_core::{
     Capabilities, CapabilityError, Context, Diagnostic, Engine, EngineError, PythonDiagnosticText,
     Registry, ResourceSet, SemanticContext, Severity, Utf16, Value,
@@ -14,6 +18,2645 @@ use umf_core::{
 };
 
 mod python_value;
+mod related_keys;
+
+create_exception!(_rust_core, SecProjectionError, PyException);
+const TARGET_PIN_PROFILE: &str = "umf-access-target-pin/0.1.0";
+const READ_PLAN_BIND_PROFILE: &str = "umf-access-read-plan-bind/0.1.0";
+const SEC_INPUT_LIMIT: usize = 4_000_000;
+const SEC_SOURCE_LIMIT: usize = 1_024;
+
+struct PyReadPlanBindHost<'a, 'py> {
+    callbacks: &'a Bound<'py, PyAny>,
+    presence: &'a Bound<'py, PyAny>,
+}
+
+impl<'a, 'py> umf_core::read_plan_bind::ReadPlanBindHost for PyReadPlanBindHost<'a, 'py> {
+    type Identity = Bound<'py, PyAny>;
+    type Error = PyErr;
+
+    fn preflight_artifact(&mut self, variant: usize) -> PyResult<()> {
+        self.callbacks
+            .call_method1("preflight_artifact", (variant,))?;
+        Ok(())
+    }
+
+    fn target_identity(&mut self) -> PyResult<Self::Identity> {
+        self.callbacks.call_method0("target_identity")
+    }
+
+    fn presence_matches(&mut self, variant: usize) -> PyResult<bool> {
+        self.callbacks
+            .call_method1("presence_matches", (variant, self.presence))?
+            .is_truthy()
+    }
+
+    fn pin_matches(&mut self, identity: &Self::Identity, variant: usize) -> PyResult<bool> {
+        self.callbacks
+            .call_method1("pin_matches", (identity, variant))?
+            .extract()
+    }
+
+    fn selected_artifact(&mut self, variant: usize) -> PyResult<()> {
+        self.callbacks
+            .call_method1("selected_artifact", (variant,))?;
+        Ok(())
+    }
+
+    fn build_parameters(&mut self, variant: usize) -> PyResult<()> {
+        self.callbacks
+            .call_method1("build_parameters", (variant,))?;
+        Ok(())
+    }
+}
+
+#[pyfunction]
+fn access_read_plan_bind_profile_version() -> &'static str {
+    READ_PLAN_BIND_PROFILE
+}
+
+#[pyfunction]
+fn access_read_plan_bind_select(
+    variants: &Bound<'_, PyAny>,
+    presence: &Bound<'_, PyAny>,
+    callbacks: &Bound<'_, PyAny>,
+) -> PyResult<Option<usize>> {
+    let variants = exact_tuple(variants, "read plan variants")?;
+    let presence = exact_tuple(presence, "argument presence")?;
+    let mut host = PyReadPlanBindHost {
+        callbacks,
+        presence,
+    };
+    umf_core::read_plan_bind::bind(variants.len(), &mut host)
+}
+
+#[pyfunction]
+fn project_sec_submissions(
+    input: &Bound<'_, PyAny>,
+    source_id: &Bound<'_, PyAny>,
+) -> PyResult<String> {
+    sec_project(input, source_id, true)
+}
+
+#[pyfunction]
+fn project_sec_company_facts(
+    input: &Bound<'_, PyAny>,
+    source_id: &Bound<'_, PyAny>,
+) -> PyResult<String> {
+    sec_project(input, source_id, false)
+}
+
+fn sec_project(
+    input: &Bound<'_, PyAny>,
+    source_id: &Bound<'_, PyAny>,
+    submissions: bool,
+) -> PyResult<String> {
+    if !input.is_exact_instance_of::<PyString>() {
+        return Err(PyTypeError::new_err("input must be JSON text"));
+    }
+    if input.len()? > SEC_INPUT_LIMIT {
+        return Err(sec_projection_error(
+            "UmfError",
+            Some("LIMIT"),
+            Some(""),
+            "Native JSON exceeds text limit",
+        ));
+    }
+    let input_bytes = sec_encode_text(input)?;
+    if input_bytes.len() / 2 > SEC_INPUT_LIMIT {
+        return Err(sec_projection_error(
+            "UmfError",
+            Some("LIMIT"),
+            Some(""),
+            "Native JSON exceeds text limit",
+        ));
+    }
+    let input_units = sec_bytes_to_units(&input_bytes);
+    let source_units =
+        if source_id.is_exact_instance_of::<PyString>() && source_id.len()? <= SEC_SOURCE_LIMIT {
+            let bytes = sec_encode_text(source_id)?;
+            if bytes.len() / 2 <= SEC_SOURCE_LIMIT {
+                sec_bytes_to_units(&bytes)
+            } else {
+                Vec::new()
+            }
+        } else {
+            Vec::new()
+        };
+    let result = if submissions {
+        umf_core::domain_pack_sec::project_sec_submissions(&input_units, &source_units)
+    } else {
+        umf_core::domain_pack_sec::project_sec_company_facts(&input_units, &source_units)
+    };
+    result.map_err(|error| {
+        sec_projection_error(
+            &error.name,
+            error.code.as_deref(),
+            error.path.as_deref(),
+            &error.message,
+        )
+    })
+}
+
+fn sec_encode_text(value: &Bound<'_, PyAny>) -> PyResult<Vec<u8>> {
+    let encoded = value.call_method1("encode", ("utf-16-le", "surrogatepass"))?;
+    Ok(encoded.downcast::<PyBytes>()?.as_bytes().to_vec())
+}
+
+fn sec_bytes_to_units(bytes: &[u8]) -> Vec<u16> {
+    bytes
+        .chunks_exact(2)
+        .map(|pair| u16::from_le_bytes([pair[0], pair[1]]))
+        .collect()
+}
+
+fn sec_projection_error(
+    name: &str,
+    code: Option<&str>,
+    path: Option<&str>,
+    message: &str,
+) -> PyErr {
+    let error = SecProjectionError::new_err(message.to_owned());
+    Python::with_gil(|py| {
+        let value = error.value_bound(py);
+        let _ = value.setattr("name", name);
+        let _ = value.setattr("code", code);
+        let _ = value.setattr("path", path);
+        let _ = value.setattr("message", message);
+    });
+    error
+}
+
+fn exact_tuple<'a, 'py>(
+    value: &'a Bound<'py, PyAny>,
+    label: &str,
+) -> PyResult<&'a Bound<'py, PyTuple>> {
+    if !value.is_exact_instance_of::<PyTuple>() {
+        return Err(PyTypeError::new_err(format!(
+            "{label} must be an exact tuple"
+        )));
+    }
+    Ok(value.downcast::<PyTuple>()?)
+}
+
+fn exact_tuple_string(value: &Bound<'_, PyAny>, label: &str) -> PyResult<String> {
+    if !value.is_exact_instance_of::<PyString>() {
+        return Err(PyTypeError::new_err(format!(
+            "{label} must be an exact str"
+        )));
+    }
+    value.extract::<String>()
+}
+
+fn target_identity_fields(value: &Bound<'_, PyAny>) -> PyResult<[String; 5]> {
+    let tuple = exact_tuple(value, "identity fields")?;
+    if tuple.len() != 5 {
+        return Err(PyValueError::new_err(
+            "identity fields must contain five strings",
+        ));
+    }
+    Ok([
+        exact_tuple_string(&tuple.get_item(0)?, "identity kind")?,
+        exact_tuple_string(&tuple.get_item(1)?, "identity backend_id")?,
+        exact_tuple_string(&tuple.get_item(2)?, "identity backend_version")?,
+        exact_tuple_string(&tuple.get_item(3)?, "identity target_profile")?,
+        exact_tuple_string(&tuple.get_item(4)?, "identity binding_sha256")?,
+    ])
+}
+
+fn target_pin_platform(value: &Bound<'_, PyAny>) -> PyResult<Vec<PlatformPin>> {
+    let tuple = exact_tuple(value, "pin platform")?;
+    tuple
+        .iter()
+        .map(|item| {
+            let pair = exact_tuple(&item, "pin platform component")?;
+            if pair.len() != 2 {
+                return Err(PyValueError::new_err(
+                    "pin platform component must be (name, versions)",
+                ));
+            }
+            let name = exact_tuple_string(&pair.get_item(0)?, "platform name")?;
+            let versions_value = pair.get_item(1)?;
+            let versions = exact_tuple(&versions_value, "platform versions")?;
+            let versions = versions
+                .iter()
+                .map(|version| exact_tuple_string(&version, "platform version"))
+                .collect::<PyResult<Vec<_>>>()?;
+            Ok(PlatformPin { name, versions })
+        })
+        .collect()
+}
+
+fn observed_target_platform(value: &Bound<'_, PyAny>) -> PyResult<Vec<PlatformComponent>> {
+    let tuple = exact_tuple(value, "observed platform")?;
+    tuple
+        .iter()
+        .map(|item| {
+            let pair = exact_tuple(&item, "observed platform component")?;
+            if pair.len() != 2 {
+                return Err(PyValueError::new_err(
+                    "observed platform component must be (name, version)",
+                ));
+            }
+            Ok(PlatformComponent {
+                name: exact_tuple_string(&pair.get_item(0)?, "platform name")?,
+                version: exact_tuple_string(&pair.get_item(1)?, "platform version")?,
+            })
+        })
+        .collect()
+}
+
+#[pyfunction]
+fn access_target_pin_profile_version() -> &'static str {
+    TARGET_PIN_PROFILE
+}
+
+#[pyfunction]
+fn access_target_pin_matches(
+    pin_fields: &Bound<'_, PyAny>,
+    pin_platform: &Bound<'_, PyAny>,
+    identity_fields: &Bound<'_, PyAny>,
+    observed_platform: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    let pin_fields = target_identity_fields(pin_fields)?;
+    let identity_fields = target_identity_fields(identity_fields)?;
+    let pin = TargetPin {
+        kind: pin_fields[0].clone(),
+        backend_id: pin_fields[1].clone(),
+        backend_version: pin_fields[2].clone(),
+        target_profile: pin_fields[3].clone(),
+        binding_sha256: pin_fields[4].clone(),
+        platform: target_pin_platform(pin_platform)?,
+    };
+    let identity = TargetIdentity {
+        kind: identity_fields[0].clone(),
+        backend_id: identity_fields[1].clone(),
+        backend_version: identity_fields[2].clone(),
+        target_profile: identity_fields[3].clone(),
+        binding_sha256: identity_fields[4].clone(),
+        platform: observed_target_platform(observed_platform)?,
+    };
+    Ok(pin.matches(&identity))
+}
+
+// Opt-in seam for callers that need Python's live attribute-observation order.
+// Keep these reads explicit: TargetPin.matches builds both field tuples before
+// comparing, observes identity.platform and pin.platform for len(), then
+// observes identity.platform again before _matches_platform reads pin.platform.
+#[pyfunction]
+fn access_target_pin_matches_host(
+    pin_value: &Bound<'_, PyAny>,
+    identity_value: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    let identity_fields = [
+        identity_value.getattr("kind")?,
+        identity_value.getattr("backend_id")?,
+        identity_value.getattr("backend_version")?,
+        identity_value.getattr("target_profile")?,
+        identity_value.getattr("binding_sha256")?,
+    ];
+    let pin_fields = [
+        pin_value.getattr("kind")?,
+        pin_value.getattr("backend_id")?,
+        pin_value.getattr("backend_version")?,
+        pin_value.getattr("target_profile")?,
+        pin_value.getattr("binding_sha256")?,
+    ];
+    let py = pin_value.py();
+    let identity_tuple = PyTuple::new_bound(py, &identity_fields);
+    let pin_tuple = PyTuple::new_bound(py, &pin_fields);
+    if !identity_tuple
+        .rich_compare(&pin_tuple, CompareOp::Eq)?
+        .is_truthy()?
+    {
+        return Ok(false);
+    }
+
+    let identity_len_value = identity_value.getattr("platform")?;
+    let identity_len = identity_len_value.len()?;
+    let pin_len_value = pin_value.getattr("platform")?;
+    let pin_len = pin_len_value.len()?;
+    if identity_len != pin_len {
+        return Ok(false);
+    }
+
+    let observed_value = identity_value.getattr("platform")?;
+    let pinned_names_value = pin_value.getattr("platform")?;
+    let pinned_names = platform_names_host(&pinned_names_value)?;
+    let observed_names = platform_names_host(&observed_value)?;
+    if has_duplicates_host(py, &pinned_names)? || has_duplicates_host(py, &observed_names)? {
+        return Ok(false);
+    }
+    let pinned_value = pin_value.getattr("platform")?;
+    let dictionary = py
+        .import_bound("builtins")?
+        .getattr("dict")?
+        .call1((pinned_value,))?;
+    for entry in observed_value.try_iter()? {
+        let (name, version) = unpack_host_pair(&entry?)?;
+        if !dictionary.contains(&name)? {
+            return Ok(false);
+        }
+        let versions = dictionary.get_item(&name)?;
+        if !versions.contains(&version)? {
+            return Ok(false);
+        }
+    }
+    Ok(true)
+}
+
+fn unpack_host_pair<'py>(
+    value: &Bound<'py, PyAny>,
+) -> PyResult<(Bound<'py, PyAny>, Bound<'py, PyAny>)> {
+    let mut iterator = value.try_iter()?;
+    let first = iterator
+        .next()
+        .transpose()?
+        .ok_or_else(|| PyValueError::new_err("not enough values to unpack (expected 2, got 0)"))?;
+    let second = iterator
+        .next()
+        .transpose()?
+        .ok_or_else(|| PyValueError::new_err("not enough values to unpack (expected 2, got 1)"))?;
+    if iterator.next().transpose()?.is_some() {
+        return Err(PyValueError::new_err(
+            "too many values to unpack (expected 2)",
+        ));
+    }
+    Ok((first, second))
+}
+
+fn platform_names_host<'py>(value: &Bound<'py, PyAny>) -> PyResult<Vec<Bound<'py, PyAny>>> {
+    value
+        .try_iter()?
+        .map(|entry| Ok(unpack_host_pair(&entry?)?.0))
+        .collect()
+}
+
+fn has_duplicates_host(py: Python<'_>, values: &[Bound<'_, PyAny>]) -> PyResult<bool> {
+    let tuple = PyTuple::new_bound(py, values);
+    let set = py
+        .import_bound("builtins")?
+        .getattr("set")?
+        .call1((tuple,))?;
+    Ok(set.len()? != values.len())
+}
+
+fn platform_names(value: &Bound<'_, PyAny>, label: &str) -> PyResult<Vec<String>> {
+    let tuple = exact_tuple(value, label)?;
+    tuple
+        .iter()
+        .map(|item| {
+            let pair = exact_tuple(&item, "platform component")?;
+            if pair.len() != 2 {
+                return Err(PyValueError::new_err(
+                    "platform component must contain two values",
+                ));
+            }
+            exact_tuple_string(&pair.get_item(0)?, "platform name")
+        })
+        .collect()
+}
+
+fn has_duplicate_names(names: &[String]) -> bool {
+    let mut seen = std::collections::HashSet::new();
+    names.iter().any(|name| !seen.insert(name))
+}
+
+fn semantic_field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
+    let Value::Object(fields) = value else {
+        return None;
+    };
+    fields
+        .iter()
+        .find(|(key, _)| key == &Utf16::from(name))
+        .map(|(_, value)| value)
+}
+
+struct PythonSemanticTypeValidator<'py> {
+    py: Python<'py>,
+    dispatcher: PyObject,
+}
+impl umf_core::core_semantic_types::SemanticTypeValidator for PythonSemanticTypeValidator<'_> {
+    fn validate(
+        &mut self,
+        token: u64,
+        value: &Value,
+        definition: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, CapabilityError> {
+        let request = umf_core_wire::encode_semantic_validator_request(value, definition, ctx)
+            .map_err(CapabilityError::Engine)?;
+        let response = self
+            .dispatcher
+            .bind(self.py)
+            .call1((token, request))
+            .map_err(|error| capability_py_error(self.py, error, ctx))?;
+        let response: String = response
+            .extract()
+            .map_err(|error| capability_py_error(self.py, error, ctx))?;
+        let response = umf_core_wire::decode(&response, ctx).map_err(CapabilityError::Engine)?;
+        let reported = match semantic_field(&response, "reportedWork") {
+            Some(Value::Number(number))
+                if number.is_finite()
+                    && *number >= 0.0
+                    && number.fract() == 0.0
+                    && *number <= 9_007_199_254_740_991.0 =>
+            {
+                *number as usize
+            }
+            _ => {
+                return Err(CapabilityError::Engine(EngineError::new(
+                    "HOST_CONTROL",
+                    Utf16::default(),
+                    "Invalid semantic validator reported work",
+                )));
+            }
+        };
+        ctx.charge_work(reported, Utf16::default())
+            .map_err(CapabilityError::Engine)?;
+        let status = match semantic_field(&response, "status") {
+            Some(Value::String(text)) => text.to_utf8().ok(),
+            _ => None,
+        };
+        match status.as_deref() {
+            Some("returned") => semantic_field(&response, "result")
+                .cloned()
+                .ok_or_else(|| CapabilityError::Host(Utf16::from("Value is not JSON-compatible"))),
+            Some("threw") => Err(CapabilityError::Host(
+                match semantic_field(&response, "message") {
+                    Some(Value::String(text)) => text.clone(),
+                    _ => Utf16::default(),
+                },
+            )),
+            Some("resource") => {
+                let code = match semantic_field(&response, "code") {
+                    Some(Value::String(text)) => text
+                        .to_utf8()
+                        .unwrap_or_else(|_| "RESOURCE_LIMIT".to_owned()),
+                    _ => "RESOURCE_LIMIT".to_owned(),
+                };
+                let message = match semantic_field(&response, "message") {
+                    Some(Value::String(text)) => text.to_utf8().unwrap_or_default(),
+                    _ => String::new(),
+                };
+                Err(CapabilityError::Engine(EngineError::new(
+                    code,
+                    Utf16::default(),
+                    message,
+                )))
+            }
+            _ => Err(CapabilityError::Host(Utf16::from(
+                "Malformed semantic validator response",
+            ))),
+        }
+    }
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, dispatcher, *, max_work=None, meter=None, is_cancelled=None, now=None, deadline_ms=None))]
+fn execute_semantic_value_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    dispatcher: PyObject,
+    max_work: Option<usize>,
+    meter: Option<PyObject>,
+    is_cancelled: Option<PyObject>,
+    now: Option<PyObject>,
+    deadline_ms: Option<u64>,
+) -> PyResult<String> {
+    for (name, callback) in [
+        ("dispatcher", Some(&dispatcher)),
+        ("meter", meter.as_ref()),
+        ("is_cancelled", is_cancelled.as_ref()),
+        ("now", now.as_ref()),
+    ] {
+        if callback.is_some_and(|value| !value.bind(py).is_callable()) {
+            return Err(PyValueError::new_err(format!("{name} must be callable")));
+        }
+    }
+    if deadline_ms.is_some() && now.is_none() {
+        return Err(PyValueError::new_err("now is required with deadline_ms"));
+    }
+    let state = Rc::new(RefCell::new(PythonWorkControl {
+        py,
+        max_work,
+        charged: 0,
+        meter,
+        is_cancelled,
+        now,
+        host_callback_failed: false,
+    }));
+    let mut meter_hook = {
+        let state = state.clone();
+        move |amount| state.borrow_mut().meter(amount)
+    };
+    let mut cancel_hook = {
+        let state = state.clone();
+        move || state.borrow_mut().cancelled()
+    };
+    let mut clock_hook = {
+        let state = state.clone();
+        move || state.borrow_mut().clock()
+    };
+    let mut ctx = Context::ordinary();
+    if max_work.is_some() || state.borrow().meter.is_some() {
+        ctx = ctx.with_meter(&mut meter_hook);
+    }
+    if state.borrow().is_cancelled.is_some() {
+        ctx = ctx.with_fallible_cancellation(&mut cancel_hook);
+    }
+    if let Some(deadline) = deadline_ms {
+        ctx = ctx.with_fallible_clock(&mut clock_hook, deadline);
+    }
+    let mut validator = PythonSemanticTypeValidator { py, dispatcher };
+    Ok(umf_core_wire::semantic_value::execute_with_context(
+        wire_json,
+        &mut validator,
+        &mut ctx,
+    ))
+}
+
+fn python_bigint(
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    context: &mut Context<'_>,
+) -> PyResult<BigInt> {
+    if !value.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("integer metadata required"));
+    }
+    let bits: usize = value
+        .call_method0("bit_length")?
+        .extract()
+        .map_err(|_| PyValueError::new_err("integer metadata cannot be represented"))?;
+    context
+        .charge_work(bits.saturating_add(1), Utf16::default())
+        .map_err(py_error)?;
+    let byte_len = bits
+        .saturating_add(8)
+        .checked_div(8)
+        .unwrap_or(usize::MAX)
+        .max(1);
+    let kwargs = PyDict::new_bound(py);
+    kwargs.set_item("signed", true)?;
+    let bytes = value
+        .call_method("to_bytes", (byte_len, "little"), Some(&kwargs))?
+        .downcast_into::<PyBytes>()?;
+    Ok(BigInt::from_signed_bytes_le(bytes.as_bytes()))
+}
+#[pyfunction]
+fn access_values_profile_version() -> &'static str {
+    "umf-access-values/0.1.0"
+}
+
+#[pyfunction]
+fn access_values_string_profile_version() -> &'static str {
+    "umf-access-string/0.1.0"
+}
+
+#[pyclass(name = "ReviewedParameterScanner")]
+struct PyReviewedParameterScanner {
+    scanner: umf_core::reviewed_parameters::Scanner,
+}
+
+fn reviewed_scanner_error(error: umf_core::reviewed_parameters::Error) -> PyErr {
+    match error {
+        umf_core::reviewed_parameters::Error::Allocation => {
+            pyo3::exceptions::PyMemoryError::new_err("reviewed SQL ordinal allocation failed")
+        }
+        _ => PyValueError::new_err("reviewed scanner protocol error"),
+    }
+}
+
+#[pymethods]
+impl PyReviewedParameterScanner {
+    #[new]
+    fn new(py: Python<'_>, sql: &Bound<'_, PyString>) -> PyResult<Self> {
+        let length = unsafe { pyo3::ffi::PyUnicode_GetLength(sql.as_ptr()) };
+        if length < 0 {
+            return Err(PyErr::fetch(py));
+        }
+        let length = length as usize;
+        if length > isize::MAX as usize / std::mem::size_of::<u32>() {
+            return Err(pyo3::exceptions::PyMemoryError::new_err(
+                "reviewed SQL exceeds Rust scanner capacity",
+            ));
+        }
+        let mut codepoints = Vec::new();
+        codepoints.try_reserve_exact(length).map_err(|_| {
+            pyo3::exceptions::PyMemoryError::new_err("reviewed SQL scanner allocation failed")
+        })?;
+        for index in 0..length {
+            let codepoint = unsafe { pyo3::ffi::PyUnicode_ReadChar(sql.as_ptr(), index as isize) };
+            if codepoint == u32::MAX {
+                if PyErr::occurred(py) {
+                    return Err(PyErr::fetch(py));
+                }
+                return Err(PyValueError::new_err("invalid CPython code point"));
+            }
+            codepoints.push(codepoint);
+        }
+        let scanner = umf_core::reviewed_parameters::Scanner::new(codepoints)
+            .map_err(|_| PyValueError::new_err("invalid CPython code-point vector"))?;
+        Ok(Self { scanner })
+    }
+
+    #[pyo3(signature = (python_isalnum=None))]
+    fn next(&mut self, py: Python<'_>, python_isalnum: Option<bool>) -> PyResult<Py<PyDict>> {
+        use umf_core::reviewed_parameters::Event;
+        let event = self.scanner.next(python_isalnum);
+        let dict = PyDict::new_bound(py);
+        match event {
+            Ok(Event::NeedPythonIsAlnum { index }) => {
+                dict.set_item("kind", "need_python_isalnum")?;
+                dict.set_item("index", index)?;
+            }
+            Ok(Event::Placeholder { start, end, digits }) => {
+                dict.set_item("kind", "placeholder")?;
+                dict.set_item("start", start)?;
+                dict.set_item("end", end)?;
+                dict.set_item("digits", digits)?;
+            }
+            Ok(Event::Done) => dict.set_item("kind", "done")?,
+            Err(error) if error.python_code().is_some() => {
+                dict.set_item("kind", "error")?;
+                dict.set_item("code", error.python_code())?;
+                dict.set_item("message", error.python_message())?;
+            }
+            Err(error) => return Err(reviewed_scanner_error(error)),
+        }
+        Ok(dict.unbind())
+    }
+}
+
+#[pyfunction]
+fn access_reviewed_parameter_profile_version() -> &'static str {
+    "umf-access-reviewed-transport/0.1.0"
+}
+
+#[pyfunction]
+fn access_values_validate_string(py: Python<'_>, value: &Bound<'_, PyAny>) -> PyResult<bool> {
+    if !value.is_exact_instance_of::<PyString>() {
+        return Err(PyValueError::new_err("string carrier required"));
+    }
+    let string = value
+        .downcast::<PyString>()
+        .map_err(|_| PyValueError::new_err("string carrier required"))?;
+    let length = unsafe { pyo3::ffi::PyUnicode_GetLength(string.as_ptr()) };
+    if length < 0 {
+        return Err(PyErr::fetch(py));
+    }
+    let mut index = 0;
+    // The exact string is immutable and `index` stays within the length just
+    // returned by CPython, so ReadChar has no expected failure case here. Keep
+    // the sentinel/PyErr check in case the C API nevertheless reports one.
+    let codepoints = std::iter::from_fn(|| {
+        if index >= length {
+            return None;
+        }
+        let codepoint = unsafe { pyo3::ffi::PyUnicode_ReadChar(string.as_ptr(), index) };
+        index += 1;
+        if codepoint == u32::MAX && PyErr::occurred(py) {
+            index = length;
+        }
+        Some(codepoint)
+    });
+    let mut context = Context::ordinary();
+    let valid = umf_core::access_values::validate_unicode_scalar_stream(codepoints, &mut context)
+        .map_err(py_error)?;
+    if PyErr::occurred(py) {
+        return Err(PyErr::fetch(py));
+    }
+    Ok(valid)
+}
+
+#[pyfunction]
+fn operation_values_profile_version() -> &'static str {
+    umf_core::operation_values::PROFILE_VERSION
+}
+
+#[pyfunction]
+fn operation_count_token_profile_version() -> &'static str {
+    umf_core::operation_values::COUNT_TOKEN_PROFILE_VERSION
+}
+
+#[pyfunction]
+fn operation_count_result_frame_profile_version() -> &'static str {
+    umf_core::operation_values::COUNT_RESULT_FRAME_PROFILE_VERSION
+}
+
+fn exact_count_result_text<'a>(value: &'a Bound<'a, PyAny>) -> PyResult<&'a str> {
+    if !value.is_exact_instance_of::<PyString>() {
+        return Err(PyValueError::new_err("exact count result text required"));
+    }
+    value.extract::<&str>()
+}
+
+#[pyfunction]
+fn operation_count_result_frame(
+    module_name: &Bound<'_, PyAny>,
+    operation_name: &Bound<'_, PyAny>,
+    source_digest: &Bound<'_, PyAny>,
+    integer_token: &Bound<'_, PyAny>,
+) -> PyResult<String> {
+    umf_core::operation_values::count_result_frame(
+        exact_count_result_text(module_name)?,
+        exact_count_result_text(operation_name)?,
+        exact_count_result_text(source_digest)?,
+        exact_count_result_text(integer_token)?,
+    )
+    .map_err(|error| PyValueError::new_err(error.to_string()))
+}
+
+#[pyfunction]
+fn operation_count_token_nonnegative(token: &Bound<'_, PyAny>) -> PyResult<bool> {
+    if !token.is_exact_instance_of::<PyString>() {
+        return Err(PyValueError::new_err("exact count token required"));
+    }
+    let token = token.extract::<String>()?;
+    let mut context = Context::ordinary();
+    umf_core::operation_values::count_token_nonnegative(&mut context, &token)
+        .map(|decision| decision == umf_core::operation_values::NativeTokenDecision::Accepted)
+        .map_err(py_error)
+}
+
+#[pyfunction]
+fn avro_fields_profile_version() -> &'static str {
+    "umf-r5-avro-fields/0.1.0"
+}
+
+#[pyfunction]
+fn iceberg_schema_profile_version() -> &'static str {
+    umf_core_wire::ICEBERG_SCHEMA_PROFILE
+}
+
+#[pyfunction]
+fn arrow_schema_profile_version() -> &'static str {
+    umf_core_wire::ARROW_SCHEMA_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_iceberg_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_iceberg_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_iceberg_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_arrow_schema_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_arrow_schema_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_arrow_schema_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+fn arrow_ipc_profile_version() -> &'static str {
+    umf_core_wire::ARROW_IPC_PROFILE
+}
+
+#[pyfunction]
+fn parquet_capture_profile_version() -> &'static str {
+    umf_core_wire::PARQUET_CAPTURE_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_parquet_capture_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_parquet_capture_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_parquet_capture_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_arrow_ipc_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_arrow_ipc_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_arrow_ipc_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+fn protobuf_inspect_profile_version() -> &'static str {
+    umf_core_wire::PROTOBUF_INSPECT_PROFILE
+}
+
+#[pyfunction]
+fn avro_inspect_profile_version() -> &'static str {
+    umf_core_wire::AVRO_INSPECT_PROFILE
+}
+
+#[pyfunction]
+fn avro_document_inspect_profile_version() -> &'static str {
+    umf_core_wire::AVRO_DOCUMENT_INSPECT_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_avro_document_inspect_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_avro_document_inspect_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_avro_document_inspect_wire_with_control(wire_json, &mut hook))
+}
+
+#[pyfunction]
+fn avro_cardinality_binding_profile_version() -> &'static str {
+    umf_core_wire::avro_cardinality_binding::PROFILE
+}
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_avro_cardinality_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::avro_cardinality_binding::execute_wire(
+            wire_json,
+        ));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(umf_core_wire::avro_cardinality_binding::execute_wire_with_control(wire_json, &mut hook))
+}
+
+#[pyfunction]
+fn dbt_profile_version() -> &'static str {
+    umf_core_wire::dbt_binding::PROFILE
+}
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_dbt_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::dbt_binding::execute_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(umf_core_wire::dbt_binding::execute_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+fn rdf_profile_version() -> &'static str {
+    umf_core_wire::rdf_binding::PROFILE
+}
+
+#[pyfunction]
+fn native_adapter_metadata(family: &str) -> String {
+    umf_core_wire::native_family_binding::metadata_wire(family)
+}
+
+#[pyfunction]
+fn native_family_profile_version() -> &'static str {
+    umf_core_wire::native_family_binding::PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (family, wire_json, control=None))]
+fn execute_native_family_wire(
+    py: Python<'_>,
+    family: &str,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::native_family_binding::execute_wire(
+            family, wire_json,
+        ));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(
+        umf_core_wire::native_family_binding::execute_wire_with_control(
+            family, wire_json, &mut hook,
+        ),
+    )
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_rdf_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::rdf_binding::execute_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(umf_core_wire::rdf_binding::execute_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+fn graphql_profile_version() -> &'static str {
+    umf_core_wire::graphql_binding::PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_graphql_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::graphql_binding::execute_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(umf_core_wire::graphql_binding::execute_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, editor, control=None))]
+fn execute_graphql_edit_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    editor: PyObject,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if !editor.bind(py).is_callable() {
+        return Err(PyValueError::new_err("editor must be callable"));
+    }
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let callback_error = std::cell::RefCell::new(None);
+    let mut editor_hook = |ast: &mut Value, ctx: &mut Context<'_>| {
+        let input = umf_core_wire::encode_host_callback_value(ast, ctx)?;
+        let result = editor.bind(py).call1((input,));
+        let value = match result {
+            Ok(value) => value,
+            Err(error) => {
+                *callback_error.borrow_mut() = Some(error);
+                return Err(EngineError::new(
+                    "GRAPHQL_CALLBACK",
+                    Utf16::default(),
+                    "GraphQL host callback threw",
+                ));
+            }
+        };
+        let value = value.downcast::<PyString>().map_err(|error| {
+            py_exception_engine_error(py, "GRAPHQL_CALLBACK", error.into())
+        })?;
+        let output = value.to_str().map_err(|error| {
+            py_exception_engine_error(py, "GRAPHQL_CALLBACK", error)
+        })?;
+        let units = output.encode_utf16().count();
+        if units > 32 * 1024 * 1024 || output.len() > 32 * 1024 * 1024 {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "GraphQL callback wire exceeds the transport limit",
+            ));
+        }
+        ctx.charge_work(units, Utf16::default())?;
+        *ast = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(output, ctx))?;
+        Ok(())
+    };
+    let mut hook = |amount: usize| {
+        let Some(control) = control.as_ref() else {
+            return Ok(());
+        };
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    let response = umf_core_wire::graphql_binding::execute_wire_with_editor(
+        wire_json,
+        &mut editor_hook,
+        &mut hook,
+    );
+    if let Some(error) = callback_error.into_inner() {
+        return Err(error);
+    }
+    Ok(response)
+}
+
+#[pyfunction]
+fn avro_candidate_profile_version() -> &'static str {
+    umf_core_wire::AVRO_CANDIDATE_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_avro_inspect_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_avro_inspect_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_avro_inspect_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_avro_candidate_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_avro_candidate_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_avro_candidate_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+fn json_schema_profile_version() -> &'static str {
+    umf_core_wire::JSON_SCHEMA_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_json_schema_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_json_schema_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_json_schema_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_protobuf_inspect_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_protobuf_inspect_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_protobuf_inspect_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+fn core_cardinality_profile_version() -> &'static str {
+    umf_core_wire::CORE_CARDINALITY_BINDING_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, max_work=None, timeout_ms=None))]
+fn execute_core_cardinality_wire(
+    wire_json: &str,
+    max_work: Option<usize>,
+    timeout_ms: Option<u64>,
+) -> String {
+    let started = std::time::Instant::now();
+    let mut remaining = max_work.unwrap_or(usize::MAX);
+    let mut control = |amount: usize| {
+        if amount > remaining {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Core Cardinality work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Core Cardinality deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    umf_core_wire::execute_cardinality_request_with_control(
+        wire_json,
+        umf_core::ResourceProfile::Cooperative,
+        &mut NoPythonCapabilities,
+        &mut control,
+    )
+}
+
+#[pyfunction]
+fn core_facets_profile_version() -> &'static str {
+    umf_core_wire::CORE_FACETS_BINDING_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, max_work=None, timeout_ms=None))]
+fn execute_core_facets_wire(
+    wire_json: &str,
+    max_work: Option<usize>,
+    timeout_ms: Option<u64>,
+) -> String {
+    let started = std::time::Instant::now();
+    let mut remaining = max_work.unwrap_or(usize::MAX);
+    let mut control = |amount: usize| {
+        if amount > remaining {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Core Facets work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Core Facets deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    umf_core_wire::execute_core_facets_request_with_control(
+        wire_json,
+        umf_core::ResourceProfile::Cooperative,
+        &mut NoPythonCapabilities,
+        &mut control,
+    )
+}
+
+#[pyfunction]
+fn core_schema_properties_profile_version() -> &'static str {
+    umf_core_wire::CORE_SCHEMA_PROPERTIES_BINDING_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, max_work=None, timeout_ms=None))]
+fn execute_core_schema_properties_wire(
+    wire_json: &str,
+    max_work: Option<usize>,
+    timeout_ms: Option<u64>,
+) -> String {
+    let started = std::time::Instant::now();
+    let mut remaining = max_work.unwrap_or(usize::MAX);
+    let mut control = |amount: usize| {
+        if amount > remaining {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Core Schema Properties work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Core Schema Properties deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    umf_core_wire::execute_schema_properties_request_with_control(
+        wire_json,
+        umf_core::ResourceProfile::Cooperative,
+        &mut NoPythonCapabilities,
+        &mut control,
+    )
+}
+
+#[pyfunction]
+fn csv_boolean_lexical_profile_version() -> &'static str {
+    umf_core_wire::CSV_BOOLEAN_LEXICAL_BINDING_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, max_work=None, timeout_ms=None))]
+fn execute_csv_boolean_lexical_wire(
+    wire_json: &str,
+    max_work: Option<usize>,
+    timeout_ms: Option<u64>,
+) -> String {
+    let started = std::time::Instant::now();
+    let mut remaining = max_work.unwrap_or(usize::MAX);
+    let mut control = |amount: usize| {
+        if amount > remaining {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "CSV Boolean lexical work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "CSV Boolean lexical deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    umf_core_wire::execute_csv_boolean_lexical_request_with_control(
+        wire_json,
+        umf_core::ResourceProfile::Cooperative,
+        &mut NoPythonCapabilities,
+        &mut control,
+    )
+}
+
+#[pyfunction]
+#[pyo3(signature = (root, dependencies=None, *, max_work=None, meter=None, is_cancelled=None, now=None, deadline_ms=None))]
+fn avro_fields_derive(
+    py: Python<'_>,
+    root: &Bound<'_, PyAny>,
+    dependencies: Option<&Bound<'_, PyAny>>,
+    max_work: Option<usize>,
+    meter: Option<PyObject>,
+    is_cancelled: Option<PyObject>,
+    now: Option<PyObject>,
+    deadline_ms: Option<u64>,
+) -> PyResult<PyObject> {
+    let empty_dependencies = PyTuple::empty_bound(py);
+    let dependencies = dependencies.unwrap_or(empty_dependencies.as_any());
+    for (name, callback) in [
+        ("meter", meter.as_ref()),
+        ("is_cancelled", is_cancelled.as_ref()),
+        ("now", now.as_ref()),
+    ] {
+        if callback.is_some_and(|value| !value.bind(py).is_callable()) {
+            return Err(PyValueError::new_err(format!("{name} must be callable")));
+        }
+    }
+    if deadline_ms.is_some() && now.is_none() {
+        return Err(PyValueError::new_err("now is required with deadline_ms"));
+    }
+    if !dependencies.is_exact_instance_of::<PyList>()
+        && !dependencies.is_exact_instance_of::<PyTuple>()
+    {
+        return Err(PyValueError::new_err(
+            "dependencies must be a list or tuple",
+        ));
+    }
+
+    let hook_meter = max_work.is_some() || meter.is_some();
+    let hook_cancel = is_cancelled.is_some();
+    let hook_clock = deadline_ms.is_some();
+    let state = Rc::new(RefCell::new(PythonWorkControl {
+        py,
+        max_work,
+        charged: 0,
+        meter,
+        is_cancelled,
+        now,
+        host_callback_failed: false,
+    }));
+    let mut meter_hook = {
+        let state = state.clone();
+        move |amount| state.borrow_mut().meter(amount)
+    };
+    let mut cancel_hook = {
+        let state = state.clone();
+        move || state.borrow_mut().cancelled()
+    };
+    let mut clock_hook = {
+        let state = state.clone();
+        move || state.borrow_mut().clock()
+    };
+    let mut context = Context::ordinary();
+    if hook_meter {
+        context = context.with_meter(&mut meter_hook);
+    }
+    if hook_cancel {
+        context = context.with_fallible_cancellation(&mut cancel_hook);
+    }
+    if hook_clock {
+        context = context.with_fallible_clock(
+            &mut clock_hook,
+            deadline_ms.expect("deadline requires clock"),
+        );
+    }
+
+    let admit_tree = |value: &Bound<'_, PyAny>,
+                      context: &mut Context<'_>|
+     -> PyResult<umf_core::native_json::NativeJsonTree> {
+        let mut count = 0;
+        let value = python_value::from_python(py, value, context, 0, &mut count)
+            .map_err(py_error)?
+            .project_schema_to_core(context)
+            .map_err(py_error)?;
+        umf_core::native_json::NativeJsonTree::from_tagged_value(&value, context).map_err(py_error)
+    };
+
+    let root = admit_tree(root, &mut context)?;
+    let mut dependency_ids = Vec::new();
+    let mut dependency_trees = Vec::new();
+    for dependency in dependencies.try_iter()? {
+        let dependency = dependency?;
+        let pair = if dependency.is_exact_instance_of::<PyTuple>() {
+            dependency.downcast::<PyTuple>()?
+        } else {
+            return Err(PyValueError::new_err(
+                "each dependency must be an exact (id, tagged_tree) tuple",
+            ));
+        };
+        if pair.len() != 2 || !pair.get_item(0)?.is_exact_instance_of::<PyString>() {
+            return Err(PyValueError::new_err(
+                "each dependency must be an exact (string_id, tagged_tree) tuple",
+            ));
+        }
+        let id_text =
+            python_value::pytext_from_python(&pair.get_item(0)?, &mut context).map_err(py_error)?;
+        // `to_utf16` charges the complete UTF-16 length before allocating its
+        // unit vector. The preceding Python-text admission is also charged
+        // before its host-string conversion, so oversized IDs cannot bypass
+        // the invocation meter, budget, cancellation, or deadline checks.
+        dependency_ids.push(id_text.to_utf16(&mut context).map_err(py_error)?);
+        dependency_trees.push(admit_tree(&pair.get_item(1)?, &mut context)?);
+    }
+    let dependencies = dependency_ids
+        .iter()
+        .zip(&dependency_trees)
+        .map(|(id, root)| umf_core::avro_fields::AvroDependency { id, root })
+        .collect::<Vec<_>>();
+    let fields = umf_core::avro_fields::derive_avro_fields(&root, &dependencies, &mut context)
+        .map_err(py_error)?;
+
+    let output = PyList::empty_bound(py);
+    for field in fields {
+        let item = PyDict::new_bound(py);
+        item.set_item("path", py_text(py, &field.path, &mut context)?)?;
+        item.set_item("record", py_text(py, &field.record, &mut context)?)?;
+        if let Some(id) = &field.dependency_id {
+            item.set_item("dependencyId", py_text(py, id, &mut context)?)?;
+        }
+        let native = field
+            .native_field
+            .tagged_value_preserving_extras(&mut context)
+            .map_err(py_error)?;
+        item.set_item(
+            "nativeField",
+            descriptor_value_to_python(py, &native, &mut context)?,
+        )?;
+        let element = PyDict::new_bound(py);
+        element.set_item(
+            "id",
+            field
+                .element_id
+                .to_utf8()
+                .map_err(|_| PyValueError::new_err("Avro element identifier is not valid UTF-8"))?,
+        )?;
+        element.set_item("name", py_text(py, &field.name, &mut context)?)?;
+        if let Some(description) = &field.description {
+            element.set_item("description", py_text(py, description, &mut context)?)?;
+        }
+        if let Some(scalar_type) = field.scalar_type {
+            element.set_item("scalarType", scalar_type.as_str())?;
+        }
+        element.set_item("extensions", PyDict::new_bound(py))?;
+        item.set_item("element", element)?;
+        output.append(item)?;
+    }
+    Ok(output.unbind().into())
+}
+
+// R6 outcome-values shard. Python owns preimage construction and call ordering;
+// these bindings accept bytes only and never retain secret material.
+#[pyfunction]
+fn outcome_values_profile_version() -> &'static str {
+    umf_core::outcome_values::PROFILE_VERSION
+}
+
+#[pyfunction]
+fn outcome_values_capabilities() -> Vec<&'static str> {
+    umf_core::outcome_values::CAPABILITIES.to_vec()
+}
+
+#[pyfunction]
+fn outcome_values_hmac_sha256(
+    secret: &Bound<'_, PyBytes>,
+    message: &Bound<'_, PyBytes>,
+) -> Vec<u8> {
+    umf_core::outcome_values::hmac_sha256(secret.as_bytes(), message.as_bytes()).to_vec()
+}
+
+#[pyfunction]
+fn outcome_values_slot_sha256(message: &Bound<'_, PyBytes>) -> Vec<u8> {
+    umf_core::outcome_values::slot_sha256(message.as_bytes()).to_vec()
+}
+
+#[pyfunction]
+fn outcome_values_signature_matches(
+    left: &Bound<'_, PyBytes>,
+    right: &Bound<'_, PyBytes>,
+) -> PyResult<bool> {
+    let left: [u8; 32] = left
+        .as_bytes()
+        .try_into()
+        .map_err(|_| PyValueError::new_err("outcome signature must be 32 bytes"))?;
+    let right: [u8; 32] = right
+        .as_bytes()
+        .try_into()
+        .map_err(|_| PyValueError::new_err("outcome signature must be 32 bytes"))?;
+    Ok(umf_core::outcome_values::signature_matches(&left, &right))
+}
+
+#[pyfunction]
+fn outcome_effect_frame_profile_version() -> &'static str {
+    umf_core::outcome_values::EFFECT_FRAME_PROFILE_VERSION
+}
+
+#[pyfunction]
+fn outcome_effect_frame_admission(
+    text: &str,
+    items: u64,
+    max_rows: u64,
+    profile: &str,
+) -> PyResult<&'static str> {
+    use umf_core::outcome_values::EffectFrameAdmission as Admission;
+
+    if profile != umf_core::outcome_values::EFFECT_FRAME_PROFILE_VERSION {
+        return Err(PyValueError::new_err(
+            "unsupported outcome effect-frame profile",
+        ));
+    }
+    let items = usize::try_from(items)
+        .map_err(|_| PyValueError::new_err("outcome effect-frame item count is out of range"))?;
+    match umf_core::outcome_values::effect_frame_admission_json(text, items, max_rows) {
+        Some(Admission::Admitted) => Ok("admitted"),
+        Some(Admission::InvalidReceipt) => Ok("invalid_receipt"),
+        Some(Admission::CountDiffersFromBound) => Ok("count_differs_from_bound"),
+        None => Err(PyValueError::new_err("invalid outcome effect-frame JSON")),
+    }
+}
+
+#[pyfunction]
+fn operation_canonical(json_text: &str) -> PyResult<String> {
+    umf_core::operation_values::canonical(json_text)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+fn operation_python_node(
+    value: &Bound<'_, PyAny>,
+    limit: usize,
+    depth: usize,
+    lower_bound: &mut usize,
+) -> PyResult<umf_core::native_json::NativeJsonNode> {
+    use umf_core::{native_json::NativeJsonNode as Node, value::Utf16};
+
+    if depth > 128 {
+        return Err(PyValueError::new_err("native wire frame bound exceeded"));
+    }
+    let add_lower = |amount: usize, total: &mut usize| -> PyResult<()> {
+        *total = total.saturating_add(amount);
+        if *total > limit {
+            return Err(PyValueError::new_err("native wire frame bound exceeded"));
+        }
+        Ok(())
+    };
+    if value.is_none() {
+        add_lower(4, lower_bound)?;
+        return Ok(Node::Null);
+    }
+    if value.is_exact_instance_of::<PyBool>() {
+        let item = value.extract::<bool>()?;
+        add_lower(if item { 4 } else { 5 }, lower_bound)?;
+        return Ok(Node::Boolean(item));
+    }
+    if value.is_exact_instance_of::<PyInt>() {
+        let bits: usize = value.call_method0("bit_length")?.extract()?;
+        add_lower(bits / 4, lower_bound)?;
+        let token: String = value.str()?.extract()?;
+        add_lower(token.len().saturating_sub(bits / 4), lower_bound)?;
+        return Ok(Node::Number(token));
+    }
+    if value.is_exact_instance_of::<PyFloat>() {
+        let number = value.extract::<f64>()?;
+        if !number.is_finite() {
+            return Err(PyValueError::new_err("invalid operation JSON"));
+        }
+        let token: String = value.str()?.extract()?;
+        add_lower(token.len(), lower_bound)?;
+        return Ok(Node::Number(token));
+    }
+    if value.is_exact_instance_of::<pyo3::types::PyString>() {
+        let chars: usize = value.len()?;
+        add_lower(chars.saturating_add(2), lower_bound)?;
+        let text: String = value.extract()?;
+        return Ok(Node::String(Utf16::from_utf8(&text)));
+    }
+    if value.is_exact_instance_of::<PyList>() || value.is_exact_instance_of::<PyTuple>() {
+        let length = if value.is_exact_instance_of::<PyList>() {
+            value.downcast::<PyList>()?.len()
+        } else {
+            value.downcast::<PyTuple>()?.len()
+        };
+        add_lower(length.saturating_sub(1) + 2, lower_bound)?;
+        let mut result = Vec::with_capacity(length.min(limit));
+        for item in value.try_iter()? {
+            let item = item?;
+            result.push(operation_python_node(&item, limit, depth + 1, lower_bound)?);
+        }
+        return Ok(Node::Array(result));
+    }
+    if value.is_exact_instance_of::<PyDict>() {
+        let dict = value.downcast::<PyDict>()?;
+        add_lower(dict.len().saturating_sub(1) + 2, lower_bound)?;
+        let mut result = Vec::with_capacity(dict.len().min(limit));
+        for (key, item) in dict.iter() {
+            if !key.is_exact_instance_of::<pyo3::types::PyString>() {
+                return Err(PyValueError::new_err("invalid operation JSON"));
+            }
+            let chars: usize = key.len()?;
+            add_lower(chars.saturating_add(3), lower_bound)?;
+            let text: String = key.extract()?;
+            let child = operation_python_node(&item, limit, depth + 1, lower_bound)?;
+            result.push((Utf16::from_utf8(&text), child));
+        }
+        return Ok(Node::Object(result));
+    }
+    Err(PyValueError::new_err("invalid operation JSON"))
+}
+
+fn operation_size_limit(limit: &Bound<'_, PyAny>) -> PyResult<usize> {
+    if limit.is_exact_instance_of::<PyBool>() {
+        return Ok(usize::from(limit.extract::<bool>()?));
+    }
+    if limit.is_exact_instance_of::<PyInt>() {
+        if limit.call_method1("__lt__", (0,))?.extract::<bool>()? {
+            return Err(PyValueError::new_err("native wire frame bound exceeded"));
+        }
+        let bits: usize = limit.call_method0("bit_length")?.extract()?;
+        if bits > usize::BITS as usize {
+            return Ok(usize::MAX);
+        }
+        return Ok(limit.extract::<usize>().unwrap_or(usize::MAX));
+    }
+    if limit.is_exact_instance_of::<PyFloat>() {
+        let number = limit.extract::<f64>()?;
+        if number.is_nan() || number == f64::INFINITY {
+            return Ok(usize::MAX);
+        }
+        if number < 0.0 || number == f64::NEG_INFINITY {
+            return Err(PyValueError::new_err("native wire frame bound exceeded"));
+        }
+        return Ok(number as usize);
+    }
+    Err(pyo3::exceptions::PyTypeError::new_err(
+        "frame limit must be an integer or float",
+    ))
+}
+
+#[pyfunction]
+fn operation_bounded_size(value: &Bound<'_, PyAny>, limit: &Bound<'_, PyAny>) -> PyResult<usize> {
+    let limit = operation_size_limit(limit)?;
+    let mut lower_bound = 0usize;
+    let node = operation_python_node(value, limit, 0, &mut lower_bound)?;
+    umf_core::operation_values::bounded_size_node(&node, limit)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_digest(json_text: &str) -> PyResult<String> {
+    umf_core::operation_values::digest(json_text).map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_loads(raw_utf8: &Bound<'_, PyBytes>) -> PyResult<String> {
+    let raw = std::str::from_utf8(raw_utf8.as_bytes())
+        .map_err(|_| PyValueError::new_err("invalid operation JSON"))?;
+    umf_core::operation_values::loads(raw).map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_token_encode(
+    secret: &Bound<'_, PyBytes>,
+    scope_json: &str,
+    after_json: &str,
+) -> PyResult<String> {
+    umf_core::operation_values::token_encode(secret.as_bytes(), scope_json, after_json)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_token_decode(secret: &Bound<'_, PyBytes>, token: &str) -> PyResult<String> {
+    umf_core::operation_values::token_decode(secret.as_bytes(), token)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_key_literal_mode(
+    py: Python<'_>,
+    carrier: &Bound<'_, PyAny>,
+    value_is_none: bool,
+) -> PyResult<&'static str> {
+    if !carrier.is_exact_instance_of::<PyString>() {
+        return Err(PyValueError::new_err("exact string carrier required"));
+    }
+    let carrier = if value_is_none {
+        Utf16::default()
+    } else {
+        extract_utf16(py, carrier)?
+    };
+    umf_core::operation_values::key_literal_mode(&carrier, value_is_none)
+        .map(|mode| match mode {
+            umf_core::operation_values::KeyLiteralMode::String => "string",
+            umf_core::operation_values::KeyLiteralMode::Boolean => "boolean",
+            umf_core::operation_values::KeyLiteralMode::PassThrough => "pass-through",
+        })
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_native_token_classify(kind: &str, token: &str) -> PyResult<&'static str> {
+    let kind = match kind {
+        "integer" => umf_core::operation_values::NativeTokenKind::Integer,
+        "decimal" => umf_core::operation_values::NativeTokenKind::Decimal,
+        "uuid" => umf_core::operation_values::NativeTokenKind::Uuid,
+        "bits128" => umf_core::operation_values::NativeTokenKind::Bits128,
+        _ => {
+            return Err(PyValueError::new_err(
+                "unsupported native result token kind",
+            ));
+        }
+    };
+    let mut context = Context::ordinary();
+    umf_core::operation_values::native_token_classify(&mut context, kind, token)
+        .map(|decision| match decision {
+            umf_core::operation_values::NativeTokenDecision::Accepted => "accepted",
+            umf_core::operation_values::NativeTokenDecision::Refused => "refused",
+            umf_core::operation_values::NativeTokenDecision::DecimalInvalidOperation => {
+                "decimal-invalid-operation"
+            }
+        })
+        .map_err(py_error)
+}
+
+#[pyfunction]
+fn operation_native_result_classify(kind: &str, token: &str) -> PyResult<&'static str> {
+    let kind = match kind {
+        "date" => umf_core::operation_values::NativeResultKind::Date,
+        "timestamp" => umf_core::operation_values::NativeResultKind::Timestamp,
+        "float" => umf_core::operation_values::NativeResultKind::FloatDecimal,
+        "float-ieee754-binary64-hex" => {
+            umf_core::operation_values::NativeResultKind::FloatIeee754Binary64Hex
+        }
+        _ => {
+            return Err(PyValueError::new_err(
+                "unsupported native result carrier kind",
+            ));
+        }
+    };
+    let mut context = Context::ordinary();
+    umf_core::operation_values::native_result_classify(&mut context, kind, token)
+        .map(|decision| match decision {
+            umf_core::operation_values::NativeResultDecision::Accepted => "accepted",
+            umf_core::operation_values::NativeResultDecision::Candidate => "candidate",
+            umf_core::operation_values::NativeResultDecision::Refused => "refused",
+        })
+        .map_err(py_error)
+}
+
+#[pyfunction]
+fn protobuf_descriptor_profile_version() -> &'static str {
+    umf_core::protobuf_descriptor::PROFILE_VERSION
+}
+
+#[pyfunction]
+fn protobuf_read_descriptor_set(py: Python<'_>, binary: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+    if !binary.is_exact_instance_of::<PyBytes>() {
+        return Err(py_error(EngineError::new(
+            "PROTOBUF_BINARY",
+            Utf16::default(),
+            "Expected exact bytes carrier",
+        )));
+    }
+    let input = binary.downcast::<PyBytes>()?.as_bytes();
+    let mut context = Context::ordinary();
+    let value = umf_core::protobuf_descriptor::read_descriptor_set(input, &mut context)
+        .map_err(py_error)?;
+    descriptor_value_to_python(py, &value, &mut context)
+}
+
+#[pyfunction]
+fn protobuf_write_descriptor_set(py: Python<'_>, node: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let admitted =
+        python_value::from_python(py, node, &mut context, 0, &mut count).map_err(py_error)?;
+    // Projection uses the ordinary UMF value admission profile (safe exact
+    // numbers, finite floats, structural limits, and charged string copies).
+    let value = admitted
+        .project_schema_to_core(&mut context)
+        .map_err(py_error)?;
+    let bytes = umf_core::protobuf_descriptor::write_descriptor_set(&value, &mut context)
+        .map_err(py_error)?;
+    Ok(PyBytes::new_bound(py, &bytes).unbind().into())
+}
+
+fn descriptor_value_to_python(
+    py: Python<'_>,
+    value: &Value,
+    context: &mut Context<'_>,
+) -> PyResult<PyObject> {
+    Ok(match value {
+        Value::Null => py.None(),
+        Value::Bool(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
+        Value::Number(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
+        Value::String(value) => py_text(py, value, context)?,
+        Value::Array(items) => {
+            let result = PyList::empty_bound(py);
+            for item in items {
+                context.charge_work(1, Utf16::default()).map_err(py_error)?;
+                result.append(descriptor_value_to_python(py, item, context)?)?;
+            }
+            result.unbind().into()
+        }
+        Value::Object(items) => {
+            let result = PyDict::new_bound(py);
+            for (key, item) in items {
+                context.charge_work(1, Utf16::default()).map_err(py_error)?;
+                result.set_item(
+                    py_text(py, key, context)?,
+                    descriptor_value_to_python(py, item, context)?,
+                )?;
+            }
+            result.unbind().into()
+        }
+    })
+}
+
+#[pyfunction]
+fn access_float32_profile_version() -> &'static str {
+    "umf-access-float32/0.1.0"
+}
+
+#[pyfunction]
+fn access_float32_classify(value: &Bound<'_, PyAny>) -> PyResult<u8> {
+    if !value.is_exact_instance_of::<PyFloat>() {
+        return Err(PyValueError::new_err("binary64 float carrier required"));
+    }
+    let value = value.extract::<f64>()?;
+    Ok(match umf_core::access_values::validate_float32(value) {
+        Ok(()) => 0,
+        Err(umf_core::access_values::Float32Error::NonFinite) => 1,
+        Err(umf_core::access_values::Float32Error::Overflow) => 2,
+        Err(umf_core::access_values::Float32Error::Rounding) => 3,
+    })
+}
+
+#[pyfunction]
+fn access_range_profile_version() -> &'static str {
+    "umf-access-range/0.1.0"
+}
+
+#[pyfunction]
+fn access_range_compare_integer(
+    py: Python<'_>,
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<i8> {
+    if !left.is_exact_instance_of::<PyInt>() || !right.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("integer range carrier required"));
+    }
+    let mut context = Context::ordinary();
+    let left = python_bigint(py, left, &mut context)?;
+    let right = python_bigint(py, right, &mut context)?;
+    Ok(ordering_code(umf_core::access_values::compare_integers(
+        &left, &right,
+    )))
+}
+
+#[pyfunction]
+fn access_range_compare_decimal(
+    py: Python<'_>,
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<i8> {
+    let mut context = Context::ordinary();
+    let (left_sign, left_digits, left_exponent) = decimal_range_tuple(py, left, &mut context)?;
+    let (right_sign, right_digits, right_exponent) = decimal_range_tuple(py, right, &mut context)?;
+    umf_core::access_values::compare_decimal_tuples(
+        left_sign,
+        &left_digits,
+        &left_exponent,
+        right_sign,
+        &right_digits,
+        &right_exponent,
+    )
+    .map(ordering_code)
+    .map_err(|error| PyValueError::new_err(error.to_string()))
+}
+
+#[pyfunction]
+fn access_constraints_profile_version() -> &'static str {
+    "umf-access-constraints/0.1.0"
+}
+
+fn exact_stream_integer(value: &Bound<'_, PyAny>) -> Option<BigInt> {
+    if !value.is_exact_instance_of::<PyInt>() {
+        return None;
+    }
+    let bits = value
+        .call_method0("bit_length")
+        .ok()?
+        .extract::<usize>()
+        .ok()?;
+    let byte_len = bits.saturating_add(8).checked_div(8)?.max(1);
+    let kwargs = PyDict::new_bound(value.py());
+    kwargs.set_item("signed", true).ok()?;
+    let bytes = value
+        .call_method("to_bytes", (byte_len, "little"), Some(&kwargs))
+        .ok()?
+        .downcast_into::<PyBytes>()
+        .ok()?;
+    Some(BigInt::from_signed_bytes_le(bytes.as_bytes()))
+}
+
+#[pyfunction]
+fn access_stream_page_size_profile_version() -> &'static str {
+    "umf-access-stream-page-size/0.1.0"
+}
+
+#[pyfunction]
+fn access_stream_read_frame_profile_version() -> &'static str {
+    umf_core::access_stream::READ_FRAME_PROFILE
+}
+
+fn access_stream_read_frame_kind(value: &str) -> PyResult<umf_core::access_stream::ReadFrameKind> {
+    use umf_core::access_stream::ReadFrameKind;
+    match value {
+        "count" => Ok(ReadFrameKind::Count),
+        "one" => Ok(ReadFrameKind::One),
+        "optional" => Ok(ReadFrameKind::Optional),
+        "many" => Ok(ReadFrameKind::Many),
+        "page" => Ok(ReadFrameKind::Page),
+        _ => Err(PyValueError::new_err("unsupported read-frame kind")),
+    }
+}
+
+fn access_stream_read_frame_error(error: umf_core::access_stream::ReadFrameError) -> &'static str {
+    use umf_core::access_stream::ReadFrameError;
+    match error {
+        ReadFrameError::CountCardinality => "count_cardinality",
+        ReadFrameError::ResultArity => "result_arity",
+        ReadFrameError::RequiredRowMissing => "required_row_missing",
+        ReadFrameError::SingleRowExceeded => "single_row_exceeded",
+        ReadFrameError::RowBoundExceeded => "row_bound_exceeded",
+        ReadFrameError::PageBoundExceeded => "page_bound_exceeded",
+    }
+}
+
+#[pyfunction]
+fn access_stream_read_frame_shape(
+    kind: &str,
+    output_count: usize,
+    rows: &Bound<'_, PyAny>,
+) -> PyResult<&'static str> {
+    use umf_core::access_stream::{
+        validate_read_frame_shape_with, ReadFrameKind, ReadFrameShapeFault,
+    };
+    let kind = access_stream_read_frame_kind(kind)?;
+    let result = if kind == ReadFrameKind::Count {
+        validate_read_frame_shape_with(
+            kind,
+            output_count,
+            || rows.len(),
+            || rows.get_item(0)?.len(),
+            || Ok(None),
+        )
+    } else {
+        let mut iterator = rows.try_iter()?;
+        validate_read_frame_shape_with(
+            kind,
+            output_count,
+            || Err(PyValueError::new_err("unexpected count row-count read")),
+            || Err(PyValueError::new_err("unexpected count row-width read")),
+            || match std::iter::Iterator::next(&mut iterator) {
+                Some(row) => Ok(Some(row?.len()?)),
+                None => Ok(None),
+            },
+        )
+    };
+    match result {
+        Ok(()) => Ok("admitted"),
+        Err(ReadFrameShapeFault::Refusal(error)) => Ok(access_stream_read_frame_error(error)),
+        Err(ReadFrameShapeFault::Host(error)) => Err(error),
+    }
+}
+
+#[pyfunction]
+fn access_stream_read_frame_cardinality(
+    kind: &str,
+    row_count: usize,
+    bound: usize,
+) -> PyResult<&'static str> {
+    let kind = access_stream_read_frame_kind(kind)?;
+    Ok(
+        match umf_core::access_stream::validate_read_frame_cardinality(kind, row_count, bound) {
+            Ok(()) => "admitted",
+            Err(error) => access_stream_read_frame_error(error),
+        },
+    )
+}
+
+#[pyfunction]
+fn access_stream_page_size_request_valid(requested: &Bound<'_, PyAny>) -> bool {
+    if requested.is_none() {
+        return true;
+    }
+    let value = exact_stream_integer(requested);
+    umf_core::access_stream::request_is_valid(value.as_ref()) && value.is_some()
+}
+
+#[pyfunction]
+fn access_stream_page_size_missing_domain_valid(requested: bool) -> bool {
+    umf_core::access_stream::missing_domain(requested).is_ok()
+}
+
+#[pyfunction]
+fn access_stream_page_size_domain_type_valid(exact_dict: bool) -> bool {
+    umf_core::access_stream::domain_type_is_valid(exact_dict).is_ok()
+}
+
+#[pyfunction]
+fn access_stream_page_size_domain_keys_valid(matches: bool) -> bool {
+    umf_core::access_stream::domain_keys_are_valid(matches).is_ok()
+}
+
+#[pyfunction]
+fn access_stream_page_size_domain_parameter_valid(matches: bool) -> bool {
+    umf_core::access_stream::domain_parameter_is_valid(matches).is_ok()
+}
+
+#[pyfunction]
+fn access_stream_page_size_minimum_valid(exact_integer: bool) -> bool {
+    umf_core::access_stream::minimum_carrier_is_valid(exact_integer)
+}
+
+#[pyfunction]
+fn access_stream_page_size_minimum_comparison_valid(matches_minimum: bool) -> bool {
+    umf_core::access_stream::minimum_value_is_valid(matches_minimum)
+}
+
+#[pyfunction]
+fn access_stream_page_size_minimum_exact_value_valid(value: &Bound<'_, PyAny>) -> bool {
+    exact_stream_integer(value)
+        .is_some_and(|integer| umf_core::access_stream::minimum_exact_value_is_valid(&integer))
+}
+
+#[pyfunction]
+fn access_stream_page_size_maximum_valid(exact_integer: bool) -> bool {
+    umf_core::access_stream::maximum_carrier_is_valid(exact_integer)
+}
+
+#[pyfunction]
+fn access_stream_page_size_maximum_comparison_valid(within_closed_range: bool) -> bool {
+    umf_core::access_stream::maximum_value_is_valid(within_closed_range)
+}
+
+#[pyfunction]
+fn access_stream_page_size_maximum_exact_value_valid(value: &Bound<'_, PyAny>) -> bool {
+    exact_stream_integer(value)
+        .is_some_and(|integer| umf_core::access_stream::maximum_exact_value_is_valid(&integer))
+}
+
+#[pyfunction]
+fn access_stream_page_size_row_cap_valid(exact_integer: bool, maximum_fits: bool) -> bool {
+    umf_core::access_stream::row_cap_is_valid(exact_integer, maximum_fits)
+}
+
+#[pyfunction]
+fn access_stream_page_size_slot_count_valid(count: usize) -> bool {
+    umf_core::access_stream::slot_count_is_valid(count)
+}
+
+#[pyfunction]
+fn access_stream_page_size_slot_carrier_valid(matches: bool) -> bool {
+    umf_core::access_stream::slot_carrier_is_valid(matches)
+}
+
+#[pyfunction]
+fn access_stream_page_size_slot_nullability_valid(is_exact_false: bool) -> bool {
+    umf_core::access_stream::slot_nullability_is_valid(is_exact_false)
+}
+
+#[pyfunction]
+fn access_stream_page_size_final_maximum_valid(fits: bool) -> bool {
+    umf_core::access_stream::final_maximum_is_valid(fits).is_ok()
+}
+
+fn constraint_bound_bigint(
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    context: &mut Context<'_>,
+) -> PyResult<BigInt> {
+    if value.is_exact_instance_of::<PyBool>() {
+        return Ok(BigInt::from(value.extract::<bool>()? as u8));
+    }
+    python_bigint(py, value, context)
+}
+
+#[pyfunction]
+fn access_constraints_length_within(
+    py: Python<'_>,
+    size: &Bound<'_, PyAny>,
+    minimum: Option<&Bound<'_, PyAny>>,
+    maximum: Option<&Bound<'_, PyAny>>,
+) -> PyResult<bool> {
+    if !size.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("exact length carrier required"));
+    }
+    let mut context = Context::ordinary();
+    let size = python_bigint(py, size, &mut context)?;
+    let size = usize::try_from(size)
+        .map_err(|_| PyValueError::new_err("length outside supported range"))?;
+    let minimum = if let Some(bound) = minimum {
+        let bound = constraint_bound_bigint(py, bound, &mut context)?;
+        if !umf_core::access_constraints::length_within(size, Some(&bound), None) {
+            return Ok(false);
+        }
+        Some(bound)
+    } else {
+        None
+    };
+    let maximum = maximum
+        .map(|bound| constraint_bound_bigint(py, bound, &mut context))
+        .transpose()?;
+    Ok(umf_core::access_constraints::length_within(
+        size,
+        minimum.as_ref(),
+        maximum.as_ref(),
+    ))
+}
+
+#[pyfunction]
+fn access_constraints_equal_boolean(
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    if !left.is_exact_instance_of::<PyBool>() || !right.is_exact_instance_of::<PyBool>() {
+        return Err(PyValueError::new_err(
+            "exact boolean allowed-value carriers required",
+        ));
+    }
+    Ok(umf_core::access_constraints::equal_boolean(
+        left.extract::<bool>()?,
+        right.extract::<bool>()?,
+    ))
+}
+
+#[pyfunction]
+fn access_constraints_equal_integer(
+    py: Python<'_>,
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    if !left.is_exact_instance_of::<PyInt>() || !right.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err(
+            "exact integer allowed-value carriers required",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let left = python_bigint(py, left, &mut context)?;
+    let right = python_bigint(py, right, &mut context)?;
+    Ok(umf_core::access_constraints::equal_integer(&left, &right))
+}
+
+#[pyfunction]
+fn access_constraints_equal_text(
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    if !left.is_exact_instance_of::<pyo3::types::PyString>()
+        || !right.is_exact_instance_of::<pyo3::types::PyString>()
+    {
+        return Err(PyValueError::new_err(
+            "exact string allowed-value carriers required",
+        ));
+    }
+    let left = left.extract::<String>()?;
+    let right = right.extract::<String>()?;
+    Ok(umf_core::access_constraints::equal_text(&left, &right))
+}
+
+#[pyfunction]
+fn access_constraints_equal_bytes(
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    if !left.is_exact_instance_of::<PyBytes>() || !right.is_exact_instance_of::<PyBytes>() {
+        return Err(PyValueError::new_err(
+            "exact bytes allowed-value carriers required",
+        ));
+    }
+    let left = left
+        .downcast::<PyBytes>()
+        .map_err(|_| PyValueError::new_err("exact bytes allowed-value carriers required"))?;
+    let right = right
+        .downcast::<PyBytes>()
+        .map_err(|_| PyValueError::new_err("exact bytes allowed-value carriers required"))?;
+    Ok(umf_core::access_constraints::equal_bytes(
+        left.as_bytes(),
+        right.as_bytes(),
+    ))
+}
+
+#[pyfunction]
+fn access_constraints_equal_decimal(
+    py: Python<'_>,
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    let mut context = Context::ordinary();
+    let (left_sign, left_digits, left_exponent) = decimal_range_tuple(py, left, &mut context)?;
+    let (right_sign, right_digits, right_exponent) = decimal_range_tuple(py, right, &mut context)?;
+    umf_core::access_values::validate_decimal_tuple(&left_digits, &left_exponent, None, None)
+        .map_err(|error| PyValueError::new_err(error.to_string()))?;
+    umf_core::access_values::validate_decimal_tuple(&right_digits, &right_exponent, None, None)
+        .map_err(|error| PyValueError::new_err(error.to_string()))?;
+    Ok(umf_core::access_constraints::equal_decimal(
+        left_sign,
+        &left_digits,
+        &left_exponent,
+        right_sign,
+        &right_digits,
+        &right_exponent,
+    ))
+}
+
+fn ordering_code(ordering: std::cmp::Ordering) -> i8 {
+    match ordering {
+        std::cmp::Ordering::Less => -1,
+        std::cmp::Ordering::Equal => 0,
+        std::cmp::Ordering::Greater => 1,
+    }
+}
+
+fn decimal_range_tuple(
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    context: &mut Context<'_>,
+) -> PyResult<(bool, Vec<u8>, BigInt)> {
+    let tuple = value
+        .downcast::<PyTuple>()
+        .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))?;
+    if tuple.len() != 3 {
+        return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+    }
+    let sign = tuple.get_item(0)?;
+    if !sign.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+    }
+    let sign = python_bigint(py, &sign, context)?;
+    let sign = if sign == BigInt::from(0) {
+        false
+    } else if sign == BigInt::from(1) {
+        true
+    } else {
+        return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+    };
+    let digits = tuple
+        .get_item(1)?
+        .downcast_into::<PyTuple>()
+        .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))?;
+    context
+        .charge_work(digits.len(), Utf16::default())
+        .map_err(py_error)?;
+    let digits = digits
+        .iter()
+        .map(|digit| {
+            if !digit.is_exact_instance_of::<PyInt>() {
+                return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+            }
+            digit
+                .extract::<u8>()
+                .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))
+        })
+        .collect::<PyResult<Vec<_>>>()?;
+    let exponent = tuple.get_item(2)?;
+    let exponent = python_bigint(py, &exponent, context)?;
+    Ok((sign, digits, exponent))
+}
+
+#[pyfunction]
+#[pyo3(signature = (value, bits, signed))]
+fn access_values_integer_fits(
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    bits: Option<&Bound<'_, PyAny>>,
+    signed: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    if !value.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("invalid integer width"));
+    }
+    if !signed.is_exact_instance_of::<pyo3::types::PyBool>()
+        || bits.is_some_and(|value| !value.is_exact_instance_of::<PyInt>())
+    {
+        return Err(PyValueError::new_err("invalid authored integer width"));
+    }
+    let signed = signed.extract::<bool>()?;
+    let mut context = Context::ordinary();
+    let value = python_bigint(py, value, &mut context)?;
+    let bits = bits
+        .map(|value| python_bigint(py, value, &mut context))
+        .transpose()?;
+    umf_core::access_values::integer_fits(&value, bits.as_ref(), signed)
+        .map_err(|error| PyValueError::new_err(error.to_string()))
+}
+
+#[pyfunction]
+#[pyo3(signature = (digits, exponent, precision=None, scale=None))]
+fn access_values_validate_decimal(
+    py: Python<'_>,
+    digits: &Bound<'_, PyAny>,
+    exponent: &Bound<'_, PyAny>,
+    precision: Option<&Bound<'_, PyAny>>,
+    scale: Option<&Bound<'_, PyAny>>,
+) -> PyResult<()> {
+    let mut context = Context::ordinary();
+    let digits = digits
+        .downcast::<PyTuple>()
+        .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))?;
+    context
+        .charge_work(digits.len(), Utf16::default())
+        .map_err(py_error)?;
+    let digits = digits
+        .iter()
+        .map(|digit| {
+            if !digit.is_exact_instance_of::<PyInt>() {
+                return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+            }
+            digit
+                .extract::<u8>()
+                .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))
+        })
+        .collect::<PyResult<Vec<_>>>()?;
+    let exponent = python_bigint(py, exponent, &mut context)?;
+    let precision = precision
+        .map(|value| python_bigint(py, value, &mut context))
+        .transpose()?;
+    let scale = scale
+        .map(|value| python_bigint(py, value, &mut context))
+        .transpose()?;
+    umf_core::access_values::validate_decimal_tuple(
+        &digits,
+        &exponent,
+        precision.as_ref(),
+        scale.as_ref(),
+    )
+    .map_err(|error| PyValueError::new_err(error.to_string()))
+}
 
 /// Generic compiler transport; callbacks are supplied only by the binding caller.
 #[pyfunction]
@@ -139,6 +2782,1724 @@ fn execute_codegen_wire(
         ));
     }
     Ok(response)
+}
+
+#[pyfunction]
+fn access_catalog_custody_profile_version() -> &'static str {
+    "umf-access-catalog-custody/0.1.0"
+}
+
+#[pyfunction]
+fn access_native_column_bindings(py: Python<'_>, target: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+    if !target.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err(
+            "native catalog target must be an exact dict",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let target =
+        python_value::from_python(py, target, &mut context, 0, &mut count).map_err(py_error)?;
+    target.admit(&mut context).map_err(py_error)?;
+    let response = match umf_core::access_catalog_custody::native_column_bindings(&target) {
+        Ok(bindings) => {
+            let values = bindings
+                .into_iter()
+                .map(|binding| {
+                    PythonConsumerValue::Object(vec![
+                        (
+                            umf_core::PyText::from_utf8("sourceId"),
+                            PythonConsumerValue::String(binding.source_id),
+                        ),
+                        (
+                            umf_core::PyText::from_utf8("documentJson"),
+                            PythonConsumerValue::String(binding.document_json),
+                        ),
+                        (
+                            umf_core::PyText::from_utf8("documentSha256"),
+                            PythonConsumerValue::String(binding.document_sha256),
+                        ),
+                    ])
+                })
+                .collect();
+            PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8("returned")),
+                ),
+                (
+                    umf_core::PyText::from_utf8("bindings"),
+                    PythonConsumerValue::Array(values),
+                ),
+            ])
+        }
+        Err(refusal) => PythonConsumerValue::Object(vec![
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+            ),
+            (
+                umf_core::PyText::from_utf8("code"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code())),
+            ),
+            (
+                umf_core::PyText::from_utf8("message"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    refusal.predecessor_message(),
+                )),
+            ),
+        ]),
+    };
+    python_value::to_python(py, &response, &mut context)
+}
+
+#[pyfunction]
+fn access_catalog_source_join_profile_version() -> &'static str {
+    "umf-access-catalog-source-join/0.1.0"
+}
+
+#[pyfunction]
+fn access_check_native_column_sources(
+    py: Python<'_>,
+    bindings: &Bound<'_, PyAny>,
+    sources: &Bound<'_, PyAny>,
+) -> PyResult<PyObject> {
+    if !bindings.is_exact_instance_of::<PyList>() {
+        return Err(PyValueError::new_err(
+            "native binding references must be an exact list",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let bindings =
+        python_value::from_python(py, bindings, &mut context, 0, &mut count).map_err(py_error)?;
+    let sources =
+        python_value::from_python(py, sources, &mut context, 0, &mut count).map_err(py_error)?;
+    bindings.admit(&mut context).map_err(py_error)?;
+    sources.admit(&mut context).map_err(py_error)?;
+    let response =
+        match umf_core::access_catalog_custody::check_native_column_sources(&bindings, &sources) {
+            Ok(()) => PythonConsumerValue::Object(vec![(
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("returned")),
+            )]),
+            Err(refusal) => PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+                ),
+                (
+                    umf_core::PyText::from_utf8("code"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code())),
+                ),
+                (
+                    umf_core::PyText::from_utf8("message"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                        refusal.predecessor_message(),
+                    )),
+                ),
+            ]),
+        };
+    python_value::to_python(py, &response, &mut context)
+}
+
+#[pyfunction]
+fn access_catalog_logical_render_profile_version() -> &'static str {
+    umf_core::access_logical_render::PROFILE
+}
+
+#[pyfunction]
+fn access_catalog_render_logical_variant(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+) -> PyResult<PyObject> {
+    if !input.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err(
+            "captured logical render input must be an exact dict",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let input =
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let response =
+        match umf_core::access_logical_render::render_captured_variant(&input, &mut context) {
+            Ok(logical_request) => PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("profile"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                        umf_core::access_logical_render::PROFILE,
+                    )),
+                ),
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8("rendered")),
+                ),
+                (
+                    umf_core::PyText::from_utf8("logicalRequest"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(&logical_request)),
+                ),
+            ]),
+            Err(umf_core::access_logical_render::LogicalRenderError::Refused(refusal)) => {
+                PythonConsumerValue::Object(vec![
+                    (
+                        umf_core::PyText::from_utf8("profile"),
+                        PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                            umf_core::access_logical_render::PROFILE,
+                        )),
+                    ),
+                    (
+                        umf_core::PyText::from_utf8("outcome"),
+                        PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+                    ),
+                    (
+                        umf_core::PyText::from_utf8("code"),
+                        PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+                    ),
+                    (
+                        umf_core::PyText::from_utf8("message"),
+                        PythonConsumerValue::String(umf_core::PyText::from_utf8(&refusal.message)),
+                    ),
+                ])
+            }
+            Err(umf_core::access_logical_render::LogicalRenderError::Resource(error)) => {
+                return Err(py_error(error));
+            }
+        };
+    python_value::to_python(py, &response, &mut context)
+}
+
+#[pyfunction]
+fn access_catalog_logical_render_full_profile_version() -> &'static str {
+    umf_core::access_logical_render::FULL_PROFILE
+}
+
+#[pyfunction]
+fn access_catalog_render_logical_full_variant(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+) -> PyResult<PyObject> {
+    if !input.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err(
+            "captured logical render input must be an exact dict",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let input =
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let response = match umf_core::access_logical_render::full::render_captured_variant(
+        &input,
+        &mut context,
+    ) {
+        Ok(logical_request) => PythonConsumerValue::Object(vec![
+            (
+                umf_core::PyText::from_utf8("profile"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    umf_core::access_logical_render::FULL_PROFILE,
+                )),
+            ),
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("rendered")),
+            ),
+            (
+                umf_core::PyText::from_utf8("logicalRequest"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(&logical_request)),
+            ),
+        ]),
+        Err(umf_core::access_logical_render::LogicalRenderError::Refused(refusal)) => {
+            PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("profile"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                        umf_core::access_logical_render::FULL_PROFILE,
+                    )),
+                ),
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+                ),
+                (
+                    umf_core::PyText::from_utf8("code"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+                ),
+                (
+                    umf_core::PyText::from_utf8("message"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(&refusal.message)),
+                ),
+            ])
+        }
+        Err(umf_core::access_logical_render::LogicalRenderError::Resource(error)) => {
+            return Err(py_error(error));
+        }
+    };
+    python_value::to_python(py, &response, &mut context)
+}
+
+#[pyfunction]
+fn access_validate_captured_graph_variant(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+) -> PyResult<PyObject> {
+    access_validate_captured_graph_variant_inner(py, input, None)
+}
+
+#[pyfunction]
+fn access_validate_captured_graph_variant_with_session(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+    session: PyRefMut<'_, CaptureResourceSession>,
+) -> PyResult<PyObject> {
+    access_validate_captured_graph_variant_inner(py, input, Some(session))
+}
+
+fn access_validate_captured_graph_variant_inner(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+    mut session: Option<PyRefMut<'_, CaptureResourceSession>>,
+) -> PyResult<PyObject> {
+    if !input.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err(
+            "captured graph input must be an exact dict",
+        ));
+    }
+    let mut refused_by_session = false;
+    let input = if let Some(session) = session.as_mut() {
+        let mut meter = |amount: usize| match session.charge_work(amount as u64) {
+            Ok(()) => Ok(()),
+            Err(_) => {
+                refused_by_session = true;
+                Err(EngineError::new(
+                    "LIMIT",
+                    Utf16::default(),
+                    "capture resource limit exceeded",
+                ))
+            }
+        };
+        let mut context = Context::ordinary().with_host_control(&mut meter);
+        let mut count = 0usize;
+        let admitted = python_value::from_python(py, input, &mut context, 0, &mut count);
+        drop(context);
+        match admitted {
+            Ok(value) => value,
+            Err(_) if refused_by_session => {
+                return Err(PyValueError::new_err("capture resource limit exceeded"));
+            }
+            Err(error) => return Err(py_error(error)),
+        }
+    } else {
+        let mut context = Context::ordinary();
+        let mut count = 0usize;
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?
+    };
+    let response = match umf_core::access_graph_validate::validate_captured_variant(&input) {
+        Ok(()) => PythonConsumerValue::Object(vec![
+            (
+                umf_core::PyText::from_utf8("profile"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    umf_core::access_graph_validate::PROFILE,
+                )),
+            ),
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("accepted")),
+            ),
+        ]),
+        Err(refusal) => PythonConsumerValue::Object(vec![
+            (
+                umf_core::PyText::from_utf8("profile"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    umf_core::access_graph_validate::PROFILE,
+                )),
+            ),
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+            ),
+            (
+                umf_core::PyText::from_utf8("kind"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.kind)),
+            ),
+            (
+                umf_core::PyText::from_utf8("code"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+            ),
+            (
+                umf_core::PyText::from_utf8("rule"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.rule)),
+            ),
+        ]),
+    };
+    let mut context = Context::ordinary();
+    python_value::to_python(py, &response, &mut context)
+}
+
+struct PythonFieldRefObserver<'py> {
+    py: Python<'py>,
+    field: PyObject,
+    host_error: Option<PyErr>,
+    conversion_error: Option<PyErr>,
+}
+
+fn python_exact_str_utf16(value: &Bound<'_, PyAny>) -> PyResult<Utf16> {
+    if !value.is_exact_instance_of::<PyString>() {
+        return Err(pyo3::exceptions::PyTypeError::new_err(
+            "captured graph text must be an exact str",
+        ));
+    }
+    let encoded = value.call_method1("encode", ("utf-16-le", "surrogatepass"))?;
+    let bytes = encoded.extract::<Vec<u8>>()?;
+    if bytes.len() % 2 != 0 {
+        return Err(pyo3::exceptions::PyValueError::new_err(
+            "UTF-16 encoding returned an odd byte count",
+        ));
+    }
+    Ok(Utf16::new(
+        bytes
+            .chunks_exact(2)
+            .map(|pair| u16::from_le_bytes([pair[0], pair[1]]))
+            .collect(),
+    ))
+}
+
+impl umf_core::access_graph_host_observation::FieldRefObserver for PythonFieldRefObserver<'_> {
+    fn read(
+        &mut self,
+        field_name: &'static str,
+    ) -> Result<
+        umf_core::access_graph_host_observation::ObservedField,
+        umf_core::access_graph_host_observation::ObservationError,
+    > {
+        use umf_core::access_graph_host_observation::{ObservationError, ObservedField};
+        let value = match self.field.bind(self.py).getattr(field_name) {
+            Ok(value) => value,
+            Err(error) => {
+                self.host_error = Some(error);
+                return Err(ObservationError::HostException);
+            }
+        };
+        if value.is_none() {
+            return Ok(ObservedField::None);
+        }
+        if !value.is_exact_instance_of::<PyString>() {
+            return Err(ObservationError::UnsupportedValue);
+        }
+        python_exact_str_utf16(&value)
+            .map(ObservedField::Text)
+            .map_err(|error| {
+                self.conversion_error = Some(error);
+                ObservationError::ConversionFailure
+            })
+    }
+}
+
+#[pyfunction]
+fn access_field_owner_observation_profile_version() -> &'static str {
+    umf_core::access_graph_host_observation::PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (field, module, element, alias=None))]
+fn access_validate_field_owner_observed(
+    py: Python<'_>,
+    field: PyObject,
+    module: PyObject,
+    element: PyObject,
+    alias: Option<PyObject>,
+) -> PyResult<bool> {
+    use umf_core::access_graph_host_observation::{
+        field_owner_matches, ExpectedOwner, ObservationError,
+    };
+    let expected = ExpectedOwner {
+        module: python_exact_str_utf16(module.bind(py))?,
+        element: python_exact_str_utf16(element.bind(py))?,
+        alias: alias
+            .map(|value| python_exact_str_utf16(value.bind(py)))
+            .transpose()?,
+    };
+    let mut observer = PythonFieldRefObserver {
+        py,
+        field,
+        host_error: None,
+        conversion_error: None,
+    };
+    match field_owner_matches(&mut observer, &expected) {
+        Ok(matches) => Ok(matches),
+        Err(ObservationError::HostException) => Err(observer
+            .host_error
+            .take()
+            .expect("host observation error retains original PyErr")),
+        Err(ObservationError::ConversionFailure) => Err(observer
+            .conversion_error
+            .take()
+            .expect("conversion failure retains its conversion PyErr")),
+        Err(ObservationError::UnsupportedValue) => Err(pyo3::exceptions::PyTypeError::new_err(
+            "captured FieldRef owner fields must be exact str or None",
+        )),
+        Err(_) => Err(pyo3::exceptions::PyTypeError::new_err(
+            "unsupported captured FieldRef observation",
+        )),
+    }
+}
+
+struct PythonCaptureGraphObserver<'py> {
+    py: Python<'py>,
+    objects: Vec<PyObject>,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+    host_error: Option<PyErr>,
+    conversion_error: Option<PyErr>,
+}
+
+/// Private shared accounting handle for one capture bridge operation.
+/// Python DTO encoding and Rust graph observation charge the same counter.
+#[pyclass]
+struct CaptureResourceSession {
+    charged_work: u64,
+    max_work: u64,
+    dto_nodes: usize,
+    dto_utf8_bytes: usize,
+    output_chars: usize,
+    output_utf8_bytes: usize,
+}
+
+const CAPTURE_DTO_MAX_NODES: usize = 50_000;
+const CAPTURE_DTO_MAX_DEPTH: usize = 64;
+const CAPTURE_DTO_MAX_TEXT: usize = 8 * 1024 * 1024;
+
+fn capture_dto_limit_error() -> PyErr {
+    pyo3::exceptions::PyValueError::new_err(
+        "captured declaration exceeds Rust bridge resource limits",
+    )
+}
+
+#[pymethods]
+impl CaptureResourceSession {
+    #[new]
+    fn new(max_work: u64) -> Self {
+        Self {
+            charged_work: 0,
+            max_work,
+            dto_nodes: 0,
+            dto_utf8_bytes: 0,
+            output_chars: 0,
+            output_utf8_bytes: 0,
+        }
+    }
+
+    fn charge_work(&mut self, amount: u64) -> PyResult<()> {
+        let Some(total) = self.charged_work.checked_add(amount) else {
+            return Err(pyo3::exceptions::PyValueError::new_err(
+                "capture resource limit exceeded",
+            ));
+        };
+        if total > self.max_work {
+            return Err(pyo3::exceptions::PyValueError::new_err(
+                "capture resource limit exceeded",
+            ));
+        }
+        self.charged_work = total;
+        Ok(())
+    }
+
+    #[getter]
+    fn charged_work(&self) -> u64 {
+        self.charged_work
+    }
+
+    /// Charge one encoder visit. Shared work fails before DTO-specific limits.
+    fn charge_capture_node(&mut self, depth: usize) -> PyResult<()> {
+        self.charge_work(1)?;
+        let Some(nodes) = self.dto_nodes.checked_add(1) else {
+            return Err(capture_dto_limit_error());
+        };
+        self.dto_nodes = nodes;
+        if nodes > CAPTURE_DTO_MAX_NODES || depth > CAPTURE_DTO_MAX_DEPTH {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    #[getter]
+    fn dto_nodes(&self) -> usize {
+        self.dto_nodes
+    }
+
+    /// Character preflight deliberately precedes Python's strict UTF-8 encode.
+    fn check_capture_text_chars(&self, chars: usize) -> PyResult<()> {
+        if chars > CAPTURE_DTO_MAX_TEXT.saturating_sub(self.dto_utf8_bytes) {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    fn charge_capture_text_bytes(&mut self, bytes: usize) -> PyResult<()> {
+        let Some(total) = self.dto_utf8_bytes.checked_add(bytes) else {
+            return Err(capture_dto_limit_error());
+        };
+        if total > CAPTURE_DTO_MAX_TEXT {
+            return Err(capture_dto_limit_error());
+        }
+        self.dto_utf8_bytes = total;
+        Ok(())
+    }
+
+    #[getter]
+    fn dto_utf8_bytes(&self) -> usize {
+        self.dto_utf8_bytes
+    }
+
+    fn check_capture_output_chars(&self, chars: usize, pending: usize) -> PyResult<()> {
+        let Some(total) = self
+            .output_chars
+            .checked_add(pending)
+            .and_then(|n| n.checked_add(chars))
+        else {
+            return Err(capture_dto_limit_error());
+        };
+        if total > CAPTURE_DTO_MAX_TEXT {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    fn check_capture_output_bytes(&self, bytes: usize, pending: usize) -> PyResult<()> {
+        let Some(total) = self
+            .output_utf8_bytes
+            .checked_add(pending)
+            .and_then(|n| n.checked_add(bytes))
+        else {
+            return Err(capture_dto_limit_error());
+        };
+        if total > CAPTURE_DTO_MAX_TEXT {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    /// Commit output only after the complete JSON iteration succeeds.
+    fn commit_capture_output(&mut self, chars: usize, bytes: usize) -> PyResult<()> {
+        let Some(total_chars) = self.output_chars.checked_add(chars) else {
+            return Err(capture_dto_limit_error());
+        };
+        let Some(total_bytes) = self.output_utf8_bytes.checked_add(bytes) else {
+            return Err(capture_dto_limit_error());
+        };
+        if total_chars > CAPTURE_DTO_MAX_TEXT || total_bytes > CAPTURE_DTO_MAX_TEXT {
+            return Err(capture_dto_limit_error());
+        }
+        self.output_chars = total_chars;
+        self.output_utf8_bytes = total_bytes;
+        Ok(())
+    }
+
+    fn preflight_capture_output_chars(&self, minimum_chars: usize) -> PyResult<()> {
+        if minimum_chars > CAPTURE_DTO_MAX_TEXT.saturating_sub(self.output_utf8_bytes) {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    #[getter]
+    fn output_chars(&self) -> usize {
+        self.output_chars
+    }
+
+    #[getter]
+    fn output_utf8_bytes(&self) -> usize {
+        self.output_utf8_bytes
+    }
+}
+
+impl<'py> PythonCaptureGraphObserver<'py> {
+    fn object(&self, handle: u32) -> PyResult<Bound<'py, PyAny>> {
+        self.objects
+            .get(handle as usize)
+            .map(|value| value.bind(self.py).clone())
+            .ok_or_else(|| pyo3::exceptions::PyIndexError::new_err("invalid graph handle"))
+    }
+
+    fn keep(&mut self, value: Bound<'py, PyAny>) -> Result<u32, PyErr> {
+        let handle = u32::try_from(self.objects.len()).map_err(|_| {
+            pyo3::exceptions::PyOverflowError::new_err("graph handle limit exceeded")
+        })?;
+        self.objects.push(value.unbind());
+        Ok(handle)
+    }
+
+    fn host_failure(
+        &mut self,
+        error: PyErr,
+    ) -> umf_core::access_graph_host_observation::ObservationError {
+        self.host_error = Some(error);
+        umf_core::access_graph_host_observation::ObservationError::HostException
+    }
+}
+
+impl umf_core::access_graph_host_observation::CaptureGraphHostObserver
+    for PythonCaptureGraphObserver<'_>
+{
+    type Handle = u32;
+
+    fn get_attr(
+        &mut self,
+        object: u32,
+        name: &'static str,
+    ) -> Result<
+        umf_core::access_graph_host_observation::ObservedValue<u32>,
+        umf_core::access_graph_host_observation::ObservationError,
+    > {
+        use umf_core::access_graph_host_observation::{ObservationError, ObservedValue};
+        let value = self
+            .object(object)
+            .and_then(|object| object.getattr(name))
+            .map_err(|error| self.host_failure(error))?;
+        if value.is_none() {
+            return Ok(ObservedValue::None);
+        }
+        if value.is_exact_instance_of::<PyString>() {
+            return python_exact_str_utf16(&value)
+                .map(ObservedValue::Text)
+                .map_err(|error| {
+                    self.conversion_error = Some(error);
+                    ObservationError::ConversionFailure
+                });
+        }
+        self.keep(value)
+            .map(ObservedValue::Object)
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn truthy(
+        &mut self,
+        value: u32,
+    ) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        self.object(value)
+            .and_then(|value| value.is_truthy())
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn get_item(
+        &mut self,
+        sequence: u32,
+        index: usize,
+    ) -> Result<u32, umf_core::access_graph_host_observation::ObservationError> {
+        self.object(sequence)
+            .and_then(|sequence| sequence.get_item(index))
+            .and_then(|item| self.keep(item))
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn is_instance(
+        &mut self,
+        value: u32,
+        kind: umf_core::access_graph_host_observation::GraphType,
+    ) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        let class = match kind {
+            umf_core::access_graph_host_observation::GraphType::Node => &self.node_type,
+            umf_core::access_graph_host_observation::GraphType::RecordRef => &self.record_ref_type,
+        };
+        self.object(value)
+            .and_then(|value| value.is_instance(class.bind(self.py)))
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn is_exact_instance(
+        &mut self,
+        value: u32,
+        kind: umf_core::access_graph_host_observation::GraphType,
+    ) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        let class_ptr = match kind {
+            umf_core::access_graph_host_observation::GraphType::Node => {
+                self.node_type.bind(self.py).as_ptr()
+            }
+            umf_core::access_graph_host_observation::GraphType::RecordRef => {
+                self.record_ref_type.bind(self.py).as_ptr()
+            }
+        };
+        let object = self
+            .object(value)
+            .map_err(|error| self.host_failure(error))?;
+        Ok(object.get_type().as_ptr() == class_ptr)
+    }
+
+    fn is_exact_structural(
+        &mut self,
+        value: u32,
+        kind: umf_core::access_graph_host_observation::StructuralType,
+    ) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        use umf_core::access_graph_host_observation::StructuralType;
+        let result = self
+            .object(value)
+            .map_err(|error| self.host_failure(error))?;
+        let class = match kind {
+            StructuralType::FieldRef => &self.field_ref_type,
+            StructuralType::Join => &self.join_type,
+            StructuralType::SearchLeg => &self.search_leg_type,
+            StructuralType::Tuple => return Ok(result.is_exact_instance_of::<PyTuple>()),
+        };
+        Ok(result.get_type().as_ptr() == class.bind(self.py).as_ptr())
+    }
+
+    fn exact_text(
+        &mut self,
+        value: u32,
+    ) -> Result<Utf16, umf_core::access_graph_host_observation::ObservationError> {
+        let value = self
+            .object(value)
+            .map_err(|error| self.host_failure(error))?;
+        if !value.is_exact_instance_of::<PyString>() {
+            return Err(
+                umf_core::access_graph_host_observation::ObservationError::UnsupportedValue,
+            );
+        }
+        python_exact_str_utf16(&value).map_err(|error| {
+            self.conversion_error = Some(error);
+            umf_core::access_graph_host_observation::ObservationError::ConversionFailure
+        })
+    }
+
+    fn is_instance_structural(
+        &mut self,
+        value: u32,
+        kind: umf_core::access_graph_host_observation::StructuralType,
+    ) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        use umf_core::access_graph_host_observation::StructuralType;
+        let result = self.object(value).and_then(|value| match kind {
+            StructuralType::FieldRef => value.is_instance(self.field_ref_type.bind(self.py)),
+            StructuralType::Join => value.is_instance(self.join_type.bind(self.py)),
+            StructuralType::SearchLeg => value.is_instance(self.search_leg_type.bind(self.py)),
+            StructuralType::Tuple => Ok(value.is_instance_of::<PyTuple>()),
+        });
+        result.map_err(|error| self.host_failure(error))
+    }
+
+    fn iter(
+        &mut self,
+        sequence: u32,
+    ) -> Result<u32, umf_core::access_graph_host_observation::ObservationError> {
+        self.object(sequence)
+            .and_then(|sequence| sequence.try_iter())
+            .and_then(|iterator| self.keep(iterator.into_any()))
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn next(
+        &mut self,
+        iterator: u32,
+    ) -> Result<Option<u32>, umf_core::access_graph_host_observation::ObservationError> {
+        let iterator = self
+            .object(iterator)
+            .map_err(|error| self.host_failure(error))?;
+        let mut iterator = iterator
+            .downcast::<PyIterator>()
+            .map_err(|_| {
+                umf_core::access_graph_host_observation::ObservationError::UnsupportedValue
+            })?
+            .clone();
+        let result = iterator
+            .next()
+            .transpose()
+            .map_err(|error| self.host_failure(error))?;
+        result
+            .map(|value| self.keep(value))
+            .transpose()
+            .map_err(|error| self.host_failure(error))
+    }
+}
+
+fn python_utf16_to_str(py: Python<'_>, value: &Utf16) -> PyResult<PyObject> {
+    let bytes: Vec<u8> = value
+        .units()
+        .iter()
+        .flat_map(|unit| unit.to_le_bytes())
+        .collect();
+    let encoded = PyBytes::new_bound(py, &bytes);
+    Ok(encoded
+        .call_method1("decode", ("utf-16-le", "surrogatepass"))?
+        .unbind())
+}
+
+fn capture_graph_error(
+    py: Python<'_>,
+    observer: &mut PythonCaptureGraphObserver<'_>,
+    error: umf_core::access_graph_host_observation::ObservationError,
+) -> PyErr {
+    use umf_core::access_graph_host_observation::ObservationError;
+    match error {
+        ObservationError::HostException => observer
+            .host_error
+            .take()
+            .expect("host observation error retains original PyErr"),
+        ObservationError::ConversionFailure => observer
+            .conversion_error
+            .take()
+            .expect("text conversion failure retains its conversion PyErr"),
+        ObservationError::TerminalUnsupported => {
+            graph_capture_error(py, "CAPTURE_UNSUPPORTED", "unsupported terminal form")
+        }
+        ObservationError::MissingRecordIdentity => {
+            graph_capture_error(py, "CAPTURE_UNSUPPORTED", "terminal has no record identity")
+        }
+        ObservationError::GroupNeedsSelection => graph_capture_error(
+            py,
+            "CAPTURE_UNSUPPORTED",
+            "grouped query requires explicit selection or count",
+        ),
+        ObservationError::ScalarTerminalDenied => graph_capture_error(
+            py,
+            "CAPTURE_UNSUPPORTED",
+            "scalar aggregate/bucket projection does not admit this terminal",
+        ),
+        ObservationError::JoinSourceAbsent => {
+            graph_capture_error(py, "CAPTURE_UNSUPPORTED", "join source is absent")
+        }
+        ObservationError::SearchForeignRecord => {
+            graph_capture_error(py, "SEARCH_DECLARATION", "foreign search Record")
+        }
+        ObservationError::SearchBoundParameter => {
+            graph_capture_error(py, "SEARCH_DECLARATION", "search requires bound parameters")
+        }
+        ObservationError::SearchParameterCarrier => graph_capture_error(
+            py,
+            "CAPTURE_SIGNATURE",
+            "search parameter carrier differs from selected leg",
+        ),
+        ObservationError::ForeignField => {
+            pyo3::exceptions::PyTypeError::new_err("expression column belongs to another Record")
+        }
+        ObservationError::UnsupportedValue => {
+            pyo3::exceptions::PyTypeError::new_err("unsupported captured graph shape")
+        }
+        ObservationError::Budget => {
+            pyo3::exceptions::PyRuntimeError::new_err("captured graph observation budget exceeded")
+        }
+    }
+}
+
+fn graph_capture_error(py: Python<'_>, code: &str, message: &str) -> PyErr {
+    py.import_bound("umf_access.capture")
+        .and_then(|module| module.getattr("CaptureError"))
+        .and_then(|class| class.call1((code, message)))
+        .map(PyErr::from_value_bound)
+        .unwrap_or_else(|error| error)
+}
+
+fn capture_owner_from_tuple(
+    value: &Bound<'_, PyAny>,
+) -> PyResult<umf_core::access_graph_host_observation::Owner> {
+    use umf_core::access_graph_host_observation::Owner;
+    if !value.is_exact_instance_of::<PyTuple>() || value.len()? != 3 {
+        return Err(pyo3::exceptions::PyTypeError::new_err(
+            "owner must be an exact (module, element, alias) tuple",
+        ));
+    }
+    let module = python_exact_str_utf16(&value.get_item(0)?)?;
+    let element = python_exact_str_utf16(&value.get_item(1)?)?;
+    let alias_value = value.get_item(2)?;
+    let alias = if alias_value.is_none() {
+        None
+    } else {
+        Some(python_exact_str_utf16(&alias_value)?)
+    };
+    Ok(Owner {
+        module,
+        element,
+        alias,
+    })
+}
+
+#[pyfunction]
+fn access_observe_capture_field_join_tuple(
+    py: Python<'_>,
+    value: PyObject,
+    allowed_owners: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+) -> PyResult<()> {
+    use umf_core::access_graph_host_observation::{observe_field_join_tuple_prefix, Owner};
+    let allowed_value = allowed_owners.bind(py);
+    if !allowed_value.is_exact_instance_of::<PyTuple>() {
+        return Err(pyo3::exceptions::PyTypeError::new_err(
+            "allowed owners must be an exact tuple",
+        ));
+    }
+    let mut allowed = std::collections::HashSet::<Owner>::new();
+    for index in 0..allowed_value.len()? {
+        allowed.insert(capture_owner_from_tuple(&allowed_value.get_item(index)?)?);
+    }
+    let mut observer = PythonCaptureGraphObserver {
+        py,
+        objects: vec![value],
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        host_error: None,
+        conversion_error: None,
+    };
+    let mut context = Context::ordinary();
+    observe_field_join_tuple_prefix(&mut context, &mut observer, 0, &allowed)
+        .map_err(|error| capture_graph_error(py, &mut observer, error))
+}
+
+#[pyfunction]
+fn access_observe_capture_empty_search_leg(
+    py: Python<'_>,
+    value: PyObject,
+    root_record: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+) -> PyResult<()> {
+    use umf_core::access_graph_host_observation::{observe_empty_search_leg_prefix, Owner};
+    let mut observer = PythonCaptureGraphObserver {
+        py,
+        objects: vec![value, root_record],
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        host_error: None,
+        conversion_error: None,
+    };
+    let mut context = Context::ordinary();
+    observe_empty_search_leg_prefix(&mut context, &mut observer, 0, 1)
+        .map_err(|error| capture_graph_error(py, &mut observer, error))
+}
+
+#[pyfunction]
+fn access_observe_capture_keyword_search_leg(
+    py: Python<'_>,
+    value: PyObject,
+    root_record: PyObject,
+    declared_name: &Bound<'_, PyString>,
+    string_carrier: bool,
+    vector_carrier: bool,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+) -> PyResult<()> {
+    let declared_name = python_exact_str_utf16(declared_name)?;
+    let mut observer = PythonCaptureGraphObserver {
+        py,
+        objects: vec![value, root_record],
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        host_error: None,
+        conversion_error: None,
+    };
+    let mut context = Context::ordinary();
+    umf_core::access_graph_host_observation::observe_keyword_search_leg(
+        &mut context,
+        &mut observer,
+        0,
+        1,
+        &declared_name,
+        string_carrier,
+        vector_carrier,
+    )
+    .map_err(|error| capture_graph_error(py, &mut observer, error))
+}
+
+#[pyfunction]
+fn access_observe_capture_terminal_join_owners(
+    py: Python<'_>,
+    node: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+) -> PyResult<PyObject> {
+    observe_capture_terminal_join_owners(
+        py,
+        node,
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        None,
+    )
+}
+
+#[pyfunction]
+fn access_observe_capture_terminal_join_owners_with_session(
+    py: Python<'_>,
+    node: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+    session: PyRefMut<'_, CaptureResourceSession>,
+) -> PyResult<PyObject> {
+    observe_capture_terminal_join_owners(
+        py,
+        node,
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        Some(session),
+    )
+}
+
+const CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE: &str = "umf-access-capture-exact-empty-terminal/0.3.0";
+#[pyfunction]
+fn access_capture_exact_empty_terminal_profile_version() -> &'static str {
+    CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE
+}
+
+// `Node` has two instance fields and `RecordRef` has eight. The profile scans
+// exact instance dictionaries to reject arbitrary Python keys before any
+// string-key lookup. Keep that scan bounded; larger dictionaries fall back
+// before graph accessors are observed.
+const CAPTURE_ADMISSION_MAX_DICT_KEYS: usize = 8;
+const CAPTURE_ADMISSION_MAX_KEY_CHARS: usize = 32;
+const CAPTURE_ADMISSION_MAX_OP_CHARS: usize = 16;
+
+fn capture_exact_empty_terminal_response(py: Python<'_>, outcome: &str) -> PyResult<PyObject> {
+    let result = PyDict::new_bound(py);
+    result.set_item("profile", CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE)?;
+    result.set_item("outcome", outcome)?;
+    Ok(result.into())
+}
+
+/// Validate exact built-in terminals with empty steps without a graph DTO.
+/// Admission reads exact-instance
+/// dictionaries through `object.__getattribute__`, rejecting arbitrary dict
+/// keys before lookup so custom `__hash__`/`__eq__` hooks cannot run. Only an
+/// admitted exact graph reaches the predecessor-ordered attribute reads.
+#[pyfunction]
+fn access_validate_capture_exact_empty_terminal_with_session(
+    py: Python<'_>,
+    node: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    mut session: PyRefMut<'_, CaptureResourceSession>,
+) -> PyResult<PyObject> {
+    macro_rules! charge {
+        () => {
+            session.charge_work(1)?
+        };
+    }
+    let node = node.bind(py);
+    let node_type = node_type.bind(py);
+    let record_ref_type = record_ref_type.bind(py);
+    let outside = || capture_exact_empty_terminal_response(py, "outside-profile");
+
+    // The raw gate is deliberately side-effect free with respect to graph
+    // accessors. All dictionary keys are checked as exact strings before any
+    // string-key lookup is performed.
+    let builtins = py.import_bound("builtins")?;
+    let builtin_type = builtins.getattr("type")?;
+    let builtin_getset_descriptor_type =
+        py.import_bound("types")?.getattr("GetSetDescriptorType")?;
+    charge!();
+    if node.get_type().as_ptr() != node_type.as_ptr() || !node_type.get_type().is(&builtin_type) {
+        return outside();
+    }
+    let object_type = builtins.getattr("object")?;
+    let object_getattribute = object_type.getattr("__getattribute__")?;
+    let has_builtin_instance_dict = |class: &Bound<'_, PyAny>| -> PyResult<bool> {
+        let class_dict = class.getattr("__dict__")?;
+        let descriptor = class_dict.get_item("__dict__")?;
+        if !descriptor.get_type().is(&builtin_getset_descriptor_type) {
+            return Ok(false);
+        }
+        Ok(
+            descriptor.getattr("__name__")?.extract::<String>()? == "__dict__"
+                && descriptor.getattr("__objclass__")?.is(class),
+        )
+    };
+    charge!();
+    if !node_type
+        .getattr("__getattribute__")?
+        .is(&object_getattribute)
+        || !has_builtin_instance_dict(node_type)?
+    {
+        return outside();
+    }
+    let node_class_dict = node_type.getattr("__dict__")?;
+    charge!();
+    if node_class_dict.contains("op")? || node_class_dict.contains("args")? {
+        return outside();
+    }
+    charge!();
+    let node_fields = object_getattribute.call1((node, "__dict__"))?;
+    if !node_fields.is_exact_instance_of::<PyDict>() {
+        return outside();
+    }
+    let node_fields = node_fields.downcast::<PyDict>()?;
+    if node_fields.len() != 2 {
+        return outside();
+    }
+    let mut node_keys = Vec::new();
+    for key in node_fields.keys().iter() {
+        charge!();
+        if !key.is_exact_instance_of::<PyString>() || key.len()? > CAPTURE_ADMISSION_MAX_KEY_CHARS {
+            return outside();
+        }
+        let Ok(key) = key.extract::<String>() else {
+            return outside();
+        };
+        node_keys.push(key);
+    }
+    if node_keys.len() != 2
+        || !node_keys.iter().any(|key| key == "op")
+        || !node_keys.iter().any(|key| key == "args")
+    {
+        return outside();
+    }
+    charge!();
+    let Some(op) = node_fields.get_item("op")? else {
+        return outside();
+    };
+    if !op.is_exact_instance_of::<PyString>() || op.len()? > CAPTURE_ADMISSION_MAX_OP_CHARS {
+        return outside();
+    }
+    if !matches!(
+        op.extract::<String>().ok().as_deref(),
+        Some("all" | "first" | "one" | "count" | "exists" | "group_count")
+    ) {
+        return outside();
+    }
+    charge!();
+    let Some(args) = node_fields.get_item("args")? else {
+        return outside();
+    };
+    if !args.is_exact_instance_of::<PyTuple>() {
+        return outside();
+    }
+    let args = args.downcast::<PyTuple>()?;
+    if args.len() != 2 {
+        return outside();
+    }
+    let record = args.get_item(0)?;
+    let steps = args.get_item(1)?;
+    if record.get_type().as_ptr() != record_ref_type.as_ptr()
+        || !steps.is_exact_instance_of::<PyTuple>()
+        || steps.len()? != 0
+    {
+        return outside();
+    }
+    charge!();
+    if !record_ref_type.get_type().is(&builtin_type)
+        || !record_ref_type
+            .getattr("__getattribute__")?
+            .is(&object_getattribute)
+        || !has_builtin_instance_dict(record_ref_type)?
+    {
+        return outside();
+    }
+    let record_class_dict = record_ref_type.getattr("__dict__")?;
+    for name in ["module", "element", "alias"] {
+        charge!();
+        if record_class_dict.contains(name)? {
+            let value = record_class_dict.get_item(name)?;
+            if name != "alias" || !value.is_none() {
+                return outside();
+            }
+        }
+    }
+    charge!();
+    let record_fields = object_getattribute.call1((&record, "__dict__"))?;
+    if !record_fields.is_exact_instance_of::<PyDict>() {
+        return outside();
+    }
+    let record_fields = record_fields.downcast::<PyDict>()?;
+    if record_fields.len() > CAPTURE_ADMISSION_MAX_DICT_KEYS {
+        return outside();
+    }
+    let mut has_module = false;
+    let mut has_element = false;
+    let mut has_alias = false;
+    for key in record_fields.keys().iter() {
+        charge!();
+        if !key.is_exact_instance_of::<PyString>() || key.len()? > CAPTURE_ADMISSION_MAX_KEY_CHARS {
+            return outside();
+        }
+        let Ok(key) = key.extract::<String>() else {
+            return outside();
+        };
+        has_module |= key == "module";
+        has_element |= key == "element";
+        has_alias |= key == "alias";
+    }
+    if !(has_module && has_element && has_alias) {
+        return outside();
+    }
+    for name in ["module", "element"] {
+        charge!();
+        let Some(value) = record_fields.get_item(name)? else {
+            return outside();
+        };
+        if !value.is_exact_instance_of::<PyString>() {
+            return outside();
+        }
+    }
+    charge!();
+    let Some(alias) = record_fields.get_item("alias")? else {
+        return outside();
+    };
+    if !alias.is_none() && !alias.is_exact_instance_of::<PyString>() {
+        return outside();
+    }
+
+    // `_validate_node`'s observable header pass. The admitted exact classes and
+    // tuple make these reads non-dispatching, but retain their order and count.
+    charge!();
+    if !matches!(
+        node.getattr("op")?.extract::<String>()?.as_str(),
+        "all" | "first" | "one" | "count" | "exists" | "group_count"
+    ) {
+        return outside();
+    }
+    charge!();
+    let truth_args = node.getattr("args")?;
+    if !truth_args.is_truthy()? {
+        return outside();
+    }
+    charge!();
+    let root_args = node.getattr("args")?;
+    charge!();
+    if root_args.get_item(0)?.get_type().as_ptr() != record_ref_type.as_ptr() {
+        return outside();
+    }
+    charge!();
+    let record_args = node.getattr("args")?;
+    let record = record_args.get_item(0)?;
+    charge!();
+    let steps_args = node.getattr("args")?;
+    let steps = steps_args.get_item(1)?;
+
+    // Empty selection/group/join passes still create and exhaust their
+    // iterators in the Python predecessor; account for those work steps.
+    for _ in 0..4 {
+        charge!();
+        if !steps.is_exact_instance_of::<PyTuple>() || steps.len()? != 0 {
+            return outside();
+        }
+    }
+    // Root owner tuple construction reads module, element, alias in that order.
+    for name in ["module", "element", "alias"] {
+        charge!();
+        let _ = record.getattr(name)?;
+    }
+
+    // Full `visit(node)` tail: type-dispatch, op rules, args read, then visit
+    // the RecordRef and empty steps children in tuple order.
+    for _ in 0..4 {
+        charge!();
+    }
+    charge!();
+    if !matches!(
+        node.getattr("op")?.extract::<String>()?.as_str(),
+        "all" | "first" | "one" | "count" | "exists" | "group_count"
+    ) {
+        return outside();
+    }
+    charge!();
+    let visit_args = node.getattr("args")?;
+    for child_index in 0..visit_args.len()? {
+        charge!();
+        let child = visit_args.get_item(child_index)?;
+        for _ in 0..4 {
+            charge!();
+        }
+        if child_index == 0 {
+            charge!();
+        } else if !child.is_exact_instance_of::<PyTuple>() {
+            return outside();
+        }
+    }
+    capture_exact_empty_terminal_response(py, "accepted")
+}
+
+const CAPTURE_SELECTED_KEY_OBSERVATION_PROFILE: &str =
+    "umf-access-capture-selected-key-observation/0.1.0";
+
+#[pyfunction]
+fn access_capture_selected_key_observation_profile_version() -> &'static str {
+    CAPTURE_SELECTED_KEY_OBSERVATION_PROFILE
+}
+
+/// Observe only the selected-key preflight stage after the caller has completed
+/// terminal/header and join-owner checks. The caller must not invoke this before
+/// that predecessor-ordered pass. It uses the original Python handles and one
+/// shared capture session; it deliberately does not construct a graph DTO.
+#[pyfunction]
+fn access_observe_capture_selected_key_preflight(
+    py: Python<'_>,
+    key: PyObject,
+    record: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    terminal_op: &str,
+    mut session: PyRefMut<'_, CaptureResourceSession>,
+) -> PyResult<&'static str> {
+    if !matches!(terminal_op, "get" | "page") {
+        return Err(PyValueError::new_err(
+            "selected-key terminal must be get or page",
+        ));
+    }
+    macro_rules! charge {
+        () => {
+            session.charge_work(1)?
+        };
+    }
+    let key = key.bind(py);
+    let record = record.bind(py);
+    let node_type = node_type.bind(py);
+    let record_ref_type = record_ref_type.bind(py);
+    // Side-effect-free exact-shape admission precedes the observable getter
+    // schedule. An unsupported op must fall back without having consumed a
+    // stateful `key.op` read that Python would then repeat.
+    let builtins = py.import_bound("builtins")?;
+    let builtin_type = builtins.getattr("type")?;
+    if !node_type.get_type().is(&builtin_type)
+        || !record_ref_type.get_type().is(&builtin_type)
+        || !key.get_type().is(node_type)
+        || !record.get_type().is(record_ref_type)
+    {
+        return Ok("outside-profile");
+    }
+    let object_type = builtins.getattr("object")?;
+    let object_getattribute = object_type.getattr("__getattribute__")?;
+    let has_builtin_instance_dict = |class: &Bound<'_, PyAny>| -> PyResult<bool> {
+        let class_dict = class.getattr("__dict__")?;
+        let descriptor = class_dict.get_item("__dict__")?;
+        let getset_type = py.import_bound("types")?.getattr("GetSetDescriptorType")?;
+        if !descriptor.get_type().is(&getset_type) {
+            return Ok(false);
+        }
+        Ok(
+            descriptor.getattr("__name__")?.extract::<String>()? == "__dict__"
+                && descriptor.getattr("__objclass__")?.is(class),
+        )
+    };
+    if !has_builtin_instance_dict(node_type)? || !has_builtin_instance_dict(record_ref_type)? {
+        return Ok("outside-profile");
+    }
+    for class in [node_type, record_ref_type] {
+        let class_dict = class.getattr("__dict__")?;
+        if class_dict.contains("op")? || class_dict.contains("args")? {
+            return Ok("outside-profile");
+        }
+    }
+    let raw_key = object_getattribute.call1((key, "__dict__"))?;
+    if !raw_key.is_exact_instance_of::<PyDict>() {
+        return Ok("outside-profile");
+    }
+    let raw_key = raw_key.downcast::<PyDict>()?;
+    let keys = raw_key.keys();
+    if keys.len() != 2
+        || !keys
+            .iter()
+            .all(|item| item.is_exact_instance_of::<PyString>())
+        || !raw_key.contains("op")?
+        || !raw_key.contains("args")?
+    {
+        return Ok("outside-profile");
+    }
+    let raw_op = raw_key
+        .get_item("op")?
+        .ok_or_else(|| PyValueError::new_err("malformed key node"))?;
+    if !raw_op.is_exact_instance_of::<PyString>() || raw_op.extract::<String>()? != "key_param" {
+        return Ok("outside-profile");
+    }
+    let raw_args = raw_key
+        .get_item("args")?
+        .ok_or_else(|| PyValueError::new_err("malformed key node"))?;
+    if !raw_args.is_exact_instance_of::<PyTuple>() || raw_args.len()? != 3 {
+        return Ok("outside-profile");
+    }
+    let raw_identity = raw_args.get_item(2)?;
+    if !raw_identity.is_exact_instance_of::<PyTuple>()
+        || !raw_identity.try_iter()?.all(|item| {
+            item.ok().is_some_and(|item| {
+                item.is_exact_instance_of::<PyTuple>()
+                    && item.len().ok() == Some(2)
+                    && item
+                        .get_item(0)
+                        .ok()
+                        .is_some_and(|v| v.is_exact_instance_of::<PyString>())
+                    && item
+                        .get_item(1)
+                        .ok()
+                        .is_some_and(|v| v.is_exact_instance_of::<PyString>())
+            })
+        })
+    {
+        return Ok("outside-profile");
+    }
+    // `_validate_node` first evaluates key.op, then key.args and its identity
+    // tuple. Preserve those live reads and let PyO3 propagate the original
+    // exception object unchanged.
+    charge!();
+    let key_op = key.getattr("op")?;
+    let key_param_token = PyString::new_bound(py, "key_param");
+    if !key_op.eq(&key_param_token)? {
+        return Ok("unsupported-after-read");
+    }
+    charge!();
+    let key_args = key.getattr("args")?;
+    let identity = key_args.get_item(2)?;
+    if !identity.is_exact_instance_of::<PyTuple>() {
+        return Ok("unsupported-after-read");
+    }
+    for item in identity.downcast::<PyTuple>()?.iter() {
+        if !item.is_exact_instance_of::<PyTuple>()
+            || item.len()? != 2
+            || !item.get_item(0)?.is_exact_instance_of::<PyString>()
+            || !item.get_item(1)?.is_exact_instance_of::<PyString>()
+        {
+            return Ok("unsupported-after-read");
+        }
+        charge!();
+    }
+    let identity_dict = py
+        .import_bound("builtins")?
+        .getattr("dict")?
+        .call1((identity,))?;
+    if identity_dict.is_truthy()? {
+        if identity_dict.get_item("module")?.is_none() {
+            return Err(pyo3::exceptions::PyKeyError::new_err("module"));
+        }
+        if identity_dict.get_item("element")?.is_none() {
+            return Err(pyo3::exceptions::PyKeyError::new_err("element"));
+        }
+        charge!();
+        let module = record.getattr("module")?;
+        charge!();
+        let element = record.getattr("element")?;
+        let identity_module = identity_dict.get_item("module")?;
+        let identity_element = identity_dict.get_item("element")?;
+        let identity_owner = PyTuple::new_bound(py, [identity_module, identity_element]);
+        let selected_owner = PyTuple::new_bound(py, [module, element]);
+        if identity_owner.ne(&selected_owner)? {
+            return Ok("foreign-record");
+        }
+    }
+    // Match Python's short-circuit reads: key_id, source, then expected source
+    // fields and the repeated root module/element/key_id reads.
+    charge!();
+    let key_id = record.getattr("key_id")?;
+    if !key_id.is_none() {
+        charge!();
+        let source = record.getattr("source")?;
+        if !source.is_none() {
+            charge!();
+            let document_id = source.getattr("document_id")?;
+            charge!();
+            let core_version = source.getattr("core_version")?;
+            charge!();
+            let module = record.getattr("module")?;
+            charge!();
+            let element = record.getattr("element")?;
+            charge!();
+            let selected_key = record.getattr("key_id")?;
+            let expected = PyDict::new_bound(py);
+            expected.set_item("documentId", document_id)?;
+            expected.set_item("coreVersion", core_version)?;
+            expected.set_item("module", module)?;
+            expected.set_item("element", element)?;
+            expected.set_item("key", selected_key)?;
+            if identity_dict.ne(&expected)? {
+                return Ok("selected-key-mismatch");
+            }
+        }
+    }
+    Ok("accepted")
+}
+
+fn observe_capture_terminal_join_owners(
+    py: Python<'_>,
+    node: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+    mut session: Option<PyRefMut<'_, CaptureResourceSession>>,
+) -> PyResult<PyObject> {
+    use umf_core::access_graph_host_observation::observe_terminal_join_owners;
+    let mut observer = PythonCaptureGraphObserver {
+        py,
+        objects: vec![node],
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        host_error: None,
+        conversion_error: None,
+    };
+    let observed = if let Some(session) = session.as_mut() {
+        let mut remaining = session.max_work.saturating_sub(session.charged_work);
+        let mut meter_refused = false;
+        let mut meter = |amount: usize| {
+            if amount as u64 > remaining {
+                meter_refused = true;
+                return Err(umf_core::EngineError::new(
+                    "LIMIT",
+                    umf_core::Utf16::default(),
+                    "capture resource limit exceeded",
+                ));
+            }
+            remaining -= amount as u64;
+            Ok(())
+        };
+        let mut context = Context::ordinary().with_meter(&mut meter);
+        context.carry_transport_usage(session.charged_work, 0);
+        let observed_result = observe_terminal_join_owners(&mut context, &mut observer, 0);
+        session.charged_work = context.charged_work();
+        drop(context);
+        observed_result.map_err(|error| {
+            if meter_refused
+                && error == umf_core::access_graph_host_observation::ObservationError::Budget
+            {
+                pyo3::exceptions::PyValueError::new_err("capture resource limit exceeded")
+            } else {
+                capture_graph_error(py, &mut observer, error)
+            }
+        })?
+    } else {
+        let mut context = Context::ordinary();
+        observe_terminal_join_owners(&mut context, &mut observer, 0)
+            .map_err(|error| capture_graph_error(py, &mut observer, error))?
+    };
+    let output = PyDict::new_bound(py);
+    output.set_item(
+        "terminalOp",
+        python_utf16_to_str(py, &observed.terminal_op)?,
+    )?;
+    output.set_item("stepsEmpty", observed.steps_empty)?;
+    output.set_item("recordExact", observed.record_exact)?;
+    output.set_item("stepsExactTuple", observed.steps_exact_tuple)?;
+    let owners = PyList::empty_bound(py);
+    let mut sorted = observed.owners.into_iter().collect::<Vec<_>>();
+    sorted.sort_by(|left, right| {
+        (&left.module, &left.element, &left.alias).cmp(&(
+            &right.module,
+            &right.element,
+            &right.alias,
+        ))
+    });
+    for owner in sorted {
+        let row = PyDict::new_bound(py);
+        row.set_item("module", python_utf16_to_str(py, &owner.module)?)?;
+        row.set_item("element", python_utf16_to_str(py, &owner.element)?)?;
+        match owner.alias {
+            Some(alias) => row.set_item("alias", python_utf16_to_str(py, &alias)?)?,
+            None => row.set_item("alias", py.None())?,
+        }
+        owners.append(row)?;
+    }
+    output.set_item("owners", owners)?;
+    Ok(output.unbind().into_any())
+}
+
+#[pyfunction]
+fn access_orchestrate_capture_pair(py: Python<'_>, input: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+    if !input.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err(
+            "capture orchestration input must be an exact dict",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let input =
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let is_discover = match &input {
+        PythonConsumerValue::Object(fields) => fields
+            .iter()
+            .find(|(k, _)| k == &umf_core::PyText::from_utf8("stage"))
+            .is_some_and(|(_, value)| {
+                matches!(value, PythonConsumerValue::String(stage) if stage == &umf_core::PyText::from_utf8("discover"))
+            }),
+        _ => false,
+    };
+    let response = match umf_core::access_graph_validate::orchestrate_capture_pair(&input) {
+        Ok(schedule) => {
+            let variants = PythonConsumerValue::Array(
+                schedule
+                    .into_iter()
+                    .map(|names| {
+                        PythonConsumerValue::Array(
+                            names
+                                .into_iter()
+                                .map(|name| {
+                                    PythonConsumerValue::String(umf_core::PyText::from_utf8(&name))
+                                })
+                                .collect(),
+                        )
+                    })
+                    .collect(),
+            );
+            PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("profile"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                        umf_core::access_graph_validate::ORCHESTRATION_PROFILE,
+                    )),
+                ),
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(if is_discover {
+                        "scheduled"
+                    } else {
+                        "accepted"
+                    })),
+                ),
+                (umf_core::PyText::from_utf8("presences"), variants),
+            ])
+        }
+        Err(refusal) => PythonConsumerValue::Object(vec![
+            (
+                umf_core::PyText::from_utf8("profile"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    umf_core::access_graph_validate::ORCHESTRATION_PROFILE,
+                )),
+            ),
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+            ),
+            (
+                umf_core::PyText::from_utf8("kind"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.kind)),
+            ),
+            (
+                umf_core::PyText::from_utf8("code"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+            ),
+            (
+                umf_core::PyText::from_utf8("rule"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.rule)),
+            ),
+        ]),
+    };
+    python_value::to_python(py, &response, &mut context)
 }
 
 #[pyfunction]
@@ -462,6 +4823,82 @@ fn schema_path_segments_to_python(
 #[pyfunction]
 fn engine_version() -> &'static str {
     "umf-core-r2"
+}
+
+#[pyfunction]
+fn access_rrf_profile_version() -> &'static str {
+    umf_core_wire::access_rrf_binding::PROFILE
+}
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_access_rrf_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::access_rrf_binding::execute_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::access_rrf_binding::execute_wire_with_control(wire_json, &mut hook))
+}
+
+/// Identifies the additive compiler wire protocol independently of core semantics.
+#[pyfunction]
+fn codegen_protocol_version() -> &'static str {
+    "umf-codegen-r3-seven-ops-nine-resources/1"
+}
+
+#[pyfunction]
+#[pyo3(signature = (kind, year, month, day, hour, minute, second, microsecond, offset_microseconds=None))]
+fn access_temporal_canonical_token(
+    kind: &str,
+    year: u16,
+    month: u8,
+    day: u8,
+    hour: u8,
+    minute: u8,
+    second: u8,
+    microsecond: u32,
+    offset_microseconds: Option<i64>,
+) -> PyResult<String> {
+    umf_core::access_temporal::canonicalize_access_temporal(
+        kind,
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        microsecond,
+        offset_microseconds,
+    )
+    .map_err(|error| PyValueError::new_err(error.to_string()))
+}
+
+#[pyfunction]
+fn access_temporal_profile_version() -> &'static str {
+    "umf-access-temporal/0.1.0"
 }
 
 #[pyfunction]
@@ -988,6 +5425,235 @@ impl NativeEngine {
             .map_err(py_error)?;
         diagnostics_to_python(py, diagnostics, &mut ctx)
     }
+
+    #[pyo3(signature = (op, args, *, max_work=None, meter=None, is_cancelled=None, now=None, deadline_ms=None))]
+    fn semantic_types_operation(
+        &self,
+        py: Python<'_>,
+        op: &str,
+        args: &Bound<'_, PyTuple>,
+        max_work: Option<usize>,
+        meter: Option<PyObject>,
+        is_cancelled: Option<PyObject>,
+        now: Option<PyObject>,
+        deadline_ms: Option<u64>,
+    ) -> PyResult<PyObject> {
+        for (name, callback) in [
+            ("meter", meter.as_ref()),
+            ("is_cancelled", is_cancelled.as_ref()),
+            ("now", now.as_ref()),
+        ] {
+            if callback.is_some_and(|value| !value.bind(py).is_callable()) {
+                return Err(PyValueError::new_err(format!("{name} must be callable")));
+            }
+        }
+        if deadline_ms.is_some() && now.is_none() {
+            return Err(PyValueError::new_err("now is required with deadline_ms"));
+        }
+        let expected = match op {
+            "inspectCoreSemanticTypes"
+            | "getCoreSemanticTypes"
+            | "verifyCoreSemanticTypeDeclaration" => 2,
+            "declareCoreSemanticTypes" => 3,
+            "getSemanticTypes" => 3,
+            "setSemanticTypes" => 4,
+            _ => return Err(PyValueError::new_err("Unknown semantic type operation")),
+        };
+        if args.len() != expected {
+            return Err(PyValueError::new_err(
+                "Incorrect semantic type operation arguments",
+            ));
+        }
+        let hook_meter = max_work.is_some() || meter.is_some();
+        let hook_cancel = is_cancelled.is_some();
+        let hook_clock = deadline_ms.is_some();
+        let state = Rc::new(RefCell::new(PythonWorkControl {
+            py,
+            max_work,
+            charged: 0,
+            meter,
+            is_cancelled,
+            now,
+            host_callback_failed: false,
+        }));
+        let mut meter_hook = {
+            let state = state.clone();
+            move |amount| state.borrow_mut().meter(amount)
+        };
+        let mut cancel_hook = {
+            let state = state.clone();
+            move || state.borrow_mut().cancelled()
+        };
+        let mut clock_hook = {
+            let state = state.clone();
+            move || state.borrow_mut().clock()
+        };
+        let mut ctx = Context::ordinary();
+        if hook_meter {
+            ctx = ctx.with_meter(&mut meter_hook);
+        }
+        if hook_cancel {
+            ctx = ctx.with_fallible_cancellation(&mut cancel_hook);
+        }
+        if hook_clock {
+            ctx = ctx.with_fallible_clock(
+                &mut clock_hook,
+                deadline_ms.expect("clock hook requires deadline"),
+            );
+        }
+        // Preflight before reflection or conversion of the first caller value.
+        ctx.charge_work(1, Utf16::default()).map_err(py_error)?;
+
+        let convert = |index: usize, ctx: &mut Context<'_>| -> PyResult<Value> {
+            let item = args.get_item(index)?;
+            let mut count = 0;
+            let admitted = python_value::from_python(py, &item, ctx, 0, &mut count)
+                .map_err(|error| py_error_preserving_origin(py, error, ctx))?;
+            admitted
+                .project_schema_to_core(ctx)
+                .map_err(|error| py_error_preserving_origin(py, error, ctx))
+        };
+        let mut no_capabilities = NoPythonCapabilities;
+        let mut registry = self
+            .engine
+            .registry(&mut ctx)
+            .map_err(|error| py_error_preserving_origin(py, error, &mut ctx))?;
+        let result = match op {
+            "inspectCoreSemanticTypes" => {
+                let document = convert(0, &mut ctx)?;
+                let identity = convert(1, &mut ctx)?;
+                umf_core::core_semantic_types::inspect_core_semantic_types(&document, &identity, &self.engine, &registry, &mut no_capabilities, &mut ctx)
+                    .map(Some)
+            }
+            "getCoreSemanticTypes" => {
+                let document = convert(0, &mut ctx)?;
+                let identity = convert(1, &mut ctx)?;
+                umf_core::core_semantic_types::get_core_semantic_types(&document, &identity, &self.engine, &registry, &mut no_capabilities, &mut ctx)
+            }
+            "declareCoreSemanticTypes" => {
+                // The TypeScript predecessor admits and validates the types
+                // request before reading source or identity.
+                let types = convert(2, &mut ctx)?;
+                let admit = |index: usize, ctx: &mut Context<'_>| -> Result<Value, EngineError> {
+                    let item = args.get_item(index).map_err(|_| EngineError::new("PYTHON_VALUE", Utf16::default(), "Could not access semantic operation argument"))?;
+                    let mut count = 0;
+                    let value = python_value::from_python(py, &item, ctx, 0, &mut count)?;
+                    value.project_schema_to_core(ctx)
+                };
+                umf_core::core_semantic_types::declare_core_semantic_types_with_inputs(
+                    &types, &self.engine, &registry, &mut no_capabilities, &mut ctx,
+                    |ctx| Ok((admit(0, ctx)?, admit(1, ctx)?)),
+                ).map(Some)
+            }
+            "verifyCoreSemanticTypeDeclaration" => {
+                let receipt = convert(0, &mut ctx)?;
+                let current = args.get_item(1)?;
+                umf_core::core_semantic_types::verify_core_semantic_type_declaration_with_current(
+                    &receipt, &self.engine, &registry, &mut no_capabilities, &mut ctx,
+                    |ctx| {
+                        let mut count = 0;
+                        let admitted = python_value::from_python(py, &current, ctx, 0, &mut count)?;
+                        admitted.project_schema_to_core(ctx)
+                    },
+                ).map(Some)
+            }
+            "getSemanticTypes" | "setSemanticTypes" => {
+                let document = convert(0, &mut ctx)?;
+                let module = convert(1, &mut ctx)?;
+                let element = convert(2, &mut ctx)?;
+                let module = match module { Value::String(text) => text, _ => return Err(PyValueError::new_err("module must be a string")) };
+                let element = match element { Value::String(text) => text, _ => return Err(PyValueError::new_err("element must be a string")) };
+                if op == "getSemanticTypes" {
+                    umf_core::semantic_type_accessors::get_semantic_types_units(&document, &module, &element, &self.engine, &mut ctx).map(Some)
+                } else {
+                    umf_core::semantic_type_accessors::set_semantic_types_units_optional_with_annotation(
+                        &document, &module, &element, &self.engine, &mut ctx,
+                        |ctx| {
+                            let item = args.get_item(3).map_err(|_| EngineError::new("PYTHON_VALUE", Utf16::default(), "Could not access annotation argument"))?;
+                            let mut count = 0;
+                            let admitted = python_value::from_python(py, &item, ctx, 0, &mut count)?;
+                            let value = admitted.project_schema_to_core(ctx)?;
+                            umf_core::copy_json(&value, ctx).map(Some)
+                        },
+                    ).map(Some)
+                }
+            }
+            _ => unreachable!(),
+        }.map_err(|error| py_error_preserving_origin(py, error, &mut ctx))?;
+        match result {
+            Some(value) => {
+                let projected = core_value_to_python_consumer(&value, &mut ctx)
+                    .map_err(|error| py_error_preserving_origin(py, error, &mut ctx))?;
+                python_value::to_python(py, &projected, &mut ctx)
+            }
+            None => Ok(py.None()),
+        }
+    }
+}
+
+struct NoPythonCapabilities;
+impl Capabilities for NoPythonCapabilities {
+    fn validate_extension(
+        &mut self,
+        _: u64,
+        _: &Value,
+        _: &SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        Err(Utf16::from("No Python extension callback is registered"))
+    }
+}
+
+fn core_value_to_python_consumer(
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<PythonConsumerValue, EngineError> {
+    fn text(units: &[u16], ctx: &mut Context<'_>) -> Result<umf_core::PyText, EngineError> {
+        ctx.charge_work(units.len(), Utf16::default())?;
+        let mut points = Vec::with_capacity(units.len());
+        let mut index = 0;
+        while index < units.len() {
+            let first = units[index];
+            if (0xd800..=0xdbff).contains(&first)
+                && units
+                    .get(index + 1)
+                    .is_some_and(|next| (0xdc00..=0xdfff).contains(next))
+            {
+                let second = units[index + 1];
+                points.push(
+                    0x10000 + (((u32::from(first) - 0xd800) << 10) | (u32::from(second) - 0xdc00)),
+                );
+                index += 2;
+            } else {
+                points.push(u32::from(first));
+                index += 1;
+            }
+        }
+        umf_core::PyText::from_codepoints(points)
+    }
+    ctx.charge_work(1, Utf16::default())?;
+    Ok(match value {
+        Value::Null => PythonConsumerValue::Null,
+        Value::Bool(value) => PythonConsumerValue::Bool(*value),
+        Value::Number(value) => PythonConsumerValue::float(*value),
+        Value::String(value) => PythonConsumerValue::String(text(value.units(), ctx)?),
+        Value::Array(values) => PythonConsumerValue::Array(
+            values
+                .iter()
+                .map(|item| core_value_to_python_consumer(item, ctx))
+                .collect::<Result<_, _>>()?,
+        ),
+        Value::Object(fields) => PythonConsumerValue::Object(
+            fields
+                .iter()
+                .map(|(key, value)| {
+                    Ok((
+                        text(key.units(), ctx)?,
+                        core_value_to_python_consumer(value, ctx)?,
+                    ))
+                })
+                .collect::<Result<_, EngineError>>()?,
+        ),
+    })
 }
 
 fn diagnostics_to_python(
@@ -1154,6 +5820,9 @@ impl PythonWorkControl<'_> {
                 ));
             }
         };
+        if value.is_none() {
+            return Ok(None);
+        }
         match value.extract::<u64>() {
             Ok(value) => Ok(Some(value)),
             Err(error) => {
@@ -1370,7 +6039,7 @@ impl PythonCapabilities<'_, '_> {
                     _ => {
                         return Err(CapabilityError::Host(Utf16::from(
                             "Extension callback diagnostic severity must be error or warning",
-                        )))
+                        )));
                     }
                 };
                 let diagnostic = Diagnostic {
@@ -1572,11 +6241,322 @@ fn py_error_utf16(py: Python<'_>, error: PyErr) -> Utf16 {
 
 #[pymodule]
 fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
+    module.add_function(wrap_pyfunction!(project_sec_submissions, module)?)?;
+    module.add_function(wrap_pyfunction!(project_sec_company_facts, module)?)?;
+    module.add_function(wrap_pyfunction!(access_target_pin_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_target_pin_matches, module)?)?;
+    module.add_function(wrap_pyfunction!(access_target_pin_matches_host, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_read_plan_bind_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_read_plan_bind_select, module)?)?;
+    module.add(
+        "SecProjectionError",
+        module.py().get_type::<SecProjectionError>(),
+    )?;
+    module.add_function(wrap_pyfunction!(domain_pack_schema, module)?)?;
+    module.add_function(wrap_pyfunction!(access_rrf_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_access_rrf_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_semantic_value_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_codegen_wire, module)?)?;
     module.add_function(wrap_pyfunction!(copy_json_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_custody_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_native_column_bindings, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_source_join_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_check_native_column_sources,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_logical_render_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_render_logical_variant,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_logical_render_full_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_render_logical_full_variant,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_validate_captured_graph_variant,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_validate_captured_graph_variant_with_session,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_field_owner_observation_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_validate_field_owner_observed,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_terminal_join_owners,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_terminal_join_owners_with_session,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_capture_exact_empty_terminal_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_validate_capture_exact_empty_terminal_with_session,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_capture_selected_key_observation_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_selected_key_preflight,
+        module
+    )?)?;
+    module.add_class::<CaptureResourceSession>()?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_field_join_tuple,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_empty_search_leg,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_keyword_search_leg,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_orchestrate_capture_pair, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_consumer_value, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_json_value, module)?)?;
     module.add_function(wrap_pyfunction!(engine_version, module)?)?;
+    module.add_function(wrap_pyfunction!(codegen_protocol_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_temporal_canonical_token, module)?)?;
+    module.add_function(wrap_pyfunction!(access_temporal_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_reviewed_parameter_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_values_string_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_values_validate_string, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        operation_count_token_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(operation_count_token_nonnegative, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        operation_count_result_frame_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(operation_count_result_frame, module)?)?;
+    module.add_function(wrap_pyfunction!(avro_fields_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(iceberg_schema_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_iceberg_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(arrow_schema_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_arrow_schema_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(arrow_ipc_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_arrow_ipc_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(parquet_capture_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_parquet_capture_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(protobuf_inspect_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(avro_inspect_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_avro_inspect_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        avro_document_inspect_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        execute_avro_document_inspect_wire,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        avro_cardinality_binding_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(execute_avro_cardinality_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(dbt_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_dbt_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(rdf_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_rdf_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(native_family_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(native_adapter_metadata, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_native_family_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(graphql_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_graphql_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_graphql_edit_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(avro_candidate_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_avro_candidate_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_protobuf_inspect_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(core_cardinality_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_core_cardinality_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(core_facets_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_core_facets_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        core_schema_properties_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        execute_core_schema_properties_wire,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        csv_boolean_lexical_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(execute_csv_boolean_lexical_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(json_schema_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_json_schema_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(avro_fields_derive, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_capabilities, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_hmac_sha256, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_slot_sha256, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_signature_matches, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        outcome_effect_frame_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(outcome_effect_frame_admission, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_canonical, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_bounded_size, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_digest, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_loads, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_token_encode, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_token_decode, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_key_literal_mode, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_native_token_classify, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_native_result_classify, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        related_keys::related_keys_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(related_keys::related_keys_parse, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        related_keys::related_keys_truss_component_profile_matches,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        protobuf_descriptor_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(protobuf_read_descriptor_set, module)?)?;
+    module.add_function(wrap_pyfunction!(protobuf_write_descriptor_set, module)?)?;
+    module.add_function(wrap_pyfunction!(access_float32_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_float32_classify, module)?)?;
+    module.add_function(wrap_pyfunction!(access_range_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_range_compare_integer, module)?)?;
+    module.add_function(wrap_pyfunction!(access_range_compare_decimal, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_constraints_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_read_frame_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_stream_read_frame_shape, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_read_frame_cardinality,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_request_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_missing_domain_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_domain_type_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_domain_keys_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_domain_parameter_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_minimum_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_minimum_comparison_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_minimum_exact_value_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_maximum_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_maximum_comparison_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_maximum_exact_value_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_row_cap_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_slot_count_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_slot_carrier_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_slot_nullability_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_final_maximum_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_length_within, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_boolean, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_integer, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_text, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_bytes, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_decimal, module)?)?;
+    module.add_function(wrap_pyfunction!(access_values_integer_fits, module)?)?;
+    module.add_function(wrap_pyfunction!(access_values_validate_decimal, module)?)?;
     module.add_function(wrap_pyfunction!(read_value_wire, module)?)?;
     module.add_function(wrap_pyfunction!(write_value, module)?)?;
     module.add_function(wrap_pyfunction!(read_python_value, module)?)?;
@@ -1587,7 +6567,58 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(literal_identity_wire, module)?)?;
     module.add_function(wrap_pyfunction!(numeric_interval_wire, module)?)?;
     module.add_class::<NativeEngine>()?;
+    module.add_class::<PyReviewedParameterScanner>()?;
     module.add_class::<NativeRegistry>()?;
     module.add_class::<NativePythonSchema>()?;
     Ok(())
+}
+
+/// Return a fresh bounded Python object generated from the requested schema version.
+#[pyfunction]
+fn domain_pack_schema(py: Python<'_>, version: String) -> PyResult<PyObject> {
+    let schema = umf_core::domain_pack_schema::domain_pack_schema(&version)
+        .map_err(|error| PyValueError::new_err(error.code))?;
+    let mut context = Context::ordinary();
+    // Apply the ordinary tree/text/depth admission profile before allocating
+    // the fresh host object graph.
+    let schema = umf_core::copy_json(&schema, &mut context).map_err(py_error)?;
+    domain_pack_value_to_python(py, &schema, &mut context)
+}
+
+fn domain_pack_value_to_python(
+    py: Python<'_>,
+    value: &Value,
+    context: &mut Context<'_>,
+) -> PyResult<PyObject> {
+    context.charge_work(1, Utf16::default()).map_err(py_error)?;
+    Ok(match value {
+        Value::Null => py.None(),
+        Value::Bool(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
+        Value::Number(value) if value.fract() == 0.0 && value.abs() <= 9_007_199_254_740_991.0 => {
+            (*value as i64)
+                .into_pyobject(py)?
+                .to_owned()
+                .into_any()
+                .unbind()
+        }
+        Value::Number(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
+        Value::String(value) => py_text(py, value, context)?,
+        Value::Array(items) => {
+            let output = PyList::empty_bound(py);
+            for item in items {
+                output.append(domain_pack_value_to_python(py, item, context)?)?;
+            }
+            output.unbind().into()
+        }
+        Value::Object(members) => {
+            let output = PyDict::new_bound(py);
+            for (key, value) in members {
+                output.set_item(
+                    py_text(py, key, context)?,
+                    domain_pack_value_to_python(py, value, context)?,
+                )?;
+            }
+            output.unbind().into()
+        }
+    })
 }

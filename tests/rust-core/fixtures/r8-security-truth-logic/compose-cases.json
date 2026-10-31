@@ -1,0 +1,38 @@
+{
+  "format": "umf-r8-compose-security-rules/1",
+  "predecessor": {
+    "runtime": "Bun 1.4.3",
+    "source": "src/extensions/security/logic.ts",
+    "sourceSha256": "df5857cf39f924552a8082f87d911b81725cce0cf1fda4375daeeb07dd48c8c8",
+    "testSource": "tests/security/logic.test.ts",
+    "testSourceSha256": "042523ea973e7d4fb8a43047c2e3e20ca754d562a8ce167afdc136e08c3ef8b2",
+    "contract": "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
+    "contractSha256": "1183e2ea8ba55fade4007554905b7175d7796e867a67814f511e9cd3ee514800"
+  },
+  "cases": [
+    {"name":"empty-default-deny","input":{"rules":[]},"oracle":{"decision":"deny","disclosure":{}}},
+    {"name":"true-permit-no-protected-fields","input":{"rules":[{"effect":"permit","truth":"T"}]},"oracle":{"decision":"permit","disclosure":{}}},
+    {"name":"unknown-truth-is-indeterminate","input":{"rules":[{"effect":"permit","truth":"T"},{"effect":"require","truth":"U"}]},"oracle":{"decision":"indeterminate","disclosure":{}}},
+    {"name":"unknown-precedes-explicit-denial","input":{"rules":[{"effect":"permit","truth":"T"},{"effect":"forbid","truth":"T"},{"effect":"require","truth":"U"}]},"oracle":{"decision":"indeterminate","disclosure":{}}},
+    {"name":"failed-require-denies","input":{"rules":[{"effect":"permit","truth":"T"},{"effect":"require","truth":"F"}]},"oracle":{"decision":"deny","disclosure":{}}},
+    {"name":"true-forbid-denies","input":{"rules":[{"effect":"permit","truth":"T"},{"effect":"forbid","truth":"T"}]},"oracle":{"decision":"deny","disclosure":{}}},
+    {"name":"no-grant-denies","input":{"rules":[{"effect":"permit","truth":"F"}]},"oracle":{"decision":"deny","disclosure":{}}},
+    {"name":"protected-field-omission-indeterminate","input":{"rules":[{"effect":"permit","truth":"T","disclosure":{"salary":{"kind":"original"}}}],"protectedFields":["salary","name"]},"oracle":{"decision":"indeterminate","disclosure":{}}},
+    {"name":"false-permit-does-not-disclose","input":{"rules":[{"effect":"permit","truth":"T"},{"effect":"permit","truth":"F","disclosure":{"salary":{"kind":"original"}}}],"protectedFields":["salary"]},"oracle":{"decision":"indeterminate","disclosure":{}}},
+    {"name":"withheld-dominates-original-and-transform","input":{"rules":[{"effect":"permit","truth":"T","disclosure":{"salary":{"kind":"transformed","type":"string","value":"masked"}}},{"effect":"permit","truth":"T","disclosure":{"salary":{"kind":"original"}}},{"effect":"permit","truth":"T","disclosure":{"salary":{"kind":"withheld"}}}],"protectedFields":["salary"]},"oracle":{"decision":"permit","disclosure":{"salary":{"kind":"withheld"}}}},
+    {"name":"equal-transforms-agree","input":{"rules":[{"effect":"permit","truth":"T","disclosure":{"salary":{"kind":"transformed","type":"string","value":"masked"}}},{"effect":"permit","truth":"T","disclosure":{"salary":{"kind":"transformed","type":"string","value":"masked"}}}],"protectedFields":["salary"]},"oracle":{"decision":"permit","disclosure":{"salary":{"kind":"transformed","type":"string","value":"masked"}}}},
+    {"name":"different-transforms-conflict","input":{"rules":[{"effect":"permit","truth":"T","disclosure":{"salary":{"kind":"transformed","type":"string","value":"masked-a"}}},{"effect":"permit","truth":"T","disclosure":{"salary":{"kind":"transformed","type":"string","value":"masked-b"}}}],"protectedFields":["salary"]},"oracle":{"decision":"conflict","disclosure":{}}},
+    {"name":"boolean-transform","input":{"rules":[{"effect":"permit","truth":"T","disclosure":{"active":{"kind":"transformed","type":"boolean","value":false}}}],"protectedFields":["active"]},"oracle":{"decision":"permit","disclosure":{"active":{"kind":"transformed","type":"boolean","value":false}}}},
+    {"name":"different-transform-types-conflict","input":{"rules":[{"effect":"permit","truth":"T","disclosure":{"active":{"kind":"transformed","type":"boolean","value":false}}},{"effect":"permit","truth":"T","disclosure":{"active":{"kind":"transformed","type":"string","value":"false"}}}],"protectedFields":["active"]},"oracle":{"decision":"conflict","disclosure":{}}},
+    {"name":"unknown-member-precedes-invalid-effect","input":{"rules":[{"effect":"future","truth":"invalid","future":true}]},"error":{"code":"SECURITY_UNKNOWN","message":"Uninterpreted security member","path":""}},
+    {"name":"invalid-effect-precedes-invalid-truth","input":{"rules":[{"effect":"future","truth":"invalid"}]},"error":{"code":"SECURITY_EFFECT","message":"Invalid effect","path":""}},
+    {"name":"only-permits-may-carry-disclosure","input":{"rules":[{"effect":"require","truth":"T","disclosure":null}]},"error":{"code":"SECURITY_DISCLOSURE","message":"Only permits carry disclosure","path":""}},
+    {"name":"invalid-disposition-rejected-during-preflight","input":{"rules":[{"effect":"permit","truth":"F","disclosure":{"x":{"kind":"transformed","type":"number","value":1}}}]},"error":{"code":"SECURITY_DISPOSITION","message":"Unsupported or malformed disposition","path":""}},
+    {"name":"composition-bounds-precede-rule-errors","input":{"rules":[{"future":true,"effect":"bad","truth":"bad"}],"protectedFields":[],"manyRules":257},"error":{"code":"SECURITY_BOUND","message":"Invalid composition bounds or protected fields","path":""}},
+    {"name":"protected-field-bounds-precede-rule-errors","input":{"rules":[{"future":true}],"protectedFields":[""]},"error":{"code":"SECURITY_BOUND","message":"Invalid composition bounds or protected fields","path":""}},
+    {"name":"unknown-disposition-member","input":{"rules":[{"effect":"permit","truth":"T","disclosure":{"x":{"kind":"original","native":"opaque"}}}]},"error":{"code":"SECURITY_UNKNOWN","message":"Uninterpreted security member","path":""}},
+    {"name":"duplicate-protected-fields","input":{"rules":[],"protectedFields":["x","x"]},"error":{"code":"SECURITY_BOUND","message":"Invalid composition bounds or protected fields","path":""}}
+  ],
+  "oracleMethod":"Hand-evaluated from CONTRACT-062: U anywhere refuses as indeterminate; a missing true permit, failed require, or true forbid denies; protected omissions refuse indeterminate; only true permits contribute obligations; any withheld dominates; unequal transformed type/value pairs conflict; otherwise transforms dominate original. Errors follow the predecessor's eager copy, top-level bounds, rule shape/member/effect/truth, then disclosure validation order.",
+  "limitations":["Tagged wire accepts already admitted JSON Values; this packet does not claim accessor/proxy behavior or raw-host parity.","Only already evaluated rules and constant string/boolean transforms are composed. Policy selection, evaluation, authority, and native effect are excluded."]
+}

@@ -113,9 +113,12 @@ metadata remains available for preservation. No retry or live service is implied
 
 ## Non-Normative Notes
 
-`bun scripts/domain-pack-schema.ts` regenerates canonical artifacts;
-`--check` refuses stale output. Consumers may ship a generated snapshot to avoid
-requiring an unpublished UMF revision. They MUST identify UMF as its authority
+`bun scripts/domain-pack-schema.ts` invokes the pinned, offline Rust CLI to
+regenerate canonical schemas and embeds those results in the extension-package
+manifests; `--check` refuses stale output. The generator requires the pinned
+Rust toolchain and cached Cargo dependencies. Consumers may ship a generated
+snapshot to avoid requiring an unpublished UMF revision. They MUST identify
+UMF as its authority
 and refresh from the generator, rather than independently editing the schema.
 Native schema compilation and value realism are separate consumer evidence.
 

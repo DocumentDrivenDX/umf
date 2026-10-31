@@ -60,7 +60,7 @@ def _load(text: str) -> dict[str, object]:
     return cast(dict[str, object], value)
 
 
-def _parameter_positions(sql: str) -> list[tuple[int, int, int]]:
+def _parameter_positions_python(sql: str) -> list[tuple[int, int, int]]:
     """Lossless parameter-style lexing of compiler-owned SQL, never lowering."""
     positions: list[tuple[int, int, int]] = []
     i = 0
@@ -123,6 +123,68 @@ def _parameter_positions(sql: str) -> list[tuple[int, int, int]]:
         else:
             i += 1
     return positions
+
+
+def _parameter_positions(sql: str) -> list[tuple[int, int, int]]:
+    """Scan legacy DB-API placeholders with Rust for exact builtin strings.
+
+    String subclasses retain the complete predecessor path because Python
+    method overrides on ``startswith``, ``find``, indexing, and ``isalnum``
+    are observable parts of that path.
+    """
+    if type(sql) is not str:
+        return _parameter_positions_python(sql)
+
+    from umf import rust_reviewed_parameters
+
+    core = rust_reviewed_parameters
+    profile = getattr(core, "access_reviewed_parameter_profile_version", None)
+    factory = getattr(core, "ReviewedParameterScanner", None)
+    if (not callable(profile) or profile() != "umf-access-reviewed-transport/0.1.0"
+            or not callable(factory)):
+        raise ReadBuildError("installed umf-core lacks reviewed parameter profile")
+    # The binding copies directly from CPython's Unicode representation into a
+    # fallibly reserved Vec<u32>; avoid a second, pointer-heavy Python list.
+    scanner = factory(sql)
+    reply: bool | None = None
+    positions: list[tuple[int, int, int]] = []
+    messages = {
+        "unterminated_comment": "unterminated compiler SQL comment",
+        "unterminated_quote": "unterminated compiler SQL quote",
+        "unterminated_dollar_quote": "unterminated compiler SQL dollar quote",
+    }
+    while True:
+        event = scanner.next(reply)
+        reply = None
+        if type(event) is not dict:
+            raise ReadBuildError("native reviewed scanner result differs")
+        kind = event.get("kind")
+        if kind == "need_python_isalnum":
+            index = event.get("index")
+            if type(index) is not int or index < 0 or index >= len(sql):
+                raise ReadBuildError("native reviewed scanner result differs")
+            reply = sql[index].isalnum()
+        elif kind == "placeholder":
+            start, end, digits = event.get("start"), event.get("end"), event.get("digits")
+            if (type(start) is not int or type(end) is not int or type(digits) is not str
+                    or not (0 <= start < end <= len(sql)) or sql[start] != "$"
+                    or sql[start + 1:end] != digits or not digits.isascii()
+                    or not digits.isdigit() or digits[0] == "0"):
+                raise ReadBuildError("native reviewed scanner result differs")
+            # Keep Python's arbitrary precision and digit-limit semantics,
+            # and do so before asking Rust to scan beyond this placeholder.
+            ordinal = int(digits) - 1
+            positions.append((start, end, ordinal))
+        elif kind == "error":
+            code = event.get("code")
+            message = messages.get(code) if type(code) is str else None
+            if message is None or event.get("message") != message:
+                raise ReadBuildError("native reviewed scanner result differs")
+            raise ReadBuildError(message)
+        elif kind == "done":
+            return positions
+        else:
+            raise ReadBuildError("native reviewed scanner result differs")
 
 
 def _dbapi(sql: str) -> str:

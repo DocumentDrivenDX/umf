@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict, cast
 
-from ._embedded import GenerationError, execute
+from ._native import GenerationError, execute
+
+__version__ = "0.2.0"
 
 
 class RecordSelection(TypedDict):
@@ -172,6 +174,7 @@ __all__ = [
     "TableDeploymentDiagnostic",
     "TableMigrationDiscoveryOptions",
     "TableMigrationPredecessor",
+    "__version__",
     "compile_table_deployment",
     "compile_table_migration",
     "discover_table_migration_changes",

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-postgresql-projection.schema.json';
+const check=process.argv.includes('--check');
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:cardinality-postgresql-projection:1.0.0';schema.title='Authored Cardinality projection to PostgreSQL stored columns';
 schema.properties.operation.const='project-cardinality-postgresql';schema.properties.source.$ref='urn:umf:core:0.10.0';
@@ -13,4 +14,10 @@ const mapping=schema.properties.mapping;
 Object.assign(mapping.properties,{basis:{const:'Explicit author declaration and requested native carrier; retained residuals qualify unrepresented obligations'},cardinality:{enum:['one','array','map','unspecified']},encoding:{enum:['scalar','sequence-check','object-check','carrier-only']}});mapping.required.push('cardinality','encoding','basis');
 mapping.properties.outcome.enum.push('approximated');schema.properties.residuals.items.properties.outcome.enum.push('approximated');
 schema.properties.binding.const.subset='Single authored Field with explicit scalar, checked sequence or JSONB object carrier; item/value conversion and native equivalence are not implied';
-await Bun.write('spec/core/cardinality-postgresql-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
+const output='spec/core/cardinality-postgresql-projection.schema.json';
+const rendered=JSON.stringify(schema,null,2)+'\n';
+if(check){
+ const current=await Bun.file(output).text();
+ if(current!==rendered)throw new Error(`${output} is stale; regenerate deliberately.`);
+ console.log(`${output} is current.`);
+}else await Bun.write(output,rendered);

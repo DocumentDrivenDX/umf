@@ -23,7 +23,7 @@ ddx:
 
 Define SHACL 1.0 graph interchange and path metadata. The governing standard is
 [W3C Recommendation 2017-07-20](https://www.w3.org/TR/2017/REC-shacl-20170720/).
-Constraint execution remains required downstream work, not an implemented claim.
+The native evaluator implements an explicit bounded subset; complete constraint execution remains downstream work.
 
 ## Normative Surface
 
@@ -103,46 +103,33 @@ on UMF's computed result. Full official validation-report execution remains open
 
 ## Constraint-engine proposal
 
-`proposeShaclEngineValidation(shapes, data, {id, blankNodePolicy})` runs pinned
-`rdf-validate-shacl@0.6.5`. It returns the copied source graphs, diagnostics, engine/version,
-policy, `complete: false`, and status `evaluated` or `blocked`. Only evaluated outcomes
-carry `engineConforms` and a full RDF report document. This boolean is the engine's
-outcome, NOT a verified UMF conformance assertion. The complete report encoding is in
-`engine-report-schema.json`; RDF report terms use CONTRACT-025.
+The default Node and browser `proposeShaclEngineValidation(shapes, data, {id,
+blankNodePolicy})` runs the Rust evaluator identified as
+`umf-shacl-native-subset/2`. It returns copied source graphs, diagnostics,
+engine identity, policy, `complete: false`, and status `evaluated` or `blocked`.
+Only evaluated outcomes carry `engineConforms` and an RDF validation-report
+document. The boolean is this evaluator's outcome, not a claim of complete
+SHACL conformance. Direct imports of the legacy TypeScript engine retain their
+actual `rdf-validate-shacl@0.6.5` identity. The report schema admits these two
+truthful identities; consumers must not treat them as interchangeable evidence.
 
-`blankNodePolicy` MUST be explicit: `disjoint-inputs` prefixes the two blank-label spaces
-separately; `shared-scope` requires equal declared blankNodeScope values and uses one
-label space. Equal document IDs alone do not request shared identity. Report-local
-blank identity is separately scoped by the requested report id. Native report graphs
-may copy source structures or abbreviate sh:in lists; the proposal retains the entire
-original graphs independently, so those report conventions cannot replace the source.
+`blankNodePolicy` MUST be explicit. `disjoint-inputs` keeps the shapes and data
+blank-label spaces separate. `shared-scope` requires equal declared
+blankNodeScope values and uses one label space. Equal document IDs alone do not
+request shared identity. Report-local blank identity is separately scoped by
+the requested report id. The proposal retains both original graph documents
+independently of how the validation report represents paths and RDF lists.
 
-A fresh engine is created per proposal, with named RDF-list cells allowed. The engine's
-silent repeated-check cutoff is disabled. Cyclic shape/list dependency edges or depth
-above 128 are rejected before execution. Cyclic class hierarchies or path expressions
-may still cause native failures, which produce blocked outcomes with no partial report.
-General recursion semantics remain unimplemented. This conservative dependency check
-also rejects unused cycles; the proposal does not claim complete shape well-formedness.
-
-Imports, declared entailment, SPARQL, JavaScript, custom targets and rules are blocked.
-Integer/decimal ordering now uses the exact profile below, correcting the known false
-pass at 9007199254740993. Mixed float/double promotion uses the numeric profile below. Datetime and string-collation
-fidelity still need further evidence. Input shapes/data remain
-recoverable on these failures. No resources are fetched and no custom code is executed.
-
-The initial official matrix executes all 98 pinned Core cases. All native conformance
-booleans agree. Mandatory top-level result fields agree in all cases when equivalent
-SPARQL path mappings are compared; raw path-subgraph isomorphism agrees in 89 because
-nine expected reports duplicate equivalent path nodes where the engine shares them.
-This comparison excludes messages, nested details, and blank-node identity relative to
-source graphs. Those exclusions MUST NOT be represented as full report equivalence.
-PySHACL 0.30.1 independently agrees with 97 booleans and 95 path-semantic projections;
-its differences remain recorded, not treated as proof that either engine is authoritative.
-
-Required follow-up: source-anchored report identity, messages/details, malformed-shape
-validation, exact native datatype ordering, recursion/limits, and cross-system consumers.
-This proposal does not close AC3 or the overall SHACL support claim.
-
+The current Rust evaluator selects standard explicit and implicit targets,
+evaluates bounded SHACL property paths and nested node/property shapes, and
+emits RDF report terms for supported count, qualified count, datatype, class,
+node kind, value, set, length, language, closed-shape, equality, disjointness,
+numeric and regular-expression constraints. Unsupported constraints, imports,
+entailment, SPARQL, JavaScript, custom targets, rules, and unsupported regex
+syntax block before claiming an evaluated result. A blocked result has no
+partial report. No resources are fetched and no custom code is executed.
+`complete: false` remains required until full syntax, datatype, recursion,
+report, and cross-system semantics are implemented and verified.
 
 ## Exact integer/decimal profile
 

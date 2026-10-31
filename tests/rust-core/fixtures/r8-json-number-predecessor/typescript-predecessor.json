@@ -1,0 +1,29 @@
+{
+  "format": "umf.r8.json-number-typescript-predecessor/1",
+  "runtime": {"name": "Bun", "version": "1.4.3"},
+  "operation": "assertExactJsonNumber",
+  "cases": [
+    {"id":"zero","token":"0","outcome":"accepted"},
+    {"id":"negative-zero","token":"-0","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Noninteroperable JSON number"}},
+    {"id":"integer","token":"42","outcome":"accepted"},
+    {"id":"safe-integer-max","token":"9007199254740991","outcome":"accepted"},
+    {"id":"unsafe-integer","token":"9007199254740992","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Noninteroperable JSON number"}},
+    {"id":"ordinary-fraction","token":"0.1","outcome":"accepted"},
+    {"id":"rounded-fraction","token":"0.10000000000000001","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Parsing would change the decimal value"}},
+    {"id":"exponent-fraction","token":"1e-7","outcome":"accepted"},
+    {"id":"equivalent-exponent","token":"100e-2","outcome":"accepted"},
+    {"id":"large-exponent-overflow","token":"1e309","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Noninteroperable JSON number"}},
+    {"id":"small-exponent-underflow","token":"1e-324","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Parsing would change the decimal value"}},
+    {"id":"signed-mantissa","token":"+1","outcome":"accepted"},
+    {"id":"leading-zero","token":"01","outcome":"accepted"},
+    {"id":"empty","token":"","outcome":"accepted"},
+    {"id":"whitespace","token":" 1","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Unsupported numeric spelling"}},
+    {"id":"hex","token":"0x10","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Unsupported numeric spelling"}},
+    {"id":"nan","token":"NaN","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Noninteroperable JSON number"}},
+    {"id":"infinity","token":"Infinity","outcome":"refused","error":{"name":"UmfError","code":"NUMBER","message":"Noninteroperable JSON number"}}
+  ],
+  "sources": [
+    {"path":"src/model/internal/json-number.ts","sha256":"30b51ae2f1aaecb87611ccdae6c1f3eaae04c02764b224407f6acb07ea9c5a06"},
+    {"path":"src/model/errors.ts","sha256":"65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6"}
+  ]
+}

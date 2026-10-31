@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import Ajv2020 from 'ajv/dist/2020';
-import manifest from '../../../spec/extensions/generalized-rdf/package.json';
 import datasetSchema from '../../../spec/extensions/generalized-rdf/dataset-schema.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,type NativeJson} from '../../model/native-json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../../model/types';
 import {wellFormedIri,wellFormedLanguage} from '../jsonld/rdf-terms';
-export const GENERALIZED_RDF_EXTENSION='umf.generalized-rdf';
-export const generalizedRdfPackage=manifest as unknown as ExtensionPackage;
+import {GENERALIZED_RDF_EXTENSION,generalizedRdfPackage} from './package';
+export {GENERALIZED_RDF_EXTENSION,generalizedRdfPackage} from './package';
 export type GeneralizedRdfNode={termType:'NamedNode'|'BlankNode';value:string};
 export type GeneralizedRdfLiteral={termType:'Literal';value:string;datatype:{termType:'NamedNode';value:string};language?:string};
 export interface GeneralizedRdfQuad {subject:GeneralizedRdfNode;predicate:GeneralizedRdfNode;object:GeneralizedRdfNode|GeneralizedRdfLiteral;graph:GeneralizedRdfNode|{termType:'DefaultGraph';value:''}}

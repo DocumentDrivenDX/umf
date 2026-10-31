@@ -8,13 +8,13 @@ use umf_core::{
     serialization::{self, Format},
 };
 
-const ORACLE: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-serialization-predecessor-boundaries.json");
-const ORDERING_ORACLE: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-serialization-ordering-predecessor.json");
-const YAML_SCALAR_ORACLE: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-scalar-predecessor.json");
-const YAML_CHARACTER_ORACLE: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-character-predecessor.json");
-const YAML_SOURCE_CONTEXT_ORACLE: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-source-context-predecessor.json");
-const YAML_PROFILE_EDGES_ORACLE: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-profile-edges-predecessor.json");
-const YAML_BREAK_CONTEXT_ORACLE: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-break-context-predecessor.json");
+const ORACLE: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-serialization-predecessor-boundaries.json");
+const ORDERING_ORACLE: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-serialization-ordering-predecessor.json");
+const YAML_SCALAR_ORACLE: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-yaml-scalar-predecessor.json");
+const YAML_CHARACTER_ORACLE: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-yaml-character-predecessor.json");
+const YAML_SOURCE_CONTEXT_ORACLE: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-yaml-source-context-predecessor.json");
+const YAML_PROFILE_EDGES_ORACLE: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-yaml-profile-edges-predecessor.json");
+const YAML_BREAK_CONTEXT_ORACLE: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-yaml-break-context-predecessor.json");
 
 #[test]
 fn scanner_profile_is_explicit_and_default_yaml12_remains_unchanged() {

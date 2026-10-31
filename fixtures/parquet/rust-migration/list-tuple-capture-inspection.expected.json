@@ -1,0 +1,874 @@
+{
+  "capture": {
+    "umf": "0.10.0",
+    "id": "golden",
+    "vocabularies": {
+      "umf.parquet": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "parquet",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "source",
+            "extensions": {
+              "umf.parquet": {
+                "profile": "parquet-file-source",
+                "encoding": "hex",
+                "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "exportHex": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231",
+  "framing": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "golden",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": "located",
+    "complete": false,
+    "byteLength": 74,
+    "diagnostics": [
+      {
+        "code": "PARQUET_UNINTERPRETED",
+        "path": "",
+        "severity": "warning",
+        "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+      }
+    ],
+    "footerRegion": {
+      "offset": 4,
+      "length": 62,
+      "mode": "plaintext-or-signed"
+    }
+  },
+  "footer": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "golden",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": "decoded",
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "PARQUET_UNINTERPRETED",
+        "path": "",
+        "severity": "warning",
+        "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+      },
+      {
+        "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+      }
+    ],
+    "value": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "value": {
+            "kind": "i32",
+            "value": "2"
+          }
+        },
+        {
+          "id": 2,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": [
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "736368656d61"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "6974656d73"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 6,
+                    "value": {
+                      "kind": "i32",
+                      "value": "3"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "2"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "7475706c65"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "2"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "0"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "61"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "62"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "value": {
+            "kind": "i64",
+            "value": "0"
+          }
+        },
+        {
+          "id": 4,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": []
+          }
+        }
+      ]
+    },
+    "consumedBytes": 62,
+    "trailingBytes": 0
+  },
+  "metadata": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "golden",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": "mapped",
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "PARQUET_UNINTERPRETED",
+        "path": "",
+        "severity": "warning",
+        "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+      },
+      {
+        "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+      },
+      {
+        "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+      }
+    ],
+    "wire": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "value": {
+            "kind": "i32",
+            "value": "2"
+          }
+        },
+        {
+          "id": 2,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": [
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "736368656d61"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "6974656d73"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 6,
+                    "value": {
+                      "kind": "i32",
+                      "value": "3"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "2"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "7475706c65"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "2"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "0"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "61"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "62"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "value": {
+            "kind": "i64",
+            "value": "0"
+          }
+        },
+        {
+          "id": 4,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": []
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "version": "2",
+      "schema": [
+        {
+          "name": "schema",
+          "num_children": "1"
+        },
+        {
+          "repetition_type": "1",
+          "name": "items",
+          "num_children": "1",
+          "converted_type": "3"
+        },
+        {
+          "repetition_type": "2",
+          "name": "tuple",
+          "num_children": "2"
+        },
+        {
+          "type": "1",
+          "repetition_type": "0",
+          "name": "a"
+        },
+        {
+          "type": "1",
+          "repetition_type": "1",
+          "name": "b"
+        }
+      ],
+      "num_rows": "0",
+      "row_groups": []
+    }
+  },
+  "schema": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "golden",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": "checked",
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "PARQUET_UNINTERPRETED",
+        "path": "",
+        "severity": "warning",
+        "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+      },
+      {
+        "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+      },
+      {
+        "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+      },
+      {
+        "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+      }
+    ],
+    "wire": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "value": {
+            "kind": "i32",
+            "value": "2"
+          }
+        },
+        {
+          "id": 2,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": [
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "736368656d61"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "6974656d73"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 6,
+                    "value": {
+                      "kind": "i32",
+                      "value": "3"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "2"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "7475706c65"
+                    }
+                  },
+                  {
+                    "id": 5,
+                    "value": {
+                      "kind": "i32",
+                      "value": "2"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "0"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "61"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "62"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "value": {
+            "kind": "i64",
+            "value": "0"
+          }
+        },
+        {
+          "id": 4,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": []
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "version": "2",
+      "schema": [
+        {
+          "name": "schema",
+          "num_children": "1"
+        },
+        {
+          "repetition_type": "1",
+          "name": "items",
+          "num_children": "1",
+          "converted_type": "3"
+        },
+        {
+          "repetition_type": "2",
+          "name": "tuple",
+          "num_children": "2"
+        },
+        {
+          "type": "1",
+          "repetition_type": "0",
+          "name": "a"
+        },
+        {
+          "type": "1",
+          "repetition_type": "1",
+          "name": "b"
+        }
+      ],
+      "num_rows": "0",
+      "row_groups": []
+    },
+    "tree": {
+      "index": 0,
+      "name": "schema",
+      "path": [],
+      "definitionLevel": 0,
+      "repetitionLevel": 0,
+      "children": [
+        {
+          "index": 1,
+          "name": "items",
+          "path": [
+            "items"
+          ],
+          "definitionLevel": 1,
+          "repetitionLevel": 0,
+          "children": [
+            {
+              "index": 2,
+              "name": "tuple",
+              "path": [
+                "items",
+                "tuple"
+              ],
+              "definitionLevel": 2,
+              "repetitionLevel": 1,
+              "children": [
+                {
+                  "index": 3,
+                  "name": "a",
+                  "path": [
+                    "items",
+                    "tuple",
+                    "a"
+                  ],
+                  "definitionLevel": 2,
+                  "repetitionLevel": 1,
+                  "children": []
+                },
+                {
+                  "index": 4,
+                  "name": "b",
+                  "path": [
+                    "items",
+                    "tuple",
+                    "b"
+                  ],
+                  "definitionLevel": 3,
+                  "repetitionLevel": 1,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "leaves": [
+      {
+        "index": 3,
+        "ordinal": 0,
+        "path": [
+          "items",
+          "tuple",
+          "a"
+        ],
+        "physicalType": "INT32",
+        "definitionLevel": 2,
+        "repetitionLevel": 1
+      },
+      {
+        "index": 4,
+        "ordinal": 1,
+        "path": [
+          "items",
+          "tuple",
+          "b"
+        ],
+        "physicalType": "INT32",
+        "definitionLevel": 3,
+        "repetitionLevel": 1
+      }
+    ]
+  }
+}

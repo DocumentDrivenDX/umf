@@ -32,7 +32,8 @@ test('current metadata inspectors, selection, containers and unknown refinement 
 });
 test('explicit Field-domain authoring preserves the source and validates collisions',()=>{
  const original=uuidDocument('binary'),before=structuredClone(original);
- const declared=u.declareCoreBit128Field(original,FIELD,'uuid');expect(original).toEqual(before);expect(declared.modules[0]!.elements[1]!.scalarType).toBe('uuid');
+ const declared=u.declareCoreBit128Field(original,FIELD,'uuid');expect(original).toEqual(before);expect(declared.umf).toBe('0.10.0');expect(declared.modules[0]!.elements[1]!.scalarType).toBe('uuid');
+ const legacy=uuidDocument('binary');(legacy as {umf:string}).umf='0.9.0';expect(()=>u.declareCoreBit128Field(legacy,FIELD,'uuid')).toThrow();
  const unknown=uuidDocument('future');expect(()=>u.declareCoreBit128Field(unknown,FIELD,'uuid')).toThrow();
  const constrained=uuidDocument('binary');constrained.modules[0]!.elements[1]!.facets={length:{min:16,max:16,unit:'byte'}};expect(()=>u.declareCoreBit128Field(constrained,FIELD,'uuid')).toThrow();
 });

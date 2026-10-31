@@ -37,7 +37,7 @@ pub(crate) fn abstract_relational_compare(
     }
 }
 
-fn to_number(value: Primitive<'_>, ctx: &mut Context<'_>) -> Result<f64, EngineError> {
+pub(crate) fn to_number(value: Primitive<'_>, ctx: &mut Context<'_>) -> Result<f64, EngineError> {
     match value {
         Primitive::Undefined => Ok(f64::NAN),
         Primitive::Null => Ok(0.0),
@@ -390,7 +390,7 @@ mod tests {
     #[test]
     fn frozen_native_ecmascript_string_numeric_corpus_matches_all_1548_cases() {
         const RECEIPT: &str = include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r2/sol-ecma-coercion-predecessor.json"
+            "../../../tests/rust-core/fixtures/r2/sol-ecma-coercion-predecessor.json"
         );
         let receipt: serde_json::Value = serde_json::from_str(RECEIPT).unwrap();
         assert_eq!(

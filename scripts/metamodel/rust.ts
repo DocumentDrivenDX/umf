@@ -4,17 +4,18 @@ import {resolve,dirname} from 'node:path';
 import {existsSync,readFileSync,readdirSync,mkdirSync,writeFileSync,rmSync,mkdtempSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {encodeWire,fromWire} from '../../bindings/core/node/src/wire.js';
+import {rustCompilePackages,rustCompileResources} from './source-closure';
 export const repositoryRoot=resolve(import.meta.dir,'../..');
 const hash=(bytes:string|Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 type Artifact={fingerprint:string;executable:string;binarySha256:string;sources:Record<string,string>};
 let cached:Artifact|undefined;
 function snapshot():{fingerprint:string;sources:Record<string,string>} {
- const paths=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml','spec/extensions/tables/operation.schema.json'];
+ const paths=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml',...rustCompileResources];
  function visit(path:string):void {for(const entry of readdirSync(resolve(repositoryRoot,path),{withFileTypes:true})){if(['target','node_modules','.git','__pycache__'].includes(entry.name))continue;const child=path+'/'+entry.name;if(entry.isDirectory())visit(child);else if(entry.isFile())paths.push(child);}}
- for(const path of ['crates/umf-core','crates/umf-core-wire','crates/umf-codegen','crates/umf-metamodel','crates/umf-cli'])visit(path);
+ for(const path of rustCompilePackages)visit(path);
  const sources=Object.fromEntries(paths.sort().map(path=>[path,hash(readFileSync(resolve(repositoryRoot,path)))]));
  const env=Object.fromEntries(['RUSTFLAGS','CARGO_ENCODED_RUSTFLAGS','CARGO_BUILD_TARGET','RUSTUP_TOOLCHAIN'].map(name=>[name,process.env[name]??'']));
- return {sources,fingerprint:hash(JSON.stringify({sources,env}))};
+ return {sources,fingerprint:hash(JSON.stringify({features:['--no-default-features'],sources,env}))};
 }
 function lock(path:string):()=>void {
  const started=Date.now();
@@ -32,15 +33,15 @@ function sourceArtifact():Artifact {
  const cargo=Bun.which('cargo')??(existsSync('/opt/homebrew/opt/rustup/bin/cargo')?'/opt/homebrew/opt/rustup/bin/cargo':'cargo');
  // Ordinary cargo builds cannot overwrite this target; bridge processes coordinate
  // through a lock and execute only immutable private copies after releasing it.
- const cacheRoot=resolve(repositoryRoot,'target/metamodel-compiler');mkdirSync(cacheRoot,{recursive:true});
+ const cacheRoot=resolve(process.env.UMF_METAMODEL_CACHE_DIR??resolve(repositoryRoot,'target/metamodel-compiler'));mkdirSync(cacheRoot,{recursive:true});
  const unlock=lock(resolve(cacheRoot,'build.lock'));
  try{
   for(let attempt=0;attempt<3;attempt++){
    const inputs=snapshot();
-   const child=Bun.spawnSync([cargo,'build','--quiet','--locked','--offline','-p','umf-cli','--message-format=json'],{cwd:repositoryRoot,env:{...process.env,CARGO_TARGET_DIR:resolve(cacheRoot,'build'),PATH:dirname(cargo)+':'+(process.env.PATH??'')},stdout:'pipe',stderr:'pipe'});
+   const child=Bun.spawnSync([cargo,'build','--quiet','--locked','--offline','-p','umf-metamodel-cli','--no-default-features','--message-format=json'],{cwd:repositoryRoot,env:{...process.env,CARGO_TARGET_DIR:resolve(cacheRoot,'build'),PATH:dirname(cargo)+':'+(process.env.PATH??'')},stdout:'pipe',stderr:'pipe'});
    const records=new TextDecoder().decode(child.stdout).split('\n').filter(Boolean).map(line=>{try{return JSON.parse(line);}catch{return {};}});
    if(child.exitCode!==0)throw Error(new TextDecoder().decode(child.stderr).trim()+'\n'+records.filter(item=>item.reason==='compiler-message').map(item=>item.message.rendered).join('\n'));
-   const built=records.find(item=>item.reason==='compiler-artifact'&&item.target?.name==='umf'&&item.executable)?.executable;
+   const built=records.find(item=>item.reason==='compiler-artifact'&&item.target?.name==='umf-metamodel'&&item.executable)?.executable;
    if(typeof built!=='string')throw Error('METAMODEL_MISSING_NATIVE_EXECUTABLE');
    const bytes=readFileSync(built);
    if(inputs.fingerprint!==snapshot().fingerprint)continue;
@@ -62,3 +63,22 @@ export function rustMetamodel(args:string[],input?:string,options:{sourceBound?:
  return result;
 }
 export function rustMetamodelValue(operation:string,value:unknown):any {return fromWire(rustMetamodel([operation,'--stdin-wire'],encodeWire(value,{maxValues:1_000_000,maxDepth:256})));}
+
+/** Admit the authored reference self-model through the source-bound Rust CLI. */
+export function referenceAdmissionMessage(detail:string):string {
+ if(detail.startsWith('SELF_MODEL_SOURCE: '))return 'SELF_MODEL_SOURCE unexpected authored metamodel identity';
+ if(detail.startsWith('SELF_MODEL_PROVENANCE: '))return 'SELF_MODEL_PROVENANCE authored model/compiler manifest mismatch';
+ return detail;
+}
+export function rustReferenceSelfModel(source:string,manifest:unknown):any {
+ const executable=sourceArtifact().executable;
+ const request=encodeWire({source,manifest},{maxValues:1_000_000,maxDepth:256});
+ const child=Bun.spawnSync([executable,'reference','self-model-check','--stdin-wire'],{cwd:repositoryRoot,env:{...process.env,PATH:''},stdin:Buffer.from(request),stdout:'pipe',stderr:'pipe'});
+ if(child.exitCode!==0){
+  const detail=new TextDecoder().decode(child.stderr).trim();
+  // Keep the predecessor's public admission diagnostics stable at this boundary.
+  throw Error(detail?referenceAdmissionMessage(detail):`Rust self-model admission exited ${child.exitCode}`);
+ }
+ try{return fromWire(JSON.parse(new TextDecoder().decode(child.stdout).trim()));}
+ catch{throw Error('SELF_MODEL_INVALID_RUST_RESPONSE');}
+}

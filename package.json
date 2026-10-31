@@ -3,15 +3,45 @@
   "version": "0.10.0",
   "private": true,
   "type": "module",
+  "files": ["dist/", "src/", "spec/"],
   "packageManager": "bun@1.4.2",
   "exports": {
     ".": {
+      "types": "./dist/src/index-browser-v4.d.ts",
+      "browser": "./dist/umf-browser.js",
+      "node": "./dist/umf-node.js",
+      "import": "./dist/umf-browser.js",
+      "default": "./dist/umf-browser.js"
+    },
+    "./reference": {
       "types": "./dist/src/index.d.ts",
       "import": "./dist/umf.js"
     },
+    "./runtime/wasm": {
+      "types": "./dist/runtime/wasm/index.d.ts",
+      "import": "./dist/runtime/wasm/index.js"
+    },
+    "./rust-codegen-candidate/v2": {
+      "types": "./dist/src/node.d.ts",
+      "browser": "./dist/umf-rust-codegen-candidate-v2-browser.js",
+      "node": "./dist/umf-rust-codegen-candidate-v2-node.js",
+      "import": "./dist/umf-rust-codegen-candidate-v2-browser.js"
+    },
+    "./rust-codegen-candidate/v3": {
+      "types": "./dist/src/node-v3.d.ts",
+      "browser": "./dist/umf-rust-codegen-candidate-v3-browser.js",
+      "node": "./dist/umf-rust-codegen-candidate-v3-node.js",
+      "import": "./dist/umf-rust-codegen-candidate-v3-browser.js"
+    },
+    "./rust-codegen-candidate/v4": {
+      "types": "./dist/src/node-v4.d.ts",
+      "browser": "./dist/umf-rust-codegen-candidate-v4-browser.js",
+      "node": "./dist/umf-rust-codegen-candidate-v4-node.js",
+      "import": "./dist/umf-rust-codegen-candidate-v4-browser.js"
+    },
     "./loader-contract": {
-      "types": "./src/domain-packs/loader-contract.ts",
-      "import": "./src/domain-packs/loader-contract.ts"
+      "types": "./dist/src/domain-packs/loader-contract.d.ts",
+      "import": "./dist/loader-contract.js"
     }
   },
   "scripts": {
@@ -20,7 +50,10 @@
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
     "test": "bun run test:prepare && bun scripts/run-tests.ts",
     "build": "bun scripts/build.ts",
-    "build:schema-browser": "bun docs/helix/05-deploy/schema-browser/build.ts",
+    "build:rust-codegen-candidate": "bun scripts/build-rust-codegen-candidate.ts",
+    "test:rust-codegen-candidate-package": "bun scripts/test-rust-codegen-candidate-package.ts",
+    "test:rust-codegen-candidate-browser": "bun scripts/test-rust-codegen-candidate-browser.ts",
+    "build:schema-browser": "bun scripts/build-schema-browser.ts",
     "test:schema-browser": "bun scripts/schema-browser-package-browser.ts",
     "test:browser": "bun scripts/browser.ts",
     "test:conformance": "bun scripts/conformance.ts",
@@ -40,8 +73,10 @@
     "docs:example:rule": "bun scripts/actions-docs/rule-example.ts",
     "test:prepare": "bun run build && bun run build:postgresql && bun scripts/build-test-prerequisites.ts && bun scripts/prepare-action-tests.ts",
     "test:actions": "bun scripts/prepare-action-tests.ts && bun scripts/run-tests.ts tests/actions-reference",
-    "build:sdk": "bun run build && bun run build:saga-runtime && bun run build:postgresql && bun scripts/package-sdk.ts",
-    "test:sdk": "bun run build:sdk && bun scripts/test-sdk-install.ts",
+    "build:sdk": "bun run build && bun scripts/package-sdk.ts",
+    "test:sdk": "bun run build:sdk && python3 scripts/test-sdk-package.py",
+    "check:saga-package": "python3 scripts/build-saga-package.py --check",
+    "build:saga-runtime": "bun scripts/build-saga-runtime.ts",
     "test:access-e2e": "bun scripts/access-e2e.ts",
     "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
     "test:reference": "bun test tests/reference && bun scripts/reference/build.ts --check",
@@ -52,11 +87,9 @@
     "test:metamodel": "bun test tests/metamodel && bun scripts/metamodel-browser.ts",
     "check:core-authority": "bun scripts/check-core-authority.ts",
     "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
-    "check:rust-boundaries": "python3 scripts/rust-inventory.py --check && python3 scripts/check-rust-boundaries.py && python3 tests/rust-inventory/test_boundaries.py && python3 tests/rust-inventory/test_inventory.py",
-    "test:rust-core": "bun scripts/rust-core/conformance.ts",
-    "check:release-versions": "python3 scripts/check-release-versions.py",
-    "check:saga-package": "python3 scripts/build-saga-package.py --check",
-    "build:saga-runtime": "bun scripts/build-saga-runtime.ts"
+    "check:rust-boundaries": "python3 scripts/check-rust-boundaries.py",
+    "test:rust-core": "cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql",
+    "check:release-versions": "python3 scripts/check-release-versions.py"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",

@@ -1,0 +1,136 @@
+{
+  "bun": "1.4.3",
+  "cases": {
+    "profile/delta": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    },
+    "profile/iceberg": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    },
+    "profile/parquet": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    },
+    "profile/postgresql": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    },
+    "profile/sqlserver": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    },
+    "profile/stable-ids-0.2": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    },
+    "profile/bit128-0.3": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    },
+    "unknown/retained-only": {
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/future",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        }
+      ]
+    },
+    "unknown/crossed-invalid-index": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/indexes/0/future",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_INDEX",
+          "path": "/extensions/umf.binding/indexes/0/unique",
+          "message": "Unique kind requires unique true",
+          "severity": "error"
+        }
+      ]
+    },
+    "reference/missing-element": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_REFERENCE",
+          "path": "/extensions/umf.binding/elements/0",
+          "message": "Missing logical element",
+          "severity": "error"
+        }
+      ]
+    },
+    "model/identity-mismatch": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_MODEL",
+          "path": "/extensions/umf.binding/logical",
+          "message": "Logical document id/version mismatch",
+          "severity": "error"
+        }
+      ]
+    },
+    "model/invalid-logical": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_MODEL",
+          "path": "/extensions/umf.binding/logical",
+          "message": "Supplied logical document is invalid",
+          "severity": "error"
+        }
+      ]
+    },
+    "precedence/invalid-binding-before-pair-check": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "path": "/vocabularies/umf.binding",
+          "message": "Exact extension version unavailable; content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_PROFILE",
+          "path": "/extensions",
+          "message": "Expected a document-scoped umf.binding 0.1.0 or 0.2.0 payload",
+          "severity": "error"
+        }
+      ]
+    },
+    "profile/bit128-pair-mismatch": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_MODEL",
+          "path": "",
+          "message": "Exact valid current core source required",
+          "severity": "error"
+        }
+      ]
+    }
+  }
+}

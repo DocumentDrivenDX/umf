@@ -473,3 +473,76 @@ class SupervisorJournalCodecBoundaryTests(unittest.TestCase):
                     f'        {builtin}("controlled-fixture")\n')
                 self.assertEqual(result, 1, output)
                 self.assertIn('HOST', output)
+
+
+class RustFacadeImportBoundaryTests(unittest.TestCase):
+    def _check_facade(self, filename: str, source_text: str) -> tuple[int, str]:
+        with tempfile.TemporaryDirectory(prefix='umf-rust-facade-boundary-') as temporary:
+            root = Path(temporary)
+            package = root / 'python/umf_access/src/umf_access'
+            package.mkdir(parents=True)
+            (package / filename).write_text(source_text, encoding='utf-8')
+            (package / 'adoption.py').write_text('class TargetIdentity: pass\n', encoding='utf-8')
+            (package / 'catalog.py').write_text('class TargetPin: pass\n', encoding='utf-8')
+            (package / 'rust_target_pin_host.py').write_text(
+                'PROFILE = {}\nclass TargetPinRustUnavailable(Exception): pass\n', encoding='utf-8')
+            (package / 'catalog_errors.py').write_text(
+                'class CatalogError(Exception): pass\nclass NotCompiledForTarget(Exception): pass\n', encoding='utf-8')
+            (package / 'pages.py').write_text(
+                'class ReadContinuation: pass\nclass StaleContinuation(Exception): pass\n', encoding='utf-8')
+            (package / 'codec_support.py').write_text('def revalidate_model(*args): pass\n', encoding='utf-8')
+            (package / 'dsl.py').write_text(
+                'class Continuation: pass\nclass Score: pass\nclass Scored: pass\nclass SearchResult: pass\n',
+                encoding='utf-8')
+            (package / 'types.py').write_text('MISSING = object()\n', encoding='utf-8')
+            (package / 'postgres_search.py').write_text(
+                'class SearchError(Exception): pass\ndef _finish(*args): pass\n', encoding='utf-8')
+            output = io.StringIO()
+            with contextlib.redirect_stderr(output), contextlib.redirect_stdout(output):
+                result = _CHECKER.check(root)
+            return result, output.getvalue()
+
+    def test_exact_rust_facade_import_sets_are_accepted(self):
+        pin = ('from __future__ import annotations\nfrom typing import Any\n'
+               'from umf_access.adoption import TargetIdentity\nfrom umf_access.catalog import TargetPin\n'
+               'from umf_access.rust_target_pin_host import PROFILE, TargetPinRustUnavailable\n'
+               'from umf import _rust\n')
+        result, output = self._check_facade('rust_target_pin.py', pin)
+        self.assertEqual(result, 0, output)
+        bind = ('from __future__ import annotations\nfrom collections.abc import Mapping\n'
+                'from typing import Any, cast\nfrom pydantic import BaseModel\n'
+                'from umf_access.catalog_errors import CatalogError, NotCompiledForTarget\n'
+                'from umf_access.pages import ReadContinuation, StaleContinuation\n'
+                'from umf_access.codec_support import revalidate_model\n'
+                'from umf_access.dsl import Continuation\nfrom umf_access.types import MISSING\n'
+                'from umf import _rust\n')
+        result, output = self._check_facade('rust_read_plan_bind.py', bind)
+        self.assertEqual(result, 0, output)
+
+    def test_rust_facade_rejects_new_import_members_and_host_hooks(self):
+        source = ('from __future__ import annotations\nfrom typing import Any\n'
+                  'from umf_access.adoption import TargetIdentity\nfrom umf_access.catalog import TargetPin\n'
+                  'from umf_access.rust_target_pin_host import PROFILE, TargetPinRustUnavailable\n'
+                  'from umf import _rust\n')
+        for suffix, marker in (('from pathlib import Path\n', 'outside exact facade imports'),
+                               ('from typing import cast\n', 'outside exact facade imports'),
+                               ('open("owned-fixture")\n', 'Rust facade cannot use host I/O builtin open')):
+            with self.subTest(suffix=suffix):
+                result, output = self._check_facade('rust_target_pin.py', source + suffix)
+                self.assertEqual(result, 1, output)
+                self.assertIn(marker, output)
+
+    def test_rrf_scorer_keeps_its_exact_rust_wire_import_seam(self):
+        allowed = ('from __future__ import annotations\nimport json, math\nfrom typing import Any\n'
+                   'from umf import _rust\nfrom umf_access.dsl import Score, Scored, SearchResult\n'
+                   'from umf_access.postgres_search import SearchError, _finish\n')
+        result, output = self._check_facade('rust_search_rrf.py', allowed)
+        self.assertEqual(result, 0, output)
+        for suffix, marker in (('from pathlib import Path\n', 'strict RRF facade imports'),
+                               ('from json import dumps\n', 'strict RRF facade imports'),
+                               ('import subprocess\n', 'strict RRF facade imports'),
+                               ('input()\n', 'RRF scorer cannot use host I/O builtin input')):
+            with self.subTest(suffix=suffix):
+                result, output = self._check_facade('rust_search_rrf.py', allowed + suffix)
+                self.assertEqual(result, 1, output)
+                self.assertIn(marker, output)

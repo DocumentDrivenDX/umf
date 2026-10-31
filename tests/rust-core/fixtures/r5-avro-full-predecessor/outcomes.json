@@ -1,0 +1,1389 @@
+{
+  "profile": "r5-avro-full-predecessor/1.0.0",
+  "capturedAt": "2026-10-23T22:41:16.244Z",
+  "versions": {
+    "bun": "1.4.3",
+    "avsc": "5.7.9 (package.json pin)"
+  },
+  "sourceHashes": {
+    "src/adapters/avro/index.ts": "c8f3bceb8f7e347565578b8003c12860968abdcd4a5ec4f6991668edd9d00dff",
+    "src/adapters/avro/facet-type.ts": "3dc14f40f21a67bebed56c3bfc6973c48c90a43130391ea93edd0607df42a3d5",
+    "src/adapters/avro/metadata.ts": "340adfa10e20068d6e0cc23559130dd42252ce6cd761daea4d0e473f284033ea",
+    "src/adapters/json-schema/tree.ts": "5db655867191fde2f82a3f01ddbb63f35cb748500d0bc7fbe18b08f9eb72bb84",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/model/serialization.ts": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
+    "src/model/document.ts": "6ea8f43e4bcd3b5d7259329e6768dd563e066d7169a23bee75e88f054f348ddb",
+    "src/validation/document.ts": "ca016c6efa4f48da17d3d1e72dccc44b0c92eeb348084bd43c24f41e806b93f9",
+    "spec/extensions/avro/package.json": "39e6d5ec6bcb56e2e9d06dd74ef50b6a99ab71d7fe466e1f4d0d0d786ed08efe",
+    "docs/helix/02-design/contracts/CONTRACT-007-avro.md": "d5bf505d91e10570b7a0a19bd28294163832394db58e39a779ffa7e425d9d4c7",
+    "docs/helix/02-design/contracts/CONTRACT-008-avro-document-projection.md": "88574834ed5389db8cca05d92c13890809f5fc7036e33ffabe9db9b5b9ba5406"
+  },
+  "input": {
+    "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"namespace\":\"billing\",\"doc\":\"source-doc\",\"aliases\":[\"OldInvoice\"],\"x/y~z\":{\"retained\":true},\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2,\"customFieldTag\":{\"x\":1}}},{\"name\":\"memo\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"count\",\"type\":\"long\",\"default\":7}],\"customTopTag\":{\"preserve\":[1,\"x\"]}}",
+    "dependency": "{\"type\":\"record\",\"name\":\"Currency\",\"namespace\":\"billing\",\"fields\":[{\"name\":\"code\",\"type\":\"string\"}],\"customDepTag\":true}",
+    "exactInt64Schema": "{\"type\":\"record\",\"name\":\"ExactInvoice\",\"fields\":[{\"name\":\"count\",\"type\":\"long\",\"default\":9223372036854775807}]}"
+  },
+  "operations": {
+    "import": {
+      "extension": {
+        "version": "1.12.0",
+        "root": {
+          "kind": "object",
+          "members": {
+            "type": {
+              "kind": "string",
+              "value": "record"
+            },
+            "name": {
+              "kind": "string",
+              "value": "Invoice"
+            },
+            "namespace": {
+              "kind": "string",
+              "value": "billing"
+            },
+            "doc": {
+              "kind": "string",
+              "value": "source-doc"
+            },
+            "aliases": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "OldInvoice"
+                }
+              ]
+            },
+            "x/y~z": {
+              "kind": "object",
+              "members": {
+                "retained": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            },
+            "fields": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "amount"
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "bytes"
+                        },
+                        "logicalType": {
+                          "kind": "string",
+                          "value": "decimal"
+                        },
+                        "precision": {
+                          "kind": "number",
+                          "value": "8"
+                        },
+                        "scale": {
+                          "kind": "number",
+                          "value": "2"
+                        },
+                        "customFieldTag": {
+                          "kind": "object",
+                          "members": {
+                            "x": {
+                              "kind": "number",
+                              "value": "1"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "memo"
+                    },
+                    "type": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "null"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "default": {
+                      "kind": "null"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "count"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "long"
+                    },
+                    "default": {
+                      "kind": "number",
+                      "value": "7"
+                    }
+                  }
+                }
+              ]
+            },
+            "customTopTag": {
+              "kind": "object",
+              "members": {
+                "preserve": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "x"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "dependencies": [
+          {
+            "id": "currency.avsc",
+            "root": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "record"
+                },
+                "name": {
+                  "kind": "string",
+                  "value": "Currency"
+                },
+                "namespace": {
+                  "kind": "string",
+                  "value": "billing"
+                },
+                "fields": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "code"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "customDepTag": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "fieldMetadata": [
+        {
+          "id": "[\"currency.avsc\",\"/fields/0\"]",
+          "name": "code",
+          "scalarType": "string",
+          "extensions": {}
+        },
+        {
+          "id": "[null,\"/fields/0\"]",
+          "name": "amount",
+          "scalarType": "decimal",
+          "extensions": {}
+        },
+        {
+          "id": "[null,\"/fields/1\"]",
+          "name": "memo",
+          "scalarType": "string",
+          "extensions": {}
+        },
+        {
+          "id": "[null,\"/fields/2\"]",
+          "name": "count",
+          "scalarType": "integer",
+          "extensions": {}
+        }
+      ]
+    },
+    "inspect": {
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "path": "/vocabularies/example.future",
+          "message": "Exact extension version unavailable; content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/dependencies/0/root/customDepTag",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/x~1y~0z",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/customTopTag",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/fields/0/type/customFieldTag",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/0/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        }
+      ]
+    },
+    "rootExport": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Export the Avro bundle to retain named-schema dependencies"
+    },
+    "bundle": {
+      "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"namespace\":\"billing\",\"doc\":\"source-doc\",\"aliases\":[\"OldInvoice\"],\"x/y~z\":{\"retained\":true},\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2,\"customFieldTag\":{\"x\":1}}},{\"name\":\"memo\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"count\",\"type\":\"long\",\"default\":7}],\"customTopTag\":{\"preserve\":[1,\"x\"]}}\n",
+      "dependencies": [
+        {
+          "id": "currency.avsc",
+          "schema": "{\"type\":\"record\",\"name\":\"Currency\",\"namespace\":\"billing\",\"fields\":[{\"name\":\"code\",\"type\":\"string\"}],\"customDepTag\":true}\n"
+        }
+      ],
+      "source": {
+        "umf": "0.10.0",
+        "id": "invoice",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          },
+          "example.future": {
+            "version": "7.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "Invoice"
+                        },
+                        "namespace": {
+                          "kind": "string",
+                          "value": "billing"
+                        },
+                        "doc": {
+                          "kind": "string",
+                          "value": "source-doc"
+                        },
+                        "aliases": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "OldInvoice"
+                            }
+                          ]
+                        },
+                        "x/y~z": {
+                          "kind": "object",
+                          "members": {
+                            "retained": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "amount"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "bytes"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "8"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "customFieldTag": {
+                                      "kind": "object",
+                                      "members": {
+                                        "x": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "memo"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  ]
+                                },
+                                "default": {
+                                  "kind": "null"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "count"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "long"
+                                },
+                                "default": {
+                                  "kind": "number",
+                                  "value": "7"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "customTopTag": {
+                          "kind": "object",
+                          "members": {
+                            "preserve": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "x"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "dependencies": [
+                      {
+                        "id": "currency.avsc",
+                        "root": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "record"
+                            },
+                            "name": {
+                              "kind": "string",
+                              "value": "Currency"
+                            },
+                            "namespace": {
+                              "kind": "string",
+                              "value": "billing"
+                            },
+                            "fields": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "code"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "customDepTag": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[\"currency.avsc\",\"/fields/0\"]",
+                "name": "code",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "amount",
+                "scalarType": "decimal",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "memo",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "count",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ],
+        "extensions": {
+          "example.future": {
+            "opaque": [
+              "keep-me",
+              7
+            ]
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "path": "/vocabularies/example.future",
+          "message": "Exact extension version unavailable; content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/dependencies/0/root/customDepTag",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/x~1y~0z",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/customTopTag",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/fields/0/type/customFieldTag",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/0/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        },
+        {
+          "code": "SOURCE_ARTIFACT_REQUIRED",
+          "path": "",
+          "severity": "warning",
+          "message": "Retain source UMF for unrelated metadata and uninterpreted content"
+        }
+      ]
+    },
+    "nodeReturnedMutationIsolated": true,
+    "proposal": {
+      "status": "candidate",
+      "source": {
+        "umf": "0.10.0",
+        "id": "invoice",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          },
+          "example.future": {
+            "version": "7.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "Invoice"
+                        },
+                        "namespace": {
+                          "kind": "string",
+                          "value": "billing"
+                        },
+                        "doc": {
+                          "kind": "string",
+                          "value": "source-doc"
+                        },
+                        "aliases": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "OldInvoice"
+                            }
+                          ]
+                        },
+                        "x/y~z": {
+                          "kind": "object",
+                          "members": {
+                            "retained": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "amount"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "bytes"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "8"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "customFieldTag": {
+                                      "kind": "object",
+                                      "members": {
+                                        "x": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "memo"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  ]
+                                },
+                                "default": {
+                                  "kind": "null"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "count"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "long"
+                                },
+                                "default": {
+                                  "kind": "number",
+                                  "value": "7"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "customTopTag": {
+                          "kind": "object",
+                          "members": {
+                            "preserve": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "x"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "dependencies": [
+                      {
+                        "id": "currency.avsc",
+                        "root": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "record"
+                            },
+                            "name": {
+                              "kind": "string",
+                              "value": "Currency"
+                            },
+                            "namespace": {
+                              "kind": "string",
+                              "value": "billing"
+                            },
+                            "fields": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "code"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "customDepTag": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[\"currency.avsc\",\"/fields/0\"]",
+                "name": "code",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "amount",
+                "scalarType": "decimal",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "memo",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "count",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ],
+        "extensions": {
+          "example.future": {
+            "opaque": [
+              "keep-me",
+              7
+            ]
+          }
+        }
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "invoice",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          },
+          "example.future": {
+            "version": "7.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "Invoice"
+                        },
+                        "namespace": {
+                          "kind": "string",
+                          "value": "billing"
+                        },
+                        "doc": {
+                          "kind": "string",
+                          "value": "source-doc"
+                        },
+                        "aliases": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "OldInvoice"
+                            }
+                          ]
+                        },
+                        "x/y~z": {
+                          "kind": "object",
+                          "members": {
+                            "retained": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "amount"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "bytes"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "8"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "3"
+                                    },
+                                    "customFieldTag": {
+                                      "kind": "object",
+                                      "members": {
+                                        "x": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "memo"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  ]
+                                },
+                                "default": {
+                                  "kind": "null"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "count"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "long"
+                                },
+                                "default": {
+                                  "kind": "number",
+                                  "value": "7"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "customTopTag": {
+                          "kind": "object",
+                          "members": {
+                            "preserve": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "x"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "dependencies": [
+                      {
+                        "id": "currency.avsc",
+                        "root": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "record"
+                            },
+                            "name": {
+                              "kind": "string",
+                              "value": "Currency"
+                            },
+                            "namespace": {
+                              "kind": "string",
+                              "value": "billing"
+                            },
+                            "fields": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "code"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "customDepTag": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[\"currency.avsc\",\"/fields/0\"]",
+                "name": "code",
+                "extensions": {},
+                "scalarType": "string"
+              },
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "amount",
+                "extensions": {},
+                "scalarType": "decimal"
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "memo",
+                "extensions": {},
+                "scalarType": "string"
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "count",
+                "extensions": {},
+                "scalarType": "integer"
+              }
+            ]
+          }
+        ],
+        "extensions": {
+          "example.future": {
+            "opaque": [
+              "keep-me",
+              7
+            ]
+          }
+        }
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/example.future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "AVRO_METADATA",
+            "path": "/dependencies/0/root/customDepTag",
+            "message": "Uninterpreted native metadata retained",
+            "severity": "warning"
+          },
+          {
+            "code": "AVRO_METADATA",
+            "path": "/root/x~1y~0z",
+            "message": "Uninterpreted native metadata retained",
+            "severity": "warning"
+          },
+          {
+            "code": "AVRO_METADATA",
+            "path": "/root/customTopTag",
+            "message": "Uninterpreted native metadata retained",
+            "severity": "warning"
+          },
+          {
+            "code": "AVRO_METADATA",
+            "path": "/root/fields/0/type/customFieldTag",
+            "message": "Uninterpreted native metadata retained",
+            "severity": "warning"
+          },
+          {
+            "code": "AVRO_LOGICAL_TYPE",
+            "path": "/root/fields/0/type/logicalType",
+            "message": "Logical type retained; this browser profile validates its underlying carrier only",
+            "severity": "warning"
+          }
+        ]
+      },
+      "edit": {
+        "path": "/fields/0/type/scale",
+        "replacement": {
+          "kind": "number",
+          "value": "3"
+        }
+      }
+    },
+    "proposalCopiesIsolated": true,
+    "bundleCopyIsolated": true,
+    "conservativeEdit": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "All present semantics must be validated before editing"
+    },
+    "recoveries": [
+      {
+        "format": "json",
+        "sameDocument": true,
+        "root": "{\"type\":\"record\",\"name\":\"Invoice\",\"namespace\":\"billing\",\"doc\":\"source-doc\",\"aliases\":[\"OldInvoice\"],\"x/y~z\":{\"retained\":true},\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2,\"customFieldTag\":{\"x\":1}}},{\"name\":\"memo\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"count\",\"type\":\"long\",\"default\":7}],\"customTopTag\":{\"preserve\":[1,\"x\"]}}\n"
+      },
+      {
+        "format": "yaml",
+        "sameDocument": true,
+        "root": "{\"type\":\"record\",\"name\":\"Invoice\",\"namespace\":\"billing\",\"doc\":\"source-doc\",\"aliases\":[\"OldInvoice\"],\"x/y~z\":{\"retained\":true},\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2,\"customFieldTag\":{\"x\":1}}},{\"name\":\"memo\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"count\",\"type\":\"long\",\"default\":7}],\"customTopTag\":{\"preserve\":[1,\"x\"]}}\n"
+      }
+    ],
+    "exactInt64": [
+      {
+        "format": "json",
+        "tokenBefore": {
+          "kind": "number",
+          "value": "9223372036854775807"
+        },
+        "nativeBefore": "{\"type\":\"record\",\"name\":\"ExactInvoice\",\"fields\":[{\"name\":\"count\",\"type\":\"long\",\"default\":9223372036854775807}]}\n",
+        "nativeAfter": "{\"type\":\"record\",\"name\":\"ExactInvoice\",\"fields\":[{\"name\":\"count\",\"type\":\"long\",\"default\":9223372036854775807}]}\n",
+        "tokenAfter": {
+          "kind": "number",
+          "value": "9223372036854775807"
+        },
+        "diagnosticsBefore": [
+          {
+            "code": "AVRO_NUMERIC",
+            "path": "/root",
+            "message": "Exact native tokens retained; host interpretation is unavailable: UmfError: Integer exceeds exact JavaScript range",
+            "severity": "warning"
+          }
+        ],
+        "diagnosticsAfter": [
+          {
+            "code": "AVRO_NUMERIC",
+            "path": "/root",
+            "message": "Exact native tokens retained; host interpretation is unavailable: UmfError: Integer exceeds exact JavaScript range",
+            "severity": "warning"
+          }
+        ],
+        "roundTripPreservesExactToken": true
+      },
+      {
+        "format": "yaml",
+        "tokenBefore": {
+          "kind": "number",
+          "value": "9223372036854775807"
+        },
+        "nativeBefore": "{\"type\":\"record\",\"name\":\"ExactInvoice\",\"fields\":[{\"name\":\"count\",\"type\":\"long\",\"default\":9223372036854775807}]}\n",
+        "nativeAfter": "{\"type\":\"record\",\"name\":\"ExactInvoice\",\"fields\":[{\"name\":\"count\",\"type\":\"long\",\"default\":9223372036854775807}]}\n",
+        "tokenAfter": {
+          "kind": "number",
+          "value": "9223372036854775807"
+        },
+        "diagnosticsBefore": [
+          {
+            "code": "AVRO_NUMERIC",
+            "path": "/root",
+            "message": "Exact native tokens retained; host interpretation is unavailable: UmfError: Integer exceeds exact JavaScript range",
+            "severity": "warning"
+          }
+        ],
+        "diagnosticsAfter": [
+          {
+            "code": "AVRO_NUMERIC",
+            "path": "/root",
+            "message": "Exact native tokens retained; host interpretation is unavailable: UmfError: Integer exceeds exact JavaScript range",
+            "severity": "warning"
+          }
+        ],
+        "roundTripPreservesExactToken": true
+      }
+    ]
+  },
+  "unknownRetention": {
+    "unrelatedUmfExtensionInCandidate": {
+      "opaque": [
+        "keep-me",
+        7
+      ]
+    },
+    "nativeMetadataExportRetained": {
+      "preserve": [
+        1,
+        "x"
+      ]
+    },
+    "fieldMetadataRetained": {
+      "x": 1
+    },
+    "unknownRepresentation": {
+      "inspect": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "AVRO_REPRESENTATION",
+            "path": "/root/futureTaggedField",
+            "severity": "warning",
+            "message": "Unknown representation field has no native destination"
+          },
+          {
+            "code": "AVRO_METADATA",
+            "path": "/root/x~1y~0z",
+            "message": "Uninterpreted native metadata retained",
+            "severity": "warning"
+          },
+          {
+            "code": "AVRO_METADATA",
+            "path": "/root/customTopTag",
+            "message": "Uninterpreted native metadata retained",
+            "severity": "warning"
+          },
+          {
+            "code": "AVRO_METADATA",
+            "path": "/root/fields/0/type/customFieldTag",
+            "message": "Uninterpreted native metadata retained",
+            "severity": "warning"
+          },
+          {
+            "code": "AVRO_LOGICAL_TYPE",
+            "path": "/root/fields/0/type/logicalType",
+            "message": "Logical type retained; this browser profile validates its underlying carrier only",
+            "severity": "warning"
+          }
+        ]
+      },
+      "rootExport": {
+        "outcome": "refused",
+        "name": "UmfError",
+        "message": "Unknown representation content cannot be discarded"
+      },
+      "bundleExport": {
+        "outcome": "refused",
+        "name": "UmfError",
+        "message": "Unknown representation content cannot be discarded"
+      },
+      "proposal": {
+        "outcome": "refused",
+        "name": "UmfError",
+        "message": "Unknown representation content prevents native node replacement"
+      }
+    }
+  },
+  "dependencies": {
+    "selected": {
+      "kind": "string",
+      "value": "string"
+    },
+    "missing": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Unknown dependency missing"
+    },
+    "duplicateIds": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "[{\"code\":\"AVRO_DEPENDENCY_ID\",\"path\":\"/dependencies/1/id\",\"severity\":\"error\",\"message\":\"Dependency IDs must be unique\"},{\"code\":\"AVRO_METADATA\",\"path\":\"/dependencies/0/root/customDepTag\",\"message\":\"Uninterpreted native metadata retained\",\"severity\":\"warning\"},{\"code\":\"AVRO_METADATA\",\"path\":\"/dependencies/1/root/customDepTag\",\"message\":\"Uninterpreted native metadata retained\",\"severity\":\"warning\"},{\"code\":\"AVRO_VALIDATOR_LIMIT\",\"path\":\"/dependencies/1/root\",\"message\":\"Native schema could not be interpreted by avsc 5.7.9: Error: duplicate type name: billing.Currency\",\"severity\":\"warning\"},{\"code\":\"AVRO_METADATA\",\"path\":\"/root/x~1y~0z\",\"message\":\"Uninterpreted native metadata retained\",\"severity\":\"warning\"},{\"code\":\"AVRO_METADATA\",\"path\":\"/root/customTopTag\",\"message\":\"Uninterpreted native metadata retained\",\"severity\":\"warning\"},{\"code\":\"AVRO_METADATA\",\"path\":\"/root/fields/0/type/customFieldTag\",\"message\":\"Uninterpreted native metadata retained\",\"severity\":\"warning\"},{\"code\":\"AVRO_LOGICAL_TYPE\",\"path\":\"/root/fields/0/type/logicalType\",\"message\":\"Logical type retained; this browser profile validates its underlying carrier only\",\"severity\":\"warning\"}]"
+    },
+    "unresolvedStandalone": false
+  },
+  "pointers": {
+    "escapedMember": {
+      "kind": "object",
+      "members": {
+        "retained": {
+          "kind": "boolean",
+          "value": true
+        }
+      }
+    },
+    "missingPath": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Native JSON Pointer target does not exist"
+    },
+    "malformedPointer": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Invalid JSON Pointer"
+    },
+    "badReplacement": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Invalid native JSON"
+    }
+  },
+  "refusalPrecedence": {
+    "staleMaterializedMetadata": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Native fields and core metadata disagree"
+    },
+    "unknownBeforePathResolution": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Unknown representation content prevents native node replacement"
+    },
+    "guardedFieldRename": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Field identity changed with attached metadata; explicit reassociation required"
+    },
+    "guardedFieldRemoval": {
+      "outcome": "refused",
+      "name": "UmfError",
+      "message": "Removing a field would discard attached core metadata"
+    }
+  },
+  "controls": {
+    "resourceCancellationDeadline": "not-applicable: current public operations are synchronous and expose no such controls"
+  },
+  "nativeOracle": {
+    "avscVersion": "5.7.9",
+    "accepted": true,
+    "exactInt64ParsedDefault": 9223372036854776000,
+    "exactInt64HostValidation": {
+      "outcome": "refused",
+      "name": "Error",
+      "message": "incompatible field default 9223372036854776000 (invalid \"long\": 9223372036854776000)"
+    },
+    "apacheAvro": "not-run: pinned Apache Avro Python module and Java artifact are unavailable in this worktree environment"
+  },
+  "scope": "Captures current TS adapter behavior and a pinned avsc acceptance check; not full Avro qualification, not Rust parity, not support for IDL/protocol/container data or datum codecs."
+}

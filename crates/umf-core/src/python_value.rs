@@ -1534,12 +1534,16 @@ mod tests {
         let core_pair = Utf16::new(vec![0xd83d, 0xde00]);
 
         let mut ctx = Context::ordinary();
-        assert!(InstanceText::Python(&scalar)
-            .equals_with_context(InstanceText::Utf16(&core_astral), &mut ctx)
-            .unwrap());
-        assert!(!InstanceText::Python(&pair)
-            .equals_with_context(InstanceText::Utf16(&core_pair), &mut ctx)
-            .unwrap());
+        assert!(
+            InstanceText::Python(&scalar)
+                .equals_with_context(InstanceText::Utf16(&core_astral), &mut ctx)
+                .unwrap()
+        );
+        assert!(
+            !InstanceText::Python(&pair)
+                .equals_with_context(InstanceText::Utf16(&core_pair), &mut ctx)
+                .unwrap()
+        );
         assert_eq!(InstanceText::Python(&pair).codepoint_len(), 2);
         assert_eq!(InstanceText::Utf16(&core_pair).codepoint_len(), 1);
     }
@@ -1621,11 +1625,13 @@ mod tests {
             value_equals_instance(&Value::String(Utf16::from("😀")), &astral, &mut context,)
                 .unwrap()
         );
-        assert!(!value_equals_instance(
-            &Value::String(Utf16::from("😀")),
-            &explicit_pair,
-            &mut context,
-        )
-        .unwrap());
+        assert!(
+            !value_equals_instance(
+                &Value::String(Utf16::from("😀")),
+                &explicit_pair,
+                &mut context,
+            )
+            .unwrap()
+        );
     }
 }

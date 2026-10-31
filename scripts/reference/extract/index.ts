@@ -43,7 +43,11 @@ export async function extensions(profiles:any,schemaEntries:Entry[],apiEntries:E
 export async function exportsInventory():Promise<Entry[]>{
  const pkg=await read('package.json');const configs=ts.readConfigFile(resolve(root,'tsconfig.json'),ts.sys.readFile);const parsed=ts.parseJsonConfigFileContent(configs.config,ts.sys,root);
  const sourceMap:Record<string,string>={'.':'src/index.ts','./loader-contract':'src/domain-packs/loader-contract.ts'};
- const points=Object.keys(pkg.exports);if(points.some(p=>!sourceMap[p]))throw Error('REFERENCE_LINK unknown public entrypoint');
+ // These source-only conditions are migration probes, not published SDK API.
+ const internalEntrypoints=new Set(['./reference','./rust-codegen-candidate/v2','./rust-codegen-candidate/v3','./rust-codegen-candidate/v4']);
+ const declared=Object.keys(pkg.exports);
+ if(declared.some(p=>!sourceMap[p]&&!internalEntrypoints.has(p)))throw Error('REFERENCE_LINK unknown public entrypoint');
+ const points=declared.filter(p=>!internalEntrypoints.has(p));
  const program=ts.createProgram(points.map(p=>resolve(root,sourceMap[p]!)),parsed.options),checker=program.getTypeChecker();const entries:Entry[]=[];
  for(const entrypoint of points){const file=program.getSourceFile(resolve(root,sourceMap[entrypoint]!))!,module=checker.getSymbolAtLocation(file);if(!module)throw Error('REFERENCE_STRUCTURE missing export module');
   for(const exported of checker.getExportsOfModule(module).sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0)){

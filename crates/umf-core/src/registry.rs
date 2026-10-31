@@ -5,7 +5,7 @@ use crate::{
     python_regex::PythonReVersion,
     python_value::{PythonConsumerValue, PythonSchemaResources},
     schema::{CompiledSchema, SchemaResources},
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
 #[derive(Clone, Debug)]
 pub struct Registration {
@@ -49,6 +49,130 @@ pub struct Registry {
     entries: Vec<Registration>,
     kind_policy: Option<Value>,
 }
+
+/// A registration discovered by an invocation-local provider. Host handles
+/// remain opaque and are inspected only by the private staged Selection path.
+#[derive(Clone, Copy, Debug)]
+pub(crate) enum RegistrationLookup<'a> {
+    Borrowed(&'a Registration),
+    HostHandle(u64),
+}
+
+/// Result of the bounded host-owned registration stage used only by the
+/// private Selection host route. Its semantic diagnostics remain opaque until
+/// checked at `emit`, classified by the post-traversal `some`, and materialized.
+#[derive(Clone, Debug, PartialEq)]
+pub(crate) enum HostRegistrationStage {
+    OutOfScope,
+    NoDiagnostics,
+    StructureErrors(Vec<crate::host_json::HostStructureErrorEntry>),
+    Unchecked,
+    Unsupported,
+    SemanticDiagnostics(Vec<crate::host_json::HostOpaqueValue>),
+    SemanticFailure(Utf16),
+}
+
+/// Demand-driven registration access used by the shared interpreter. Calls
+/// occur at the original `registered` and extension-payload evaluation sites.
+pub(crate) trait RegistrationProvider {
+    fn lookup<'a>(
+        &'a self,
+        id: &Utf16,
+        version: &Utf16,
+        _ctx: &mut Context<'_>,
+    ) -> Result<Option<RegistrationLookup<'a>>, EngineError>;
+
+    fn host_registration_stage(
+        &self,
+        _handle: u64,
+        _document: &Value,
+        _payload: &Value,
+        _scope: &Utf16,
+        _path: &Utf16,
+        _ctx: &mut Context<'_>,
+    ) -> Result<HostRegistrationStage, EngineError> {
+        Err(EngineError::new(
+            "HOST_JSON_UNSUPPORTED",
+            Utf16::default(),
+            "Caller-owned Selection registration requires a host-aware provider",
+        ))
+    }
+
+    /// Read callback diagnostic severity in the predecessor's post-traversal
+    /// validation pass. Implementations must preserve the original handle and
+    /// perform at most this one requested property read.
+    fn host_callback_is_error(
+        &self,
+        _diagnostic: &crate::host_json::HostOpaqueValue,
+        _ctx: &mut Context<'_>,
+    ) -> Result<bool, EngineError> {
+        Err(EngineError::new(
+            "HOST_JSON_UNSUPPORTED",
+            Utf16::default(),
+            "Opaque callback diagnostics require a host-aware provider",
+        ))
+    }
+
+    /// Match the TypeScript `emit` boundary before retaining a callback
+    /// diagnostic. The host adapter reads severity, path, code, message in
+    /// that order and leaves the original opaque value untouched.
+    fn host_callback_validate_at_emit(
+        &self,
+        _diagnostic: &crate::host_json::HostOpaqueValue,
+        _ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        Err(EngineError::new(
+            "HOST_JSON_UNSUPPORTED",
+            Utf16::default(),
+            "Opaque callback diagnostics require a host-aware provider",
+        ))
+    }
+}
+
+pub(crate) struct StaticRegistrationProvider<'a>(pub(crate) &'a Registry);
+
+impl RegistrationProvider for StaticRegistrationProvider<'_> {
+    fn lookup<'a>(
+        &'a self,
+        id: &Utf16,
+        version: &Utf16,
+        _ctx: &mut Context<'_>,
+    ) -> Result<Option<RegistrationLookup<'a>>, EngineError> {
+        Ok(self.0.get(id, version).map(RegistrationLookup::Borrowed))
+    }
+}
+
+// Internal tests and existing interpreter call sites can use the registry
+// directly; production public entry points still construct the explicit
+// adapter above to make the static binding boundary visible.
+impl RegistrationProvider for Registry {
+    fn lookup<'a>(
+        &'a self,
+        id: &Utf16,
+        version: &Utf16,
+        _ctx: &mut Context<'_>,
+    ) -> Result<Option<RegistrationLookup<'a>>, EngineError> {
+        Ok(self.get(id, version).map(RegistrationLookup::Borrowed))
+    }
+}
+
+fn opaque_lookup_error() -> EngineError {
+    EngineError::new(
+        "REGISTRY_PROVIDER_HANDLE",
+        Utf16::default(),
+        "Opaque host registration handles require a host-aware selection provider",
+    )
+}
+
+pub(crate) fn require_borrowed<'a>(
+    lookup: Option<RegistrationLookup<'a>>,
+) -> Result<Option<&'a Registration>, EngineError> {
+    match lookup {
+        None => Ok(None),
+        Some(RegistrationLookup::Borrowed(entry)) => Ok(Some(entry)),
+        Some(RegistrationLookup::HostHandle(_)) => Err(opaque_lookup_error()),
+    }
+}
 fn k(s: &str) -> Utf16 {
     Utf16::from(s)
 }
@@ -89,7 +213,10 @@ fn core_version(
     Ok(property.clone())
 }
 impl Registry {
-    pub fn with_kind_policy(policy: &Value, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+    pub(crate) fn with_kind_policy(
+        policy: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
         Ok(Self {
             entries: Vec::new(),
             kind_policy: Some(copy_json(policy, ctx)?),
@@ -97,6 +224,20 @@ impl Registry {
     }
     pub(crate) fn kind_policy(&self) -> &Value {
         self.kind_policy.as_ref().unwrap_or(&Value::Null)
+    }
+    pub(crate) fn require_kind_runtime(&self) -> Result<(), EngineError> {
+        if self
+            .kind_policy
+            .as_ref()
+            .and_then(|policy| get(policy, "kindCatalogPolicy"))
+            .is_none()
+        {
+            return Err(err(
+                "EXTENSION_KIND_RUNTIME_REQUIRED",
+                "Initialize the registry through the shared engine",
+            ));
+        }
+        Ok(())
     }
     pub fn new() -> Self {
         Self::default()

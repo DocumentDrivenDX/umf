@@ -1,10 +1,10 @@
 # UMF Python client generator
 
-Local `0.1.0a3` candidate; publication and platform qualification are pending.
-The installed wheel runs the original portable TypeScript generator inside
-embedded V8. Authors need Python and `mini-racer==0.14.1`, without Bun, Node,
-a JavaScript subprocess, an SDK tarball or a network connection during generation.
-Generated clients use the Python standard library only.
+`umf-codegen` exposes the seven Python code generation, deployment, migration,
+verification, change discovery, and row-scope operations through the native
+Rust compiler in `umf-core==0.11.0`. The package requires that exact core
+release and checks its native ABI and codegen protocol before use. It has no
+JavaScript or V8 runtime dependency.
 
 ```sh
 python -m umf_codegen generate --schema plugin.json --package plugin_client --output generated
@@ -12,12 +12,32 @@ python -m umf_codegen check --schema plugin.json --package plugin_client --outpu
 ```
 
 `check` is read-only and exits nonzero for drift or refusal. `generate` refuses
-hand-edited output and unsafe paths. Pin release wheel hashes and the embedded
-runtime version in your build lock; a candidate wheel is not a release guarantee.
+hand-edited output and unsafe paths. At build and runtime, the package checks a
+pinned manifest covering exactly nine compiler resources. Five shared core
+resources are also byte-compared with the installed `umf-core` wheel; an
+incoherent package pair fails with `ENGINE_UNAVAILABLE` and has no fallback.
 
-The same wheel exposes inert deployment, migration, verification and reviewed
-change discovery APIs. They call the original portable compiler in the same
-bounded embedded runtime:
+Each public compiler call uses the `umf` CLI binary packaged inside the pinned
+`umf-core` wheel. The package resolves that exact resource and checks the CLI
+capability protocol, input and output wire protocols, and all nine resource
+hashes before compiling. Missing binaries and mismatched identities fail with
+`ENGINE_UNAVAILABLE`; it never searches `PATH` or the current directory.
+
+The parent enforces one monotonic deadline across request validation and
+serialization, CLI startup, compilation, and result decoding. It bounds JSON
+stdin to 32 MiB and stdout to 64 MiB, kills and reaps a timed-out process, and
+returns no partial result. The native CLI caps its live Rust-managed
+allocations at 512 MiB. That allocator budget does not cap Python memory or
+total process RSS. The 64 MiB wire response limit is a serialized-byte bound;
+Python's JSON parser and result objects may use more memory while decoding it.
+JSON parsing cannot be interrupted, so an expired deadline is reported
+immediately after parsing and throughout result conversion.
+Calls accept timeouts greater than zero and up to 60 seconds. The native
+binary must be present and pass the installed-wheel qualification before the
+platform is considered supported.
+
+The same package exposes inert deployment, migration, verification, and
+reviewed change discovery APIs:
 
 ```python
 from umf_codegen import (
@@ -55,12 +75,11 @@ but do not grant execution authority or make unsupported changes executable.
 Migration plan 0.1 remains the historical bootstrap/additive profile. Migration
 plan 0.2 is a bounded existing-table evolution profile requiring an installed
 predecessor and stable table inventory. It uses explicit backfill, concurrent
-index, validation and reviewed-change selections. Plans retain complete before
+index, validation, and reviewed-change selections. Plans retain complete before
 and after source bundles and require digest-bound host approval. Verification
 checks source/plan consistency; it cannot authenticate a supplied predecessor,
-apply DDL or establish installed ledger authority. Native application belongs to
-the separately installed host runtime. See the repository's legal table
-lifecycle guide for the exact supported subset and residual limits.
+apply DDL, or establish installed ledger authority. Native application belongs
+to the separately installed host runtime.
 
-First-party files use MIT OR Apache-2.0. Bundled dependencies retain the notices
-in `_assets/notices/`; mini-racer retains its own ISC license and V8 notices.
+First-party files use MIT OR Apache-2.0. The native core wheel retains its own
+license and third-party notices.

@@ -1,17 +1,35 @@
 [workspace]
 resolver = "2"
+# The default local test command selects UMF's native libraries and CLI.
+# Foreign-host bindings and vendored upstream suites have separate entry points.
+default-members = [
+  "crates/umf-core", "crates/umf-core-wire", "crates/umf-tagged-wire",
+  "crates/umf-codegen", "crates/umf-metamodel", "crates/umf-metamodel-cli",
+  "crates/umf-cli", "crates/umf-graphql",
+]
+exclude = [
+  "crates/umf-core/vendor/saphyr-parser",
+  "crates/umf-core/vendor/oxttl",
+  "crates/umf-core/vendor/oxrdf",
+  "crates/umf-graphql/vendor/apollo-compiler",
+  "crates/umf-graphql/vendor/serde_json_bytes",
+]
 members = [
   "crates/umf-core",
   "crates/umf-core-wire",
+  "crates/umf-tagged-wire",
+  "crates/umf-metamodel-cli",
   "crates/umf-codegen",
   "bindings/core/python",
   "bindings/core/node",
   "bindings/core/wasm",
   "crates/umf-metamodel",
   "crates/umf-cli",
-  "crates/rust-spike-core",
-  "crates/rust-spike-cli",
-  "bindings/rust-spike/python",
-  "bindings/rust-spike/node",
-  "bindings/rust-spike/wasm",
+  "crates/umf-graphql",
 ]
+
+[profile.test]
+# Keep a stable optimized test profile while retaining debug and overflow checks.
+opt-level = 1
+debug-assertions = true
+overflow-checks = true

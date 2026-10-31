@@ -124,6 +124,32 @@ describe("actual compilation boundary checker", () => {
 });
 
 describe("actual Python boundary checker", () => {
+  test("catalog Rust facades use only the named public core bridge", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    for (const facade of ["rust_catalog_custody.py", "rust_catalog_render.py", "rust_catalog_render_v2.py"]) {
+      expect(check("py", { [prefix + facade]: "from umf import rust_access_catalog as _core\n" }).exitCode).toBe(0);
+      rejects("py", { [prefix + facade]: "from umf import rust_values\n" }, "DEPENDENCY");
+    }
+    expect(check("py", { [prefix + "rust_catalog_render.py"]: "from umf import _rust\n" }).exitCode).toBe(0);
+    for (const facade of ["rust_catalog_custody.py", "rust_catalog_render_v2.py"])
+      rejects("py", { [prefix + facade]: "from umf import _rust\n" }, "DEPENDENCY");
+    rejects("py", { [prefix + "catalog.py"]: "from umf import rust_access_catalog\n" }, "DEPENDENCY");
+  });
+  test("target pin and read-plan Rust facades keep exact imports and reject host hooks", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    const facade = "rust_target_pin.py";
+    expect(check("py", { [prefix + facade]: "from umf import _rust\n" }).exitCode).toBe(0);
+    rejects("py", { [prefix + facade]: "import socket\n" }, "DEPENDENCY");
+    rejects("py", { [prefix + facade]: "open('/tmp/probe')\n" }, "HOST");
+    rejects("py", { [prefix + "rust_target_pin_host.py"]: "from umf import rust_values\n" }, "DEPENDENCY");
+    rejects("py", { [prefix + "rust_read_plan_bind.py"]: "import subprocess\n" }, "DEPENDENCY");
+    rejects("py", { [prefix + "rust_read_plan_bind.py"]: "input()\n" }, "HOST");
+    rejects("py", {
+      [prefix + "catalog.py"]: "from .rust_target_pin_host import matches\n",
+      [prefix + "rust_target_pin_host.py"]: "from .rust_target_pin import PROFILE\n",
+      [prefix + "rust_target_pin.py"]: "from .catalog import TargetPin\n",
+    }, "CYCLE");
+  });
   test("SQL containment separates pure admission from optional pinned parser and host I/O",()=>{
     const prefix="python/umf_access/src/umf_access/lifecycle/";
     expect(check("py",{[prefix+"sql_containment.py"]:"from dataclasses import dataclass\nimport hashlib\nimport json\nfrom typing import Protocol"}).exitCode).toBe(0);
@@ -197,6 +223,57 @@ describe("actual Python boundary checker", () => {
     }).exitCode).toBe(0);
     rejects("py", { [prefix + "surprise.py"]: "" }, "MODULE");
     rejects("py", { [prefix + "types.py"]: "from .dsl import Query", [prefix + "dsl/__init__.py"]: "class Query: pass" }, "DEPENDENCY");
+  });
+  test("values foundation reaches only the two public native core bridges", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    expect(check("py", {[prefix + "values.py"]: "from umf import rust_temporal, rust_values"}).exitCode).toBe(0);
+    for (const source of ["from umf import _rust", "from umf import rust_codegen", "import umf._rust"])
+      rejects("py", {[prefix + "values.py"]: source}, "DEPENDENCY");
+    rejects("py", {[prefix + "types.py"]: "from umf import rust_values"}, "DEPENDENCY");
+  });
+  test("the Rust graph candidate has only its four named private capture primitives", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    const helpers = "from umf_access.capture import _canonical, _invoke, _parameters, _validate_node";
+    const candidate = `def capture_with_rust_graph_validator():\n    ${helpers}`;
+    expect(check("py", {
+      [prefix + "rust_catalog_render.py"]: candidate,
+      [prefix + "capture.py"]: "def _canonical(): pass\ndef _invoke(): pass\ndef _parameters(): pass\ndef _validate_node(): pass",
+    }).exitCode).toBe(0);
+    rejects("py", {
+      [prefix + "rust_catalog_render.py"]: `def capture_with_rust_graph_validator():\n    ${helpers}, _unsupported_helper`,
+      [prefix + "capture.py"]: "def _canonical(): pass\ndef _invoke(): pass\ndef _parameters(): pass\ndef _validate_node(): pass\ndef _unsupported_helper(): pass",
+    }, "PRIVATE");
+    rejects("py", {
+      [prefix + "rust_catalog_render.py"]: helpers,
+      [prefix + "capture.py"]: "def _canonical(): pass\ndef _invoke(): pass\ndef _parameters(): pass\ndef _validate_node(): pass",
+    }, "PRIVATE");
+    rejects("py", {
+      [prefix + "runtime/read.py"]: "from umf_access.capture import _canonical",
+      [prefix + "capture.py"]: "def _canonical(): pass",
+    }, "PRIVATE");
+  });
+  test("stream and operation-value owners reach only their public Rust bridges", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    expect(check("py", {[prefix + "pages.py"]: "from umf import rust_streams"}).exitCode).toBe(0);
+    expect(check("py", {[prefix + "unified/operation_values.py"]: "from umf import rust_operation_values\nfrom umf import rust_values"}).exitCode).toBe(0);
+    rejects("py", {[prefix + "pages.py"]: "from umf import rust_operation_values"}, "DEPENDENCY");
+    rejects("py", {[prefix + "unified/operation_values.py"]: "from umf import rust_streams"}, "DEPENDENCY");
+    rejects("py", {[prefix + "unified/session.py"]: "from umf import rust_operation_values"}, "DEPENDENCY");
+    rejects("py", {[prefix + "unified/session.py"]: "from umf import rust_values"}, "DEPENDENCY");
+  });
+  test("capture observer helpers stay inside the DSL ownership and reject host access", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    expect(check("py", {
+      [prefix + "capture.py"]: "from .rust_capture_observe import observe\nfrom .capture_types import CapturedParameter",
+      [prefix + "rust_capture_observe.py"]: "from .capture_types import CapturedParameter\nfrom umf_access.dsl import Node\nfrom umf import _rust",
+      [prefix + "capture_types.py"]: "from umf_access.dsl import Node",
+      [prefix + "dsl/__init__.py"]: "class Node: pass",
+    }).exitCode).toBe(0);
+    rejects("py", {
+      [prefix + "dsl/extra.py"]: "from umf import _rust",
+      [prefix + "dsl/__init__.py"]: "class Node: pass",
+    }, "DEPENDENCY");
+    rejects("py", {[prefix + "rust_capture_observe.py"]: "import socket"}, "HOST");
   });
   test("lifecycle administration owns only its public compiler verifier and native exception imports",()=>{
     const prefix="python/umf_access/src/umf_access/";

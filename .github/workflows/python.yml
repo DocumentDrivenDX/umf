@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Artifact-custody tests resolve the retained historical source tree.
+          fetch-depth: 0
       - name: Isolate Rust toolchain state
         run: printf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v5

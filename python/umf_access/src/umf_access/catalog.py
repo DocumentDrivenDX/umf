@@ -10,30 +10,20 @@ from typing import Any, cast
 from pydantic import BaseModel, TypeAdapter
 
 from .adoption import TargetIdentity
+from .catalog_errors import (
+    CatalogError,
+    NotCompiledForTarget,  # noqa: F401 -- public ABI re-export
+    QueryNotFound,
+    QueryNotUnique,
+)
 from .codec_support import revalidate_model, validate_graph
 from .dsl import Continuation, RelatedKeys, SortValue, WithKeys
 from .dsl import Page as Page  # noqa: PLC0414 -- explicit public ABI re-export
-from .pages import ReadContinuation, ReadPage, StaleContinuation
+from .pages import ReadContinuation, ReadPage
 from .protocols import AsyncReadTarget, ReadTarget
 from .reviewed import CatalogRead
 from .types import MISSING, StrictModel, Vector
 from .values import validate_vector
-
-
-class CatalogError(ValueError):
-    pass
-
-
-class NotCompiledForTarget(CatalogError):
-    pass
-
-
-class QueryNotFound(LookupError):
-    pass
-
-
-class QueryNotUnique(ValueError):
-    pass
 
 
 @dataclass(frozen=True)
@@ -46,27 +36,11 @@ class TargetPin:
     platform: tuple[tuple[str, tuple[str, ...]], ...]
 
     def matches(self, identity: TargetIdentity) -> bool:
-        return (
-            (
-                identity.kind,
-                identity.backend_id,
-                identity.backend_version,
-                identity.target_profile,
-                identity.binding_sha256,
-            )
-            == (
-                self.kind,
-                self.backend_id,
-                self.backend_version,
-                self.target_profile,
-                self.binding_sha256,
-            )
-            and len(identity.platform) == len(self.platform)
-            and all(
-                name in dict(self.platform) and version in dict(self.platform)[name]
-                for name, version in identity.platform
-            )
-        )
+        # Import lazily so constructing/reading inert catalog data does not load
+        # the native extension until target qualification is actually requested.
+        from .rust_target_pin_host import matches
+
+        return matches(self, identity)
 
 
 @dataclass(frozen=True)
@@ -117,73 +91,9 @@ class ReadPlan:
     def bind(
         self, target: ReadTarget | AsyncReadTarget, values: Mapping[str, object]
     ) -> tuple[ReadVariant, BaseModel, ReadContinuation | None]:
-        if set(values) != {a.name for a in self.arguments}:
-            raise CatalogError("exact catalog argument inventory required")
-        checked = {
-            a.name: (
-                values[a.name]
-                if a.name == self.cursor_argument
-                else a.validate(values[a.name])
-            )
-            for a in self.arguments
-        }
-        after = checked.get(self.cursor_argument) if self.cursor_argument else None
-        if after is not None:
-            if (
-                not isinstance(after, Continuation)
-                or self.cursor_key_model is None
-                or type(after.key) is not self.cursor_key_model
-            ):
-                raise StaleContinuation(
-                    "page requires its original declared-Key continuation"
-                )
-            key = revalidate_model(self.cursor_key_model, after.key)
-            if any(
-                index >= len(after.sort_values)
-                or getattr(key, name) != after.sort_values[index]
-                for name, index in self.key_components
-            ):
-                raise StaleContinuation(
-                    "continuation Key differs from its complete sort context"
-                )
-            after = ReadContinuation(
-                after.sort_values,
-                after.identity_digest,
-                after.owner_cursor,
-                after.snapshot_versions,
-            )
-        presence = tuple(
-            a.name
-            for a in self.arguments
-            if a.optional and checked[a.name] is not MISSING
-        )
-        for candidate in self.variants:
-            candidate.entry.artifact()
-        identity = target.identity()
-        candidates = [
-            v
-            for v in self.variants
-            if v.presence == presence and v.pin.matches(identity)
-        ]
-        if len(candidates) != 1:
-            raise NotCompiledForTarget(
-                "no unique compiled variant for target identity and argument presence"
-            )
-        variant = candidates[0]
-        variant.entry.artifact()  # Loaded generation/runtime pins checked before target dispatch.
-        native = {
-            name: (
-                getattr(checked[source], component)
-                if component is not None
-                else checked[source]
-            )
-            for name, source, component in variant.parameters
-        }
-        return (
-            variant,
-            variant.entry.parameters.model_validate(native, strict=True),
-            cast(ReadContinuation | None, after),
-        )
+        from .rust_read_plan_bind import bind
+
+        return bind(self, target, values)
 
 
 def _row(plan: ReadPlan, row: object) -> object:
@@ -193,7 +103,10 @@ def _row(plan: ReadPlan, row: object) -> object:
     elif plan.related_field is not None:
         if plan.related_row_model is None:
             raise CatalogError("original related row model required")
-        result = validate_graph(plan.related_row_model, {name: getattr(row, name) for name in plan.related_row_model.model_fields})
+        result = validate_graph(
+            plan.related_row_model,
+            {name: getattr(row, name) for name in plan.related_row_model.model_fields},
+        )
     else:
         result = row
     if plan.related_field is not None:

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use crate::{
     context::Context,
-    ecma_coercion::{abstract_relational_compare, Primitive},
+    ecma_coercion::{Primitive, abstract_relational_compare},
     error::{Diagnostic, EngineError, Severity},
     literal::{literal_errors_admitted, literal_identity_admitted, numeric_interval_admitted},
-    literal_policy::{prepare_policy, PreparedPolicy},
-    value::{copy_json, Utf16, Value},
+    literal_policy::{PreparedPolicy, prepare_policy},
+    value::{Utf16, Value, copy_json},
 };
 use std::{cell::RefCell, cmp::Ordering, rc::Rc};
 
@@ -19,6 +19,17 @@ impl PreparedProgram {
 #[derive(Clone, Debug)]
 enum Runtime {
     Json(Value),
+    /// A host-owned structure message stays opaque until its enclosing
+    /// diagnostic is checked at the constraint `emit` site.
+    HostStructureDiagnostic {
+        code: Utf16,
+        path: Utf16,
+        severity: Severity,
+        message: crate::host_json::HostOpaqueValue,
+    },
+    /// Opaque caller-owned diagnostics can flow only to the private Selection
+    /// packet; constraint operators may not inspect or coerce them.
+    HostCallbackDiagnostic(crate::host_json::HostOpaqueValue),
     Array(Vec<Runtime>),
     Object(Vec<(Utf16, Runtime)>),
     CopiedObject(Vec<(Utf16, Runtime)>),
@@ -28,7 +39,202 @@ enum Runtime {
         python_source_path: bool,
     },
     Missing,
-    Map(Rc<RefCell<Vec<(Vec<u16>, Runtime)>>>),
+    Map(Rc<RefCell<RuntimeMap>>),
+}
+
+/// A JS-like string-keyed map. The vector remains the source of insertion
+/// order and replacement position; the side index avoids rescanning it for
+/// every key while constraint programs construct large ID indexes.
+#[derive(Clone, Debug, Default)]
+struct RuntimeMap {
+    entries: Vec<(Vec<u16>, Runtime)>,
+    slots: Vec<Option<usize>>,
+}
+impl RuntimeMap {
+    fn new() -> Self {
+        Self::default()
+    }
+
+    fn len(&self) -> usize {
+        self.entries.len()
+    }
+
+    fn position_metered(
+        &self,
+        target: &[u16],
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<usize>, EngineError> {
+        Ok(self.find_slot_metered(target, ctx)?.0)
+    }
+
+    fn find_slot_metered(
+        &self,
+        target: &[u16],
+        ctx: &mut Context<'_>,
+    ) -> Result<(Option<usize>, usize), EngineError> {
+        if self.slots.is_empty() {
+            return Ok((None, 0));
+        }
+        // Hashing visits the complete canonical UTF-16 key. Charge before
+        // doing that work. Every collision probe below also charges the
+        // candidate comparison before it reads the stored key.
+        ctx.charge_work(target.len().saturating_add(1), Utf16::default())?;
+        let mask = self.slots.len() - 1;
+        let mut slot = (runtime_map_hash(target) as usize) & mask;
+        for _ in 0..self.slots.len() {
+            let Some(index) = self.slots[slot] else {
+                return Ok((None, slot));
+            };
+            let candidate = &self.entries[index].0;
+            ctx.charge_work(
+                candidate.len().min(target.len()).saturating_add(1),
+                Utf16::default(),
+            )?;
+            if candidate == target {
+                return Ok((Some(index), slot));
+            }
+            slot = (slot + 1) & mask;
+        }
+        // The load factor invariant guarantees an empty slot.
+        Err(runtime_map_allocation_error())
+    }
+
+    fn ensure_insert_capacity(&mut self, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        if !self.slots.is_empty() && self.entries.len().saturating_add(1) <= self.slots.len() / 2 {
+            return Ok(());
+        }
+        let capacity = if self.slots.is_empty() {
+            8
+        } else {
+            self.slots
+                .len()
+                .checked_mul(2)
+                .ok_or_else(runtime_map_allocation_error)?
+        };
+        // Charge the slot table before reserving its bounded capacity.
+        ctx.charge_work(capacity, Utf16::default())?;
+        let mut slots = Vec::new();
+        slots
+            .try_reserve_exact(capacity)
+            .map_err(|_| runtime_map_allocation_error())?;
+        slots.resize(capacity, None);
+
+        let mask = capacity - 1;
+        for (index, (key, _)) in self.entries.iter().enumerate() {
+            ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+            let mut slot = (runtime_map_hash(key) as usize) & mask;
+            loop {
+                match slots[slot] {
+                    None => {
+                        slots[slot] = Some(index);
+                        break;
+                    }
+                    Some(existing) => {
+                        let existing_key = &self.entries[existing].0;
+                        ctx.charge_work(
+                            existing_key.len().min(key.len()).saturating_add(1),
+                            Utf16::default(),
+                        )?;
+                        debug_assert_ne!(existing_key, key, "RuntimeMap entries are unique");
+                        slot = (slot + 1) & mask;
+                    }
+                }
+            }
+        }
+        self.slots = slots;
+        Ok(())
+    }
+
+    fn get_metered(
+        &self,
+        target: &[u16],
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<&Runtime>, EngineError> {
+        Ok(self
+            .position_metered(target, ctx)?
+            .map(|index| &self.entries[index].1))
+    }
+
+    fn insert_metered(
+        &mut self,
+        key: Vec<u16>,
+        value: Runtime,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<usize>, EngineError> {
+        if let Some(index) = self.position_metered(&key, ctx)? {
+            self.entries[index].1 = value;
+            return Ok(Some(index));
+        }
+
+        self.ensure_insert_capacity(ctx)?;
+        ctx.charge_work(1, Utf16::default())?;
+        self.entries
+            .try_reserve(1)
+            .map_err(|_| runtime_map_allocation_error())?;
+        let (_, slot) = self.find_slot_metered(&key, ctx)?;
+        let index = self.entries.len();
+        self.entries.push((key, value));
+        self.slots[slot] = Some(index);
+        Ok(None)
+    }
+}
+
+fn runtime_map_hash(key: &[u16]) -> u64 {
+    key.iter().fold(0xcbf29ce484222325u64, |hash, unit| {
+        (hash ^ u64::from(*unit)).wrapping_mul(0x100000001b3)
+    })
+}
+
+fn runtime_map_allocation_error() -> EngineError {
+    EngineError::new(
+        "RESOURCE_LIMIT",
+        Utf16::default(),
+        "Constraint map allocation failed",
+    )
+}
+
+#[derive(Debug)]
+enum BorrowedPathValue<'a> {
+    Runtime(&'a Runtime),
+    Json(&'a Value),
+    Number(f64),
+    Missing,
+}
+
+/// Invocation-local constraint output. Static callers still receive the
+/// established `Diagnostic` API; the private Selection path can retain a
+/// structure message as its original host string token.
+#[derive(Clone, Debug, PartialEq)]
+pub(crate) enum ConstraintDiagnostic {
+    Static(Diagnostic),
+    HostCallback(crate::host_json::HostOpaqueValue),
+    HostStructure {
+        code: Utf16,
+        path: Utf16,
+        severity: Severity,
+        message: crate::host_json::HostOpaqueValue,
+    },
+}
+fn runtime_tree_nodes(value: &Runtime) -> usize {
+    1 + match value {
+        Runtime::Json(value) => crate::dataset_values::tree_values(value).saturating_sub(1),
+        Runtime::HostStructureDiagnostic { .. } | Runtime::HostCallbackDiagnostic(_) => 0,
+        Runtime::Array(items) => items.iter().map(runtime_tree_nodes).sum(),
+        Runtime::Object(items) | Runtime::CopiedObject(items) => items
+            .iter()
+            .map(|(_, value)| runtime_tree_nodes(value))
+            .sum(),
+        Runtime::Text { .. } | Runtime::Missing | Runtime::Map(_) => 0,
+    }
+}
+fn observe_runtime_visit(
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+    value: &Runtime,
+) -> Result<(), EngineError> {
+    if let Some(observer) = observer.as_deref_mut() {
+        observer("constraint-value-visit", runtime_tree_nodes(value))?;
+    }
+    Ok(())
 }
 type Env = Vec<(Utf16, Rc<Runtime>)>;
 fn k(s: &str) -> Utf16 {
@@ -40,11 +246,60 @@ fn get<'a>(v: &'a Value, n: &str) -> Option<&'a Value> {
         _ => None,
     }
 }
-fn get_key<'a>(v: &'a Value, name: &Utf16) -> Option<&'a Value> {
-    match v {
-        Value::Object(m) => m.iter().find(|(x, _)| x == name).map(|(_, v)| v),
+#[derive(Clone, Copy)]
+enum RuntimeMember<'a> {
+    Value(&'a Value),
+    Runtime(&'a Runtime),
+}
+fn runtime_member<'a>(
+    value: RuntimeMember<'a>,
+    name: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<Option<RuntimeMember<'a>>, EngineError> {
+    let found = match value {
+        RuntimeMember::Value(Value::Object(fields)) => {
+            let mut found = None;
+            for (key, value) in fields {
+                if compare_utf16_metered(key, name, ctx)? == Ordering::Equal {
+                    found = Some(RuntimeMember::Value(value));
+                    break;
+                }
+            }
+            found
+        }
+        RuntimeMember::Runtime(Runtime::Json(Value::Object(fields))) => {
+            let mut found = None;
+            for (key, value) in fields {
+                if compare_utf16_metered(key, name, ctx)? == Ordering::Equal {
+                    found = Some(RuntimeMember::Value(value));
+                    break;
+                }
+            }
+            found
+        }
+        RuntimeMember::Runtime(Runtime::Object(fields) | Runtime::CopiedObject(fields)) => {
+            find_runtime_key_metered(fields, name, ctx)?
+                .map(|index| RuntimeMember::Runtime(&fields[index].1))
+        }
         _ => None,
-    }
+    };
+    Ok(found)
+}
+fn runtime_member_string(
+    value: RuntimeMember<'_>,
+    ctx: &mut Context<'_>,
+) -> Result<Option<Utf16>, EngineError> {
+    let text = match value {
+        RuntimeMember::Value(Value::String(text))
+        | RuntimeMember::Runtime(Runtime::Json(Value::String(text))) => Some(text),
+        RuntimeMember::Runtime(Runtime::Text { value, .. }) => Some(value),
+        _ => None,
+    };
+    text.map(|text| {
+        ctx.charge_work(text.len(), Utf16::default())?;
+        Ok(text.clone())
+    })
+    .transpose()
 }
 fn utf16(v: &Value) -> Option<Utf16> {
     match v {
@@ -95,45 +350,18 @@ fn contains_utf16_metered(
     Ok(false)
 }
 fn find_map_value_metered<'a>(
-    entries: &'a [(Vec<u16>, Runtime)],
+    entries: &'a RuntimeMap,
     target: &[u16],
     ctx: &mut Context<'_>,
 ) -> Result<Option<&'a Runtime>, EngineError> {
-    for (key, value) in entries {
-        ctx.charge_work(1, Utf16::default())?;
-        ctx.charge_work(
-            key.len().min(target.len()).saturating_add(1),
-            Utf16::default(),
-        )?;
-        if key == target {
-            return Ok(Some(value));
-        }
-    }
-    Ok(None)
+    entries.get_metered(target, ctx)
 }
 fn contains_map_key_metered(
-    entries: &[(Vec<u16>, Runtime)],
+    entries: &RuntimeMap,
     target: &[u16],
     ctx: &mut Context<'_>,
 ) -> Result<bool, EngineError> {
     Ok(find_map_value_metered(entries, target, ctx)?.is_some())
-}
-fn find_map_value_index_metered(
-    entries: &[(Vec<u16>, Runtime)],
-    target: &[u16],
-    ctx: &mut Context<'_>,
-) -> Result<Option<usize>, EngineError> {
-    for (index, (key, _)) in entries.iter().enumerate() {
-        ctx.charge_work(1, Utf16::default())?;
-        ctx.charge_work(
-            key.len().min(target.len()).saturating_add(1),
-            Utf16::default(),
-        )?;
-        if key == target {
-            return Ok(Some(index));
-        }
-    }
-    Ok(None)
 }
 fn find_runtime_key_metered(
     entries: &[(Utf16, Runtime)],
@@ -159,6 +387,229 @@ fn find_env_key_metered(
     }
     Ok(None)
 }
+
+/// Evaluate the common generated-rule shape `get(var, [string-key])` without
+/// first materializing a private copy of the entire variable value. The
+/// generic evaluator remains the fallback for every dynamic path and runtime
+/// kind. Runtime values are immutable, so property lookup can borrow the root
+/// and only copy the selected child, matching the observable result while
+/// avoiding a full-document clone for each element.
+fn eval_get_variable_literal_path(
+    args: &[Value],
+    env: &Env,
+    doc: &Value,
+    policy: &Value,
+    reg: &dyn crate::registry::RegistrationProvider,
+    caps: &mut dyn crate::engine::Capabilities,
+    ctx: &mut Context<'_>,
+    diagnostics: &mut Vec<ConstraintDiagnostic>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+) -> Result<Option<Runtime>, EngineError> {
+    let [Value::Object(var_fields), Value::Array(path_exprs)] = args else {
+        return Ok(None);
+    };
+    if var_fields.len() != 1 || var_fields[0].0 != k("var") {
+        return Ok(None);
+    }
+    // Keep this fast path to literal string-key paths. It cannot invoke user
+    // callbacks or coercion diagnostics, and it avoids copying the root just
+    // to copy one selected child. Dynamic paths stay on the generic evaluator.
+    if path_exprs.is_empty()
+        || path_exprs
+            .iter()
+            .any(|expr| !matches!(expr, Value::String(_)))
+    {
+        return Ok(None);
+    }
+    let variable_name = utf16(&var_fields[0].1).unwrap_or_default();
+    ctx.charge_constraint_step(Utf16::default())?;
+    if let Some(observer) = observer.as_deref_mut() {
+        observer("constraint-instruction", 1)?;
+    }
+    let root_index = find_env_key_metered(env, &variable_name, ctx)?;
+    let root = root_index.map(|index| env[index].1.as_ref());
+
+    if matches!(
+        root,
+        Some(Runtime::Json(_) | Runtime::Array(_) | Runtime::Object(_) | Runtime::CopiedObject(_))
+    ) {
+        // Preserve the normal evaluator's instruction/observer accounting for
+        // the literal array and each scalar child. Only the selected subtree
+        // is copied; the document-sized variable remains borrowed.
+        ctx.charge_constraint_step(Utf16::default())?;
+        if let Some(observer) = observer.as_deref_mut() {
+            observer("constraint-instruction", 1)?;
+        }
+        ctx.charge_work(path_exprs.len(), Utf16::default())?;
+        let mut path_values = Vec::new();
+        path_values
+            .try_reserve_exact(path_exprs.len())
+            .map_err(|_| {
+                EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "Constraint path allocation failed",
+                )
+            })?;
+        for segment_expr in path_exprs {
+            let segment = eval(
+                segment_expr,
+                env,
+                doc,
+                policy,
+                reg,
+                caps,
+                ctx,
+                diagnostics,
+                observer,
+            )?;
+            path_values.push(segment);
+        }
+        let mut current = BorrowedPathValue::Runtime(root.expect("matched owned runtime root"));
+        for segment in &path_values {
+            let key = string_units_metered(segment, ctx)?;
+            current = match current {
+                BorrowedPathValue::Runtime(Runtime::Json(value)) => {
+                    borrowed_json_property(value, &key, ctx)?
+                }
+                BorrowedPathValue::Runtime(Runtime::Array(items)) => {
+                    if key == k("length") {
+                        BorrowedPathValue::Number(items.len() as f64)
+                    } else {
+                        array_index(&key)
+                            .and_then(|index| items.get(index))
+                            .map(BorrowedPathValue::Runtime)
+                            .unwrap_or(BorrowedPathValue::Missing)
+                    }
+                }
+                BorrowedPathValue::Runtime(
+                    Runtime::Object(items) | Runtime::CopiedObject(items),
+                ) => match find_runtime_key_metered(items, &key, ctx)? {
+                    Some(index) => BorrowedPathValue::Runtime(&items[index].1),
+                    None => BorrowedPathValue::Missing,
+                },
+                BorrowedPathValue::Runtime(_) | BorrowedPathValue::Number(_) => {
+                    BorrowedPathValue::Missing
+                }
+                BorrowedPathValue::Json(value) => borrowed_json_property(value, &key, ctx)?,
+                BorrowedPathValue::Missing => BorrowedPathValue::Missing,
+            };
+        }
+        let result = match current {
+            BorrowedPathValue::Runtime(value) => runtime_copy(value, ctx)?,
+            BorrowedPathValue::Json(value) => Runtime::Json(clone_private(value, ctx)?),
+            BorrowedPathValue::Number(value) => Runtime::Json(Value::Number(value)),
+            BorrowedPathValue::Missing => Runtime::Missing,
+        };
+        return Ok(Some(result));
+    }
+
+    // For missing and non-owned runtime values, reproduce the generic evaluator
+    // completely so callbacks, copy costs, and failure order stay unchanged.
+    let variable_value = root
+        .map(|value| runtime_copy(value, ctx))
+        .transpose()?
+        .unwrap_or(Runtime::Missing);
+    let path_value = eval(
+        &args[1],
+        env,
+        doc,
+        policy,
+        reg,
+        caps,
+        ctx,
+        diagnostics,
+        observer,
+    )?;
+    let x = runtime_copy(&variable_value, ctx)?;
+    let y = runtime_copy(&path_value, ctx)?;
+    let path = match runtime_json_copy(&y, ctx)? {
+        Some(Value::Array(segments)) => segments.into_iter().map(Runtime::Json).collect::<Vec<_>>(),
+        _ => Vec::new(),
+    };
+    Ok(Some(path_get(&x, &path, ctx)?))
+}
+
+/// Execute the generated `extension-errors(var doc, ...)` form without making
+/// a private, document-sized copy before the extension payload is examined.
+/// The invocation environment starts with the caller's document in slot zero;
+/// this fast path reads the current `doc` binding and otherwise falls back to
+/// the generic evaluator.
+fn eval_extension_errors_document(
+    args: &[Value],
+    env: &Env,
+    doc: &Value,
+    policy: &Value,
+    reg: &dyn crate::registry::RegistrationProvider,
+    caps: &mut dyn crate::engine::Capabilities,
+    ctx: &mut Context<'_>,
+    diagnostics: &mut Vec<ConstraintDiagnostic>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+) -> Result<Option<Runtime>, EngineError> {
+    if args.len() != 5
+        || !matches!(&args[0], Value::Object(fields) if fields.len() == 1 && fields[0].0 == k("var") && utf16(&fields[0].1).as_ref() == Some(&k("doc")))
+    {
+        return Ok(None);
+    }
+
+    // This mirrors eval(var doc)'s observable instruction and variable-name
+    // lookup work; only its full-tree runtime_copy is intentionally avoided.
+    ctx.charge_constraint_step(Utf16::default())?;
+    if let Some(observer) = observer.as_deref_mut() {
+        observer("constraint-instruction", 1)?;
+    }
+    let doc_index = find_env_key_metered(env, &k("doc"), ctx)?;
+    let doc_value = doc_index.map(|index| env[index].1.as_ref());
+    let can_borrow_doc = matches!(doc_value, Some(Runtime::Json(_) | Runtime::CopiedObject(_)));
+    let variable_value = if can_borrow_doc {
+        None
+    } else {
+        Some(doc_value
+            .map(|value| runtime_copy(value, ctx))
+            .transpose()?
+            .unwrap_or(Runtime::Missing))
+    };
+
+    // Evaluate the remaining arguments in authored order before copying or
+    // coercing them, matching the generic call path.
+    let mut av = Vec::with_capacity(args.len() - 1);
+    for arg in &args[1..] {
+        av.push(eval(arg, env, doc, policy, reg, caps, ctx, diagnostics, observer)?);
+    }
+    let x_owned = variable_value
+        .as_ref()
+        .map(|value| runtime_copy(value, ctx))
+        .transpose()?;
+    let missing_doc = Runtime::Missing;
+    let x = if can_borrow_doc {
+        doc_value.expect("borrowable doc binding")
+    } else {
+        x_owned.as_ref().unwrap_or(&missing_doc)
+    };
+    let y = av.first().map(|v| runtime_copy(v, ctx)).transpose()?.unwrap_or(Runtime::Missing);
+    let fallback_doc = if can_borrow_doc {
+        None
+    } else {
+        Some(Runtime::Json(runtime_json_copy(x, ctx)?.unwrap_or(Value::Null)))
+    };
+    let yj = runtime_json_copy(&y, ctx)?;
+    let payloads = yj.as_ref().unwrap_or(&Value::Null);
+    let scope = av.get(1).map(|value| string_units_metered(value, ctx)).transpose()?.unwrap_or_default();
+    let path = av.get(2).map(|value| string_units_metered(value, ctx)).transpose()?.unwrap_or_default();
+    let p = av.get(3).map(|value| as_json(value, ctx)).transpose()?.unwrap_or(Value::Null);
+    let errors = extension_errors(
+        fallback_doc.as_ref().unwrap_or(x),
+        payloads,
+        &scope,
+        &path,
+        &p,
+        reg,
+        caps,
+        ctx,
+    )?;
+    Ok(Some(runtime_constraint_diagnostics(&errors, ctx)?))
+}
+
 pub fn prepare_program(
     input: &Value,
     ctx: &mut Context<'_>,
@@ -406,6 +857,8 @@ fn canonical_runtime(
         ctx.charge_work(1, Utf16::default())?;
         match value {
             Runtime::Missing => Ok(false),
+            Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+            Runtime::HostCallbackDiagnostic(_) => Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be serialized by a constraint operator")),
             Runtime::Json(value) => {
                 let encoded = canonical(value, ctx)?;
                 ctx.charge_work(encoded.len(), Utf16::default())?;
@@ -579,6 +1032,54 @@ fn runtime_diagnostics(
     }
     Ok(Runtime::Array(values))
 }
+
+fn runtime_constraint_diagnostics(
+    diagnostics: &[ConstraintDiagnostic],
+    ctx: &mut Context<'_>,
+) -> Result<Runtime, EngineError> {
+    ctx.charge_work(diagnostics.len(), Utf16::default())?;
+    let mut values = Vec::with_capacity(diagnostics.len());
+    for diagnostic in diagnostics {
+        values.push(match diagnostic {
+            ConstraintDiagnostic::Static(diagnostic) => runtime_object(diagnostic, ctx)?,
+            ConstraintDiagnostic::HostCallback(value) => Runtime::HostCallbackDiagnostic(value.clone()),
+            ConstraintDiagnostic::HostStructure {
+                code,
+                path,
+                severity,
+                message,
+            } => {
+                ctx.charge_work(code.len().saturating_add(path.len()), path.clone())?;
+                Runtime::HostStructureDiagnostic {
+                    code: code.clone(),
+                    path: path.clone(),
+                    severity: *severity,
+                    message: message.clone(),
+                }
+            }
+        });
+    }
+    Ok(Runtime::Array(values))
+}
+
+fn static_diagnostics(
+    diagnostics: Vec<ConstraintDiagnostic>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    diagnostics
+        .into_iter()
+        .map(|diagnostic| match diagnostic {
+            ConstraintDiagnostic::Static(diagnostic) => Ok(diagnostic),
+            ConstraintDiagnostic::HostCallback(_) => Err(err(
+                "HOST_JSON_UNSUPPORTED",
+                "Opaque callback diagnostics require the private Selection materializer",
+            )),
+            ConstraintDiagnostic::HostStructure { .. } => Err(err(
+                "HOST_JSON_UNSUPPORTED",
+                "Opaque host diagnostics require the private Selection materializer",
+            )),
+        })
+        .collect()
+}
 fn diagnostic_text_origin<'a>(
     diagnostic: &'a Diagnostic,
     field: &str,
@@ -616,6 +1117,14 @@ fn diagnostic_cost(diagnostic: &Diagnostic) -> usize {
 fn runtime_copy(v: &Runtime, ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
     Ok(match v {
         Runtime::Json(value) => Runtime::Json(clone_private(value, ctx)?),
+        Runtime::HostStructureDiagnostic { code, path, severity, message } => {
+            ctx.charge_work(code.len().saturating_add(path.len()).saturating_add(1), path.clone())?;
+            Runtime::HostStructureDiagnostic { code: code.clone(), path: path.clone(), severity: *severity, message: message.clone() }
+        }
+        Runtime::HostCallbackDiagnostic(value) => {
+            ctx.charge_work(1, Utf16::default())?;
+            Runtime::HostCallbackDiagnostic(value.clone())
+        }
         Runtime::Array(items) => {
             ctx.charge_work(items.len(), Utf16::default())?;
             Runtime::Array(
@@ -736,6 +1245,8 @@ fn truth(v: &Runtime) -> bool {
         Runtime::Json(Value::Number(n)) => *n != 0.0 && !n.is_nan(),
         Runtime::Json(Value::String(s)) => !s.is_empty(),
         Runtime::Json(Value::Array(_) | Value::Object(_)) => true,
+        Runtime::HostStructureDiagnostic { .. } => true,
+        Runtime::HostCallbackDiagnostic(_) => true,
     }
 }
 fn runtime_text_codepoint_origin(
@@ -789,6 +1300,8 @@ fn runtime_text_codepoint_origin(
     ) -> Result<(), EngineError> {
         match value {
             Runtime::Missing => out.extend("undefined".chars().map(|c| c as u32)),
+            Runtime::HostStructureDiagnostic { .. } => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+            Runtime::HostCallbackDiagnostic(_) => return Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be coerced by a constraint operator")),
             Runtime::Map(_) => out.extend("[object Map]".chars().map(|c| c as u32)),
             Runtime::Text {
                 python_origin: Some(origin),
@@ -831,6 +1344,33 @@ fn runtime_text_codepoint_origin(
 }
 fn own<'a>(v: &'a Value, name: &Utf16) -> Option<&'a Value> {
     obj(v)?.iter().find(|(k, _)| k == name).map(|(_, v)| v)
+}
+fn borrowed_json_property<'a>(
+    value: &'a Value,
+    key: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<BorrowedPathValue<'a>, EngineError> {
+    match value {
+        Value::Object(fields) => {
+            for (candidate, value) in fields {
+                if compare_utf16_metered(candidate, key, ctx)? == Ordering::Equal {
+                    return Ok(BorrowedPathValue::Json(value));
+                }
+            }
+            Ok(BorrowedPathValue::Missing)
+        }
+        Value::Array(items) => {
+            if key == &k("length") {
+                Ok(BorrowedPathValue::Number(items.len() as f64))
+            } else {
+                Ok(array_index(key)
+                    .and_then(|index| items.get(index))
+                    .map(BorrowedPathValue::Json)
+                    .unwrap_or(BorrowedPathValue::Missing))
+            }
+        }
+        _ => Ok(BorrowedPathValue::Missing),
+    }
 }
 fn array_index(key: &Utf16) -> Option<usize> {
     let units = key.units();
@@ -958,6 +1498,7 @@ fn runtime_string_into(value: &Runtime, out: &mut Vec<u16>) {
     }
     match value {
         Runtime::Missing => out.extend("undefined".encode_utf16()),
+        Runtime::HostStructureDiagnostic { .. } | Runtime::HostCallbackDiagnostic(_) => return,
         Runtime::Map(_) => out.extend("[object Map]".encode_utf16()),
         Runtime::Text {
             value,
@@ -993,6 +1534,8 @@ fn runtime_primitive<'a>(
     }
     let primitive = match value {
         Runtime::Missing => Primitive::Undefined,
+        Runtime::HostStructureDiagnostic { .. } => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+        Runtime::HostCallbackDiagnostic(_) => return Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be coerced by a constraint operator")),
         Runtime::Map(_) => {
             *scratch = Some(Utf16::from("[object Map]"));
             Primitive::String(scratch.as_ref().unwrap())
@@ -1129,6 +1672,8 @@ fn runtime_string_cost(value: &Runtime, ctx: &mut Context<'_>) -> Result<usize, 
             Utf16::default(),
             "Object cannot be converted to a primitive",
         )),
+        Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+        Runtime::HostCallbackDiagnostic(_) => Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be coerced by a constraint operator")),
     }
 }
 
@@ -1196,6 +1741,7 @@ fn runtime_property(
             let _ = (value, key, ctx);
             Ok(None)
         }
+        Runtime::HostStructureDiagnostic { .. } => Ok(None),
         _ => Ok(None),
     }
 }
@@ -1252,6 +1798,8 @@ fn clone_private(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
 fn as_json(v: &Runtime, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     match v {
         Runtime::Json(v) => clone_private(v, ctx),
+        Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+        Runtime::HostCallbackDiagnostic(_) => Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be coerced by a constraint operator")),
         Runtime::Array(items) => {
             ctx.charge_work(items.len(), Utf16::default())?;
             Ok(Value::Array(
@@ -1307,12 +1855,16 @@ fn eval(
     env: &Env,
     doc: &Value,
     policy: &Value,
-    reg: &crate::registry::Registry,
+    reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
+    diagnostics: &mut Vec<ConstraintDiagnostic>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
 ) -> Result<Runtime, EngineError> {
     ctx.charge_constraint_step(Utf16::default())?;
+    if let Some(observer) = observer.as_deref_mut() {
+        observer("constraint-instruction", 1)?;
+    }
     match e {
         Value::Object(_) => {
             if let Some(v) = get(e, "var") {
@@ -1325,10 +1877,25 @@ fn eval(
             if let Some(op) = get(e, "op") {
                 let name = txt(op).unwrap_or_default();
                 let args = arr(get(e, "args").unwrap_or(&Value::Null)).unwrap_or(&[]);
+                if name == "get" {
+                    if let Some(value) = eval_get_variable_literal_path(
+                        args, env, doc, policy, reg, caps, ctx, diagnostics, observer,
+                    )? {
+                        return Ok(value);
+                    }
+                }
+                if name == "extension-errors" {
+                    if let Some(value) = eval_extension_errors_document(
+                        args, env, doc, policy, reg, caps, ctx, diagnostics, observer,
+                    )? {
+                        return Ok(value);
+                    }
+                }
                 if matches!(name.as_str(), "and" | "or") {
                     if name == "and" {
                         for a in args {
-                            let v = eval(a, env, doc, policy, reg, caps, ctx, diagnostics)?;
+                            let v =
+                                eval(a, env, doc, policy, reg, caps, ctx, diagnostics, observer)?;
                             if !truth(&v) {
                                 return Ok(Runtime::Json(Value::Bool(false)));
                             }
@@ -1336,7 +1903,7 @@ fn eval(
                         return Ok(Runtime::Json(Value::Bool(true)));
                     }
                     for a in args {
-                        let v = eval(a, env, doc, policy, reg, caps, ctx, diagnostics)?;
+                        let v = eval(a, env, doc, policy, reg, caps, ctx, diagnostics, observer)?;
                         if truth(&v) {
                             return Ok(Runtime::Json(Value::Bool(true)));
                         }
@@ -1345,7 +1912,17 @@ fn eval(
                 }
                 let mut av = Vec::with_capacity(args.len());
                 for a in args {
-                    av.push(eval(a, env, doc, policy, reg, caps, ctx, diagnostics)?)
+                    av.push(eval(
+                        a,
+                        env,
+                        doc,
+                        policy,
+                        reg,
+                        caps,
+                        ctx,
+                        diagnostics,
+                        observer,
+                    )?)
                 }
                 let x = av
                     .first()
@@ -1385,6 +1962,18 @@ fn eval(
                         Ok(Runtime::Json(Value::Bool(present)))
                     }
                     "keys" | "values" | "entries" => {
+                        if let Some(observer) = observer.as_deref_mut() {
+                            let amount = match &x {
+                                Runtime::Object(items) | Runtime::CopiedObject(items) => {
+                                    items.len()
+                                }
+                                Runtime::Array(items) => items.len(),
+                                Runtime::Json(Value::Object(items)) => items.len(),
+                                Runtime::Json(Value::Array(items)) => items.len(),
+                                _ => 0,
+                            };
+                            observer("constraint-enumeration", amount)?;
+                        }
                         if let Runtime::Object(members) | Runtime::CopiedObject(members) = &x {
                             ctx.charge_work(members.len(), Utf16::default())?;
                             let mut out = Vec::with_capacity(members.len());
@@ -1466,6 +2055,24 @@ fn eval(
                         Ok(Runtime::Json(Value::Array(out)))
                     }
                     "without" => {
+                        if let Some(observer) = observer.as_deref_mut() {
+                            let object_len = match &x {
+                                Runtime::Object(items) | Runtime::CopiedObject(items) => {
+                                    items.len()
+                                }
+                                Runtime::Json(Value::Object(items)) => items.len(),
+                                _ => 0,
+                            };
+                            let remove_len = match &y {
+                                Runtime::Array(items) => items.len(),
+                                Runtime::Json(Value::Array(items)) => items.len(),
+                                _ => 0,
+                            };
+                            observer(
+                                "constraint-enumeration",
+                                object_len.saturating_mul(1 + remove_len),
+                            )?;
+                        }
                         let yj = runtime_json_copy(&y, ctx)?;
                         if let Runtime::Object(members) = &x {
                             let remove_values =
@@ -1512,6 +2119,27 @@ fn eval(
                         Ok(Runtime::Json(Value::Object(out)))
                     }
                     "flatten" => {
+                        if let Some(observer) = observer.as_deref_mut() {
+                            let amount = match &x {
+                                Runtime::Array(items) => items
+                                    .iter()
+                                    .map(|item| match item {
+                                        Runtime::Array(inner) => 1 + inner.len(),
+                                        Runtime::Json(Value::Array(inner)) => 1 + inner.len(),
+                                        _ => 1,
+                                    })
+                                    .sum(),
+                                Runtime::Json(Value::Array(items)) => items
+                                    .iter()
+                                    .map(|item| match item {
+                                        Value::Array(inner) => 1 + inner.len(),
+                                        _ => 1,
+                                    })
+                                    .sum(),
+                                _ => 0,
+                            };
+                            observer("constraint-enumeration", amount)?;
+                        }
                         if let Runtime::Array(items) = x {
                             let cost = items
                                 .iter()
@@ -1561,9 +2189,7 @@ fn eval(
                     }
                     "length" => {
                         let length = match &x {
-                            Runtime::Map(map) => {
-                                Runtime::Json(Value::Number(map.borrow().len() as f64))
-                            }
+                            Runtime::Map(map) => Runtime::Json(Value::Number(map.borrow().len() as f64)),
                             Runtime::Array(items) => {
                                 Runtime::Json(Value::Number(items.len() as f64))
                             }
@@ -1607,7 +2233,7 @@ fn eval(
                         Ok(length)
                     }
                     "eq" | "ne" => {
-                        let same = runtime_equal(&x, &y, ctx)?;
+                        let same = runtime_equal(&x, &y, ctx, observer)?;
                         Ok(Runtime::Json(Value::Bool(if name == "eq" {
                             same
                         } else {
@@ -1631,6 +2257,7 @@ fn eval(
                     "in" => {
                         let yes = match (&y, &x) {
                             (Runtime::Map(m), _) => {
+                                observe_runtime_visit(observer, &x)?;
                                 let key = canonical_runtime(&x, ctx)?
                                     .map(|(units, _)| units)
                                     .unwrap_or_else(|| Utf16::from("undefined").into_units());
@@ -1641,7 +2268,7 @@ fn eval(
                                 let mut found = false;
                                 for value in a {
                                     let candidate = Runtime::Json(clone_private(value, ctx)?);
-                                    if runtime_equal(&candidate, &x, ctx)? {
+                                    if runtime_equal(&candidate, &x, ctx, observer)? {
                                         found = true;
                                         break;
                                     }
@@ -1651,7 +2278,7 @@ fn eval(
                             (Runtime::Array(items), _) => {
                                 let mut found = false;
                                 for value in items {
-                                    if runtime_equal(value, &x, ctx)? {
+                                    if runtime_equal(value, &x, ctx, observer)? {
                                         found = true;
                                         break;
                                     }
@@ -1733,6 +2360,19 @@ fn eval(
                         Ok(Runtime::Array(av))
                     }
                     "sort" => {
+                        if let Some(observer) = observer.as_deref_mut() {
+                            let len = match &x {
+                                Runtime::Array(items) => Some(items.len()),
+                                Runtime::Json(Value::Array(items)) => Some(items.len()),
+                                _ => None,
+                            };
+                            if let Some(len) = len {
+                                observer("constraint-value-visit", runtime_tree_nodes(&x))?;
+                                let sort_work =
+                                    ((len as f64) * ((len + 1) as f64).log2()).ceil() as usize;
+                                observer("constraint-sort", sort_work)?;
+                            }
+                        }
                         if let Runtime::Array(mut values) = x {
                             let n = values.len();
                             let cost =
@@ -1813,15 +2453,19 @@ fn eval(
                         }
                         Ok(Runtime::Json(Value::Array(sorted)))
                     }
-                    "canonical" => Ok(canonical_runtime(&x, ctx)?
-                        .map(|(units, origin)| Runtime::Text {
-                            value: Utf16::new(units),
-                            python_origin: Some(origin),
-                            python_source_path: false,
-                        })
-                        .unwrap_or(Runtime::Missing)),
-                    "set" => Ok(Runtime::Map(Rc::new(RefCell::new(Vec::new())))),
+                    "canonical" => {
+                        observe_runtime_visit(observer, &x)?;
+                        Ok(canonical_runtime(&x, ctx)?
+                            .map(|(units, origin)| Runtime::Text {
+                                value: Utf16::new(units),
+                                python_origin: Some(origin),
+                                python_source_path: false,
+                            })
+                            .unwrap_or(Runtime::Missing))
+                    }
+                    "set" => Ok(Runtime::Map(Rc::new(RefCell::new(RuntimeMap::new())))),
                     "lookup" => {
+                        observe_runtime_visit(observer, &y)?;
                         let key = canonical_runtime(&y, ctx)?
                             .map(|(units, _)| units)
                             .unwrap_or_else(|| Utf16::from("undefined").into_units());
@@ -1841,7 +2485,7 @@ fn eval(
                         let yj = runtime_json_copy(&y, ctx)?;
                         let found = match (xj.as_ref(), yj.as_ref()) {
                             (Some(Value::String(id)), Some(Value::String(version))) => {
-                                reg.get(id, version).is_some()
+                                reg.lookup(id, version, ctx)?.is_some()
                             }
                             _ => false,
                         };
@@ -1914,7 +2558,7 @@ fn eval(
                     "extension-errors" => {
                         let xj = runtime_json_copy(&x, ctx)?;
                         let yj = runtime_json_copy(&y, ctx)?;
-                        let supplied_doc = xj.as_ref().unwrap_or(&Value::Null);
+                        let supplied_doc = Runtime::Json(xj.unwrap_or(Value::Null));
                         let payloads = yj.as_ref().unwrap_or(&Value::Null);
                         let scope = av
                             .get(2)
@@ -1932,7 +2576,7 @@ fn eval(
                             .transpose()?
                             .unwrap_or(Value::Null);
                         let errors = extension_errors(
-                            supplied_doc,
+                            &supplied_doc,
                             payloads,
                             &scope,
                             &path,
@@ -1941,7 +2585,7 @@ fn eval(
                             caps,
                             ctx,
                         )?;
-                        runtime_diagnostics(&errors, ctx)
+                        runtime_constraint_diagnostics(&errors, ctx)
                     }
                     "filter" | "map" | "find" | "some" | "every" | "index" => {
                         let list = as_values(x, ctx)?;
@@ -1949,7 +2593,7 @@ fn eval(
                         let idx_name = get(e, "index").and_then(utf16);
                         let body = get(e, "value").unwrap();
                         let mut out = Vec::new();
-                        let mut map = Vec::new();
+                        let mut map = RuntimeMap::new();
                         let mut found = Runtime::Missing;
                         let mut truth_value = name == "every";
                         for (i, item) in list.iter().enumerate() {
@@ -1963,7 +2607,17 @@ fn eval(
                                     Rc::new(Runtime::Json(Value::Number(i as f64))),
                                 ))
                             }
-                            let v = eval(body, &local, doc, policy, reg, caps, ctx, diagnostics)?;
+                            let v = eval(
+                                body,
+                                &local,
+                                doc,
+                                policy,
+                                reg,
+                                caps,
+                                ctx,
+                                diagnostics,
+                                observer,
+                            )?;
                             match name.as_str() {
                                 "filter" => {
                                     if truth(&v) {
@@ -1990,16 +2644,11 @@ fn eval(
                                     }
                                 }
                                 "index" => {
+                                    observe_runtime_visit(observer, &v)?;
                                     let key = canonical_runtime(&v, ctx)?
                                         .map(|(units, _)| units)
                                         .unwrap_or_else(|| Utf16::from("undefined").into_units());
-                                    if let Some(index) =
-                                        find_map_value_index_metered(&map, &key, ctx)?
-                                    {
-                                        map[index].1 = runtime_copy(item, ctx)?;
-                                    } else {
-                                        map.push((key, runtime_copy(item, ctx)?));
-                                    }
+                                    map.insert_metered(key, runtime_copy(item, ctx)?, ctx)?;
                                 }
                                 _ => (),
                             }
@@ -2023,7 +2672,17 @@ fn eval(
                 let mut members = Vec::with_capacity(member_count);
                 let mut preserve_origin = false;
                 for (key, value) in obj(e).unwrap() {
-                    let evaluated = eval(value, env, doc, policy, reg, caps, ctx, diagnostics)?;
+                    let evaluated = eval(
+                        value,
+                        env,
+                        doc,
+                        policy,
+                        reg,
+                        caps,
+                        ctx,
+                        diagnostics,
+                        observer,
+                    )?;
                     ctx.charge_work(key.len(), Utf16::default())?;
                     preserve_origin |= matches!(
                         evaluated,
@@ -2051,7 +2710,7 @@ fn eval(
             let mut out = Vec::with_capacity(a.len());
             let mut preserve_origin = false;
             for v in a {
-                let evaluated = eval(v, env, doc, policy, reg, caps, ctx, diagnostics)?;
+                let evaluated = eval(v, env, doc, policy, reg, caps, ctx, diagnostics, observer)?;
                 preserve_origin |= matches!(
                     evaluated,
                     Runtime::Text { .. }
@@ -2120,14 +2779,25 @@ fn runtime_to_value(v: Runtime, ctx: &mut Context<'_>) -> Result<Value, EngineEr
             )?;
             Ok(Value::String(value))
         }
+        Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+        Runtime::HostCallbackDiagnostic(_) => Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be materialized by a constraint operator")),
         Runtime::Missing => Ok(Value::Null),
         Runtime::Map(_) => Ok(Value::Array(vec![])),
     }
 }
-fn runtime_equal(a: &Runtime, b: &Runtime, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+fn runtime_equal(
+    a: &Runtime,
+    b: &Runtime,
+    ctx: &mut Context<'_>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+) -> Result<bool, EngineError> {
     // The retained TypeScript equality is canonical JSON equality. Maps have
     // no enumerable own properties, so each one canonicalizes as an empty
     // object regardless of its internal entries.
+    if !matches!(a, Runtime::Missing) && !matches!(b, Runtime::Missing) {
+        observe_runtime_visit(observer, a)?;
+        observe_runtime_visit(observer, b)?;
+    }
     let left = canonical_runtime(a, ctx)?;
     let right = canonical_runtime(b, ctx)?;
     Ok(match (left, right) {
@@ -2175,15 +2845,15 @@ fn python_path_with_source_suffix(
 }
 
 fn extension_errors(
-    doc: &Value,
+    doc: &Runtime,
     payloads: &Value,
     scope: &Utf16,
     path: &Utf16,
     policy: &Value,
-    registry: &crate::registry::Registry,
+    registry: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-) -> Result<Vec<Diagnostic>, EngineError> {
+) -> Result<Vec<ConstraintDiagnostic>, EngineError> {
     fn child(base: &Utf16, segment: &Utf16, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
         let escaped = segment
             .units()
@@ -2212,36 +2882,83 @@ fn extension_errors(
     let Some(entries) = obj(payloads) else {
         return Ok(out);
     };
-    let vocab = get(doc, "vocabularies").unwrap_or(&Value::Null);
+    let vocab = runtime_member(
+        RuntimeMember::Runtime(doc),
+        &k("vocabularies"),
+        ctx,
+    )?;
     for (id, payload) in entries {
         let mut at = child(path, &Utf16::from("extensions"), ctx)?;
         at = child(&at, id, ctx)?;
-        let Some(decl) = get_key(vocab, id) else {
-            out.push(model_diag(policy, "undeclared", &at, None, ctx)?);
+        let Some(decl) = vocab
+            .map(|value| runtime_member(value, id, ctx))
+            .transpose()?
+            .flatten()
+        else {
+            out.push(ConstraintDiagnostic::Static(model_diag(policy, "undeclared", &at, None, ctx)?));
             continue;
         };
-        let Some(version) = get(decl, "version").and_then(|v| {
-            if let Value::String(s) = v {
-                Some(s.clone())
-            } else {
-                None
+        let Some(version) = runtime_member(decl, &k("version"), ctx)?
+            .map(|value| runtime_member_string(value, ctx))
+            .transpose()?
+            .flatten()
+        else {
+            out.push(ConstraintDiagnostic::Static(model_diag(policy, "undeclared", &at, None, ctx)?));
+            continue;
+        };
+        let entry = match registry.lookup(id, &version, ctx)? {
+            None => continue,
+            Some(crate::registry::RegistrationLookup::Borrowed(entry)) => entry,
+            Some(crate::registry::RegistrationLookup::HostHandle(handle)) => {
+                let materialized_doc = runtime_json_copy(doc, ctx)?.unwrap_or(Value::Null);
+                match registry.host_registration_stage(handle, &materialized_doc, payload, scope, &at, ctx)? {
+                    crate::registry::HostRegistrationStage::OutOfScope => {
+                        out.push(ConstraintDiagnostic::Static(model_diag(policy, "scope", &at, None, ctx)?));
+                    }
+                    crate::registry::HostRegistrationStage::NoDiagnostics => {}
+                    crate::registry::HostRegistrationStage::StructureErrors(errors) => {
+                        let rule = get(policy, "structure").ok_or_else(|| err("CONSTRAINT_PROGRAM", "Missing model diagnostic"))?;
+                        let code = get(rule, "code").and_then(utf16).ok_or_else(|| err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic"))?.clone();
+                        let severity = match get(rule, "severity").and_then(utf16).and_then(|value| value.to_utf8().ok()).as_deref() {
+                            Some("error") => Severity::Error,
+                            Some("warning") => Severity::Warning,
+                            _ => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+                        };
+                        for entry in errors {
+                            ctx.charge_work(code.len().saturating_add(entry.path.len()), entry.path.clone())?;
+                            out.push(ConstraintDiagnostic::HostStructure {
+                                code: code.clone(),
+                                path: entry.path,
+                                severity,
+                                message: entry.message,
+                            });
+                        }
+                    }
+                    crate::registry::HostRegistrationStage::Unchecked => {
+                        out.push(ConstraintDiagnostic::Static(model_diag(policy, "unchecked", &at, None, ctx)?));
+                    }
+                    crate::registry::HostRegistrationStage::SemanticDiagnostics(diagnostics) => {
+                        out.extend(diagnostics.into_iter().map(ConstraintDiagnostic::HostCallback));
+                    }
+                    crate::registry::HostRegistrationStage::SemanticFailure(message) => {
+                        out.push(ConstraintDiagnostic::Static(model_diag(policy, "failure", &at, Some(message), ctx)?));
+                    }
+                    crate::registry::HostRegistrationStage::Unsupported => {
+                        return Err(crate::selection_host_json::reject_host_semantics());
+                    }
+                }
+                continue;
             }
-        }) else {
-            out.push(model_diag(policy, "undeclared", &at, None, ctx)?);
-            continue;
-        };
-        let Some(entry) = registry.get(id, &version) else {
-            continue;
         };
         let (kind_invalid, mut kind_diagnostics) =
             crate::kinds::occurrence(entry, payload, scope, &at, policy, ctx)?;
-        out.append(&mut kind_diagnostics);
+        out.extend(kind_diagnostics.drain(..).map(ConstraintDiagnostic::Static));
         if !entry
             .scopes()
             .iter()
             .any(|s| Utf16::from(s.as_str()) == *scope)
         {
-            out.push(model_diag(policy, "scope", &at, None, ctx)?);
+                out.push(ConstraintDiagnostic::Static(model_diag(policy, "scope", &at, None, ctx)?));
             continue;
         }
         let errors = if let Some(source_document) = caps.python_source_document() {
@@ -2282,7 +2999,7 @@ fn extension_errors(
                         message: None,
                     });
                 }
-                out.push(diagnostic);
+                out.push(ConstraintDiagnostic::Static(diagnostic));
             }
             continue;
         }
@@ -2290,15 +3007,15 @@ fn extension_errors(
             continue;
         }
         if !entry.semantic() {
-            out.push(model_diag(policy, "unchecked", &at, None, ctx)?);
+            out.push(ConstraintDiagnostic::Static(model_diag(policy, "unchecked", &at, None, ctx)?));
             continue;
         }
         let Some(token) = entry.token() else {
-            out.push(model_diag(policy, "unchecked", &at, None, ctx)?);
+            out.push(ConstraintDiagnostic::Static(model_diag(policy, "unchecked", &at, None, ctx)?));
             continue;
         };
         let context = crate::engine::SemanticContext {
-            document: clone_private(doc, ctx)?,
+            document: runtime_json_copy(doc, ctx)?.unwrap_or(Value::Null),
             source_document: None,
             source_payload: None,
             path: at.clone(),
@@ -2306,9 +3023,9 @@ fn extension_errors(
         };
         let payload_copy = clone_private(payload, ctx)?;
         match caps.validate_extension_with_context(token, &payload_copy, &context, ctx) {
-            Ok(mut diagnostics) => out.append(&mut diagnostics),
+            Ok(diagnostics) => out.extend(diagnostics.into_iter().map(ConstraintDiagnostic::Static)),
             Err(crate::engine::CapabilityError::Host(message)) => {
-                out.push(model_diag(policy, "failure", &at, Some(message), ctx)?)
+                out.push(ConstraintDiagnostic::Static(model_diag(policy, "failure", &at, Some(message), ctx)?))
             }
             Err(crate::engine::CapabilityError::HostPython { message, source }) => {
                 let mut diagnostic = model_diag(policy, "failure", &at, Some(message), ctx)?;
@@ -2317,7 +3034,7 @@ fn extension_errors(
                     path: None,
                     message: Some(source),
                 });
-                out.push(diagnostic);
+                out.push(ConstraintDiagnostic::Static(diagnostic));
             }
             Err(crate::engine::CapabilityError::Engine(error)) => return Err(error),
         }
@@ -2397,25 +3114,40 @@ fn eval_bool(
     env: &Env,
     doc: &Value,
     p: &Value,
-    reg: &crate::registry::Registry,
+    reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
+    diagnostics: &mut Vec<ConstraintDiagnostic>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
 ) -> Result<bool, EngineError> {
-    Ok(truth(&eval(e, env, doc, p, reg, caps, ctx, diagnostics)?))
+    Ok(truth(&eval(
+        e,
+        env,
+        doc,
+        p,
+        reg,
+        caps,
+        ctx,
+        diagnostics,
+        observer,
+    )?))
 }
 fn exec(
     body: &Value,
     env: &mut Env,
     doc: &Value,
     p: &Value,
-    reg: &crate::registry::Registry,
+    reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-    diags: &mut Vec<Diagnostic>,
+    diags: &mut Vec<ConstraintDiagnostic>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
 ) -> Result<(), EngineError> {
     for step in arr(body).unwrap_or(&[]) {
         ctx.charge_constraint_step(Utf16::default())?;
+        if let Some(observer) = observer.as_deref_mut() {
+            observer("constraint-instruction", 1)?;
+        }
         let op = txt(get(step, "op").unwrap_or(&Value::Null)).unwrap_or_default();
         match op.as_str() {
             "let" => {
@@ -2429,6 +3161,7 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
                 if let Some(index) = find_env_key_metered(env, &n, ctx)? {
                     env[index].1 = Rc::new(v)
@@ -2446,6 +3179,7 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
                 for (i, v) in as_values(values, ctx)?.into_iter().enumerate() {
                     let mut local = clone_env(env, ctx)?;
@@ -2468,6 +3202,7 @@ fn exec(
                         caps,
                         ctx,
                         diags,
+                        observer,
                     )?
                 }
             }
@@ -2481,6 +3216,7 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
                 if test {
                     let mut local = clone_env(env, ctx)?;
@@ -2493,15 +3229,16 @@ fn exec(
                         caps,
                         ctx,
                         diags,
+                        observer,
                     )?
                 } else if let Some(other) = get(step, "else") {
                     let mut local = clone_env(env, ctx)?;
-                    exec(other, &mut local, doc, p, reg, caps, ctx, diags)?
+                    exec(other, &mut local, doc, p, reg, caps, ctx, diags, observer)?
                 }
             }
             "emit" => {
                 let should_emit = match get(step, "when") {
-                    Some(w) => eval_bool(w, env, doc, p, reg, caps, ctx, diags)?,
+                    Some(w) => eval_bool(w, env, doc, p, reg, caps, ctx, diags, observer)?,
                     None => true,
                 };
                 if should_emit {
@@ -2514,8 +3251,9 @@ fn exec(
                         caps,
                         ctx,
                         diags,
+                        observer,
                     )?;
-                    diags.push(diagnostic_from_runtime(v, ctx)?)
+                    diags.push(diagnostic_from_runtime_with_provider(v, reg, ctx)?)
                 }
             }
             "remember" => {
@@ -2528,6 +3266,7 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
                 let key_runtime = eval(
                     get(step, "key").unwrap(),
@@ -2538,7 +3277,9 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
+                observe_runtime_visit(observer, &key_runtime)?;
                 let key = canonical_runtime(&key_runtime, ctx)?
                     .map(|(units, _)| units)
                     .unwrap_or_else(|| Utf16::from("undefined").into_units());
@@ -2548,16 +3289,16 @@ fn exec(
                     drop(entries);
                     if duplicate {
                         if let Some(d) = get(step, "diagnostic") {
-                            let diagnostic = eval(d, env, doc, p, reg, caps, ctx, diags)?;
-                            diags.push(diagnostic_from_runtime(diagnostic, ctx)?)
+                            let diagnostic = eval(d, env, doc, p, reg, caps, ctx, diags, observer)?;
+                            diags.push(diagnostic_from_runtime_with_provider(diagnostic, reg, ctx)?)
                         }
                     } else {
                         let stored = if let Some(value) = get(step, "value") {
-                            eval(value, env, doc, p, reg, caps, ctx, diags)?
+                            eval(value, env, doc, p, reg, caps, ctx, diags, observer)?
                         } else {
                             Runtime::Json(Value::Bool(true))
                         };
-                        m.borrow_mut().push((key, stored));
+                        m.borrow_mut().insert_metered(key, stored, ctx)?;
                     }
                 }
             }
@@ -2572,7 +3313,17 @@ fn exec(
     }
     Ok(())
 }
-fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<Diagnostic, EngineError> {
+fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<ConstraintDiagnostic, EngineError> {
+    let v = match v {
+        Runtime::HostStructureDiagnostic { code, path, severity, message } => {
+            if !matches!(&message, crate::host_json::HostOpaqueValue::String(_)) {
+                return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic"));
+            }
+            return Ok(ConstraintDiagnostic::HostStructure { code, path, severity, message });
+        }
+        Runtime::HostCallbackDiagnostic(value) => return Ok(ConstraintDiagnostic::HostCallback(value)),
+        value => value,
+    };
     let fields = match v {
         Runtime::Json(Value::Object(fields)) => {
             ctx.charge_work(fields.len(), Utf16::default())?;
@@ -2636,7 +3387,7 @@ fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<Diagnost
         Some(severity) if severity == "warning" => Severity::Warning,
         _ => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
     };
-    Ok(Diagnostic {
+    Ok(ConstraintDiagnostic::Static(Diagnostic {
         code,
         path,
         python_source_path,
@@ -2654,7 +3405,19 @@ fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<Diagnost
         } else {
             None
         },
-    })
+    }))
+}
+
+fn diagnostic_from_runtime_with_provider(
+    value: Runtime,
+    provider: &dyn crate::registry::RegistrationProvider,
+    ctx: &mut Context<'_>,
+) -> Result<ConstraintDiagnostic, EngineError> {
+    if let Runtime::HostCallbackDiagnostic(original) = value {
+        provider.host_callback_validate_at_emit(&original, ctx)?;
+        return Ok(ConstraintDiagnostic::HostCallback(original));
+    }
+    diagnostic_from_runtime(value, ctx)
 }
 pub fn execute_constraints(
     document: &Value,
@@ -2669,7 +3432,8 @@ pub fn execute_constraints(
     if let Some(literal) = get(&policy, "literal") {
         prepare_policy(literal, ctx)?;
     }
-    execute_constraints_admitted(&document, program, &policy, registry, caps, ctx)
+    let provider = crate::registry::StaticRegistrationProvider(registry);
+    execute_constraints_admitted_with_provider(&document, program, &policy, &provider, caps, ctx)
 }
 
 /// Execute an interpreter operation whose document and policy have already
@@ -2682,7 +3446,55 @@ pub(crate) fn execute_constraints_admitted(
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
-    let mut diags = Vec::new();
+    let provider = crate::registry::StaticRegistrationProvider(registry);
+    execute_constraints_admitted_observed_with_provider(
+        document, program, policy, &provider, caps, ctx, None,
+    )
+}
+
+pub(crate) fn execute_constraints_admitted_with_provider(
+    document: &Value,
+    program: &PreparedProgram,
+    policy: &Value,
+    provider: &dyn crate::registry::RegistrationProvider,
+    caps: &mut dyn crate::engine::Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    execute_constraints_admitted_observed_with_provider(
+        document, program, policy, provider, caps, ctx, None,
+    )
+}
+
+pub(crate) fn execute_constraints_admitted_observed_with_provider(
+    document: &Value,
+    program: &PreparedProgram,
+    policy: &Value,
+    registry: &dyn crate::registry::RegistrationProvider,
+    caps: &mut dyn crate::engine::Capabilities,
+    ctx: &mut Context<'_>,
+    observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    static_diagnostics(execute_constraints_admitted_observed_with_provider_mixed(
+        document, program, policy, registry, caps, ctx, observer,
+    )?)
+}
+
+pub(crate) fn execute_constraints_admitted_observed_with_provider_mixed(
+    document: &Value,
+    program: &PreparedProgram,
+    policy: &Value,
+    registry: &dyn crate::registry::RegistrationProvider,
+    caps: &mut dyn crate::engine::Capabilities,
+    ctx: &mut Context<'_>,
+    mut observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+) -> Result<Vec<ConstraintDiagnostic>, EngineError> {
+    let mut diags: Vec<ConstraintDiagnostic> = Vec::new();
+    if let Some(observer) = observer.as_deref_mut() {
+        observer(
+            "constraint-copy",
+            crate::dataset_values::tree_values(document),
+        )?;
+    }
     let mut env = vec![
         (
             "doc".into(),
@@ -2702,6 +3514,7 @@ pub(crate) fn execute_constraints_admitted(
         caps,
         ctx,
         &mut diags,
+        &mut observer,
     )?;
     Ok(diags)
 }
@@ -2722,6 +3535,268 @@ pub fn run_core_constraints(
 #[cfg(test)]
 mod runtime_diagnostic_tests {
     use super::*;
+
+    #[derive(Default)]
+    struct ScriptedProvider {
+        calls: std::cell::RefCell<Vec<(Utf16, Utf16)>>,
+        fail_at: Option<usize>,
+    }
+
+    impl crate::registry::RegistrationProvider for ScriptedProvider {
+        fn lookup<'a>(
+            &'a self,
+            id: &Utf16,
+            version: &Utf16,
+            _ctx: &mut Context<'_>,
+        ) -> Result<Option<crate::registry::RegistrationLookup<'a>>, EngineError> {
+            let mut calls = self.calls.borrow_mut();
+            calls.push((id.clone(), version.clone()));
+            if self.fail_at == Some(calls.len()) {
+                return Err(EngineError::new(
+                    "SCRIPTED_PROVIDER",
+                    Utf16::default(),
+                    "provider stopped",
+                ));
+            }
+            Ok(None)
+        }
+    }
+
+    struct StructureProvider {
+        entries: Vec<crate::host_json::HostStructureErrorEntry>,
+        seen_path: std::cell::RefCell<Option<Utf16>>,
+    }
+    impl crate::registry::RegistrationProvider for StructureProvider {
+        fn lookup<'a>(
+            &'a self,
+            _id: &Utf16,
+            _version: &Utf16,
+            _ctx: &mut Context<'_>,
+        ) -> Result<Option<crate::registry::RegistrationLookup<'a>>, EngineError> {
+            Ok(Some(crate::registry::RegistrationLookup::HostHandle(7)))
+        }
+        fn host_registration_stage(
+            &self,
+            _handle: u64,
+            _document: &Value,
+            _payload: &Value,
+            _scope: &Utf16,
+            path: &Utf16,
+            _ctx: &mut Context<'_>,
+        ) -> Result<crate::registry::HostRegistrationStage, EngineError> {
+            *self.seen_path.borrow_mut() = Some(path.clone());
+            Ok(crate::registry::HostRegistrationStage::StructureErrors(self.entries.clone()))
+        }
+    }
+
+    fn static_diagnostic_expr(code: &str) -> Value {
+        object(vec![
+            ("code", Value::string_utf8(code)),
+            ("path", Value::string_utf8("/static")),
+            ("message", Value::string_utf8("static")),
+            ("severity", Value::string_utf8("warning")),
+        ])
+    }
+
+    fn structure_program() -> PreparedProgram {
+        let extension_errors = operation(
+            "extension-errors",
+            vec![
+                variable("doc"),
+                object(vec![("future", object(vec![]))]),
+                Value::string_utf8("document"),
+                Value::string_utf8(""),
+                variable("policy"),
+            ],
+        );
+        let input = object(vec![
+            ("profile", Value::string_utf8("umf.constraints/1")),
+            ("steps", Value::Array(vec![
+                object(vec![("op", Value::string_utf8("emit")), ("diagnostic", static_diagnostic_expr("BEFORE"))]),
+                object(vec![
+                    ("op", Value::string_utf8("for")),
+                    ("each", extension_errors),
+                    ("as", Value::string_utf8("item")),
+                    ("body", Value::Array(vec![object(vec![
+                        ("op", Value::string_utf8("emit")),
+                        ("diagnostic", variable("item")),
+                    ])])),
+                ]),
+                object(vec![("op", Value::string_utf8("emit")), ("diagnostic", static_diagnostic_expr("AFTER"))]),
+            ])),
+        ]);
+        prepare_program(&input, &mut Context::ordinary()).unwrap()
+    }
+
+    fn structure_provider(message: crate::host_json::HostOpaqueValue) -> StructureProvider {
+        StructureProvider {
+            entries: vec![crate::host_json::HostStructureErrorEntry {
+                path: Utf16::from("/extensions/future/first"),
+                message: message.clone(),
+            }, crate::host_json::HostStructureErrorEntry {
+                path: Utf16::from("/extensions/future/second"),
+                message,
+            }],
+            seen_path: std::cell::RefCell::new(None),
+        }
+    }
+
+    fn host_structure_policy() -> Value {
+        object(vec![("structure", object(vec![
+            ("code", Value::string_utf8("EXTENSION_STRUCTURE")),
+            ("severity", Value::string_utf8("error")),
+            ("message", Value::string_utf8("Invalid payload")),
+        ]))])
+    }
+
+    #[test]
+    fn constraint_execution_preserves_static_and_host_structure_insertion_order() {
+        let provider = structure_provider(crate::host_json::HostOpaqueValue::String(
+            crate::host_json::HostStringRef::fake("opaque message"),
+        ));
+        let document = object(vec![("vocabularies", object(vec![("future", object(vec![("version", Value::string_utf8("1.0.0"))]))]))]);
+        let mut ctx = Context::ordinary();
+        let diagnostics = execute_constraints_admitted_observed_with_provider_mixed(
+            &document, &structure_program(), &host_structure_policy(), &provider,
+            &mut NoCapabilities, &mut ctx, None,
+        ).unwrap();
+        assert_eq!(provider.seen_path.borrow().as_ref(), Some(&Utf16::from("/extensions/future")));
+        assert!(matches!(&diagnostics[0], ConstraintDiagnostic::Static(d) if d.code == k("BEFORE")));
+        assert!(matches!(&diagnostics[1], ConstraintDiagnostic::HostStructure { path, message: crate::host_json::HostOpaqueValue::String(_), .. } if path == &k("/extensions/future/first")));
+        assert!(matches!(&diagnostics[2], ConstraintDiagnostic::HostStructure { path, .. } if path == &k("/extensions/future/second")));
+        assert!(matches!(&diagnostics[3], ConstraintDiagnostic::Static(d) if d.code == k("AFTER")));
+    }
+
+    #[test]
+    fn nonstring_host_structure_message_is_refused_at_emit() {
+        let provider = structure_provider(crate::host_json::HostOpaqueValue::Number(4.0));
+        let document = object(vec![("vocabularies", object(vec![("future", object(vec![("version", Value::string_utf8("1.0.0"))]))]))]);
+        let mut ctx = Context::ordinary();
+        let error = execute_constraints_admitted_observed_with_provider_mixed(
+            &document, &structure_program(), &host_structure_policy(), &provider,
+            &mut NoCapabilities, &mut ctx, None,
+        ).unwrap_err();
+        assert_eq!(error.code, "CONSTRAINT_DIAGNOSTIC");
+    }
+
+    #[test]
+    fn registration_provider_is_queried_at_each_interpreter_demand_site() {
+        let provider = ScriptedProvider::default();
+        let mut ctx = Context::ordinary();
+        let mut diagnostics = Vec::new();
+        let mut observer = None;
+        let env = vec![
+            (k("id"), Rc::new(Runtime::Json(Value::String(k("one"))))),
+            (
+                k("version"),
+                Rc::new(Runtime::Json(Value::String(k("1.0.0")))),
+            ),
+        ];
+        let expression = Value::Object(vec![
+            (k("op"), Value::String(k("registered"))),
+            (
+                k("args"),
+                Value::Array(vec![
+                    Value::Object(vec![(k("var"), Value::String(k("id")))]),
+                    Value::Object(vec![(k("var"), Value::String(k("version")))]),
+                ]),
+            ),
+        ]);
+        eval(
+            &expression,
+            &env,
+            &Value::Null,
+            &Value::Null,
+            &provider,
+            &mut NoCapabilities,
+            &mut ctx,
+            &mut diagnostics,
+            &mut observer,
+        )
+        .unwrap();
+        eval(
+            &expression,
+            &env,
+            &Value::Null,
+            &Value::Null,
+            &provider,
+            &mut NoCapabilities,
+            &mut ctx,
+            &mut diagnostics,
+            &mut observer,
+        )
+        .unwrap();
+
+        let document = Value::Object(vec![(
+            k("vocabularies"),
+            Value::Object(vec![(
+                k("two"),
+                Value::Object(vec![(k("version"), Value::String(k("2.0.0")))]),
+            )]),
+        )]);
+        let runtime_document = Runtime::Json(document.clone());
+        let payloads = Value::Object(vec![(k("two"), Value::Null)]);
+        extension_errors(
+            &runtime_document,
+            &payloads,
+            &k("core"),
+            &Utf16::default(),
+            &Value::Null,
+            &provider,
+            &mut NoCapabilities,
+            &mut ctx,
+        )
+        .unwrap();
+
+        assert_eq!(
+            *provider.calls.borrow(),
+            vec![
+                (k("one"), k("1.0.0")),
+                (k("one"), k("1.0.0")),
+                (k("two"), k("2.0.0"))
+            ]
+        );
+    }
+
+    #[test]
+    fn registration_provider_errors_propagate_and_stop_constraint_evaluation() {
+        let provider = ScriptedProvider {
+            calls: std::cell::RefCell::new(Vec::new()),
+            fail_at: Some(1),
+        };
+        let mut ctx = Context::ordinary();
+        let env = vec![
+            (k("id"), Rc::new(Runtime::Json(Value::String(k("one"))))),
+            (
+                k("version"),
+                Rc::new(Runtime::Json(Value::String(k("1.0.0")))),
+            ),
+        ];
+        let expression = Value::Object(vec![
+            (k("op"), Value::String(k("registered"))),
+            (
+                k("args"),
+                Value::Array(vec![
+                    Value::Object(vec![(k("var"), Value::String(k("id")))]),
+                    Value::Object(vec![(k("var"), Value::String(k("version")))]),
+                ]),
+            ),
+        ]);
+        let error = eval(
+            &expression,
+            &env,
+            &Value::Null,
+            &Value::Null,
+            &provider,
+            &mut NoCapabilities,
+            &mut ctx,
+            &mut Vec::new(),
+            &mut None,
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "SCRIPTED_PROVIDER");
+        assert_eq!(provider.calls.borrow().len(), 1);
+    }
 
     struct NoCapabilities;
     impl crate::engine::Capabilities for NoCapabilities {
@@ -2769,6 +3844,13 @@ mod runtime_diagnostic_tests {
             }),
         }
     }
+    fn static_diagnostic(diagnostic: ConstraintDiagnostic) -> Diagnostic {
+        match diagnostic {
+            ConstraintDiagnostic::Static(diagnostic) => diagnostic,
+            ConstraintDiagnostic::HostCallback(_) => panic!("expected static diagnostic"),
+            ConstraintDiagnostic::HostStructure { .. } => panic!("expected static diagnostic"),
+        }
+    }
     fn run_expr<T>(expression: &Value, env: &[(Utf16, T)], ctx: &mut Context<'_>) -> Runtime
     where
         T: Clone + Into<Rc<Runtime>>,
@@ -2786,8 +3868,426 @@ mod runtime_diagnostic_tests {
             &mut NoCapabilities,
             ctx,
             &mut Vec::new(),
+            &mut None,
         )
         .unwrap()
+    }
+
+    #[test]
+    fn literal_get_borrows_owned_copied_object_and_clones_only_selected_child() {
+        let fast_expression = operation(
+            "get",
+            vec![variable("module"), Value::Array(vec![Value::string_utf8("id")])],
+        );
+        // A dynamic path takes the predecessor generic route and provides an
+        let generic_expression = operation("get", vec![variable("module"), variable("path")]);
+        let path = Rc::new(Runtime::Array(vec![Runtime::Json(Value::string_utf8("id"))]));
+        let mut measurements = Vec::new();
+        for count in [1_000, 2_000] {
+            let payload = (0..count)
+                .map(|index| {
+                    Runtime::CopiedObject(vec![(
+                        k("value"),
+                        Runtime::Json(Value::string_utf8(&format!("payload-{index}"))),
+                    )])
+                })
+                .collect::<Vec<_>>();
+            let root = Rc::new(Runtime::CopiedObject(vec![
+                (k("id"), Runtime::Json(Value::string_utf8("module-id"))),
+                (k("elements"), Runtime::Array(payload)),
+            ]));
+            let mut fast_ctx = Context::ordinary();
+            let fast = run_expr(
+                &fast_expression,
+                &[(k("module"), Rc::clone(&root))],
+                &mut fast_ctx,
+            );
+            let mut generic_ctx = Context::ordinary();
+            let generic = run_expr(
+                &generic_expression,
+                &[(k("module"), Rc::clone(&root)), (k("path"), Rc::clone(&path))],
+                &mut generic_ctx,
+            );
+            assert!(matches!(fast, Runtime::Json(Value::String(ref value)) if value == &k("module-id")));
+            assert!(matches!(generic, Runtime::Json(Value::String(ref value)) if value == &k("module-id")));
+            assert!(fast_ctx.charged_work() < generic_ctx.charged_work() / 100);
+            measurements.push((count, fast_ctx.charged_work(), generic_ctx.charged_work()));
+        }
+        assert_eq!(measurements[0].1, measurements[1].1, "borrowed lookup work is independent of untouched siblings");
+        assert!(measurements[1].2 * 10 > measurements[0].2 * 19, "generic copy work scales with the full root");
+        eprintln!("literal-get work measurements (siblings, borrowed, generic): {measurements:?}");
+    }
+
+    #[test]
+    fn literal_multisegment_get_borrows_nested_json_objects_and_preserves_observer_order() {
+        let fast_expression = operation(
+            "get",
+            vec![
+                variable("policy"),
+                Value::Array(vec![
+                    Value::string_utf8("knownKeys"),
+                    Value::string_utf8("reference"),
+                ]),
+            ],
+        );
+        let known_keys = vec![(k("reference"), Value::Array(vec![Value::string_utf8("id")]))];
+        let policy = Rc::new(Runtime::Json(Value::Object(vec![
+            (k("knownKeys"), Value::Object(known_keys)),
+            (
+                k("untouched"),
+                Value::Array((0..2_000).map(|_| Value::Null).collect()),
+            ),
+        ])));
+        let generic_expression = operation("get", vec![variable("policy"), variable("path")]);
+        let generic_known_keys = vec![(
+            k("reference"),
+            Runtime::Array(vec![Runtime::Json(Value::string_utf8("id"))]),
+        )];
+        let generic_policy = Rc::new(Runtime::CopiedObject(vec![
+            (k("knownKeys"), Runtime::CopiedObject(generic_known_keys)),
+            (
+                k("untouched"),
+                Runtime::Array((0..2_000).map(|_| Runtime::Json(Value::Null)).collect()),
+            ),
+        ]));
+        let path = Rc::new(Runtime::Array(vec![
+            Runtime::Json(Value::string_utf8("knownKeys")),
+            Runtime::Json(Value::string_utf8("reference")),
+        ]));
+        let mut fast_observed = Vec::new();
+        let mut fast_record = |name: &'static str, amount: usize| {
+            fast_observed.push((name, amount));
+            Ok(())
+        };
+        let mut fast_observer = Some(
+            &mut fast_record as &mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>,
+        );
+        let fast_env = vec![(k("policy"), Rc::clone(&policy))];
+        let mut fast_ctx = Context::ordinary();
+        let fast = eval(
+            &fast_expression,
+            &fast_env,
+            &Value::Null,
+            &Value::Null,
+            &crate::registry::Registry::new(),
+            &mut NoCapabilities,
+            &mut fast_ctx,
+            &mut Vec::new(),
+            &mut fast_observer,
+        )
+        .unwrap();
+        drop(fast_observer);
+        drop(fast_record);
+
+        let mut generic_observed = Vec::new();
+        let mut generic_record = |name: &'static str, amount: usize| {
+            generic_observed.push((name, amount));
+            Ok(())
+        };
+        let mut generic_observer = Some(
+            &mut generic_record as &mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>,
+        );
+        let generic_env = vec![
+            (k("policy"), Rc::clone(&generic_policy)),
+            (k("path"), Rc::clone(&path)),
+        ];
+        let mut generic_ctx = Context::ordinary();
+        let generic = eval(
+            &generic_expression,
+            &generic_env,
+            &Value::Null,
+            &Value::Null,
+            &crate::registry::Registry::new(),
+            &mut NoCapabilities,
+            &mut generic_ctx,
+            &mut Vec::new(),
+            &mut generic_observer,
+        )
+        .unwrap();
+        drop(generic_observer);
+        drop(generic_record);
+
+        assert!(
+            matches!(fast, Runtime::Json(Value::Array(ref values)) if values == &vec![Value::string_utf8("id")])
+        );
+        assert!(
+            matches!(generic, Runtime::Array(ref values) if values.len() == 1 && matches!(&values[0], Runtime::Json(Value::String(value)) if value == &k("id")))
+        );
+        assert_eq!(fast_observed.len(), 5);
+        assert_eq!(generic_observed.len(), 3);
+        assert!(fast_ctx.charged_work() * 100 < generic_ctx.charged_work());
+
+        let missing_prefix = operation(
+            "get",
+            vec![
+                variable("policy"),
+                Value::Array(vec![
+                    Value::string_utf8("absent"),
+                    Value::string_utf8("nested"),
+                    Value::string_utf8("field"),
+                ]),
+            ],
+        );
+        let mut observed = 0;
+        let mut stop_after_all_literal_segments = |_: &'static str, _: usize| {
+            observed += 1;
+            if observed == 6 {
+                Err(EngineError::new(
+                    "PATH_EVALUATION_ORDER",
+                    Utf16::default(),
+                    "all literal path expressions ran before traversal",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut observer = Some(
+            &mut stop_after_all_literal_segments
+                as &mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>,
+        );
+        let mut order_ctx = Context::ordinary();
+        let error = eval(
+            &missing_prefix,
+            &fast_env,
+            &Value::Null,
+            &Value::Null,
+            &crate::registry::Registry::new(),
+            &mut NoCapabilities,
+            &mut order_ctx,
+            &mut Vec::new(),
+            &mut observer,
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "PATH_EVALUATION_ORDER");
+        assert_eq!(observed, 6);
+    }
+
+    #[test]
+    fn borrowed_json_object_lookup_meters_shared_prefix_scans_and_stops_before_comparison() {
+        let prefix = "x".repeat(64);
+        let object = Value::Object(
+            (0..2_000)
+                .map(|index| {
+                    (
+                        k(&format!("{prefix}{index:04}")),
+                        Value::Number(index as f64),
+                    )
+                })
+                .collect(),
+        );
+        let hit = k(&format!("{prefix}1999"));
+        let mut hit_ctx = Context::ordinary();
+        assert!(matches!(
+            borrowed_json_property(&object, &hit, &mut hit_ctx).unwrap(),
+            BorrowedPathValue::Json(Value::Number(1999.0))
+        ));
+        assert!(hit_ctx.charged_work() >= 2_000 * 64);
+
+        let miss = k(&format!("{prefix}9999"));
+        let mut miss_ctx = Context::ordinary();
+        assert!(matches!(
+            borrowed_json_property(&object, &miss, &mut miss_ctx).unwrap(),
+            BorrowedPathValue::Missing
+        ));
+        assert!(miss_ctx.charged_work() >= 2_000 * 64);
+
+        let mut observed = Vec::new();
+        let mut meter = |amount| {
+            observed.push(amount);
+            Err(EngineError::new(
+                "BORROWED_LOOKUP_DENIED",
+                Utf16::default(),
+                "denied before UTF-16 key comparison",
+            ))
+        };
+        let mut denied_ctx = Context::ordinary().with_meter(&mut meter);
+        let error = borrowed_json_property(&object, &hit, &mut denied_ctx).unwrap_err();
+        assert_eq!(error.code, "BORROWED_LOOKUP_DENIED");
+        assert_eq!(observed, vec![hit.len() + 1]);
+    }
+
+    #[test]
+    fn borrowed_runtime_object_keeps_host_opaque_leaf_and_fallback_semantics() {
+        let opaque = crate::host_json::HostOpaqueValue::Opaque {
+            handle: 7,
+            opaque_type: crate::host_json::HostOpaqueType::Object,
+        };
+        let root = Rc::new(Runtime::Object(vec![(
+            k("opaque"),
+            Runtime::HostCallbackDiagnostic(opaque.clone()),
+        )]));
+        let leaf = operation(
+            "get",
+            vec![
+                variable("root"),
+                Value::Array(vec![Value::string_utf8("opaque")]),
+            ],
+        );
+        let mut leaf_ctx = Context::ordinary();
+        assert!(matches!(
+            run_expr(&leaf, &[(k("root"), Rc::clone(&root))], &mut leaf_ctx),
+            Runtime::HostCallbackDiagnostic(value) if value == opaque
+        ));
+
+        let nested = operation(
+            "get",
+            vec![
+                variable("root"),
+                Value::Array(vec![
+                    Value::string_utf8("opaque"),
+                    Value::string_utf8("field"),
+                ]),
+            ],
+        );
+        let mut nested_ctx = Context::ordinary();
+        assert!(matches!(
+            run_expr(&nested, &[(k("root"), Rc::clone(&root))], &mut nested_ctx),
+            Runtime::Missing
+        ));
+
+        let opaque_root = Rc::new(Runtime::HostCallbackDiagnostic(opaque));
+        let mut fallback_ctx = Context::ordinary();
+        assert!(matches!(
+            run_expr(&leaf, &[(k("root"), opaque_root)], &mut fallback_ctx),
+            Runtime::Missing
+        ));
+    }
+
+    #[test]
+    fn literal_get_matches_generic_for_missing_null_array_and_object_properties() {
+        let cases = [
+            (
+                Runtime::Json(Value::Null),
+                "missing",
+            ),
+            (
+                Runtime::Json(Value::Object(vec![(k("nullable"), Value::Null)])),
+                "nullable",
+            ),
+            (
+                Runtime::Array(vec![Runtime::Json(Value::Null), Runtime::Json(Value::string_utf8("second"))]),
+                "0",
+            ),
+            (
+                Runtime::CopiedObject(vec![(k("present"), Runtime::Json(Value::Bool(true)))]),
+                "absent",
+            ),
+        ];
+        for (root, key) in cases {
+            let root = Rc::new(root);
+            let fast_expression = operation(
+                "get",
+                vec![variable("root"), Value::Array(vec![Value::string_utf8(key)])],
+            );
+            let dynamic_key = Rc::new(Runtime::Json(Value::string_utf8(key)));
+            let generic_expression = operation(
+                "get",
+                vec![variable("root"), Value::Array(vec![variable("key")])],
+            );
+            let mut fast_ctx = Context::ordinary();
+            let fast = run_expr(
+                &fast_expression,
+                &[(k("root"), Rc::clone(&root))],
+                &mut fast_ctx,
+            );
+            let mut generic_ctx = Context::ordinary();
+            let generic = run_expr(
+                &generic_expression,
+                &[(k("root"), Rc::clone(&root)), (k("key"), dynamic_key)],
+                &mut generic_ctx,
+            );
+            assert_eq!(format!("{fast:?}"), format!("{generic:?}"), "key {key}");
+        }
+    }
+
+    #[test]
+    fn extension_errors_uses_current_reassigned_invocation_document() {
+        let document = Value::Object(vec![(
+            k("vocabularies"),
+            Value::Object(vec![]),
+        )]);
+        let module = Value::Object(vec![(
+            k("extensions"),
+            Value::Object(vec![(k("future"), Value::Object(vec![]))]),
+        )]);
+        let policy = Value::Object(vec![(
+            k("undeclared"),
+            Value::Object(vec![
+                (k("code"), Value::string_utf8("UNDECLARED")),
+                (k("message"), Value::string_utf8("undeclared extension")),
+            ]),
+        )]);
+        let mut setup = Context::ordinary();
+        let mut env = vec![
+            (k("doc"), Rc::new(runtime_from_value(document.clone(), &mut setup).unwrap())),
+            (k("module"), Rc::new(runtime_from_value(module, &mut setup).unwrap())),
+            (k("policy"), Rc::new(runtime_from_value(policy, &mut setup).unwrap())),
+        ];
+        // `let doc = ...` replaces the invocation slot in place. The fast path
+        // must use this actual current binding, not the original eval argument.
+        env[0].1 = Rc::new(runtime_from_value(
+            Value::Object(vec![(
+                k("vocabularies"),
+                Value::Object(vec![(
+                    k("future"),
+                    Value::Object(vec![(k("version"), Value::string_utf8("1.0.0"))]),
+                )]),
+            )]),
+            &mut setup,
+        ).unwrap());
+        let expression = operation(
+            "extension-errors",
+            vec![
+                variable("doc"),
+                operation("get", vec![variable("module"), Value::Array(vec![Value::string_utf8("extensions")])]),
+                Value::string_utf8("module"),
+                Value::string_utf8("/modules/0"),
+                variable("policy"),
+            ],
+        );
+
+        let mut fast_ctx = Context::ordinary();
+        let fast = eval(
+            &expression,
+            &env,
+            &document,
+            &Value::Null,
+            &crate::registry::Registry::new(),
+            &mut NoCapabilities,
+            &mut fast_ctx,
+            &mut Vec::new(),
+            &mut None,
+        )
+        .unwrap();
+        assert!(matches!(&fast, Runtime::Array(items) if items.is_empty()));
+
+        // A later shadow forces the established generic route while keeping
+        // the selected document value identical.
+        let generic_expression = operation(
+            "extension-errors",
+            vec![
+                operation("get", vec![variable("doc"), Value::Array(vec![])]),
+                operation("get", vec![variable("module"), Value::Array(vec![Value::string_utf8("extensions")])]),
+                Value::string_utf8("module"),
+                Value::string_utf8("/modules/0"),
+                variable("policy"),
+            ],
+        );
+        let mut generic_ctx = Context::ordinary();
+        let generic = eval(
+            &generic_expression,
+            &env,
+            &document,
+            &Value::Null,
+            &crate::registry::Registry::new(),
+            &mut NoCapabilities,
+            &mut generic_ctx,
+            &mut Vec::new(),
+            &mut None,
+        )
+        .unwrap();
+        assert_eq!(format!("{fast:?}"), format!("{generic:?}"));
+        assert!(fast_ctx.charged_work() < generic_ctx.charged_work());
     }
 
     #[test]
@@ -2804,7 +4304,7 @@ mod runtime_diagnostic_tests {
             (Utf16::from("empty-diags"), empty_array),
             (
                 Utf16::from("empty-map"),
-                Runtime::Map(Rc::new(RefCell::new(Vec::new()))),
+                Runtime::Map(Rc::new(RefCell::new(RuntimeMap::new()))),
             ),
         ];
 
@@ -2856,7 +4356,9 @@ mod runtime_diagnostic_tests {
             &mut ctx,
         );
         assert!(matches!(equality, Runtime::Json(Value::Bool(true))));
-        assert!(runtime_equal(&diagnostic_object, &diagnostic_object, &mut ctx).unwrap());
+        assert!(
+            runtime_equal(&diagnostic_object, &diagnostic_object, &mut ctx, &mut None).unwrap()
+        );
 
         for operator in ["keys", "values", "entries"] {
             let result = run_expr(&operation(operator, vec![variable("diag")]), &env, &mut ctx);
@@ -2997,9 +4499,11 @@ mod runtime_diagnostic_tests {
                 ..
             }
         ));
-        assert!(runtime_property(&without, &k("message"), &mut ctx)
-            .unwrap()
-            .is_none());
+        assert!(
+            runtime_property(&without, &k("message"), &mut ctx)
+                .unwrap()
+                .is_none()
+        );
 
         let mut marker_path = diagnostic.clone();
         marker_path.path = Utf16::from("/~p000061");
@@ -3016,8 +4520,7 @@ mod runtime_diagnostic_tests {
             }
         ));
         assert!(
-            !diagnostic_from_runtime(host_marker, &mut ctx)
-                .unwrap()
+            !static_diagnostic(diagnostic_from_runtime(host_marker, &mut ctx).unwrap())
                 .python_source_path
         );
         marker_path.python_source_path = true;
@@ -3033,8 +4536,7 @@ mod runtime_diagnostic_tests {
             }
         ));
         assert!(
-            diagnostic_from_runtime(source_marker, &mut ctx)
-                .unwrap()
+            static_diagnostic(diagnostic_from_runtime(source_marker, &mut ctx).unwrap())
                 .python_source_path
         );
 
@@ -3054,7 +4556,7 @@ mod runtime_diagnostic_tests {
             ("severity", Value::string_utf8("warning")),
         ]);
         let result = run_expr(&reconstructed, &env, &mut ctx);
-        let diagnostic = diagnostic_from_runtime(result, &mut ctx).unwrap();
+        let diagnostic = static_diagnostic(diagnostic_from_runtime(result, &mut ctx).unwrap());
         assert_eq!(
             diagnostic
                 .python_text_origin
@@ -3289,7 +4791,7 @@ mod runtime_diagnostic_tests {
         let Runtime::Array(sorted) = sorted else {
             panic!("sort preserves generic array shape")
         };
-        let reconstructed = diagnostic_from_runtime(sorted[0].clone(), &mut ctx).unwrap();
+        let reconstructed = static_diagnostic(diagnostic_from_runtime(sorted[0].clone(), &mut ctx).unwrap());
         assert_eq!(
             reconstructed
                 .python_text_origin
@@ -3543,6 +5045,7 @@ mod runtime_diagnostic_tests {
             &mut NoCapabilities,
             &mut ctx,
             &mut Vec::new(),
+            &mut None,
         )
         .unwrap_err();
         assert_eq!(error.code, "METER_FAILURE");
@@ -3566,15 +5069,17 @@ mod runtime_diagnostic_tests {
         for _ in 0..128 {
             depth_128 = Value::Array(vec![depth_128]);
         }
-        assert!(execute_constraints(
-            &depth_128,
-            &program,
-            &empty_policy,
-            &registry,
-            &mut caps,
-            &mut Context::ordinary(),
-        )
-        .is_ok());
+        assert!(
+            execute_constraints(
+                &depth_128,
+                &program,
+                &empty_policy,
+                &registry,
+                &mut caps,
+                &mut Context::ordinary(),
+            )
+            .is_ok()
+        );
         let depth_129 = Value::Array(vec![depth_128]);
         assert_eq!(
             execute_constraints(
@@ -3630,37 +5135,43 @@ mod runtime_diagnostic_tests {
             .code,
             "CONSTRAINT_POLICY"
         );
-        assert!(execute_constraints(
-            &Value::Null,
-            &program,
-            &object(vec![]),
-            &registry,
-            &mut caps,
-            &mut Context::ordinary(),
-        )
-        .is_ok());
+        assert!(
+            execute_constraints(
+                &Value::Null,
+                &program,
+                &object(vec![]),
+                &registry,
+                &mut caps,
+                &mut Context::ordinary(),
+            )
+            .is_ok()
+        );
 
         let text = Value::String(Utf16::new(vec![b'x' as u16; 4_000_001]));
-        assert!(execute_constraints(
-            &text,
-            &program,
-            &empty_policy,
-            &registry,
-            &mut caps,
-            &mut Context::ordinary(),
-        )
-        .is_ok());
+        assert!(
+            execute_constraints(
+                &text,
+                &program,
+                &empty_policy,
+                &registry,
+                &mut caps,
+                &mut Context::ordinary(),
+            )
+            .is_ok()
+        );
 
         let admitted_count = Value::Array(vec![Value::Null; 99_999]);
-        assert!(execute_constraints(
-            &admitted_count,
-            &program,
-            &empty_policy,
-            &registry,
-            &mut caps,
-            &mut Context::ordinary(),
-        )
-        .is_ok());
+        assert!(
+            execute_constraints(
+                &admitted_count,
+                &program,
+                &empty_policy,
+                &registry,
+                &mut caps,
+                &mut Context::ordinary(),
+            )
+            .is_ok()
+        );
         let excessive_count = Value::Array(vec![Value::Null; 100_000]);
         assert_eq!(
             execute_constraints(
@@ -3771,10 +5282,225 @@ mod runtime_diagnostic_tests {
         };
         let mut ctx = Context::ordinary().with_meter(&mut meter);
         let key = vec![b'a' as u16; 1536];
-        let entries = vec![(key.clone(), Runtime::Json(Value::Null))];
+        let mut entries = RuntimeMap::new();
+        entries.insert_metered(
+            key.clone(), Runtime::Json(Value::Null), &mut Context::ordinary(),
+        ).unwrap();
         let error = find_map_value_metered(&entries, &key, &mut ctx).unwrap_err();
         assert_eq!(error.code, "MAP_METER_DENIED");
-        assert_eq!(observed, vec![1, 1537]);
+        assert_eq!(observed, vec![1537]);
+    }
+
+    #[test]
+    fn runtime_map_index_matches_vec_order_and_replaces_in_place() {
+        let mut map = RuntimeMap::new();
+        let mut ctx = Context::ordinary();
+        assert_eq!(
+            map.insert_metered(
+                vec![b'a' as u16],
+                Runtime::Json(Value::Number(1.0)),
+                &mut ctx
+            )
+            .unwrap(),
+            None
+        );
+        assert_eq!(
+            map.insert_metered(
+                vec![b'b' as u16],
+                Runtime::Json(Value::Number(2.0)),
+                &mut ctx
+            )
+            .unwrap(),
+            None
+        );
+        assert_eq!(
+            map.insert_metered(
+                vec![b'a' as u16],
+                Runtime::Json(Value::Number(3.0)),
+                &mut ctx
+            )
+            .unwrap(),
+            Some(0)
+        );
+        assert_eq!(map.len(), 2);
+        assert_eq!(
+            map.entries
+                .iter()
+                .map(|(key, _)| key.clone())
+                .collect::<Vec<_>>(),
+            vec![vec![b'a' as u16], vec![b'b' as u16]]
+        );
+        assert!(matches!(
+            map.get_metered(&[b'a' as u16], &mut ctx).unwrap(),
+            Some(Runtime::Json(Value::Number(3.0)))
+        ));
+        assert!(matches!(
+            map.get_metered(&[b'b' as u16], &mut ctx).unwrap(),
+            Some(Runtime::Json(Value::Number(2.0)))
+        ));
+        assert!(map.get_metered(&[b'c' as u16], &mut ctx).unwrap().is_none());
+    }
+
+    #[test]
+    fn runtime_map_index_matches_reference_vec_for_canonical_key_classes() {
+        let mut ctx = Context::ordinary();
+        let key = |value: Runtime, ctx: &mut Context<'_>| {
+            canonical_runtime(&value, ctx)
+                .unwrap()
+                .map(|(units, _)| units)
+                .unwrap_or_else(|| Utf16::from("undefined").into_units())
+        };
+        let prefix = "p".repeat(2048);
+        let keys = vec![
+            key(Runtime::Json(Value::Number(-0.0)), &mut ctx),
+            key(Runtime::Json(Value::Null), &mut ctx),
+            key(Runtime::Json(Value::Bool(true)), &mut ctx),
+            key(Runtime::Json(Value::string_utf8("alpha")), &mut ctx),
+            key(Runtime::Json(Value::Array(Vec::new())), &mut ctx),
+            key(
+                Runtime::Text {
+                    value: Utf16::new(vec![0xd800, b'x' as u16]),
+                    python_origin: None,
+                    python_source_path: false,
+                },
+                &mut ctx,
+            ),
+            key(
+                Runtime::Json(Value::string_utf8(format!("{prefix}a"))),
+                &mut ctx,
+            ),
+            key(
+                Runtime::Json(Value::string_utf8(format!("{prefix}b"))),
+                &mut ctx,
+            ),
+            key(Runtime::Json(Value::Number(0.0)), &mut ctx),
+        ];
+
+        let mut indexed = RuntimeMap::new();
+        let mut reference: Vec<(Vec<u16>, f64)> = Vec::new();
+        for (sequence, candidate) in keys.into_iter().enumerate() {
+            let value = sequence as f64;
+            let expected_index = reference
+                .iter()
+                .position(|(existing, _)| existing == &candidate);
+            if let Some(index) = expected_index {
+                reference[index].1 = value;
+            } else {
+                reference.push((candidate.clone(), value));
+            }
+            let actual_index = indexed
+                .insert_metered(candidate, Runtime::Json(Value::Number(value)), &mut ctx)
+                .unwrap();
+            assert_eq!(actual_index, expected_index);
+            assert_eq!(indexed.len(), reference.len());
+            for (actual, expected) in indexed.entries.iter().zip(&reference) {
+                assert_eq!(actual.0, expected.0);
+                assert!(
+                    matches!(&actual.1, Runtime::Json(Value::Number(number)) if number == &expected.1)
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn runtime_map_index_uses_exact_canonical_utf16_keys() {
+        let mut ctx = Context::ordinary();
+        let canonical_key = |value: Runtime, ctx: &mut Context<'_>| {
+            canonical_runtime(&value, ctx).unwrap().unwrap().0
+        };
+        let negative_zero = canonical_key(Runtime::Json(Value::Number(-0.0)), &mut ctx);
+        let positive_zero = canonical_key(Runtime::Json(Value::Number(0.0)), &mut ctx);
+        assert_eq!(negative_zero, positive_zero);
+        let null_key = canonical_key(Runtime::Json(Value::Null), &mut ctx);
+        let nan_key = canonical_key(Runtime::Json(Value::Number(f64::NAN)), &mut ctx);
+        assert_ne!(nan_key, null_key);
+
+        let raw_surrogate = vec![0xd800];
+        let escaped_text = canonical_key(
+            Runtime::Text {
+                value: Utf16::new(raw_surrogate.clone()),
+                python_origin: None,
+                python_source_path: false,
+            },
+            &mut ctx,
+        );
+        let literal_escape = canonical_key(Runtime::Json(Value::string_utf8("\\ud800")), &mut ctx);
+        assert_ne!(
+            escaped_text, literal_escape,
+            "the internal UTF-16 key preserves lone-surrogate identity through canonicalization"
+        );
+
+        let mut map = RuntimeMap::new();
+        assert_eq!(
+            map.insert_metered(negative_zero, Runtime::Json(Value::Bool(false)), &mut ctx)
+                .unwrap(),
+            None
+        );
+        assert_eq!(
+            map.insert_metered(positive_zero, Runtime::Json(Value::Bool(true)), &mut ctx)
+                .unwrap(),
+            Some(0)
+        );
+        assert_eq!(
+            map.insert_metered(nan_key.clone(), Runtime::Json(Value::Null), &mut ctx)
+                .unwrap(),
+            None
+        );
+        assert_eq!(
+            map.insert_metered(null_key, Runtime::Json(Value::Bool(true)), &mut ctx)
+                .unwrap(),
+            None
+        );
+        assert_eq!(
+            map.insert_metered(nan_key, Runtime::Json(Value::Bool(false)), &mut ctx)
+                .unwrap(),
+            Some(1)
+        );
+        assert_eq!(map.len(), 3);
+    }
+    #[test]
+    fn runtime_map_index_charges_collision_probes_and_denies_before_growth() {
+        let first = vec![1u16];
+        let colliding = vec![9u16];
+        assert_eq!(
+            runtime_map_hash(&first) & 7,
+            runtime_map_hash(&colliding) & 7
+        );
+
+        let mut map = RuntimeMap::new();
+        map.insert_metered(first, Runtime::Json(Value::Null), &mut Context::ordinary())
+            .unwrap();
+        let mut observed = Vec::new();
+        let mut meter = |amount| {
+            observed.push(amount);
+            Ok(())
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        assert_eq!(map.position_metered(&colliding, &mut ctx).unwrap(), None);
+        assert_eq!(
+            observed,
+            vec![2, 2],
+            "charge key hashing and the occupied-slot comparison separately"
+        );
+
+        let mut observed = Vec::new();
+        let mut meter = |amount| {
+            observed.push(amount);
+            Err(EngineError::new(
+                "MAP_GROWTH_DENIED",
+                Utf16::default(),
+                "denied before slot allocation",
+            ))
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let mut empty = RuntimeMap::new();
+        let error = empty
+            .insert_metered(vec![b'x' as u16], Runtime::Json(Value::Null), &mut ctx)
+            .unwrap_err();
+        assert_eq!(error.code, "MAP_GROWTH_DENIED");
+        assert_eq!(observed, vec![8]);
+        assert!(empty.entries.is_empty());
+        assert!(empty.slots.is_empty());
     }
 }
 
@@ -3830,6 +5556,7 @@ mod shared_env_tests {
             &mut NoCapabilities,
             ctx,
             &mut Vec::new(),
+            &mut None,
         )
         .unwrap()
     }
@@ -3844,6 +5571,7 @@ mod shared_env_tests {
             &mut NoCapabilities,
             ctx,
             &mut Vec::new(),
+            &mut None,
         )
         .unwrap();
     }
@@ -3945,8 +5673,8 @@ mod shared_env_tests {
 
     #[test]
     fn map_mutations_remain_shared_across_scopes_and_nested_maps() {
-        let inner = Rc::new(Runtime::Map(Rc::new(RefCell::new(Vec::new()))));
-        let outer = Rc::new(Runtime::Map(Rc::new(RefCell::new(Vec::new()))));
+        let inner = Rc::new(Runtime::Map(Rc::new(RefCell::new(RuntimeMap::new()))));
+        let outer = Rc::new(Runtime::Map(Rc::new(RefCell::new(RuntimeMap::new()))));
         let mut env = vec![
             (Utf16::from("outer"), Rc::clone(&outer)),
             (Utf16::from("inner"), Rc::clone(&inner)),
@@ -3986,7 +5714,7 @@ mod shared_env_tests {
         let entries = map.borrow();
         assert_eq!(entries.len(), 1);
         assert!(
-            matches!(&entries[0].1, Runtime::Map(found) if Rc::ptr_eq(found, match &*inner { Runtime::Map(map) => map, _ => unreachable!() }))
+            matches!(&entries.entries[0].1, Runtime::Map(found) if Rc::ptr_eq(found, match &*inner { Runtime::Map(map) => map, _ => unreachable!() }))
         );
     }
 
@@ -4056,11 +5784,12 @@ mod shared_env_tests {
             assert_eq!(error.code, code);
             assert!(error.is_control_failure());
             assert_eq!(calls, stop_call);
-            assert!(env
-                .iter()
-                .zip(&original)
-                .all(|((name, value), (old_name, old_value))| name == old_name
-                    && Rc::ptr_eq(value, old_value)));
+            assert!(
+                env.iter()
+                    .zip(&original)
+                    .all(|((name, value), (old_name, old_value))| name == old_name
+                        && Rc::ptr_eq(value, old_value))
+            );
         }
     }
 }

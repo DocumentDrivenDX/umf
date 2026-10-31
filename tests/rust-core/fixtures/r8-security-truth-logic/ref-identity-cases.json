@@ -1,0 +1,24 @@
+{
+  "format": "umf-r8-security-ref-identity/1",
+  "predecessor": {
+    "runtime": "Bun 1.4.3",
+    "source": "src/extensions/security/types.ts",
+    "sourceSha256": "1a7cc55dea6fc1c4c88cb486970adfdc2aad85c2fa360cc1439a27f46ca80574",
+    "testSource": "tests/security/ref-identity.test.ts",
+    "testSourceSha256": "3376900cd5fc3d6a24f38c2675982b16d6590351091dfa349b76812c9b505ae9",
+    "contract": "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
+    "contractSha256": "1183e2ea8ba55fade4007554905b7175d7796e867a67814f511e9cd3ee514800"
+  },
+  "cases": [
+    {"name":"simple-reference","ref":{"documentId":"doc","moduleId":"m","elementId":"E"},"expected":"[\"doc\",\"m\",\"E\"]"},
+    {"name":"escaped-strings","ref":{"documentId":"a\\\"\n\t\u0001","moduleId":"/\\","elementId":"line\rbreak"},"expected":"[\"a\\\\\\\"\\n\\t\\u0001\",\"/\\\\\",\"line\\rbreak\"]"},
+    {"name":"unicode-and-combining-mark","ref":{"documentId":"資料😀","moduleId":"x\u2028y","elementId":"e\u0301"},"expected":"[\"資料😀\",\"x y\",\"é\"]"},
+    {"name":"lone-surrogate-escaping","ref":{"documentId":"\ud800","moduleId":"m\udfff","elementId":"e"},"expected":"[\"\\ud800\",\"m\\udfff\",\"e\"]"},
+    {"name":"missing-member-becomes-null","ref":{"documentId":"doc","moduleId":"m"},"expected":"[\"doc\",\"m\",null]"},
+    {"name":"null-member","ref":{"documentId":null,"moduleId":"m","elementId":"e"},"expected":"[null,\"m\",\"e\"]"},
+    {"name":"tagged-json-values-and-javascript-object-key-order","ref":{"documentId":{"z":1,"2":"two","1":"one","a":[true,null]},"moduleId":["m",3],"elementId":false},"expected":"[{\"1\":\"one\",\"2\":\"two\",\"z\":1,\"a\":[true,null]},[\"m\",3],false]"},
+    {"name":"non-object-root-is-three-missing-properties","ref":7,"expected":"[null,null,null]"}
+  ],
+  "oracleMethod":"The predecessor evaluates JSON.stringify([ref.documentId,ref.moduleId,ref.elementId]) in fixed member order. Expected strings are frozen outputs; nested object integer-index keys use ECMAScript own-property enumeration order. Rust independently serializes the same ordered tuple with the core ECMAScript-compatible compact JSON writer.",
+  "limitations":["This packet covers non-null admitted tagged JSON references only. JavaScript getters, proxies, toJSON hooks, undefined/function/symbol values, BigInt, cycles, and the predecessor's native TypeError for a null root are not representable or qualified at the tagged wire boundary.","The helper returns a stable tuple identity string only; it does not authenticate identity or grant authority."]
+}

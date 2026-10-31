@@ -1,0 +1,3261 @@
+{
+  "runtime": "Bun 1.4.3",
+  "operationSourceSha256": "ad6ae8d5dfdb300db7490855655875637409cd325b3bfe51f7f4fb29a0012d31",
+  "hybridSourceSha256": "3ff024067dd61cd5f467e0bc5fec6e9fd7cd73e80362807af05f6eac01d0378c",
+  "cases": [
+    {
+      "id": "upstream-0",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-0.json"
+    },
+    {
+      "id": "upstream-1",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-1.json"
+    },
+    {
+      "id": "upstream-2",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-2.json"
+    },
+    {
+      "id": "upstream-3",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_d/_delta_log/00000000000000000000.checkpoint.parquet",
+      "inputSha256": "c477c60042a8cf7181eb9479494399cb663a7ba8712744271a2f2d79f590137f",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-3.json"
+    },
+    {
+      "id": "upstream-4",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_e/_delta_log/00000000000000000000.checkpoint.parquet",
+      "inputSha256": "20fc2f695d8e2752b4bcd1ee6afbab8a4b1a4220876b318482f3335e3d623a1b",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-4.json"
+    },
+    {
+      "id": "upstream-5",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "a463eb4708fe9ecf8a1232b4195055002741b1282ba5cd36e1a94fd316d4b1c2",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-5.json"
+    },
+    {
+      "id": "upstream-6",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-6.json"
+    },
+    {
+      "id": "upstream-7",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000009999.checkpoint.parquet",
+      "inputSha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-7.json"
+    },
+    {
+      "id": "upstream-8",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-8.json"
+    },
+    {
+      "id": "upstream-9",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000009999.checkpoint.parquet",
+      "inputSha256": "c477c60042a8cf7181eb9479494399cb663a7ba8712744271a2f2d79f590137f",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-9.json"
+    },
+    {
+      "id": "upstream-10",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-10.json"
+    },
+    {
+      "id": "upstream-11",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000009999.checkpoint.parquet",
+      "inputSha256": "20fc2f695d8e2752b4bcd1ee6afbab8a4b1a4220876b318482f3335e3d623a1b",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-11.json"
+    },
+    {
+      "id": "upstream-12",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000003.checkpoint.parquet",
+      "inputSha256": "26b18770956222e96b593be88f74e660359b8c5f93c4e434b2b56b7ad8c0e363",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-12.json"
+    },
+    {
+      "id": "upstream-13",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000006.checkpoint.0000000001.0000000001.1a1516f4-8a39-48f0-9ccd-cc3790d824c7.parquet",
+      "inputSha256": "2933abbaf4a5d5889f0df42f80df8a96518f092a4789c7a0a2b82e512030ad89",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-13.json"
+    },
+    {
+      "id": "upstream-14",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000008.checkpoint.0000000001.0000000001.d55fb2cb-b8d3-4362-8572-c52142a9da1f.parquet",
+      "inputSha256": "7e90e80541ae811d80a3d6df3927aa5166793d45aecbd72f407c6a34977a705f",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-14.json"
+    },
+    {
+      "id": "upstream-15",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint_with_partitions/_delta_log/00000000000000000002.checkpoint.parquet",
+      "inputSha256": "99a0fcbfe39484a93b598c785495a3a33ee4420668062885b741c5ef29109470",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-15.json"
+    },
+    {
+      "id": "upstream-16",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000005.checkpoint.parquet",
+      "inputSha256": "37fc42f87f3a9c8c95d8a03b03e69ba163c17dd1a0e19111d2fc198f24074c87",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-16.json"
+    },
+    {
+      "id": "upstream-17",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "f34282665eee3c136268ac5e5e32316bd7666e7667d8066502cbf123d80ccf7e",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-17.json"
+    },
+    {
+      "id": "upstream-18",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000003.checkpoint.parquet",
+      "inputSha256": "7911bc9369cf8851a18fab2c2b731502ca8d08ac7818c5dc0d053d27a3606010",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_BOUNDS",
+          "path": "",
+          "severity": "error",
+          "message": "Dictionary must occur once at declared chunk start"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "upstream-19",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "6c305559225a6989713153e1488ad41950bddc2864ce42361d5d142a0f1efa1a",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-19.json"
+    },
+    {
+      "id": "upstream-20",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000002.checkpoint.parquet",
+      "inputSha256": "37a1e05e6c12087bc12f81a7bbadefa0bbeaa3785616d74ff58cfd1c0424d21a",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-20.json"
+    },
+    {
+      "id": "upstream-21",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/issue_1374/_delta_log/00000000000000000001.checkpoint.parquet",
+      "inputSha256": "6e688f6927cafd006550802a252b914b45d6d79993b6d0409fb4048e8b2cfb28",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-21.json"
+    },
+    {
+      "id": "upstream-22",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000002.checkpoint.parquet",
+      "inputSha256": "cf2e5b457c6af893ac56ca5f87357824476cc0446e55ce6fdb8081ea656c4787",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-22.json"
+    },
+    {
+      "id": "upstream-23",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000000.checkpoint.parquet",
+      "inputSha256": "6d6d6cfe3fd77f62c24711fbf85f75d0cf1acf43cfc5e2f1ca505c2be0005a66",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-23.json"
+    },
+    {
+      "id": "upstream-24",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "b7be7b2614c6b8fd13facd17f4e9f6c936f5a3abdc19da68e46d1b599987bd11",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_BOUNDS",
+          "path": "",
+          "severity": "error",
+          "message": "Dictionary must occur once at declared chunk start"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "upstream-25",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000002.checkpoint.parquet",
+      "inputSha256": "1a72efc906f1ca3c843204e9b8cd97c3855a7261aa873bce9ce79808e6fab271",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-25.json"
+    },
+    {
+      "id": "upstream-26",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000002.checkpoint.parquet",
+      "inputSha256": "9a2290450b5fde8bad85a4c106c51425806bf4ae5ecb4c4d1b43b1eddbc0ea55",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-26.json"
+    },
+    {
+      "id": "upstream-27",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table-with-domain-metadata/_delta_log/00000000000000000108.checkpoint.parquet",
+      "inputSha256": "427eba303fc07a216e928a68c3c3db5f6992aa79052263db0985751e4c65d7bb",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-27.json"
+    },
+    {
+      "id": "upstream-28",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000001.checkpoint.parquet",
+      "inputSha256": "e568986b5d8b10f333fad396f0cc1d5e5d1206ffb652ee1111bf601461a39030",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-28.json"
+    },
+    {
+      "id": "upstream-29",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000003.checkpoint.parquet",
+      "inputSha256": "96586696d59564dc2f0cfdb14fd9d18a443437b2535e452ab477c8a28c70242f",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-29.json"
+    },
+    {
+      "id": "upstream-30",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000010.checkpoint.parquet",
+      "inputSha256": "5332276f28cf1f16a2beb6b060048dc6c383d9db0b2c3312a1d33cc38159e3be",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-30.json"
+    },
+    {
+      "id": "upstream-31",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000020.checkpoint.parquet",
+      "inputSha256": "5332276f28cf1f16a2beb6b060048dc6c383d9db0b2c3312a1d33cc38159e3be",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-31.json"
+    },
+    {
+      "id": "upstream-32",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000001.checkpoint.parquet",
+      "inputSha256": "9ba79ee8580a82b3e48a5ba49c442fe28c6d32174632157a66f25b2228f00997",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-32.json"
+    },
+    {
+      "id": "upstream-33",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/_sidecars/00000000000000000001.checkpoint.0000000001.0000000001.c1bacf45-f3a9-4846-bd44-87cdacd4620f.parquet",
+      "inputSha256": "0556d8555da108067f84ab7553f08ac60055a4a12e4fe6fcb612fefd4115a1d1",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-33.json"
+    },
+    {
+      "id": "upstream-34",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000002.checkpoint.parquet",
+      "inputSha256": "cf2e5b457c6af893ac56ca5f87357824476cc0446e55ce6fdb8081ea656c4787",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "upstream-34.json"
+    },
+    {
+      "id": "int32",
+      "path": "fixtures/delta/checkpoint-upstream/decimal-boundaries/int32.parquet",
+      "inputSha256": "ac05603a878e434d37f765e03eb2e3bc9994f7c595c86dd287f8d87c82fc9369",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "int32.json"
+    },
+    {
+      "id": "int64",
+      "path": "fixtures/delta/checkpoint-upstream/decimal-boundaries/int64.parquet",
+      "inputSha256": "b54df982ac33095acddb099e4bafb42cb10e3ac5ba364353abdf02c71e6733f9",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "int64.json"
+    },
+    {
+      "id": "fixed128",
+      "path": "fixtures/delta/checkpoint-upstream/decimal-boundaries/fixed128.parquet",
+      "inputSha256": "1c2fb8672975af52bdac5ff79a5bd07ff12ae47191ab178fca36a0468553364f",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "fixed128.json"
+    },
+    {
+      "id": "fixed256",
+      "path": "fixtures/delta/checkpoint-upstream/decimal-boundaries/fixed256.parquet",
+      "inputSha256": "dd99ba01a8ab616d19bc728ea0ba728fcb7461d41284ac6153c4bbe1b310db88",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "fixed256.json"
+    },
+    {
+      "id": "rename-none",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "inputSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "rename-none.json"
+    },
+    {
+      "id": "rename-snappy",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "inputSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "rename-snappy.json"
+    },
+    {
+      "id": "rename-gzip",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "inputSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_BODY",
+          "path": "",
+          "severity": "error",
+          "message": "Page codec 2 is not implemented by the bounded decoder"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "rename-embedded-schema",
+      "path": "fixtures/parquet/rename/embedded-schema.parquet",
+      "inputSha256": "61cd2c1878ff7b42c7572656b2b965ce9b4af517a64137f76b644901ad42e953",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "rename-embedded-schema.json"
+    },
+    {
+      "id": "page-1.0-dict-true",
+      "path": "fixtures/parquet/values-trial/page-1.0-dict-true.parquet",
+      "inputSha256": "91f716009fe46e2e039b94a85ada35a40db1890eff35507c676ced3c17977572",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "page-1.0-dict-true.json"
+    },
+    {
+      "id": "page-1.0-dict-false",
+      "path": "fixtures/parquet/values-trial/page-1.0-dict-false.parquet",
+      "inputSha256": "f1ff6edb5c5a14843f9c809dd5f86fe9295aad8fff752a587008f4951a1b429d",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "page-1.0-dict-false.json"
+    },
+    {
+      "id": "page-2.0-dict-true",
+      "path": "fixtures/parquet/values-trial/page-2.0-dict-true.parquet",
+      "inputSha256": "d0271f729a2de91e063fe98d7be1ac5f033f8d50ee46a2547b0c867409cefd98",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "page-2.0-dict-true.json"
+    },
+    {
+      "id": "page-2.0-dict-false",
+      "path": "fixtures/parquet/values-trial/page-2.0-dict-false.parquet",
+      "inputSha256": "e98e16b5d67cd95cda0c29082f4a68fe418991f119040bd58c84c374f894289e",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "page-2.0-dict-false.json"
+    },
+    {
+      "id": "required-v1",
+      "path": "fixtures/parquet/levels/authored/required-v1.parquet",
+      "inputSha256": "29dfe25113b91432d0006a2a464d827aad711c5e0a6ae885c129041b64c4d1bd",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "required-v1.json"
+    },
+    {
+      "id": "required-v2",
+      "path": "fixtures/parquet/levels/authored/required-v2.parquet",
+      "inputSha256": "a1f3671111861012ca78ec4e2e1a97a55c3846d9d20e02a146b0a7d09a336e12",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "required-v2.json"
+    },
+    {
+      "id": "optional-v1",
+      "path": "fixtures/parquet/levels/authored/optional-v1.parquet",
+      "inputSha256": "f108a4cfcb81b1a04fe3bae53e12367152b8bf1ca996cb5475ab50928f59a7c0",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "optional-v1.json"
+    },
+    {
+      "id": "optional-v2",
+      "path": "fixtures/parquet/levels/authored/optional-v2.parquet",
+      "inputSha256": "8f8852b5d7445d725484df1e4dc86fe0f463201dda9c8effbaea31ab3e32e965",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "optional-v2.json"
+    },
+    {
+      "id": "repeated-v1",
+      "path": "fixtures/parquet/levels/authored/repeated-v1.parquet",
+      "inputSha256": "78b65fe38916d4edd325e8878ce8b15eeab1b8f4001cf6da3cd8542efc29f135",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "repeated-v1.json"
+    },
+    {
+      "id": "repeated-v2",
+      "path": "fixtures/parquet/levels/authored/repeated-v2.parquet",
+      "inputSha256": "5c5440aa40caa0c9159d45cc141bd7559b7da529bbc496a8ed0ee13040b359a6",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "repeated-v2.json"
+    },
+    {
+      "id": "nullable-list-v1",
+      "path": "fixtures/parquet/levels/authored/nullable-list-v1.parquet",
+      "inputSha256": "bd851a1e200e65e5bb6a294f3571a1e94fad64760d7a6553c00fa090121d914f",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "nullable-list-v1.json"
+    },
+    {
+      "id": "nullable-list-v2",
+      "path": "fixtures/parquet/levels/authored/nullable-list-v2.parquet",
+      "inputSha256": "579d2199a90af16d438c82f2f584ee7df4d1b6780f6bafca72f5dccfb21d2d7f",
+      "status": "decoded",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        }
+      ],
+      "pagesFile": "nullable-list-v2.json"
+    },
+    {
+      "id": "invalid-definition-domain",
+      "path": "fixtures/parquet/levels/authored/invalid-definition-domain.parquet",
+      "inputSha256": "d526ea82d48c1d8566dc06ffc303012fb34917f6ac273bc5532f28877983fc4e",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_DECODE",
+          "path": "",
+          "severity": "error",
+          "message": "RLE value exceeds allowed range"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "invalid-repetition-domain",
+      "path": "fixtures/parquet/levels/authored/invalid-repetition-domain.parquet",
+      "inputSha256": "a37e98f195b9f0a7227b56a84a26a7830d27cd0dcf85836690098c42bf6d3727",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_DECODE",
+          "path": "",
+          "severity": "error",
+          "message": "RLE value exceeds allowed range"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "invalid-truncated-stream",
+      "path": "fixtures/parquet/levels/authored/invalid-truncated-stream.parquet",
+      "inputSha256": "d12fb81678cd86169d8a6ccfddc6a5790545abd7eff9298e11a0c7289d58b70f",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_DECODE",
+          "path": "",
+          "severity": "error",
+          "message": "Truncated hybrid stream"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "invalid-rle-overrun",
+      "path": "fixtures/parquet/levels/authored/invalid-rle-overrun.parquet",
+      "inputSha256": "91a0f45c0d5b05eb4e583a8a947d09eb4e800614b770a200acee85c356641c7e",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_DECODE",
+          "path": "",
+          "severity": "error",
+          "message": "RLE run exceeds requested count"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "invalid-first-row",
+      "path": "fixtures/parquet/levels/authored/invalid-first-row.parquet",
+      "inputSha256": "d74552da26f5cfb491a8932e43153000dc5d10938fc06b49cca7affcc209b888",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_DECODE",
+          "path": "",
+          "severity": "error",
+          "message": "Repetition level exceeds definition level"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "invalid-null-count",
+      "path": "fixtures/parquet/levels/authored/invalid-null-count.parquet",
+      "inputSha256": "72d45daf4b13298fb7af6fdc170df9a354e3c1e313de58fa14cc64d80d15e636",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_DECODE",
+          "path": "",
+          "severity": "error",
+          "message": "Decoded V2 row/null counts differ from page header"
+        }
+      ],
+      "pagesFile": null
+    },
+    {
+      "id": "invalid-row-count",
+      "path": "fixtures/parquet/levels/authored/invalid-row-count.parquet",
+      "inputSha256": "c92b71a3e63e18ca52f5ecc293cacd215ed9567be95596bfe9a63f679ea19edb",
+      "status": "blocked",
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_BOUNDS",
+          "path": "",
+          "severity": "error",
+          "message": "V2 row totals differ from row group"
+        }
+      ],
+      "pagesFile": null
+    }
+  ]
+}

@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/owl/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document,type Diagnostic,type Json,type ExtensionPackage} from '../../model/types';
 import {RDF_EXTENSION,importRdfTurtle,exportRdfTurtle,getRdfQuads,inspectRdfDocument,proposeRdfQuadEdit,type RdfNode,type RdfLiteral,type RdfQuad} from '../rdf';
-export const OWL_EXTENSION='umf.owl';
-export const owlPackage=manifest as unknown as ExtensionPackage;
+import {OWL_EXTENSION,owlPackage} from './package';
+export {OWL_EXTENSION,owlPackage} from './package';
 type Value=RdfNode|RdfLiteral;
 function rdfEnvelope(p:Json):Document {
  const payload=copyJson(p) as Record<string,Json>;delete payload.owlVersion;

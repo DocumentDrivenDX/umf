@@ -1,0 +1,927 @@
+{
+  "profile": "inspect-core-record-members/0.3.0",
+  "predecessor": "src/model/record-members.ts",
+  "sourceClosureSha256": {
+    "src/model/record-members.ts": "9e46fb9eacf24aa3428f38f688edd2e7a1a64d21d8c0a051171475d51f147bbc",
+    "src/model/types.ts": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/generated/core-model.ts": "6536e081663c2662866e2805c0db981807ca658fb10e195d4732034691b9761e",
+    "src/generated/core-validators.ts": "488599c21dd1bb523c7b9ae619cbb277f8e5948afb48892f31ae0d17893e506a",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "src/validation/current-policy.ts": "010d8dcc062363592713d68fcd54000775420cae779a074474bcca19b862cd33",
+    "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
+    "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
+    "src/validation/internal-schema.ts": "df2f752489b4cf90c083c1411f88e2ff2952c8269f50810308cab65b0106d237",
+    "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
+    "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
+    "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
+    "src/validation/constraint-language.ts": "decf47ca801a2c03d0c01b92ef3418813c79992c042be879ba0c1d2561678597",
+    "src/registry/registry.ts": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1",
+    "spec/core/schema.json": "c313b2bc19f8973bbede810141b07b7950accf74b164631721d6273228c8e78b",
+    "spec/core/record-members-inspection-v0.3.schema.json": "1f5d95cd75717b3f55a06b51656cbe25b8aa2dd167730f84b67a484cb2f5d5f9",
+    "spec/core/semantic-type-reference.schema.json": "a682fad7d914d7469515118341c246664591c11d742d58868ace0c0f1c192fd1",
+    "spec/metamodel/generated/core-constraints.json": "66d23f07f85ac14fbb7d6057f74f37797c7bef4a49e4b3c3b1d724298dde0307",
+    "spec/metamodel/generated/domain-policy.json": "ffd46789a3d2f1a666ae76a880c1b008565865fb7062554b3c67ec8e398b752f",
+    "tests/helpers/uuid-fixtures.ts": "66762564ec668564346f301d3a8de703e22f70416e842de9e435f602d66b0693"
+  },
+  "cases": {
+    "known": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "id",
+                    "name": "ID",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "value"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "record"
+      }
+    },
+    "reversed_identity_order": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "id",
+                    "name": "ID",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "value"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "element": "record",
+        "module": "m"
+      }
+    },
+    "explicit_empty": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "record"
+      }
+    },
+    "absent": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "record"
+      }
+    },
+    "inapplicable_field": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "id",
+                    "name": "ID",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "value"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "value"
+      }
+    },
+    "unknown_member_qualifier": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value",
+                    "futureQualifier": "opaque"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "id",
+                    "name": "ID",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "value",
+                        "futureQualifier": "opaque"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "record"
+      }
+    },
+    "unknown_member_surrogate_qualifier": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value",
+                    "\ud800": "opaque"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "id",
+                    "name": "ID",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "value",
+                        "\ud800": "opaque"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "record"
+      }
+    },
+    "missing_element": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "id",
+                    "name": "ID",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "value"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "missing"
+      }
+    },
+    "extra_identity_member": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "uuid-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "test",
+            "elements": [
+              {
+                "id": "record",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "id",
+                    "name": "ID",
+                    "fields": [
+                      {
+                        "module": "m",
+                        "element": "value"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "value",
+                "kind": "field",
+                "cardinality": "one",
+                "nullability": "required",
+                "scalarType": "uuid",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "record",
+        "extra": true
+      }
+    },
+    "source_diagnostics": {
+      "source": {
+        "umf": "0.10.0"
+      },
+      "identity": {
+        "module": "m",
+        "element": "missing"
+      }
+    },
+    "retired_version": {
+      "source": {
+        "umf": "0.9.0"
+      },
+      "identity": {
+        "module": "m",
+        "element": "record"
+      }
+    }
+  },
+  "outcomes": {
+    "known": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-record-members",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "record"
+        },
+        "path": "/modules/0/elements/0/members",
+        "meaning": {
+          "state": "known",
+          "members": [
+            {
+              "module": "m",
+              "element": "value"
+            }
+          ],
+          "uninterpretedPaths": []
+        },
+        "provenance": "unverified"
+      }
+    },
+    "reversed_identity_order": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-record-members",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "element": "record",
+          "module": "m"
+        },
+        "path": "/modules/0/elements/0/members",
+        "meaning": {
+          "state": "known",
+          "members": [
+            {
+              "module": "m",
+              "element": "value"
+            }
+          ],
+          "uninterpretedPaths": []
+        },
+        "provenance": "unverified"
+      }
+    },
+    "explicit_empty": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-record-members",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "record"
+        },
+        "path": "/modules/0/elements/0/members",
+        "meaning": {
+          "state": "known",
+          "members": [],
+          "uninterpretedPaths": []
+        },
+        "provenance": "unverified"
+      }
+    },
+    "absent": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-record-members",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "record"
+        },
+        "path": "/modules/0/elements/0/members",
+        "meaning": {
+          "state": "missing"
+        },
+        "provenance": "unverified"
+      }
+    },
+    "inapplicable_field": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-record-members",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value"
+        },
+        "path": "/modules/0/elements/1/members",
+        "meaning": {
+          "state": "inapplicable"
+        },
+        "provenance": "unverified"
+      }
+    },
+    "unknown_member_qualifier": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-record-members",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value",
+                      "futureQualifier": "opaque"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value",
+                          "futureQualifier": "opaque"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "record"
+        },
+        "path": "/modules/0/elements/0/members",
+        "meaning": {
+          "state": "partial",
+          "members": [
+            {
+              "module": "m",
+              "element": "value",
+              "futureQualifier": "opaque"
+            }
+          ],
+          "uninterpretedPaths": [
+            "/modules/0/elements/0/members/0/futureQualifier"
+          ]
+        },
+        "provenance": "unverified"
+      }
+    },
+    "unknown_member_surrogate_qualifier": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-record-members",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value",
+                      "\ud800": "opaque"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value",
+                          "\ud800": "opaque"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "record"
+        },
+        "path": "/modules/0/elements/0/members",
+        "meaning": {
+          "state": "partial",
+          "members": [
+            {
+              "module": "m",
+              "element": "value",
+              "\ud800": "opaque"
+            }
+          ],
+          "uninterpretedPaths": [
+            "/modules/0/elements/0/members/0/\ud800"
+          ]
+        },
+        "provenance": "unverified"
+      }
+    },
+    "missing_element": {
+      "ok": false,
+      "error": {
+        "code": "CORE_RECORD_MEMBERS_MISSING",
+        "message": "Element identity is absent",
+        "path": ""
+      }
+    },
+    "extra_identity_member": {
+      "ok": false,
+      "error": {
+        "code": "CORE_RECORD_MEMBERS_IDENTITY",
+        "message": "Expected explicit module and element identities",
+        "path": ""
+      }
+    },
+    "source_diagnostics": {
+      "ok": false,
+      "error": {
+        "code": "CORE_RECORD_MEMBERS_SOURCE",
+        "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'id'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'vocabularies'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'modules'\",\"severity\":\"error\"}]",
+        "path": ""
+      }
+    },
+    "retired_version": {
+      "ok": false,
+      "error": {
+        "code": "CORE_RECORD_MEMBERS_VERSION",
+        "message": "Current core 0.10.0 document required",
+        "path": ""
+      }
+    }
+  }
+}

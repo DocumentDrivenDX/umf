@@ -8,21 +8,21 @@ use umf_core::{
     PythonSchemaEvaluation, PythonSchemaEvaluationMode, PythonSchemaResources,
 };
 
-const ORDERED: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-evaluation-order-predecessor.json");
-const ORDINARY: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-evaluation-order-ordinary-predecessor.json");
-const YIELD_BOUNDARIES: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-yield-boundaries-predecessor.json");
-const ANNOTATION_REACH: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-annotation-reach-predecessor.json");
-const ERROR_METADATA: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-error-metadata-predecessor.json");
-const UNORDERED_TARGETS: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-unordered-targets.json");
-const ERROR_SUBJECTS: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-error-subjects-predecessor.json");
-const ERROR_SUBJECT_PHASES: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-error-subject-phases.json");
-const ANNOTATION_MECHANISMS: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-annotation-mechanism-predecessor.json");
-const ANNOTATION_MECHANISMS_2019: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-annotation-mechanism-2019-predecessor.json");
+const ORDERED: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-evaluation-order-predecessor.json");
+const ORDINARY: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-evaluation-order-ordinary-predecessor.json");
+const YIELD_BOUNDARIES: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-yield-boundaries-predecessor.json");
+const ANNOTATION_REACH: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-annotation-reach-predecessor.json");
+const ERROR_METADATA: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-error-metadata-predecessor.json");
+const UNORDERED_TARGETS: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-unordered-targets.json");
+const ERROR_SUBJECTS: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-error-subjects-predecessor.json");
+const ERROR_SUBJECT_PHASES: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-error-subject-phases.json");
+const ANNOTATION_MECHANISMS: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-annotation-mechanism-predecessor.json");
+const ANNOTATION_MECHANISMS_2019: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-annotation-mechanism-2019-predecessor.json");
 const PYTHON_2019_AP_NATIVE: &str = include_str!(
-    "../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-2019-ap-native.json"
+    "../../../tests/rust-core/fixtures/r2/sol-python-schema-2019-ap-native.json"
 );
-const PYTHON_2019_AP_TARGET: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-2019-ap-target-proposal.json");
-const PYTHON_2019_AP_DECISION: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/approved-python-schema-2019-ap-correction.json");
+const PYTHON_2019_AP_TARGET: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-2019-ap-target-proposal.json");
+const PYTHON_2019_AP_DECISION: &str = include_str!("../../../tests/rust-core/fixtures/r2/approved-python-schema-2019-ap-correction.json");
 
 fn decode_recipe(recipe: &Json) -> Py {
     match recipe["kind"].as_str().expect("recipe kind") {

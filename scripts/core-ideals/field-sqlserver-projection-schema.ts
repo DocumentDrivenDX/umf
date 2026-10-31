@@ -5,4 +5,10 @@ const schema=await Bun.file('spec/core/field-postgresql-projection.schema.json')
 schema.$id='urn:umf:core:field-sqlserver-projection:1.0.0';schema.title='Authored Field to SQL Server DDL';schema.properties.operation.const='project-field-sqlserver';schema.properties.request.properties.nativeType.enum=Object.keys(sqlServerCarriers);
 schema.properties.binding.const={id:'umf.core.field.sqlserver',version:'1.0.0',nativeVersion:'16.0.4295.3',subset:'Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence'};
 schema.properties.target={type:'object',additionalProperties:false,required:['format','sql'],properties:{format:{const:'sqlserver-ddl'},sql:{type:'string',minLength:1}}};schema.properties.mapping.properties.nativePath.const='/sql';enforceProjectionPolicy(schema);
-await Bun.write('spec/core/field-sqlserver-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
+const output='spec/core/field-sqlserver-projection.schema.json';
+const rendered=JSON.stringify(schema,null,2)+'\n';
+if(process.argv.includes('--check')){
+ const current=await Bun.file(output).text();
+ if(current!==rendered)throw new Error(`${output} is stale; regenerate deliberately.`);
+ console.log(`${output} is current.`);
+}else await Bun.write(output,rendered);

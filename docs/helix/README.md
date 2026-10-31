@@ -43,13 +43,11 @@ The registration capability preserves core 0.10.0; scoped implementation and
 runtime qualification are recorded in [execution evidence](04-build/evidence/extension-kinds/README.md).
 See the [usage guide](05-deploy/extension-defined-kinds.md) for explicit activation.
 
-[Shared Rust migration and Python V8 removal plan](04-build/rust-migration-plan.md)
-sequences a native Rust CLI and Python/Node/Bun/browser bindings over one engine.
-[ADR-006](02-design/adr/ADR-006-shared-rust-implementation.md) records the target
-ownership; the [R0 inventory](04-build/evidence/rust-migration/r0/README.md) and
-[R1 installed binding/browser evidence](04-build/evidence/rust-migration/r1/README.md)
-qualify a bounded Darwin-arm64 spike. Production V8 removal and the full Rust
-migration remain unimplemented.
+[Rust library completion plan](04-build/rust-migration-plan.md) governs the
+shared native implementation. Current source, executable regression tests and
+ordinary resource/import boundaries determine readiness. Historical Rust
+qualification archives and retirement bookkeeping are removed under the
+owner's 2026-10-29 direction. Test vectors are retained as ordinary test fixtures.
 
 [Schema migration design](02-design/solution-designs/SD-007-schema-migrations.md)
 and [delivery plan](04-build/schema-migration-plan.md) define field additions,

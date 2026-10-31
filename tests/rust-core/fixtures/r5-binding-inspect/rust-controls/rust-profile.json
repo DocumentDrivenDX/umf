@@ -1,0 +1,23 @@
+{
+  "profile": "umf-r5-binding-inspector/0.1.0",
+  "api": "umf_core::binding_inspection::inspect_binding",
+  "activation": "opt-in only; no existing caller is rerouted",
+  "acceptedBindingVocabularyVersions": ["0.1.0", "0.2.0"],
+  "unsupportedBindingVocabularyVersions": [
+    {
+      "version": "0.3.0",
+      "result": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "BINDING_PROFILE",
+            "path": "/vocabularies/umf.binding/version",
+            "message": "Rust inspector supports umf.binding 0.1.0 and 0.2.0 only",
+            "severity": "error"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1835,7 +1835,7 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
                     match self.pop() {
                         Some(45) if !disable => disable = true,
                         Some(45) => {
-                            return Err(self.err("bad inline flags: flag turned on and off"))
+                            return Err(self.err("bad inline flags: flag turned on and off"));
                         }
                         Some(58) => {
                             self.global_flags_allowed = false;
@@ -1853,8 +1853,10 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
                                     self.err("global flags not at the start of the expression")
                                 );
                             }
-                            if matches!(self.version, PythonReVersion::V3_13 | PythonReVersion::V3_14)
-                                && on.contains(&116)
+                            if matches!(
+                                self.version,
+                                PythonReVersion::V3_13 | PythonReVersion::V3_14
+                            ) && on.contains(&116)
                             {
                                 return Err(self.err("invalid global flag"));
                             }
@@ -1870,11 +1872,7 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
                             return Ok(OpenResult::Ignored);
                         }
                         Some(x) if matches!(x, 105 | 109 | 115 | 120 | 97 | 117 | 116) => {
-                            if disable {
-                                off.push(x)
-                            } else {
-                                on.push(x)
-                            }
+                            if disable { off.push(x) } else { on.push(x) }
                         }
                         _ => return Err(self.err("invalid inline flags")),
                     }
@@ -1968,8 +1966,10 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
                         .iter()
                         .all(|c| matches!(*c, 105 | 109 | 115 | 120 | 97 | 117 | 116))
                 {
-                    if matches!(self.version, PythonReVersion::V3_13 | PythonReVersion::V3_14)
-                        && spec.contains(&116)
+                    if matches!(
+                        self.version,
+                        PythonReVersion::V3_13 | PythonReVersion::V3_14
+                    ) && spec.contains(&116)
                     {
                         return Err(self.err("invalid global flag"));
                     }
@@ -2070,8 +2070,10 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
         Ok(s)
     }
     fn parse_quantifier(&mut self, n: Node) -> Result<Node, PythonRegexError> {
-        if !matches!(self.version, PythonReVersion::V3_13 | PythonReVersion::V3_14)
-            && self.flags.has(Flags::TEMPLATE)
+        if !matches!(
+            self.version,
+            PythonReVersion::V3_13 | PythonReVersion::V3_14
+        ) && self.flags.has(Flags::TEMPLATE)
             && matches!(self.peek(), Some(42 | 43 | 63 | 123))
         {
             return Err(self.err("internal: unsupported template operator MAX_REPEAT"));
@@ -2611,11 +2613,13 @@ mod tests {
         let alias =
             PythonRegex::compile(&Utf16::from(r"\N{null}"), PythonReVersion::V3_11).unwrap();
         assert_eq!(alias.find_from_utf16(&[0], 0), Some((0, 1)));
-        assert!(PythonRegex::compile(
-            &Utf16::from(r"\N{not a real Unicode name}"),
-            PythonReVersion::V3_11
-        )
-        .is_err());
+        assert!(
+            PythonRegex::compile(
+                &Utf16::from(r"\N{not a real Unicode name}"),
+                PythonReVersion::V3_11
+            )
+            .is_err()
+        );
     }
 
     fn check_cpython_corpus(data: &str, version: PythonReVersion) {

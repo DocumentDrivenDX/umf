@@ -25,6 +25,14 @@ MACOS_DEPLOYMENT_TARGET = _NATIVE_PLATFORM.MACOS_DEPLOYMENT_TARGET
 inspect_macho_file = _NATIVE_PLATFORM.inspect_macho_file
 macos_target = _NATIVE_PLATFORM.macos_target
 
+_ACTION_MANIFEST_PATH = Path(__file__).parent / "src/umf/_action_runtime_manifest.py"
+_ACTION_MANIFEST_SPEC = importlib.util.spec_from_file_location(
+    "umf_action_runtime_manifest", _ACTION_MANIFEST_PATH
+)
+if _ACTION_MANIFEST_SPEC is None or _ACTION_MANIFEST_SPEC.loader is None:
+    raise RuntimeError("The action runtime resource inventory cannot be loaded")
+_ACTION_MANIFEST = importlib.util.module_from_spec(_ACTION_MANIFEST_SPEC)
+_ACTION_MANIFEST_SPEC.loader.exec_module(_ACTION_MANIFEST)
 ACTION_RUNTIME_RESOURCES = (
     ("coreSchema.json", "spec/core/schema.json"),
     ("referenceSchema.json", "spec/core/semantic-type-reference.schema.json"),
@@ -37,6 +45,9 @@ ACTION_RUNTIME_RESOURCES = (
     ("bindingPackage.json", "spec/extensions/binding/package.json"),
     ("stableBindingPackage.json", "spec/extensions/binding-stable/package.json"),
 )
+if tuple(sorted((filename, source) for _, filename, source in _ACTION_MANIFEST.RESOURCES)) != tuple(sorted(ACTION_RUNTIME_RESOURCES)):
+    raise RuntimeError("The fixed action runtime package map differs from its manifest authority")
+check_action_runtime_resource_manifest = _ACTION_MANIFEST.check
 
 CORE_RESOURCES = (
     "schema.json",
@@ -49,15 +60,114 @@ SDIST_SOURCE_FILES = (
     "Cargo.lock",
     "rust-toolchain.toml",
     ".cargo/config.toml",
+    # Keep native include_str!/include_bytes! authority files available for offline builds
+    # from an extracted source archive.
+    "spec/extensions/arrow/package.json",
+    "spec/extensions/arrow/integration-schema.json",
+    "spec/extensions/avro/package.json",
+    "spec/extensions/parquet/package.json",
+    "spec/extensions/parquet/idl.json",
+    "spec/extensions/dbt-manifest/package.json",
+    "spec/extensions/dbt-artifact/package.json",
+    "spec/extensions/dbt-semantic/package.json",
+    "spec/extensions/dbt-manifest/native-schema.json",
+    "spec/extensions/dbt-artifact/run-results-v6-schema.json",
+    "spec/extensions/dbt-artifact/catalog-v1-schema.json",
+    "spec/extensions/dbt-artifact/sources-v3-schema.json",
+    "spec/extensions/dbt-semantic/native-schema.json",
+    "spec/extensions/rdf/package.json",
+    "spec/extensions/generalized-rdf/package.json",
+    "spec/extensions/rdf/schema.json",
+    "spec/extensions/generalized-rdf/dataset-schema.json",
+    "spec/extensions/openapi/package.json",
+    "spec/extensions/openapi/upstream/2.0-schema.json",
+    "spec/extensions/openapi/upstream/3.0-schema.json",
+    "spec/extensions/openapi/upstream/3.1-schema.json",
+    "spec/extensions/openapi/upstream/3.2-schema.json",
+    "spec/extensions/openapi/upstream/3.1-meta.json",
+    "spec/extensions/openapi/upstream/3.2-meta.json",
+    "spec/extensions/openapi/upstream/3.1-dialect.json",
+    "spec/extensions/openapi/upstream/3.2-dialect.json",
+    "spec/domain-packs/public-company-intelligence/sources/scoped-submissions-0000004962.json",
+    "spec/domain-packs/public-company-intelligence/sources/scoped-companyfacts-0000004962.json",
+    "spec/loader-companion/1.0.0/loader.schema.json",
+    "spec/loader-companion/1.0.0/inventory.schema.json",
+    "spec/extensions/json-schema/package.json",
+    "spec/extensions/delta/package.json",
+    "spec/extensions/delta/datatype-schema.json",
+    "spec/extensions/delta-table/package.json",
+    "spec/extensions/delta-table/context-schema.json",
+    "spec/extensions/protobuf/package.json",
+    "spec/extensions/arrow-ipc/package.json",
+    "spec/core/cardinality-operation-v6.schema.json",
+    "spec/core/cardinality-operation-v4.schema.json",
+    "spec/core/kind-operation-v8.schema.json",
+    "spec/core/kind-operation-v6.schema.json",
+    "spec/core/record-type-operation-v6.schema.json",
+    "spec/core/avro-record-type-classification.schema.json",
+    "spec/core/avro-cardinality-classification.schema.json",
+    "spec/core/native-json.schema.json",
+    "spec/extensions/avro-cardinality/package.json",
+    "spec/core/avro-record-classification.schema.json",
+    "spec/core/avro-field-classification.schema.json",
+    "spec/core/parquet-record-type-classification.schema.json",
+    "spec/core/parquet-record-classification.schema.json",
+    "spec/extensions/delta-log/package.json",
+    "spec/extensions/delta-log/action-schema.json",
+    "spec/extensions/security-v0.2/package.json",
+    "spec/extensions/security-protection/package.json",
+    "spec/extensions/security-protection/domain-resolution.schema.json",
+    "spec/core/nullability-operation-v7.schema.json",
+    "spec/core/nullability-operation-v5.schema.json",
+    "spec/core/facet-operation-v3.schema.json",
+    "spec/core/facet-operation-v5.schema.json",
+    "spec/core/key-operation-v2.schema.json",
+    "spec/core/key-operation-v4.schema.json",
+    "spec/core/key-tuple-operation-v4.schema.json",
+    "spec/core/scalar-type-inspection-v0.3.schema.json",
+    "spec/core/record-members-inspection-v0.3.schema.json",
+    "spec/core/reference-links-inspection-v0.3.schema.json",
+    "spec/core/relationship-operation.schema.json",
+    "spec/core/relationship-operation-v3.schema.json",
+    "spec/core/evolution-operation.schema.json",
+    "spec/core/dataset-value-operation.schema.json",
+    "spec/core/dataset-value-compact-operation.schema.json",
+    "spec/core/relationship-metadata-selection-v2.schema.json",
+    "spec/extensions/semantic-types/package.json",
+    "spec/core/semantic-types-operation.schema.json",
+    "spec/metamodel/umf.yaml",
+    "spec/extensions/iceberg/package.json",
+    "spec/extensions/iceberg/datatype-schema.json",
+    "spec/extensions/graphql/package.json",
+    "spec/extensions/jsonld/package.json",
+    "spec/extensions/shacl/package.json",
+    "spec/extensions/owl/package.json",
+    "spec/extensions/tablespec/package.json",
+    "spec/extensions/saga/package.json",
+    "spec/extensions/sqlserver/package.json",
+    "spec/extensions/sqlserver/capture.schema.json",
+    "spec/extensions/postgresql-catalog/capture.schema.json",
+    "spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json",
+    "spec/extensions/postgresql-catalog/cardinality-v1.schema.json",
+    "spec/extensions/postgresql-catalog/key-observations-v1.schema.json",
+    "spec/extensions/postgresql/package.json",
+    "spec/extensions/postgresql/native-ast.schema.json",
+    "fixtures/sqlserver/catalog.json",
+    "fixtures/validation/facets-sqlserver-discovery-native.json",
+    "spec/extensions/linkml/package.json",
+    "spec/extensions/linkml/native-schema.json",
+    "spec/extensions/odcs/package.json",
+    "spec/extensions/odcs/native-3.0.0.json",
+    "spec/extensions/odcs/native-3.0.1.json",
+    "spec/extensions/odcs/native-3.0.2.json",
+    "spec/extensions/odcs/native-3.1.0.json",
+    "spec/extensions/odcs/native-3.2.0.json",
 )
 SDIST_SOURCE_TREES = (
     "crates",
     "bindings/core/python",
     "bindings/core/node",
     "bindings/core/wasm",
-    "bindings/rust-spike/python",
-    "bindings/rust-spike/node",
-    "bindings/rust-spike/wasm",
 )
 SDIST_EXCLUDED_DIRS = {
     ".git",
@@ -128,6 +238,11 @@ def add_action_runtime_resources(
         else "src/umf/action_runtime_resource_manifest.json"
     )
     build_data["force_include"][str(manifest)] = manifest_target
+    helper = package_root / "src/umf/_action_runtime_manifest.py"
+    if not helper.is_file() or helper.is_symlink():
+        raise FileNotFoundError("The action runtime manifest helper is missing")
+    helper_target = "umf/_action_runtime_manifest.py" if wheel else "src/umf/_action_runtime_manifest.py"
+    build_data["force_include"][str(helper)] = helper_target
     if wheel:
         return
     for filename, source_name in ACTION_RUNTIME_RESOURCES:
@@ -183,6 +298,7 @@ class CustomBuildHook(BuildHookInterface):
             if (package_root / "spec/core").is_dir()
             else package_root.parent
         )
+        check_action_runtime_resource_manifest(repository, package_root)
         if self.target_name == "sdist":
             # Carry the pinned native source closure so an sdist can produce
             # this abi3 wheel without JavaScript runtimes or downloads.
@@ -256,9 +372,11 @@ class CustomBuildHook(BuildHookInterface):
             "--locked",
             "--release",
             "--manifest-path",
-            str(repository / "bindings/core/python/Cargo.toml"),
+            str(repository / "Cargo.toml"),
             "-p",
             "umf-core-python",
+            "-p",
+            "umf-cli",
         ]
         native_target = None
         platform_tag = sysconfig.get_platform().replace("-", "_").replace(".", "_")
@@ -272,7 +390,7 @@ class CustomBuildHook(BuildHookInterface):
             cargo_command.extend(["--target", native_target])
             # Apple ld 27 can emit a dyld-invalid LINKEDIT string-pool offset
             # when release symbols are stripped. Keep the actual extension
-            # unstripped on macOS; qualification imports this artifact.
+            # unstripped on macOS; the installed-artifact smoke test imports it.
             build_env["CARGO_PROFILE_RELEASE_STRIP"] = "none"
             flags = build_env.get("RUSTFLAGS", "")
             for flag in ("-C debuginfo=2", "-C strip=none"):
@@ -302,6 +420,12 @@ class CustomBuildHook(BuildHookInterface):
         build_data["force_include"][str(extension)] = "umf/_rust_core.abi3.so"
         if expected_machine is not None:
             inspect_macho_file(extension, expected_machine)
+        cli = target / ("umf.exe" if os.name == "nt" else "umf")
+        if not cli.is_file():
+            raise FileNotFoundError(f"Compiled Rust CLI is missing under {target}")
+        if expected_machine is not None:
+            inspect_macho_file(cli, expected_machine)
+        build_data["force_include"][str(cli)] = f"umf/_bin/{cli.name}"
         # The explicit platform tag is based on a verified thin Mach-O slice,
         # never on a universal2 Python interpreter's sysconfig platform.
         build_data["pure_python"] = False

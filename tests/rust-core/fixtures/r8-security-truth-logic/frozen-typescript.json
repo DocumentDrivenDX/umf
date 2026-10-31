@@ -1,0 +1,37 @@
+{
+  "format": "umf-r8-security-truth-predecessor/1",
+  "operationScope": ["securityNot", "securityAnd", "securityOr"],
+  "predecessor": {
+    "runtime": "Bun 1.4.3",
+    "source": "src/extensions/security/logic.ts",
+    "sourceSha256": "df5857cf39f924552a8082f87d911b81725cce0cf1fda4375daeeb07dd48c8c8",
+    "testSource": "tests/security/logic.test.ts",
+    "testSourceSha256": "042523ea973e7d4fb8a43047c2e3e20ca754d562a8ce167afdc136e08c3ef8b2",
+    "contract": "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
+    "contractSha256": "1183e2ea8ba55fade4007554905b7175d7796e867a67814f511e9cd3ee514800",
+    "captureCommand": "bun -e import {securityNot,securityAnd,securityOr} from ./src/extensions/security/logic.ts; emit exact truth tables and boundary errors"
+  },
+  "truths": ["T", "F", "U"],
+  "not": ["F", "T", "U"],
+  "and": [["T", "F", "U"], ["F", "F", "F"], ["U", "F", "U"]],
+  "or": [["T", "T", "T"], ["T", "F", "U"], ["T", "U", "U"]],
+  "refusals": [
+    {"name": "empty-and", "operation": "securityAnd", "values": [], "code": "SECURITY_BOUND", "message": "Expected 1–64 truth operands", "path": ""},
+    {"name": "invalid-or-operand", "operation": "securityOr", "values": ["T", "X"], "code": "SECURITY_TRUTH", "message": "Invalid security truth", "path": ""},
+    {"name": "too-many-and-operands", "operation": "securityAnd", "operandCount": 65, "code": "SECURITY_BOUND", "message": "Expected 1–64 truth operands", "path": ""}
+  ],
+  "notRefusals": [
+    {"name": "object-is-not-a-truth", "operation": "securityNot", "value": {}, "code": "SECURITY_TRUTH", "message": "Invalid security truth", "path": ""}
+  ],
+  "independentOracle": {
+    "method": "Hand-enumerated strong Kleene tables from CONTRACT-062: not U=U, F and U=F, T or U=T; remaining cells follow conjunction minimum and disjunction maximum over F < U < T.",
+    "not": ["F", "T", "U"],
+    "and": [["T", "F", "U"], ["F", "F", "F"], ["U", "F", "U"]],
+    "or": [["T", "T", "T"], ["T", "F", "U"], ["T", "U", "U"]]
+  },
+  "limitations": [
+    "No policy selection, policy-source inspection, fact-cut admission, identity authentication, authorization, host registration, query compilation, or native effect is qualified.",
+    "The Rust wire result is scoped to already admitted umf.core-wire/1 tagged Values. JavaScript accessors and proxies cannot cross that boundary, so raw-host input parity is not claimed.",
+    "The packet freezes truth behavior and selected bounds only; it is not a complete R8 source-closure census or installed Node, Python, Bun, or WASM qualification."
+  ]
+}

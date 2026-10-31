@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/odcs/package.json';
 import Ajv2019 from 'ajv/dist/2019';
 import {installJsonEquality} from '../../validation/schema';
 import grammar0 from '../../../spec/extensions/odcs/native-3.0.0.json';
@@ -13,9 +12,9 @@ import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,parseNativeYaml,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const ODCS_EXTENSION='umf.odcs';
-export const odcsPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+import { ODCS_EXTENSION, odcsPackage } from './package';
+export { ODCS_EXTENSION, odcsPackage };
 type Payload={profile:'odcs-json-yaml';root:NativeJson;originalSource:string;originalFormat:'json'|'yaml'};
 const parse=(text:string,format:'json'|'yaml')=>format==='json'?parseNativeJson(text):parseNativeYaml(text);
 const grammars:Record<string,object>={'v3.0.0':grammar0,'v3.0.1':grammar1,'v3.0.2':grammar2,'v3.1.0':grammar3,'v3.2.0':grammar4};

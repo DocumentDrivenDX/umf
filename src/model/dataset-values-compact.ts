@@ -36,8 +36,7 @@ export function evaluateCompactWithWork(source:Document,input:CoreDatasetInput,w
 export function validateCoreDatasetValuesCompact(source:Document,input:CoreDatasetInput):CoreDatasetCompactValueCheck{return evaluateCompactWithWork(source,input).receipt;}
 export function verifyCoreDatasetValuesCompact(receiptInput:CoreDatasetCompactValueCheck,current:Document,expectedInput:CoreDatasetInput):CoreDatasetCompactValueCheck{return verifyCompactWithWork(receiptInput,current,expectedInput).receipt;}
 /** Internal accounting receipt for tests, not exported from package API. */
-export function verifyCompactWithWork(receiptInput:CoreDatasetCompactValueCheck,current:Document,expectedInput:CoreDatasetInput){
- const work=new ValueWork();
+export function verifyCompactWithWork(receiptInput:CoreDatasetCompactValueCheck,current:Document,expectedInput:CoreDatasetInput,work=new ValueWork()){
  try{
   const receipt=work.copy(receiptInput) as unknown as CoreDatasetCompactValueCheck;
   reserveCompactSchemaWork(receipt,work);

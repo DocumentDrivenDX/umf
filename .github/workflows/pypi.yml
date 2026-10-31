@@ -10,8 +10,8 @@ permissions:
 jobs:
   dispatch:
     if: >-
-      github.event_name == 'release' ||
-      (github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.path, '.github/workflows/release'))
+      (github.event_name == 'release' && !startsWith(github.event.release.tag_name, 'umf-rust-v')) ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.path, '.github/workflows/release'))
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:

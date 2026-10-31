@@ -311,6 +311,13 @@
       "reason": "Original Avro relationship current-input case generator retained byte-exact so historical native codec evidence can be rechecked; current functional tests continue exercising the migrated generator."
     },
     {
+      "path": "scripts/core-ideals/relationship-avro-projection-native.py",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__relationship-avro-projection-native.py",
+      "sha256": "7976347c219c3ba70886bf7c8d02679a3e0a43c550d4d9dab285d6faa830d2dc",
+      "source": "24d3bf3c01584b42b627699a76cb8ee987562bd2",
+      "reason": "The Apache Avro 1.12.0 and fastavro 1.12.2 native validation proof was produced from this exact pre-dual-license oracle. The current source differs by the later SPDX line; retain the historical proof input byte-exactly without changing its validation claim."
+    },
+    {
       "path": "scripts/core-key-operation-schema.ts",
       "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-key-operation-schema.ts",
       "sha256": "0d2164775fcb9eea1326ef516321857cc4e4f72b47b7860049e638e0e5f4e55c",
@@ -659,6 +666,13 @@
       "sha256": "8973415a4aa9b380b20e093cc78d125528f00cfc0a148d2f1e84600d6a9fe67d",
       "source": "HEAD",
       "reason": "Original SQL Server Key projection implementation retained byte-exact for its frozen native proof; current behavior remains covered by active projection and recovery tests."
+    },
+    {
+      "path": "src/core-ideals/relationship-avro-carrier.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__relationship-avro-carrier.ts",
+      "sha256": "41738f5b72691cf734b595d5372a1aa939e9adc804545ffb8c035a5eb1627444",
+      "source": "cd0f4c13a81f6dc7ad09132fc795b00aba08aa5f",
+      "reason": "The pinned Apache Avro 1.12.0 and fastavro 1.12.2 native validation proof used this exact pre-dual-license carrier source. Current behavior differs only by the later SPDX line; preserve the historical proof input byte-exactly."
     },
     {
       "path": "src/core-ideals/relationship-avro-projection.ts",

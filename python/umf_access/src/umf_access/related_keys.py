@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import re
+import sys
+from collections.abc import Callable
 from decimal import Decimal, InvalidOperation
 from types import GenericAlias
 from typing import cast
@@ -12,7 +14,7 @@ from pydantic import BaseModel
 
 from .codec_support import validate_graph
 from .dsl import RelatedKeys
-from .types import CodecError, StrictModel
+from .types import CodecError, RelatedKeyParserUnavailable, StrictModel
 
 _INTEGER = re.compile(r"(?:0|-[1-9][0-9]*|[1-9][0-9]*)\Z")
 _DECIMAL = re.compile(r"[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?\Z")
@@ -39,6 +41,17 @@ def key_descriptor(key_model: type[StrictModel]) -> dict[str, object]:
 
 
 def validate_decoder(decoder: object, key_model: type[StrictModel]) -> dict[str, object]:
+    return _validate_decoder(decoder, key_model, _truss_component_type)
+
+
+def validate_decoder_rust(decoder: object, key_model: type[StrictModel]) -> dict[str, object]:
+    """Opt into Rust for the closed Truss component-profile predicate only."""
+    from .rust_related_keys import truss_component_type_matches
+
+    return _validate_decoder(decoder, key_model, truss_component_type_matches)
+
+
+def _validate_decoder(decoder: object, key_model: type[StrictModel], component_check: Callable[[object, object], bool]) -> dict[str, object]:
     if type(decoder) is not dict:
         raise CodecError("closed original related-Key decoder required")
     profile=decoder.get("profile")
@@ -55,11 +68,11 @@ def validate_decoder(decoder: object, key_model: type[StrictModel]) -> dict[str,
     if declared_key != descriptor or type(components) is not list or any(type(c) is not dict or c.get("nullable") is not False for c in components):
         raise CodecError("original relationship Key descriptor differs from generated class")
     if profile in ("ashlar-related-keys-string/0.1","truss-related-keys/0.1"):
-        _engine_metadata(decoder,key_model,descriptor)
+        _engine_metadata(decoder,key_model,descriptor,component_check)
     return cast(dict[str,object],decoder)
 
 
-def _engine_metadata(decoder: dict[str,object], key_model: type[StrictModel], descriptor: dict[str,object]) -> None:
+def _engine_metadata(decoder: dict[str,object], key_model: type[StrictModel], descriptor: dict[str,object], component_check: object) -> None:
     """Validate original metadata only; native engine values stay engine-owned."""
     source=getattr(key_model,"UMF_SOURCE",None)
     pins=decoder["modelPins"]
@@ -92,7 +105,7 @@ def _engine_metadata(decoder: dict[str,object], key_model: type[StrictModel], de
         types=[{"family":"string","facets":{},"nullable":False} for _ in components]
         if any(c["carrier"]!="string" for c in components) or any(type(t) is not dict or t.get("nullable") is not False for t in key["types"]) or key["types"]!=types:
             raise CodecError("original Ashlar required String-Key profile differs")
-    elif any(not _truss_component_type(t,c["carrier"]) for t,c in zip(key["types"],components,strict=True)):
+    elif any(not component_check(t,c["carrier"]) for t,c in zip(key["types"],components,strict=True)):
         raise CodecError("original Truss non-temporal related-Key profile differs")
 
 
@@ -124,13 +137,87 @@ def _number(_: str) -> object:
 
 
 def decode_related_keys(value: object, decoder: object, key_model: type[StrictModel]) -> RelatedKeys[StrictModel]:
+    # Keep parsing in this frame: CPython's json.loads recursion behavior
+    # depends on ambient Python call depth, including this wrapper.
+    metadata = validate_decoder(decoder,key_model)
+    if metadata["profile"] != "pg-related-keys-json/0.1":
+        raise CodecError("original engine related values require their owner adapter")
+    if type(value) is not str:
+        raise CodecError("related-Key native JSON text required")
+    parser = json.loads
+    if sys.implementation.name == "cpython" and sys.version_info[:2] in ((3, 11), (3, 14)):
+        try:
+            if sys.version_info[:2] == (3, 11):
+                from .rust_related_keys import loads_default as parser
+            else:
+                from .rust_related_keys import loads as parser
+        except (ImportError, AttributeError):
+            raise RelatedKeyParserUnavailable("Rust related-Key parser capability unavailable") from None
+    try:
+        if parser is json.loads:
+            payload=json.loads(value,object_pairs_hook=_object,parse_int=_number,parse_float=_number,parse_constant=_number)
+        else:
+            payload=parser(value)  # type: ignore[operator]
+    except (ValueError,TypeError):
+        raise CodecError("invalid related-Key JSON text") from None
+    if type(payload) is not dict or set(payload) != {"items","truncated"} or type(payload["items"]) is not list or type(payload["truncated"]) is not bool:
+        raise CodecError("closed related-Key JSON payload required")
+    items=payload["items"];bound=cast(int,metadata["bound"])
+    if len(items)>bound or payload["truncated"] and len(items)!=bound:
+        raise CodecError("related-Key truncation/bound differs")
+    descriptor=key_descriptor(key_model)
+    components=cast(list[dict[str,object]],descriptor["components"])
+    fields=cast(tuple[tuple[str,str,str],...],getattr(key_model,"UMF_FIELDS",None))
+    result: list[StrictModel]=[]
+    previous: tuple[object,...] | None=None
+    for item in items:
+        if type(item) is not list or len(item)!=len(components):
+            raise CodecError("related-Key component inventory differs")
+        values: list[object]=[]
+        for token,component in zip(item,components,strict=True):
+            carrier=component["carrier"]
+            decoded: object
+            if carrier=="boolean":
+                if type(token) is not bool:raise CodecError("Boolean related-Key token required")
+                decoded=token
+            elif type(token) is not str:
+                raise CodecError("exact related-Key string token required")
+            elif carrier=="string":decoded=token
+            elif carrier=="integer":
+                if not _INTEGER.fullmatch(token):raise CodecError("canonical Integer related-Key token required")
+                decoded=int(Decimal(token))
+            else:
+                if not _DECIMAL.fullmatch(token):raise CodecError("exact finite Decimal related-Key token required")
+                try:decoded=Decimal(token)
+                except InvalidOperation:raise CodecError("exact finite Decimal related-Key token required") from None
+                if not decoded.is_finite():raise CodecError("exact finite Decimal related-Key token required")
+            values.append(decoded)
+        key=validate_graph(key_model,{name:value for (_,_,name),value in zip(fields,values,strict=True)})
+        normalized=tuple(getattr(key,name) for _,_,name in fields)
+        if previous is not None and not _ascending(previous,normalized,components):
+            raise CodecError("related-Key native ordering or uniqueness differs")
+        previous=normalized;result.append(key)
+    return RelatedKeys(tuple(result),payload["truncated"])
+
+
+def decode_related_keys_rust(value: object, decoder: object, key_model: type[StrictModel]) -> RelatedKeys[StrictModel]:
+    """Opt in to the Rust parser while preserving all Python-owned decoding."""
+    from .rust_related_keys import loads
+
+    return _decode_related_keys(value, decoder, key_model, loads)
+
+
+def _decode_related_keys(value: object, decoder: object, key_model: type[StrictModel], parser: object) -> RelatedKeys[StrictModel]:
     metadata = validate_decoder(decoder,key_model)
     if metadata["profile"] != "pg-related-keys-json/0.1":
         raise CodecError("original engine related values require their owner adapter")
     if type(value) is not str:
         raise CodecError("related-Key native JSON text required")
     try:
-        payload=json.loads(value,object_pairs_hook=_object,parse_int=_number,parse_float=_number,parse_constant=_number)
+        if parser is json.loads:
+            payload=json.loads(value,object_pairs_hook=_object,parse_int=_number,parse_float=_number,parse_constant=_number)
+        else:
+            payload=parser(value)  # type: ignore[operator]
     except (ValueError,TypeError):
         raise CodecError("invalid related-Key JSON text") from None
     if type(payload) is not dict or set(payload) != {"items","truncated"} or type(payload["items"]) is not list or type(payload["truncated"]) is not bool:

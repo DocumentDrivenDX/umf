@@ -4,7 +4,8 @@ import {getLinkmlDocumentNode} from './index';
 import {inspectLinkmlClassSlots} from './class-slots';
 import {pointer,type Document,type Diagnostic,UmfError} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
-export const LINKML_SCALAR_SLOT_FIELDS={domain:'string',inherited:'boolean',readonly:'string',ifabsent:'string',list_elements_unique:'boolean',list_elements_ordered:'boolean',shared:'boolean',key:'boolean',identifier:'boolean',designates_type:'boolean',role:'string',relational_role:'string',range:'string',required:'boolean',recommended:'boolean',multivalued:'boolean',inlined:'boolean',inlined_as_list:'boolean',minimum_value:'number',maximum_value:'number',pattern:'string',value_presence:'string',equals_string:'string',equals_number:'number',equals_expression:'string',exact_cardinality:'number',minimum_cardinality:'number',maximum_cardinality:'number',description:'string'} as const;
+export { LINKML_SCALAR_SLOT_FIELDS } from './package';
+import { LINKML_SCALAR_SLOT_FIELDS } from './package';
 export type LinkmlScalarSlotField=keyof typeof LINKML_SCALAR_SLOT_FIELDS;
 export interface LinkmlSlotValuesReport {
  source:Document;className:string;slotName:string;scope:'document-scalar-slot-values';status:'resolved'|'blocked';complete:false;

@@ -14,6 +14,12 @@ export async function source(path:string,copy=true):Promise<Source>{
  const actual=await realpath(resolve(root,path)),rel=relative(root,actual);if(rel.startsWith('..')||isAbsolute(rel))throw Error('REFERENCE_INPUT escaping symlink '+path);
  const bytes=new Uint8Array(await readFile(actual));const value={path,sha256:sha(bytes),bytes:bytes.length};inputs.set(path,value);if(copy)originals.set(value.sha256,bytes);return value;
 }
+/** Read UTF-8 source through the same realpath, digest and custody checks as source(). */
+export async function sourceText(path:string):Promise<string>{
+ const value=await source(path,true),bytes=originals.get(value.sha256)!;
+ try{return new TextDecoder('utf-8',{fatal:true}).decode(bytes);}
+ catch{throw Error('REFERENCE_INPUT invalid UTF-8 '+path);}
+}
 export async function read(path:string,copy=true):Promise<any>{await source(path,copy);return JSON.parse(await Bun.file(resolve(root,path)).text());}
 export async function paths(pattern:string):Promise<string[]>{return (await Array.fromAsync(new Bun.Glob(pattern).scan({cwd:root,onlyFiles:true}))).sort();}
 export const text=(path:string)=>Bun.file(resolve(root,path)).text();

@@ -20,6 +20,7 @@ from typing import Any
 SHA = re.compile(r"[0-9a-f]{64}\Z")
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
+QUALIFIED_CORE_VERSION = "0.10.2"
 
 
 class ReleaseError(ValueError):
@@ -253,6 +254,10 @@ def prepare_release(
         isinstance(version, str)
         and re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version) is not None,
         "release pins do not identify a numeric core version",
+    )
+    _require(
+        version == QUALIFIED_CORE_VERSION,
+        f"Core version {QUALIFIED_CORE_VERSION} is the only qualified version for this publisher",
     )
     archives = sorted(
         name for name in sums if name.startswith(wheel_prefix) and name.endswith(".whl")

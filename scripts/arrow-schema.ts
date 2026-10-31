@@ -24,5 +24,9 @@ const schema:any={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'ur
 const node=(await Bun.file('spec/extensions/postgresql/schema.json').json()).$defs.node;
 const payload={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:arrow:0.1.0',...object({profile:{const:'arrow-integration-schema'},root:{$ref:'#/$defs/node'}}),$defs:{node}};
 const manifest={id:'umf.arrow',version:'0.1.0',coreVersion:CURRENT_CORE_VERSION,description:'Arrow integration schema JSON with exact unknown content and ordered metadata',schema:payload,semantics:'CONTRACT-016. Exact schema JSON preservation is separate from native IPC and record-batch validity. Unknown types/properties and duplicate metadata remain authoritative in source.',scopes:['element'],capabilities:{validation:'semantic',directions:['import','export'],native:{system:'Apache Arrow integration schema JSON',version:'Grammar profile 0.1.0; native feasibility evidence JS 21.2.0 / PyArrow 21.0.0',subset:'Schema JSON only, exact metadata/type parameter retention and candidate edits. Guarded schema-only IPC export via an explicit pinned backend; no arbitrary IPC import or array/data support claimed.'},evidence:['tests/arrow/schema.test.ts','tests/arrow/ipc.test.ts','fixtures/arrow/capability-results.json','fixtures/arrow/public-ipc-oracle-results.json','fixtures/arrow/upstream/schema-results.json']}};
-for(const [name,value] of Object.entries({'integration-schema.json':schema,'schema.json':payload,'package.json':manifest}))await Bun.write('spec/extensions/arrow/'+name,JSON.stringify(value,null,2)+'\n');
+for(const [name,value] of Object.entries({'integration-schema.json':schema,'schema.json':payload,'package.json':manifest})){
+ const path='spec/extensions/arrow/'+name,text=JSON.stringify(value,null,2)+'\n';
+ if(process.argv.includes('--check')){if(!await Bun.file(path).exists()||await Bun.file(path).text()!==text)throw Error('Generated drift '+path);}
+ else await Bun.write(path,text);
+}
 export {};

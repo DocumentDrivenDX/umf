@@ -648,7 +648,7 @@ mod tests {
 
     #[test]
     fn all_frozen_profile_admission_controls_match_their_phase_pointer() {
-        let source = include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-final-access-profile-review/frozen.json");
+        let source = include_str!("../../../../tests/rust-core/fixtures/r3/sol-final-access-profile-review/frozen.json");
         let frozen = umf_core::serialization::read_json_value(
             &source.encode_utf16().collect::<Vec<_>>(),
             umf_core::serialization::Format::Json,

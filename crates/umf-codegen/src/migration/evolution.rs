@@ -1954,7 +1954,7 @@ mod inner_scan_controls {
         // migration control independently checks the complete plan, so these
         // scans use accepted compiler records rather than synthetic lookalikes.
         let input=umf_core::serialization::read_json_value(
-            &include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-final-migration-meter-review/scan-inputs.json").encode_utf16().collect::<Vec<_>>(),
+            &include_str!("../../../../tests/rust-core/fixtures/r3/sol-final-migration-meter-review/scan-inputs.json").encode_utf16().collect::<Vec<_>>(),
             Format::Json,&mut Context::catalog()).unwrap();
         let previous = v(&input, "previous");
         let options = v(&input, "options");

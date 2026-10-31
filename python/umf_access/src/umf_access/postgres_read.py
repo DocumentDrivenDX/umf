@@ -35,7 +35,7 @@ from .reviewed import (
     catalog_fence,
     validate_list_parameters,
 )
-from .types import CodecError, StrictModel
+from .types import CodecError, RelatedKeyParserUnavailable, StrictModel
 from .values import validate_vector
 from .verification import postgres_verification_cache
 
@@ -481,6 +481,8 @@ def _output_value(value: object, output: dict[str, object], *, key_model: type[S
             raise ReadObligationUnmet("original generated relationship Key class required")
         try:
             return decode_related_keys(value, output.get("decoder"), key_model)
+        except RelatedKeyParserUnavailable:
+            raise ReadObligationUnmet("native related-Key decoder capability unavailable") from None
         except CodecError:
             raise ReadObligationUnmet("native related-Key output differs from original decoder") from None
     if output.get("carrier") in ("binary", "vector"):

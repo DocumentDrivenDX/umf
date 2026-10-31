@@ -26,6 +26,8 @@ from typing import Any
 from urllib.parse import unquote
 
 NATIVE_MEMBER = "umf/_rust_core.abi3.so"
+CLI_MEMBER = "umf/_bin/umf"
+WINDOWS_CLI_MEMBER = "umf/_bin/umf.exe"
 RESOURCE_MANIFEST = "umf/action_runtime_resource_manifest.json"
 EXPECTED_RUNTIME_FILES = {
     "actionsPackage.json",
@@ -55,7 +57,7 @@ SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
 NATIVE_PLATFORM_HELPER_SHA256 = (
     "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1"
 )
-SDIST_HELPER_SHA256 = "81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e"
+SDIST_HELPER_SHA256 = "225a06eb6d0bc1307da1fb7acb68f234ff8e9270392bb0d50adb93d62beec184"
 
 
 def _sha256(payload: bytes) -> str:
@@ -120,15 +122,26 @@ def _inspect_macos_native(payload: bytes) -> dict[str, Any]:
     return result
 
 
-def _source_payloads(repository: Path) -> tuple[dict[str, bytes], dict[str, str]]:
-    package_source = repository / "python/src/umf"
-    pyproject_path = repository / "python/pyproject.toml"
-    if not package_source.is_dir() or not pyproject_path.is_file():
-        raise ValueError("Python source package or project metadata is missing")
-
+def _python_package_payloads(package_source: Path) -> dict[str, bytes]:
     payloads: dict[str, bytes] = {}
     for source in sorted(package_source.iterdir()):
         if source.name == "__pycache__":
+            continue
+        if source.name == "_rust_core.abi3.so":
+            if source.is_symlink() or not source.is_file():
+                raise ValueError("Generated Rust extension is not a regular file")
+            continue
+        if source.name == "_bin":
+            if source.is_symlink() or not source.is_dir():
+                raise ValueError("Generated CLI directory is not a regular directory")
+            cli_files = sorted(source.iterdir())
+            if len(cli_files) > 1 or any(
+                path.name not in {"umf", "umf.exe"}
+                or path.is_symlink()
+                or not path.is_file()
+                for path in cli_files
+            ):
+                raise ValueError("Generated CLI directory has unexpected content")
             continue
         if source.is_symlink() or source.is_dir():
             raise ValueError("Source package contains a symlink")
@@ -136,6 +149,16 @@ def _source_payloads(repository: Path) -> tuple[dict[str, bytes], dict[str, str]
             if source.suffix in {".pyc", ".pyo"} or source.name == ".DS_Store":
                 continue
             payloads[f"umf/{source.name}"] = source.read_bytes()
+    return payloads
+
+
+def _source_payloads(repository: Path) -> tuple[dict[str, bytes], dict[str, str]]:
+    package_source = repository / "python/src/umf"
+    pyproject_path = repository / "python/pyproject.toml"
+    if not package_source.is_dir() or not pyproject_path.is_file():
+        raise ValueError("Python source package or project metadata is missing")
+
+    payloads = _python_package_payloads(package_source)
 
     manifest_bytes = payloads.get(RESOURCE_MANIFEST)
     if manifest_bytes is None or len(manifest_bytes) > 65_536:
@@ -408,6 +431,7 @@ def _validate_installed_wheel(
         if (
             installed_package != expected_package
             or NATIVE_MEMBER not in installed_package
+            or len({CLI_MEMBER, WINDOWS_CLI_MEMBER} & installed_package) != 1
         ):
             raise ValueError("Installed package inventory differs from the exact wheel")
         return {
@@ -417,6 +441,9 @@ def _validate_installed_wheel(
             "installed_file_count": len(installed_entries),
             "package_file_count": len(installed_package),
             "native_sha256": _sha256((platlib / NATIVE_MEMBER).read_bytes()),
+            "cli_sha256": _sha256(
+                (platlib / next(iter({CLI_MEMBER, WINDOWS_CLI_MEMBER} & installed_package))).read_bytes()
+            ),
             "all_files_inside_platlib": True,
         }
 
@@ -476,7 +503,9 @@ def _validate_wheel(
         if not _platform_matches(pieces[2], expected_platform):
             raise ValueError("Wheel platform tag does not match the requested cohort")
         package_files = {name for name in filenames if name.startswith("umf/")}
-        required_package_files = set(expected_payloads) | {NATIVE_MEMBER}
+        cli_member = WINDOWS_CLI_MEMBER if pieces[2].startswith("win") else CLI_MEMBER
+        native_members = {NATIVE_MEMBER, cli_member}
+        required_package_files = set(expected_payloads) | native_members
         if package_files != required_package_files:
             raise ValueError(
                 "Wheel package payload differs from the exact source inventory"
@@ -496,8 +525,16 @@ def _validate_wheel(
         native_bytes = wheel.read(NATIVE_MEMBER)
         if not native_bytes:
             raise ValueError("Wheel native extension is empty")
+        cli_bytes = wheel.read(cli_member)
+        if not cli_bytes:
+            raise ValueError("Wheel native CLI is empty")
         native_platform = (
             _inspect_macos_native(native_bytes)
+            if expected_platform == "macos_arm64"
+            else None
+        )
+        cli_platform = (
+            _inspect_macos_native(cli_bytes)
             if expected_platform == "macos_arm64"
             else None
         )
@@ -517,12 +554,15 @@ def _validate_wheel(
             "tag": tag,
             "package_file_count": len(package_files),
             "native_sha256": _sha256(native_bytes),
+            "cli_member": cli_member,
+            "cli_sha256": _sha256(cli_bytes),
             "native_platform": native_platform,
+            "cli_platform": cli_platform,
         }
 
 
 def _extract_sdist(
-    sdist: Path, destination: Path, expected_version: str = "0.10.1"
+    sdist: Path, destination: Path, expected_version: str = "0.11.0"
 ) -> Path:
     destination.mkdir(parents=True, exist_ok=True)
     if any(destination.iterdir()):
@@ -657,13 +697,21 @@ def _rebuild_sdist_wheel(
 
 def _wheel_package_bytes(
     path: Path,
-) -> tuple[dict[str, bytes], str, str, str, bytes, bytes]:
+) -> tuple[dict[str, bytes], str, str, dict[str, str], bytes, bytes]:
     with zipfile.ZipFile(path) as archive:
         names = [name for name in archive.namelist() if not name.endswith("/")]
+        cli_members = [name for name in names if name in {CLI_MEMBER, WINDOWS_CLI_MEMBER}]
+        if len(cli_members) != 1 or NATIVE_MEMBER not in names:
+            raise ValueError("Wheel is missing one or more native payloads")
+        native_digests = {
+            NATIVE_MEMBER: _sha256(archive.read(NATIVE_MEMBER)),
+            cli_members[0]: _sha256(archive.read(cli_members[0])),
+        }
         package = {
             name: archive.read(name)
             for name in names
-            if name.startswith("umf/") and name != NATIVE_MEMBER
+            if name.startswith("umf/")
+            and name not in {NATIVE_MEMBER, CLI_MEMBER, WINDOWS_CLI_MEMBER}
         }
         dist_info = next(
             name.split("/", 1)[0] for name in names if ".dist-info/" in name
@@ -681,7 +729,7 @@ def _wheel_package_bytes(
             package,
             metadata.get("Version", ""),
             tag,
-            _sha256(archive.read(NATIVE_MEMBER)),
+            native_digests,
             archive.read(f"{dist_info}/METADATA"),
             archive.read(f"{dist_info}/WHEEL"),
         )
@@ -721,6 +769,10 @@ def _compare_wheel_package_sources(direct: Path, rebuilt: Path) -> dict[str, Any
         "metadata_byte_identity": True,
         "wheel_byte_identity": True,
         "native_byte_identity": direct_native == rebuilt_native,
+        "native_byte_identity_by_member": {
+            member: direct_native[member] == rebuilt_native[member]
+            for member in sorted(direct_native)
+        },
     }
 
 
@@ -730,7 +782,7 @@ def verify(
     expected_platform: str,
     sdist_path: Path | None,
     rebuilt_wheel_directory: Path | None = None,
-    expected_version: str = "0.10.1",
+    expected_version: str = "0.11.0",
 ) -> dict[str, Any]:
     repository = repository.resolve()
     project = tomllib.loads((repository / "python/pyproject.toml").read_text())
@@ -825,8 +877,8 @@ def main() -> int:
     parser.add_argument("--wheel", type=Path, required=True)
     parser.add_argument(
         "--expected-version",
-        default="0.10.1",
-        help="Expected umf-core distribution/package version (defaults to the historical 0.10.1 profile)",
+        default="0.11.0",
+        help="Expected umf-core distribution/package version",
     )
     parser.add_argument(
         "--verify-installed-wheel",

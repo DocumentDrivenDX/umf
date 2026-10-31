@@ -1,5 +1,7 @@
 # UMF
 
+Use the [Rust crates guide](crates/README.md) for the native library and CLI.
+
 The published [SDK 0.5.2 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.2)
 includes the immutable UMF 0.10.0 Python core, `umf_access` 0.1.0.dev4 host
 and `umf_codegen` 0.1.0a1. Its [release notes](docs/helix/05-deploy/sdk-release-notes-0.5.2.md)

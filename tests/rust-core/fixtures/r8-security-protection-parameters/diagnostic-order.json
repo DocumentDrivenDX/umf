@@ -1,0 +1,414 @@
+{
+  "cases": [
+    {
+      "id": "catalog.bound-before-later-transform-unknown",
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "string": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "transform-later",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [],
+              "queryUse": {},
+              "parameters": [],
+              "futureTransform": {
+                "retained": true
+              }
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        },
+        "closure": {
+          "pins": [
+            {
+              "documentId": "domain",
+              "revision": "schema1"
+            }
+          ],
+          "documents": [
+            {
+              "revision": "schema1",
+              "document": {
+                "umf": "0.10.0",
+                "id": "domain",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "m",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "input",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "output",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "parameter",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "record",
+                        "kind": "record",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "policy": {
+            "vocabulary": "umf.security",
+            "version": "0.2.0",
+            "id": "p",
+            "revision": "p1",
+            "ontology": {
+              "documentId": "ontology",
+              "revision": "o1"
+            },
+            "protection": {
+              "id": "catalog",
+              "revision": "c1"
+            },
+            "rules": [
+              {
+                "id": "permit",
+                "effect": "permit",
+                "actions": [
+                  "read"
+                ],
+                "target": [
+                  {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "record"
+                  }
+                ],
+                "condition": {
+                  "op": "literal",
+                  "value": true
+                },
+                "disclosure": [
+                  {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "input"
+                    },
+                    "disposition": {
+                      "kind": "transformed",
+                      "vocabulary": "umf.security.protection",
+                      "transform": "transform",
+                      "version": "t1",
+                      "field": {
+                        "documentId": "domain",
+                        "moduleId": "m",
+                        "elementId": "output"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "catalog": {
+            "vocabulary": "umf.security.protection",
+            "version": "0.1.0",
+            "id": "catalog",
+            "revision": "c1",
+            "transforms": [
+              {
+                "id": "transform",
+                "version": "t1",
+                "kind": "mask",
+                "function": "constant",
+                "inputDomain": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "input"
+                },
+                "outputDomain": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "output"
+                },
+                "determinism": "deterministic",
+                "reversibility": "none",
+                "disclosureProfile": [
+                  {
+                    "kind": "range",
+                    "bucket": {
+                      "field": {
+                        "documentId": "domain",
+                        "moduleId": "m",
+                        "elementId": "parameter"
+                      },
+                      "value": {
+                        "integerToken": "10"
+                      }
+                    }
+                  }
+                ],
+                "queryUse": {},
+                "parameters": [
+                  {
+                    "name": "value",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "string": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "transform-later",
+                "version": "t1",
+                "kind": "mask",
+                "function": "constant",
+                "inputDomain": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "input"
+                },
+                "outputDomain": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "output"
+                },
+                "determinism": "deterministic",
+                "reversibility": "none",
+                "disclosureProfile": [],
+                "queryUse": {},
+                "parameters": [],
+                "futureTransform": {
+                  "retained": true
+                }
+              }
+            ],
+            "native": {
+              "sql": "opaque\r\n😀"
+            }
+          },
+          "closure": {
+            "pins": [
+              {
+                "documentId": "domain",
+                "revision": "schema1"
+              }
+            ],
+            "documents": [
+              {
+                "revision": "schema1",
+                "document": {
+                  "umf": "0.10.0",
+                  "id": "domain",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "m",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "input",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "cardinality": "one",
+                          "nullability": "required",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "output",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "cardinality": "one",
+                          "nullability": "required",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "parameter",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "cardinality": "one",
+                          "nullability": "required",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "record",
+                          "kind": "record",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "validated": [],
+          "diagnostics": [
+            {
+              "code": "PROTECTION_BOUND",
+              "path": "/transforms/0/parameters/0/value",
+              "message": "resource-exhausted: canonical literal exceeds4096 UTF-16 units",
+              "severity": "error"
+            },
+            {
+              "code": "PROTECTION_UNKNOWN",
+              "path": "/transforms/1/futureTransform",
+              "message": "Uninterpreted protection member retained",
+              "severity": "warning"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -7,9 +7,9 @@ import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson,LIMITS} from '../../model/json';
 import {editExtension} from '../../model/document';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const GRAPHQL_EXTENSION='umf.graphql';
-export const graphqlPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+import { GRAPHQL_EXTENSION, graphqlPackage } from './package';
+export { GRAPHQL_EXTENSION, graphqlPackage };
 export interface GraphqlPayload {profile:'graphql-js-17.0.2-sdl';mode?:'schema'|'fragment';ast:DocumentNode;originalSource:string;}
 const structure=createValidator().compile(manifest.schema);
 const fields=new Map<string,string[]>();

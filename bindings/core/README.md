@@ -1,10 +1,9 @@
 # Rust-backed UMF core hosts
 
-These expose the R2 production core and additive R3 compiler entry points.
-The existing default TypeScript SDK continues to use its current implementation until the separate R7 cutover.
-The existing Python `umf_codegen` distribution and default CLI retain MiniRacer
-until R4. These Rust host packages are private;
-this work does not publish a wheel, npm package or Rust crate.
+Rust owns the shared core, compiler and native adapter operations exposed by
+these host packages. Python calls Rust through PyO3; Node and Bun use the native
+addon; browser hosts use WASM. The codegen CLI uses the Rust executable bundled
+with the matching `umf-core` wheel.
 
 `crates/umf-core` owns document/schema validation, literal and constraint kernels,
 registry admission, JSON/YAML serialization and diagnostics.
@@ -15,7 +14,7 @@ and manifest. Ajv is a build backend, never a Python or native runtime dependenc
 ## Native Python
 
 Build with `pip install ./python` using Rust 1.90.0. The resulting native abi3 wheel
-supports CPython 3.11 and later within its qualified platform/runtime cohort.
+supports the declared CPython 3.11–3.14 versions.
 An installed wheel executes Rust through PyO3 without JavaScript or Cargo.
 Pydantic provides access models. Schemas and inert constraint/domain programs
 are packaged explicitly; the library does not discover resources from the working
@@ -38,7 +37,7 @@ Build `umf-core-wasm` for `wasm32-unknown-unknown`, then run wasm-bindgen 0.2.10
 `--target web` into `bindings/core/wasm/pkg`. Call `initializeWasm(loader, globalThis,
 resources, options)` once asynchronously; returned engine operations are
 synchronous. The default loader reads the packaged module from `pkg`.
-Initialization refuses missing WASM capabilities or exports. Qualification runs the
+Initialization refuses missing WASM capabilities or exports. Browser tests run the
 actual module in Chromium, separately from native addon tests.
 
 ## Native CLI
@@ -50,7 +49,7 @@ actual module in Chromium, separately from native addon tests.
 callback requires an explicit startup flag and is never enabled by document data.
 The CLI executes without Node, Bun or V8.
 
-## Additive Rust compilation API (R3)
+## Rust compilation API
 
 Node/Bun exports `createCodegenEngine(resources, options)`. WASM exports
 `createCodegenEngine(module, resources, options)` and `initializeCodegenWasm`; Python exposes
@@ -72,10 +71,9 @@ failures remain terminal host errors. The CLI uses the same operations with a
 The generated files, diagnostics and source archives retain their existing
 contracts. Stage-one resolved IR stays private. Compiler source text retains the
 ordinary 4M limit; compiler aggregate result text has a separate 32Mi UTF-16
-budget, so a valid multi-file package can exceed 4M units. This API is additive;
-default generator CLI cutover and MiniRacer removal remain R4. The
-[R3 evidence index](../../docs/helix/04-build/evidence/rust-migration/r3/)
-records exact versions, supported subsets and qualification status.
+budget, so a valid multi-file package can exceed 4M units. The current
+`umf_codegen` package routes its public CLI through the bundled Rust executable
+in the matching core wheel.
 
 ## Values and resource controls
 
@@ -93,12 +91,6 @@ equivalent keyword controls. Work budgets apply per operation. Callbacks receive
 copies and may reenter the engine. The profile does not promise a process memory
 ceiling or preemption of a host callback. `hard-isolated` refuses before execution.
 
-Run `bun run test:rust-core` for the installed wheel, wheel rebuilt from sdist,
-packed Node/Bun addon, native CLI and real Chromium qualification. This gate
-rebuilds artifacts, installs outside the checkout, disables JavaScript discovery
-for Python/CLI checks, and refuses a passing receipt if source hashes change
-during the run. The current compiler and retained core qualification receipt is
-written to [the R3 evidence directory](../../docs/helix/04-build/evidence/rust-migration/r3/).
-It records exact versions, supported subsets, resource controls and source/build
-identities. Historical core compatibility corrections and predecessor evidence
-remain in [the R2 evidence directory](../../docs/helix/04-build/evidence/rust-migration/r2/).
+Run `cargo test --locked` or `bun run test:rust-core` for the current Rust
+libraries, wire protocols and native CLI. Foreign-host bindings have separate
+Python, Node/Bun and browser tests.

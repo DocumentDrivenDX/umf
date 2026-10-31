@@ -1,0 +1,20 @@
+{
+  "source": "src/adapters/protobuf/descriptor.ts",
+  "sourceSha256": "be1d0450873a9b4dd0ff0e914ea1a282fe535e5ebde6f317c5f035c5f875dc8a",
+  "cases": {
+    "empty": {"ok":true,"value":{"type":"google.protobuf.FileDescriptorSet","fields":{},"unknown":[]}},
+    "zero-tag": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"Error: illegal tag: field no 0 wire type 0"},
+    "truncated-tag-varint": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"RangeError: premature EOF"},
+    "bad-wire-type": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"Error: illegal tag: field no 1 wire type 7"},
+    "truncated-fixed32": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"RangeError: premature EOF"},
+    "truncated-length": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"Error: illegal tag: field no 0 wire type 1"},
+    "truncated-field-varint": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"RangeError: premature EOF"},
+    "malformed-10th-varint": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"Error: illegal tag: varint overflows uint32"},
+    "overlong-unknown-varint": {"ok":true,"value":{"type":"google.protobuf.FileDescriptorSet","fields":{},"unknown":[{"number":100,"wireType":0,"data":"8000"}]}},
+    "true-trailing-tag": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"Error: illegal tag: field no 1 wire type 7"},
+    "offset-valid-file": {"ok":true,"value":{"type":"google.protobuf.FileDescriptorSet","fields":{"file":[{"type":"google.protobuf.FileDescriptorProto","fields":{},"unknown":[]}]} ,"unknown":[]}},
+    "unknown-wire-preservation": {"ok":true,"value":{"type":"google.protobuf.FileDescriptorSet","fields":{},"unknown":[{"number":50000,"wireType":2,"data":"04000102ff"}]}},
+    "exact-limit-malformed-first-byte": {"ok":false,"name":"UmfError","code":"PROTOBUF_BINARY","path":"","message":"Error: illegal tag: field no 0 wire type 0"},
+    "limit-plus-one": {"ok":false,"name":"UmfError","code":"LIMIT","path":"","message":"Descriptor input exceeds limit"}
+  }
+}

@@ -118,7 +118,7 @@ mod tests {
     }
     #[test]
     fn captured_scalar_mapping_and_all_property_boundary_contexts_match_retained_bun() {
-        let input=include_str!("../../../..//docs/helix/04-build/evidence/rust-migration/r3/unicode-lowercase/source-data.json");
+        let input=include_str!("../../../..//tests/rust-core/fixtures/r3/unicode-lowercase/source-data.json");
         let data = read_json_value(
             &input.encode_utf16().collect::<Vec<_>>(),
             Format::Json,

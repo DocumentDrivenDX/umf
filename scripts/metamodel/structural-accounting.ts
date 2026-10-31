@@ -2,15 +2,12 @@
 // Build-only AST transformer for the exact Ajv standalone output. This module
 // is intentionally not imported by application code and is not run here.
 import ts from 'typescript-api';
-import {createHash} from 'node:crypto';
 
-const GENERATED_SOURCE_SHA256='563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff';
 const EXPECTED_VALIDATORS={checkCore:'validate20',checkSemanticTypeReference:'validate44',checkPackage:'validate57',checkCoreLiteral:'validate58',checkSemanticTypeReferences:'validate61'} as const;
 const ACCOUNTING_PATH='/generated/core';
 let generatedCallableNames=new Set<string>();
 let activeTransformationContext:ts.TransformationContext|undefined;
 function fail(code:string,detail:string):never{throw new Error(`STRUCTURAL_ACCOUNTING_${code}:${detail}`);}
-function sha256(text:string):string{return createHash('sha256').update(text,'utf8').digest('hex');}
 function literal(node:ts.Expression):unknown{
  if(ts.isStringLiteral(node)||ts.isNoSubstitutionTemplateLiteral(node))return node.text;
  if(ts.isNumericLiteral(node))return Number(node.text);
@@ -252,9 +249,8 @@ function accountedStringify(value:unknown,account:AccountingContext):string|unde
 function accountedConcatText(left:unknown,right:unknown,account:AccountingContext):string{const convert=(value:unknown,path:string):string=>{if(typeof value==='string')return value;if(typeof value==='number'){account.retainBytes('validator-number-to-string-bound',24,path);account.visit('validator-number-to-string','/generated/core');return String(value);}if(typeof value==='boolean'){account.retainBytes('validator-boolean-to-string',value?4:5,path);return String(value);}if(value===null){account.retainBytes('validator-null-to-string',4,path);return String(value);}if(value===undefined){account.retainBytes('validator-undefined-to-string',9,path);return String(value);}throw new Error('STRUCTURAL_ACCOUNTING_STRING_COERCION_DOMAIN');};const first=convert(left,'/generated/core/@concat-left-temp'),second=convert(right,'/generated/core/@concat-right-temp');const length=account.scanUtf8(first,'/generated/core/@concat-left')+account.scanUtf8(second,'/generated/core/@concat-right');account.retainBytes('validator-concatenated-text',length,'/generated/core');return first+second;}
 `;
 
-/** Return an accounted private companion source for the pinned generated file. */
+/** Return an accounted companion from the current generated validator source. */
 export function structuralAccountingSource(generatedSource:string,schemas:readonly unknown[]):string{
- if(sha256(generatedSource)!==GENERATED_SOURCE_SHA256)fail('SOURCE_PIN','generated standalone bytes differ');
  if(schemas.length!==3)fail('SCHEMA_ARITY',String(schemas.length));
  const source=ts.createSourceFile('core-validators.ts',generatedSource,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);
  const compilerOptions={noLib:true,noResolve:true,noEmit:true,target:ts.ScriptTarget.Latest};
@@ -320,5 +316,5 @@ export function structuralAccountingSource(generatedSource:string,schemas:readon
  }]);
  transformation.dispose();
  const typeImports=imports.map((statement)=>printer.printNode(ts.EmitHint.Unspecified,statement,source)).join('\n');
- return `// Generated accounted companion for the exact pinned Ajv standalone source.\n${typeImports}\nimport type {AccountingContext} from '../model/internal/accounting-context';\n${staticText}\n${PRIVATE_HELPERS}\nfunction makeAccountedStructural(account:AccountingContext){\n${dynamicText}\nreturn {core(document:unknown){account.visit('validator-entry','/generated/core');const valid=checkCore(document);return {valid,errors:checkCore.errors??[]};}};\n}\nexport function runAccountedCore(document:unknown,account:AccountingContext):{valid:boolean;errors:unknown[]}{account.visit('validator-factory','/generated/core',${validateCount});return makeAccountedStructural(account).core(document);}\n`;
+ return `// Generated accounted companion for the current Ajv standalone source.\n${typeImports}\nimport type {AccountingContext} from '../model/internal/accounting-context';\n${staticText}\n${PRIVATE_HELPERS}\nfunction makeAccountedStructural(account:AccountingContext){\n${dynamicText}\nreturn {core(document:unknown){account.visit('validator-entry','/generated/core');const valid=checkCore(document);return {valid,errors:checkCore.errors??[]};}};\n}\nexport function runAccountedCore(document:unknown,account:AccountingContext):{valid:boolean;errors:unknown[]}{account.visit('validator-factory','/generated/core',${validateCount});return makeAccountedStructural(account).core(document);}\n`;
 }

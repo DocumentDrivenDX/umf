@@ -1,0 +1,154 @@
+{
+  "profile": "TypeScript Delta schema warning diagnostics",
+  "runner": "scripts/rust-migration/r8/freeze-delta-source.ts",
+  "runnerSha256": "a24769dbb8acfe927ddfa5eed1f3aeb131bfd563a36c2c04a5077fdced7c04f3",
+  "sources": {
+    "src/adapters/delta/index.ts": "3b432e603dc96bc0d9cfbb36584f0d87286daba89e4b713460e126c22f8fe4bb",
+    "src/model/native-json.ts": "9f8402db883a0d211c86e4a5a00e037a40410a2bf2bbfa3cf1cc288772c205f7"
+  },
+  "cases": [
+    {
+      "id": "unknownPropertiesAndTypes",
+      "source": "{\"type\":\"struct\",\"future\":1,\"fields\":[{\"name\":\"a\",\"type\":\"mystery\",\"nullable\":true,\"metadata\":{},\"future\":true}]}",
+      "sourceSha256": "d8b43d3a77ea588dd6931037633e1733d18c34d97cff2decd0e368223d89047d",
+      "diagnostics": [
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_UNKNOWN",
+          "path": "/future",
+          "message": "Unknown native property preserved; native normalization may discard it",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_UNKNOWN",
+          "path": "/fields/0/future",
+          "message": "Unknown native property preserved; native normalization may discard it",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_UNKNOWN_TYPE",
+          "path": "/fields/0/type",
+          "message": "Type spelling is outside the declared protocol vocabulary; native parser acceptance is insufficient",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "unicodeDuplicateNames",
+      "source": "{\"type\":\"struct\",\"fields\":[{\"name\":\"\u00c5\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"\u00e5\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "sourceSha256": "56a5ae54be92bc6146fe4f881243be5e38e1ad7e8f4063bd97af4857e6732dda",
+      "diagnostics": [
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_DUPLICATE_NAME",
+          "path": "/fields/1/name",
+          "message": "Case-insensitive duplicate name; preserved source is not a valid Delta table schema",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "decimalGrammarAndRange",
+      "source": "{\"type\":\"struct\",\"fields\":[{\"name\":\"a\",\"type\":\"decimal(0,0)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"b\",\"type\":\"decimal(-1,2)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"c\",\"type\":\"decimal(39,39)\",\"nullable\":true,\"metadata\":{}}]}",
+      "sourceSha256": "67fe1115112a4da9588381b1df3b788bb5d1b21bdab9a4b0239a509a06754b09",
+      "diagnostics": [
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_DECIMAL_RANGE",
+          "path": "/fields/0/type",
+          "message": "Decimal parameters require native and protocol validation",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_UNKNOWN_TYPE",
+          "path": "/fields/1/type",
+          "message": "Type spelling is outside the declared protocol vocabulary; native parser acceptance is insufficient",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_DECIMAL_RANGE",
+          "path": "/fields/2/type",
+          "message": "Decimal parameters require native and protocol validation",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "featureAndVoid",
+      "source": "{\"type\":\"struct\",\"fields\":[{\"name\":\"a\",\"type\":\"timestamp_ntz\",\"nullable\":true,\"metadata\":{}},{\"name\":\"b\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}},{\"name\":\"c\",\"type\":\"void\",\"nullable\":true,\"metadata\":{}}]}",
+      "sourceSha256": "bbe39d6a1e1ca488d7e16b28a2ee0a0503a4220d5df253c2469836b7aa88ed27",
+      "diagnostics": [
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_REQUIRED",
+          "path": "/fields/0/type",
+          "message": "Type requires matching table protocol/features; schema-only import cannot verify them",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_REQUIRED",
+          "path": "/fields/1/type",
+          "message": "Type requires matching table protocol/features; schema-only import cannot verify them",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_VOID_WRITE_CONTEXT",
+          "path": "/fields/2/type",
+          "message": "Void storage omission and write restrictions require the surrounding table schema",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "metadataAndMapDefaultNullability",
+      "source": "{\"type\":\"struct\",\"fields\":[{\"name\":\"a\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"long\"},\"nullable\":true,\"metadata\":{\"comment\":\"x\",\"delta\":\"y\"}}]}",
+      "sourceSha256": "0a1bc3463c8edddfb219ab86cc0169b0c34af3b0c17bb71af3a41b1a9a7af6a8",
+      "diagnostics": [
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_DEFAULT_NULLABILITY",
+          "path": "/fields/0/type",
+          "message": "Native parser may insert valueContainsNull=true; source absence is retained",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata/comment",
+          "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata/delta",
+          "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+          "severity": "warning"
+        }
+      ]
+    }
+  ]
+}

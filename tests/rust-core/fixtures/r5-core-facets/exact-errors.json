@@ -1,0 +1,16 @@
+{
+  "typescriptSourceSha256": "4f875d0e2561fa5f7949f72db8d16b8199f03841b6fb40ed1af5e9efe5f59465",
+  "testSourceSha256": "bea16015123f62688e6a04d90a6ba09e16c839eba9dfe1e55debb4e818857363",
+  "cases": {
+    "invalidIdentity": {"code":"CORE_FACET_IDENTITY","message":"Expected explicit module and element identities","path":""},
+    "invalidSource": {"code":"CORE_FACET_SOURCE","message":"[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/umf\",\"message\":\"must pass \\\"const\\\" keyword validation\",\"severity\":\"error\"}]","path":""},
+    "recordRoleSourceRefusal": {"code":"CORE_FACET_SOURCE","message":"[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/scalarType\",\"message\":\"boolean schema is false\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]","path":""},
+    "unknownUnit": {"code":"CORE_FACET_UNKNOWN","message":"Unknown length unit cannot be overwritten","path":"/modules/0/elements/0/facets/length/unit"},
+    "targetConflict": {"code":"CORE_FACET_CONFLICT","message":"[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/scalarType\",\"message\":\"must pass \\\"enum\\\" keyword validation\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/scalarType\",\"message\":\"must pass \\\"const\\\" keyword validation\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]","path":"/modules/0/elements/0/facets"},
+    "stale": {"code":"CORE_FACET_STALE","message":"Document changed since facets were declared","path":""},
+    "forged": {"code":"CORE_FACET_RECEIPT","message":"Declaration differs from retained source/request","path":""},
+    "invalidRequest": {"code":"CORE_FACET_REQUEST","message":"[{\"instancePath\":\"\",\"schemaPath\":\"#/$defs/request/dependentRequired\",\"keyword\":\"dependentRequired\",\"params\":{\"property\":\"precision\",\"missingProperty\":\"scale\",\"depsCount\":1,\"deps\":\"scale\"},\"message\":\"must have property scale when property precision is present\"}]","path":""},
+    "malformedReceipt": {"code":"CORE_FACET_RECEIPT","message":"Malformed facet declaration","path":""},
+    "unknownUnitWithInvalidBound": {"code":"CORE_FACET_SOURCE","message":"[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/facets/length/max\",\"message\":\"must be >= 0\",\"severity\":\"error\"}]","path":""}
+  }
+}

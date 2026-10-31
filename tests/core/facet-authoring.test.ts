@@ -38,3 +38,33 @@ test('stale, forged and cross-document facet receipts cannot confer author prove
  expect(()=>u.verifyCoreFacetDeclaration(r,{...r.target,id:'different'})).toThrow();
  const inspection=u.inspectCoreFacets(r.target,identity);if(inspection.meaning.state!=='known')throw Error('Expected known');inspection.meaning.facets.integerWidth!.bits=32;expect(r.target.modules[0]!.elements[0]!.facets).toEqual({integerWidth:{bits:8,signed:true}});
 });
+test('review regressions retain length qualifiers and validate historical bounds before version refusal',()=>{
+ const source=doc('string');source.modules[0]!.elements[0]!.facets={length:{min:2,max:4,unit:'unicode-scalar',future:'opaque'}};
+ const result=u.declareCoreFacets(source,identity,{length:{max:8,unit:'unicode-scalar'}});
+ expect(result.target.modules[0]!.elements[0]!.facets).toEqual({length:{min:2,max:8,unit:'unicode-scalar',future:'opaque'}});
+ for(const malformed of [
+  {length:{min:1,max:8,unit:'byte',future:true}},
+  {integerWidth:{bits:8,signed:true,future:true}},
+  {collectionSize:null},
+  {range:{min:{integerToken:'1'},future:true}},
+  {collectionSize:{min:1.5}},
+ ]){let error:unknown;try{u.historicalCoreFacetPatch(malformed as never);}catch(caught){error=caught;}expect(error).toMatchObject({code:'CORE_FACET_PROJECTION_INPUT'});}
+ let versionError:unknown;try{u.historicalCoreFacetPatch({collectionSize:{min:1}});}catch(caught){versionError=caught;}expect(versionError).toMatchObject({code:'CORE_FACET_PROJECTION_VERSION'});
+ let numberError:unknown;try{u.historicalCoreFacetPatch({integerWidth:{bits:Number('9007199254740992'),signed:true}});}catch(caught){numberError=caught;}expect(numberError).toMatchObject({code:'NUMBER'});
+});
+test('facet unknown qualifier paths and identity lookup preserve lone UTF-16 units',()=>{
+ const source=doc('integer'), qualifier='future\ud800', id='element\ud800';
+ source.modules[0]!.elements[0]!.id=id;
+ source.modules[0]!.elements[0]!.facets={integerWidth:{bits:8,signed:true,[qualifier]:'opaque'}};
+ const result=u.inspectCoreFacets(source,{module:'m',element:id});
+ expect(result.identity.element).toBe(id);
+ if(result.meaning.state!=='partial')throw Error('Expected partial');
+ expect(result.meaning.uninterpretedPaths).toEqual([`/modules/0/elements/0/facets/integerWidth/${qualifier}`]);
+});
+test('receipt validation and recomputation precede current-document numeric admission',()=>{
+ const unsafeCurrent=Number('9007199254740992');
+ for(const receipt of [
+  {operation:'declare-core-facets',version:'3.0.0'},
+  {...u.declareCoreFacets(doc('string'),identity,{length:{max:8,unit:'unicode-scalar'}}),target:{...u.declareCoreFacets(doc('string'),identity,{length:{max:8,unit:'unicode-scalar'}}).target,id:'forged-target'}},
+ ]){let error:unknown;try{u.verifyCoreFacetDeclaration(receipt as never,unsafeCurrent as never);}catch(caught){error=caught;}expect(error).toMatchObject({code:'CORE_FACET_RECEIPT'});}
+});

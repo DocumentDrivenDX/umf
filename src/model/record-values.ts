@@ -9,7 +9,7 @@ import {validateCoreFieldValue} from './schema-properties';
 export interface CoreRecordValueIdentity {module:string;element:string;}
 export type CoreRecordFieldValue={field:CoreRecordValueIdentity;state:'absent'}|{field:CoreRecordValueIdentity;state:'present';value:CoreLiteral};
 export interface CoreRecordValueCheck {
- operation:'validate-core-record-values';version:'1.0.0'|'2.0.0';source:Document;identity:CoreRecordValueIdentity;
+ operation:'validate-core-record-values';version:'2.0.0';source:Document;identity:CoreRecordValueIdentity;
  values:CoreRecordFieldValue[];documentValidation:Validation;validation:Validation;
  fields:{field:CoreRecordValueIdentity;state:'absent'|'present';validation:Validation}[];
 }

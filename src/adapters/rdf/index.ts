@@ -2,13 +2,12 @@
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {Parser,Writer,DataFactory} from 'n3/browser/n3.esm.min.js';
 import type {Term,Quad as NativeQuad} from '@rdfjs/types';
-import manifest from '../../../spec/extensions/rdf/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
-import {UmfError,type Document,type Diagnostic,type Json,type ExtensionPackage} from '../../model/types';
-export const RDF_EXTENSION='umf.rdf';
-export const rdfPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,type Document,type Diagnostic,type Json} from '../../model/types';
+import {RDF_EXTENSION,rdfPackage} from './package';
+export {RDF_EXTENSION,rdfPackage} from './package';
 export type RdfNode={kind:'iri'|'blank';value:string};
 export type RdfLiteral={kind:'literal';value:string;datatype:string;language?:string};
 export interface RdfQuad {subject:RdfNode;predicate:{kind:'iri';value:string};object:RdfNode|RdfLiteral;graph:RdfNode|{kind:'default'}}
