@@ -944,6 +944,73 @@ fn scalar_family(
         .map(|f| f.as_str()))
 }
 
+/// Inspect one retained Avro type location using the same structural type
+/// kernel as native Cardinality classification. This is shared with authored
+/// projection so it does not invent a second Avro shape interpretation.
+pub fn inspect_projection_type(
+    target: &Value,
+    request: &Value,
+    location: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let path = text(location, "path").ok_or_else(|| {
+        err(
+            "CARDINALITY_AVRO_NATIVE",
+            "Native location path is required",
+        )
+    })?;
+    let dependency = text(location, "dependencyId");
+    let native = text(request, "nativeType")
+        .ok_or_else(|| err("CARDINALITY_AVRO_REQUEST", "nativeType is required"))?;
+    let root = NativeJsonTree::parse_json(native.units(), ctx)?;
+    let dependency_values = match get(request, "dependencies") {
+        Some(Value::Array(values)) => values.as_slice(),
+        _ => &[],
+    };
+    let mut parsed = Vec::with_capacity(dependency_values.len());
+    for item in dependency_values {
+        let id = text(item, "id")
+            .ok_or_else(|| err("CARDINALITY_AVRO_REQUEST", "Dependency id is required"))?;
+        let schema = text(item, "schema")
+            .ok_or_else(|| err("CARDINALITY_AVRO_REQUEST", "Dependency schema is required"))?;
+        parsed.push((id.clone(), NativeJsonTree::parse_json(schema.units(), ctx)?));
+    }
+    let mut types = Types::new();
+    for (id, tree) in parsed
+        .iter()
+        .map(|(id, tree)| (Some(id.clone()), tree))
+        .chain(std::iter::once((None, &root)))
+    {
+        let path = if id.is_none() {
+            u("/fields/0/type")
+        } else {
+            u("")
+        };
+        types.walk(tree.root(), &(id, path), &u(""), 0, ctx)?;
+    }
+    ctx.charge_work(
+        path.len()
+            .saturating_add(dependency.map_or(0, Utf16::len))
+            .saturating_add(1),
+        Utf16::default(),
+    )?;
+    let selected = (dependency.cloned(), path.clone());
+    let (shape, allows_null, _, item, _) = inspect(target, &selected, &types, ctx)?;
+    let mut fields = vec![
+        (u("shape"), t(&shape)),
+        (u("allowsNull"), Value::Bool(allows_null)),
+    ];
+    if let Some(item) = item {
+        fields.push((u("itemLocation"), loc_value(&item, ctx)?));
+    }
+    if shape == "one" {
+        if let Some(family) = scalar_family(target, &selected, &types, ctx)? {
+            fields.push((u("scalarFamily"), t(family)));
+        }
+    }
+    Ok(Value::Object(fields))
+}
+
 pub fn classify_avro_cardinality(
     input: &Value,
     options: &Value,

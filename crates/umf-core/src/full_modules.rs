@@ -91,6 +91,8 @@ pub mod bit128_binding;
 pub mod bit128_dataset;
 pub mod cardinality;
 #[cfg(feature = "embedded-adapters")]
+pub mod cardinality_avro_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod cardinality_sqlserver_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_field_record_projection;
@@ -201,6 +203,8 @@ pub mod parquet_pages;
 pub mod parquet_physical;
 #[cfg(feature = "embedded-adapters")]
 pub mod parquet_cardinality_classification;
+#[cfg(feature = "embedded-adapters")]
+pub mod cardinality_parquet_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod parquet_field_classification;
 pub mod parquet_key_classification;
@@ -334,3 +338,6 @@ pub mod value;
 pub mod binding_postgresql_indexes;
 
 pub mod prepared_core_inspection;
+
+#[cfg(feature = "embedded-adapters")]
+pub mod core_ideal_reports;

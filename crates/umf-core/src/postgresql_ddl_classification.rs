@@ -158,7 +158,7 @@ fn validate_doc(doc: &Value, r: &Rt, c: &mut Context<'_>) -> Result<(), EngineEr
     }
     Ok(())
 }
-fn tagged_plain(doc: &Value, c: &mut Context<'_>) -> Result<Value, EngineError> {
+pub(crate) fn tagged_plain(doc: &Value, c: &mut Context<'_>) -> Result<Value, EngineError> {
     let root = crate::postgresql_sql_runtime::get_postgresql_node(doc, &u(""), c)?;
     tagged_to_plain(&root, c)
 }

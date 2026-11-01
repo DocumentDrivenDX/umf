@@ -8,6 +8,7 @@ use umf_core::{Context, EngineError, Utf16, Value};
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
     "field-record-parquet-projection",
+    "core-ideal-reports",
     "medical-projection",
     "relationship-extra-projection",
     "relationship-parquet-projection",
@@ -106,6 +107,8 @@ pub fn metadata_wire(family: &str) -> String {
         "avro-cardinality" => (
             crate::avro_cardinality_binding::PROFILE,
             &[
+                "projectCardinalityToAvro",
+                "recoverCardinalityFromAvro",
                 "classifyAvroCardinality",
                 "verifyAvroCardinalityClassification",
                 "recoverAvroCardinalityBundle",
@@ -144,6 +147,8 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyParquetRelationships",
                 "verifyParquetRelationshipClassification",
                 "recoverParquetRelationshipSource",
+                "projectNullabilityToParquet",
+                "recoverNullabilityFromParquet",
                 "classifyParquetNullability",
                 "verifyParquetNullabilityClassification",
                 "recoverParquetNullabilityBytes",
@@ -154,6 +159,8 @@ pub fn metadata_wire(family: &str) -> String {
                 "verifyParquetKeyClassification",
                 "recoverParquetKeySource",
                 "classifyParquetCardinality",
+                "projectCardinalityToParquet",
+                "recoverCardinalityFromParquet",
                 "verifyParquetCardinalityClassification",
                 "recoverParquetCardinalityBytes",
                 "classifyParquetFacets",
@@ -226,6 +233,19 @@ pub fn metadata_wire(family: &str) -> String {
                 "verifyRelationshipsPostgresqlProjection",
                 "recoverRelationshipsPostgresqlIdeal",
                 "recoverRelationshipsPostgresqlNative",
+            ],
+        ),
+        "core-ideal-reports" => (
+            crate::core_ideal_reports_binding::PROFILE,
+            &[
+                "inspectFieldClassification",
+                "verifyFieldClassificationInspection",
+                "inspectFieldProjection",
+                "verifyFieldProjectionInspection",
+                "inspectRecordProjection",
+                "verifyRecordProjectionInspection",
+                "inspectStructuredClassification",
+                "verifyStructuredClassificationInspection",
             ],
         ),
         "medical-projection" => (
@@ -856,6 +876,7 @@ pub fn execute_wire_with_control(
             )
         }
         "relationship-postgresql-projection" => crate::relationship_postgresql_projection_binding::execute_wire_with_control(wire, control),
+        "core-ideal-reports" => crate::core_ideal_reports_binding::execute_wire_with_control(wire, control),
         "medical-projection" => crate::medical_projection_binding::execute_wire_with_control(wire, control),
         "relationship-extra-projection" => crate::relationship_extra_projection_binding::execute_wire_with_control(wire, control),
         "relationship-parquet-projection" => {

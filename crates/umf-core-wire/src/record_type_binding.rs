@@ -37,6 +37,10 @@ fn validate_envelope(
         | "classifyParquetKeys"
         | "classifyParquetCardinality"
         | "classifyParquetFacets" => &["profile", "op", "source", "request"],
+        "projectCardinalityToParquet" => &["profile", "op", "author", "request"],
+        "recoverCardinalityFromParquet" => &["profile", "op", "receipt", "nativeHex"],
+        "projectNullabilityToParquet" => &["profile", "op", "author", "request"],
+        "recoverNullabilityFromParquet" => &["profile", "op", "receipt", "nativeHex"],
         "recoverAvroRecordTypeBundle"
         | "recoverParquetRecordTypeBytes"
         | "recoverParquetRecordBytes"
@@ -665,6 +669,40 @@ pub fn execute_wire_with_control(
                     Utf16::from("bytesHex"),
                     Value::string_utf8(bytes_hex),
                 )])
+            }
+            "projectNullabilityToParquet" => {
+                umf_core::cardinality_parquet_projection::project_nullability_to_parquet(
+                    field(&request, "author").ok_or_else(|| request_error("author is required"))?,
+                    field(&request, "request")
+                        .ok_or_else(|| request_error("request is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "recoverNullabilityFromParquet" => {
+                umf_core::cardinality_parquet_projection::recover_nullability_from_parquet(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "nativeHex")
+                        .ok_or_else(|| request_error("nativeHex is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "projectCardinalityToParquet" => {
+                umf_core::cardinality_parquet_projection::project_cardinality_to_parquet(
+                    field(&request, "author").ok_or_else(|| request_error("author is required"))?,
+                    field(&request, "request")
+                        .ok_or_else(|| request_error("request is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "recoverCardinalityFromParquet" => {
+                umf_core::cardinality_parquet_projection::recover_cardinality_from_parquet(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "nativeHex")
+                        .ok_or_else(|| request_error("nativeHex is required"))?,
+                    &mut ctx,
+                )?
             }
             "classifyParquetCardinality" => {
                 let source =

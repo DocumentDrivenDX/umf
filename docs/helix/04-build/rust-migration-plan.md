@@ -187,20 +187,26 @@ and PostgreSQL Key/Cardinality observation helpers all pass their current public
 baselines (seven cases). Full TypeScript, actual host-library compilation and
 resource closure also pass. These capabilities leave the repair queue.
 
-PostgreSQL authored Field/Record now passes staged public projection, refusal
-and exact recovery, including whole-target integrity. The Record baseline uses
-one already-kinded document so its author receipts share the same snapshot.
-Only that failed fixture case was retried; the passing Field case was excluded.
-The native Rust/Python/CLI backend composites remain a separate implementation
-closure item and are not established by this staged Node flow.
+PostgreSQL authored Field/Record passes staged public projection, refusal and
+exact recovery, including whole-target integrity. The native Rust/Python/CLI
+backend composites remain a separate implementation closure item and are not
+established by this staged Node flow.
 
-Reports, Avro/Parquet Cardinality, Parquet Nullability and PostgreSQL native
-composites are under source review. Remaining authored targets and adapter
-composites continue in parallel. Local source guards also require exact audited
-type-only grants, generic Registry ownership transport and removal of transitive
-JSON-LD hashing/clock host dependencies; keep the strict checks intact. Run only
-new or affected cases during these batches, then perform complete current
-host/package integration once.
+Common Field/Record classification and projection reports, authored Avro/Parquet
+Cardinality, and authored Parquet Nullability now pass their six focused public
+workflows, including ordinary projection/classification, refusal and exact recovery.
+The Avro projection excludes the inspector's informational scope notice from losses;
+actual native diagnostics still contribute losses. These cases leave the repair queue.
+Full TypeScript, actual host-library compilation and source resource closure pass.
+
+The next reviewed batch closes PostgreSQL native authored Field/Record/Cardinality
+and the affected source boundaries: exact audited type-only grants, generic Registry
+ownership transport and portable JSON-LD hashing/clock dependencies. Independent
+PostgreSQL Nullability and Arrow inspection work joins the next shared build after
+source review. Parquet Keys/Facets has concrete implementation corrections with its
+Luna owner. PostgreSQL Keys/Facets and Arrow editing continue in parallel. Run only
+new or affected ordinary baselines during implementation; perform complete current
+host/package integration once the remaining callable operations are integrated.
 
 Preserve current meaning constraints during integration: PostgreSQL generated SQL
 retains its original text while deparse validates the codec; parser AST admission

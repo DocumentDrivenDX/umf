@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Opt-in tagged transport for Avro Cardinality classification and recovery.
+//! Opt-in tagged transport for Avro Cardinality classification, projection and recovery.
 use crate::{decode, encode, field, result_envelope, text_field};
 use umf_core::{Utf16, Value, context::Context, error::EngineError};
 pub const PROFILE: &str = "umf.avro-cardinality-binding/1.0.0";
@@ -25,6 +25,8 @@ pub fn execute_wire_with_control(
         let op =
             text_field(&request, "op").ok_or_else(|| request_error("Operation is required"))?;
         let allowed = match op.as_str() {
+            "projectCardinalityToAvro" => ["profile", "op", "author", "request"],
+            "recoverCardinalityFromAvro" => ["profile", "op", "receipt", "nativeBundle"],
             "classifyAvroCardinality" => ["profile", "op", "source", "request"],
             "verifyAvroCardinalityClassification" | "recoverAvroCardinalityBundle" => {
                 ["profile", "op", "receipt", "current"]
@@ -45,6 +47,16 @@ pub fn execute_wire_with_control(
             }
         }
         let output = match op.as_str() {
+            "projectCardinalityToAvro" => umf_core::cardinality_avro_projection::project_cardinality_to_avro(
+                field(&request, "author").ok_or_else(|| request_error("author is required"))?,
+                field(&request, "request").ok_or_else(|| request_error("request is required"))?,
+                &mut ctx,
+            )?,
+            "recoverCardinalityFromAvro" => umf_core::cardinality_avro_projection::recover_cardinality_from_avro(
+                field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
+                field(&request, "nativeBundle").ok_or_else(|| request_error("nativeBundle is required"))?,
+                &mut ctx,
+            )?,
             "classifyAvroCardinality" => umf_core::avro_cardinality::classify_avro_cardinality(
                 field(&request, "source").ok_or_else(|| request_error("source is required"))?,
                 field(&request, "request").ok_or_else(|| request_error("request is required"))?,

@@ -4701,3 +4701,6 @@ mod tests {
     }
 }
 pub mod gregorian_date_binding;
+
+#[cfg(feature = "embedded-adapters")]
+pub mod core_ideal_reports_binding;

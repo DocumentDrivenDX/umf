@@ -56,6 +56,7 @@ CORE_RESOURCES = (
 )
 
 SDIST_SOURCE_FILES = (
+    'spec/core/cardinality-parquet-projection.schema.json',
     "Cargo.toml",
     "Cargo.lock",
     "rust-toolchain.toml",
@@ -109,6 +110,7 @@ SDIST_SOURCE_FILES = (
     "spec/extensions/arrow-ipc/package.json",
     "spec/core/cardinality-operation-v6.schema.json",
     "spec/core/cardinality-operation-v4.schema.json",
+    "spec/core/cardinality-avro-projection.schema.json",
     "spec/core/cardinality-sqlserver-projection.schema.json",
     "spec/core/field-avro-projection.schema.json",
     "spec/core/field-sqlserver-projection.schema.json",
@@ -116,8 +118,12 @@ SDIST_SOURCE_FILES = (
     "spec/core/record-avro-projection.schema.json",
     "spec/core/field-parquet-projection.schema.json",
     "spec/core/record-parquet-projection.schema.json",
-    "spec/core/record-sqlserver-projection.schema.json",
+    "spec/core/field-classification-inspection.schema.json",
+    "spec/core/field-projection-inspection.schema.json",
     "spec/core/record-postgresql-projection.schema.json",
+    "spec/core/record-projection-inspection.schema.json",
+    "spec/core/structured-classification-inspection.schema.json",
+    "spec/core/record-sqlserver-projection.schema.json",
     "spec/core/kind-operation-v8.schema.json",
     "spec/core/kind-operation-v6.schema.json",
     "spec/core/record-type-operation-v6.schema.json",
@@ -182,6 +188,7 @@ SDIST_SOURCE_FILES = (
     "spec/extensions/security-protection/domain-resolution.schema.json",
     "spec/core/nullability-operation-v7.schema.json",
     "spec/core/nullability-operation-v5.schema.json",
+    "spec/core/nullability-parquet-projection.schema.json",
     "spec/core/facet-operation-v3.schema.json",
     "spec/core/facet-operation-v5.schema.json",
     "spec/core/key-operation-v2.schema.json",

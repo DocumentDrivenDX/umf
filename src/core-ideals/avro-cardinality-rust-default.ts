@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import type {NullabilityParquetProjection,NullabilityParquetRequest} from './nullability-parquet-projection';
+import type {CardinalityParquetProjection,CardinalityParquetRequest} from './cardinality-parquet-projection';
 import {copyJson} from '../model/json';
 import {UmfError,type Document} from '../model/types';
 import type {AvroCardinalityClassification,AvroCardinalityRequest} from './cardinality-avro';
@@ -37,6 +39,7 @@ import type {RecordAvroProjection,RecordAvroRequest} from './record-avro-project
 import type {FieldParquetProjection,FieldParquetRequest} from './field-parquet-projection';
 import type {RecordParquetProjection,RecordParquetRequest} from './record-parquet-projection';
 import type {CoreCardinalityDeclaration} from '../model/cardinality';
+import type {CardinalityAvroProjection,CardinalityAvroRequest} from './cardinality-avro-projection';
 
 type NativeErrorGuard=(error:unknown)=>boolean;
 export interface CoreIdealNativeFamilies {
@@ -63,6 +66,8 @@ export interface CoreIdealNativeFamilies {
     recoverCardinalityFromSqlServer(fields:{receipt:CardinalitySqlServerProjection;nativeText:string}):unknown;
   };
   ['avro-cardinality']:{
+    projectCardinalityToAvro(fields:{author:CoreCardinalityDeclaration;request:CardinalityAvroRequest}):unknown;
+    recoverCardinalityFromAvro(fields:{receipt:CardinalityAvroProjection;nativeBundle:NonNullable<CardinalityAvroProjection['nativeBundle']>}):unknown;
     classifyAvroCardinality(fields:{source:Document;request:AvroCardinalityRequest}):unknown;
     verifyAvroCardinalityClassification(fields:{receipt:AvroCardinalityClassification;current:Document}):unknown;
     recoverAvroCardinalityBundle(fields:{receipt:AvroCardinalityClassification;current:Document}):unknown;
@@ -101,7 +106,11 @@ export interface CoreIdealNativeFamilies {
     classifyParquetField(fields:{source:Document;request:ParquetFieldRequest}):unknown;
     verifyParquetFieldClassification(fields:{receipt:ParquetFieldClassification;current:Document}):unknown;
     recoverParquetFieldBytes(fields:{receipt:ParquetFieldClassification;current:Document}):unknown;
+    projectNullabilityToParquet(fields:{author:CoreNullabilityDeclaration;request:NullabilityParquetRequest}):unknown;
+    recoverNullabilityFromParquet(fields:{receipt:NullabilityParquetProjection;nativeHex:string}):unknown;
     classifyParquetKeys(fields:{source:Document;request:ParquetKeyRequest}):unknown;
+    projectCardinalityToParquet(fields:{author:CoreCardinalityDeclaration;request:CardinalityParquetRequest}):unknown;
+    recoverCardinalityFromParquet(fields:{receipt:CardinalityParquetProjection;nativeHex:string}):unknown;
     verifyParquetKeyClassification(fields:{receipt:ParquetKeyClassification;current:Document}):unknown;
     recoverParquetKeySource(fields:{receipt:ParquetKeyClassification;current:Document}):unknown;
     classifyParquetCardinality(fields:{source:Document;request:ParquetCardinalityRequest}):unknown;
@@ -168,6 +177,8 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     }
   }
   return Object.freeze({
+    projectCardinalityToAvro(author:CoreCardinalityDeclaration,request:CardinalityAvroRequest):CardinalityAvroProjection{return call(()=>engine['avro-cardinality'].projectCardinalityToAvro({author:copyJson(author) as unknown as CoreCardinalityDeclaration,request:copyJson(request) as unknown as CardinalityAvroRequest}) as CardinalityAvroProjection);},
+    recoverCardinalityFromAvro(receipt:CardinalityAvroProjection,nativeBundle:NonNullable<CardinalityAvroProjection['nativeBundle']>):Document{return call(()=>engine['avro-cardinality'].recoverCardinalityFromAvro({receipt:copyJson(receipt) as unknown as CardinalityAvroProjection,nativeBundle:copyJson(nativeBundle) as unknown as NonNullable<CardinalityAvroProjection['nativeBundle']>}) as unknown as Document);},
     classifyAvroCardinality(source:Document,request:AvroCardinalityRequest):AvroCardinalityClassification{return call(()=>engine['avro-cardinality'].classifyAvroCardinality({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroCardinalityRequest}));},
     verifyAvroCardinalityClassification(receipt:AvroCardinalityClassification,current:Document):AvroCardinalityClassification{return call(()=>engine['avro-cardinality'].verifyAvroCardinalityClassification({receipt:copyJson(receipt) as unknown as AvroCardinalityClassification,current:copyJson(current) as unknown as Document}));},
     recoverAvroCardinalityBundle(receipt:AvroCardinalityClassification,current:Document):{schema:string;dependencies:{id:string;schema:string}[]}{return call(()=>engine['avro-cardinality'].recoverAvroCardinalityBundle({receipt:copyJson(receipt) as unknown as AvroCardinalityClassification,current:copyJson(current) as unknown as Document}));},
@@ -200,6 +211,10 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     classifyParquetField(source:Document,request:ParquetFieldRequest):ParquetFieldClassification{return call(()=>engine['record-type'].classifyParquetField({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetFieldRequest}) as ParquetFieldClassification);},
     verifyParquetFieldClassification(receipt:ParquetFieldClassification,current:Document):ParquetFieldClassification{return call(()=>engine['record-type'].verifyParquetFieldClassification({receipt:copyJson(receipt) as unknown as ParquetFieldClassification,current:copyJson(current) as unknown as Document}) as ParquetFieldClassification);},
     recoverParquetFieldBytes(receipt:ParquetFieldClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetFieldBytes({receipt:copyJson(receipt) as unknown as ParquetFieldClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('FIELD_CLASSIFICATION_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
+    projectNullabilityToParquet(author:CoreNullabilityDeclaration,request:NullabilityParquetRequest):NullabilityParquetProjection{return call(()=>engine['record-type'].projectNullabilityToParquet({author:copyJson(author) as unknown as CoreNullabilityDeclaration,request:copyJson(request) as unknown as NullabilityParquetRequest}) as NullabilityParquetProjection);},
+    recoverNullabilityFromParquet(receipt:NullabilityParquetProjection,native:Uint8Array):Document{let nativeHex='';for(const byte of native)nativeHex+=byte.toString(16).padStart(2,'0');return call(()=>engine['record-type'].recoverNullabilityFromParquet({receipt:copyJson(receipt) as unknown as NullabilityParquetProjection,nativeHex}) as unknown as Document);},
+    projectCardinalityToParquet(author:CoreCardinalityDeclaration,request:CardinalityParquetRequest):CardinalityParquetProjection{return call(()=>engine['record-type'].projectCardinalityToParquet({author:copyJson(author) as unknown as CoreCardinalityDeclaration,request:copyJson(request) as unknown as CardinalityParquetRequest}) as CardinalityParquetProjection);},
+    recoverCardinalityFromParquet(receipt:CardinalityParquetProjection,native:Uint8Array):Document{let nativeHex='';for(const byte of native)nativeHex+=byte.toString(16).padStart(2,'0');return call(()=>engine['record-type'].recoverCardinalityFromParquet({receipt:copyJson(receipt) as unknown as CardinalityParquetProjection,nativeHex}) as unknown as Document);},
     classifyParquetCardinality(source:Document,request:ParquetCardinalityRequest):ParquetCardinalityClassification{return call(()=>engine['record-type'].classifyParquetCardinality({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetCardinalityRequest}) as ParquetCardinalityClassification);},
     verifyParquetCardinalityClassification(receipt:ParquetCardinalityClassification,current:Document):ParquetCardinalityClassification{return call(()=>engine['record-type'].verifyParquetCardinalityClassification({receipt:copyJson(receipt) as unknown as ParquetCardinalityClassification,current:copyJson(current) as unknown as Document}) as ParquetCardinalityClassification);},
     recoverParquetCardinalityBytes(receipt:ParquetCardinalityClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetCardinalityBytes({receipt:copyJson(receipt) as unknown as ParquetCardinalityClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_CARDINALITY_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
