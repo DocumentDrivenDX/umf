@@ -14,6 +14,9 @@ import type {CoreFacetDeclaration} from '../model/facets';
 import type {CoreKindDeclaration} from '../model/field-kind';
 import type {KeyAvroProjection,KeyAvroRequest} from './key-avro-projection';
 import type {CoreKeyDeclaration} from '../model/keys';
+import type {AvroKeyClassification,AvroKeyRequest,AvroKeyArchive} from './key-avro';
+import type {AvroRelationshipClassification,AvroRelationshipRequest,AvroRelationshipArchive} from './relationship-avro';
+import type {ParquetRelationshipClassification,ParquetRelationshipRequest} from './relationship-parquet';
 
 type NativeErrorGuard=(error:unknown)=>boolean;
 export interface CoreIdealNativeFamilies {
@@ -27,6 +30,12 @@ export interface CoreIdealNativeFamilies {
     recoverAvroFieldBundle(fields:{receipt:AvroFieldClassification;current:Document}):unknown;
     classifyAvroRecord(fields:{source:Document;request:AvroRecordRequest}):unknown;
     recoverAvroRecordBundle(fields:{receipt:AvroRecordClassification;current:Document}):unknown;
+    classifyAvroKeys(fields:{source:Document;request:AvroKeyRequest}):unknown;
+    verifyAvroKeyClassification(fields:{receipt:AvroKeyClassification;current:Document}):unknown;
+    recoverAvroKeySource(fields:{receipt:AvroKeyClassification;current:Document}):unknown;
+    classifyAvroRelationships(fields:{source:Document;request:AvroRelationshipRequest}):unknown;
+    verifyAvroRelationshipClassification(fields:{receipt:AvroRelationshipClassification;current:Document}):unknown;
+    recoverAvroRelationshipSource(fields:{receipt:AvroRelationshipClassification;current:Document}):unknown;
   };
   ['record-type']:{
     classifyAvroRecordType(fields:{source:Document;request:AvroRecordTypeRequest}):unknown;
@@ -35,6 +44,9 @@ export interface CoreIdealNativeFamilies {
     recoverParquetRecordTypeBytes(fields:{receipt:ParquetRecordTypeClassification;current:Document}):unknown;
     classifyParquetRecord(fields:{source:Document;request:ParquetRecordRequest}):unknown;
     recoverParquetRecordBytes(fields:{receipt:ParquetRecordClassification;current:Document}):unknown;
+    classifyParquetRelationships(fields:{source:Document;request:ParquetRelationshipRequest}):unknown;
+    verifyParquetRelationshipClassification(fields:{receipt:ParquetRelationshipClassification;current:Document}):unknown;
+    recoverParquetRelationshipSource(fields:{receipt:ParquetRelationshipClassification;current:Document}):unknown;
   };
   ['nullability-avro-projection']:{
     projectNullabilityToAvro(fields:{author:CoreNullabilityDeclaration;request:NullabilityAvroRequest}):unknown;
@@ -58,7 +70,7 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     try{return operation() as T;}catch(error){
       if(!isNativeUmfCoreError(error))throw error;
       const native=error as {code?:unknown;message?:unknown;path?:unknown};
-      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(AVRO_CARDINALITY_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|PARQUET_RECORD_|PARQUET_RECORD_TYPE_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&native.code!=='REQUEST'))throw error;
+      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(AVRO_CARDINALITY_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&native.code!=='REQUEST'))throw error;
       throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
     }
   }
@@ -70,11 +82,20 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     recoverAvroFieldBundle(receipt:AvroFieldClassification,current:Document):{schema:string;dependencies:{id:string;schema:string}[]}{return call(()=>engine['avro-classification'].recoverAvroFieldBundle({receipt:copyJson(receipt) as unknown as AvroFieldClassification,current:copyJson(current) as unknown as Document}));},
     classifyAvroRecord(source:Document,request:AvroRecordRequest):AvroRecordClassification{return call(()=>engine['avro-classification'].classifyAvroRecord({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroRecordRequest}));},
     recoverAvroRecordBundle(receipt:AvroRecordClassification,current:Document):{schema:string;dependencies:{id:string;schema:string}[]}{return call(()=>engine['avro-classification'].recoverAvroRecordBundle({receipt:copyJson(receipt) as unknown as AvroRecordClassification,current:copyJson(current) as unknown as Document}));},
+    classifyAvroKeys(source:Document,request:AvroKeyRequest):AvroKeyClassification{return call(()=>engine['avro-classification'].classifyAvroKeys({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroKeyRequest}));},
+    verifyAvroKeyClassification(receipt:AvroKeyClassification,current:Document):AvroKeyClassification{return call(()=>engine['avro-classification'].verifyAvroKeyClassification({receipt:copyJson(receipt) as unknown as AvroKeyClassification,current:copyJson(current) as unknown as Document}));},
+    recoverAvroKeySource(receipt:AvroKeyClassification,current:Document):AvroKeyArchive{return call(()=>engine['avro-classification'].recoverAvroKeySource({receipt:copyJson(receipt) as unknown as AvroKeyClassification,current:copyJson(current) as unknown as Document}));},
+    classifyAvroRelationships(source:Document,request:AvroRelationshipRequest):AvroRelationshipClassification{return call(()=>engine['avro-classification'].classifyAvroRelationships({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroRelationshipRequest}));},
+    verifyAvroRelationshipClassification(receipt:AvroRelationshipClassification,current:Document):AvroRelationshipClassification{return call(()=>engine['avro-classification'].verifyAvroRelationshipClassification({receipt:copyJson(receipt) as unknown as AvroRelationshipClassification,current:copyJson(current) as unknown as Document}));},
+    recoverAvroRelationshipSource(receipt:AvroRelationshipClassification,current:Document):AvroRelationshipArchive{return call(()=>engine['avro-classification'].recoverAvroRelationshipSource({receipt:copyJson(receipt) as unknown as AvroRelationshipClassification,current:copyJson(current) as unknown as Document}));},
     classifyAvroRecordType(source:Document,request:AvroRecordTypeRequest):AvroRecordTypeClassification{return call(()=>engine['record-type'].classifyAvroRecordType({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroRecordTypeRequest}));},
     recoverAvroRecordTypeBundle(receipt:AvroRecordTypeClassification,current:Document):{schema:string;dependencies:{id:string;schema:string}[]}{return call(()=>engine['record-type'].recoverAvroRecordTypeBundle({receipt:copyJson(receipt) as unknown as AvroRecordTypeClassification,current:copyJson(current) as unknown as Document}));},
     classifyParquetRecordType(source:Document,request:ParquetRecordTypeRequest):ParquetRecordTypeClassification{return call(()=>engine['record-type'].classifyParquetRecordType({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetRecordTypeRequest}));},
     classifyParquetRecord(source:Document,request:ParquetRecordRequest):ParquetRecordClassification{return call(()=>engine['record-type'].classifyParquetRecord({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetRecordRequest}));},
     recoverParquetRecordBytes(receipt:ParquetRecordClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetRecordBytes({receipt:copyJson(receipt) as unknown as ParquetRecordClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_RECORD_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
+    classifyParquetRelationships(source:Document,request:ParquetRelationshipRequest):ParquetRelationshipClassification{return call(()=>engine['record-type'].classifyParquetRelationships({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetRelationshipRequest}) as ParquetRelationshipClassification);},
+    verifyParquetRelationshipClassification(receipt:ParquetRelationshipClassification,current:Document):ParquetRelationshipClassification{return call(()=>engine['record-type'].verifyParquetRelationshipClassification({receipt:copyJson(receipt) as unknown as ParquetRelationshipClassification,current:copyJson(current) as unknown as Document}) as ParquetRelationshipClassification);},
+    recoverParquetRelationshipSource(receipt:ParquetRelationshipClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetRelationshipSource({receipt:copyJson(receipt) as unknown as ParquetRelationshipClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_RELATIONSHIP_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
     recoverParquetRecordTypeBytes(receipt:ParquetRecordTypeClassification,current:Document):Uint8Array{
       const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetRecordTypeBytes({receipt:copyJson(receipt) as unknown as ParquetRecordTypeClassification,current:copyJson(current) as unknown as Document}));
       if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_RECORD_TYPE_RECEIPT','Rust returned malformed recovered bytes');

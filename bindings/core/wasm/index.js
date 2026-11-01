@@ -252,7 +252,7 @@ export function createBit128Engine(module, options = {}) {
 export function createJsonNumberEngine(module, options = {}) {
   if (typeof module?.executeJsonNumberWire !== 'function' || typeof module?.jsonNumberProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   if (module.jsonNumberProfileVersion() !== JSON_NUMBER_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
-  return createJsonNumberEngineWithWire((wire, control) => module.executeJsonNumberWire(wire, control), options);
+  return createJsonNumberEngineWithWire((wire, control) => module.executeJsonNumberWire(wire, control), options, NativeCoreErrorType);
 }
 /** Initialize the opt-in exact JSON number operation in a browser. */
 export async function initializeJsonNumberWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {

@@ -75,12 +75,11 @@ fn add_residual(
     Ok(())
 }
 fn same_field(a: &Value, b: &Value) -> bool {
+    // Match the TypeScript strict-equality comparison: field references commonly
+    // omit `field`, so two absent values still match the same element reference.
     ["module", "element", "field"]
         .iter()
-        .all(|name| match (get(a, name), get(b, name)) {
-            (Some(Value::String(x)), Some(Value::String(y))) => x == y,
-            _ => false,
-        })
+        .all(|name| get(a, name) == get(b, name))
 }
 fn set(value: &mut Value, name: &str, replacement: Value) -> Result<(), EngineError> {
     let Value::Object(fields) = value else {

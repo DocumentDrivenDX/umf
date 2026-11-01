@@ -16,10 +16,16 @@ fn validate_envelope(
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     let allowed: &[&str] = match operation {
-        "classifyAvroField" | "classifyAvroRecord" => &["profile", "op", "source", "request"],
-        "recoverAvroFieldBundle" | "recoverAvroRecordBundle" => {
-            &["profile", "op", "receipt", "current"]
-        }
+        "classifyAvroField"
+        | "classifyAvroRecord"
+        | "classifyAvroKeys"
+        | "classifyAvroRelationships" => &["profile", "op", "source", "request"],
+        "recoverAvroFieldBundle"
+        | "recoverAvroRecordBundle"
+        | "verifyAvroKeyClassification"
+        | "recoverAvroKeySource"
+        | "verifyAvroRelationshipClassification"
+        | "recoverAvroRelationshipSource" => &["profile", "op", "receipt", "current"],
         _ => return Err(request_error("Unknown Avro classification operation")),
     };
     let Value::Object(members) = value else {
@@ -79,6 +85,51 @@ pub fn execute_wire_with_control(
             )?,
             "recoverAvroRecordBundle" => {
                 umf_core::avro_record_recovery::recover_avro_record_bundle(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "classifyAvroKeys" => umf_core::avro_key_classification::classify_avro_keys(
+                field(&request, "source").ok_or_else(|| request_error("source is required"))?,
+                field(&request, "request").ok_or_else(|| request_error("request is required"))?,
+                &mut ctx,
+            )?,
+            "verifyAvroKeyClassification" => {
+                umf_core::avro_key_classification::verify_avro_key_classification(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "recoverAvroKeySource" => umf_core::avro_key_classification::recover_avro_key_source(
+                field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
+                field(&request, "current").ok_or_else(|| request_error("current is required"))?,
+                &mut ctx,
+            )?,
+            "classifyAvroRelationships" => {
+                umf_core::avro_relationship_classification::classify_avro_relationships(
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?,
+                    field(&request, "request")
+                        .ok_or_else(|| request_error("request is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "verifyAvroRelationshipClassification" => {
+                umf_core::avro_relationship_classification::verify_avro_relationship_classification(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "recoverAvroRelationshipSource" => {
+                umf_core::avro_relationship_classification::recover_avro_relationship_source(
                     field(&request, "receipt")
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")

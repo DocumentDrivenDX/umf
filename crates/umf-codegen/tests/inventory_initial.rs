@@ -591,3 +591,241 @@ fn initial_inventory_projects_typed_command_refs_into_source_review() {
             >= 2
     );
 }
+
+#[test]
+fn retained_g02_mixed_create_compiles_serializes_and_verifies() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let request = load_text(include_str!("fixtures/inventory-g02-retained-request.json"));
+    let result = engine
+        .compile_table_inventory_migration(&request, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&result, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{result:?}"
+    );
+    let plan = member(&result, "plan").unwrap();
+    let Value::Array(steps) = member(plan, "steps").unwrap() else {
+        panic!("steps")
+    };
+    let roles = steps
+        .iter()
+        .filter_map(|step| member(step, "operation"))
+        .collect::<Vec<_>>();
+    for required in [
+        "create-table",
+        "dependency-drop",
+        "add-column",
+        "target-check",
+        "apply-backfill",
+        "install-default",
+        "tighten-not-null",
+        "dependency-add",
+        "publish-inventory",
+    ] {
+        assert!(
+            roles.contains(&&Value::string_utf8(required)),
+            "missing {required}: {result:?}"
+        );
+    }
+    assert!(
+        roles
+            .iter()
+            .position(|value| *value == &Value::string_utf8("dependency-drop"))
+            < roles
+                .iter()
+                .position(|value| *value == &Value::string_utf8("add-column"))
+    );
+    assert!(
+        roles
+            .iter()
+            .position(|value| *value == &Value::string_utf8("add-column"))
+            < roles
+                .iter()
+                .position(|value| *value == &Value::string_utf8("apply-backfill"))
+    );
+    let history = member(&request, "history").unwrap();
+    let selector = object(vec![
+        (
+            "version",
+            Value::string_utf8("umf.table-inventory-discovery/0.1"),
+        ),
+        (
+            "tableIntents",
+            member(member(&request, "options").unwrap(), "tableIntents")
+                .unwrap()
+                .clone(),
+        ),
+        ("conversions", Value::Array(vec![])),
+        ("retiredSeedSets", Value::Array(vec![])),
+        ("retirements", Value::Array(vec![])),
+        ("restorations", Value::Array(vec![])),
+        ("archiveSources", Value::Array(vec![])),
+    ]);
+    let discovered = engine
+        .discover_table_inventory_migration_changes(
+            member(&request, "previous").unwrap(),
+            member(&request, "next").unwrap(),
+            &selector,
+            history,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+    assert_eq!(&discovered, member(plan, "review").unwrap());
+    let verified = engine
+        .verify_table_inventory_migration(plan, history, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(&verified, plan);
+    let serialized = engine
+        .serialize_table_inventory_migration(plan, history, &mut Context::ordinary())
+        .unwrap();
+    assert!(matches!(serialized, Value::String(_)));
+
+    let mut forged = request;
+    let options = member_mut(&mut forged, "options");
+    let Value::Array(backfills) = member_mut(options, "backfills") else {
+        panic!("backfills")
+    };
+    *member_mut(&mut backfills[0], "operation") = Value::string_utf8("unknown_fill");
+    let refused = engine
+        .compile_table_inventory_migration(&forged, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&refused, "status"),
+        Some(&Value::string_utf8("blocked")),
+        "{refused:?}"
+    );
+    assert!(member(&refused, "plan").is_none());
+}
+
+#[test]
+fn retained_g02_selected_created_seed_and_command_have_source_lineage() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let request = load_text(include_str!(
+        "fixtures/inventory-g02-seed-command-request.json"
+    ));
+    let result = engine
+        .compile_table_inventory_migration(&request, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&result, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{result:?}"
+    );
+    let plan = member(&result, "plan").unwrap();
+    let Value::Array(review) = member(plan, "review").unwrap() else {
+        panic!("review")
+    };
+    assert!(review.iter().any(|row| member(row, "kind")
+        == Some(&Value::string_utf8("change-operation"))
+        && member(row, "path")
+            == Some(&Value::string_utf8(
+                "/modules/0/extensions/umf.tables/commands/1"
+            ))));
+    let Value::Array(phases) = member(plan, "phases").unwrap() else {
+        panic!("phases")
+    };
+    assert!(phases
+        .iter()
+        .any(|phase| { member(phase, "kind") == Some(&Value::string_utf8("seed")) }));
+    let Value::Array(steps) = member(plan, "steps").unwrap() else {
+        panic!("steps")
+    };
+    assert_eq!(
+        steps
+            .iter()
+            .filter(|step| member(step, "operation") == Some(&Value::string_utf8("apply-seeds")))
+            .count(),
+        1
+    );
+    let Value::Array(prefixes) = member(plan, "prefixes").unwrap() else {
+        panic!("prefixes")
+    };
+    assert_eq!(prefixes.len(), phases.len() + 1);
+    let Value::Array(pending) = member(&prefixes[4], "seedStates").unwrap() else {
+        panic!("pending seeds")
+    };
+    let Value::Array(confirmed) = member(&prefixes[5], "seedStates").unwrap() else {
+        panic!("confirmed seeds")
+    };
+    assert!(pending.iter().any(|seed| {
+        member(seed, "id") == Some(&Value::string_utf8("archive-seed"))
+            && member(seed, "execution") == Some(&Value::string_utf8("not-run"))
+    }));
+    assert!(confirmed.iter().any(|seed| {
+        member(seed, "id") == Some(&Value::string_utf8("archive-seed"))
+            && member(seed, "execution") == Some(&Value::string_utf8("confirmed"))
+    }));
+    let history = member(&request, "history").unwrap();
+    let verified = engine
+        .verify_table_inventory_migration(plan, history, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(&verified, plan);
+    let mut forged = request;
+    let Value::Array(selected) = member_mut(member_mut(&mut forged, "options"), "seedSets") else {
+        panic!("selected seeds")
+    };
+    selected.push(Value::string_utf8("unknown-seed"));
+    let refused = engine
+        .compile_table_inventory_migration(&forged, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&refused, "status"),
+        Some(&Value::string_utf8("blocked")),
+        "{refused:?}"
+    );
+    assert!(member(&refused, "plan").is_none());
+}
+
+#[test]
+fn retained_g02_created_read_command_has_source_bound_field_dependencies() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let request = load_text(include_str!(
+        "fixtures/inventory-g02-read-command-request.json"
+    ));
+    let result = engine
+        .compile_table_inventory_migration(&request, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&result, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{result:?}"
+    );
+    let plan = member(&result, "plan").unwrap();
+    let Value::Array(review) = member(plan, "review").unwrap() else {
+        panic!("review")
+    };
+    assert!(review.iter().any(|row| {
+        member(row, "kind") == Some(&Value::string_utf8("change-operation"))
+            && member(row, "path")
+                == Some(&Value::string_utf8(
+                    "/modules/0/extensions/umf.tables/commands/2",
+                ))
+    }));
+    let history = member(&request, "history").unwrap();
+    let verified = engine
+        .verify_table_inventory_migration(plan, history, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(&verified, plan);
+
+    let mut missing_review = request;
+    let Value::Array(markers) = member_mut(
+        member_mut(&mut missing_review, "options"),
+        "reviewedChanges",
+    ) else {
+        panic!("reviewed changes")
+    };
+    markers.pop();
+    let refused = engine
+        .compile_table_inventory_migration(&missing_review, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&refused, "status"),
+        Some(&Value::string_utf8("blocked")),
+        "{refused:?}"
+    );
+    assert!(member(&refused, "plan").is_none());
+}

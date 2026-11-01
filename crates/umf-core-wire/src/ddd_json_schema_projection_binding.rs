@@ -4,6 +4,8 @@ use std::collections::BTreeSet;
 
 use crate::{decode, encode, field, result_envelope};
 use umf_core::{
+    binding_index_projection::BindingIndexProjectionResources,
+    binding_inspection::BindingInspectionResources,
     copy_json, ddd_graphql_projection,
     ddd_json_schema_projection::{self, Bindings, LossPolicy},
     Context, EngineError, Utf16, Value,
@@ -21,6 +23,8 @@ const PROJECT_GRAPHQL: &str = "ddd-json-schema-projection.projectDddToGraphql";
 const VERIFY_GRAPHQL: &str = "ddd-json-schema-projection.verifyDddGraphqlProjection";
 const RECOVER_GRAPHQL: &str = "ddd-json-schema-projection.recoverDddFromGraphql";
 const RECOVER_GRAPHQL_NATIVE: &str = "ddd-json-schema-projection.recoverDddGraphqlNative";
+const VALIDATE_SQLSERVER_LAYOUT: &str =
+    "ddd-json-schema-projection.validateSqlServerRelationshipLayout";
 fn request(message: &str) -> EngineError {
     EngineError::new("REQUEST", Utf16::default(), message)
 }
@@ -226,6 +230,25 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         )?));
     }
     let operation = text(field(value, "op"), "op")?;
+    if operation == &Utf16::from(VALIDATE_SQLSERVER_LAYOUT) {
+        let logical = field(value, "document").ok_or_else(|| request("document is required"))?;
+        let binding = field(value, "binding").ok_or_else(|| request("binding is required"))?;
+        let policy = field(value, "policy").ok_or_else(|| request("policy is required"))?;
+        let loss = text(field(value, "lossPolicy"), "lossPolicy")?
+            .to_utf8()
+            .map_err(|_| request("lossPolicy must be valid UTF-16"))?;
+        let resources = BindingIndexProjectionResources::new(ctx)?;
+        let binding_resources = BindingInspectionResources::new(ctx)?;
+        return umf_core::sqlserver_relationship_layout::validate_sqlserver_relationship_layout(
+            &resources,
+            &binding_resources,
+            logical,
+            binding,
+            policy,
+            &loss,
+            ctx,
+        );
+    }
     if operation == &Utf16::from(PROJECT_ENTITIES_GRAPHQL)
         || operation == &Utf16::from(PROJECT_GRAPHQL)
     {

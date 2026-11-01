@@ -126,6 +126,10 @@ fn schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), En
     let operation = json_resource(RESULT_SCHEMA, ctx)?;
     let resources = SchemaResources {
         entries: vec![
+            (
+                k("urn:umf:core:semantic-type-reference:1.0.0"),
+                json_resource(include_str!("../../../spec/core/semantic-type-reference.schema.json"), ctx)?,
+            ),
             (k("urn:umf:core:0.10.0"), json_resource(CORE_SCHEMA, ctx)?),
             (
                 k("urn:umf:core:nullability-operation:5.0.0"),

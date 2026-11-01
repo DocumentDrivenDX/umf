@@ -52,12 +52,42 @@ fn err(code: &str, message: &str) -> EngineError {
 fn is_true(v: Option<&Value>) -> bool {
     matches!(v, Some(Value::Bool(true)))
 }
+fn tagged_get<'a>(node: &'a Value, name: &str) -> Option<&'a Value> {
+    if !eq(get(node, "kind"), "object") {
+        return None;
+    }
+    get(get(node, "members")?, name)
+}
+fn tagged_array(node: Option<&Value>) -> Option<&[Value]> {
+    let node = node?;
+    if !eq(get(node, "kind"), "array") {
+        return None;
+    }
+    arr(get(node, "items"))
+}
+fn tagged_text(node: Option<&Value>) -> Option<&Utf16> {
+    let node = node?;
+    if !eq(get(node, "kind"), "string") {
+        return None;
+    }
+    text(get(node, "value"))
+}
+fn tagged_number_is(node: Option<&Value>, expected: f64) -> bool {
+    let Some(node) = node else { return false };
+    if !eq(get(node, "kind"), "number") {
+        return false;
+    }
+    text(get(node, "value"))
+        .and_then(|value| value.to_utf8().ok())
+        .and_then(|value| value.parse::<f64>().ok())
+        .is_some_and(|value| value == expected)
+}
 fn last_action<'a>(lines: &'a [Value], action: &str) -> Option<&'a Value> {
     lines
         .iter()
         .rev()
         .filter_map(|line| get(line, "node"))
-        .find_map(|node| get(node, action))
+        .find_map(|node| tagged_get(node, action))
 }
 fn append_lf(value: Utf16) -> Utf16 {
     let mut units = value.into_units();
@@ -81,13 +111,7 @@ fn add_residual(
 fn same_field(a: &Value, b: &Value) -> bool {
     ["module", "element", "field"]
         .iter()
-        .all(|name| match (get(a, name), get(b, name)) {
-            (Some(Value::String(x)), Some(Value::String(y))) => x == y,
-            _ => false,
-        })
-}
-fn json_number_is(v: Option<&Value>, n: f64) -> bool {
-    matches!(v,Some(Value::Number(x)) if *x == n)
+        .all(|name| get(a, name) == get(b, name))
 }
 fn number(v: Option<&Value>) -> Option<f64> {
     if let Some(Value::Number(n)) = v {
@@ -170,21 +194,22 @@ pub fn project_binding_to_delta(
     })?;
     let metadata = last_action(lines, "metaData")
         .ok_or_else(|| err("DELTA_BINDING_FEATURE", "Native table metadata is required"))?;
-    let features = arr(get(protocol, "writerFeatures"));
+    let features = tagged_array(tagged_get(protocol, "writerFeatures"));
     let has_feature = |feature: &str| {
         features.is_some_and(|list| {
-            list.iter().any(|v| {
-                text(Some(v)).is_some_and(|s| s.to_utf8().ok().as_deref() == Some(feature))
+            list.iter().any(|value| {
+                tagged_text(Some(value))
+                    .is_some_and(|text| text.to_utf8().ok().as_deref() == Some(feature))
             })
         })
     };
     if !has_feature("clustering")
         || !has_feature("domainMetadata")
-        || !json_number_is(get(protocol, "minWriterVersion"), 7.0)
+        || !tagged_number_is(tagged_get(protocol, "minWriterVersion"), 7.0)
     {
         return Err(err("DELTA_BINDING_FEATURE","Native table must declare clustering and domainMetadata writer features with writer version 7"));
     }
-    let schema_text = text(get(metadata, "schemaString")).ok_or_else(|| {
+    let schema_text = tagged_text(tagged_get(metadata, "schemaString")).ok_or_else(|| {
         err(
             "DELTA_BINDING_SCHEMA",
             "Native table has no known struct schema",
@@ -213,9 +238,10 @@ pub fn project_binding_to_delta(
         }
     }
     let mut residuals = Vec::new();
-    if let Some(partitions) = get(metadata, "partitionColumns") {
-        let has_partitions = arr(Some(partitions)).is_some_and(|values| !values.is_empty())
-            || text(Some(partitions)).is_some_and(|value| !value.is_empty());
+    if let Some(partitions) = tagged_get(metadata, "partitionColumns") {
+        let has_partitions = tagged_array(Some(partitions))
+            .is_some_and(|values| !values.is_empty())
+            || tagged_text(Some(partitions)).is_some_and(|value| !value.is_empty());
         if has_partitions {
             add_residual(
                 &mut residuals,

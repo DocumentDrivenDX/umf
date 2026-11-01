@@ -5,11 +5,11 @@
 use crate::{
     context::Context,
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
-    error::{Diagnostic, EngineError},
+    error::{Diagnostic, EngineError, Validation},
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
-    serialization::{Format, read_json_value, stringify_compact_metered},
-    value::{Utf16, Value, copy_json},
+    serialization::{read_json_value, stringify_compact_metered, Format},
+    value::{copy_json, Utf16, Value},
 };
 
 /// Version of this opt-in generic projection profile. It does not activate a
@@ -102,6 +102,18 @@ impl BindingIndexProjectionResources {
             .engine
             .validate_document(document, &mut registry, &mut capabilities, ctx)?
             .valid)
+    }
+
+    /// Validate a complete logical document and preserve the native diagnostics.
+    pub fn validate_document_report(
+        &self,
+        document: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        let mut registry = Registry::new();
+        let mut capabilities = NoExtensionCapabilities;
+        self.engine
+            .validate_document(document, &mut registry, &mut capabilities, ctx)
     }
 
     fn validate_binding_schema(

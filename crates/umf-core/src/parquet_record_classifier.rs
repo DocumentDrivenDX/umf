@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Opt-in UMF Document classifier for the pinned Parquet LIST-struct Record
-//! subset. This is deliberately narrower than the TypeScript classifier: only
-//! schema elements resolved by the existing LIST interpreter are admitted.
+//! Opt-in UMF Document classifier for unannotated Parquet group Records after
+//! LIST/MAP interpretation. LIST/MAP wrappers remain non-record declarations.
 
 use crate::{
     context::Context,
     engine::{Capabilities, Engine},
     error::EngineError,
     parquet_document_capture::capture_parquet_document,
-    parquet_record_type_candidate::{CandidateResolution, ParquetCapture, SchemaElement},
+    parquet_record_type_candidate::SchemaElement,
     registry::Registry,
     value::{copy_json, Utf16, Value},
 };
@@ -56,6 +55,36 @@ fn err(code: &str, message: &str, path: &str) -> EngineError {
 }
 fn number(n: usize) -> Value {
     Value::Number(n as f64)
+}
+fn usize_value(value: &Value) -> Option<usize> {
+    match value {
+        Value::Number(value) if value.is_finite() && *value >= 0.0 && value.fract() == 0.0 => {
+            Some(*value as usize)
+        }
+        _ => None,
+    }
+}
+fn has_unknown(value: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+    let mut pending = vec![value];
+    while let Some(value) = pending.pop() {
+        ctx.charge_work(1, Utf16::default())?;
+        match value {
+            Value::Object(fields) => {
+                for (key, item) in fields {
+                    ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+                    if key == &k("$unknown")
+                        && matches!(item, Value::Array(values) if !values.is_empty())
+                    {
+                        return Ok(true);
+                    }
+                    pending.push(item);
+                }
+            }
+            Value::Array(items) => pending.extend(items),
+            _ => {}
+        }
+    }
+    Ok(false)
 }
 fn replace(v: &mut Value, name: &str, value: Value) -> bool {
     if let Value::Object(m) = v {
@@ -127,43 +156,71 @@ pub fn classify_parquet_record(
         captured.bytes.len().saturating_add(schema_cost),
         Utf16::default(),
     )?;
-    let candidate_capture =
-        ParquetCapture::new(captured.bytes.clone(), captured.schema.clone(), ctx)?;
-    let resolution = if request.index == 0
-        && selected.physical_type.is_none()
-        && selected.annotation.is_none()
-    {
-        // The established TypeScript classifier admits the unannotated root
-        // group as a Record declaration. It is not a LIST element, but its
-        // direct children are still checked as imported Field members below.
-        CandidateResolution::StructMember(
-            crate::parquet_record_type_candidate::RecordTypeCandidate {
-                index: 0,
-                path: Vec::new(),
-                container_index: 0,
-                layout: Utf16::from("root-record"),
-            },
+    // Reuse the existing bounded LIST/MAP interpreter. A plain unannotated
+    // nested group is also a Record candidate; interpreted wrapper nodes and
+    // groups with unknown meaning remain refused below.
+    let containers = crate::parquet_capture_inspection::inspect_parquet_containers(
+        &source,
+        engine,
+        registry,
+        capabilities,
+        ctx,
+    )?;
+    if get(&containers, "status").and_then(string).as_deref() != Some("checked") {
+        return Err(err(
+            "PARQUET_RECORD_SCHEMA",
+            "Checked schema and container topology required",
+            "/schema",
+        ));
+    }
+    let metadata_schema = get(
+        get(&containers, "metadata").unwrap_or(&Value::Null),
+        "schema",
+    )
+    .and_then(as_array)
+    .ok_or_else(|| {
+        err(
+            "PARQUET_RECORD_SCHEMA",
+            "Checked schema metadata required",
+            "/schema",
         )
-    } else {
-        candidate_capture.resolve_record_type(request.index, ctx)?
-    };
+    })?;
+    let selected_metadata = metadata_schema.get(request.index).ok_or_else(|| {
+        err(
+            "PARQUET_RECORD_IDENTITY",
+            "Selected schema index is missing",
+            "/schema",
+        )
+    })?;
+    let container_rows = get(&containers, "containers")
+        .and_then(as_array)
+        .map(Vec::as_slice)
+        .unwrap_or(&[]);
+    let wrapper = container_rows.iter().any(|container| {
+        let index = get(container, "index").and_then(usize_value);
+        let repeated = get(container, "repeatedIndex").and_then(usize_value);
+        let kind = get(container, "kind").and_then(string);
+        let layout = get(container, "layout").and_then(string);
+        index == Some(request.index)
+            || repeated == Some(request.index)
+                && (kind.as_deref() == Some("map") || layout.as_deref() == Some("three-level"))
+    });
+    let selected_unknown = has_unknown(selected_metadata, ctx)?;
+    let selected_is_plain_group = selected.physical_type.is_none()
+        && selected.annotation.is_none()
+        && selected.converted_type.is_none()
+        && !selected_unknown
+        && !wrapper;
     let mut result = base_receipt(&source, request, ctx)?;
     let mut blockers: Vec<(String, String, Value, String)> = Vec::new();
-    let candidate = match resolution {
-        CandidateResolution::StructMember(c) => Some(c),
-        CandidateResolution::Unsupported { reason } => {
-            blockers.push((
-                "RECORD_ROLE_UNKNOWN".into(),
-                format!("/schema/{}", request.index),
-                schema_fragment(selected),
-                reason.into(),
-            ));
-            None
-        }
-    };
-    let Some(candidate) = candidate else {
-        return validate_receipt(blocked(result, blockers, ctx)?, ctx);
-    };
+    if !selected_is_plain_group {
+        blockers.push((
+            "RECORD_ROLE_UNKNOWN".into(),
+            format!("/schema/{}", request.index),
+            copy_json(selected_metadata, ctx)?,
+            "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied".into(),
+        ));
+    }
 
     // Reconstruct direct child indexes from the validated preorder schema.
     let children = schema_children(&captured.schema, ctx)?;
@@ -176,27 +233,26 @@ pub fn classify_parquet_record(
     }
     let mut ancestor = parent[request.index];
     while let Some(ai) = ancestor {
-        if let Some(annotation) = &captured.schema[ai].annotation {
-            let known = matches!(annotation.to_utf8().ok().as_deref(), Some("LIST"));
-            if !known {
-                blockers.push((
-                    "RECORD_ANCESTOR_UNKNOWN".into(),
-                    format!("/schema/{ai}"),
-                    schema_fragment(&captured.schema[ai]),
-                    "Uninterpreted ancestor annotation may change the selected group meaning"
-                        .into(),
-                ));
-            }
+        let fragment = metadata_schema.get(ai).unwrap_or(&Value::Null);
+        let interpreted_container = container_rows.iter().any(|container| {
+            get(container, "index").and_then(usize_value) == Some(ai)
+                || get(container, "kind").and_then(string).as_deref() == Some("map")
+                    && get(container, "repeatedIndex").and_then(usize_value) == Some(ai)
+        });
+        let unknown = has_unknown(fragment, ctx)?;
+        if unknown
+            || !interpreted_container
+                && (captured.schema[ai].annotation.is_some()
+                    || captured.schema[ai].converted_type.is_some())
+        {
+            blockers.push((
+                "RECORD_ANCESTOR_UNKNOWN".into(),
+                format!("/schema/{ai}"),
+                copy_json(fragment, ctx)?,
+                "Uninterpreted ancestor annotation may change the selected group meaning".into(),
+            ));
         }
         ancestor = parent[ai];
-    }
-    if child_indices.is_empty() {
-        blockers.push((
-            "RECORD_ROLE_UNKNOWN".into(),
-            format!("/schema/{}", request.index),
-            schema_fragment(selected),
-            "Selected LIST struct has no direct members".into(),
-        ));
     }
     let modules = get(&source, "modules").and_then(as_array).ok_or_else(|| {
         err(
@@ -272,7 +328,7 @@ pub fn classify_parquet_record(
         blockers.push((
             "RECORD_DUPLICATE_NAMES".into(),
             format!("/schema/{}", request.index),
-            schema_fragment(selected),
+            copy_json(selected_metadata, ctx)?,
             "Duplicate or missing direct sibling names require an explicit member naming policy"
                 .into(),
         ));
@@ -390,7 +446,7 @@ pub fn classify_parquet_record(
         "record",
         &format!("{record_path}/kind"),
         &format!("/schema/{}", request.index),
-        schema_fragment(selected),
+        copy_json(selected_metadata, ctx)?,
         "checked-record-declaration",
         if blockers.is_empty() {
             "exact"
@@ -465,7 +521,6 @@ pub fn classify_parquet_record(
     if let Value::Object(ref mut o) = result {
         o.push((k("target"), target));
     }
-    let _ = candidate;
     validate_receipt(result, ctx)
 }
 

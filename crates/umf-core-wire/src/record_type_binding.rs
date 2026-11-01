@@ -28,12 +28,15 @@ fn validate_envelope(
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     let allowed: &[&str] = match operation {
-        "classifyAvroRecordType" | "classifyParquetRecordType" | "classifyParquetRecord" => {
-            &["profile", "op", "source", "request"]
-        }
+        "classifyAvroRecordType"
+        | "classifyParquetRecordType"
+        | "classifyParquetRecord"
+        | "classifyParquetRelationships" => &["profile", "op", "source", "request"],
         "recoverAvroRecordTypeBundle"
         | "recoverParquetRecordTypeBytes"
-        | "recoverParquetRecordBytes" => &["profile", "op", "receipt", "current"],
+        | "recoverParquetRecordBytes"
+        | "verifyParquetRelationshipClassification"
+        | "recoverParquetRelationshipSource" => &["profile", "op", "receipt", "current"],
         _ => return Err(request_error("Unknown Record Type binding operation")),
     };
     let Value::Object(members) = value else {
@@ -96,6 +99,7 @@ fn embedded_parquet_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), 
     for package in [
         include_str!("../../../spec/extensions/avro/package.json"),
         include_str!("../../../spec/extensions/parquet/package.json"),
+        include_str!("../../../spec/extensions/parquet-relationships/package.json"),
     ] {
         registry.register(
             &parse_resource(package, ctx)?,
@@ -389,6 +393,55 @@ pub fn execute_wire_with_control(
                     Utf16::from("bytesHex"),
                     Value::string_utf8(bytes_hex),
                 )])
+            }
+            "classifyParquetRelationships" => {
+                let source =
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?;
+                let operation_request = field(&request, "request")
+                    .ok_or_else(|| request_error("request is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_relationship_classifier::classify(
+                    source,
+                    operation_request,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "verifyParquetRelationshipClassification" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_relationship_classifier::verify(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "recoverParquetRelationshipSource" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                let recovered = umf_core::parquet_relationship_classifier::recover_source(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?;
+                recovered
             }
             _ => return Err(request_error("Unknown Record Type binding operation")),
         };

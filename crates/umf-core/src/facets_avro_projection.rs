@@ -230,15 +230,9 @@ fn number(value: Option<&Value>) -> Option<u64> {
 
 fn identity(
     source: &Value,
+    author_identity: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<(usize, usize, Value, String, Value), EngineError> {
-    let author_identity = get(source, "identity").ok_or_else(|| {
-        error(
-            "FACETS_AVRO_AUTHOR",
-            "Author identity is required",
-            "/identity",
-        )
-    })?;
     let module = text(get(author_identity, "module")).ok_or_else(|| {
         error(
             "FACETS_AVRO_AUTHOR",
@@ -449,7 +443,7 @@ fn project_inner(
             "/umf",
         ));
     }
-    let (mi, ei, element, path, ident) = identity(&author, ctx)?;
+    let (mi, ei, element, path, ident) = identity(&source, get(&author, "identity").unwrap_or(&Value::Null), ctx)?;
     if text(get(&element, "kind")).as_deref() != Some("field") {
         return Err(error(
             "FACETS_AVRO_FIELD",

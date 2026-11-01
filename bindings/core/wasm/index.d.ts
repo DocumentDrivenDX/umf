@@ -746,8 +746,8 @@ export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
  readonly ['avro-cardinality']: Readonly<Record<'classifyAvroCardinality'|'verifyAvroCardinalityClassification'|'recoverAvroCardinalityBundle', NativeFamilyOperation>>;
- readonly ['avro-classification']: Readonly<Record<'classifyAvroField'|'recoverAvroFieldBundle'|'classifyAvroRecord'|'recoverAvroRecordBundle', NativeFamilyOperation>>;
- readonly ['record-type']: Readonly<Record<'classifyAvroRecordType'|'recoverAvroRecordTypeBundle'|'classifyParquetRecordType'|'recoverParquetRecordTypeBytes'|'classifyParquetRecord'|'recoverParquetRecordBytes', NativeFamilyOperation>>;
+ readonly ['avro-classification']: Readonly<Record<'classifyAvroField'|'recoverAvroFieldBundle'|'classifyAvroRecord'|'recoverAvroRecordBundle'|'classifyAvroKeys'|'verifyAvroKeyClassification'|'recoverAvroKeySource'|'classifyAvroRelationships'|'verifyAvroRelationshipClassification'|'recoverAvroRelationshipSource', NativeFamilyOperation>>;
+ readonly ['record-type']: Readonly<Record<'classifyAvroRecordType'|'recoverAvroRecordTypeBundle'|'classifyParquetRecordType'|'recoverParquetRecordTypeBytes'|'classifyParquetRecord'|'recoverParquetRecordBytes'|'classifyParquetRelationships'|'verifyParquetRelationshipClassification'|'recoverParquetRelationshipSource', NativeFamilyOperation>>;
  readonly ['nullability-avro-projection']: Readonly<Record<'projectNullabilityToAvro'|'recoverNullabilityFromAvro', NativeFamilyOperation>>;
  readonly ['facets-avro-projection']: Readonly<Record<'projectFacetsToAvro'|'recoverFacetsFromAvro', NativeFamilyOperation>>;
  readonly ['key-avro-projection']: Readonly<Record<'projectKeysToAvro'|'verifyKeysAvroProjection'|'recoverKeysAvroIdeal', NativeFamilyOperation>>;
@@ -765,9 +765,10 @@ export interface NativeFamilyOperations {
  readonly ['binding-sqlserver-planned-index-projection']: Readonly<Record<'projectBindingIndexesAgainstSqlServerPlan', NativeFamilyOperation>>;
  readonly ['binding-parquet-projection']: Readonly<Record<'projectBindingToParquet', NativeFamilyOperation>>;
  readonly ['binding-delta-projection']: Readonly<Record<'projectBindingToDelta', NativeFamilyOperation>>;
+ readonly ['binding-sqlserver-tables']: Readonly<Record<'projectBindingTablesToSqlServer' | 'projectBindingTablesAndIndexesFromPlanToSqlServer' | 'projectBindingTablesAndIndexesToSqlServer', NativeFamilyOperation>>;
  readonly avro: Readonly<Record<'import'|'inspect'|'inspectPayload'|'fields'|'export'|'exportBundle'|'getNode'|'editNode'|'proposeNodeEdit', NativeFamilyOperation>>;
  readonly ['avro-json-schema-projection']: Readonly<Record<'projectAvroToJsonSchema', NativeFamilyOperation>>;
- readonly ['ddd-json-schema-projection']: Readonly<Record<'projectDddToJsonSchema'|'dddFieldBinding'|'inspectDdd'|'validateDddPayload'|'getDddDefinition'|'editDddDefinition'|'projectDddEntitiesToGraphql'|'projectDddToGraphql'|'verifyDddGraphqlProjection'|'recoverDddFromGraphql'|'recoverDddGraphqlNative', NativeFamilyOperation>>;
+ readonly ['ddd-json-schema-projection']: Readonly<Record<'projectDddToJsonSchema'|'dddFieldBinding'|'inspectDdd'|'validateDddPayload'|'getDddDefinition'|'editDddDefinition'|'projectDddEntitiesToGraphql'|'projectDddToGraphql'|'verifyDddGraphqlProjection'|'recoverDddFromGraphql'|'recoverDddGraphqlNative'|'validateSqlServerRelationshipLayout', NativeFamilyOperation>>;
  readonly ['openapi-json-schema-projection']: Readonly<Record<'projectOpenapiToJsonSchema', NativeFamilyOperation>>;
  readonly ['typespec-smithy-jsonschema-projection']: Readonly<Record<'prepareTypeSpecJsonSchema'|'completeTypeSpecJsonSchema'|'prepareSmithyJsonSchema'|'completeSmithyJsonSchema', NativeFamilyOperation>>;
  readonly openapi: Readonly<Record<'import'|'validate'|'inspectPayload'|'export'|'exportBundle'|'getNode'|'lookupResource'|'extractSchema'|'indexSchemas'|'resolveSchemaReference'|'resolveDynamicReference'|'resolveObjectReference'|'edit', NativeFamilyOperation>>;

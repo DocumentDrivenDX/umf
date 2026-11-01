@@ -112,56 +112,40 @@ Current integration order:
 
 ## Latest focused capability results
 
-The production TypeScript and selected Rust compiler preflight pass. The completed
-Node batches pass the Security policy/evaluation/registration and V1/V2 disclosure
-workflows, Avro↔TableSpec, SQL Server→Avro/DDL, PostgreSQL→Avro and row→JSON Schema,
-Arrow↔Spark, Arrow FlatBuffer model and binary operations, Parquet→Avro, the
-Avro→TableSpec chain, JSON Schema public defaults and authority transitions.
-Their focused normal/refusal cases are excluded from subsequent repair runs.
+The latest production TypeScript and Rust metadata checks pass, as does the
+Python source-resource closure. The native build completes. Its focused Node
+batch passes eleven cases: Delta binding (normal and strict), Iceberg binding,
+authored Avro nullability and facets (normal/recovery and refusal), Parquet
+Relationship observation/verification/recovery, general nested Parquet Record
+classification, initial inventory and irreversible-purge disclosure. The utility
+error-mapping repair also passes. These passing cases are excluded from repair
+runs unless their behavior or dependencies change.
 
-The next completed batch passes nine Node cases: the eight model operations,
-DDD→GraphQL projection/verification/recovery, OpenAPI→JSON Schema,
-TypeSpec/Smithy→JSON Schema, Avro Field/Record classification and recovery,
-and Security refusal cases. G11's supported replacement normal passes Rust.
-Five inventory cases pass: initial compilation/verification/serialization,
-source-bound commands and seeds, multiple tables, and forged-marker refusal.
+The next repair batch passes Avro Key/Relationship classification, verification
+and recovery plus SQL Server table projection and scalar-mapping refusal. Three
+Node cases still fail: SQL Server layout wire admission, the observed-catalog
+table/index composite, and retained G02 discovery. All three Rust G02 cases also
+fail: the base case reaches discovery after successful compilation/verification,
+while selected seeds and created commands stop at reviewed-marker comparison.
+Exact synthetic-option, wire and tagged-catalog repairs are prepared. Strict
+marker equality remains required. Parameter, cross-table and history closure
+continues in scratch. Current TypeScript explicitly refuses removal compilation
+with `TABLE_REMOVAL_EFFECTS_NOT_LOWERED`; Rust preserves that refusal while
+supporting removal discovery and irreversible-purge disclosure.
 
-The remaining normal failures have focused repairs: GraphQL 17 built-in
-`@oneOf` validation, JSON Schema→Protobuf property paths, Parquet root Record
-classification, and normalized Security 0.2 associations. The latter now handles
-record-member and core-relationship associations. G01's normal passes; its test
-incorrectly rejected ordinary atomic check installation, so the refusal now
-selects a nonexistent check. Inventory removal paths now match the current
-public profile and its path-derived marker IDs. Four newly referenced schema
-assets are included in the Python source-package closure.
+Sol reviewed the new Rust SQL Server relationship-layout kernel; it compiles and its first runtime baseline exposed the wire admission failure. The full outer SQL Server binding projection and Avro facets classifier have passed source review and are queued for compiler/runtime admission.
+Repeated classify/verify/recover families should share Rust receipt mechanics
+with format-specific observers. Authored projection mappers remain separate
+Rust kernels. Existing passing Action, Saga, Security, Bit128, migration,
+projection and browser workflows retain the scope recorded below.
 
-The next source batch adds authored Avro nullability/facet/key projections with
-verification and recovery, Parquet/Delta/Iceberg binding projections, SQL Server
-planned indexes, and nine existing Rust utility bindings. Sol reviewed the thin
-model and utility defaults. Production TypeScript, selected Rust metadata and
-resource closure pass. New and repaired runtime cases remain pending. Passing
-cases above are excluded from that repair run.
-
-Inventory retained-transition compilation/discovery and public activation are
-still being implemented. Most remaining core-ideal composites need actual Rust
-kernels; the current relationship factory overrides also retain TypeScript
-semantics despite their native inspectors. Binding SQL Server/PostgreSQL
-composition, remaining adapter/model helpers, Dashboard and medical operations,
-SDK retirement and final host/package integration remain open.
-
-Action Manifest construction/inspection/assessment and refusal pass. Bit128
-carrier/model projection and recovery plus file-record encode/decode/refusal now
-pass, in addition to the earlier full-row and classifier cases. Security V2
-source migration/transport, reviewed-value digest and public migration
-compile/verify/refusal also pass. Keep these green cases out of subsequent repair
-runs unless their dependencies change.
-
-The complete tools/test TypeScript project still has fixture and mock typing
-errors. Repair those during final integration; the production compiler remains
-an admission gate for each new batch.
-
-Sol reviews each source cut before admission. Metadata checks precede native
-code generation; static checks do not substitute for callable runtime results.
+Current remaining implementation cuts are selected inventory seed/history
+closure; relationship and binding projection composites still executed in
+TypeScript; remaining adapter, model and core-ideal default activation; and
+browser/Python/CLI package integration. Retire executable reference/candidate
+SDK exports only after current public defaults are callable. Then run the
+complete local Rust, host, browser and installed-package suites, repair actual
+failures, review, merge and publish the successor release.
 
 ## Current callable baseline
 
@@ -182,9 +166,9 @@ code generation; static checks do not substitute for callable runtime results.
 | Migration and row-scope | Discovery `.2`/`.3`/`.4`, G04 recipes, caller row-scope, compiler `.4`/`.5`/`.7`, public compile/verify and reviewed digest pass focused baselines. G02 orders revoke before column changes and grant afterward. | G01 `.3` ordering and G11 `.6` supported replacement baseline; inventory compilation/discovery/serialization/verification. |
 | Python/CLI/package | Native adapters, Action Plan, callback semantics, Delta/RDF/Avro/PostgreSQL workflows and sdist include closure pass local focused cases without JavaScript on PATH. | Complete installed wheel/sdist, supported local platform builds and final CLI consumer. |
 
-### Remaining public executable export queue (current V4 barrel)
+### Current public executable implementation queue (V4 barrel)
 
-This queue names the current TypeScript-executed V4 exports in the Action, Security, Projection and migration families. Static package constants, type exports and host Registry registration helpers are omitted. A source-level native primitive is a reuse point, not proof that the composite public operation is callable. Each row closes only after its exact public export reaches Rust in Node and browser with one normal/refusal baseline; Python/CLI routes join where that API is exposed there.
+This queue tracks Rust ownership and remaining work for the current V4 exports in the Action, Security, Projection and migration families. Static package constants, type exports and host Registry registration helpers are omitted. A source-level native primitive is a reuse point, not proof that the composite public operation is callable. Each row closes only after its exact public export reaches Rust in Node and browser with one normal/refusal baseline; Python/CLI routes join where that API is exposed there.
 
 | Cut | Exact public exports | Rust owner / next change |
 | --- | --- | --- |
@@ -193,19 +177,19 @@ This queue names the current TypeScript-executed V4 exports in the Action, Secur
 | Action declaration and assessment | `inspectActions`, `declareAction`, `editAction`, `assessAction` | Rust authoring/assessment kernel drives V4 defaults; supported Action workflow and caller callback/refusal baselines pass. |
 | Action selector/expression | `admitActionInputs`, `compileActionRule`, `compileActionSelector`, `prepareActionIdentities`, `selectActionIdentity`, `actionFieldValueKey` | Rust default routes own all named operations; six new selector/identity/rule Node normal/refusal cases pass; browser/package activation remains. |
 | Action manifest/bulk | `constructActionManifest`, `inspectActionManifest`, `assessActionManifest`, `validateBulkOutcome` | Bulk-outcome Rust validation passes both new Node cases. Manifest construction/inspection/assessment and retained Rust session refusals pass focused Node baselines. |
-| Security existing-kernel activation | `composeSecurityRules`, `securityRefIdentity`, `resolveSecurityProtectionDomains`, `resolveSecurityProtectionSources`, `validateProtectionParameters`, `readProtectionSource`, `writeProtectionSource` | Existing `security_logic`, `security_domains`, `security_parameters`, `security_protection_source_binding` kernels/wires; add thin defaults with ordinary/refusal. |
-| Security policy/source meaning | `inspectSecurityPolicy`, `requireSecurityInterpretation`, `inspectSecurityPolicyV2Source`, `upgradeSecurityPolicySource`, `downgradeSecurityPolicySource`, `readSecuritySource`, `writeSecuritySource`, `securityPolicyDependencies`, `securityIdentityTransportDependencies` | Generic native JSON/YAML transport exists, but policy/V2 migration and dependency closure decisions still need Rust kernels/defaults. |
-| Security evaluation and authority | `evaluateSecurityAccess`, `evaluateSecurityCollection`, `evaluateSecurityWrite`, `evaluateSecurityPolicyV2LegacyAccess`, `SecurityAuthorityGuard`, `SecurityReadRegistration` | New Rust evaluation/stateful authority kernels with explicit caller capabilities; no JS policy decision fallback. |
-| Security disclosure/catalog | `inspectProtectionCatalog`, `requireProtectionInterpretation`, `inspectProtectionObligations`, `inspectSecurityActionPurposes`, `validateSecurityDisclosure`, `encodeSecurityDisclosure`, `decodeSecurityDisclosure`, `inspectSecurityDisclosureV2`, `encodeSecurityDisclosureV2`, `decodeSecurityDisclosureV2` | Reuse native source/literal/parameter primitives; add missing disclosure/catalog/obligation semantic kernels and exact source retention. |
-| Core-ideal classifiers/projections/recovery | Thirteen Avro/Parquet classifier and recovery exports now route to existing Rust owners and await their focused runtime batch. | Many remaining facets, nullability, keys and relationship composites lack a complete Rust kernel. Implement those operations; the current relationship factory overrides still execute TypeScript despite native inspectors. |
-| Binding target projection | `projectBindingToDelta`, `projectBindingToIceberg`, `projectBindingToParquet`, `projectBindingToSqlServer`, `projectBindingTablesToSqlServer`, `projectBindingTablesAndIndexesToSqlServer`, `projectBindingTablesAndIndexesFromPlanToSqlServer`, `recoverBindingSqlServerNative`, `recoverBindingSqlServerSources`, `verifyBindingSqlServerProjection`, `validateSqlServerRelationshipLayout` | Native binding source/inspection and generic index projection are reuse points; target-specific composition/verification remains a Rust cut. |
+| Security existing-kernel activation | `composeSecurityRules`, `securityRefIdentity`, `resolveSecurityProtectionDomains`, `resolveSecurityProtectionSources`, `validateProtectionParameters`, `readProtectionSource`, `writeProtectionSource` | Named utility/domain/parameter/source operations have Rust owners and passing focused Node workflows; final host/package integration remains. |
+| Security policy/source meaning | `inspectSecurityPolicy`, `requireSecurityInterpretation`, `inspectSecurityPolicyV2Source`, `upgradeSecurityPolicySource`, `downgradeSecurityPolicySource`, `readSecuritySource`, `writeSecuritySource`, `securityPolicyDependencies`, `securityIdentityTransportDependencies` | Rust policy/V2 migration, dependency and source transport owners pass the focused Node workflows; final host/package integration remains. |
+| Security evaluation and authority | `evaluateSecurityAccess`, `evaluateSecurityCollection`, `evaluateSecurityWrite`, `evaluateSecurityPolicyV2LegacyAccess`, `SecurityAuthorityGuard`, `SecurityReadRegistration` | Rust evaluation, registration and stateful authority owners pass focused Node workflows with explicit caller capabilities; final host/package integration remains. |
+| Security disclosure/catalog | `inspectProtectionCatalog`, `requireProtectionInterpretation`, `inspectProtectionObligations`, `inspectSecurityActionPurposes`, `validateSecurityDisclosure`, `encodeSecurityDisclosure`, `decodeSecurityDisclosure`, `inspectSecurityDisclosureV2`, `encodeSecurityDisclosureV2`, `decodeSecurityDisclosureV2` | Rust V1/V2 disclosure, catalog, purpose and obligation workflows pass focused Node normal/refusal cases; final host/package integration remains. |
+| Core-ideal classifiers/projections/recovery | Thirteen Avro/Parquet classifier and recovery exports now route to existing Rust owners and await their focused runtime batch. | Existing Avro/Parquet classifier and recovery routes, authored Avro nullability/facets/keys, Parquet relationships and nested Records pass focused Node baselines. Avro Key/Relationship classification resource repairs and the new Avro facet classifier await runtime. Many other current composites still need Rust kernels; old relationship factories retain TypeScript semantics. |
+| Binding target projection | `projectBindingToDelta`, `projectBindingToIceberg`, `projectBindingToParquet`, `projectBindingToSqlServer`, `projectBindingTablesToSqlServer`, `projectBindingTablesAndIndexesToSqlServer`, `projectBindingTablesAndIndexesFromPlanToSqlServer`, `recoverBindingSqlServerNative`, `recoverBindingSqlServerSources`, `verifyBindingSqlServerProjection`, `validateSqlServerRelationshipLayout` | Delta, Iceberg and Parquet target workflows pass focused Node baselines. SQL Server tables and layout are in the current repair/new-capability batch; the complete outer SQL Server composer is source-reviewed and queued, with runtime still pending. |
 | Binding index projection | `projectBindingIndexesToPostgresql`, `projectBindingIndexesToSqlServer`, `projectBindingIndexesAgainstSqlServerPlan` | Reuse `binding_index_projection::project_binding_indexes`; add target-specific DDL/catalog admission and public routes. |
 | Bit128 projection | `classifyBit128NativeType`, `decodeBit128FileRecord`, `encodeBit128FileRecord`, `projectBit128CarrierSchema`, `recoverBit128CarrierProjection`, `projectBit128Model`, `recoverBit128ModelProjection` | Classifier, Field authoring, binding inspection, full-row and file encode/decode, carrier/model projection/recovery pass Node; final host activation remains. |
-| DDD → GraphQL/PostgreSQL | `projectDddEntitiesToGraphql`, `projectDddToGraphql`, `recoverDddFromGraphql`, `recoverDddGraphqlNative`, `verifyDddGraphqlProjection`, `projectDddTablesToPostgresql`, `projectDddTablesAndIndexesToPostgresql`, `projectDddToPostgresql`, `recoverDddPostgresqlIdeal`, `recoverDddPostgresqlNative`, `verifyDddPostgresqlProjection`, `validatePostgresqlRelationshipLayout` | Reuse native GraphQL/PostgreSQL source adapters; DDD mapping and recovery/loss kernel is absent. |
+| DDD → GraphQL/PostgreSQL | `projectDddEntitiesToGraphql`, `projectDddToGraphql`, `recoverDddFromGraphql`, `recoverDddGraphqlNative`, `verifyDddGraphqlProjection`, `projectDddTablesToPostgresql`, `projectDddTablesAndIndexesToPostgresql`, `projectDddToPostgresql`, `recoverDddPostgresqlIdeal`, `recoverDddPostgresqlNative`, `verifyDddPostgresqlProjection`, `validatePostgresqlRelationshipLayout` | All five GraphQL projection/verification/recovery operations pass focused Node baselines. PostgreSQL layout and complete projection composition remain implementation work. |
 | DDD → JSON Schema | `dddFieldBinding`, `projectDddToJsonSchema` | Native DDD mapping kernel and Node public projection/edit/read/write/refusal baselines pass; browser/Python activation remains. |
-| Cross-format schema projections | `projectArrowToSpark`, `projectAvroToTableSpec`, `projectGraphqlInputToJsonSchema`, `projectJsonSchemaToProtobuf`, `projectOpenapiToJsonSchema`, `projectParquetToAvro`, `projectPostgresqlRowToJsonSchema`, `projectPostgresqlToAvro`, `projectSmithyToJsonSchema`, `projectSparkToArrow`, `projectSqlServerToAvro`, `projectSqlServerToDdl`, `projectTableSpecToAvro`, `projectToTableSpecViaAvro`, `projectTypeSpecToJsonSchema`, `createSmithyJavaScriptJsonSchemaBackend` | Reuse existing Rust format/source adapters and explicit compiler backends; add one Rust-owned mapping/loss kernel per coherent source→target relation. The Smithy backend factory remains a host capability, but projected status/source/loss belongs to Rust. |
-| Table inventory migration | `compileTableInventoryMigration`, `discoverTableInventoryMigrationChanges`, `serializeTableInventoryMigration`, `verifyTableInventoryMigration`, `irreversiblePurgeDisclosure` | Separate new inventory kernel; `umf-codegen` current migration compiler does not own this public profile. |
-| Migration digest and selected compiler | `reviewedValueDigest`, `compileTableMigration`, `verifyTableMigration` | Native canonical digest and public compile/verify/refusal pass. Compiler `.4`/`.5`/`.7` baselines pass; `.3` ordering and `.6` supported replacement baseline remain in repair. |
+| Cross-format schema projections | `projectArrowToSpark`, `projectAvroToTableSpec`, `projectGraphqlInputToJsonSchema`, `projectJsonSchemaToProtobuf`, `projectOpenapiToJsonSchema`, `projectParquetToAvro`, `projectPostgresqlRowToJsonSchema`, `projectPostgresqlToAvro`, `projectSmithyToJsonSchema`, `projectSparkToArrow`, `projectSqlServerToAvro`, `projectSqlServerToDdl`, `projectTableSpecToAvro`, `projectToTableSpecViaAvro`, `projectTypeSpecToJsonSchema`, `createSmithyJavaScriptJsonSchemaBackend` | Focused Node workflows pass for the listed source-to-target Rust mappings. `createSmithyJavaScriptJsonSchemaBackend` is a host capability factory. Final browser/installed-package integration remains. |
+| Table inventory migration | `compileTableInventoryMigration`, `discoverTableInventoryMigrationChanges`, `serializeTableInventoryMigration`, `verifyTableInventoryMigration`, `irreversiblePurgeDisclosure` | Rust initial inventory compile/discover/serialize/verify and removal discovery/disclosure pass. Retained G02, selected seeds and created-table command increments are implemented and under focused repair/testing; parameter, cross-table and history closure remains in progress. |
+| Migration digest and selected compiler | `reviewedValueDigest`, `compileTableMigration`, `verifyTableMigration` | Rust canonical digest, public compile/verify/refusal and supported compiler .3/.4/.5/.6/.7 workflows pass focused baselines; final package integration remains. |
 
 Host-only/static exports in these families: `actionExpressionLimits`, `actionsPackage`, `sagaPackage`, `createSagaResources`, `registerActions`, `registerSagas`, `protectionPackage`, `SECURITY_EXTENSION`, `securityPackage`, `securityV2Package`, and `securityRegistry`. Keep these as data/registration facades only; underlying validation and semantics must still use Rust. The broader `core-ideals` barrel needs both actual missing kernels and exact default activation. Existing native primitives are reuse points; neither a facade override count nor an injected Rust inspector establishes ownership of a composite.
 

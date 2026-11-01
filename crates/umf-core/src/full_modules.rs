@@ -37,6 +37,10 @@ pub mod avro_record_declarations;
 pub mod avro_record_fields;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_record_recovery;
+#[cfg(feature = "embedded-adapters")]
+pub mod avro_key_classification;
+#[cfg(feature = "embedded-adapters")]
+pub mod avro_relationship_classification;
 pub mod avro_record_type_candidate;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_record_type_classifier;
@@ -46,6 +50,10 @@ pub mod avro_semantics;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection;
 pub mod binding_index_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_relationship_layout;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_sqlserver_tables;
 #[cfg(feature = "embedded-adapters")]
 pub mod binding_iceberg_projection;
 #[cfg(feature = "embedded-adapters")]
@@ -152,6 +160,7 @@ pub mod parquet_record_type_classifier;
 pub mod parquet_record_type_operation;
 pub mod parquet_record_type_recovery;
 pub mod parquet_relationship_observation;
+pub mod parquet_relationship_classifier;
 pub mod parquet_repair_offsets;
 pub mod parquet_rows;
 pub mod parquet_schema_decode;

@@ -28,6 +28,7 @@ pub const FAMILIES: &[&str] = &[
     "binding-sqlserver-planned-index-projection",
     "binding-parquet-projection",
     "binding-delta-projection",
+    "binding-sqlserver-tables",
     "ddd-json-schema-projection",
     "openapi-json-schema-projection",
     "typespec-smithy-jsonschema-projection",
@@ -76,6 +77,12 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverAvroFieldBundle",
                 "classifyAvroRecord",
                 "recoverAvroRecordBundle",
+                "classifyAvroKeys",
+                "verifyAvroKeyClassification",
+                "recoverAvroKeySource",
+                "classifyAvroRelationships",
+                "verifyAvroRelationshipClassification",
+                "recoverAvroRelationshipSource",
             ],
         ),
         "record-type" => (
@@ -87,6 +94,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverParquetRecordTypeBytes",
                 "classifyParquetRecord",
                 "recoverParquetRecordBytes",
+                "classifyParquetRelationships",
+                "verifyParquetRelationshipClassification",
+                "recoverParquetRelationshipSource",
             ],
         ),
         "nullability-avro-projection" => (
@@ -175,6 +185,14 @@ pub fn metadata_wire(family: &str) -> String {
             crate::binding_parquet_projection_binding::PROFILE,
             &["projectBindingToParquet"],
         ),
+        "binding-sqlserver-tables" => (
+            crate::binding_sqlserver_tables_binding::PROFILE,
+            &[
+                "projectBindingTablesToSqlServer",
+                "projectBindingTablesAndIndexesFromPlanToSqlServer",
+                "projectBindingTablesAndIndexesToSqlServer",
+            ],
+        ),
         "binding-delta-projection" => (
             crate::binding_delta_projection_binding::PROFILE,
             &["projectBindingToDelta"],
@@ -193,6 +211,7 @@ pub fn metadata_wire(family: &str) -> String {
                 "verifyDddGraphqlProjection",
                 "recoverDddFromGraphql",
                 "recoverDddGraphqlNative",
+                "validateSqlServerRelationshipLayout",
             ],
         ),
         "openapi-json-schema-projection" => (
@@ -548,6 +567,9 @@ pub fn execute_wire_with_control(
         }
         "binding-parquet-projection" => {
             crate::binding_parquet_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "binding-sqlserver-tables" => {
+            crate::binding_sqlserver_tables_binding::execute_wire_with_control(wire, control)
         }
         "binding-delta-projection" => {
             crate::binding_delta_projection_binding::execute_wire_with_control(wire, control)

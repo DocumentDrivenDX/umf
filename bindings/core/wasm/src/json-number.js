@@ -77,7 +77,7 @@ function workWith(bridge) {
 }
 
 /** Create the explicitly selected umf-json-number/0.1 operation over Rust. */
-export function createJsonNumberEngine(invoke, options = {}) {
+export function createJsonNumberEngine(invoke, options = {}, nativeError = fault) {
   if (typeof invoke !== 'function') throw new TypeError('Rust JSON number wire function is required');
   const controls = controlsFor(options);
   const active = Object.values(controls).some(value => value !== undefined);
@@ -92,7 +92,11 @@ export function createJsonNumberEngine(invoke, options = {}) {
       work(responseText.length);
       const response = JSON.parse(responseText);
       const failure = resultError(response);
-      if (failure) throw fault(failure.code, failure.message, failure.path);
+      if (failure) {
+        const error = nativeError(failure.code, failure.message, failure.path);
+        if (failure.code === 'NUMBER') error.name = 'UmfError';
+        throw error;
+      }
       work(response.wire.length);
       const result = fromWire(JSON.parse(response.wire), work);
       if (result !== null) throw fault('WIRE_FORMAT', 'JSON number operation returned an invalid result');

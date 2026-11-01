@@ -79,6 +79,8 @@ pub mod binding_parquet_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod binding_delta_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod binding_sqlserver_tables_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod tablespec_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_via_avro_projection_binding;

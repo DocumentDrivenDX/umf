@@ -149,7 +149,7 @@ export function createBit128Engine(options = {}) {
 export function createJsonNumberEngine(options = {}) {
   if (typeof addon.executeJsonNumberWire !== 'function' || typeof addon.jsonNumberProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
   if (addon.jsonNumberProfileVersion() !== JSON_NUMBER_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
-  return createJsonNumberEngineWithWire((wire, control) => addon.executeJsonNumberWire(wire, control), options);
+  return createJsonNumberEngineWithWire((wire, control) => addon.executeJsonNumberWire(wire, control), options, NativeCoreErrorType);
 }
 /** Create the opt-in Rust-backed CONTRACT-049 numeric adapter. */
 export function createJavascriptNumericEngine(resources, options = {}) {

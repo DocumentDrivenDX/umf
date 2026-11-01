@@ -2,6 +2,8 @@
 //! Current G10 initial-create inventory migration, derived from verified source.
 //! This module intentionally handles the original initial-create branch only.
 
+mod g02;
+
 use std::collections::{BTreeMap, BTreeSet};
 
 use umf_core::serialization::{read_json_value, Format};
@@ -322,7 +324,19 @@ impl CodegenEngine<'_> {
         request: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
-        self.compile_table_inventory_initial(request, ctx)
+        if get(request, "previous") == Some(&Value::Null) {
+            return self.compile_table_inventory_initial(request, ctx);
+        }
+        let admitted = admit_json(request, ctx)?;
+        match g02::compile_retained_g02(self, &admitted, ctx) {
+            Ok(plan) => Ok(o(vec![
+                ("status", s("compiled")),
+                ("plan", plan),
+                ("diagnostics", a(vec![])),
+            ])),
+            Err(error) if is_control(&error) => Err(error),
+            Err(error) => Ok(blocked(&error)),
+        }
     }
 
     pub fn discover_table_inventory_migration_changes(
@@ -335,6 +349,15 @@ impl CodegenEngine<'_> {
     ) -> Result<Value, EngineError> {
         if previous == &Value::Null {
             self.discover_table_inventory_initial(previous, next, selector, history, ctx)
+        } else if get(selector, "tableIntents")
+            .and_then(array_items)
+            .is_some_and(|intents| {
+                intents
+                    .iter()
+                    .any(|intent| eq_text(get(intent, "kind"), "create"))
+            })
+        {
+            g02::discover_mixed_create_fill(self, previous, next, selector, history, ctx)
         } else {
             self.discover_table_inventory_removal(previous, next, selector, history, ctx)
         }
@@ -346,7 +369,35 @@ impl CodegenEngine<'_> {
         history: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
-        self.verify_table_inventory_initial(plan, history, ctx)
+        let plan = admit_json(plan, ctx)?;
+        let history = admit_json(history, ctx)?;
+        let request = o(vec![
+            ("id", clone_member(&plan, "id", "/id")?),
+            (
+                "predecessor",
+                clone_member(&plan, "predecessor", "/predecessor")?,
+            ),
+            ("previous", clone_member(&plan, "previous", "/previous")?),
+            ("next", clone_member(&plan, "next", "/next")?),
+            ("options", clone_member(&plan, "options", "/options")?),
+            ("history", history),
+        ]);
+        let rebuilt = self.compile_table_inventory_migration(&request, ctx)?;
+        let rebuilt_plan = get(&rebuilt, "plan").ok_or_else(|| {
+            err(
+                "TABLE_INVENTORY_PLAN",
+                "/",
+                "Inventory plan differs from source recompilation",
+            )
+        })?;
+        if !same(rebuilt_plan, &plan, ctx)? {
+            return Err(err(
+                "TABLE_INVENTORY_PLAN",
+                "/",
+                "Inventory plan differs from source recompilation",
+            ));
+        }
+        Ok(plan)
     }
 
     pub fn serialize_table_inventory_migration(
@@ -355,7 +406,8 @@ impl CodegenEngine<'_> {
         history: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
-        self.serialize_table_inventory_initial(plan, history, ctx)
+        let verified = self.verify_table_inventory_migration(plan, history, ctx)?;
+        Ok(s(&canonical_text(&verified, ctx)?))
     }
 
     pub fn irreversible_table_purge_disclosure(
@@ -1086,11 +1138,11 @@ fn project_initial(
     for (index, command) in source_commands.iter().enumerate() {
         ctx.charge_work(1, Utf16::from("/next/source/commands"))?;
         let path = format!("{extension_path}/commands/{index}");
-        if !eq_text(get(command, "version"), "umf.table-operation/0.2") {
+        if !supported_created_single_table_command(command, &path, ctx)? {
             return Err(err(
                 "TABLE_INVENTORY_UNSUPPORTED",
                 &path,
-                "Only closed typed row-expression commands have source-bound references",
+                "Command references are not closed over one created table",
             ));
         }
         let id = member_text(command, "id", &path)?;
@@ -1102,24 +1154,17 @@ fn project_initial(
             ));
         }
         let body = val(command, "body", &path)?;
-        if !eq_text(get(body, "kind"), "update") {
-            return Err(err(
-                "TABLE_INVENTORY_UNSUPPORTED",
-                &path,
-                "Only typed update commands can be source-bound",
-            ));
-        }
         let table_id = member_text(body, "table", &path)?;
-        if !tables
+        let table = tables
             .iter()
-            .any(|table| eq_text(get(table, "id"), &table_id))
-        {
-            return Err(err(
-                "TABLE_INVENTORY_UNSUPPORTED",
-                &path,
-                "Command table is unbound",
-            ));
-        }
+            .find(|table| eq_text(get(table, "id"), &table_id))
+            .ok_or_else(|| {
+                err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Command table is unbound",
+                )
+            })?;
         let command_identity = identity("operation", None, s(&id));
         let source_key = hash(&command_identity, ctx)?;
         if source_paths.insert(source_key, path.clone()).is_some() {
@@ -1128,6 +1173,19 @@ fn project_initial(
                 &path,
                 "Duplicate source-derived command identity",
             ));
+        }
+        let columns = items(val(table, "columns", &path)?, &path)?;
+        for field in command_field_refs(body, &path, ctx)? {
+            ctx.charge_work(columns.len(), Utf16::from(path.as_str()))?;
+            if !columns.iter().any(|column| {
+                get(column, "field").is_some_and(|candidate| ref_equal(candidate, &field))
+            }) {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Command Field is not bound to the exact source table",
+                ));
+            }
         }
         projected_operations.push(row(
             command_identity,
@@ -1371,6 +1429,21 @@ fn command_field_refs(
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Value>, EngineError> {
     let mut fields = Vec::new();
+    for key in ["fields", "returning", "updateFields"] {
+        if let Some(values) = get(body, key) {
+            for value in items(values, &format!("{path}/{key}"))? {
+                ctx.charge_work(1, Utf16::from(path))?;
+                if !exact_fields(value, &["module", "element"]) {
+                    return Err(err(
+                        "TABLE_INVENTORY_UNSUPPORTED",
+                        &format!("{path}/{key}"),
+                        "Command Field reference is malformed",
+                    ));
+                }
+                fields.push(value.clone());
+            }
+        }
+    }
     let mut pending = vec![(None, body)];
     while let Some((key, value)) = pending.pop() {
         ctx.charge_work(1, Utf16::from(path))?;
@@ -1400,6 +1473,52 @@ fn command_field_refs(
         }
     }
     Ok(fields)
+}
+
+fn supported_created_single_table_command(
+    command: &Value,
+    path: &str,
+    ctx: &mut Context<'_>,
+) -> Result<bool, EngineError> {
+    let Some(body) = get(command, "body") else {
+        return Ok(false);
+    };
+    if eq_text(get(command, "version"), "umf.table-operation/0.2") {
+        return Ok(eq_text(get(body, "kind"), "update"));
+    }
+    if !eq_text(get(command, "version"), "umf.table-operation/0.1")
+        || !matches!(
+            get(body, "kind").and_then(text).as_deref(),
+            Some("read" | "insert" | "update" | "delete" | "upsert")
+        )
+        || !get(command, "parameters")
+            .and_then(array_items)
+            .is_some_and(|items| items.is_empty())
+    {
+        return Ok(false);
+    }
+    // A related predicate, source-field assignment, or insertFrom command
+    // requires typed references to a second source table. This continuation
+    // only admits command references proven within one created table.
+    let mut pending = vec![body];
+    while let Some(value) = pending.pop() {
+        ctx.charge_work(1, Utf16::from(path))?;
+        match value {
+            Value::Object(members) => {
+                if eq_text(get(value, "op"), "related")
+                    || eq_text(get(value, "kind"), "sourceField")
+                {
+                    return Ok(false);
+                }
+                for (_, child) in members.iter().rev() {
+                    pending.push(child);
+                }
+            }
+            Value::Array(items) => pending.extend(items.iter().rev()),
+            _ => {}
+        }
+    }
+    Ok(true)
 }
 
 fn project_one_initial(
@@ -1760,16 +1879,16 @@ fn project_one_initial(
     for (index, command) in source_commands.iter().enumerate() {
         ctx.charge_work(1, Utf16::from("/next/source/commands"))?;
         let path = format!("{extension_path}/commands/{index}");
-        if !eq_text(get(command, "version"), "umf.table-operation/0.2") {
+        let body = val(command, "body", &format!("{path}/body"))?;
+        if !eq_text(get(body, "table"), &table_id) {
+            continue;
+        }
+        if !supported_created_single_table_command(command, &path, ctx)? {
             return Err(err(
                 "TABLE_INVENTORY_UNSUPPORTED",
                 &path,
-                "Only closed typed row-expression commands have source-bound references",
+                "Command references are not closed over one created table",
             ));
-        }
-        let body = val(command, "body", &format!("{path}/body"))?;
-        if !eq_text(get(body, "kind"), "update") || !eq_text(get(body, "table"), &table_id) {
-            continue;
         }
         let id = member_text(command, "id", &format!("{path}/id"))?;
         if id.is_empty() || operation_ids.iter().any(|value| value == &s(&id)) {
@@ -1813,6 +1932,30 @@ fn project_one_initial(
                 "operation-requires-field",
                 &path,
             ));
+        }
+        let (key, reason) = if eq_text(get(body, "kind"), "read") {
+            (get(body, "cursorKey"), "operation-requires-cursor-key")
+        } else if eq_text(get(body, "kind"), "upsert") {
+            (get(body, "conflictKey"), "operation-requires-conflict-key")
+        } else {
+            (None, "")
+        };
+        if let Some(key) = key {
+            let key_name = text(key).ok_or_else(|| {
+                err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Command Key ID is malformed",
+                )
+            })?;
+            let key_hash = key_ids.get(&key_name).ok_or_else(|| {
+                err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Command Key is not bound to its Record",
+                )
+            })?;
+            dependencies.push(edge(&command_key, key_hash, reason, &path));
         }
         operation_ids.push(s(&id));
         command_paths.push(path);

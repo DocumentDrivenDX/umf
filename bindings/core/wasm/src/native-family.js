@@ -5,8 +5,8 @@ export const NATIVE_FAMILY_PROFILE='umf.native-family-dispatch/1';
 
 const FAMILIES=Object.freeze({
  'avro-cardinality':{profile:'umf.avro-cardinality-binding/1.0.0',operations:['classifyAvroCardinality','verifyAvroCardinalityClassification','recoverAvroCardinalityBundle']},
- 'avro-classification':{profile:'umf.avro-classification-binding/1.0.0',operations:['classifyAvroField','recoverAvroFieldBundle','classifyAvroRecord','recoverAvroRecordBundle']},
- 'record-type':{profile:'umf.record-type-binding/1.0.0',operations:['classifyAvroRecordType','recoverAvroRecordTypeBundle','classifyParquetRecordType','recoverParquetRecordTypeBytes','classifyParquetRecord','recoverParquetRecordBytes']},
+ 'avro-classification':{profile:'umf.avro-classification-binding/1.0.0',operations:['classifyAvroField','recoverAvroFieldBundle','classifyAvroRecord','recoverAvroRecordBundle','classifyAvroKeys','verifyAvroKeyClassification','recoverAvroKeySource','classifyAvroRelationships','verifyAvroRelationshipClassification','recoverAvroRelationshipSource']},
+ 'record-type':{profile:'umf.record-type-binding/1.0.0',operations:['classifyAvroRecordType','recoverAvroRecordTypeBundle','classifyParquetRecordType','recoverParquetRecordTypeBytes','classifyParquetRecord','recoverParquetRecordBytes','classifyParquetRelationships','verifyParquetRelationshipClassification','recoverParquetRelationshipSource']},
  'nullability-avro-projection':{profile:'umf.nullability-avro-projection-binding/1.0.0',operations:['projectNullabilityToAvro','recoverNullabilityFromAvro']},
  'facets-avro-projection':{profile:'umf.facets-avro-projection-binding/1.0.0',operations:['projectFacetsToAvro','recoverFacetsFromAvro']},
  'key-avro-projection':{profile:'umf.key-avro-projection-binding/1.0.0',operations:['projectKeysToAvro','verifyKeysAvroProjection','recoverKeysAvroIdeal']},
@@ -25,7 +25,8 @@ const FAMILIES=Object.freeze({
  'binding-sqlserver-planned-index-projection':{profile:'umf.binding-sqlserver-planned-index-projection-wire/1',operations:['projectBindingIndexesAgainstSqlServerPlan']},
  'binding-parquet-projection':{profile:'umf.binding-parquet-projection-wire/1',operations:['projectBindingToParquet']},
  'binding-delta-projection':{profile:'umf.binding-delta-projection-wire/1',operations:['projectBindingToDelta']},
- 'ddd-json-schema-projection':{profile:'umf.ddd-json-schema-projection-wire/1',operations:['projectDddToJsonSchema','dddFieldBinding','inspectDdd','validateDddPayload','getDddDefinition','editDddDefinition','projectDddEntitiesToGraphql','projectDddToGraphql','verifyDddGraphqlProjection','recoverDddFromGraphql','recoverDddGraphqlNative']},
+ 'binding-sqlserver-tables':{profile:'umf.binding-sqlserver-tables-wire/1',operations:['projectBindingTablesToSqlServer','projectBindingTablesAndIndexesFromPlanToSqlServer','projectBindingTablesAndIndexesToSqlServer']},
+ 'ddd-json-schema-projection':{profile:'umf.ddd-json-schema-projection-wire/1',operations:['projectDddToJsonSchema','dddFieldBinding','inspectDdd','validateDddPayload','getDddDefinition','editDddDefinition','projectDddEntitiesToGraphql','projectDddToGraphql','verifyDddGraphqlProjection','recoverDddFromGraphql','recoverDddGraphqlNative','validateSqlServerRelationshipLayout']},
  'openapi-json-schema-projection':{profile:'umf.openapi-json-schema-projection-wire/1',operations:['projectOpenapiToJsonSchema']},
  'typespec-smithy-jsonschema-projection':{profile:'umf.typespec-smithy-jsonschema-projection-wire/1',operations:['prepareTypeSpecJsonSchema','completeTypeSpecJsonSchema','prepareSmithyJsonSchema','completeSmithyJsonSchema']},
  openapi:{profile:'umf.openapi-wire/1',operations:['import','validate','inspectPayload','export','exportBundle','getNode','lookupResource','extractSchema','indexSchemas','resolveSchemaReference','resolveDynamicReference','resolveObjectReference','edit']},
