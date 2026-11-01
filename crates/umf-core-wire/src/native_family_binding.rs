@@ -427,6 +427,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyTableSpecNullability",
                 "verifyTableSpecNullabilityClassification",
                 "recoverTableSpecNullabilitySource",
+                "classifyTableSpecKeys",
+                "verifyTableSpecKeyClassification",
+                "recoverTableSpecKeySource",
             ],
         ),
         "jsonld" => (
@@ -462,6 +465,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyNullability",
                 "verifyNullabilityClassification",
                 "recoverNullabilitySource",
+                "prepareKeyParserRequests",
+                "classifyKeys",
+                "verifyKeyClassification",
+                "recoverKeySource",
             ],
         ),
         "sqlserver" => (

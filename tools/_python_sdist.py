@@ -81,6 +81,7 @@ _EXPECTED_ROOT_FILES = {
     "spec/core/tablespec-field-classification.schema.json",
     "spec/core/tablespec-record-classification.schema.json",
     "spec/core/tablespec-cardinality-classification.schema.json",
+    "spec/core/tablespec-key-classification.schema.json",
     "spec/core/tablespec-nullability-classification.schema.json",
     "spec/core/sqlserver-field-classification.schema.json",
     "spec/core/sqlserver-record-classification.schema.json",
@@ -172,6 +173,9 @@ _EXPECTED_ROOT_FILES = {
     "spec/core/postgresql-nullability-classification.schema.json",
     "spec/core/postgresql-field-classification.schema.json",
     "spec/core/postgresql-record-classification.schema.json",
+    "spec/extensions/postgresql-keys/package.json",
+    "spec/core/postgresql-key-classification.schema.json",
+    "spec/core/postgresql-key-catalog-correlation.schema.json",
 }
 _EXPECTED_ROOT_TREES = {
     "crates",
@@ -212,6 +216,9 @@ _PYTHON_BUILD_DIRS = {
     "target",
     "venv",
     "spec/core/postgresql-record-classification.schema.json",
+    "spec/extensions/postgresql-keys/package.json",
+    "spec/core/postgresql-key-classification.schema.json",
+    "spec/core/postgresql-key-catalog-correlation.schema.json",
 }
 _PYTHON_BUILD_SUFFIXES = {".pyc", ".pyo"}
 _REQUIRED_ARCHIVE_PATHS = {
@@ -257,6 +264,7 @@ _REQUIRED_ARCHIVE_PATHS = {
     "spec/core/tablespec-field-classification.schema.json",
     "spec/core/tablespec-record-classification.schema.json",
     "spec/core/tablespec-cardinality-classification.schema.json",
+    "spec/core/tablespec-key-classification.schema.json",
     "spec/core/tablespec-nullability-classification.schema.json",
     "spec/core/sqlserver-field-classification.schema.json",
     "spec/core/sqlserver-record-classification.schema.json",
@@ -329,6 +337,9 @@ _REQUIRED_ARCHIVE_PATHS = {
     "spec/core/postgresql-nullability-classification.schema.json",
     "spec/core/postgresql-field-classification.schema.json",
     "spec/core/postgresql-record-classification.schema.json",
+    "spec/extensions/postgresql-keys/package.json",
+    "spec/core/postgresql-key-classification.schema.json",
+    "spec/core/postgresql-key-catalog-correlation.schema.json",
     "spec/core/relationship-extras.schema.json",
 }
 _EXPECTED_FORCE_INCLUDE = {
@@ -362,6 +373,7 @@ _EXPECTED_FORCE_INCLUDE = {
     "../spec/core/tablespec-field-classification.schema.json": "spec/core/tablespec-field-classification.schema.json",
     "../spec/core/tablespec-record-classification.schema.json": "spec/core/tablespec-record-classification.schema.json",
     "../spec/core/tablespec-cardinality-classification.schema.json": "spec/core/tablespec-cardinality-classification.schema.json",
+    "../spec/core/tablespec-key-classification.schema.json": "spec/core/tablespec-key-classification.schema.json",
     "../spec/core/tablespec-nullability-classification.schema.json": "spec/core/tablespec-nullability-classification.schema.json",
     "../spec/core/sqlserver-field-classification.schema.json": "spec/core/sqlserver-field-classification.schema.json",
     "../spec/core/sqlserver-record-classification.schema.json": "spec/core/sqlserver-record-classification.schema.json",
@@ -461,6 +473,9 @@ _EXPECTED_FORCE_INCLUDE = {
     "../spec/core/postgresql-nullability-classification.schema.json": "spec/core/postgresql-nullability-classification.schema.json",
     "../spec/core/postgresql-field-classification.schema.json": "spec/core/postgresql-field-classification.schema.json",
     "../spec/core/postgresql-record-classification.schema.json": "spec/core/postgresql-record-classification.schema.json",
+    "../spec/extensions/postgresql-keys/package.json": "spec/extensions/postgresql-keys/package.json",
+    "../spec/core/postgresql-key-classification.schema.json": "spec/core/postgresql-key-classification.schema.json",
+    "../spec/core/postgresql-key-catalog-correlation.schema.json": "spec/core/postgresql-key-catalog-correlation.schema.json",
 }
 
 

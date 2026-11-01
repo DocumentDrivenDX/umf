@@ -215,6 +215,8 @@ pub mod postgresql_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_catalog;
 #[cfg(feature = "embedded-adapters")]
+pub mod postgresql_keys_classification;
+#[cfg(feature = "embedded-adapters")]
 pub mod postgresql_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_json_schema_projection;
@@ -290,6 +292,7 @@ pub(crate) mod tablespec_field_classification;
 pub(crate) mod tablespec_record_classification;
 pub(crate) mod tablespec_cardinality_classification;
 pub(crate) mod tablespec_nullability_classification;
+pub(crate) mod tablespec_key_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_via_avro_projection;
 pub mod target_pin;

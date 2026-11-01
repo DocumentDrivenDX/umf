@@ -21,6 +21,8 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         | "postgresql.classifyRecord"
         | "postgresql.classifyCardinality"
         | "postgresql.classifyNullability" => &["profile", "op", "source", "request"],
+        "postgresql.prepareKeyParserRequests" => &["profile", "op", "source", "request"],
+        "postgresql.classifyKeys" => &["profile", "op", "source", "request", "parser"],
         "postgresql.verifyFieldClassification"
         | "postgresql.recoverFieldCapture"
         | "postgresql.verifyRecordClassification"
@@ -29,6 +31,9 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         | "postgresql.recoverCardinalitySource"
         | "postgresql.verifyNullabilityClassification"
         | "postgresql.recoverNullabilitySource" => &["profile", "op", "receipt", "current"],
+        "postgresql.verifyKeyClassification" | "postgresql.recoverKeySource" => {
+            &["profile", "op", "receipt", "current", "parser"]
+        }
         "postgresql.inspect"
         | "postgresql.export"
         | "postgresql.columns"
@@ -78,6 +83,10 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.classifyNullability",
         "postgresql.verifyNullabilityClassification",
         "postgresql.recoverNullabilitySource",
+        "postgresql.prepareKeyParserRequests",
+        "postgresql.classifyKeys",
+        "postgresql.verifyKeyClassification",
+        "postgresql.recoverKeySource",
         "postgresql.inspect",
         "postgresql.export",
         "postgresql.columns",
@@ -126,6 +135,18 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         | "postgresql.recoverNullabilitySource" => {
             required(request, "receipt")?;
             required(request, "current")?;
+        }
+        "postgresql.prepareKeyParserRequests" | "postgresql.classifyKeys" => {
+            required(request, "source")?;
+            required(request, "request")?;
+            if op == "postgresql.classifyKeys" {
+                required(request, "parser")?;
+            }
+        }
+        "postgresql.verifyKeyClassification" | "postgresql.recoverKeySource" => {
+            required(request, "receipt")?;
+            required(request, "current")?;
+            required(request, "parser")?;
         }
         "postgresql.import" => {
             let source = string(request, "source")?;
@@ -306,6 +327,33 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
                 ctx,
             )?,
         )),
+        "postgresql.prepareKeyParserRequests" => {
+            umf_core::postgresql_keys_classification::prepare_key_parser_requests(
+                required(request, "source")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.classifyKeys" => umf_core::postgresql_keys_classification::classify_keys(
+            required(request, "source")?,
+            required(request, "request")?,
+            required(request, "parser")?,
+            ctx,
+        ),
+        "postgresql.verifyKeyClassification" => {
+            umf_core::postgresql_keys_classification::verify_keys(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                required(request, "parser")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverKeySource" => umf_core::postgresql_keys_classification::recover_keys(
+            required(request, "receipt")?,
+            required(request, "current")?,
+            required(request, "parser")?,
+            ctx,
+        ),
         "postgresql.import" => {
             let capture = pg::PostgresqlCatalogCapture::import(string(request, "source")?, ctx)?;
             pg::document_value(string(request, "id")?, &capture, ctx)

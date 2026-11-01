@@ -37,6 +37,9 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "classifyTableSpecNullability",
     "verifyTableSpecNullabilityClassification",
     "recoverTableSpecNullabilitySource",
+    "classifyTableSpecKeys",
+    "verifyTableSpecKeyClassification",
+    "recoverTableSpecKeySource",
 ];
 
 #[cfg(test)]
@@ -265,6 +268,40 @@ impl TableSpecRuntime {
     ) -> Result<Value, EngineError> {
         let mut capabilities = StructuralOnly;
         crate::tablespec_nullability_classification::recover_table_spec_nullability_source(receipt, current, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
+
+    pub fn classify_keys(
+        &self,
+        input: &Value,
+        request: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_key_classification::classify_table_spec_keys(
+            input, request, self, &self.engine, &self.registry, &mut capabilities, ctx,
+        )
+    }
+    pub fn verify_key_classification(
+        &self,
+        receipt: &Value,
+        current: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_key_classification::verify_table_spec_key_classification(
+            receipt, current, self, &self.engine, &self.registry, &mut capabilities, ctx,
+        )
+    }
+    pub fn recover_key_source(
+        &self,
+        receipt: &Value,
+        current: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_key_classification::recover_table_spec_key_source(
+            receipt, current, self, &self.engine, &self.registry, &mut capabilities, ctx,
+        )
     }
 
     pub fn import(

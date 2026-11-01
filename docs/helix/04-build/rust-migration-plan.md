@@ -100,9 +100,9 @@ Current integration order:
 2. Extra Relationship for GraphQL/RDF/LinkML, PostgreSQL Nullability, authored SQL
    Server Nullability and TableSpec Cardinality now pass their focused public
    workflows. Authored SQL Server Keys and TableSpec Nullability now also pass.
-   Luna implements PostgreSQL Keys correlation, SQL Server Field/Record projection
-   and TableSpec Keys next. Parser callbacks may supply AST transport only;
-   PostgreSQL Facets follows the Keys correction.
+   PostgreSQL and TableSpec Keys also pass their current public workflows.
+   Luna implements PostgreSQL/TableSpec Facets and SQL Server Field/Record
+   projection next. Parser callbacks supply AST transport only.
 3. Continue the remaining TableSpec classifiers and authored scalar target
    projections in bounded parallel cuts. Use existing pinned contracts and one
    normal/refusal workflow per capability. Preserve legacy direct consumers until
@@ -118,7 +118,10 @@ Current integration order:
 Each capability has an implementation owner and a focused normal/refusal baseline.
 A passing baseline leaves the repair queue unless its behavior or dependency changes.
 Source review and metadata compilation precede a shared native build; they do not
-replace runtime tests. Do not grow an admitted batch while compiler fixes prevent
+replace runtime tests. Node-focused batches check every Rust host and CLI with
+Cargo metadata, then build only the Node binding for their runtime cases. Keep
+that same feature graph and target cache. Build and test Python and CLI executables
+during final host integration; Node runtime results do not establish those hosts. Do not grow an admitted batch while compiler fixes prevent
 it from reaching runtime.
 
 ## Remaining implementation lanes
@@ -129,10 +132,10 @@ its public Rust route and one ordinary normal/refusal/recovery workflow as appli
 
 | Lane | Concrete remaining implementation | Reuse and next cut |
 | --- | --- | --- |
-| PostgreSQL classifiers | Keys, Facets, Relationships and Composite/DDL-kind classifier pairs. | Keys first: Rust prepares parser requests, the host returns ASTs, and Rust computes catalog correlation. |
-| TableSpec classifiers | Keys, Facets and Relationships. | Reuse the admitted Field/Record/Cardinality adapter and core authoring kernels. |
+| PostgreSQL classifiers | Facets, Relationships and Composite/DDL-kind classifier pairs. | Reuse the passing Keys bridge: Rust prepares parser requests, the host returns ASTs, and Rust computes catalog correlation. |
+| TableSpec classifiers | Facets and Relationships. | Reuse the admitted Field/Record/Cardinality adapter and core authoring kernels. |
 | Authored Field/Record | Projection and recovery for SQL Server, TableSpec, Avro, Parquet and PostgreSQL. | Bundle Field and Record per target; share author verification, target import/export and receipt checks. SQL Server first. |
-| Other authored projections | Cardinality for Avro/Parquet/PostgreSQL/TableSpec; Nullability for Parquet/PostgreSQL/TableSpec; Facets and Keys for Parquet/PostgreSQL/SQL Server/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability and Keys pass their focused workflows. |
+| Other authored projections | Cardinality for Avro/Parquet/PostgreSQL/TableSpec; Nullability for Parquet/PostgreSQL/TableSpec; Facets for Parquet/PostgreSQL/SQL Server/TableSpec; Keys for Parquet/PostgreSQL/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability and Keys pass their focused workflows. |
 | Model and reports | `editExtension`, `prepareCoreInspection` and generic Field/Record/Structured classification/projection report inspector/verify pairs. | Existing Rust extension edits and core inspectors own decisions; host retains only caller callbacks and object presentation. |
 | Binding and Dashboard | Binding validation, inspection/read/write/get, migration/rollback and dataset validation; Dashboard validation/read/write/get/edit. | Port meaning checks in factories and registration callbacks, alongside public operations. |
 | Medical | FHIR, CDC mortality, DICOM metadata and terminology lookup. | Use exact native-JSON traversal and existing domain-pack wire patterns. |
@@ -211,9 +214,19 @@ Rust metadata and Python resource closure. Their shared native build completes i
 Keys passes projection, verification, ideal recovery and strict refusal after
 caller-context traversal/copy corrections. TableSpec Nullability passes
 classification, verification, exact source recovery and authored-conflict refusal.
-These capabilities leave the repair queue. PostgreSQL Keys remains with Luna for
-Rust catalog correlation; SQL Server Field/Record and TableSpec Keys are active
-implementation cuts. The PostgreSQL Field/Record baseline now selects an existing
+These capabilities leave the repair queue.
+
+PostgreSQL Keys and TableSpec Keys now pass resource closure, full TypeScript and
+Rust metadata checks, a shared native build (3m49s), and all four focused tests
+with 16 assertions in 42 seconds. PostgreSQL catalog correlation is Rust-owned:
+Rust prepares the SQL list, the supplied backend only returns parser ASTs, and
+Rust validates correspondence and computes observations. Classification,
+verification, exact archive recovery, strict refusal and parser-error identity
+pass on a derived ordinary two-column/two-index input. The original 17-relation
+fixture remains unchanged for integration. TableSpec native key observation,
+verification, source recovery and strict refusal also pass. These workflows leave
+the repair queue. PostgreSQL/TableSpec Facets and authored SQL Server Field/Record
+are the active implementation cuts. The PostgreSQL Field/Record baseline now selects an existing
 ordinary two-column relation while retaining the same assertions; final integration
 will validate that smaller fixture. Compiler checks precede native builds; only
 new or failed workflows enter each focused runtime. Complete local host and package

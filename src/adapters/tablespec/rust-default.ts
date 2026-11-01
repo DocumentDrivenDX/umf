@@ -9,6 +9,7 @@ import type {TableSpecFieldClassification,TableSpecFieldRequest} from '../../cor
 import type {TableSpecRecordClassification,TableSpecRecordRequest} from '../../core-ideals/tablespec-record-package';
 import type {TableSpecCardinalityClassification,TableSpecCardinalityRequest} from '../../core-ideals/cardinality-tablespec';
 import type {TableSpecNullabilityClassification,TableSpecNullabilityRequest} from '../../core-ideals/nullability-tablespec';
+import type {TableSpecKeyClassification,TableSpecKeyRequest} from '../../core-ideals/key-tablespec';
 
 export interface TableSpecNativeFamilyEngine {
  tablespec:{
@@ -31,6 +32,9 @@ export interface TableSpecNativeFamilyEngine {
   classifyTableSpecNullability(fields:{document:Document;request:TableSpecNullabilityRequest}):unknown;
   verifyTableSpecNullabilityClassification(fields:{receipt:TableSpecNullabilityClassification;current:Document}):unknown;
   recoverTableSpecNullabilitySource(fields:{receipt:TableSpecNullabilityClassification;current:Document}):unknown;
+  classifyTableSpecKeys(fields:{document:Document;request:TableSpecKeyRequest}):unknown;
+  verifyTableSpecKeyClassification(fields:{receipt:TableSpecKeyClassification;current:Document}):unknown;
+  recoverTableSpecKeySource(fields:{receipt:TableSpecKeyClassification;current:Document}):unknown;
  }
 }
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
@@ -68,5 +72,8 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   classifyTableSpecNullability(document:Document,request:TableSpecNullabilityRequest):TableSpecNullabilityClassification{return call(()=>engine.tablespec.classifyTableSpecNullability({document,request}) as TableSpecNullabilityClassification);},
   verifyTableSpecNullabilityClassification(receipt:TableSpecNullabilityClassification,current:Document):TableSpecNullabilityClassification{return call(()=>engine.tablespec.verifyTableSpecNullabilityClassification({receipt,current}) as TableSpecNullabilityClassification);},
   recoverTableSpecNullabilitySource(receipt:TableSpecNullabilityClassification,current:Document):string|Record<string,string>{return call(()=>engine.tablespec.recoverTableSpecNullabilitySource({receipt,current}) as string|Record<string,string>);},
+  classifyTableSpecKeys(document:Document,request:TableSpecKeyRequest):TableSpecKeyClassification{return call(()=>engine.tablespec.classifyTableSpecKeys({document,request}) as TableSpecKeyClassification);},
+  verifyTableSpecKeyClassification(receipt:TableSpecKeyClassification,current:Document):TableSpecKeyClassification{return call(()=>engine.tablespec.verifyTableSpecKeyClassification({receipt,current}) as TableSpecKeyClassification);},
+  recoverTableSpecKeySource(receipt:TableSpecKeyClassification,current:Document):string|Record<string,string>{return call(()=>engine.tablespec.recoverTableSpecKeySource({receipt,current}) as string|Record<string,string>);},
  });
 }

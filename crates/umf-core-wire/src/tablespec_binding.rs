@@ -53,6 +53,9 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "classifyTableSpecNullability",
         "verifyTableSpecNullabilityClassification",
         "recoverTableSpecNullabilitySource",
+        "classifyTableSpecKeys",
+        "verifyTableSpecKeyClassification",
+        "recoverTableSpecKeySource",
     ]
     .into_iter()
     .find(|candidate| op == &Utf16::from(*candidate))
@@ -76,8 +79,10 @@ fn allowed(op: &str) -> &'static [&'static str] {
         | "verifyTableSpecCardinalityClassification"
         | "recoverTableSpecCardinalitySource"
         | "verifyTableSpecNullabilityClassification"
-        | "recoverTableSpecNullabilitySource" => &["profile", "op", "receipt", "current"],
-        "classifyTableSpecCardinality" | "classifyTableSpecNullability" => &["profile", "op", "document", "request"],
+        | "recoverTableSpecNullabilitySource"
+        | "verifyTableSpecKeyClassification"
+        | "recoverTableSpecKeySource" => &["profile", "op", "receipt", "current"],
+        "classifyTableSpecCardinality" | "classifyTableSpecNullability" | "classifyTableSpecKeys" => &["profile", "op", "document", "request"],
         _ => &[],
     }
 }
@@ -233,11 +238,13 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         | "verifyTableSpecCardinalityClassification"
         | "recoverTableSpecCardinalitySource"
         | "verifyTableSpecNullabilityClassification"
-        | "recoverTableSpecNullabilitySource" => {
+        | "recoverTableSpecNullabilitySource"
+        | "verifyTableSpecKeyClassification"
+        | "recoverTableSpecKeySource" => {
             required_value(request, "receipt")?;
             required_value(request, "current")?;
         }
-        "classifyTableSpecRecord" | "classifyTableSpecCardinality" | "classifyTableSpecNullability" => {
+        "classifyTableSpecRecord" | "classifyTableSpecCardinality" | "classifyTableSpecNullability" | "classifyTableSpecKeys" => {
             required_value(request, "document")?;
             required_value(request, "request")?;
         }
@@ -366,6 +373,9 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
         "classifyTableSpecNullability" => runtime.classify_nullability(required_value(request, "document")?, required_value(request, "request")?, ctx),
         "verifyTableSpecNullabilityClassification" => runtime.verify_nullability_classification(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
         "recoverTableSpecNullabilitySource" => runtime.recover_nullability_source(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
+        "classifyTableSpecKeys" => runtime.classify_keys(required_value(request, "document")?, required_value(request, "request")?, ctx),
+        "verifyTableSpecKeyClassification" => runtime.verify_key_classification(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
+        "recoverTableSpecKeySource" => runtime.recover_key_source(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
         _ => Err(request_error("unknown TableSpec operation")),
     }
 }

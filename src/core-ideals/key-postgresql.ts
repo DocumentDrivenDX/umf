@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
 import {exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../adapters/postgresql/catalog';
 import {inspectPostgresqlKeyCatalog} from '../adapters/postgresql/key-catalog';
@@ -11,9 +11,8 @@ import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
 import schema from '../../spec/core/postgresql-key-classification.schema.json';
 import nativeSchema from '../../spec/extensions/postgresql-catalog/key-observations-v1.schema.json';
-import manifest from '../../spec/extensions/postgresql-keys/package.json';
-export const POSTGRESQL_KEYS_EXTENSION='umf.postgresql.keys';
-export const postgresqlKeysPackage=manifest as unknown as ExtensionPackage;
+import {POSTGRESQL_KEYS_EXTENSION} from './key-postgresql-package';
+export {POSTGRESQL_KEYS_EXTENSION,postgresqlKeysPackage} from './key-postgresql-package';
 export {default as postgresqlKeyClassificationSchema} from '../../spec/core/postgresql-key-classification.schema.json';
 export interface PostgresqlKeyRequest {nativeSource:string;supplement:string;mode:'strict'|'report';profile:'captured-stored-values'}
 export interface PostgresqlKeyObservation {

@@ -179,10 +179,8 @@ export type { CardinalityTableSpecRequest } from './core-ideals/cardinality-tabl
 export { classifyPostgresqlComposite } from './core-ideals/postgresql-composite';
 export { classifyPostgresqlDdlRecord } from './core-ideals/postgresql-ddl-kinds';
 export { classifyPostgresqlFacets } from './core-ideals/facets-postgresql';
-export { classifyPostgresqlKeys } from './core-ideals/key-postgresql';
 export { classifyPostgresqlRelationships } from './core-ideals/relationship-postgresql-factory';
 export { classifyTableSpecFacets } from './core-ideals/facets-tablespec';
-export { classifyTableSpecKeys } from './core-ideals/key-tablespec';
 export { classifyTableSpecRelationships } from './core-ideals/relationship-tablespec';
 export type { CompiledActionRule } from './extensions/actions/expression';
 export type { CompiledActionSelector } from './extensions/actions/selector';
@@ -752,7 +750,7 @@ export { POSTGRESQL_CARDINALITY_EXTENSION } from './core-ideals/cardinality-post
 export { POSTGRESQL_CATALOG_EXTENSION } from './adapters/postgresql/catalog';
 export { POSTGRESQL_EXTENSION } from './adapters/postgresql/package';
 export { POSTGRESQL_FACETS_EXTENSION } from './core-ideals/facets-postgresql';
-export { POSTGRESQL_KEYS_EXTENSION } from './core-ideals/key-postgresql';
+export { POSTGRESQL_KEYS_EXTENSION } from './core-ideals/key-postgresql-package';
 export { POSTGRESQL_NULLABILITY_EXTENSION } from './core-ideals/nullability-postgresql';
 export { POSTGRESQL_RELATIONSHIPS_EXTENSION } from './core-ideals/relationship-postgresql-factory';
 export type { PostgresqlAvroPolicy } from './projections/postgresql-avro';
@@ -798,7 +796,7 @@ export type { PostgresqlKeyIndex } from './adapters/postgresql/key-catalog';
 export type { PostgresqlKeyObservation } from './core-ideals/key-postgresql';
 export { default as postgresqlKeyObservationsSchema } from '../spec/extensions/postgresql-catalog/key-observations-v1.schema.json';
 export type { PostgresqlKeyRequest } from './core-ideals/key-postgresql';
-export { postgresqlKeysPackage } from './core-ideals/key-postgresql';
+export { postgresqlKeysPackage } from './core-ideals/key-postgresql-package';
 export type { PostgresqlLayoutEndpointComponent } from './projections/ddd-postgresql/relationship-layout';
 export type { PostgresqlLayoutField } from './projections/ddd-postgresql/relationship-layout';
 export type { PostgresqlLayoutKey } from './projections/ddd-postgresql/relationship-layout';
@@ -938,7 +936,6 @@ export { recoverNullabilityFromTableSpec } from './core-ideals/nullability-table
 export { recoverPostgresqlCompositeCapture } from './core-ideals/postgresql-composite';
 export { recoverPostgresqlDdlKinds } from './core-ideals/postgresql-ddl-kinds';
 export { recoverPostgresqlFacetSource } from './core-ideals/facets-postgresql';
-export { recoverPostgresqlKeySource } from './core-ideals/key-postgresql';
 export { recoverPostgresqlRelationshipSource } from './core-ideals/relationship-postgresql-factory';
 export { recoverRecordFromAvro } from './core-ideals/record-avro-projection';
 export { recoverRecordFromParquet } from './core-ideals/record-parquet-projection';
@@ -946,7 +943,6 @@ export { recoverRecordFromPostgresql } from './core-ideals/record-postgresql-pro
 export { recoverRecordFromSqlServer } from './core-ideals/record-sqlserver-projection';
 export { recoverRecordFromTableSpec } from './core-ideals/record-tablespec-projection';
 export { recoverTableSpecFacetSource } from './core-ideals/facets-tablespec';
-export { recoverTableSpecKeySource } from './core-ideals/key-tablespec';
 export { recoverTableSpecRelationshipSource } from './core-ideals/relationship-tablespec';
 export { registerSagas } from './extensions/actions/saga';
 export type { Registration } from './registry/registry';
@@ -1317,12 +1313,10 @@ export { verifyKeysParquetProjection } from './core-ideals/key-parquet-projectio
 export { verifyKeysPostgresqlProjection } from './core-ideals/key-postgresql-projection';
 export { verifyKeysTableSpecProjection } from './core-ideals/key-tablespec-projection';
 export { verifyPostgresqlFacetClassification } from './core-ideals/facets-postgresql';
-export { verifyPostgresqlKeyClassification } from './core-ideals/key-postgresql';
 export { verifyPostgresqlRelationshipClassification } from './core-ideals/relationship-postgresql-factory';
 export { verifyRecordProjectionInspection } from './core-ideals/record-report';
 export { verifyStructuredClassificationInspection } from './core-ideals/structured-report';
 export { verifyTableSpecFacetClassification } from './core-ideals/facets-tablespec';
-export { verifyTableSpecKeyClassification } from './core-ideals/key-tablespec';
 export { verifyTableSpecRelationshipClassification } from './core-ideals/relationship-tablespec';
 export { writeBindingDocument } from './extensions/binding/index';
 export { writeDashboardDocument } from './extensions/dashboard/index';
