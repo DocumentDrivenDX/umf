@@ -207,6 +207,38 @@ test('retiring an action at the native admission cut prevents a fresh effect',as
  });
 },{timeout:30_000});
 
+test('a provider ticket intent conflict stays pending and cannot be mistaken for a business result',async()=>withSagaNativeCluster(async cluster=>{
+ const [inventory,allocation]=await Promise.all([installSagaProvider(cluster.providers[0],'register-conflict-a'),installSagaProvider(cluster.providers[1],'register-conflict-b')]);
+ const definition=sagaRuntimePlan(inventory,allocation),target={module:definition.module,saga:definition.id,revision:definition.revision},protocol='umf.actions.saga/1',actor={tenant:'tenant-a',principal:'register-conflict-worker',service:'saga-test-worker',worker:'register-conflict-worker'},adapter=new SagaProtocolCoordinator(cluster.coordinator,new Map([[JSON.stringify([target.module,target.saga,target.revision]),definition]]),async a=>a.tenant==='tenant-a'),orderKey='register-conflict-order';
+ await inventory.seed('reserve',orderKey);
+ const submitted=await adapter.invoke(actor,{protocol,operation:'submit',key:'register-conflict-submit',target,inputs:{order:inventory.request('reserve',orderKey).inputs.order}}) as any;
+ const claim=await adapter.invoke(actor,{protocol,operation:'claim',instance:submitted.instance}) as any;
+ const originalRegister=inventory.gateway.register.bind(inventory.gateway);let injected=false;
+ inventory.gateway.register=async(ticket,tenant,request,credential)=>{
+  if(!injected){injected=true;await originalRegister(ticket,tenant,{...request,key:`${request.key}-foreign`},credential);}
+  return originalRegister(ticket,tenant,request,credential);
+ };
+ const executeRequest={protocol,operation:'execute',instance:submitted.instance,invocation:claim.invocation,fence:claim.fence},capability=await adapter.prepareControl(actor,executeRequest),result=await adapter.handle(actor,executeRequest,capability) as any;
+ expect(injected).toBe(true);
+ expect(result).toEqual({status:'indeterminate',recovery:{id:capability,operation:'execute'}});
+ const status=await adapter.handle(actor,{protocol,operation:'status',instance:submitted.instance}) as any;
+ expect(status.phase).toBe('reconciling');expect(status.pending).toHaveLength(1);
+ const pendingClaim=await adapter.invoke(actor,{protocol,operation:'claim',instance:submitted.instance}) as any;
+ expect(pendingClaim.status).toBe('claimed');expect(pendingClaim.invocation).toEqual(claim.invocation);
+ expect(await adapter.invoke(actor,{protocol,operation:'execute',instance:submitted.instance,invocation:{step:'allocate',direction:'forward'},fence:pendingClaim.fence})).toEqual({status:'conflict',code:'SAGA_ORDER'});
+ expect(await cluster.coordinator.sql`select ticket from saga_ticket where instance_id=${submitted.instance.id}`).toHaveLength(1);
+ expect(await adapter.handle(actor,{protocol,operation:'recover-control',recovery:{id:capability,operation:'execute'}})).toEqual(result);
+ const ticket=String((await cluster.coordinator.sql`select ticket from saga_ticket where instance_id=${submitted.instance.id}`)[0]!.ticket);
+ const [providerRow]=await inventory.gateway.sql`select intent,state from saga_provider_ticket where ticket=${ticket}`;
+ expect(providerRow).toBeDefined();expect(providerRow!.state).toBe('open');
+ expect((decodeReferenceJson(providerRow!.intent) as any).key).toBe(`saga1/${submitted.instance.namespace}/${submitted.instance.id}/0/f-foreign`);
+ const outcomes=await inventory.store.transaction(inventory.storeName,async(tx,control)=>tx`select count(*)::int as n from action_outcome where store=${control.id}`);
+ expect(outcomes[0]!.n).toBe(0);
+ const entities=await inventory.store.sql`select fields from action_entity`;
+ const entity=entities.map((row:any)=>decodeReferenceJson(row.fields) as any).find((fields:any)=>fields['["sales","id"]']?.string===orderKey);
+ expect(entity).toBeDefined();expect(entity['["sales","status"]'].string).toBe('pending');
+}));
+
 test('a natively admitted action retains its original result when retirement follows execution',async()=>{
  await withSagaNativeCluster(async cluster=>{
   let signal!:()=>void,release!:()=>void,armed=true;
@@ -676,8 +708,11 @@ test('reconciliation consumes the bounded lookup budget across coordinator resta
   const adapter=new SagaProtocolCoordinator(cluster.coordinator,directory,authorize),key='bounded-lookup-order';await inventory.seed('reserve',key);
   const submitted=await adapter.invoke(actor,{protocol,operation:'submit',key:'bounded-lookup-submit',target,inputs:{order:inventory.request('reserve',key).inputs.order}}) as any;
   const claim=await adapter.invoke(actor,{protocol,operation:'claim',instance:submitted.instance}) as any;
-  const result=await adapter.invoke(actor,{protocol,operation:'execute',instance:submitted.instance,invocation:claim.invocation,fence:claim.fence}) as any;expect(result.status).toBe('indeterminate');
-  for(let attempt=0;attempt<8;attempt++)expect((await adapter.invoke(actor,{protocol,operation:'reconcile',instance:submitted.instance}) as any).status).toBe('indeterminate');
+  const executeRequest={protocol,operation:'execute',instance:submitted.instance,invocation:claim.invocation,fence:claim.fence},executeCapability=await adapter.prepareControl(actor,executeRequest),result=await adapter.handle(actor,executeRequest,executeCapability) as any;expect(result.status).toBe('indeterminate');expect(result.recovery.id).toBe(executeCapability);
+  const reconcileRequest={protocol,operation:'reconcile',instance:submitted.instance},reconcileCapability=await adapter.prepareControl(actor,reconcileRequest),firstReconcile=await adapter.handle(actor,reconcileRequest,reconcileCapability) as any;
+  expect(firstReconcile).toEqual({status:'indeterminate',recovery:{id:reconcileCapability,operation:'reconcile'}});
+  expect(await adapter.handle(actor,{protocol,operation:'recover-control',recovery:{id:reconcileCapability,operation:'reconcile'}})).toEqual(firstReconcile);
+  for(let attempt=1;attempt<8;attempt++)expect((await adapter.invoke(actor,{protocol,operation:'reconcile',instance:submitted.instance}) as any).status).toBe('indeterminate');
   await cluster.coordinator.close();
   const restartedCoordinator=new SagaCoordinator(cluster.coordinator.url);await restartedCoordinator.initialize();
   const restartedAdapter=new SagaProtocolCoordinator(restartedCoordinator,directory,authorize);

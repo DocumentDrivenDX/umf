@@ -29,7 +29,7 @@ from .validation import inspect_extension_kinds, validate_document
 
 from .saga import SagaRuntime
 
-__version__ = "0.10.4"
+__version__ = "0.10.5"
 __all__ = [
     "SagaRuntime",
     "CoreItemTypeReference",
