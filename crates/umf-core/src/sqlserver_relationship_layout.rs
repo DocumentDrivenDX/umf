@@ -1143,7 +1143,8 @@ pub fn validate_sqlserver_relationship_layout(
             }
         } else {
             if get(layout, "sourceKey").is_none_or(|source_key| {
-                !same_ref(source_key, source_end, &["module", "element", "key"])
+                !same_ref(source_key, source_end, &["module", "element"])
+                    || !key_layouts.contains_key(&ref_id(source_key, &["module", "element", "key"]))
             }) || get(layout, "sourceComponents").is_none()
                 || get(layout, "sourceConstraint").is_none()
             {

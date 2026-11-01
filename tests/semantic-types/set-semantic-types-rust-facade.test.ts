@@ -1,9 +1,10 @@
 import {expect, test} from 'bun:test';
 import {UmfError} from '../../src/model/errors';
 import {bindSemanticTypeAccessorsRust} from '../../src/model/rust-semantic-type-accessors-default';
+import type {Document} from '../../src/model/types';
 
 test('setSemanticTypes delegates annotation unchanged and returns the core copy-on-write result',()=>{
- const source={id:'doc',extensions:{native:{value:1}}};
+ const source:Document={umf:'0.10.0',id:'doc',vocabularies:{},modules:[],extensions:{native:{value:1}}};
  const annotation={types:[{vocabulary:'example.contact',version:'1.0',term:'email',custom:'retained'}]};
  const target={...source,extensions:{...source.extensions,semanticTypes:annotation}};
  let args:unknown[]=[];
@@ -14,7 +15,7 @@ test('setSemanticTypes delegates annotation unchanged and returns the core copy-
  const result=api.setSemanticTypes(source as never,'contact','Email',annotation as never);
  expect(args).toEqual([source,'contact','Email',annotation]);
  expect(result).toBe(target);
- expect(source).toEqual({id:'doc',extensions:{native:{value:1}}});
+ expect(source).toEqual({umf:'0.10.0',id:'doc',vocabularies:{},modules:[],extensions:{native:{value:1}}});
 });
 
 test('setSemanticTypes preserves unrelated host errors',()=>{

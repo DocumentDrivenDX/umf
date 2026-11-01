@@ -7,6 +7,9 @@ import {readFile} from 'node:fs/promises';
 import {resolve, sep} from 'node:path';
 import {chromium} from 'playwright';
 
+type ActionBrowserResult = Record<string, string | number | boolean>;
+declare global { interface Window { umfActionPlanResult?: ActionBrowserResult } }
+
 assert(process.argv[2], 'Pass the built SDK dist directory');
 const sdk = resolve(process.argv[2]);
 await Promise.all(['umf-browser.js', 'umf_core_wasm_bg.wasm'].map(file => readFile(resolve(sdk, file))));
@@ -42,7 +45,7 @@ const forged={...manifestInspection,eligible:false};
 const manifestRefused=api.assessActionManifest(forged,capabilities,context);
 plan.selection.dependencies=[{module:'sales',element:'active'}];
 const refused=api.inspectActionPlan(await artifact(plan),context);
-window.umfResult={frame:JSON.parse(prepared.utf8).frames[0],eligible:inspected.eligible,refused:!refused.eligible,refusal:refused.diagnostics.some(item=>item.code==='PAP_ACTION'),manifestEligible:manifestInspection.eligible,manifestCompatible:manifestAssessment.compatible,manifestRefused:!manifestRefused.compatible,sealed:constructed.sealed,nodeGlobals:typeof process!=='undefined'||typeof Buffer!=='undefined'};
+window.umfActionPlanResult={frame:JSON.parse(prepared.utf8).frames[0],eligible:inspected.eligible,refused:!refused.eligible,refusal:refused.diagnostics.some(item=>item.code==='PAP_ACTION'),manifestEligible:manifestInspection.eligible,manifestCompatible:manifestAssessment.compatible,manifestRefused:!manifestRefused.compatible,sealed:constructed.sealed,nodeGlobals:typeof process!=='undefined'||typeof Buffer!=='undefined'};
 `;
 
 const server = createServer(async (request, response) => {
@@ -68,15 +71,15 @@ const server = createServer(async (request, response) => {
   response.writeHead(404);
   response.end('not found');
 });
-await new Promise(done => server.listen(0, '127.0.0.1', done));
+await new Promise<void>(done => server.listen({port:0,host:'127.0.0.1'}, done));
 let browser;
 try {
   const address = server.address();
   assert(address && typeof address !== 'string');
   browser = await chromium.launch({headless: true, ...(process.env.UMF_CHROMIUM_PATH ? {executablePath: process.env.UMF_CHROMIUM_PATH} : {})});
   const page = await browser.newPage();
-  const errors = [];
-  const external = [];
+  const errors: string[] = [];
+  const external: string[] = [];
   page.on('pageerror', error => errors.push(String(error)));
   await page.route('**/*', route => {
     const url = new URL(route.request().url());
@@ -85,12 +88,12 @@ try {
   });
   await page.goto(`http://127.0.0.1:${address.port}/`);
   await Promise.race([
-    page.waitForFunction(() => window.umfResult, undefined, {timeout: 30000}),
+    page.waitForFunction(() => window.umfActionPlanResult, undefined, {timeout: 30000}),
     new Promise((_, reject) => page.once('pageerror', reject)),
   ]);
   assert.deepEqual(errors, []);
   assert.deepEqual(external, []);
-  const result = await page.evaluate(() => window.umfResult);
+  const result = await page.evaluate(() => window.umfActionPlanResult!);
   assert.deepEqual(result, {frame: 'customer-write', eligible: true, refused: true, refusal: true, manifestEligible:true, manifestCompatible:true, manifestRefused:true, sealed:false, nodeGlobals: false});
   console.log(JSON.stringify({browser: browser.version(), ...result, passed: true}));
 } finally {

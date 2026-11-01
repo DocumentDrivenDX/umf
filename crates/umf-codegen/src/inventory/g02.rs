@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact retained-source certificate for the currently callable mixed CREATE/G02 profile.
 use super::*;
+use sha2::{Digest, Sha256};
 
 fn at_mut<'a>(value: &'a mut Value, key: &str) -> Option<&'a mut Value> {
     let Value::Object(fields) = value else {
@@ -878,30 +879,10 @@ pub(super) fn mixed_review_candidates(
     let discovered =
         engine.discover_table_migration_changes_selected(previous, next, Some(&selector), ctx)?;
     let native = items(&discovered, "/review")?;
-    let mut result = Vec::new();
-    for (kind, path) in [
-        ("replace-check", domain_path.as_str()),
-        ("change-operation", command_path.as_str()),
-    ] {
-        let mut selected = native.iter().filter(|candidate| {
-            eq_text(get(candidate, "kind"), kind) && eq_text(get(candidate, "path"), path)
-        });
-        let candidate = selected.next().ok_or_else(|| {
-            err(
-                "TABLE_MIGRATION_REVIEW",
-                path,
-                "Selected G02 source meaning has no independently discovered review",
-            )
-        })?;
-        if selected.next().is_some() {
-            return Err(err(
-                "TABLE_MIGRATION_REVIEW",
-                path,
-                "Selected G02 review is ambiguous",
-            ));
-        }
-        result.push(umf_core::copy_json(candidate, ctx)?);
-    }
+    // Native discovery already orders the selected check and source commands
+    // by their governed change sequence. Preserve that order in the exact
+    // review certificate; forcing the G02 operation ahead of other new
+    // commands changes an otherwise identical marker list.
     let previous_doc = source(previous, ctx)?;
     let previous_commands = items(
         val(
@@ -921,32 +902,57 @@ pub(super) fn mixed_review_candidates(
         .iter()
         .filter_map(|row| get(row, "id").and_then(text))
         .collect::<BTreeSet<_>>();
+    let mut expected = BTreeSet::new();
+    expected.insert(("replace-check".to_owned(), domain_path.clone()));
     for (index, command) in commands.iter().enumerate() {
         ctx.charge_work(1, Utf16::from("/next/source/commands"))?;
         let id = member_text(command, "id", "/next/source/commands/id")?;
-        if id == operation_id || old_ids.contains(&id) {
+        if old_ids.contains(&id) {
+            if id == operation_id {
+                return Err(err(
+                    "TABLE_MIGRATION_REVIEW",
+                    &command_path,
+                    "Selected G02 operation is not newly source-bound",
+                ));
+            }
             continue;
         }
-        let path = format!("/modules/{module_index}/extensions/umf.tables/commands/{index}");
-        let mut matches = native.iter().filter(|candidate| {
-            eq_text(get(candidate, "kind"), "change-operation")
-                && eq_text(get(candidate, "path"), &path)
-        });
-        let candidate = matches.next().ok_or_else(|| {
-            err(
-                "TABLE_MIGRATION_REVIEW",
-                &path,
-                "Created command has no source-derived review",
-            )
-        })?;
-        if matches.next().is_some() {
-            return Err(err(
-                "TABLE_MIGRATION_REVIEW",
-                &path,
-                "Created command review is ambiguous",
-            ));
+        expected.insert((
+            "change-operation".to_owned(),
+            format!("/modules/{module_index}/extensions/umf.tables/commands/{index}"),
+        ));
+    }
+    if !expected.contains(&("change-operation".to_owned(), command_path.clone())) {
+        return Err(err(
+            "TABLE_MIGRATION_REVIEW",
+            &command_path,
+            "Selected G02 operation has no source command",
+        ));
+    }
+    let mut seen = BTreeSet::new();
+    let mut result = Vec::new();
+    for candidate in native {
+        ctx.charge_work(1, Utf16::from("/review"))?;
+        let kind = member_text(candidate, "kind", "/review/kind")?;
+        let path = member_text(candidate, "path", "/review/path")?;
+        let key = (kind, path);
+        if expected.contains(&key) {
+            if !seen.insert(key) {
+                return Err(err(
+                    "TABLE_MIGRATION_REVIEW",
+                    "/review",
+                    "Selected source review is ambiguous",
+                ));
+            }
+            result.push(umf_core::copy_json(candidate, ctx)?);
         }
-        result.push(umf_core::copy_json(candidate, ctx)?);
+    }
+    if seen.len() != expected.len() {
+        return Err(err(
+            "TABLE_MIGRATION_REVIEW",
+            "/review",
+            "Selected source meaning has no independently discovered review",
+        ));
     }
     let intents = items(
         val(options, "tableIntents", "/options/tableIntents")?,
@@ -1077,57 +1083,568 @@ fn present_states(
     Ok(a(states))
 }
 
+fn sha256_text(value: Option<&Value>) -> Option<String> {
+    let value = value.and_then(text)?;
+    if value.len() == 64
+        && value
+            .bytes()
+            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+    {
+        Some(value)
+    } else {
+        None
+    }
+}
+
+fn historical_selected_ids(
+    plan: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<BTreeSet<String>, EngineError> {
+    let execution = val(plan, "seedExecution", "/history/plans/0/seedExecution")?;
+    if eq_text(Some(execution), "none") {
+        return Ok(BTreeSet::new());
+    }
+    if !exact_fields(execution, &["version", "sets"])
+        || !eq_text(get(execution, "version"), "umf.table-seed-execution/0.1")
+    {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/plans/0/seedExecution",
+            "Installed seed execution is malformed",
+        ));
+    }
+    let sets = items(
+        val(execution, "sets", "/history/plans/0/seedExecution/sets")?,
+        "/history/plans/0/seedExecution/sets",
+    )?;
+    let mut selected = BTreeSet::new();
+    for (index, set) in sets.iter().enumerate() {
+        ctx.charge_work(1, Utf16::from("/history/plans/0/seedExecution/sets"))?;
+        let id = text(set).ok_or_else(|| {
+            err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                &format!("/history/plans/0/seedExecution/sets/{index}"),
+                "Installed seed identity is malformed",
+            )
+        })?;
+        if id.is_empty() || !selected.insert(id) {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/plans/0/seedExecution/sets",
+                "Installed seed identities are repeated",
+            ));
+        }
+    }
+    Ok(selected)
+}
+
+fn historical_seed_phase_digest(
+    plan: &Value,
+    seed_id: &str,
+    ctx: &mut Context<'_>,
+) -> Result<(String, String), EngineError> {
+    let steps = items(
+        val(plan, "steps", "/history/plans/0/steps")?,
+        "/history/plans/0/steps",
+    )?;
+    let phases = items(
+        val(plan, "phases", "/history/plans/0/phases")?,
+        "/history/plans/0/phases",
+    )?;
+    let mut seed_step = None;
+    for step in steps {
+        ctx.charge_work(1, Utf16::from("/history/plans/0/steps"))?;
+        if !eq_text(get(step, "operation"), "apply-seeds") {
+            continue;
+        }
+        let sets = get(step, "seedSets").or_else(|| get(get(step, "inventorySubject")?, "sets"));
+        let Some(sets) = sets.and_then(array_items) else {
+            continue;
+        };
+        if sets.iter().any(|set| eq_text(Some(set), seed_id)) {
+            if seed_step.replace(step).is_some() {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    "/history/plans/0/steps",
+                    "Installed seed has multiple effect steps",
+                ));
+            }
+        }
+    }
+    let seed_step = seed_step.ok_or_else(|| {
+        err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/plans/0/steps",
+            "Installed selected seed has no effect step",
+        )
+    })?;
+    let step_sets = get(seed_step, "seedSets")
+        .or_else(|| get(get(seed_step, "inventorySubject")?, "sets"))
+        .ok_or_else(|| {
+            err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/plans/0/steps",
+                "Installed seed effect has no selected sets",
+            )
+        })?;
+    let execution_sets = val(
+        val(plan, "seedExecution", "/history/plans/0/seedExecution")?,
+        "sets",
+        "/history/plans/0/seedExecution/sets",
+    )?;
+    if step_sets != execution_sets {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/plans/0/steps",
+            "Installed seed effect does not bind selected execution",
+        ));
+    }
+    let step_id = member_text(seed_step, "id", "/history/plans/0/steps/id")?;
+    let mut owner = None;
+    for phase in phases {
+        ctx.charge_work(1, Utf16::from("/history/plans/0/phases"))?;
+        if get(phase, "steps")
+            .and_then(array_items)
+            .is_some_and(|ids| ids.iter().any(|id| eq_text(Some(id), &step_id)))
+        {
+            if owner.replace(phase).is_some() {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    "/history/plans/0/phases",
+                    "Installed selected seed has multiple owning phases",
+                ));
+            }
+        }
+    }
+    let phase = owner.ok_or_else(|| {
+        err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/plans/0/phases",
+            "Installed selected seed has no owning phase",
+        )
+    })?;
+    let phase_id = member_text(phase, "id", "/history/plans/0/phases/id")?;
+    let ids = items(
+        val(phase, "steps", "/history/plans/0/phases/steps")?,
+        "/history/plans/0/phases/steps",
+    )?;
+    let mut phase_steps = Vec::new();
+    let mut seen = BTreeSet::new();
+    for id in ids {
+        ctx.charge_work(
+            steps.len().saturating_add(1),
+            Utf16::from("/history/plans/0/phases/steps"),
+        )?;
+        let id = text(id).ok_or_else(|| {
+            err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/plans/0/phases/steps",
+                "Phase step identity is malformed",
+            )
+        })?;
+        if !seen.insert(id.clone()) {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/plans/0/phases/steps",
+                "Phase step identity is repeated",
+            ));
+        }
+        let step = steps
+            .iter()
+            .find(|step| eq_text(get(step, "id"), &id))
+            .ok_or_else(|| {
+                err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    "/history/plans/0/phases/steps",
+                    "Phase references an absent effect step",
+                )
+            })?;
+        phase_steps.push((*step).clone());
+    }
+    let preimage = o(vec![("phase", phase.clone()), ("steps", a(phase_steps))]);
+    let legacy = [
+        "umf.table-migration/0.1",
+        "umf.table-migration/0.2",
+        "umf.table-migration/0.3",
+        "umf.table-migration/0.4",
+        "umf.table-migration/0.5",
+        "umf.table-migration/0.6",
+    ]
+    .iter()
+    .any(|version| eq_text(get(plan, "version"), version));
+    let digest = if legacy {
+        legacy_phase_digest(&preimage, ctx)?
+    } else {
+        hash(&preimage, ctx)?
+    };
+    Ok((phase_id, digest))
+}
+
+/// The legacy TypeScript phase proof used code-point key ordering rather than
+/// the G10 canonical JSON key order. Keep its source proof distinct.
+fn legacy_phase_digest(value: &Value, ctx: &mut Context<'_>) -> Result<String, EngineError> {
+    fn emit(value: &Value, hash: &mut Sha256, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        ctx.charge_work(1, Utf16::from("/history/phase"))?;
+        match value {
+            Value::Array(items) => {
+                hash.update(b"[");
+                for (index, item) in items.iter().enumerate() {
+                    if index > 0 {
+                        hash.update(b",");
+                    }
+                    emit(item, hash, ctx)?;
+                }
+                hash.update(b"]");
+            }
+            Value::Object(members) => {
+                ctx.charge_work(
+                    members.len().saturating_mul(2),
+                    Utf16::from("/history/phase"),
+                )?;
+                let mut ordered = Vec::with_capacity(members.len());
+                for (key, item) in members {
+                    let scalar = key.to_utf8().map_err(|_| {
+                        err(
+                            "TABLE_INVENTORY_UNSUPPORTED",
+                            "/history/phase",
+                            "Legacy phase contains invalid UTF-16",
+                        )
+                    })?;
+                    ordered.push((scalar, key, item));
+                }
+                ordered.sort_by(|a, b| a.0.chars().cmp(b.0.chars()));
+                for pair in ordered.windows(2) {
+                    if pair[0].0 == pair[1].0 {
+                        return Err(err(
+                            "TABLE_INVENTORY_UNSUPPORTED",
+                            "/history/phase",
+                            "Legacy phase repeats a member key",
+                        ));
+                    }
+                }
+                hash.update(b"{");
+                for (index, (_, key, item)) in ordered.iter().enumerate() {
+                    if index > 0 {
+                        hash.update(b",");
+                    }
+                    hash.update(crate::canonical::canonical_json_admitted(
+                        &Value::String((*key).clone()),
+                        ctx,
+                    )?);
+                    hash.update(b":");
+                    emit(item, hash, ctx)?;
+                }
+                hash.update(b"}");
+            }
+            Value::Number(number)
+                if !number.is_finite()
+                    || number.fract() != 0.0
+                    || number.abs() > 9_007_199_254_740_991.0
+                    || *number == 0.0 && number.is_sign_negative() =>
+            {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    "/history/phase",
+                    "Legacy phase contains a noncanonical number",
+                ));
+            }
+            _ => hash.update(crate::canonical::canonical_json_admitted(value, ctx)?),
+        }
+        Ok(())
+    }
+    let mut hasher = Sha256::new();
+    emit(value, &mut hasher, ctx)?;
+    Ok(hex(&hasher.finalize()))
+}
+
+fn historical_seed_state(
+    plan: &Value,
+    receipt: &Value,
+    prior: &BTreeMap<String, Value>,
+    ctx: &mut Context<'_>,
+) -> Result<BTreeMap<String, Value>, EngineError> {
+    let legacy = [
+        "umf.table-migration/0.1",
+        "umf.table-migration/0.2",
+        "umf.table-migration/0.3",
+        "umf.table-migration/0.4",
+        "umf.table-migration/0.5",
+        "umf.table-migration/0.6",
+    ]
+    .iter()
+    .any(|version| eq_text(get(plan, "version"), version));
+    let selected = historical_selected_ids(plan, ctx)?;
+    let lineage = if legacy {
+        &[][..]
+    } else {
+        items(
+            val(
+                val(plan, "inventory", "/history/plans/0/inventory")?,
+                "seedLineage",
+                "/history/plans/0/inventory/seedLineage",
+            )?,
+            "/history/plans/0/inventory/seedLineage",
+        )?
+    };
+    let outcomes = items(
+        val(
+            receipt,
+            "seedOutcomes",
+            "/history/executions/0/seedOutcomes",
+        )?,
+        "/history/executions/0/seedOutcomes",
+    )?;
+    if outcomes.len() != selected.len() {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/executions/0/seedOutcomes",
+            "Installed seed outcomes do not bind selected seeds",
+        ));
+    }
+    let entry_digest = sha256_text(get(receipt, "entryDigest")).ok_or_else(|| {
+        err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/executions/0/entryDigest",
+            "Installed entry digest is malformed",
+        )
+    })?;
+    let next = val(plan, "next", "/history/plans/0/next")?;
+    let next_digest = member_text(next, "sourceDigest", "/history/plans/0/next/sourceDigest")?;
+    let definitions = items(
+        val(next, "seedSets", "/history/plans/0/next/seedSets")?,
+        "/history/plans/0/next/seedSets",
+    )?;
+    let mut expected = BTreeMap::new();
+    for definition in definitions {
+        ctx.charge_work(1, Utf16::from("/history/plans/0/next/seedSets"))?;
+        let id = member_text(definition, "id", "/history/plans/0/next/seedSets/id")?;
+        let definition_digest = hash(definition, ctx)?;
+        let old = prior.get(&id);
+        if old.is_some_and(|row| {
+            eq_text(get(row, "disposition"), "retire-definition")
+                || !eq_text(get(row, "definitionDigest"), &definition_digest)
+        }) || selected.contains(&id)
+            && old.is_some_and(|row| eq_text(get(row, "execution"), "confirmed"))
+        {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/plans/0/next/seedSets",
+                "Installed seed redefines, revives, or replays prior meaning",
+            ));
+        }
+        let original_digest = old
+            .and_then(|row| get(row, "originalSourceDigest"))
+            .cloned()
+            .unwrap_or_else(|| s(&next_digest));
+        let execution = old
+            .and_then(|row| get(row, "execution"))
+            .cloned()
+            .unwrap_or_else(|| s("not-run"));
+        if expected
+            .insert(
+                id.clone(),
+                o(vec![
+                    ("id", s(&id)),
+                    ("definitionDigest", s(&definition_digest)),
+                    ("originalSourceDigest", original_digest),
+                    (
+                        "disposition",
+                        s(if selected.contains(&id) {
+                            "apply-once"
+                        } else {
+                            "retain-definition"
+                        }),
+                    ),
+                    ("execution", execution),
+                ]),
+            )
+            .is_some()
+        {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/plans/0/next/seedSets",
+                "Installed seed identity is repeated",
+            ));
+        }
+    }
+    if prior.keys().any(|id| !expected.contains_key(id)) {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/plans/0/next/seedSets",
+            "Installed seed disappeared without explicit retirement",
+        ));
+    }
+    let mut rows = BTreeMap::new();
+    for row in lineage {
+        ctx.charge_work(1, Utf16::from("/history/plans/0/inventory/seedLineage"))?;
+        let id = member_text(row, "id", "/history/plans/0/inventory/seedLineage/id")?;
+        let expected_row = expected.get(&id).ok_or_else(|| {
+            err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/plans/0/inventory/seedLineage",
+                "Installed seed has no source definition",
+            )
+        })?;
+        if !same(expected_row, row, ctx)?
+            || rows
+                .insert(id.clone(), umf_core::copy_json(row, ctx)?)
+                .is_some()
+        {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/plans/0/inventory/seedLineage",
+                "Installed seed lineage does not bind plan selection",
+            ));
+        }
+    }
+    if legacy {
+        rows = copy_seed_state(&expected, ctx)?;
+    } else if rows.len() != expected.len() {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/plans/0/inventory/seedLineage",
+            "Installed seed lineage omits a definition",
+        ));
+    }
+    let mut seen = BTreeSet::new();
+    let mut receipts = BTreeMap::<String, (String, String)>::new();
+    for outcome in outcomes {
+        ctx.charge_work(1, Utf16::from("/history/executions/0/seedOutcomes"))?;
+        let id = member_text(outcome, "id", "/history/executions/0/seedOutcomes/id")?;
+        let row = rows.get_mut(&id).ok_or_else(|| {
+            err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/executions/0/seedOutcomes",
+                "Outcome has no installed seed lineage",
+            )
+        })?;
+        if !exact_fields(
+            outcome,
+            &[
+                "id",
+                "definitionDigest",
+                "originalSourceDigest",
+                "execution",
+                "proof",
+            ],
+        ) || !selected.contains(&id)
+            || !seen.insert(id.clone())
+            || !eq_text(get(outcome, "execution"), "confirmed")
+            || get(outcome, "definitionDigest") != get(row, "definitionDigest")
+            || get(outcome, "originalSourceDigest") != get(row, "originalSourceDigest")
+        {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/executions/0/seedOutcomes",
+                "Confirmed outcome does not bind installed seed",
+            ));
+        }
+        let proof = val(outcome, "proof", "/history/executions/0/seedOutcomes/proof")?;
+        let atomic = eq_text(get(plan, "version"), "umf.table-migration/0.1")
+            && get(plan, "phases")
+                .and_then(array_items)
+                .is_none_or(|phases| phases.is_empty());
+        if atomic {
+            if !exact_fields(proof, &["kind", "entryDigest"])
+                || !eq_text(get(proof, "kind"), "atomic-publication")
+                || !eq_text(get(proof, "entryDigest"), &entry_digest)
+            {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    "/history/executions/0/seedOutcomes/proof",
+                    "Atomic selected seed proof does not bind execution",
+                ));
+            }
+            replace(row, "execution", s("confirmed"))?;
+            continue;
+        }
+        if !exact_fields(
+            proof,
+            &[
+                "kind",
+                "phaseId",
+                "phaseDigest",
+                "phaseReceiptDigest",
+                "entryDigest",
+            ],
+        ) || !eq_text(get(proof, "kind"), "phase")
+            || !eq_text(get(proof, "entryDigest"), &entry_digest)
+            || sha256_text(get(proof, "phaseDigest")).is_none()
+            || sha256_text(get(proof, "phaseReceiptDigest")).is_none()
+        {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/executions/0/seedOutcomes/proof",
+                "Selected seed proof is malformed",
+            ));
+        }
+        let (phase_id, phase_digest) = historical_seed_phase_digest(plan, &id, ctx)?;
+        if !eq_text(get(proof, "phaseId"), &phase_id)
+            || !eq_text(get(proof, "phaseDigest"), &phase_digest)
+        {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/history/executions/0/seedOutcomes/proof",
+                "Selected seed proof does not bind owning phase",
+            ));
+        }
+        let receipt_digest = sha256_text(get(proof, "phaseReceiptDigest")).unwrap();
+        if let Some((old_phase, old_receipt)) = receipts.insert(
+            phase_id.clone(),
+            (phase_digest.clone(), receipt_digest.clone()),
+        ) {
+            if old_phase != phase_digest || old_receipt != receipt_digest {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    "/history/executions/0/seedOutcomes",
+                    "Selected seeds have conflicting phase receipts",
+                ));
+            }
+        }
+        replace(row, "execution", s("confirmed"))?;
+    }
+    if seen != selected {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history/executions/0/seedOutcomes",
+            "Installed selected seed has no confirmed outcome",
+        ));
+    }
+    Ok(rows)
+}
+
+fn copy_seed_state(
+    state: &BTreeMap<String, Value>,
+    ctx: &mut Context<'_>,
+) -> Result<BTreeMap<String, Value>, EngineError> {
+    let mut copied = BTreeMap::new();
+    for (id, row) in state {
+        ctx.charge_work(
+            id.len().saturating_add(1),
+            Utf16::from("/history/seedLineage"),
+        )?;
+        copied.insert(id.clone(), umf_core::copy_json(row, ctx)?);
+    }
+    Ok(copied)
+}
+
 fn selected_seed_lineage(
     request: &Value,
     before: &Projection,
     after: &Projection,
     next: &Value,
     options: &Value,
+    prior: &BTreeMap<String, Value>,
     ctx: &mut Context<'_>,
 ) -> Result<(Value, Value, Option<Value>), EngineError> {
-    // The installed plan is recompiled at request admission. Its one executed
-    // receipt is admitted there; this continuation permits retained definitions
-    // only when no prior seed was selected for execution.
-    let history = val(request, "history", "/history")?;
-    let plans = items(val(history, "plans", "/history/plans")?, "/history/plans")?;
-    let prior_plan = plans.first().ok_or_else(|| {
-        err(
-            "TABLE_INVENTORY_UNSUPPORTED",
-            "/history/plans",
-            "Retained seed lineage needs the installed plan",
-        )
-    })?;
-    if !eq_text(get(prior_plan, "seedExecution"), "none") {
-        return Err(err(
-            "TABLE_INVENTORY_UNSUPPORTED",
-            "/history/plans/0/seedExecution",
-            "Prior selected seed execution is outside this retained continuation",
-        ));
-    }
-    let prior_lineage = items(
-        val(
-            val(prior_plan, "inventory", "/history/plans/0/inventory")?,
-            "seedLineage",
-            "/history/plans/0/inventory/seedLineage",
-        )?,
-        "/history/plans/0/inventory/seedLineage",
-    )?;
-    let mut prior = BTreeMap::new();
-    for row in prior_lineage {
-        ctx.charge_work(1, Utf16::from("/history/plans/0/inventory/seedLineage"))?;
-        let id = member_text(row, "id", "/history/plans/0/inventory/seedLineage/id")?;
-        if !eq_text(get(row, "disposition"), "retain-definition")
-            || !eq_text(get(row, "execution"), "not-run")
-            || prior.insert(id, row).is_some()
-        {
-            return Err(err(
-                "TABLE_INVENTORY_UNSUPPORTED",
-                "/history/plans/0/inventory/seedLineage",
-                "Installed seed lineage is not an unexecuted retained definition",
-            ));
-        }
-    }
-    if prior.len() != before.seed_states.len() {
+    // The installed history is recompiled at request admission. Only its
+    // source-bound confirmed outcomes can authorize retaining a seed state.
+    if prior
+        .values()
+        .filter(|row| !eq_text(get(row, "disposition"), "retire-definition"))
+        .count()
+        != before.seed_states.len()
+    {
         return Err(err(
             "TABLE_INVENTORY_UNSUPPORTED",
             "/history/plans/0/inventory/seedLineage",
@@ -1190,6 +1707,13 @@ fn selected_seed_lineage(
         }
         let selected = selected_ids.contains(&id);
         let old = prior.get(&id);
+        if selected && old.is_some_and(|row| eq_text(get(row, "execution"), "confirmed")) {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                "/options/seedSets",
+                "A confirmed seed cannot be selected for execution again",
+            ));
+        }
         if old.is_some_and(|row| get(row, "definitionDigest") != get(seed, "definitionDigest")) {
             return Err(err(
                 "TABLE_INVENTORY_UNSUPPORTED",
@@ -1220,7 +1744,12 @@ fn selected_seed_lineage(
                     "retain-definition"
                 }),
             ),
-            ("execution", s("not-run")),
+            (
+                "execution",
+                old.and_then(|row| get(row, "execution"))
+                    .cloned()
+                    .unwrap_or_else(|| s("not-run")),
+            ),
         ]);
         let mut completed = entry.clone();
         if selected {
@@ -1317,6 +1846,7 @@ pub(super) fn schedule_mixed_create_fill(
     review: &[Value],
     created: &[String],
     lowered: &[Value],
+    prior_seed_state: &BTreeMap<String, Value>,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let options = val(request, "options", "/options")?;
@@ -1429,7 +1959,7 @@ pub(super) fn schedule_mixed_create_fill(
     let create_states = present_states(&create_catalog, &after.inventory_tables, &create_ids, ctx)?;
     let final_states = present_states(&after.catalog, &after.inventory_tables, &create_ids, ctx)?;
     let (pending_seeds, confirmed_seeds, seed_execution) =
-        selected_seed_lineage(request, before, after, next, options, ctx)?;
+        selected_seed_lineage(request, before, after, next, options, prior_seed_state, ctx)?;
     let seed_count = usize::from(seed_execution.is_some());
     let mut completed = Vec::new();
     let mut prefixes = Vec::new();
@@ -1756,9 +2286,10 @@ pub(super) fn schedule_mixed_create_fill(
         ]));
     }
     let history = val(request, "history", "/history")?;
+    let history_count = items(val(history, "plans", "/history/plans")?, "/history/plans")?.len();
     let history_binding = o(vec![
         ("profile", s("umf.table-inventory-source-history/0.1")),
-        ("count", Value::Number(1.0)),
+        ("count", Value::Number(history_count as f64)),
         ("digest", s(&hash(history, ctx)?)),
     ]);
     let execution = o(vec![
@@ -1827,12 +2358,172 @@ pub(super) fn schedule_mixed_create_fill(
     Ok(plan)
 }
 
+fn verify_retained_history_chain(
+    engine: &CodegenEngine<'_>,
+    history: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<(Value, BTreeMap<String, Value>), EngineError> {
+    let plans = items(val(history, "plans", "/history/plans")?, "/history/plans")?;
+    let executions = items(
+        val(history, "executions", "/history/executions")?,
+        "/history/executions",
+    )?;
+    if plans.is_empty() || plans.len() > 128 || plans.len() != executions.len() {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/history",
+            "Installed history has no bounded matching plan and execution sequence",
+        ));
+    }
+    let mut installed: Option<Value> = None;
+    let mut seed_state = BTreeMap::new();
+    for index in 0..plans.len() {
+        ctx.charge_work(1, Utf16::from("/history/plans"))?;
+        let prefix_plans = plans[..index]
+            .iter()
+            .map(|value| umf_core::copy_json(value, ctx))
+            .collect::<Result<Vec<_>, _>>()?;
+        let prefix_executions = executions[..index]
+            .iter()
+            .map(|value| umf_core::copy_json(value, ctx))
+            .collect::<Result<Vec<_>, _>>()?;
+        let prefix = o(vec![
+            ("profile", s("umf.table-inventory-source-history/0.1")),
+            ("plans", a(prefix_plans)),
+            ("executions", a(prefix_executions)),
+        ]);
+        let plan = &plans[index];
+        let legacy = [
+            "umf.table-migration/0.1",
+            "umf.table-migration/0.2",
+            "umf.table-migration/0.3",
+            "umf.table-migration/0.4",
+            "umf.table-migration/0.5",
+            "umf.table-migration/0.6",
+        ]
+        .iter()
+        .any(|version| eq_text(get(plan, "version"), version));
+        let verified = if legacy {
+            let verified = engine.verify_table_migration(plan, ctx)?;
+            if index == 0 {
+                if !matches!(get(&verified, "previous"), Some(Value::Null))
+                    || !matches!(get(&verified, "predecessor"), Some(Value::Null))
+                {
+                    return Err(err(
+                        "TABLE_INVENTORY_UNSUPPORTED",
+                        "/history/plans/0",
+                        "First legacy source plan is not initial",
+                    ));
+                }
+            } else {
+                let prior = installed.as_ref().expect("verified first source plan");
+                if !same(
+                    val(&verified, "previous", "/history/plans/previous")?,
+                    val(prior, "next", "/history/plans/previous/next")?,
+                    ctx,
+                )? || get(&verified, "predecessor").and_then(|value| get(value, "id"))
+                    != get(prior, "id")
+                    || get(&verified, "predecessor").and_then(|value| get(value, "digest"))
+                        != get(prior, "digest")
+                {
+                    return Err(err(
+                        "TABLE_INVENTORY_UNSUPPORTED",
+                        &format!("/history/plans/{index}"),
+                        "Historical legacy plan does not bind prior source",
+                    ));
+                }
+            }
+            verified
+        } else if index == 0 {
+            engine.verify_table_inventory_initial(plan, &prefix, ctx)?
+        } else {
+            let prior = installed.as_ref().expect("verified first source plan");
+            if !eq_text(get(plan, "version"), "umf.table-inventory-migration/0.1") {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &format!("/history/plans/{index}/version"),
+                    "Historical plan has no native inventory verifier",
+                ));
+            }
+            let prior_next = val(prior, "next", "/history/plans/previous/next")?;
+            if !same(
+                val(plan, "previous", "/history/plans/previous")?,
+                prior_next,
+                ctx,
+            )? || get(plan, "predecessor").and_then(|value| get(value, "id")) != get(prior, "id")
+                || get(plan, "predecessor").and_then(|value| get(value, "digest"))
+                    != get(prior, "digest")
+            {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &format!("/history/plans/{index}"),
+                    "Historical plan does not bind its prior source",
+                ));
+            }
+            let request = o(vec![
+                ("id", clone_member(plan, "id", "/history/plans/id")?),
+                (
+                    "predecessor",
+                    clone_member(plan, "predecessor", "/history/plans/predecessor")?,
+                ),
+                (
+                    "previous",
+                    clone_member(plan, "previous", "/history/plans/previous")?,
+                ),
+                ("next", clone_member(plan, "next", "/history/plans/next")?),
+                (
+                    "options",
+                    clone_member(plan, "options", "/history/plans/options")?,
+                ),
+                ("history", prefix),
+            ]);
+            let rebuilt = compile_retained_g02_from_verified(
+                engine,
+                &request,
+                Some((prior, &seed_state)),
+                ctx,
+            )?;
+            if !same(&rebuilt, plan, ctx)? {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &format!("/history/plans/{index}"),
+                    "Historical inventory plan differs from native source recompilation",
+                ));
+            }
+            rebuilt
+        };
+        let receipt = &executions[index];
+        if !exact_fields(receipt, &["planDigest", "entryDigest", "seedOutcomes"])
+            || get(receipt, "planDigest") != get(&verified, "digest")
+            || sha256_text(get(receipt, "entryDigest")).is_none()
+        {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                &format!("/history/executions/{index}"),
+                "Historical execution receipt does not bind its source plan",
+            ));
+        }
+        seed_state = historical_seed_state(&verified, receipt, &seed_state, ctx)?;
+        installed = Some(verified);
+    }
+    Ok((installed.expect("nonempty verified history"), seed_state))
+}
+
 /// The retained G02 branch is compiled only after the installed previous plan
 /// and its explicit execution receipt are bound to the request. Unsupported
 /// compositions are refused before any plan or partial prefix is returned.
 pub(super) fn compile_retained_g02(
     engine: &CodegenEngine<'_>,
     request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    compile_retained_g02_from_verified(engine, request, None, ctx)
+}
+
+fn compile_retained_g02_from_verified(
+    engine: &CodegenEngine<'_>,
+    request: &Value,
+    verified_installed: Option<(&Value, &BTreeMap<String, Value>)>,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     if !exact_fields(
@@ -1880,19 +2571,20 @@ pub(super) fn compile_retained_g02(
         val(history, "executions", "/history/executions")?,
         "/history/executions",
     )?;
-    if plans.len() != 1 || executions.len() != 1 {
+    if plans.is_empty() || plans.len() > 128 || plans.len() != executions.len() {
         return Err(err(
             "TABLE_INVENTORY_UNSUPPORTED",
             "/history",
-            "This retained source requires one verified installed plan",
+            "Retained source requires a bounded matching history",
         ));
     }
-    let empty_history = o(vec![
-        ("profile", s("umf.table-inventory-source-history/0.1")),
-        ("plans", a(vec![])),
-        ("executions", a(vec![])),
-    ]);
-    let installed = engine.verify_table_inventory_initial(&plans[0], &empty_history, ctx)?;
+    let (installed, prior_seed_state) = match verified_installed {
+        Some((value, state)) => (
+            umf_core::copy_json(value, ctx)?,
+            copy_seed_state(state, ctx)?,
+        ),
+        None => verify_retained_history_chain(engine, history, ctx)?,
+    };
     if !same(
         val(&installed, "next", "/history/plans/0/next")?,
         &previous,
@@ -1915,25 +2607,16 @@ pub(super) fn compile_retained_g02(
             "Predecessor does not bind the installed plan",
         ));
     }
-    let receipt = &executions[0];
-    let receipt_digest = member_text(receipt, "entryDigest", "/history/executions/0/entryDigest")?;
+    let receipt = executions.last().expect("nonempty verified history");
+    let receipt_digest = member_text(receipt, "entryDigest", "/history/executions/entryDigest")?;
     if !exact_fields(receipt, &["planDigest", "entryDigest", "seedOutcomes"])
         || get(receipt, "planDigest") != get(&installed, "digest")
         || receipt_digest.len() != 64
         || !receipt_digest.bytes().all(|byte| byte.is_ascii_hexdigit())
-        || !items(
-            val(
-                receipt,
-                "seedOutcomes",
-                "/history/executions/0/seedOutcomes",
-            )?,
-            "/history/executions/0/seedOutcomes",
-        )?
-        .is_empty()
     {
         return Err(err(
             "TABLE_INVENTORY_UNSUPPORTED",
-            "/history/executions/0",
+            "/history/executions",
             "Installed execution receipt is invalid",
         ));
     }
@@ -2075,7 +2758,16 @@ pub(super) fn compile_retained_g02(
     }
     let lowered = lower_selected_fill(engine, request, &created, ctx)?;
     schedule_mixed_create_fill(
-        request, &previous, &next, &before, &after, &review, &created, &lowered, ctx,
+        request,
+        &previous,
+        &next,
+        &before,
+        &after,
+        &review,
+        &created,
+        &lowered,
+        &prior_seed_state,
+        ctx,
     )
 }
 
@@ -2147,21 +2839,26 @@ pub(super) fn discover_mixed_create_fill(
         val(&history, "executions", "/history/executions")?,
         "/history/executions",
     )?;
-    if plans.len() != 1 || executions.len() != 1 {
+    if plans.is_empty() || plans.len() > 128 || plans.len() != executions.len() {
         return Err(err(
             "TABLE_MIGRATION_REVIEW",
             "/history",
-            "Retained discovery requires one installed source plan",
+            "Retained discovery requires a bounded matching source history",
         ));
     }
-    let empty_history = o(vec![
-        ("profile", s("umf.table-inventory-source-history/0.1")),
-        ("plans", a(vec![])),
-        ("executions", a(vec![])),
-    ]);
-    let installed = engine.verify_table_inventory_initial(&plans[0], &empty_history, ctx)?;
-    let receipt = &executions[0];
-    let receipt_digest = member_text(receipt, "entryDigest", "/history/executions/0/entryDigest")?;
+    let (installed, _) = verify_retained_history_chain(engine, &history, ctx).map_err(|error| {
+        if error.is_control_failure() {
+            error
+        } else {
+            err(
+                "TABLE_MIGRATION_REVIEW",
+                "/history",
+                "Installed source history is not bound",
+            )
+        }
+    })?;
+    let receipt = executions.last().expect("nonempty verified history");
+    let receipt_digest = member_text(receipt, "entryDigest", "/history/executions/entryDigest")?;
     if !same(
         val(&installed, "next", "/history/plans/0/next")?,
         &previous,
@@ -2170,15 +2867,6 @@ pub(super) fn discover_mixed_create_fill(
         || get(receipt, "planDigest") != get(&installed, "digest")
         || receipt_digest.len() != 64
         || !receipt_digest.bytes().all(|byte| byte.is_ascii_hexdigit())
-        || !items(
-            val(
-                receipt,
-                "seedOutcomes",
-                "/history/executions/0/seedOutcomes",
-            )?,
-            "/history/executions/0/seedOutcomes",
-        )?
-        .is_empty()
     {
         return Err(err(
             "TABLE_MIGRATION_REVIEW",
@@ -2237,8 +2925,31 @@ pub(super) fn discover_mixed_create_fill(
     )?;
     let candidates = items(&migration, "/review")?;
     let mut operations = candidates.iter().filter(|candidate| {
-        eq_text(get(candidate, "kind"), "change-operation")
-            && get(candidate, "oldValue") == Some(&Value::Null)
+        if !eq_text(get(candidate, "kind"), "change-operation")
+            || get(candidate, "oldValue") != Some(&Value::Null)
+        {
+            return false;
+        }
+        let Some(declaration) = get(candidate, "newValue") else {
+            return false;
+        };
+        let Some(body) = get(declaration, "body") else {
+            return false;
+        };
+        let Some(where_clause) = get(body, "where") else {
+            return false;
+        };
+        let Some(field) = get(where_clause, "field") else {
+            return false;
+        };
+        let Some(values) = get(body, "values").and_then(array_items) else {
+            return false;
+        };
+        eq_text(get(declaration, "version"), "umf.table-operation/0.2")
+            && eq_text(get(body, "kind"), "update")
+            && eq_text(get(where_clause, "op"), "isNull")
+            && values.len() == 1
+            && get(&values[0], "field").is_some_and(|value| ref_equal(value, field))
     });
     let operation = operations.next().ok_or_else(|| {
         err(

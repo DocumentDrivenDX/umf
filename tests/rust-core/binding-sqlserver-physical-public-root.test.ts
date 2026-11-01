@@ -6,6 +6,7 @@ const fixture=rows[0]!;
 test('public SQL Server physical projection retains sources and verifies/recover receipts',()=>{
  const report=projectBindingToSqlServer(fixture.logical,fixture.binding,fixture.policy as never,'report');
  expect(report.status).toBe('reported');expect(report.logical).toEqual(fixture.logical);expect(report.binding).toEqual(fixture.binding);
+ if(!report.candidate)throw new Error('Reported SQL Server projection must include candidate SQL');
  expect(report.candidate).toContain('CREATE TABLE');expect(report.candidate).toContain('FOREIGN KEY');
  expect(verifyBindingSqlServerProjection(report,report.candidate!).candidate).toBe(report.candidate);
  expect(recoverBindingSqlServerSources(report,report.candidate!)).toEqual({logical:fixture.logical,binding:fixture.binding,policy:fixture.policy});

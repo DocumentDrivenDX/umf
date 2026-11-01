@@ -1,6 +1,21 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {describe, expect, test} from 'vitest';
-import {createDbtOperations} from '../../bindings/core/node/src/dbt.js';
+import {describe, expect, test} from 'bun:test';
+type DbtOperations = {
+  importDbtManifest(text: string, options: unknown): unknown;
+  importDbtArtifact(text: string, options: unknown): unknown;
+  inspectDbtManifest(document: unknown): unknown;
+  exportDbtManifest(document: unknown): unknown;
+  selectDbtManifestDependencies(document: unknown, options: unknown): unknown;
+  getDbtManifestNode(document: unknown, path: string): unknown;
+};
+type DbtHostHelpers = {
+  copyJson?: (value: unknown) => unknown;
+  isHostJsonResponseError?: (error: unknown) => boolean;
+};
+const dbtModulePath = '../../bindings/core/node/src/dbt.js';
+const {createDbtOperations} = await import(dbtModulePath) as unknown as {
+  createDbtOperations(dispatch: (operation: string, fields: unknown, transaction?: unknown) => unknown, helpers?: DbtHostHelpers): DbtOperations;
+};
 
 const plain = (value: object) => Object.getPrototypeOf(value) === Object.prototype;
 const nullObject = (value: object) => Object.getPrototypeOf(value) === null;
@@ -96,10 +111,17 @@ describe('DBT Rust host boundary', () => {
   test('operation results restore predecessor object prototypes by result kind', () => {
     const nativeRoot = {kind: 'object', members: {answer: {kind: 'number', value: '42'}}};
     const imported = {modules: [{elements: [{extensions: {'umf.dbt.manifest': {root: nativeRoot}}}]}]};
-    const operations = createDbtOperations((operation) => operation === 'importManifest'
-      ? imported
-      : operation === 'getManifestNode' ? nativeRoot
-        : {source: imported, selection: {status: 'selected'}});
+    const operations = createDbtOperations((operation, fields: any) => {
+      if (operation === 'importManifest') return imported;
+      if (operation === 'getManifestNode') return nativeRoot;
+      if (operation === 'prepareManifestSelectionBounds') return {minimum: 1, maximum: 64};
+      if (operation === 'prepareManifestSelectionRootItem') return false;
+      if (operation === 'prepareManifestSelectionSettings') return fields.options;
+      if (operation === 'finishManifestSelection') {
+        return {source: imported, selection: {status: 'selected'}};
+      }
+      return {source: imported, selection: {status: 'selected'}};
+    });
     const document = operations.importDbtManifest('{}', {id: 'x'} as {id: string}) as any;
     expect(plain(document)).toBe(true);
     expect(plain(document.modules[0])).toBe(true);

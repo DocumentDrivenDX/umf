@@ -18,7 +18,8 @@ try{
  await page.route('**/*',route=>{if(!route.request().url().startsWith(`http://127.0.0.1:${server.port}/`)){external.push(route.request().url());return route.abort();}return route.continue();});
  await page.goto(`http://127.0.0.1:${server.port}/`);
  const result=await page.evaluate(async()=>{
-  const umf=await import('/umf-browser.js');
+  const browserModulePath='/umf-browser.js';
+  const umf=await import(browserModulePath);
   const source=umf.importAvroSchema(JSON.stringify({type:'record',name:'Thing',fields:[{name:'id',type:'long'}]}),{id:'browser-avro-source'});
   const bindings={id:'browser-avro-target',schemaId:'https://example.test/schemas/browser-avro',long:'decimal-string',bytes:'hex-string',union:'untagged',lossPolicy:'allow-reported-loss'} as const;
   const projected=umf.projectAvroToJsonSchema(source,bindings);

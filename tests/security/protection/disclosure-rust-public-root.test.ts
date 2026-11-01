@@ -7,7 +7,7 @@ import {UmfError} from '../../../src/model/errors';
 function fixture(){
  const f=domainFixture();
  f.catalog.transforms[0]!.parameters=[];f.catalog.transforms[0]!.disclosureProfile=[];
- const batch={version:'umf.security.disclosure/0.2.0',policy:{id:'p',revision:'p1'},protection:{id:'catalog',revision:'c1'},domains:structuredClone(f.closure.pins),
+ const batch={version:'umf.security.disclosure/0.2.0' as const,policy:{id:'p',revision:'p1'},protection:{id:'catalog',revision:'c1'},domains:structuredClone(f.closure.pins),
   columns:[{field:domainRef('input'),storageEffect:'canonical' as const}],
   rows:[[{disposition:'transformed' as const,selection:{ruleIndex:0,disclosureIndex:0},outputDomain:domainRef('output'),transform:{id:'transform',version:'t1'},value:{string:'restricted'}}]]};
  return {...f,batch};

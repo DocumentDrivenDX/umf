@@ -828,6 +828,79 @@ fn retained_g02_selected_created_seed_and_command_have_source_lineage() {
 }
 
 #[test]
+fn retained_g02_accepts_confirmed_prior_seed_and_refuses_a_replayed_selection() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let request = load_text(include_str!(
+        "fixtures/inventory-linked-seed-history-request.json"
+    ));
+    let result = engine
+        .compile_table_inventory_migration(&request, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&result, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{result:?}"
+    );
+    let plan = member(&result, "plan").unwrap();
+    let Value::Array(lineage) = member(member(plan, "inventory").unwrap(), "seedLineage").unwrap()
+    else {
+        panic!("seed lineage")
+    };
+    assert_eq!(lineage.len(), 2);
+    assert_eq!(
+        member(&lineage[0], "id"),
+        Some(&Value::string_utf8("initial-note-seed"))
+    );
+    assert_eq!(
+        member(&lineage[0], "execution"),
+        Some(&Value::string_utf8("confirmed"))
+    );
+    assert_eq!(
+        member(&lineage[0], "disposition"),
+        Some(&Value::string_utf8("retain-definition"))
+    );
+    assert_eq!(
+        member(&lineage[1], "id"),
+        Some(&Value::string_utf8("archive-seed"))
+    );
+    assert_eq!(
+        member(&lineage[1], "execution"),
+        Some(&Value::string_utf8("not-run"))
+    );
+    engine
+        .verify_table_inventory_migration(
+            plan,
+            member(&request, "history").unwrap(),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+
+    let mut replay = request;
+    let Value::Array(selected) = member_mut(member_mut(&mut replay, "options"), "seedSets") else {
+        panic!("seed selection")
+    };
+    selected.clear();
+    selected.push(Value::string_utf8("initial-note-seed"));
+    let blocked = engine
+        .compile_table_inventory_migration(&replay, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&blocked, "status"),
+        Some(&Value::string_utf8("blocked")),
+        "{blocked:?}"
+    );
+    assert!(member(&blocked, "plan").is_none());
+    let Value::Array(diagnostics) = member(&blocked, "diagnostics").unwrap() else {
+        panic!("diagnostics")
+    };
+    assert_eq!(
+        member(&diagnostics[0], "path"),
+        Some(&Value::string_utf8("/options/seedSets"))
+    );
+}
+
+#[test]
 fn retained_g02_created_read_command_has_source_bound_field_dependencies() {
     let resources = resources();
     let engine = CodegenEngine::new(&resources);

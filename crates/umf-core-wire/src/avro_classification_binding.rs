@@ -20,7 +20,8 @@ fn validate_envelope(
         | "classifyAvroRecord"
         | "classifyAvroKeys"
         | "classifyAvroRelationships"
-        | "classifyAvroFacets" => &["profile", "op", "source", "request"],
+        | "classifyAvroFacets"
+        | "classifyAvroNullability" => &["profile", "op", "source", "request"],
         "recoverAvroFieldBundle"
         | "recoverAvroRecordBundle"
         | "verifyAvroKeyClassification"
@@ -28,7 +29,9 @@ fn validate_envelope(
         | "verifyAvroRelationshipClassification"
         | "recoverAvroRelationshipSource"
         | "verifyAvroFacetClassification"
-        | "recoverAvroFacetSource" => &["profile", "op", "receipt", "current"],
+        | "recoverAvroFacetSource"
+        | "verifyAvroNullabilityClassification"
+        | "recoverAvroNullabilityBundle" => &["profile", "op", "receipt", "current"],
         _ => return Err(request_error("Unknown Avro classification operation")),
     };
     let Value::Object(members) = value else {
@@ -71,36 +74,55 @@ pub fn execute_wire_with_control(
             text_field(&request, "op").ok_or_else(|| request_error("Operation is required"))?;
         validate_envelope(&request, &operation, &mut ctx)?;
         let output = match operation.as_str() {
-            "classifyAvroNullability" => umf_core::avro_nullability_classification::classify_avro_nullability(
-                field(&request, "source").ok_or_else(|| request_error("source is required"))?,
-                field(&request, "request").ok_or_else(|| request_error("request is required"))?,
-                &mut ctx,
-            )?,
-            "verifyAvroNullabilityClassification" => umf_core::avro_nullability_classification::verify_avro_nullability_classification(
-                field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
-                field(&request, "current").ok_or_else(|| request_error("current is required"))?,
-                &mut ctx,
-            )?,
-            "recoverAvroNullabilityBundle" => umf_core::avro_nullability_classification::recover_avro_nullability_bundle(
-                field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
-                field(&request, "current").ok_or_else(|| request_error("current is required"))?,
-                &mut ctx,
-            )?,
+            "classifyAvroNullability" => {
+                umf_core::avro_nullability_classification::classify_avro_nullability(
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?,
+                    field(&request, "request")
+                        .ok_or_else(|| request_error("request is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "verifyAvroNullabilityClassification" => {
+                umf_core::avro_nullability_classification::verify_avro_nullability_classification(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "recoverAvroNullabilityBundle" => {
+                umf_core::avro_nullability_classification::recover_avro_nullability_bundle(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
+            }
             "classifyAvroFacets" => umf_core::avro_facets_classification::classify_avro_facets(
                 field(&request, "source").ok_or_else(|| request_error("source is required"))?,
                 field(&request, "request").ok_or_else(|| request_error("request is required"))?,
                 &mut ctx,
             )?,
-            "verifyAvroFacetClassification" => umf_core::avro_facets_classification::verify_avro_facet_classification(
-                field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
-                field(&request, "current").ok_or_else(|| request_error("current is required"))?,
-                &mut ctx,
-            )?,
-            "recoverAvroFacetSource" => umf_core::avro_facets_classification::recover_avro_facet_source(
-                field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
-                field(&request, "current").ok_or_else(|| request_error("current is required"))?,
-                &mut ctx,
-            )?,
+            "verifyAvroFacetClassification" => {
+                umf_core::avro_facets_classification::verify_avro_facet_classification(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "recoverAvroFacetSource" => {
+                umf_core::avro_facets_classification::recover_avro_facet_source(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
+            }
             "classifyAvroField" => umf_core::avro_field_classifier::classify_field(
                 field(&request, "source").ok_or_else(|| request_error("source is required"))?,
                 field(&request, "request").ok_or_else(|| request_error("request is required"))?,

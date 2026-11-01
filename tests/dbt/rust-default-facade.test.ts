@@ -2,35 +2,37 @@
 import {test,expect} from 'bun:test';
 import {UmfError} from '../../src/model/errors';
 import {bindDbtRust,type DbtRustEngine} from '../../src/adapters/dbt/rust-default';
+import type {Document} from '../../src/model/types';
 
 const methods=[
  'importDbtManifest','exportDbtManifest','inspectDbtManifest','getDbtManifestNode','proposeDbtManifestNodeEdit',
  'importDbtArtifact','exportDbtArtifact','inspectDbtArtifact','getDbtArtifactNode','proposeDbtArtifactNodeEdit',
  'importDbtSemanticManifest','exportDbtSemanticManifest','inspectDbtSemanticManifest','getDbtSemanticManifestNode','proposeDbtSemanticManifestNodeEdit',
  'inspectDbtManifestGraph','selectDbtManifestDependencies',
-] as const;
+];
+const document:Document={umf:'0.10.0',id:'dbt-default',vocabularies:{},modules:[]};
 
 test('DBT default binder forwards all data-operation arguments without rebuilding them',()=>{
  const calls:{name:string;args:unknown[]}[]=[];
  const engine=Object.fromEntries(methods.map(name=>[name,(...args:unknown[])=>{calls.push({name,args});return name;}])) as unknown as DbtRustEngine;
- const operations=bindDbtRust(engine),document={umf:'0.10.0'},options={id:'kept-reference',extra:true},path='/a~1b',replacement='null',selection={roots:['model.a']};
- expect(operations.importDbtManifest('manifest',options)).toBe('importDbtManifest');
- expect(operations.exportDbtManifest(document)).toBe('exportDbtManifest');
- expect(operations.inspectDbtManifest(document)).toBe('inspectDbtManifest');
- expect(operations.getDbtManifestNode(document,path)).toBe('getDbtManifestNode');
- expect(operations.proposeDbtManifestNodeEdit(document,path,replacement)).toBe('proposeDbtManifestNodeEdit');
- expect(operations.importDbtArtifact('artifact',options)).toBe('importDbtArtifact');
- expect(operations.exportDbtArtifact(document)).toBe('exportDbtArtifact');
- expect(operations.inspectDbtArtifact(document)).toBe('inspectDbtArtifact');
- expect(operations.getDbtArtifactNode(document,path)).toBe('getDbtArtifactNode');
- expect(operations.proposeDbtArtifactNodeEdit(document,path,replacement)).toBe('proposeDbtArtifactNodeEdit');
- expect(operations.importDbtSemanticManifest('semantic',options)).toBe('importDbtSemanticManifest');
- expect(operations.exportDbtSemanticManifest(document)).toBe('exportDbtSemanticManifest');
- expect(operations.inspectDbtSemanticManifest(document)).toBe('inspectDbtSemanticManifest');
- expect(operations.getDbtSemanticManifestNode(document,path)).toBe('getDbtSemanticManifestNode');
- expect(operations.proposeDbtSemanticManifestNodeEdit(document,path,replacement)).toBe('proposeDbtSemanticManifestNodeEdit');
- expect(operations.inspectDbtManifestGraph(document)).toBe('inspectDbtManifestGraph');
- expect(operations.selectDbtManifestDependencies(document,selection)).toBe('selectDbtManifestDependencies');
+ const operations=bindDbtRust(engine),options={id:'kept-reference',extra:true},path='/a~1b',replacement='null',selection={roots:['model.a']};
+ expect(operations.importDbtManifest('manifest',options) as unknown).toBe('importDbtManifest');
+ expect(operations.exportDbtManifest(document) as unknown).toBe('exportDbtManifest');
+ expect(operations.inspectDbtManifest(document) as unknown).toBe('inspectDbtManifest');
+ expect(operations.getDbtManifestNode(document,path) as unknown).toBe('getDbtManifestNode');
+ expect(operations.proposeDbtManifestNodeEdit(document,path,replacement) as unknown).toBe('proposeDbtManifestNodeEdit');
+ expect(operations.importDbtArtifact('artifact',options) as unknown).toBe('importDbtArtifact');
+ expect(operations.exportDbtArtifact(document) as unknown).toBe('exportDbtArtifact');
+ expect(operations.inspectDbtArtifact(document) as unknown).toBe('inspectDbtArtifact');
+ expect(operations.getDbtArtifactNode(document,path) as unknown).toBe('getDbtArtifactNode');
+ expect(operations.proposeDbtArtifactNodeEdit(document,path,replacement) as unknown).toBe('proposeDbtArtifactNodeEdit');
+ expect(operations.importDbtSemanticManifest('semantic',options) as unknown).toBe('importDbtSemanticManifest');
+ expect(operations.exportDbtSemanticManifest(document) as unknown).toBe('exportDbtSemanticManifest');
+ expect(operations.inspectDbtSemanticManifest(document) as unknown).toBe('inspectDbtSemanticManifest');
+ expect(operations.getDbtSemanticManifestNode(document,path) as unknown).toBe('getDbtSemanticManifestNode');
+ expect(operations.proposeDbtSemanticManifestNodeEdit(document,path,replacement) as unknown).toBe('proposeDbtSemanticManifestNodeEdit');
+ expect(operations.inspectDbtManifestGraph(document) as unknown).toBe('inspectDbtManifestGraph');
+ expect(operations.selectDbtManifestDependencies(document,selection) as unknown).toBe('selectDbtManifestDependencies');
  expect(calls.map(call=>call.name)).toEqual(methods);
  expect(calls[0]!.args).toEqual(['manifest',options]);
  expect(calls[0]!.args[1]).toBe(options);
@@ -43,7 +45,7 @@ test('DBT default binder rethrows native operation failures as the public UmfErr
  const native=Object.assign(new Error('Native schema refusal'),{code:'DBT_MANIFEST_DOCUMENT',path:'/modules/0'});
  const engine={...Object.fromEntries(methods.map(name=>[name,()=>{throw native;}]))} as unknown as DbtRustEngine;
  let caught:unknown;
- try{bindDbtRust(engine,error=>error===native).inspectDbtManifest({});}catch(error){caught=error;}
+ try{bindDbtRust(engine,error=>error===native).inspectDbtManifest(document);}catch(error){caught=error;}
  expect(caught).toBeInstanceOf(UmfError);
  expect(caught).toMatchObject({code:'DBT_MANIFEST_DOCUMENT',path:'/modules/0',message:'Native schema refusal'});
 });

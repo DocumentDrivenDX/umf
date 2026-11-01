@@ -27,6 +27,15 @@ const VALIDATE_SQLSERVER_LAYOUT: &str =
     "ddd-json-schema-projection.validateSqlServerRelationshipLayout";
 const VALIDATE_POSTGRESQL_LAYOUT: &str =
     "ddd-json-schema-projection.validatePostgresqlRelationshipLayout";
+const PREPARE_POSTGRESQL_PROJECTION: &str =
+    "ddd-json-schema-projection.prepareDddPostgresqlProjection";
+const COMPLETE_POSTGRESQL_PROJECTION: &str =
+    "ddd-json-schema-projection.completeDddPostgresqlProjection";
+const BLOCK_POSTGRESQL_PROJECTION: &str = "ddd-json-schema-projection.blockDddPostgresqlProjection";
+const VERIFY_POSTGRESQL_PROJECTION: &str =
+    "ddd-json-schema-projection.verifyDddPostgresqlProjection";
+const RECOVER_POSTGRESQL_IDEAL: &str = "ddd-json-schema-projection.recoverDddPostgresqlIdeal";
+const RECOVER_POSTGRESQL_NATIVE: &str = "ddd-json-schema-projection.recoverDddPostgresqlNative";
 fn request(message: &str) -> EngineError {
     EngineError::new("REQUEST", Utf16::default(), message)
 }
@@ -176,6 +185,11 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             "lossPolicy",
             "receipt",
             "currentTarget",
+            "nativeSource",
+            "candidateSource",
+            "candidateArchive",
+            "targetArchive",
+            "message",
         ]
         .iter()
         .any(|name| key == &Utf16::from(*name))
@@ -233,6 +247,91 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         )?));
     }
     let operation = text(field(value, "op"), "op")?;
+    if operation == &Utf16::from(PREPARE_POSTGRESQL_PROJECTION) {
+        let logical = field(value, "document").ok_or_else(|| request("document is required"))?;
+        let binding = field(value, "binding").ok_or_else(|| request("binding is required"))?;
+        let policy = field(value, "policy").ok_or_else(|| request("policy is required"))?;
+        let resources = BindingInspectionResources::new(ctx)?;
+        return umf_core::ddd_postgresql_projection::prepare(
+            logical, binding, policy, &resources, ctx,
+        );
+    }
+    if operation == &Utf16::from(COMPLETE_POSTGRESQL_PROJECTION) {
+        let logical = field(value, "document").ok_or_else(|| request("document is required"))?;
+        let binding = field(value, "binding").ok_or_else(|| request("binding is required"))?;
+        let policy = field(value, "policy").ok_or_else(|| request("policy is required"))?;
+        let candidate_source = text(field(value, "candidateSource"), "candidateSource")?;
+        let candidate_archive = field(value, "candidateArchive")
+            .ok_or_else(|| request("candidateArchive is required"))?;
+        let native_source = text(field(value, "nativeSource"), "nativeSource")?;
+        let target_archive =
+            field(value, "targetArchive").ok_or_else(|| request("targetArchive is required"))?;
+        let resources = BindingInspectionResources::new(ctx)?;
+        return umf_core::ddd_postgresql_projection::complete(
+            logical,
+            binding,
+            policy,
+            candidate_source,
+            candidate_archive,
+            native_source,
+            target_archive,
+            &resources,
+            ctx,
+        );
+    }
+    if operation == &Utf16::from(BLOCK_POSTGRESQL_PROJECTION) {
+        let logical = field(value, "document").ok_or_else(|| request("document is required"))?;
+        let binding = field(value, "binding").ok_or_else(|| request("binding is required"))?;
+        let policy = field(value, "policy").ok_or_else(|| request("policy is required"))?;
+        let path = text(field(value, "path"), "path")?;
+        let message = text(field(value, "message"), "message")?;
+        let resources = BindingInspectionResources::new(ctx)?;
+        return umf_core::ddd_postgresql_projection::block_host_failure(
+            logical, binding, policy, path, message, &resources, ctx,
+        );
+    }
+    if operation == &Utf16::from(VERIFY_POSTGRESQL_PROJECTION)
+        || operation == &Utf16::from(RECOVER_POSTGRESQL_IDEAL)
+        || operation == &Utf16::from(RECOVER_POSTGRESQL_NATIVE)
+    {
+        let receipt = field(value, "receipt").ok_or_else(|| request("receipt is required"))?;
+        let current =
+            field(value, "currentTarget").ok_or_else(|| request("currentTarget is required"))?;
+        let candidate_source = text(field(value, "candidateSource"), "candidateSource")?;
+        let candidate_archive = field(value, "candidateArchive")
+            .ok_or_else(|| request("candidateArchive is required"))?;
+        let resources = BindingInspectionResources::new(ctx)?;
+        return match operation {
+            x if x == &Utf16::from(VERIFY_POSTGRESQL_PROJECTION) => {
+                umf_core::ddd_postgresql_projection::verify(
+                    receipt,
+                    current,
+                    candidate_source,
+                    candidate_archive,
+                    &resources,
+                    ctx,
+                )
+            }
+            x if x == &Utf16::from(RECOVER_POSTGRESQL_IDEAL) => {
+                umf_core::ddd_postgresql_projection::recover_ideal(
+                    receipt,
+                    current,
+                    candidate_source,
+                    candidate_archive,
+                    &resources,
+                    ctx,
+                )
+            }
+            _ => umf_core::ddd_postgresql_projection::recover_native(
+                receipt,
+                current,
+                candidate_source,
+                candidate_archive,
+                &resources,
+                ctx,
+            ),
+        };
+    }
     if operation == &Utf16::from(VALIDATE_POSTGRESQL_LAYOUT) {
         let logical = field(value, "document").ok_or_else(|| request("document is required"))?;
         let binding = field(value, "binding").ok_or_else(|| request("binding is required"))?;

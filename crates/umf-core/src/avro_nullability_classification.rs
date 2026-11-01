@@ -145,6 +145,13 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
         entries: vec![
             (u("urn:umf:core:0.10.0"), read_json(CORE_SCHEMA, ctx)?),
             (
+                u("urn:umf:core:semantic-type-reference:1.0.0"),
+                read_json(
+                    include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+                    ctx,
+                )?,
+            ),
+            (
                 u("urn:umf:core:nullability-operation:5.0.0"),
                 read_json(
                     include_str!("../../../spec/core/nullability-operation-v5.schema.json"),

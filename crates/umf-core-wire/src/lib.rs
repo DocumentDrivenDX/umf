@@ -20,6 +20,7 @@ pub mod nullability_avro_projection_binding;
 pub mod facets_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod key_avro_projection_binding;
+pub mod avro_relationship_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection_binding;
 #[cfg(feature = "embedded-adapters")]

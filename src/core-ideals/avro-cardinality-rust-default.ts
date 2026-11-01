@@ -14,11 +14,17 @@ import type {CoreFacetDeclaration} from '../model/facets';
 import type {CoreKindDeclaration} from '../model/field-kind';
 import type {KeyAvroProjection,KeyAvroRequest} from './key-avro-projection';
 import type {CoreKeyDeclaration} from '../model/keys';
+import type {RelationshipAvroProjection,RelationshipAvroRequest} from './relationship-avro-projection-factory';
 import type {AvroKeyClassification,AvroKeyRequest,AvroKeyArchive} from './key-avro';
 import type {AvroRelationshipClassification,AvroRelationshipRequest,AvroRelationshipArchive} from './relationship-avro';
 import type {AvroNullabilityClassification,AvroNullabilityRequest} from './nullability-avro';
 import type {AvroFacetClassification,AvroFacetRequest} from './facets-avro';
 import type {ParquetRelationshipClassification,ParquetRelationshipRequest} from './relationship-parquet';
+import type {ParquetNullabilityClassification,ParquetNullabilityRequest} from './nullability-parquet';
+import type {ParquetFieldClassification,ParquetFieldRequest} from './parquet-field';
+import type {ParquetKeyClassification,ParquetKeyRequest} from './key-parquet';
+import type {ParquetCardinalityClassification,ParquetCardinalityRequest} from './cardinality-parquet';
+import type {ParquetFacetClassification,ParquetFacetRequest} from './facets-parquet';
 
 type NativeErrorGuard=(error:unknown)=>boolean;
 export interface CoreIdealNativeFamilies {
@@ -55,6 +61,21 @@ export interface CoreIdealNativeFamilies {
     classifyParquetRelationships(fields:{source:Document;request:ParquetRelationshipRequest}):unknown;
     verifyParquetRelationshipClassification(fields:{receipt:ParquetRelationshipClassification;current:Document}):unknown;
     recoverParquetRelationshipSource(fields:{receipt:ParquetRelationshipClassification;current:Document}):unknown;
+    classifyParquetNullability(fields:{source:Document;request:ParquetNullabilityRequest}):unknown;
+    verifyParquetNullabilityClassification(fields:{receipt:ParquetNullabilityClassification;current:Document}):unknown;
+    recoverParquetNullabilityBytes(fields:{receipt:ParquetNullabilityClassification;current:Document}):unknown;
+    classifyParquetField(fields:{source:Document;request:ParquetFieldRequest}):unknown;
+    verifyParquetFieldClassification(fields:{receipt:ParquetFieldClassification;current:Document}):unknown;
+    recoverParquetFieldBytes(fields:{receipt:ParquetFieldClassification;current:Document}):unknown;
+    classifyParquetKeys(fields:{source:Document;request:ParquetKeyRequest}):unknown;
+    verifyParquetKeyClassification(fields:{receipt:ParquetKeyClassification;current:Document}):unknown;
+    recoverParquetKeySource(fields:{receipt:ParquetKeyClassification;current:Document}):unknown;
+    classifyParquetCardinality(fields:{source:Document;request:ParquetCardinalityRequest}):unknown;
+    verifyParquetCardinalityClassification(fields:{receipt:ParquetCardinalityClassification;current:Document}):unknown;
+    recoverParquetCardinalityBytes(fields:{receipt:ParquetCardinalityClassification;current:Document}):unknown;
+    classifyParquetFacets(fields:{source:Document;request:ParquetFacetRequest}):unknown;
+    verifyParquetFacetClassification(fields:{receipt:ParquetFacetClassification;current:Document}):unknown;
+    recoverParquetFacetSource(fields:{receipt:ParquetFacetClassification;current:Document}):unknown;
   };
   ['nullability-avro-projection']:{
     projectNullabilityToAvro(fields:{author:CoreNullabilityDeclaration;request:NullabilityAvroRequest}):unknown;
@@ -68,6 +89,12 @@ export interface CoreIdealNativeFamilies {
     projectKeysToAvro(fields:{source:Document;authors:CoreKeyDeclaration[];request:KeyAvroRequest}):unknown;
     verifyKeysAvroProjection(fields:{receipt:KeyAvroProjection;current:Document}):unknown;
     recoverKeysAvroIdeal(fields:{receipt:KeyAvroProjection;current:Document}):unknown;
+  };
+  ['avro-relationship-projection']:{
+    projectRelationshipToAvro(fields:{source:Document;author:import('../model/relationships').CoreRelationshipDeclaration;request:RelationshipAvroRequest}):unknown;
+    verifyRelationshipAvroProjection(fields:{receipt:RelationshipAvroProjection;current:Document}):unknown;
+    recoverRelationshipAvroIdeal(fields:{receipt:RelationshipAvroProjection;current:Document}):unknown;
+    recoverRelationshipAvroNative(fields:{receipt:RelationshipAvroProjection;current:Document}):unknown;
   };
 }
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
@@ -109,6 +136,21 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     recoverParquetRecordBytes(receipt:ParquetRecordClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetRecordBytes({receipt:copyJson(receipt) as unknown as ParquetRecordClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_RECORD_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
     classifyParquetRelationships(source:Document,request:ParquetRelationshipRequest):ParquetRelationshipClassification{return call(()=>engine['record-type'].classifyParquetRelationships({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetRelationshipRequest}) as ParquetRelationshipClassification);},
     verifyParquetRelationshipClassification(receipt:ParquetRelationshipClassification,current:Document):ParquetRelationshipClassification{return call(()=>engine['record-type'].verifyParquetRelationshipClassification({receipt:copyJson(receipt) as unknown as ParquetRelationshipClassification,current:copyJson(current) as unknown as Document}) as ParquetRelationshipClassification);},
+    classifyParquetNullability(source:Document,request:ParquetNullabilityRequest):ParquetNullabilityClassification{return call(()=>engine['record-type'].classifyParquetNullability({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetNullabilityRequest}) as ParquetNullabilityClassification);},
+    verifyParquetNullabilityClassification(receipt:ParquetNullabilityClassification,current:Document):ParquetNullabilityClassification{return call(()=>engine['record-type'].verifyParquetNullabilityClassification({receipt:copyJson(receipt) as unknown as ParquetNullabilityClassification,current:copyJson(current) as unknown as Document}) as ParquetNullabilityClassification);},
+    recoverParquetNullabilityBytes(receipt:ParquetNullabilityClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetNullabilityBytes({receipt:copyJson(receipt) as unknown as ParquetNullabilityClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_NULLABILITY_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
+    classifyParquetField(source:Document,request:ParquetFieldRequest):ParquetFieldClassification{return call(()=>engine['record-type'].classifyParquetField({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetFieldRequest}) as ParquetFieldClassification);},
+    verifyParquetFieldClassification(receipt:ParquetFieldClassification,current:Document):ParquetFieldClassification{return call(()=>engine['record-type'].verifyParquetFieldClassification({receipt:copyJson(receipt) as unknown as ParquetFieldClassification,current:copyJson(current) as unknown as Document}) as ParquetFieldClassification);},
+    recoverParquetFieldBytes(receipt:ParquetFieldClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetFieldBytes({receipt:copyJson(receipt) as unknown as ParquetFieldClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('FIELD_CLASSIFICATION_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
+    classifyParquetCardinality(source:Document,request:ParquetCardinalityRequest):ParquetCardinalityClassification{return call(()=>engine['record-type'].classifyParquetCardinality({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetCardinalityRequest}) as ParquetCardinalityClassification);},
+    verifyParquetCardinalityClassification(receipt:ParquetCardinalityClassification,current:Document):ParquetCardinalityClassification{return call(()=>engine['record-type'].verifyParquetCardinalityClassification({receipt:copyJson(receipt) as unknown as ParquetCardinalityClassification,current:copyJson(current) as unknown as Document}) as ParquetCardinalityClassification);},
+    recoverParquetCardinalityBytes(receipt:ParquetCardinalityClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetCardinalityBytes({receipt:copyJson(receipt) as unknown as ParquetCardinalityClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_CARDINALITY_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
+    classifyParquetFacets(source:Document,request:ParquetFacetRequest):ParquetFacetClassification{return call(()=>engine['record-type'].classifyParquetFacets({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetFacetRequest}) as ParquetFacetClassification);},
+    verifyParquetFacetClassification(receipt:ParquetFacetClassification,current:Document):ParquetFacetClassification{return call(()=>engine['record-type'].verifyParquetFacetClassification({receipt:copyJson(receipt) as unknown as ParquetFacetClassification,current:copyJson(current) as unknown as Document}) as ParquetFacetClassification);},
+    recoverParquetFacetSource(receipt:ParquetFacetClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetFacetSource({receipt:copyJson(receipt) as unknown as ParquetFacetClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_FACET_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
+    classifyParquetKeys(source:Document,request:ParquetKeyRequest):ParquetKeyClassification{return call(()=>engine['record-type'].classifyParquetKeys({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetKeyRequest}) as ParquetKeyClassification);},
+    verifyParquetKeyClassification(receipt:ParquetKeyClassification,current:Document):ParquetKeyClassification{return call(()=>engine['record-type'].verifyParquetKeyClassification({receipt:copyJson(receipt) as unknown as ParquetKeyClassification,current:copyJson(current) as unknown as Document}) as ParquetKeyClassification);},
+    recoverParquetKeySource(receipt:ParquetKeyClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetKeySource({receipt:copyJson(receipt) as unknown as ParquetKeyClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_KEY_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
     recoverParquetRelationshipSource(receipt:ParquetRelationshipClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetRelationshipSource({receipt:copyJson(receipt) as unknown as ParquetRelationshipClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_RELATIONSHIP_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
     recoverParquetRecordTypeBytes(receipt:ParquetRecordTypeClassification,current:Document):Uint8Array{
       const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetRecordTypeBytes({receipt:copyJson(receipt) as unknown as ParquetRecordTypeClassification,current:copyJson(current) as unknown as Document}));
@@ -122,5 +164,9 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     projectKeysToAvro(source:Document,authors:CoreKeyDeclaration[],request:KeyAvroRequest):KeyAvroProjection{return call(()=>engine['key-avro-projection'].projectKeysToAvro({source:copyJson(source) as unknown as Document,authors:copyJson(authors) as unknown as CoreKeyDeclaration[],request:copyJson(request) as unknown as KeyAvroRequest}) as KeyAvroProjection);},
     verifyKeysAvroProjection(receipt:KeyAvroProjection,current:Document):KeyAvroProjection{return call(()=>engine['key-avro-projection'].verifyKeysAvroProjection({receipt:copyJson(receipt) as unknown as KeyAvroProjection,current:copyJson(current) as unknown as Document}) as KeyAvroProjection);},
     recoverKeysAvroIdeal(receipt:KeyAvroProjection,current:Document):Document{return call(()=>engine['key-avro-projection'].recoverKeysAvroIdeal({receipt:copyJson(receipt) as unknown as KeyAvroProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
+    projectRelationshipToAvro(source:Document,author:import('../model/relationships').CoreRelationshipDeclaration,request:RelationshipAvroRequest):RelationshipAvroProjection{return call(()=>engine['avro-relationship-projection'].projectRelationshipToAvro({source:copyJson(source) as unknown as Document,author:copyJson(author) as unknown as import('../model/relationships').CoreRelationshipDeclaration,request:copyJson(request) as unknown as RelationshipAvroRequest}) as RelationshipAvroProjection);},
+    verifyRelationshipAvroProjection(receipt:RelationshipAvroProjection,current:Document):RelationshipAvroProjection{return call(()=>engine['avro-relationship-projection'].verifyRelationshipAvroProjection({receipt:copyJson(receipt) as unknown as RelationshipAvroProjection,current:copyJson(current) as unknown as Document}) as RelationshipAvroProjection);},
+    recoverRelationshipAvroIdeal(receipt:RelationshipAvroProjection,current:Document):Document{return call(()=>engine['avro-relationship-projection'].recoverRelationshipAvroIdeal({receipt:copyJson(receipt) as unknown as RelationshipAvroProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
+    recoverRelationshipAvroNative(receipt:RelationshipAvroProjection,current:Document):{schema:string;dependencies:[]}{return call(()=>engine['avro-relationship-projection'].recoverRelationshipAvroNative({receipt:copyJson(receipt) as unknown as RelationshipAvroProjection,current:copyJson(current) as unknown as Document}) as {schema:string;dependencies:[]});},
   });
 }

@@ -1,6 +1,6 @@
 import {readFileSync} from 'node:fs';
 import {spawn} from 'node:child_process';
-import {encodeRequestWire,fromWire,resultError} from '../../../../../../bindings/core/node/src/wire.js';
+import {encodeRequestWire,fromWire,resultError} from '../../../../bindings/core/node/src/wire.js';
 const cli=process.env.UMF_AVRO_CARDINALITY_CLI;
 if(!cli)throw Error('Set UMF_AVRO_CARDINALITY_CLI to the reviewed release CLI');
 const packet=JSON.parse(readFileSync(new URL('./typescript-extra.json',import.meta.url),'utf8'));

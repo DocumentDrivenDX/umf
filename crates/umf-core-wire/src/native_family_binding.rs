@@ -13,6 +13,7 @@ pub const FAMILIES: &[&str] = &[
     "nullability-avro-projection",
     "facets-avro-projection",
     "key-avro-projection",
+    "avro-relationship-projection",
     "avro",
     "avro-json-schema-projection",
     "arrow-spark-projection",
@@ -104,6 +105,21 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyParquetRelationships",
                 "verifyParquetRelationshipClassification",
                 "recoverParquetRelationshipSource",
+                "classifyParquetNullability",
+                "verifyParquetNullabilityClassification",
+                "recoverParquetNullabilityBytes",
+                "classifyParquetField",
+                "verifyParquetFieldClassification",
+                "recoverParquetFieldBytes",
+                "classifyParquetKeys",
+                "verifyParquetKeyClassification",
+                "recoverParquetKeySource",
+                "classifyParquetCardinality",
+                "verifyParquetCardinalityClassification",
+                "recoverParquetCardinalityBytes",
+                "classifyParquetFacets",
+                "verifyParquetFacetClassification",
+                "recoverParquetFacetSource",
             ],
         ),
         "nullability-avro-projection" => (
@@ -116,7 +132,15 @@ pub fn metadata_wire(family: &str) -> String {
         ),
         "key-avro-projection" => (
             crate::key_avro_projection_binding::PROFILE,
-            &["projectKeysToAvro", "verifyKeysAvroProjection", "recoverKeysAvroIdeal"],
+            &[
+                "projectKeysToAvro",
+                "verifyKeysAvroProjection",
+                "recoverKeysAvroIdeal",
+            ],
+        ),
+        "avro-relationship-projection" => (
+            crate::avro_relationship_projection_binding::PROFILE,
+            &["projectRelationshipToAvro", "verifyRelationshipAvroProjection", "recoverRelationshipAvroIdeal", "recoverRelationshipAvroNative"],
         ),
         "avro" => (
             crate::avro_binding::PROFILE,
@@ -229,6 +253,12 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverDddGraphqlNative",
                 "validateSqlServerRelationshipLayout",
                 "validatePostgresqlRelationshipLayout",
+                "prepareDddPostgresqlProjection",
+                "completeDddPostgresqlProjection",
+                "verifyDddPostgresqlProjection",
+                "recoverDddPostgresqlIdeal",
+                "recoverDddPostgresqlNative",
+                "blockDddPostgresqlProjection",
             ],
         ),
         "openapi-json-schema-projection" => (
@@ -337,6 +367,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "facetType",
                 "facetPredicate",
                 "facetConstraints",
+                "classifyField",
+                "verifyFieldClassification",
+                "recoverFieldCapture",
             ],
         ),
         "shacl" => (
@@ -542,7 +575,10 @@ pub fn execute_wire_with_control(
         "facets-avro-projection" => {
             crate::facets_avro_projection_binding::execute_wire_with_control(wire, control)
         }
-        "key-avro-projection" => crate::key_avro_projection_binding::execute_wire_with_control(wire,control),
+        "key-avro-projection" => {
+            crate::key_avro_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "avro-relationship-projection" => crate::avro_relationship_projection_binding::execute_wire_with_control(wire, control),
         "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
         "avro-json-schema-projection" => {
             crate::avro_json_schema_projection_binding::execute_wire_with_control(wire, control)
@@ -580,7 +616,9 @@ pub fn execute_wire_with_control(
             crate::sqlserver_ddl_projection_binding::execute_wire_with_control(wire, control)
         }
         "binding-sqlserver-planned-index-projection" => {
-            crate::binding_sqlserver_planned_indexes_binding::execute_wire_with_control(wire, control)
+            crate::binding_sqlserver_planned_indexes_binding::execute_wire_with_control(
+                wire, control,
+            )
         }
         "binding-parquet-projection" => {
             crate::binding_parquet_projection_binding::execute_wire_with_control(wire, control)
@@ -614,7 +652,9 @@ pub fn execute_wire_with_control(
         "shacl" => crate::shacl_owl_binding::execute_shacl_wire_with_control(wire, control),
         "owl" => crate::shacl_owl_binding::execute_owl_wire_with_control(wire, control),
         "rdf" => crate::rdf_binding::execute_wire_with_control(wire, control),
-        "binding-iceberg-projection" => crate::binding_iceberg_projection_binding::execute_wire_with_control(wire, control),
+        "binding-iceberg-projection" => {
+            crate::binding_iceberg_projection_binding::execute_wire_with_control(wire, control)
+        }
         "iceberg-table" => crate::iceberg_table_binding::execute_wire_with_control(wire, control),
         "delta-schema" | "delta-table" => {
             crate::delta_schema_table::execute_json_with_control(wire, control)

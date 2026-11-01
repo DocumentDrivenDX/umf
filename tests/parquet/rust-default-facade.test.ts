@@ -2,14 +2,18 @@
 import {test,expect} from 'bun:test';
 import {UmfError,type Document} from '../../src/model/types';
 import {bindParquetCaptureRust,type ParquetCaptureRustEngine} from '../../src/adapters/parquet/rust-capture-default';
+import type {ParquetWireValue} from '../../src/adapters/parquet/footer';
+import type {ParquetValues} from '../../src/adapters/parquet/values';
 
+const document:Document={umf:'0.10.0',id:'parquet-rust-default',vocabularies:{},modules:[]};
+const blockedValues:ParquetValues={source:document,status:'blocked',complete:false,diagnostics:[]};
 const checkedContainers={source:{id:'copy'},status:'checked',complete:false,diagnostics:[],containers:[]} as any;
 function stub(overrides:Record<string,unknown>={}) {
  const calls:string[]=[];
  const engine={
   profile:'test-profile',capabilities:{profile:'test-profile',maxBytes:1_000_000,exactSource:true,complete:false},
-  captureParquet:()=>{calls.push('capture');return {captured:true};},
-  importParquetSchema:()=>{calls.push('importSchema');return {imported:true};},
+  captureParquet:()=>{calls.push('capture');return document;},
+  importParquetSchema:()=>{calls.push('importSchema');return document;},
   encodeParquetWire:()=>{calls.push('encodeWire');return new Uint8Array([1,2]);},
   exportParquetCapture:()=>{calls.push('export');return new Uint8Array([3,4]);},
   inspectParquetFraming:()=>{calls.push('inspectFraming');return {status:'invalid'};},
@@ -20,7 +24,7 @@ function stub(overrides:Record<string,unknown>={}) {
   decodeParquetPageBodies:()=>{calls.push('decodePageBodies');return {status:'blocked'};},
   decodeParquetLevels:()=>{calls.push('decodeLevels');return {status:'blocked'};},
   decodeParquetPhysical:()=>{calls.push('decodePhysical');return {status:'blocked'};},
-  decodeParquetValues:()=>{calls.push('decodeValues');return {status:'blocked'};},
+  decodeParquetValues:()=>{calls.push('decodeValues');return blockedValues;},
   assembleParquetRows:()=>{calls.push('assembleRows');return {status:'blocked'};},
   repairParquetDictionaryOffsets:()=>{calls.push('repairDictionaryOffsets');return {status:'blocked'};},
   inspectParquetLogicalTypes:()=>{calls.push('inspectLogicalTypes');return {status:'blocked'};},
@@ -35,12 +39,11 @@ function stub(overrides:Record<string,unknown>={}) {
 
 test('Parquet Rust facade forwards capture and result operations and returns public Rust errors',()=>{
  const {engine,calls}=stub(),api=bindParquetCaptureRust(engine);
- const document={umf:'0.10.0'} as Document;
- expect(api.captureParquet(new Uint8Array([1]),{id:'x'})).toEqual({captured:true});
- expect(api.importParquetSchema(new Uint8Array([1]),{id:'x'})).toEqual({imported:true});
- expect(api.encodeParquetWire({kind:'struct',fields:[]} as any)).toEqual(new Uint8Array([1,2]));
+ expect(api.captureParquet(new Uint8Array([1]),{id:'x'})).toEqual(document);
+ expect(api.importParquetSchema(new Uint8Array([1]),{id:'x'})).toEqual(document);
+ expect(api.encodeParquetWire({kind:'struct',fields:[]} as unknown as ParquetWireValue)).toEqual(new Uint8Array([1,2]));
  expect(api.exportParquetCapture(document)).toEqual(new Uint8Array([3,4]));
- expect(api.decodeParquetValues(document)).toEqual({status:'blocked'});
+ expect(api.decodeParquetValues(document)).toEqual(blockedValues);
  expect(calls).toEqual(['capture','importSchema','encodeWire','export','decodeValues']);
 
  const failure=Object.assign(new Error('capture failed'),{name:'UmfCoreError',code:'PARQUET_CAPTURE',path:'/source'});
@@ -49,7 +52,7 @@ test('Parquet Rust facade forwards capture and result operations and returns pub
 });
 
 test('Parquet default facade leaves malformed rename staging to the engine host boundary',()=>{
- const {engine,calls}=stub(),api=bindParquetCaptureRust(engine),document={} as Document;
+ const {engine,calls}=stub(),api=bindParquetCaptureRust(engine);
  api.renameParquetField(document,1.5 as number,'field');
  api.renameParquetField(document,1,undefined as unknown as string);
  expect(calls).toEqual(['renameField','renameField']);

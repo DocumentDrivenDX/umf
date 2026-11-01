@@ -31,12 +31,27 @@ fn validate_envelope(
         "classifyAvroRecordType"
         | "classifyParquetRecordType"
         | "classifyParquetRecord"
-        | "classifyParquetRelationships" => &["profile", "op", "source", "request"],
+        | "classifyParquetRelationships"
+        | "classifyParquetNullability"
+        | "classifyParquetField"
+        | "classifyParquetKeys"
+        | "classifyParquetCardinality"
+        | "classifyParquetFacets" => &["profile", "op", "source", "request"],
         "recoverAvroRecordTypeBundle"
         | "recoverParquetRecordTypeBytes"
         | "recoverParquetRecordBytes"
         | "verifyParquetRelationshipClassification"
-        | "recoverParquetRelationshipSource" => &["profile", "op", "receipt", "current"],
+        | "recoverParquetRelationshipSource"
+        | "verifyParquetNullabilityClassification"
+        | "recoverParquetNullabilityBytes"
+        | "verifyParquetFieldClassification"
+        | "recoverParquetFieldBytes"
+        | "verifyParquetKeyClassification"
+        | "recoverParquetKeySource"
+        | "verifyParquetCardinalityClassification"
+        | "recoverParquetCardinalityBytes"
+        | "verifyParquetFacetClassification"
+        | "recoverParquetFacetSource" => &["profile", "op", "receipt", "current"],
         _ => return Err(request_error("Unknown Record Type binding operation")),
     };
     let Value::Object(members) = value else {
@@ -100,6 +115,10 @@ fn embedded_parquet_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), 
         include_str!("../../../spec/extensions/avro/package.json"),
         include_str!("../../../spec/extensions/parquet/package.json"),
         include_str!("../../../spec/extensions/parquet-relationships/package.json"),
+        include_str!("../../../spec/extensions/parquet-nullability/package.json"),
+        include_str!("../../../spec/extensions/parquet-keys/package.json"),
+        include_str!("../../../spec/extensions/parquet-cardinality/package.json"),
+        include_str!("../../../spec/extensions/parquet-facets/package.json"),
     ] {
         registry.register(
             &parse_resource(package, ctx)?,
@@ -442,6 +461,264 @@ pub fn execute_wire_with_control(
                     &mut ctx,
                 )?;
                 recovered
+            }
+            "classifyParquetNullability" => {
+                let source =
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?;
+                let operation_request = field(&request, "request")
+                    .ok_or_else(|| request_error("request is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_nullability_classification::classify_parquet_nullability(
+                    source,
+                    operation_request,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "verifyParquetNullabilityClassification" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_nullability_classification::verify_parquet_nullability_classification(
+                    receipt, current, &engine, &registry, &mut capabilities, &mut ctx,
+                )?
+            }
+            "recoverParquetNullabilityBytes" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                let bytes = umf_core::parquet_nullability_classification::recover_parquet_nullability_bytes(
+                    receipt, current, &engine, &registry, &mut capabilities, &mut ctx,
+                )?;
+                let bytes_hex = hex(&bytes, &mut ctx)?;
+                Value::Object(vec![(
+                    Utf16::from("bytesHex"),
+                    Value::string_utf8(bytes_hex),
+                )])
+            }
+            "classifyParquetField" => {
+                let source =
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?;
+                let operation_request = field(&request, "request")
+                    .ok_or_else(|| request_error("request is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_field_classification::classify_parquet_field(
+                    source,
+                    operation_request,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "verifyParquetFieldClassification" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_field_classification::verify_parquet_field_classification(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "recoverParquetFieldBytes" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                let bytes = umf_core::parquet_field_classification::recover_parquet_field_bytes(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?;
+                let bytes_hex = hex(&bytes, &mut ctx)?;
+                Value::Object(vec![(
+                    Utf16::from("bytesHex"),
+                    Value::string_utf8(bytes_hex),
+                )])
+            }
+            "classifyParquetKeys" => {
+                let source =
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?;
+                let operation_request = field(&request, "request")
+                    .ok_or_else(|| request_error("request is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_key_classification::classify_parquet_keys(
+                    source,
+                    operation_request,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "verifyParquetKeyClassification" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_key_classification::verify_parquet_key_classification(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "recoverParquetKeySource" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                let bytes = umf_core::parquet_key_classification::recover_parquet_key_source(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?;
+                let bytes_hex = hex(&bytes, &mut ctx)?;
+                ctx.charge_work(bytes_hex.len(), Utf16::default())?;
+                Value::Object(vec![(
+                    Utf16::from("bytesHex"),
+                    Value::string_utf8(bytes_hex),
+                )])
+            }
+            "classifyParquetFacets" => {
+                let source =
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?;
+                let operation_request = field(&request, "request")
+                    .ok_or_else(|| request_error("request is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_facets_classification::classify(
+                    source,
+                    operation_request,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "verifyParquetFacetClassification" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_facets_classification::verify(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "recoverParquetFacetSource" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                let bytes = umf_core::parquet_facets_classification::recover_source(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?;
+                let bytes_hex = hex(&bytes, &mut ctx)?;
+                ctx.charge_work(bytes_hex.len(), Utf16::default())?;
+                Value::Object(vec![(
+                    Utf16::from("bytesHex"),
+                    Value::string_utf8(bytes_hex),
+                )])
+            }
+            "classifyParquetCardinality" => {
+                let source =
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?;
+                let operation_request = field(&request, "request")
+                    .ok_or_else(|| request_error("request is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_cardinality_classification::classify(
+                    source,
+                    operation_request,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "verifyParquetCardinalityClassification" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_cardinality_classification::verify_classification(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "recoverParquetCardinalityBytes" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                let bytes = umf_core::parquet_cardinality_classification::recover_bytes(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?;
+                let bytes_hex = hex(&bytes, &mut ctx)?;
+                ctx.charge_work(bytes_hex.len(), Utf16::default())?;
+                Value::Object(vec![(
+                    Utf16::from("bytesHex"),
+                    Value::string_utf8(bytes_hex),
+                )])
             }
             _ => return Err(request_error("Unknown Record Type binding operation")),
         };

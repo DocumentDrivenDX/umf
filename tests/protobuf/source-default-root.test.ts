@@ -3,7 +3,7 @@ import {expect, test} from 'bun:test';
 import {importProtobufSources, exportProtobufSources, readDescriptorSet, writeDescriptorSet, proposeProtobufDescriptorEdit} from '../../src/index-node-v4';
 import type {DescriptorNode} from '../../src/adapters/protobuf/descriptor';
 
-async function runNative(input: Record<string, unknown>) {
+async function runNative(input: object) {
   const process = Bun.spawn(['go', 'run', '.'], {
     cwd: 'native/protobuf',
     stdin: new Blob([JSON.stringify(input)]),

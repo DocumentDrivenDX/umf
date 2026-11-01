@@ -17,6 +17,8 @@ use std::collections::{HashMap, HashSet};
 const RESULT_SCHEMA: &str =
     include_str!("../../../spec/projections/sqlserver-physical-binding.schema.json");
 const CORE_SCHEMA: &str = include_str!("../../../spec/core/schema.json");
+const SEMANTIC_TYPE_REFERENCE_SCHEMA: &str =
+    include_str!("../../../spec/core/semantic-type-reference.schema.json");
 const LAYOUT_SCHEMA: &str =
     include_str!("../../../spec/projections/sqlserver-relationship-layout.schema.json");
 
@@ -120,10 +122,11 @@ fn bound_id(v: &Value) -> String {
         .join("\u{1f}")
 }
 fn key_id(v: &Value) -> String {
-    ["module", "element", "key"]
+    let record = get(v, "record").unwrap_or(v);
+    [get(record, "module"), get(record, "element"), get(v, "key")]
         .iter()
-        .map(|n| {
-            text(get(v, n))
+        .map(|value| {
+            text(*value)
                 .map(|v| v.units().iter().map(|u| format!("{u:04x}")).collect())
                 .unwrap_or_else(|| "<missing>".into())
         })
@@ -144,24 +147,34 @@ fn replace_member(value: &mut Value, name: &str, replacement: Value) -> Result<(
 }
 
 fn find_logical_record<'a>(logical: &'a Value, identity: &Value) -> Option<&'a Value> {
+    let module_id = text(get(identity, "module"))?;
+    let element_id = text(get(identity, "element"))?;
     arr(get(logical, "modules"))?.iter().find_map(|module| {
+        if text(get(module, "id")) != Some(module_id) {
+            return None;
+        }
         arr(get(module, "elements"))?
             .iter()
-            .find(|record| id(record) == id(identity))
+            .find(|record| text(get(record, "id")) == Some(element_id))
     })
 }
 fn logical_record_path(logical: &Value, identity: &Value) -> Result<String, EngineError> {
+    let module_id = text(get(identity, "module"));
+    let element_id = text(get(identity, "element"));
     for (module_index, module) in arr(get(logical, "modules"))
         .unwrap_or(&[])
         .iter()
         .enumerate()
     {
+        if text(get(module, "id")) != module_id {
+            continue;
+        }
         for (element_index, record) in arr(get(module, "elements"))
             .unwrap_or(&[])
             .iter()
             .enumerate()
         {
-            if id(record) == id(identity) {
+            if text(get(record, "id")) == element_id {
                 return Ok(format!("/modules/{module_index}/elements/{element_index}"));
             }
         }
@@ -266,6 +279,10 @@ fn schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), En
     resources
         .entries
         .push((k("urn:umf:core:0.10.0"), load_schema(CORE_SCHEMA, ctx)?));
+    resources.entries.push((
+        k("urn:umf:core:semantic-type-reference:1.0.0"),
+        load_schema(SEMANTIC_TYPE_REFERENCE_SCHEMA, ctx)?,
+    ));
     resources.entries.push((
         k("urn:umf:sqlserver:relationship-layout:1.0.0"),
         load_schema(LAYOUT_SCHEMA, ctx)?,
@@ -1351,8 +1368,9 @@ pub fn project_binding_to_sqlserver(
 }
 
 fn resolve_key_primary(logical: &Value, key: &Value) -> bool {
-    let module = text(get(key, "module"));
-    let element = text(get(key, "element"));
+    let record = get(key, "record").unwrap_or(&Value::Null);
+    let module = text(get(record, "module"));
+    let element = text(get(record, "element"));
     let key_id = text(get(key, "key"));
     arr(get(&logical, "modules"))
         .unwrap_or(&[])

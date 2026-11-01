@@ -61,6 +61,8 @@ pub mod sqlserver_relationship_layout;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_relationship_layout;
 #[cfg(feature = "embedded-adapters")]
+pub mod ddd_postgresql_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod binding_sqlserver_tables;
 #[cfg(feature = "embedded-adapters")]
 pub mod binding_iceberg_projection;
@@ -151,6 +153,8 @@ pub mod facets_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod key_avro_projection;
 #[cfg(feature = "embedded-adapters")]
+pub mod avro_relationship_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod openapi_json_schema_projection;
 pub mod openapi_adapter;
 pub mod operation_values;
@@ -163,6 +167,14 @@ pub mod parquet_edits;
 pub mod parquet_levels;
 pub mod parquet_pages;
 pub mod parquet_physical;
+#[cfg(feature = "embedded-adapters")]
+pub mod parquet_cardinality_classification;
+#[cfg(feature = "embedded-adapters")]
+pub mod parquet_field_classification;
+pub mod parquet_key_classification;
+#[cfg(feature = "embedded-adapters")]
+pub mod parquet_facets_classification;
+pub mod parquet_nullability_classification;
 pub mod parquet_record_classifier;
 pub mod parquet_record_recovery;
 pub mod parquet_record_type_candidate;
@@ -238,6 +250,8 @@ pub mod smithy_adapter;
 pub mod spark_schema;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_adapter;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_field_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_avro_projection;
 #[cfg(feature = "embedded-adapters")]

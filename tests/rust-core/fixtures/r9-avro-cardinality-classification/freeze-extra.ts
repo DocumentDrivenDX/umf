@@ -1,5 +1,5 @@
-import {avroAvailabilitySource} from '../../../../../../scripts/core-ideals/nullability-avro-cases';
-import {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle} from '../../../../../../src/core-ideals/cardinality-avro';
+import {avroAvailabilitySource} from '../../../../scripts/core-ideals/nullability-avro-cases';
+import {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,type AvroCardinalityRequest} from '../../../../src/core-ideals/cardinality-avro';
 import packet from './typescript-predecessor.json';
 const base=(packet.outcomes as any)['empty-array/present-non-null-schema/strict'];
 const clone=structuredClone;
@@ -26,11 +26,11 @@ add('blocked-receipt','verifyAvroCardinalityClassification',{receipt:classifyAvr
 add('recover-base','recoverAvroCardinalityBundle',{receipt:base.result,current:base.result.target});
 const dependency=' {"type":"enum","name":"dep.Choice","symbols":["A","B"],"opaque":9007199254740993} ';
 const dependencies=[{id:'shared',schema:dependency}];const schema=JSON.stringify({type:'record',name:'cardinality.Example',fields:[{name:'value',type:{type:'array',items:'dep.Choice'}}]});
-const dep=avroAvailabilitySource(schema,dependencies,'cardinality.Example');const request={column:dep.column,nativeSource:schema,dependencies,identity:{module:'logical',element:'value'},profile:'present-non-null-schema',mode:'strict'};
+const dep=avroAvailabilitySource(schema,dependencies,'cardinality.Example');const request:AvroCardinalityRequest={column:dep.column,nativeSource:schema,dependencies,identity:{module:'logical',element:'value'},profile:'present-non-null-schema',mode:'strict'};
 c('dependency-enum',dep.source,request);
 const depResult=classifyAvroCardinality(dep.source,request);add('recover-dependency','recoverAvroCardinalityBundle',{receipt:depResult,current:depResult.target});
-const reformatted=clone(depResult);reformatted.request.dependencies[0].schema+='\n';add('recover-dependency-reformatted','recoverAvroCardinalityBundle',{receipt:reformatted,current:depResult.target});
-const depForged=clone(depResult);depForged.request.dependencies[0].schema=dependency.replace('9007199254740993','9007199254740995');add('recover-dependency-forged','recoverAvroCardinalityBundle',{receipt:depForged,current:depResult.target});
+const reformatted=clone(depResult);reformatted.request.dependencies![0]!.schema+='\n';add('recover-dependency-reformatted','recoverAvroCardinalityBundle',{receipt:reformatted,current:depResult.target});
+const depForged=clone(depResult);depForged.request.dependencies![0]!.schema=dependency.replace('9007199254740993','9007199254740995');add('recover-dependency-forged','recoverAvroCardinalityBundle',{receipt:depForged,current:depResult.target});
 const versioned=clone(base.result);versioned.version='2.0.0';add('receipt-version','verifyAvroCardinalityClassification',{receipt:versioned,current:base.result.target});
 const futureSchema=JSON.stringify({type:'record',name:'cardinality.Example',aliases:['Legacy'],fields:[{name:'value',type:{type:'array',items:'long',future:'\ud800'}}],opaque:9007199254740993});
 const future=avroAvailabilitySource(futureSchema,[],'cardinality.Example');c('utf16-alias-lexeme',future.source,{column:future.column,nativeSource:futureSchema,dependencies:[],identity:{module:'logical',element:'value'},profile:'present-non-null-schema',mode:'strict'});

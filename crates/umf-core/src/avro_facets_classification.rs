@@ -1311,12 +1311,7 @@ pub fn classify_avro_facets(
                 ),
                 (
                     "binding",
-                    obj(vec![
-                        ("id", t(EXT)),
-                        ("version", t("1.0.0")),
-                        ("nativeVersion", t("1.12.0")),
-                        ("subset", t(BASIS)),
-                    ]),
+                    obj(vec![("id", t(EXT)), ("version", t("1.0.0"))]),
                 ),
                 (
                     "profile",

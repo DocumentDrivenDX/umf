@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Dedicated tagged transport for native SQL Server catalog observations.
 use crate::{decode, encode, field, result_envelope};
-use umf_core::{Context, EngineError, Utf16, Value, sqlserver_adapter as sqlserver};
+use umf_core::{
+    context::Context,
+    engine::{Capabilities, Engine, ResourceSet, SemanticContext},
+    error::{Diagnostic, EngineError},
+    registry::Registry,
+    serialization::{self, Format},
+    sqlserver_adapter as sqlserver, Utf16, Value,
+};
 
 pub const PROFILE: &str = "umf.sqlserver-wire/1";
 
@@ -17,6 +24,57 @@ fn required_string<'a>(value: &'a Value, name: &str) -> Result<&'a Utf16, Engine
 fn required<'a>(value: &'a Value, name: &str) -> Result<&'a Value, EngineError> {
     field(value, name).ok_or_else(|| request_error(&format!("{name} is required")))
 }
+fn parse_resource(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    serialization::read_json_value(
+        &source.encode_utf16().collect::<Vec<_>>(),
+        Format::Json,
+        ctx,
+    )
+}
+fn embedded_sqlserver_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
+    let engine = Engine::new(
+        ResourceSet::new(
+            parse_resource(include_str!("../../../spec/core/schema.json"), ctx)?,
+            parse_resource(
+                include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+                ctx,
+            )?,
+            parse_resource(
+                include_str!("../../../spec/core/extension-package.schema.json"),
+                ctx,
+            )?,
+            parse_resource(
+                include_str!("../../../spec/metamodel/generated/core-constraints.json"),
+                ctx,
+            )?,
+            parse_resource(
+                include_str!("../../../spec/metamodel/generated/domain-policy.json"),
+                ctx,
+            )?,
+        ),
+        ctx,
+    )?;
+    let schemas = engine.schema_resources_with_context(ctx)?;
+    let package = parse_resource(
+        include_str!("../../../spec/extensions/sqlserver/package.json"),
+        ctx,
+    )?;
+    let mut registry = Registry::new();
+    registry.register(&package, None, engine.package_schema(), &schemas, ctx)?;
+    Ok((engine, registry))
+}
+struct NoCapabilities;
+impl Capabilities for NoCapabilities {
+    fn validate_extension(
+        &mut self,
+        _: u64,
+        _: &Value,
+        _: &SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        Ok(Vec::new())
+    }
+}
+
 fn allowed(op: &str) -> Option<&'static [&'static str]> {
     Some(match op {
         "sqlserver.import" => &["profile", "op", "source", "id"],
@@ -30,6 +88,10 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         "sqlserver.facetType" => &["profile", "op", "native"],
         "sqlserver.facetPredicate" => &["profile", "op", "source", "columnName"],
         "sqlserver.facetConstraints" => &["profile", "op", "document", "columnPath"],
+        "sqlserver.classifyField" => &["profile", "op", "source", "request"],
+        "sqlserver.verifyFieldClassification" | "sqlserver.recoverFieldCapture" => {
+            &["profile", "op", "receipt", "current"]
+        }
         _ => return None,
     })
 }
@@ -57,6 +119,9 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         "sqlserver.facetType",
         "sqlserver.facetPredicate",
         "sqlserver.facetConstraints",
+        "sqlserver.classifyField",
+        "sqlserver.verifyFieldClassification",
+        "sqlserver.recoverFieldCapture",
     ]
     .into_iter()
     .find(|op| op.encode_utf16().eq(op_text.units().iter().copied()))
@@ -136,6 +201,14 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
                 ));
             }
         }
+        "sqlserver.classifyField" => {
+            required(request, "source")?;
+            required(request, "request")?;
+        }
+        "sqlserver.verifyFieldClassification" | "sqlserver.recoverFieldCapture" => {
+            required(request, "receipt")?;
+            required(request, "current")?;
+        }
         _ => unreachable!(),
     }
     Ok(op)
@@ -149,7 +222,9 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             sqlserver::document_value(required_string(request, "id")?, &catalog, ctx)
         }
         "sqlserver.inspect" => sqlserver::inspect_document(required(request, "document")?, ctx),
-        "sqlserver.inspectPayload" => sqlserver::inspect_payload(required(request, "payload")?, ctx),
+        "sqlserver.inspectPayload" => {
+            sqlserver::inspect_payload(required(request, "payload")?, ctx)
+        }
         "sqlserver.export" => Ok(Value::String(sqlserver::export_document(
             required(request, "document")?,
             ctx,
@@ -185,6 +260,43 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             required_string(request, "columnPath")?,
             ctx,
         ),
+        "sqlserver.classifyField" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::classify(
+                required(request, "source")?,
+                required(request, "request")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.verifyFieldClassification" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::verify(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.recoverFieldCapture" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::recover(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+            .map(Value::String)
+        }
         _ => Err(request_error("unknown SQL Server operation")),
     }
 }

@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe, expect, test} from 'bun:test';
 import {createRowScopeRustDefault} from '../../src/table-authoring/rust-default';
+import type {TablePolicy} from '../../src/extensions/tables';
+
+const rowPolicy:TablePolicy={
+  mode:'native-rls',
+  person:{select:{kind:'allow'},insert:{kind:'deny'},update:{kind:'deny'},delete:{kind:'deny'}},
+  batch:{select:{kind:'deny'},insert:{kind:'deny'},update:{kind:'deny'},delete:{kind:'deny'}},
+};
 
 describe('Rust row-scope staged admission', () => {
   test('invokes the caller policy callback between prepare and native completion', () => {
@@ -9,7 +16,7 @@ describe('Rust row-scope staged admission', () => {
     const prepared = {
       valid: true,
       source: {commands: ['select']},
-      policy: {mode: 'native-rls'},
+      policy: rowPolicy,
       diagnostics: [],
       sourceToOutput: {'/commands/0': ['/policy/person/select']},
     };
@@ -51,7 +58,7 @@ describe('Rust row-scope staged admission', () => {
     let completeCalls = 0;
     const prepared = {
       valid: true,
-      policy: {mode: 'native-rls'},
+      policy: rowPolicy,
       diagnostics: [],
       sourceToOutput: {},
     };

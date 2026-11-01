@@ -31,7 +31,7 @@ const server = createServer(async (request, response) => {
   }
   response.writeHead(404); response.end('not found');
 });
-await new Promise(done => server.listen(0, '127.0.0.1', done));
+await new Promise<void>(done => server.listen({port:0,host:'127.0.0.1'}, done));
 let browser;
 try {
   const address = server.address(); assert(address && typeof address !== 'string');

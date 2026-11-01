@@ -121,6 +121,15 @@ fn identity(v: &Value, names: &[&str]) -> String {
         .collect::<Vec<_>>()
         .join("\u{1f}")
 }
+fn key_layout_identity(layout: &Value) -> String {
+    let record = get(layout, "record").unwrap_or(&Value::Null);
+    let reference = obj(vec![
+        ("module", get(record, "module").cloned().unwrap_or(Value::Null)),
+        ("element", get(record, "element").cloned().unwrap_or(Value::Null)),
+        ("key", get(layout, "key").cloned().unwrap_or(Value::Null)),
+    ]);
+    identity(&reference, &["module", "element", "key"])
+}
 fn same_ref(a: &Value, b: &Value, names: &[&str]) -> bool {
     names.iter().all(|name| get(a, name) == get(b, name))
 }
@@ -755,7 +764,7 @@ pub fn validate_postgresql_relationship_layout(
             .unwrap_or(&[])
             .iter()
             .find(|k| get(k, "id") == Some(key_name));
-        let kid = identity(key, &["module", "element", "key"]);
+        let kid = key_layout_identity(key);
         if keys.insert(kid, key).is_some() {
             add_error(&mut errors, "DUPLICATE", &path, "Key layout repeats");
         }
@@ -1032,12 +1041,10 @@ pub fn validate_postgresql_relationship_layout(
                 );
             }
         } else {
-            if get(layout, "sourceKey").is_none()
-                || !same_ref(
-                    get(layout, "sourceKey").unwrap_or(&Value::Null),
-                    source_ref,
-                    &["module", "element", "key"],
-                )
+            if get(layout, "sourceKey").is_none_or(|source_key| {
+                !same_ref(source_key, source_ref, &["module", "element"])
+                    || !keys.contains_key(&identity(source_key, &["module", "element", "key"]))
+            })
                 || get(layout, "sourceComponents").is_none()
                 || get(layout, "sourceConstraint").is_none()
             {

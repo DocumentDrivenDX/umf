@@ -8,6 +8,7 @@ import type {importSqlServerCatalog,inspectSqlServer,exportSqlServerCatalog,prop
 import type {SqlServerFacetTypeInspection,inspectSqlServerFacetType} from './facet-type';
 import type {SqlServerFacetPredicateInspection,inspectSqlServerFacetPredicate} from './facet-predicate';
 import type {SqlServerFacetConstraintsInspection,inspectSqlServerFacetConstraints} from './facet-constraints';
+import type {SqlServerFieldClassification,SqlServerFieldRequest} from '../../core-ideals/sqlserver-field';
 
 export interface SqlServerNativeFamilyEngine {
  sqlserver:{
@@ -22,6 +23,9 @@ export interface SqlServerNativeFamilyEngine {
   facetType(fields:{native:NativeJson}):unknown;
   facetPredicate(fields:{source:unknown;columnName:string}):unknown;
   facetConstraints(fields:{document:Document;columnPath:string}):unknown;
+  classifyField(fields:{source:Document;request:SqlServerFieldRequest}):unknown;
+  verifyFieldClassification(fields:{receipt:SqlServerFieldClassification;current:Document}):unknown;
+  recoverFieldCapture(fields:{receipt:SqlServerFieldClassification;current:Document}):unknown;
  }
 }
 
@@ -53,5 +57,8 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
    return call(()=>engine.sqlserver.facetPredicate({source:input,columnName}) as SqlServerFacetPredicateInspection);
   },
   inspectSqlServerFacetConstraints(document:Parameters<typeof inspectSqlServerFacetConstraints>[0],columnPath:Parameters<typeof inspectSqlServerFacetConstraints>[1]):SqlServerFacetConstraintsInspection{return call(()=>engine.sqlserver.facetConstraints({document,columnPath}) as SqlServerFacetConstraintsInspection);},
+  classifySqlServerField(source:Document,request:SqlServerFieldRequest):SqlServerFieldClassification{return call(()=>engine.sqlserver.classifyField({source,request}) as SqlServerFieldClassification);},
+  verifySqlServerFieldClassification(receipt:SqlServerFieldClassification,current:Document):SqlServerFieldClassification{return call(()=>engine.sqlserver.verifyFieldClassification({receipt,current}) as SqlServerFieldClassification);},
+  recoverSqlServerFieldCapture(receipt:SqlServerFieldClassification,current:Document):string{return call(()=>engine.sqlserver.recoverFieldCapture({receipt,current}) as string);},
  });
 }

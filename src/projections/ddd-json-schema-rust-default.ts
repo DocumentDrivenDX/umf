@@ -22,6 +22,12 @@ export interface DddJsonSchemaNativeFamily {
   recoverDddGraphqlNative(fields:{receipt:import('./ddd-graphql').DddGraphqlProjection;currentTarget:Document}):unknown;
   validateSqlServerRelationshipLayout(fields:{document:Document;binding:Document;policy:import('./binding-sqlserver/relationship-layout').SqlServerRelationshipLayoutPolicy;lossPolicy:'strict'|'report'}):unknown;
   validatePostgresqlRelationshipLayout(fields:{document:Document;binding:Document;policy:import('./ddd-postgresql/relationship-layout').PostgresqlRelationshipLayoutPolicy;lossPolicy:'strict'|'report'}):unknown;
+  prepareDddPostgresqlProjection(fields:{document:Document;binding:Document;policy:import('./ddd-postgresql/index').DddPostgresqlPolicy}):unknown;
+  completeDddPostgresqlProjection(fields:{document:Document;binding:Document;policy:import('./ddd-postgresql/index').DddPostgresqlPolicy;candidateSource:string;candidateArchive:Document;nativeSource:string;targetArchive:Document}):unknown;
+  blockDddPostgresqlProjection(fields:{document:Document;binding:Document;policy:import('./ddd-postgresql/index').DddPostgresqlPolicy;path:string;message:string}):unknown;
+  verifyDddPostgresqlProjection(fields:{receipt:import('./ddd-postgresql/index').DddPostgresqlProjection;currentTarget:Document;candidateSource:string;candidateArchive:Document}):unknown;
+  recoverDddPostgresqlIdeal(fields:{receipt:import('./ddd-postgresql/index').DddPostgresqlProjection;currentTarget:Document;candidateSource:string;candidateArchive:Document}):unknown;
+  recoverDddPostgresqlNative(fields:{receipt:import('./ddd-postgresql/index').DddPostgresqlProjection;currentTarget:Document;candidateSource:string;candidateArchive:Document}):unknown;
  };
 }
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);

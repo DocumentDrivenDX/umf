@@ -1,7 +1,8 @@
 import {describe,expect,test} from 'bun:test';
 import {createJsonLdRustDefault,type JsonLdNativeFamilyEngine} from '../../src/adapters/jsonld/rust-default';
+import type {Document} from '../../src/model/types';
 
-const document={umf:'0.10.0',id:'jsonld-public-root',modules:[]} as const;
+const document:Document={umf:'0.10.0',id:'jsonld-public-root',vocabularies:{},modules:[]};
 
 describe('JSON-LD Rust default facade',()=>{
  test('uses native registry inspection and keeps source sync / transformations promise based',async()=>{
@@ -21,6 +22,7 @@ describe('JSON-LD Rust default facade',()=>{
   expect(api.inspectJsonLdDocument(document as never)).toMatchObject({valid:true,complete:false});
   expect(api.exportJsonLdDocument(document as never)).toBe('{}');
   const registration=api.jsonldRegistry().registrations()[0];
+  if(!registration)throw new Error('JSON-LD registration was not created');
   expect(registration.manifest.id).toBe('umf.jsonld');
   expect(registration.semantics?.({profile:'jsonld-source'} as never,{document:document as never,path:'/payload',scope:[] as never})).toEqual([
    {code:'JSONLD_CONTEXT',path:'',message:'source only',severity:'warning'},

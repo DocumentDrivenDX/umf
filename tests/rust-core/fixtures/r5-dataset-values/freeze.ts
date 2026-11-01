@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
-import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues} from '../../../../../../src/index';
-import {commerceDataset} from '../../../../../../tests/helpers/commerce-dataset';
+import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues} from '../../../../src/index';
+import {commerceDataset} from '../../../../tests/helpers/commerce-dataset';
 
 const root='tests/rust-core/fixtures/r5-dataset-values';
 mkdirSync(root,{recursive:true});
@@ -27,9 +27,9 @@ for(const [id,mutate] of Object.entries({
 })) {const s=clone(source),i=clone(input);mutate(s,i);if(id==='unknown_source_meaning'||id==='supplementary_and_surrogate'||id==='unsupported_lifecycle'||id==='surrogate_unknown_path'||id==='unsupported_relationship_order'){i.records=[];i.relationships=[];}if(id==='duplicate_instance'){i.records=i.records.slice(0,2);i.relationships=[];}cases[id]={source:s,input:i};}
 const oversized=clone(input);oversized.records=Array(1000).fill(input.records[0]);cases.oversized={source,input:oversized};
 const valueCountSource=clone(source);valueCountSource['x-r5-large-payload']=Array.from({length:50000},(_,i)=>i);const valueCountInput=clone(input);valueCountInput.records=[];valueCountInput.relationships=[];cases.unknown_source_value_count={source:valueCountSource,input:valueCountInput};
-const targetKeyInput=clone(input);targetKeyInput.relationships[0].target.values=[{boolean:true}];cases.invalid_target_key_updates_key_obligation={source,input:targetKeyInput};
-const unknownTargetSource=clone(source);const supplier=unknownTargetSource.modules[0].elements.find(e=>e.id==='suppliers');supplier.keys[0]['future-equality']={meaning:'target equality remains unknown'};const unknownTargetInput=clone(input);unknownTargetInput.records=unknownTargetInput.records.filter(r=>r.identity.element==='products');unknownTargetInput.relationships=[unknownTargetInput.relationships[0]];cases.unknown_target_key_updates_key_obligation={source:unknownTargetSource,input:unknownTargetInput};
-const wrongVersionSource=clone(source);wrongVersionSource.umf='0.11.0';const wrongVersionInput=clone(input);wrongVersionInput.records=[];wrongVersionInput.relationships=[];cases.wrong_version_document_validation_order={source:wrongVersionSource,input:wrongVersionInput};
+const targetKeyInput=clone(input);targetKeyInput.relationships[0]!.target.values=[{boolean:true}];cases.invalid_target_key_updates_key_obligation={source,input:targetKeyInput};
+const unknownTargetSource=clone(source);const supplier=unknownTargetSource.modules[0]!.elements.find(e=>e.id==='suppliers');if(!supplier)throw new Error('Expected the suppliers element');const supplierKey=supplier.keys?.[0];if(!supplierKey)throw new Error('Expected a supplier key');Object.assign(supplierKey,{'future-equality':{meaning:'target equality remains unknown'}});const unknownTargetInput=clone(input);unknownTargetInput.records=unknownTargetInput.records.filter(r=>r.identity.element==='products');const supplierRelationship=unknownTargetInput.relationships[0];if(!supplierRelationship)throw new Error('Expected a supplier relationship');unknownTargetInput.relationships=[supplierRelationship];cases.unknown_target_key_updates_key_obligation={source:unknownTargetSource,input:unknownTargetInput};
+const wrongVersionSource={...clone(source),umf:'0.11.0' as string};const wrongVersionInput=clone(input);wrongVersionInput.records=[];wrongVersionInput.relationships=[];cases.wrong_version_document_validation_order={source:wrongVersionSource,input:wrongVersionInput};
 const index:Record<string,{file:string;outcome:unknown}>={};
 for(const [id,v] of Object.entries(cases)){
  const result=outcome(v.source,v.input),file=`frozen-${id}.json`;

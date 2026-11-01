@@ -7,7 +7,7 @@ test('DDD PostgreSQL relationship layout uses the native public route and retain
  const c=postgresqlLayoutCase(),before=structuredClone(c);
  const report=validatePostgresqlRelationshipLayout(c.logical,c.binding,c.policy,'report');
  expect(report.status).toBe('reported');expect(report.candidate).toEqual(c.policy);
- expect(report.logical).toEqual(c.logical);expect(report.binding).toEqual(c.binding);expect(report.policy).toEqual(c.policy);
+ expect(report.logical).toEqual(c.logical);expect(report.binding).toEqual(c.binding);expect(report.policy as unknown).toEqual(c.policy);
  expect(c).toEqual(before);
  const strict=validatePostgresqlRelationshipLayout(c.logical,c.binding,c.policy,'strict');
  expect(strict.status).toBe('blocked');expect(strict.candidate).toBeUndefined();

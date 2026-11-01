@@ -27,7 +27,7 @@ test('Node V4 Action selector public root refuses unsupported selector versions'
 });
 
 
-test('Node V4 Action identity public root admits typed values and selects a stable Core Key tuple through Rust', {timeout: 60_000}, () => {
+test('Node V4 Action identity public root admits typed values and selects a stable Core Key tuple through Rust', () => {
   const {document, action, frame} = setup();
   const inputs = {customer: {key: {module: 'sales', element: 'customer', key: 'pk'}, components: [{string: 'customer-17'}]}, 'active-value': {boolean: false}};
   expect(admitActionInputs(document, action as never, inputs as never)).toEqual(inputs);
@@ -35,7 +35,7 @@ test('Node V4 Action identity public root admits typed values and selects a stab
   const prepared = prepareActionIdentities(document, action as never);
   expect(prepared.select('customer-write', inputs as never).entity).toEqual(inputs.customer);
   expect(actionFieldValueKey({module: 'sales', element: 'active'})).toBe('["sales","active"]');
-});
+}, 60_000);
 
 test('Node V4 Action identity public root refuses missing required input', () => {
   const {document, action} = setup();

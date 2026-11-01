@@ -4,8 +4,9 @@ import sourcePacket from '../rust-core/fixtures/r8-security-protection-resolutio
 import parameterPacket from '../rust-core/fixtures/r8-security-protection-parameters/predecessor.json';
 import {resolveSecurityProtectionSources, resolveSecurityProtectionDomains, validateProtectionParameters} from '../../src/index-node-v4';
 
-const sourceCase = sourcePacket.cases[0]!.sources;
-const parameterCase = parameterPacket.cases[0]!.sources;
+const sourceCase = sourcePacket.cases[0]?.sources;
+const parameterCase = parameterPacket.cases[0]?.sources;
+if (!sourceCase || !parameterCase) throw new Error('Protection default fixtures must include source and parameter cases');
 
 test('V4 source resolver uses Rust for exact policy and catalog pins', () => {
   const result = resolveSecurityProtectionSources(sourceCase.policy, sourceCase.catalog);
@@ -16,6 +17,7 @@ test('V4 source resolver uses Rust for exact policy and catalog pins', () => {
 
 test('V4 source resolver refuses a mismatched catalog revision', () => {
   const policy = structuredClone(sourceCase.policy);
+  if (!policy.protection) throw new Error('Source fixture must include a protection pin');
   policy.protection.revision = 'stale';
   const result = resolveSecurityProtectionSources(policy, sourceCase.catalog);
   expect(result.status).toBe('refused');

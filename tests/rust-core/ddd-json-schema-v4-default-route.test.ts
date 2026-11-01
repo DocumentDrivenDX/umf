@@ -33,7 +33,7 @@ test('DDD document projection public Node root delegates binding and projection 
  expect(()=>projectDddToJsonSchema(invalid,bindings)).toThrow(UmfError);
  expect(validateDocument(invalid,dddRegistry()).diagnostics.some(diagnostic=>diagnostic.code==='DDD_IDENTITY')).toBe(true);
  expect(()=>getDddDefinition(invalid,'sales','Order')).toThrow(UmfError);
- expect(()=>editDddDefinition(source,'sales','Order',definition=>({...definition,identity:{fields:['missing']}}))).toThrow(UmfError);
+ expect(()=>editDddDefinition(source,'sales','Order',definition=>({...definition,identity:{fields:['missing'],scope:'aggregate'}}))).toThrow(UmfError);
  const refused=projectDddToJsonSchema(source,{...bindings,relations:{}});
  expect(refused.status).toBe('blocked');expect(refused.target).toBeUndefined();
 },60_000);

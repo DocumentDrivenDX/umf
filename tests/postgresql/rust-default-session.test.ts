@@ -1,10 +1,19 @@
 import {describe,expect,it} from 'bun:test';
-import {createPostgresqlRustDefault} from '../../src/adapters/postgresql/rust-default';
+import {createPostgresqlRustDefault as bindPostgresqlRustDefault} from '../../src/adapters/postgresql/rust-default';
 import {UmfError} from '../../src/model/errors';
+import type {Document} from '../../src/model/types';
 
 const ast={version:170004,stmts:[]};
-const document={umf:'0.10.0',id:'pg',vocabularies:{},modules:[]} as never;
-const editedDocument={...document,id:'pg-edited'} as never;
+const document:Document={umf:'0.10.0',id:'pg',vocabularies:{},modules:[]};
+const editedDocument:Document={...document,id:'pg-edited'};
+type ParserEngine=Parameters<typeof bindPostgresqlRustDefault>[0];
+type ParserRequest=ReturnType<ParserEngine['prepareImport']>;
+const createPostgresqlRustDefault=(engine:Partial<ParserEngine>,...args:Parameters<typeof bindPostgresqlRustDefault> extends [unknown, ...infer R] ? R : never)=>bindPostgresqlRustDefault({
+ prepareImport(){throw new Error('unexpected prepareImport');},cancel(){return false;},completeImport(){throw new Error('unexpected completeImport');},
+ prepareExport(){throw new Error('unexpected prepareExport');},completeExport(){throw new Error('unexpected completeExport');},editNode(){throw new Error('unexpected editNode');},
+ inspect(){throw new Error('unexpected inspect');},getSource(){throw new Error('unexpected getSource');},getNode(){throw new Error('unexpected getNode');},
+ inspectPayload(){return [];},validateAst(){throw new Error('unexpected validateAst');},...engine,
+},...args);
 
 describe('PostgreSQL Rust parser-session facade',()=>{
  it('uses the caller-supplied backend for import and the complete export sequence',async()=>{
@@ -15,7 +24,7 @@ describe('PostgreSQL Rust parser-session facade',()=>{
    completeImport({token,tree}:{token:string;tree:unknown}){expect(token).toBe('import-1');expect(tree).toBe(ast);return {done:true as const,document};},
    prepareExport({document:input}:{document:unknown}){expect(input).toBe(editedDocument);return {token:'export-1',backend:'@libpg-query/parser@17.6.10' as const,astVersion:170004 as const,work:'codecRoundTrip' as const,tree:ast};},
    completeExport({token,response}:{token:string;response:any}){
-    expect(token).toBe(['export-1','export-2','export-3'][exportStage]);
+    expect(token).toBe(['export-1','export-2','export-3'][exportStage]!);
     if(exportStage++===0){expect(response.kind).toBe('codecRoundTripped');return {done:false as const,request:{token:'export-2',backend:'@libpg-query/parser@17.6.10' as const,astVersion:170004 as const,work:'deparse' as const,tree:ast}};}
     if(exportStage===2){expect(response.kind).toBe('deparsed');return {done:false as const,request:{token:'export-3',backend:'@libpg-query/parser@17.6.10' as const,astVersion:170004 as const,work:'parse' as const,sql:'SELECT 1'}};}
     expect(response.kind).toBe('parsed');return {done:true as const,sql:'SELECT 1'};
@@ -41,7 +50,7 @@ describe('PostgreSQL Rust parser-session facade',()=>{
    prepareExport(){throw new Error('unused');},
    completeExport(){throw new Error('unused');},
   };
-  const backend={identity:'@libpg-query/parser@17.6.10' as const,parse(){throw thrown;},deparse(){return '';},codecRoundTrip(){return ast;}};
+  const backend={identity:'@libpg-query/parser@17.6.10' as const,async parse(){throw thrown;},async deparse(){return '';},codecRoundTrip(){return ast;}};
   const api=createPostgresqlRustDefault(engine);
   await expect(api.importPostgresqlSql('SELECT 1',backend,{id:'pg'})).rejects.toBe(thrown);
   expect(cancelled).toEqual(['import-1']);
@@ -56,7 +65,7 @@ describe('PostgreSQL Rust parser-session facade',()=>{
    prepareExport(){throw new Error('unused');},completeExport(){throw new Error('unused');},
   };
   const thrown={reason:'parser failed once'};let fail=true;
-  const backend={identity:'@libpg-query/parser@17.6.10' as const,parse(){if(fail){fail=false;throw thrown;}return ast;},deparse(){return '';},codecRoundTrip(){return ast;}};
+  const backend={identity:'@libpg-query/parser@17.6.10' as const,async parse(){if(fail){fail=false;throw thrown;}return ast;},async deparse(){return '';},codecRoundTrip(){return ast;}};
   const api=createPostgresqlRustDefault(engine);
   await expect(api.importPostgresqlSql('SELECT 1',backend,{id:'pg'})).rejects.toBe(thrown);
   expect(pending.size).toBe(0);
@@ -75,7 +84,7 @@ describe('PostgreSQL Rust parser-session facade',()=>{
     throw Object.assign(new Error('codec output differs'),{code:'POSTGRESQL_CODEC_LOSS'});
    },editNode(){throw new Error('unused');},
   };
-  const backend={identity:'@libpg-query/parser@17.6.10' as const,parse(){return ast;},deparse(){return 'SELECT 1';},codecRoundTrip(){return lossy;}};
+  const backend={identity:'@libpg-query/parser@17.6.10' as const,async parse(){return ast;},async deparse(){return 'SELECT 1';},codecRoundTrip(){return lossy;}};
   const api=createPostgresqlRustDefault(engine);
   await expect(api.exportPostgresqlSql(document,backend)).rejects.toMatchObject({code:'POSTGRESQL_CODEC_LOSS'});
  });
@@ -95,8 +104,8 @@ describe('PostgreSQL Rust parser-session facade',()=>{
 
  it('refuses a parser request from the wrong AST version before invoking the callback',async()=>{
   let called=false;
-  const engine={prepareImport(){return {token:'wrong-version',backend:'@libpg-query/parser@17.6.10' as const,astVersion:170005 as const,work:'parse' as const,sql:'SELECT 1'};},completeImport(){throw new Error('must not complete');},prepareExport(){throw new Error('unused');},completeExport(){throw new Error('unused');},editNode(){throw new Error('unused');}};
-  const backend={identity:'@libpg-query/parser@17.6.10' as const,parse(){called=true;return ast;},deparse(){return '';},codecRoundTrip(){return ast;}};
+  const engine={prepareImport(){return {token:'wrong-version',backend:'@libpg-query/parser@17.6.10' as const,astVersion:170005 as const,work:'parse' as const,sql:'SELECT 1'} as unknown as ParserRequest;},completeImport(){throw new Error('must not complete');},prepareExport(){throw new Error('unused');},completeExport(){throw new Error('unused');},editNode(){throw new Error('unused');}};
+  const backend={identity:'@libpg-query/parser@17.6.10' as const,async parse(){called=true;return ast;},async deparse(){return '';},codecRoundTrip(){return ast;}};
   const api=createPostgresqlRustDefault(engine);
   await expect(api.importPostgresqlSql('SELECT 1',backend,{id:'pg'})).rejects.toMatchObject({code:'POSTGRESQL_BACKEND'});
   expect(called).toBe(false);
@@ -105,16 +114,16 @@ describe('PostgreSQL Rust parser-session facade',()=>{
  it('uses Rust payload inspection for the public registry callback',()=>{
   const expected=[{code:'POSTGRESQL_CATALOG_UNRESOLVED',path:'',severity:'warning',message:'not catalog resolution'}];
   let registeredPackage:unknown;
-  let inspect:((payload:unknown)=>unknown[])|undefined=undefined;
-  const registry={register(pkg:unknown,callback:(payload:unknown)=>unknown[]){registeredPackage=pkg;inspect=callback;return this;}};
+  const inspectors:((payload:unknown)=>unknown[])[]=[];
+  const registry={register(pkg:unknown,callback:(payload:unknown)=>unknown[]){registeredPackage=pkg;inspectors.push(callback);return this;}};
   const engine={
    inspectPayload({payload}:{payload:unknown}){expect(payload).toEqual({profile:'postgresql-raw-parse-tree'});return expected;},
   };
   const api=createPostgresqlRustDefault(engine,()=>false,()=>registry as never);
   const result=api.postgresqlRegistry();
   expect(registeredPackage).toBeTruthy();
-  expect(inspect?.({profile:'postgresql-raw-parse-tree'})).toBe(expected);
-  expect(result).toBe(registry);
+  expect(inspectors[0]?.({profile:'postgresql-raw-parse-tree'})).toBe(expected);
+  expect(result as unknown).toBe(registry);
  });
 
  it('maps branded Rust pointer and syntax failures to the public UmfError class',()=>{
@@ -137,7 +146,7 @@ describe('PostgreSQL Rust parser-session facade',()=>{
    completeImport({token,tree}:{token:string;tree:unknown}){expect(tree).toEqual({version:170004,stmts:[],source:pending.get(token)});return {done:true as const,document:{...document,id:pending.get(token)} as never};},
    prepareExport(){throw new Error('unused');},completeExport(){throw new Error('unused');},
   };
-  const backend={identity:'@libpg-query/parser@17.6.10' as const,async parse(sql:string){await Promise.resolve();return {version:170004,stmts:[],source:sql};},deparse(){return '';},codecRoundTrip(){return ast;}};
+  const backend={identity:'@libpg-query/parser@17.6.10' as const,async parse(sql:string){await Promise.resolve();return {version:170004,stmts:[],source:sql};},async deparse(){return '';},codecRoundTrip(){return ast;}};
   const api=createPostgresqlRustDefault(engine);
   const results=await Promise.all(['SELECT 1','SELECT 2'].map((sql)=>api.importPostgresqlSql(sql,backend,{id:'pg'})));
   expect(results.map((entry)=>entry.id)).toEqual(['SELECT 1','SELECT 2']);
