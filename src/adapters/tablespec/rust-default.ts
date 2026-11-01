@@ -8,6 +8,7 @@ import type {importTableSpec,exportTableSpec,getTableSpecColumn,getTableSpecTabl
 import type {TableSpecFieldClassification,TableSpecFieldRequest} from '../../core-ideals/tablespec-field';
 import type {TableSpecRecordClassification,TableSpecRecordRequest} from '../../core-ideals/tablespec-record-package';
 import type {TableSpecCardinalityClassification,TableSpecCardinalityRequest} from '../../core-ideals/cardinality-tablespec';
+import type {TableSpecNullabilityClassification,TableSpecNullabilityRequest} from '../../core-ideals/nullability-tablespec';
 
 export interface TableSpecNativeFamilyEngine {
  tablespec:{
@@ -27,6 +28,9 @@ export interface TableSpecNativeFamilyEngine {
   classifyTableSpecCardinality(fields:{document:Document;request:TableSpecCardinalityRequest}):unknown;
   verifyTableSpecCardinalityClassification(fields:{receipt:TableSpecCardinalityClassification;current:Document}):unknown;
   recoverTableSpecCardinalitySource(fields:{receipt:TableSpecCardinalityClassification;current:Document}):unknown;
+  classifyTableSpecNullability(fields:{document:Document;request:TableSpecNullabilityRequest}):unknown;
+  verifyTableSpecNullabilityClassification(fields:{receipt:TableSpecNullabilityClassification;current:Document}):unknown;
+  recoverTableSpecNullabilitySource(fields:{receipt:TableSpecNullabilityClassification;current:Document}):unknown;
  }
 }
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
@@ -39,7 +43,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_CARDINALITY_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
+   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_CARDINALITY_')||native.code.startsWith('CORE_NULLABILITY_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
@@ -61,5 +65,8 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   classifyTableSpecCardinality(document:Document,request:TableSpecCardinalityRequest):TableSpecCardinalityClassification{return call(()=>engine.tablespec.classifyTableSpecCardinality({document,request}) as TableSpecCardinalityClassification);},
   verifyTableSpecCardinalityClassification(receipt:TableSpecCardinalityClassification,current:Document):TableSpecCardinalityClassification{return call(()=>engine.tablespec.verifyTableSpecCardinalityClassification({receipt,current}) as TableSpecCardinalityClassification);},
   recoverTableSpecCardinalitySource(receipt:TableSpecCardinalityClassification,current:Document):string|Record<string,string>{return call(()=>engine.tablespec.recoverTableSpecCardinalitySource({receipt,current}) as string|Record<string,string>);},
+  classifyTableSpecNullability(document:Document,request:TableSpecNullabilityRequest):TableSpecNullabilityClassification{return call(()=>engine.tablespec.classifyTableSpecNullability({document,request}) as TableSpecNullabilityClassification);},
+  verifyTableSpecNullabilityClassification(receipt:TableSpecNullabilityClassification,current:Document):TableSpecNullabilityClassification{return call(()=>engine.tablespec.verifyTableSpecNullabilityClassification({receipt,current}) as TableSpecNullabilityClassification);},
+  recoverTableSpecNullabilitySource(receipt:TableSpecNullabilityClassification,current:Document):string|Record<string,string>{return call(()=>engine.tablespec.recoverTableSpecNullabilitySource({receipt,current}) as string|Record<string,string>);},
  });
 }

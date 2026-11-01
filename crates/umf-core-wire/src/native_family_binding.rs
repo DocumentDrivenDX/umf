@@ -17,6 +17,7 @@ pub const FAMILIES: &[&str] = &[
     "nullability-sqlserver-projection",
     "facets-avro-projection",
     "key-avro-projection",
+    "key-sqlserver-projection",
     "avro-relationship-projection",
     "tablespec-relationship-projection",
     "relationship-sqlserver-projection",
@@ -154,6 +155,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "verifyKeysAvroProjection",
                 "recoverKeysAvroIdeal",
             ],
+        ),
+        "key-sqlserver-projection" => (
+            crate::key_sqlserver_projection_binding::PROFILE,
+            &["projectKeysToSqlServer", "verifyKeysSqlServerProjection", "recoverKeysSqlServerIdeal"],
         ),
         "avro-relationship-projection" => (
             crate::avro_relationship_projection_binding::PROFILE,
@@ -419,6 +424,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyTableSpecCardinality",
                 "verifyTableSpecCardinalityClassification",
                 "recoverTableSpecCardinalitySource",
+                "classifyTableSpecNullability",
+                "verifyTableSpecNullabilityClassification",
+                "recoverTableSpecNullabilitySource",
             ],
         ),
         "jsonld" => (
@@ -703,6 +711,9 @@ pub fn execute_wire_with_control(
         }
         "key-avro-projection" => {
             crate::key_avro_projection_binding::execute_wire_with_control(wire, control)
+        },
+        "key-sqlserver-projection" => {
+            crate::key_sqlserver_projection_binding::execute_wire_with_control(wire, control)
         }
         "avro-relationship-projection" => {
             crate::avro_relationship_projection_binding::execute_wire_with_control(wire, control)

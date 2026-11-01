@@ -34,6 +34,9 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "classifyTableSpecCardinality",
     "verifyTableSpecCardinalityClassification",
     "recoverTableSpecCardinalitySource",
+    "classifyTableSpecNullability",
+    "verifyTableSpecNullabilityClassification",
+    "recoverTableSpecNullabilitySource",
 ];
 
 #[cfg(test)]
@@ -243,6 +246,25 @@ impl TableSpecRuntime {
             &mut capabilities,
             ctx,
         )
+    }
+
+    pub fn classify_nullability(
+        &self, input: &Value, request: &Value, ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_nullability_classification::classify_table_spec_nullability(input, request, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
+    pub fn verify_nullability_classification(
+        &self, receipt: &Value, current: &Value, ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_nullability_classification::verify_table_spec_nullability_classification(receipt, current, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
+    pub fn recover_nullability_source(
+        &self, receipt: &Value, current: &Value, ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_nullability_classification::recover_table_spec_nullability_source(receipt, current, self, &self.engine, &self.registry, &mut capabilities, ctx)
     }
 
     pub fn import(

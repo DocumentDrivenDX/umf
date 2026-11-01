@@ -167,6 +167,8 @@ pub mod facets_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod key_avro_projection;
 #[cfg(feature = "embedded-adapters")]
+pub mod key_sqlserver_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod avro_relationship_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod relationship_tablespec_projection;
@@ -287,6 +289,7 @@ pub mod tablespec_adapter;
 pub(crate) mod tablespec_field_classification;
 pub(crate) mod tablespec_record_classification;
 pub(crate) mod tablespec_cardinality_classification;
+pub(crate) mod tablespec_nullability_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_via_avro_projection;
 pub mod target_pin;

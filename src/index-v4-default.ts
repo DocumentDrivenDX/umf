@@ -183,7 +183,6 @@ export { classifyPostgresqlKeys } from './core-ideals/key-postgresql';
 export { classifyPostgresqlRelationships } from './core-ideals/relationship-postgresql-factory';
 export { classifyTableSpecFacets } from './core-ideals/facets-tablespec';
 export { classifyTableSpecKeys } from './core-ideals/key-tablespec';
-export { classifyTableSpecNullability } from './core-ideals/nullability-tablespec';
 export { classifyTableSpecRelationships } from './core-ideals/relationship-tablespec';
 export type { CompiledActionRule } from './extensions/actions/expression';
 export type { CompiledActionSelector } from './extensions/actions/selector';
@@ -851,7 +850,6 @@ export { projectFieldToTableSpec } from './core-ideals/field-tablespec-projectio
 export type { ProjectionIssue } from './projections/json-schema-protobuf';
 export { projectKeysToParquet } from './core-ideals/key-parquet-projection';
 export { projectKeysToPostgresql } from './core-ideals/key-postgresql-projection';
-export { projectKeysToSqlServer } from './core-ideals/key-sqlserver-projection';
 export { projectKeysToTableSpec } from './core-ideals/key-tablespec-projection';
 export { projectMedicalFhir } from './domain-packs/medical';
 export { projectNullabilityToParquet } from './core-ideals/nullability-parquet-projection';
@@ -933,7 +931,6 @@ export { recoverFieldFromSqlServer } from './core-ideals/field-sqlserver-project
 export { recoverFieldFromTableSpec } from './core-ideals/field-tablespec-projection';
 export { recoverKeysParquetIdeal } from './core-ideals/key-parquet-projection';
 export { recoverKeysPostgresqlIdeal } from './core-ideals/key-postgresql-projection';
-export { recoverKeysSqlServerIdeal } from './core-ideals/key-sqlserver-projection';
 export { recoverKeysTableSpecIdeal } from './core-ideals/key-tablespec-projection';
 export { recoverNullabilityFromParquet } from './core-ideals/nullability-parquet-projection';
 export { recoverNullabilityFromPostgresql } from './core-ideals/nullability-postgresql-projection';
@@ -950,7 +947,6 @@ export { recoverRecordFromSqlServer } from './core-ideals/record-sqlserver-proje
 export { recoverRecordFromTableSpec } from './core-ideals/record-tablespec-projection';
 export { recoverTableSpecFacetSource } from './core-ideals/facets-tablespec';
 export { recoverTableSpecKeySource } from './core-ideals/key-tablespec';
-export { recoverTableSpecNullabilitySource } from './core-ideals/nullability-tablespec';
 export { recoverTableSpecRelationshipSource } from './core-ideals/relationship-tablespec';
 export { registerSagas } from './extensions/actions/saga';
 export type { Registration } from './registry/registry';
@@ -1319,7 +1315,6 @@ export { verifyFieldClassificationInspection } from './core-ideals/classificatio
 export { verifyFieldProjectionInspection } from './core-ideals/field-report';
 export { verifyKeysParquetProjection } from './core-ideals/key-parquet-projection';
 export { verifyKeysPostgresqlProjection } from './core-ideals/key-postgresql-projection';
-export { verifyKeysSqlServerProjection } from './core-ideals/key-sqlserver-projection';
 export { verifyKeysTableSpecProjection } from './core-ideals/key-tablespec-projection';
 export { verifyPostgresqlFacetClassification } from './core-ideals/facets-postgresql';
 export { verifyPostgresqlKeyClassification } from './core-ideals/key-postgresql';
@@ -1328,7 +1323,6 @@ export { verifyRecordProjectionInspection } from './core-ideals/record-report';
 export { verifyStructuredClassificationInspection } from './core-ideals/structured-report';
 export { verifyTableSpecFacetClassification } from './core-ideals/facets-tablespec';
 export { verifyTableSpecKeyClassification } from './core-ideals/key-tablespec';
-export { verifyTableSpecNullabilityClassification } from './core-ideals/nullability-tablespec';
 export { verifyTableSpecRelationshipClassification } from './core-ideals/relationship-tablespec';
 export { writeBindingDocument } from './extensions/binding/index';
 export { writeDashboardDocument } from './extensions/dashboard/index';
