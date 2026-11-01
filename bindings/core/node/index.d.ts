@@ -103,7 +103,25 @@ export declare function createSecurityLogicEngine(options?: {controls?: UmfCoreC
 export declare const SECURITY_FUNCTIONS_PROFILE: 'umf.security-functions/1';
 export declare const SECURITY_PROTECTION_SOURCE_PROFILE: 'umf.security-protection-source/1';
 export declare const SECURITY_POLICY_SOURCE_PROFILE: 'umf.security-policy-source/1';
+export interface SecurityActionPurposeInspection { readonly status: 'resolved-purposes'|'refused'; readonly ontology: unknown; readonly documents: unknown; readonly purposes: readonly {readonly action:string; readonly purposes: readonly ('read'|'field'|'original-authorized'|'reverse'|'vault-write'|'other')[]}[]; readonly complete:false; readonly authority:false; readonly diagnostics: readonly {readonly code:string;readonly path:string;readonly message:string;readonly severity:'error'|'warning'}[] }
+export interface ProtectionDeclarationInspection { readonly status:'declared-obligations'|'refused'; readonly complete:false; readonly authority:false; readonly policy:unknown; readonly catalog:unknown; readonly closure:unknown; readonly ontology:unknown; readonly purposes:SecurityActionPurposeInspection['purposes']; readonly obligations:readonly {readonly transform:{readonly id:string;readonly version:string};readonly kind:'hash-algorithm'|'salt-custody'|'dictionary-attack-warning'|'stored-custody'|'propagation'|'reverse-action'|'vault-write-action';readonly status:'unverified';readonly declaration:unknown}[]; readonly diagnostics:SecurityActionPurposeInspection['diagnostics'] }
 export interface UmfSecurityPolicySourceEngine {
+  inspectSecurityActionPurposes(ontology: unknown, documents: unknown): SecurityActionPurposeInspection;
+  inspectProtectionObligations(policy: unknown, catalog: unknown, closure: unknown, ontology: unknown): ProtectionDeclarationInspection;
+  validateSecurityDisclosure(batch: unknown, policy: unknown, resolution: unknown): unknown;
+  encodeSecurityDisclosure(batch: unknown, policy: unknown, resolution: unknown): string;
+  decodeSecurityDisclosure(source: string, policy: unknown, resolution: unknown): unknown;
+  inspectSecurityDisclosureV2(source: unknown, policy: unknown, catalog: unknown, closure: unknown): unknown;
+  encodeSecurityDisclosureV2(source: unknown, policy: unknown, catalog: unknown, closure: unknown, format?: 'json'|'yaml'): string;
+  decodeSecurityDisclosureV2(source: string, policy: unknown, catalog: unknown, closure: unknown, format?: 'json'|'yaml'): unknown;
+  inspectSecurityPolicy(source: unknown, resolution?: unknown): unknown;
+  requireSecurityInterpretation(source: unknown, resolution: unknown): unknown;
+  securityPolicyDependencies(source: unknown, resolution: unknown): unknown;
+  securityIdentityTransportDependencies(source: unknown, resolution: unknown): unknown;
+  evaluateSecurityAccess(policy: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): unknown;
+  evaluateSecurityCollection(policy: unknown, resolution: unknown, cut: unknown, request: unknown): unknown;
+  evaluateSecurityWrite(policy: unknown, resolution: unknown, writeProfile: unknown, request: unknown): unknown;
+  evaluateSecurityPolicyV2LegacyAccess(source: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): unknown;
   inspectSecurityPolicyV2Source(source: unknown): unknown;
   upgradeSecurityPolicySource(source: unknown, revision: unknown): unknown;
   downgradeSecurityPolicySource(source: unknown, revision: unknown): unknown;
@@ -160,8 +178,16 @@ export interface SecurityProtectionSourceResult {
   readonly references: readonly {readonly ruleIndex: number; readonly disclosureIndex: number; readonly transformIndex: number}[];
   readonly diagnostics: readonly {readonly code: string; readonly path: string; readonly message: string; readonly severity: 'error' | 'warning'}[];
 }
+export interface ProtectionCatalogInspection {
+  readonly source: unknown;
+  readonly valid: boolean;
+  readonly complete: false;
+  readonly diagnostics: readonly {readonly code:string; readonly path:string; readonly message:string; readonly severity:'error'|'warning'}[];
+}
 export interface UmfSecurityProtectionSourceEngine {
   resolveSecurityProtectionSources(policy: unknown, catalog: unknown): SecurityProtectionSourceResult;
+  inspectProtectionCatalog(input: unknown): ProtectionCatalogInspection;
+  requireProtectionInterpretation(input: unknown): never;
 }
 export declare function createSecurityProtectionSourceEngine(): UmfSecurityProtectionSourceEngine;
 export declare const GREGORIAN_DATE_PROFILE: 'umf-gregorian-date/1.0.0';
@@ -755,6 +781,15 @@ export declare function createGraphqlEngine(options?: {profile?: 'cooperative' |
 export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
+ readonly ['tablespec-via-avro-projection']: Readonly<Record<'projectToTableSpecViaAvro', NativeFamilyOperation>>;
+ readonly ['parquet-avro-projection']: Readonly<Record<'projectParquetToAvro', NativeFamilyOperation>>;
+ readonly ['arrow-spark-projection']: Readonly<Record<'projectArrowToSpark'|'projectSparkToArrow', NativeFamilyOperation>>;
+ readonly ['arrow-flatbuffer-model']: Readonly<Record<'importArrowFlatbufferModel'|'inspectArrowFlatbufferModel'|'exportArrowFlatbufferModel'|'proposeArrowFlatbufferEdit', NativeFamilyOperation>>;
+ readonly ['avro-tablespec-projection']: Readonly<Record<'projectAvroToTableSpec'|'projectTableSpecToAvro', NativeFamilyOperation>>;
+ readonly ['postgresql-avro-projection']: Readonly<Record<'projectPostgresqlToAvro', NativeFamilyOperation>>;
+ readonly ['postgresql-json-schema-projection']: Readonly<Record<'projectPostgresqlRowToJsonSchema', NativeFamilyOperation>>;
+ readonly ['sqlserver-avro-projection']: Readonly<Record<'projectSqlServerToAvro', NativeFamilyOperation>>;
+ readonly ['sqlserver-ddl-projection']: Readonly<Record<'projectSqlServerToDdl', NativeFamilyOperation>>;
  readonly avro: Readonly<Record<'import'|'inspect'|'inspectPayload'|'fields'|'export'|'exportBundle'|'getNode'|'editNode'|'proposeNodeEdit', NativeFamilyOperation>>;
  readonly ['avro-json-schema-projection']: Readonly<Record<'projectAvroToJsonSchema', NativeFamilyOperation>>;
  readonly ['ddd-json-schema-projection']: Readonly<Record<'projectDddToJsonSchema'|'dddFieldBinding'|'inspectDdd'|'validateDddPayload'|'getDddDefinition'|'editDddDefinition', NativeFamilyOperation>>;
@@ -838,7 +873,7 @@ export interface SmithySessionOperations {
 export declare function createSmithySessionEngine(options?:{profile?:'cooperative'|'hard-isolated';controls?:UmfCoreControls}):SmithySessionOperations;
 
 export declare function createActionPlanSessionEngine(options?: {controls?: UmfCoreControls}): {
-  run(operation: 'prepareModel'|'prepareInspect'|'prepareAssess'|'completeRegistry'|'completeSelection'|'cancel', fields?: Record<string, unknown>): unknown;
+  run(operation: 'prepareModel'|'prepareInspect'|'prepareAssess'|'completeRegistry'|'completeSelection'|'cancel'|'inspectManifest'|'constructManifest'|'assessManifest', fields?: Record<string, unknown>): unknown;
 };
 export interface SecurityProtectionDomainsResult {
   readonly status: 'resolved-domains' | 'refused'; readonly complete: false; readonly authority: false;
@@ -847,3 +882,14 @@ export interface SecurityProtectionDomainsResult {
 }
 export interface UmfSecurityProtectionDomainsEngine { resolveSecurityProtectionDomains(policy:unknown,catalog:unknown,closure:unknown):SecurityProtectionDomainsResult; }
 export declare function createSecurityProtectionDomainsEngine(): UmfSecurityProtectionDomainsEngine;
+
+export interface SecurityReadRegistrationSession {
+  registerSecurityRead(policy: unknown, resolution: unknown): number;
+  evaluateSecurityRead(handle: number, cut: unknown, request: unknown): unknown;
+}
+export interface SecurityReadRegistrationEngine { createSession(): SecurityReadRegistrationSession; }
+export declare function createSecurityReadRegistrationEngine(): SecurityReadRegistrationEngine;
+
+export interface SecurityAuthorityGuardSession { beginRead():string; beginChange(generation:string):number; completeChange(token:number,committed:boolean):void; close():void; }
+export interface SecurityAuthorityGuardEngine { createSession(generation:string):SecurityAuthorityGuardSession; }
+export declare function createSecurityAuthorityGuardEngine():SecurityAuthorityGuardEngine;

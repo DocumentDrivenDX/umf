@@ -1664,6 +1664,23 @@ fn emit(
             }
             for col in &c.tighten {
                 precharge(col, ctx)?;
+                // G01's selected retained-field backfill emits its paired
+                // tightening after the backfill below. Emitting this ordinary
+                // tightening as well would duplicate the same SQL effect.
+                let selected_g01 = options
+                    .and_then(|value| get(value, "version"))
+                    .and_then(text)
+                    .as_deref()
+                    == Some("umf.table-migration-options/0.3")
+                    && items(options.and_then(|value| get(value, "backfills")))
+                        .iter()
+                        .any(|backfill| {
+                            txt(backfill, "table") == txt(table, "id")
+                                && refs_equal(v(backfill, "column"), v(col, "field"))
+                        });
+                if selected_g01 {
+                    continue;
+                }
                 let mut step = sql_step(
                     "table",
                     &txt(col, "sourcePath"),

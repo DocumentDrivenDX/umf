@@ -1,51 +1,69 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
+pub mod access_rrf_binding;
+pub mod access_temporal_binding;
 #[cfg(feature = "embedded-adapters")]
-pub mod dbt_binding;
+pub mod action_plan_binding;
 #[cfg(feature = "embedded-adapters")]
-pub mod rdf_binding;
+pub mod arrow_flatbuffer_model_binding;
 #[cfg(feature = "embedded-adapters")]
-pub mod shacl_owl_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod graphql_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod openapi_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod native_contract_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod jsonld_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod tablespec_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod sqlserver_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod spark_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod postgresql_catalog_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod postgresql_sql_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod postgresql_parser_binding;
-#[cfg(feature = "native-postgresql")]
-pub mod postgresql_native_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod native_family_binding;
+pub mod arrow_spark_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_json_schema_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod avro_tablespec_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod dbt_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod ddd_json_schema_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod graphql_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod iceberg_table_binding;
 #[cfg(feature = "embedded-adapters")]
-pub mod typespec_binding;
+pub mod jsonld_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod native_contract_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod native_family_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod openapi_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod parquet_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_catalog_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_json_schema_projection_binding;
+#[cfg(feature = "native-postgresql")]
+pub mod postgresql_native_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_parser_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_sql_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod rdf_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod shacl_owl_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod smithy_binding;
 #[cfg(feature = "embedded-adapters")]
-pub mod action_plan_binding;
-pub mod access_rrf_binding;
-pub mod access_temporal_binding;
+pub mod spark_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_ddl_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod tablespec_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod tablespec_via_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod typespec_binding;
 pub mod arrow_ipc_capture_binding {
     //! Explicit tagged-wire owner for exact IPC byte capture operations.
     use umf_core::{
@@ -171,13 +189,14 @@ pub mod javascript_numeric_runtime;
 pub mod json_number_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod json_schema_import_session_binding;
-pub mod parquet_record_type_binding;
 pub mod parquet_capture_binding;
+pub mod parquet_record_type_binding;
 pub const PARQUET_CAPTURE_PROFILE: &str = parquet_capture_binding::PROFILE;
 pub use parquet_capture_binding::{
     execute_wire as execute_parquet_capture_wire,
     execute_wire_with_control as execute_parquet_capture_wire_with_control,
 };
+pub mod avro_cardinality_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod protobuf_document;
 #[cfg(feature = "embedded-adapters")]
@@ -185,16 +204,17 @@ pub mod protobuf_source;
 pub mod record_members_inspection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod record_type_binding;
-pub mod avro_cardinality_binding;
 pub mod rfc3339_exact_instant_binding;
+pub mod security_authority_guard_binding;
 pub mod security_disclosure_literal_binding;
 pub mod security_domains_binding;
 pub mod security_functions_binding;
 pub mod security_logic_binding;
 pub mod security_parameters_binding;
-pub mod security_protection_source_binding;
 pub mod security_policy_source_binding;
+pub mod security_protection_source_binding;
 pub mod security_queries_binding;
+pub mod security_read_registration_binding;
 pub mod semantic_value;
 #[cfg(feature = "codegen")]
 pub use umf_codegen::generation::PythonClientHostReadV3;
@@ -304,10 +324,7 @@ pub fn encode_host_callback_value(
 
 /// Bound and meter a host callback's tagged value before parsing it in the
 /// same operation Context's independent transport scope.
-pub fn decode_host_callback_value(
-    wire: &str,
-    ctx: &mut Context<'_>,
-) -> Result<Value, EngineError> {
+pub fn decode_host_callback_value(wire: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let size = wire.encode_utf16().count();
     if size > HOST_CALLBACK_WIRE_LIMIT {
         return Err(EngineError::new(
@@ -576,14 +593,16 @@ pub fn execute_bit128_wire_with_control(
                 value("signed")?,
                 &mut ctx,
             )?,
-            "classifyNativeType" => umf_core::bit128::classify_native_type(value("input")?, &mut ctx)?,
-            "inspectBit128Binding" => validation_value(
-                umf_core::bit128_binding::inspect_bit128_binding(
+            "classifyNativeType" => {
+                umf_core::bit128::classify_native_type(value("input")?, &mut ctx)?
+            }
+            "inspectBit128Binding" => {
+                validation_value(umf_core::bit128_binding::inspect_bit128_binding(
                     value("binding")?,
                     value("logical")?,
                     &mut ctx,
-                )?,
-            ),
+                )?)
+            }
             "encodeBit128CarrierValue" => umf_core::bit128_binding::encode_carrier_value(
                 value("binding")?,
                 value("logical")?,
@@ -618,11 +637,9 @@ pub fn execute_bit128_wire_with_control(
                 value("lossPolicy")?,
                 &mut ctx,
             )?,
-            "recoverBit128ModelProjection" => umf_core::bit128_binding::recover_model(
-                value("report")?,
-                value("text")?,
-                &mut ctx,
-            )?,
+            "recoverBit128ModelProjection" => {
+                umf_core::bit128_binding::recover_model(value("report")?, value("text")?, &mut ctx)?
+            }
             "encodeBit128FileRecord" => umf_core::bit128_binding::encode_file_record(
                 value("binding")?,
                 value("logical")?,
@@ -644,11 +661,13 @@ pub fn execute_bit128_wire_with_control(
                 value("policy")?,
                 &mut ctx,
             )?,
-            "recoverBit128CarrierProjection" => umf_core::bit128_binding::recover_carrier_projection(
-                value("report")?,
-                value("text")?,
-                &mut ctx,
-            )?,
+            "recoverBit128CarrierProjection" => {
+                umf_core::bit128_binding::recover_carrier_projection(
+                    value("report")?,
+                    value("text")?,
+                    &mut ctx,
+                )?
+            }
             _ => return Err(fail("REQUEST", "Unknown umf-128/1 operation")),
         };
         encode(&result, &mut ctx)
@@ -1125,8 +1144,7 @@ pub fn execute_iceberg_wire_with_control(
                 .ok_or_else(|| fail("REQUEST", "Iceberg document is required"))
         };
         let payload = || {
-            field(&request, "payload")
-                .ok_or_else(|| fail("REQUEST", "Iceberg payload is required"))
+            field(&request, "payload").ok_or_else(|| fail("REQUEST", "Iceberg payload is required"))
         };
         let value = match op.as_str() {
             "iceberg.schema.import" => {
@@ -3738,7 +3756,8 @@ mod tests {
     fn opt_in_native_yaml_matches_frozen_option_profiles_and_precedence() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../tests/rust-core/fixtures/r8-native-yaml/options-predecessor.json"
-        )).unwrap();
+        ))
+        .unwrap();
         for case in fixture["cases"].as_array().unwrap() {
             let id = case["id"].as_str().unwrap();
             let mut fields = vec![
@@ -4236,9 +4255,7 @@ mod tests {
     fn production_request_dispatcher_matches_all_frozen_139_vectors() {
         let mut catalog = Context::catalog();
         let fixture = parse_wire_source(
-            include_str!(
-                "../../../tests/rust-core/fixtures/r2/baseline-current-conformance.json"
-            ),
+            include_str!("../../../tests/rust-core/fixtures/r2/baseline-current-conformance.json"),
             &mut catalog,
         );
         let resources = Value::Object(vec![

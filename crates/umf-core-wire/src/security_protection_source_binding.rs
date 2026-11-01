@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Opt-in tagged wire for exact, data-only V2 catalog source resolution.
-//! Policy/catalog interpretation and authority remain unimplemented.
+//! Tagged wire for Rust-owned Security protection source and catalog inspection.
 
 use umf_core::{Context, EngineError, Value};
 
@@ -26,27 +25,60 @@ pub fn execute_security_protection_source_wire_with_control(
                 "Security protection source profile is required",
             ));
         }
-        if text_field(&request, "op").as_deref() != Some("resolveSecurityProtectionSources") {
-            return Err(fail(
-                "REQUEST",
-                "Unknown security protection source operation",
-            ));
-        }
-        if !closed_object(&request, &["profile", "op", "policy", "catalog"]) {
+        let op = text_field(&request, "op");
+        let expected = match op.as_deref() {
+            Some("resolveSecurityProtectionSources") => &["profile", "op", "policy", "catalog"][..],
+            Some("inspectProtectionCatalog") | Some("requireProtectionInterpretation") => {
+                &["profile", "op", "input"][..]
+            }
+            _ => {
+                return Err(fail(
+                    "REQUEST",
+                    "Unknown security protection source operation",
+                ))
+            }
+        };
+        if !closed_object(&request, expected) {
             return Err(fail(
                 "REQUEST",
                 "Closed security protection source request required",
             ));
         }
-        let policy = field(&request, "policy")
-            .ok_or_else(|| fail("REQUEST", "Policy source is required"))?;
-        let catalog = field(&request, "catalog")
-            .ok_or_else(|| fail("REQUEST", "Protection catalog source is required"))?;
-        let result = umf_core::security_logic::resolve_security_protection_sources_candidate(
-            policy,
-            catalog,
-            &mut context,
-        )?;
+        let result = match op.as_deref() {
+            Some("resolveSecurityProtectionSources") => {
+                let policy = field(&request, "policy")
+                    .ok_or_else(|| fail("REQUEST", "Policy source is required"))?;
+                let catalog = field(&request, "catalog")
+                    .ok_or_else(|| fail("REQUEST", "Protection catalog source is required"))?;
+                umf_core::security_logic::resolve_security_protection_sources_candidate(
+                    policy,
+                    catalog,
+                    &mut context,
+                )?
+            }
+            Some("inspectProtectionCatalog") => {
+                let input = field(&request, "input")
+                    .ok_or_else(|| fail("REQUEST", "Protection catalog source is required"))?;
+                umf_core::security_protection_catalog::inspect_protection_catalog(
+                    input,
+                    &mut context,
+                )?
+            }
+            Some("requireProtectionInterpretation") => {
+                let input = field(&request, "input")
+                    .ok_or_else(|| fail("REQUEST", "Protection catalog source is required"))?;
+                umf_core::security_protection_catalog::require_protection_interpretation(
+                    input,
+                    &mut context,
+                )?
+            }
+            _ => {
+                return Err(fail(
+                    "REQUEST",
+                    "Unknown security protection source operation",
+                ))
+            }
+        };
         encode(&result, &mut context)
     })();
     result_envelope(result)
@@ -66,12 +98,12 @@ fn closed_object(value: &Value, expected: &[&str]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{SECURITY_PROTECTION_SOURCE_PROFILE, execute_security_protection_source_wire};
+    use super::{execute_security_protection_source_wire, SECURITY_PROTECTION_SOURCE_PROFILE};
     use crate::{decode, encode};
     use serde_json::Value as Json;
     use umf_core::{
+        serialization::{read_json_value, Format},
         Context, Utf16, Value,
-        serialization::{Format, read_json_value},
     };
 
     fn parse(source: &str) -> Value {

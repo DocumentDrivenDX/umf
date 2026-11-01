@@ -4,8 +4,17 @@ import {encodeRequestWire,fromWire,resultError} from './wire.js';
 export const NATIVE_FAMILY_PROFILE='umf.native-family-dispatch/1';
 
 const FAMILIES=Object.freeze({
+ 'tablespec-via-avro-projection':{profile:'umf.tablespec-via-avro-projection-wire/1',operations:['projectToTableSpecViaAvro']},
+ 'parquet-avro-projection':{profile:'umf.parquet-avro-projection-wire/1',operations:['projectParquetToAvro']},
  avro:{profile:'umf.avro-wire/1',operations:['import','inspect','inspectPayload','fields','export','exportBundle','getNode','editNode','proposeNodeEdit']},
  'avro-json-schema-projection':{profile:'umf.avro-json-schema-projection-wire/1',operations:['projectAvroToJsonSchema']},
+ 'arrow-spark-projection':{profile:'umf.arrow-spark-projection-wire/1',operations:['projectArrowToSpark','projectSparkToArrow']},
+ 'arrow-flatbuffer-model':{profile:'umf.arrow-flatbuffer-model-wire/1',operations:['importArrowFlatbufferModel','inspectArrowFlatbufferModel','exportArrowFlatbufferModel','proposeArrowFlatbufferEdit']},
+ 'avro-tablespec-projection':{profile:'umf.avro-tablespec-projection-wire/1',operations:['projectAvroToTableSpec','projectTableSpecToAvro']},
+ 'postgresql-avro-projection':{profile:'umf.postgresql-avro-projection-wire/1',operations:['projectPostgresqlToAvro']},
+ 'postgresql-json-schema-projection':{profile:'umf.postgresql-json-schema-projection-wire/1',operations:['projectPostgresqlRowToJsonSchema']},
+ 'sqlserver-avro-projection':{profile:'umf.sqlserver-avro-projection-wire/1',operations:['projectSqlServerToAvro']},
+ 'sqlserver-ddl-projection':{profile:'umf.sqlserver-ddl-projection-wire/1',operations:['projectSqlServerToDdl']},
  'ddd-json-schema-projection':{profile:'umf.ddd-json-schema-projection-wire/1',operations:['projectDddToJsonSchema','dddFieldBinding','inspectDdd','validateDddPayload','getDddDefinition','editDddDefinition']},
  openapi:{profile:'umf.openapi-wire/1',operations:['import','validate','inspectPayload','export','exportBundle','getNode','lookupResource','extractSchema','indexSchemas','resolveSchemaReference','resolveDynamicReference','resolveObjectReference','edit']},
  linkml:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','classSlots','slotValues','importContext','importMerge']},

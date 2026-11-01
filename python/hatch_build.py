@@ -118,6 +118,8 @@ SDIST_SOURCE_FILES = (
     "spec/extensions/delta-log/package.json",
     "spec/extensions/delta-log/action-schema.json",
     "spec/extensions/security/schema.json",
+    "spec/extensions/security/package.json",
+    "spec/extensions/security/ontology.schema.json",
     "spec/extensions/security-v0.2/package.json",
     "spec/extensions/security-protection/package.json",
     "spec/extensions/security-protection/domain-resolution.schema.json",

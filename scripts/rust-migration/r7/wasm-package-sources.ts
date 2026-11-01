@@ -24,6 +24,7 @@ const pairs = [
   ['bindings/core/node/src/security-functions.js', 'bindings/core/wasm/src/security-functions.js'],
   ['bindings/core/node/src/security-protection-source.js', 'bindings/core/wasm/src/security-protection-source.js'],
   ['bindings/core/node/src/security-policy-source.js', 'bindings/core/wasm/src/security-policy-source.js'],
+  ['bindings/core/node/src/security-read-registration.js', 'bindings/core/wasm/src/security-read-registration.js'],
   ['bindings/core/node/src/security-domains.js', 'bindings/core/wasm/src/security-domains.js'],
   ['bindings/core/node/src/security-query-properties.js', 'bindings/core/wasm/src/security-query-properties.js'],
   ['bindings/core/node/src/security-protection-parameters.js', 'bindings/core/wasm/src/security-protection-parameters.js'],

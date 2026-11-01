@@ -12,6 +12,22 @@ export function createSecurityPolicySourceEngine(execute, ErrorType = Error) {
     return fromWire(JSON.parse(envelope.wire));
   };
   return Object.freeze({
+    inspectSecurityActionPurposes(ontology, documents) { return run('inspectActionPurposes', {ontology, documents}); },
+    inspectProtectionObligations(policy, catalog, closure, ontology) { return run('inspectProtectionObligations', {policy, catalog, closure, ontology}); },
+    inspectSecurityPolicy(source, resolution) { return run('inspectV1', {source, ...(resolution === undefined ? {} : {resolution})}); },
+    requireSecurityInterpretation(source, resolution) { return run('requireV1', {source, resolution}); },
+    securityPolicyDependencies(source, resolution) { return run('dependencies', {source, resolution}); },
+    securityIdentityTransportDependencies(source, resolution) { return run('identityTransportDependencies', {source, resolution}); },
+    evaluateSecurityAccess(policy, resolution, cut, request, resource) { return run('evaluateAccess', {policy, resolution, cut, request, resource}); },
+    evaluateSecurityCollection(policy, resolution, cut, request) { return run('evaluateCollection', {policy, resolution, cut, request}); },
+    evaluateSecurityWrite(policy, resolution, writeProfile, request) { return run('evaluateWrite', {policy, resolution, writeProfile, request}); },
+    evaluateSecurityPolicyV2LegacyAccess(source, resolution, cut, request, resource) { return run('evaluateV2LegacyAccess', {source, resolution, cut, request, resource}); },
+    validateSecurityDisclosure(batch, policy, resolution) { return run('validateDisclosure', {batch, policy, resolution}); },
+    encodeSecurityDisclosure(batch, policy, resolution) { return run('encodeDisclosure', {batch, policy, resolution}).text; },
+    decodeSecurityDisclosure(source, policy, resolution) { return run('decodeDisclosure', {source, policy, resolution}); },
+    inspectSecurityDisclosureV2(source, policy, catalog, closure) { return run('inspectDisclosureV2', {source, policy, catalog, closure}); },
+    encodeSecurityDisclosureV2(source, policy, catalog, closure, format = 'json') { return run('encodeDisclosureV2', {source, policy, catalog, closure, format}).text; },
+    decodeSecurityDisclosureV2(source, policy, catalog, closure, format = 'json') { return run('decodeDisclosureV2', {source, policy, catalog, closure, format}); },
     inspectSecurityPolicyV2Source(source) { return run('inspectV2', {source}); },
     upgradeSecurityPolicySource(source, revision) { return run('upgrade', {source, revision}); },
     downgradeSecurityPolicySource(source, revision) { return run('downgrade', {source, revision}); },

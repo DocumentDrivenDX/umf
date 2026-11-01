@@ -9,6 +9,15 @@ pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
     "avro",
     "avro-json-schema-projection",
+    "arrow-spark-projection",
+    "arrow-flatbuffer-model",
+    "avro-tablespec-projection",
+    "postgresql-avro-projection",
+    "postgresql-json-schema-projection",
+    "tablespec-via-avro-projection",
+    "parquet-avro-projection",
+    "sqlserver-avro-projection",
+    "sqlserver-ddl-projection",
     "ddd-json-schema-projection",
     "openapi",
     "linkml",
@@ -56,6 +65,47 @@ pub fn metadata_wire(family: &str) -> String {
         "avro-json-schema-projection" => (
             crate::avro_json_schema_projection_binding::PROFILE,
             &["projectAvroToJsonSchema"],
+        ),
+        "arrow-flatbuffer-model" => (
+            crate::arrow_flatbuffer_model_binding::PROFILE,
+            &[
+                "importArrowFlatbufferModel",
+                "inspectArrowFlatbufferModel",
+                "exportArrowFlatbufferModel",
+                "proposeArrowFlatbufferEdit",
+            ],
+        ),
+        "arrow-spark-projection" => (
+            crate::arrow_spark_projection_binding::PROFILE,
+            &["projectArrowToSpark", "projectSparkToArrow"],
+        ),
+        "avro-tablespec-projection" => (
+            crate::avro_tablespec_projection_binding::PROFILE,
+            &["projectAvroToTableSpec", "projectTableSpecToAvro"],
+        ),
+        "postgresql-avro-projection" => (
+            crate::postgresql_avro_projection_binding::PROFILE,
+            &["projectPostgresqlToAvro"],
+        ),
+        "postgresql-json-schema-projection" => (
+            crate::postgresql_json_schema_projection_binding::PROFILE,
+            &["projectPostgresqlRowToJsonSchema"],
+        ),
+        "tablespec-via-avro-projection" => (
+            crate::tablespec_via_avro_projection_binding::PROFILE,
+            &["projectToTableSpecViaAvro"],
+        ),
+        "parquet-avro-projection" => (
+            crate::parquet_avro_projection_binding::PROFILE,
+            &["projectParquetToAvro"],
+        ),
+        "sqlserver-avro-projection" => (
+            crate::sqlserver_avro_projection_binding::PROFILE,
+            &["projectSqlServerToAvro"],
+        ),
+        "sqlserver-ddl-projection" => (
+            crate::sqlserver_ddl_projection_binding::PROFILE,
+            &["projectSqlServerToDdl"],
         ),
         "ddd-json-schema-projection" => (
             crate::ddd_json_schema_projection_binding::PROFILE,
@@ -347,6 +397,35 @@ pub fn execute_wire_with_control(
         "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
         "avro-json-schema-projection" => {
             crate::avro_json_schema_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "arrow-flatbuffer-model" => {
+            crate::arrow_flatbuffer_model_binding::execute_wire_with_control(wire, control)
+        }
+        "arrow-spark-projection" => {
+            crate::arrow_spark_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "avro-tablespec-projection" => {
+            crate::avro_tablespec_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "postgresql-avro-projection" => {
+            crate::postgresql_avro_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "postgresql-json-schema-projection" => {
+            crate::postgresql_json_schema_projection_binding::execute_wire_with_control(
+                wire, control,
+            )
+        }
+        "tablespec-via-avro-projection" => {
+            crate::tablespec_via_avro_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "parquet-avro-projection" => {
+            crate::parquet_avro_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "sqlserver-avro-projection" => {
+            crate::sqlserver_avro_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "sqlserver-ddl-projection" => {
+            crate::sqlserver_ddl_projection_binding::execute_wire_with_control(wire, control)
         }
         "ddd-json-schema-projection" => {
             crate::ddd_json_schema_projection_binding::execute_wire_with_control(wire, control)

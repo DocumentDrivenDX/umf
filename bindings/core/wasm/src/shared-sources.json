@@ -33,7 +33,7 @@
     {
       "source": "bindings/core/node/src/native-family.js",
       "generated": "bindings/core/wasm/src/native-family.js",
-      "sha256": "10ae1cb9ebde76cede483a438ff0a48e8ff5d90c208ef1fd86c0bd5b882ceef9"
+      "sha256": "ee18d5db6862b73b4fc41044b1f8036419373de485e4089ff84db8f2ce2b5347"
     },
     {
       "source": "bindings/core/node/src/postgresql-parser-session.js",
@@ -83,12 +83,17 @@
     {
       "source": "bindings/core/node/src/security-protection-source.js",
       "generated": "bindings/core/wasm/src/security-protection-source.js",
-      "sha256": "be148feb96f65f7bc2b1fc7efd49602a1dd75a7ac1270a4eab856b5a8059d474"
+      "sha256": "70f0b28f8f21e3941ce1162c80bb3a62f713c4c95065c849f6d034b1b4fa5f63"
     },
     {
       "source": "bindings/core/node/src/security-policy-source.js",
       "generated": "bindings/core/wasm/src/security-policy-source.js",
-      "sha256": "db68a2dd91bff0b46067ef211bcc651543f5322470fb24a87f8e8b1b02372e0a"
+      "sha256": "7e8bcd5c0ce5a1249bb7bb74750424c80de8a2756104675f5a46ec78de6a2efd"
+    },
+    {
+      "source": "bindings/core/node/src/security-read-registration.js",
+      "generated": "bindings/core/wasm/src/security-read-registration.js",
+      "sha256": "1fc78ae2ad8fd8ae83b6c0523fde69cf7f9a80f8ba7d726382e0ab56bc6c24e0"
     },
     {
       "source": "bindings/core/node/src/security-domains.js",

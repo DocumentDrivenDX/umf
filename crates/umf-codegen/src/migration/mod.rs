@@ -920,7 +920,32 @@ fn migration_options(
                 "/options",
             ));
         }
-        let candidates = discover_verified(previous, next, v6, ctx)?;
+        // The 0.6 plan reviews the complete 0.3 source discovery. The base
+        // discovery alone omits added constraints and operation-context
+        // changes, so a valid selected marker would otherwise be rejected.
+        let candidates = if v6 {
+            let base = discover_verified(previous, next, true, ctx)?;
+            let added = discovery::discover_added_constraints(previous, next, ctx)?;
+            let mut changes = interleave_g03_added_constraints(
+                base,
+                added,
+                get(next, "expectedCatalog")
+                    .and_then(|catalog| get(catalog, "tables"))
+                    .and_then(|tables| match tables {
+                        Value::Array(tables) => Some(tables.as_slice()),
+                        _ => None,
+                    })
+                    .unwrap_or(&[]),
+                ctx,
+            )?;
+            changes.extend(discovery::discover_default_changes(previous, next, ctx)?);
+            changes.extend(discovery::discover_operation_context_changes(
+                previous, next, ctx,
+            )?);
+            changes
+        } else {
+            discover_verified(previous, next, false, ctx)?
+        };
         let mut seen = Vec::<String>::new();
         for (index, marker) in items(get(value, "reviewedChanges")).iter().enumerate() {
             charge(ctx, 128, "")?;

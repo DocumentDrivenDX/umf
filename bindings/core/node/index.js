@@ -6,6 +6,8 @@ import {createPostgresqlParserSessionOperations, POSTGRESQL_PARSER_PROFILE} from
 import {createTypeSpecSessionOperations, TYPESPEC_SESSION_PROFILE} from './src/typespec-session.js';
 import {createSmithySessionOperations, SMITHY_SESSION_PROFILE} from './src/smithy-session.js';
 import {createActionPlanSessionOperations, ACTION_PLAN_PROFILE} from './src/action-plan-session.js';
+import {createSecurityReadRegistrationEngine as createSecurityReadRegistrationEngineWithWire, SECURITY_READ_REGISTRATION_PROFILE} from './src/security-read-registration.js';
+import {createSecurityAuthorityGuardEngine as createSecurityAuthorityGuardEngineWithWire, SECURITY_AUTHORITY_GUARD_PROFILE} from './src/security-authority-guard.js';
 import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
 export {POSTGRESQL_PARSER_PROFILE};
@@ -2080,6 +2082,26 @@ export function createActionPlanSessionEngine(options = {}) {
   const session = new addon.ActionPlanSession();
   if (typeof session.executeActionPlanSessionWire !== 'function' || session.profileVersion() !== ACTION_PLAN_PROFILE) throw new Error('RUST_ACTION_PLAN_SESSION_PROFILE_MISMATCH');
   return createActionPlanSessionOperations((wire, control) => session.executeActionPlanSessionWire(wire, control), controlBridge, hostWork, nativeCoreError);
+}
+
+export function createSecurityReadRegistrationEngine() {
+  if (typeof addon.SecurityReadRegistrationSession !== 'function') throw new Error('RUST_SECURITY_READ_REGISTRATION_SESSION_MISSING');
+  return createSecurityReadRegistrationEngineWithWire(() => {
+    const session = new addon.SecurityReadRegistrationSession();
+    if (typeof session.executeSecurityReadRegistrationWire !== 'function' || session.profileVersion() !== SECURITY_READ_REGISTRATION_PROFILE) {
+      throw new Error('RUST_SECURITY_READ_REGISTRATION_SESSION_PROFILE_MISMATCH');
+    }
+    return wire => session.executeSecurityReadRegistrationWire(wire);
+  }, NativeCoreErrorType);
+}
+
+export function createSecurityAuthorityGuardEngine() {
+  if (typeof addon.SecurityAuthorityGuardSession !== 'function') throw new Error('RUST_SECURITY_AUTHORITY_GUARD_SESSION_MISSING');
+  return createSecurityAuthorityGuardEngineWithWire(() => {
+    const session = new addon.SecurityAuthorityGuardSession();
+    if (typeof session.executeSecurityAuthorityGuardWire !== 'function' || session.profileVersion() !== SECURITY_AUTHORITY_GUARD_PROFILE) throw new Error('RUST_SECURITY_AUTHORITY_GUARD_SESSION_PROFILE_MISMATCH');
+    return wire => session.executeSecurityAuthorityGuardWire(wire);
+  }, NativeCoreErrorType);
 }
 
 // This private staged importer is opt-in and is not connected to the default adapter.

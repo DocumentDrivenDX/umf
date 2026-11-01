@@ -3,9 +3,12 @@ import {UmfError} from '../../../model/errors';
 import type {SecurityProtectionSourceResolution} from './references';
 import type {ProtectionParameterValidation} from './parameters';
 import type {SecurityProtectionDomainResolution} from './domains';
+import type {ProtectionCatalogInspection} from './catalog';
 
 export interface SecurityProtectionSourceEngine {
   resolveSecurityProtectionSources(policy: unknown, catalog: unknown): unknown;
+  inspectProtectionCatalog(input: unknown): unknown;
+  requireProtectionInterpretation(input: unknown): unknown;
 }
 export interface SecurityProtectionParametersEngine {
   validateProtectionParameters(policy: unknown, catalog: unknown, closure: unknown): unknown;
@@ -41,6 +44,12 @@ export function createProtectionSourcesRustDefault(
   return Object.freeze({
     resolveSecurityProtectionSources(policy: unknown, catalog: unknown): SecurityProtectionSourceResolution {
       return call(() => engine.resolveSecurityProtectionSources(policy, catalog));
+    },
+    inspectProtectionCatalog(input: unknown): ProtectionCatalogInspection {
+      return call(() => engine.inspectProtectionCatalog(input));
+    },
+    requireProtectionInterpretation(input: unknown): never {
+      return call(() => engine.requireProtectionInterpretation(input));
     },
     validateProtectionParameters(policy: unknown, catalog: unknown, closure: unknown): ProtectionParameterValidation {
       return call(() => engine.validateProtectionParameters(policy, catalog, closure));

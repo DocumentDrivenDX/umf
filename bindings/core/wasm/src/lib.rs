@@ -1877,3 +1877,72 @@ impl ActionPlanSession {
         }
     }
 }
+
+const SECURITY_READ_REGISTRATION_PROFILE: &str = "umf.security-read-registration/1";
+
+#[wasm_bindgen]
+pub struct SecurityReadRegistrationSession {
+    inner: std::sync::Mutex<umf_core_wire::security_read_registration_binding::Session>,
+}
+
+#[wasm_bindgen]
+impl SecurityReadRegistrationSession {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> Self {
+        Self {
+            inner: std::sync::Mutex::new(
+                umf_core_wire::security_read_registration_binding::Session::new(),
+            ),
+        }
+    }
+
+    #[wasm_bindgen(js_name = profileVersion)]
+    pub fn profile_version(&self) -> String {
+        SECURITY_READ_REGISTRATION_PROFILE.to_owned()
+    }
+
+    #[wasm_bindgen(js_name = executeSecurityReadRegistrationWire)]
+    pub fn execute_wire(&self, wire_json: &str) -> String {
+        match self.inner.try_lock() {
+            Ok(mut session) => {
+                let mut no_control = |_amount| Ok(());
+                umf_core_wire::security_read_registration_binding::execute_security_read_registration_wire_with_session(
+                    &mut session,
+                    wire_json,
+                    &mut no_control,
+                )
+            }
+            Err(_) => umf_core_wire::security_read_registration_binding::busy_session_envelope(),
+        }
+    }
+}
+
+const SECURITY_AUTHORITY_GUARD_PROFILE: &str = "umf.security-authority-guard/1";
+
+#[wasm_bindgen]
+pub struct SecurityAuthorityGuardSession {
+    inner: std::sync::Mutex<umf_core_wire::security_authority_guard_binding::Session>,
+}
+
+#[wasm_bindgen]
+impl SecurityAuthorityGuardSession {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> Self {
+        Self {
+            inner: std::sync::Mutex::new(
+                umf_core_wire::security_authority_guard_binding::Session::new(),
+            ),
+        }
+    }
+    #[wasm_bindgen(js_name = profileVersion)]
+    pub fn profile_version(&self) -> String {
+        SECURITY_AUTHORITY_GUARD_PROFILE.to_owned()
+    }
+    #[wasm_bindgen(js_name = executeSecurityAuthorityGuardWire)]
+    pub fn execute_wire(&self, wire_json: &str) -> String {
+        match self.inner.try_lock() {
+            Ok(mut session) => umf_core_wire::security_authority_guard_binding::execute_security_authority_guard_wire_with_session(&mut session, wire_json),
+            Err(_) => umf_core_wire::security_authority_guard_binding::busy_session_envelope(),
+        }
+    }
+}

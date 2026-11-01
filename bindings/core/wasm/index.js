@@ -6,6 +6,8 @@ import {createPostgresqlParserSessionOperations, POSTGRESQL_PARSER_PROFILE} from
 import {createTypeSpecSessionOperations, TYPESPEC_SESSION_PROFILE} from './src/typespec-session.js';
 import {createSmithySessionOperations, SMITHY_SESSION_PROFILE} from './src/smithy-session.js';
 import {createActionPlanSessionOperations, ACTION_PLAN_PROFILE} from './src/action-plan-session.js';
+import {createSecurityReadRegistrationEngine as createSecurityReadRegistrationEngineWithWire, SECURITY_READ_REGISTRATION_PROFILE} from './src/security-read-registration.js';
+import {createSecurityAuthorityGuardEngine as createSecurityAuthorityGuardEngineWithWire, SECURITY_AUTHORITY_GUARD_PROFILE} from './src/security-authority-guard.js';
 import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
 export {POSTGRESQL_PARSER_PROFILE};
@@ -2210,6 +2212,17 @@ export function createActionPlanSessionEngine(module, options = {}) {
   return createActionPlanSessionOperations((wire, control) => session.executeActionPlanSessionWire(wire, control), controlBridge, hostWork, nativeCoreError);
 }
 
+export function createSecurityReadRegistrationEngine(module) {
+  if (typeof module?.SecurityReadRegistrationSession !== 'function') throw new Error('RUST_SECURITY_READ_REGISTRATION_SESSION_MISSING');
+  return createSecurityReadRegistrationEngineWithWire(() => {
+    const session = new module.SecurityReadRegistrationSession();
+    if (typeof session.executeSecurityReadRegistrationWire !== 'function' || session.profileVersion() !== SECURITY_READ_REGISTRATION_PROFILE) {
+      throw new Error('RUST_SECURITY_READ_REGISTRATION_SESSION_PROFILE_MISMATCH');
+    }
+    return wire => session.executeSecurityReadRegistrationWire(wire);
+  }, NativeCoreErrorType);
+}
+
 export async function initializeCodegenWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, resources, options = {}) {
   codegenOptions(options);
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
@@ -2227,4 +2240,13 @@ function admissionWork(bridge) {
       throw new UmfCoreError(failure.code, failure.message);
     }
   };
+}
+
+export function createSecurityAuthorityGuardEngine(module) {
+  if (typeof module?.SecurityAuthorityGuardSession !== 'function') throw new Error('RUST_SECURITY_AUTHORITY_GUARD_SESSION_MISSING');
+  return createSecurityAuthorityGuardEngineWithWire(() => {
+    const session = new module.SecurityAuthorityGuardSession();
+    if (typeof session.executeSecurityAuthorityGuardWire !== 'function' || session.profileVersion() !== SECURITY_AUTHORITY_GUARD_PROFILE) throw new Error('RUST_SECURITY_AUTHORITY_GUARD_SESSION_PROFILE_MISMATCH');
+    return wire => session.executeSecurityAuthorityGuardWire(wire);
+  }, NativeCoreErrorType);
 }

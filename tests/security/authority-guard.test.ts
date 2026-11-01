@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {SecurityAuthorityGuard} from '../../src/extensions/security/authority-guard';
+import {SecurityAuthorityGuard} from '../../src/index-node-v4';
 const barrier=()=>{let release!:()=>void;const wait=new Promise<void>(resolve=>release=resolve);return {wait,release};};
 
 // @covers US-057-AC2

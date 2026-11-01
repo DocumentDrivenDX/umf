@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,Diagnostic,Json} from './model/types';
+import {createSecurityAuthorityGuardRustDefault} from './extensions/security/authority-guard-rust-default';
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootKindNullabilityWasm,initializeCoreBit128FieldWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createSecurityProtectionSourceEngine,createSecurityPolicySourceEngine,createSecurityProtectionParametersEngine,createSecurityProtectionDomainsEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createTypeSpecSessionEngine,createSmithySessionEngine,createActionPlanSessionEngine,createParquetCaptureEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,isCoreBit128FieldBindingError,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
+import {initializeCoreModelRootKindNullabilityWasm,initializeCoreBit128FieldWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createSecurityProtectionSourceEngine,createSecurityPolicySourceEngine,createSecurityReadRegistrationEngine,createSecurityAuthorityGuardEngine,createSecurityProtectionParametersEngine,createSecurityProtectionDomainsEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createTypeSpecSessionEngine,createSmithySessionEngine,createActionPlanSessionEngine,createParquetCaptureEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,isCoreBit128FieldBindingError,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreKindNullabilityRust} from './access/rust-kind-nullability-default';
@@ -28,6 +29,8 @@ import {createSecurityLogicRustAdapter} from './extensions/security/rust-logic-a
 import {createProtectionRustDefault} from './extensions/security/protection/rust-default';
 import {createProtectionSourcesRustDefault} from './extensions/security/protection/rust-sources-default';
 import {createSecurityPolicySourceRustDefault} from './extensions/security/policy-source-rust-default';
+import {createSecurityPolicyRustDefault} from './extensions/security/policy-rust-default';
+import {SecurityReadRegistration as SecurityReadRegistrationBase} from './extensions/security/registration-rust-default';
 import {createRawTableBindingInspector} from './extensions/binding/raw-profiles-inspector';
 import {createAvroRelationshipProjection} from './core-ideals/relationship-avro-projection-factory';
 import {createTableSpecRelationshipProjection} from './core-ideals/relationship-tablespec-projection-factory';
@@ -70,6 +73,15 @@ import {createOwlRustDefault} from './adapters/owl/rust-default';
 import {createRdfRustDefault} from './adapters/rdf/rust-default';
 import {createAvroRustDefault} from './adapters/avro/rust-default';
 import {createAvroJsonSchemaRustDefault} from './projections/avro-json-schema-rust-default';
+import {createArrowFlatbufferModelRustDefault} from './adapters/arrow/flatbuffer-model-rust-default';
+import {createArrowSparkRustDefault} from './projections/arrow-spark-rust-default';
+import {createAvroTableSpecRustDefault} from './projections/avro-tablespec-rust-default';
+import {createPostgresqlAvroRustDefault} from './projections/postgresql-avro-rust-default';
+import {createPostgresqlRowJsonSchemaRustDefault} from './projections/postgresql-json-schema-rust-default';
+import {createTableSpecViaAvroRustDefault} from './projections/tablespec-via-avro-rust-default';
+import {createParquetAvroRustDefault} from './projections/parquet-avro-rust-default';
+import {createSqlServerAvroRustDefault} from './projections/sqlserver-avro-rust-default';
+import {createSqlServerDdlRustDefault} from './projections/sqlserver-ddl-rust-default';
 import {createDddJsonSchemaRustDefault} from './projections/ddd-json-schema-rust-default';
 import {createPostgresqlRustDefault} from './adapters/postgresql/rust-default';
 import {bindParquetCaptureRust} from './adapters/parquet/rust-capture-default';
@@ -123,9 +135,17 @@ const spark=createSparkRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,(
 const {sparkRegistry,inspectSpark,importSparkSchema,exportSparkSchema,getSparkNode,proposeSparkNodeEdit,renameSparkField}=spark;
 const protection=createProtectionRustDefault(Object.assign({},createSecurityFunctionsEngine(wasmModule),createSecurityQueryPropertiesEngine(wasmModule)),isNativeUmfCoreError);
 const protectionSources=createProtectionSourcesRustDefault(Object.assign({},createSecurityProtectionSourceEngine(wasmModule),createSecurityProtectionParametersEngine(wasmModule),createSecurityProtectionDomainsEngine(wasmModule)),isNativeUmfCoreError);
-const {resolveSecurityProtectionSources,resolveSecurityProtectionDomains,validateProtectionParameters}=protectionSources;
+const {resolveSecurityProtectionSources,resolveSecurityProtectionDomains,validateProtectionParameters,inspectProtectionCatalog,requireProtectionInterpretation}=protectionSources;
 const securityPolicySource=createSecurityPolicySourceRustDefault(createSecurityPolicySourceEngine(wasmModule),isNativeUmfCoreError);
-const {inspectSecurityPolicyV2Source,upgradeSecurityPolicySource,downgradeSecurityPolicySource,readSecuritySource,writeSecuritySource}=securityPolicySource;
+const securityPolicy=createSecurityPolicyRustDefault(securityPolicySource,isNativeUmfCoreError);
+const {inspectSecurityPolicy,requireSecurityInterpretation,securityPolicyDependencies,securityIdentityTransportDependencies}=securityPolicy;
+const {validateSecurityDisclosure,encodeSecurityDisclosure,decodeSecurityDisclosure}=securityPolicySource;
+const {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2}=securityPolicySource;
+const {inspectSecurityActionPurposes,inspectProtectionObligations}=securityPolicySource;
+const securityReadRegistrationEngine=createSecurityReadRegistrationEngine(wasmModule);
+const SecurityAuthorityGuard=createSecurityAuthorityGuardRustDefault(createSecurityAuthorityGuardEngine(wasmModule),isNativeUmfCoreError);
+const {inspectSecurityPolicyV2Source,upgradeSecurityPolicySource,downgradeSecurityPolicySource,readSecuritySource,writeSecuritySource,evaluateSecurityAccess,evaluateSecurityCollection,evaluateSecurityWrite,evaluateSecurityPolicyV2LegacyAccess}=securityPolicySource;
+class SecurityReadRegistration extends SecurityReadRegistrationBase { constructor() { super(securityReadRegistrationEngine,isNativeUmfCoreError); } }
 const {inspectProtectionFunction,evaluateProtectionValue,inspectProtectionQueryProperties}=protection;
 const evaluateActionRule=createActionRuleRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
 const actionSelectors=createActionSelectorsRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
@@ -159,6 +179,16 @@ const {icebergTableRegistry,inspectIcebergTable,importIcebergTable,exportIceberg
 const avro=createAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit}=avro;
 const {projectAvroToJsonSchema}=createAvroJsonSchemaRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const arrowFlatbufferModel=createArrowFlatbufferModelRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {importArrowFlatbufferModel,inspectArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit}=arrowFlatbufferModel;
+const {projectArrowToSpark,projectSparkToArrow}=createArrowSparkRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectAvroToTableSpec,projectTableSpecToAvro}=createAvroTableSpecRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectPostgresqlToAvro}=createPostgresqlAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectPostgresqlRowToJsonSchema}=createPostgresqlRowJsonSchemaRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectToTableSpecViaAvro}=createTableSpecViaAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectParquetToAvro}=createParquetAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectSqlServerToAvro}=createSqlServerAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectSqlServerToDdl}=createSqlServerDdlRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const dddRust=createDddJsonSchemaRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectDddToJsonSchema,dddFieldBinding}=dddRust;
 const parquet=bindParquetCaptureRust(createParquetCaptureEngine(wasmModule),isNativeUmfCoreError,error=>error instanceof BindingUmfError);
@@ -336,6 +366,15 @@ export {postgresqlRegistry,validatePostgresqlAst,inspectPostgresql,importPostgre
 export type {PostgresqlBackend} from './adapters/postgresql/index';
 export {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit};
 export {projectAvroToJsonSchema};
+export {importArrowFlatbufferModel,inspectArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit};
+export {projectArrowToSpark,projectSparkToArrow};
+export {projectAvroToTableSpec,projectTableSpecToAvro};
+export {projectPostgresqlToAvro};
+export {projectPostgresqlRowToJsonSchema};
+export {projectToTableSpecViaAvro};
+export {projectParquetToAvro};
+export {projectSqlServerToAvro};
+export {projectSqlServerToDdl};
 export {projectDddToJsonSchema,dddFieldBinding};
 export {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage,parquetRegistry,captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField};
 export {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit};
@@ -373,8 +412,15 @@ export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDel
 export {evaluateActionRule,compileTableDeployment,verifyTableDeployment,normalizeRowScope,discoverTableMigrationChanges,reviewedValueDigest,compileTableMigration,verifyTableMigration};
 export {SPARK_EXTENSION,sparkPackage,sparkRegistry,inspectSpark,importSparkSchema,exportSparkSchema,getSparkNode,proposeSparkNodeEdit,renameSparkField};
 
-export {inspectProtectionFunction,evaluateProtectionValue,inspectProtectionQueryProperties,resolveSecurityProtectionSources,resolveSecurityProtectionDomains,validateProtectionParameters};
+export {inspectProtectionFunction,evaluateProtectionValue,inspectProtectionQueryProperties,inspectProtectionCatalog,requireProtectionInterpretation,resolveSecurityProtectionSources,resolveSecurityProtectionDomains,validateProtectionParameters};
 export {inspectSecurityPolicyV2Source,upgradeSecurityPolicySource,downgradeSecurityPolicySource,readSecuritySource,writeSecuritySource};
+export {evaluateSecurityAccess,evaluateSecurityCollection,evaluateSecurityWrite,evaluateSecurityPolicyV2LegacyAccess};
+export {SecurityReadRegistration};
+export {inspectSecurityPolicy,requireSecurityInterpretation,securityPolicyDependencies,securityIdentityTransportDependencies};
+export {validateSecurityDisclosure,encodeSecurityDisclosure,decodeSecurityDisclosure};
+export {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2};
+export {inspectSecurityActionPurposes,inspectProtectionObligations};
+export {SecurityAuthorityGuard};
 
 export {prepareActionPlanModel,inspectActionPlan,assessActionPlan,constructActionManifest,inspectActionManifest,assessActionManifest};
 export {inspectActions,declareAction,editAction,assessAction,registerActions};
