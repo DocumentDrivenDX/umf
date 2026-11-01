@@ -134,7 +134,7 @@ its public Rust route and one ordinary normal/refusal/recovery workflow as appli
 
 | Lane | Concrete remaining implementation | Reuse and next cut |
 | --- | --- | --- |
-| Authored targets | PostgreSQL Field/Record, Cardinality/Nullability and Keys/Facets; Avro Cardinality; Parquet Cardinality/Nullability and Keys/Facets. | Bundle Field/Record per target and related scalar operations; reuse target adapters, author verification and exact receipt/native recovery. Avro and Parquet Field/Record pass; PostgreSQL Field/Record is source-ready for review. |
+| Authored targets | PostgreSQL native authored Field/Record closure, Cardinality/Nullability and Keys/Facets; Avro Cardinality; Parquet Cardinality/Nullability and Keys/Facets. | Bundle Field/Record per target and related scalar operations; reuse target adapters, author verification and exact receipt/native recovery. Avro/Parquet Field/Record and staged PostgreSQL Field/Record pass; native PostgreSQL backend composites are the next closure cut. |
 | Generic reports | Field classification/projection, Record projection and Structured classification inspector/verify pairs. | Reuse Rust kind/schema and receipt primitives; preserve exact current diagnostic and integrity meaning. |
 | Adapter composites | Arrow IPC schema export, layout/consistency/rename/observation; embedded Parquet Arrow schema inspection/coordinated rename; Delta checkpoint reconciliation; Protobuf descriptor edit. | Implement each complete public composite on its existing Rust capture/schema primitive, including ordinary edit/refusal behavior and caller controls. |
 | Extension composites | Relationship Extra archive import. | Reuse the existing Rust importer, classification and archive validation; preserve parser injection and exact retained-source meaning. |
@@ -187,10 +187,20 @@ and PostgreSQL Key/Cardinality observation helpers all pass their current public
 baselines (seven cases). Full TypeScript, actual host-library compilation and
 resource closure also pass. These capabilities leave the repair queue.
 
-PostgreSQL authored Field/Record and the first generic classification-report cut
-are source-ready for review. The remaining authored targets, report APIs and
-adapter composites continue in parallel. Run only new or affected cases during
-these batches, then perform complete current host/package integration once.
+PostgreSQL authored Field/Record now passes staged public projection, refusal
+and exact recovery, including whole-target integrity. The Record baseline uses
+one already-kinded document so its author receipts share the same snapshot.
+Only that failed fixture case was retried; the passing Field case was excluded.
+The native Rust/Python/CLI backend composites remain a separate implementation
+closure item and are not established by this staged Node flow.
+
+Reports, Avro/Parquet Cardinality, Parquet Nullability and PostgreSQL native
+composites are under source review. Remaining authored targets and adapter
+composites continue in parallel. Local source guards also require exact audited
+type-only grants, generic Registry ownership transport and removal of transitive
+JSON-LD hashing/clock host dependencies; keep the strict checks intact. Run only
+new or affected cases during these batches, then perform complete current
+host/package integration once.
 
 Preserve current meaning constraints during integration: PostgreSQL generated SQL
 retains its original text while deparse validates the codec; parser AST admission

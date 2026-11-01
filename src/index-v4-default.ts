@@ -804,13 +804,11 @@ export { projectCardinalityToParquet } from './core-ideals/cardinality-parquet-p
 export { projectCardinalityToPostgresql } from './core-ideals/cardinality-postgresql-projection';
 export { projectFacetsToParquet } from './core-ideals/facets-parquet-projection';
 export { projectFacetsToPostgresql } from './core-ideals/facets-postgresql-projection';
-export { projectFieldToPostgresql } from './core-ideals/field-postgresql-projection';
 export type { ProjectionIssue } from './projections/json-schema-protobuf';
 export { projectKeysToParquet } from './core-ideals/key-parquet-projection';
 export { projectKeysToPostgresql } from './core-ideals/key-postgresql-projection';
 export { projectNullabilityToParquet } from './core-ideals/nullability-parquet-projection';
 export { projectNullabilityToPostgresql } from './core-ideals/nullability-postgresql-projection';
-export { projectRecordToPostgresql } from './core-ideals/record-postgresql-projection';
 export { proposeProtobufDescriptorEdit } from './adapters/protobuf/index';
 export type { ProtectionCatalogInspection } from './extensions/security/protection/catalog';
 export type { ProtectionCoreClosure } from './extensions/security/protection/domains';
@@ -868,12 +866,10 @@ export { recoverCardinalityFromParquet } from './core-ideals/cardinality-parquet
 export { recoverCardinalityFromPostgresql } from './core-ideals/cardinality-postgresql-projection';
 export { recoverFacetsFromParquet } from './core-ideals/facets-parquet-projection';
 export { recoverFacetsFromPostgresql } from './core-ideals/facets-postgresql-projection';
-export { recoverFieldFromPostgresql } from './core-ideals/field-postgresql-projection';
 export { recoverKeysParquetIdeal } from './core-ideals/key-parquet-projection';
 export { recoverKeysPostgresqlIdeal } from './core-ideals/key-postgresql-projection';
 export { recoverNullabilityFromParquet } from './core-ideals/nullability-parquet-projection';
 export { recoverNullabilityFromPostgresql } from './core-ideals/nullability-postgresql-projection';
-export { recoverRecordFromPostgresql } from './core-ideals/record-postgresql-projection';
 export { registerSagas } from './extensions/actions/saga';
 export type { Registration } from './registry/registry';
 export type { Registry } from './registry/registry';

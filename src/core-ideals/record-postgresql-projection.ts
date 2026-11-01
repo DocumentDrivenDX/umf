@@ -7,7 +7,7 @@ import {carriers,identifier,literal} from './postgresql-syntax';
 import {type FieldPostgresqlRequest,type FieldPostgresqlProjection} from './field-postgresql-projection';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/record-postgresql-projection.schema.json';
-export {default as recordPostgresqlProjectionSchema} from '../../spec/core/record-postgresql-projection.schema.json';
+export {recordPostgresqlProjectionSchema} from './record-postgresql-package';
 export interface RecordPostgresqlRequest {id:string;namespace:string;tableName:string;mode:'strict'|'report';fields:{author:CoreKindDeclaration;columnName:string;nativeType:FieldPostgresqlRequest['nativeType']}[]}
 const binding={id:'umf.core.record.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Authored record with explicit pg_catalog field carriers; no value-domain or execution equivalence'} as const;
 export interface RecordPostgresqlProjection {operation:'project-record-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordPostgresqlRequest;binding:typeof binding;target?:Document;nativeSql?:string;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldPostgresqlProjection['residuals'];diagnostics:Diagnostic[]}

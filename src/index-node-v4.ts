@@ -99,6 +99,7 @@ import {createBindingSqlServerPhysicalRustDefault} from './projections/binding-s
 import {createDddJsonSchemaRustDefault} from './projections/ddd-json-schema-rust-default';
 import {createDddPostgresqlRustDefault} from './projections/ddd-postgresql-rust-default';
 import {createPostgresqlRustDefault} from './adapters/postgresql/rust-default';
+import {createPostgresqlAuthoredRustDefault} from './core-ideals/postgresql-authored-rust-default';
 import {createPostgresqlCatalogRustDefault} from './adapters/postgresql/catalog-rust-default';
 import {createPostgresqlCatalogObservationRustDefault} from './adapters/postgresql/catalog-observation-rust-default';
 import {createPostgresqlClassificationRustDefault} from './core-ideals/postgresql-classification-rust-default';
@@ -245,6 +246,8 @@ const parquet=bindParquetCaptureRust(createParquetCaptureEngine(),isNativeUmfCor
 const {captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField}=parquet;
 function parquetRegistry():Registry{return new Registry().register(parquetPackage);}
 const postgresql=createPostgresqlRustDefault(createPostgresqlParserSessionEngine(),isNativeUmfCoreError,()=>new Registry());
+const postgresqlAuthored=createPostgresqlAuthoredRustDefault(nativeFamilyDispatcher,postgresql,isNativeUmfCoreError);
+const {projectFieldToPostgresql,recoverFieldFromPostgresql,projectRecordToPostgresql,recoverRecordFromPostgresql}=postgresqlAuthored;
 const postgresqlCatalog=createPostgresqlCatalogRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const postgresqlCatalogObservations=createPostgresqlCatalogObservationRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {inspectPostgresqlKeyCatalog,correlatePostgresqlKeyCatalog,inspectPostgresqlCardinalityCatalog,resolvePostgresqlCardinalityType,correlatePostgresqlCardinalityCatalog}=postgresqlCatalogObservations;
@@ -446,6 +449,7 @@ export {classifyPostgresqlComposite,verifyPostgresqlCompositeClassification,reco
 export {getPostgresqlDdlDeclarations,classifyPostgresqlDdlRecord,recoverPostgresqlDdlKinds};
 export {classifyPostgresqlField,verifyPostgresqlFieldClassification,recoverPostgresqlFieldCapture,classifyPostgresqlRecord,verifyPostgresqlRecordClassification,recoverPostgresqlRecordCapture,classifyPostgresqlCardinality,verifyPostgresqlCardinalityClassification,recoverPostgresqlCardinalitySource,classifyPostgresqlNullability,verifyPostgresqlNullabilityClassification,recoverPostgresqlNullabilitySource,classifyPostgresqlKeys,verifyPostgresqlKeyClassification,recoverPostgresqlKeySource,classifyPostgresqlFacets,verifyPostgresqlFacetClassification,recoverPostgresqlFacetSource};
 export {classifyPostgresqlRelationships,verifyPostgresqlRelationshipClassification,recoverPostgresqlRelationshipSource};
+export {projectFieldToPostgresql,recoverFieldFromPostgresql,projectRecordToPostgresql,recoverRecordFromPostgresql};
 export type {PostgresqlBackend} from './adapters/postgresql/index';
 export {createPostgresqlSqlEngine};
 export {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit};

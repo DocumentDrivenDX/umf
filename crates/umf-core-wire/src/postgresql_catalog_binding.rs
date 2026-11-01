@@ -17,6 +17,18 @@ fn string<'a>(v: &'a Value, k: &str) -> Result<&'a Utf16, EngineError> {
 fn allowed(op: &str) -> Option<&'static [&'static str]> {
     Some(match op {
         "postgresql.import" => &["profile", "op", "source", "id"],
+        "postgresql.prepareFieldProjection" | "postgresql.prepareRecordProjection" => {
+            &["profile", "op", "author", "request"]
+        }
+        "postgresql.completeFieldProjection" | "postgresql.completeRecordProjection" => {
+            &["profile", "op", "prepared", "target"]
+        }
+        "postgresql.prepareFieldRecovery" | "postgresql.prepareRecordRecovery" => {
+            &["profile", "op", "receipt"]
+        }
+        "postgresql.recoverFieldProjection" | "postgresql.recoverRecordProjection" => {
+            &["profile", "op", "receipt", "fresh", "nativeText"]
+        }
         "postgresql.classifyField"
         | "postgresql.classifyRecord"
         | "postgresql.classifyCardinality"
@@ -94,6 +106,14 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
     let op = string(request, "op")?;
     let names = [
         "postgresql.import",
+        "postgresql.prepareFieldProjection",
+        "postgresql.completeFieldProjection",
+        "postgresql.recoverFieldProjection",
+        "postgresql.prepareRecordProjection",
+        "postgresql.completeRecordProjection",
+        "postgresql.recoverRecordProjection",
+        "postgresql.prepareFieldRecovery",
+        "postgresql.prepareRecordRecovery",
         "postgresql.classifyComposite",
         "postgresql.getDdlDeclarations",
         "postgresql.prepareDdlParserRequest",
@@ -161,6 +181,22 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         }
     }
     match op {
+        "postgresql.prepareFieldProjection" | "postgresql.prepareRecordProjection" => {
+            required(request, "author")?;
+            required(request, "request")?;
+        }
+        "postgresql.completeFieldProjection" | "postgresql.completeRecordProjection" => {
+            required(request, "prepared")?;
+            required(request, "target")?;
+        }
+        "postgresql.prepareFieldRecovery" | "postgresql.prepareRecordRecovery" => {
+            required(request, "receipt")?;
+        }
+        "postgresql.recoverFieldProjection" | "postgresql.recoverRecordProjection" => {
+            required(request, "receipt")?;
+            required(request, "fresh")?;
+            string(request, "nativeText")?;
+        }
         "postgresql.classifyField"
         | "postgresql.classifyRecord"
         | "postgresql.classifyCardinality"
@@ -566,6 +602,48 @@ fn execute_validated(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     match op {
+        "postgresql.prepareFieldProjection" => {
+            umf_core::postgresql_authored_projection::prepare_field_projection(
+                required(request, "author")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.completeFieldProjection" => {
+            umf_core::postgresql_authored_projection::complete_field_projection(
+                required(request, "prepared")?,
+                required(request, "target")?,
+                ctx,
+            )
+        }
+        "postgresql.prepareFieldRecovery" => umf_core::postgresql_authored_projection::prepare_field_recovery(required(request, "receipt")?, ctx),
+        "postgresql.recoverFieldProjection" => umf_core::postgresql_authored_projection::recover_field_projection(
+            required(request, "receipt")?,
+            required(request, "fresh")?,
+            required(request, "nativeText")?,
+            ctx,
+        ),
+        "postgresql.prepareRecordProjection" => {
+            umf_core::postgresql_authored_projection::prepare_record_projection(
+                required(request, "author")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.completeRecordProjection" => {
+            umf_core::postgresql_authored_projection::complete_record_projection(
+                required(request, "prepared")?,
+                required(request, "target")?,
+                ctx,
+            )
+        }
+        "postgresql.prepareRecordRecovery" => umf_core::postgresql_authored_projection::prepare_record_recovery(required(request, "receipt")?, ctx),
+        "postgresql.recoverRecordProjection" => umf_core::postgresql_authored_projection::recover_record_projection(
+            required(request, "receipt")?,
+            required(request, "fresh")?,
+            required(request, "nativeText")?,
+            ctx,
+        ),
         "postgresql.classifyComposite" => umf_core::postgresql_composite_classification::classify(
             required(request, "source")?,
             required(request, "request")?,
