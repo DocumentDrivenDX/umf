@@ -3,7 +3,7 @@ ddx:
   id: umf.actions-sagas-release-alignment-plan
   type: implementation-plan
   activity: build
-  status: active
+  status: complete
   authoring:
     home: repo
   links:
@@ -120,8 +120,37 @@ Focused native retirement checks passed 15, 3 and 6 assertions; typecheck,
 package generation, coupled versions, coverage inventory and local boundary
 checks pass. The boundary inventory records 627 modules / 453 active scripts;
 636 source modules were checked with production core passing and zero findings.
-Final selected CI and merge remain pending. No production runtime or contract
+No production runtime or contract
 semantics changed; historical release and formal packets remain unchanged.
+
+Revision 4: R0, A1–A3 and V1/V2 are complete. Changed-material review identified
+and resolved three consistency defects: SD-900's superseded TypeScript engine
+direction, STP-906's portable-only mapping introduction after allocating native
+AC14 witnesses, and TD-905's obsolete planned-gateway wording. Final review is
+clean; no additional journey or runtime implementation was introduced.
+
+Qualified source `f02117a0e70067a745d514ee15d5c177f1e15987` passed
+[CI 41254161733](https://github.com/DocumentDrivenDX/umf/actions/runs/41254161733).
+[PR #78](https://github.com/DocumentDrivenDX/umf/pull/78) merged as
+`3485208ab5a39f92fd4aec9cc408b2de0889325a`. The selected saga/oracle/custody
+suite passed 59 tests / 751 assertions across eight files in 164.06 seconds,
+including the extended retirement cut and both completion-meaning witnesses.
+Six focused Rust saga tests, type/resource checks, package generation, coupled
+version checks and boundary gates passed. The boundary gate checked 636 source
+modules, with production core passing, zero findings, nine negative controls and
+16 boundary plus 13 inventory unit tests.
+
+The independently reviewed [hosted artifact 13062434024](https://github.com/DocumentDrivenDX/umf/actions/runs/41254161733/artifacts/13062434024)
+is 12,132 bytes, SHA-256
+`4883b15cdfcb4967845da5d92ba3baad6f02d29982ba7d20fc1a2e91aa874411`.
+It retains the raw suite log, actual provider-platform observations, PostgreSQL
+and handler image pins, and the bounded component observation. The provider
+observations identify PostgreSQL 17.9 and the pinned image cohort. This artifact
+does not replace the five-host installed qualification packet at d5: that broader
+evidence retains its original source/artifact identity. No fresh all-host,
+production-provider or formal-run claim follows from this selected CI lane.
+Product versions, public product bytes and historical packets remain unchanged.
+Aggregate token usage remains unmeasured; no enforced spending cap is claimed.
 
 ## Validation Plan
 
@@ -129,7 +158,7 @@ semantics changed; historical release and formal packets remain unchanged.
 - [x] A1 ownership/path/package statements agree with actual code and governing contracts.
 - [x] A2 completion mapping names actual native forward-success and completed-compensation assertions, supported by independent provider/history witnesses; positive assessment inventories remain allocated separately.
 - [x] A3 independently proves fresh retired admission refusal plus retained lookup/replay.
-- [ ] Focused native checks and final selected CI pass; boundary inventory/check remains valid.
+- [x] Focused native checks and final selected CI pass; boundary inventory/check remains valid.
 - [x] Review finds no contract weakening, semantic fork or false current/formal/product claim.
 
 Existing broad action/saga campaigns remain baseline evidence while their inputs
@@ -151,7 +180,7 @@ all-AC completion from a suite count.
 ## Exit Criteria
 
 - [x] R0 is public and byte-verified with unchanged product releases.
-- [ ] A1–A3 resolve their named discrepancies without weakening governing semantics.
-- [ ] V1/V2 pass, required checks and review are recorded at exact final source.
-- [ ] Root merges the scoped alignment changes; no material blocker remains.
-- [ ] This successor plan records outcomes and limits; old completed plans and historical packets remain unchanged.
+- [x] A1–A3 resolve their named discrepancies without weakening governing semantics.
+- [x] V1/V2 pass, required checks and review are recorded at exact final source.
+- [x] Root merges the scoped alignment changes; no material blocker remains.
+- [x] This successor plan records outcomes and limits; old completed plans and historical packets remain unchanged.
