@@ -6,6 +6,7 @@ use umf_core::{
     delta_log::DeltaLogResources,
     delta_parquet_actions::project_delta_parquet_actions,
     delta_parquet_checkpoint::reconcile_delta_parquet_checkpoint,
+    delta_parquet_multipart::reconcile_delta_multipart_checkpoint,
     engine::{Capabilities, Engine, ResourceSet},
     error::{Diagnostic, EngineError},
     parquet_capture_inspection::{
@@ -191,6 +192,36 @@ pub fn execute_wire_with_control(
         }
         let resources = Resources::shared(&mut ctx)?;
         let mut capabilities = Accept;
+        if operation == "delta.parquet.reconcileMultipart" {
+            let version = text_field(&request, "version")
+                .ok_or_else(|| request_error("version is required"))?;
+            let part_count = match field(&request, "partCount") {
+                Some(Value::Number(value))
+                    if value.is_finite()
+                        && value.fract() == 0.0
+                        && (2.0..=9_007_199_254_740_991.0).contains(value) => *value as usize,
+                _ => return Err(request_error("partCount must be a safe positive integer")),
+            };
+            let parts = field(&request, "parts")
+                .ok_or_else(|| request_error("parts is required"))?;
+            let commits = field(&request, "commits")
+                .ok_or_else(|| request_error("commits is required"))?;
+            let log_resources = DeltaLogResources::new(&mut ctx)?;
+            let action_resources = DeltaActionResources::new(&mut ctx)?;
+            let recovered = reconcile_delta_multipart_checkpoint(
+                &version,
+                part_count,
+                parts,
+                commits,
+                &resources.engine,
+                &resources.registry,
+                &mut capabilities,
+                &log_resources,
+                &action_resources,
+                &mut ctx,
+            )?;
+            return encode(&recovered, &mut ctx);
+        }
         if operation == "delta.parquet.reconcileCheckpoint" {
             let checkpoint = field(&request, "checkpoint")
                 .ok_or_else(|| request_error("checkpoint is required"))?;

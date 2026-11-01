@@ -12,6 +12,7 @@ import type {renameDeltaMappedField} from './rename';
 import type {inspectDeltaActions} from './actions';
 import type {DeltaDefinition, SparkDelta4TargetBinding, SparkDelta4DDLRealization, generateDeltaDDL, generateDeltaDDLBundle, realizeSparkDelta4DDL} from './ddl';
 import type {projectDeltaParquetActions} from './parquet';
+import type {reconcileDeltaMultipartCheckpoint} from './multipart';
 import type {DeltaParquetCheckpointRecovery} from './parquet-checkpoint';
 import type {DeltaSidecar} from './sidecars';
 
@@ -22,6 +23,7 @@ export interface DeltaNativeEngine {
   capture(source:string,id:string):Document; export(document:Document):string; inspect(document:Document):{source:Document;complete:false;parsedAll:boolean;lines:DeltaLogLine[];diagnostics:Diagnostic[]}; inspectActions(document:Document):ReturnType<typeof inspectDeltaActions>; reconcileCommits(commits:DeltaCommit[]):DeltaReconciliation;
   inspectDefinitionPayload(payload:Json):Diagnostic[]; defineTable(source:string,definition:DeltaDefinition,id:string):Document; generateDdl(document:Document):ReturnType<typeof generateDeltaDDL>; generateDdlBundle(documents:readonly Document[]):ReturnType<typeof generateDeltaDDLBundle>; realizeSparkDelta4(document:Document,target:SparkDelta4TargetBinding):SparkDelta4DDLRealization;
   projectParquetActions(document:Document):ReturnType<typeof projectDeltaParquetActions>;
+  reconcileMultipart(version:string,partCount:number,parts:Parameters<typeof reconcileDeltaMultipartCheckpoint>[2],commits:Parameters<typeof reconcileDeltaMultipartCheckpoint>[3]):ReturnType<typeof reconcileDeltaMultipartCheckpoint>;
   reconcileParquetCheckpoint(checkpoint:DeltaCommit,commits:DeltaCommit[],spec:'v1'|'v2',sidecars:DeltaSidecar[]):DeltaParquetCheckpointRecovery;
 }
 const CONTROL_CODES = new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
@@ -56,6 +58,7 @@ export function createDeltaRustDefault(engine:DeltaNativeEngine,isNativeError:Na
     generateDeltaDDLBundle(documents:readonly Document[]){return call(()=>engine.generateDdlBundle(documents));},
     realizeSparkDelta4DDL(document:Document,target:SparkDelta4TargetBinding){return call(()=>engine.realizeSparkDelta4(document,target));},
     projectDeltaParquetActions(document:Document){return call(()=>engine.projectParquetActions(document));},
+    reconcileDeltaMultipartCheckpoint(version:string,partCount:number,parts:Parameters<typeof reconcileDeltaMultipartCheckpoint>[2],commits:Parameters<typeof reconcileDeltaMultipartCheckpoint>[3]){return call(()=>engine.reconcileMultipart(version,partCount,parts,commits));},
     reconcileDeltaParquetCheckpoint(checkpoint:DeltaCommit,commits:DeltaCommit[],spec:'v1'|'v2',sidecars:DeltaSidecar[]=[]){return call(()=>engine.reconcileParquetCheckpoint(checkpoint,commits,spec,sidecars));},
   });
 }

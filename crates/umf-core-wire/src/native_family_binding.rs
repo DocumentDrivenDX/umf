@@ -8,6 +8,7 @@ use umf_core::{Context, EngineError, Utf16, Value};
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
     "avro",
+    "avro-json-schema-projection",
     "openapi",
     "linkml",
     "odcs",
@@ -49,6 +50,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "editNode",
                 "proposeNodeEdit",
             ],
+        ),
+        "avro-json-schema-projection" => (
+            crate::avro_json_schema_projection_binding::PROFILE,
+            &["projectAvroToJsonSchema"],
         ),
         "openapi" => (
             crate::openapi_binding::PROFILE,
@@ -214,7 +219,7 @@ pub fn metadata_wire(family: &str) -> String {
         ),
         "delta-parquet" => (
             crate::parquet_capture_binding::PROFILE,
-            &["projectActions", "reconcileCheckpoint"],
+            &["projectActions", "reconcileCheckpoint", "reconcileMultipart"],
         ),
         "delta-log" => (
             crate::delta_log_binding::PROFILE,
@@ -310,6 +315,9 @@ pub fn execute_wire_with_control(
 ) -> String {
     match family {
         "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
+        "avro-json-schema-projection" => {
+            crate::avro_json_schema_projection_binding::execute_wire_with_control(wire, control)
+        }
         "openapi" => crate::openapi_binding::execute_wire_with_control(wire, control),
         "linkml" => crate::native_contract_binding::execute_linkml_wire_with_control(wire, control),
         "odcs" => crate::native_contract_binding::execute_odcs_wire_with_control(wire, control),

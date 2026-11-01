@@ -7,6 +7,8 @@ use crate::{
     value::{copy_json, Utf16, Value},
 };
 
+const NULL_VALUE: Value = Value::Null;
+
 fn member<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     match value {
         Value::Object(fields) => fields
@@ -22,6 +24,17 @@ fn text(value: Option<&Value>) -> Option<String> {
         _ => None,
     }
 }
+fn metered_text(
+    value: Option<&Value>,
+    context: &mut Context<'_>,
+) -> Result<Option<String>, EngineError> {
+    let Some(Value::String(value)) = value else {
+        return Ok(None);
+    };
+    context.charge_text(value.len(), Utf16::default())?;
+    Ok(value.to_utf8().ok())
+}
+
 fn array(value: Option<&Value>) -> Option<&[Value]> {
     match value? {
         Value::Array(values) => Some(values),
@@ -92,14 +105,126 @@ fn result(
     ])
 }
 
-fn property_key(value: &Value, context: &mut Context<'_>) -> Result<String, EngineError> {
+fn range_property_key(
+    value: &Value,
+    domains: &Value,
+    context: &mut Context<'_>,
+) -> Result<String, EngineError> {
+    let bucket = member(value, "bucket").ok_or_else(|| {
+        EngineError::new(
+            "PROTECTION_QUERY_PROPERTY_FIELD",
+            Utf16::default(),
+            "Range property has no bucket",
+        )
+    })?;
+    let reference = member(bucket, "field").ok_or_else(|| {
+        EngineError::new(
+            "PROTECTION_QUERY_PROPERTY_FIELD",
+            Utf16::default(),
+            "Range property has no qualified Field",
+        )
+    })?;
+    let document_id = metered_text(member(reference, "documentId"), context)?;
+    let module_id = metered_text(member(reference, "moduleId"), context)?;
+    let element_id = metered_text(member(reference, "elementId"), context)?;
+    let (Some(document_id), Some(module_id), Some(element_id)) =
+        (document_id, module_id, element_id)
+    else {
+        return Err(EngineError::new(
+            "PROTECTION_QUERY_PROPERTY_FIELD",
+            Utf16::default(),
+            "Range property Field identity is malformed",
+        ));
+    };
+    let closure = member(domains, "closure").ok_or_else(|| {
+        EngineError::new(
+            "PROTECTION_QUERY_PROPERTY_FIELD",
+            Utf16::default(),
+            "Qualified Field closure is missing",
+        )
+    })?;
+    let documents = array(member(closure, "documents")).unwrap_or_default();
+    context.charge_work(documents.len(), Utf16::default())?;
+    let mut selected = None;
+    'documents: for (document_index, entry) in documents.iter().enumerate() {
+        let document = member(entry, "document").unwrap_or(&NULL_VALUE);
+        if metered_text(member(document, "id"), context)?.as_deref() != Some(document_id.as_str()) {
+            continue;
+        }
+        let modules = array(member(document, "modules")).unwrap_or_default();
+        context.charge_work(modules.len(), Utf16::default())?;
+        for (module_index, module) in modules.iter().enumerate() {
+            if metered_text(member(module, "id"), context)?.as_deref() != Some(module_id.as_str()) {
+                continue;
+            }
+            let elements = array(member(module, "elements")).unwrap_or_default();
+            context.charge_work(elements.len(), Utf16::default())?;
+            for (element_index, element) in elements.iter().enumerate() {
+                if member(element, "kind") == Some(&Value::string_utf8("field"))
+                    && metered_text(member(element, "id"), context)?.as_deref()
+                        == Some(element_id.as_str())
+                {
+                    selected = Some((
+                        document_index,
+                        module_index,
+                        element_index,
+                        document,
+                        element,
+                    ));
+                    break 'documents;
+                }
+            }
+        }
+    }
+    let Some((document_index, module_index, element_index, document, field)) = selected else {
+        return Err(EngineError::new(
+            "PROTECTION_QUERY_PROPERTY_FIELD",
+            Utf16::default(),
+            "Qualified requirement Field missing",
+        ));
+    };
+    let literal = member(bucket, "value").ok_or_else(|| {
+        EngineError::new(
+            "PROTECTION_QUERY_LITERAL",
+            Utf16::default(),
+            "Range bucket value is missing",
+        )
+    })?;
+    if crate::security_logic::canonical_json_units(literal, 0).is_none_or(|size| size > 4096) {
+        return Err(EngineError::new(
+            "PROTECTION_QUERY_BOUND",
+            Utf16::default(),
+            "resource-exhausted: requirement literal exceeds4096 UTF-16 units",
+        ));
+    }
+    let typed_identity =
+        crate::security_parameters::typed_literal_identity(document, field, literal, context)?;
+    let tuple = Value::Array(vec![
+        Value::string_utf8("range"),
+        Value::Number(document_index as f64),
+        Value::Number(module_index as f64),
+        Value::Number(element_index as f64),
+        Value::String(typed_identity),
+    ]);
+    crate::serialization::stringify_compact_metered(&tuple, context)?
+        .to_utf8()
+        .map_err(|_| {
+            EngineError::new(
+                "PROTECTION_QUERY_LITERAL",
+                Utf16::default(),
+                "Range identity contains invalid UTF-16",
+            )
+        })
+}
+
+fn property_key(
+    value: &Value,
+    domains: &Value,
+    context: &mut Context<'_>,
+) -> Result<String, EngineError> {
     context.charge_work(1, Utf16::default())?;
     if member(value, "kind") == Some(&Value::string_utf8("range")) {
-        return Err(EngineError::new(
-            "PROTECTION_QUERY_UNIMPLEMENTED",
-            Utf16::default(),
-            "Range-property identity is outside this candidate subset",
-        ));
+        return range_property_key(value, domains, context);
     }
     if let Value::String(property) = value {
         for allowed in [
@@ -122,12 +247,16 @@ fn property_key(value: &Value, context: &mut Context<'_>) -> Result<String, Engi
     ))
 }
 
-fn authored_property_key(value: &Value, context: &mut Context<'_>) -> Result<String, EngineError> {
+fn authored_property_key(
+    value: &Value,
+    domains: &Value,
+    context: &mut Context<'_>,
+) -> Result<String, EngineError> {
     if member(value, "kind") == Some(&Value::string_utf8("range")) {
         context.charge_work(1, Utf16::default())?;
-        return Ok("authored-range-single".into());
+        return range_property_key(value, domains, context);
     }
-    property_key(value, context)
+    property_key(value, domains, context)
 }
 
 /// Compose source/domain/parameter admission with conditional property comparison.
@@ -420,32 +549,6 @@ pub fn inspect_security_protection_query_properties_candidate(
     let authored = array(member(transform, "disclosureProfile"))
         .unwrap_or_default()
         .to_vec();
-    if authored
-        .iter()
-        .filter(|property| member(property, "kind") == Some(&Value::string_utf8("range")))
-        .count()
-        > 1
-    {
-        diagnostics.push(diagnostic(
-            "PROTECTION_QUERY_UNIMPLEMENTED",
-            "/use",
-            "Multiple authored range identities are outside this candidate subset",
-            "error",
-        ));
-        return Ok(result(
-            "refused",
-            policy,
-            catalog,
-            closure,
-            use_value,
-            authored,
-            Vec::new(),
-            Vec::new(),
-            Vec::new(),
-            Vec::new(),
-            diagnostics,
-        ));
-    }
     let implied = if matches!(
         text(member(transform, "determinism")).as_deref(),
         Some("deterministic" | "keyed-deterministic")
@@ -456,9 +559,12 @@ pub fn inspect_security_protection_query_properties_candidate(
     };
     let mut effective = Vec::<(String, Value)>::new();
     for property in &authored {
-        let key = match authored_property_key(property, context) {
+        let key = match authored_property_key(property, &parameters, context) {
             Ok(key) => key,
             Err(error) => {
+                if error.is_control_failure() {
+                    return Err(error);
+                }
                 let message = error.message.to_utf8().unwrap_or_default();
                 diagnostics.push(diagnostic(&error.code, "/use", &message, "error"));
                 return Ok(result(
@@ -481,9 +587,12 @@ pub fn inspect_security_protection_query_properties_candidate(
         }
     }
     for property in &implied {
-        let key = match property_key(property, context) {
+        let key = match property_key(property, &parameters, context) {
             Ok(key) => key,
             Err(error) => {
+                if error.is_control_failure() {
+                    return Err(error);
+                }
                 let message = error.message.to_utf8().unwrap_or_default();
                 diagnostics.push(diagnostic(&error.code, "/use", &message, "error"));
                 return Ok(result(
@@ -518,9 +627,12 @@ pub fn inspect_security_protection_query_properties_candidate(
                 Vec::new()
             })
     {
-        let key = match property_key(&property, context) {
+        let key = match property_key(&property, &parameters, context) {
             Ok(key) => key,
             Err(error) => {
+                if error.is_control_failure() {
+                    return Err(error);
+                }
                 let message = error.message.to_utf8().unwrap_or_default();
                 diagnostics.push(diagnostic(&error.code, "/use", &message, "error"));
                 return Ok(result(

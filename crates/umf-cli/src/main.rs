@@ -2430,7 +2430,7 @@ fn parquet_capture_run(args: &[String]) -> Result<(), String> {
     }
     if args == ["--capabilities"] {
         println!(
-            "{{\"profile\":\"{}\",\"operations\":[\"parquet.capture\",\"parquet.importSchema\",\"parquet.export\",\"parquet.inspectFraming\",\"parquet.decodeFooter\",\"parquet.inspectMetadata\",\"parquet.inspectSchema\",\"parquet.inspectLogicalTypes\",\"parquet.inspectContainers\",\"parquet.getFieldMetadata\",\"parquet.encodeWire\",\"parquet.inspectPages\",\"parquet.decodePageBodies\",\"parquet.decodeLevels\",\"parquet.decodePhysical\",\"parquet.decodeValues\",\"parquet.assembleRows\",\"parquet.repairDictionaryOffsets\",\"parquet.appendKeyValueMetadata\",\"parquet.renameField\"],\"resourceProfile\":\"cooperative\",\"maxSourceBytes\":1000000}}",
+            "{{\"profile\":\"{}\",\"operations\":[\"parquet.capture\",\"parquet.importSchema\",\"parquet.export\",\"parquet.inspectFraming\",\"parquet.decodeFooter\",\"parquet.inspectMetadata\",\"parquet.inspectSchema\",\"parquet.inspectLogicalTypes\",\"parquet.inspectContainers\",\"parquet.getFieldMetadata\",\"parquet.encodeWire\",\"parquet.inspectPages\",\"parquet.decodePageBodies\",\"parquet.decodeLevels\",\"parquet.decodePhysical\",\"parquet.decodeValues\",\"parquet.assembleRows\",\"parquet.repairDictionaryOffsets\",\"parquet.appendKeyValueMetadata\",\"parquet.renameField\",\"delta.parquet.projectActions\",\"delta.parquet.reconcileCheckpoint\",\"delta.parquet.reconcileMultipart\"],\"resourceProfile\":\"cooperative\",\"maxSourceBytes\":1000000}}",
             umf_core_wire::PARQUET_CAPTURE_PROFILE,
         );
         return Ok(());

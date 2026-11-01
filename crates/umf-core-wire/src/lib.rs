@@ -31,6 +31,8 @@ pub mod native_family_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod avro_json_schema_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod iceberg_table_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod typespec_binding;

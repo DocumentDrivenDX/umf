@@ -15,6 +15,8 @@ pub mod arrow_ipc_capture;
 pub mod artifact_references;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_document;
+#[cfg(feature = "embedded-adapters")]
+pub mod avro_json_schema_projection;
 pub mod avro_cardinality;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_field_classifier;
@@ -63,6 +65,8 @@ pub mod delta_ddl;
 pub mod delta_log;
 pub mod delta_parquet_actions;
 pub mod delta_parquet_checkpoint;
+#[cfg(feature = "embedded-adapters")]
+pub mod delta_parquet_multipart;
 pub mod delta_reconcile;
 pub mod delta_schema;
 pub mod delta_spark_hash;

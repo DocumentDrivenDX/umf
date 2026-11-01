@@ -329,6 +329,25 @@ fn canonical_numeric(token: &str) -> bool {
         && (fraction.is_empty() || fraction.bytes().all(|byte| byte.is_ascii_digit()))
         && (!mantissa.contains('.') || !fraction.is_empty())
 }
+/// Return the canonical typed identity used by parameterized security range
+/// properties after validating the value against its pinned core Field.
+pub(crate) fn typed_literal_identity(
+    document: &Value,
+    field: &Value,
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let engine = core_engine()?;
+    engine.check_schema_literal_public(document, field, value, ctx)?;
+    crate::literal::literal_identity(field, value, engine.policy(), ctx)?.ok_or_else(|| {
+        EngineError::new(
+            "PROTECTION_QUERY_LITERAL",
+            Utf16::default(),
+            "Typed literal identity is unavailable for the selected Field",
+        )
+    })
+}
+
 fn check_one(
     domains: &Value,
     path: &str,

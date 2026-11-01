@@ -176,6 +176,24 @@ class NativeAdapterBaseline(unittest.TestCase):
                             definition={**definition, "futureMeaning": "retained"}, id="invalid")
         self.assertEqual(refused.exception.code, "DELTA_DDL_UNSUPPORTED")
 
+    def test_public_delta_multipart_checkpoint_and_duplicate_refusal(self):
+        from umf.rust_parquet_capture import capture
+        root = Path(__file__).resolve().parents[2]
+        first_name = "00000000000000000010.checkpoint.0000000001.0000000002.parquet"
+        second_name = "00000000000000000010.checkpoint.0000000002.0000000002.parquet"
+        first = capture((root / "fixtures/delta/multipart" / first_name).read_bytes(), first_name)
+        second = capture((root / "fixtures/delta/multipart" / second_name).read_bytes(), second_name)
+        result = execute_adapter("delta-parquet", "reconcileMultipart", version="10", partCount=2,
+                                 parts=[{"name": second_name, "source": second},
+                                        {"name": first_name, "source": first}], commits=[])
+        self.assertEqual(result["status"], "reconciled")
+        self.assertEqual(result["recovery"]["state"]["version"], "10")
+        blocked = execute_adapter("delta-parquet", "reconcileMultipart", version="10", partCount=2,
+                                  parts=[{"name": first_name, "source": first},
+                                         {"name": first_name, "source": first}], commits=[])
+        self.assertEqual(blocked["status"], "blocked")
+        self.assertNotIn("recovery", blocked)
+
 
 if __name__ == "__main__":
     unittest.main()

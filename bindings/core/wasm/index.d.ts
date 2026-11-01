@@ -670,6 +670,7 @@ export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
  readonly avro: Readonly<Record<'import'|'inspect'|'inspectPayload'|'fields'|'export'|'exportBundle'|'getNode'|'editNode'|'proposeNodeEdit', NativeFamilyOperation>>;
+ readonly ['avro-json-schema-projection']: Readonly<Record<'projectAvroToJsonSchema', NativeFamilyOperation>>;
  readonly openapi: Readonly<Record<'import'|'validate'|'inspectPayload'|'export'|'exportBundle'|'getNode'|'lookupResource'|'extractSchema'|'indexSchemas'|'resolveSchemaReference'|'resolveDynamicReference'|'resolveObjectReference'|'edit', NativeFamilyOperation>>;
  readonly linkml: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'classSlots'|'slotValues'|'importContext'|'importMerge', NativeFamilyOperation>>;
  readonly odcs: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'resolveReference'|'relationships'|'renameElement', NativeFamilyOperation>>;
@@ -679,7 +680,7 @@ export interface NativeFamilyOperations {
  readonly shacl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getPropertyPath'|'evaluatePropertyPath'|'getTargetNodes'|'getShapeMetadata'|'validate', NativeFamilyOperation>>;
  readonly owl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getOntologyHeaders'|'getExpressionView'|'getListAxioms'|'getSpecialAxioms'|'getAxiomAnnotations'|'getDeclarations', NativeFamilyOperation>>;
  readonly ['delta-ddl']: Readonly<Record<'defineTable'|'generate'|'generateBundle'|'realizeSparkDelta4'|'inspectPayload', NativeFamilyOperation>>;
- readonly ['delta-parquet']: Readonly<Record<'projectActions'|'reconcileCheckpoint', NativeFamilyOperation>>;
+ readonly ['delta-parquet']: Readonly<Record<'projectActions'|'reconcileCheckpoint'|'reconcileMultipart', NativeFamilyOperation>>;
 }
 export declare function createNativeFamilyDispatcher(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;
 export type PostgresqlParserRequest = {token: string; backend: '@libpg-query/parser@17.6.10'; astVersion: 170004; work: 'parse'|'deparse'|'codecRoundTrip'; sql?: string; tree?: unknown};

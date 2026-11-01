@@ -39,3 +39,15 @@ test('public Rust query-property inspection refuses an unknown operator',()=>{
  const {policy,catalog,closure}=domainFixture();
  expect(inspectProtectionQueryProperties(policy,catalog,closure,{ruleIndex:0,disclosureIndex:0,operator:'future',required:['equality']}).status).toBe('refused');
 },30_000);
+
+test('public Rust query-property inspection matches a typed range and refuses another bucket',()=>{
+ const {policy,catalog,closure}=domainFixture();
+ catalog.transforms[0].queryUse.join='disclosed';
+ const range=(integerToken:string)=>({kind:'range' as const,bucket:{field:domainRef('parameter'),value:{integerToken}}});
+ const same=inspectProtectionQueryProperties(policy,catalog,closure,{ruleIndex:0,disclosureIndex:0,operator:'join',required:[range('1e1')]});
+ expect(same.status).toBe('compatible-properties');
+ expect(same.missingProperties).toEqual([]);
+ const different=inspectProtectionQueryProperties(policy,catalog,closure,{ruleIndex:0,disclosureIndex:0,operator:'join',required:[range('20')]});
+ expect(different.status).toBe('refused');
+ expect(different.diagnostics.some(diagnostic=>diagnostic.code==='PROTECTION_QUERY_MISSING')).toBe(true);
+},30_000);

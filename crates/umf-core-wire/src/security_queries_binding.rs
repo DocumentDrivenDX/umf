@@ -143,7 +143,9 @@ mod tests {
     }
     #[test]
     fn replays_frozen_predecessor_cases_from_each_exact_operation_input() {
-        let packet=parse(include_str!("../../../tests/rust-core/fixtures/r8-security-protection-query-properties/predecessor.json"));
+        let packet = parse(include_str!(
+            "../../../tests/rust-core/fixtures/r8-security-protection-query-properties/predecessor.json"
+        ));
         let cases = member(&packet, "cases")
             .and_then(|v| match v {
                 Value::Array(xs) => Some(xs),
@@ -260,8 +262,10 @@ mod tests {
     }
 
     #[test]
-    fn authored_range_is_refused_and_retained_in_snapshot() {
-        let packet=parse(include_str!("../../../tests/rust-core/fixtures/r8-security-protection-query-properties/predecessor.json"));
+    fn multiple_authored_ranges_are_retained_and_compared_by_typed_identity() {
+        let packet = parse(include_str!(
+            "../../../tests/rust-core/fixtures/r8-security-protection-query-properties/predecessor.json"
+        ));
         let case = &member(&packet, "cases")
             .and_then(|v| match v {
                 Value::Array(xs) => Some(xs),
@@ -290,7 +294,7 @@ mod tests {
                         .iter_mut()
                         .find(|(k, _)| k == &Utf16::from("value"))
                     {
-                        set_member(value, "integerToken", Value::string_utf8("1e1"));
+                        set_member(value, "integerToken", Value::string_utf8("20"));
                     }
                 }
             }
@@ -335,20 +339,109 @@ mod tests {
         let wire = encode(&request, &mut Context::ordinary()).unwrap();
         let response: Json = serde_json::from_str(&execute_security_queries_wire(&wire)).unwrap();
         let actual = decode(response["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap();
-        assert_eq!(text(member(&actual, "status")).as_deref(), Some("refused"));
+        assert_eq!(response["status"], "ok", "{response}");
+        assert_eq!(
+            text(member(&actual, "status")).as_deref(),
+            Some("compatible-properties")
+        );
         assert_eq!(member(&actual, "complete"), Some(&Value::Bool(false)));
         assert_eq!(member(&actual, "authority"), Some(&Value::Bool(false)));
         let actual_authored = member(&actual, "authoredProperties").unwrap();
-        assert!(
-            matches!(actual_authored, Value::Array(xs) if xs.len() == 2 && xs.iter().all(|p| member(p, "kind") == Some(&Value::string_utf8("range"))))
-        );
-        assert!(member(&actual, "diagnostics")
-            .and_then(|v| match v {
-                Value::Array(xs) => Some(xs),
-                _ => None,
-            })
-            .unwrap()
+        assert!(matches!(actual_authored, Value::Array(xs) if xs.len() == 2));
+        let effective_ranges: Vec<_> = array_val(member(&actual, "effectiveProperties").unwrap())
             .iter()
-            .any(|d| text(member(d, "code")).as_deref() == Some("PROTECTION_QUERY_UNIMPLEMENTED")));
+            .filter(|property| member(property, "kind") == Some(&Value::string_utf8("range")))
+            .collect();
+        assert_eq!(effective_ranges.len(), 2);
+        let values: Vec<_> = effective_ranges
+            .iter()
+            .map(|property| {
+                text(member(
+                    member(member(property, "bucket").unwrap(), "value").unwrap(),
+                    "integerToken",
+                ))
+                .unwrap()
+            })
+            .collect();
+        assert!(values.iter().any(|value| value == "10"));
+        assert!(values.iter().any(|value| value == "20"));
+    }
+
+    #[test]
+    fn range_property_identity_matches_same_bucket_and_refuses_a_different_bucket() {
+        let packet = parse(include_str!(
+            "../../../tests/rust-core/fixtures/r8-security-protection-query-properties/predecessor.json"
+        ));
+        let case = &array_val(member(&packet, "cases").unwrap())[0];
+        let operation = &array_val(member(case, "operations").unwrap())[0];
+        let sources = member(operation, "sources").unwrap();
+        let authored = selected_authored(sources, member(operation, "input").unwrap());
+        let range = authored
+            .iter()
+            .find(|property| member(property, "kind") == Some(&Value::string_utf8("range")))
+            .unwrap()
+            .clone();
+        let run = |use_value: Value| {
+            let request = object(vec![
+                ("profile", Value::string_utf8(SECURITY_QUERIES_PROFILE)),
+                ("op", Value::string_utf8("inspectProtectionQueryProperties")),
+                ("policy", member(sources, "policy").unwrap().clone()),
+                ("catalog", member(sources, "catalog").unwrap().clone()),
+                ("closure", member(sources, "closure").unwrap().clone()),
+                ("use", use_value),
+            ]);
+            let wire = encode(&request, &mut Context::ordinary()).unwrap();
+            let response: Json =
+                serde_json::from_str(&execute_security_queries_wire(&wire)).unwrap();
+            assert_eq!(response["status"], "ok", "{response}");
+            decode(response["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap()
+        };
+
+        let mut same_use = member(operation, "input").unwrap().clone();
+        set_member(&mut same_use, "required", Value::Array(vec![range.clone()]));
+        let same = run(same_use);
+        assert_eq!(
+            text(member(&same, "status")).as_deref(),
+            Some("compatible-properties")
+        );
+        assert!(array_val(member(&same, "missingProperties").unwrap()).is_empty());
+
+        let mut different_range = range;
+        if let Value::Object(fields) = &mut different_range {
+            if let Some((_, bucket)) = fields
+                .iter_mut()
+                .find(|(key, _)| key == &Utf16::from("bucket"))
+            {
+                if let Value::Object(bucket_fields) = bucket {
+                    if let Some((_, value)) = bucket_fields
+                        .iter_mut()
+                        .find(|(key, _)| key == &Utf16::from("value"))
+                    {
+                        set_member(value, "integerToken", Value::string_utf8("20"));
+                    }
+                }
+            }
+        }
+        let mut different_use = member(operation, "input").unwrap().clone();
+        set_member(
+            &mut different_use,
+            "required",
+            Value::Array(vec![different_range]),
+        );
+        let different = run(different_use);
+        assert_eq!(
+            text(member(&different, "status")).as_deref(),
+            Some("refused")
+        );
+        assert_eq!(
+            text(member(
+                array_val(member(&different, "diagnostics").unwrap())
+                    .last()
+                    .unwrap(),
+                "code"
+            ))
+            .as_deref(),
+            Some("PROTECTION_QUERY_MISSING")
+        );
     }
 }
