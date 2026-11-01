@@ -45,6 +45,8 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "exportTableSpecBundle",
         "classifyTableSpecField",
         "verifyTableSpecFieldClassification",
+        "classifyTableSpecRecord",
+        "verifyTableSpecRecordClassification",
     ]
     .into_iter()
     .find(|candidate| op == &Utf16::from(*candidate))
@@ -63,6 +65,8 @@ fn allowed(op: &str) -> &'static [&'static str] {
         "exportTableSpecBundle" => &["profile", "op", "document"],
         "classifyTableSpecField" => &["profile", "op", "document", "request"],
         "verifyTableSpecFieldClassification" => &["profile", "op", "receipt", "current"],
+        "classifyTableSpecRecord" => &["profile", "op", "document", "request"],
+        "verifyTableSpecRecordClassification" => &["profile", "op", "receipt", "current"],
         _ => &[],
     }
 }
@@ -210,9 +214,13 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
             required_value(request, "document")?;
             required_value(request, "request")?;
         }
-        "verifyTableSpecFieldClassification" => {
+        "verifyTableSpecFieldClassification" | "verifyTableSpecRecordClassification" => {
             required_value(request, "receipt")?;
             required_value(request, "current")?;
+        }
+        "classifyTableSpecRecord" => {
+            required_value(request, "document")?;
+            required_value(request, "request")?;
         }
         _ => return Err(request_error("unknown TableSpec operation")),
     }
@@ -307,6 +315,16 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             ctx,
         ),
         "verifyTableSpecFieldClassification" => runtime.verify_field_classification(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "classifyTableSpecRecord" => runtime.classify_record(
+            required_value(request, "document")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "verifyTableSpecRecordClassification" => runtime.verify_record_classification(
             required_value(request, "receipt")?,
             required_value(request, "current")?,
             ctx,

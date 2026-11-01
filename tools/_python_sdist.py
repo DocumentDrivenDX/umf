@@ -66,6 +66,7 @@ _EXPECTED_ROOT_FILES = {
     "spec/extensions/arrow-ipc/package.json",
     "spec/core/cardinality-operation-v6.schema.json",
     "spec/core/cardinality-operation-v4.schema.json",
+    "spec/core/cardinality-sqlserver-projection.schema.json",
     "spec/core/kind-operation-v8.schema.json",
     "spec/core/kind-operation-v6.schema.json",
     "spec/core/record-type-operation-v6.schema.json",
@@ -77,6 +78,7 @@ _EXPECTED_ROOT_FILES = {
     "spec/core/parquet-nullability-classification.schema.json",
     "spec/core/parquet-field-classification.schema.json",
     "spec/core/tablespec-field-classification.schema.json",
+    "spec/core/tablespec-record-classification.schema.json",
     "spec/core/sqlserver-field-classification.schema.json",
     "spec/core/sqlserver-record-classification.schema.json",
     "spec/core/sqlserver-key-classification.schema.json",
@@ -158,6 +160,11 @@ _EXPECTED_ROOT_FILES = {
     "spec/extensions/odcs/native-3.0.2.json",
     "spec/extensions/odcs/native-3.1.0.json",
     "spec/extensions/odcs/native-3.2.0.json",
+    "spec/extensions/postgresql-catalog/package.json",
+    "spec/extensions/postgresql-cardinality/package.json",
+    "spec/core/postgresql-cardinality-classification.schema.json",
+    "spec/core/postgresql-field-classification.schema.json",
+    "spec/core/postgresql-record-classification.schema.json",
 }
 _EXPECTED_ROOT_TREES = {
     "crates",
@@ -197,6 +204,7 @@ _PYTHON_BUILD_DIRS = {
     "node_modules",
     "target",
     "venv",
+    "spec/core/postgresql-record-classification.schema.json",
 }
 _PYTHON_BUILD_SUFFIXES = {".pyc", ".pyo"}
 _REQUIRED_ARCHIVE_PATHS = {
@@ -227,6 +235,7 @@ _REQUIRED_ARCHIVE_PATHS = {
     "spec/extensions/protobuf/package.json",
     "spec/core/cardinality-operation-v6.schema.json",
     "spec/core/cardinality-operation-v4.schema.json",
+    "spec/core/cardinality-sqlserver-projection.schema.json",
     "spec/core/kind-operation-v8.schema.json",
     "spec/core/kind-operation-v6.schema.json",
     "spec/core/record-type-operation-v6.schema.json",
@@ -238,6 +247,7 @@ _REQUIRED_ARCHIVE_PATHS = {
     "spec/core/parquet-nullability-classification.schema.json",
     "spec/core/parquet-field-classification.schema.json",
     "spec/core/tablespec-field-classification.schema.json",
+    "spec/core/tablespec-record-classification.schema.json",
     "spec/core/sqlserver-field-classification.schema.json",
     "spec/core/sqlserver-record-classification.schema.json",
     "spec/extensions/sqlserver-relationships/package.json",
@@ -301,6 +311,11 @@ _REQUIRED_ARCHIVE_PATHS = {
     "spec/extensions/openapi/upstream/3.2-meta.json",
     "spec/extensions/openapi/upstream/3.1-dialect.json",
     "spec/extensions/openapi/upstream/3.2-dialect.json",
+    "spec/extensions/postgresql-catalog/package.json",
+    "spec/extensions/postgresql-cardinality/package.json",
+    "spec/core/postgresql-cardinality-classification.schema.json",
+    "spec/core/postgresql-field-classification.schema.json",
+    "spec/core/postgresql-record-classification.schema.json",
 }
 _EXPECTED_FORCE_INCLUDE = {
     "../spec/extensions/tables/operation.schema.json": "spec/extensions/tables/operation.schema.json",
@@ -312,6 +327,9 @@ _EXPECTED_FORCE_INCLUDE = {
     "../spec/extensions/binding/package.json": "spec/extensions/binding/package.json",
     "../spec/extensions/binding-stable/package.json": "spec/extensions/binding-stable/package.json",
     "../spec/core/schema.json": "spec/core/schema.json",
+    "../spec/core/kind-operation-v6.schema.json": "spec/core/kind-operation-v6.schema.json",
+    "../spec/core/cardinality-operation-v4.schema.json": "spec/core/cardinality-operation-v4.schema.json",
+    "../spec/core/cardinality-sqlserver-projection.schema.json": "spec/core/cardinality-sqlserver-projection.schema.json",
     "../spec/core/semantic-type-reference.schema.json": "spec/core/semantic-type-reference.schema.json",
     "../spec/core/extension-package.schema.json": "spec/core/extension-package.schema.json",
     "../spec/core/record-type-operation-v6.schema.json": "spec/core/record-type-operation-v6.schema.json",
@@ -326,6 +344,7 @@ _EXPECTED_FORCE_INCLUDE = {
     "../spec/core/parquet-nullability-classification.schema.json": "spec/core/parquet-nullability-classification.schema.json",
     "../spec/core/parquet-field-classification.schema.json": "spec/core/parquet-field-classification.schema.json",
     "../spec/core/tablespec-field-classification.schema.json": "spec/core/tablespec-field-classification.schema.json",
+    "../spec/core/tablespec-record-classification.schema.json": "spec/core/tablespec-record-classification.schema.json",
     "../spec/core/sqlserver-field-classification.schema.json": "spec/core/sqlserver-field-classification.schema.json",
     "../spec/core/sqlserver-record-classification.schema.json": "spec/core/sqlserver-record-classification.schema.json",
     "../spec/core/sqlserver-cardinality-classification.schema.json": "spec/core/sqlserver-cardinality-classification.schema.json",
@@ -416,6 +435,11 @@ _EXPECTED_FORCE_INCLUDE = {
     "../spec/extensions/dataset-source": "spec/extensions/dataset-source",
     "../fixtures/metamodel/current-conformance.json": "fixtures/metamodel/current-conformance.json",
     "../fixtures/actions-binding": "fixtures/actions-binding",
+    "../spec/extensions/postgresql-catalog/package.json": "spec/extensions/postgresql-catalog/package.json",
+    "../spec/extensions/postgresql-cardinality/package.json": "spec/extensions/postgresql-cardinality/package.json",
+    "../spec/core/postgresql-cardinality-classification.schema.json": "spec/core/postgresql-cardinality-classification.schema.json",
+    "../spec/core/postgresql-field-classification.schema.json": "spec/core/postgresql-field-classification.schema.json",
+    "../spec/core/postgresql-record-classification.schema.json": "spec/core/postgresql-record-classification.schema.json",
 }
 
 

@@ -93,15 +93,14 @@ remaining callable operations are integrated, and repair only actual failures.
 
 Current integration order:
 
-1. Admit the reviewed PostgreSQL Field/Record and Cardinality, authored SQL Server
-   Cardinality and TableSpec Record cuts, preserving every existing default route.
-   Compile first, then run their public normal/refusal/recovery baselines through
-   one shared native build. The previous three-capability cohort and all three
-   runtime repairs pass; exclude those passing cases from the next focused run.
-2. Luna corrects the remaining authored Relationship Extra GraphQL/RDF/LinkML
-   implementation and implements PostgreSQL Nullability. Sol reviews ordinary
-   semantics, current API closure, resources and full Rust decision ownership
-   before admission. PostgreSQL Keys/Facets follow the classifier handoff.
+1. PostgreSQL Field/Record and Cardinality, authored SQL Server Cardinality and
+   TableSpec Record pass their focused public baselines after the shared schema
+   resource, transport profile and valid refusal-fixture corrections. Exclude
+   these passing cases from unrelated repair runs.
+2. Admit the source-complete Extra Relationship, PostgreSQL Nullability, SQL Server
+   Nullability and TableSpec Cardinality cuts after Sol review. PostgreSQL Keys
+   remains with Luna until catalog correlation decisions move into Rust; parser
+   callbacks may supply AST transport only. PostgreSQL Facets follows that repair.
 3. Continue the remaining TableSpec classifiers and authored scalar target
    projections in bounded parallel cuts. Use existing pinned contracts and one
    normal/refusal workflow per capability. Preserve legacy direct consumers until
@@ -167,13 +166,20 @@ annotations. These capabilities leave the repair queue. PostgreSQL index initial
 admission and AST derivation now run inside Rust; the host supplies parser/deparser
 transport only.
 
-The next source cuts are PostgreSQL Field/Record and Cardinality, authored SQL
-Server Cardinality and TableSpec Record. Luna implements focused public workflows;
-Sol checks the existing semantic contract and complete additive routing before
-admission. Parallel implementation continues with PostgreSQL Nullability and
-authored Relationship Extra corrections. Compiler checks precede native builds;
-only new or failed workflows enter each focused runtime. Complete local host and
-package integration follows semantic completion.
+The subsequent cohort passes full TypeScript and Rust metadata compilation, and
+its shared native build completes in 1m47s. PostgreSQL Field/Record and Cardinality,
+authored SQL Server Cardinality and TableSpec Record pass the four focused public
+test files. Their normal, refusal, verification and available recovery paths use
+the Rust defaults. Corrections registered the transitive native-JSON schema,
+aligned the SQL Server transport profile and made the Record refusal fixture
+structurally valid. These passing capabilities leave the repair queue.
+
+Sol reviews the next Extra Relationship, PostgreSQL Nullability, SQL Server
+Nullability and TableSpec Cardinality source cuts. Luna corrects PostgreSQL Keys
+semantic ownership and continues missing classifiers and authored projections.
+Compiler checks precede native builds; only new or failed workflows enter each
+focused runtime. Complete local host and package integration follows semantic
+completion.
 Current removal compilation retains `TABLE_REMOVAL_EFFECTS_NOT_LOWERED`;
 discovery and irreversible-purge disclosure remain supported.
 

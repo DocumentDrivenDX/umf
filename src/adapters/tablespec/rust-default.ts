@@ -6,6 +6,7 @@ import {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/tablespec/package.json';
 import type {importTableSpec,exportTableSpec,getTableSpecColumn,getTableSpecTable,editTableSpecColumn,editTableSpecTable,importTableSpecBundle,exportTableSpecBundle} from './index';
 import type {TableSpecFieldClassification,TableSpecFieldRequest} from '../../core-ideals/tablespec-field';
+import type {TableSpecRecordClassification,TableSpecRecordRequest} from '../../core-ideals/tablespec-record-package';
 
 export interface TableSpecNativeFamilyEngine {
  tablespec:{
@@ -20,6 +21,8 @@ export interface TableSpecNativeFamilyEngine {
   exportTableSpecBundle(fields:{document:Document}):unknown;
   classifyTableSpecField(fields:{document:Document;request:TableSpecFieldRequest}):unknown;
   verifyTableSpecFieldClassification(fields:{receipt:TableSpecFieldClassification;current:Document}):unknown;
+  classifyTableSpecRecord(fields:{document:Document;request:TableSpecRecordRequest}):unknown;
+  verifyTableSpecRecordClassification(fields:{receipt:TableSpecRecordClassification;current:Document}):unknown;
  }
 }
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
@@ -32,7 +35,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
+   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
@@ -49,5 +52,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   exportTableSpecBundle(document:Parameters<typeof exportTableSpecBundle>[0]):ReturnType<typeof exportTableSpecBundle>{return call(()=>engine.tablespec.exportTableSpecBundle({document}) as ReturnType<typeof exportTableSpecBundle>);},
   classifyTableSpecField(document:Document,request:TableSpecFieldRequest):TableSpecFieldClassification & {diagnostics:Diagnostic[]}{return call(()=>engine.tablespec.classifyTableSpecField({document,request}) as TableSpecFieldClassification & {diagnostics:Diagnostic[]});},
   verifyTableSpecFieldClassification(receipt:TableSpecFieldClassification,current:Document):TableSpecFieldClassification{return call(()=>engine.tablespec.verifyTableSpecFieldClassification({receipt,current}) as TableSpecFieldClassification);},
+  classifyTableSpecRecord(document:Document,request:TableSpecRecordRequest):TableSpecRecordClassification{return call(()=>engine.tablespec.classifyTableSpecRecord({document,request}) as TableSpecRecordClassification);},
+  verifyTableSpecRecordClassification(receipt:TableSpecRecordClassification,current:Document):TableSpecRecordClassification{return call(()=>engine.tablespec.verifyTableSpecRecordClassification({receipt,current}) as TableSpecRecordClassification);},
  });
 }

@@ -17,6 +17,15 @@ fn string<'a>(v: &'a Value, k: &str) -> Result<&'a Utf16, EngineError> {
 fn allowed(op: &str) -> Option<&'static [&'static str]> {
     Some(match op {
         "postgresql.import" => &["profile", "op", "source", "id"],
+        "postgresql.classifyField" | "postgresql.classifyRecord" | "postgresql.classifyCardinality" => {
+            &["profile", "op", "source", "request"]
+        }
+        "postgresql.verifyFieldClassification"
+        | "postgresql.recoverFieldCapture"
+        | "postgresql.verifyRecordClassification"
+        | "postgresql.recoverRecordCapture"
+        | "postgresql.verifyCardinalityClassification"
+        | "postgresql.recoverCardinalitySource" => &["profile", "op", "receipt", "current"],
         "postgresql.inspect"
         | "postgresql.export"
         | "postgresql.columns"
@@ -54,6 +63,15 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
     let op = string(request, "op")?;
     let names = [
         "postgresql.import",
+        "postgresql.classifyField",
+        "postgresql.verifyFieldClassification",
+        "postgresql.recoverFieldCapture",
+        "postgresql.classifyRecord",
+        "postgresql.verifyRecordClassification",
+        "postgresql.recoverRecordCapture",
+        "postgresql.classifyCardinality",
+        "postgresql.verifyCardinalityClassification",
+        "postgresql.recoverCardinalitySource",
         "postgresql.inspect",
         "postgresql.export",
         "postgresql.columns",
@@ -85,6 +103,19 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         }
     }
     match op {
+        "postgresql.classifyField" | "postgresql.classifyRecord" | "postgresql.classifyCardinality" => {
+            required(request, "source")?;
+            required(request, "request")?;
+        }
+        "postgresql.verifyFieldClassification"
+        | "postgresql.recoverFieldCapture"
+        | "postgresql.verifyRecordClassification"
+        | "postgresql.recoverRecordCapture"
+        | "postgresql.verifyCardinalityClassification"
+        | "postgresql.recoverCardinalitySource" => {
+            required(request, "receipt")?;
+            required(request, "current")?;
+        }
         "postgresql.import" => {
             let source = string(request, "source")?;
             string(request, "id")?;
@@ -184,6 +215,59 @@ pub fn execute_with_parser_backend(
 fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let op = validate(request, ctx)?;
     match op {
+        "postgresql.classifyField" => umf_core::postgresql_classification::classify_field(
+            required(request, "source")?,
+            required(request, "request")?,
+            ctx,
+        ),
+        "postgresql.verifyFieldClassification" => {
+            umf_core::postgresql_classification::verify_field(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverFieldCapture" => Ok(Value::String(
+            umf_core::postgresql_classification::recover_field(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )?,
+        )),
+        "postgresql.classifyRecord" => umf_core::postgresql_classification::classify_record(
+            required(request, "source")?,
+            required(request, "request")?,
+            ctx,
+        ),
+        "postgresql.verifyRecordClassification" => {
+            umf_core::postgresql_classification::verify_record(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverRecordCapture" => Ok(Value::String(
+            umf_core::postgresql_classification::recover_record(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )?,
+        )),
+        "postgresql.classifyCardinality" => umf_core::postgresql_classification::classify_cardinality(
+            required(request, "source")?,
+            required(request, "request")?,
+            ctx,
+        ),
+        "postgresql.verifyCardinalityClassification" => umf_core::postgresql_classification::verify_cardinality(
+            required(request, "receipt")?,
+            required(request, "current")?,
+            ctx,
+        ),
+        "postgresql.recoverCardinalitySource" => umf_core::postgresql_classification::recover_cardinality(
+            required(request, "receipt")?,
+            required(request, "current")?,
+            ctx,
+        ),
         "postgresql.import" => {
             let capture = pg::PostgresqlCatalogCapture::import(string(request, "source")?, ctx)?;
             pg::document_value(string(request, "id")?, &capture, ctx)

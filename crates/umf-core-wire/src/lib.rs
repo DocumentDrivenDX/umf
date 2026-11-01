@@ -233,6 +233,8 @@ pub use parquet_capture_binding::{
     execute_wire as execute_parquet_capture_wire,
     execute_wire_with_control as execute_parquet_capture_wire_with_control,
 };
+#[cfg(feature = "embedded-adapters")]
+pub mod cardinality_sqlserver_projection_binding;
 pub mod avro_cardinality_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod protobuf_document;

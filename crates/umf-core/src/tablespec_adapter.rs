@@ -29,6 +29,8 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "exportTableSpecBundle",
     "classifyTableSpecField",
     "verifyTableSpecFieldClassification",
+    "classifyTableSpecRecord",
+    "verifyTableSpecRecordClassification",
 ];
 
 #[cfg(test)]
@@ -152,6 +154,42 @@ impl TableSpecRuntime {
             ctx,
         )
     }
+    pub fn classify_record(
+        &self,
+        input: &Value,
+        request: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_record_classification::classify_table_spec_record(
+            input,
+            request,
+            self,
+            &self.engine,
+            &self.registry,
+            &mut capabilities,
+            ctx,
+        )
+    }
+
+    pub fn verify_record_classification(
+        &self,
+        receipt: &Value,
+        current: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_record_classification::verify_table_spec_record_classification(
+            receipt,
+            current,
+            self,
+            &self.engine,
+            &self.registry,
+            &mut capabilities,
+            ctx,
+        )
+    }
+
     pub fn import(
         &self,
         source: &Utf16,

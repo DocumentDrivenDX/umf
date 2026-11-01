@@ -8,6 +8,7 @@ use umf_core::{Context, EngineError, Utf16, Value};
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
     "relationship-parquet-projection",
+    "cardinality-sqlserver-projection",
     "avro-cardinality",
     "avro-classification",
     "record-type",
@@ -44,6 +45,7 @@ pub const FAMILIES: &[&str] = &[
     "odcs",
     "tablespec",
     "jsonld",
+    "postgresql",
     "sqlserver",
     "shacl",
     "owl",
@@ -69,6 +71,10 @@ fn bad_family() -> String {
 /// Describe callable family operations without a host-owned profile table.
 pub fn metadata_wire(family: &str) -> String {
     let (profile, operations): (&str, &[&str]) = match family {
+        "cardinality-sqlserver-projection" => (
+            crate::cardinality_sqlserver_projection_binding::PROFILE,
+            &["projectCardinalityToSqlServer", "recoverCardinalityFromSqlServer"],
+        ),
         "avro-cardinality" => (
             crate::avro_cardinality_binding::PROFILE,
             &[
@@ -398,6 +404,8 @@ pub fn metadata_wire(family: &str) -> String {
                 "exportTableSpecBundle",
                 "classifyTableSpecField",
                 "verifyTableSpecFieldClassification",
+                "classifyTableSpecRecord",
+                "verifyTableSpecRecordClassification",
             ],
         ),
         "jsonld" => (
@@ -416,6 +424,20 @@ pub fn metadata_wire(family: &str) -> String {
                 "fromRdf",
                 "fromGeneralizedRdf",
                 "frame",
+            ],
+        ),
+        "postgresql" => (
+            crate::postgresql_catalog_binding::PROFILE,
+            &[
+                "classifyField",
+                "verifyFieldClassification",
+                "recoverFieldCapture",
+                "classifyRecord",
+                "verifyRecordClassification",
+                "recoverRecordCapture",
+                "classifyCardinality",
+                "verifyCardinalityClassification",
+                "recoverCardinalitySource",
             ],
         ),
         "sqlserver" => (
@@ -601,7 +623,8 @@ pub fn metadata_wire(family: &str) -> String {
     let operations = operations
         .iter()
         .map(|operation| {
-            let wire_operation = if family == "avro-cardinality"
+            let wire_operation = if family == "cardinality-sqlserver-projection"
+                || family == "avro-cardinality"
                 || family == "avro-classification"
                 || family == "record-type"
             {
@@ -645,6 +668,7 @@ pub fn execute_wire_with_control(
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
     match family {
+        "cardinality-sqlserver-projection" => crate::cardinality_sqlserver_projection_binding::execute_wire_with_control(wire, control),
         "avro-classification" => {
             crate::avro_classification_binding::execute_wire_with_control(wire, control)
         }
@@ -750,6 +774,7 @@ pub fn execute_wire_with_control(
         "odcs" => crate::native_contract_binding::execute_odcs_wire_with_control(wire, control),
         "tablespec" => crate::tablespec_binding::execute_wire_with_control(wire, control),
         "jsonld" => crate::jsonld_binding::execute_wire_with_control(wire, control),
+        "postgresql" => crate::postgresql_catalog_binding::execute_wire_with_control(wire, control),
         "sqlserver" => crate::sqlserver_binding::execute_wire_with_control(wire, control),
         "shacl" => crate::shacl_owl_binding::execute_shacl_wire_with_control(wire, control),
         "owl" => crate::shacl_owl_binding::execute_owl_wire_with_control(wire, control),

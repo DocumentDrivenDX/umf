@@ -84,6 +84,8 @@ pub mod binding_inspection;
 pub mod bit128;
 pub mod bit128_binding;
 pub mod cardinality;
+#[cfg(feature = "embedded-adapters")]
+pub mod cardinality_sqlserver_projection;
 pub mod cardinality_host_json;
 pub mod constraint_language;
 pub mod constraints;
@@ -207,6 +209,8 @@ pub mod postgresql_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_catalog;
 #[cfg(feature = "embedded-adapters")]
+pub mod postgresql_classification;
+#[cfg(feature = "embedded-adapters")]
 pub mod postgresql_json_schema_projection;
 #[cfg(feature = "native-postgresql")]
 mod postgresql_proto_json;
@@ -277,6 +281,7 @@ pub mod sqlserver_ddl_projection;
 pub mod structural_diff;
 pub mod tablespec_adapter;
 pub(crate) mod tablespec_field_classification;
+pub(crate) mod tablespec_record_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_via_avro_projection;
 pub mod target_pin;
