@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {NullabilityParquetProjection,NullabilityParquetRequest} from './nullability-parquet-projection';
+import type {FacetsParquetProjection,FacetsParquetRequest} from './facets-parquet-projection';
 import type {CardinalityParquetProjection,CardinalityParquetRequest} from './cardinality-parquet-projection';
 import {copyJson} from '../model/json';
 import {UmfError,type Document} from '../model/types';
@@ -17,6 +18,7 @@ import type {CoreFacetDeclaration} from '../model/facets';
 import type {CoreKindDeclaration} from '../model/field-kind';
 import type {KeyAvroProjection,KeyAvroRequest} from './key-avro-projection';
 import type {CoreKeyDeclaration} from '../model/keys';
+import type {KeyParquetProjection,KeyParquetRequest} from './key-parquet-projection';
 import type {RelationshipAvroProjection,RelationshipAvroRequest} from './relationship-avro-projection-factory';
 import type {RelationshipParquetProjection,RelationshipParquetRequest} from './relationship-parquet-projection-factory';
 import type {RelationshipTableSpecProjection,RelationshipTableSpecRequest} from './relationship-tablespec-projection-factory';
@@ -108,6 +110,11 @@ export interface CoreIdealNativeFamilies {
     recoverParquetFieldBytes(fields:{receipt:ParquetFieldClassification;current:Document}):unknown;
     projectNullabilityToParquet(fields:{author:CoreNullabilityDeclaration;request:NullabilityParquetRequest}):unknown;
     recoverNullabilityFromParquet(fields:{receipt:NullabilityParquetProjection;nativeHex:string}):unknown;
+    projectFacetsToParquet(fields:{author:CoreFacetDeclaration|CoreKindDeclaration;request:FacetsParquetRequest}):unknown;
+    recoverFacetsFromParquet(fields:{receipt:FacetsParquetProjection;nativeHex:string}):unknown;
+    projectKeysToParquet(fields:{source:Document;authors:CoreKeyDeclaration[];request:KeyParquetRequest}):unknown;
+    verifyKeysParquetProjection(fields:{receipt:KeyParquetProjection;current:Document}):unknown;
+    recoverKeysParquetIdeal(fields:{receipt:KeyParquetProjection;current:Document}):unknown;
     classifyParquetKeys(fields:{source:Document;request:ParquetKeyRequest}):unknown;
     projectCardinalityToParquet(fields:{author:CoreCardinalityDeclaration;request:CardinalityParquetRequest}):unknown;
     recoverCardinalityFromParquet(fields:{receipt:CardinalityParquetProjection;nativeHex:string}):unknown;
@@ -211,8 +218,13 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     classifyParquetField(source:Document,request:ParquetFieldRequest):ParquetFieldClassification{return call(()=>engine['record-type'].classifyParquetField({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetFieldRequest}) as ParquetFieldClassification);},
     verifyParquetFieldClassification(receipt:ParquetFieldClassification,current:Document):ParquetFieldClassification{return call(()=>engine['record-type'].verifyParquetFieldClassification({receipt:copyJson(receipt) as unknown as ParquetFieldClassification,current:copyJson(current) as unknown as Document}) as ParquetFieldClassification);},
     recoverParquetFieldBytes(receipt:ParquetFieldClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetFieldBytes({receipt:copyJson(receipt) as unknown as ParquetFieldClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('FIELD_CLASSIFICATION_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
+    projectFacetsToParquet(author:CoreFacetDeclaration|CoreKindDeclaration,request:FacetsParquetRequest):FacetsParquetProjection{return call(()=>engine['record-type'].projectFacetsToParquet({author:copyJson(author) as unknown as CoreFacetDeclaration|CoreKindDeclaration,request:copyJson(request) as unknown as FacetsParquetRequest}) as FacetsParquetProjection);},
+    recoverFacetsFromParquet(receipt:FacetsParquetProjection,native:Uint8Array):Document{let nativeHex='';for(const byte of native)nativeHex+=byte.toString(16).padStart(2,'0');return call(()=>engine['record-type'].recoverFacetsFromParquet({receipt:copyJson(receipt) as unknown as FacetsParquetProjection,nativeHex}) as unknown as Document);},
     projectNullabilityToParquet(author:CoreNullabilityDeclaration,request:NullabilityParquetRequest):NullabilityParquetProjection{return call(()=>engine['record-type'].projectNullabilityToParquet({author:copyJson(author) as unknown as CoreNullabilityDeclaration,request:copyJson(request) as unknown as NullabilityParquetRequest}) as NullabilityParquetProjection);},
     recoverNullabilityFromParquet(receipt:NullabilityParquetProjection,native:Uint8Array):Document{let nativeHex='';for(const byte of native)nativeHex+=byte.toString(16).padStart(2,'0');return call(()=>engine['record-type'].recoverNullabilityFromParquet({receipt:copyJson(receipt) as unknown as NullabilityParquetProjection,nativeHex}) as unknown as Document);},
+    projectKeysToParquet(source:Document,authors:CoreKeyDeclaration[],request:KeyParquetRequest):KeyParquetProjection{return call(()=>engine['record-type'].projectKeysToParquet({source:copyJson(source) as unknown as Document,authors:copyJson(authors) as unknown as CoreKeyDeclaration[],request:copyJson(request) as unknown as KeyParquetRequest}) as KeyParquetProjection);},
+    verifyKeysParquetProjection(receipt:KeyParquetProjection,current:Document):KeyParquetProjection{return call(()=>engine['record-type'].verifyKeysParquetProjection({receipt:copyJson(receipt) as unknown as KeyParquetProjection,current:copyJson(current) as unknown as Document}) as KeyParquetProjection);},
+    recoverKeysParquetIdeal(receipt:KeyParquetProjection,current:Document):Document{return call(()=>engine['record-type'].recoverKeysParquetIdeal({receipt:copyJson(receipt) as unknown as KeyParquetProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
     projectCardinalityToParquet(author:CoreCardinalityDeclaration,request:CardinalityParquetRequest):CardinalityParquetProjection{return call(()=>engine['record-type'].projectCardinalityToParquet({author:copyJson(author) as unknown as CoreCardinalityDeclaration,request:copyJson(request) as unknown as CardinalityParquetRequest}) as CardinalityParquetProjection);},
     recoverCardinalityFromParquet(receipt:CardinalityParquetProjection,native:Uint8Array):Document{let nativeHex='';for(const byte of native)nativeHex+=byte.toString(16).padStart(2,'0');return call(()=>engine['record-type'].recoverCardinalityFromParquet({receipt:copyJson(receipt) as unknown as CardinalityParquetProjection,nativeHex}) as unknown as Document);},
     classifyParquetCardinality(source:Document,request:ParquetCardinalityRequest):ParquetCardinalityClassification{return call(()=>engine['record-type'].classifyParquetCardinality({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetCardinalityRequest}) as ParquetCardinalityClassification);},

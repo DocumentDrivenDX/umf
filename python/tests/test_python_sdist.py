@@ -26,6 +26,8 @@ PKG_INFO = (
 ROOT_FILES = (
     'spec/core/cardinality-postgresql-projection.schema.json',
     'spec/core/cardinality-parquet-projection.schema.json',
+    'spec/core/facets-parquet-projection.schema.json',
+    'spec/core/key-parquet-projection.schema.json',
     "Cargo.toml",
     "Cargo.lock",
     "rust-toolchain.toml",
@@ -287,6 +289,8 @@ FORCE_INCLUDE = {
     '../spec/core/nullability-postgresql-projection.schema.json': 'spec/core/nullability-postgresql-projection.schema.json',
     '../spec/core/cardinality-postgresql-projection.schema.json': 'spec/core/cardinality-postgresql-projection.schema.json',
     '../spec/core/cardinality-parquet-projection.schema.json': 'spec/core/cardinality-parquet-projection.schema.json',
+    '../spec/core/facets-parquet-projection.schema.json': 'spec/core/facets-parquet-projection.schema.json',
+    '../spec/core/key-parquet-projection.schema.json': 'spec/core/key-parquet-projection.schema.json',
     "../spec/extensions/arrow/flatbuffer-inventory.json": "spec/extensions/arrow/flatbuffer-inventory.json",
     "../spec/extensions/arrow-flatbuffer/package.json": "spec/extensions/arrow-flatbuffer/package.json",
     "../spec/extensions/tables/operation.schema.json": "spec/extensions/tables/operation.schema.json",

@@ -452,6 +452,61 @@ fn inspect_native(
     }
     Ok((Some(meaning), String::new(), rest))
 }
+
+/// Return the existing native Parquet interpretation used by classification.
+/// Authored projections consume this result rather than inferring meaning from
+/// the request carrier tags.
+pub(crate) fn inspect_native_meaning(
+    native: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let (meaning, _, _) = inspect_native(native, ctx)?;
+    Ok(match meaning {
+        Some(Meaning::Integer { bits, signed }) => obj(vec![
+            ("family", t("integer")),
+            ("bits", number(bits)),
+            ("signed", Value::Bool(signed)),
+            ("exactBytes", Value::Null),
+            ("precision", Value::Null),
+            ("scale", Value::Null),
+        ]),
+        Some(Meaning::Float { bits }) => obj(vec![
+            ("family", t("float")),
+            ("bits", number(bits)),
+            ("signed", Value::Null),
+            ("exactBytes", Value::Null),
+            ("precision", Value::Null),
+            ("scale", Value::Null),
+        ]),
+        Some(Meaning::String) => obj(vec![
+            ("family", t("string")),
+            ("bits", Value::Null),
+            ("signed", Value::Null),
+            ("exactBytes", Value::Null),
+            ("precision", Value::Null),
+            ("scale", Value::Null),
+        ]),
+        Some(Meaning::Binary { exact }) => obj(vec![
+            ("family", t("binary")),
+            ("bits", Value::Null),
+            ("signed", Value::Null),
+            ("exactBytes", exact.map(number).unwrap_or(Value::Null)),
+            ("precision", Value::Null),
+            ("scale", Value::Null),
+        ]),
+        Some(Meaning::Decimal {
+            precision, scale, ..
+        }) => obj(vec![
+            ("family", t("decimal")),
+            ("bits", Value::Null),
+            ("signed", Value::Null),
+            ("exactBytes", Value::Null),
+            ("precision", number(precision)),
+            ("scale", number(scale)),
+        ]),
+        None => Value::Null,
+    })
+}
 fn push_residual(
     residuals: &mut Vec<Value>,
     observations: &mut Vec<Value>,

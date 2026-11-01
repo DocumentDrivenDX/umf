@@ -39,8 +39,16 @@ fn validate_envelope(
         | "classifyParquetFacets" => &["profile", "op", "source", "request"],
         "projectCardinalityToParquet" => &["profile", "op", "author", "request"],
         "recoverCardinalityFromParquet" => &["profile", "op", "receipt", "nativeHex"],
-        "projectNullabilityToParquet" => &["profile", "op", "author", "request"],
-        "recoverNullabilityFromParquet" => &["profile", "op", "receipt", "nativeHex"],
+        "projectNullabilityToParquet" | "projectFacetsToParquet" => {
+            &["profile", "op", "author", "request"]
+        }
+        "recoverNullabilityFromParquet" | "recoverFacetsFromParquet" => {
+            &["profile", "op", "receipt", "nativeHex"]
+        }
+        "projectKeysToParquet" => &["profile", "op", "source", "authors", "request"],
+        "verifyKeysParquetProjection" | "recoverKeysParquetIdeal" => {
+            &["profile", "op", "receipt", "current"]
+        }
         "recoverAvroRecordTypeBundle"
         | "recoverParquetRecordTypeBytes"
         | "recoverParquetRecordBytes"
@@ -669,6 +677,51 @@ pub fn execute_wire_with_control(
                     Utf16::from("bytesHex"),
                     Value::string_utf8(bytes_hex),
                 )])
+            }
+            "projectFacetsToParquet" => {
+                umf_core::cardinality_parquet_projection::project_facets_to_parquet(
+                    field(&request, "author").ok_or_else(|| request_error("author is required"))?,
+                    field(&request, "request")
+                        .ok_or_else(|| request_error("request is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "recoverFacetsFromParquet" => {
+                umf_core::cardinality_parquet_projection::recover_facets_from_parquet(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "nativeHex")
+                        .ok_or_else(|| request_error("nativeHex is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "projectKeysToParquet" => {
+                umf_core::cardinality_parquet_projection::project_keys_to_parquet(
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?,
+                    field(&request, "authors")
+                        .ok_or_else(|| request_error("authors is required"))?,
+                    field(&request, "request")
+                        .ok_or_else(|| request_error("request is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "verifyKeysParquetProjection" => {
+                umf_core::cardinality_parquet_projection::verify_keys_parquet_projection(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
+            }
+            "recoverKeysParquetIdeal" => {
+                umf_core::cardinality_parquet_projection::recover_keys_parquet_ideal(
+                    field(&request, "receipt")
+                        .ok_or_else(|| request_error("receipt is required"))?,
+                    field(&request, "current")
+                        .ok_or_else(|| request_error("current is required"))?,
+                    &mut ctx,
+                )?
             }
             "projectNullabilityToParquet" => {
                 umf_core::cardinality_parquet_projection::project_nullability_to_parquet(

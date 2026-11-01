@@ -1553,3 +1553,1618 @@ pub fn recover_nullability_from_parquet(
         c,
     )
 }
+const FACET_RESULT: &str = include_str!("../../../spec/core/facets-parquet-projection.schema.json");
+const FACET_AUTHOR: &str = include_str!("../../../spec/core/facet-operation-v3.schema.json");
+const KIND_AUTHOR: &str = include_str!("../../../spec/core/kind-operation-v6.schema.json");
+const FACET_RECOVERY: &str =
+    "Recover source meaning with retained projection receipt; native-only import does not recover author intent";
+
+fn facet_loss(
+    path: &str,
+    value: &Value,
+    reason: &str,
+    outcome: &str,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    Ok(obj(vec![
+        ("path", s(path)),
+        ("value", copy_json(value, c)?),
+        ("reason", s(reason)),
+        ("outcome", s(outcome)),
+        ("recovery", s(FACET_RECOVERY)),
+    ]))
+}
+
+fn facet_loss_exact(
+    path: Utf16,
+    value: &Value,
+    reason: &str,
+    outcome: &str,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    Ok(obj(vec![
+        ("path", Value::String(path)),
+        ("value", copy_json(value, c)?),
+        ("reason", s(reason)),
+        ("outcome", s(outcome)),
+        ("recovery", s(FACET_RECOVERY)),
+    ]))
+}
+
+fn facet_wire_file(
+    request: &Value,
+    source_facets: Option<&Value>,
+    c: &mut Context<'_>,
+) -> Result<Vec<u8>, EngineError> {
+    let record = text(get(request, "recordName")).unwrap_or_default();
+    let field = text(get(request, "fieldName")).unwrap_or_default();
+    let nullable = matches!(get(request, "nullable"), Some(Value::Bool(true)));
+    let carrier = get(request, "carrier").ok_or_else(|| {
+        err(
+            "PARQUET_FACET_CARRIER",
+            "Carrier required",
+            "/request/carrier",
+        )
+    })?;
+    let kind = text(get(carrier, "kind")).unwrap_or_default();
+    let mut leaf = vec![
+        (3, wire_i32(if nullable { 1 } else { 0 })),
+        (4, wire_binary(&k(&field), c)?),
+    ];
+    if let Some(Value::Number(id)) = get(request, "fieldId") {
+        if !id.is_finite() || id.fract() != 0.0 || *id < i32::MIN as f64 || *id > i32::MAX as f64 {
+            return Err(err(
+                "PARQUET_FACET_CARRIER",
+                "Field ID must be int32",
+                "/request/fieldId",
+            ));
+        }
+        leaf.push((9, wire_i32(*id as i32)));
+    }
+    match kind.as_str() {
+        "primitive" => {
+            let (physical, converted) =
+                scalar(&text(get(carrier, "nativeType")).unwrap_or_default())?;
+            leaf.push((1, wire_i32(physical)));
+            if let Some(value) = converted {
+                leaf.push((6, wire_i32(value)));
+            }
+        }
+        "integer" => {
+            let bits = get(carrier, "bits")
+                .and_then(|x| {
+                    if let Value::Number(n) = x {
+                        Some(*n as i32)
+                    } else {
+                        None
+                    }
+                })
+                .unwrap_or(0);
+            let signed = matches!(get(carrier, "signed"), Some(Value::Bool(true)));
+            if ![8, 16, 32, 64].contains(&bits) {
+                return Err(err(
+                    "PARQUET_FACET_CARRIER",
+                    "Integer width must be 8, 16, 32 or 64",
+                    "/request/carrier/bits",
+                ));
+            }
+            leaf.push((1, wire_i32(if bits == 64 { 2 } else { 1 })));
+            leaf.push((
+                6,
+                wire_i32(
+                    (if signed { 15 } else { 11 })
+                        + [8, 16, 32, 64].iter().position(|x| *x == bits).unwrap() as i32,
+                ),
+            ));
+            let int_type = wire_struct(vec![
+                (
+                    1,
+                    obj(vec![("kind", s("i8")), ("value", s(&bits.to_string()))]),
+                ),
+                (
+                    2,
+                    obj(vec![("kind", s("bool")), ("value", Value::Bool(signed))]),
+                ),
+            ]);
+            leaf.push((10, wire_struct(vec![(10, int_type)])));
+        }
+        "fixed" => {
+            let bytes = get(carrier, "bytes")
+                .and_then(|x| {
+                    if let Value::Number(n) = x {
+                        Some(*n)
+                    } else {
+                        None
+                    }
+                })
+                .unwrap_or(0.0);
+            if !bytes.is_finite() || bytes.fract() != 0.0 || bytes < 1.0 || bytes > 4096.0 {
+                return Err(err(
+                    "PARQUET_FACET_CARRIER",
+                    "Fixed bytes must be 1..4096",
+                    "/request/carrier/bytes",
+                ));
+            }
+            leaf.push((1, wire_i32(7)));
+            leaf.push((2, wire_i32(bytes as i32)));
+        }
+        "decimal" => {
+            let physical_name = text(get(carrier, "carrier")).unwrap_or_default();
+            let precision = get(carrier, "precision")
+                .and_then(|x| {
+                    if let Value::Number(n) = x {
+                        Some(*n)
+                    } else {
+                        None
+                    }
+                })
+                .unwrap_or(0.0);
+            let scale_value = get(carrier, "scale")
+                .and_then(|x| {
+                    if let Value::Number(n) = x {
+                        Some(*n)
+                    } else {
+                        None
+                    }
+                })
+                .unwrap_or(-1.0);
+            if !precision.is_finite()
+                || precision.fract() != 0.0
+                || precision < 1.0
+                || precision > i32::MAX as f64
+                || !scale_value.is_finite()
+                || scale_value.fract() != 0.0
+                || scale_value < 0.0
+                || scale_value > precision
+            {
+                return Err(err(
+                    "PARQUET_FACET_CARRIER",
+                    "Invalid decimal precision/scale",
+                    "/request/carrier",
+                ));
+            }
+            let (physical, bytes) = match physical_name.as_str() {
+                "int32" => (1, None),
+                "int64" => (2, None),
+                "bytes" => (6, None),
+                "fixed" => {
+                    let n = get(carrier, "bytes")
+                        .and_then(|x| {
+                            if let Value::Number(n) = x {
+                                Some(*n)
+                            } else {
+                                None
+                            }
+                        })
+                        .ok_or_else(|| {
+                            err(
+                                "PARQUET_FACET_CARRIER",
+                                "Fixed decimal requires byte count",
+                                "/request/carrier/bytes",
+                            )
+                        })?;
+                    if !n.is_finite() || n.fract() != 0. || n < 1. || n > 4096. {
+                        return Err(err(
+                            "PARQUET_FACET_CARRIER",
+                            "Fixed decimal bytes must be 1..4096",
+                            "/request/carrier/bytes",
+                        ));
+                    }
+                    let bytes = n as usize;
+                    let maximum = (num_bigint::BigUint::from(1u8) << (bytes * 8 - 1)) - 1u8;
+                    let maximum_decimal_digits = maximum.to_str_radix(10).len().saturating_sub(1);
+                    c.charge_work(maximum.to_str_radix(10).len(), k("/request/carrier/bytes"))?;
+                    if precision as usize > maximum_decimal_digits {
+                        return Err(err(
+                            "PARQUET_FACET_CARRIER",
+                            "Decimal precision exceeds fixed-byte capacity",
+                            "/request/carrier/precision",
+                        ));
+                    }
+                    (7, Some(n as i32))
+                }
+                _ => {
+                    return Err(err(
+                        "PARQUET_FACET_CARRIER",
+                        "Unknown decimal carrier",
+                        "/request/carrier/carrier",
+                    ))
+                }
+            };
+            if (physical == 1 && precision > 9.0) || (physical == 2 && precision > 18.0) {
+                return Err(err(
+                    "PARQUET_FACET_CARRIER",
+                    "Decimal precision exceeds physical integer capacity",
+                    "/request/carrier/precision",
+                ));
+            }
+            leaf.push((1, wire_i32(physical)));
+            if let Some(n) = bytes {
+                leaf.push((2, wire_i32(n)));
+            }
+            leaf.push((6, wire_i32(5)));
+            leaf.push((7, wire_i32(scale_value as i32)));
+            leaf.push((8, wire_i32(precision as i32)));
+            leaf.push((
+                10,
+                wire_struct(vec![(
+                    5,
+                    wire_struct(vec![
+                        (1, wire_i32(scale_value as i32)),
+                        (2, wire_i32(precision as i32)),
+                    ]),
+                )]),
+            ));
+        }
+        _ => {
+            return Err(err(
+                "PARQUET_FACET_CARRIER",
+                "Unknown carrier kind",
+                "/request/carrier/kind",
+            ))
+        }
+    }
+    let mut footer = vec![
+        (1, wire_i32(1)),
+        (
+            2,
+            obj(vec![
+                ("kind", s("list")),
+                ("elementType", s("struct")),
+                (
+                    "items",
+                    Value::Array(vec![
+                        wire_struct(vec![(4, wire_binary(&k(&record), c)?), (5, wire_i32(1))]),
+                        wire_struct(leaf),
+                    ]),
+                ),
+            ]),
+        ),
+        (3, wire_i64(0)),
+        (
+            4,
+            obj(vec![
+                ("kind", s("list")),
+                ("elementType", s("struct")),
+                ("items", Value::Array(vec![])),
+            ]),
+        ),
+    ];
+    if let Some(facets) = source_facets {
+        let json = crate::serialization::stringify_compact_metered(facets, c)?
+            .to_utf8()
+            .map_err(|_| {
+                err(
+                    "PARQUET_FACET_CARRIER",
+                    "Facet metadata must be Unicode scalar text",
+                    "/request",
+                )
+            })?;
+        footer.push((
+            5,
+            obj(vec![
+                ("kind", s("list")),
+                ("elementType", s("struct")),
+                (
+                    "items",
+                    Value::Array(vec![wire_struct(vec![
+                        (1, wire_binary(&k("umf.facets"), c)?),
+                        (2, wire_binary(&k(&json), c)?),
+                    ])]),
+                ),
+            ]),
+        ));
+    }
+    let bytes = encode_parquet_wire(&wire_struct(footer), c)?;
+    let mut out = b"PAR1".to_vec();
+    out.extend(bytes.iter().copied());
+    out.extend((bytes.len() as u32).to_le_bytes());
+    out.extend(b"PAR1");
+    Ok(out)
+}
+
+pub fn project_facets_to_parquet(
+    author_input: &Value,
+    request_input: &Value,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(c)?;
+    let schema = parse(FACET_RESULT, c)?;
+    let mut resources = rt.engine.schema_resources_with_context(c)?;
+    resources.entries.push((
+        k("urn:umf:core:semantic-type-reference:1.0.0"),
+        parse(
+            include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+            c,
+        )?,
+    ));
+    resources
+        .entries
+        .push((k("urn:umf:core:0.10.0"), parse(CORE, c)?));
+    resources.entries.push((
+        k("urn:umf:core:facet-operation:3.0.0"),
+        parse(FACET_AUTHOR, c)?,
+    ));
+    resources.entries.push((
+        k("urn:umf:core:kind-operation:6.0.0"),
+        parse(KIND_AUTHOR, c)?,
+    ));
+    let result_schema = CompiledSchema::compile(&schema, &resources, c)?;
+    let req = get(
+        get(&schema, "properties").unwrap_or(&Value::Null),
+        "request",
+    )
+    .unwrap();
+    let mut req_schema = copy_json(req, c)?;
+    if let (Value::Object(fields), Some(defs)) = (&mut req_schema, get(&schema, "$defs")) {
+        fields.push((k("$defs"), copy_json(defs, c)?));
+    }
+    let req_schema = CompiledSchema::compile(&req_schema, &resources, c)?;
+    let request = copy_json(request_input, c)?;
+    if let Some(d) = req_schema.validate(&request, c)?.first() {
+        return Err(EngineError::new(
+            "FACETS_PARQUET_REQUEST",
+            d.instance_path.clone(),
+            d.message.clone(),
+        ));
+    }
+    let raw = copy_json(author_input, c)?;
+    let current = get(&raw, "target").ok_or_else(|| {
+        err(
+            "FACETS_PARQUET_AUTHOR",
+            "Author target required",
+            "/author/target",
+        )
+    })?;
+    let mut caps = NoCaps;
+    let author = if text(get(&raw, "operation")).as_deref() == Some("declare-core-facets") {
+        crate::facets::verify_core_facet_declaration(
+            &raw,
+            current,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?
+    } else {
+        crate::core_kind::verify_core_kind_declaration(
+            &raw,
+            current,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?
+    };
+    let source = copy_json(
+        get(&author, "target").ok_or_else(|| {
+            err(
+                "FACETS_PARQUET_AUTHOR",
+                "Author target missing",
+                "/author/target",
+            )
+        })?,
+        c,
+    )?;
+    if text(get(&source, "umf")).as_deref() != Some("0.10.0") {
+        return Err(err(
+            "FACETS_PARQUET_VERSION",
+            "Current core 0.10.0 declaration required",
+            "/author/target/umf",
+        ));
+    }
+    let identity = get(&author, "identity").unwrap();
+    let module = text(get(identity, "module")).unwrap_or_default();
+    let element = text(get(identity, "element")).unwrap_or_default();
+    let (mi, ei, root, path) = locate(&source, &module, &element, c)?;
+    if text(get(root, "kind")).as_deref() != Some("field") {
+        return Err(err(
+            "FACETS_PARQUET_FIELD",
+            "Selected author must identify a Field",
+            "/author/identity",
+        ));
+    }
+    let request_id = text(get(&request, "id")).unwrap_or_default();
+    let field_name = text(get(&request, "fieldName")).unwrap_or_default();
+    let record_name = text(get(&request, "recordName")).unwrap_or_default();
+    let field_path = format!("{path}/facets");
+    let mut residuals = Vec::new();
+    let mut diagnostics = Vec::new();
+    let mut intended = Value::Object(vec![]);
+    let mut fatal = false;
+    if let Value::Object(fields) = &source {
+        for (name, value) in fields {
+            if ![k("umf"), k("id"), k("modules"), k("vocabularies")].contains(name) {
+                let at = path_key(&Utf16::default(), name, c)?;
+                residuals.push(facet_loss_exact(
+                    at,
+                    value,
+                    "Document metadata remains in the receipt and is not projected",
+                    "unknown",
+                    c,
+                )?);
+            }
+        }
+    }
+    if matches!(get(&source, "vocabularies"), Some(Value::Object(vocabularies)) if !vocabularies.is_empty())
+    {
+        residuals.push(facet_loss(
+            "/vocabularies",
+            get(&source, "vocabularies").unwrap(),
+            "Vocabulary semantics are not projected",
+            "unknown",
+            c,
+        )?);
+    }
+    for (module_index, module_value) in arr(get(&source, "modules")).iter().enumerate() {
+        if module_index != mi {
+            residuals.push(facet_loss(
+                &format!("/modules/{module_index}"),
+                module_value,
+                "Other module is outside selected Field projection",
+                "unknown",
+                c,
+            )?);
+            continue;
+        }
+        if let Value::Object(fields) = module_value {
+            for (name, value) in fields {
+                if name != &k("id")
+                    && name != &k("elements")
+                    && !(name == &k("namespace") && text(Some(value)).as_deref() == Some(""))
+                {
+                    let base = Utf16::from(format!("/modules/{module_index}"));
+                    let at = path_key(&base, name, c)?;
+                    residuals.push(facet_loss_exact(
+                        at,
+                        value,
+                        "Module metadata is not projected",
+                        "unknown",
+                        c,
+                    )?);
+                }
+            }
+        }
+        for (element_index, other) in arr(get(module_value, "elements")).iter().enumerate() {
+            if element_index != ei {
+                residuals.push(facet_loss(
+                    &format!("/modules/{module_index}/elements/{element_index}"),
+                    other,
+                    "Other element is outside selected Field projection",
+                    "unknown",
+                    c,
+                )?);
+            }
+        }
+    }
+    if let Value::Object(fields) = root {
+        for (name, value) in fields {
+            if ![k("id"), k("kind"), k("name"), k("scalarType"), k("facets")].contains(name)
+                && !(name == &k("cardinality") && text(Some(value)).as_deref() == Some("one"))
+                && !(name == &k("extensions")
+                    && matches!(value, Value::Object(members) if members.is_empty()))
+            {
+                let base = Utf16::from(path.clone());
+                let at = path_key(&base, name, c)?;
+                residuals.push(facet_loss_exact(at, value, "Field metadata is retained; availability/default execution is not inferred from facets", "unknown", c)?);
+            }
+        }
+    }
+    if let Some(name) = text(get(root, "name")) {
+        if name != field_name {
+            residuals.push(facet_loss(
+                &format!("{path}/name"),
+                get(root, "name").unwrap(),
+                "Explicit native field name differs from ideal name",
+                "not-expressible",
+                c,
+            )?);
+        }
+    }
+    if get(root, "itemType").is_some()
+        || text(get(root, "cardinality")).is_some_and(|value| value == "array" || value == "map")
+        || arr(get(root, "references"))
+            .iter()
+            .any(|reference| text(get(reference, "role")).as_deref() == Some("record-type"))
+    {
+        fatal = true;
+        residuals.push(facet_loss(
+            &path,
+            root,
+            "A scalar projection cannot flatten a container or record-valued Field",
+            "not-expressible",
+            c,
+        )?);
+    }
+    if text(get(&author, "operation")).as_deref() == Some("declare-core-facets") {
+        let inspected = crate::facets::inspect_core_facets(
+            &source,
+            identity,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?;
+        let meaning = get(&inspected, "meaning").unwrap_or(&Value::Null);
+        if let Some(v) = get(meaning, "interpreted") {
+            intended = crate::facets::historical_core_facet_patch(v, &rt.engine, c)?;
+        }
+        if text(get(meaning, "state")).as_deref() == Some("partial") {
+            residuals.push(facet_loss(
+                &field_path,
+                get(meaning, "facets").unwrap_or(&Value::Null),
+                "Unknown facet qualifiers remain attached; no native interpretation is fabricated",
+                "unknown",
+                c,
+            )?);
+        }
+    } else if get(root, "facets").is_some() {
+        residuals.push(facet_loss(
+            &format!("{path}/facets"),
+            get(root, "facets").unwrap(),
+            "A Field-kind receipt does not establish authorship of facet members",
+            "unknown",
+            c,
+        )?);
+    }
+    let mut mapping_facets = Vec::new();
+    let carrier = get(&request, "carrier").unwrap();
+    let ck = text(get(carrier, "kind")).unwrap_or_default();
+    let metadata = if text(get(&request, "encoding")).as_deref() == Some("metadata-only")
+        && text(get(&author, "operation")).as_deref() == Some("declare-core-facets")
+    {
+        get(root, "facets")
+    } else {
+        None
+    };
+    let target_result = facet_wire_file(&request, metadata, c).and_then(|bytes| {
+        import_parquet_schema(
+            &bytes,
+            &k(&request_id),
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )
+    });
+    let (target, status) = match target_result {
+        Ok(t) => (Some(t), "projected"),
+        Err(e) if e.code.contains("PARQUET_FACET_CARRIER") => {
+            residuals.push(facet_loss(
+                "/request/carrier",
+                carrier,
+                &format!(
+                    "Invalid native carrier or unsupported representation: {}",
+                    e.message.to_utf8().unwrap_or_default()
+                ),
+                "not-expressible",
+                c,
+            )?);
+            (None, "blocked")
+        }
+        Err(e) => return Err(e),
+    };
+    if let Some(target_value) = target.as_ref() {
+        let shape = crate::parquet_cardinality_classification::inspect_shape_node(
+            target_value,
+            1,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?;
+        let native_fragment = get(&shape, "nativeFragment").ok_or_else(|| {
+            err(
+                "FACETS_PARQUET_NATIVE",
+                "Generated Parquet carrier has no observed native field",
+                "/target/schema/1",
+            )
+        })?;
+        let observed =
+            crate::parquet_facets_classification::inspect_native_meaning(native_fragment, c)?;
+        let native_family = text(get(&observed, "family")).unwrap_or_default();
+        let field_metadata = crate::parquet_capture_inspection::get_parquet_field_metadata(
+            target_value,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?;
+        let native_scalar_family = arr(get(&field_metadata, "fields"))
+            .first()
+            .and_then(|entry| get(entry, "element"))
+            .and_then(|element| get(element, "scalarType"));
+        if let Some(width) = get(&intended, "integerWidth") {
+            let matches = native_family == "integer"
+                && get(width, "bits") == get(&observed, "bits")
+                && get(width, "signed") == get(&observed, "signed");
+            if matches {
+                mapping_facets.push(("integerWidth", copy_json(width, c)?));
+            } else {
+                residuals.push(facet_loss(
+                    &format!("{path}/facets/integerWidth"),
+                    width,
+                    "Explicit Parquet carrier does not declare the authored integer domain",
+                    "not-expressible",
+                    c,
+                )?);
+            }
+        }
+        if let Some(p) = get(&intended, "precision") {
+            let matches = native_family == "decimal"
+                && Some(p) == get(&observed, "precision")
+                && get(&intended, "scale") == get(&observed, "scale");
+            if matches {
+                mapping_facets.push(("precision", copy_json(p, c)?));
+                mapping_facets.push(("scale", copy_json(get(&intended, "scale").unwrap(), c)?));
+            } else {
+                residuals.push(facet_loss(
+                    &field_path,
+                    &intended,
+                    "Explicit Parquet carrier does not declare the authored decimal pair",
+                    "not-expressible",
+                    c,
+                )?);
+            }
+        }
+        if let Some(length) = get(&intended, "length") {
+            let exact_bytes = get(&observed, "exactBytes");
+            let matches = native_family == "binary"
+                && exact_bytes.is_some_and(|v| !matches!(v, Value::Null))
+                && text(get(length, "unit")).as_deref() == Some("byte")
+                && get(length, "max") == exact_bytes;
+            if matches {
+                mapping_facets.push(("length", copy_json(length, c)?));
+            } else {
+                residuals.push(facet_loss(
+                    &format!("{path}/facets/length"),
+                    length,
+                    "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+                    "not-expressible",
+                    c,
+                )?);
+            }
+        }
+        if native_family == "binary"
+            && get(&observed, "exactBytes").is_some_and(|v| !matches!(v, Value::Null))
+        {
+            residuals.push(facet_loss(
+                &format!("{path}/facets/length"),
+                get(&intended, "length").unwrap_or(&Value::Null),
+                "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+                "not-expressible",
+                c,
+            )?);
+        }
+        if let Some(source_scalar) = get(root, "scalarType") {
+            if Some(source_scalar) != native_scalar_family {
+                residuals.push(facet_loss(
+                    &format!("{path}/scalarType"),
+                    source_scalar,
+                    "Explicit native carrier belongs to a different scalar family; no value conversion is inferred",
+                    "not-expressible",
+                    c,
+                )?);
+            }
+        }
+        if text(get(&request, "profile")).as_deref() == Some("pyarrow-21")
+            && native_family == "decimal"
+            && get(&observed, "precision")
+                .is_some_and(|x| matches!(x, Value::Number(n) if *n > 76.0))
+        {
+            residuals.push(facet_loss(
+                "/request/carrier",
+                carrier,
+                "PyArrow 21.0.0 cannot represent decimal precision above 76 although Parquet BYTE_ARRAY declarations allow it",
+                "not-expressible",
+                c,
+            )?);
+        }
+        if text(get(&request, "obligation")).as_deref() == Some("exact-input") {
+            let (reason, outcome) = if native_family == "integer" {
+                (
+                    "PyArrow safe array construction truncates fractional input 1.5 to integer 1",
+                    "approximated",
+                )
+            } else if native_family == "float"
+                && get(&observed, "bits") == Some(&Value::Number(32.0))
+            {
+                (
+                    "Binary64 1.0000000000000002 narrows to binary32 1.0",
+                    "approximated",
+                )
+            } else {
+                (
+                    "Schema domains do not prove exact conversion of arbitrary host inputs",
+                    "unknown",
+                )
+            };
+            residuals.push(facet_loss(&path, root, reason, outcome, c)?);
+        }
+    }
+    let blocked = status == "blocked"
+        || fatal
+        || (!residuals.is_empty() && text(get(&request, "mode")).as_deref() == Some("strict"));
+    let status = if blocked { "blocked" } else { "projected" };
+    let outcome = if residuals
+        .iter()
+        .any(|r| text(get(r, "outcome")).as_deref() == Some("not-expressible"))
+    {
+        "not-expressible"
+    } else if residuals
+        .iter()
+        .any(|r| text(get(r, "outcome")).as_deref() == Some("unknown"))
+    {
+        "unknown"
+    } else if residuals.is_empty() {
+        "exact"
+    } else {
+        "approximated"
+    };
+    for r in &residuals {
+        diagnostics.push(obj(vec![
+            ("code", s("FACETS_MEANING_NOT_PROJECTED")),
+            ("path", copy_json(get(r, "path").unwrap(), c)?),
+            ("message", copy_json(get(r, "reason").unwrap(), c)?),
+            ("severity", s(if blocked { "error" } else { "warning" })),
+        ]));
+    }
+    let mut mapping = vec![
+        ("origin", s("authored")),
+        ("idealPath", s(&field_path)),
+        ("nativeIndex", Value::Number(1.0)),
+        (
+            "facets",
+            Value::Object(mapping_facets.into_iter().map(|(n, v)| (k(n), v)).collect()),
+        ),
+        (
+            "encoding",
+            copy_json(get(&request, "encoding").unwrap(), c)?,
+        ),
+        ("profile", copy_json(get(&request, "profile").unwrap(), c)?),
+        ("outcome", s(outcome)),
+    ];
+    let mut output = vec![
+        ("operation", s("project-facets-parquet")),
+        ("version", s("1.0.0")),
+        ("status", s(status)),
+        ("source", source),
+        ("author", author),
+        ("request", request),
+        (
+            "binding",
+            copy_json(
+                get(get(&schema, "properties").unwrap(), "binding")
+                    .and_then(|x| get(x, "const"))
+                    .unwrap(),
+                c,
+            )?,
+        ),
+        ("mapping", obj(mapping)),
+        ("residuals", Value::Array(residuals)),
+        ("diagnostics", Value::Array(diagnostics)),
+    ];
+    if !blocked {
+        output.push(("target", target.unwrap()));
+    }
+    let value = obj(output);
+    if !result_schema.validate(&value, c)?.is_empty() {
+        return Err(err(
+            "FACETS_PARQUET_RESULT",
+            "Projection result failed its pinned schema",
+            "",
+        ));
+    }
+    Ok(value)
+}
+
+pub fn recover_facets_from_parquet(
+    receipt: &Value,
+    native_hex: &Value,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(c)?;
+    let schema = parse(FACET_RESULT, c)?;
+    let mut resources = rt.engine.schema_resources_with_context(c)?;
+    resources.entries.push((
+        k("urn:umf:core:semantic-type-reference:1.0.0"),
+        parse(
+            include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+            c,
+        )?,
+    ));
+    resources
+        .entries
+        .push((k("urn:umf:core:0.10.0"), parse(CORE, c)?));
+    resources.entries.push((
+        k("urn:umf:core:facet-operation:3.0.0"),
+        parse(FACET_AUTHOR, c)?,
+    ));
+    resources.entries.push((
+        k("urn:umf:core:kind-operation:6.0.0"),
+        parse(KIND_AUTHOR, c)?,
+    ));
+    let compiled = CompiledSchema::compile(&schema, &resources, c)?;
+    if !compiled.validate(receipt, c)?.is_empty()
+        || text(get(receipt, "status")).as_deref() != Some("projected")
+    {
+        return Err(err(
+            "FACETS_PARQUET_RECEIPT",
+            "Expected projected receipt",
+            "/receipt",
+        ));
+    }
+    let expected = project_facets_to_parquet(
+        get(receipt, "author").unwrap(),
+        get(receipt, "request").unwrap(),
+        c,
+    )?;
+    if canonical(&expected, c)? != canonical(receipt, c)? {
+        return Err(err(
+            "FACETS_PARQUET_RECEIPT",
+            "Receipt differs from retained author and request",
+            "/receipt",
+        ));
+    }
+    let hex = text(Some(native_hex)).ok_or_else(|| {
+        err(
+            "FACETS_PARQUET_STALE",
+            "nativeHex must be lowercase hexadecimal",
+            "/nativeHex",
+        )
+    })?;
+    c.charge_work(hex.len(), k("/nativeHex"))?;
+    let mut supplied = Vec::with_capacity(hex.len() / 2);
+    let nib = |b: u8| -> Option<u8> {
+        match b {
+            b'0'..=b'9' => Some(b - b'0'),
+            b'a'..=b'f' => Some(b - b'a' + 10),
+            _ => None,
+        }
+    };
+    if hex.len() % 2 != 0 {
+        return Err(err(
+            "FACETS_PARQUET_STALE",
+            "nativeHex must be lowercase hexadecimal",
+            "/nativeHex",
+        ));
+    }
+    for pair in hex.as_bytes().chunks_exact(2) {
+        let hi = nib(pair[0]).ok_or_else(|| {
+            err(
+                "FACETS_PARQUET_STALE",
+                "nativeHex must be lowercase hexadecimal",
+                "/nativeHex",
+            )
+        })?;
+        let lo = nib(pair[1]).ok_or_else(|| {
+            err(
+                "FACETS_PARQUET_STALE",
+                "nativeHex must be lowercase hexadecimal",
+                "/nativeHex",
+            )
+        })?;
+        supplied.push(hi << 4 | lo);
+    }
+    let actual = export_parquet_capture(
+        get(receipt, "target").unwrap(),
+        &rt.engine,
+        &rt.registry,
+        &mut NoCaps,
+        c,
+    )?;
+    if supplied != actual {
+        return Err(err(
+            "FACETS_PARQUET_STALE",
+            "Native target bytes changed",
+            "/nativeHex",
+        ));
+    }
+    copy_json(get(receipt, "source").unwrap(), c)
+}
+
+const KEY_RESULT: &str = include_str!("../../../spec/core/key-parquet-projection.schema.json");
+const KEY_AUTHOR_SCHEMA: &str = include_str!("../../../spec/core/key-operation-v2.schema.json");
+const KEY_RECOVERY: &str = "Recover authored source from retained receipt; native import alone does not recover authored identity";
+
+fn key_type_name(tag: u8) -> Result<&'static str, EngineError> {
+    match tag {
+        1 | 2 => Ok("bool"),
+        3 => Ok("i8"),
+        4 => Ok("i16"),
+        5 => Ok("i32"),
+        6 => Ok("i64"),
+        7 => Ok("double"),
+        8 => Ok("binary"),
+        9 => Ok("list"),
+        10 => Ok("set"),
+        11 => Ok("map"),
+        12 => Ok("struct"),
+        _ => Err(err(
+            "KEY_PARQUET_WIRE",
+            "Unsupported Parquet wire value",
+            "/request",
+        )),
+    }
+}
+fn native_wire_to_value(
+    v: &crate::parquet_schema_decode::NativeWireValue,
+    depth: usize,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    use crate::parquet_schema_decode::NativeWireValue as N;
+    if depth > c.limits().max_depth {
+        return Err(
+            err("LIMIT", "Wire conversion depth exceeded", "/request").with_control_failure()
+        );
+    }
+    c.charge_work(1, k("/request"))?;
+    Ok(match v {
+        N::Bool(value) => obj(vec![("kind", s("bool")), ("value", Value::Bool(*value))]),
+        N::Byte(value) => obj(vec![("kind", s("i8")), ("value", s(&value.to_string()))]),
+        N::I16(value) => obj(vec![("kind", s("i16")), ("value", s(&value.to_string()))]),
+        N::I32(value) => obj(vec![("kind", s("i32")), ("value", s(&value.to_string()))]),
+        N::I64(value) => obj(vec![("kind", s("i64")), ("value", s(&value.to_string()))]),
+        N::Double(bits) => obj(vec![
+            ("kind", s("double")),
+            ("value", Value::Number(f64::from_bits(*bits))),
+        ]),
+        N::Binary(bytes) => {
+            c.charge_work(bytes.len().saturating_mul(2), k("/request"))?;
+            c.charge_text(bytes.len().saturating_mul(2), k("/request"))?;
+            let mut hex = String::with_capacity(bytes.len().saturating_mul(2));
+            for b in bytes {
+                use std::fmt::Write as _;
+                write!(&mut hex, "{b:02x}").unwrap();
+            }
+            obj(vec![("kind", s("binary")), ("hex", s(&hex))])
+        }
+        N::List(tag, items) | N::Set(tag, items) => {
+            let kind = if matches!(v, N::List(..)) {
+                "list"
+            } else {
+                "set"
+            };
+            let mut out = Vec::with_capacity(items.len());
+            for item in items {
+                out.push(native_wire_to_value(item, depth + 1, c)?);
+            }
+            obj(vec![
+                ("kind", s(kind)),
+                ("elementType", s(key_type_name(*tag)?)),
+                ("items", Value::Array(out)),
+            ])
+        }
+        N::Map(key_tag, value_tag, entries) => {
+            let mut out = Vec::with_capacity(entries.len());
+            for (key, value) in entries {
+                out.push(obj(vec![
+                    ("key", native_wire_to_value(key, depth + 1, c)?),
+                    ("value", native_wire_to_value(value, depth + 1, c)?),
+                ]));
+            }
+            obj(vec![
+                ("kind", s("map")),
+                ("keyType", s(key_type_name(*key_tag)?)),
+                ("valueType", s(key_type_name(*value_tag)?)),
+                ("entries", Value::Array(out)),
+            ])
+        }
+        N::Struct(fields) => {
+            let mut out = Vec::with_capacity(fields.len());
+            for (id, value) in fields {
+                out.push(obj(vec![
+                    ("id", Value::Number(*id as f64)),
+                    ("value", native_wire_to_value(value, depth + 1, c)?),
+                ]));
+            }
+            obj(vec![("kind", s("struct")), ("fields", Value::Array(out))])
+        }
+        N::Uuid(bytes) => {
+            c.charge_work(32, k("/request"))?;
+            c.charge_text(32, k("/request"))?;
+            let mut hex = String::with_capacity(32);
+            for b in bytes {
+                use std::fmt::Write as _;
+                write!(&mut hex, "{b:02x}").unwrap();
+            }
+            obj(vec![("kind", s("uuid")), ("hex", s(&hex))])
+        }
+    })
+}
+fn key_wire_file(
+    record_name: &str,
+    columns: &[Value],
+    c: &mut Context<'_>,
+) -> Result<Vec<u8>, EngineError> {
+    if columns.is_empty() || columns.len() > 1000 {
+        return Err(err(
+            "KEY_PARQUET_COLUMNS",
+            "At least one and at most 1000 columns are required",
+            "/request/columns",
+        ));
+    }
+    let mut schema = vec![wire_struct(vec![
+        (4, wire_binary(&k(record_name), c)?),
+        (5, wire_i32(columns.len() as i32)),
+    ])];
+    for column in columns {
+        let name = text(get(column, "name")).unwrap_or_default();
+        let mut request = obj(vec![
+            ("recordName", s("Carrier")),
+            ("fieldName", s(&name)),
+            ("nullable", Value::Bool(false)),
+            (
+                "carrier",
+                copy_json(
+                    get(column, "carrier").ok_or_else(|| {
+                        err(
+                            "KEY_PARQUET_COLUMNS",
+                            "Carrier required",
+                            "/request/columns",
+                        )
+                    })?,
+                    c,
+                )?,
+            ),
+        ]);
+        if let Some(field_id) = get(column, "fieldId") {
+            if let Value::Object(m) = &mut request {
+                m.push((k("fieldId"), copy_json(field_id, c)?));
+            }
+        }
+        let bytes = facet_wire_file(&request, None, c)?;
+        let decoded = crate::parquet_schema_decode::decode_compact_footer(&bytes, c)?;
+        let crate::parquet_schema_decode::NativeWireValue::Struct(footer) = decoded.value else {
+            return Err(err(
+                "KEY_PARQUET_WIRE",
+                "Expected FileMetaData struct",
+                "/request/columns",
+            ));
+        };
+        let schema_fields = footer
+            .iter()
+            .find(|(id, _)| *id == 2)
+            .map(|(_, v)| v)
+            .ok_or_else(|| {
+                err(
+                    "KEY_PARQUET_WIRE",
+                    "Schema list missing",
+                    "/request/columns",
+                )
+            })?;
+        let crate::parquet_schema_decode::NativeWireValue::List(_, items) = schema_fields else {
+            return Err(err(
+                "KEY_PARQUET_WIRE",
+                "Expected schema list",
+                "/request/columns",
+            ));
+        };
+        let leaf = items.get(1).ok_or_else(|| {
+            err(
+                "KEY_PARQUET_WIRE",
+                "Field schema missing",
+                "/request/columns",
+            )
+        })?;
+        schema.push(native_wire_to_value(leaf, 0, c)?);
+    }
+    let footer = encode_parquet_wire(
+        &wire_struct(vec![
+            (1, wire_i32(1)),
+            (
+                2,
+                obj(vec![
+                    ("kind", s("list")),
+                    ("elementType", s("struct")),
+                    ("items", Value::Array(schema)),
+                ]),
+            ),
+            (3, wire_i64(0)),
+            (
+                4,
+                obj(vec![
+                    ("kind", s("list")),
+                    ("elementType", s("struct")),
+                    ("items", Value::Array(vec![])),
+                ]),
+            ),
+        ]),
+        c,
+    )?;
+    let mut bytes = b"PAR1".to_vec();
+    bytes.extend(footer.iter().copied());
+    bytes.extend((footer.len() as u32).to_le_bytes());
+    bytes.extend(b"PAR1");
+    Ok(bytes)
+}
+fn key_loss(
+    path: &str,
+    value: &Value,
+    reason: &str,
+    outcome: &str,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    Ok(obj(vec![
+        ("path", s(path)),
+        ("value", copy_json(value, c)?),
+        ("reason", s(reason)),
+        ("outcome", s(outcome)),
+        ("recovery", s(KEY_RECOVERY)),
+    ]))
+}
+fn same_key_value(a: &Value, b: &Value, c: &mut Context<'_>) -> Result<bool, EngineError> {
+    Ok(canonical(a, c)? == canonical(b, c)?)
+}
+fn key_pair(value: &Value) -> String {
+    let module = text(get(value, "module")).unwrap_or_default();
+    let element = text(get(value, "element")).unwrap_or_default();
+    format!("{}:{}{}:{}", module.len(), module, element.len(), element)
+}
+fn key_locate<'a>(
+    source: &'a Value,
+    reference: &Value,
+    c: &mut Context<'_>,
+) -> Result<(usize, usize, &'a Value, String), EngineError> {
+    locate(
+        source,
+        &text(get(reference, "module")).unwrap_or_default(),
+        &text(get(reference, "element")).unwrap_or_default(),
+        c,
+    )
+}
+
+pub fn project_keys_to_parquet(
+    source_input: &Value,
+    authors_input: &Value,
+    request_input: &Value,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(c)?;
+    let schema = parse(KEY_RESULT, c)?;
+    let mut resources = rt.engine.schema_resources_with_context(c)?;
+    resources.entries.push((
+        k("urn:umf:core:semantic-type-reference:1.0.0"),
+        parse(
+            include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+            c,
+        )?,
+    ));
+    resources
+        .entries
+        .push((k("urn:umf:core:0.10.0"), parse(CORE, c)?));
+    resources.entries.push((
+        k("urn:umf:core:key-operation:2.0.0"),
+        parse(KEY_AUTHOR_SCHEMA, c)?,
+    ));
+    let result_schema = CompiledSchema::compile(&schema, &resources, c)?;
+    let request_value = get(
+        get(&schema, "properties").unwrap_or(&Value::Null),
+        "request",
+    )
+    .unwrap();
+    let request_schema = CompiledSchema::compile(request_value, &resources, c)?;
+    let request = copy_json(request_input, c)?;
+    if let Some(d) = request_schema.validate(&request, c)?.first() {
+        return Err(EngineError::new(
+            "KEY_PARQUET_REQUEST",
+            d.instance_path.clone(),
+            d.message.clone(),
+        ));
+    }
+    let source = copy_json(source_input, c)?;
+    if text(get(&source, "umf")).as_deref() != Some("0.10.0") {
+        return Err(err(
+            "KEY_PARQUET_SOURCE",
+            "Valid explicit core 0.10.0 required",
+            "/source/umf",
+        ));
+    }
+    let mut caps = NoCaps;
+    if !rt
+        .engine
+        .validate_document(&source, &rt.registry, &mut caps, c)?
+        .valid
+    {
+        return Err(err(
+            "KEY_PARQUET_SOURCE",
+            "Valid explicit core 0.10.0 required",
+            "/source",
+        ));
+    }
+    let record_ref = get(&request, "record").unwrap();
+    let (module_index, element_index, record, path) = key_locate(&source, record_ref, c)?;
+    if text(get(record, "kind")).as_deref() != Some("record") {
+        return Err(err(
+            "KEY_PARQUET_RECORD",
+            "Selected Record must have authored keys and explicit membership",
+            "/request/record",
+        ));
+    }
+    let declared = arr(get(record, "keys"));
+    let members = arr(get(record, "members"));
+    if declared.is_empty() || members.is_empty() {
+        return Err(err(
+            "KEY_PARQUET_RECORD",
+            "Selected Record must have authored keys and explicit membership",
+            "/source",
+        ));
+    }
+    let authors = copy_json(authors_input, c)?;
+    let Value::Array(author_values) = &authors else {
+        return Err(err(
+            "KEY_PARQUET_AUTHORS",
+            "Exactly one verified declaration for every current key is required",
+            "/authors",
+        ));
+    };
+    if author_values.len() != declared.len() {
+        return Err(err(
+            "KEY_PARQUET_AUTHORS",
+            "Exactly one verified declaration for every current key is required",
+            "/authors",
+        ));
+    }
+    let mut author_ids = std::collections::HashSet::new();
+    for author in author_values {
+        if text(get(author, "operation")).as_deref() != Some("declare-core-key") {
+            return Err(err(
+                "KEY_PARQUET_AUTHORS",
+                "Expected key declarations",
+                "/authors",
+            ));
+        }
+        let target = get(author, "target")
+            .ok_or_else(|| err("KEY_PARQUET_AUTHORS", "Author target required", "/authors"))?;
+        crate::core_keys::verify_core_key_operation(
+            author,
+            target,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?;
+        let ident = get(author, "identity").ok_or_else(|| {
+            err(
+                "KEY_PARQUET_AUTHORS",
+                "Author identity required",
+                "/authors",
+            )
+        })?;
+        if get(target, "id") != get(&source, "id") || key_pair(ident) != key_pair(record_ref) {
+            return Err(err(
+                "KEY_PARQUET_AUTHORS",
+                "Duplicate or mismatched author identity",
+                "/authors",
+            ));
+        }
+        let key_id =
+            text(get(get(author, "request").unwrap_or(&Value::Null), "id")).unwrap_or_default();
+        if !author_ids.insert(key_id.clone()) {
+            return Err(err(
+                "KEY_PARQUET_AUTHORS",
+                "Duplicate or mismatched author identity",
+                "/authors",
+            ));
+        }
+        let key_identity = obj(vec![
+            ("module", copy_json(get(record_ref, "module").unwrap(), c)?),
+            (
+                "element",
+                copy_json(get(record_ref, "element").unwrap(), c)?,
+            ),
+            ("key", s(&key_id)),
+        ]);
+        let current = crate::core_keys::lookup_core_key(
+            &source,
+            &key_identity,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?;
+        let prior = crate::core_keys::lookup_core_key(
+            target,
+            &key_identity,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?;
+        if !same_key_value(
+            get(&current, "key").unwrap(),
+            get(&prior, "key").unwrap(),
+            c,
+        )? {
+            return Err(err(
+                "KEY_PARQUET_STALE",
+                "Key meaning changed since declaration",
+                "/authors",
+            ));
+        }
+        for reference in arr(get(&current, "key").and_then(|x| get(x, "fields"))) {
+            let (_, _, now, now_path) = key_locate(&source, reference, c)?;
+            let (_, _, then, _) = key_locate(target, reference, c)?;
+            if !same_key_value(now, then, c)? {
+                return Err(err(
+                    "KEY_PARQUET_STALE",
+                    "Key component changed since declaration",
+                    "/authors",
+                ));
+            }
+            let now_member = members.iter().find(|m| key_pair(m) == key_pair(reference));
+            let prior_record = key_locate(target, record_ref, c)?.2;
+            let then_member = arr(get(prior_record, "members"))
+                .iter()
+                .find(|m| key_pair(m) == key_pair(reference));
+            if now_member != then_member {
+                return Err(err(
+                    "KEY_PARQUET_STALE",
+                    "Key ownership qualifier changed since declaration",
+                    "/authors",
+                ));
+            }
+            let _ = now_path;
+        }
+    }
+    let declared_ids = declared
+        .iter()
+        .filter_map(|key| text(get(key, "id")))
+        .collect::<std::collections::HashSet<_>>();
+    if author_ids != declared_ids {
+        return Err(err(
+            "KEY_PARQUET_AUTHORS",
+            "Exactly one verified declaration for every current key is required",
+            "/authors",
+        ));
+    }
+    let columns = arr(get(&request, "columns"));
+    let mut mapped = std::collections::HashMap::<String, &Value>::new();
+    let mut names = std::collections::HashSet::<String>::new();
+    for column in columns {
+        let field = get(column, "field").ok_or_else(|| {
+            err(
+                "KEY_PARQUET_COLUMNS",
+                "Column identity required",
+                "/request/columns",
+            )
+        })?;
+        let id = key_pair(field);
+        let name = text(get(column, "name")).unwrap_or_default();
+        if mapped.insert(id.clone(), column).is_some() || !names.insert(name) {
+            return Err(err(
+                "KEY_PARQUET_COLUMNS",
+                "Column identities and names must be unique and owned by the selected Record",
+                "/request/columns",
+            ));
+        }
+        if !members.iter().any(|m| key_pair(m) == id) {
+            return Err(err(
+                "KEY_PARQUET_COLUMNS",
+                "Column identities and names must be unique and owned by the selected Record",
+                "/request/columns",
+            ));
+        }
+    }
+    if mapped.len() != members.len() {
+        return Err(err(
+            "KEY_PARQUET_COLUMNS",
+            "Map every owned Field explicitly",
+            "/request/columns",
+        ));
+    }
+    let record_name = text(get(&request, "recordName")).unwrap_or_default();
+    let mut impossible = false;
+    let mut target = None;
+    let bytes = key_wire_file(&record_name, columns, c);
+    match bytes {
+        Ok(bytes) => match import_parquet_schema(
+            &bytes,
+            &k(&text(get(&request, "id")).unwrap_or_default()),
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        ) {
+            Ok(value) => target = Some(value),
+            Err(e) => return Err(e),
+        },
+        Err(e) => {
+            if e.code.contains("PARQUET_FACET_CARRIER") {
+                impossible = true;
+            } else {
+                return Err(e);
+            }
+        }
+    }
+    let native_fields = if let Some(t) = target.as_ref() {
+        let m = crate::parquet_capture_inspection::get_parquet_field_metadata(
+            t,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?;
+        arr(get(&m, "fields")).to_vec()
+    } else {
+        Vec::new()
+    };
+    let mut residuals = Vec::new();
+    if target.is_none() {
+        residuals.push(key_loss(
+            "/request",
+            &request,
+            "Native carrier cannot be emitted; no column target was produced",
+            "not-expressible",
+            c,
+        )?);
+    }
+    residuals.push(key_loss("/",&source,"Only selected Record scalar column carriers are emitted; all other metadata, native extensions, relationships and unknown content remain in this source residual","not-expressible",c)?);
+    for (index, column) in columns.iter().enumerate() {
+        let reference = get(column, "field").unwrap();
+        let (_, _, field, field_path) = key_locate(&source, reference, c)?;
+        let actual = native_fields.get(index).and_then(|x| get(x, "element"));
+        let mismatch = actual.and_then(|x| get(x, "scalarType")) != get(field, "scalarType");
+        let invalid = text(get(field, "kind")).as_deref() != Some("field")
+            || text(get(field, "cardinality")).as_deref() != Some("one")
+            || get(field, "itemType").is_some()
+            || arr(get(field, "references"))
+                .iter()
+                .any(|x| text(get(x, "role")).as_deref() == Some("record-type"))
+            || text(get(field, "nullability")).as_deref() != Some("required")
+            || mismatch;
+        if invalid {
+            impossible = true;
+            residuals.push(key_loss(&field_path,field,"This carrier binding requires a required singular scalar Field with matching native family; other shapes need explicit separate bindings","not-expressible",c)?);
+            continue;
+        }
+        residuals.push(key_loss(&field_path,field,"Native bounds, length/width facets, fixed-byte lower bounds, decimal annotations and unknown qualifiers do not replace the authored domain. The empty file is a schema carrier, not a row validator or exact input converter","unknown",c)?);
+        if text(get(field, "scalarType")).as_deref() == Some("integer") {
+            residuals.push(key_loss(&field_path,field,"PyArrow 21 safe integer construction can truncate fractional input; native requiredness and integer storage do not establish exact writer input","unknown",c)?);
+        }
+    }
+    let mut mappings = Vec::new();
+    for key in declared {
+        let key_id = text(get(key, "id")).unwrap_or_default();
+        let identity = obj(vec![
+            ("module", copy_json(get(record_ref, "module").unwrap(), c)?),
+            (
+                "element",
+                copy_json(get(record_ref, "element").unwrap(), c)?,
+            ),
+            ("key", s(&key_id)),
+        ]);
+        let lookup = crate::core_keys::lookup_core_key(
+            &source,
+            &identity,
+            &rt.engine,
+            &rt.registry,
+            &mut caps,
+            c,
+        )?;
+        let definition = get(&lookup, "key").unwrap();
+        let refs = arr(get(definition, "fields"));
+        let mut cols = Vec::new();
+        let mut native_paths = Vec::new();
+        for reference in refs {
+            let id = key_pair(reference);
+            let col = mapped.get(&id).ok_or_else(|| {
+                err(
+                    "KEY_PARQUET_COLUMNS",
+                    "Map every key component explicitly",
+                    "/request/columns",
+                )
+            })?;
+            cols.push(copy_json(get(col, "name").unwrap(), c)?);
+            let index = columns
+                .iter()
+                .position(|x| key_pair(get(x, "field").unwrap()) == id)
+                .unwrap();
+            native_paths.push(s(&format!("/schema/{}", index + 1)));
+        }
+        let primary = matches!(get(definition, "primary"), Some(Value::Bool(true)));
+        mappings.push(obj(vec![
+            ("keyId", s(&key_id)),
+            (
+                "keyName",
+                copy_json(get(definition, "name").unwrap_or(&Value::Null), c)?,
+            ),
+            ("idealPath", copy_json(get(&lookup, "path").unwrap(), c)?),
+            ("nativePaths", Value::Array(native_paths)),
+            ("columns", Value::Array(cols)),
+            ("primary", Value::Bool(primary)),
+            ("origin", s("authored")),
+            ("enforcement", s("not-expressible")),
+            ("outcome", s("not-expressible")),
+        ]));
+        residuals.push(key_loss(&text(get(&lookup,"path")).unwrap_or_default(),key,"Parquet has no native collection uniqueness or primary/alternate key declaration. Stable key IDs, names, ordered tuple and primary intent remain in this per-key residual; field order and metadata are not key enforcement","not-expressible",c)?);
+    }
+    let blocked = impossible || text(get(&request, "mode")).as_deref() == Some("strict");
+    let mut diagnostics = Vec::new();
+    for r in &residuals {
+        diagnostics.push(obj(vec![
+            ("code", s("KEY_PARQUET_LOSS")),
+            ("path", copy_json(get(r, "path").unwrap(), c)?),
+            ("message", copy_json(get(r, "reason").unwrap(), c)?),
+            ("severity", s(if blocked { "error" } else { "warning" })),
+        ]));
+    }
+    let binding = copy_json(
+        get(
+            get(get(&schema, "properties").unwrap(), "binding").unwrap(),
+            "const",
+        )
+        .unwrap(),
+        c,
+    )?;
+    let mut out = vec![
+        ("operation", s("project-keys-parquet")),
+        ("version", s("1.0.0")),
+        ("status", s(if blocked { "blocked" } else { "projected" })),
+        ("source", source),
+        ("authors", authors),
+        ("request", request),
+        ("binding", binding),
+        ("mappings", Value::Array(mappings)),
+        ("residuals", Value::Array(residuals)),
+        ("diagnostics", Value::Array(diagnostics)),
+    ];
+    if !blocked {
+        out.push(("target", target.unwrap()));
+    }
+    let value = obj(out);
+    if !result_schema.validate(&value, c)?.is_empty() {
+        return Err(err(
+            "KEY_PARQUET_RESULT",
+            "Projection result failed its pinned schema",
+            "",
+        ));
+    }
+    let _ = module_index;
+    let _ = element_index;
+    Ok(value)
+}
+
+pub fn verify_keys_parquet_projection(
+    receipt: &Value,
+    current: &Value,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let source = get(receipt, "source")
+        .ok_or_else(|| err("KEY_PARQUET_RECEIPT", "Source required", "/receipt"))?;
+    let authors = get(receipt, "authors")
+        .ok_or_else(|| err("KEY_PARQUET_RECEIPT", "Authors required", "/receipt"))?;
+    let request = get(receipt, "request")
+        .ok_or_else(|| err("KEY_PARQUET_RECEIPT", "Request required", "/receipt"))?;
+    let expected = project_keys_to_parquet(source, authors, request, c)?;
+    if text(get(&expected, "status")).as_deref() != Some("projected")
+        || !same_key_value(&expected, receipt, c)?
+    {
+        return Err(err(
+            "KEY_PARQUET_RECEIPT",
+            "Receipt differs from retained author/source/request",
+            "/receipt",
+        ));
+    }
+    if !same_key_value(
+        get(receipt, "target")
+            .ok_or_else(|| err("KEY_PARQUET_RECEIPT", "Target required", "/receipt/target"))?,
+        current,
+        c,
+    )? {
+        return Err(err(
+            "KEY_PARQUET_STALE",
+            "Native representation changed since projection",
+            "/current",
+        ));
+    }
+    Ok(copy_json(receipt, c)?)
+}
+pub fn recover_keys_parquet_ideal(
+    receipt: &Value,
+    current: &Value,
+    c: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let verified = verify_keys_parquet_projection(receipt, current, c)?;
+    copy_json(get(&verified, "source").unwrap(), c)
+}

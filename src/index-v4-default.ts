@@ -792,10 +792,8 @@ export type { PostgresqlTypeIdentity } from './adapters/postgresql/cardinality-c
 export type { PreparedActionIdentities } from './extensions/actions/selector';
 export type { PreparedActionPlanModel } from './extensions/actions/plan-types';
 export type { PreparedCoreKeyTuples } from './model/key-tuple';
-export { projectFacetsToParquet } from './core-ideals/facets-parquet-projection';
 export { projectFacetsToPostgresql } from './core-ideals/facets-postgresql-projection';
 export type { ProjectionIssue } from './projections/json-schema-protobuf';
-export { projectKeysToParquet } from './core-ideals/key-parquet-projection';
 export { projectKeysToPostgresql } from './core-ideals/key-postgresql-projection';
 export { proposeProtobufDescriptorEdit } from './adapters/protobuf/index';
 export type { ProtectionCatalogInspection } from './extensions/security/protection/catalog';
@@ -849,9 +847,7 @@ export type { RecordSqlServerRequest } from './core-ideals/record-sqlserver-proj
 export type { RecordTableSpecProjection } from './core-ideals/record-tablespec-projection';
 export { default as recordTableSpecProjectionSchema } from '../spec/core/record-tablespec-projection.schema.json';
 export type { RecordTableSpecRequest } from './core-ideals/record-tablespec-projection';
-export { recoverFacetsFromParquet } from './core-ideals/facets-parquet-projection';
 export { recoverFacetsFromPostgresql } from './core-ideals/facets-postgresql-projection';
-export { recoverKeysParquetIdeal } from './core-ideals/key-parquet-projection';
 export { recoverKeysPostgresqlIdeal } from './core-ideals/key-postgresql-projection';
 export { registerSagas } from './extensions/actions/saga';
 export type { Registration } from './registry/registry';
@@ -1213,5 +1209,4 @@ export { default as typespecSyntaxLocationsSchema } from '../spec/extensions/typ
 export { UmfError } from './model/errors';
 export type { UuidValue } from './model/uuid';
 export type { Validation } from './model/types';
-export { verifyKeysParquetProjection } from './core-ideals/key-parquet-projection';
 export { verifyKeysPostgresqlProjection } from './core-ideals/key-postgresql-projection';

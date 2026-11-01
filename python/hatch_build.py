@@ -58,6 +58,8 @@ CORE_RESOURCES = (
 SDIST_SOURCE_FILES = (
     'spec/core/cardinality-postgresql-projection.schema.json',
     'spec/core/cardinality-parquet-projection.schema.json',
+    'spec/core/facets-parquet-projection.schema.json',
+    'spec/core/key-parquet-projection.schema.json',
     "Cargo.toml",
     "Cargo.lock",
     "rust-toolchain.toml",

@@ -134,9 +134,8 @@ its public Rust route and one ordinary normal/refusal/recovery workflow as appli
 
 | Lane | Concrete remaining implementation | Reuse and next cut |
 | --- | --- | --- |
-| Authored targets | PostgreSQL native authored Field/Record closure, Cardinality/Nullability and Keys/Facets; Avro Cardinality; Parquet Cardinality/Nullability and Keys/Facets. | Bundle Field/Record per target and related scalar operations; reuse target adapters, author verification and exact receipt/native recovery. Avro/Parquet Field/Record and staged PostgreSQL Field/Record pass; native PostgreSQL backend composites are the next closure cut. |
-| Generic reports | Field classification/projection, Record projection and Structured classification inspector/verify pairs. | Reuse Rust kind/schema and receipt primitives; preserve exact current diagnostic and integrity meaning. |
-| Adapter composites | Arrow IPC schema export, layout/consistency/rename/observation; embedded Parquet Arrow schema inspection/coordinated rename; Delta checkpoint reconciliation; Protobuf descriptor edit. | Implement each complete public composite on its existing Rust capture/schema primitive, including ordinary edit/refusal behavior and caller controls. |
+| Authored targets | PostgreSQL Keys/Facets. | All authored Avro, Parquet, SQL Server and TableSpec capabilities pass their focused workflows. PostgreSQL Field/Record/Cardinality/Nullability native workflows also pass; Keys/Facets source is reviewed, with a native baseline pair prepared. |
+| Adapter composites | Native Arrow FlatBuffer encoding, IPC schema export and rename; embedded Parquet coordinated rename; Delta checkpoint reconciliation; Protobuf descriptor edit. | IPC layout/consistency and embedded Parquet Arrow reading pass. Native Arrow codec/edit source is under review; Delta and Protobuf source is reviewed for the next build. |
 | Extension composites | Relationship Extra archive import. | Reuse the existing Rust importer, classification and archive validation; preserve parser injection and exact retained-source meaning. |
 
 Implement the remaining queue through three parallel Luna lanes. The PostgreSQL
@@ -209,9 +208,11 @@ also pass. Registry transport retains callback identity and exact semantic-owner
 provenance. Full TypeScript, actual host-library/native-test compilation and resource
 closure pass. These capabilities leave the repair queue.
 
-The next reviewed implementation pair is authored Parquet Keys/Facets. PostgreSQL
-Keys/Facets, Delta checkpoint reconciliation, Protobuf descriptor editing and
-RelationshipExtra archive import have source cuts under review. Arrow schema export,
+Authored Parquet Keys/Facets now passes both focused public workflows, including
+verification, native recovery and strict refusal. Full TypeScript, actual host-library
+compilation and resource closure pass. These cases leave the repair queue.
+PostgreSQL Keys/Facets, Delta checkpoint reconciliation, Protobuf descriptor editing
+and RelationshipExtra archive import have reviewed source cuts for the next build. Arrow schema export,
 IPC editing and embedded Parquet coordinated rename still need the shared native
 encoder closure; explicit host encoder callbacks alone do not finish that capability.
 Luna owns focused test execution and failed-baseline repair while Sol reviews and
