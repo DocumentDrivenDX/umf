@@ -180,7 +180,6 @@ export { classifyPostgresqlComposite } from './core-ideals/postgresql-composite'
 export { classifyPostgresqlDdlRecord } from './core-ideals/postgresql-ddl-kinds';
 export { classifyPostgresqlFacets } from './core-ideals/facets-postgresql';
 export { classifyPostgresqlRelationships } from './core-ideals/relationship-postgresql-factory';
-export { classifyTableSpecFacets } from './core-ideals/facets-tablespec';
 export { classifyTableSpecRelationships } from './core-ideals/relationship-tablespec';
 export type { CompiledActionRule } from './extensions/actions/expression';
 export type { CompiledActionSelector } from './extensions/actions/selector';
@@ -843,7 +842,6 @@ export { projectFacetsToTableSpec } from './core-ideals/facets-tablespec-project
 export { projectFieldToAvro } from './core-ideals/field-avro-projection';
 export { projectFieldToParquet } from './core-ideals/field-parquet-projection';
 export { projectFieldToPostgresql } from './core-ideals/field-postgresql-projection';
-export { projectFieldToSqlServer } from './core-ideals/field-sqlserver-projection';
 export { projectFieldToTableSpec } from './core-ideals/field-tablespec-projection';
 export type { ProjectionIssue } from './projections/json-schema-protobuf';
 export { projectKeysToParquet } from './core-ideals/key-parquet-projection';
@@ -856,7 +854,6 @@ export { projectNullabilityToTableSpec } from './core-ideals/nullability-tablesp
 export { projectRecordToAvro } from './core-ideals/record-avro-projection';
 export { projectRecordToParquet } from './core-ideals/record-parquet-projection';
 export { projectRecordToPostgresql } from './core-ideals/record-postgresql-projection';
-export { projectRecordToSqlServer } from './core-ideals/record-sqlserver-projection';
 export { projectRecordToTableSpec } from './core-ideals/record-tablespec-projection';
 export { proposePostgresqlCatalogEdit } from './adapters/postgresql/catalog';
 export { proposeProtobufDescriptorEdit } from './adapters/protobuf/index';
@@ -925,7 +922,6 @@ export { recoverFacetsFromTableSpec } from './core-ideals/facets-tablespec-proje
 export { recoverFieldFromAvro } from './core-ideals/field-avro-projection';
 export { recoverFieldFromParquet } from './core-ideals/field-parquet-projection';
 export { recoverFieldFromPostgresql } from './core-ideals/field-postgresql-projection';
-export { recoverFieldFromSqlServer } from './core-ideals/field-sqlserver-projection';
 export { recoverFieldFromTableSpec } from './core-ideals/field-tablespec-projection';
 export { recoverKeysParquetIdeal } from './core-ideals/key-parquet-projection';
 export { recoverKeysPostgresqlIdeal } from './core-ideals/key-postgresql-projection';
@@ -940,9 +936,7 @@ export { recoverPostgresqlRelationshipSource } from './core-ideals/relationship-
 export { recoverRecordFromAvro } from './core-ideals/record-avro-projection';
 export { recoverRecordFromParquet } from './core-ideals/record-parquet-projection';
 export { recoverRecordFromPostgresql } from './core-ideals/record-postgresql-projection';
-export { recoverRecordFromSqlServer } from './core-ideals/record-sqlserver-projection';
 export { recoverRecordFromTableSpec } from './core-ideals/record-tablespec-projection';
-export { recoverTableSpecFacetSource } from './core-ideals/facets-tablespec';
 export { recoverTableSpecRelationshipSource } from './core-ideals/relationship-tablespec';
 export { registerSagas } from './extensions/actions/saga';
 export type { Registration } from './registry/registry';
@@ -1316,7 +1310,6 @@ export { verifyPostgresqlFacetClassification } from './core-ideals/facets-postgr
 export { verifyPostgresqlRelationshipClassification } from './core-ideals/relationship-postgresql-factory';
 export { verifyRecordProjectionInspection } from './core-ideals/record-report';
 export { verifyStructuredClassificationInspection } from './core-ideals/structured-report';
-export { verifyTableSpecFacetClassification } from './core-ideals/facets-tablespec';
 export { verifyTableSpecRelationshipClassification } from './core-ideals/relationship-tablespec';
 export { writeBindingDocument } from './extensions/binding/index';
 export { writeDashboardDocument } from './extensions/dashboard/index';

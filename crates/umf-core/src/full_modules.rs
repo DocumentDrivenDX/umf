@@ -88,6 +88,8 @@ pub mod bit128_binding;
 pub mod cardinality;
 #[cfg(feature = "embedded-adapters")]
 pub mod cardinality_sqlserver_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_field_record_projection;
 pub mod cardinality_host_json;
 pub mod constraint_language;
 pub mod constraints;
@@ -293,6 +295,7 @@ pub(crate) mod tablespec_record_classification;
 pub(crate) mod tablespec_cardinality_classification;
 pub(crate) mod tablespec_nullability_classification;
 pub(crate) mod tablespec_key_classification;
+pub(crate) mod tablespec_facets_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_via_avro_projection;
 pub mod target_pin;

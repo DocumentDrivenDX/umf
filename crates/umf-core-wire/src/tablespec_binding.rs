@@ -56,6 +56,9 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "classifyTableSpecKeys",
         "verifyTableSpecKeyClassification",
         "recoverTableSpecKeySource",
+        "classifyTableSpecFacets",
+        "verifyTableSpecFacetClassification",
+        "recoverTableSpecFacetSource",
     ]
     .into_iter()
     .find(|candidate| op == &Utf16::from(*candidate))
@@ -81,8 +84,10 @@ fn allowed(op: &str) -> &'static [&'static str] {
         | "verifyTableSpecNullabilityClassification"
         | "recoverTableSpecNullabilitySource"
         | "verifyTableSpecKeyClassification"
-        | "recoverTableSpecKeySource" => &["profile", "op", "receipt", "current"],
-        "classifyTableSpecCardinality" | "classifyTableSpecNullability" | "classifyTableSpecKeys" => &["profile", "op", "document", "request"],
+        | "recoverTableSpecKeySource"
+        | "verifyTableSpecFacetClassification"
+        | "recoverTableSpecFacetSource" => &["profile", "op", "receipt", "current"],
+        "classifyTableSpecCardinality" | "classifyTableSpecNullability" | "classifyTableSpecKeys" | "classifyTableSpecFacets" => &["profile", "op", "document", "request"],
         _ => &[],
     }
 }
@@ -240,11 +245,13 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         | "verifyTableSpecNullabilityClassification"
         | "recoverTableSpecNullabilitySource"
         | "verifyTableSpecKeyClassification"
-        | "recoverTableSpecKeySource" => {
+        | "recoverTableSpecKeySource"
+        | "verifyTableSpecFacetClassification"
+        | "recoverTableSpecFacetSource" => {
             required_value(request, "receipt")?;
             required_value(request, "current")?;
         }
-        "classifyTableSpecRecord" | "classifyTableSpecCardinality" | "classifyTableSpecNullability" | "classifyTableSpecKeys" => {
+        "classifyTableSpecRecord" | "classifyTableSpecCardinality" | "classifyTableSpecNullability" | "classifyTableSpecKeys" | "classifyTableSpecFacets" => {
             required_value(request, "document")?;
             required_value(request, "request")?;
         }
@@ -376,6 +383,9 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
         "classifyTableSpecKeys" => runtime.classify_keys(required_value(request, "document")?, required_value(request, "request")?, ctx),
         "verifyTableSpecKeyClassification" => runtime.verify_key_classification(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
         "recoverTableSpecKeySource" => runtime.recover_key_source(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
+        "classifyTableSpecFacets" => runtime.classify_facets(required_value(request, "document")?, required_value(request, "request")?, ctx),
+        "verifyTableSpecFacetClassification" => runtime.verify_facet_classification(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
+        "recoverTableSpecFacetSource" => runtime.recover_facet_source(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
         _ => Err(request_error("unknown TableSpec operation")),
     }
 }

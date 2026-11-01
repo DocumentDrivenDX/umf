@@ -40,6 +40,9 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "classifyTableSpecKeys",
     "verifyTableSpecKeyClassification",
     "recoverTableSpecKeySource",
+    "classifyTableSpecFacets",
+    "verifyTableSpecFacetClassification",
+    "recoverTableSpecFacetSource",
 ];
 
 #[cfg(test)]
@@ -303,6 +306,10 @@ impl TableSpecRuntime {
             receipt, current, self, &self.engine, &self.registry, &mut capabilities, ctx,
         )
     }
+
+    pub fn classify_facets(&self,input:&Value,request:&Value,ctx:&mut Context<'_>)->Result<Value,EngineError>{let mut capabilities=StructuralOnly;crate::tablespec_facets_classification::classify_table_spec_facets(input,request,self,&self.engine,&self.registry,&mut capabilities,ctx)}
+    pub fn verify_facet_classification(&self,receipt:&Value,current:&Value,ctx:&mut Context<'_>)->Result<Value,EngineError>{let mut capabilities=StructuralOnly;crate::tablespec_facets_classification::verify_table_spec_facet_classification(receipt,current,self,&self.engine,&self.registry,&mut capabilities,ctx)}
+    pub fn recover_facet_source(&self,receipt:&Value,current:&Value,ctx:&mut Context<'_>)->Result<Value,EngineError>{let mut capabilities=StructuralOnly;crate::tablespec_facets_classification::recover_table_spec_facet_source(receipt,current,self,&self.engine,&self.registry,&mut capabilities,ctx)}
 
     pub fn import(
         &self,

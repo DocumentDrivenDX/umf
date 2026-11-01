@@ -101,8 +101,10 @@ Current integration order:
    Server Nullability and TableSpec Cardinality now pass their focused public
    workflows. Authored SQL Server Keys and TableSpec Nullability now also pass.
    PostgreSQL and TableSpec Keys also pass their current public workflows.
-   Luna implements PostgreSQL/TableSpec Facets and SQL Server Field/Record
-   projection next. Parser callbacks supply AST transport only.
+   Authored SQL Server Field/Record and TableSpec Facets also pass. Sol reviews
+   corrected PostgreSQL Facets and TableSpec Relationships next. Luna implements
+   authored SQL Server Facets and TableSpec Field/Record in parallel. Parser
+   callbacks supply AST transport only.
 3. Continue the remaining TableSpec classifiers and authored scalar target
    projections in bounded parallel cuts. Use existing pinned contracts and one
    normal/refusal workflow per capability. Preserve legacy direct consumers until
@@ -133,8 +135,8 @@ its public Rust route and one ordinary normal/refusal/recovery workflow as appli
 | Lane | Concrete remaining implementation | Reuse and next cut |
 | --- | --- | --- |
 | PostgreSQL classifiers | Facets, Relationships and Composite/DDL-kind classifier pairs. | Reuse the passing Keys bridge: Rust prepares parser requests, the host returns ASTs, and Rust computes catalog correlation. |
-| TableSpec classifiers | Facets and Relationships. | Reuse the admitted Field/Record/Cardinality adapter and core authoring kernels. |
-| Authored Field/Record | Projection and recovery for SQL Server, TableSpec, Avro, Parquet and PostgreSQL. | Bundle Field and Record per target; share author verification, target import/export and receipt checks. SQL Server first. |
+| TableSpec classifiers | Relationships. | Reuse the admitted Field/Record/Cardinality adapter and core authoring kernels. |
+| Authored Field/Record | Projection and recovery for TableSpec, Avro, Parquet and PostgreSQL. | Bundle Field and Record per target; share author verification, target import/export and receipt checks. SQL Server passes; TableSpec is active. |
 | Other authored projections | Cardinality for Avro/Parquet/PostgreSQL/TableSpec; Nullability for Parquet/PostgreSQL/TableSpec; Facets for Parquet/PostgreSQL/SQL Server/TableSpec; Keys for Parquet/PostgreSQL/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability and Keys pass their focused workflows. |
 | Model and reports | `editExtension`, `prepareCoreInspection` and generic Field/Record/Structured classification/projection report inspector/verify pairs. | Existing Rust extension edits and core inspectors own decisions; host retains only caller callbacks and object presentation. |
 | Binding and Dashboard | Binding validation, inspection/read/write/get, migration/rollback and dataset validation; Dashboard validation/read/write/get/edit. | Port meaning checks in factories and registration callbacks, alongside public operations. |
@@ -225,8 +227,19 @@ verification, exact archive recovery, strict refusal and parser-error identity
 pass on a derived ordinary two-column/two-index input. The original 17-relation
 fixture remains unchanged for integration. TableSpec native key observation,
 verification, source recovery and strict refusal also pass. These workflows leave
-the repair queue. PostgreSQL/TableSpec Facets and authored SQL Server Field/Record
-are the active implementation cuts. The PostgreSQL Field/Record baseline now selects an existing
+the repair queue.
+
+Authored SQL Server Field and Record plus TableSpec Facets now pass all-host
+Cargo metadata, full TypeScript and Python resource closure. Their Node-only
+native build completes in 3m07s; all three focused tests pass with 20 assertions
+in 19 seconds. Field/Record preserve source and authored member order, recover
+from retained receipts and refuse strict loss or stale native targets. TableSpec
+Facets passes classification, verification, exact source recovery and refusal.
+These workflows leave the repair queue. The Node results do not replace final
+Python/CLI executable and browser integration.
+
+Corrected PostgreSQL Facets and TableSpec Relationships are under Sol review.
+Authored SQL Server Facets and TableSpec Field/Record are active Luna cuts. The PostgreSQL Field/Record baseline now selects an existing
 ordinary two-column relation while retaining the same assertions; final integration
 will validate that smaller fixture. Compiler checks precede native builds; only
 new or failed workflows enter each focused runtime. Complete local host and package

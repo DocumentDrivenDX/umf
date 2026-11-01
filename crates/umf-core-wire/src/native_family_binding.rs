@@ -10,6 +10,7 @@ pub const FAMILIES: &[&str] = &[
     "relationship-extra-projection",
     "relationship-parquet-projection",
     "cardinality-sqlserver-projection",
+    "field-record-sqlserver-projection",
     "avro-cardinality",
     "avro-classification",
     "record-type",
@@ -77,6 +78,15 @@ pub fn metadata_wire(family: &str) -> String {
         "cardinality-sqlserver-projection" => (
             crate::cardinality_sqlserver_projection_binding::PROFILE,
             &["projectCardinalityToSqlServer", "recoverCardinalityFromSqlServer"],
+        ),
+        "field-record-sqlserver-projection" => (
+            crate::sqlserver_field_record_projection_binding::PROFILE,
+            &[
+                "projectFieldToSqlServer",
+                "recoverFieldFromSqlServer",
+                "projectRecordToSqlServer",
+                "recoverRecordFromSqlServer",
+            ],
         ),
         "avro-cardinality" => (
             crate::avro_cardinality_binding::PROFILE,
@@ -430,6 +440,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyTableSpecKeys",
                 "verifyTableSpecKeyClassification",
                 "recoverTableSpecKeySource",
+                "classifyTableSpecFacets",
+                "verifyTableSpecFacetClassification",
+                "recoverTableSpecFacetSource",
             ],
         ),
         "jsonld" => (
@@ -654,7 +667,8 @@ pub fn metadata_wire(family: &str) -> String {
     let operations = operations
         .iter()
         .map(|operation| {
-            let wire_operation = if family == "cardinality-sqlserver-projection"
+            let wire_operation = if family == "field-record-sqlserver-projection"
+                || family == "cardinality-sqlserver-projection"
                 || family == "avro-cardinality"
                 || family == "avro-classification"
                 || family == "record-type"
@@ -700,6 +714,7 @@ pub fn execute_wire_with_control(
 ) -> String {
     match family {
         "cardinality-sqlserver-projection" => crate::cardinality_sqlserver_projection_binding::execute_wire_with_control(wire, control),
+        "field-record-sqlserver-projection" => crate::sqlserver_field_record_projection_binding::execute_wire_with_control(wire, control),
         "avro-classification" => {
             crate::avro_classification_binding::execute_wire_with_control(wire, control)
         }

@@ -241,6 +241,8 @@ pub use parquet_capture_binding::{
 };
 #[cfg(feature = "embedded-adapters")]
 pub mod cardinality_sqlserver_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_field_record_projection_binding;
 pub mod avro_cardinality_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod protobuf_document;

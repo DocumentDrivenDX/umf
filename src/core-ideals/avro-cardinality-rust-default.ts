@@ -29,10 +29,18 @@ import type {ParquetCardinalityClassification,ParquetCardinalityRequest} from '.
 import type {ParquetFacetClassification,ParquetFacetRequest} from './facets-parquet';
 import type {RelationshipSqlServerProjection,RelationshipSqlServerRequest} from './relationship-sqlserver-projection-factory';
 import type {CardinalitySqlServerProjection,CardinalitySqlServerRequest} from './cardinality-sqlserver-projection';
+import type {FieldSqlServerProjection,FieldSqlServerRequest} from './field-sqlserver-projection';
+import type {RecordSqlServerProjection,RecordSqlServerRequest} from './record-sqlserver-projection';
 import type {CoreCardinalityDeclaration} from '../model/cardinality';
 
 type NativeErrorGuard=(error:unknown)=>boolean;
 export interface CoreIdealNativeFamilies {
+  ['field-record-sqlserver-projection']:{
+    projectFieldToSqlServer(fields:{author:CoreKindDeclaration;request:FieldSqlServerRequest}):unknown;
+    recoverFieldFromSqlServer(fields:{receipt:FieldSqlServerProjection;nativeText:string}):unknown;
+    projectRecordToSqlServer(fields:{author:CoreKindDeclaration;request:RecordSqlServerRequest}):unknown;
+    recoverRecordFromSqlServer(fields:{receipt:RecordSqlServerProjection;nativeText:string}):unknown;
+  };
   ['cardinality-sqlserver-projection']:{
     projectCardinalityToSqlServer(fields:{author:CoreCardinalityDeclaration;request:CardinalitySqlServerRequest}):unknown;
     recoverCardinalityFromSqlServer(fields:{receipt:CardinalitySqlServerProjection;nativeText:string}):unknown;
@@ -133,7 +141,7 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     try{return operation() as T;}catch(error){
       if(!isNativeUmfCoreError(error))throw error;
       const native=error as {code?:unknown;message?:unknown;path?:unknown};
-      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(AVRO_CARDINALITY_|CARDINALITY_SQLSERVER_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|RELATIONSHIP_PARQUET_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
+      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(FIELD_SQLSERVER_|RECORD_SQLSERVER_|AVRO_CARDINALITY_|CARDINALITY_SQLSERVER_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|RELATIONSHIP_PARQUET_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
       throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
     }
   }
@@ -209,6 +217,10 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     verifyRelationshipParquetProjection(receipt:RelationshipParquetProjection,current:Document):RelationshipParquetProjection{return call(()=>engine['relationship-parquet-projection'].verifyRelationshipParquetProjection({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as RelationshipParquetProjection);},
     recoverRelationshipParquetIdeal(receipt:RelationshipParquetProjection,current:Document):Document{return call(()=>engine['relationship-parquet-projection'].recoverRelationshipParquetIdeal({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
     recoverRelationshipParquetNative(receipt:RelationshipParquetProjection,current:Document):{hex:string}{return call(()=>engine['relationship-parquet-projection'].recoverRelationshipParquetNative({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as {hex:string});},
+    projectFieldToSqlServer(author:CoreKindDeclaration,request:FieldSqlServerRequest):FieldSqlServerProjection{return call(()=>engine['field-record-sqlserver-projection'].projectFieldToSqlServer({author:copyJson(author) as unknown as CoreKindDeclaration,request:copyJson(request) as unknown as FieldSqlServerRequest}) as FieldSqlServerProjection);},
+    recoverFieldFromSqlServer(receipt:FieldSqlServerProjection,nativeText:string):Document{return call(()=>engine['field-record-sqlserver-projection'].recoverFieldFromSqlServer({receipt:copyJson(receipt) as unknown as FieldSqlServerProjection,nativeText}) as unknown as Document);},
+    projectRecordToSqlServer(author:CoreKindDeclaration,request:RecordSqlServerRequest):RecordSqlServerProjection{return call(()=>engine['field-record-sqlserver-projection'].projectRecordToSqlServer({author:copyJson(author) as unknown as CoreKindDeclaration,request:copyJson(request) as unknown as RecordSqlServerRequest}) as RecordSqlServerProjection);},
+    recoverRecordFromSqlServer(receipt:RecordSqlServerProjection,nativeText:string):Document{return call(()=>engine['field-record-sqlserver-projection'].recoverRecordFromSqlServer({receipt:copyJson(receipt) as unknown as RecordSqlServerProjection,nativeText}) as unknown as Document);},
     projectCardinalityToSqlServer(author:CoreCardinalityDeclaration,request:CardinalitySqlServerRequest):CardinalitySqlServerProjection{return call(()=>engine['cardinality-sqlserver-projection'].projectCardinalityToSqlServer({author:copyJson(author) as unknown as CoreCardinalityDeclaration,request:copyJson(request) as unknown as CardinalitySqlServerRequest}) as CardinalitySqlServerProjection);},
     recoverCardinalityFromSqlServer(receipt:CardinalitySqlServerProjection,nativeText:string):Document{return call(()=>engine['cardinality-sqlserver-projection'].recoverCardinalityFromSqlServer({receipt:copyJson(receipt) as unknown as CardinalitySqlServerProjection,nativeText}) as unknown as Document);},
   });
