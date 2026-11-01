@@ -10,13 +10,26 @@ core 0.10.0 from SDK tag `umf-v0.5.4`, wheel SHA-256
 `49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9`.
 SDK/tag and core package versions are separate identities.
 
-`pypi.yml` now dispatches `publish-pypi.yml` on the default branch when a
+`pypi.yml` is configured to dispatch `publish-pypi.yml` on the default branch when a
 core-bearing SDK or standalone `python-vX.Y.Z` release is published. A completed owned `release*.yml`
 producer is also observed for releases created with GitHub's workflow token.
 The latter route selects exactly one matching published release in that run's
 publication window; missing releases do nothing and ambiguity fails. Unrelated
 component releases are ignored. The former manual rebuild/upload trigger is
 retired so it cannot create competing bytes under an existing package version.
+
+Operational observation — 2026-11-01: the GitHub API reported `pypi.yml` as
+`disabled_manually`, a pre-existing state left unchanged by the saga release.
+Python 0.10.5 therefore used the existing manual dispatch of the main-only
+`publish-pypi.yml` OIDC publisher with tag `python-v0.10.5`, resolved source
+`90cb61eb63aec3f5a77b5991a56e3dfc3d10bd27` and the published SHA256SUMS pin.
+[Run 41271459809](https://github.com/DocumentDrivenDX/umf/actions/runs/41271459809)
+passed release verification, publication and its clean Linux public-index
+consumer. This does not establish that automatic dispatch is currently active;
+the immutable-archive validation and owned OIDC publication requirements below
+remain in force.
+The [0.10.5 release evidence](../04-build/evidence/saga-public-library-completion/README.md)
+records exact registry bytes and separate Linux/macOS public-consumer results.
 
 `publish-pypi.yml` requires an exact tag, resolved commit and SHA256SUMS pin,
 validates GitHub digests and the SDK/core release pins, then stages only the

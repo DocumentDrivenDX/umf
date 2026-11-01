@@ -1,0 +1,278 @@
+{
+  "profile": "umf.sdk-installed-archive-custody/2",
+  "archivePath": "/Users/erik/.codex/worktrees/38b0/umf/.cache/sdk-distribution/umf-sdk.tgz",
+  "archiveSha256": "3d95fff822f4f44b3d1a8e56185c3697e94ee66f5315cda7389f5301f3d16d26",
+  "installCommand": [
+    "/opt/homebrew/Cellar/bun/1.4.3/bin/bun",
+    "install",
+    "--ignore-scripts",
+    "/Users/erik/.codex/worktrees/38b0/umf/.cache/sdk-distribution/umf-sdk.tgz"
+  ],
+  "installedPackageRoot": "/private/tmp/umf-saga-0101-public-sdk-consumer/node_modules/@umf/core",
+  "exactArchiveMembers": {
+    "package/dist/loader-contract.js": {
+      "sha256": "762aa3da1ccda868e22064182805b64316a0608a3a08a5a742a25381654fe52d",
+      "size": 834639
+    },
+    "package/dist/runtime/wasm/index.js": {
+      "sha256": "571b1b10ada6ea70c787ed82f0adb2e870e607bf4f11e501febb0fca5184b995",
+      "size": 17050
+    },
+    "package/dist/runtime/wasm/pkg/umf_core_wasm.js": {
+      "sha256": "6718a4e460b23f34204175afe214122702ea93c85ea3a586130e6bb1d05039a5",
+      "size": 11649
+    },
+    "package/dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm": {
+      "sha256": "35c8bad69c919ae4ddb1d8d6d152bef215a2ec1dfe3915c3c215c06e48e9224f",
+      "size": 7041011
+    },
+    "package/dist/umf.js": {
+      "sha256": "7577c4efe5269d9f98187265b31be71f2be69b67cab357ce9bf07dabcd758f27",
+      "size": 13882317
+    },
+    "package/manifest.json": {
+      "sha256": "a9f9b527ed9cdec61f5c2ef937af5da414dca6527c39eaac80acb08a55c9be2e",
+      "size": 231262
+    },
+    "package/package.json": {
+      "sha256": "1ee399ec3ed308bcb2d278b33bfe9d1bc1e736c0914893eeb2399c4a39d3c46f",
+      "size": 1414
+    }
+  },
+  "installedMembers": {
+    "package/package.json": {
+      "size": 1414,
+      "sha256": "1ee399ec3ed308bcb2d278b33bfe9d1bc1e736c0914893eeb2399c4a39d3c46f"
+    },
+    "package/manifest.json": {
+      "size": 231262,
+      "sha256": "a9f9b527ed9cdec61f5c2ef937af5da414dca6527c39eaac80acb08a55c9be2e"
+    },
+    "package/dist/umf.js": {
+      "size": 13882317,
+      "sha256": "7577c4efe5269d9f98187265b31be71f2be69b67cab357ce9bf07dabcd758f27"
+    },
+    "package/dist/loader-contract.js": {
+      "size": 834639,
+      "sha256": "762aa3da1ccda868e22064182805b64316a0608a3a08a5a742a25381654fe52d"
+    },
+    "package/dist/runtime/wasm/index.js": {
+      "size": 17050,
+      "sha256": "571b1b10ada6ea70c787ed82f0adb2e870e607bf4f11e501febb0fca5184b995"
+    },
+    "package/dist/runtime/wasm/pkg/umf_core_wasm.js": {
+      "size": 11649,
+      "sha256": "6718a4e460b23f34204175afe214122702ea93c85ea3a586130e6bb1d05039a5"
+    },
+    "package/dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm": {
+      "size": 7041011,
+      "sha256": "35c8bad69c919ae4ddb1d8d6d152bef215a2ec1dfe3915c3c215c06e48e9224f"
+    }
+  },
+  "publicEntryManifestSha256": "7577c4efe5269d9f98187265b31be71f2be69b67cab357ce9bf07dabcd758f27",
+  "sdkManifestSha256": "a9f9b527ed9cdec61f5c2ef937af5da414dca6527c39eaac80acb08a55c9be2e",
+  "installerSourceSha256": "188e778780bd1936cf9d077ba922493f8b225b3207b804a4d5867870bd76ea11",
+  "sagaCorpusSha256": "6f67fdfe6fba205436490f8b64f55f58e9bdae315d19148d10de799c05a3f1a7",
+  "sagaOracleSha256": "72a84d18c6ae0d118d30ddb3fc6300e5edc427d6f906f554be6ca672bf911389",
+  "sagaQualificationInputs": {
+    "scripts/saga-portable/verify.ts": "d0b8d7b2614de6b348b9ddc69996254907f94b413cee2d5f86a3942dd1aaab14",
+    "scripts/saga-portable/custody.ts": "478abc65e2859e90da0444c003eacbc63dcf109259ba5b20fc01412b63371bb9",
+    "scripts/saga-portable/collect.ts": "b6d9772d70d88a385154e77383cb6b93e4605ceda1b8bd61f153d91ce998e773",
+    "scripts/saga-portable/native.ts": "b9dbec6f300f648d68fa3de9440d61702e9f3847fcfb5a681569b25f960d9ea9",
+    "scripts/saga-portable/browser.ts": "5426ef74e273ca40367d213b707ca831a5775aa8bc10528d5e674fd2e53333f6",
+    "scripts/saga-portable/other-hosts.ts": "b96a7919ad992ee11702d63f947a1e4f1155883cc6461efbf14a65abf0ba3536",
+    "scripts/saga-portable/python-probe.py": "82a5f20917cd7ffca700be90ddeaf5426841a4375ab0a7d7c2056c653e49f083",
+    "scripts/test-sdk-install.ts": "188e778780bd1936cf9d077ba922493f8b225b3207b804a4d5867870bd76ea11",
+    "scripts/check-core-authority.ts": "efabc390841c66d0fe5bae025a111ac0a66fc15a8031443d9fd626f920beced5",
+    "tools/verify_python_artifacts.py": "5ce797ba8e4304bd51bd0077c197dd3327d26fb45d5dce860ae662e705883f3a",
+    "tests/saga/portable-oracle.test.ts": "b77a02d2b946daa457082b2689cc322e242023adb904c376b68d19b50b443003",
+    "tests/saga/custody.test.ts": "f441755db8f3cd8f33cd6ce2c729e17c9ee8ea3fa3154e9d6e2454adea97a519",
+    "tests/actions/assessment.test.ts": "c86b0cedadf8b5d420fb95c38a3cad954a19e346325338af43baaaf7c638d174",
+    "package.json": "10c04c166657a4877b8b7008fe248ae7433e2b4e00bc2446a447cd640a89c9d5",
+    "spec/release.json": "e86cfdc969c32b079c291a2d10aa70e50c5b4cf0516cf87d66614cf8db677e6c",
+    "python/tests/test_python_artifact_version.py": "4d2b9b8822dd0103ce22118a6885d474f23f4b4afe88c01a5f985796c20740ca",
+    "python/tests/test_saga_lifecycle.py": "7c6b00892392613f44201214b92f13302e278b15ec4109a6425e3f5aca8707ce",
+    "fixtures/saga/portable.json": "6f67fdfe6fba205436490f8b64f55f58e9bdae315d19148d10de799c05a3f1a7",
+    "src/extensions/actions/saga.ts": "e9e0b49f7ea10540ec274b496b40eb34e9b2aefc743b7932adae6b221732b0a7",
+    "src/extensions/actions/saga-resources.ts": "d1950468311112db244f32c6ed2a38987cdc4601971938a17f6fee06f5ded7ec",
+    "src/registry/registry.ts": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1",
+    "crates/umf-codegen/src/actions/saga/mod.rs": "9da922bb19d98d1dada85ce067b36f821c73e8491447da1013457d9aea38a9a1",
+    "crates/umf-codegen/src/actions/saga/tests.rs": "aec2a47ea1092d99b8bab8abbf5f33c41a7aefd9ae2a4ff0c012e82415f57417",
+    "bindings/core/node/index.js": "fd7d296cf63c6756e9fc3b38b4bd1d81b2b4e89a3802793f79870e14755acbfb",
+    "bindings/core/node/src/wire.js": "31c0bda130717d6e6438674bc7ba80977f916eb29e8ee1e9604e2ed219b56f33",
+    "python/src/umf/saga.py": "38478b87e62afc1f2ca6f3c4f5d294f31842f3faf922982cd2a64d167bd53df4",
+    "python/pyproject.toml": "2672c7353c689c5ab29c4e1927ee23b0a32f77d3f3434480426a5e16ed6fd6a7",
+    "python/hatch_build.py": "7a20ff7fe7eff9ec57e94ae480e47fa905abab71acde791d2ea18dbd1606726a",
+    "python/umf_codegen/pyproject.toml": "07253df785a646223c12051e41e3a07b0d5806e442b5aec96f8dce9362d30620",
+    "python/umf_codegen/hatch_build.py": "054be67e8037510b69ea89667d1e8eb9b05ecaaab1882776137b6342cde90bcf",
+    "spec/core/schema.json": "789e943e70d666ae0ab6a9ba0d7aeada3edda512c03e66211f431db4cc180a23",
+    "spec/core/semantic-type-reference.schema.json": "a993f2054bb12e2ce74533865d015d0977d381a0e243fdb0ff6dbf6324b11ce1",
+    "spec/core/extension-package.schema.json": "3ad7d47c2480cfc64fcc16e54d3821c19081b39bcd549f0c58723b545c0f06ed",
+    "spec/metamodel/generated/core-constraints.json": "25987ca5250f733e024cc69efba0038a964d121c74c6b59aa95cc0d6802bd31c",
+    "spec/metamodel/generated/domain-policy.json": "4a9db271fddaf879f70253fba4cf438515964937ebe9dc7b1144f937ba0d710d",
+    "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
+    "spec/extensions/actions/package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
+    "spec/extensions/actions/schema.json": "41eeb67807fc8a540785ffdd712caaa007bd3627a6a612e1adc2400d0ec5b382",
+    "spec/extensions/binding/package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+    "spec/extensions/binding-stable/package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+    "spec/extensions/saga/package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
+    "spec/extensions/saga/schema.json": "4e3d2fc34882602ac922ba187a97e511ecf495fc96b4a6f6f4d81dbe6a5313fa",
+    "spec/extensions/saga/runtime.schema.json": "65d11a276e24badd9b1e34443918b9be8e1e07a1ed11727c2d3712a0f09cdb94"
+  },
+  "sagaResult": {
+    "profile": "umf.saga.portable-result/1",
+    "cases": 19,
+    "passed": 19,
+    "results": [
+      {
+        "id": "ordered-baseline",
+        "covers": [
+          1,
+          4,
+          9,
+          11,
+          13,
+          14
+        ],
+        "passed": true
+      },
+      {
+        "id": "missing-output",
+        "covers": [
+          2
+        ],
+        "passed": true
+      },
+      {
+        "id": "forward-later",
+        "covers": [
+          3
+        ],
+        "passed": true
+      },
+      {
+        "id": "compensation-later",
+        "covers": [
+          4
+        ],
+        "passed": true
+      },
+      {
+        "id": "terminal-irreversible",
+        "covers": [
+          5
+        ],
+        "passed": true
+      },
+      {
+        "id": "early-irreversible",
+        "covers": [
+          5
+        ],
+        "passed": true
+      },
+      {
+        "id": "missing-compensation",
+        "covers": [
+          6
+        ],
+        "passed": true
+      },
+      {
+        "id": "unknown-recovery",
+        "covers": [
+          7,
+          8
+        ],
+        "passed": true
+      },
+      {
+        "id": "duplicate-step",
+        "covers": [
+          1
+        ],
+        "passed": true
+      },
+      {
+        "id": "unknown-external-profile",
+        "covers": [
+          10,
+          15
+        ],
+        "passed": true
+      },
+      {
+        "id": "no-inferred-compensation",
+        "covers": [
+          6
+        ],
+        "passed": true
+      },
+      {
+        "id": "missing-required-output",
+        "covers": [
+          2
+        ],
+        "passed": true
+      },
+      {
+        "id": "at-32-steps",
+        "covers": [
+          12
+        ],
+        "passed": true
+      },
+      {
+        "id": "over-32-steps",
+        "covers": [
+          12
+        ],
+        "passed": true
+      },
+      {
+        "id": "different-key-identity",
+        "covers": [
+          2
+        ],
+        "passed": true
+      },
+      {
+        "id": "recipe-declaration",
+        "covers": [
+          16
+        ],
+        "passed": true
+      },
+      {
+        "id": "inert-handler-url",
+        "covers": [
+          11
+        ],
+        "passed": true
+      },
+      {
+        "id": "external-action-meaning",
+        "covers": [
+          10,
+          15
+        ],
+        "passed": true
+      },
+      {
+        "id": "recipe-missing-output",
+        "covers": [
+          2,
+          16
+        ],
+        "passed": true
+      }
+    ]
+  },
+  "runtime": {
+    "bun": "1.4.3",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "distributionFiles": 1814,
+  "existing139ConsumerChecks": "passed"
+}
