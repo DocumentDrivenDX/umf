@@ -1,9 +1,12 @@
 {
   "name": "@umf/core",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "private": true,
   "type": "module",
-  "files": ["dist/", "src/", "spec/"],
+  "files": [
+    "dist/",
+    "spec/"
+  ],
   "packageManager": "bun@1.4.2",
   "exports": {
     ".": {
@@ -16,31 +19,9 @@
       "import": "./dist/umf-browser.js",
       "default": "./dist/umf-browser.js"
     },
-    "./reference": {
-      "types": "./dist/src/index.d.ts",
-      "import": "./dist/umf.js"
-    },
     "./runtime/wasm": {
       "types": "./dist/runtime/wasm/index.d.ts",
       "import": "./dist/runtime/wasm/index.js"
-    },
-    "./rust-codegen-candidate/v2": {
-      "types": "./dist/src/node.d.ts",
-      "browser": "./dist/umf-rust-codegen-candidate-v2-browser.js",
-      "node": "./dist/umf-rust-codegen-candidate-v2-node.js",
-      "import": "./dist/umf-rust-codegen-candidate-v2-browser.js"
-    },
-    "./rust-codegen-candidate/v3": {
-      "types": "./dist/src/node-v3.d.ts",
-      "browser": "./dist/umf-rust-codegen-candidate-v3-browser.js",
-      "node": "./dist/umf-rust-codegen-candidate-v3-node.js",
-      "import": "./dist/umf-rust-codegen-candidate-v3-browser.js"
-    },
-    "./rust-codegen-candidate/v4": {
-      "types": "./dist/src/node-v4.d.ts",
-      "browser": "./dist/umf-rust-codegen-candidate-v4-browser.js",
-      "node": "./dist/umf-rust-codegen-candidate-v4-node.js",
-      "import": "./dist/umf-rust-codegen-candidate-v4-browser.js"
     },
     "./loader-contract": {
       "types": "./dist/src/domain-packs/loader-contract.d.ts",
@@ -55,7 +36,6 @@
     "build": "bun scripts/build.ts",
     "build:rust-codegen-candidate": "bun scripts/build-rust-codegen-candidate.ts",
     "test:rust-codegen-candidate-package": "bun scripts/test-rust-codegen-candidate-package.ts",
-    "test:rust-codegen-candidate-browser": "bun scripts/test-rust-codegen-candidate-browser.ts",
     "build:schema-browser": "bun scripts/build-schema-browser.ts",
     "test:schema-browser": "bun scripts/schema-browser-package-browser.ts",
     "test:browser": "bun scripts/browser.ts",

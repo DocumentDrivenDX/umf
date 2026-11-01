@@ -116,6 +116,7 @@ export interface UmfSecurityPolicySourceEngine {
   encodeSecurityDisclosureV2(source: unknown, policy: unknown, catalog: unknown, closure: unknown, format?: 'json'|'yaml'): string;
   decodeSecurityDisclosureV2(source: string, policy: unknown, catalog: unknown, closure: unknown, format?: 'json'|'yaml'): unknown;
   inspectSecurityPolicy(source: unknown, resolution?: unknown): unknown;
+  inspectSecurityPolicyPayload(payload: unknown, path: string): unknown;
   requireSecurityInterpretation(source: unknown, resolution: unknown): unknown;
   securityPolicyDependencies(source: unknown, resolution: unknown): unknown;
   securityIdentityTransportDependencies(source: unknown, resolution: unknown): unknown;
@@ -414,6 +415,7 @@ export declare function createCoreModelRootKindNullabilityEngine(resources: UmfC
   verifyCoreNullabilityDeclaration(receipt: unknown, current: unknown): unknown;
   getSemanticTypes(document: unknown, module: unknown, element: unknown): unknown;
   setSemanticTypes(document: unknown, module: unknown, element: unknown, annotation: unknown): unknown;
+  inspectSemanticTypePayload(payload: unknown, path: string): unknown;
 };
 export declare function createCoreKeyTupleEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Pick<UmfCoreModelEngine, 'encodeCoreKeyTuple' | 'verifyCoreKeyTuple' | 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 /** Create the opt-in Rust-owned umf.host-json/1 schema-property declaration route. */
@@ -487,9 +489,11 @@ export interface ProtobufDescriptorDocumentEngine {
   writeDescriptorSet(descriptorSet: unknown): Uint8Array;
   importProtobufDescriptorSet(binary: Uint8Array, options: {id: string}): unknown;
   getProtobufDescriptorSet(document: unknown): unknown;
+  proposeProtobufDescriptorEdit(document: unknown, descriptorSet: unknown): {document: unknown; diagnostics: ProtobufInspectDiagnostic[]};
   exportProtobufDescriptorSet(document: unknown): Uint8Array;
   exportProtobufBundle(document: unknown): {descriptorSet: Uint8Array; source: unknown; diagnostics: ProtobufInspectDiagnostic[]};
   inspectProtobuf(document: unknown): ProtobufInspectResult;
+  inspectProtobufPayload(payload: unknown): ProtobufInspectResult;
 }
 /** Create the opt-in descriptor/document operation packet; source compiler callbacks remain separate. */
 export declare function createProtobufDescriptorDocumentEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): ProtobufDescriptorDocumentEngine;
@@ -579,6 +583,7 @@ export interface ArrowSchemaEngine {
   /** Export schema JSON while preserving source number lexemes and unknown fields. */
   exportSchema(document: unknown): string;
   inspect(document: unknown): ArrowSchemaValidation;
+  validatePayload(payload: unknown, document: unknown, path: string, scope: string): ArrowSchemaValidation['diagnostics'];
   /** Return a copied tagged native JSON subtree at an RFC 6901 pointer. */
   getNode(document: unknown, pointer: string): unknown;
   /** Return a detached candidate document after validating a replacement JSON string. */
@@ -596,8 +601,17 @@ export interface ArrowIpcEngine {
   exportArrowIpcCapture(document: unknown): Uint8Array;
   /** Validate capture representation and report incomplete interpretation. */
   inspectArrowIpcCapture(document: unknown): unknown;
+  prepareArrowIpcObservation(document: unknown): unknown;
+  completeArrowIpcObservation(prepared: unknown, outcome: unknown): unknown;
   inspectArrowIpcLayout(document: unknown): unknown;
   inspectArrowIpcConsistency(document: unknown): unknown;
+  exportArrowSchemaIpcNative(document: unknown): Uint8Array;
+  prepareArrowSchemaIpc(document: unknown): unknown;
+  completeArrowSchemaIpc(document: unknown, beforeJson: string, afterJson: string, bytesHex: string): unknown;
+  prepareArrowIpcRename(document: unknown, request: unknown): unknown;
+  prepareArrowIpcRenameFooter(document: unknown, request: unknown, schemaHex: string): unknown;
+  completeArrowIpcRename(document: unknown, request: unknown, schemaHex: string, footerHex: string | null): unknown;
+  renameArrowIpcFieldNative(document: unknown, request: unknown): unknown;
 }
 export interface ParquetCaptureEngine {
   readonly profile: typeof PARQUET_CAPTURE_PROFILE;
@@ -610,6 +624,9 @@ export interface ParquetCaptureEngine {
   decodeParquetFooter(document: unknown): unknown;
   inspectParquetMetadata(document: unknown): unknown;
   getParquetArrowSchema(document: unknown): unknown;
+  renameParquetFieldWithArrowSchema(document: unknown, policy: unknown): unknown;
+  prepareRenameParquetFieldWithArrowSchema(document: unknown, policy: unknown): unknown;
+  completeRenameParquetFieldWithArrowSchema(document: unknown, policy: unknown, flatbufferHex: string, backendError?: string): unknown;
   inspectParquetSchema(document: unknown): unknown;
   inspectParquetPages(document: unknown): unknown;
   decodeParquetPageBodies(document: unknown): unknown;
@@ -667,7 +684,7 @@ export declare function createJsonSchemaEngine(options?: {profile?: 'cooperative
 export declare function createPreparedJsonSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): JsonSchemaEngine;
 
 export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage?: unknown}
-export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'inspectTableLifecycle' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'compileTableInventoryMigration' | 'discoverTableInventoryMigrationChanges' | 'verifyTableInventoryMigration' | 'serializeTableInventoryMigration' | 'irreversiblePurgeDisclosure' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
+export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'inspectTableLifecycle' | 'inspectTableLifecyclePayload' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'compileTableInventoryMigration' | 'discoverTableInventoryMigrationChanges' | 'verifyTableInventoryMigration' | 'serializeTableInventoryMigration' | 'irreversiblePurgeDisclosure' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
 export type UmfCodegenOutcome = {ok: true; result: unknown} | {ok: false; error: {code: string; message: string; path?: string; pointer?: string}};
 export type UmfCodegenHostReadEventV3 = 'InitialPackage' | 'ParseText' | 'ParseFormat' | 'DigestText' | 'SelectRecords' | 'NativeFormat' | 'SelectActions' | 'OutputPackageSuffix' | 'OutputSourceText';
 export interface UmfCodegenEngine {
@@ -693,6 +710,7 @@ export interface UmfCodegenEngine {
   generatePythonClientWithHost(readHost: (event: UmfCodegenHostReadEventV3, argument?: string) => unknown): unknown;
   reviewedValueDigest(value: unknown): string;
   inspectTableLifecycle(source: unknown): unknown;
+  inspectTableLifecyclePayload(payload: unknown, context: {document: unknown; path: string; scope: string}): unknown;
   compileTableDeployment(request: unknown): unknown;
   verifyTableDeployment(bundle: unknown): unknown;
   compileTableMigration(request: unknown): unknown;
@@ -733,6 +751,7 @@ export declare const DBT_PROFILE: 'umf-r9-dbt-preservation/0.1.0';
 export interface DbtEngine {
  readonly profile: typeof DBT_PROFILE;
  readonly capabilities: Readonly<{profile: typeof DBT_PROFILE; nativeJson: true; complete: false}>;
+ inspectPayload(token: 1 | 2 | 3, payload: unknown): unknown;
  importDbtManifest(text: string, options: {id: string}): unknown;
  exportDbtManifest(document: unknown): string;
  inspectDbtManifest(document: unknown): unknown;
@@ -796,12 +815,13 @@ export declare function createGraphqlEngine(options?: {profile?: 'cooperative' |
 export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
+ readonly ['delta-log']: Readonly<Record<'capture'|'export'|'inspect'|'inspectActions'|'reconcileCommits'|'reconcileCheckpoint'|'reconcileCheckpointSidecars', NativeFamilyOperation>>;
  readonly ['core-ideal-reports']: Readonly<Record<'inspectFieldClassification'|'verifyFieldClassificationInspection'|'inspectFieldProjection'|'verifyFieldProjectionInspection'|'inspectRecordProjection'|'verifyRecordProjectionInspection'|'inspectStructuredClassification'|'verifyStructuredClassificationInspection', NativeFamilyOperation>>;
   readonly ['field-record-parquet-projection']: Readonly<Record<'projectFieldToParquet'|'recoverFieldFromParquet'|'projectRecordToParquet'|'recoverRecordFromParquet', NativeFamilyOperation>>;
  readonly ['binding-public']: Readonly<Record<'inspectBinding'|'getBinding'|'readBindingDocument'|'writeBindingDocument'|'projectBindingIndexes'|'migrateBindingRelationships'|'rollbackBindingRelationships'|'validateBindingSemantics'|'validateBit128Dataset', NativeFamilyOperation>>;
  readonly ['dashboard-public']: Readonly<Record<'inspectDashboard'|'readDashboardDocument'|'writeDashboardDocument'|'getDashboardDefinition'|'validateDashboardSemantics', NativeFamilyOperation>>;
  readonly ['medical-projection']: Readonly<Record<'projectMedicalFhir'|'projectCdcMortality'|'projectDicomMetadata'|'lookupMedicalTerminology', NativeFamilyOperation>>;
- readonly ['relationship-extra-projection']: Readonly<Record<'prepareRelationshipToExtra'|'completeRelationshipToExtra'|'classifyRelationshipExtra'|'verifyRelationshipExtra'|'recoverRelationshipExtraIdeal'|'recoverRelationshipExtraNative', NativeFamilyOperation>>;
+ readonly ['relationship-extra-projection']: Readonly<Record<'importRelationshipExtraArchive'|'prepareRelationshipToExtra'|'completeRelationshipToExtra'|'classifyRelationshipExtra'|'verifyRelationshipExtra'|'recoverRelationshipExtraIdeal'|'recoverRelationshipExtraNative', NativeFamilyOperation>>;
  readonly ['relationship-parquet-projection']: Readonly<Record<'projectRelationshipToParquet'|'verifyRelationshipParquetProjection'|'recoverRelationshipParquetIdeal'|'recoverRelationshipParquetNative', NativeFamilyOperation>>;
  readonly ['cardinality-sqlserver-projection']: Readonly<Record<'projectCardinalityToSqlServer'|'recoverCardinalityFromSqlServer', NativeFamilyOperation>>;
  readonly ['field-record-sqlserver-projection']: Readonly<Record<'projectFieldToSqlServer'|'recoverFieldFromSqlServer'|'projectRecordToSqlServer'|'recoverRecordFromSqlServer', NativeFamilyOperation>>;
@@ -822,7 +842,7 @@ export interface NativeFamilyOperations {
  readonly ['tablespec-via-avro-projection']: Readonly<Record<'projectToTableSpecViaAvro', NativeFamilyOperation>>;
  readonly ['parquet-avro-projection']: Readonly<Record<'projectParquetToAvro', NativeFamilyOperation>>;
  readonly ['arrow-spark-projection']: Readonly<Record<'projectArrowToSpark'|'projectSparkToArrow', NativeFamilyOperation>>;
- readonly ['arrow-flatbuffer-model']: Readonly<Record<'importArrowFlatbufferModel'|'inspectArrowFlatbufferModel'|'exportArrowFlatbufferModel'|'proposeArrowFlatbufferEdit'|'decodeArrowFlatbuffer'|'prepareArrowFlatbufferEncoding'|'verifyArrowFlatbufferEncoding', NativeFamilyOperation>>;
+ readonly ['arrow-flatbuffer-model']: Readonly<Record<'importArrowFlatbufferModel'|'inspectArrowFlatbufferModel'|'exportArrowFlatbufferModel'|'proposeArrowFlatbufferEdit'|'decodeArrowFlatbuffer'|'prepareArrowFlatbufferEncoding'|'verifyArrowFlatbufferEncoding'|'encodeArrowFlatbufferNative', NativeFamilyOperation>>;
  readonly ['avro-tablespec-projection']: Readonly<Record<'projectAvroToTableSpec'|'projectTableSpecToAvro', NativeFamilyOperation>>;
  readonly ['postgresql-avro-projection']: Readonly<Record<'projectPostgresqlToAvro', NativeFamilyOperation>>;
  readonly ['postgresql-json-schema-projection']: Readonly<Record<'projectPostgresqlRowToJsonSchema', NativeFamilyOperation>>;
@@ -846,7 +866,7 @@ export interface NativeFamilyOperations {
  readonly odcs: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'resolveReference'|'relationships'|'renameElement', NativeFamilyOperation>>;
  readonly tablespec: Readonly<Record<'projectKeysToTableSpec'|'verifyKeysTableSpecProjection'|'recoverKeysTableSpecIdeal'|'projectFacetsToTableSpec'|'recoverFacetsFromTableSpec'|'importTableSpec'|'inspectTableSpec'|'exportTableSpec'|'getTableSpecTable'|'getTableSpecColumn'|'editTableSpecTable'|'editTableSpecColumn'|'importTableSpecBundle'|'exportTableSpecBundle'|'classifyTableSpecField'|'verifyTableSpecFieldClassification'|'projectFieldToTableSpec'|'recoverFieldFromTableSpec'|'classifyTableSpecRecord'|'verifyTableSpecRecordClassification'|'projectRecordToTableSpec'|'recoverRecordFromTableSpec'|'projectCardinalityToTableSpec'|'recoverCardinalityFromTableSpec'|'projectNullabilityToTableSpec'|'recoverNullabilityFromTableSpec'|'classifyTableSpecCardinality'|'verifyTableSpecCardinalityClassification'|'recoverTableSpecCardinalitySource'|'classifyTableSpecNullability'|'verifyTableSpecNullabilityClassification'|'recoverTableSpecNullabilitySource'|'classifyTableSpecKeys'|'verifyTableSpecKeyClassification'|'recoverTableSpecKeySource'|'classifyTableSpecFacets'|'verifyTableSpecFacetClassification'|'recoverTableSpecFacetSource'|'classifyTableSpecRelationships'|'verifyTableSpecRelationshipClassification'|'recoverTableSpecRelationshipSource', NativeFamilyOperation>>;
  readonly jsonld: Readonly<Record<'import'|'inspectPayload'|'validate'|'export'|'getNode'|'editNode'|'expand'|'flatten'|'compact'|'toRdf'|'fromRdf'|'fromGeneralizedRdf'|'frame', NativeFamilyOperation>>;
- readonly postgresql: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'columns'|'getNode'|'findRelation'|'edit'|'proposeCatalogEdit'|'reconstruction'|'dependencies'|'facetCatalog'|'cardinalityCatalog'|'cardinalityType'|'cardinalityCorrelate'|'keyCatalog'|'prepareKeyCorrelation'|'keyCorrelate'|'facetCorrelate'|'classifyComposite'|'verifyCompositeClassification'|'recoverCompositeCapture'|'getDdlDeclarations'|'prepareDdlParserRequest'|'classifyDdlRecord'|'verifyDdlKinds'|'recoverDdlKinds'|'prepareFieldProjection'|'completeFieldProjection'|'recoverFieldProjection'|'prepareRecordProjection'|'completeRecordProjection'|'recoverRecordProjection'|'prepareFieldRecovery'|'prepareCardinalityProjection'|'completeCardinalityProjection'|'prepareCardinalityRecovery'|'recoverCardinalityProjection'|'projectFieldWithNativeBackend'|'recoverFieldWithNativeBackend'|'projectRecordWithNativeBackend'|'recoverRecordWithNativeBackend'|'projectCardinalityWithNativeBackend'|'recoverCardinalityWithNativeBackend'|'prepareNullabilityProjection'|'completeNullabilityProjection'|'prepareNullabilityRecovery'|'recoverNullabilityProjection'|'projectNullabilityWithNativeBackend'|'recoverNullabilityWithNativeBackend'|'prepareRecordRecovery'|'classifyField'|'verifyFieldClassification'|'recoverFieldCapture'|'classifyRecord'|'verifyRecordClassification'|'recoverRecordCapture'|'classifyCardinality'|'verifyCardinalityClassification'|'recoverCardinalitySource'|'classifyNullability'|'verifyNullabilityClassification'|'recoverNullabilitySource'|'prepareKeyParserRequests'|'classifyKeys'|'verifyKeyClassification'|'recoverKeySource'|'prepareFacetParserRequests'|'classifyFacets'|'verifyFacetClassification'|'recoverFacetSource'|'prepareRelationshipParserRequests'|'classifyRelationships'|'verifyRelationshipClassification'|'recoverRelationshipSource', NativeFamilyOperation>>;
+ readonly postgresql: Readonly<Record<'prepareFacetsProjection'|'completeFacetsProjection'|'prepareFacetsRecovery'|'verifyFacetsProjection'|'recoverFacetsProjection'|'projectFacetsWithNativeBackend'|'recoverFacetsWithNativeBackend'|'import'|'inspect'|'inspectPayload'|'export'|'columns'|'getNode'|'findRelation'|'edit'|'proposeCatalogEdit'|'reconstruction'|'dependencies'|'facetCatalog'|'cardinalityCatalog'|'cardinalityType'|'cardinalityCorrelate'|'keyCatalog'|'prepareKeyCorrelation'|'keyCorrelate'|'facetCorrelate'|'classifyComposite'|'verifyCompositeClassification'|'recoverCompositeCapture'|'getDdlDeclarations'|'prepareDdlParserRequest'|'classifyDdlRecord'|'verifyDdlKinds'|'recoverDdlKinds'|'prepareFieldProjection'|'completeFieldProjection'|'recoverFieldProjection'|'prepareRecordProjection'|'completeRecordProjection'|'recoverRecordProjection'|'prepareFieldRecovery'|'prepareCardinalityProjection'|'completeCardinalityProjection'|'prepareCardinalityRecovery'|'recoverCardinalityProjection'|'projectFieldWithNativeBackend'|'recoverFieldWithNativeBackend'|'projectRecordWithNativeBackend'|'recoverRecordWithNativeBackend'|'projectCardinalityWithNativeBackend'|'recoverCardinalityWithNativeBackend'|'prepareNullabilityProjection'|'completeNullabilityProjection'|'prepareNullabilityRecovery'|'recoverNullabilityProjection'|'prepareKeysProjection'|'completeKeysProjection'|'prepareKeysRecovery'|'verifyKeysProjection'|'recoverKeysProjection'|'projectKeysWithNativeBackend'|'recoverKeysWithNativeBackend'|'projectNullabilityWithNativeBackend'|'recoverNullabilityWithNativeBackend'|'prepareRecordRecovery'|'classifyField'|'verifyFieldClassification'|'recoverFieldCapture'|'classifyRecord'|'verifyRecordClassification'|'recoverRecordCapture'|'classifyCardinality'|'verifyCardinalityClassification'|'recoverCardinalitySource'|'classifyNullability'|'verifyNullabilityClassification'|'recoverNullabilitySource'|'prepareKeyParserRequests'|'classifyKeys'|'verifyKeyClassification'|'recoverKeySource'|'prepareFacetParserRequests'|'classifyFacets'|'verifyFacetClassification'|'recoverFacetSource'|'prepareRelationshipParserRequests'|'classifyRelationships'|'verifyRelationshipClassification'|'recoverRelationshipSource', NativeFamilyOperation>>;
  readonly sqlserver: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'columns'|'constraints'|'indexes'|'edit'|'facetType'|'facetPredicate'|'facetConstraints'|'classifyField'|'verifyFieldClassification'|'recoverFieldCapture'|'classifyRecord'|'verifyRecordClassification'|'recoverRecordCapture'|'classifyCardinality'|'verifyCardinalityClassification'|'recoverCardinalitySource'|'classifyNullability'|'verifyNullabilityClassification'|'recoverNullabilitySource'|'classifyKeys'|'verifyKeyClassification'|'recoverKeySource'|'classifyRelationships'|'verifyRelationshipClassification'|'recoverRelationshipSource'|'classifyFacets'|'verifyFacetClassification'|'recoverFacetSource', NativeFamilyOperation>>;
  readonly shacl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getPropertyPath'|'evaluatePropertyPath'|'getTargetNodes'|'getShapeMetadata'|'validate', NativeFamilyOperation>>;
  readonly owl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getOntologyHeaders'|'getExpressionView'|'getListAxioms'|'getSpecialAxioms'|'getAxiomAnnotations'|'getDeclarations', NativeFamilyOperation>>;

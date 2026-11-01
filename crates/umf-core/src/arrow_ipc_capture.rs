@@ -7,7 +7,7 @@ use crate::{
     error::EngineError,
     registry::Registry,
     serialization::{self, Format},
-    value::{Utf16, Value},
+    value::{copy_json, Utf16, Value},
 };
 
 pub const PROFILE: &str = "arrow-ipc-source";
@@ -163,6 +163,63 @@ pub fn inspect_arrow_ipc_capture(
         (Utf16::from("complete"), Value::Bool(complete)),
         (Utf16::from("diagnostics"), Value::Array(diagnostics)),
     ]))
+}
+
+/// Prepare an observation call while keeping capture validation and source retention in Rust.
+pub fn prepare_arrow_ipc_observation(
+    document: &Value,
+    resources: &ArrowIpcResources,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let bytes = export_arrow_ipc_capture(document, resources, ctx)?;
+    Ok(obj(vec![
+        ("source", copy_json(document, ctx)?),
+        ("bytesHex", Value::string_utf8(hex(&bytes))),
+    ]))
+}
+
+/// Complete the pinned observer result after the host invokes its explicit provider.
+pub fn complete_arrow_ipc_observation(
+    prepared: &Value,
+    outcome: &Value,
+    resources: &ArrowIpcResources,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let retained = field(prepared, "source")
+        .ok_or_else(|| err("ARROW_IPC_CAPTURE", "Missing prepared source"))?;
+    let retained_copy = copy_json(retained, ctx)?;
+    let expected_hex = hex(&export_arrow_ipc_capture(&retained_copy, resources, ctx)?);
+    if text(prepared, "bytesHex")? != &Utf16::from(expected_hex.as_str()) {
+        return Err(err(
+            "ARROW_IPC_CAPTURE",
+            "Prepared bytes do not match capture source",
+        ));
+    }
+    let identity = text(outcome, "backend")?;
+    if identity != &Utf16::from("apache-arrow@21.2.0") {
+        return Err(err(
+            "ARROW_BACKEND",
+            "Expected explicit pinned IPC observation backend",
+        ));
+    }
+    let status = text(outcome, "status")?;
+    let mut result = vec![
+        ("source", retained_copy),
+        ("backend", Value::String(identity.clone())),
+        ("complete", Value::Bool(false)),
+    ];
+    if status == &Utf16::from("observed") {
+        let schema = field(outcome, "schema")
+            .ok_or_else(|| err("ARROW_IPC_CAPTURE", "Missing observed schema"))?;
+        result.push(("status", Value::string_utf8("observed")));
+        result.push(("schema", copy_json(schema, ctx)?));
+    } else if status == &Utf16::from("uninterpreted") {
+        result.push(("status", Value::string_utf8("uninterpreted")));
+        result.push(("message", Value::String(text(outcome, "message")?.clone())));
+    } else {
+        return Err(err("ARROW_IPC_CAPTURE", "Unknown observation status"));
+    }
+    Ok(obj(result))
 }
 
 fn document(id: &Utf16, bytes: &str) -> Value {

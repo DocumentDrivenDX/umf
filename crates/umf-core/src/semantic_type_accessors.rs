@@ -138,6 +138,16 @@ fn append_path(
     Ok(Utf16::new(units))
 }
 
+/// Inspect one `umf.semantic-types` payload at its containing document path.
+/// Unknown annotation members and qualifiers remain ordered Rust diagnostics.
+pub fn inspect_semantic_type_payload(
+    payload: &Value,
+    base: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    semantic_diagnostics(payload, base, Some(ctx))
+}
+
 fn semantic_diagnostics(
     payload: &Value,
     base: &Utf16,

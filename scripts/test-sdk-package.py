@@ -30,7 +30,6 @@ class PackageManifestTests(unittest.TestCase):
                                   'default': './dist/src/index-browser-v4.d.ts'},
                       'node': './dist/umf-node.js', 'browser': './dist/umf-browser.js',
                       'import': './dist/umf-browser.js', 'default': './dist/umf-browser.js'},
-                './reference': {'import': './dist/umf.js'},
                 './runtime/wasm': {'types': './dist/runtime/wasm/index.d.ts',
                                    'import': './dist/runtime/wasm/index.js'},
             },

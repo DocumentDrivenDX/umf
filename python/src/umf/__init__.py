@@ -55,7 +55,7 @@ from .rust_sec_projection import (
     project_sec_submissions,
 )
 
-__version__ = "0.10.5"
+__version__ = "0.10.6"
 __all__ = [
     "TypeSpecSession",
     "SmithySession",

@@ -1142,6 +1142,7 @@ export function createArrowSchemaEngine(options = {}) {
     inspect(document) { return call('inspect', {document}); },
     getNode(document, pointer) { return call('getNode', {document, pointer}); },
     proposeNodeEdit(document, pointer, replacementJson) { return call('proposeNodeEdit', {document, pointer, replacement: replacementJson}); },
+    validatePayload(payload, document, path, scope) { return call('validatePayload', {payload, document, path, scope}); },
   });
 }
 
@@ -1497,12 +1498,14 @@ export function createProtobufDescriptorDocumentEngine(options = {}) {
       return invoke('protobuf.document.import', () => ({id: options.id}), binary).value;
     },
     getProtobufDescriptorSet(document) { return invoke('protobuf.document.get', {document}).value; },
+    proposeProtobufDescriptorEdit(document, descriptorSet) { return invoke('protobuf.document.edit', {document, descriptorSet}).value; },
     exportProtobufDescriptorSet(document) { return invoke('protobuf.document.export', {document}).binary; },
     exportProtobufBundle(document) {
       const result = invoke('protobuf.document.bundle', {document});
       return {...result.value, descriptorSet: result.binary};
     },
     inspectProtobuf(document) { return invoke('protobuf.document.inspect', {document}).value; },
+    inspectProtobufPayload(payload) { return invoke('protobuf.document.inspectPayload', {payload}).value; },
   });
 }
 
@@ -1843,6 +1846,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
       Object.assign(api, createCoreRecordTypeOperations(call, createNativeCoreRecordTypeVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork}), {ErrorType:UmfCoreError}));
     } else {
       Object.assign(api, createCoreModelOperations(call, {ErrorType: JsonSchemaUmfError}));
+      api.inspectSemanticTypePayload = (payload, path) => call('model/inspectSemanticTypePayload', {payload, path});
       if (includeKeyTuple) Object.assign(api, createCoreKeyTupleOperations(call, createNativeKeyTupleOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork})));
       Object.assign(api, createCoreKeysOperations(call, createNativeCoreKeyVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork, resourcesWire: preparedResources?.resourcesWire, runtime: coreKeyRuntime})));
       if (includeRecordType) Object.assign(api, createCoreRecordTypeOperations(call, createNativeCoreRecordTypeVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork}), {ErrorType:UmfCoreError}));
@@ -1978,6 +1982,7 @@ export function createCodegenEngine(resources, options = {}) {
     generatePythonClientWithHost(readHost, hostReadProfile) { return resultWithHostReads(readHost, hostReadProfile); },
     reviewedValueDigest(value) { return result('reviewedValueDigest', {value}).digest; },
     inspectTableLifecycle(source) { return result('inspectTableLifecycle', {source}); },
+    inspectTableLifecyclePayload(payload, context) { return result('inspectTableLifecyclePayload', {payload, ...context}); },
     compileTableDeployment(request) { return result('compileTableDeployment', request); },
     verifyTableDeployment(bundle) { return result('verifyTableDeployment', {bundle}); },
     compileTableMigration(request) { return result('compileTableMigration', request); },
@@ -2073,6 +2078,7 @@ export function createRetainedCodegenEngine(resources, options = {}) {
     generatePythonClientWithHost(readHost, hostReadProfile) { return hostRead(readHost, hostReadProfile); },
     reviewedValueDigest(value) { return result('reviewedValueDigest', {value}).digest; },
     inspectTableLifecycle(source) { return result('inspectTableLifecycle', {source}); },
+    inspectTableLifecyclePayload(payload, context) { return result('inspectTableLifecyclePayload', {payload, ...context}); },
     compileTableDeployment(request) { return result('compileTableDeployment', request); },
     verifyTableDeployment(bundle) { return result('verifyTableDeployment', {bundle}); },
     compileTableMigration(request) { return result('compileTableMigration', request); },

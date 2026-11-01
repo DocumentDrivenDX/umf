@@ -1,21 +1,35 @@
 # Rust crates
 
-UMF’s Rust implementation is a source-based workspace today. Workspace packages set `publish = false`, so Cargo dependencies must point to a complete UMF checkout; these crates are not available from crates.io. The checkout includes sibling path dependencies, vendored parser sources and pinned schemas loaded at compile time. Use a Git tag once a Rust release tag is published, or a local path while developing:
+UMF's Rust workspace is the implementation behind the native library, CLI, Python extension, Node/Bun addon and browser WASM host. It owns shared document and registry semantics, compiler operations, and the native adapter operations exposed by those hosts. The current UMF document/core version is 0.10.0.
+
+The workspace packages are not published to crates.io. Use the `umf-rust-v0.1.0` release ref for this Rust port. For local development, use the workspace or a path dependency:
 
 ```toml
 [dependencies]
-umf-core = { git = "https://github.com/DocumentDrivenDX/umf.git", tag = "<release-tag>" }
-# Or: umf-core = { path = "../umf/crates/umf-core" }
+umf-core = { path = "../umf/crates/umf-core" }
 ```
 
-Add `umf-core-wire` when using the tagged transport. `umf-cli` is a binary-only package, so run it from the checkout (for example, `cargo run --locked -p umf-cli -- graphql --capabilities`) rather than adding it as a Rust library dependency. Use the same repository tag for every UMF Git dependency. The tag above is a placeholder; select a published Rust release tag when one exists.
+The workspace contains `umf-core`, `umf-core-wire`, `umf-tagged-wire`, `umf-codegen`, `umf-metamodel`, `umf-metamodel-cli`, `umf-cli` and `umf-graphql`. `umf-core-wire` exposes selected operations over the tagged UTF-16 transport. `umf-cli` is a binary package; run it from the checkout. For example:
 
-The workspace’s default Cargo selection includes `umf-core`, `umf-core-wire`, `umf-tagged-wire`, `umf-codegen`, `umf-metamodel`, `umf-metamodel-cli`, `umf-cli` and `umf-graphql`. With Rust 1.90.0 installed, build and test that current selection using the workspace test profile, which uses optimization level 1 while keeping debug assertions and overflow checks enabled:
+```sh
+cargo run --locked -p umf-cli -- graphql --capabilities
+```
+
+With Rust 1.90.0 installed, build and test the workspace's default package selection:
 
 ```sh
 cargo build --locked
 cargo test --locked
 ```
+
+Build the CLI with the native PostgreSQL parser when using its SQL capability:
+
+```sh
+cargo build --release --locked -p umf-cli --features native-postgresql
+cargo run --locked -p umf-cli --features native-postgresql -- postgresql sql --capabilities
+```
+
+The optional native PostgreSQL feature also requires a C toolchain and libclang at build time.
 
 The equivalent explicit test selection is:
 
@@ -24,11 +38,7 @@ cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire \
   -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql
 ```
 
-`umf-core` provides shared Rust semantics and the native adapters currently implemented in the workspace. `umf-core-wire` exposes selected operations through the tagged UTF-16 transport; `umf-cli` provides the native `umf` executable. The current default CLI includes `graphql`, `rdf`, `json-schema`, `protobuf`, `avro`, `avro-cardinality`, `iceberg`, `arrow`, `parquet-capture`, `dbt`, `cardinality`, `csv-boolean-lexical`, `facets`, `reference`, `access rrf`, `metamodel`, and `domain-pack`. Where provided, inspect a family’s operation list with `umf <family> --capabilities`, for example `cargo run --locked -p umf-cli -- graphql --capabilities`.
-
-The Rust crates and CLI run natively without V8, Node.js or Bun. This is the current Rust library surface, not a port of every TypeScript adapter API; only operations present in these crates are available to Rust consumers.
-
-A small example using the current RDF API:
+A compact example using the RDF API:
 
 ```rust
 use umf_core::{rdf::{export_rdf_nquads, import_rdf_nquads, RdfRuntime}, Context, Utf16};
@@ -48,4 +58,4 @@ let exported = export_rdf_nquads(&runtime, &document, Some(true), &mut context)
 assert_eq!(exported.to_utf8().expect("UTF-8 source"), source);
 ```
 
-The core and CLI are developed against Rust 1.90.0. See the root README for the broader Bun, browser, and native binding workflows.
+The public support boundary is expressed by each operation's API and capability checks. Callers provide explicit external parser/compiler callbacks where required; Rust owns UMF validation, admission, projection, receipt and recovery decisions. See the [host binding guide](../bindings/core/README.md) for Python, Node/Bun, WASM and CLI entry points.

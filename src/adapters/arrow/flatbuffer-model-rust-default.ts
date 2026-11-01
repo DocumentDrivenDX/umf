@@ -14,10 +14,15 @@ interface Engine{['arrow-flatbuffer-model']:{
  decodeArrowFlatbuffer(fields:{id:string;rootType:ArrowFlatbufferRoot;bytes:string}):unknown;
  prepareArrowFlatbufferEncoding(fields:{document:Document}):unknown;
  verifyArrowFlatbufferEncoding(fields:{document:Document;bytes:string}):unknown;
+ encodeArrowFlatbufferNative(fields:{document:Document}):unknown;
 }}
 const CONTROL=new Set(['CANCELLED','DEADLINE','WORK_LIMIT','CONTROL']);
 const MAX_BYTES=1_000_000;
 function hex(bytes:Uint8Array):string{return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('')}
+function unhex(value:string):Uint8Array{
+ if(typeof value!=='string'||!value.length||(value.length&1)!==0||!/^[0-9a-f]+$/.test(value))throw new UmfError('ARROW_FLATBUFFER_BYTES','Expected bounded metadata bytes');
+ const bytes=new Uint8Array(value.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(value.slice(i*2,i*2+2),16);return bytes;
+}
 
 export function createArrowFlatbufferModelRustDefault(engine:Engine,isNativeUmfCoreError:Guard=()=>false){
  function call<T>(operation:()=>unknown):T{
@@ -38,7 +43,11 @@ export function createArrowFlatbufferModelRustDefault(engine:Engine,isNativeUmfC
    if(!(bytes instanceof Uint8Array)||bytes.byteLength>MAX_BYTES)throw new UmfError('ARROW_IPC_LIMIT','Expected at most 1000000 source bytes');
    return call(()=>engine['arrow-flatbuffer-model'].decodeArrowFlatbuffer({id:options.id,rootType:options.rootType,bytes:hex(bytes)}));
   },
-  encodeArrowFlatbuffer(document:Document,backend:ArrowFlatbufferEncodingBackend):Uint8Array{
+  encodeArrowFlatbuffer(document:Document,backend?:ArrowFlatbufferEncodingBackend):Uint8Array{
+   if(backend===undefined){
+    const encoded=call<string>(()=>engine['arrow-flatbuffer-model'].encodeArrowFlatbufferNative({document}));
+    const bytes=unhex(encoded);if(bytes.byteLength>MAX_BYTES)throw new UmfError('ARROW_FLATBUFFER_BYTES','Expected bounded metadata bytes');return bytes;
+   }
    if(backend?.identity!=='flatbuffers@25.9.23'||typeof backend.encode!=='function')throw new UmfError('ARROW_BACKEND','Expected explicit pinned FlatBuffers backend');
    const model=call<{rootType:ArrowFlatbufferRoot;value:unknown}>(()=>engine['arrow-flatbuffer-model'].prepareArrowFlatbufferEncoding({document}));
    const output=backend.encode(model);

@@ -231,6 +231,7 @@ fn operation_fields(op: &str) -> Option<&'static [&'static str]> {
         | "dbt.exportSemanticManifest"
         | "dbt.inspectSemanticManifest"
         | "dbt.inspectManifestGraph" => &["profile", "op", "document"],
+        "dbt.inspectPayload" => &["profile", "op", "token", "payload"],
         "dbt.getManifestNode" | "dbt.getArtifactNode" | "dbt.getSemanticManifestNode" => {
             &["profile", "op", "document", "path"]
         }
@@ -263,6 +264,39 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             ctx,
         )?;
         return Ok(Value::Null);
+    }
+    if operation == "dbt.inspectPayload" {
+        let token = match field(request, "token") {
+            Some(Value::Number(value))
+                if value.fract() == 0.0 && (1.0..=3.0).contains(value) =>
+            {
+                *value as u64
+            }
+            _ => return Err(request_error("DBT payload token must be 1, 2 or 3")),
+        };
+        let payload = field(request, "payload")
+            .ok_or_else(|| request_error("DBT payload is required"))?;
+        let runtime = RuntimeCache::shared(ctx)?;
+        return Ok(Value::Array(
+            dbt::inspect_payload(&runtime, token, payload, ctx)?
+                .into_iter()
+                .map(|item| {
+                    object([
+                        ("code", Value::String(item.code)),
+                        ("path", Value::String(item.path)),
+                        ("message", Value::String(item.message)),
+                        (
+                            "severity",
+                            Value::string_utf8(if item.severity == umf_core::Severity::Warning {
+                                "warning"
+                            } else {
+                                "error"
+                            }),
+                        ),
+                    ])
+                })
+                .collect(),
+        ));
     }
     if operation == "dbt.prepareManifestSelectionBounds" {
         return Ok(object([
@@ -351,6 +385,10 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
         | "dbt.inspectSemanticManifest"
         | "dbt.inspectManifestGraph" => {
             document(request)?;
+            None
+        }
+        "dbt.inspectPayload" => {
+            field(request, "payload").ok_or_else(|| request_error("payload is required"))?;
             None
         }
         "dbt.getManifestNode" | "dbt.getArtifactNode" | "dbt.getSemanticManifestNode" => {

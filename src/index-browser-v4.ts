@@ -45,12 +45,16 @@ import {createDomainPackLoaderInspectionOperation} from './domain-packs/loader-r
 import {createDomainPackProfileInspectionOperation} from './domain-packs/profile-rust';
 import {createSecProjectionRustOperations} from './domain-packs/sec-projection-rust';
 import {createReadDescriptorSetRustCandidate} from './adapters/protobuf/descriptor-rust-candidate';
-import {createProtobufDescriptorDocumentRustDefault} from './adapters/protobuf/rust-default';
+import {createProtobufDescriptorDocumentRustDefault,createProtobufRegistryRustDefault} from './adapters/protobuf/rust-default';
 import type {ProtobufDescriptorDocumentRustEngine} from './adapters/protobuf/rust-default';
+import {arrowPackage} from './adapters/arrow';
+import {arrowIpcPackage} from './adapters/arrow/capture';
+import {arrowFlatbufferPackage} from './adapters/arrow/flatbuffer-model';
 import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
-import {bindDbtRust} from './adapters/dbt/rust-default';
+import {bindDbtRust,createDbtRegistriesRustDefault} from './adapters/dbt/rust-default';
 import {createRegistryRustDefault} from './registry/rust-default';
+import {createExtensionRegistriesRustDefault} from './registry/extension-registries-rust-default';
 import {createPreparedCoreInspectionRustDefault} from './model/prepared-inspection-rust-default';
 import {createEditExtensionRustDefault} from './model/edit-extension-rust-default';
 import {createCoreModelPublicRustDefault} from './model/rust-public-default';
@@ -108,6 +112,8 @@ import {createDddPostgresqlRustDefault} from './projections/ddd-postgresql-rust-
 import {createPostgresqlRustDefault} from './adapters/postgresql/rust-default';
 import {createPostgresqlAuthoredRustDefault} from './core-ideals/postgresql-authored-rust-default';
 import {createPostgresqlAuthoredCardinalityRustDefault} from './core-ideals/cardinality-postgresql-rust-default';
+import {createPostgresqlAuthoredKeysRustDefault} from './core-ideals/key-postgresql-rust-default';
+import {createPostgresqlAuthoredFacetsRustDefault} from './core-ideals/facets-postgresql-rust-default';
 import {createPostgresqlAuthoredNullabilityRustDefault} from './core-ideals/nullability-postgresql-rust-default';
 import {createPostgresqlCatalogRustDefault} from './adapters/postgresql/catalog-rust-default';
 import {createPostgresqlCatalogObservationRustDefault} from './adapters/postgresql/catalog-observation-rust-default';
@@ -202,11 +208,12 @@ const deltaEngine=Object.assign({},createDeltaSchemaTableEngine(wasmModule),crea
   generateDdlBundle:(documents:readonly Document[])=>deltaDdlOperations.generateBundle({documents}) as ReturnType<typeof import('./adapters/delta/ddl').generateDeltaDDLBundle>,
   realizeSparkDelta4:(document:Document,target:Parameters<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>[1])=>deltaDdlOperations.realizeSparkDelta4({document,target}) as ReturnType<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>,
   projectParquetActions:(document:Document)=>deltaParquetOperations.projectActions({document}) as ReturnType<typeof import('./adapters/delta/parquet').projectDeltaParquetActions>,
+  reconcileCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2')=>nativeFamilyDispatcher['delta-log'].reconcileCheckpoint({checkpoint,commits,spec}) as ReturnType<typeof import('./adapters/delta/reconcile').reconcileDeltaCheckpoint>,
   reconcileParquetCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2',sidecars:import('./adapters/delta/sidecars').DeltaSidecar[])=>deltaParquetOperations.reconcileCheckpoint({checkpoint,commits,spec,sidecars}) as ReturnType<typeof import('./adapters/delta/parquet-checkpoint').reconcileDeltaParquetCheckpoint>,
   reconcileMultipart:(version:string,partCount:number,parts:import('./adapters/delta/multipart').DeltaCheckpointPart[],commits:import('./adapters/delta/reconcile').DeltaCommit[])=>deltaParquetOperations.reconcileMultipart({version,partCount,parts,commits}) as ReturnType<typeof import('./adapters/delta/multipart').reconcileDeltaMultipartCheckpoint>,
 });
 const delta=createDeltaRustDefault(deltaEngine,error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
-const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,reconcileDeltaCheckpointSidecars,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint,reconcileDeltaMultipartCheckpoint}=delta;
+const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,reconcileDeltaCheckpoint,reconcileDeltaCheckpointSidecars,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint,reconcileDeltaMultipartCheckpoint}=delta;
 const icebergSchema=createIcebergSchemaRustDefault(createIcebergSchemaEngine(wasmModule),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {icebergRegistry,inspectIceberg,importIcebergSchema,exportIcebergSchema,getIcebergNode,proposeIcebergNodeEdit}=icebergSchema;
 const icebergTable=createIcebergTableRustDefault(createIcebergTableEngine(wasmModule),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
@@ -239,13 +246,17 @@ const {projectBindingToSqlServer,verifyBindingSqlServerProjection,recoverBinding
 const dddRust=createDddJsonSchemaRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectDddToJsonSchema,dddFieldBinding,projectDddEntitiesToGraphql,projectDddToGraphql,verifyDddGraphqlProjection,recoverDddFromGraphql,recoverDddGraphqlNative,validateSqlServerRelationshipLayout,validatePostgresqlRelationshipLayout}=dddRust;
 const parquet=bindParquetCaptureRust(createParquetCaptureEngine(wasmModule),isNativeUmfCoreError,error=>error instanceof BindingUmfError);
-const {captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,getParquetArrowSchema,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField}=parquet;
+const {captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,getParquetArrowSchema,renameParquetFieldWithArrowSchema,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField}=parquet;
 function parquetRegistry():Registry{return new Registry().register(parquetPackage);}
 const postgresql=createPostgresqlRustDefault(createPostgresqlParserSessionEngine(wasmModule),isNativeUmfCoreError,()=>new Registry());
 const postgresqlAuthored=createPostgresqlAuthoredRustDefault(nativeFamilyDispatcher,postgresql,isNativeUmfCoreError);
+const postgresqlAuthoredKeys=createPostgresqlAuthoredKeysRustDefault(nativeFamilyDispatcher,postgresql,isNativeUmfCoreError);
+const {projectKeysToPostgresql,verifyKeysPostgresqlProjection,recoverKeysPostgresqlIdeal}=postgresqlAuthoredKeys;
 const {projectFieldToPostgresql,recoverFieldFromPostgresql,projectRecordToPostgresql,recoverRecordFromPostgresql}=postgresqlAuthored;
 const postgresqlAuthoredCardinality=createPostgresqlAuthoredCardinalityRustDefault(nativeFamilyDispatcher,postgresql,isNativeUmfCoreError);
 const {projectCardinalityToPostgresql,recoverCardinalityFromPostgresql}=postgresqlAuthoredCardinality;
+const postgresqlAuthoredFacets=createPostgresqlAuthoredFacetsRustDefault(nativeFamilyDispatcher,postgresql,isNativeUmfCoreError);
+const {projectFacetsToPostgresql,recoverFacetsFromPostgresql}=postgresqlAuthoredFacets;
 const postgresqlAuthoredNullability=createPostgresqlAuthoredNullabilityRustDefault(nativeFamilyDispatcher,postgresql,isNativeUmfCoreError);
 const {projectNullabilityToPostgresql,recoverNullabilityFromPostgresql}=postgresqlAuthoredNullability;
 const postgresqlCatalog=createPostgresqlCatalogRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
@@ -351,6 +362,12 @@ const dashboardPublic=createDashboardRustDefault(nativeFamilyDispatcher,isNative
 const {dashboardRegistry,registerDashboard,inspectDashboard,readDashboardDocument,writeDashboardDocument,getDashboardDefinition,editDashboardDefinition}=dashboardPublic;
 const {declareCoreBit128Field}=bindCoreBit128FieldRust(await initializeCoreBit128FieldWasm(CORE_MODEL_RESOURCES,async()=>wasmModule),isCoreBit128FieldBindingError);
 const {Registry,validateDocument,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
+const ownedExtensionRegistries=createExtensionRegistriesRustDefault(
+ ()=>new Registry(),securityPolicySource,model,
+ createCodegenEngine(wasmModule,CODEGEN_RESOURCES),
+ isNativeUmfCoreError,
+);
+const {securityRegistry,semanticTypesRegistry,tableLifecycleRegistry}=ownedExtensionRegistries;
 const bindingPublic=createBindingRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {validateCoreDatasetValues,verifyCoreDatasetValues,inspectCoreEvolution,verifyCoreEvolution,encodeCoreKeyTuple,verifyCoreKeyTuple,selectCoreElements,selectCoreRelationships}=createCoreModelPublicRustDefault(model,createCoreKeyTupleEngine(wasmModule,CORE_MODEL_RESOURCES),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {importJsonSchema,inspectJsonSchema,exportJsonSchema,exportJsonSchemaResources,exportJsonSchemaBundle,getJsonSchemaNode,walkJsonSchema,editJsonSchemaNode,parseNativeJson,parseNativeYaml,jsonSchemaRegistry}=createJsonSchemaRustDefault(createPreparedJsonSchemaEngine(wasmModule),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
@@ -373,7 +390,9 @@ const protobufDescriptorDocument=createProtobufDescriptorDocumentRustDefault(opt
   if(options.ErrorType!==UmfError)throw new TypeError('Public Protobuf error constructor mismatch');
   return protobufDescriptorEngine;
 });
-const {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle}=protobufDescriptorDocument;
+const protobufRegistries=createProtobufRegistryRustDefault(protobufDescriptorDocument,()=>new Registry());
+const {protobufRegistry}=protobufRegistries;
+const {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,proposeProtobufDescriptorEdit,inspectProtobuf,exportProtobufBundle}=protobufDescriptorDocument;
 const protobufSources=createProtobufSourceRustDefault(
   createProtobufSourceImportEngine(wasmModule),
   createProtobufSourceExportEngine(wasmModule),
@@ -414,20 +433,23 @@ const keySqlServer=createKeySqlServerRustDefault(nativeFamilyDispatcher,isNative
 const {projectKeysToSqlServer,verifyKeysSqlServerProjection,recoverKeysSqlServerIdeal}=keySqlServer;
 const {projectNullabilityToSqlServer,recoverNullabilityFromSqlServer}=nullabilitySqlServer;
 const {projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative}=coreIdealRust;
-const relationshipExtras=createRelationshipExtrasRustDefault(nativeFamilyDispatcher,{
- graphql:(text,id)=>importGraphqlSchema(text,{id,mode:'schema'}),
- rdf:(text,id,blankNodeScope)=>importRdfNQuads(text,{id,blankNodeScope}),
- linkml:(text,id,format)=>importLinkmlDocument(text,{id,format}),
-},isNativeUmfCoreError);
-const {projectRelationshipToExtra,classifyRelationshipExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative}=relationshipExtras;
+const relationshipExtras=createRelationshipExtrasRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {importRelationshipExtraArchive,projectRelationshipToExtra,classifyRelationshipExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative}=relationshipExtras;
 const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative}=createRelationshipPostgresqlRustDefault(nativeFamilyDispatcher,postgresql,isNativeUmfCoreError);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,classifyBit128NativeType,inspectBit128Binding,encodeBit128CarrierValue,decodeBit128CarrierValue,encodeBit128Record,decodeBit128Record,projectBit128Model,recoverBit128ModelProjection,encodeBit128FileRecord,decodeBit128FileRecord,projectBit128CarrierSchema,recoverBit128CarrierProjection}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
-const {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit}=bindArrowSchemaRust(createArrowSchemaEngine(wasmModule),isNativeUmfCoreError);
-const {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture,inspectArrowIpcLayout,inspectArrowIpcConsistency}=bindArrowIpcRust(createArrowIpcEngine(wasmModule),isNativeUmfCoreError,error=>error instanceof BindingUmfError);
+const arrowSchemaRust=bindArrowSchemaRust(createArrowSchemaEngine(wasmModule),isNativeUmfCoreError);
+const {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit,validateArrowExtensionPayload}=arrowSchemaRust;
+const arrowRegistry=()=>new Registry().register(arrowPackage,validateArrowExtensionPayload);
+const arrowIpcRegistry=()=>new Registry().register(arrowIpcPackage);
+const arrowFlatbufferRegistry=()=>new Registry().register(arrowFlatbufferPackage);
+const {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture,inspectArrowIpcLayout,inspectArrowIpcConsistency,observeArrowIpcCapture,exportArrowSchemaIpc,renameArrowIpcField}=bindArrowIpcRust(createArrowIpcEngine(wasmModule),copyJson,isNativeUmfCoreError,error=>error instanceof BindingUmfError);
 const dbt=bindDbtRust(createDbtEngine(wasmModule),isNativeUmfCoreError,isHostJsonResponseError,isDbtHostError);
+const dbtRegistries=createDbtRegistriesRustDefault(dbt,()=>new Registry());
+const {dbtManifestRegistry,dbtArtifactRegistry,dbtSemanticManifestRegistry}=dbtRegistries;
 const {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit,importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit,inspectDbtManifestGraph,selectDbtManifestDependencies}=dbt;
 export {editExtension,prepareCoreInspection};
 export * from './index-v4-default';
+export {arrowRegistry,arrowIpcRegistry,arrowFlatbufferRegistry};
 export {projectKeysToSqlServer,verifyKeysSqlServerProjection,recoverKeysSqlServerIdeal};
 export const projectDddToPostgresql=dddPostgresqlRust.projectDddToPostgresql;
 export const projectDddTablesToPostgresql=dddPostgresqlRust.projectDddTablesToPostgresql;
@@ -448,8 +470,8 @@ export const inspectStructuredClassification=coreIdealReports.inspectStructuredC
 export const verifyStructuredClassificationInspection=coreIdealReports.verifyStructuredClassificationInspection;
 export {getSemanticTypes,setSemanticTypes};
 export {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit};
-export {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture,inspectArrowIpcLayout,inspectArrowIpcConsistency};
-export {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit,importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit,inspectDbtManifestGraph,selectDbtManifestDependencies};
+export {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture,inspectArrowIpcLayout,inspectArrowIpcConsistency,observeArrowIpcCapture,exportArrowSchemaIpc,renameArrowIpcField};
+export {dbtManifestRegistry,dbtArtifactRegistry,dbtSemanticManifestRegistry,importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit,importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit,inspectDbtManifestGraph,selectDbtManifestDependencies};
 export {scalarTypesForVersion};
 export {readCoreKeyTupleBytes,prepareCoreKeyTuples};
 export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};
@@ -460,7 +482,7 @@ export {projectSecSubmissions,projectSecCompanyFacts};
 export {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,lookupMedicalTerminology};
 export {projectSecSubmissions as projectSecSubmissionsRustCandidate,projectSecCompanyFacts as projectSecCompanyFactsRustCandidate};
 export {readDescriptorSetRustCandidate};
-export {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle};
+export {protobufRegistry,readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,proposeProtobufDescriptorEdit,inspectProtobuf,exportProtobufBundle};
 export {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle,projectGraphqlInputToJsonSchema};
 export {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit};
 export {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd};
@@ -475,6 +497,10 @@ export {classifyPostgresqlField,verifyPostgresqlFieldClassification,recoverPostg
 export {classifyPostgresqlRelationships,verifyPostgresqlRelationshipClassification,recoverPostgresqlRelationshipSource};
 export {projectFieldToPostgresql,recoverFieldFromPostgresql,projectRecordToPostgresql,recoverRecordFromPostgresql};
 export {projectCardinalityToPostgresql,recoverCardinalityFromPostgresql};
+export {projectFacetsToPostgresql,recoverFacetsFromPostgresql};
+export {projectKeysToPostgresql,verifyKeysPostgresqlProjection,recoverKeysPostgresqlIdeal};
+export type {KeyPostgresqlProjection,KeyPostgresqlRequest} from './core-ideals/key-postgresql-projection';
+export {default as keyPostgresqlProjectionSchema} from '../spec/core/key-postgresql-projection.schema.json';
 export {projectNullabilityToPostgresql,recoverNullabilityFromPostgresql};
 export type {NullabilityPostgresqlProjection,NullabilityPostgresqlRequest} from './core-ideals/nullability-postgresql-projection';
 export {POSTGRESQL_NULLABILITY_EXTENSION,postgresqlNullabilityPackage,postgresqlNullabilityClassificationSchema,nullabilityPostgresqlProjectionSchema} from './core-ideals/nullability-postgresql-package';
@@ -485,8 +511,6 @@ export {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvr
 export {projectAvroToJsonSchema};
 export {recoverNullabilityFromParquet,projectNullabilityToParquet,recoverFacetsFromParquet,projectFacetsToParquet,recoverKeysParquetIdeal,verifyKeysParquetProjection,projectKeysToParquet,recoverCardinalityFromParquet,projectCardinalityToParquet,projectCardinalityToAvro,recoverCardinalityFromAvro,classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,classifyAvroRecordType,recoverAvroRecordTypeBundle,classifyParquetRecordType,recoverParquetRecordTypeBytes,classifyParquetRecord,recoverParquetRecordBytes,classifyParquetRelationships,verifyParquetRelationshipClassification,recoverParquetRelationshipSource,classifyParquetNullability,verifyParquetNullabilityClassification,recoverParquetNullabilityBytes,classifyParquetField,verifyParquetFieldClassification,recoverParquetFieldBytes,classifyParquetKeys,verifyParquetKeyClassification,recoverParquetKeySource,classifyParquetCardinality,verifyParquetCardinalityClassification,recoverParquetCardinalityBytes,classifyParquetFacets,verifyParquetFacetClassification,recoverParquetFacetSource,classifyAvroField,recoverAvroFieldBundle,classifyAvroRecord,recoverAvroRecordBundle,classifyAvroKeys,verifyAvroKeyClassification,recoverAvroKeySource,classifyAvroRelationships,verifyAvroRelationshipClassification,recoverAvroRelationshipSource,classifyAvroNullability,verifyAvroNullabilityClassification,recoverAvroNullabilityBundle,classifyAvroFacets,verifyAvroFacetClassification,recoverAvroFacetSource};
 export {projectNullabilityToAvro,recoverNullabilityFromAvro};
-export type {FacetsParquetProjection,FacetsParquetRequest} from './core-ideals/facets-parquet-projection';
-export type {KeyParquetProjection,KeyParquetRequest} from './core-ideals/key-parquet-projection';
 export {projectFacetsToAvro,recoverFacetsFromAvro,projectFacetsToSqlServer,recoverFacetsFromSqlServer};
 export {projectKeysToAvro,verifyKeysAvroProjection,recoverKeysAvroIdeal};
 export {projectFieldToAvro,recoverFieldFromAvro,projectRecordToAvro,recoverRecordFromAvro};
@@ -515,7 +539,7 @@ export {projectBindingToDelta};
 export {projectBindingTablesToSqlServer,projectBindingTablesAndIndexesFromPlanToSqlServer,projectBindingTablesAndIndexesToSqlServer};
 export {projectBindingToSqlServer,verifyBindingSqlServerProjection,recoverBindingSqlServerSources,recoverBindingSqlServerNative};
 export {projectDddToJsonSchema,dddFieldBinding,projectDddEntitiesToGraphql,projectDddToGraphql,verifyDddGraphqlProjection,recoverDddFromGraphql,recoverDddGraphqlNative,validateSqlServerRelationshipLayout,validatePostgresqlRelationshipLayout};
-export {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage,parquetRegistry,captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,getParquetArrowSchema,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField};
+export {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage,parquetRegistry,captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,getParquetArrowSchema,renameParquetFieldWithArrowSchema,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField};
 export {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit};
 export {projectOpenapiToJsonSchema};
 export {projectTypeSpecToJsonSchema,projectSmithyToJsonSchema};
@@ -541,8 +565,12 @@ export {default as tableSpecRecordClassificationSchema} from '../spec/core/table
 export type {TableSpecRecordClassification,TableSpecRecordRequest} from './core-ideals/tablespec-record-package';
 export {sqlserverRegistry,importSqlServerCatalog,inspectSqlServer,exportSqlServerCatalog,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,getSqlServerIndexMetadata,proposeSqlServerCatalogEdit,inspectSqlServerFacetType,inspectSqlServerFacetPredicate,inspectSqlServerFacetConstraints,classifySqlServerField,verifySqlServerFieldClassification,recoverSqlServerFieldCapture,classifySqlServerRecord,verifySqlServerRecordClassification,recoverSqlServerRecordCapture,classifySqlServerCardinality,verifySqlServerCardinalityClassification,recoverSqlServerCardinalitySource,classifySqlServerNullability,verifySqlServerNullabilityClassification,recoverSqlServerNullabilitySource,classifySqlServerKeys,verifySqlServerKeyClassification,recoverSqlServerKeySource,classifySqlServerRelationships,verifySqlServerRelationshipClassification,recoverSqlServerRelationshipSource,classifySqlServerFacets,verifySqlServerFacetClassification,recoverSqlServerFacetSource};
 export {shaclRegistry,inspectShaclDocument,importShaclTurtle,exportShaclTurtle,getShaclQuads,proposeShaclQuadEdit,getShaclPropertyPath,evaluateShaclPropertyPath,getShaclTargetNodes,getShaclShapeMetadata,proposeShaclEngineValidation};
+export {securityPackage} from './extensions/security/policy-package';
+export {semanticTypesPackage} from './extensions/semantic-types/package';
+export {tableLifecyclePackage} from './extensions/tables/package';
+export {securityRegistry,semanticTypesRegistry,tableLifecycleRegistry};
 export {owlRegistry,inspectOwlDocument,importOwlTurtle,exportOwlTurtle,getOwlQuads,proposeOwlQuadEdit,getOwlOntologyHeaders,getOwlExpressionView,getOwlListAxioms,getOwlSpecialAxioms,getOwlAxiomAnnotations,getOwlDeclarations};
-export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,classifyRelationshipExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};
+export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,importRelationshipExtraArchive,projectRelationshipToExtra,classifyRelationshipExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};
 export {projectCardinalityToSqlServer,recoverCardinalityFromSqlServer,projectFieldToSqlServer,recoverFieldFromSqlServer,projectRecordToSqlServer,recoverRecordFromSqlServer};
 export type {FieldSqlServerProjection,FieldSqlServerRequest} from './core-ideals/field-sqlserver-projection';
 export type {RecordSqlServerProjection,RecordSqlServerRequest} from './core-ideals/record-sqlserver-projection';
@@ -563,7 +591,7 @@ export { deltaTablePackage };
 
 export { deltaLogPackage };
 
-export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,reconcileDeltaCheckpointSidecars,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint,reconcileDeltaMultipartCheckpoint};
+export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,reconcileDeltaCheckpoint,reconcileDeltaCheckpointSidecars,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint,reconcileDeltaMultipartCheckpoint};
 
 export {evaluateActionRule,compileTableDeployment,verifyTableDeployment,inspectTableLifecycle,normalizeRowScope,discoverTableMigrationChanges,reviewedValueDigest,compileTableMigration,verifyTableMigration};
 export {SPARK_EXTENSION,sparkPackage,sparkRegistry,inspectSpark,importSparkSchema,exportSparkSchema,getSparkNode,proposeSparkNodeEdit,renameSparkField};
@@ -585,3 +613,9 @@ export {inspectSagas,declareSaga,editSaga,assessSaga};
 
 export {AVRO_FACETS_EXTENSION,avroFacetsPackage} from './core-ideals/avro-facets-package';
 export type {RelationshipAvroProjection,RelationshipAvroRequest} from './core-ideals/relationship-avro-projection-factory';
+
+export type {DeltaCommit,DeltaReconciliation} from './adapters/delta/reconcile';
+
+export type {FacetsParquetProjection,FacetsParquetRequest} from './core-ideals/facets-parquet-projection';
+
+export type {KeyParquetProjection,KeyParquetRequest} from './core-ideals/key-parquet-projection';

@@ -337,7 +337,10 @@ pub fn execute_wire_with_control(
             | "parquet.assembleRows"
             | "parquet.repairDictionaryOffsets"
             | "parquet.appendKeyValueMetadata"
-            | "parquet.renameField" => {
+            | "parquet.renameField"
+            | "parquet.renameArrowField"
+            | "parquet.prepareRenameArrowField"
+            | "parquet.completeRenameArrowField" => {
                 let document = field(&request, "document")
                     .ok_or_else(|| request_error("document is required"))?;
                 match operation.as_str() {
@@ -402,6 +405,59 @@ pub fn execute_wire_with_control(
                         &mut capabilities,
                         &mut ctx,
                     )?,
+                    #[cfg(feature = "embedded-adapters")]
+                    "parquet.renameArrowField" => {
+                        umf_core::parquet_edits::rename_field_with_arrow_schema(
+                            document,
+                            field(&request, "policy")
+                                .ok_or_else(|| request_error("policy is required"))?,
+                            &resources.engine,
+                            &resources.registry,
+                            &mut capabilities,
+                            &mut ctx,
+                        )?
+                    }
+                    #[cfg(feature = "embedded-adapters")]
+                    "parquet.prepareRenameArrowField" => {
+                        umf_core::parquet_edits::prepare_rename_field_with_arrow_schema(
+                            document,
+                            field(&request, "policy")
+                                .ok_or_else(|| request_error("policy is required"))?,
+                            &resources.engine,
+                            &resources.registry,
+                            &mut capabilities,
+                            &mut ctx,
+                        )?
+                    }
+                    #[cfg(feature = "embedded-adapters")]
+                    "parquet.completeRenameArrowField" => {
+                        let policy = field(&request, "policy")
+                            .ok_or_else(|| request_error("policy is required"))?;
+                        if let Some(Value::String(message)) = field(&request, "backendError") {
+                            umf_core::parquet_edits::fail_rename_field_with_arrow_schema(
+                                document,
+                                policy,
+                                message,
+                                &resources.engine,
+                                &resources.registry,
+                                &mut capabilities,
+                                &mut ctx,
+                            )?
+                        } else {
+                            let flatbuffer_hex = text_field(&request, "flatbufferHex")
+                                .ok_or_else(|| request_error("flatbufferHex is required"))?;
+                            let flatbuffer = decode_hex(&flatbuffer_hex)?;
+                            umf_core::parquet_edits::complete_rename_field_with_arrow_schema(
+                                document,
+                                policy,
+                                &flatbuffer,
+                                &resources.engine,
+                                &resources.registry,
+                                &mut capabilities,
+                                &mut ctx,
+                            )?
+                        }
+                    }
                     "parquet.inspectFraming" => inspect_parquet_framing(
                         document,
                         &resources.engine,

@@ -19,6 +19,7 @@ export interface SecurityPolicySourceEngine {
   evaluateSecurityPolicyV2LegacyAccess(source: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): unknown;
   inspectSecurityPolicyV2Source(source: unknown): unknown;
   inspectSecurityPolicy(source: unknown, resolution?: unknown): unknown;
+  inspectSecurityPolicyPayload(payload: unknown, path: string): unknown;
   requireSecurityInterpretation(source: unknown, resolution: unknown): unknown;
   securityPolicyDependencies(source: unknown, resolution: unknown): unknown;
   securityIdentityTransportDependencies(source: unknown, resolution: unknown): unknown;
@@ -63,6 +64,7 @@ export function createSecurityPolicySourceRustDefault(engine: SecurityPolicySour
     evaluateSecurityPolicyV2LegacyAccess(source: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): unknown { return call(() => engine.evaluateSecurityPolicyV2LegacyAccess(source,resolution,cut,request,resource)); },
     inspectSecurityPolicyV2Source(source: unknown): unknown { return call(() => engine.inspectSecurityPolicyV2Source(source)); },
     inspectSecurityPolicy(source: unknown, resolution?: unknown): unknown { return call(() => engine.inspectSecurityPolicy(source,resolution)); },
+    inspectSecurityPolicyPayload(payload: unknown, path: string): unknown { return call(() => engine.inspectSecurityPolicyPayload(payload,path)); },
     requireSecurityInterpretation(source: unknown, resolution: unknown): unknown { return call(() => engine.requireSecurityInterpretation(source,resolution)); },
     securityPolicyDependencies(source: unknown, resolution: unknown): unknown { return call(() => engine.securityPolicyDependencies(source,resolution)); },
     securityIdentityTransportDependencies(source: unknown, resolution: unknown): unknown { return call(() => engine.securityIdentityTransportDependencies(source,resolution)); },

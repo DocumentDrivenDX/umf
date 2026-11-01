@@ -143,7 +143,7 @@ console.log(JSON.stringify({installedSagaRuntime:true,sharedWasm:true,publicFaca
  if(retainedDirectory){
   const receipt={profile:'umf.sdk-installed-archive-custody/2',archivePath:archive,archiveSha256:sourceSnapshot.artifacts.sdkArchive,
    installCommand:[process.execPath,'install','--ignore-scripts',archive],installedPackageRoot:packageRoot,
-   exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256['dist/umf.js'],
+   exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256['dist/umf-node.js'],
    sdkManifestSha256:sha256(installedManifestBytes),installerSourceSha256,
    sagaCorpusSha256:sha256(await readFile(join(directory,'saga-vectors.json'))),
    sagaOracleSha256:sha256(await readFile(join(directory,'saga-oracle.js'))),

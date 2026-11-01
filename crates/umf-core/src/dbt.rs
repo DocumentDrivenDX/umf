@@ -413,7 +413,7 @@ pub fn validation_to_value(report: &Validation) -> Value {
     ])
 }
 
-fn inspect_payload(
+pub fn inspect_payload(
     runtime: &DbtRuntime,
     token: u64,
     payload: &Value,

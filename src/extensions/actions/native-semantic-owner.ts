@@ -11,7 +11,10 @@ export function actionSemanticParts(value:SemanticValidator|undefined,owner:Sema
  return parts&&semanticOwnerMatches(parts,owner)?{native:parts.native,callers:[...parts.callers]}:{callers:[value]};
 }
 export function actionCallerSemanticValidator(value:SemanticValidator|undefined,owner:SemanticOwnerIdentity):SemanticValidator|undefined {
- const callers=actionSemanticParts(value,owner).callers;
+ // Only the Action package's own callback is replaced by the native Action owner.
+ // Other native-owner callbacks remain explicit capabilities in reduced registries.
+ const isActionOwner=owner.id==='umf.actions'&&owner.version==='0.1.0';
+ const callers=isActionOwner?actionSemanticParts(value,owner).callers:value?[value]:[];
  if(!callers.length)return undefined;
  return (payload,context)=>callers.flatMap(callback=>callback(payload,context));
 }

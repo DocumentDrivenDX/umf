@@ -296,6 +296,26 @@ fn diag_from_loss(loss: &Value, blocked: bool) -> Value {
     ])
 }
 
+/// Admit a retained GraphQL, RDF or LinkML native archive against the pinned schema.
+pub fn validate_native_archive(archive: &Value, c: &mut Context<'_>) -> Result<Value, EngineError> {
+    let archive = copy_json(archive, c)?;
+    let rt = runtime(c)?;
+    let schema = parse(RESULT, c)?;
+    let archive_schema = get(
+        get(&schema, "$defs")
+            .ok_or_else(|| err("RELATIONSHIP_EXTRA", "Invalid native archive", ""))?,
+        "archive",
+    )
+    .ok_or_else(|| err("RELATIONSHIP_EXTRA", "Invalid native archive", ""))?;
+    match validate_schema(&archive, archive_schema, &rt, c, "RELATIONSHIP_EXTRA") {
+        Ok(()) => Ok(archive),
+        Err(error) if error.code == "RELATIONSHIP_EXTRA" => {
+            Err(err("RELATIONSHIP_EXTRA", "Invalid native archive", ""))
+        }
+        Err(error) => Err(error),
+    }
+}
+
 /// Rust owns source/author admission, target naming, projection policy and losses.
 /// The wire owner imports the emitted native archive and calls `complete`.
 pub fn prepare_relationship_to_extra(
@@ -1200,9 +1220,14 @@ pub fn complete_relationship_to_extra(
         }
     }
     let (module_index, element_index, _) = native_location(target, &system).ok_or_else(|| {
-        err("RELATIONSHIP_EXTRA_TARGET", "Native parser omitted target payload", "/target")
+        err(
+            "RELATIONSHIP_EXTRA_TARGET",
+            "Native parser omitted target payload",
+            "/target",
+        )
     })?;
-    let payload_path = format!("/modules/{module_index}/elements/{element_index}/extensions/umf.{system}");
+    let payload_path =
+        format!("/modules/{module_index}/elements/{element_index}/extensions/umf.{system}");
     let path = raw(get(prepared, "relationshipPath")).unwrap();
     let rel = get(prepared, "relationship").unwrap();
     let mut mappings = Vec::new();

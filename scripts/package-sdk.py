@@ -7,10 +7,11 @@ import re
 OUTPUT = Path('.cache/sdk-distribution')
 FORMAT = 'umf.rust-sdk-package/1'
 REQUIRED = [
-    'dist/umf.js', 'dist/umf.js.map', 'dist/umf-node.js',
+    'dist/umf-node.js',
     'dist/umf-browser.js', 'dist/umf_core_node.node',
     'dist/umf_core_wasm_bg.wasm', 'dist/rust-default-manifest.json',
-    'dist/src/index.d.ts', 'dist/spec/extensions/actions/package.json',
+    'dist/src/index-node-v4.d.ts', 'dist/src/index-browser-v4.d.ts',
+    'dist/spec/extensions/actions/package.json',
     'dist/bindings/core/node/index.d.ts',
     'dist/bindings/core/node/copy-json-host-input.d.ts',
     'dist/bindings/core/node/src/wire.d.ts',
@@ -117,7 +118,6 @@ def verify(root):
     exports = package.get('exports') or {}
     root_export = exports.get('.') or {}
     root_types = root_export.get('types') or {}
-    reference = exports.get('./reference') or {}
     saga_runtime = exports.get('./runtime/wasm') or {}
     if (root_export.get('node') != './dist/umf-node.js'
             or root_export.get('browser') != './dist/umf-browser.js'
@@ -125,10 +125,9 @@ def verify(root):
             or root_export.get('default') != './dist/umf-browser.js'
             or root_types.get('node') != './dist/src/index-node-v4.d.ts'
             or root_types.get('default') != './dist/src/index-browser-v4.d.ts'
-            or reference.get('import') != './dist/umf.js'
             or saga_runtime.get('types') != './dist/runtime/wasm/index.d.ts'
             or saga_runtime.get('import') != './dist/runtime/wasm/index.js'):
-        raise ValueError('SDK_BUILD root/reference export routing mismatch')
+        raise ValueError('SDK_BUILD Rust root export routing mismatch')
     if manifest.get('api', {}).get('sagaRuntime') != './runtime/wasm':
         raise ValueError('SDK_BUILD Saga runtime is absent from the default build manifest')
 
@@ -196,8 +195,7 @@ def package(root, output=OUTPUT):
     package_bytes = (json.dumps(package_json, indent=2) + '\n').encode()
     readme_bytes = (
         '# UMF SDK\n\n'
-        'The package root uses the synchronous Rust V4 entry. The TypeScript reference '
-        'implementation remains available from `@umf/core/reference`. The shared Saga '
+        'The package root uses the synchronous Rust entry. The shared Saga '
         'WASM host is available from `@umf/core/runtime/wasm`; declarations and resources '
         'are included in the source-built asset manifest.\n'
     ).encode()

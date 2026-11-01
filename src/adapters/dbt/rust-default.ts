@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/types';
+import type {Diagnostic,ExtensionPackage,Json} from '../../model/types';
+import type {Registry as BaseRegistry,SemanticValidator} from '../../registry/registry';
+import {composeOwnedSemanticValidator} from '../../registry/semantic-owner';
+import {dbtManifestPackage} from './index';
+import {dbtArtifactPackage} from './artifact';
+import {dbtSemanticManifestPackage} from './semantic';
 import type {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit} from './index';
 import type {importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit} from './artifact';
 import type {importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit} from './semantic';
@@ -7,6 +13,7 @@ import type {inspectDbtManifestGraph} from './graph';
 import type {selectDbtManifestDependencies} from './selection';
 
 export interface DbtRustEngine {
+ inspectPayload:(token:1|2|3,payload:unknown)=>unknown;
  importDbtManifest:(text:string,options:{id:string})=>unknown;
  exportDbtManifest:(document:unknown)=>unknown;
  inspectDbtManifest:(document:unknown)=>unknown;
@@ -34,6 +41,7 @@ function domainCode(error:unknown):string|undefined{
  return typeof code==='string'&&(code.startsWith('DBT_')||JSON_DOMAIN_CODES.has(code))?code:undefined;
 }
 type DbtOperations={
+ inspectPayload:(token:1|2|3,payload:unknown)=>Diagnostic[];
  importDbtManifest:(text:string,options:{id:string})=>ReturnType<typeof importDbtManifest>;
  exportDbtManifest:(document:Parameters<typeof exportDbtManifest>[0])=>ReturnType<typeof exportDbtManifest>;
  inspectDbtManifest:(document:Parameters<typeof inspectDbtManifest>[0])=>ReturnType<typeof inspectDbtManifest>;
@@ -66,6 +74,7 @@ export function bindDbtRust(engine:DbtRustEngine,isNativeUmfCoreError:NativeCore
   }
  };
  return Object.freeze({
+  inspectPayload:(token,payload)=>call<Diagnostic[]>(()=>engine.inspectPayload(token,payload)),
   importDbtManifest:(text,options)=>call<ReturnType<typeof importDbtManifest>>(()=>engine.importDbtManifest(text,options)),
   exportDbtManifest:document=>call<ReturnType<typeof exportDbtManifest>>(()=>engine.exportDbtManifest(document)),
   inspectDbtManifest:document=>call<ReturnType<typeof inspectDbtManifest>>(()=>engine.inspectDbtManifest(document)),
@@ -83,5 +92,21 @@ export function bindDbtRust(engine:DbtRustEngine,isNativeUmfCoreError:NativeCore
   proposeDbtSemanticManifestNodeEdit:(document,path,text)=>call<ReturnType<typeof proposeDbtSemanticManifestNodeEdit>>(()=>engine.proposeDbtSemanticManifestNodeEdit(document,path,text)),
   inspectDbtManifestGraph:document=>call<ReturnType<typeof inspectDbtManifestGraph>>(()=>engine.inspectDbtManifestGraph(document)),
   selectDbtManifestDependencies:(document,options)=>call<ReturnType<typeof selectDbtManifestDependencies>>(()=>engine.selectDbtManifestDependencies(document,options)),
+ });
+}
+
+/** Construct the three public DBT registries with Rust-owned payload semantics. */
+export function createDbtRegistriesRustDefault(
+ engine:Pick<DbtOperations,'inspectPayload'>,
+ createRegistry:()=>BaseRegistry,
+){
+ const registry=(manifest:ExtensionPackage,token:1|2|3)=>createRegistry().register(
+  manifest,
+  composeOwnedSemanticValidator({id:manifest.id,version:manifest.version},(payload:Json)=>engine.inspectPayload(token,payload)),
+ );
+ return Object.freeze({
+  dbtManifestRegistry:()=>registry(dbtManifestPackage,1),
+  dbtArtifactRegistry:()=>registry(dbtArtifactPackage,2),
+  dbtSemanticManifestRegistry:()=>registry(dbtSemanticManifestPackage,3),
  });
 }

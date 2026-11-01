@@ -214,6 +214,22 @@ pub mod arrow_ipc_capture_binding {
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
                     inspect_arrow_ipc_capture(document, &resources, &mut ctx)?
                 }
+                "arrow.ipc.prepareObserve" => {
+                    let document = field(&request, "document")
+                        .ok_or_else(|| err("document is required"))?;
+                    umf_core::arrow_ipc_capture::prepare_arrow_ipc_observation(
+                        document, &resources, &mut ctx,
+                    )?
+                }
+                "arrow.ipc.completeObserve" => {
+                    let prepared = field(&request, "prepared")
+                        .ok_or_else(|| err("prepared is required"))?;
+                    let outcome = field(&request, "outcome")
+                        .ok_or_else(|| err("outcome is required"))?;
+                    umf_core::arrow_ipc_capture::complete_arrow_ipc_observation(
+                        prepared, outcome, &resources, &mut ctx,
+                    )?
+                }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.layout" => {
                     let document =
@@ -225,6 +241,51 @@ pub mod arrow_ipc_capture_binding {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
                     umf_core::arrow_ipc_inspection::inspect_arrow_ipc_consistency(document, &resources, &mut ctx)?
+                }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.prepareSchemaExport" => {
+                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    umf_core::arrow_ipc_inspection::prepare_arrow_schema_ipc(document, &mut ctx)?
+                }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.completeSchemaExport" => {
+                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let before = match field(&request, "beforeJson") { Some(Value::String(value)) => value, _ => return Err(err("beforeJson is required")) };
+                    let after = match field(&request, "afterJson") { Some(Value::String(value)) => value, _ => return Err(err("afterJson is required")) };
+                    let bytes = match field(&request, "bytesHex") { Some(Value::String(value)) => value, _ => return Err(err("bytesHex is required")) };
+                    umf_core::arrow_ipc_inspection::complete_arrow_schema_ipc(document, before, after, bytes, &mut ctx)?
+                }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.exportSchemaNative" => {
+                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    Value::string_utf8(hex(&umf_core::arrow_ipc_inspection::encode_arrow_schema_ipc_native(document, &resources, &mut ctx)?))
+                }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.prepareRename" => {
+                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let policy = field(&request, "request").ok_or_else(|| err("request is required"))?;
+                    umf_core::arrow_ipc_inspection::prepare_arrow_ipc_rename(document, policy, &resources, &mut ctx)?
+                }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.prepareRenameFooter" => {
+                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let policy = field(&request, "request").ok_or_else(|| err("request is required"))?;
+                    let schema_hex = match field(&request, "schemaHex") { Some(Value::String(value)) => value, _ => return Err(err("schemaHex is required")) };
+                    umf_core::arrow_ipc_inspection::prepare_arrow_ipc_rename_footer(document, policy, schema_hex, &resources, &mut ctx)?
+                }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.completeRename" => {
+                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let policy = field(&request, "request").ok_or_else(|| err("request is required"))?;
+                    let schema_hex = match field(&request, "schemaHex") { Some(Value::String(value)) => value, _ => return Err(err("schemaHex is required")) };
+                    let footer_hex = field(&request, "footerHex").ok_or_else(|| err("footerHex is required"))?;
+                    umf_core::arrow_ipc_inspection::complete_arrow_ipc_rename(document, policy, schema_hex, footer_hex, &resources, &mut ctx)?
+                }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.renameNative" => {
+                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let policy = field(&request, "request").ok_or_else(|| err("request is required"))?;
+                    umf_core::arrow_ipc_inspection::rename_arrow_ipc_field_native(document, policy, &resources, &mut ctx)?
                 }
                 _ => return Err(err("Unknown Arrow IPC capture operation")),
             };
@@ -1341,6 +1402,7 @@ pub fn execute_arrow_schema_wire_with_control(
                 | "arrow.schema.inspect"
                 | "arrow.schema.getNode"
                 | "arrow.schema.proposeNodeEdit"
+                | "arrow.schema.validatePayload"
         ) {
             return Err(fail("REQUEST", "Unknown Arrow schema operation"));
         }
@@ -1372,6 +1434,7 @@ fn execute_arrow_schema_request(
             | "arrow.schema.inspect"
             | "arrow.schema.getNode"
             | "arrow.schema.proposeNodeEdit"
+            | "arrow.schema.validatePayload"
     ) {
         return Err(fail("REQUEST", "Unknown Arrow schema operation"));
     }
@@ -1396,6 +1459,24 @@ fn execute_arrow_schema_request(
             resources,
             ctx,
         )?)),
+        "arrow.schema.validatePayload" => {
+            let payload = field(&request, "payload")
+                .ok_or_else(|| fail("REQUEST", "Arrow payload is required"))?;
+            let scope = text("scope")?
+                .to_utf8()
+                .map_err(|_| fail("REQUEST", "Arrow scope must be UTF-8"))?;
+            let diagnostics = umf_core::arrow_schema::validate_arrow_extension_payload(
+                payload,
+                document()?,
+                text("path")?,
+                &scope,
+                resources,
+                ctx,
+            )?;
+            Ok(Value::Array(
+                diagnostics.into_iter().map(diagnostic_value).collect(),
+            ))
+        }
         "arrow.schema.getNode" => {
             Ok(
                 get_arrow_node(document()?, text("pointer")?, resources, ctx)?
@@ -2788,6 +2869,7 @@ fn execute_request_inner(
             | "model/admitCoreRelationshipRequest"
             | "model/prepareCoreRelationshipVerification"
             | "model/finishCoreRelationshipVerification"
+            | "model/inspectSemanticTypePayload"
             | "model/inspectCoreSemanticTypes"
             | "model/getCoreSemanticTypes"
             | "model/declareCoreSemanticTypes"
@@ -3380,6 +3462,16 @@ fn model_operation(
         }
         "model/historicalCoreFacetPatch" => {
             umf_core::facets::historical_core_facet_patch(value("input")?, engine, ctx)?
+        }
+        "model/inspectSemanticTypePayload" => {
+            let payload = value("payload")?;
+            let path =
+                as_utf16(value("path")?).ok_or_else(|| fail("REQUEST", "path must be a string"))?;
+            let diagnostics = umf_core::semantic_type_accessors::inspect_semantic_type_payload(
+                payload, path, ctx,
+            )?;
+            ctx.charge_work(diagnostics.len().saturating_mul(8), Utf16::default())?;
+            Value::Array(diagnostics.into_iter().map(diagnostic_value).collect())
         }
         "model/inspectCoreSemanticTypes" => {
             umf_core::core_semantic_types::inspect_core_semantic_types(

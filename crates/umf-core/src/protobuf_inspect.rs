@@ -38,7 +38,7 @@ pub fn inspect_protobuf_document(
 /// Inspect a payload value which has already been copied and admitted by its
 /// host. This preserves the source adapter's payload-only checkpoint without
 /// revalidating a containing document that may have changed after inspection.
-pub(crate) fn inspect_protobuf_payload_admitted(
+pub fn inspect_protobuf_payload_admitted(
     payload: &Value,
     payload_path: &Utf16,
     context: &mut Context<'_>,

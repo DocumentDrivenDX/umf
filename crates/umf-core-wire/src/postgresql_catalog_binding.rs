@@ -29,30 +29,42 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         "postgresql.recoverFieldProjection" | "postgresql.recoverRecordProjection" => {
             &["profile", "op", "receipt", "fresh", "nativeText"]
         }
+        "postgresql.prepareKeysProjection" | "postgresql.projectKeysWithNativeBackend" => {
+            &["profile", "op", "source", "authors", "request"]
+        }
+        "postgresql.completeKeysProjection" => &["profile", "op", "prepared", "target"],
+        "postgresql.prepareKeysRecovery" => &["profile", "op", "receipt"],
+        "postgresql.verifyKeysProjection" => &["profile", "op", "receipt", "current", "fresh"],
+        "postgresql.recoverKeysProjection" => &["profile", "op", "receipt", "current", "fresh"],
+        "postgresql.recoverKeysWithNativeBackend" => &["profile", "op", "receipt", "nativeText"],
         "postgresql.prepareCardinalityProjection" => &["profile", "op", "author", "request"],
         "postgresql.completeCardinalityProjection" => &["profile", "op", "prepared", "target"],
         "postgresql.prepareCardinalityRecovery" => &["profile", "op", "receipt"],
         "postgresql.recoverCardinalityProjection" => {
             &["profile", "op", "receipt", "fresh", "nativeText"]
         }
-        "postgresql.prepareNullabilityProjection" => &[
-            "profile", "op", "author", "request",
-        ],
-        "postgresql.completeNullabilityProjection" => &[
-            "profile", "op", "prepared", "target",
-        ],
+        "postgresql.prepareFacetsProjection" | "postgresql.projectFacetsWithNativeBackend" => {
+            &["profile", "op", "author", "request"]
+        }
+        "postgresql.completeFacetsProjection" => &["profile", "op", "prepared", "target"],
+        "postgresql.prepareFacetsRecovery" => &["profile", "op", "receipt"],
+        "postgresql.verifyFacetsProjection" => &["profile", "op", "receipt", "current", "fresh"],
+        "postgresql.recoverFacetsProjection" => {
+            &["profile", "op", "receipt", "fresh", "nativeText"]
+        }
+        "postgresql.recoverFacetsWithNativeBackend" => &["profile", "op", "receipt", "nativeText"],
+        "postgresql.prepareNullabilityProjection" => &["profile", "op", "author", "request"],
+        "postgresql.completeNullabilityProjection" => &["profile", "op", "prepared", "target"],
         "postgresql.prepareNullabilityRecovery" => &["profile", "op", "receipt"],
-        "postgresql.recoverNullabilityProjection" => &[
-            "profile", "op", "receipt", "fresh", "nativeText",
-        ],
+        "postgresql.recoverNullabilityProjection" => {
+            &["profile", "op", "receipt", "fresh", "nativeText"]
+        }
         "postgresql.projectFieldWithNativeBackend"
         | "postgresql.projectRecordWithNativeBackend"
         | "postgresql.projectCardinalityWithNativeBackend" => {
             &["profile", "op", "author", "request"]
         }
-        "postgresql.projectNullabilityWithNativeBackend" => {
-            &["profile", "op", "author", "request"]
-        }
+        "postgresql.projectNullabilityWithNativeBackend" => &["profile", "op", "author", "request"],
         "postgresql.recoverFieldWithNativeBackend"
         | "postgresql.recoverRecordWithNativeBackend"
         | "postgresql.recoverCardinalityWithNativeBackend" => {
@@ -146,10 +158,24 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.recoverRecordProjection",
         "postgresql.prepareFieldRecovery",
         "postgresql.prepareRecordRecovery",
+        "postgresql.prepareKeysProjection",
+        "postgresql.completeKeysProjection",
+        "postgresql.prepareKeysRecovery",
+        "postgresql.verifyKeysProjection",
+        "postgresql.recoverKeysProjection",
+        "postgresql.projectKeysWithNativeBackend",
+        "postgresql.recoverKeysWithNativeBackend",
         "postgresql.prepareCardinalityProjection",
         "postgresql.completeCardinalityProjection",
         "postgresql.prepareCardinalityRecovery",
         "postgresql.recoverCardinalityProjection",
+        "postgresql.prepareFacetsProjection",
+        "postgresql.completeFacetsProjection",
+        "postgresql.prepareFacetsRecovery",
+        "postgresql.verifyFacetsProjection",
+        "postgresql.recoverFacetsProjection",
+        "postgresql.projectFacetsWithNativeBackend",
+        "postgresql.recoverFacetsWithNativeBackend",
         "postgresql.prepareNullabilityProjection",
         "postgresql.completeNullabilityProjection",
         "postgresql.prepareNullabilityRecovery",
@@ -256,6 +282,31 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
             required(request, "fresh")?;
             string(request, "nativeText")?;
         }
+        "postgresql.prepareFacetsProjection" | "postgresql.projectFacetsWithNativeBackend" => {
+            required(request, "author")?;
+            required(request, "request")?;
+        }
+        "postgresql.completeFacetsProjection" => {
+            required(request, "prepared")?;
+            required(request, "target")?;
+        }
+        "postgresql.prepareFacetsRecovery" => {
+            required(request, "receipt")?;
+        }
+        "postgresql.verifyFacetsProjection" => {
+            required(request, "receipt")?;
+            required(request, "current")?;
+            required(request, "fresh")?;
+        }
+        "postgresql.recoverFacetsProjection" => {
+            required(request, "receipt")?;
+            required(request, "fresh")?;
+            string(request, "nativeText")?;
+        }
+        "postgresql.recoverFacetsWithNativeBackend" => {
+            required(request, "receipt")?;
+            string(request, "nativeText")?;
+        }
         "postgresql.prepareNullabilityProjection" => {
             required(request, "author")?;
             required(request, "request")?;
@@ -295,6 +346,32 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.recoverFieldProjection" | "postgresql.recoverRecordProjection" => {
             required(request, "receipt")?;
             required(request, "fresh")?;
+            string(request, "nativeText")?;
+        }
+        "postgresql.prepareKeysProjection" | "postgresql.projectKeysWithNativeBackend" => {
+            required(request, "source")?;
+            required(request, "authors")?;
+            required(request, "request")?;
+        }
+        "postgresql.completeKeysProjection" => {
+            required(request, "prepared")?;
+            required(request, "target")?;
+        }
+        "postgresql.prepareKeysRecovery" => {
+            required(request, "receipt")?;
+        }
+        "postgresql.verifyKeysProjection" => {
+            required(request, "receipt")?;
+            required(request, "current")?;
+            required(request, "fresh")?;
+        }
+        "postgresql.recoverKeysProjection" => {
+            required(request, "receipt")?;
+            required(request, "current")?;
+            required(request, "fresh")?;
+        }
+        "postgresql.recoverKeysWithNativeBackend" => {
+            required(request, "receipt")?;
             string(request, "nativeText")?;
         }
         "postgresql.classifyField"
@@ -482,6 +559,23 @@ pub fn execute_with_parser_backend(
         return execute_validated(request, op, ctx);
     }
     match op {
+        "postgresql.projectKeysWithNativeBackend" => {
+            umf_core::postgresql_key_projection::project_keys_with_backend(
+                required(request, "source")?,
+                required(request, "authors")?,
+                required(request, "request")?,
+                backend,
+                ctx,
+            )
+        }
+        "postgresql.recoverKeysWithNativeBackend" => {
+            umf_core::postgresql_key_projection::recover_keys_with_backend(
+                required(request, "receipt")?,
+                required(request, "nativeText")?,
+                backend,
+                ctx,
+            )
+        }
         "postgresql.projectFieldWithNativeBackend" => {
             umf_core::postgresql_authored_projection::project_field_with_backend(
                 required(request, "author")?,
@@ -502,6 +596,22 @@ pub fn execute_with_parser_backend(
             umf_core::postgresql_authored_projection::project_cardinality_with_backend(
                 required(request, "author")?,
                 required(request, "request")?,
+                backend,
+                ctx,
+            )
+        }
+        "postgresql.projectFacetsWithNativeBackend" => {
+            umf_core::facets_postgresql_projection::project_facets_with_backend(
+                required(request, "author")?,
+                required(request, "request")?,
+                backend,
+                ctx,
+            )
+        }
+        "postgresql.recoverFacetsWithNativeBackend" => {
+            umf_core::facets_postgresql_projection::recover_facets_with_backend(
+                required(request, "receipt")?,
+                required(request, "nativeText")?,
                 backend,
                 ctx,
             )
@@ -792,6 +902,43 @@ fn execute_validated(
                 ctx,
             )
         }
+        "postgresql.prepareKeysProjection" => {
+            umf_core::postgresql_key_projection::prepare_keys_projection(
+                required(request, "source")?,
+                required(request, "authors")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.completeKeysProjection" => {
+            umf_core::postgresql_key_projection::complete_keys_projection(
+                required(request, "prepared")?,
+                required(request, "target")?,
+                ctx,
+            )
+        }
+        "postgresql.prepareKeysRecovery" => {
+            umf_core::postgresql_key_projection::prepare_keys_recovery(
+                required(request, "receipt")?,
+                ctx,
+            )
+        }
+        "postgresql.verifyKeysProjection" => {
+            umf_core::postgresql_key_projection::verify_keys_projection(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                required(request, "fresh")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverKeysProjection" => {
+            umf_core::postgresql_key_projection::recover_keys_projection(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                required(request, "fresh")?,
+                ctx,
+            )
+        }
         "postgresql.prepareRecordProjection" => {
             umf_core::postgresql_authored_projection::prepare_record_projection(
                 required(request, "author")?,
@@ -848,6 +995,42 @@ fn execute_validated(
                 ctx,
             )
         }
+        "postgresql.prepareFacetsProjection" => {
+            umf_core::facets_postgresql_projection::prepare_facets_projection(
+                required(request, "author")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.completeFacetsProjection" => {
+            umf_core::facets_postgresql_projection::complete_facets_projection(
+                required(request, "prepared")?,
+                required(request, "target")?,
+                ctx,
+            )
+        }
+        "postgresql.prepareFacetsRecovery" => {
+            umf_core::facets_postgresql_projection::prepare_facets_recovery(
+                required(request, "receipt")?,
+                ctx,
+            )
+        }
+        "postgresql.verifyFacetsProjection" => {
+            umf_core::facets_postgresql_projection::verify_facets_projection(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                required(request, "fresh")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverFacetsProjection" => {
+            umf_core::facets_postgresql_projection::recover_facets_projection(
+                required(request, "receipt")?,
+                required(request, "fresh")?,
+                required(request, "nativeText")?,
+                ctx,
+            )
+        }
         "postgresql.prepareNullabilityProjection" => {
             umf_core::postgresql_authored_projection::prepare_nullability_projection(
                 required(request, "author")?,
@@ -882,6 +1065,12 @@ fn execute_validated(
         | "postgresql.recoverFieldWithNativeBackend"
         | "postgresql.recoverRecordWithNativeBackend"
         | "postgresql.recoverCardinalityWithNativeBackend" => Err(EngineError::new(
+            "POSTGRESQL_BACKEND",
+            Utf16::default(),
+            "This operation requires an admitted PostgreSQL parser backend",
+        )),
+        "postgresql.projectFacetsWithNativeBackend"
+        | "postgresql.recoverFacetsWithNativeBackend" => Err(EngineError::new(
             "POSTGRESQL_BACKEND",
             Utf16::default(),
             "This operation requires an admitted PostgreSQL parser backend",

@@ -850,3 +850,699 @@ pub fn rename_field(
 fn from_value(v: &Json) -> Value {
     crate::parquet_capture_inspection::from_json(v.clone())
 }
+
+// Rust-owned coordinated rewrite implementation is added here.
+
+#[cfg(feature = "embedded-adapters")]
+enum ArrowSchemaRenameEncoding<'a> {
+    Native,
+    Prepare,
+    Supplied(&'a [u8]),
+    HostFailure(&'a Utf16),
+}
+
+#[cfg(feature = "embedded-adapters")]
+/// Coordinated physical and embedded Arrow schema rename. The result is a
+/// complete, source-retaining report; the temporary intermediate files never
+/// escape this Rust operation.
+pub fn rename_field_with_arrow_schema(
+    source: &Value,
+    policy: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    cap: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    rename_field_with_arrow_schema_encoding(
+        source,
+        policy,
+        engine,
+        registry,
+        cap,
+        ctx,
+        ArrowSchemaRenameEncoding::Native,
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+pub fn prepare_rename_field_with_arrow_schema(
+    source: &Value,
+    policy: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    cap: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    rename_field_with_arrow_schema_encoding(
+        source,
+        policy,
+        engine,
+        registry,
+        cap,
+        ctx,
+        ArrowSchemaRenameEncoding::Prepare,
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+pub fn complete_rename_field_with_arrow_schema(
+    source: &Value,
+    policy: &Value,
+    flatbuffer: &[u8],
+    engine: &Engine,
+    registry: &Registry,
+    cap: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    rename_field_with_arrow_schema_encoding(
+        source,
+        policy,
+        engine,
+        registry,
+        cap,
+        ctx,
+        ArrowSchemaRenameEncoding::Supplied(flatbuffer),
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+pub fn fail_rename_field_with_arrow_schema(
+    source: &Value,
+    policy: &Value,
+    message: &Utf16,
+    engine: &Engine,
+    registry: &Registry,
+    cap: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    rename_field_with_arrow_schema_encoding(
+        source,
+        policy,
+        engine,
+        registry,
+        cap,
+        ctx,
+        ArrowSchemaRenameEncoding::HostFailure(message),
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn rename_field_with_arrow_schema_encoding(
+    source: &Value,
+    policy: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    cap: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+    encoding: ArrowSchemaRenameEncoding<'_>,
+) -> Result<Value, EngineError> {
+    use base64::{engine::general_purpose::STANDARD, Engine as _};
+    use serde_json::Value as Json;
+
+    let original = copy_json(source, ctx)?;
+    let policy_copy = copy_json(policy, ctx)?;
+    let policy_json = to_json(&policy_copy)?;
+    let object = policy_json
+        .as_object()
+        .ok_or_else(|| err("Invalid policy"))?;
+    if object.keys().any(|name| {
+        ![
+            "parquetIndex",
+            "arrowFieldPath",
+            "name",
+            "parquetName",
+            "uninterpretedMetadata",
+        ]
+        .contains(&name.as_str())
+    }) {
+        return Err(err("Unexpected policy property"));
+    }
+    let index = policy_json
+        .get("parquetIndex")
+        .and_then(Json::as_u64)
+        .filter(|index| *index > 0 && *index <= 9_007_199_254_740_991)
+        .and_then(|index| usize::try_from(index).ok())
+        .ok_or_else(|| err("Expected a non-root schema index"))?;
+    let field_path = policy_json
+        .get("arrowFieldPath")
+        .and_then(Json::as_array)
+        .ok_or_else(|| err("Expected an Arrow field path"))?;
+    if field_path.is_empty()
+        || field_path.len() > 64
+        || field_path.iter().any(|part| {
+            part.as_u64()
+                .filter(|index| *index <= 9_007_199_254_740_991)
+                .and_then(|index| usize::try_from(index).ok())
+                .is_none()
+        })
+    {
+        return Err(err("Expected an Arrow field path"));
+    }
+    let field_path = field_path
+        .iter()
+        .map(|part| usize::try_from(part.as_u64().unwrap()).unwrap())
+        .collect::<Vec<_>>();
+    let name = policy_json
+        .get("name")
+        .and_then(Json::as_str)
+        .ok_or_else(|| err("Expected an Arrow field name"))?;
+    let parquet_name = policy_json.get("parquetName").and_then(Json::as_str);
+    if policy_json
+        .get("parquetName")
+        .is_some_and(|value| !value.is_string())
+        || name.is_empty()
+        || name.encode_utf16().count() > 100_000
+        || policy_json
+            .get("uninterpretedMetadata")
+            .and_then(Json::as_str)
+            != Some("preserve-and-report")
+    {
+        return Err(err(
+            "Explicit schema indexes, name and metadata preservation policy required",
+        ));
+    }
+    let name = name.to_owned();
+    let physical_name = parquet_name.unwrap_or(&name).to_owned();
+    let physical = inspect_parquet_containers(source, engine, registry, cap, ctx)?;
+    let metadata = inspect_parquet_metadata(source, engine, registry, cap, ctx)?;
+    let embedded = crate::arrow_ipc_inspection::get_parquet_arrow_schema(source, &metadata, ctx)?;
+    let mut diagnostics = Vec::new();
+    for report in [&embedded, &physical] {
+        for diagnostic in arr(member(report, "diagnostics").unwrap_or(&Value::Null)).unwrap_or(&[])
+        {
+            diagnostics.push(copy_json(diagnostic, ctx)?);
+        }
+    }
+    let mut out = result(original.clone(), diagnostics.clone());
+    replace_member(&mut out, "policy", policy_copy);
+    let fail = |mut out: Value, message: &str| {
+        let mut items = arr(member(&out, "diagnostics").unwrap_or(&Value::Null))
+            .unwrap_or(&[])
+            .to_vec();
+        items.push(path_diagnostic(
+            "PARQUET_ARROW_RENAME_BLOCKED",
+            Utf16::default(),
+            "error",
+            message,
+        ));
+        replace_member(&mut out, "diagnostics", Value::Array(items));
+        out
+    };
+    if !status(&embedded, "decoded") || !status(&physical, "checked") {
+        return Ok(fail(
+            out,
+            "Decoded embedded Arrow and inspected physical schemas required",
+        ));
+    }
+    let metadata_json =
+        to_json(member(&metadata, "metadata").ok_or_else(|| err("Missing metadata"))?)?;
+    if unsafe_json(&metadata_json)
+        || diagnostics.iter().any(|item| {
+            member(item, "code").and_then(text).as_deref() == Some("PARQUET_ENUM_UNKNOWN")
+        })
+    {
+        return Ok(fail(
+            out,
+            "Unknown, crypto or trailing footer content prevents rename",
+        ));
+    }
+    let footer = decode_parquet_footer(source, engine, registry, cap, ctx)?;
+    if member(&footer, "trailingBytes")
+        .and_then(|value| match value {
+            Value::Number(number) => Some(*number as usize),
+            _ => None,
+        })
+        .unwrap_or(0)
+        != 0
+    {
+        return Ok(fail(
+            out,
+            "Unknown, crypto or trailing footer content prevents rename",
+        ));
+    }
+    let message = member(&embedded, "message").ok_or_else(|| err("Missing embedded message"))?;
+    let model_text = crate::arrow_flatbuffer_model::export_arrow_flatbuffer_model(message, ctx)?;
+    ctx.charge_work(model_text.units().len(), Utf16::from("/arrowSchema"))?;
+    let mut model: Json = serde_json::from_str(
+        &model_text
+            .to_utf8()
+            .map_err(|_| err("Invalid embedded Arrow model text"))?,
+    )
+    .map_err(|_| err("Invalid embedded Arrow model"))?;
+    let tree = to_json(member(&physical, "tree").ok_or_else(|| err("Missing schema tree"))?)?;
+    let containers =
+        to_json(member(&physical, "containers").ok_or_else(|| err("Missing containers"))?)?;
+    let container_list = containers
+        .as_array()
+        .ok_or_else(|| err("Invalid containers"))?;
+    let mut fields = model
+        .pointer("/value/header/value/fields")
+        .and_then(Json::as_array)
+        .ok_or_else(|| err("Expected Arrow schema fields"))?;
+    let physical_root = tree
+        .get("children")
+        .and_then(Json::as_array)
+        .ok_or_else(|| err("Expected Parquet schema children"))?;
+    let mut nodes = std::collections::HashMap::<usize, &Json>::new();
+    fn collect<'a>(
+        node: &'a Json,
+        nodes: &mut std::collections::HashMap<usize, &'a Json>,
+        ctx: &mut Context<'_>,
+        depth: usize,
+    ) -> Result<(), EngineError> {
+        ctx.charge_work(1, Utf16::from("/schema"))?;
+        if depth > ctx.limits().max_depth {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::from("/schema"),
+                "Schema traversal depth exceeded",
+            )
+            .with_control_failure());
+        }
+        if let Some(index) = node.get("index").and_then(Json::as_u64) {
+            nodes.insert(index as usize, node);
+        }
+        if let Some(children) = node.get("children").and_then(Json::as_array) {
+            for child in children {
+                collect(child, nodes, ctx, depth + 1)?;
+            }
+        }
+        Ok(())
+    }
+    collect(&tree, &mut nodes, ctx, 0)?;
+    let mut map_entries = std::collections::HashSet::new();
+    for container in container_list {
+        ctx.charge_work(1, Utf16::from("/containers"))?;
+        if container.get("kind").and_then(Json::as_str) == Some("map") {
+            if let Some(index) = container.get("repeatedIndex").and_then(Json::as_u64) {
+                map_entries.insert(index as usize);
+            }
+        }
+    }
+    let mut candidates: &[Json] = physical_root;
+    let mut role_name = false;
+    let mut selected: Option<&Json> = None;
+    let mut from = Vec::<String>::new();
+    for (depth, field_index) in field_path.iter().copied().enumerate() {
+        ctx.charge_work(1, Utf16::from(format!("/arrowFieldPath/{depth}")))?;
+        if field_index >= fields.len() {
+            return Ok(fail(out, "Arrow field path is absent"));
+        }
+        if fields.len() != candidates.len() {
+            return Ok(fail(out, "Arrow and Parquet child counts differ"));
+        }
+        let mut sibling_names = std::collections::HashSet::new();
+        for sibling in fields {
+            ctx.charge_work(1, Utf16::from(format!("/arrowFieldPath/{depth}/siblings")))?;
+            let Some(sibling_name) = sibling.get("name").and_then(Json::as_str) else {
+                return Ok(fail(out, "Invalid Arrow sibling name"));
+            };
+            if !sibling_names.insert(sibling_name) {
+                return Ok(fail(out, "Ambiguous Arrow sibling names"));
+            }
+        }
+        let field = &fields[field_index];
+        let node = &candidates[field_index];
+        let field_name = field
+            .get("name")
+            .and_then(Json::as_str)
+            .ok_or_else(|| err("Missing field name"))?;
+        let node_name = node.get("name").and_then(Json::as_str).unwrap_or("");
+        if !role_name && field_name != node_name {
+            return Ok(fail(
+                out,
+                "Ordinary record fields require matching names and positions",
+            ));
+        }
+        from.push(field_name.to_owned());
+        selected = Some(node);
+        if depth + 1 == field_path.len() {
+            break;
+        }
+        let node_index = node.get("index").and_then(Json::as_u64).unwrap_or(u64::MAX);
+        let mut container = None;
+        for candidate in container_list {
+            ctx.charge_work(1, Utf16::from("/containers"))?;
+            if candidate.get("index").and_then(Json::as_u64) == Some(node_index) {
+                container = Some(candidate);
+                break;
+            }
+        }
+        let container_kind = container
+            .and_then(|container| container.get("kind"))
+            .and_then(Json::as_str);
+        let type_name = field
+            .get("type")
+            .and_then(|type_value| type_value.get("type"))
+            .and_then(Json::as_str)
+            .unwrap_or("");
+        let children = field
+            .get("children")
+            .and_then(Json::as_array)
+            .ok_or_else(|| err("Missing Arrow child fields"))?;
+        if container_kind == Some("list") {
+            if !["List", "LargeList", "FixedSizeList"].contains(&type_name) {
+                return Ok(fail(
+                    out,
+                    "LIST requires a corresponding Arrow list declaration",
+                ));
+            }
+            let element = container
+                .and_then(|item| item.get("elementIndex"))
+                .and_then(Json::as_u64)
+                .ok_or_else(|| err("Missing list element"))? as usize;
+            let Some(element_node) = nodes.get(&element) else {
+                return Ok(fail(out, "LIST element node is missing"));
+            };
+            candidates = std::slice::from_ref(*element_node);
+            role_name = true;
+        } else if container_kind == Some("map") {
+            if type_name != "Map" {
+                return Ok(fail(
+                    out,
+                    "MAP requires a corresponding Arrow map declaration",
+                ));
+            }
+            let repeated = container
+                .and_then(|item| item.get("repeatedIndex"))
+                .and_then(Json::as_u64)
+                .ok_or_else(|| err("Missing MAP entry"))? as usize;
+            let Some(entry_node) = nodes.get(&repeated) else {
+                return Ok(fail(out, "MAP entry node is missing"));
+            };
+            candidates = std::slice::from_ref(*entry_node);
+            role_name = true;
+        } else {
+            if type_name != "Struct_" {
+                return Ok(fail(
+                    out,
+                    "Nested record traversal requires an Arrow struct",
+                ));
+            }
+            role_name = map_entries.contains(&(node_index as usize));
+            candidates = node
+                .get("children")
+                .and_then(Json::as_array)
+                .ok_or_else(|| err("Missing Parquet struct children"))?;
+        }
+        fields = children;
+    }
+    let Some(selected) = selected else {
+        return Ok(fail(out, "Arrow field path is absent"));
+    };
+    let selected_index = selected
+        .get("index")
+        .and_then(Json::as_u64)
+        .unwrap_or(u64::MAX) as usize;
+    if selected_index != index {
+        return Ok(fail(
+            out,
+            "Explicit indexes do not identify the same structural field",
+        ));
+    }
+    if map_entries.contains(&selected_index) {
+        return Ok(fail(
+            out,
+            "Renaming the synthetic MAP entry wrapper is unsupported",
+        ));
+    }
+    let mut selected_is_map_role = false;
+    for container in container_list {
+        ctx.charge_work(1, Utf16::from("/containers"))?;
+        if container.get("kind").and_then(Json::as_str) == Some("map")
+            && (container.get("keyIndex").and_then(Json::as_u64) == Some(selected_index as u64)
+                || container.get("valueIndex").and_then(Json::as_u64)
+                    == Some(selected_index as u64))
+        {
+            selected_is_map_role = true;
+            break;
+        }
+    }
+    if selected_is_map_role {
+        return Ok(fail(
+            out,
+            "Native Arrow readers normalize MAP key/value role labels; rename descendants instead",
+        ));
+    }
+    if !role_name && parquet_name.is_some() && physical_name != name {
+        return Ok(fail(
+            out,
+            "Ordinary record fields require one shared target name",
+        ));
+    }
+    fn siblings_for_path<'a>(model: &'a Json, path: &[usize]) -> Option<&'a [Json]> {
+        let mut siblings = model.pointer("/value/header/value/fields")?.as_array()?;
+        for index in path.iter().take(path.len().saturating_sub(1)) {
+            siblings = siblings.get(*index)?.get("children")?.as_array()?;
+        }
+        Some(siblings)
+    }
+    let siblings = siblings_for_path(&model, &field_path)
+        .ok_or_else(|| err("Arrow field parent is unavailable"))?;
+    let mut sibling_collision = false;
+    for (sibling_index, sibling) in siblings.iter().enumerate() {
+        ctx.charge_work(1, Utf16::from("/arrowFieldPath/siblings"))?;
+        if sibling_index != *field_path.last().unwrap()
+            && sibling.get("name").and_then(Json::as_str) == Some(name.as_str())
+        {
+            sibling_collision = true;
+            break;
+        }
+    }
+    if sibling_collision {
+        return Ok(fail(out, "Arrow sibling name collision"));
+    }
+    fn field_mut_at<'a>(model: &'a mut Json, path: &[usize]) -> Option<&'a mut Json> {
+        let (last, parents) = path.split_last()?;
+        let mut fields = model
+            .pointer_mut("/value/header/value/fields")?
+            .as_array_mut()?;
+        for index in parents {
+            fields = fields
+                .get_mut(*index)?
+                .get_mut("children")?
+                .as_array_mut()?;
+        }
+        fields.get_mut(*last)
+    }
+    field_mut_at(&mut model, &field_path).ok_or_else(|| err("Arrow field path is absent"))?
+        ["name"] = Json::String(name.clone());
+    let changed_model =
+        serde_json::to_string(&model).map_err(|_| err("Could not serialize Arrow model"))?;
+    ctx.charge_work(changed_model.len(), Utf16::from("/arrowSchema"))?;
+    let changed_document = crate::arrow_flatbuffer_model::import_arrow_flatbuffer_model(
+        &Utf16::from(changed_model.as_str()),
+        &Utf16::from("parquet-arrow-rename"),
+        ctx,
+    )?;
+    let prepared =
+        crate::arrow_flatbuffer_binary::prepare_arrow_flatbuffer_encoding(&changed_document, ctx)?;
+    let flatbuffer = match encoding {
+        ArrowSchemaRenameEncoding::Prepare => {
+            let mut prepared_report = out;
+            replace_member(
+                &mut prepared_report,
+                "schemaModel",
+                Value::String(Utf16::from(changed_model.as_str())),
+            );
+            return Ok(prepared_report);
+        }
+        ArrowSchemaRenameEncoding::Native => {
+            crate::arrow_flatbuffer_binary::encode_arrow_flatbuffer_native(&prepared, ctx)?
+        }
+        ArrowSchemaRenameEncoding::Supplied(bytes) => {
+            if let Err(error) =
+                crate::arrow_flatbuffer_binary::verify_encoded_bytes(&prepared, bytes, ctx)
+            {
+                if error.is_control_failure()
+                    || matches!(
+                        error.code.as_str(),
+                        "RESOURCE_LIMIT" | "LIMIT" | "CAPACITY" | "CANCELLED" | "DEADLINE"
+                    )
+                {
+                    return Err(error);
+                }
+                let message = error
+                    .message
+                    .to_utf8()
+                    .unwrap_or_else(|_| "Encoded Arrow schema was rejected".into());
+                return Ok(fail(out, &message));
+            }
+            ctx.charge_work(bytes.len(), Utf16::from("/flatbuffer"))?;
+            bytes.to_vec()
+        }
+        ArrowSchemaRenameEncoding::HostFailure(message) => {
+            let mut blocked = out;
+            let mut items = arr(member(&blocked, "diagnostics").unwrap_or(&Value::Null))
+                .unwrap_or(&[])
+                .to_vec();
+            items.push(obj([
+                ("code", s("PARQUET_ARROW_RENAME_BLOCKED")),
+                ("path", s("")),
+                ("severity", s("error")),
+                ("message", Value::String(message.clone())),
+            ]));
+            replace_member(&mut blocked, "diagnostics", Value::Array(items));
+            return Ok(blocked);
+        }
+    };
+    let ipc_hex = member(&embedded, "ipcHex")
+        .and_then(text)
+        .ok_or_else(|| err("Embedded IPC bytes are unavailable"))?;
+    let prefix = if ipc_hex.starts_with("ffffffff") {
+        8usize
+    } else {
+        4usize
+    };
+    let padded = (prefix + flatbuffer.len() + 7) / 8 * 8 - prefix;
+    let mut ipc_bytes = vec![0; prefix + padded];
+    if prefix == 8 {
+        ipc_bytes[..4].copy_from_slice(&(-1i32).to_le_bytes());
+    }
+    let padded_i32 = i32::try_from(padded).map_err(|_| err("Arrow IPC message exceeds limits"))?;
+    ipc_bytes[prefix - 4..prefix].copy_from_slice(&padded_i32.to_le_bytes());
+    ipc_bytes[prefix..prefix + flatbuffer.len()].copy_from_slice(&flatbuffer);
+    let encoded = STANDARD.encode(&ipc_bytes);
+    let mut original_footer =
+        to_json(member(&footer, "value").ok_or_else(|| err("Missing footer value"))?)?;
+    let key_values = id_value_mut(&mut original_footer, 5)
+        .and_then(wire_list_items_mut)
+        .ok_or_else(|| err("Key/value metadata is unavailable"))?;
+    let metadata_index = member(&embedded, "metadataIndex")
+        .and_then(|value| match value {
+            Value::Number(number) => Some(*number as usize),
+            _ => None,
+        })
+        .ok_or_else(|| err("Embedded schema metadata index is unavailable"))?;
+    let entry = key_values
+        .get_mut(metadata_index)
+        .ok_or_else(|| err("Embedded schema entry is unavailable"))?;
+    let binary_value =
+        id_value_mut(entry, 2).ok_or_else(|| err("Embedded schema value is unavailable"))?;
+    *binary_value = json!({"kind":"binary","hex":hex(encoded.as_bytes())});
+    let mut temporary_footer = original_footer.clone();
+    if let Some(fields) = temporary_footer
+        .get_mut("fields")
+        .and_then(Json::as_array_mut)
+    {
+        fields.retain(|field| field.get("id").and_then(Json::as_u64) != Some(5));
+    }
+    let (temporary, _) = match rewrite(&original, &temporary_footer, engine, registry, cap, ctx) {
+        Ok(rewritten) => rewritten,
+        Err(error) if error.is_control_failure() => return Err(error),
+        Err(error) => {
+            return Ok(fail(
+                out,
+                &error
+                    .message
+                    .to_utf8()
+                    .unwrap_or_else(|_| "Footer rewrite rejected".into()),
+            ))
+        }
+    };
+    let renamed = rename_field(
+        &temporary,
+        &Value::Number(index as f64),
+        &Value::String(Utf16::from(physical_name.as_str())),
+        engine,
+        registry,
+        cap,
+        ctx,
+    )?;
+    if !status(&renamed, "transformed") {
+        return Ok(fail(out, "Physical Parquet field rename rejected"));
+    }
+    let renamed_document = member(&renamed, "output").ok_or_else(|| err("Missing renamed file"))?;
+    let renamed_footer = decode_parquet_footer(renamed_document, engine, registry, cap, ctx)?;
+    let mut final_footer =
+        to_json(member(&renamed_footer, "value").ok_or_else(|| err("Missing renamed footer"))?)?;
+    let final_fields = final_footer
+        .get_mut("fields")
+        .and_then(Json::as_array_mut)
+        .ok_or_else(|| err("Invalid renamed footer"))?;
+    let key_values = original_footer
+        .get("fields")
+        .and_then(Json::as_array)
+        .and_then(|fields| {
+            fields
+                .iter()
+                .find(|field| field.get("id").and_then(Json::as_u64) == Some(5))
+        })
+        .cloned()
+        .ok_or_else(|| err("Missing preserved key/value metadata"))?;
+    final_fields.push(key_values);
+    let (output, prefix_bytes) =
+        match rewrite(renamed_document, &final_footer, engine, registry, cap, ctx) {
+            Ok(rewritten) => rewritten,
+            Err(error) if error.is_control_failure() => return Err(error),
+            Err(error) => {
+                return Ok(fail(
+                    out,
+                    &error
+                        .message
+                        .to_utf8()
+                        .unwrap_or_else(|_| "Footer rewrite rejected".into()),
+                ))
+            }
+        };
+    let after_metadata = inspect_parquet_metadata(&output, engine, registry, cap, ctx)?;
+    let after =
+        crate::arrow_ipc_inspection::get_parquet_arrow_schema(&output, &after_metadata, ctx)?;
+    if !status(&after, "decoded") {
+        return Ok(fail(
+            out,
+            "Rewritten embedded Arrow schema failed validation",
+        ));
+    }
+    let after_message =
+        member(&after, "message").ok_or_else(|| err("Missing rewritten Arrow message"))?;
+    if !crate::arrow_ipc_inspection::exported_flatbuffer_models_equivalent(
+        after_message,
+        &changed_document,
+        ctx,
+    )? {
+        return Ok(fail(
+            out,
+            "Rewritten embedded schema changed unexpected metadata",
+        ));
+    }
+    replace_member(&mut out, "output", copy_json(&output, ctx)?);
+    replace_member(&mut out, "unchangedPrefixBytes", n(prefix_bytes));
+    replace_member(&mut out, "status", s("transformed"));
+    let mut renamed_paths = from.clone();
+    if let Some(last) = renamed_paths.last_mut() {
+        *last = name.clone();
+    }
+    let mut rename = obj([
+        ("from", Value::Array(from.iter().map(s).collect())),
+        ("to", Value::Array(renamed_paths.iter().map(s).collect())),
+    ]);
+    let physical_path = selected
+        .get("path")
+        .and_then(Json::as_array)
+        .map(|parts| {
+            parts
+                .iter()
+                .filter_map(Json::as_str)
+                .map(str::to_owned)
+                .collect::<Vec<_>>()
+        })
+        .unwrap_or_default();
+    if from != physical_path || physical_name != name {
+        let physical_from = member(&renamed, "rename")
+            .and_then(|value| member(value, "from"))
+            .cloned()
+            .unwrap_or(Value::Null);
+        let physical_to = member(&renamed, "rename")
+            .and_then(|value| member(value, "to"))
+            .cloned()
+            .unwrap_or(Value::Null);
+        replace_member(&mut rename, "parquetFrom", physical_from);
+        replace_member(&mut rename, "parquetTo", physical_to);
+    }
+    replace_member(&mut out, "rename", rename);
+    let mut final_diagnostics = diagnostics;
+    final_diagnostics.push(scope_diag("PARQUET_ARROW_NAME_REFERENCES_UNVERIFIED", "", "Physical field and embedded Arrow field renamed together. All other metadata is preserved without rewriting name references; external consumers and schema/data correspondence remain unverified. Data-page prefix is unchanged."));
+    replace_member(&mut out, "diagnostics", Value::Array(final_diagnostics));
+    Ok(out)
+}

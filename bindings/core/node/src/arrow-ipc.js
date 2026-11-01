@@ -38,11 +38,26 @@ export function createArrowIpcOperations(call) {
     inspectArrowIpcCapture(document) {
       return call('inspect', {document});
     },
+    prepareArrowIpcObservation(document) { return call('prepareObserve', {document}); },
+    completeArrowIpcObservation(prepared, outcome) { return call('completeObserve', {prepared, outcome}); },
     inspectArrowIpcLayout(document) {
       return call('layout', {document});
     },
     inspectArrowIpcConsistency(document) {
       return call('consistency', {document});
     },
+    exportArrowSchemaIpcNative(document) {
+      return copyBytes(fromHex(call('exportSchemaNative', {document})));
+    },
+    prepareArrowSchemaIpc(document) {
+      return call('prepareSchemaExport', {document});
+    },
+    completeArrowSchemaIpc(document, beforeJson, afterJson, bytesHex) {
+      return call('completeSchemaExport', {document, beforeJson, afterJson, bytesHex});
+    },
+    prepareArrowIpcRename(document, request) { return call('prepareRename', {document, request}); },
+    prepareArrowIpcRenameFooter(document, request, schemaHex) { return call('prepareRenameFooter', {document, request, schemaHex}); },
+    completeArrowIpcRename(document, request, schemaHex, footerHex) { return call('completeRename', {document, request, schemaHex, footerHex}); },
+    renameArrowIpcFieldNative(document, request) { return call('renameNative', {document, request}); },
   });
 }

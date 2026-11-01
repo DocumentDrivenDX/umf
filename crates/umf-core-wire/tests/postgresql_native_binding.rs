@@ -2,8 +2,12 @@
 #![cfg(feature = "native-postgresql")]
 
 use serde_json::Value as Json;
-use umf_core::{Context, Utf16, Value};
+use umf_core::{
+    serialization::{read_json_value, Format},
+    Capabilities, Context, Diagnostic, ResourceProfile, SemanticContext, Utf16, Value,
+};
 use umf_core_wire::postgresql_native_binding::{execute_wire_with_control, PROFILE};
+use umf_core_wire::{decode, encode, execute_request};
 
 fn call(op: &str, fields: impl IntoIterator<Item = (&'static str, Value)>) -> Result<Value, Json> {
     let mut request = vec![
@@ -95,6 +99,82 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
             .map(|(name, value)| (Utf16::from(name), value))
             .collect(),
     )
+}
+
+struct NoCapabilities;
+impl Capabilities for NoCapabilities {
+    fn validate_extension(
+        &mut self,
+        _: u64,
+        _: &Value,
+        _: &SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        Ok(Vec::new())
+    }
+}
+
+fn parse_json(source: &str) -> Value {
+    read_json_value(
+        &source.encode_utf16().collect::<Vec<_>>(),
+        Format::Json,
+        &mut Context::ordinary(),
+    )
+    .unwrap()
+}
+
+fn core_resources() -> Value {
+    object(vec![
+        (
+            "coreSchema",
+            parse_json(include_str!("../../../spec/core/schema.json")),
+        ),
+        (
+            "referenceSchema",
+            parse_json(include_str!(
+                "../../../spec/core/semantic-type-reference.schema.json"
+            )),
+        ),
+        (
+            "packageSchema",
+            parse_json(include_str!(
+                "../../../spec/core/extension-package.schema.json"
+            )),
+        ),
+        (
+            "constraints",
+            parse_json(include_str!(
+                "../../../spec/metamodel/generated/core-constraints.json"
+            )),
+        ),
+        (
+            "domainPolicy",
+            parse_json(include_str!(
+                "../../../spec/metamodel/generated/domain-policy.json"
+            )),
+        ),
+    ])
+}
+
+fn model_call(op: &str, fields: impl IntoIterator<Item = (&'static str, Value)>) -> Value {
+    let mut request = vec![
+        (Utf16::from("op"), Value::string_utf8(op)),
+        (Utf16::from("resources"), core_resources()),
+    ];
+    request.extend(
+        fields
+            .into_iter()
+            .map(|(name, value)| (Utf16::from(name), value)),
+    );
+    let wire = encode(&Value::Object(request), &mut Context::ordinary()).unwrap();
+    let mut capabilities = NoCapabilities;
+    let envelope: Json = serde_json::from_str(&execute_request(
+        &wire,
+        ResourceProfile::Cooperative,
+        &mut capabilities,
+    ))
+    .unwrap();
+    assert_eq!(envelope["status"], "ok", "{op}: {envelope}");
+    decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap()
 }
 
 fn kind_author(
@@ -355,7 +435,10 @@ fn native_postgresql_authored_cardinality_projects_and_recovers_without_parser_v
             "provenance",
             object(vec![
                 ("origin", Value::string_utf8("authored")),
-                ("idealPath", Value::string_utf8("/modules/0/elements/0/cardinality")),
+                (
+                    "idealPath",
+                    Value::string_utf8("/modules/0/elements/0/cardinality"),
+                ),
                 ("cardinality", Value::string_utf8("one")),
                 (
                     "binding",
@@ -677,4 +760,203 @@ fn native_postgresql_nullability_projection_uses_catalog_parser_without_parser_v
     )
     .unwrap();
     assert_eq!(member(&blocked, "status"), &Value::string_utf8("blocked"));
+}
+
+#[test]
+fn native_postgresql_authored_keys_and_facets_project_and_recover_without_parser_values() {
+    let source = object(vec![
+        ("umf", Value::string_utf8("0.10.0")),
+        ("id", Value::string_utf8("native-authored-pg-source")),
+        ("vocabularies", object(vec![])),
+        ("extensions", object(vec![])),
+        (
+            "modules",
+            Value::Array(vec![object(vec![
+                ("id", Value::string_utf8("sales")),
+                ("namespace", Value::string_utf8("sales")),
+                (
+                    "elements",
+                    Value::Array(vec![
+                        object(vec![
+                            ("id", Value::string_utf8("orders")),
+                            ("name", Value::string_utf8("orders")),
+                            ("kind", Value::string_utf8("record")),
+                            (
+                                "members",
+                                Value::Array(vec![object(vec![
+                                    ("module", Value::string_utf8("sales")),
+                                    ("element", Value::string_utf8("id")),
+                                ])]),
+                            ),
+                            ("extensions", object(vec![])),
+                        ]),
+                        object(vec![
+                            ("id", Value::string_utf8("id")),
+                            ("name", Value::string_utf8("id")),
+                            ("kind", Value::string_utf8("field")),
+                            ("scalarType", Value::string_utf8("integer")),
+                            ("cardinality", Value::string_utf8("one")),
+                            ("nullability", Value::string_utf8("required")),
+                            ("extensions", object(vec![])),
+                        ]),
+                    ]),
+                ),
+            ])]),
+        ),
+    ]);
+    let record_identity = object(vec![
+        ("module", Value::string_utf8("sales")),
+        ("element", Value::string_utf8("orders")),
+    ]);
+    let field_identity = object(vec![
+        ("module", Value::string_utf8("sales")),
+        ("element", Value::string_utf8("id")),
+    ]);
+    let key_author = model_call(
+        "model/declareCoreKey",
+        [
+            ("source", source.clone()),
+            ("identity", record_identity.clone()),
+            (
+                "request",
+                object(vec![
+                    ("id", Value::string_utf8("order-id")),
+                    ("name", Value::string_utf8("Order identity")),
+                    ("fields", Value::Array(vec![field_identity.clone()])),
+                    ("primary", Value::Bool(true)),
+                ]),
+            ),
+        ],
+    );
+    let key_source = member(&key_author, "target").clone();
+    let key_request = object(vec![
+        ("id", Value::string_utf8("native-orders-key")),
+        ("record", record_identity),
+        ("namespace", Value::string_utf8("sales")),
+        ("tableName", Value::string_utf8("orders")),
+        ("scope", Value::string_utf8("new-table-stored-values")),
+        ("mode", Value::string_utf8("report")),
+        (
+            "keyNames",
+            Value::Array(vec![object(vec![
+                ("keyId", Value::string_utf8("order-id")),
+                ("name", Value::string_utf8("orders_pk")),
+            ])]),
+        ),
+        (
+            "columns",
+            Value::Array(vec![object(vec![
+                ("field", field_identity.clone()),
+                ("name", Value::string_utf8("id")),
+                ("nativeType", Value::string_utf8("integer")),
+            ])]),
+        ),
+    ]);
+    let key_receipt = call_catalog(
+        "postgresql.projectKeysWithNativeBackend",
+        [
+            ("source", key_source.clone()),
+            ("authors", Value::Array(vec![key_author.clone()])),
+            ("request", key_request.clone()),
+        ],
+    )
+    .unwrap();
+    assert_eq!(
+        member(&key_receipt, "status"),
+        &Value::string_utf8("projected")
+    );
+    let key_native_sql = member(&key_receipt, "nativeSql").clone();
+    let key_recovered = call_catalog(
+        "postgresql.recoverKeysWithNativeBackend",
+        [("receipt", key_receipt), ("nativeText", key_native_sql)],
+    )
+    .unwrap();
+    assert_eq!(key_recovered, key_source);
+    let mut strict_key_request = key_request;
+    set_member(
+        &mut strict_key_request,
+        "mode",
+        Value::string_utf8("strict"),
+    );
+    let refused_key = call_catalog(
+        "postgresql.projectKeysWithNativeBackend",
+        [
+            ("source", key_source.clone()),
+            ("authors", Value::Array(vec![key_author])),
+            ("request", strict_key_request),
+        ],
+    )
+    .unwrap();
+    assert_eq!(
+        member(&refused_key, "status"),
+        &Value::string_utf8("blocked")
+    );
+
+    let facet_author = model_call(
+        "model/declareCoreFacets",
+        [
+            ("source", key_source),
+            ("identity", field_identity),
+            (
+                "request",
+                object(vec![(
+                    "integerWidth",
+                    object(vec![
+                        ("bits", Value::Number(16.0)),
+                        ("signed", Value::Bool(true)),
+                    ]),
+                )]),
+            ),
+        ],
+    );
+    let facet_request = object(vec![
+        ("id", Value::string_utf8("native-orders-facet")),
+        ("namespace", Value::string_utf8("sales")),
+        ("tableName", Value::string_utf8("orders")),
+        ("columnName", Value::string_utf8("id")),
+        ("nativeType", Value::string_utf8("integer")),
+        ("mode", Value::string_utf8("report")),
+        ("encoding", Value::string_utf8("checked")),
+        ("obligation", Value::string_utf8("value-domain")),
+    ]);
+    let facet_receipt = call_catalog(
+        "postgresql.projectFacetsWithNativeBackend",
+        [
+            ("author", facet_author.clone()),
+            ("request", facet_request.clone()),
+        ],
+    )
+    .unwrap();
+    assert_eq!(
+        member(&facet_receipt, "status"),
+        &Value::string_utf8("projected")
+    );
+    let facet_native_sql = member(&facet_receipt, "nativeSql").clone();
+    let facet_recovered = call_catalog(
+        "postgresql.recoverFacetsWithNativeBackend",
+        [("receipt", facet_receipt), ("nativeText", facet_native_sql)],
+    )
+    .unwrap();
+    assert_eq!(facet_recovered, member(&facet_author, "target").clone());
+
+    let mut strict_facet_request = facet_request;
+    set_member(
+        &mut strict_facet_request,
+        "mode",
+        Value::string_utf8("strict"),
+    );
+    set_member(
+        &mut strict_facet_request,
+        "obligation",
+        Value::string_utf8("exact-input"),
+    );
+    let refused_facet = call_catalog(
+        "postgresql.projectFacetsWithNativeBackend",
+        [("author", facet_author), ("request", strict_facet_request)],
+    )
+    .unwrap();
+    assert_eq!(
+        member(&refused_facet, "status"),
+        &Value::string_utf8("blocked")
+    );
 }

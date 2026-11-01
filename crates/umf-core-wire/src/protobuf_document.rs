@@ -7,7 +7,7 @@
 use super::{
     as_utf16, decode, encode, fail, field, object, result_envelope, text_field, validation_value,
 };
-use umf_core::{Context, EngineError, Utf16, Value, protobuf_descriptor, protobuf_document};
+use umf_core::{protobuf_descriptor, protobuf_document, Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf-r8-protobuf-descriptor-document/0.1.0";
 
@@ -54,6 +54,16 @@ pub fn execute(
                 charge_binary(input_binary, &mut context)?;
                 protobuf_document::import_descriptor_set(input_binary, &id, &mut context)?
             }
+            "protobuf.document.edit" => {
+                let document = required(&request, "document", "Protobuf document is required")?;
+                let descriptor = required(&request, "descriptorSet", "Descriptor set is required")?;
+                let (document, diagnostics) =
+                    protobuf_document::propose_descriptor_edit(document, descriptor, &mut context)?;
+                object(vec![
+                    ("document", document),
+                    ("diagnostics", diagnostics_value(diagnostics)),
+                ])
+            }
             "protobuf.document.get" => {
                 let document = required(&request, "document", "Protobuf document is required")?;
                 protobuf_document::get_descriptor_set(document, &mut context)?
@@ -75,6 +85,16 @@ pub fn execute(
             "protobuf.document.inspect" => {
                 let document = required(&request, "document", "Protobuf document is required")?;
                 validation_value(protobuf_document::inspect(document, &mut context)?)
+            }
+            "protobuf.document.inspectPayload" => {
+                let payload = required(&request, "payload", "Protobuf payload is required")?;
+                validation_value(
+                    umf_core::protobuf_inspect::inspect_protobuf_payload_admitted(
+                        payload,
+                        &Utf16::default(),
+                        &mut context,
+                    )?,
+                )
             }
             _ => {
                 return Err(fail(

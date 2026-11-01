@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Rust-owned logical Arrow FlatBuffer model host routes.
 use crate::{decode, encode, field, result_envelope};
-use std::collections::BTreeSet;
+use std::{collections::BTreeSet, fmt::Write as _};
 use umf_core::{
     arrow_flatbuffer_binary, arrow_flatbuffer_model, Context, EngineError, Utf16, Value,
 };
@@ -88,6 +88,22 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             let bytes = decode_hex(text(field(request, "bytes"), "bytes")?)?;
             arrow_flatbuffer_binary::verify_encoded_bytes(&expected, &bytes, ctx)?;
             Ok(Value::Bool(true))
+        }
+        "arrow-flatbuffer-model.encodeArrowFlatbufferNative" => {
+            let d = field(request, "document").ok_or_else(|| err("document required"))?;
+            let model = arrow_flatbuffer_binary::prepare_arrow_flatbuffer_encoding(d, ctx)?;
+            let bytes = arrow_flatbuffer_binary::encode_arrow_flatbuffer_native(&model, ctx)?;
+            ctx.charge_work(bytes.len(), Utf16::default())?;
+            let capacity = bytes
+                .len()
+                .checked_mul(2)
+                .ok_or_else(|| err("encoded metadata is too large"))?;
+            let mut hex = String::with_capacity(capacity);
+            for byte in bytes {
+                write!(&mut hex, "{byte:02x}")
+                    .map_err(|_| err("encoded metadata could not be rendered"))?;
+            }
+            Ok(Value::String(Utf16::from(hex)))
         }
         _ => Err(err("unknown Arrow FlatBuffer model operation")),
     }

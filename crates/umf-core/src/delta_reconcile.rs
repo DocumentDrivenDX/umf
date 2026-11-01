@@ -23,7 +23,7 @@ pub fn reconcile_delta_commits(
     actions: &DeltaActionResources,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    reconcile_delta_commits_inner(commits, logs, actions, ctx, false)
+    reconcile_delta_commits_inner(commits, logs, actions, ctx, None)
 }
 
 /// Checkpoint replay uses the checkpoint's full remove identity so two
@@ -34,7 +34,64 @@ pub fn reconcile_delta_checkpoint_commits(
     actions: &DeltaActionResources,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    reconcile_delta_commits_inner(commits, logs, actions, ctx, true)
+    reconcile_delta_commits_inner(commits, logs, actions, ctx, Some("legacy"))
+}
+
+/// Reconcile an explicit V1 or V2 checkpoint and its contiguous later commits.
+/// The result preserves the original checkpoint separately from the post-checkpoint sources.
+pub fn reconcile_delta_checkpoint(
+    checkpoint: &Value,
+    commits: &Value,
+    spec: &str,
+    logs: &DeltaLogResources,
+    actions: &DeltaActionResources,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    if !matches!(commits, Value::Array(_)) {
+        return Err(fail("DELTA_HISTORY_INPUT", "Expected an array of commits"));
+    }
+    let checkpoint = crate::value::copy_json(checkpoint, ctx)?;
+    let commits = crate::value::copy_json(commits, ctx)?;
+    let Value::Array(tail) = commits else {
+        return Err(fail("DELTA_HISTORY_INPUT", "Expected an array of commits"));
+    };
+    let mut combined = Vec::with_capacity(tail.len().saturating_add(1));
+    combined.push(checkpoint);
+    combined.extend(tail);
+    let mut result =
+        reconcile_delta_commits_inner(&Value::Array(combined), logs, actions, ctx, Some(spec))?;
+    if let Value::Object(fields) = &mut result {
+        let sources_index = fields
+            .iter()
+            .position(|(name, _)| name == &Utf16::from("sources"));
+        if let Some(index) = sources_index {
+            let checkpoint = match &mut fields[index].1 {
+                Value::Array(sources) if !sources.is_empty() => Some(sources.remove(0)),
+                _ => None,
+            };
+            if let Some(checkpoint) = checkpoint {
+                fields.push((Utf16::from("checkpoint"), checkpoint));
+            }
+        }
+        let diagnostics_index = fields
+            .iter()
+            .position(|(name, _)| name == &Utf16::from("diagnostics"));
+        if let Some(index) = diagnostics_index {
+            if let Value::Array(diagnostics) = &mut fields[index].1 {
+                for diagnostic in diagnostics {
+                    if let Some((_, Value::String(path))) = match diagnostic {
+                        Value::Object(members) => members
+                            .iter_mut()
+                            .find(|(name, _)| name == &Utf16::from("path")),
+                        _ => None,
+                    } {
+                        *path = rewrite_checkpoint_path(path, ctx)?;
+                    }
+                }
+            }
+        }
+    }
+    Ok(result)
 }
 
 fn reconcile_delta_commits_inner(
@@ -42,19 +99,28 @@ fn reconcile_delta_commits_inner(
     logs: &DeltaLogResources,
     actions: &DeltaActionResources,
     ctx: &mut Context<'_>,
-    checkpoint_first: bool,
+    checkpoint_spec: Option<&str>,
 ) -> Result<Value, EngineError> {
     let input = match commits {
         Value::Array(v) => v,
         _ => return Err(fail("DELTA_HISTORY_INPUT", "Expected an array of commits")),
     };
-    let sources = Value::Array(input.clone());
+    let sources = crate::value::copy_json(commits, ctx)?;
     let mut out = Vec::new();
     macro_rules! issue {
         ($code:expr,$path:expr,$message:expr,$severity:expr) => {{
             let severity = $severity;
             out.push(diag($code, &$path, $message, severity));
         }};
+    }
+    if checkpoint_spec.is_some_and(|spec| spec != "legacy" && spec != "v1" && spec != "v2") {
+        issue!(
+            "DELTA_CHECKPOINT_SPEC",
+            String::new(),
+            "Expected v1 or v2 checkpoint spec",
+            Severity::Error
+        );
+        return Ok(report("blocked", sources, out, None));
     }
     if input.is_empty() {
         issue!(
@@ -74,6 +140,29 @@ fn reconcile_delta_commits_inner(
         );
         return Ok(report("blocked", sources, out, None));
     }
+    let checkpoint_mode = checkpoint_spec.is_some_and(|spec| spec == "v1" || spec == "v2");
+    let start_version = if checkpoint_mode {
+        let version = text(&input[0], "version").unwrap_or_default();
+        let valid = !version.is_empty()
+            && version.bytes().all(|byte| byte.is_ascii_digit())
+            && (version == "0" || !version.starts_with('0'))
+            && version.len() <= 19
+            && version
+                .parse::<u64>()
+                .is_ok_and(|number| number <= i64::MAX as u64);
+        if !valid {
+            issue!(
+                "DELTA_CHECKPOINT_VERSION",
+                "/sources/0/version".to_owned(),
+                "Expected a nonnegative signed-int64 checkpoint version",
+                Severity::Error
+            );
+            return Ok(report("blocked", sources, out, None));
+        }
+        version.parse::<u64>().unwrap_or(0)
+    } else {
+        0
+    };
     let mut histories: Vec<Vec<Action>> = Vec::new();
     for (i, c) in input.iter().enumerate() {
         let version = text(c, "version").unwrap_or_default();
@@ -83,14 +172,18 @@ fn reconcile_delta_commits_inner(
             && version.len() <= 19;
         let numeric = version.parse::<u64>().ok();
         if !valid
-            || numeric != Some(i as u64)
+            || numeric != start_version.checked_add(i as u64)
             || numeric.is_none()
             || numeric.unwrap_or(u64::MAX) > i64::MAX as u64
         {
             issue!(
                 "DELTA_HISTORY_SEQUENCE",
                 format!("/sources/{i}/version"),
-                "Require ascending contiguous versions beginning at zero",
+                if checkpoint_mode {
+                    "Require ascending contiguous versions after the checkpoint"
+                } else {
+                    "Require ascending contiguous versions beginning at zero"
+                },
                 Severity::Error
             );
             return Ok(report("blocked", sources, out, None));
@@ -163,8 +256,98 @@ fn reconcile_delta_commits_inner(
                 }
             }
         }
+        let is_checkpoint = checkpoint_mode && i == 0;
+        if is_checkpoint && checkpoint_spec == Some("v2") {
+            let markers = list
+                .iter()
+                .filter(|action| action.name == "checkpointMetadata")
+                .collect::<Vec<_>>();
+            let marker_matches = markers.len() == 1
+                && scalar(&markers[0].value, "version").and_then(|v| v.parse::<u64>().ok())
+                    == Some(start_version);
+            if !marker_matches {
+                issue!(
+                    "DELTA_CHECKPOINT_METADATA",
+                    "/sources/0".to_owned(),
+                    "Exactly one checkpointMetadata must match the supplied version",
+                    Severity::Error
+                );
+            }
+            let protocol = list
+                .iter()
+                .find(|action| action.name == "protocol")
+                .map(|action| &action.value);
+            let has_feature = |key: &str| -> bool {
+                let Some(features) = field(
+                    field(protocol.unwrap_or(&Value::Null), "members").unwrap_or(&Value::Null),
+                    key,
+                ) else {
+                    return false;
+                };
+                let Some(items) = arr(field(features, "items")) else {
+                    return false;
+                };
+                items.iter().any(|item| {
+                    text(item, "kind").as_deref() == Some("string")
+                        && text(item, "value").as_deref() == Some("v2Checkpoint")
+                })
+            };
+            if protocol.is_none()
+                || scalar(protocol.unwrap(), "minReaderVersion").as_deref() != Some("3")
+                || scalar(protocol.unwrap(), "minWriterVersion").as_deref() != Some("7")
+                || !has_feature("readerFeatures")
+                || !has_feature("writerFeatures")
+            {
+                issue!(
+                    "DELTA_CHECKPOINT_PROTOCOL",
+                    "/sources/0".to_owned(),
+                    "V2 checkpoints require protocol 3/7 and both v2Checkpoint feature declarations",
+                    Severity::Error
+                );
+            }
+        }
         let mut seen = Vec::<String>::new();
         for a in &list {
+            if is_checkpoint
+                && checkpoint_spec == Some("v1")
+                && ["checkpointMetadata", "sidecar"].contains(&a.name.as_str())
+            {
+                issue!(
+                    "DELTA_CHECKPOINT_V1_ACTION",
+                    format!("/sources/{i}/lines/{}", a.line.saturating_sub(1)),
+                    "V1 checkpoints cannot contain checkpointMetadata or sidecars",
+                    Severity::Error
+                );
+                continue;
+            }
+            if is_checkpoint && checkpoint_spec == Some("v2") && a.name == "checkpointMetadata" {
+                continue;
+            }
+            if is_checkpoint && checkpoint_spec == Some("v2") && a.name == "sidecar" {
+                issue!(
+                    "DELTA_CHECKPOINT_SIDECAR_UNRESOLVED",
+                    format!("/sources/{i}/lines/{}", a.line.saturating_sub(1)),
+                    "Parquet sidecars must be resolved before state can be reconstructed",
+                    Severity::Error
+                );
+                continue;
+            }
+            if is_checkpoint
+                && (["commitInfo", "cdc"].contains(&a.name.as_str())
+                    || a.name == "domainMetadata"
+                        && boolval(field(
+                            field(&a.value, "members").unwrap_or(&Value::Null),
+                            "removed",
+                        )) == Some(true))
+            {
+                issue!(
+                    "DELTA_CHECKPOINT_FORBIDDEN_ACTION",
+                    format!("/sources/{i}/lines/{}", a.line.saturating_sub(1)),
+                    "Checkpoint cannot contain provenance, CDC or removed domain actions",
+                    Severity::Error
+                );
+                continue;
+            }
             if ["sidecar", "checkpointMetadata"].contains(&a.name.as_str()) {
                 issue!(
                     "DELTA_HISTORY_CHECKPOINT",
@@ -176,7 +359,7 @@ fn reconcile_delta_commits_inner(
             }
             let key = if ["protocol", "metaData"].contains(&a.name.as_str()) {
                 Some(a.name.clone())
-            } else if checkpoint_first && i == 0 && a.name == "remove" {
+            } else if checkpoint_spec.is_some() && i == 0 && a.name == "remove" {
                 Some(format!("remove:{}", file_identity(&a.value)))
             } else {
                 let field_name = match a.name.as_str() {
@@ -281,6 +464,9 @@ fn reconcile_delta_commits_inner(
             removes.retain(|prior| file_identity(prior) != key);
         }
         for a in hs {
+            if checkpoint_mode && i == 0 && a.name == "checkpointMetadata" {
+                continue;
+            }
             match a.name.as_str() {
                 "protocol" => protocol = Some(a.value.clone()),
                 "metaData" => metadata = Some(a.value.clone()),
@@ -312,7 +498,11 @@ fn reconcile_delta_commits_inner(
             issue!(
                 "DELTA_HISTORY_INITIAL_CONTEXT",
                 format!("/sources/{i}"),
-                "Version zero must establish protocol and metadata",
+                if checkpoint_mode {
+                    "Checkpoint must establish protocol and metadata"
+                } else {
+                    "Version zero must establish protocol and metadata"
+                },
                 Severity::Error
             );
             return Ok(report("blocked", sources, out, None));
@@ -420,6 +610,27 @@ fn diag(c: &str, p: &str, m: &str, s: Severity) -> Value {
         ),
     ])
 }
+fn rewrite_checkpoint_path(path: &Utf16, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+    ctx.charge_work(path.units().len(), Utf16::default())?;
+    let Ok(text) = path.to_utf8() else {
+        return Ok(path.clone());
+    };
+    let rewritten = if let Some(rest) = text.strip_prefix("/sources/0") {
+        format!("/checkpoint{rest}")
+    } else if let Some(rest) = text.strip_prefix("/sources/") {
+        let (index, suffix) = rest.split_once('/').unwrap_or((rest, ""));
+        match index.parse::<usize>() {
+            Ok(index) if index > 0 && suffix.is_empty() => format!("/sources/{}", index - 1),
+            Ok(index) if index > 0 => format!("/sources/{}/{suffix}", index - 1),
+            _ => text,
+        }
+    } else {
+        text
+    };
+    ctx.charge_text(rewritten.encode_utf16().count(), Utf16::default())?;
+    Ok(Utf16::from(rewritten.as_str()))
+}
+
 fn source_error_diagnostic(index: usize, message: Utf16) -> Value {
     obj(vec![
         ("code", Value::string_utf8("DELTA_HISTORY_SOURCE")),
@@ -459,10 +670,16 @@ fn number(v: Option<&Value>) -> Option<f64> {
     }
 }
 fn boolval(v: Option<&Value>) -> Option<bool> {
-    if let Value::Bool(b) = v? {
-        Some(*b)
-    } else {
-        None
+    match v? {
+        Value::Bool(b) => Some(*b),
+        Value::Object(_) if text(v?, "kind").as_deref() == Some("boolean") => {
+            if let Value::Bool(b) = field(v?, "value")? {
+                Some(*b)
+            } else {
+                None
+            }
+        }
+        _ => None,
     }
 }
 fn fail(c: &str, m: &str) -> EngineError {

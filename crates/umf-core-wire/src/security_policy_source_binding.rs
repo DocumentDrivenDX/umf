@@ -104,6 +104,48 @@ pub fn execute_security_policy_source_wire_with_control(
                     &mut context,
                 )
             }
+            "inspectPayload" => {
+                closed(&request, &["profile", "op", "payload", "path"])?;
+                let path = match required(&request, "path")? {
+                    Value::String(path) => path,
+                    _ => return Err(fail("REQUEST", "Security semantic path must be text")),
+                };
+                let report = umf_core::security_policy::inspect_security_policy(
+                    required(&request, "payload")?,
+                    None,
+                    &mut context,
+                )?;
+                let diagnostics = match report {
+                    Value::Object(fields) => fields
+                        .into_iter()
+                        .find(|(name, _)| name == &Utf16::from("diagnostics"))
+                        .map(|(_, value)| value),
+                    _ => None,
+                };
+                let Some(Value::Array(mut items)) = diagnostics else {
+                    return Err(fail(
+                        "SECURITY_STRUCTURE",
+                        "Rust policy inspection omitted diagnostics",
+                    ));
+                };
+                for diagnostic in &mut items {
+                    if let Value::Object(fields) = diagnostic {
+                        if let Some((_, Value::String(relative))) = fields
+                            .iter_mut()
+                            .find(|(name, _)| name == &Utf16::from("path"))
+                        {
+                            context.charge_work(
+                                path.len().saturating_add(relative.len()),
+                                Utf16::default(),
+                            )?;
+                            let mut units = path.units().to_vec();
+                            units.extend(relative.units());
+                            *relative = Utf16::new(units);
+                        }
+                    }
+                }
+                Ok(Value::Array(items))
+            }
             "inspectV1" => {
                 closed_optional(
                     &request,

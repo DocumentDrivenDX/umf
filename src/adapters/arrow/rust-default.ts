@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {Document} from '../../model/types';
+import type {Document,Diagnostic,Json,Scope} from '../../model/types';
 import {UmfError} from '../../model/errors';
 import type {
  exportArrowSchema, getArrowNode, importArrowSchema, inspectArrow, proposeArrowNodeEdit,
@@ -13,6 +13,7 @@ export interface ArrowSchemaRustEngine {
  inspect(document:unknown):unknown;
  getNode(document:unknown,pointer:string):unknown;
  proposeNodeEdit(document:unknown,pointer:string,replacementJson:string):unknown;
+ validatePayload(payload:unknown,document:unknown,path:string,scope:string):unknown;
 }
 
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
@@ -49,6 +50,9 @@ export function bindArrowSchemaRust(engine:ArrowSchemaRustEngine,isNativeUmfCore
   },
   proposeArrowNodeEdit(document:Document,path:string,text:string):ReturnType<typeof proposeArrowNodeEdit>{
    return call(()=>engine.proposeNodeEdit(document,path,text)) as ReturnType<typeof proposeArrowNodeEdit>;
+  },
+  validateArrowExtensionPayload(payload:Json,context:{document:Document;path:string;scope:Scope}):Diagnostic[]{
+   return call(()=>engine.validatePayload(payload,context.document,context.path,context.scope)) as Diagnostic[];
   },
  });
 }

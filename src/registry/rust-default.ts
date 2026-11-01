@@ -2,10 +2,10 @@
 import {Registry as BaseRegistry} from './registry';
 import type {ExtensionKindRuntime} from './kind-runtime';
 import {UmfError} from '../model/errors';
-import {validateDocument as validateWithRegistry} from '../validation/document';
+import type {validateDocument as ValidateDocument} from '../validation/document';
 import type {readDocument as ReadDocument,writeDocument as WriteDocument} from '../model/document';
 
-const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
+const CONTROL_CODES=new Set(['RESOURCE_LIMIT','LIMIT','CAPACITY','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
 
 interface RegistryRustEngine extends ExtensionKindRuntime {
  validateExtensionPayload(id:string,version:string,payload:unknown,registry?:Parameters<ExtensionKindRuntime['listKinds']>[0]):unknown;
@@ -35,7 +35,10 @@ export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfC
  const Registry:typeof BaseRegistry=class Registry extends BaseRegistry {
   constructor(kindRuntime:ExtensionKindRuntime=runtime){super(kindRuntime);}
  };
- const validateDocument:typeof validateWithRegistry=(input,registry=new Registry(),meter)=>validateWithRegistry(input,registry,meter);
+ const validateDocument:typeof ValidateDocument=(input,registry=new Registry(),meter)=>{
+  if(meter)throw new UmfError('EXTENSION_KIND_RUNTIME_CONTROLS','Use the shared engine controls for native work metering');
+  return invoke(()=>engine.validateDocument(input,registry.registrations()));
+ };
  const readDocument:typeof ReadDocument=(source,format='yaml')=>invoke(()=>engine.readDocument(source,format)) as ReturnType<typeof ReadDocument>;
  const writeDocument:typeof WriteDocument=(document,format='yaml')=>invoke(()=>engine.writeDocument(document,format));
  return Object.freeze({Registry,validateDocument,readDocument,writeDocument,createUmfRegistry:()=>registerActionsNative(new Registry())});

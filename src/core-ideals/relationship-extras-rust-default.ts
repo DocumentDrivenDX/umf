@@ -2,7 +2,6 @@
 import {UmfError,type Document} from '../model/types';
 import {copyJson} from '../model/json';
 import type {CoreRelationshipDeclaration} from '../model/relationships';
-import {importRelationshipExtraArchive} from './relationship-extras-host';
 import type {RelationshipExtraArchive,RelationshipExtraClassification,RelationshipExtraClassificationRequest,RelationshipExtraProjection,RelationshipExtraRequest} from './relationship-extras-factory';
 
 type Engine={['relationship-extra-projection']:{
@@ -12,13 +11,13 @@ type Engine={['relationship-extra-projection']:{
  verifyRelationshipExtra(fields:{receipt:RelationshipExtraProjection|RelationshipExtraClassification;fresh:Document;current?:Document}):unknown;
  recoverRelationshipExtraIdeal(fields:{receipt:RelationshipExtraProjection;fresh:Document;current?:Document}):unknown;
  recoverRelationshipExtraNative(fields:{receipt:RelationshipExtraProjection|RelationshipExtraClassification;fresh:Document;current?:Document}):unknown;
+ importRelationshipExtraArchive(fields:{archive:RelationshipExtraArchive;id:string}):unknown;
 }};
 type NativeGuard=(error:unknown)=>boolean;
-type Importers={graphql:(text:string,id:string)=>Document;rdf:(text:string,id:string,scope:string)=>Document;linkml:(text:string,id:string,format:'json'|'yaml')=>Document};
 const CONTROL=new Set(['LIMIT','CAPACITY','RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
-export function createRelationshipExtrasRustDefault(engine:Engine,importers:Importers,isNative:NativeGuard=()=>false){
+export function createRelationshipExtrasRustDefault(engine:Engine,isNative:NativeGuard=()=>false){
  function call<T>(op:()=>unknown):T {try{return op() as T;}catch(error){if(!isNative(error))throw error;const e=error as {code?:unknown;message?:unknown;path?:unknown};if(typeof e.code!=='string'||CONTROL.has(e.code)||!e.code.startsWith('RELATIONSHIP_EXTRA_'))throw error;throw new UmfError(e.code,String(e.message??''),typeof e.path==='string'?e.path:'');}}
- function importArchive(archive:RelationshipExtraArchive,id:string):Document{return importRelationshipExtraArchive(archive,id,importers);}
+ function importArchive(archive:RelationshipExtraArchive,id:string):Document{return call<Document>(()=>engine['relationship-extra-projection'].importRelationshipExtraArchive({archive,id}));}
  function archiveFor(receipt:RelationshipExtraProjection|RelationshipExtraClassification):RelationshipExtraArchive{if(receipt.operation==='classify-relationship-extra')return receipt.request.archive;if(!receipt.nativeArchive)throw new UmfError('RELATIONSHIP_EXTRA_RECEIPT','Projected receipt does not contain a native archive');return receipt.nativeArchive;}
  function targetFor(receipt:RelationshipExtraProjection|RelationshipExtraClassification):Document{return importArchive(archiveFor(receipt),receipt.operation==='classify-relationship-extra'?receipt.source.id:receipt.request.id);}
  function projectRelationshipToExtra(sourceInput:Document,authorInput:CoreRelationshipDeclaration,requestInput:RelationshipExtraRequest):RelationshipExtraProjection{
@@ -46,5 +45,5 @@ export function createRelationshipExtrasRustDefault(engine:Engine,importers:Impo
   const receipt=copyJson(receiptInput) as unknown as RelationshipExtraProjection|RelationshipExtraClassification,fresh=targetFor(receipt),current=copyJson(currentInput) as Document;
   return call<{document:Document;archive:RelationshipExtraArchive}>(()=>engine['relationship-extra-projection'].recoverRelationshipExtraNative({receipt,fresh,current}));
  }
- return Object.freeze({projectRelationshipToExtra,classifyRelationshipExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative});
+ return Object.freeze({importRelationshipExtraArchive:importArchive,projectRelationshipToExtra,classifyRelationshipExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative});
 }

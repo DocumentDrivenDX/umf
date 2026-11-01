@@ -124,6 +124,8 @@ SDIST_SOURCE_FILES = (
     "spec/core/field-classification-inspection.schema.json",
     "spec/core/field-projection-inspection.schema.json",
     "spec/core/record-postgresql-projection.schema.json",
+    "spec/core/key-postgresql-projection.schema.json",
+    "spec/core/facets-postgresql-projection.schema.json",
     "spec/core/record-projection-inspection.schema.json",
     "spec/core/structured-classification-inspection.schema.json",
     "spec/core/record-sqlserver-projection.schema.json",

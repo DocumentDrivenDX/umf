@@ -267,8 +267,6 @@ try{
  await cp(join(root,'dist/postgresql'),join(dist,'postgresql'),{recursive:true});
  await cp(join(wasmOut,'umf_core_wasm.js'),join(dist,'umf_core_wasm.js'));
  await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(dist,'umf_core_wasm.d.ts'));
- const legacyBuild=await Bun.build({entrypoints:['src/index.ts'],outdir:dist,naming:'umf.js',target:'browser',format:'esm',sourcemap:'external'});
- if(!legacyBuild.success)throw new Error(legacyBuild.logs.join('\n'));
  const loaderBuild=await Bun.build({entrypoints:['src/domain-packs/loader-contract.ts'],outdir:dist,naming:'loader-contract.js',target:'browser',format:'esm'});
  if(!loaderBuild.success)throw new Error(loaderBuild.logs.join('\n'));
 
@@ -300,12 +298,6 @@ try{
  const builds=[
   await Bun.build({entrypoints:['src/index-node-v4.ts'],outdir:dist,naming:'umf-node.js',target:'node',format:'esm'}),
   await Bun.build({entrypoints:['src/index-browser-v4.ts'],outdir:dist,naming:'umf-browser.js',target:'browser',format:'esm',plugins:[wasmPlugin]}),
-  await Bun.build({entrypoints:['src/node.ts'],outdir:dist,naming:'umf-rust-codegen-candidate-v2-node.js',target:'node',format:'esm'}),
-  await Bun.build({entrypoints:['src/browser.ts'],outdir:dist,naming:'umf-rust-codegen-candidate-v2-browser.js',target:'browser',format:'esm',plugins:[wasmPlugin]}),
-  await Bun.build({entrypoints:['src/node-v3.ts'],outdir:dist,naming:'umf-rust-codegen-candidate-v3-node.js',target:'node',format:'esm'}),
-  await Bun.build({entrypoints:['src/browser-v3.ts'],outdir:dist,naming:'umf-rust-codegen-candidate-v3-browser.js',target:'browser',format:'esm',plugins:[wasmPlugin]}),
-  await Bun.build({entrypoints:['src/node-v4.ts'],outdir:dist,naming:'umf-rust-codegen-candidate-v4-node.js',target:'node',format:'esm'}),
-  await Bun.build({entrypoints:['src/browser-v4.ts'],outdir:dist,naming:'umf-rust-codegen-candidate-v4-browser.js',target:'browser',format:'esm',plugins:[wasmPlugin]}),
  ];
  for(const build of builds)if(!build.success)throw new Error(build.logs.join('\n'));
  if(!freshWasmImports.has('browser-root')||!freshWasmImports.has('wasm-index'))throw new Error('Browser bundles did not consume the fresh wasm-bindgen glue through both direct root and WASM adapter imports');
@@ -321,7 +313,7 @@ try{
   platform:{os:host,arch:archId,nodeArch:arch,nativeTarget:host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu',napi:'N-API 8',runtimeCohort:['Node','Bun']},
   resources:{count:10,identity:'fixed-repository-owned'},
   limits:{recordPositions:10000,actionPositions:1000,selectedIdentityUtf16Units:4000000},
-  api:{entry:'.',reference:'./reference',sagaRuntime:'./runtime/wasm',moduleLoad:'top-level-await-initialization',generator:'synchronous'},
+  api:{entry:'.',sagaRuntime:'./runtime/wasm',moduleLoad:'top-level-await-initialization',generator:'synchronous'},
   toolchain:{rustc,cargo:await capture(['cargo','--version']),bun:Bun.version,wasmBindgen:'0.2.100',cargoLockSha256:await digest(join(root,'Cargo.lock'))},
   sourceClosure:{sha256:sourceHash,capturedLiveSha256:capturedLiveSourceHash,transform:sourceTransform,coverage:'Repository source closure includes Rust crates, core Node/WASM/Python binding source and Node/WASM binding tests, TypeScript source, schemas, fixture/corpus inputs, builder scripts, and metamodel compiler inputs. The exact external WASM package resource copied by build-postgresql.ts is separately SHA-256 pinned. The model metamodel and action identity generators run inside an isolated source snapshot; generated-input changes are recorded in transform.',fileCount:sourceInputs.length,liveInputs:capturedLiveInputHashes,inputs:sourceInputHashes,externalInputs:externalInputHashes},
   assets:Object.fromEntries(await Promise.all(compiled.map(async path=>[relative(packageRoot,path).split('\\').join('/'),await digest(path)]))),

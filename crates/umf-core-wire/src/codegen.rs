@@ -206,6 +206,30 @@ fn invoke(
             engine.reviewed_value_digest(field(request, "value").ok_or_else(missing_argument)?, ctx)
         }
         "compileTableDeployment" => engine.compile_table_deployment(request, ctx),
+        "inspectTableLifecyclePayload" => {
+            if !exact_fields(request, &["payload", "document", "path", "scope"]) {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact table lifecycle semantic context",
+                ));
+            }
+            let path = match field(request, "path") {
+                Some(Value::String(value)) => value,
+                _ => return Err(missing_argument()),
+            };
+            let scope = match field(request, "scope") {
+                Some(Value::String(value)) => value.to_utf8().map_err(|_| missing_argument())?,
+                _ => return Err(missing_argument()),
+            };
+            engine.inspect_table_lifecycle_payload(
+                field(request, "payload").ok_or_else(missing_argument)?,
+                field(request, "document").ok_or_else(missing_argument)?,
+                path,
+                &scope,
+                ctx,
+            )
+        }
         "inspectTableLifecycle" => {
             if !exact_fields(request, &["source"]) {
                 return Err(EngineError::new(

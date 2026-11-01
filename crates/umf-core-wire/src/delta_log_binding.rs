@@ -64,6 +64,21 @@ pub fn execute_json_with_control(
                     &mut ctx,
                 )?
             }
+            "delta/log.reconcileCheckpoint" => {
+                let action_resources =
+                    umf_core::delta_actions::DeltaActionResources::new(&mut ctx)?;
+                let spec = text(&request, "spec").unwrap_or_else(|| "v2".to_owned());
+                umf_core::delta_reconcile::reconcile_delta_checkpoint(
+                    field(&request, "checkpoint")
+                        .ok_or_else(|| fail("REQUEST", "Delta checkpoint is required"))?,
+                    field(&request, "commits")
+                        .ok_or_else(|| fail("REQUEST", "Delta commits array is required"))?,
+                    &spec,
+                    &resources,
+                    &action_resources,
+                    &mut ctx,
+                )?
+            }
             "delta/log.reconcileCheckpointSidecars" => {
                 let checkpoint = field(&request, "checkpoint")
                     .ok_or_else(|| fail("REQUEST", "Delta checkpoint is required"))?;

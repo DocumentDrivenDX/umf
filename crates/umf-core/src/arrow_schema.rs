@@ -188,6 +188,41 @@ impl Capabilities for ArrowCapabilities<'_> {
     }
 }
 
+/// Validate one Arrow extension payload through the same semantic owner used by document inspection.
+pub fn validate_arrow_extension_payload(
+    payload: &Value,
+    document: &Value,
+    path: &Utf16,
+    scope: &str,
+    resources: &ArrowSchemaResources,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    let semantic_context = SemanticContext {
+        document: copy_json(document, ctx)?,
+        source_document: None,
+        source_payload: None,
+        path: path.clone(),
+        scope: scope.to_owned(),
+    };
+    let mut capabilities = ArrowCapabilities {
+        grammar: &resources.grammar,
+    };
+    match capabilities.validate_extension_with_context(TOKEN, payload, &semantic_context, ctx) {
+        Ok(diagnostics) => Ok(diagnostics),
+        Err(CapabilityError::Engine(error)) => Err(error),
+        Err(CapabilityError::Host(message)) => Err(EngineError::new(
+            "ARROW_EXTENSION_CAPABILITY",
+            path.clone(),
+            message,
+        )),
+        Err(CapabilityError::HostPython { message, .. }) => Err(EngineError::new(
+            "ARROW_EXTENSION_CAPABILITY",
+            path.clone(),
+            message,
+        )),
+    }
+}
+
 pub fn inspect_arrow(
     document: &Value,
     resources: &ArrowSchemaResources,

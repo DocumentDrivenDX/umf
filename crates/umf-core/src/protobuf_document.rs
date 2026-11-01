@@ -72,7 +72,7 @@ pub fn import_descriptor_set(
     ]);
     let core = core_validation(&document, context)?;
     if !core.valid {
-        return Err(invalid_document_error(core.diagnostics)?);
+        return Err(invalid_document_error(core.diagnostics, context)?);
     }
     let result = protobuf_inspect::inspect_protobuf_document(&document, context)?;
     if !result.valid {
@@ -85,6 +85,102 @@ pub fn import_descriptor_set(
 }
 
 /// Export a copied and validated descriptor set from an existing document.
+/// Propose an edited descriptor tree while preserving the surrounding UMF document.
+/// The edited tree is validated by the Rust writer before it is installed, then
+/// the resulting document is inspected through the same Rust validator.
+pub fn propose_descriptor_edit(
+    document: &Value,
+    descriptor_set: &Value,
+    context: &mut Context<'_>,
+) -> Result<(Value, Vec<Diagnostic>), EngineError> {
+    let _ = payload(document, context)?;
+    protobuf_descriptor::write_descriptor_set(descriptor_set, context)?;
+    let mut candidate = copy_json(document, context)?;
+    install_descriptor_set(&mut candidate, copy_json(descriptor_set, context)?, context)?;
+    let inspection = inspect(&candidate, context)?;
+    if !inspection.valid {
+        let value = diagnostics_value(inspection.diagnostics);
+        let message = serialization::stringify_compact_metered(&value, context)?
+            .to_utf8()
+            .map_err(|_| error("PROTOBUF_EDIT", "Edit diagnostics are not UTF-8"))?;
+        return Err(error("PROTOBUF_EDIT", &message));
+    }
+    Ok((candidate, inspection.diagnostics))
+}
+
+fn install_descriptor_set(
+    document: &mut Value,
+    descriptor_set: Value,
+    context: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let root = object_mut(document)
+        .ok_or_else(|| error("PROTOBUF_DOCUMENT", "Expected UMF document object"))?;
+    let modules = get_mut(root, "modules")
+        .and_then(array_mut)
+        .ok_or_else(|| error("PROTOBUF_DOCUMENT", "Document modules must be an array"))?;
+    for module in modules {
+        context.charge_work(1, Utf16::default())?;
+        let Some(fields) = object_mut(module) else {
+            continue;
+        };
+        if get(fields, "id") != Some(&Value::string_utf8("schema")) {
+            continue;
+        }
+        let Some(elements) = get_mut(fields, "elements").and_then(array_mut) else {
+            continue;
+        };
+        for element in elements {
+            context.charge_work(1, Utf16::default())?;
+            let Some(fields) = object_mut(element) else {
+                continue;
+            };
+            if get(fields, "id") != Some(&Value::string_utf8("schema")) {
+                continue;
+            }
+            let Some(extension) = get_mut(fields, "extensions").and_then(object_mut) else {
+                continue;
+            };
+            let Some(payload) = get_mut(extension, EXT).and_then(object_mut) else {
+                continue;
+            };
+            if let Some((_, value)) = payload
+                .iter_mut()
+                .find(|(key, _)| key.to_utf8().is_ok_and(|s| s == "descriptorSet"))
+            {
+                *value = descriptor_set;
+                return Ok(());
+            }
+        }
+    }
+    Err(error(
+        "PROTOBUF_PAYLOAD",
+        "Schema element has no umf.protobuf payload",
+    ))
+}
+
+fn diagnostics_value(diagnostics: Vec<Diagnostic>) -> Value {
+    Value::Array(
+        diagnostics
+            .into_iter()
+            .map(|item| {
+                obj(vec![
+                    ("code", Value::String(item.code)),
+                    ("path", Value::String(item.path)),
+                    ("message", Value::String(item.message)),
+                    (
+                        "severity",
+                        Value::string_utf8(if item.severity == Severity::Warning {
+                            "warning"
+                        } else {
+                            "error"
+                        }),
+                    ),
+                ])
+            })
+            .collect(),
+    )
+}
+
 pub fn export_descriptor_set(
     document: &Value,
     context: &mut Context<'_>,
@@ -202,7 +298,7 @@ fn payload<'a>(
 ) -> Result<(&'a Value, Utf16), EngineError> {
     let core = core_validation(document, context)?;
     if !core.valid {
-        return Err(invalid_document_error(core.diagnostics)?);
+        return Err(invalid_document_error(core.diagnostics, context)?);
     }
     let root = object(document)
         .ok_or_else(|| error("PROTOBUF_DOCUMENT", "Expected UMF document object"))?;
@@ -316,12 +412,32 @@ fn object(value: &Value) -> Option<&[(Utf16, Value)]> {
         None
     }
 }
+fn object_mut(value: &mut Value) -> Option<&mut Vec<(Utf16, Value)>> {
+    if let Value::Object(v) = value {
+        Some(v)
+    } else {
+        None
+    }
+}
 fn array(value: &Value) -> Option<&[Value]> {
     if let Value::Array(v) = value {
         Some(v)
     } else {
         None
     }
+}
+fn array_mut(value: &mut Value) -> Option<&mut Vec<Value>> {
+    if let Value::Array(v) = value {
+        Some(v)
+    } else {
+        None
+    }
+}
+fn get_mut<'a>(fields: &'a mut [(Utf16, Value)], key: &str) -> Option<&'a mut Value> {
+    fields
+        .iter_mut()
+        .find(|(k, _)| k.to_utf8().is_ok_and(|s| s == key))
+        .map(|(_, v)| v)
 }
 fn get<'a>(fields: &'a [(Utf16, Value)], key: &str) -> Option<&'a Value> {
     fields
@@ -332,7 +448,10 @@ fn get<'a>(fields: &'a [(Utf16, Value)], key: &str) -> Option<&'a Value> {
 fn error(code: &str, message: &str) -> EngineError {
     EngineError::new(code, Utf16::default(), message)
 }
-fn invalid_document_error(diagnostics: Vec<Diagnostic>) -> Result<EngineError, EngineError> {
+fn invalid_document_error(
+    diagnostics: Vec<Diagnostic>,
+    context: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
     let value = Value::Array(
         diagnostics
             .into_iter()
@@ -353,7 +472,7 @@ fn invalid_document_error(diagnostics: Vec<Diagnostic>) -> Result<EngineError, E
             })
             .collect(),
     );
-    let message = serialization::stringify_compact(&value)?
+    let message = serialization::stringify_compact_metered(&value, context)?
         .to_utf8()
         .map_err(|_| error("PROTOBUF_DOCUMENT", "Document diagnostics are not UTF-8"))?;
     Ok(error("PROTOBUF_DOCUMENT", &message))

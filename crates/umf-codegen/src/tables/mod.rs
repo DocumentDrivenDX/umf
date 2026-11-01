@@ -16,6 +16,41 @@ use umf_core::{
 };
 
 impl CodegenEngine<'_> {
+    /// Inspect one table lifecycle payload with the native module context supplied by Registry.
+    /// This avoids revalidating a whole document or filtering unrelated diagnostics in the host.
+    pub fn inspect_table_lifecycle_payload(
+        &self,
+        payload: &Value,
+        document: &Value,
+        path: &Utf16,
+        scope: &str,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let context = SemanticContext {
+            document: umf_core::copy_json(document, ctx)?,
+            source_document: None,
+            source_payload: None,
+            path: path.clone(),
+            scope: scope.to_owned(),
+        };
+        let diagnostics = inspect_module_semantics(payload, &context, self.resources(), ctx)?;
+        ctx.charge_work(diagnostics.len().saturating_mul(8), Utf16::default())?;
+        let mut values = Vec::with_capacity(diagnostics.len());
+        for diagnostic in &diagnostics {
+            ctx.charge_work(
+                diagnostic
+                    .code
+                    .len()
+                    .saturating_add(diagnostic.path.len())
+                    .saturating_add(diagnostic.message.len())
+                    .saturating_add(8),
+                Utf16::default(),
+            )?;
+            values.push(diagnostic_value(diagnostic));
+        }
+        Ok(Value::Array(values))
+    }
+
     /// Admit, structurally validate, and inspect table lifecycle declarations.
     /// The returned value is the stable wire-shaped inspection result used by
     /// generators and review tools; it does not qualify native execution.

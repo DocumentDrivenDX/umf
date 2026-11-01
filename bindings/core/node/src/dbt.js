@@ -133,6 +133,7 @@ export function createDbtOperations(call, host = {}) {
   return Object.freeze({
     profile: DBT_PROFILE,
     capabilities: Object.freeze({profile: DBT_PROFILE, nativeJson: true, complete: false}),
+    inspectPayload(token, payload) { return invoke('inspectPayload', {token, payload}); },
     importDbtManifest(text, options) { return importDocument('importManifest', text, options); },
     exportDbtManifest(document) { return documentOperation('exportManifest', document); },
     inspectDbtManifest(document) { return inspect('inspectManifest', document); },

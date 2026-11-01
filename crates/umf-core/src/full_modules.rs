@@ -247,6 +247,10 @@ pub mod postgresql_relationship_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_authored_projection;
 #[cfg(feature = "embedded-adapters")]
+pub mod postgresql_key_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod facets_postgresql_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod postgresql_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_json_schema_projection;
