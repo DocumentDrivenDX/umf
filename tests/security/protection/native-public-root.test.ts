@@ -51,3 +51,16 @@ test('public Rust query-property inspection matches a typed range and refuses an
  expect(different.status).toBe('refused');
  expect(different.diagnostics.some(diagnostic=>diagnostic.code==='PROTECTION_QUERY_MISSING')).toBe(true);
 },30_000);
+
+
+test('public Rust query-property inspection compares prefix and suffix objects canonically',()=>{
+ const {policy,catalog,closure}=domainFixture();
+ catalog.transforms[0].disclosureProfile=[{kind:'prefix',length:2}];
+ catalog.transforms[0].queryUse.join='disclosed';
+ const same=inspectProtectionQueryProperties(policy,catalog,closure,{ruleIndex:0,disclosureIndex:0,operator:'join',required:[{length:2,kind:'prefix'}]});
+ expect(same.status).toBe('compatible-properties');
+ expect(same.missingProperties).toEqual([]);
+ const different=inspectProtectionQueryProperties(policy,catalog,closure,{ruleIndex:0,disclosureIndex:0,operator:'join',required:[{kind:'suffix',length:2}]});
+ expect(different.status).toBe('refused');
+ expect(different.diagnostics.some(d=>d.code==='PROTECTION_QUERY_MISSING')).toBe(true);
+},30_000);

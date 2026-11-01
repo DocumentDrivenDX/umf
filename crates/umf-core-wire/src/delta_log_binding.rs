@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Opt-in wire operations for bounded Delta JSONL source capture.
-use umf_core::{Context, EngineError, Utf16, Value, delta_log};
+use umf_core::{delta_log, Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf-r8-delta-log/0.1.0";
 pub fn execute_json(input: &str) -> String {
@@ -59,6 +59,29 @@ pub fn execute_json_with_control(
                 umf_core::delta_reconcile::reconcile_delta_commits(
                     field(&request, "commits")
                         .ok_or_else(|| fail("REQUEST", "Delta commits array is required"))?,
+                    &resources,
+                    &action_resources,
+                    &mut ctx,
+                )?
+            }
+            "delta/log.reconcileCheckpointSidecars" => {
+                let checkpoint = field(&request, "checkpoint")
+                    .ok_or_else(|| fail("REQUEST", "Delta checkpoint is required"))?;
+                let commits = field(&request, "commits")
+                    .ok_or_else(|| fail("REQUEST", "Delta commits array is required"))?;
+                let sidecars = field(&request, "sidecars")
+                    .ok_or_else(|| fail("REQUEST", "Delta sidecars array is required"))?;
+                let parquet = super::parquet_capture_binding::Resources::shared(&mut ctx)?;
+                let action_resources =
+                    umf_core::delta_actions::DeltaActionResources::new(&mut ctx)?;
+                let mut parquet_capabilities = super::parquet_capture_binding::Accept;
+                umf_core::delta_jsonl_sidecars::reconcile_delta_jsonl_checkpoint_sidecars(
+                    checkpoint,
+                    commits,
+                    sidecars,
+                    &parquet.engine,
+                    &parquet.registry,
+                    &mut parquet_capabilities,
                     &resources,
                     &action_resources,
                     &mut ctx,

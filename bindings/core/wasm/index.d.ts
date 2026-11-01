@@ -393,7 +393,7 @@ export interface DeltaSchemaTableEngine {
   importTable(source:string,id:string):any; inspectTable(document:unknown):any; inspectTablePayload(payload:unknown):any; exportTable(document:unknown):string; getTableNode(document:unknown,pointer:string):any; getTableSchema(document:unknown):any; editTableNode(document:unknown,pointer:string,replacement:string):any; renameMappedField(document:unknown,options:unknown):any;
 }
 export declare function createDeltaLogEngine(module: unknown, options?: {profile?: 'cooperative'|'hard-isolated'; controls?: UmfCoreControls}): DeltaLogEngine;
-export interface DeltaLogEngine {capture(source:string,id:string):any;export(document:unknown):string;inspect(document:unknown):any;inspectActions(document:unknown):any;reconcileCommits(commits:unknown[]):any;}
+export interface DeltaLogEngine {capture(source:string,id:string):any;export(document:unknown):string;inspect(document:unknown):any;inspectActions(document:unknown):any;reconcileCommits(commits:unknown[]):any;reconcileCheckpointSidecars(checkpoint:unknown,commits:unknown[],sidecars:unknown[]):any;}
 export declare function createIcebergTableEngine(module: unknown, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergTableEngine;
 export interface IcebergTableEngine {
   importTable(source: string, id: string): any;

@@ -1055,7 +1055,6 @@ export { readJsonValue } from './model/serialization';
 export { readProtectionSource } from './extensions/security/protection/source';
 export { readSecuritySource } from './extensions/security/policy';
 export { reconcileDeltaCheckpoint } from './adapters/delta/reconcile';
-export { reconcileDeltaCheckpointSidecars } from './adapters/delta/sidecars';
 export type { RecordAvroProjection } from './core-ideals/record-avro-projection';
 export { default as recordAvroProjectionSchema } from '../spec/core/record-avro-projection.schema.json';
 export type { RecordAvroRequest } from './core-ideals/record-avro-projection';

@@ -17,7 +17,7 @@ const FAMILIES=Object.freeze({
  'iceberg-table':{profile:'umf.iceberg-table-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','inspectContext','inspectTransforms','inspectTransformType','proposeRename','proposePromotion']},
  'delta-schema':{profile:'umf-r8-delta-source/0.1.0',operations:['import','inspect','inspectPayload','export','getNode','proposeNodeEdit']},
  'delta-table':{profile:'umf-r8-delta-source/0.1.0',operations:['import','inspect','inspectPayload','export','getNode','getSchema','proposeNodeEdit','renameMappedField']},
- 'delta-log':{profile:'umf-r8-delta-log/0.1.0',operations:['capture','export','inspect','inspectActions','reconcileCommits']},
+ 'delta-log':{profile:'umf-r8-delta-log/0.1.0',operations:['capture','export','inspect','inspectActions','reconcileCommits','reconcileCheckpointSidecars']},
  'delta-ddl':{profile:'umf-r8-delta-ddl/0.1.0',operations:['defineTable','generate','generateBundle','realizeSparkDelta4','inspectPayload']},
  'delta-parquet':{profile:'umf-r8-parquet-capture-inspection/0.1.0',operations:['projectActions','reconcileCheckpoint','reconcileMultipart']},
 });

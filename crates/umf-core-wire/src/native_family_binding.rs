@@ -229,6 +229,7 @@ pub fn metadata_wire(family: &str) -> String {
                 "inspect",
                 "inspectActions",
                 "reconcileCommits",
+                "reconcileCheckpointSidecars",
             ],
         ),
         "iceberg-table" => (

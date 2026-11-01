@@ -31,7 +31,7 @@ use crate::{decode, encode, field, result_envelope, text_field};
 pub const PROFILE: &str = "umf-r8-parquet-capture-inspection/0.1.0";
 const TOKEN: u64 = 0x5041_5251_5545_5401;
 
-struct Accept;
+pub(crate) struct Accept;
 impl Capabilities for Accept {
     fn validate_extension(
         &mut self,
@@ -43,12 +43,12 @@ impl Capabilities for Accept {
     }
 }
 
-struct Resources {
-    engine: Engine,
-    registry: Registry,
+pub(crate) struct Resources {
+    pub(crate) engine: Engine,
+    pub(crate) registry: Registry,
 }
 impl Resources {
-    fn shared(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Self>, EngineError> {
+    pub(crate) fn shared(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Self>, EngineError> {
         use std::sync::{Arc, OnceLock};
         static RESOURCES: OnceLock<Arc<Resources>> = OnceLock::new();
         ctx.charge_work(1, Utf16::default())?;

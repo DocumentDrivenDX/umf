@@ -63,6 +63,7 @@ pub mod delta_actions;
 #[cfg(feature = "embedded-adapters")]
 pub mod delta_ddl;
 pub mod delta_log;
+pub mod delta_jsonl_sidecars;
 pub mod delta_parquet_actions;
 pub mod delta_parquet_checkpoint;
 #[cfg(feature = "embedded-adapters")]

@@ -39,6 +39,73 @@ fn json(v: &Value) -> serde_json::Value {
 }
 
 #[test]
+fn reconciles_explicit_jsonl_sidecars_and_refuses_missing_sidecar_atomically() {
+    let packet: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../fixtures/delta/sidecars/results.json"
+    ))
+    .unwrap();
+    let expected = &packet["results"][0];
+    let fields = |sidecars: serde_json::Value| {
+        vec![
+            ("checkpoint", from_json(&expected["checkpoint"])),
+            ("commits", from_json(&expected["sources"])),
+            ("sidecars", from_json(&sidecars)),
+        ]
+    };
+    let recovered = json(
+        &decode(
+            &result(&execute_json(&request(
+                "delta/log.reconcileCheckpointSidecars",
+                fields(expected["sidecars"].clone()),
+            ))),
+            &mut Context::ordinary(),
+        )
+        .unwrap(),
+    );
+    assert_eq!(
+        recovered["status"], "reconciled",
+        "{:?}",
+        recovered["diagnostics"]
+    );
+    assert_eq!(recovered["state"]["version"], "10");
+    assert_eq!(recovered["origins"].as_array().unwrap().len(), 8);
+
+    let blocked = json(
+        &decode(
+            &result(&execute_json(&request(
+                "delta/log.reconcileCheckpointSidecars",
+                fields(serde_json::json!([])),
+            ))),
+            &mut Context::ordinary(),
+        )
+        .unwrap(),
+    );
+    assert_eq!(blocked["status"], "blocked");
+    assert!(blocked.get("state").is_none());
+    assert!(blocked["diagnostics"].as_array().unwrap().iter().any(|d| {
+        d["message"]
+            .as_str()
+            .is_some_and(|message| message.contains("No explicitly supplied sidecar"))
+    }));
+}
+
+fn from_json(v: &serde_json::Value) -> Value {
+    match v {
+        serde_json::Value::Null => Value::Null,
+        serde_json::Value::Bool(value) => Value::Bool(*value),
+        serde_json::Value::Number(value) => Value::Number(value.as_f64().unwrap()),
+        serde_json::Value::String(value) => text(value),
+        serde_json::Value::Array(values) => Value::Array(values.iter().map(from_json).collect()),
+        serde_json::Value::Object(values) => object(
+            values
+                .iter()
+                .map(|(key, value)| (key.as_str(), from_json(value)))
+                .collect(),
+        ),
+    }
+}
+
+#[test]
 fn captures_exports_and_inspects_utf16_jsonl_source_without_normalizing_it() {
     let source="😀\r\n\t \n{\"txn\":{\"appId\":\"x\",\"version\":9223372036854775807}}\n{\"future\":{\"n\":1e400}}\nnot json\n{\"add\":{},\"remove\":{}}\n{\"metaData\":null}";
     let imported = decode(
@@ -83,7 +150,10 @@ fn captures_exports_and_inspects_utf16_jsonl_source_without_normalizing_it() {
 
 #[test]
 fn inspection_matches_the_frozen_typescript_predecessor_cases() {
-    let packet:serde_json::Value=serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-log-predecessor.json")).unwrap();
+    let packet: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-log-predecessor.json"
+    ))
+    .unwrap();
     for case in packet["cases"].as_array().unwrap() {
         let id = case["id"].as_str().unwrap();
         let source = case["text"].as_str().unwrap();

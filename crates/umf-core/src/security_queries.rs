@@ -217,6 +217,63 @@ fn range_property_key(
         })
 }
 
+fn canonical_property_key(value: &Value, context: &mut Context<'_>) -> Result<String, EngineError> {
+    fn order(
+        value: &mut Value,
+        context: &mut Context<'_>,
+        depth: usize,
+    ) -> Result<(), EngineError> {
+        if depth > 128 {
+            return Err(EngineError::new(
+                "PROTECTION_QUERY_BOUND",
+                Utf16::default(),
+                "Property nesting exceeds the canonical identity bound",
+            ));
+        }
+        match value {
+            Value::Array(items) => {
+                context.charge_work(items.len(), Utf16::default())?;
+                for item in items {
+                    order(item, context, depth + 1)?;
+                }
+            }
+            Value::Object(fields) => {
+                let width = fields.iter().map(|(key, _)| key.len()).max().unwrap_or(0);
+                let count = fields.len() as u64;
+                let comparisons = count.saturating_mul(count.max(1).ilog2() as u64 + 1);
+                context.charge_work_u64(
+                    comparisons.saturating_mul(width.max(1) as u64),
+                    Utf16::default(),
+                )?;
+                fields.sort_unstable_by(|left, right| left.0.units().cmp(right.0.units()));
+                if fields.windows(2).any(|pair| pair[0].0 == pair[1].0) {
+                    return Err(EngineError::new(
+                        "PROTECTION_QUERY_PROPERTY_FIELD",
+                        Utf16::default(),
+                        "Duplicate property member cannot have a canonical identity",
+                    ));
+                }
+                for (_, item) in fields {
+                    order(item, context, depth + 1)?;
+                }
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+    let mut ordered = crate::value::copy_json(value, context)?;
+    order(&mut ordered, context, 0)?;
+    let encoded = crate::serialization::stringify_compact_metered(&ordered, context)?;
+    context.charge_text(encoded.len(), Utf16::default())?;
+    encoded.to_utf8().map_err(|_| {
+        EngineError::new(
+            "PROTECTION_QUERY_PROPERTY_FIELD",
+            Utf16::default(),
+            "Property identity could not be serialized",
+        )
+    })
+}
+
 fn property_key(
     value: &Value,
     domains: &Value,
@@ -240,10 +297,16 @@ fn property_key(
             }
         }
     }
+    if matches!(
+        text(member(value, "kind")).as_deref(),
+        Some("prefix" | "suffix")
+    ) {
+        return canonical_property_key(value, context);
+    }
     Err(EngineError::new(
         "PROTECTION_QUERY_UNIMPLEMENTED",
         Utf16::default(),
-        "Only the six atomic property names are implemented in this candidate subset",
+        "Property kind is outside the admitted protection query profile",
     ))
 }
 

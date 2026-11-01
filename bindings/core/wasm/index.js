@@ -1167,7 +1167,7 @@ export function createDeltaLogEngine(module, options = {}) {
     work?.(responseText.length); const envelope = JSON.parse(responseText), failure = resultError(envelope);
     if (failure) throw nativeCoreError(failure); work?.(envelope.wire.length); return fromWire(JSON.parse(envelope.wire), work);
   };
-  return Object.freeze({ capture(source,id) {return call('delta/log.capture',{source,id});}, export(document) {return call('delta/log.export',{document});}, inspect(document) {return call('delta/log.inspect',{document});}, inspectActions(document) {return call('delta/log.inspectActions',{document});}, reconcileCommits(commits) {return call('delta/log.reconcileCommits',{commits});} });
+  return Object.freeze({ capture(source,id) {return call('delta/log.capture',{source,id});}, export(document) {return call('delta/log.export',{document});}, inspect(document) {return call('delta/log.inspect',{document});}, inspectActions(document) {return call('delta/log.inspectActions',{document});}, reconcileCommits(commits) {return call('delta/log.reconcileCommits',{commits});}, reconcileCheckpointSidecars(checkpoint,commits,sidecars) {return call('delta/log.reconcileCheckpointSidecars',{checkpoint,commits,sidecars});} });
 }
 
 /** Create the opt-in Arrow integration-schema JSON preservation engine. */
@@ -1233,7 +1233,7 @@ export function createArrowIpcEngine(module, options = {}) {
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   });
@@ -1258,7 +1258,7 @@ export function createParquetCaptureEngine(module, options = {}) {
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   }, {
@@ -1287,7 +1287,7 @@ export function createDbtEngine(module, options = {}) {
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   }, {
@@ -1311,7 +1311,7 @@ export function createRdfEngine(module, options = {}) {
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   });
