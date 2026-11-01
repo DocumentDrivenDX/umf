@@ -14,7 +14,7 @@ import keySchema from '../../spec/core/key-tuple-operation-v4.schema.json';
 import operationSchema from '../../spec/core/dataset-value-operation.schema.json';
 const validator=createValidator();validator.addSchema(snapshotSchema(coreSchema));validator.addSchema(snapshotSchema(keySchema));
 const checkReceipt=validator.compile(snapshotSchema(operationSchema)),checkInput=validator.compile(snapshotSchema({$schema:operationSchema.$schema,$id:operationSchema.$id+':input',$ref:'#/$defs/input',$defs:operationSchema.$defs}));
-export {operationSchema as coreDatasetValueOperationSchema};
+export {coreDatasetValueOperationSchema} from './operation-schemas';
 
 export interface CoreDatasetRecord {instanceId:string;identity:CoreRecordValueIdentity;values:CoreRecordFieldValue[]}
 export interface CoreDatasetRelationship {instanceId:string;identity:{module:string;id:string};sourceInstanceId:string;target:{identity:CoreKeyIdentity;values:CoreKeyTupleValue[]}}

@@ -10,6 +10,7 @@ pub mod actions;
 pub mod canonical;
 pub mod deployment;
 pub mod generation;
+pub mod inventory;
 pub mod migration;
 pub mod resources;
 pub mod row_scope;

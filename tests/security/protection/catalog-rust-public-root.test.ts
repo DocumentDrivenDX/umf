@@ -13,7 +13,7 @@ test('Node V4 catalog inspection preserves opaque fields and strict interpretati
  expect(result.source).toEqual(source);
  expect(result.diagnostics.some(d=>d.code==='PROTECTION_UNKNOWN'&&d.path==='/transforms/0/future')).toBe(true);
  expect(result.diagnostics.some(d=>d.code==='PROTECTION_UNIMPLEMENTED')).toBe(true);
- expect(()=>requireProtectionInterpretation(source)).toThrow(expect.objectContaining({name:UmfError.name,code:'PROTECTION_UNIMPLEMENTED'}));
+ expect(()=>requireProtectionInterpretation(source)).toThrow(expect.objectContaining({name:UmfError.name,code:'PROTECTION_UNKNOWN',path:'/transforms/0/future'}));
  const duplicate={...source,transforms:[...source.transforms,{...source.transforms[0]}]};
  expect(inspectProtectionCatalog(duplicate).valid).toBe(false);
  expect(inspectProtectionCatalog(duplicate).diagnostics.some(d=>d.code==='PROTECTION_DUPLICATE')).toBe(true);

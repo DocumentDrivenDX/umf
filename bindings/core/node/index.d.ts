@@ -98,6 +98,7 @@ export interface UmfSecurityLogicEngine {
   securityAnd(values: readonly SecurityTruth[]): SecurityTruth;
   securityOr(values: readonly SecurityTruth[]): SecurityTruth;
   composeSecurityRules(rules: readonly EvaluatedSecurityRule[], protectedFields?: readonly string[]): SecurityComposition;
+  securityRefIdentity(ref: {documentId:string;moduleId:string;elementId:string}): string;
 }
 export declare function createSecurityLogicEngine(options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export declare const SECURITY_FUNCTIONS_PROFILE: 'umf.security-functions/1';
@@ -285,7 +286,7 @@ export interface UmfCoreModelEngine {
   validateCoreDatasetValues(source: unknown, input: CoreDatasetCompactInput): CoreDatasetValuesReceipt;
   verifyCoreDatasetValues(receipt: CoreDatasetValuesReceipt, current: unknown, expectedInput: CoreDatasetCompactInput): CoreDatasetValuesReceipt;
   inspectCoreRelationships(source: unknown, identity: {module: string}): unknown;
-  selectCoreRelationships(source: unknown, query: unknown): unknown;
+  selectCoreRelationships(source: unknown, query: unknown, registry?: UmfCoreRegistration[]): unknown;
   lookupCoreRelationship(source: unknown, identity: {module: string; id: string}): unknown;
   declareCoreRelationship(source: unknown, identity: {module: string}, request: unknown): unknown;
   verifyCoreRelationshipOperation(receipt: unknown, current: unknown): unknown;
@@ -297,7 +298,7 @@ export interface UmfCoreModelEngine {
   verifyCoreEvolution(receipt: unknown, before: unknown, after: unknown, policy: unknown): unknown;
   validateCsvBooleanLexical(source: unknown, request: CsvBooleanLexicalRequest): CsvBooleanLexicalReceipt;
   verifyCsvBooleanLexical(receipt: CsvBooleanLexicalReceipt, source: unknown, request: CsvBooleanLexicalRequest): CsvBooleanLexicalReceipt;
-  selectCoreElements(source: unknown, query: unknown, registry?: UmfCoreExtension[]): unknown;
+  selectCoreElements(source: unknown, query: unknown, registry?: UmfCoreRegistration[]): unknown;
   validateCoreFieldValue(source: unknown, field: {module: string; element: string}, value: unknown): UmfCoreValidation;
   validateCoreRecordValues(source: unknown, identity: {module: string; element: string}, values: unknown[]): unknown;
   resolveCoreDefault(source: unknown, field: {module: string; element: string}, state: UmfCoreDefaultInput): UmfCoreDefaultResolution;
@@ -644,6 +645,7 @@ export interface JsonSchemaValidation {valid: boolean; complete: boolean; diagno
 export interface JsonSchemaEngine {
   importJsonSchema(source: string, options: {id: string; baseUri: string; resources?: Record<string, string>}): unknown;
   inspectJsonSchema(document: unknown): JsonSchemaValidation;
+  inspectJsonSchemaPayload(payload: unknown, path: string): JsonSchemaValidation['diagnostics'];
   exportJsonSchema(document: unknown): string;
   exportJsonSchemaResources(document: unknown): Record<string, string>;
   exportJsonSchemaBundle(document: unknown): {schema: string; resources: Record<string, string>; source: unknown; diagnostics: JsonSchemaValidation['diagnostics']};
@@ -659,7 +661,7 @@ export declare function createJsonSchemaEngine(options?: {profile?: 'cooperative
 export declare function createPreparedJsonSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): JsonSchemaEngine;
 
 export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage?: unknown}
-export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
+export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'compileTableInventoryMigration' | 'discoverTableInventoryMigrationChanges' | 'verifyTableInventoryMigration' | 'serializeTableInventoryMigration' | 'irreversiblePurgeDisclosure' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
 export type UmfCodegenOutcome = {ok: true; result: unknown} | {ok: false; error: {code: string; message: string; path?: string; pointer?: string}};
 export type UmfCodegenHostReadEventV3 = 'InitialPackage' | 'ParseText' | 'ParseFormat' | 'DigestText' | 'SelectRecords' | 'NativeFormat' | 'SelectActions' | 'OutputPackageSuffix' | 'OutputSourceText';
 export interface UmfCodegenEngine {
@@ -688,6 +690,11 @@ export interface UmfCodegenEngine {
   verifyTableDeployment(bundle: unknown): unknown;
   compileTableMigration(request: unknown): unknown;
   verifyTableMigration(plan: unknown): unknown;
+  compileTableInventoryMigration(request: unknown): unknown;
+  discoverTableInventoryMigrationChanges(previous: unknown, next: unknown, selector: unknown, history: unknown): unknown;
+  verifyTableInventoryMigration(plan: unknown, history: unknown): unknown;
+  serializeTableInventoryMigration(plan: unknown, history: unknown): string;
+  irreversiblePurgeDisclosure(candidate: unknown): unknown;
   discoverTableMigrationChanges(previous: unknown, next: unknown, selector?: unknown): unknown[];
   normalizeRowScope(input: unknown, context: unknown): unknown;
   prepareRowScope(input: unknown, context: unknown): unknown;
@@ -775,24 +782,38 @@ export interface GraphqlEngine {
  editGraphqlAst(document: unknown, edit: (ast: any) => any): unknown;
  exportGraphqlBundle(document: unknown): {schema: string; source: any; diagnostics: any[]};
  inspectGraphqlPayload(payload: unknown): any[];
+ projectGraphqlInputToJsonSchema(document: unknown, bindings: unknown): unknown;
 }
 export declare function createGraphqlEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): GraphqlEngine;
 
 export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
+ readonly ['avro-cardinality']: Readonly<Record<'classifyAvroCardinality'|'verifyAvroCardinalityClassification'|'recoverAvroCardinalityBundle', NativeFamilyOperation>>;
+ readonly ['avro-classification']: Readonly<Record<'classifyAvroField'|'recoverAvroFieldBundle'|'classifyAvroRecord'|'recoverAvroRecordBundle', NativeFamilyOperation>>;
+ readonly ['record-type']: Readonly<Record<'classifyAvroRecordType'|'recoverAvroRecordTypeBundle'|'classifyParquetRecordType'|'recoverParquetRecordTypeBytes'|'classifyParquetRecord'|'recoverParquetRecordBytes', NativeFamilyOperation>>;
+ readonly ['nullability-avro-projection']: Readonly<Record<'projectNullabilityToAvro'|'recoverNullabilityFromAvro', NativeFamilyOperation>>;
+ readonly ['facets-avro-projection']: Readonly<Record<'projectFacetsToAvro'|'recoverFacetsFromAvro', NativeFamilyOperation>>;
+ readonly ['key-avro-projection']: Readonly<Record<'projectKeysToAvro'|'verifyKeysAvroProjection'|'recoverKeysAvroIdeal', NativeFamilyOperation>>;
  readonly ['tablespec-via-avro-projection']: Readonly<Record<'projectToTableSpecViaAvro', NativeFamilyOperation>>;
  readonly ['parquet-avro-projection']: Readonly<Record<'projectParquetToAvro', NativeFamilyOperation>>;
  readonly ['arrow-spark-projection']: Readonly<Record<'projectArrowToSpark'|'projectSparkToArrow', NativeFamilyOperation>>;
- readonly ['arrow-flatbuffer-model']: Readonly<Record<'importArrowFlatbufferModel'|'inspectArrowFlatbufferModel'|'exportArrowFlatbufferModel'|'proposeArrowFlatbufferEdit', NativeFamilyOperation>>;
+ readonly ['arrow-flatbuffer-model']: Readonly<Record<'importArrowFlatbufferModel'|'inspectArrowFlatbufferModel'|'exportArrowFlatbufferModel'|'proposeArrowFlatbufferEdit'|'decodeArrowFlatbuffer'|'prepareArrowFlatbufferEncoding'|'verifyArrowFlatbufferEncoding', NativeFamilyOperation>>;
  readonly ['avro-tablespec-projection']: Readonly<Record<'projectAvroToTableSpec'|'projectTableSpecToAvro', NativeFamilyOperation>>;
  readonly ['postgresql-avro-projection']: Readonly<Record<'projectPostgresqlToAvro', NativeFamilyOperation>>;
  readonly ['postgresql-json-schema-projection']: Readonly<Record<'projectPostgresqlRowToJsonSchema', NativeFamilyOperation>>;
+ readonly ['json-schema-protobuf-projection']: Readonly<Record<'projectJsonSchemaToProtobuf', NativeFamilyOperation>>;
  readonly ['sqlserver-avro-projection']: Readonly<Record<'projectSqlServerToAvro', NativeFamilyOperation>>;
  readonly ['sqlserver-ddl-projection']: Readonly<Record<'projectSqlServerToDdl', NativeFamilyOperation>>;
+ readonly ['binding-iceberg-projection']: Readonly<Record<'projectBindingToIceberg', NativeFamilyOperation>>;
+ readonly ['binding-sqlserver-planned-index-projection']: Readonly<Record<'projectBindingIndexesAgainstSqlServerPlan', NativeFamilyOperation>>;
+ readonly ['binding-parquet-projection']: Readonly<Record<'projectBindingToParquet', NativeFamilyOperation>>;
+ readonly ['binding-delta-projection']: Readonly<Record<'projectBindingToDelta', NativeFamilyOperation>>;
  readonly avro: Readonly<Record<'import'|'inspect'|'inspectPayload'|'fields'|'export'|'exportBundle'|'getNode'|'editNode'|'proposeNodeEdit', NativeFamilyOperation>>;
  readonly ['avro-json-schema-projection']: Readonly<Record<'projectAvroToJsonSchema', NativeFamilyOperation>>;
- readonly ['ddd-json-schema-projection']: Readonly<Record<'projectDddToJsonSchema'|'dddFieldBinding'|'inspectDdd'|'validateDddPayload'|'getDddDefinition'|'editDddDefinition', NativeFamilyOperation>>;
+ readonly ['ddd-json-schema-projection']: Readonly<Record<'projectDddToJsonSchema'|'dddFieldBinding'|'inspectDdd'|'validateDddPayload'|'getDddDefinition'|'editDddDefinition'|'projectDddEntitiesToGraphql'|'projectDddToGraphql'|'verifyDddGraphqlProjection'|'recoverDddFromGraphql'|'recoverDddGraphqlNative', NativeFamilyOperation>>;
+ readonly ['openapi-json-schema-projection']: Readonly<Record<'projectOpenapiToJsonSchema', NativeFamilyOperation>>;
+ readonly ['typespec-smithy-jsonschema-projection']: Readonly<Record<'prepareTypeSpecJsonSchema'|'completeTypeSpecJsonSchema'|'prepareSmithyJsonSchema'|'completeSmithyJsonSchema', NativeFamilyOperation>>;
  readonly openapi: Readonly<Record<'import'|'validate'|'inspectPayload'|'export'|'exportBundle'|'getNode'|'lookupResource'|'extractSchema'|'indexSchemas'|'resolveSchemaReference'|'resolveDynamicReference'|'resolveObjectReference'|'edit', NativeFamilyOperation>>;
  readonly linkml: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'classSlots'|'slotValues'|'importContext'|'importMerge', NativeFamilyOperation>>;
  readonly odcs: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'resolveReference'|'relationships'|'renameElement', NativeFamilyOperation>>;

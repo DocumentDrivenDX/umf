@@ -115,5 +115,6 @@ export function createSecurityLogicEngine(execute, options = {}, ErrorType = Err
     securityAnd(values) { return invoke('securityAnd', {values}); },
     securityOr(values) { return invoke('securityOr', {values}); },
     composeSecurityRules(rules, protectedFields = []) { return invoke('composeSecurityRules', {rules, protectedFields}); },
+    securityRefIdentity(ref) { return invoke('securityRefIdentity', {ref}); },
   });
 }

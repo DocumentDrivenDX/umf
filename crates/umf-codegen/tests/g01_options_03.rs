@@ -446,13 +446,35 @@ fn g01_options_03_compiles_and_reverifies_reviewed_existing_field_fill() {
     assert!(phases
         .iter()
         .any(|phase| member(phase, "kind") == Some(&Value::string_utf8("constraint-validation"))));
+    // A newly added check may be installed atomically without a deferred
+    // validation selection. Selecting it opts into ADD NOT VALID + VALIDATE.
+    let mut immediate = append_request.clone();
+    arr(child_mut(&mut immediate, "options"), "validations").clear();
+    let immediate = engine
+        .compile_table_migration(&immediate, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&immediate, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{immediate:?}"
+    );
+    let immediate_phases = umf_codegen::value::array_items(
+        member(member(&immediate, "plan").unwrap(), "phases").unwrap(),
+    )
+    .unwrap();
+    assert!(!immediate_phases.iter().any(|phase| {
+        member(phase, "kind") == Some(&Value::string_utf8("constraint-validation"))
+    }));
+
     let mut refused = append_request;
-    arr(child_mut(&mut refused, "options"), "validations").clear();
+    let validations = arr(child_mut(&mut refused, "options"), "validations");
+    *child_mut(&mut validations[0], "constraint") = Value::string_utf8("missing_check");
     let refused = engine
         .compile_table_migration(&refused, &mut Context::ordinary())
         .unwrap();
     assert_eq!(
         member(&refused, "status"),
-        Some(&Value::string_utf8("blocked"))
+        Some(&Value::string_utf8("blocked")),
+        "{refused:?}"
     );
 }

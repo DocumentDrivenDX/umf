@@ -1,0 +1,91 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {copyJson} from '../model/json';
+import {UmfError,type Document} from '../model/types';
+import type {AvroCardinalityClassification,AvroCardinalityRequest} from './cardinality-avro';
+import type {AvroRecordTypeClassification,AvroRecordTypeRequest} from './avro-record-type';
+import type {AvroFieldClassification,AvroFieldRequest} from './avro-field';
+import type {AvroRecordClassification,AvroRecordRequest} from './avro-record';
+import type {ParquetRecordTypeClassification,ParquetRecordTypeRequest} from './parquet-record-type';
+import type {ParquetRecordClassification,ParquetRecordRequest} from './parquet-record';
+import type {NullabilityAvroProjection,NullabilityAvroRequest} from './nullability-avro-projection';
+import type {CoreNullabilityDeclaration} from '../model/nullability';
+import type {FacetsAvroProjection,FacetsAvroRequest} from './facets-avro-projection';
+import type {CoreFacetDeclaration} from '../model/facets';
+import type {CoreKindDeclaration} from '../model/field-kind';
+import type {KeyAvroProjection,KeyAvroRequest} from './key-avro-projection';
+import type {CoreKeyDeclaration} from '../model/keys';
+
+type NativeErrorGuard=(error:unknown)=>boolean;
+export interface CoreIdealNativeFamilies {
+  ['avro-cardinality']:{
+    classifyAvroCardinality(fields:{source:Document;request:AvroCardinalityRequest}):unknown;
+    verifyAvroCardinalityClassification(fields:{receipt:AvroCardinalityClassification;current:Document}):unknown;
+    recoverAvroCardinalityBundle(fields:{receipt:AvroCardinalityClassification;current:Document}):unknown;
+  };
+  ['avro-classification']:{
+    classifyAvroField(fields:{source:Document;request:AvroFieldRequest}):unknown;
+    recoverAvroFieldBundle(fields:{receipt:AvroFieldClassification;current:Document}):unknown;
+    classifyAvroRecord(fields:{source:Document;request:AvroRecordRequest}):unknown;
+    recoverAvroRecordBundle(fields:{receipt:AvroRecordClassification;current:Document}):unknown;
+  };
+  ['record-type']:{
+    classifyAvroRecordType(fields:{source:Document;request:AvroRecordTypeRequest}):unknown;
+    recoverAvroRecordTypeBundle(fields:{receipt:AvroRecordTypeClassification;current:Document}):unknown;
+    classifyParquetRecordType(fields:{source:Document;request:ParquetRecordTypeRequest}):unknown;
+    recoverParquetRecordTypeBytes(fields:{receipt:ParquetRecordTypeClassification;current:Document}):unknown;
+    classifyParquetRecord(fields:{source:Document;request:ParquetRecordRequest}):unknown;
+    recoverParquetRecordBytes(fields:{receipt:ParquetRecordClassification;current:Document}):unknown;
+  };
+  ['nullability-avro-projection']:{
+    projectNullabilityToAvro(fields:{author:CoreNullabilityDeclaration;request:NullabilityAvroRequest}):unknown;
+    recoverNullabilityFromAvro(fields:{receipt:NullabilityAvroProjection;nativeText:string}):unknown;
+  };
+  ['facets-avro-projection']:{
+    projectFacetsToAvro(fields:{author:CoreFacetDeclaration|CoreKindDeclaration;request:FacetsAvroRequest}):unknown;
+    recoverFacetsFromAvro(fields:{receipt:FacetsAvroProjection;nativeText:string}):unknown;
+  };
+  ['key-avro-projection']:{
+    projectKeysToAvro(fields:{source:Document;authors:CoreKeyDeclaration[];request:KeyAvroRequest}):unknown;
+    verifyKeysAvroProjection(fields:{receipt:KeyAvroProjection;current:Document}):unknown;
+    recoverKeysAvroIdeal(fields:{receipt:KeyAvroProjection;current:Document}):unknown;
+  };
+}
+const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
+
+/** Public classifier and native recovery facades over existing Rust wire owners. */
+export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNativeUmfCoreError:NativeErrorGuard=()=>false){
+  function call<T>(operation:()=>unknown):T{
+    try{return operation() as T;}catch(error){
+      if(!isNativeUmfCoreError(error))throw error;
+      const native=error as {code?:unknown;message?:unknown;path?:unknown};
+      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(AVRO_CARDINALITY_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|PARQUET_RECORD_|PARQUET_RECORD_TYPE_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&native.code!=='REQUEST'))throw error;
+      throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
+    }
+  }
+  return Object.freeze({
+    classifyAvroCardinality(source:Document,request:AvroCardinalityRequest):AvroCardinalityClassification{return call(()=>engine['avro-cardinality'].classifyAvroCardinality({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroCardinalityRequest}));},
+    verifyAvroCardinalityClassification(receipt:AvroCardinalityClassification,current:Document):AvroCardinalityClassification{return call(()=>engine['avro-cardinality'].verifyAvroCardinalityClassification({receipt:copyJson(receipt) as unknown as AvroCardinalityClassification,current:copyJson(current) as unknown as Document}));},
+    recoverAvroCardinalityBundle(receipt:AvroCardinalityClassification,current:Document):{schema:string;dependencies:{id:string;schema:string}[]}{return call(()=>engine['avro-cardinality'].recoverAvroCardinalityBundle({receipt:copyJson(receipt) as unknown as AvroCardinalityClassification,current:copyJson(current) as unknown as Document}));},
+    classifyAvroField(source:Document,request:AvroFieldRequest):AvroFieldClassification{return call(()=>engine['avro-classification'].classifyAvroField({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroFieldRequest}));},
+    recoverAvroFieldBundle(receipt:AvroFieldClassification,current:Document):{schema:string;dependencies:{id:string;schema:string}[]}{return call(()=>engine['avro-classification'].recoverAvroFieldBundle({receipt:copyJson(receipt) as unknown as AvroFieldClassification,current:copyJson(current) as unknown as Document}));},
+    classifyAvroRecord(source:Document,request:AvroRecordRequest):AvroRecordClassification{return call(()=>engine['avro-classification'].classifyAvroRecord({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroRecordRequest}));},
+    recoverAvroRecordBundle(receipt:AvroRecordClassification,current:Document):{schema:string;dependencies:{id:string;schema:string}[]}{return call(()=>engine['avro-classification'].recoverAvroRecordBundle({receipt:copyJson(receipt) as unknown as AvroRecordClassification,current:copyJson(current) as unknown as Document}));},
+    classifyAvroRecordType(source:Document,request:AvroRecordTypeRequest):AvroRecordTypeClassification{return call(()=>engine['record-type'].classifyAvroRecordType({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as AvroRecordTypeRequest}));},
+    recoverAvroRecordTypeBundle(receipt:AvroRecordTypeClassification,current:Document):{schema:string;dependencies:{id:string;schema:string}[]}{return call(()=>engine['record-type'].recoverAvroRecordTypeBundle({receipt:copyJson(receipt) as unknown as AvroRecordTypeClassification,current:copyJson(current) as unknown as Document}));},
+    classifyParquetRecordType(source:Document,request:ParquetRecordTypeRequest):ParquetRecordTypeClassification{return call(()=>engine['record-type'].classifyParquetRecordType({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetRecordTypeRequest}));},
+    classifyParquetRecord(source:Document,request:ParquetRecordRequest):ParquetRecordClassification{return call(()=>engine['record-type'].classifyParquetRecord({source:copyJson(source) as unknown as Document,request:copyJson(request) as unknown as ParquetRecordRequest}));},
+    recoverParquetRecordBytes(receipt:ParquetRecordClassification,current:Document):Uint8Array{const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetRecordBytes({receipt:copyJson(receipt) as unknown as ParquetRecordClassification,current:copyJson(current) as unknown as Document}));if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_RECORD_RECEIPT','Rust returned malformed recovered bytes');const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;},
+    recoverParquetRecordTypeBytes(receipt:ParquetRecordTypeClassification,current:Document):Uint8Array{
+      const recovered=call<{bytesHex:string}>(()=>engine['record-type'].recoverParquetRecordTypeBytes({receipt:copyJson(receipt) as unknown as ParquetRecordTypeClassification,current:copyJson(current) as unknown as Document}));
+      if(!/^(?:[0-9a-f]{2})*$/i.test(recovered.bytesHex))throw new UmfError('PARQUET_RECORD_TYPE_RECEIPT','Rust returned malformed recovered bytes');
+      const bytes=new Uint8Array(recovered.bytesHex.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=Number.parseInt(recovered.bytesHex.slice(i*2,i*2+2),16);return bytes;
+    },
+    projectNullabilityToAvro(author:CoreNullabilityDeclaration,request:NullabilityAvroRequest):NullabilityAvroProjection{return call(()=>engine['nullability-avro-projection'].projectNullabilityToAvro({author:copyJson(author) as unknown as CoreNullabilityDeclaration,request:copyJson(request) as unknown as NullabilityAvroRequest}) as NullabilityAvroProjection);},
+    recoverNullabilityFromAvro(receipt:NullabilityAvroProjection,nativeText:string):Document{return call(()=>engine['nullability-avro-projection'].recoverNullabilityFromAvro({receipt:copyJson(receipt) as unknown as NullabilityAvroProjection,nativeText}) as unknown as Document);},
+    projectFacetsToAvro(author:CoreFacetDeclaration|CoreKindDeclaration,request:FacetsAvroRequest):FacetsAvroProjection{return call(()=>engine['facets-avro-projection'].projectFacetsToAvro({author:copyJson(author) as unknown as CoreFacetDeclaration|CoreKindDeclaration,request:copyJson(request) as unknown as FacetsAvroRequest}) as FacetsAvroProjection);},
+    recoverFacetsFromAvro(receipt:FacetsAvroProjection,nativeText:string):Document{return call(()=>engine['facets-avro-projection'].recoverFacetsFromAvro({receipt:copyJson(receipt) as unknown as FacetsAvroProjection,nativeText}) as unknown as Document);},
+    projectKeysToAvro(source:Document,authors:CoreKeyDeclaration[],request:KeyAvroRequest):KeyAvroProjection{return call(()=>engine['key-avro-projection'].projectKeysToAvro({source:copyJson(source) as unknown as Document,authors:copyJson(authors) as unknown as CoreKeyDeclaration[],request:copyJson(request) as unknown as KeyAvroRequest}) as KeyAvroProjection);},
+    verifyKeysAvroProjection(receipt:KeyAvroProjection,current:Document):KeyAvroProjection{return call(()=>engine['key-avro-projection'].verifyKeysAvroProjection({receipt:copyJson(receipt) as unknown as KeyAvroProjection,current:copyJson(current) as unknown as Document}) as KeyAvroProjection);},
+    recoverKeysAvroIdeal(receipt:KeyAvroProjection,current:Document):Document{return call(()=>engine['key-avro-projection'].recoverKeysAvroIdeal({receipt:copyJson(receipt) as unknown as KeyAvroProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
+  });
+}

@@ -4,18 +4,30 @@ import {encodeRequestWire,fromWire,resultError} from './wire.js';
 export const NATIVE_FAMILY_PROFILE='umf.native-family-dispatch/1';
 
 const FAMILIES=Object.freeze({
+ 'avro-cardinality':{profile:'umf.avro-cardinality-binding/1.0.0',operations:['classifyAvroCardinality','verifyAvroCardinalityClassification','recoverAvroCardinalityBundle']},
+ 'avro-classification':{profile:'umf.avro-classification-binding/1.0.0',operations:['classifyAvroField','recoverAvroFieldBundle','classifyAvroRecord','recoverAvroRecordBundle']},
+ 'record-type':{profile:'umf.record-type-binding/1.0.0',operations:['classifyAvroRecordType','recoverAvroRecordTypeBundle','classifyParquetRecordType','recoverParquetRecordTypeBytes','classifyParquetRecord','recoverParquetRecordBytes']},
+ 'nullability-avro-projection':{profile:'umf.nullability-avro-projection-binding/1.0.0',operations:['projectNullabilityToAvro','recoverNullabilityFromAvro']},
+ 'facets-avro-projection':{profile:'umf.facets-avro-projection-binding/1.0.0',operations:['projectFacetsToAvro','recoverFacetsFromAvro']},
+ 'key-avro-projection':{profile:'umf.key-avro-projection-binding/1.0.0',operations:['projectKeysToAvro','verifyKeysAvroProjection','recoverKeysAvroIdeal']},
  'tablespec-via-avro-projection':{profile:'umf.tablespec-via-avro-projection-wire/1',operations:['projectToTableSpecViaAvro']},
  'parquet-avro-projection':{profile:'umf.parquet-avro-projection-wire/1',operations:['projectParquetToAvro']},
  avro:{profile:'umf.avro-wire/1',operations:['import','inspect','inspectPayload','fields','export','exportBundle','getNode','editNode','proposeNodeEdit']},
  'avro-json-schema-projection':{profile:'umf.avro-json-schema-projection-wire/1',operations:['projectAvroToJsonSchema']},
  'arrow-spark-projection':{profile:'umf.arrow-spark-projection-wire/1',operations:['projectArrowToSpark','projectSparkToArrow']},
- 'arrow-flatbuffer-model':{profile:'umf.arrow-flatbuffer-model-wire/1',operations:['importArrowFlatbufferModel','inspectArrowFlatbufferModel','exportArrowFlatbufferModel','proposeArrowFlatbufferEdit']},
+ 'arrow-flatbuffer-model':{profile:'umf.arrow-flatbuffer-model-wire/1',operations:['importArrowFlatbufferModel','inspectArrowFlatbufferModel','exportArrowFlatbufferModel','proposeArrowFlatbufferEdit','decodeArrowFlatbuffer','prepareArrowFlatbufferEncoding','verifyArrowFlatbufferEncoding']},
  'avro-tablespec-projection':{profile:'umf.avro-tablespec-projection-wire/1',operations:['projectAvroToTableSpec','projectTableSpecToAvro']},
  'postgresql-avro-projection':{profile:'umf.postgresql-avro-projection-wire/1',operations:['projectPostgresqlToAvro']},
  'postgresql-json-schema-projection':{profile:'umf.postgresql-json-schema-projection-wire/1',operations:['projectPostgresqlRowToJsonSchema']},
+ 'json-schema-protobuf-projection':{profile:'umf.json-schema-protobuf-projection-wire/1',operations:['projectJsonSchemaToProtobuf']},
  'sqlserver-avro-projection':{profile:'umf.sqlserver-avro-projection-wire/1',operations:['projectSqlServerToAvro']},
  'sqlserver-ddl-projection':{profile:'umf.sqlserver-ddl-projection-wire/1',operations:['projectSqlServerToDdl']},
- 'ddd-json-schema-projection':{profile:'umf.ddd-json-schema-projection-wire/1',operations:['projectDddToJsonSchema','dddFieldBinding','inspectDdd','validateDddPayload','getDddDefinition','editDddDefinition']},
+ 'binding-sqlserver-planned-index-projection':{profile:'umf.binding-sqlserver-planned-index-projection-wire/1',operations:['projectBindingIndexesAgainstSqlServerPlan']},
+ 'binding-parquet-projection':{profile:'umf.binding-parquet-projection-wire/1',operations:['projectBindingToParquet']},
+ 'binding-delta-projection':{profile:'umf.binding-delta-projection-wire/1',operations:['projectBindingToDelta']},
+ 'ddd-json-schema-projection':{profile:'umf.ddd-json-schema-projection-wire/1',operations:['projectDddToJsonSchema','dddFieldBinding','inspectDdd','validateDddPayload','getDddDefinition','editDddDefinition','projectDddEntitiesToGraphql','projectDddToGraphql','verifyDddGraphqlProjection','recoverDddFromGraphql','recoverDddGraphqlNative']},
+ 'openapi-json-schema-projection':{profile:'umf.openapi-json-schema-projection-wire/1',operations:['projectOpenapiToJsonSchema']},
+ 'typespec-smithy-jsonschema-projection':{profile:'umf.typespec-smithy-jsonschema-projection-wire/1',operations:['prepareTypeSpecJsonSchema','completeTypeSpecJsonSchema','prepareSmithyJsonSchema','completeSmithyJsonSchema']},
  openapi:{profile:'umf.openapi-wire/1',operations:['import','validate','inspectPayload','export','exportBundle','getNode','lookupResource','extractSchema','indexSchemas','resolveSchemaReference','resolveDynamicReference','resolveObjectReference','edit']},
  linkml:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','classSlots','slotValues','importContext','importMerge']},
  odcs:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','resolveReference','relationships','renameElement']},
@@ -25,6 +37,7 @@ const FAMILIES=Object.freeze({
  shacl:{profile:'umf.shacl-wire/1',operations:['import','inspect','inspectPayload','export','getQuads','editQuad','getPropertyPath','evaluatePropertyPath','getTargetNodes','getShapeMetadata','validate']},
  owl:{profile:'umf.owl-wire/1',operations:['import','inspect','inspectPayload','export','getQuads','editQuad','getOntologyHeaders','getExpressionView','getListAxioms','getSpecialAxioms','getAxiomAnnotations','getDeclarations']},
  'iceberg-table':{profile:'umf.iceberg-table-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','inspectContext','inspectTransforms','inspectTransformType','proposeRename','proposePromotion']},
+ 'binding-iceberg-projection':{profile:'umf.binding-iceberg-projection-wire/1',operations:['projectBindingToIceberg']},
  'delta-schema':{profile:'umf-r8-delta-source/0.1.0',operations:['import','inspect','inspectPayload','export','getNode','proposeNodeEdit']},
  'delta-table':{profile:'umf-r8-delta-source/0.1.0',operations:['import','inspect','inspectPayload','export','getNode','getSchema','proposeNodeEdit','renameMappedField']},
  'delta-log':{profile:'umf-r8-delta-log/0.1.0',operations:['capture','export','inspect','inspectActions','reconcileCommits','reconcileCheckpointSidecars']},
@@ -49,7 +62,7 @@ export function createNativeFamilyOperations(executeNativeFamilyWire,controlDisp
    Object.defineProperty(request,key,{value:descriptor.value,enumerable:true,writable:true,configurable:true});
   }
   request.profile=spec.profile;
-  request.op=family==='tablespec'?operation:family==='iceberg-table'?`iceberg.table.${operation}`:family==='delta-schema'?`delta/schema.${operation}`:family==='delta-table'?`delta/table.${operation}`:family==='delta-log'?`delta/log.${operation}`:family==='delta-ddl'?`delta.ddl.${operation}`:family==='delta-parquet'?`delta.parquet.${operation}`:`${family}.${operation}`;
+  request.op=family==='avro-cardinality'||family==='avro-classification'||family==='record-type'||family==='nullability-avro-projection'||family==='facets-avro-projection'||family==='key-avro-projection'||family==='tablespec'?operation:family==='iceberg-table'?`iceberg.table.${operation}`:family==='delta-schema'?`delta/schema.${operation}`:family==='delta-table'?`delta/table.${operation}`:family==='delta-log'?`delta/log.${operation}`:family==='delta-ddl'?`delta.ddl.${operation}`:family==='delta-parquet'?`delta.parquet.${operation}`:`${family}.${operation}`;
   hostWork?.(1);
   const requestWire=encodeRequestWire(request,hostWork);
   const responseText=executeNativeFamilyWire(family,requestWire,controlDispatcher);

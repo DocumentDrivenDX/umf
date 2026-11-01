@@ -6,6 +6,7 @@ use umf_core::{
     context::Context,
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
     error::{Diagnostic, EngineError},
+    parquet_record_classifier::ParquetRecordRequest,
     parquet_record_type_operation::ParquetRecordTypeRequest,
     registry::Registry,
     serialization::{self, Format},
@@ -27,12 +28,12 @@ fn validate_envelope(
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     let allowed: &[&str] = match operation {
-        "classifyAvroRecordType" | "classifyParquetRecordType" => {
+        "classifyAvroRecordType" | "classifyParquetRecordType" | "classifyParquetRecord" => {
             &["profile", "op", "source", "request"]
         }
-        "recoverAvroRecordTypeBundle" | "recoverParquetRecordTypeBytes" => {
-            &["profile", "op", "receipt", "current"]
-        }
+        "recoverAvroRecordTypeBundle"
+        | "recoverParquetRecordTypeBytes"
+        | "recoverParquetRecordBytes" => &["profile", "op", "receipt", "current"],
         _ => return Err(request_error("Unknown Record Type binding operation")),
     };
     let Value::Object(members) = value else {
@@ -204,6 +205,54 @@ fn parquet_request(
     })
 }
 
+fn parquet_record_request(
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<ParquetRecordRequest, EngineError> {
+    let Value::Object(members) = value else {
+        return Err(request_error("request must be an object"));
+    };
+    let allowed = ["recordModule", "recordId", "index", "mode", "authors"];
+    for (index, (key, _)) in members.iter().enumerate() {
+        ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+        if !allowed
+            .iter()
+            .any(|candidate| key == &Utf16::from(*candidate))
+        {
+            return Err(request_error("request contains an unknown member"));
+        }
+        if members[..index].iter().any(|(previous, _)| previous == key) {
+            return Err(request_error("request contains a duplicate member"));
+        }
+    }
+    let index = match field(value, "index") {
+        Some(Value::Number(number))
+            if number.is_finite()
+                && *number >= 0.0
+                && number.fract() == 0.0
+                && *number <= 9_007_199_254_740_991.0 =>
+        {
+            usize::try_from(*number as u64).map_err(|_| request_error("index is out of range"))?
+        }
+        _ => return Err(request_error("index must be a nonnegative safe integer")),
+    };
+    let authors = match field(value, "authors") {
+        None => Vec::new(),
+        Some(Value::Array(values)) => values
+            .iter()
+            .map(|author| copy_json(author, ctx))
+            .collect::<Result<Vec<_>, _>>()?,
+        _ => return Err(request_error("authors must be an array")),
+    };
+    Ok(ParquetRecordRequest {
+        record_module: copy_text(text_member(value, "recordModule")?, ctx)?,
+        record_id: copy_text(text_member(value, "recordId")?, ctx)?,
+        index,
+        mode: copy_text(text_member(value, "mode")?, ctx)?,
+        authors,
+    })
+}
+
 fn hex(bytes: &[u8], ctx: &mut Context<'_>) -> Result<String, EngineError> {
     const DIGITS: &[u8; 16] = b"0123456789abcdef";
     let size = bytes
@@ -278,6 +327,45 @@ pub fn execute_wire_with_control(
                     &mut capabilities,
                     &mut ctx,
                 )?
+            }
+            "classifyParquetRecord" => {
+                let source =
+                    field(&request, "source").ok_or_else(|| request_error("source is required"))?;
+                let operation_request = field(&request, "request")
+                    .ok_or_else(|| request_error("request is required"))?;
+                let operation_request = parquet_record_request(operation_request, &mut ctx)?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                umf_core::parquet_record_classifier::classify_parquet_record(
+                    source,
+                    &operation_request,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?
+            }
+            "recoverParquetRecordBytes" => {
+                let receipt = field(&request, "receipt")
+                    .ok_or_else(|| request_error("receipt is required"))?;
+                let current = field(&request, "current")
+                    .ok_or_else(|| request_error("current is required"))?;
+                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let mut capabilities = NoCapabilities;
+                let bytes = umf_core::parquet_record_recovery::recover_parquet_record_bytes(
+                    receipt,
+                    current,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?;
+                let bytes_hex = hex(&bytes, &mut ctx)?;
+                ctx.charge_work(bytes_hex.len(), Utf16::default())?;
+                Value::Object(vec![(
+                    Utf16::from("bytesHex"),
+                    Value::string_utf8(bytes_hex),
+                )])
             }
             "recoverParquetRecordTypeBytes" => {
                 let receipt = field(&request, "receipt")

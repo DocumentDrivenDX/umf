@@ -4,6 +4,7 @@ import type {GraphqlPayload} from './index';
 import {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/graphql/package.json';
 import {UmfError} from '../../model/errors';
+import type {GraphqlInputBindings,GraphqlInputProjection} from '../../projections/graphql-input-json-schema';
 
 export interface GraphqlRustEngine {
   importGraphqlSchema(source:string,options:{id:string;mode?:'schema'|'fragment'}):Document;
@@ -13,6 +14,7 @@ export interface GraphqlRustEngine {
   editGraphqlAst(document:Document,edit:(ast:GraphqlPayload['ast'])=>GraphqlPayload['ast']):unknown;
   exportGraphqlBundle(document:Document):{schema:string;source:Document;diagnostics:Diagnostic[]};
   inspectGraphqlPayload(payload:Json):Diagnostic[];
+  projectGraphqlInputToJsonSchema(document:Document,bindings:GraphqlInputBindings):unknown;
 }
 
 /** Keep the six established GraphQL API signatures on the source-built Rust path. */
@@ -33,5 +35,6 @@ export function createGraphqlRustDefault(engine:GraphqlRustEngine,isNativeUmfCor
       return invoke(()=>engine.editGraphqlAst(document,wrapped) as Document,callbackFailure);
     },
     exportGraphqlBundle:(document:Document)=>invoke(()=>engine.exportGraphqlBundle(document)),
+    projectGraphqlInputToJsonSchema:(document:Document,bindings:GraphqlInputBindings)=>invoke(()=>engine.projectGraphqlInputToJsonSchema(document,bindings) as GraphqlInputProjection),
   });
 }

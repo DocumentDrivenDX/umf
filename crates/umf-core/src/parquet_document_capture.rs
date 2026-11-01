@@ -13,7 +13,7 @@ use crate::{
     parquet_record_type_candidate::SchemaElement,
     parquet_schema_decode::decode_schema,
     registry::Registry,
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 
 const PARQUET_EXTENSION: &str = "umf.parquet";
@@ -186,6 +186,12 @@ fn selected_field_identity(
         .iter()
         .filter(|element| get(element, "id").is_some_and(|id| as_utf16(id) == Some(&expected_id)));
     let Some(element) = matching_elements.next() else {
+        // The top-level Parquet group is a record declaration, not an
+        // imported field. Its direct children still carry their usual
+        // schema-index field identities, which the record classifier checks.
+        if index == 0 {
+            return Ok(None);
+        }
         return Err(err(
             "PARQUET_FIELD_IDENTITY",
             "Selected schema index has no matching parquet.fields identity",
@@ -287,7 +293,7 @@ mod tests {
     use crate::{
         engine::{ResourceSet, SemanticContext},
         error::Diagnostic,
-        serialization::{Format, read_json_value},
+        serialization::{read_json_value, Format},
     };
 
     struct NoCapabilities;

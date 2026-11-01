@@ -71,6 +71,7 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         "graphql.editAst" => &["profile", "op", "document", "candidateAst"],
         "graphql.editAstHost" => &["profile", "op", "document"],
         "graphql.inspectPayload" => &["profile", "op", "payload"],
+        "graphql.projectInputToJsonSchema" => &["profile", "op", "document", "bindings"],
         _ => return None,
     })
 }
@@ -146,6 +147,10 @@ fn validate_operation_input(
         "graphql.inspectPayload" => {
             field(request, "payload").ok_or_else(|| request_error("payload is required"))?;
         }
+        "graphql.projectInputToJsonSchema" => {
+            field(request, "document").ok_or_else(|| request_error("document is required"))?;
+            field(request, "bindings").ok_or_else(|| request_error("bindings are required"))?;
+        }
         _ => return Err(request_error("Unknown GraphQL operation")),
     }
     Ok(())
@@ -175,6 +180,7 @@ fn execute(
         "graphql.editAst",
         "graphql.editAstHost",
         "graphql.inspectPayload",
+        "graphql.projectInputToJsonSchema",
     ]
     .into_iter()
     .find(|candidate| is_ascii(op, candidate))
@@ -182,7 +188,8 @@ fn execute(
     validate_members(request, allowed(op).unwrap(), ctx)?;
     validate_operation_input(op, request, ctx)?;
     if op == "graphql.inspectPayload" {
-        let payload = field(request, "payload").ok_or_else(|| request_error("payload is required"))?;
+        let payload =
+            field(request, "payload").ok_or_else(|| request_error("payload is required"))?;
         let diagnostics = engine_registry::inspect_payload_with_context(payload, ctx)?;
         ctx.charge_work(diagnostics.len(), Utf16::default())?;
         let mut output = Vec::with_capacity(diagnostics.len());
@@ -193,6 +200,13 @@ fn execute(
             output.push(diagnostic_value(diagnostic));
         }
         return Ok(Value::Array(output));
+    }
+    if op == "graphql.projectInputToJsonSchema" {
+        return umf_graphql::graphql_input_json_schema_projection::project(
+            field(request, "document").ok_or_else(|| request_error("document is required"))?,
+            field(request, "bindings").ok_or_else(|| request_error("bindings are required"))?,
+            ctx,
+        );
     }
     let mut resources = GraphqlResources::new(ctx)?;
     let result = match op {
@@ -289,8 +303,7 @@ fn execute(
                 .ok_or_else(|| request_error("GraphQL host AST editor is required"))?;
             engine_registry::edit_ast_with_context(
                 &mut resources,
-                field(request, "document")
-                    .ok_or_else(|| request_error("document is required"))?,
+                field(request, "document").ok_or_else(|| request_error("document is required"))?,
                 |ast, ctx| editor(ast, ctx),
                 ctx,
             )?

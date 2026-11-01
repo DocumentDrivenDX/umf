@@ -15,6 +15,11 @@ export interface DddJsonSchemaNativeFamily {
   validateDddPayload(fields:{document:Document;payload:Json;path:string;scope:Scope}):unknown;
   getDddDefinition(fields:{document:Document;module:string;element:string}):unknown;
   editDddDefinition(fields:{document:Document;module:string;element:string;replacement:Json}):unknown;
+  projectDddEntitiesToGraphql(fields:{document:Document;policy:import('./ddd-graphql/entities').DddGraphqlEntityPolicy;lossPolicy:'strict'|'report'}):unknown;
+  projectDddToGraphql(fields:{document:Document;policy:import('./ddd-graphql').DddGraphqlPolicy;lossPolicy:'strict'|'report'}):unknown;
+  verifyDddGraphqlProjection(fields:{receipt:import('./ddd-graphql').DddGraphqlProjection|import('./ddd-graphql/entities').DddGraphqlEntityProjection;currentTarget?:Document}):unknown;
+  recoverDddFromGraphql(fields:{receipt:import('./ddd-graphql').DddGraphqlProjection;currentTarget:Document}):unknown;
+  recoverDddGraphqlNative(fields:{receipt:import('./ddd-graphql').DddGraphqlProjection;currentTarget:Document}):unknown;
  };
 }
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
@@ -38,5 +43,10 @@ export function createDddJsonSchemaRustDefault(engine:DddJsonSchemaNativeFamily,
   registerDdd,
   dddRegistry<T extends {register(manifest:ExtensionPackage,semantics:(payload:Json,context:{document:Document;path:string;scope:Scope})=>Diagnostic[]):T}>(createRegistry:()=>T):T{return registerDdd(createRegistry());},
   validateDddPayload:validatePayload,
+  projectDddEntitiesToGraphql(logical:Document,policy:import('./ddd-graphql/entities').DddGraphqlEntityPolicy,lossPolicy:'strict'|'report'):import('./ddd-graphql/entities').DddGraphqlEntityProjection{return call(()=>engine['ddd-json-schema-projection'].projectDddEntitiesToGraphql({document:copyJson(logical) as unknown as Document,policy:copyJson(policy) as unknown as import('./ddd-graphql/entities').DddGraphqlEntityPolicy,lossPolicy})) as import('./ddd-graphql/entities').DddGraphqlEntityProjection;},
+  projectDddToGraphql(logical:Document,policy:import('./ddd-graphql').DddGraphqlPolicy,lossPolicy:'strict'|'report'):import('./ddd-graphql').DddGraphqlProjection{return call(()=>engine['ddd-json-schema-projection'].projectDddToGraphql({document:copyJson(logical) as unknown as Document,policy:copyJson(policy) as unknown as import('./ddd-graphql').DddGraphqlPolicy,lossPolicy})) as import('./ddd-graphql').DddGraphqlProjection;},
+  verifyDddGraphqlProjection(input:import('./ddd-graphql').DddGraphqlProjection,currentTarget?:Document):import('./ddd-graphql').DddGraphqlProjection{return call(()=>engine['ddd-json-schema-projection'].verifyDddGraphqlProjection({receipt:copyJson(input) as unknown as import('./ddd-graphql').DddGraphqlProjection|import('./ddd-graphql/entities').DddGraphqlEntityProjection,...(currentTarget?{currentTarget:copyJson(currentTarget) as unknown as Document}:{})}));},
+  recoverDddFromGraphql(input:import('./ddd-graphql').DddGraphqlProjection,currentTarget:Document):Document{return call(()=>engine['ddd-json-schema-projection'].recoverDddFromGraphql({receipt:copyJson(input) as unknown as import('./ddd-graphql').DddGraphqlProjection,currentTarget:copyJson(currentTarget) as unknown as Document})) as Document;},
+  recoverDddGraphqlNative(input:import('./ddd-graphql').DddGraphqlProjection,currentTarget:Document):string{return call(()=>engine['ddd-json-schema-projection'].recoverDddGraphqlNative({receipt:copyJson(input) as unknown as import('./ddd-graphql').DddGraphqlProjection,currentTarget:copyJson(currentTarget) as unknown as Document})) as string;},
  });
 }

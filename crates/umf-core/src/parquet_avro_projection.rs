@@ -233,8 +233,8 @@ fn entries(value: Option<&Value>) -> Option<&[(Utf16, Value)]> {
 fn schema_entry<'a>(schema: &'a [Value], index: usize) -> Option<&'a Value> {
     schema.get(index)
 }
-fn map_entry(value: Option<&Value>, key_name: &str) -> Option<&Value> {
-    field(value, key_name)
+fn map_entry<'a>(value: Option<&'a Value>, key_name: &str) -> Option<&'a Value> {
+    field(value?, key_name)
 }
 
 /// Translate source Parquet schema observations. It never decodes page data.
@@ -1389,7 +1389,7 @@ fn arrow_fields_issues(
         }
         if kind == "Timestamp" && field.timezone.as_ref().is_some_and(|tz| !tz.is_empty()) {
             let timezone = serialization::write_json_value(
-                &Value::String(Utf16::from(field.timezone.as_ref().unwrap())),
+                &Value::String(Utf16::from(field.timezone.as_ref().unwrap().as_str())),
                 Format::Json,
                 ctx,
             )?

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Opt-in Rust-backed core relationship operations over the shared request route. */
 export function createCoreRelationshipOperations(invoke) {
-  const call = (operation, fields) => invoke(`model/${operation}`, fields);
+  const call = (operation, fields, registry) => invoke(`model/${operation}`, fields, registry);
   const preparedReceipts = new WeakMap();
   return Object.freeze({
-    selectCoreRelationships(source, query) {
-      return call('selectCoreRelationships', {source, query});
+    selectCoreRelationships(source, query, registry = []) {
+      return call('selectCoreRelationships', {source, query}, registry);
     },
     inspectCoreRelationships(source, identity) {
       return call('inspectCoreRelationships', {source, identity});

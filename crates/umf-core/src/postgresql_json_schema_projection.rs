@@ -420,7 +420,7 @@ fn parse_policy(input: &Value, ctx: &mut Context<'_>) -> Result<Policy, EngineEr
     };
     if !["strict", "allow-reported-loss"]
         .iter()
-        .any(|known| loss == &key(known))
+        .any(|known| loss == key(known))
     {
         return Err(err(
             "POSTGRESQL_ROW_POLICY",
@@ -514,12 +514,7 @@ pub fn project_postgresql_row_to_json_schema(
     let policy = parse_policy(policy_input, ctx)?;
     let checked = match pg::inspect_document(source, ctx) {
         Ok(value) => value,
-        Err(error)
-            if error
-                .code
-                .units()
-                .starts_with(&"POSTGRESQL_CATALOG".encode_utf16().collect::<Vec<_>>()) =>
-        {
+        Err(error) if error.code.starts_with("POSTGRESQL_CATALOG") => {
             return Err(err("POSTGRESQL_ROW_SOURCE", "Invalid catalog capture"));
         }
         Err(error) => return Err(error),
@@ -541,7 +536,7 @@ pub fn project_postgresql_row_to_json_schema(
     let mut issues = Vec::new();
     issues.push(issue("", "POSTGRESQL_CATALOG_SCOPE", "not-enforced", "Observed metadata is limited to the declared query/profile; server state and reconstruction correspondence are not verified"));
     add_schema_unknowns(source, &capture_tree, &mut issues, ctx)?;
-    let diagnostics = match field(&checked, "diagnostics") {
+    let diagnostics: &[Value] = match field(&checked, "diagnostics") {
         Some(Value::Array(d)) => d,
         _ => &[],
     };

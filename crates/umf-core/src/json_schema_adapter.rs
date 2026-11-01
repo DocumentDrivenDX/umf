@@ -605,6 +605,17 @@ pub fn admit_payload(
     admit_payload_inner(value, ctx, false)
 }
 
+/// Inspect a registered JSON Schema payload using the same native semantics as
+/// whole-document inspection. Registry hosts retain only the callback bridge.
+pub fn inspect_registered_payload(
+    value: &Value,
+    path: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    let payload = admit_payload_for_inspection(value, ctx)?;
+    crate::json_schema_inspect::inspect_payload(&payload, path, ctx)
+}
+
 pub(crate) fn admit_payload_for_inspection(
     value: &Value,
     ctx: &mut Context<'_>,

@@ -7,6 +7,12 @@ use umf_core::{Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
+    "avro-cardinality",
+    "avro-classification",
+    "record-type",
+    "nullability-avro-projection",
+    "facets-avro-projection",
+    "key-avro-projection",
     "avro",
     "avro-json-schema-projection",
     "arrow-spark-projection",
@@ -14,11 +20,17 @@ pub const FAMILIES: &[&str] = &[
     "avro-tablespec-projection",
     "postgresql-avro-projection",
     "postgresql-json-schema-projection",
+    "json-schema-protobuf-projection",
     "tablespec-via-avro-projection",
     "parquet-avro-projection",
     "sqlserver-avro-projection",
     "sqlserver-ddl-projection",
+    "binding-sqlserver-planned-index-projection",
+    "binding-parquet-projection",
+    "binding-delta-projection",
     "ddd-json-schema-projection",
+    "openapi-json-schema-projection",
+    "typespec-smithy-jsonschema-projection",
     "openapi",
     "linkml",
     "odcs",
@@ -29,6 +41,7 @@ pub const FAMILIES: &[&str] = &[
     "owl",
     "rdf",
     "iceberg-table",
+    "binding-iceberg-projection",
     "delta-schema",
     "delta-table",
     "delta-log",
@@ -48,6 +61,46 @@ fn bad_family() -> String {
 /// Describe callable family operations without a host-owned profile table.
 pub fn metadata_wire(family: &str) -> String {
     let (profile, operations): (&str, &[&str]) = match family {
+        "avro-cardinality" => (
+            crate::avro_cardinality_binding::PROFILE,
+            &[
+                "classifyAvroCardinality",
+                "verifyAvroCardinalityClassification",
+                "recoverAvroCardinalityBundle",
+            ],
+        ),
+        "avro-classification" => (
+            crate::avro_classification_binding::PROFILE,
+            &[
+                "classifyAvroField",
+                "recoverAvroFieldBundle",
+                "classifyAvroRecord",
+                "recoverAvroRecordBundle",
+            ],
+        ),
+        "record-type" => (
+            crate::record_type_binding::PROFILE,
+            &[
+                "classifyAvroRecordType",
+                "recoverAvroRecordTypeBundle",
+                "classifyParquetRecordType",
+                "recoverParquetRecordTypeBytes",
+                "classifyParquetRecord",
+                "recoverParquetRecordBytes",
+            ],
+        ),
+        "nullability-avro-projection" => (
+            crate::nullability_avro_projection_binding::PROFILE,
+            &["projectNullabilityToAvro", "recoverNullabilityFromAvro"],
+        ),
+        "facets-avro-projection" => (
+            crate::facets_avro_projection_binding::PROFILE,
+            &["projectFacetsToAvro", "recoverFacetsFromAvro"],
+        ),
+        "key-avro-projection" => (
+            crate::key_avro_projection_binding::PROFILE,
+            &["projectKeysToAvro", "verifyKeysAvroProjection", "recoverKeysAvroIdeal"],
+        ),
         "avro" => (
             crate::avro_binding::PROFILE,
             &[
@@ -73,6 +126,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "inspectArrowFlatbufferModel",
                 "exportArrowFlatbufferModel",
                 "proposeArrowFlatbufferEdit",
+                "decodeArrowFlatbuffer",
+                "prepareArrowFlatbufferEncoding",
+                "verifyArrowFlatbufferEncoding",
             ],
         ),
         "arrow-spark-projection" => (
@@ -91,6 +147,10 @@ pub fn metadata_wire(family: &str) -> String {
             crate::postgresql_json_schema_projection_binding::PROFILE,
             &["projectPostgresqlRowToJsonSchema"],
         ),
+        "json-schema-protobuf-projection" => (
+            crate::json_schema_protobuf_projection_binding::PROFILE,
+            &["projectJsonSchemaToProtobuf"],
+        ),
         "tablespec-via-avro-projection" => (
             crate::tablespec_via_avro_projection_binding::PROFILE,
             &["projectToTableSpecViaAvro"],
@@ -107,6 +167,18 @@ pub fn metadata_wire(family: &str) -> String {
             crate::sqlserver_ddl_projection_binding::PROFILE,
             &["projectSqlServerToDdl"],
         ),
+        "binding-sqlserver-planned-index-projection" => (
+            crate::binding_sqlserver_planned_indexes_binding::PROFILE,
+            &["projectBindingIndexesAgainstSqlServerPlan"],
+        ),
+        "binding-parquet-projection" => (
+            crate::binding_parquet_projection_binding::PROFILE,
+            &["projectBindingToParquet"],
+        ),
+        "binding-delta-projection" => (
+            crate::binding_delta_projection_binding::PROFILE,
+            &["projectBindingToDelta"],
+        ),
         "ddd-json-schema-projection" => (
             crate::ddd_json_schema_projection_binding::PROFILE,
             &[
@@ -116,6 +188,24 @@ pub fn metadata_wire(family: &str) -> String {
                 "validateDddPayload",
                 "getDddDefinition",
                 "editDddDefinition",
+                "projectDddEntitiesToGraphql",
+                "projectDddToGraphql",
+                "verifyDddGraphqlProjection",
+                "recoverDddFromGraphql",
+                "recoverDddGraphqlNative",
+            ],
+        ),
+        "openapi-json-schema-projection" => (
+            crate::openapi_json_schema_projection_binding::PROFILE,
+            &["projectOpenapiToJsonSchema"],
+        ),
+        "typespec-smithy-jsonschema-projection" => (
+            crate::typespec_smithy_jsonschema_projection_binding::PROFILE,
+            &[
+                "prepareTypeSpecJsonSchema",
+                "completeTypeSpecJsonSchema",
+                "prepareSmithyJsonSchema",
+                "completeSmithyJsonSchema",
             ],
         ),
         "openapi" => (
@@ -311,6 +401,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "reconcileCheckpointSidecars",
             ],
         ),
+        "binding-iceberg-projection" => (
+            crate::binding_iceberg_projection_binding::PROFILE,
+            &["projectBindingToIceberg"],
+        ),
         "iceberg-table" => (
             crate::iceberg_table_binding::PROFILE,
             &[
@@ -355,7 +449,12 @@ pub fn metadata_wire(family: &str) -> String {
     let operations = operations
         .iter()
         .map(|operation| {
-            let wire_operation = if family == "tablespec" {
+            let wire_operation = if family == "avro-cardinality"
+                || family == "avro-classification"
+                || family == "record-type"
+            {
+                (*operation).to_owned()
+            } else if family == "tablespec" {
                 (*operation).to_owned()
             } else if family == "iceberg-table" {
                 format!("iceberg.table.{operation}")
@@ -394,6 +493,20 @@ pub fn execute_wire_with_control(
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
     match family {
+        "avro-classification" => {
+            crate::avro_classification_binding::execute_wire_with_control(wire, control)
+        }
+        "avro-cardinality" => {
+            crate::avro_cardinality_binding::execute_wire_with_control(wire, control)
+        }
+        "record-type" => crate::record_type_binding::execute_wire_with_control(wire, control),
+        "nullability-avro-projection" => {
+            crate::nullability_avro_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "facets-avro-projection" => {
+            crate::facets_avro_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "key-avro-projection" => crate::key_avro_projection_binding::execute_wire_with_control(wire,control),
         "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
         "avro-json-schema-projection" => {
             crate::avro_json_schema_projection_binding::execute_wire_with_control(wire, control)
@@ -415,6 +528,9 @@ pub fn execute_wire_with_control(
                 wire, control,
             )
         }
+        "json-schema-protobuf-projection" => {
+            crate::json_schema_protobuf_projection_binding::execute_wire_with_control(wire, control)
+        }
         "tablespec-via-avro-projection" => {
             crate::tablespec_via_avro_projection_binding::execute_wire_with_control(wire, control)
         }
@@ -427,8 +543,25 @@ pub fn execute_wire_with_control(
         "sqlserver-ddl-projection" => {
             crate::sqlserver_ddl_projection_binding::execute_wire_with_control(wire, control)
         }
+        "binding-sqlserver-planned-index-projection" => {
+            crate::binding_sqlserver_planned_indexes_binding::execute_wire_with_control(wire, control)
+        }
+        "binding-parquet-projection" => {
+            crate::binding_parquet_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "binding-delta-projection" => {
+            crate::binding_delta_projection_binding::execute_wire_with_control(wire, control)
+        }
         "ddd-json-schema-projection" => {
             crate::ddd_json_schema_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "openapi-json-schema-projection" => {
+            crate::openapi_json_schema_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "typespec-smithy-jsonschema-projection" => {
+            crate::typespec_smithy_jsonschema_projection_binding::execute_wire_with_control(
+                wire, control,
+            )
         }
         "openapi" => crate::openapi_binding::execute_wire_with_control(wire, control),
         "linkml" => crate::native_contract_binding::execute_linkml_wire_with_control(wire, control),
@@ -439,6 +572,7 @@ pub fn execute_wire_with_control(
         "shacl" => crate::shacl_owl_binding::execute_shacl_wire_with_control(wire, control),
         "owl" => crate::shacl_owl_binding::execute_owl_wire_with_control(wire, control),
         "rdf" => crate::rdf_binding::execute_wire_with_control(wire, control),
+        "binding-iceberg-projection" => crate::binding_iceberg_projection_binding::execute_wire_with_control(wire, control),
         "iceberg-table" => crate::iceberg_table_binding::execute_wire_with_control(wire, control),
         "delta-schema" | "delta-table" => {
             crate::delta_schema_table::execute_json_with_control(wire, control)

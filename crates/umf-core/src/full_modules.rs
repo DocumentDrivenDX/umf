@@ -14,6 +14,8 @@ pub mod access_values;
 pub mod action_plan_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod arrow_flatbuffer_model;
+#[cfg(feature = "embedded-adapters")]
+pub mod arrow_flatbuffer_binary;
 pub mod arrow_ipc_capture;
 pub mod arrow_schema;
 #[cfg(feature = "embedded-adapters")]
@@ -44,6 +46,12 @@ pub mod avro_semantics;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection;
 pub mod binding_index_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_iceberg_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_sqlserver_planned_indexes;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_delta_projection;
 pub mod binding_inspection;
 pub mod bit128;
 pub mod bit128_binding;
@@ -69,6 +77,7 @@ pub mod dataset_values;
 pub mod dbt;
 #[cfg(feature = "embedded-adapters")]
 pub mod ddd_json_schema_projection;
+pub mod ddd_graphql_projection;
 pub mod delta_actions;
 #[cfg(feature = "embedded-adapters")]
 pub mod delta_ddl;
@@ -108,6 +117,8 @@ pub mod json_schema_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod json_schema_inspect;
 #[cfg(feature = "embedded-adapters")]
+pub mod json_schema_protobuf_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod jsonld_source;
 pub mod kinds;
 pub mod literal;
@@ -115,6 +126,14 @@ pub mod literal_policy;
 pub mod native_contract_adapters;
 pub mod native_json;
 pub mod nullability;
+#[cfg(feature = "embedded-adapters")]
+pub mod nullability_avro_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod facets_avro_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod key_avro_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod openapi_json_schema_projection;
 pub mod openapi_adapter;
 pub mod operation_values;
 pub mod outcome_values;
@@ -211,4 +230,6 @@ pub mod tablespec_via_avro_projection;
 pub mod target_pin;
 #[cfg(feature = "embedded-adapters")]
 pub mod typespec_adapter;
+#[cfg(feature = "embedded-adapters")]
+pub mod typespec_smithy_jsonschema_projection;
 pub mod value;

@@ -2,7 +2,9 @@
 //! Rust-owned logical Arrow FlatBuffer model host routes.
 use crate::{decode, encode, field, result_envelope};
 use std::collections::BTreeSet;
-use umf_core::{arrow_flatbuffer_model, Context, EngineError, Utf16, Value};
+use umf_core::{
+    arrow_flatbuffer_binary, arrow_flatbuffer_model, Context, EngineError, Utf16, Value,
+};
 pub const PROFILE: &str = "umf.arrow-flatbuffer-model-wire/1";
 fn err(message: &str) -> EngineError {
     EngineError::new("REQUEST", Utf16::default(), message)
@@ -29,6 +31,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             "document",
             "path",
             "replacement",
+            "rootType",
+            "bytes",
         ]
         .iter()
         .any(|x| k == &Utf16::from(*x))
@@ -66,9 +70,55 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
                 field(request, "replacement").ok_or_else(|| err("replacement required"))?;
             arrow_flatbuffer_model::propose_arrow_flatbuffer_edit(d, path, replacement, ctx)
         }
+        "arrow-flatbuffer-model.decodeArrowFlatbuffer" => {
+            let id = text(field(request, "id"), "id")?;
+            let root_type = text(field(request, "rootType"), "rootType")?
+                .to_utf8()
+                .map_err(|_| err("rootType must be valid UTF-16"))?;
+            let bytes = decode_hex(text(field(request, "bytes"), "bytes")?)?;
+            arrow_flatbuffer_binary::decode_arrow_flatbuffer(&bytes, id, &root_type, ctx)
+        }
+        "arrow-flatbuffer-model.prepareArrowFlatbufferEncoding" => {
+            let d = field(request, "document").ok_or_else(|| err("document required"))?;
+            arrow_flatbuffer_binary::prepare_arrow_flatbuffer_encoding(d, ctx)
+        }
+        "arrow-flatbuffer-model.verifyArrowFlatbufferEncoding" => {
+            let d = field(request, "document").ok_or_else(|| err("document required"))?;
+            let expected = arrow_flatbuffer_binary::prepare_arrow_flatbuffer_encoding(d, ctx)?;
+            let bytes = decode_hex(text(field(request, "bytes"), "bytes")?)?;
+            arrow_flatbuffer_binary::verify_encoded_bytes(&expected, &bytes, ctx)?;
+            Ok(Value::Bool(true))
+        }
         _ => Err(err("unknown Arrow FlatBuffer model operation")),
     }
 }
+fn decode_hex(source: &Utf16) -> Result<Vec<u8>, EngineError> {
+    let text = source
+        .to_utf8()
+        .map_err(|_| err("bytes must be valid lowercase hexadecimal"))?;
+    if text.len() > 2_000_000 {
+        return Err(EngineError::new(
+            "ARROW_IPC_LIMIT",
+            Utf16::default(),
+            "Expected at most 1000000 source bytes",
+        ));
+    }
+    if text.len() % 2 != 0
+        || !text
+            .bytes()
+            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+    {
+        return Err(err("bytes must be valid lowercase hexadecimal"));
+    }
+    text.as_bytes()
+        .chunks_exact(2)
+        .map(|pair| {
+            let nibble = |b: u8| if b <= b'9' { b - b'0' } else { b - b'a' + 10 };
+            Ok((nibble(pair[0]) << 4) | nibble(pair[1]))
+        })
+        .collect()
+}
+
 pub fn execute_wire(wire: &str) -> String {
     let mut no_control = |_: usize| Ok(());
     execute_wire_with_control(wire, &mut no_control)

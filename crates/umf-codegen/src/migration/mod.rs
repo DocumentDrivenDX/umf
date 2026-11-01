@@ -3184,6 +3184,7 @@ impl CodegenEngine<'_> {
             .unwrap_or_default();
         let plan_version = match option_version.as_str() {
             "umf.table-migration-options/0.2" => "umf.table-migration/0.2",
+            "umf.table-migration-options/0.3" => "umf.table-migration/0.3",
             "umf.table-migration-options/0.4" => "umf.table-migration/0.4",
             "umf.table-migration-options/0.6" => "umf.table-migration/0.6",
             _ => "umf.table-migration/0.1",
@@ -3216,11 +3217,13 @@ impl CodegenEngine<'_> {
                 fields.push((Utf16::from("options"), options.clone()));
                 fields.push((Utf16::from("review"), array(review_items)));
                 if plan_version == "umf.table-migration/0.2"
+                    || plan_version == "umf.table-migration/0.3"
                     || plan_version == "umf.table-migration/0.4"
                     || plan_version == "umf.table-migration/0.6"
                 {
                     fields.push((Utf16::from("phases"), array(phases)));
-                    if plan_version == "umf.table-migration/0.4"
+                    if plan_version == "umf.table-migration/0.3"
+                        || plan_version == "umf.table-migration/0.4"
                         || plan_version == "umf.table-migration/0.6"
                     {
                         fields.push((
@@ -3234,7 +3237,13 @@ impl CodegenEngine<'_> {
                     }
                     fields.push((
                         Utf16::from("executionProfile"),
-                        if plan_version == "umf.table-migration/0.4"
+                        if plan_version == "umf.table-migration/0.3" {
+                            object(vec![
+                                ("version", s("umf.table-migration-execution/0.2")),
+                                ("progressRelation", s("umf_lifecycle_progress")),
+                                ("ownerOnly", Value::Bool(true)),
+                            ])
+                        } else if plan_version == "umf.table-migration/0.4"
                             || plan_version == "umf.table-migration/0.6"
                         {
                             object(vec![
@@ -3301,6 +3310,7 @@ impl CodegenEngine<'_> {
             Some(
                 "umf.table-migration/0.1"
                     | "umf.table-migration/0.2"
+                    | "umf.table-migration/0.3"
                     | "umf.table-migration/0.4"
                     | "umf.table-migration/0.5"
                     | "umf.table-migration/0.6"

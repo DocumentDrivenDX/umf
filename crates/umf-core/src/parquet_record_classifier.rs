@@ -129,7 +129,24 @@ pub fn classify_parquet_record(
     )?;
     let candidate_capture =
         ParquetCapture::new(captured.bytes.clone(), captured.schema.clone(), ctx)?;
-    let resolution = candidate_capture.resolve_record_type(request.index, ctx)?;
+    let resolution = if request.index == 0
+        && selected.physical_type.is_none()
+        && selected.annotation.is_none()
+    {
+        // The established TypeScript classifier admits the unannotated root
+        // group as a Record declaration. It is not a LIST element, but its
+        // direct children are still checked as imported Field members below.
+        CandidateResolution::StructMember(
+            crate::parquet_record_type_candidate::RecordTypeCandidate {
+                index: 0,
+                path: Vec::new(),
+                container_index: 0,
+                layout: Utf16::from("root-record"),
+            },
+        )
+    } else {
+        candidate_capture.resolve_record_type(request.index, ctx)?
+    };
     let mut result = base_receipt(&source, request, ctx)?;
     let mut blockers: Vec<(String, String, Value, String)> = Vec::new();
     let candidate = match resolution {

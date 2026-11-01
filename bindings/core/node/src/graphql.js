@@ -46,5 +46,6 @@ export function createGraphqlOperations(addon,ErrorType=Error,controlDispatcher,
   editGraphqlAst,
   exportGraphqlBundle(document){return run('exportBundle',{document});},
   inspectGraphqlPayload(payload){return run('inspectPayload',{payload});},
+  projectGraphqlInputToJsonSchema(document,bindings){return run('projectInputToJsonSchema',{document,bindings});},
  });
 }

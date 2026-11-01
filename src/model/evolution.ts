@@ -12,7 +12,7 @@ import receiptInput from '../../spec/core/evolution-operation.schema.json';
 const policySchema=snapshotSchema(policyInput),receiptSchema=snapshotSchema(receiptInput);
 const validator=createValidator();for(const s of [coreSchema,keySchema,datasetSchema])validator.addSchema(snapshotSchema(s));
 const checkPolicy=validator.compile(policySchema),checkReceipt=validator.compile(receiptSchema);
-export const coreEvolutionPolicySchema=policyInput,coreEvolutionOperationSchema=receiptInput;
+export {coreEvolutionPolicySchema,coreEvolutionOperationSchema} from './operation-schemas';
 export interface CoreEvolutionPolicy{profile:'core-0.8-absent-string-additions/0.1'}
 function canonical(value:any,work:ValueWork):string{work.charge('evolution-canonical',1);if(Array.isArray(value))return '['+value.map(x=>canonical(x,work)).join(',')+']';if(value!==null&&typeof value==='object'){const keys=Object.keys(value);work.charge('evolution-sort',keys.length*Math.ceil(Math.log2(keys.length+1)));return '{'+keys.sort().map(k=>JSON.stringify(k)+':'+canonical(value[k],work)).join(',')+'}';}return JSON.stringify(value);}
 function equal(a:any,b:any,w:ValueWork){return canonical(a,w)===canonical(b,w);}

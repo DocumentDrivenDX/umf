@@ -4,6 +4,7 @@ use std::collections::BTreeSet;
 
 use crate::{decode, encode, field, result_envelope};
 use umf_core::{
+    copy_json, ddd_graphql_projection,
     ddd_json_schema_projection::{self, Bindings, LossPolicy},
     Context, EngineError, Utf16, Value,
 };
@@ -15,6 +16,11 @@ const INSPECT_OPERATION: &str = "ddd-json-schema-projection.inspectDdd";
 const VALIDATE_PAYLOAD_OPERATION: &str = "ddd-json-schema-projection.validateDddPayload";
 const GET_DEFINITION_OPERATION: &str = "ddd-json-schema-projection.getDddDefinition";
 const EDIT_DEFINITION_OPERATION: &str = "ddd-json-schema-projection.editDddDefinition";
+const PROJECT_ENTITIES_GRAPHQL: &str = "ddd-json-schema-projection.projectDddEntitiesToGraphql";
+const PROJECT_GRAPHQL: &str = "ddd-json-schema-projection.projectDddToGraphql";
+const VERIFY_GRAPHQL: &str = "ddd-json-schema-projection.verifyDddGraphqlProjection";
+const RECOVER_GRAPHQL: &str = "ddd-json-schema-projection.recoverDddFromGraphql";
+const RECOVER_GRAPHQL_NATIVE: &str = "ddd-json-schema-projection.recoverDddGraphqlNative";
 fn request(message: &str) -> EngineError {
     EngineError::new("REQUEST", Utf16::default(), message)
 }
@@ -159,6 +165,10 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             "path",
             "scope",
             "replacement",
+            "policy",
+            "lossPolicy",
+            "receipt",
+            "currentTarget",
         ]
         .iter()
         .any(|name| key == &Utf16::from(*name))
@@ -215,6 +225,117 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             module, element, field_name,
         )?));
     }
+    let operation = text(field(value, "op"), "op")?;
+    if operation == &Utf16::from(PROJECT_ENTITIES_GRAPHQL)
+        || operation == &Utf16::from(PROJECT_GRAPHQL)
+    {
+        let document = field(value, "document").ok_or_else(|| request("document is required"))?;
+        let policy = field(value, "policy").ok_or_else(|| request("policy is required"))?;
+        let loss = text(field(value, "lossPolicy"), "lossPolicy")?
+            .to_utf8()
+            .map_err(|_| request("lossPolicy must be valid UTF-16"))?;
+        let full = operation == &Utf16::from(PROJECT_GRAPHQL);
+        let mut report = ddd_graphql_projection::project(document, policy, &loss, full, ctx)?;
+        return attach_graphql_target(&mut report, full, ctx);
+    }
+    if operation == &Utf16::from(VERIFY_GRAPHQL)
+        || operation == &Utf16::from(RECOVER_GRAPHQL)
+        || operation == &Utf16::from(RECOVER_GRAPHQL_NATIVE)
+    {
+        let receipt = field(value, "receipt").ok_or_else(|| request("receipt is required"))?;
+        let document = field(receipt, "logical").ok_or_else(|| {
+            EngineError::new(
+                "DDD_GRAPHQL_RECEIPT",
+                Utf16::default(),
+                "Projection receipt has no logical source",
+            )
+        })?;
+        let policy = field(receipt, "policy").ok_or_else(|| {
+            EngineError::new(
+                "DDD_GRAPHQL_RECEIPT",
+                Utf16::default(),
+                "Projection receipt has no policy",
+            )
+        })?;
+        let loss = field(receipt, "lossPolicy")
+            .and_then(|v| {
+                if let Value::String(s) = v {
+                    s.to_utf8().ok()
+                } else {
+                    None
+                }
+            })
+            .unwrap_or_else(|| "report".to_owned());
+        if field(receipt, "operation")
+            .and_then(|v| {
+                if let Value::String(s) = v {
+                    s.to_utf8().ok()
+                } else {
+                    None
+                }
+            })
+            .as_deref()
+            != Some("project-ddd-graphql")
+        {
+            return Err(EngineError::new(
+                "DDD_GRAPHQL_RECEIPT",
+                Utf16::default(),
+                "Expected a full DDD GraphQL projection receipt",
+            ));
+        }
+        let mut expected = ddd_graphql_projection::project(document, policy, &loss, true, ctx)?;
+        attach_graphql_target(&mut expected, true, ctx)?;
+        if let Some(current) = field(value, "currentTarget") {
+            let mut target = copy_json(current, ctx)?;
+            let target_id = field(&expected, "targetArchive")
+                .and_then(|v| field(v, "id"))
+                .cloned()
+                .unwrap_or(Value::Null);
+            set_field(&mut target, "id", target_id);
+            if field(&expected, "targetArchive") != Some(&target) {
+                return Err(EngineError::new(
+                    "DDD_GRAPHQL_RECEIPT",
+                    Utf16::default(),
+                    "Forged or stale GraphQL projection report",
+                ));
+            }
+        }
+        if !json_equal(&expected, receipt, ctx)? {
+            return Err(EngineError::new(
+                "DDD_GRAPHQL_RECEIPT",
+                Utf16::default(),
+                "Forged or stale GraphQL projection report",
+            ));
+        }
+        if operation == &Utf16::from(VERIFY_GRAPHQL) {
+            return Ok(expected);
+        }
+        if field(value, "currentTarget").is_none() {
+            return Err(request("currentTarget is required"));
+        }
+        if let Some(target) = field(&expected, "targetArchive") {
+            let _ = target;
+        } else {
+            return Err(EngineError::new(
+                "DDD_GRAPHQL_RECOVERY",
+                Utf16::default(),
+                "Blocked projection has no native recovery",
+            ));
+        }
+        if operation == &Utf16::from(RECOVER_GRAPHQL) {
+            if field(value, "currentTarget").is_none() {
+                return Err(request("currentTarget is required"));
+            }
+            return copy_json(document, ctx);
+        }
+        return field(&expected, "candidate").cloned().ok_or_else(|| {
+            EngineError::new(
+                "DDD_GRAPHQL_RECOVERY",
+                Utf16::default(),
+                "Blocked projection has no native recovery",
+            )
+        });
+    }
     if text(field(value, "op"), "op")? != &Utf16::from(OPERATION) {
         return Err(request("unknown DDD projection operation"));
     }
@@ -224,6 +345,165 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         ctx,
     )?;
     ddd_json_schema_projection::project(document, &bindings, ctx)
+}
+fn field_mut<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Value> {
+    if let Value::Object(fields) = value {
+        fields
+            .iter_mut()
+            .find(|(key, _)| key == &Utf16::from(name))
+            .map(|(_, v)| v)
+    } else {
+        None
+    }
+}
+fn set_field(value: &mut Value, name: &str, replacement: Value) {
+    if let Some(slot) = field_mut(value, name) {
+        *slot = replacement;
+    }
+}
+fn json_equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+    match (a, b) {
+        (Value::Array(left), Value::Array(right)) => {
+            if left.len() != right.len() {
+                return Ok(false);
+            }
+            for (left, right) in left.iter().zip(right) {
+                ctx.charge_work(1, Utf16::default())?;
+                if !json_equal(left, right, ctx)? {
+                    return Ok(false);
+                }
+            }
+            Ok(true)
+        }
+        (Value::Object(left), Value::Object(right)) => {
+            if left.len() != right.len() {
+                return Ok(false);
+            }
+            for (key, value) in left {
+                ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+                let Some((_, other)) = right.iter().find(|(candidate, _)| candidate == key) else {
+                    return Ok(false);
+                };
+                if !json_equal(value, other, ctx)? {
+                    return Ok(false);
+                }
+            }
+            Ok(true)
+        }
+        _ => Ok(a == b),
+    }
+}
+#[cfg(feature = "embedded-adapters")]
+fn attach_graphql_target(
+    report: &mut Value,
+    full: bool,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let status = field(report, "status")
+        .and_then(|v| {
+            if let Value::String(s) = v {
+                s.to_utf8().ok()
+            } else {
+                None
+            }
+        })
+        .unwrap_or_default();
+    if status != "blocked" {
+        let candidate = field(report, "candidate")
+            .and_then(|v| {
+                if let Value::String(s) = v {
+                    s.to_utf8().ok()
+                } else {
+                    None
+                }
+            })
+            .ok_or_else(|| {
+                EngineError::new(
+                    "DDD_GRAPHQL_TARGET",
+                    Utf16::default(),
+                    "Candidate SDL is missing",
+                )
+            })?;
+        let mut resources = umf_graphql::engine_registry::GraphqlResources::new(ctx)?;
+        let target = umf_graphql::engine_registry::import_sdl(
+            &mut resources,
+            &candidate,
+            if full {
+                "ddd-graphql-target"
+            } else {
+                "ddd-graphql-entities-target"
+            },
+            Some("schema"),
+            ctx,
+        )
+        .map_err(|_| {
+            EngineError::new(
+                "DDD_GRAPHQL_TARGET",
+                Utf16::default(),
+                "Generated SDL failed native schema-mode import",
+            )
+        })?;
+        let emitted = umf_graphql::engine_registry::export_sdl(&mut resources, &target, ctx)?;
+        if emitted.to_utf8().ok().as_deref() != Some(candidate.as_str()) {
+            return Err(EngineError::new(
+                "DDD_GRAPHQL_TARGET",
+                Utf16::default(),
+                "Native GraphQL SDL export changed the candidate",
+            ));
+        }
+        if let Value::Object(fields) = report {
+            fields.push((Utf16::from("targetArchive"), target));
+        }
+    }
+    if full {
+        let diagnostics = field(report, "residuals")
+            .and_then(|v| {
+                if let Value::Array(a) = v {
+                    Some(a.as_slice())
+                } else {
+                    None
+                }
+            })
+            .unwrap_or(&[])
+            .iter()
+            .map(|r| {
+                Value::Object(vec![
+                    (Utf16::from("code"), Value::string_utf8("DDD_GRAPHQL_LOSS")),
+                    (
+                        Utf16::from("path"),
+                        field(r, "path").cloned().unwrap_or(Value::Null),
+                    ),
+                    (Utf16::from("severity"), Value::string_utf8("warning")),
+                    (
+                        Utf16::from("message"),
+                        field(r, "reason").cloned().unwrap_or(Value::Null),
+                    ),
+                ])
+            })
+            .collect();
+        if let Value::Object(fields) = report {
+            if let Some((_, slot)) = fields
+                .iter_mut()
+                .find(|(k, _)| k == &Utf16::from("diagnostics"))
+            {
+                *slot = Value::Array(diagnostics);
+            }
+        }
+    }
+    let _ = ctx;
+    Ok(report.clone())
+}
+#[cfg(not(feature = "embedded-adapters"))]
+fn attach_graphql_target(
+    _report: &mut Value,
+    _full: bool,
+    _ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    Err(EngineError::new(
+        "DDD_GRAPHQL_TARGET",
+        Utf16::default(),
+        "GraphQL adapter support is disabled",
+    ))
 }
 fn validation_value(
     value: umf_core::Validation,

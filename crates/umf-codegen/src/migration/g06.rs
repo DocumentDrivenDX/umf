@@ -1722,7 +1722,27 @@ pub(super) fn validate_mapping_replacement(
             ));
         }
     }
-    let candidates = discover_verified(previous, next, true, ctx)?;
+    // G11 reviews the complete 0.3 discovery graph. Base discovery omits
+    // added constraints and source-bound operations, so using it here would
+    // leave legitimate selected dependencies in the source certificate.
+    let base = discover_verified(previous, next, true, ctx)?;
+    let added_constraints = discovery::discover_added_constraints(previous, next, ctx)?;
+    let mut candidates = interleave_g03_added_constraints(
+        base,
+        added_constraints,
+        get(next, "expectedCatalog")
+            .and_then(|catalog| get(catalog, "tables"))
+            .and_then(|tables| match tables {
+                Value::Array(tables) => Some(tables.as_slice()),
+                _ => None,
+            })
+            .unwrap_or(&[]),
+        ctx,
+    )?;
+    candidates.extend(discovery::discover_default_changes(previous, next, ctx)?);
+    candidates.extend(discovery::discover_operation_context_changes(
+        previous, next, ctx,
+    )?);
     let markers = fields(get(options, "reviewedChanges").unwrap_or(&Value::Null));
     let mut old_normal = copy(&old_doc, ctx)?;
     let mut new_normal = copy(&new_doc, ctx)?;

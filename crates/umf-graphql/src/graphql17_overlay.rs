@@ -142,7 +142,9 @@ fn statement_end(t: &[Token], i: usize, _source_len: usize) -> usize {
         }
         j += 1;
     }
-    t.get(j.saturating_sub(1)).map(|token| token.end).unwrap_or(0)
+    t.get(j.saturating_sub(1))
+        .map(|token| token.end)
+        .unwrap_or(0)
 }
 fn top_start(t: &[Token], i: usize) -> bool {
     if i > 0
@@ -189,7 +191,9 @@ fn directive_apps_end(t: &[Token], i: usize, _source_len: usize) -> usize {
         }
         j += 1;
     }
-    t.get(j.saturating_sub(1)).map(|token| token.end).unwrap_or(0)
+    t.get(j.saturating_sub(1))
+        .map(|token| token.end)
+        .unwrap_or(0)
 }
 fn lex(s: &str, limit: usize, max_depth: usize) -> Result<Vec<Token>, String> {
     let b = s.as_bytes();
@@ -459,7 +463,8 @@ pub fn validate_profile_with_limits(
         Ok(x) => x.masked,
         Err(e) => return vec![e],
     };
-    let mut errors = crate::apollo_mapper::validate_schema(&normalized)
+    let validation_source = apollo_validation_source(&normalized, ast);
+    let mut errors = crate::apollo_mapper::validate_schema(&validation_source)
         .err()
         .unwrap_or_default();
     if let Some(defs) = ast.get("definitions").and_then(Value::as_array) {
@@ -508,6 +513,46 @@ pub fn validate_profile_with_limits(
     errors
 }
 
+/// Apollo Compiler predates GraphQL.js 17's built-in `@oneOf` directive.
+/// Define it only in the temporary validation SDL when the retained AST uses
+/// the built-in and the source does not supply its own directive definition.
+/// The returned source is never stored in the UMF document or exported.
+pub fn apollo_validation_source(source: &str, ast: &Value) -> String {
+    let definitions = ast.get("definitions").and_then(Value::as_array);
+    let has_application = definitions.is_some_and(|definitions| {
+        definitions.iter().any(|definition| {
+            definition.get("kind").and_then(Value::as_str) == Some("InputObjectTypeDefinition")
+                && definition
+                    .get("directives")
+                    .and_then(Value::as_array)
+                    .is_some_and(|directives| {
+                        directives.iter().any(|directive| {
+                            directive
+                                .get("name")
+                                .and_then(|name| name.get("value"))
+                                .and_then(Value::as_str)
+                                == Some("oneOf")
+                        })
+                    })
+        })
+    });
+    let has_definition = definitions.is_some_and(|definitions| {
+        definitions.iter().any(|definition| {
+            definition.get("kind").and_then(Value::as_str) == Some("DirectiveDefinition")
+                && definition
+                    .get("name")
+                    .and_then(|name| name.get("value"))
+                    .and_then(Value::as_str)
+                    == Some("oneOf")
+        })
+    });
+    if has_application && !has_definition {
+        format!("directive @oneOf on INPUT_OBJECT\n{source}")
+    } else {
+        source.to_owned()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -520,7 +565,10 @@ mod tests {
         let (ast, _) = parse_with_overlay(src, 1000).unwrap();
         let defs = ast["definitions"].as_array().unwrap();
         assert_eq!(defs.len(), 2);
-        assert_eq!(defs[1]["fields"][0]["directives"][0]["name"]["value"], "flag");
+        assert_eq!(
+            defs[1]["fields"][0]["directives"][0]["name"]["value"],
+            "flag"
+        );
         let with_extension =
             "directive @flag on FIELD_DEFINITION @tag\ntype Query { x: String @flag }";
         let scan = scan_and_mask(with_extension, 1000).unwrap();

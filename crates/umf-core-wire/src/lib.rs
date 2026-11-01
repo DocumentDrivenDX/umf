@@ -11,7 +11,15 @@ pub mod arrow_spark_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod avro_classification_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod avro_json_schema_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod nullability_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod facets_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod key_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -23,6 +31,10 @@ pub mod graphql_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod iceberg_table_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod binding_iceberg_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod json_schema_protobuf_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod jsonld_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_contract_binding;
@@ -30,6 +42,8 @@ pub mod native_contract_binding;
 pub mod native_family_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod openapi_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod openapi_json_schema_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod parquet_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -59,11 +73,19 @@ pub mod sqlserver_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_ddl_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod binding_sqlserver_planned_indexes_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_parquet_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_delta_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod tablespec_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_via_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod typespec_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod typespec_smithy_jsonschema_projection_binding;
 pub mod arrow_ipc_capture_binding {
     //! Explicit tagged-wire owner for exact IPC byte capture operations.
     use umf_core::{
@@ -884,6 +906,19 @@ fn execute_json_schema_wire_inner(
                         schema::import_json_schema(source.units(), id, base, &resources, &mut ctx)?
                     }
                 }
+            }
+            "inspectJsonSchemaPayload" => {
+                let payload = field(&request, "payload")
+                    .ok_or_else(|| fail("REQUEST", "JSON Schema payload is required"))?;
+                let path = field(&request, "path")
+                    .and_then(as_utf16)
+                    .ok_or_else(|| fail("REQUEST", "JSON Schema payload path is required"))?;
+                Value::Array(
+                    schema::inspect_registered_payload(payload, path, &mut ctx)?
+                        .into_iter()
+                        .map(diagnostic_value)
+                        .collect(),
+                )
             }
             "inspectJsonSchema" => {
                 let validation = match runtime {

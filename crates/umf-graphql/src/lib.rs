@@ -7,6 +7,7 @@ pub mod core_value_bridge;
 pub mod engine_registry;
 pub mod graphql17_overlay;
 pub mod graphql_adapter;
+pub mod graphql_input_json_schema_projection;
 
 #[cfg(test)]
 mod tests {
@@ -86,10 +87,10 @@ input Choice { """Choice text""" text: String }
 "#;
         let doc = graphql_adapter::import(source, "described-schema", Some("schema")).unwrap();
         let edited = graphql_adapter::edit(&doc, |ast| {
-            *ast.pointer_mut("/definitions/0/fields/0/name/value").unwrap() =
-                Value::String("renamed".into());
-            *ast.pointer_mut("/definitions/2/values/0/name/value").unwrap() =
-                Value::String("READY".into());
+            *ast.pointer_mut("/definitions/0/fields/0/name/value")
+                .unwrap() = Value::String("renamed".into());
+            *ast.pointer_mut("/definitions/2/values/0/name/value")
+                .unwrap() = Value::String("READY".into());
             Ok(())
         })
         .unwrap();
@@ -103,17 +104,44 @@ input Choice { """Choice text""" text: String }
             .pointer("/modules/0/elements/0/extensions/umf.graphql/ast")
             .unwrap();
         assert_eq!(ast["definitions"][0]["name"]["value"], "Query");
-        assert_eq!(ast["definitions"][0]["description"]["value"], "Query description");
+        assert_eq!(
+            ast["definitions"][0]["description"]["value"],
+            "Query description"
+        );
         assert_eq!(ast["definitions"][0]["description"]["block"], true);
-        assert_eq!(ast["definitions"][0]["fields"][0]["name"]["value"], "renamed");
-        assert_eq!(ast["definitions"][0]["fields"][0]["description"]["value"], "Old query field");
-        assert_eq!(ast["definitions"][0]["fields"][0]["description"]["block"], true);
-        assert_eq!(ast["definitions"][1]["description"]["value"], "Node description");
-        assert_eq!(ast["definitions"][1]["fields"][0]["description"]["value"], "Identifier field");
+        assert_eq!(
+            ast["definitions"][0]["fields"][0]["name"]["value"],
+            "renamed"
+        );
+        assert_eq!(
+            ast["definitions"][0]["fields"][0]["description"]["value"],
+            "Old query field"
+        );
+        assert_eq!(
+            ast["definitions"][0]["fields"][0]["description"]["block"],
+            true
+        );
+        assert_eq!(
+            ast["definitions"][1]["description"]["value"],
+            "Node description"
+        );
+        assert_eq!(
+            ast["definitions"][1]["fields"][0]["description"]["value"],
+            "Identifier field"
+        );
         assert_eq!(ast["definitions"][2]["values"][0]["name"]["value"], "READY");
-        assert_eq!(ast["definitions"][2]["values"][0]["description"]["value"], "Active status");
-        assert_eq!(ast["definitions"][3]["fields"][0]["description"]["value"], "Choice text");
-        assert_eq!(ast["definitions"][3]["fields"][0]["description"]["block"], true);
+        assert_eq!(
+            ast["definitions"][2]["values"][0]["description"]["value"],
+            "Active status"
+        );
+        assert_eq!(
+            ast["definitions"][3]["fields"][0]["description"]["value"],
+            "Choice text"
+        );
+        assert_eq!(
+            ast["definitions"][3]["fields"][0]["description"]["block"],
+            true
+        );
     }
 }
 

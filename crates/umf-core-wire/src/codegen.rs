@@ -212,6 +212,64 @@ fn invoke(
         "verifyTableMigration" => {
             engine.verify_table_migration(field(request, "plan").ok_or_else(missing_argument)?, ctx)
         }
+        "compileTableInventoryMigration" => engine.compile_table_inventory_migration(request, ctx),
+        "discoverTableInventoryMigrationChanges" => {
+            if !exact_fields(request, &["previous", "next", "selector", "history"]) {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact inventory discovery members",
+                ));
+            }
+            engine.discover_table_inventory_migration_changes(
+                field(request, "previous").ok_or_else(missing_argument)?,
+                field(request, "next").ok_or_else(missing_argument)?,
+                field(request, "selector").ok_or_else(missing_argument)?,
+                field(request, "history").ok_or_else(missing_argument)?,
+                ctx,
+            )
+        }
+        "verifyTableInventoryMigration" => {
+            if !exact_fields(request, &["plan", "history"]) {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact inventory verification members",
+                ));
+            }
+            engine.verify_table_inventory_migration(
+                field(request, "plan").ok_or_else(missing_argument)?,
+                field(request, "history").ok_or_else(missing_argument)?,
+                ctx,
+            )
+        }
+        "serializeTableInventoryMigration" => {
+            if !exact_fields(request, &["plan", "history"]) {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact inventory serialization members",
+                ));
+            }
+            engine.serialize_table_inventory_migration(
+                field(request, "plan").ok_or_else(missing_argument)?,
+                field(request, "history").ok_or_else(missing_argument)?,
+                ctx,
+            )
+        }
+        "irreversiblePurgeDisclosure" => {
+            if !exact_fields(request, &["candidate"]) {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact purge candidate member",
+                ));
+            }
+            engine.irreversible_table_purge_disclosure(
+                field(request, "candidate").ok_or_else(missing_argument)?,
+                ctx,
+            )
+        }
         "normalizeRowScope" => engine.normalize_row_scope(request, ctx),
         "prepareRowScope" => {
             if !exact_fields(request, &["input", "context"]) {

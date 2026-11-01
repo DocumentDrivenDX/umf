@@ -1652,10 +1652,11 @@ pub fn inspect_security_action_purposes(
     }
     for action in actions {
         match text(Some(action)) {
-            Some(value)
-                if !value.is_empty()
-                    && value.encode_utf16().count() <= 4096
-                    && action_ids.insert(value) => {}
+            Some(value) if !value.is_empty() && value.encode_utf16().count() <= 4096 => {
+                if !action_ids.insert(value) {
+                    purpose_error = true;
+                }
+            }
             _ => purpose_error = true,
         }
     }
@@ -1728,7 +1729,10 @@ pub fn inspect_security_action_purposes(
 
     // The 0.2 action-purpose member is additive to the 0.1 ontology graph.
     // Validate its graph and every pinned core document through the existing
-    // policy semantic kernel after adapting only that wire-version marker.
+    // policy semantic kernel after adapting the candidate's normalized entity
+    // and record-members views back to the 0.1 ontology representation. The
+    // candidate migration stores association Records in `entities`, while the
+    // executable 0.1 inspector stores them in `associations`.
     let mut legacy_ontology = ontology.clone();
     if let Value::Object(fields) = &mut legacy_ontology {
         fields.retain(|(key, _)| key != &Utf16::from("actionPurposes"));
@@ -1737,6 +1741,118 @@ pub fn inspect_security_action_purposes(
             .find(|(key, _)| key == &Utf16::from("version"))
         {
             *version = string("0.1.0");
+        }
+    }
+    let candidate_entities = array(get(&ontology, "entities"));
+    let candidate_associations = array(get(&ontology, "associations"));
+    let record_associations = candidate_associations
+        .iter()
+        .filter(|association| text(get(association, "kind")).as_deref() == Some("record-members"))
+        .collect::<Vec<_>>();
+    for (index, association) in candidate_associations.iter().enumerate() {
+        if text(get(association, "kind")).as_deref() == Some("core-relationship") {
+            if let Err(error) =
+                validate_candidate_relationship_association(association, &ontology, &documents, ctx)
+            {
+                if error.is_control_failure() {
+                    return Err(error);
+                }
+                return Ok(action_purpose_result(
+                    ontology,
+                    documents,
+                    Vec::new(),
+                    vec![diag_u16(
+                        &error.code,
+                        error.path,
+                        error
+                            .message
+                            .to_utf8()
+                            .as_deref()
+                            .unwrap_or("Invalid relationship association"),
+                        "error",
+                    )],
+                ));
+            }
+        } else if text(get(association, "kind")).as_deref() != Some("record-members") {
+            return Ok(action_purpose_result(
+                ontology,
+                documents,
+                Vec::new(),
+                vec![diag(
+                    "SECURITY_ONTOLOGY_ASSOCIATION",
+                    &format!("/associations/{index}"),
+                    "Unknown association selector",
+                    "error",
+                )],
+            ));
+        }
+    }
+    let old_entities = candidate_entities
+        .iter()
+        .filter(|entity| {
+            !record_associations.iter().any(|association| {
+                same_ref(
+                    get(entity, "type").unwrap_or(&Value::Null),
+                    get(association, "type").unwrap_or(&Value::Null),
+                )
+            })
+        })
+        .map(|entity| copy_json(entity, ctx))
+        .collect::<Result<Vec<_>, _>>()?;
+    let mut old_associations = Vec::with_capacity(record_associations.len());
+    for association in record_associations {
+        let association_type = get(association, "type").unwrap_or(&Value::Null);
+        let record = candidate_entities
+            .iter()
+            .find(|entity| {
+                same_ref(
+                    get(entity, "type").unwrap_or(&Value::Null),
+                    association_type,
+                )
+            })
+            .ok_or_else(|| {
+                EngineError::new(
+                    "SECURITY_ONTOLOGY_STRUCTURE",
+                    Utf16::from("/associations"),
+                    "Record-members association has no normalized Record entity",
+                )
+            })?;
+        old_associations.push(object(vec![
+            ("type", copy_json(association_type, ctx)?),
+            (
+                "keyId",
+                get(association, "keyId")
+                    .map(|v| copy_json(v, ctx))
+                    .transpose()?
+                    .unwrap_or(Value::Null),
+            ),
+            (
+                "fields",
+                get(record, "fields")
+                    .map(|v| copy_json(v, ctx))
+                    .transpose()?
+                    .unwrap_or(Value::Array(Vec::new())),
+            ),
+            (
+                "endpoints",
+                get(association, "endpoints")
+                    .map(|v| copy_json(v, ctx))
+                    .transpose()?
+                    .unwrap_or(Value::Array(Vec::new())),
+            ),
+        ]));
+    }
+    if let Value::Object(fields) = &mut legacy_ontology {
+        for (name, value) in [
+            ("entities", Value::Array(old_entities)),
+            ("associations", Value::Array(old_associations)),
+        ] {
+            if let Some((_, current)) = fields.iter_mut().find(|(key, _)| key == &Utf16::from(name))
+            {
+                *current = value;
+            } else {
+                fields.push((Utf16::from(name), value));
+            }
         }
     }
     let identity = object(vec![
@@ -1794,25 +1910,291 @@ fn action_purpose_ontology_schema() -> Result<CompiledSchema, EngineError> {
     SCHEMA
         .get_or_init(|| {
             let mut context = Context::ordinary();
-            let package = parse(
-                include_str!("../../../spec/extensions/security-v0.2/package.json"),
+            let schema = parse(
+                include_str!("../../../spec/extensions/security-v0.2/ontology.schema.json"),
                 &mut context,
             )?;
-            let schema = get(&package, "schema").ok_or_else(|| {
-                EngineError::new(
-                    "SECURITY_SCHEMA",
-                    Utf16::default(),
-                    "Action-purpose schema missing",
-                )
-            })?;
             CompiledSchema::compile_consumer(
-                schema,
+                &schema,
                 &SchemaResources::default(),
                 false,
                 &mut context,
             )
         })
         .clone()
+}
+
+fn validate_candidate_relationship_association(
+    selector: &Value,
+    ontology: &Value,
+    documents: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let relationship_ref = get(selector, "relationship").unwrap_or(&Value::Null);
+    let document_id = text(get(relationship_ref, "documentId")).ok_or_else(|| {
+        EngineError::new(
+            "SECURITY_ASSOCIATION_RELATIONSHIP",
+            Utf16::from("/relationship"),
+            "Relationship document ID is required",
+        )
+    })?;
+    let module_id = text(get(relationship_ref, "moduleId")).ok_or_else(|| {
+        EngineError::new(
+            "SECURITY_ASSOCIATION_RELATIONSHIP",
+            Utf16::from("/relationship"),
+            "Relationship module ID is required",
+        )
+    })?;
+    let relationship_id = text(get(relationship_ref, "relationshipId")).ok_or_else(|| {
+        EngineError::new(
+            "SECURITY_ASSOCIATION_RELATIONSHIP",
+            Utf16::from("/relationship"),
+            "Relationship ID is required",
+        )
+    })?;
+    let entry = array(Some(documents))
+        .iter()
+        .find(|entry| {
+            get(entry, "document")
+                .and_then(|document| text(get(document, "id")))
+                .as_deref()
+                == Some(document_id.as_str())
+        })
+        .ok_or_else(|| {
+            EngineError::new(
+                "SECURITY_ASSOCIATION_DOCUMENT",
+                Utf16::from("/relationship/documentId"),
+                "Pinned relationship document is missing",
+            )
+        })?;
+    let source = get(entry, "document").ok_or_else(|| {
+        EngineError::new(
+            "SECURITY_ASSOCIATION_DOCUMENT",
+            Utf16::from("/relationship/documentId"),
+            "Pinned relationship document is missing",
+        )
+    })?;
+    let runtime = crate::security_parameters::core_engine()?;
+    let registry = Registry::new();
+    let mut capabilities = NoExtensions;
+    let lookup = crate::core_relationships::lookup_core_relationship(
+        source,
+        &object(vec![
+            ("module", string(&module_id)),
+            ("id", string(&relationship_id)),
+        ]),
+        &runtime,
+        &registry,
+        &mut capabilities,
+        ctx,
+    )?;
+    if !array(get(&lookup, "uninterpretedPaths")).is_empty() {
+        return Err(EngineError::new(
+            "SECURITY_ASSOCIATION_UNINTERPRETED",
+            Utf16::from("/relationship"),
+            "Relationship contains unknown qualifiers",
+        ));
+    }
+    let relationship = get(&lookup, "relationship").ok_or_else(|| {
+        EngineError::new(
+            "SECURITY_ASSOCIATION_RELATIONSHIP",
+            Utf16::from("/relationship"),
+            "Relationship lookup returned no declaration",
+        )
+    })?;
+    if get(relationship, "directed") != Some(&Value::Bool(true))
+        || array(get(relationship, "source")).len() != 1
+        || array(get(relationship, "target")).len() != 1
+    {
+        return Err(EngineError::new(
+            "SECURITY_ASSOCIATION_RELATIONSHIP",
+            Utf16::from("/relationship"),
+            "Only directed singular relationships are admitted",
+        ));
+    }
+    let entities = array(get(ontology, "entities"));
+    let endpoints = array(get(selector, "endpoints"));
+    if endpoints.len() != 2 {
+        return Err(EngineError::new(
+            "SECURITY_ASSOCIATION_ENDPOINTS",
+            Utf16::from("/endpoints"),
+            "Exactly one source and one target endpoint are required",
+        ));
+    }
+    let mut roles = std::collections::BTreeSet::new();
+    let mut sides = std::collections::BTreeSet::new();
+    for endpoint in endpoints {
+        let role = text(get(endpoint, "role")).ok_or_else(|| {
+            EngineError::new(
+                "SECURITY_ASSOCIATION_ENDPOINTS",
+                Utf16::from("/endpoints"),
+                "Endpoint role is required",
+            )
+        })?;
+        let side = text(get(endpoint, "side")).ok_or_else(|| {
+            EngineError::new(
+                "SECURITY_ASSOCIATION_ENDPOINTS",
+                Utf16::from("/endpoints"),
+                "Endpoint side is required",
+            )
+        })?;
+        if !roles.insert(role)
+            || !matches!(side.as_str(), "source" | "target")
+            || !sides.insert(side.clone())
+        {
+            return Err(EngineError::new(
+                "SECURITY_ASSOCIATION_ENDPOINTS",
+                Utf16::from("/endpoints"),
+                "Endpoint roles and relationship sides must be unique",
+            ));
+        }
+        let native = array(get(relationship, &side)).first().ok_or_else(|| {
+            EngineError::new(
+                "SECURITY_ASSOCIATION_ENDPOINTS",
+                Utf16::from("/endpoints"),
+                "Relationship endpoint is missing",
+            )
+        })?;
+        let target = get(endpoint, "target").unwrap_or(&Value::Null);
+        if text(get(target, "documentId")).as_deref() != Some(document_id.as_str())
+            || text(get(target, "moduleId")) != text(get(native, "module"))
+            || text(get(target, "elementId")) != text(get(native, "element"))
+        {
+            return Err(EngineError::new(
+                "SECURITY_ASSOCIATION_ENDPOINTS",
+                Utf16::from("/endpoints"),
+                "Endpoint target does not match the selected relationship side",
+            ));
+        }
+        let key_id = text(get(endpoint, "keyId")).ok_or_else(|| {
+            EngineError::new(
+                "SECURITY_ASSOCIATION_ENDPOINTS",
+                Utf16::from("/endpoints"),
+                "Endpoint key ID is required",
+            )
+        })?;
+        if get(native, "key")
+            .and_then(|value| text(Some(value)))
+            .is_some_and(|native_key| native_key != key_id)
+        {
+            return Err(EngineError::new(
+                "SECURITY_ASSOCIATION_ENDPOINTS",
+                Utf16::from("/endpoints/keyId"),
+                "Endpoint key does not match the relationship declaration",
+            ));
+        }
+        let entity = entities
+            .iter()
+            .find(|entity| same_ref(get(entity, "type").unwrap_or(&Value::Null), target))
+            .ok_or_else(|| {
+                EngineError::new(
+                    "SECURITY_ASSOCIATION_ENTITY",
+                    Utf16::from("/endpoints/target"),
+                    "Endpoint Record must be declared as an ontology entity",
+                )
+            })?;
+        if text(get(entity, "keyId")).as_deref() != Some(key_id.as_str()) {
+            return Err(EngineError::new(
+                "SECURITY_ASSOCIATION_ENTITY",
+                Utf16::from("/endpoints/keyId"),
+                "Endpoint must select its declared ontology Key",
+            ));
+        }
+        crate::core_keys::lookup_core_key(
+            source,
+            &object(vec![
+                (
+                    "module",
+                    get(target, "moduleId").cloned().unwrap_or(Value::Null),
+                ),
+                (
+                    "element",
+                    get(target, "elementId").cloned().unwrap_or(Value::Null),
+                ),
+                ("key", string(&key_id)),
+            ]),
+            &runtime,
+            &registry,
+            &mut capabilities,
+            ctx,
+        )?;
+    }
+    let witness = get(selector, "witness").unwrap_or(&Value::Null);
+    let association_record = get(relationship, "associationRecord");
+    match text(get(witness, "kind")).as_deref() {
+        Some("opaque-existential") if association_record.is_none() => Ok(()),
+        Some("record-key") => {
+            let target = get(witness, "type").unwrap_or(&Value::Null);
+            let key_id = text(get(witness, "keyId")).ok_or_else(|| {
+                EngineError::new(
+                    "SECURITY_ASSOCIATION_WITNESS",
+                    Utf16::from("/witness/keyId"),
+                    "Witness key ID is required",
+                )
+            })?;
+            let record = association_record.ok_or_else(|| {
+                EngineError::new(
+                    "SECURITY_ASSOCIATION_WITNESS",
+                    Utf16::from("/witness"),
+                    "Relationship has no association Record",
+                )
+            })?;
+            if text(get(target, "documentId")).as_deref() != Some(document_id.as_str())
+                || text(get(target, "moduleId")) != text(get(record, "module"))
+                || text(get(target, "elementId")) != text(get(record, "element"))
+                || get(record, "key")
+                    .and_then(|value| text(Some(value)))
+                    .is_some_and(|native| native != key_id)
+            {
+                return Err(EngineError::new(
+                    "SECURITY_ASSOCIATION_WITNESS",
+                    Utf16::from("/witness"),
+                    "Witness does not identify the relationship association Record and Key",
+                ));
+            }
+            let entity = entities
+                .iter()
+                .find(|entity| same_ref(get(entity, "type").unwrap_or(&Value::Null), target))
+                .ok_or_else(|| {
+                    EngineError::new(
+                        "SECURITY_ASSOCIATION_WITNESS",
+                        Utf16::from("/witness/type"),
+                        "Association Record must be declared as an ontology entity",
+                    )
+                })?;
+            if text(get(entity, "keyId")).as_deref() != Some(key_id.as_str()) {
+                return Err(EngineError::new(
+                    "SECURITY_ASSOCIATION_WITNESS",
+                    Utf16::from("/witness/keyId"),
+                    "Witness Key must match its ontology entity",
+                ));
+            }
+            crate::core_keys::lookup_core_key(
+                source,
+                &object(vec![
+                    (
+                        "module",
+                        get(target, "moduleId").cloned().unwrap_or(Value::Null),
+                    ),
+                    (
+                        "element",
+                        get(target, "elementId").cloned().unwrap_or(Value::Null),
+                    ),
+                    ("key", string(&key_id)),
+                ]),
+                &runtime,
+                &registry,
+                &mut capabilities,
+                ctx,
+            )?;
+            Ok(())
+        }
+        _ => Err(EngineError::new(
+            "SECURITY_ASSOCIATION_WITNESS",
+            Utf16::from("/witness"),
+            "Unsupported relationship witness",
+        )),
+    }
 }
 
 fn action_purpose_result(

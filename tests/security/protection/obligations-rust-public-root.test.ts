@@ -16,7 +16,7 @@ function fixture(){
 
 test('Node V4 protection obligations retain the full unverified custody declaration set',()=>{
  const f=fixture(),report=inspectProtectionObligations(f.policy,f.catalog,f.closure,f.ontology);
- expect(report.status).toBe('declared-obligations');expect([report.complete,report.authority]).toEqual([false,false]);
+ expect(report.status,JSON.stringify(report)).toBe('declared-obligations');expect([report.complete,report.authority]).toEqual([false,false]);
  expect(report.obligations.map(item=>item.kind)).toEqual(['stored-custody','propagation','propagation','propagation','propagation','propagation','vault-write-action','reverse-action']);
  expect(report.obligations.every(item=>item.status==='unverified')).toBe(true);
 });
@@ -24,5 +24,5 @@ test('Node V4 protection obligations retain the full unverified custody declarat
 test('Node V4 protection obligations refuse a reverse action with an ordinary purpose',()=>{
  const f=fixture();f.ontology.actionPurposes.find((entry:any)=>entry.action==='reverse').purposes=['read'];
  const report=inspectProtectionObligations(f.policy,f.catalog,f.closure,f.ontology);
- expect(report.status).toBe('refused');expect(report.obligations).toEqual([]);expect(report.diagnostics.some(item=>item.severity==='error')).toBe(true);
+ expect(report.status,JSON.stringify(report)).toBe('refused');expect(report.obligations).toEqual([]);expect(report.diagnostics.some(item=>item.severity==='error')).toBe(true);
 });

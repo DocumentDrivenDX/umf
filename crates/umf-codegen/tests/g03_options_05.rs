@@ -164,7 +164,8 @@ fn bundle(
         .unwrap();
     assert_eq!(
         member(&result, "status"),
-        Some(&Value::string_utf8("compiled"))
+        Some(&Value::string_utf8("compiled")),
+        "G11 compile result: {result:?}"
     );
     member(&result, "bundle").unwrap().clone()
 }
@@ -237,7 +238,8 @@ fn g03_options_05_compiles_and_reverifies_one_source_bound_default_change() {
         .unwrap();
     assert_eq!(
         member(&result, "status"),
-        Some(&Value::string_utf8("compiled"))
+        Some(&Value::string_utf8("compiled")),
+        "G11 compile result: {result:?}"
     );
     let plan = member(&result, "plan").unwrap();
     assert_eq!(
@@ -534,7 +536,8 @@ fn g11_options_06_compiles_multiple_field_replacements_and_binds_key_effects() {
         .unwrap();
     assert_eq!(
         member(&result, "status"),
-        Some(&Value::string_utf8("compiled"))
+        Some(&Value::string_utf8("compiled")),
+        "G11 compile result: {result:?}"
     );
     let plan = member(&result, "plan").unwrap();
     assert_eq!(

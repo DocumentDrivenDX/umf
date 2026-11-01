@@ -11,7 +11,7 @@ import {createValidator} from '../validation/schema';
 import keySchema from '../../spec/core/key-tuple-operation-v4.schema.json';
 import coreSchema from '../../spec/core/schema.json';
 import operationSchema from '../../spec/core/dataset-value-compact-operation.schema.json';
-export {operationSchema as coreDatasetValueCompactOperationSchema};
+export {coreDatasetValueCompactOperationSchema} from './operation-schemas';
 export type CoreCompactRecordValueCheck=Omit<CoreRecordValueCheck,'source'>&{sourceRef:'#/source'};
 export type CoreCompactKeyTupleReceipt=Omit<CoreKeyTupleReceipt,'source'>&{sourceRef:'#/source'};
 export interface CoreDatasetCompactValueCheck extends Omit<CoreDatasetValueCheck,'operation'|'records'|'keys'|'relationships'>{

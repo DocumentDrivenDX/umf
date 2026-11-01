@@ -41,8 +41,8 @@ regression cases as ordinary fixtures.
 
 ADR-006, the PRD, cross-cutting requirements, architecture, TP-001 and the affected
 adapter contracts govern behavior. Preserve exact native values, unknown content
-and explicit resource boundaries. Core is 0.10.0; the native Python candidate is
-0.10.4 with matching dependent-package pins.
+and explicit resource boundaries. Core is 0.10.0. Main currently releases SDK 0.10.1 and Python 0.10.5;
+the completed Rust port needs a successor release with matching dependent pins.
 
 ## Implementation slices
 
@@ -112,17 +112,42 @@ Current integration order:
 
 ## Latest focused capability results
 
-The production TypeScript and selected Rust compiler preflight pass. The latest
-native batch passed 13 new Node baseline cases: legacy Security interpretation,
-access/collection/write and registration; Security V1/V2 disclosure transport;
-Avro↔TableSpec; SQL Server→Avro and SQL Server→DDL. Python's embedded source
-resource closure passes. These cases are excluded from repair runs.
+The production TypeScript and selected Rust compiler preflight pass. The completed
+Node batches pass the Security policy/evaluation/registration and V1/V2 disclosure
+workflows, Avro↔TableSpec, SQL Server→Avro/DDL, PostgreSQL→Avro and row→JSON Schema,
+Arrow↔Spark, Arrow FlatBuffer model and binary operations, Parquet→Avro, the
+Avro→TableSpec chain, JSON Schema public defaults and authority transitions.
+Their focused normal/refusal cases are excluded from subsequent repair runs.
 
-Four cases failed: the two migration compiler normals, PostgreSQL→Avro and
-Arrow↔Spark. The migration and PostgreSQL repairs are in source. The Arrow repair
-adds the missing Rust owner for the current FlatBuffer model adapter and routes
-both projections through it. These repairs still require their focused runtime
-check. FlatBuffer binary encode/decode remains a separate missing operation.
+The next completed batch passes nine Node cases: the eight model operations,
+DDD→GraphQL projection/verification/recovery, OpenAPI→JSON Schema,
+TypeSpec/Smithy→JSON Schema, Avro Field/Record classification and recovery,
+and Security refusal cases. G11's supported replacement normal passes Rust.
+Five inventory cases pass: initial compilation/verification/serialization,
+source-bound commands and seeds, multiple tables, and forged-marker refusal.
+
+The remaining normal failures have focused repairs: GraphQL 17 built-in
+`@oneOf` validation, JSON Schema→Protobuf property paths, Parquet root Record
+classification, and normalized Security 0.2 associations. The latter now handles
+record-member and core-relationship associations. G01's normal passes; its test
+incorrectly rejected ordinary atomic check installation, so the refusal now
+selects a nonexistent check. Inventory removal paths now match the current
+public profile and its path-derived marker IDs. Four newly referenced schema
+assets are included in the Python source-package closure.
+
+The next source batch adds authored Avro nullability/facet/key projections with
+verification and recovery, Parquet/Delta/Iceberg binding projections, SQL Server
+planned indexes, and nine existing Rust utility bindings. Sol reviewed the thin
+model and utility defaults. Production TypeScript, selected Rust metadata and
+resource closure pass. New and repaired runtime cases remain pending. Passing
+cases above are excluded from that repair run.
+
+Inventory retained-transition compilation/discovery and public activation are
+still being implemented. Most remaining core-ideal composites need actual Rust
+kernels; the current relationship factory overrides also retain TypeScript
+semantics despite their native inspectors. Binding SQL Server/PostgreSQL
+composition, remaining adapter/model helpers, Dashboard and medical operations,
+SDK retirement and final host/package integration remain open.
 
 Action Manifest construction/inspection/assessment and refusal pass. Bit128
 carrier/model projection and recovery plus file-record encode/decode/refusal now
@@ -172,7 +197,7 @@ This queue names the current TypeScript-executed V4 exports in the Action, Secur
 | Security policy/source meaning | `inspectSecurityPolicy`, `requireSecurityInterpretation`, `inspectSecurityPolicyV2Source`, `upgradeSecurityPolicySource`, `downgradeSecurityPolicySource`, `readSecuritySource`, `writeSecuritySource`, `securityPolicyDependencies`, `securityIdentityTransportDependencies` | Generic native JSON/YAML transport exists, but policy/V2 migration and dependency closure decisions still need Rust kernels/defaults. |
 | Security evaluation and authority | `evaluateSecurityAccess`, `evaluateSecurityCollection`, `evaluateSecurityWrite`, `evaluateSecurityPolicyV2LegacyAccess`, `SecurityAuthorityGuard`, `SecurityReadRegistration` | New Rust evaluation/stateful authority kernels with explicit caller capabilities; no JS policy decision fallback. |
 | Security disclosure/catalog | `inspectProtectionCatalog`, `requireProtectionInterpretation`, `inspectProtectionObligations`, `inspectSecurityActionPurposes`, `validateSecurityDisclosure`, `encodeSecurityDisclosure`, `decodeSecurityDisclosure`, `inspectSecurityDisclosureV2`, `encodeSecurityDisclosureV2`, `decodeSecurityDisclosureV2` | Reuse native source/literal/parameter primitives; add missing disclosure/catalog/obligation semantic kernels and exact source retention. |
-| Existing core-ideal defaults | Native classifiers/projections/recovery already exist for Avro, Parquet, PostgreSQL, SQL Server and TableSpec. | Activate exact published classify/project/verify/recover exports through those owners, replacing original TypeScript decisions. |
+| Core-ideal classifiers/projections/recovery | Thirteen Avro/Parquet classifier and recovery exports now route to existing Rust owners and await their focused runtime batch. | Many remaining facets, nullability, keys and relationship composites lack a complete Rust kernel. Implement those operations; the current relationship factory overrides still execute TypeScript despite native inspectors. |
 | Binding target projection | `projectBindingToDelta`, `projectBindingToIceberg`, `projectBindingToParquet`, `projectBindingToSqlServer`, `projectBindingTablesToSqlServer`, `projectBindingTablesAndIndexesToSqlServer`, `projectBindingTablesAndIndexesFromPlanToSqlServer`, `recoverBindingSqlServerNative`, `recoverBindingSqlServerSources`, `verifyBindingSqlServerProjection`, `validateSqlServerRelationshipLayout` | Native binding source/inspection and generic index projection are reuse points; target-specific composition/verification remains a Rust cut. |
 | Binding index projection | `projectBindingIndexesToPostgresql`, `projectBindingIndexesToSqlServer`, `projectBindingIndexesAgainstSqlServerPlan` | Reuse `binding_index_projection::project_binding_indexes`; add target-specific DDL/catalog admission and public routes. |
 | Bit128 projection | `classifyBit128NativeType`, `decodeBit128FileRecord`, `encodeBit128FileRecord`, `projectBit128CarrierSchema`, `recoverBit128CarrierProjection`, `projectBit128Model`, `recoverBit128ModelProjection` | Classifier, Field authoring, binding inspection, full-row and file encode/decode, carrier/model projection/recovery pass Node; final host activation remains. |
@@ -182,7 +207,7 @@ This queue names the current TypeScript-executed V4 exports in the Action, Secur
 | Table inventory migration | `compileTableInventoryMigration`, `discoverTableInventoryMigrationChanges`, `serializeTableInventoryMigration`, `verifyTableInventoryMigration`, `irreversiblePurgeDisclosure` | Separate new inventory kernel; `umf-codegen` current migration compiler does not own this public profile. |
 | Migration digest and selected compiler | `reviewedValueDigest`, `compileTableMigration`, `verifyTableMigration` | Native canonical digest and public compile/verify/refusal pass. Compiler `.4`/`.5`/`.7` baselines pass; `.3` ordering and `.6` supported replacement baseline remain in repair. |
 
-Host-only/static exports in these families: `actionExpressionLimits`, `actionsPackage`, `sagaPackage`, `createSagaResources`, `registerActions`, `registerSagas`, `protectionPackage`, `SECURITY_EXTENSION`, `securityPackage`, `securityV2Package`, and `securityRegistry`. Keep these as data/registration facades only; underlying validation and semantics must still use Rust. The broader `core-ideals` barrel has native classifier/recovery primitives in `umf-core` and needs a separate exact default-route audit, not a blanket new-kernel assignment.
+Host-only/static exports in these families: `actionExpressionLimits`, `actionsPackage`, `sagaPackage`, `createSagaResources`, `registerActions`, `registerSagas`, `protectionPackage`, `SECURITY_EXTENSION`, `securityPackage`, `securityV2Package`, and `securityRegistry`. Keep these as data/registration facades only; underlying validation and semantics must still use Rust. The broader `core-ideals` barrel needs both actual missing kernels and exact default activation. Existing native primitives are reuse points; neither a facade override count nor an injected Rust inspector establishes ownership of a composite.
 
 ## Remaining Port Work
 

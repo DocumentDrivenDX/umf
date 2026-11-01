@@ -1,16 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson,LIMITS} from '../model/json';
 import {UmfError,type Document} from '../model/types';
-import {assembleSmithyDocument,createSmithyJavaScriptBackend,type SmithyAssemblyBackend,type SmithyAssemblyResult} from '../adapters/smithy/assembly';
+import {assembleSmithyDocument,type SmithyAssemblyBackend,type SmithyAssemblyResult} from '../adapters/smithy/assembly';
 import {importJsonSchema,inspectJsonSchema,walkJsonSchema,getJsonSchemaNode} from '../adapters/json-schema';
 import type {ProjectionIssue} from './json-schema-protobuf';
 export interface SmithyJsonSchemaBackend extends SmithyAssemblyBackend {converterIdentity:string;jsonSchema(modelJson:string,rootShape:string):string|Promise<string>;jsonSchemaForService?(modelJson:string,rootShape:string,serviceContext:string,addRootDefinition:boolean):string|Promise<string>;jsonSchemaWithRootDefinition?(modelJson:string,rootShape:string):string|Promise<string>;}
 export interface SmithyJsonSchemaPolicy {id:string;baseUri:string;rootShape:string;profile:'native-defaults-2020-12'|'native-root-definition-2020-12'|'native-service-context-2020-12';serviceContext?:string;usage:'native-emission';lossPolicy:'strict'|'allow-reported-loss';}
 export interface SmithyJsonSchemaProjection {status:'blocked'|'projected';source:Document;converter:string;assembly:SmithyAssemblyResult;policy:SmithyJsonSchemaPolicy;complete:false;issues:ProjectionIssue[];nativeSchema?:string;adaptedSchema?:string;target?:Document;}
-export function createSmithyJavaScriptJsonSchemaBackend(module:{assemble(sourcesJson:string):string;jsonSchema(modelJson:string,rootShape:string):string;jsonSchemaWithRootDefinition?(modelJson:string,rootShape:string):string;jsonSchemaForService?(modelJson:string,rootShape:string,serviceContext:string,addRootDefinition:boolean):string}):SmithyJsonSchemaBackend{
- if(typeof module?.jsonSchema!=='function')throw new UmfError('SMITHY_RUNTIME','Expected the installed Smithy JSON Schema converter');
- return {...createSmithyJavaScriptBackend(module),converterIdentity:'smithy-jsonschema@1.73.0',jsonSchema:(model,root)=>module.jsonSchema(model,root),...(module.jsonSchemaForService?{jsonSchemaForService:(model:string,root:string,service:string,adapted:boolean)=>module.jsonSchemaForService!(model,root,service,adapted)}:{}),...(module.jsonSchemaWithRootDefinition?{jsonSchemaWithRootDefinition:(model:string,root:string)=>module.jsonSchemaWithRootDefinition!(model,root)}:{})};
-}
+export {createSmithyJavaScriptJsonSchemaBackend} from '../adapters/smithy/json-schema-host-backend';
 /** Native emission with explicit policy; does not certify Smithy instance or protocol equivalence. */
 export async function projectSmithyToJsonSchema(source:Document,backend:SmithyJsonSchemaBackend,input:SmithyJsonSchemaPolicy):Promise<SmithyJsonSchemaProjection>{
  const policy=copyJson(input) as unknown as SmithyJsonSchemaPolicy;

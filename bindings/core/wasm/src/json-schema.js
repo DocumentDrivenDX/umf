@@ -64,6 +64,7 @@ export function createJsonSchemaOperations(call, preflight) {
       return call('importJsonSchema', {source, id, baseUri, resources: entries}, admission);
     },
     inspectJsonSchema(document) { const admission = preflight(); return call('inspectJsonSchema', {document}, admission); },
+    inspectJsonSchemaPayload(payload, path) { const admission = preflight(); return call('inspectJsonSchemaPayload', {payload, path}, admission); },
     exportJsonSchema(document) { const admission = preflight(); return call('exportJsonSchema', {document}, admission); },
     exportJsonSchemaResources(document) { const admission = preflight(); return resourceMap(call('exportJsonSchemaResources', {document}, admission), admission.work); },
     exportJsonSchemaBundle(document) { const admission = preflight(); const bundle = call('exportJsonSchemaBundle', {document}, admission); return {schema: bundle.root, resources: resourceMap(bundle.resources, admission.work), source: bundle.source, diagnostics: orderedDiagnostics(bundle.diagnostics)}; },

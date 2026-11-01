@@ -45,6 +45,9 @@ import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
 import {bindDbtRust} from './adapters/dbt/rust-default';
 import {createRegistryRustDefault} from './registry/rust-default';
+import {createCoreModelPublicRustDefault} from './model/rust-public-default';
+import {createNativeUtilityDefaults} from './model/native-utility-default';
+import {createJsonSchemaRustDefault} from './adapters/json-schema/rust-default';
 import {createSecurityAuthorityGuardRustDefault} from './extensions/security/authority-guard-rust-default';
 import {createActionRuleRustDefault} from './extensions/actions/rust-rule-default';
 import {createActionSelectorsRustDefault} from './extensions/actions/selector-rust-default';
@@ -60,6 +63,8 @@ import {CODEGEN_RESOURCES} from './access/codegen-resources';
 import {createGraphqlRustDefault} from './adapters/graphql/rust-default';
 import {createJsonLdRustDefault} from './adapters/jsonld/rust-default';
 import {createOpenapiRustDefault} from './adapters/openapi/rust-default';
+import {createOpenapiJsonSchemaRustDefault} from './projections/openapi-json-schema-rust-default';
+import {createTypeSpecSmithyJsonSchemaRustDefault} from './projections/typespec-smithy-jsonschema-rust-default';
 import {createLinkmlOdcsRustDefault} from './adapters/linkml-odcs-rust-default';
 import {createTableSpecRustDefault} from './adapters/tablespec/rust-default';
 import {createSqlServerRustDefault} from './adapters/sqlserver/rust-default';
@@ -68,15 +73,21 @@ import {createOwlRustDefault} from './adapters/owl/rust-default';
 import {createRdfRustDefault} from './adapters/rdf/rust-default';
 import {createAvroRustDefault} from './adapters/avro/rust-default';
 import {createAvroJsonSchemaRustDefault} from './projections/avro-json-schema-rust-default';
+import {createCoreIdealRustDefault} from './core-ideals/avro-cardinality-rust-default';
 import {createArrowFlatbufferModelRustDefault} from './adapters/arrow/flatbuffer-model-rust-default';
 import {createArrowSparkRustDefault} from './projections/arrow-spark-rust-default';
 import {createAvroTableSpecRustDefault} from './projections/avro-tablespec-rust-default';
 import {createPostgresqlAvroRustDefault} from './projections/postgresql-avro-rust-default';
 import {createPostgresqlRowJsonSchemaRustDefault} from './projections/postgresql-json-schema-rust-default';
+import {createJsonSchemaProtobufRustDefault} from './projections/json-schema-protobuf-rust-default';
 import {createTableSpecViaAvroRustDefault} from './projections/tablespec-via-avro-rust-default';
 import {createParquetAvroRustDefault} from './projections/parquet-avro-rust-default';
 import {createSqlServerAvroRustDefault} from './projections/sqlserver-avro-rust-default';
 import {createSqlServerDdlRustDefault} from './projections/sqlserver-ddl-rust-default';
+import {createBindingIcebergRustDefault} from './projections/binding-iceberg-rust-default';
+import {createBindingSqlServerPlannedIndexRustDefault} from './projections/binding-sqlserver-planned-index-rust-default';
+import {createBindingParquetRustDefault} from './projections/binding-parquet-rust-default';
+import {createBindingDeltaRustDefault} from './projections/binding-delta-rust-default';
 import {createDddJsonSchemaRustDefault} from './projections/ddd-json-schema-rust-default';
 import {createPostgresqlRustDefault} from './adapters/postgresql/rust-default';
 import {bindParquetCaptureRust} from './adapters/parquet/rust-capture-default';
@@ -90,6 +101,7 @@ import {createSparkRustDefault} from './adapters/spark/rust-default';
 import {SPARK_EXTENSION,sparkPackage} from './adapters/spark/package';
 import type {SmithyNativeOperations} from './adapters/smithy/rust-default';
 import {createSmithyJavaScriptBackend,createSmithyJavaScriptSelectionBackend,createSmithyWorkerBackend} from './adapters/smithy/host-backends';
+import {createSmithyJavaScriptJsonSchemaBackend} from './adapters/smithy/json-schema-host-backend';
 import {SMITHY_EXTENSION,smithyPackage} from './adapters/smithy/package';
 import type {TypeSpecOperations} from './adapters/typespec/rust-default';
 import {executeTypeSpecHostRequest} from './adapters/typespec/host-runtime';
@@ -109,7 +121,7 @@ import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
 // Module import resolves only after the native engine is ready. The function
 // exported below remains synchronous and never falls back to TypeScript.
 assertPythonClientRustPlatformV4(process.platform,process.arch);
-const [{createCoreModelRootKindNullabilityEngine,createCoreBit128FieldEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,isCoreBit128FieldBindingError,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createSecurityProtectionSourceEngine,createSecurityPolicySourceEngine,createSecurityReadRegistrationEngine,createSecurityAuthorityGuardEngine,createSecurityProtectionParametersEngine,createSecurityProtectionDomainsEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createPostgresqlSqlEngine,createTypeSpecSessionEngine,createSmithySessionEngine,createActionPlanSessionEngine,createParquetCaptureEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4},{createRowScopeRustDefault},{createTableMigrationDiscoveryRustDefault,createReviewedValueDigestRustDefault,createTableMigrationRustDefault}]=await Promise.all([
+const [{copyJson:nativeCopyJson,createJsonNumberEngine,createCoreModelRootKindNullabilityEngine,createCoreKeyTupleEngine,createCoreBit128FieldEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,isCoreBit128FieldBindingError,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createSecurityProtectionSourceEngine,createSecurityPolicySourceEngine,createSecurityReadRegistrationEngine,createSecurityAuthorityGuardEngine,createSecurityProtectionParametersEngine,createSecurityProtectionDomainsEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createPreparedJsonSchemaEngine,createCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createPostgresqlSqlEngine,createTypeSpecSessionEngine,createSmithySessionEngine,createActionPlanSessionEngine,createParquetCaptureEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4},{createRowScopeRustDefault},{createTableMigrationDiscoveryRustDefault,createReviewedValueDigestRustDefault,createTableMigrationRustDefault}]=await Promise.all([
  import('../bindings/core/node/index.js'),
  import('./access/core-model-resources'),
  import('./node-v4'),
@@ -136,7 +148,7 @@ const saga=createSagaRustDefault(createCodegenEngine(Object.assign({},CODEGEN_RE
 const {inspectSagas,declareSaga,editSaga,assessSaga}=saga;
 const rdf=createRdfRustDefault(createRdfEngine(),isNativeUmfCoreError,()=>new Registry());
 const {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit}=rdf;
-const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle}=graphql;
+const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle,projectGraphqlInputToJsonSchema}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher();
 const spark=createSparkRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {sparkRegistry,inspectSpark,importSparkSchema,exportSparkSchema,getSparkNode,proposeSparkNodeEdit,renameSparkField}=spark;
@@ -186,8 +198,10 @@ const {icebergTableRegistry,inspectIcebergTable,importIcebergTable,exportIceberg
 const avro=createAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit}=avro;
 const {projectAvroToJsonSchema}=createAvroJsonSchemaRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const coreIdealRust=createCoreIdealRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,classifyAvroRecordType,recoverAvroRecordTypeBundle,classifyParquetRecordType,recoverParquetRecordTypeBytes,classifyParquetRecord,recoverParquetRecordBytes,classifyAvroField,recoverAvroFieldBundle,classifyAvroRecord,recoverAvroRecordBundle,projectNullabilityToAvro,recoverNullabilityFromAvro,projectFacetsToAvro,recoverFacetsFromAvro,projectKeysToAvro,verifyKeysAvroProjection,recoverKeysAvroIdeal}=coreIdealRust;
 const arrowFlatbufferModel=createArrowFlatbufferModelRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
-const {importArrowFlatbufferModel,inspectArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit}=arrowFlatbufferModel;
+const {importArrowFlatbufferModel,inspectArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit,decodeArrowFlatbuffer,encodeArrowFlatbuffer}=arrowFlatbufferModel;
 const {projectArrowToSpark,projectSparkToArrow}=createArrowSparkRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectAvroToTableSpec,projectTableSpecToAvro}=createAvroTableSpecRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectPostgresqlToAvro}=createPostgresqlAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
@@ -196,8 +210,12 @@ const {projectToTableSpecViaAvro}=createTableSpecViaAvroRustDefault(nativeFamily
 const {projectParquetToAvro}=createParquetAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectSqlServerToAvro}=createSqlServerAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectSqlServerToDdl}=createSqlServerDdlRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectBindingToIceberg}=createBindingIcebergRustDefault(nativeFamilyDispatcher);
+const {projectBindingIndexesAgainstSqlServerPlan}=createBindingSqlServerPlannedIndexRustDefault(nativeFamilyDispatcher);
+const {projectBindingToParquet}=createBindingParquetRustDefault(nativeFamilyDispatcher);
+const {projectBindingToDelta}=createBindingDeltaRustDefault(nativeFamilyDispatcher);
 const dddRust=createDddJsonSchemaRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
-const {projectDddToJsonSchema,dddFieldBinding}=dddRust;
+const {projectDddToJsonSchema,dddFieldBinding,projectDddEntitiesToGraphql,projectDddToGraphql,verifyDddGraphqlProjection,recoverDddFromGraphql,recoverDddGraphqlNative}=dddRust;
 const parquet=bindParquetCaptureRust(createParquetCaptureEngine(),isNativeUmfCoreError,error=>error instanceof BindingUmfError);
 const {captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField}=parquet;
 function parquetRegistry():Registry{return new Registry().register(parquetPackage);}
@@ -238,6 +256,10 @@ const jsonld=createJsonLdRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError
 const {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd}=jsonld;
 const openapi=createOpenapiRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit}=openapi;
+const openapiJsonSchemaProjection=createOpenapiJsonSchemaRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectOpenapiToJsonSchema}=openapiJsonSchemaProjection;
+const typespecSmithyJsonSchema=createTypeSpecSmithyJsonSchemaRustDefault(nativeFamilyDispatcher,emitTypeSpecJsonSchema,assembleSmithyDocument,isNativeUmfCoreError);
+const {projectTypeSpecToJsonSchema,projectSmithyToJsonSchema}=typespecSmithyJsonSchema;
 const linkmlOdcs=createLinkmlOdcsRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {linkmlRegistry,importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,inspectLinkmlImportContext,proposeLinkmlImportMerge,inspectLinkmlClassSlots,inspectLinkmlSlotValues,odcsRegistry,importOdcsDocument,inspectOdcsDocument,exportOdcsDocument,getOdcsDocumentNode,proposeOdcsDocumentNodeEdit,resolveOdcsReference,inspectOdcsRelationships,proposeOdcsElementRename}=linkmlOdcs;
 const tableSpec=createTableSpecRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
@@ -255,6 +277,7 @@ const protobufSources=createProtobufSourceRustDefault(
   createProtobufSourceExportEngine(),
   isNativeUmfCoreError,
 );
+const {projectJsonSchemaToProtobuf}=createJsonSchemaProtobufRustDefault(nativeFamilyDispatcher,protobufSources.importProtobufSources,inspectProtobuf,isNativeUmfCoreError);
 const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createPythonClientRustCandidateV4());
 const generateDomainPackSchemaOperation=createGeneratedSchemaGraphOperation(domainPackSchemaGraphJson) as typeof DomainPackSchemaReference;
 const generateDatasetSourceSchemaOperation=createGeneratedSchemaGraphOperation(datasetSourceSchemaGraphJson) as typeof DatasetSourceSchemaReference;
@@ -277,6 +300,8 @@ Object.defineProperty(generateLoaderInventorySchema,'name',{value:'generateLoade
 const model=createCoreModelRootKindNullabilityEngine(CORE_MODEL_RESOURCES);
 const {declareCoreBit128Field}=bindCoreBit128FieldRust(createCoreBit128FieldEngine(CORE_MODEL_RESOURCES),isCoreBit128FieldBindingError);
 const {Registry,validateDocument,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
+const {validateCoreDatasetValues,verifyCoreDatasetValues,inspectCoreEvolution,verifyCoreEvolution,encodeCoreKeyTuple,verifyCoreKeyTuple,selectCoreElements,selectCoreRelationships}=createCoreModelPublicRustDefault(model,createCoreKeyTupleEngine(CORE_MODEL_RESOURCES),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
+const {importJsonSchema,inspectJsonSchema,exportJsonSchema,exportJsonSchemaResources,exportJsonSchemaBundle,getJsonSchemaNode,walkJsonSchema,editJsonSchemaNode,parseNativeJson,parseNativeYaml,jsonSchemaRegistry}=createJsonSchemaRustDefault(createPreparedJsonSchemaEngine(),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const dddRegistry=()=>dddRust.dddRegistry(()=>new Registry());
 const inspectDdd=dddRust.inspectDdd;
 const registerDdd=<T extends InstanceType<typeof Registry>>(registry:T):T=>dddRust.registerDdd(registry);
@@ -307,6 +332,8 @@ export function parseAccessTemporal(kind:AccessTemporalKind,token:string):Access
 const securityEngine=createSecurityLogicEngine();
 const securityNot=createSecurityNotRustAdapter(securityEngine);
 const {securityAnd,securityOr}=createSecurityLogicRustAdapter(securityEngine);
+const nativeJsonNumber=createJsonNumberEngine();
+const {copyJson,readJsonValue,writeJsonValue,readProtectionSource,writeProtectionSource,inspectExtensionKinds,assertExactJsonNumber,composeSecurityRules,securityRefIdentity}=createNativeUtilityDefaults(Object.assign({},model,securityEngine,{copyJson:nativeCopyJson,assertExactJsonNumber:nativeJsonNumber.assertExactJsonNumber}),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant}=temporal;
 const {validateCsvBooleanLexical,verifyCsvBooleanLexical}=bindCsvBooleanLexicalRust(model,isWireAdmissionError,isNativeUmfCoreError);
 const {inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks}=bindCoreInspectorsRust(model,isWireAdmissionError,isNativeUmfCoreError);
@@ -349,7 +376,7 @@ export {projectSecSubmissions,projectSecCompanyFacts};
 export {projectSecSubmissions as projectSecSubmissionsRustCandidate,projectSecCompanyFacts as projectSecCompanyFactsRustCandidate};
 export {readDescriptorSetRustCandidate};
 export {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle};
-export {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle};
+export {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle,projectGraphqlInputToJsonSchema};
 export {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit};
 export {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd};
 export {ICEBERG_EXTENSION,icebergPackage,icebergRegistry,inspectIceberg,importIcebergSchema,exportIcebergSchema,getIcebergNode,proposeIcebergNodeEdit};
@@ -359,19 +386,33 @@ export type {PostgresqlBackend} from './adapters/postgresql/index';
 export {createPostgresqlSqlEngine};
 export {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit};
 export {projectAvroToJsonSchema};
-export {importArrowFlatbufferModel,inspectArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit};
+export {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,classifyAvroRecordType,recoverAvroRecordTypeBundle,classifyParquetRecordType,recoverParquetRecordTypeBytes,classifyParquetRecord,recoverParquetRecordBytes,classifyAvroField,recoverAvroFieldBundle,classifyAvroRecord,recoverAvroRecordBundle};
+export {projectNullabilityToAvro,recoverNullabilityFromAvro};
+export {projectFacetsToAvro,recoverFacetsFromAvro};
+export {projectKeysToAvro,verifyKeysAvroProjection,recoverKeysAvroIdeal};
+export {importArrowFlatbufferModel,inspectArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit,decodeArrowFlatbuffer,encodeArrowFlatbuffer};
 export {projectArrowToSpark,projectSparkToArrow};
+export {copyJson,readJsonValue,writeJsonValue,readProtectionSource,writeProtectionSource,inspectExtensionKinds,assertExactJsonNumber,composeSecurityRules,securityRefIdentity};
+export {validateCoreDatasetValues,verifyCoreDatasetValues,inspectCoreEvolution,verifyCoreEvolution,encodeCoreKeyTuple,verifyCoreKeyTuple,selectCoreElements,selectCoreRelationships};
+export {importJsonSchema,inspectJsonSchema,exportJsonSchema,exportJsonSchemaResources,exportJsonSchemaBundle,getJsonSchemaNode,walkJsonSchema,editJsonSchemaNode,parseNativeJson,parseNativeYaml,jsonSchemaRegistry};
 export {projectAvroToTableSpec,projectTableSpecToAvro};
 export {projectPostgresqlToAvro};
 export {projectPostgresqlRowToJsonSchema};
+export {projectJsonSchemaToProtobuf};
 export {projectToTableSpecViaAvro};
 export {projectParquetToAvro};
 export {projectSqlServerToAvro};
 export {projectSqlServerToDdl};
-export {projectDddToJsonSchema,dddFieldBinding};
+export {projectBindingToIceberg};
+export {projectBindingIndexesAgainstSqlServerPlan};
+export {projectBindingToParquet};
+export {projectBindingToDelta};
+export {projectDddToJsonSchema,dddFieldBinding,projectDddEntitiesToGraphql,projectDddToGraphql,verifyDddGraphqlProjection,recoverDddFromGraphql,recoverDddGraphqlNative};
 export {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage,parquetRegistry,captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField};
 export {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit};
-export {createSmithyJavaScriptBackend,createSmithyJavaScriptSelectionBackend,createSmithyWorkerBackend};
+export {projectOpenapiToJsonSchema};
+export {projectTypeSpecToJsonSchema,projectSmithyToJsonSchema};
+export {createSmithyJavaScriptBackend,createSmithyJavaScriptSelectionBackend,createSmithyJavaScriptJsonSchemaBackend,createSmithyWorkerBackend};
 export {SMITHY_EXTENSION,smithyPackage,smithyRegistry,inspectSmithy,importSmithyJson,importSmithySources,exportSmithyJson,exportSmithySources,exportSmithyBundle,getSmithyNode,proposeSmithyNodeEdit,proposeSmithySourceEdit,assembleSmithyDocument,selectSmithyShapes};
 export {TYPESPEC_EXTENSION,typespecPackage,typespecRegistry,inspectTypeSpec,importTypeSpecSources,exportTypeSpecSources,compileTypeSpecDocument,getTypeSpecSyntax,getTypeSpecSemanticGraph,emitTypeSpecJsonSchema,proposeTypeSpecSourceEdit};
 export type {TypeSpecPayload} from './adapters/typespec/package';
@@ -379,6 +420,8 @@ export type {TypeSpecCompilerReport,TypeSpecGraphReport,TypeSpecJsonSchemaEmissi
 export type {SmithySourcePayload} from './adapters/smithy/source-profile';
 export type {SmithyAssemblyBackend,SmithyAssemblyEvent,SmithyAssemblyResult} from './adapters/smithy/assembly';
 export type {SmithySelectionBackend,SmithySelectionResult} from './adapters/smithy/selection';
+export type {SmithyJsonSchemaBackend,SmithyJsonSchemaPolicy,SmithyJsonSchemaProjection} from './projections/smithy-json-schema';
+export type {TypeSpecJsonSchemaPolicy} from './projections/typespec-json-schema';
 export {linkmlRegistry,importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,inspectLinkmlImportContext,proposeLinkmlImportMerge,inspectLinkmlClassSlots,inspectLinkmlSlotValues,odcsRegistry,importOdcsDocument,inspectOdcsDocument,exportOdcsDocument,getOdcsDocumentNode,proposeOdcsDocumentNodeEdit,resolveOdcsReference,inspectOdcsRelationships,proposeOdcsElementRename};
 export {importTableSpec,inspectTableSpec,exportTableSpec,getTableSpecTable,getTableSpecColumn,editTableSpecTable,editTableSpecColumn,importTableSpecBundle,exportTableSpecBundle};
 export {sqlserverRegistry,importSqlServerCatalog,inspectSqlServer,exportSqlServerCatalog,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,getSqlServerIndexMetadata,proposeSqlServerCatalogEdit,inspectSqlServerFacetType,inspectSqlServerFacetPredicate,inspectSqlServerFacetConstraints};
