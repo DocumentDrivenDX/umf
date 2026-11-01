@@ -26,6 +26,8 @@ pub mod relationship_tablespec_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod relationship_sqlserver_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod relationship_postgresql_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod relationship_parquet_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection_binding;

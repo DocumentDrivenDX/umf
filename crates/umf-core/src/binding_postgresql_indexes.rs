@@ -353,11 +353,13 @@ pub fn prepare(
                 "Index target is missing",
             )
         })?;
-        let owner = get(first, "field").and_then(|f| {
-            get(f, "module")
-                .and_then(|m| txt(Some(m)))
-                .zip(get(f, "element").and_then(|e| txt(Some(e))))
-        });
+        let owner = get(first, "field")
+            .or_else(|| get(first, "documentPath").and_then(|p| get(p, "field")))
+            .and_then(|f| {
+                get(f, "module")
+                    .and_then(|m| txt(Some(m)))
+                    .zip(get(f, "element").and_then(|e| txt(Some(e))))
+            });
         let element = owner.as_ref().and_then(|(module, id)| {
             arr(get(payload, "elements"))
                 .iter()

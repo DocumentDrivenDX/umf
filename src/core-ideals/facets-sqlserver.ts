@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
 import {exportSqlServerCatalog,getSqlServerColumnMetadata} from '../adapters/sqlserver';
@@ -11,10 +11,8 @@ import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';import authorSchema from '../../spec/core/facet-operation-v3.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/sqlserver-facet-classification.schema.json';
 import captureSchema from '../../spec/extensions/sqlserver/capture.schema.json';
-import manifest from '../../spec/extensions/sqlserver-facets/package.json';
-export const SQLSERVER_FACETS_EXTENSION='umf.sqlserver.facets';
-export const sqlserverFacetsPackage=manifest as unknown as ExtensionPackage;
-export {default as sqlserverFacetClassificationSchema} from '../../spec/core/sqlserver-facet-classification.schema.json';
+import {SQLSERVER_FACETS_EXTENSION} from './facets-sqlserver-package';
+export {SQLSERVER_FACETS_EXTENSION,sqlserverFacetsPackage,sqlserverFacetClassificationSchema} from './facets-sqlserver-package';
 export interface SqlServerFacetRequest {column:string;nativeSource:string;identity:{module:string;element:string};mode:'strict'|'report';profile:'stored-value'|'ordinary-checked-write'|'unresolved';obligation:'value-domain'|'exact-input';author?:CoreFacetDeclaration}
 type Outcome='exact'|'approximated'|'not-expressible'|'unknown';
 type Concept='length'|'decimal'|'integerWidth'|'conversion'|'native';

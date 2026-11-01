@@ -17,6 +17,7 @@ pub const FAMILIES: &[&str] = &[
     "avro-relationship-projection",
     "tablespec-relationship-projection",
     "relationship-sqlserver-projection",
+    "relationship-postgresql-projection",
     "avro",
     "avro-json-schema-projection",
     "arrow-spark-projection",
@@ -170,9 +171,25 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverRelationshipSqlServerNative",
             ],
         ),
+        "relationship-postgresql-projection" => (
+            crate::relationship_postgresql_projection_binding::PROFILE,
+            &[
+                "prepareProjectRelationshipsToPostgresql",
+                "completeProjectRelationshipsToPostgresql",
+                "blockProjectRelationshipsToPostgresql",
+                "verifyRelationshipsPostgresqlProjection",
+                "recoverRelationshipsPostgresqlIdeal",
+                "recoverRelationshipsPostgresqlNative",
+            ],
+        ),
         "relationship-parquet-projection" => (
             crate::relationship_parquet_projection_binding::PROFILE,
-            &["projectRelationshipToParquet", "verifyRelationshipParquetProjection", "recoverRelationshipParquetIdeal", "recoverRelationshipParquetNative"],
+            &[
+                "projectRelationshipToParquet",
+                "verifyRelationshipParquetProjection",
+                "recoverRelationshipParquetIdeal",
+                "recoverRelationshipParquetNative",
+            ],
         ),
         "avro" => (
             crate::avro_binding::PROFILE,
@@ -246,7 +263,11 @@ pub fn metadata_wire(family: &str) -> String {
         ),
         "binding-index-projection" => (
             crate::binding_indexes_binding::PROFILE,
-            &["projectBindingIndexesToSqlServer", "prepareBindingIndexesToPostgresql", "completeBindingIndexesToPostgresql"],
+            &[
+                "projectBindingIndexesToSqlServer",
+                "prepareBindingIndexesToPostgresql",
+                "completeBindingIndexesToPostgresql",
+            ],
         ),
         "binding-parquet-projection" => (
             crate::binding_parquet_projection_binding::PROFILE,
@@ -375,6 +396,8 @@ pub fn metadata_wire(family: &str) -> String {
                 "editTableSpecColumn",
                 "importTableSpecBundle",
                 "exportTableSpecBundle",
+                "classifyTableSpecField",
+                "verifyTableSpecFieldClassification",
             ],
         ),
         "jsonld" => (
@@ -427,6 +450,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverRelationshipSource",
                 "verifyRelationshipClassification",
                 "classifyRelationships",
+                "classifyFacets",
+                "verifyFacetClassification",
+                "recoverFacetSource",
             ],
         ),
         "shacl" => (
@@ -648,7 +674,10 @@ pub fn execute_wire_with_control(
                 wire, control,
             )
         }
-        "relationship-parquet-projection" => crate::relationship_parquet_projection_binding::execute_wire_with_control(wire, control),
+        "relationship-postgresql-projection" => crate::relationship_postgresql_projection_binding::execute_wire_with_control(wire, control),
+        "relationship-parquet-projection" => {
+            crate::relationship_parquet_projection_binding::execute_wire_with_control(wire, control)
+        }
         "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
         "avro-json-schema-projection" => {
             crate::avro_json_schema_projection_binding::execute_wire_with_control(wire, control)

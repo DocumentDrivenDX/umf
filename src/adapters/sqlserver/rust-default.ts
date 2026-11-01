@@ -19,6 +19,8 @@ import type {SqlServerNullabilityClassification,SqlServerNullabilityRequest} fro
 import type {SqlServerKeyClassification,SqlServerKeyRequest} from '../../core-ideals/key-sqlserver';
 
 import type {SqlServerRelationshipClassification,SqlServerRelationshipRequest} from '../../core-ideals/relationship-sqlserver';
+import type {SqlServerFacetClassification,SqlServerFacetRequest} from '../../core-ideals/facets-sqlserver';
+import {sqlserverFacetsPackage} from '../../core-ideals/facets-sqlserver-package';
 
 export interface SqlServerNativeFamilyEngine {
  sqlserver:{
@@ -51,6 +53,9 @@ export interface SqlServerNativeFamilyEngine {
   recoverRelationshipSource(fields:{receipt:SqlServerRelationshipClassification;current:Document}):unknown;
   verifyRelationshipClassification(fields:{receipt:SqlServerRelationshipClassification;current:Document}):unknown;
   classifyRelationships(fields:{source:Document;request:SqlServerRelationshipRequest}):unknown;
+  classifyFacets(fields:{source:Document;request:SqlServerFacetRequest}):unknown;
+  verifyFacetClassification(fields:{receipt:SqlServerFacetClassification;current:Document}):unknown;
+  recoverFacetSource(fields:{receipt:SqlServerFacetClassification;current:Document}):unknown;
  }
 }
 
@@ -69,7 +74,7 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   }
  };
  return Object.freeze({
-  sqlserverRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload}))).register(cardinalityManifest as unknown as ExtensionPackage).register(sqlserverNullabilityPackage).register(sqlserverKeysPackage).register(sqlserverRelationshipsPackage);},
+  sqlserverRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload}))).register(cardinalityManifest as unknown as ExtensionPackage).register(sqlserverNullabilityPackage).register(sqlserverKeysPackage).register(sqlserverRelationshipsPackage).register(sqlserverFacetsPackage);},
   importSqlServerCatalog(text:string,options:Parameters<typeof importSqlServerCatalog>[1]):ReturnType<typeof importSqlServerCatalog>{return call(()=>engine.sqlserver.import({source:text,id:options.id}) as ReturnType<typeof importSqlServerCatalog>);},
   inspectSqlServer(document:Parameters<typeof inspectSqlServer>[0]):ReturnType<typeof inspectSqlServer>{return call(()=>engine.sqlserver.inspect({document}) as ReturnType<typeof inspectSqlServer>);},
   exportSqlServerCatalog(document:Parameters<typeof exportSqlServerCatalog>[0]):ReturnType<typeof exportSqlServerCatalog>{return call(()=>engine.sqlserver.export({document}) as ReturnType<typeof exportSqlServerCatalog>);},
@@ -100,5 +105,8 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   classifySqlServerRelationships(source:Document,request:SqlServerRelationshipRequest):SqlServerRelationshipClassification{return call(()=>engine.sqlserver.classifyRelationships({source,request}) as SqlServerRelationshipClassification);},
   verifySqlServerRelationshipClassification(receipt:SqlServerRelationshipClassification,current:Document):SqlServerRelationshipClassification{return call(()=>engine.sqlserver.verifyRelationshipClassification({receipt,current}) as SqlServerRelationshipClassification);},
   recoverSqlServerRelationshipSource(receipt:SqlServerRelationshipClassification,current:Document):string{return call(()=>engine.sqlserver.recoverRelationshipSource({receipt,current}) as string);},
+  classifySqlServerFacets(source:Document,request:SqlServerFacetRequest):SqlServerFacetClassification{return call(()=>engine.sqlserver.classifyFacets({source,request}) as SqlServerFacetClassification);},
+  verifySqlServerFacetClassification(receipt:SqlServerFacetClassification,current:Document):SqlServerFacetClassification{return call(()=>engine.sqlserver.verifyFacetClassification({receipt,current}) as SqlServerFacetClassification);},
+  recoverSqlServerFacetSource(receipt:SqlServerFacetClassification,current:Document):string{return call(()=>engine.sqlserver.recoverFacetSource({receipt,current}) as string);},
  });
 }

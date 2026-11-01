@@ -8,7 +8,7 @@ use crate::{
     native_json::{NativeJsonNode, NativeJsonTree},
     registry::Registry,
     serialization::{self, Format},
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 
 const EXTENSION: &str = "umf.tablespec";
@@ -27,6 +27,8 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "editTableSpecColumn",
     "importTableSpecBundle",
     "exportTableSpecBundle",
+    "classifyTableSpecField",
+    "verifyTableSpecFieldClassification",
 ];
 
 #[cfg(test)]
@@ -115,6 +117,41 @@ impl TableSpecRuntime {
         Ok(Self { engine, registry })
     }
 
+    pub fn classify_field(
+        &self,
+        input: &Value,
+        request: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_field_classification::classify_table_spec_field(
+            input,
+            request,
+            self,
+            &self.engine,
+            &self.registry,
+            &mut capabilities,
+            ctx,
+        )
+    }
+
+    pub fn verify_field_classification(
+        &self,
+        receipt: &Value,
+        current: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_field_classification::verify_table_spec_field_classification(
+            receipt,
+            current,
+            self,
+            &self.engine,
+            &self.registry,
+            &mut capabilities,
+            ctx,
+        )
+    }
     pub fn import(
         &self,
         source: &Utf16,
@@ -681,6 +718,7 @@ impl TableSpecRuntime {
     }
 }
 
+#[doc(hidden)]
 struct StructuralOnly;
 impl Capabilities for StructuralOnly {
     fn validate_extension(

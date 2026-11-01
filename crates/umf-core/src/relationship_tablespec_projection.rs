@@ -424,6 +424,26 @@ fn columns(node: &NativeJsonNode) -> Vec<(String, &NativeJsonNode)> {
 fn table_name(node: &NativeJsonNode) -> Option<String> {
     native_text(member(node, "table_name"))
 }
+fn strip_openapi_discriminator_annotations(value: &mut Value) {
+    match value {
+        Value::Array(items) => {
+            for item in items {
+                strip_openapi_discriminator_annotations(item);
+            }
+        }
+        Value::Object(members) => {
+            // TableSpec's pinned native-model schema embeds the OpenAPI
+            // discriminator annotation to document the source union. It is
+            // authoring metadata, not a JSON Schema validation keyword.
+            members.retain(|(key, _)| key != &k("discriminator"));
+            for (_, child) in members {
+                strip_openapi_discriminator_annotations(child);
+            }
+        }
+        Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => {}
+    }
+}
+
 fn schema_ok(
     v: &Value,
     schema: &Value,
@@ -447,6 +467,7 @@ fn schema_ok(
         if let Value::Object(members) = &mut schema {
             members.retain(|(key, _)| key != &k("example"));
         }
+        strip_openapi_discriminator_annotations(&mut schema);
         Some(schema)
     } else {
         None

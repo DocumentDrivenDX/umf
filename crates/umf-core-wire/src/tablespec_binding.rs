@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Dedicated tagged-wire API for the current monolithic TableSpec adapter.
-use umf_core::{Context, EngineError, Severity, Utf16, Value, tablespec_adapter as tablespec};
+use umf_core::{tablespec_adapter as tablespec, Context, EngineError, Severity, Utf16, Value};
 
 use crate::{decode, encode, field, result_envelope};
 
@@ -43,6 +43,8 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "editTableSpecColumn",
         "importTableSpecBundle",
         "exportTableSpecBundle",
+        "classifyTableSpecField",
+        "verifyTableSpecFieldClassification",
     ]
     .into_iter()
     .find(|candidate| op == &Utf16::from(*candidate))
@@ -59,6 +61,8 @@ fn allowed(op: &str) -> &'static [&'static str] {
         "editTableSpecColumn" => &["profile", "op", "document", "index", "changes"],
         "importTableSpecBundle" => &["profile", "op", "files", "id"],
         "exportTableSpecBundle" => &["profile", "op", "document"],
+        "classifyTableSpecField" => &["profile", "op", "document", "request"],
+        "verifyTableSpecFieldClassification" => &["profile", "op", "receipt", "current"],
         _ => &[],
     }
 }
@@ -202,6 +206,14 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         "exportTableSpecBundle" => {
             required_value(request, "document")?;
         }
+        "classifyTableSpecField" => {
+            required_value(request, "document")?;
+            required_value(request, "request")?;
+        }
+        "verifyTableSpecFieldClassification" => {
+            required_value(request, "receipt")?;
+            required_value(request, "current")?;
+        }
         _ => return Err(request_error("unknown TableSpec operation")),
     }
     Ok(op)
@@ -289,6 +301,16 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             ctx,
         ),
         "exportTableSpecBundle" => runtime.export_bundle(required_value(request, "document")?, ctx),
+        "classifyTableSpecField" => runtime.classify_field(
+            required_value(request, "document")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "verifyTableSpecFieldClassification" => runtime.verify_field_classification(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
         _ => Err(request_error("unknown TableSpec operation")),
     }
 }

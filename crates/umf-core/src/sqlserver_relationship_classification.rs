@@ -92,6 +92,104 @@ fn set(v: &mut Value, k: &str, n: Value) -> Result<(), EngineError> {
 fn read_json(source: &Utf16, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     serialization::read_json_value(source.units(), Format::Json, ctx)
 }
+fn capture_value(tagged: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    let kind = text(tagged, "kind").ok_or_else(|| {
+        err(
+            "SQLSERVER_RELATIONSHIP_CAPTURE",
+            "",
+            "Tagged capture node kind is required",
+        )
+    })?;
+    match kind.to_utf8().ok().as_deref() {
+        Some("null") => Ok(Value::Null),
+        Some("boolean") => match get(tagged, "value") {
+            Some(Value::Bool(value)) => Ok(Value::Bool(*value)),
+            _ => Err(err(
+                "SQLSERVER_RELATIONSHIP_CAPTURE",
+                "",
+                "Tagged boolean value is malformed",
+            )),
+        },
+        Some("string") => match get(tagged, "value") {
+            Some(Value::String(value)) => {
+                ctx.charge_text(value.len(), Utf16::default())?;
+                Ok(Value::String(value.clone()))
+            }
+            _ => Err(err(
+                "SQLSERVER_RELATIONSHIP_CAPTURE",
+                "",
+                "Tagged string value is malformed",
+            )),
+        },
+        Some("number") => match get(tagged, "value") {
+            Some(Value::String(token)) => {
+                ctx.charge_text(token.len(), Utf16::default())?;
+                let text = token.to_utf8().map_err(|_| {
+                    err(
+                        "SQLSERVER_RELATIONSHIP_CAPTURE",
+                        "",
+                        "Tagged numeric token is not UTF-8",
+                    )
+                })?;
+                let number = text.parse::<f64>().ok().filter(|n| {
+                    n.is_finite() && n.fract() == 0.0 && n.abs() <= 9_007_199_254_740_991.0
+                });
+                if let Some(number) = number {
+                    Ok(Value::Number(number))
+                } else {
+                    Ok(Value::String(token.clone()))
+                }
+            }
+            _ => Err(err(
+                "SQLSERVER_RELATIONSHIP_CAPTURE",
+                "",
+                "Tagged number value is malformed",
+            )),
+        },
+        Some("array") => {
+            let items = arr(tagged, "items").ok_or_else(|| {
+                err(
+                    "SQLSERVER_RELATIONSHIP_CAPTURE",
+                    "",
+                    "Tagged array items are malformed",
+                )
+            })?;
+            ctx.charge_work(items.len(), Utf16::default())?;
+            let mut out = Vec::with_capacity(items.len());
+            for item in items {
+                out.push(capture_value(item, ctx)?);
+            }
+            Ok(Value::Array(out))
+        }
+        Some("object") => {
+            let Value::Object(members) = get(tagged, "members").ok_or_else(|| {
+                err(
+                    "SQLSERVER_RELATIONSHIP_CAPTURE",
+                    "",
+                    "Tagged object members are malformed",
+                )
+            })?
+            else {
+                return Err(err(
+                    "SQLSERVER_RELATIONSHIP_CAPTURE",
+                    "",
+                    "Tagged object members are malformed",
+                ));
+            };
+            ctx.charge_work(members.len(), Utf16::default())?;
+            let mut out = Vec::with_capacity(members.len());
+            for (key, value) in members {
+                out.push((key.clone(), capture_value(value, ctx)?));
+            }
+            Ok(Value::Object(out))
+        }
+        _ => Err(err(
+            "SQLSERVER_RELATIONSHIP_CAPTURE",
+            "",
+            "Unknown tagged SQL Server capture node kind",
+        )),
+    }
+}
 fn equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
     fn canon(v: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         match v {
@@ -245,7 +343,17 @@ fn classified_body(
             "Native archive differs from retained catalog",
         ));
     }
-    let native = read_json(&canonical_native, ctx)?;
+    let capture_root = get(&source, "extensions")
+        .and_then(|extensions| get(extensions, "umf.sqlserver"))
+        .and_then(|capture| get(capture, "root"))
+        .ok_or_else(|| {
+            err(
+                "SQLSERVER_RELATIONSHIP_CAPTURE",
+                "/extensions/umf.sqlserver/root",
+                "Retained tagged SQL Server capture root is required",
+            )
+        })?;
+    let native = capture_value(capture_root, ctx)?;
     if !matches!(get(&native,"profile"),Some(Value::String(v)) if v==&u("sqlserver-catalog-v3"))
         || !matches!(get(&native,"state"),Some(Value::String(v)) if v==&u("captured"))
         || text(&native, "serverVersion") != Some(&u(NATIVE_VERSION))

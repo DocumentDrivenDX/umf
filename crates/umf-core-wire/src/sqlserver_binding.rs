@@ -75,6 +75,10 @@ fn embedded_sqlserver_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry)
         include_str!("../../../spec/extensions/sqlserver-relationships/package.json"),
         ctx,
     )?;
+    let facets_package = parse_resource(
+        include_str!("../../../spec/extensions/sqlserver-facets/package.json"),
+        ctx,
+    )?;
     let mut registry = Registry::new();
     registry.register(&package, None, engine.package_schema(), &schemas, ctx)?;
     registry.register(
@@ -94,6 +98,13 @@ fn embedded_sqlserver_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry)
     registry.register(&keys_package, None, engine.package_schema(), &schemas, ctx)?;
     registry.register(
         &relationship_package,
+        None,
+        engine.package_schema(),
+        &schemas,
+        ctx,
+    )?;
+    registry.register(
+        &facets_package,
         None,
         engine.package_schema(),
         &schemas,
@@ -131,7 +142,8 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         | "sqlserver.classifyCardinality"
         | "sqlserver.classifyNullability"
         | "sqlserver.classifyKeys"
-        | "sqlserver.classifyRelationships" => &["profile", "op", "source", "request"],
+        | "sqlserver.classifyRelationships"
+        | "sqlserver.classifyFacets" => &["profile", "op", "source", "request"],
         "sqlserver.verifyFieldClassification"
         | "sqlserver.recoverFieldCapture"
         | "sqlserver.verifyRecordClassification"
@@ -143,7 +155,9 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         | "sqlserver.verifyKeyClassification"
         | "sqlserver.recoverKeySource"
         | "sqlserver.verifyRelationshipClassification"
-        | "sqlserver.recoverRelationshipSource" => &["profile", "op", "receipt", "current"],
+        | "sqlserver.recoverRelationshipSource"
+        | "sqlserver.verifyFacetClassification"
+        | "sqlserver.recoverFacetSource" => &["profile", "op", "receipt", "current"],
         _ => return None,
     })
 }
@@ -189,6 +203,9 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         "sqlserver.classifyRelationships",
         "sqlserver.verifyRelationshipClassification",
         "sqlserver.recoverRelationshipSource",
+        "sqlserver.classifyFacets",
+        "sqlserver.verifyFacetClassification",
+        "sqlserver.recoverFacetSource",
     ]
     .into_iter()
     .find(|op| op.encode_utf16().eq(op_text.units().iter().copied()))
@@ -295,6 +312,18 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
                 ));
             }
         }
+        "sqlserver.classifyFacets" => {
+            required(request, "source")?;
+            let input = required(request, "request")?;
+            let native_source = required_string(input, "nativeSource")?;
+            if native_source.len() > ctx.limits().max_text_units {
+                return Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "SQL Server native source exceeds the text limit",
+                ));
+            }
+        }
         "sqlserver.classifyNullability" => {
             required(request, "source")?;
             let input = required(request, "request")?;
@@ -318,7 +347,9 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         | "sqlserver.verifyKeyClassification"
         | "sqlserver.recoverKeySource"
         | "sqlserver.verifyRelationshipClassification"
-        | "sqlserver.recoverRelationshipSource" => {
+        | "sqlserver.recoverRelationshipSource"
+        | "sqlserver.verifyFacetClassification"
+        | "sqlserver.recoverFacetSource" => {
             required(request, "receipt")?;
             required(request, "current")?;
         }
@@ -586,6 +617,43 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             let (engine, registry) = embedded_sqlserver_engine(ctx)?;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_relationship_classification::recover(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+            .map(Value::String)
+        }
+        "sqlserver.classifyFacets" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_facets_classification::classify(
+                required(request, "source")?,
+                required(request, "request")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.verifyFacetClassification" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_facets_classification::verify(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.recoverFacetSource" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_facets_classification::recover(
                 required(request, "receipt")?,
                 required(request, "current")?,
                 &engine,

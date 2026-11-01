@@ -93,18 +93,19 @@ remaining callable operations are integrated, and repair only actual failures.
 
 Current integration order:
 
-1. Finish the admitted SQL Server Nullability/Keys/Relationship, authored Parquet
-   Relationship and direct PostgreSQL/SQL Server index routes, together with the
-   TableSpec Relationship and Parquet Facets repairs. Python source-resource
-   closure, full TypeScript and Rust metadata pass; one native build then focused
-   public workflows are running. Keep only actual failures in the repair queue.
-2. Sol reviews the next SQL Server Facets and authored PostgreSQL Relationship
-   cuts before admission. Luna resumes PostgreSQL Field/Record classification
-   after the SQL Facets handoff and continues authored Relationship Extra targets.
-3. A third bounded Luna lane implements TableSpec Field classification and its
-   existing verify/recovery API. Follow with TableSpec Record and the remaining
-   classifiers after review. Use existing pinned contracts and one normal/refusal
-   workflow per capability; keep every default route Rust-owned.
+1. Admit the reviewed PostgreSQL Field/Record and Cardinality, authored SQL Server
+   Cardinality and TableSpec Record cuts, preserving every existing default route.
+   Compile first, then run their public normal/refusal/recovery baselines through
+   one shared native build. The previous three-capability cohort and all three
+   runtime repairs pass; exclude those passing cases from the next focused run.
+2. Luna corrects the remaining authored Relationship Extra GraphQL/RDF/LinkML
+   implementation and implements PostgreSQL Nullability. Sol reviews ordinary
+   semantics, current API closure, resources and full Rust decision ownership
+   before admission. PostgreSQL Keys/Facets follow the classifier handoff.
+3. Continue the remaining TableSpec classifiers and authored scalar target
+   projections in bounded parallel cuts. Use existing pinned contracts and one
+   normal/refusal workflow per capability. Preserve legacy direct consumers until
+   their replacements are available while routing public V4 defaults to Rust.
 4. Close the remaining reachable adapter, model, extension and authored-projection
    semantics. Reuse existing Rust primitives and common receipt mechanics. A
    TypeScript composite around a Rust inspector does not close its ownership.
@@ -152,30 +153,33 @@ SQL Server Record/Cardinality, authored SQL Server Relationship and both
 independent PostgreSQL table APIs now pass their focused current baselines,
 including table/index report-plus-strict after the reviewed runtime allowance.
 
-The following source batch passes Python resource closure, full TypeScript,
-Rust metadata and the shared native build. Its focused runtime completes in
-55 seconds: seven pass and three fail. SQL Server Nullability and Keys
-normal/refusal, authored Parquet Relationship, direct SQL Server indexes and
-Parquet Facets classification/verification/recovery pass and leave the repair
-queue. The three remaining failures are SQL Server Relationship parsing an
-unclaimed unsafe native number, TableSpec Relationship's pinned OpenAPI
-`discriminator` metadata, and owner resolution for a PostgreSQL document-path
-expression index. Luna has concrete source repairs for all three; Sol reviews
-those before the next shared build.
+SQL Server Nullability and Keys normal/refusal, authored Parquet Relationship,
+direct SQL Server indexes and Parquet Facets classification/verification/recovery
+pass and leave the repair queue.
 
-The next new source cuts are TableSpec Field, SQL Server Facets and authored
-PostgreSQL Relationship. Luna implements focused public normal/refusal tests;
-Sol checks the existing semantic contract and complete Rust routing before
-admission. Parallel implementation continues with PostgreSQL Field/Record and
-authored Relationship Extra targets. Compiler checks precede native builds, and
-only new or failed workflows enter the next focused runtime. Complete local
-host/package integration follows semantic completion.
+The latest cohort passes Python resource closure, full TypeScript, Rust metadata
+and a shared native build (3m54s). All six focused public workflows pass with
+49 assertions in 219 seconds: authored PostgreSQL Relationship projection, verify,
+ideal/native recovery and strict refusal; TableSpec Field and SQL Server Facets;
+and the three repairs for PostgreSQL expression-index ownership, SQL Server
+Relationship's retained unsafe native number, and pinned TableSpec schema
+annotations. These capabilities leave the repair queue. PostgreSQL index initial
+admission and AST derivation now run inside Rust; the host supplies parser/deparser
+transport only.
+
+The next source cuts are PostgreSQL Field/Record and Cardinality, authored SQL
+Server Cardinality and TableSpec Record. Luna implements focused public workflows;
+Sol checks the existing semantic contract and complete additive routing before
+admission. Parallel implementation continues with PostgreSQL Nullability and
+authored Relationship Extra corrections. Compiler checks precede native builds;
+only new or failed workflows enter each focused runtime. Complete local host and
+package integration follows semantic completion.
 Current removal compilation retains `TABLE_REMOVAL_EFFECTS_NOT_LOWERED`;
 discovery and irreversible-purge disclosure remain supported.
 
 The current batch has complete shared routing after Sol corrected dropped
-integration hunks. Full TypeScript/Rust metadata and native builds pass; focused
-runtime results and remaining repairs are recorded above. PostgreSQL index initial admission now
+integration hunks. Full TypeScript/Rust metadata, native builds and all six focused public
+workflows pass; the current source frontier is recorded above. PostgreSQL index initial admission now
 inspects the retained archive and derives/validates its AST inside Rust; hosts
 supply only parser/deparser transport. The new standalone index baseline uses one
 expression candidate and one declined clustering choice, preserving the broader
@@ -218,9 +222,9 @@ This queue tracks Rust ownership and remaining work for the current V4 exports i
 | Security policy/source meaning | `inspectSecurityPolicy`, `requireSecurityInterpretation`, `inspectSecurityPolicyV2Source`, `upgradeSecurityPolicySource`, `downgradeSecurityPolicySource`, `readSecuritySource`, `writeSecuritySource`, `securityPolicyDependencies`, `securityIdentityTransportDependencies` | Rust policy/V2 migration, dependency and source transport owners pass the focused Node workflows; final host/package integration remains. |
 | Security evaluation and authority | `evaluateSecurityAccess`, `evaluateSecurityCollection`, `evaluateSecurityWrite`, `evaluateSecurityPolicyV2LegacyAccess`, `SecurityAuthorityGuard`, `SecurityReadRegistration` | Rust evaluation, registration and stateful authority owners pass focused Node workflows with explicit caller capabilities; final host/package integration remains. |
 | Security disclosure/catalog | `inspectProtectionCatalog`, `requireProtectionInterpretation`, `inspectProtectionObligations`, `inspectSecurityActionPurposes`, `validateSecurityDisclosure`, `encodeSecurityDisclosure`, `decodeSecurityDisclosure`, `inspectSecurityDisclosureV2`, `encodeSecurityDisclosureV2`, `decodeSecurityDisclosureV2` | Rust V1/V2 disclosure, catalog, purpose and obligation workflows pass focused Node normal/refusal cases; final host/package integration remains. |
-| Core-ideal classifiers/projections/recovery | Avro/Parquet classification, authored projection and recovery exports; new SQL Server Field route. | Avro classification and authored nullability/facets/keys plus Parquet relationships, nested Records, Field, Keys and Cardinality pass focused Node baselines. Parquet nullability, authored Avro Relationship and SQL Server Field now pass. Parquet Facets now passes classification/verification/recovery/refusal. SQL Server Nullability/Keys and authored Parquet Relationship also pass. SQL Server Record/Cardinality and authored SQL Server Relationship now pass their normal/refusal baselines; further classifiers and projections are queued. Remaining same-format classifiers and authored projections still need Rust kernels; legacy relationship factories retain TypeScript semantics until replaced. |
+| Core-ideal classifiers/projections/recovery | Avro/Parquet classification, authored projection and recovery exports; new SQL Server Field route. | Avro classification and authored nullability/facets/keys plus Parquet relationships, nested Records, Field, Keys and Cardinality pass focused Node baselines. Parquet nullability, authored Avro Relationship and SQL Server Field now pass. Parquet Facets now passes classification/verification/recovery/refusal. SQL Server Nullability/Keys and authored Parquet Relationship also pass. SQL Server Record/Cardinality and authored SQL Server Relationship now pass their normal/refusal baselines; SQL Server Facets and Relationship classification plus TableSpec Field now pass; PostgreSQL/TableSpec classifiers and authored scalar projections are next. Remaining same-format classifiers and authored projections still need Rust kernels; legacy relationship factories retain TypeScript semantics until replaced. |
 | Binding target projection | `projectBindingToDelta`, `projectBindingToIceberg`, `projectBindingToParquet`, `projectBindingToSqlServer`, `projectBindingTablesToSqlServer`, `projectBindingTablesAndIndexesToSqlServer`, `projectBindingTablesAndIndexesFromPlanToSqlServer`, `recoverBindingSqlServerNative`, `recoverBindingSqlServerSources`, `verifyBindingSqlServerProjection`, `validateSqlServerRelationshipLayout` | Delta, Iceberg and Parquet target workflows pass focused Node baselines. SQL Server tables and layout pass. Full outer SQL Server composition passes both focused public workflows; final host/package integration remains. |
-| Binding index projection | `projectBindingIndexesToPostgresql`, `projectBindingIndexesToSqlServer`, `projectBindingIndexesAgainstSqlServerPlan` | Direct SQL Server index projection passes its focused normal/refusal baseline. PostgreSQL native admission, parser-AST acceptance and outcomes are Rust-owned; the focused expression-index case needs the reviewed documentPath owner correction. |
+| Binding index projection | `projectBindingIndexesToPostgresql`, `projectBindingIndexesToSqlServer`, `projectBindingIndexesAgainstSqlServerPlan` | Direct SQL Server index projection passes its focused normal/refusal baseline. PostgreSQL native admission, parser-AST acceptance and outcomes are Rust-owned; the focused expression-index and strict-refusal workflow passes. |
 | Bit128 projection | `classifyBit128NativeType`, `decodeBit128FileRecord`, `encodeBit128FileRecord`, `projectBit128CarrierSchema`, `recoverBit128CarrierProjection`, `projectBit128Model`, `recoverBit128ModelProjection` | Classifier, Field authoring, binding inspection, full-row and file encode/decode, carrier/model projection/recovery pass Node; final host activation remains. |
 | DDD → GraphQL/PostgreSQL | `projectDddEntitiesToGraphql`, `projectDddToGraphql`, `recoverDddFromGraphql`, `recoverDddGraphqlNative`, `verifyDddGraphqlProjection`, `projectDddTablesToPostgresql`, `projectDddTablesAndIndexesToPostgresql`, `projectDddToPostgresql`, `recoverDddPostgresqlIdeal`, `recoverDddPostgresqlNative`, `verifyDddPostgresqlProjection`, `validatePostgresqlRelationshipLayout` | All five GraphQL projection/verification/recovery operations pass focused Node baselines. PostgreSQL layout and full composition pass. The independent table API and table/index refusal/quoted-column cases pass; the combined report/strict baseline also passes its focused retry with its reviewed bounded-runtime allowance. |
 | DDD → JSON Schema | `dddFieldBinding`, `projectDddToJsonSchema` | Native DDD mapping kernel and Node public projection/edit/read/write/refusal baselines pass; browser/Python activation remains. |

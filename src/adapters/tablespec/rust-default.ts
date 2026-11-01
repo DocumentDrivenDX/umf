@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {Document,ExtensionPackage} from '../../model/types';
+import type {Diagnostic,Document,ExtensionPackage} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 import {UmfError} from '../../model/errors';
 import {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/tablespec/package.json';
 import type {importTableSpec,exportTableSpec,getTableSpecColumn,getTableSpecTable,editTableSpecColumn,editTableSpecTable,importTableSpecBundle,exportTableSpecBundle} from './index';
+import type {TableSpecFieldClassification,TableSpecFieldRequest} from '../../core-ideals/tablespec-field';
 
 export interface TableSpecNativeFamilyEngine {
  tablespec:{
@@ -17,6 +18,8 @@ export interface TableSpecNativeFamilyEngine {
   editTableSpecTable(fields:{document:Document;changes:Record<string,NativeJson>}):unknown;
   importTableSpecBundle(fields:{files:Record<string,string>;id:string}):unknown;
   exportTableSpecBundle(fields:{document:Document}):unknown;
+  classifyTableSpecField(fields:{document:Document;request:TableSpecFieldRequest}):unknown;
+  verifyTableSpecFieldClassification(fields:{receipt:TableSpecFieldClassification;current:Document}):unknown;
  }
 }
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
@@ -29,7 +32,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
+   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
@@ -44,5 +47,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   editTableSpecTable(document:Parameters<typeof editTableSpecTable>[0],changes:Parameters<typeof editTableSpecTable>[1]):ReturnType<typeof editTableSpecTable>{return call(()=>engine.tablespec.editTableSpecTable({document,changes}) as ReturnType<typeof editTableSpecTable>);},
   importTableSpecBundle(files:Parameters<typeof importTableSpecBundle>[0],options:Parameters<typeof importTableSpecBundle>[1]):ReturnType<typeof importTableSpecBundle>{return call(()=>engine.tablespec.importTableSpecBundle({files,id:options.id}) as ReturnType<typeof importTableSpecBundle>);},
   exportTableSpecBundle(document:Parameters<typeof exportTableSpecBundle>[0]):ReturnType<typeof exportTableSpecBundle>{return call(()=>engine.tablespec.exportTableSpecBundle({document}) as ReturnType<typeof exportTableSpecBundle>);},
+  classifyTableSpecField(document:Document,request:TableSpecFieldRequest):TableSpecFieldClassification & {diagnostics:Diagnostic[]}{return call(()=>engine.tablespec.classifyTableSpecField({document,request}) as TableSpecFieldClassification & {diagnostics:Diagnostic[]});},
+  verifyTableSpecFieldClassification(receipt:TableSpecFieldClassification,current:Document):TableSpecFieldClassification{return call(()=>engine.tablespec.verifyTableSpecFieldClassification({receipt,current}) as TableSpecFieldClassification);},
  });
 }

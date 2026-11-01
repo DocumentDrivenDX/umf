@@ -61,6 +61,8 @@ pub mod sqlserver_relationship_layout;
 #[cfg(feature = "embedded-adapters")]
 pub mod relationship_sqlserver_projection;
 #[cfg(feature = "embedded-adapters")]
+pub mod relationship_postgresql_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod relationship_parquet_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_relationship_layout;
@@ -267,11 +269,14 @@ pub mod sqlserver_nullability_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_key_classification;
 #[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_facets_classification;
+#[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_ddl_projection;
 pub mod structural_diff;
 pub mod tablespec_adapter;
+pub(crate) mod tablespec_field_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_via_avro_projection;
 pub mod target_pin;
