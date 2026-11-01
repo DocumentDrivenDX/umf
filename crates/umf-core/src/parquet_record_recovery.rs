@@ -232,7 +232,6 @@ mod tests {
         engine::{ResourceSet, SemanticContext},
         error::Diagnostic,
         parquet_record_classifier,
-        parquet_record_type_candidate::SchemaElement,
         serialization::read_json_value,
     };
 
@@ -276,26 +275,23 @@ mod tests {
         )
         .unwrap()
     }
-    fn document(bytes: &[u8], schema: &[SchemaElement]) -> Value {
-        let hex = bytes.iter().map(|b| format!("{b:02x}")).collect::<String>();
-        let fields = schema
-            .iter()
-            .enumerate()
-            .map(|(i, e)| {
-                format!(
-                    "{{\"id\":\"schema:{i}\",\"name\":\"{}\",\"extensions\":{{}}}}",
-                    e.name.to_utf8().unwrap()
-                )
-            })
-            .collect::<Vec<_>>()
-            .join(",");
-        parse(&format!("{{\"umf\":\"0.10.0\",\"id\":\"fixture\",\"vocabularies\":{{\"umf.parquet\":{{\"version\":\"0.1.0\"}}}},\"modules\":[{{\"id\":\"parquet\",\"namespace\":\"\",\"elements\":[{{\"id\":\"source\",\"extensions\":{{\"umf.parquet\":{{\"profile\":\"parquet-file-source\",\"encoding\":\"hex\",\"bytes\":\"{hex}\"}}}}}}]}},{{\"id\":\"parquet.fields\",\"namespace\":\"\",\"elements\":[{fields}]}}]}}"))
+    fn document(bytes: &[u8]) -> Value {
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let mut context = Context::ordinary();
+        crate::parquet_capture_inspection::import_parquet_schema(
+            bytes,
+            &Utf16::from("fixture"),
+            &engine,
+            &registry,
+            &mut capabilities,
+            &mut context,
+        )
+        .unwrap()
     }
     fn classified(bytes: &[u8]) -> (Value, Value) {
-        let schema = crate::parquet_schema_decode::decode_schema(bytes, &mut Context::ordinary())
-            .unwrap()
-            .schema;
-        let source = document(bytes, &schema);
+        let source = document(bytes);
         let request = ParquetRecordRequest {
             record_module: Utf16::from("records"),
             record_id: Utf16::from("root"),
@@ -383,10 +379,7 @@ mod tests {
         );
         let bytes =
             include_bytes!("../../../fixtures/parquet/containers/list-three-element.parquet");
-        let schema = crate::parquet_schema_decode::decode_schema(bytes, &mut Context::ordinary())
-            .unwrap()
-            .schema;
-        let source = document(bytes, &schema);
+        let source = document(bytes);
         let request = ParquetRecordRequest {
             record_module: Utf16::from("records"),
             record_id: Utf16::from("root"),

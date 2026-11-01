@@ -5391,7 +5391,7 @@ mod jsonld_rdf_projection_tests {
         let report = propose_jsonld_framing(
             &document,
         &Utf16::from(
-            r#"{"@context":{"Person":"https://schema.org/Person","name":"https://schema.org/name"},"@type":"Person","name":{}}"#,
+            r#"{"@context":{"Person":"https://schema.org/Person","name":"https://schema.org/name","count":"https://schema.org/count"},"@type":"Person","name":{},"count":{}}"#,
         ),
             &Utf16::from("report"),
             true,
@@ -5513,12 +5513,66 @@ mod jsonld_rdf_projection_tests {
         );
         let candidate = field(&report, "candidate").unwrap();
         let projected = payload_from_valid_document(candidate, &mut ctx).unwrap();
-        let NativeJsonNode::Array(nodes) = projected.root.root() else {
-            panic!("framing should preserve an array with compactArrays=false");
-        };
-        assert_eq!(nodes.len(), 1);
-        assert!(native_member(&nodes[0], "@id").is_none());
-        assert!(native_member(&nodes[0], "https://schema.org/nickname").is_some());
+        fn contains_text(node: &NativeJsonNode, expected: &str) -> bool {
+            match node {
+                NativeJsonNode::Object(fields) => fields
+                    .iter()
+                    .any(|(_, value)| contains_text(value, expected)),
+                NativeJsonNode::Array(items) => {
+                    items.iter().any(|item| contains_text(item, expected))
+                }
+                NativeJsonNode::String(value) => value == &Utf16::from(expected),
+                NativeJsonNode::Null | NativeJsonNode::Boolean(_) | NativeJsonNode::Number(_) => {
+                    false
+                }
+            }
+        }
+        fn selected_nodes<'a>(node: &'a NativeJsonNode, found: &mut Vec<&'a NativeJsonNode>) {
+            match node {
+                NativeJsonNode::Object(fields) => {
+                    if fields.iter().any(|(name, value)| {
+                        name == &Utf16::from("name") && matches!(value, NativeJsonNode::Array(_))
+                    }) {
+                        found.push(node);
+                    }
+                    for (_, value) in fields {
+                        selected_nodes(value, found);
+                    }
+                }
+                NativeJsonNode::Array(items) => {
+                    for item in items {
+                        selected_nodes(item, found);
+                    }
+                }
+                NativeJsonNode::Null
+                | NativeJsonNode::Boolean(_)
+                | NativeJsonNode::String(_)
+                | NativeJsonNode::Number(_) => {}
+            }
+        }
+        let mut selected = Vec::new();
+        selected_nodes(projected.root.root(), &mut selected);
+        assert_eq!(selected.len(), 1);
+        assert!(native_member(selected[0], "@id").is_none());
+        assert!(matches!(
+            native_member(selected[0], "name"),
+            Some(NativeJsonNode::Array(_))
+        ));
+        assert!(matches!(
+            native_member(selected[0], "nickname"),
+            Some(NativeJsonNode::Array(_))
+        ));
+        assert!(contains_text(
+            native_member(selected[0], "nickname").unwrap(),
+            "Ada Lovelace"
+        ));
+        assert!(projected
+            .root
+            .render_compact(&mut ctx)
+            .unwrap()
+            .to_utf8()
+            .unwrap()
+            .contains("Ada Lovelace"));
         let output = export_jsonld_document(candidate, &runtime, &mut ctx)
             .unwrap()
             .to_utf8()
@@ -5547,10 +5601,19 @@ mod jsonld_rdf_projection_tests {
         .unwrap();
         let result = field(&without_default, "candidate").unwrap();
         let payload = payload_from_valid_document(result, &mut ctx).unwrap();
-        let NativeJsonNode::Array(nodes) = payload.root.root() else {
-            panic!("omitGraph should produce the selected array");
-        };
-        assert!(native_member(&nodes[0], "https://schema.org/nickname").is_none());
+        let mut selected_without_default = Vec::new();
+        selected_nodes(payload.root.root(), &mut selected_without_default);
+        assert_eq!(selected_without_default.len(), 1);
+        assert!(matches!(
+            native_member(selected_without_default[0], "@id"),
+            Some(NativeJsonNode::String(value)) if value == &Utf16::from("_:person")
+        ));
+        assert!(matches!(
+            native_member(selected_without_default[0], "name"),
+            Some(NativeJsonNode::Array(_))
+        ));
+        assert!(native_member(selected_without_default[0], "nickname").is_none());
+        assert!(!contains_text(selected_without_default[0], "Ada Lovelace"));
 
         let graph_source = Utf16::from(
             r#"{"@context":{"name":"https://schema.org/name"},"@id":"https://example.test/graph","@graph":[{"@id":"https://example.test/person","name":"Ada"}]}"#,
@@ -5591,17 +5654,19 @@ mod jsonld_rdf_projection_tests {
         let graph_payload =
             payload_from_valid_document(field(&graph_report, "candidate").unwrap(), &mut ctx)
                 .unwrap();
-        let Some(NativeJsonNode::Array(graph_nodes)) =
-            native_member(graph_payload.root.root(), "@graph")
-        else {
-            panic!("framed output should preserve the graph wrapper");
+        let graph_root = graph_payload.root.root();
+        assert_eq!(
+            native_member(graph_root, "@id"),
+            Some(&NativeJsonNode::String(Utf16::from("graph")))
+        );
+        let Some(NativeJsonNode::Array(graph_nodes)) = native_member(graph_root, "@graph") else {
+            panic!("compacted graph root should retain its graph array");
         };
         assert!(graph_nodes.iter().any(|node| {
             native_member(node, "@id")
-                == Some(&NativeJsonNode::String(Utf16::from(
-                    "https://example.test/graph",
-                )))
-                && native_member(node, "@graph").is_some()
+                == Some(&NativeJsonNode::String(Utf16::from("person")))
+                && native_member(node, "name")
+                    == Some(&NativeJsonNode::String(Utf16::from("Ada")))
         }));
 
         let referenced_source = Utf16::from(
@@ -5691,10 +5756,46 @@ mod jsonld_rdf_projection_tests {
         .unwrap()
         .to_utf8()
         .unwrap();
-        assert!(expanded.contains("\"@value\":\"שלום\""));
-        assert!(expanded.contains("\"@direction\":\"rtl\""));
-        assert!(expanded.contains("\"@language\":\"he\""));
-        assert!(expanded.contains("\"@list\""));
+        let expanded_tree =
+            NativeJsonTree::parse_json(Utf16::from(expanded.as_str()).units(), &mut ctx).unwrap();
+        fn has_compound_direction(node: &NativeJsonNode) -> bool {
+            match node {
+                NativeJsonNode::Object(fields) => {
+                    let member = |name: &str| {
+                        fields
+                            .iter()
+                            .find(|(key, _)| key == &Utf16::from(name))
+                            .map(|(_, value)| value)
+                    };
+                    let value = matches!(member("@value"), Some(NativeJsonNode::String(value)) if value == &Utf16::from("שלום"));
+                    let direction = matches!(member("@direction"), Some(NativeJsonNode::String(value)) if value == &Utf16::from("rtl"));
+                    let language = matches!(member("@language"), Some(NativeJsonNode::String(value)) if value == &Utf16::from("he"));
+                    (value && direction && language)
+                        || fields
+                            .iter()
+                            .any(|(_, child)| has_compound_direction(child))
+                }
+                NativeJsonNode::Array(items) => items.iter().any(has_compound_direction),
+                NativeJsonNode::Null
+                | NativeJsonNode::Boolean(_)
+                | NativeJsonNode::String(_)
+                | NativeJsonNode::Number(_) => false,
+            }
+        }
+        assert!(has_compound_direction(expanded_tree.root()));
+        fn has_list(node: &NativeJsonNode) -> bool {
+            match node {
+                NativeJsonNode::Object(fields) => fields
+                    .iter()
+                    .any(|(key, value)| key == &Utf16::from("@list") || has_list(value)),
+                NativeJsonNode::Array(items) => items.iter().any(has_list),
+                NativeJsonNode::Null
+                | NativeJsonNode::Boolean(_)
+                | NativeJsonNode::String(_)
+                | NativeJsonNode::Number(_) => false,
+            }
+        }
+        assert!(has_list(expanded_tree.root()));
         assert!(!expanded.contains("_:direction"));
     }
 

@@ -1338,7 +1338,7 @@ pub fn get_shacl_target_nodes(
     data: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let sq = quads(rt, shapes, ctx)?;
+    let sq = shacl_quads(rt, shapes, ctx)?;
     let dq = quads(rt, data, ctx)?;
     if !values(Some(&rdf::get_rdf_named_graphs(rt, data, ctx)?)).is_empty() {
         return Err(EngineError::new(
@@ -2639,6 +2639,9 @@ fn shacl_nested_shape_conforms(
             "Nested shape evaluation exceeded the supported depth",
         ));
     }
+    if shacl_shape_deactivated(shapes, shape, ctx)? {
+        return Ok(true);
+    }
     let path_predicate = u("http://www.w3.org/ns/shacl#path");
     let mut declared_path = None;
     for quad in shapes.iter().filter(|quad| {
@@ -2726,16 +2729,17 @@ fn shacl_nested_shape_conforms(
                 "Nested property shape has no path",
             )
         })?;
-        let path_iri = text(member(path, "value"))
-            .filter(|_| text(member(path, "kind")) == Some(&u("iri")))
-            .ok_or_else(|| {
-                EngineError::new(
-                    "SHACL_ENGINE_UNSUPPORTED",
-                    Utf16::default(),
-                    "Nested property shape supports only direct IRI paths",
-                )
-            })?;
-        let nodes = shacl_direct_values(data, focus, path_iri, ctx)?;
+        let path_ast = compile_nested_path(shapes, path, &mut BTreeSet::new(), ctx, 0)?;
+        let mut work = 0;
+        let nodes = evaluate_nested_path(
+            data,
+            &path_ast,
+            std::slice::from_ref(focus),
+            false,
+            ctx,
+            &mut work,
+            0,
+        )?;
         let mut nested = Vec::new();
         evaluate_shacl_constraints(
             shapes,
@@ -2757,6 +2761,51 @@ fn shacl_nested_shape_conforms(
         }
     }
     Ok(violations.is_empty())
+}
+
+fn shacl_shape_deactivated(
+    qs: &[Value],
+    shape: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<bool, EngineError> {
+    let predicate = u("http://www.w3.org/ns/shacl#deactivated");
+    let mut deactivated = false;
+    ctx.charge_work(qs.len(), Utf16::default())?;
+    for row in qs.iter().filter(|row| {
+        member(row, "subject").is_some_and(|subject| term_eq(subject, shape))
+            && member(row, "predicate").and_then(|term| member(term, "value"))
+                == Some(&Value::String(predicate.clone()))
+    }) {
+        let object = member(row, "object").ok_or_else(|| {
+            EngineError::new(
+                "SHACL_ENGINE_UNSUPPORTED",
+                Utf16::default(),
+                "sh:deactivated has no value",
+            )
+        })?;
+        if text(member(object, "kind")) != Some(&u("literal"))
+            || text(member(object, "datatype"))
+                != Some(&u("http://www.w3.org/2001/XMLSchema#boolean"))
+        {
+            return Err(EngineError::new(
+                "SHACL_ENGINE_UNSUPPORTED",
+                Utf16::default(),
+                "sh:deactivated must be an xsd:boolean literal",
+            ));
+        }
+        match text(member(object, "value")) {
+            Some(value) if value == &u("true") => deactivated = true,
+            Some(value) if value == &u("false") => (),
+            _ => {
+                return Err(EngineError::new(
+                    "SHACL_ENGINE_UNSUPPORTED",
+                    Utf16::default(),
+                    "sh:deactivated has an invalid boolean lexical form",
+                ))
+            }
+        }
+    }
+    Ok(deactivated)
 }
 
 fn shacl_basic_language_range(range: &str) -> bool {
@@ -3479,23 +3528,25 @@ fn evaluate_shacl_constraints(
                 }
             }
             "node" | "not" => {
-                let conforms =
-                    shacl_nested_shape_conforms(qs, data, parameter, focus, ctx, depth + 1)?;
-                if (local == "node" && !conforms) || (local == "not" && conforms) {
-                    push_shacl_violation(
-                        out,
-                        focus,
-                        path,
-                        shape,
-                        if local == "node" { "Node" } else { "Not" },
-                        value_nodes.first(),
-                        if local == "node" {
-                            "Value node does not conform to sh:node shape"
-                        } else {
-                            "Value node conforms to the prohibited sh:not shape"
-                        },
-                        ctx,
-                    )?;
+                for value in value_nodes {
+                    let conforms =
+                        shacl_nested_shape_conforms(qs, data, parameter, value, ctx, depth + 1)?;
+                    if (local == "node" && !conforms) || (local == "not" && conforms) {
+                        push_shacl_violation(
+                            out,
+                            focus,
+                            path,
+                            shape,
+                            if local == "node" { "Node" } else { "Not" },
+                            Some(value),
+                            if local == "node" {
+                                "Value node does not conform to sh:node shape"
+                            } else {
+                                "Value node conforms to the prohibited sh:not shape"
+                            },
+                            ctx,
+                        )?;
+                    }
                 }
             }
             "and" | "or" | "xone" => {
@@ -3507,32 +3558,41 @@ fn evaluate_shacl_constraints(
                         "Logical shape lists must be nonempty",
                     ));
                 }
-                let mut matches = 0usize;
-                for nested_shape in &shapes {
-                    if shacl_nested_shape_conforms(qs, data, nested_shape, focus, ctx, depth + 1)? {
-                        matches += 1;
+                for value in value_nodes {
+                    let mut matches = 0usize;
+                    for nested_shape in &shapes {
+                        if shacl_nested_shape_conforms(
+                            qs,
+                            data,
+                            nested_shape,
+                            value,
+                            ctx,
+                            depth + 1,
+                        )? {
+                            matches += 1;
+                        }
                     }
-                }
-                let conforms = match local.as_str() {
-                    "and" => matches == shapes.len(),
-                    "or" => matches > 0,
-                    _ => matches == 1,
-                };
-                if !conforms {
-                    push_shacl_violation(
-                        out,
-                        focus,
-                        path,
-                        shape,
-                        match local.as_str() {
-                            "and" => "And",
-                            "or" => "Or",
-                            _ => "Xone",
-                        },
-                        value_nodes.first(),
-                        "Value node does not satisfy the logical shape constraint",
-                        ctx,
-                    )?;
+                    let conforms = match local.as_str() {
+                        "and" => matches == shapes.len(),
+                        "or" => matches > 0,
+                        _ => matches == 1,
+                    };
+                    if !conforms {
+                        push_shacl_violation(
+                            out,
+                            focus,
+                            path,
+                            shape,
+                            match local.as_str() {
+                                "and" => "And",
+                                "or" => "Or",
+                                _ => "Xone",
+                            },
+                            Some(value),
+                            "Value node does not satisfy the logical shape constraint",
+                            ctx,
+                        )?;
+                    }
                 }
             }
             "in" => {
@@ -3856,6 +3916,7 @@ fn evaluate_shacl_constraints(
             | "order"
             | "group"
             | "deactivated"
+            | "flags"
             | "ignoredProperties"
             | "defaultValue" => (),
             _ if local.starts_with("target") => (),
@@ -4155,6 +4216,9 @@ pub fn propose_shacl_engine_validation_sync(
         }
         for (shape, focus) in targets {
             ctx.charge_work(1, Utf16::default())?;
+            if shacl_shape_deactivated(&sq, &shape, ctx)? {
+                continue;
+            }
             // Evaluate node-shape constraints against the focus node itself.
             let shape_types: Vec<_> = sq
                 .iter()
@@ -5766,6 +5830,13 @@ _:place <http://www.w3.org/ns/shacl#path> (<https://ex.test/address> <https://ex
             &mut ctx,
         )
         .unwrap();
+        if let Some(Value::Object(vocabularies)) = member_mut_path(&mut document, &["vocabularies"])
+        {
+            vocabularies.push((
+                u("future.vendor"),
+                Value::Object(vec![(u("version"), Value::string_utf8("0.1.0"))]),
+            ));
+        }
         if let Value::Object(fields) = &mut document {
             if let Some((_, Value::Array(modules))) =
                 fields.iter_mut().find(|(key, _)| key == &u("modules"))
@@ -5801,7 +5872,7 @@ _:place <http://www.w3.org/ns/shacl#path> (<https://ex.test/address> <https://ex
         assert_eq!(member(&inspected, "valid"), Some(&Value::Bool(true)));
         assert_eq!(member(&inspected, "complete"), Some(&Value::Bool(false)));
         let rows = owl_quads(&runtime, &document, &mut ctx).unwrap();
-        let first = values(Some(&rows)).first().unwrap();
+        let first = rows.first().unwrap();
         let mut replacement = copy_json(first, &mut ctx).unwrap();
         if let Value::Object(fields) = &mut replacement {
             if let Some((_, object)) = fields.iter_mut().find(|(key, _)| key == &u("object")) {
@@ -5844,10 +5915,18 @@ _:place <http://www.w3.org/ns/shacl#path> (<https://ex.test/address> <https://ex
         .unwrap();
         let expression_doc =
             domain_document(&expression_rdf, "umf.owl", "owlVersion", "2", &mut ctx);
-        let node = Value::Object(vec![
-            (u("kind"), Value::string_utf8("blank")),
-            (u("value"), Value::string_utf8("restriction")),
-        ]);
+        let restriction_predicate = u(&format!("{RDF}type"));
+        let restriction_type = u(&format!("{OWL}Restriction"));
+        let node = owl_quads(&runtime, &expression_doc, &mut ctx)
+            .unwrap()
+            .iter()
+            .find(|row| {
+                text(member(member(row, "predicate"), "value")) == Some(&restriction_predicate)
+                    && text(member(member(row, "object"), "value")) == Some(&restriction_type)
+            })
+            .and_then(|row| member(row, "subject"))
+            .unwrap()
+            .clone();
         let expression =
             get_owl_expression_view(&expression_doc, &node, &runtime, &mut ctx).unwrap();
         assert_eq!(
@@ -6577,7 +6656,7 @@ _:boolean <http://www.w3.org/ns/shacl#datatype> <http://www.w3.org/2001/XMLSchem
     fn shacl_family_source_import_inspection_export_and_edit_round_trip() {
         let mut ctx = Context::ordinary();
         let runtime = RdfRuntime::new(&mut ctx).unwrap();
-        let document = import_shacl_turtle(
+        let mut document = import_shacl_turtle(
             &runtime,
             Utf16::from(
                 "<https://ex.test/Shape> a <http://www.w3.org/ns/shacl#NodeShape> ; <http://www.w3.org/ns/shacl#targetNode> <https://ex.test/alice> .\n",
@@ -6589,6 +6668,9 @@ _:boolean <http://www.w3.org/ns/shacl#datatype> <http://www.w3.org/2001/XMLSchem
             &mut ctx,
         )
         .unwrap();
+        if let Value::Object(fields) = &mut document {
+            fields.push((u("futureMetadata"), Value::string_utf8("retained")));
+        }
         let inspected = inspect_shacl_document(&document, &mut ctx).unwrap();
         assert_eq!(member(&inspected, "valid"), Some(&Value::Bool(true)));
         assert_eq!(member(&inspected, "complete"), Some(&Value::Bool(false)));

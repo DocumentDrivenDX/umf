@@ -513,7 +513,7 @@ mod tests {
         let Value::Object(fields) = unknown else {
             panic!("diagnostic object")
         };
-        let path = fields
+        let path = &fields
             .iter()
             .find(|(name, _)| name == &Utf16::from("path"))
             .unwrap()

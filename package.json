@@ -34,8 +34,6 @@
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
     "test": "bun run test:prepare && bun scripts/run-tests.ts",
     "build": "bun scripts/build.ts",
-    "build:rust-codegen-candidate": "bun scripts/build-rust-codegen-candidate.ts",
-    "test:rust-codegen-candidate-package": "bun scripts/test-rust-codegen-candidate-package.ts",
     "build:schema-browser": "bun scripts/build-schema-browser.ts",
     "test:schema-browser": "bun scripts/schema-browser-package-browser.ts",
     "test:browser": "bun scripts/browser.ts",
@@ -72,7 +70,8 @@
     "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
     "check:rust-boundaries": "python3 scripts/check-rust-boundaries.py",
     "test:rust-core": "cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql",
-    "check:release-versions": "python3 scripts/check-release-versions.py"
+    "check:release-versions": "python3 scripts/check-release-versions.py",
+    "test:sdk-installed": "node scripts/test-native-sdk-install.mjs \"$UMF_SDK_PACKAGE\""
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",

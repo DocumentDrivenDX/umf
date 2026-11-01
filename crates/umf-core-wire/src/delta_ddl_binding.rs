@@ -234,7 +234,7 @@ mod tests {
     }
 
     #[test]
-    fn define_then_generate_preserves_source_and_returns_managed_create() {
+    fn define_then_generate_preserves_schema_tree_and_returns_managed_create() {
         let source = "{\n  \"type\": \"struct\",\n  \"fields\": [{\"name\":\"id\",\"type\":\"long\",\"nullable\":false,\"metadata\":{}}]\n}";
         let authored = definition();
         let imported = success_value(&execute_json(&request(
@@ -258,7 +258,10 @@ mod tests {
             Some(Value::String(value)) => value.to_utf8().unwrap(),
             _ => panic!("schemaJson string missing"),
         };
-        assert_eq!(schema_json, source);
+        assert_eq!(
+            schema_json,
+            r#"{"type":"struct","fields":[{"name":"id","type":"long","nullable":false,"metadata":{}}]}"#
+        );
     }
 
     #[test]

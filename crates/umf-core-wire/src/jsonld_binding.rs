@@ -989,7 +989,7 @@ mod tests {
     }
 
     #[test]
-    fn rdf_conversion_wire_roundtrips_and_refuses_unimplemented_options() {
+    fn rdf_conversion_wire_roundtrips_and_refuses_invalid_options() {
         let document = run(request_value(
             "jsonld.import",
             vec![
@@ -1041,7 +1041,7 @@ mod tests {
                 ("id", Value::string_utf8("person-view")),
                 ("baseIRI", Value::string_utf8("https://example.test/")),
                 ("lossPolicy", Value::string_utf8("report")),
-                ("rdfDirection", Value::string_utf8("compound-literal")),
+                ("rdfDirection", Value::string_utf8("unsupported-direction")),
             ],
         ))
         .is_err());

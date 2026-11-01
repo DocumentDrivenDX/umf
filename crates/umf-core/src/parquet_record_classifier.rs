@@ -805,20 +805,20 @@ mod tests {
         )
         .unwrap()
     }
-    fn document(bytes: &[u8], schema: &[SchemaElement]) -> Value {
-        let hex = bytes.iter().map(|b| format!("{b:02x}")).collect::<String>();
-        let fields = schema
-            .iter()
-            .enumerate()
-            .map(|(i, e)| {
-                format!(
-                    "{{\"id\":\"schema:{i}\",\"name\":\"{}\",\"extensions\":{{}}}}",
-                    e.name.to_utf8().unwrap()
-                )
-            })
-            .collect::<Vec<_>>()
-            .join(",");
-        parse(&format!("{{\"umf\":\"0.10.0\",\"id\":\"fixture\",\"vocabularies\":{{\"umf.parquet\":{{\"version\":\"0.1.0\"}}}},\"modules\":[{{\"id\":\"parquet\",\"namespace\":\"\",\"elements\":[{{\"id\":\"source\",\"extensions\":{{\"umf.parquet\":{{\"profile\":\"parquet-file-source\",\"encoding\":\"hex\",\"bytes\":\"{hex}\"}}}}}}]}},{{\"id\":\"parquet.fields\",\"namespace\":\"\",\"elements\":[{fields}]}}]}}"))
+    fn document(bytes: &[u8]) -> Value {
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let mut context = Context::ordinary();
+        crate::parquet_capture_inspection::import_parquet_schema(
+            bytes,
+            &Utf16::from("fixture"),
+            &engine,
+            &registry,
+            &mut capabilities,
+            &mut context,
+        )
+        .unwrap()
     }
     fn request() -> ParquetRecordRequest {
         ParquetRecordRequest {
@@ -838,10 +838,7 @@ mod tests {
             include_bytes!("../../../fixtures/parquet/containers/list-items_tuple.parquet"),
         ];
         for bytes in fixtures {
-            let decoded =
-                crate::parquet_schema_decode::decode_schema(bytes, &mut Context::ordinary())
-                    .unwrap();
-            let source = document(bytes, &decoded.schema);
+            let source = document(bytes);
             for mode in ["strict", "report"] {
                 let mut req = request();
                 req.mode = k(mode);
@@ -879,9 +876,7 @@ mod tests {
     fn reports_complete_blocked_receipt_for_list_wrapper() {
         let bytes =
             include_bytes!("../../../fixtures/parquet/containers/list-three-element.parquet");
-        let decoded =
-            crate::parquet_schema_decode::decode_schema(bytes, &mut Context::ordinary()).unwrap();
-        let source = document(bytes, &decoded.schema);
+        let source = document(bytes);
         let mut req = request();
         req.index = 1;
         let mut caps = NoCapabilities;
@@ -906,9 +901,7 @@ mod tests {
     #[test]
     fn resource_refusal_returns_no_receipt() {
         let bytes = include_bytes!("../../../fixtures/parquet/containers/list-tuple.parquet");
-        let decoded =
-            crate::parquet_schema_decode::decode_schema(bytes, &mut Context::ordinary()).unwrap();
-        let source = document(bytes, &decoded.schema);
+        let source = document(bytes);
         let mut limits = Limits::ordinary();
         limits.max_values = 1;
         let mut ctx = Context::with_limits(ResourceProfile::Cooperative, limits).unwrap();

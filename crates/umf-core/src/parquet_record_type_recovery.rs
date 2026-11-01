@@ -303,25 +303,19 @@ mod tests {
     }
 
     fn source(bytes: &[u8]) -> Value {
-        let schema = crate::parquet_schema_decode::decode_schema(bytes, &mut Context::ordinary())
-            .unwrap()
-            .schema;
-        let hex = bytes
-            .iter()
-            .map(|byte| format!("{byte:02x}"))
-            .collect::<String>();
-        let fields = schema
-            .iter()
-            .enumerate()
-            .map(|(index, element)| {
-                format!(
-                    "{{\"id\":\"schema:{index}\",\"name\":\"{}\",\"extensions\":{{}}}}",
-                    element.name.to_utf8().unwrap()
-                )
-            })
-            .collect::<Vec<_>>()
-            .join(",");
-        parse(&format!("{{\"umf\":\"0.10.0\",\"id\":\"fixture\",\"vocabularies\":{{\"umf.parquet\":{{\"version\":\"0.1.0\"}}}},\"modules\":[{{\"id\":\"parquet\",\"namespace\":\"\",\"elements\":[{{\"id\":\"source\",\"extensions\":{{\"umf.parquet\":{{\"profile\":\"parquet-file-source\",\"encoding\":\"hex\",\"bytes\":\"{hex}\"}}}}}}]}},{{\"id\":\"parquet.fields\",\"namespace\":\"\",\"elements\":[{fields}]}}]}}"))
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let mut context = Context::ordinary();
+        crate::parquet_capture_inspection::import_parquet_schema(
+            bytes,
+            &Utf16::from("fixture"),
+            &engine,
+            &registry,
+            &mut capabilities,
+            &mut context,
+        )
+        .unwrap()
     }
 
     fn classified(bytes: &[u8]) -> (Value, Value) {

@@ -36,8 +36,9 @@ Wrappers admit host values, transport explicit capabilities and present results;
 they do not contain a second UMF interpreter. ADR-006, the PRD, cross-cutting
 requirements, architecture, TP-001 and the affected contracts govern behavior.
 
-Core stays at 0.10.0. The release candidates are SDK 0.10.2, Python 0.10.6 and
-Rust source/CLI `umf-rust-v0.1.0`, subject to any newer release on main. Rust
+Core stays at 0.10.0. SDK 0.10.2, Python 0.10.6 and the Rust source/CLI
+ship together in one GitHub release, `umf-rust-v0.1.0`, subject to any newer
+release on main. Rust
 crates remain `publish = false`; distribute the source library and built CLI
 without claiming crates.io publication. Preserve exact native values, unknown
 content, functional receipts and integrity checks needed by current APIs. Historical
@@ -110,8 +111,15 @@ import ecosystem semantics. Caller callback identity/order and configured contro
 are preserved through the existing bridge. Each Rust operation uses its passed
 Context; one literal Context does not cross the JavaScript boundary.
 
-The implementation is ready for the final shipping suite and installed artifact
-checks below. Publication, not this source milestone, closes the goal.
+Rust library/CLI capability tests and the affected ordinary integration cases pass.
+The SHACL implementation now handles family target extraction, per-value nested
+logical constraints, nested sequence paths, deactivated shapes and regex flags.
+Current fixtures retain exact source metadata, bytes, unknown content and actual
+framing options; the final framing and affected SHACL wire checks pass. Generated
+resources, TypeScript, source/import boundaries, negative controls, release versions
+and SDK packaging checks also pass.
+
+Installed artifact checks and publication below remain. Publication closes the goal.
 
 ## Integration and release
 
@@ -122,12 +130,17 @@ Release preparation and verification:
    integrity and functional receipt behavior. Refresh main and integrate incoming work.
 2. Run source boundaries, TypeScript, generated sources, resource closure and
    ordinary release-version/packaging checks for the completed source.
-3. Run the standard current shipping Cargo library/CLI suite once, including the
-   native PostgreSQL bridge, and an independent Rust consumer. Retry only failures
-   or genuinely affected portions after corrections.
+3. Run shipping Rust library/CLI tests and ordinary capability baselines, including
+   the native PostgreSQL bridge and an independent Rust consumer. Retain completed
+   results and retry actual failures or affected portions. Full predecessor parity
+   campaigns are excluded from release acceptance; an interrupted unfiltered run
+   is never reported as a full-suite pass.
 4. Build the source SDK once from a fresh private source snapshot. Reuse its actual
    native and WASM artifacts for installed Node/Bun and real Chromium ordinary
-   public workflows. Test the public package entry points and explicit caller
+   public workflows. Build the Linux addon in the existing Linux wheel/CLI Cargo
+   graph and assemble a separate Linux SDK from identical common assets. Verify
+   the same fixed-point source inputs, retain both build provenances and use the
+   unchanged archive verifier. Test public package entry points and explicit caller
    capabilities; do not reopen the historical Bun edge corpus.
 5. Build and install the native Python wheel and sdist; run ordinary public API
    workflows with JavaScript absent from PATH. Check the supported CPython
@@ -135,7 +148,9 @@ Release preparation and verification:
    release builds use `MACOSX_DEPLOYMENT_TARGET=11.0` consistently.
 6. Obtain Sol's final review, refresh main, update PR61 with the actual resulting
    implementation and local validation, merge, and publish the complete source,
-   SDK, Python and native CLI release assets directly. Verify published revision,
+   SDK, Python and native CLI assets in the single Rust GitHub release directly.
+   Use the existing Rust-tag dispatcher exclusion to avoid Actions publication.
+   No PyPI or crates.io publication is claimed. Verify published revision,
    assets and installed consumers. Do not publish a partial port or overwrite an
    existing release.
 
@@ -144,6 +159,6 @@ Release preparation and verification:
 Every UMF-owned executable operation exposed by the current public interfaces has
 a Rust owner and passes its capability baseline. Supported library, CLI, Python,
 Node/Bun and browser entry points execute that owner, preserving current meaning,
-unknown content, caller callbacks and controls. Current Cargo and final installed-host
+unknown content, caller callbacks and controls. Shipping Rust and final installed-host
 checks pass, review is resolved, main is integrated, and the released artifacts
 contain the completed port. The goal stays active until publication and verification.

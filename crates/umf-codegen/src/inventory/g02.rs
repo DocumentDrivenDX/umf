@@ -608,18 +608,21 @@ mod tests {
         ])
     }
     fn options() -> Value {
-        o(vec![(
-            "backfills",
-            a(vec![o(vec![
-                ("table", s("notes")),
-                (
-                    "column",
-                    o(vec![("module", s("demo")), ("element", s("summary"))]),
-                ),
-                ("operation", s("fill_summary")),
-                ("scopedRows", Value::Bool(true)),
-            ])]),
-        )])
+        o(vec![
+            (
+                "backfills",
+                a(vec![o(vec![
+                    ("table", s("notes")),
+                    (
+                        "column",
+                        o(vec![("module", s("demo")), ("element", s("summary"))]),
+                    ),
+                    ("operation", s("fill_summary")),
+                    ("scopedRows", Value::Bool(true)),
+                ])]),
+            ),
+            ("seedSets", a(vec![])),
+        ])
     }
     const PREVIOUS: &str = r#"{"modules":[{"id":"demo","elements":[{"id":"id","kind":"field"},{"id":"Note","kind":"record","members":[{"module":"demo","element":"id"}]}],"extensions":{"umf.tables":{"tables":[{"id":"notes","record":{"module":"demo","element":"Note"},"columns":[{"field":{"module":"demo","element":"id"}}]}],"commands":[],"seedSets":[]}}}]}"#;
     const NEXT: &str = r#"{"modules":[{"id":"demo","elements":[{"id":"id","kind":"field"},{"id":"Note","kind":"record","members":[{"module":"demo","element":"id"},{"module":"demo","element":"summary"}]},{"id":"summary","kind":"field"},{"id":"archive_id","kind":"field"},{"id":"Archive","kind":"record","members":[{"module":"demo","element":"archive_id"}]}],"extensions":{"umf.tables":{"tables":[{"id":"notes","record":{"module":"demo","element":"Note"},"columns":[{"field":{"module":"demo","element":"id"}},{"field":{"module":"demo","element":"summary"}}]},{"id":"archive","record":{"module":"demo","element":"Archive"},"columns":[{"field":{"module":"demo","element":"archive_id"}}]}],"commands":[{"id":"fill_summary"}],"seedSets":[]}}}]}"#;

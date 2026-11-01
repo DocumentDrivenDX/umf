@@ -1,7 +1,7 @@
 use crate::context::TransportUsage;
 use crate::{Context, Utf16, Value};
 
-use super as protocol;
+use crate::parser_backend_protocol as protocol;
 
 #[test]
 fn async_parser_continuation_rejects_wrong_ast_version_and_is_single_use() {

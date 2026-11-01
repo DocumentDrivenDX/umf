@@ -37,7 +37,9 @@ fn captures_columns_and_exports_exact_native_source_tree() {
 #[test]
 fn refuses_malformed_relation_list_before_materializing_metadata() {
     let source = fixture().to_utf8().unwrap();
-    let malformed = source.replacen("\"relations\": [", "\"relations\": {}", 1);
+    let mut malformed: serde_json::Value = serde_json::from_str(&source).unwrap();
+    malformed["snapshot"]["relations"] = serde_json::json!({});
+    let malformed = serde_json::to_string(&malformed).unwrap();
     assert_ne!(malformed, source);
     let mut ctx = context();
     let error = PostgresqlCatalogCapture::import(&Utf16::from(malformed), &mut ctx).unwrap_err();

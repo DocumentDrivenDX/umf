@@ -154,6 +154,10 @@ fn capabilities_reports_the_pinned_resource_manifest() {
             include_bytes!("../../../spec/core/schema.json"),
         ),
         (
+            "saga.package.json",
+            include_bytes!("../../../spec/extensions/saga/package.json"),
+        ),
+        (
             "stable-binding.package.json",
             include_bytes!("../../../spec/extensions/binding-stable/package.json"),
         ),

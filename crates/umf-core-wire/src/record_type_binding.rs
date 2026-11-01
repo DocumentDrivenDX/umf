@@ -856,28 +856,18 @@ mod tests {
     }
 
     fn parquet_source(bytes: &[u8]) -> Value {
-        let schema =
-            umf_core::parquet_schema_decode::decode_schema(bytes, &mut Context::ordinary())
-                .unwrap()
-                .schema;
-        let bytes_hex = bytes
-            .iter()
-            .map(|byte| format!("{byte:02x}"))
-            .collect::<String>();
-        let elements = schema
-            .iter()
-            .enumerate()
-            .map(|(index, element)| {
-                format!(
-                    r#"{{"id":"schema:{index}","name":{},"extensions":{{}}}}"#,
-                    serde_json::to_string(&element.name.to_utf8().unwrap()).unwrap()
-                )
-            })
-            .collect::<Vec<_>>()
-            .join(",");
-        parse_json(&format!(
-            r#"{{"umf":"0.10.0","id":"fixture","vocabularies":{{"umf.parquet":{{"version":"0.1.0"}}}},"modules":[{{"id":"parquet","namespace":"","elements":[{{"id":"source","extensions":{{"umf.parquet":{{"profile":"parquet-file-source","encoding":"hex","bytes":"{bytes_hex}"}}}}}}]}},{{"id":"parquet.fields","namespace":"","elements":[{elements}]}}]}}"#
-        ))
+        let mut ctx = Context::ordinary();
+        let (engine, registry) = embedded_parquet_engine(&mut ctx).unwrap();
+        let mut capabilities = NoCapabilities;
+        umf_core::parquet_capture_inspection::import_parquet_schema(
+            bytes,
+            &Utf16::from("fixture"),
+            &engine,
+            &registry,
+            &mut capabilities,
+            &mut ctx,
+        )
+        .unwrap()
     }
 
     #[test]
