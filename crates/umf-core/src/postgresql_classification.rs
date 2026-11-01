@@ -18,6 +18,14 @@ const RECORD_SCHEMA: &str =
     include_str!("../../../spec/core/postgresql-record-classification.schema.json");
 const CARDINALITY_SCHEMA: &str =
     include_str!("../../../spec/core/postgresql-cardinality-classification.schema.json");
+const NULLABILITY_SCHEMA: &str =
+    include_str!("../../../spec/core/postgresql-nullability-classification.schema.json");
+const NULLABILITY_OPERATION_SCHEMA: &str =
+    include_str!("../../../spec/core/nullability-operation-v5.schema.json");
+const NULLABILITY_PACKAGE: &str =
+    include_str!("../../../spec/extensions/postgresql-nullability/package.json");
+const NULLABILITY_RECOVERY: &str = "Retain the complete source and native archive; unknown native meaning is not replaced by the core label";
+const NULLABILITY_BASIS: &str = "Captured declarations for stored relation values; not query results, omitted inputs or live enforcement verification";
 const KIND_SCHEMA: &str = include_str!("../../../spec/core/kind-operation-v6.schema.json");
 const CARDINALITY_OPERATION_SCHEMA: &str =
     include_str!("../../../spec/core/cardinality-operation-v4.schema.json");
@@ -146,6 +154,8 @@ struct Runtime {
     record_request: CompiledSchema,
     cardinality: CompiledSchema,
     cardinality_request: CompiledSchema,
+    nullability: CompiledSchema,
+    nullability_request: CompiledSchema,
 }
 fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
     let core = |source: &str, ctx: &mut Context<'_>| read_json(source, ctx);
@@ -183,6 +193,14 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
         &resources,
         ctx,
     )?;
+    let nullability_package = read_json(NULLABILITY_PACKAGE, ctx)?;
+    registry.register(
+        &nullability_package,
+        Some(49),
+        engine.package_schema(),
+        &resources,
+        ctx,
+    )?;
     let mut schemas = resources.clone();
     schemas.entries.push((
         u("urn:umf:core:kind-operation:6.0.0"),
@@ -196,12 +214,15 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
         u("urn:umf:native-json:0.1.0"),
         read_json(NATIVE_JSON_SCHEMA, ctx)?,
     ));
+    schemas.entries.push((u("urn:umf:core:nullability-operation:5.0.0"), read_json(NULLABILITY_OPERATION_SCHEMA, ctx)?));
     let fs = read_json(FIELD_SCHEMA, ctx)?;
     let rs = read_json(RECORD_SCHEMA, ctx)?;
     let field = CompiledSchema::compile(&fs, &schemas, ctx)?;
     let record = CompiledSchema::compile(&rs, &schemas, ctx)?;
     let cs = read_json(CARDINALITY_SCHEMA, ctx)?;
     let cardinality = CompiledSchema::compile(&cs, &schemas, ctx)?;
+    let ns = read_json(NULLABILITY_SCHEMA, ctx)?;
+    let nullability = CompiledSchema::compile(&ns, &schemas, ctx)?;
     let field_request = CompiledSchema::compile(
         get(get(&fs, "properties").unwrap_or(&Value::Null), "request")
             .ok_or_else(|| error("SCHEMA", "", "Field request schema missing"))?,
@@ -220,6 +241,12 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
         &schemas,
         ctx,
     )?;
+    let nullability_request = CompiledSchema::compile(
+        get(get(&ns, "properties").unwrap_or(&Value::Null), "request")
+            .ok_or_else(|| error("SCHEMA", "", "Nullability request schema missing"))?,
+        &schemas,
+        ctx,
+    )?;
     Ok(Runtime {
         engine,
         registry,
@@ -229,6 +256,8 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
         record_request,
         cardinality,
         cardinality_request,
+        nullability,
+        nullability_request,
     })
 }
 fn validate(
@@ -1575,4 +1604,690 @@ pub fn recover_cardinality(
             })?),
         ),
     ]))
+}
+
+fn tagged_kind(v: &Value) -> Option<&Utf16> {
+    text(v, "kind")
+}
+fn tagged_text(v: &Value) -> Option<&Utf16> {
+    if tagged_kind(v) == Some(&u("string")) {
+        text(v, "value")
+    } else {
+        None
+    }
+}
+fn tagged_bool(v: &Value) -> Option<bool> {
+    if tagged_kind(v) == Some(&u("boolean")) {
+        match get(v, "value") {
+            Some(Value::Bool(x)) => Some(*x),
+            _ => None,
+        }
+    } else {
+        None
+    }
+}
+fn tagged_items(v: &Value) -> Option<&[Value]> {
+    if tagged_kind(v) == Some(&u("array")) {
+        arr(v, "items")
+    } else {
+        None
+    }
+}
+fn tagged_members(v: &Value) -> Option<&Value> {
+    if tagged_kind(v) == Some(&u("object")) {
+        get(v, "members")
+    } else {
+        None
+    }
+}
+fn tagged_empty(v: Option<&Value>) -> bool {
+    match v {
+        Some(x) if tagged_kind(x) == Some(&u("null")) => true,
+        Some(x) => tagged_items(x).is_some_and(|items| items.is_empty()),
+        None => false,
+    }
+}
+fn tagged_at<'a>(mut node: &'a Value, path: &str) -> Option<&'a Value> {
+    for part in path.trim_start_matches('/').split('/') {
+        node = match tagged_kind(node)? {
+            k if k == &u("object") => get(tagged_members(node)?, part)?,
+            k if k == &u("array") => tagged_items(node)?.get(part.parse::<usize>().ok()?)?,
+            _ => return None,
+        };
+    }
+    Some(node)
+}
+fn contains_key(v: &Value, key: &str) -> bool {
+    matches!(v,Value::Object(fields) if fields.iter().any(|(k,_)|k==&u(key)))
+}
+fn nullability_loss(
+    result: &mut Value,
+    path: Utf16,
+    value: &Value,
+    reason: &str,
+    conflict: bool,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let residual = obj(vec![
+        ("path", Value::String(path.clone())),
+        ("value", copy_json(value, ctx)?),
+        ("reason", t(reason)),
+        ("recovery", t(NULLABILITY_RECOVERY)),
+    ]);
+    let diagnostic = obj(vec![
+        (
+            "code",
+            t(if conflict {
+                "POSTGRESQL_NULLABILITY_CONFLICT"
+            } else {
+                "POSTGRESQL_NULLABILITY_UNRESOLVED"
+            }),
+        ),
+        ("path", Value::String(path)),
+        ("message", t(reason)),
+        ("severity", t("warning")),
+    ]);
+    if let Some(Value::Array(items)) = get_mut(result, "residuals") {
+        items.push(residual)
+    }
+    if let Some(Value::Array(items)) = get_mut(result, "diagnostics") {
+        items.push(diagnostic)
+    }
+    Ok(())
+}
+fn validate_nullability_source(
+    source: &Value,
+    rt: &Runtime,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    validate_document(source, rt, ctx)
+}
+fn classify_nullability_inner(
+    source: &Value,
+    request: &Value,
+    rt: &Runtime,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    validate(
+        request,
+        &rt.nullability_request,
+        ctx,
+        "POSTGRESQL_NULLABILITY_REQUEST",
+    )?;
+    validate_nullability_source(source, rt, ctx)?;
+    let native_source = text(request, "nativeSource").cloned().ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_REQUEST",
+            "/nativeSource",
+            "Native archive must be a string",
+        )
+    })?;
+    let source_capture = pg::catalog_from_document(source, ctx)?;
+    let requested_capture = pg::PostgresqlCatalogCapture::import(&native_source, ctx)?;
+    let source_root = source_capture.root_tagged(ctx)?;
+    let requested_root = requested_capture.root_tagged(ctx)?;
+    if !equal(&source_root, &requested_root, ctx)?
+        || source_capture.state() != &u("captured")
+        || requested_capture.state() != &u("captured")
+    {
+        return Err(error(
+            "POSTGRESQL_NULLABILITY_ARCHIVE",
+            "/request/nativeSource",
+            "Native text differs from the retained captured catalog",
+        ));
+    }
+    let root_members = tagged_members(&source_root).ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_PROFILE",
+            "",
+            "Expected captured catalog root",
+        )
+    })?;
+    let snapshot = get(root_members, "snapshot").ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_PROFILE",
+            "/snapshot",
+            "Snapshot missing",
+        )
+    })?;
+    let snapshot_members = tagged_members(snapshot).ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_PROFILE",
+            "/snapshot",
+            "Expected snapshot object",
+        )
+    })?;
+    if tagged_kind(get(root_members, "serverVersion").unwrap_or(&Value::Null)) != Some(&u("number"))
+        || text(
+            get(root_members, "serverVersion").unwrap_or(&Value::Null),
+            "value",
+        ) != Some(&u("170004"))
+        || tagged_text(get(root_members, "profile").unwrap_or(&Value::Null))
+            != Some(&u("postgresql-catalog-capture-v1"))
+        || tagged_text(get(root_members, "state").unwrap_or(&Value::Null)) != Some(&u("captured"))
+        || tagged_text(get(snapshot_members, "profile").unwrap_or(&Value::Null))
+            != Some(&u("umf-postgresql-catalog-evidence-17-v3"))
+    {
+        return Err(error(
+            "POSTGRESQL_NULLABILITY_PROFILE",
+            "/snapshot/profile",
+            "Expected captured PostgreSQL 17.4 catalog evidence profile 17-v3",
+        ));
+    }
+    let columns = source_capture.columns(ctx)?;
+    let wanted = text(request, "column").ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_COLUMN",
+            "/request/column",
+            "Column path required",
+        )
+    })?;
+    let mut column_index = None;
+    for (index, column) in columns.iter().enumerate() {
+        ctx.charge_work(1, u("/request/column"))?;
+        if &column.path == wanted {
+            if column_index.replace(index).is_some() {
+                return Err(error(
+                    "POSTGRESQL_NULLABILITY_COLUMN",
+                    "/request/column",
+                    "Native column path is ambiguous",
+                ));
+            }
+        }
+    }
+    let column = column_index
+        .and_then(|index| columns.get(index))
+        .ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_COLUMN",
+                "/request/column",
+                "Native column not found",
+            )
+        })?;
+    let modules = arr(source, "modules").ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_SOURCE",
+            "/modules",
+            "Modules required",
+        )
+    })?;
+    let mi = modules
+        .iter()
+        .position(|m| text(m, "id") == Some(&u("postgresql.columns")))
+        .ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_COLUMN",
+                "/modules",
+                "Column module missing",
+            )
+        })?;
+    let elements = arr(&modules[mi], "elements").ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_COLUMN",
+            "/elements",
+            "Elements required",
+        )
+    })?;
+    let element_id = text(&column.element, "id").ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_COLUMN",
+            "/id",
+            "Column identity missing",
+        )
+    })?;
+    let ei = elements
+        .iter()
+        .position(|e| text(e, "id") == Some(element_id))
+        .ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_COLUMN",
+                "/elements",
+                "Derived column member is required",
+            )
+        })?;
+    let element = &elements[ei];
+    let native_members = tagged_members(&column.native_column).ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_COLUMN",
+            "/nativeColumn",
+            "Expected native column object",
+        )
+    })?;
+    let mut ideal = append(&u("/modules/"), &mi.to_string(), ctx)?;
+    ideal = append(&ideal, "/elements/", ctx)?;
+    ideal = append(&ideal, &ei.to_string(), ctx)?;
+    ideal = append(&ideal, "/nullability", ctx)?;
+    let mut native_path = column.path.clone();
+    native_path = append(&native_path, "/notNull", ctx)?;
+    let flag = get(native_members, "notNull").and_then(tagged_bool);
+    let mut nullability = "unspecified";
+    let mut interpretation = "unknown";
+    let mut outcome = "unknown";
+    let mut reason: Option<String> = None;
+    let scope = text(request, "scope")
+        .cloned()
+        .unwrap_or_else(|| u("unresolved"));
+    let carrier = text(request, "carrier")
+        .cloned()
+        .unwrap_or_else(|| u("unresolved"));
+    if scope != u("stored-relation") {
+        reason=Some("Stored-relation scope required; query outputs and input omission have different availability".into());
+    } else if carrier != u("sql-null") {
+        reason = Some(
+            "Explicit SQL-NULL absence carrier required; omitted members are not equated with NULL"
+                .into(),
+        );
+    } else if column.kind != u("r") && column.kind != u("p") {
+        reason =
+            Some("Only captured ordinary and partitioned table declarations are supported".into());
+        interpretation = "unsupported";
+    } else if flag.is_none() {
+        reason = Some("Column notNull is missing or is not an exact native boolean".into());
+    } else if flag == Some(false) {
+        let native_type = get(native_members, "nativeType").and_then(tagged_members);
+        let type_name =
+            native_type.and_then(|ty| tagged_text(get(ty, "name").unwrap_or(&Value::Null)));
+        let type_ok = native_type.is_some_and(|ty| {
+            tagged_text(get(ty, "schema").unwrap_or(&Value::Null)) == Some(&u("pg_catalog"))
+                && tagged_text(get(ty, "kind").unwrap_or(&Value::Null)) == Some(&u("b"))
+                && tagged_text(get(ty, "category").unwrap_or(&Value::Null)) != Some(&u("A"))
+                && tagged_kind(get(ty, "dimensions").unwrap_or(&Value::Null)) == Some(&u("number"))
+                && text(get(ty, "dimensions").unwrap_or(&Value::Null), "value") == Some(&u("0"))
+                && [
+                    "bool",
+                    "int2",
+                    "int4",
+                    "int8",
+                    "numeric",
+                    "float4",
+                    "float8",
+                    "text",
+                    "varchar",
+                    "bpchar",
+                    "bytea",
+                    "date",
+                    "time",
+                    "timetz",
+                    "timestamp",
+                    "timestamptz",
+                ]
+                .iter()
+                .any(|n| type_name == Some(&u(n)))
+        });
+        if !type_ok {
+            reason = Some(
+                "Domain, array or unresolved native type requires additional availability evidence"
+                    .into(),
+            );
+        } else if tagged_text(get(native_members, "generated").unwrap_or(&Value::Null))
+            .is_some_and(|x| !x.is_empty())
+            || tagged_text(get(native_members, "identity").unwrap_or(&Value::Null))
+                .is_some_and(|x| !x.is_empty())
+        {
+            reason=Some("Generated/identity behavior is retained separately; a false flag alone is insufficient".into());
+        } else {
+            let path_text = column.path.to_utf8().map_err(|_| {
+                error(
+                    "POSTGRESQL_NULLABILITY_COLUMN",
+                    "/request/column",
+                    "Derived native path is invalid",
+                )
+            })?;
+            let parts: Vec<_> = path_text.split('/').collect();
+            let relation_path = if parts.len() >= 5 {
+                format!("/snapshot/relations/{}", parts[3])
+            } else {
+                return Err(error(
+                    "POSTGRESQL_NULLABILITY_COLUMN",
+                    "/request/column",
+                    "Derived relation path is invalid",
+                ));
+            };
+            let relation = tagged_at(&source_root, &relation_path);
+            let constraints = relation
+                .and_then(tagged_members)
+                .and_then(|m| get(m, "constraints"));
+            if relation.is_none() || !tagged_empty(constraints) {
+                reason=Some("Native relation constraints may prohibit NULL; no arbitrary constraint expression is evaluated".into());
+            } else if !tagged_empty(get(snapshot_members, "triggers")) {
+                let triggers = get(snapshot_members, "triggers").and_then(tagged_items);
+                let mut current = false;
+                if let Some(items) = triggers {
+                    for trigger in items {
+                        ctx.charge_work(1, u("/snapshot/triggers"))?;
+                        let m = tagged_members(trigger);
+                        let matches_relation = m.and_then(|m| {
+                            Some((
+                                tagged_text(get(m, "schema")?)?,
+                                tagged_text(get(m, "relation")?)?,
+                            ))
+                        });
+                        match matches_relation {
+                            Some((schema, relation))
+                                if schema != &column.schema || relation != &column.relation => {}
+                            _ => {
+                                current = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if triggers.is_none() || current {
+                    reason = Some("Native trigger behavior for this relation is unresolved".into());
+                }
+            }
+            if reason.is_none() {
+                let allowed = [
+                    "name",
+                    "position",
+                    "type",
+                    "nativeType",
+                    "notNull",
+                    "identity",
+                    "generated",
+                    "collation",
+                    "default",
+                    "comment",
+                    "storage",
+                    "compression",
+                    "acl",
+                ];
+                if let Value::Object(fields) = native_members {
+                    for (key, _) in fields {
+                        ctx.charge_work(key.len().saturating_add(1), u("/nativeColumn/members"))?;
+                        if !allowed.iter().any(|name| key == &u(name)) {
+                            reason=Some("Unknown native column refinement prevents an unconditional absence permission".into());
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if reason.is_none() {
+        nullability = if flag == Some(true) {
+            "required"
+        } else {
+            "absent-allowed"
+        };
+        interpretation = "declared";
+        outcome = "exact";
+    }
+    let mut result=obj(vec![("operation",t("classify-postgresql-nullability")),("version",t("1.0.0")),("status",t("classified")),("source",copy_json(source,ctx)?),("request",copy_json(request,ctx)?),("binding",obj(vec![("id",t("umf.postgresql.nullability")),("version",t("1.0.0")),("nativeVersion",t("17.4")),("subset",t("Captured PostgreSQL 17.4 stored-column declarations under SQL-NULL absence policy; no query, omission or native equivalence"))])),("mapping",obj(vec![("origin",t("classified")),("idealPath",Value::String(ideal.clone())),("nativePath",Value::String(native_path.clone())),("nativeFragment",copy_json(&column.native_column,ctx)?),("nullability",t("unspecified")),("interpretation",t("unknown")),("outcome",t("unknown")),("scope",Value::String(scope.clone())),("carrier",Value::String(carrier.clone())),("basis",t(NULLABILITY_BASIS))])),("residuals",Value::Array(vec![])),("diagnostics",Value::Array(vec![]))]);
+    if let Some(reason) = reason.as_deref() {
+        nullability_loss(
+            &mut result,
+            native_path.clone(),
+            &column.native_column,
+            reason,
+            false,
+            ctx,
+        )?;
+        if interpretation == "unsupported" {
+            outcome = "not-expressible";
+        }
+    }
+    if let Some(mapping) = get_mut(&mut result, "mapping") {
+        set(mapping, "nullability", t(nullability))?;
+        set(mapping, "interpretation", t(interpretation))?;
+        set(mapping, "outcome", t(outcome))?;
+    }
+    let mut conflict: Option<String> = None;
+    if text(element, "kind") != Some(&u("field")) {
+        conflict=Some("Selected native member must already be an explicit Field; this operation does not replace its kind".into());
+    }
+    if let Some(author) = get(request, "author") {
+        let mut capabilities = NoCallbacks;
+        match crate::nullability::verify_core_nullability_declaration(
+            author,
+            source,
+            &rt.engine,
+            &rt.registry,
+            &mut capabilities,
+            ctx,
+        ) {
+            Ok(verified) => {
+                let identity = get(&verified, "identity").unwrap_or(&Value::Null);
+                let provenance = get(&verified, "provenance").unwrap_or(&Value::Null);
+                if text(identity, "module") != Some(&u("postgresql.columns"))
+                    || text(identity, "element") != Some(element_id)
+                {
+                    conflict = Some("Author receipt identifies a different member".into());
+                } else if text(provenance, "nullability") != Some(&u(nullability)) {
+                    conflict=Some("Authored availability differs from the native observation; neither assertion may be overwritten".into());
+                }
+            }
+            Err(e) if e.is_control_failure() || e.code == "LIMIT" || e.code == "CAPACITY" => {
+                return Err(e)
+            }
+            Err(e) => conflict = Some(format!("Author provenance is invalid or stale: {}", e.code)),
+        }
+    } else if contains_key(element, "nullability") {
+        conflict=Some("Existing availability requires verified author provenance before native classification".into());
+    }
+    let extensions = get(element, "extensions").unwrap_or(&Value::Null);
+    if get(extensions, "umf.postgresql.nullability").is_some() {
+        conflict = Some(
+            "Existing binding scope cannot be overwritten; reclassify from its retained source"
+                .into(),
+        );
+    }
+    if get(
+        get(source, "vocabularies").unwrap_or(&Value::Null),
+        "umf.postgresql.nullability",
+    )
+    .is_some_and(|v| text(v, "version") != Some(&u("1.0.0")))
+    {
+        conflict = Some("Existing binding vocabulary version is incompatible".into());
+    }
+    if let Some(reason) = conflict.as_deref() {
+        nullability_loss(
+            &mut result,
+            ideal.clone(),
+            get(element, "nullability").unwrap_or(&Value::Null),
+            reason,
+            true,
+            ctx,
+        )?;
+        if let Some(mapping) = get_mut(&mut result, "mapping") {
+            set(mapping, "outcome", t("unknown"))?;
+        }
+    }
+    let default_mode = u("report");
+    let mode = text(request, "mode").unwrap_or(&default_mode);
+    let blocked = conflict.is_some()
+        || (mode == &u("strict") && arr(&result, "residuals").is_some_and(|r| !r.is_empty()));
+    set(
+        &mut result,
+        "status",
+        t(if blocked { "blocked" } else { "classified" }),
+    )?;
+    if let Some(Value::Array(items)) = get_mut(&mut result, "diagnostics") {
+        for d in items {
+            set(d, "severity", t(if blocked { "error" } else { "warning" }))?;
+        }
+    }
+    if !blocked {
+        let mut target = copy_json(source, ctx)?;
+        {
+            let vocab = get_mut(&mut target, "vocabularies").ok_or_else(|| {
+                error(
+                    "POSTGRESQL_NULLABILITY_TARGET",
+                    "/vocabularies",
+                    "Vocabularies required",
+                )
+            })?;
+            if get(vocab, "umf.postgresql.nullability").is_none() {
+                set(
+                    vocab,
+                    "umf.postgresql.nullability",
+                    obj(vec![("version", t("1.0.0"))]),
+                )?;
+            }
+        }
+        let selected = get_mut(arr_mut_document_module(&mut target, mi)?, "elements");
+        let elements = selected
+            .and_then(|x| {
+                if let Value::Array(a) = x {
+                    a.get_mut(ei)
+                } else {
+                    None
+                }
+            })
+            .ok_or_else(|| {
+                error(
+                    "POSTGRESQL_NULLABILITY_TARGET",
+                    "/modules",
+                    "Selected element missing",
+                )
+            })?;
+        set(elements, "nullability", t(nullability))?;
+        let element_extensions = get_mut(elements, "extensions").ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_TARGET",
+                "/extensions",
+                "Element extensions required",
+            )
+        })?;
+        set(
+            element_extensions,
+            "umf.postgresql.nullability",
+            obj(vec![
+                ("origin", t("classified")),
+                (
+                    "binding",
+                    obj(vec![
+                        ("id", t("umf.postgresql.nullability")),
+                        ("version", t("1.0.0")),
+                    ]),
+                ),
+                ("scope", Value::String(scope)),
+                ("carrier", Value::String(carrier)),
+                ("interpretation", t(interpretation)),
+                ("nativePath", Value::String(native_path)),
+            ]),
+        )?;
+        validate_document(&target, rt, ctx)?;
+        set(&mut result, "target", target)?;
+    }
+    validate(
+        &result,
+        &rt.nullability,
+        ctx,
+        "POSTGRESQL_NULLABILITY_RESULT",
+    )?;
+    Ok(result)
+}
+fn arr_mut_document_module(document: &mut Value, mi: usize) -> Result<&mut Value, EngineError> {
+    get_mut(document, "modules")
+        .and_then(|v| {
+            if let Value::Array(a) = v {
+                a.get_mut(mi)
+            } else {
+                None
+            }
+        })
+        .ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_TARGET",
+                "/modules",
+                "Selected module missing",
+            )
+        })
+}
+pub fn classify_nullability(
+    source: &Value,
+    request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    classify_nullability_inner(source, request, &rt, ctx)
+}
+pub fn verify_nullability(
+    receipt: &Value,
+    current: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    validate(
+        receipt,
+        &rt.nullability,
+        ctx,
+        "POSTGRESQL_NULLABILITY_RECEIPT",
+    )?;
+    if text(receipt, "status") != Some(&u("classified")) {
+        return Err(error(
+            "POSTGRESQL_NULLABILITY_RECEIPT",
+            "/status",
+            "Expected complete classified receipt",
+        ));
+    }
+    let expected = classify_nullability_inner(
+        get(receipt, "source").ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_RECEIPT",
+                "/source",
+                "Receipt source required",
+            )
+        })?,
+        get(receipt, "request").ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_RECEIPT",
+                "/request",
+                "Receipt request required",
+            )
+        })?,
+        &rt,
+        ctx,
+    )?;
+    if !equal(receipt, &expected, ctx)? {
+        return Err(error(
+            "POSTGRESQL_NULLABILITY_RECEIPT",
+            "",
+            "Receipt disagrees with retained source and selected binding",
+        ));
+    }
+    if !equal(
+        current,
+        get(receipt, "target").ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_RECEIPT",
+                "/target",
+                "Target required",
+            )
+        })?,
+        ctx,
+    )? {
+        return Err(error(
+            "POSTGRESQL_NULLABILITY_STALE",
+            "/target",
+            "Target changed after classification",
+        ));
+    }
+    copy_json(receipt, ctx)
+}
+pub fn recover_nullability(
+    receipt: &Value,
+    current: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let verified = verify_nullability(receipt, current, ctx)?;
+    text(
+        get(&verified, "request").ok_or_else(|| {
+            error(
+                "POSTGRESQL_NULLABILITY_RECEIPT",
+                "/request",
+                "Request required",
+            )
+        })?,
+        "nativeSource",
+    )
+    .cloned()
+    .ok_or_else(|| {
+        error(
+            "POSTGRESQL_NULLABILITY_RECEIPT",
+            "/request/nativeSource",
+            "Native source required",
+        )
+    })
 }

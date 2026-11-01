@@ -47,6 +47,9 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "verifyTableSpecFieldClassification",
         "classifyTableSpecRecord",
         "verifyTableSpecRecordClassification",
+        "classifyTableSpecCardinality",
+        "verifyTableSpecCardinalityClassification",
+        "recoverTableSpecCardinalitySource",
     ]
     .into_iter()
     .find(|candidate| op == &Utf16::from(*candidate))
@@ -66,7 +69,10 @@ fn allowed(op: &str) -> &'static [&'static str] {
         "classifyTableSpecField" => &["profile", "op", "document", "request"],
         "verifyTableSpecFieldClassification" => &["profile", "op", "receipt", "current"],
         "classifyTableSpecRecord" => &["profile", "op", "document", "request"],
-        "verifyTableSpecRecordClassification" => &["profile", "op", "receipt", "current"],
+        "verifyTableSpecRecordClassification"
+        | "verifyTableSpecCardinalityClassification"
+        | "recoverTableSpecCardinalitySource" => &["profile", "op", "receipt", "current"],
+        "classifyTableSpecCardinality" => &["profile", "op", "document", "request"],
         _ => &[],
     }
 }
@@ -214,11 +220,17 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
             required_value(request, "document")?;
             required_value(request, "request")?;
         }
-        "verifyTableSpecFieldClassification" | "verifyTableSpecRecordClassification" => {
+        "verifyTableSpecFieldClassification" => {
             required_value(request, "receipt")?;
             required_value(request, "current")?;
         }
-        "classifyTableSpecRecord" => {
+        "verifyTableSpecRecordClassification"
+        | "verifyTableSpecCardinalityClassification"
+        | "recoverTableSpecCardinalitySource" => {
+            required_value(request, "receipt")?;
+            required_value(request, "current")?;
+        }
+        "classifyTableSpecRecord" | "classifyTableSpecCardinality" => {
             required_value(request, "document")?;
             required_value(request, "request")?;
         }
@@ -325,6 +337,21 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             ctx,
         ),
         "verifyTableSpecRecordClassification" => runtime.verify_record_classification(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "classifyTableSpecCardinality" => runtime.classify_cardinality(
+            required_value(request, "document")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "verifyTableSpecCardinalityClassification" => runtime.verify_cardinality_classification(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "recoverTableSpecCardinalitySource" => runtime.recover_cardinality_source(
             required_value(request, "receipt")?,
             required_value(request, "current")?,
             ctx,

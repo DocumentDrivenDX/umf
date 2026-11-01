@@ -31,6 +31,9 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "verifyTableSpecFieldClassification",
     "classifyTableSpecRecord",
     "verifyTableSpecRecordClassification",
+    "classifyTableSpecCardinality",
+    "verifyTableSpecCardinalityClassification",
+    "recoverTableSpecCardinalitySource",
 ];
 
 #[cfg(test)]
@@ -180,6 +183,58 @@ impl TableSpecRuntime {
     ) -> Result<Value, EngineError> {
         let mut capabilities = StructuralOnly;
         crate::tablespec_record_classification::verify_table_spec_record_classification(
+            receipt,
+            current,
+            self,
+            &self.engine,
+            &self.registry,
+            &mut capabilities,
+            ctx,
+        )
+    }
+
+    pub fn classify_cardinality(
+        &self,
+        input: &Value,
+        request: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_cardinality_classification::classify_table_spec_cardinality(
+            input,
+            request,
+            self,
+            &self.engine,
+            &self.registry,
+            &mut capabilities,
+            ctx,
+        )
+    }
+    pub fn verify_cardinality_classification(
+        &self,
+        receipt: &Value,
+        current: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_cardinality_classification::verify_table_spec_cardinality_classification(
+            receipt,
+            current,
+            self,
+            &self.engine,
+            &self.registry,
+            &mut capabilities,
+            ctx,
+        )
+    }
+    pub fn recover_cardinality_source(
+        &self,
+        receipt: &Value,
+        current: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_cardinality_classification::recover_table_spec_cardinality_source(
             receipt,
             current,
             self,

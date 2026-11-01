@@ -17,15 +17,18 @@ fn string<'a>(v: &'a Value, k: &str) -> Result<&'a Utf16, EngineError> {
 fn allowed(op: &str) -> Option<&'static [&'static str]> {
     Some(match op {
         "postgresql.import" => &["profile", "op", "source", "id"],
-        "postgresql.classifyField" | "postgresql.classifyRecord" | "postgresql.classifyCardinality" => {
-            &["profile", "op", "source", "request"]
-        }
+        "postgresql.classifyField"
+        | "postgresql.classifyRecord"
+        | "postgresql.classifyCardinality"
+        | "postgresql.classifyNullability" => &["profile", "op", "source", "request"],
         "postgresql.verifyFieldClassification"
         | "postgresql.recoverFieldCapture"
         | "postgresql.verifyRecordClassification"
         | "postgresql.recoverRecordCapture"
         | "postgresql.verifyCardinalityClassification"
-        | "postgresql.recoverCardinalitySource" => &["profile", "op", "receipt", "current"],
+        | "postgresql.recoverCardinalitySource"
+        | "postgresql.verifyNullabilityClassification"
+        | "postgresql.recoverNullabilitySource" => &["profile", "op", "receipt", "current"],
         "postgresql.inspect"
         | "postgresql.export"
         | "postgresql.columns"
@@ -72,6 +75,9 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.classifyCardinality",
         "postgresql.verifyCardinalityClassification",
         "postgresql.recoverCardinalitySource",
+        "postgresql.classifyNullability",
+        "postgresql.verifyNullabilityClassification",
+        "postgresql.recoverNullabilitySource",
         "postgresql.inspect",
         "postgresql.export",
         "postgresql.columns",
@@ -103,7 +109,10 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         }
     }
     match op {
-        "postgresql.classifyField" | "postgresql.classifyRecord" | "postgresql.classifyCardinality" => {
+        "postgresql.classifyField"
+        | "postgresql.classifyRecord"
+        | "postgresql.classifyCardinality"
+        | "postgresql.classifyNullability" => {
             required(request, "source")?;
             required(request, "request")?;
         }
@@ -112,7 +121,9 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         | "postgresql.verifyRecordClassification"
         | "postgresql.recoverRecordCapture"
         | "postgresql.verifyCardinalityClassification"
-        | "postgresql.recoverCardinalitySource" => {
+        | "postgresql.recoverCardinalitySource"
+        | "postgresql.verifyNullabilityClassification"
+        | "postgresql.recoverNullabilitySource" => {
             required(request, "receipt")?;
             required(request, "current")?;
         }
@@ -253,21 +264,48 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
                 ctx,
             )?,
         )),
-        "postgresql.classifyCardinality" => umf_core::postgresql_classification::classify_cardinality(
-            required(request, "source")?,
-            required(request, "request")?,
-            ctx,
-        ),
-        "postgresql.verifyCardinalityClassification" => umf_core::postgresql_classification::verify_cardinality(
-            required(request, "receipt")?,
-            required(request, "current")?,
-            ctx,
-        ),
-        "postgresql.recoverCardinalitySource" => umf_core::postgresql_classification::recover_cardinality(
-            required(request, "receipt")?,
-            required(request, "current")?,
-            ctx,
-        ),
+        "postgresql.classifyCardinality" => {
+            umf_core::postgresql_classification::classify_cardinality(
+                required(request, "source")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.verifyCardinalityClassification" => {
+            umf_core::postgresql_classification::verify_cardinality(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverCardinalitySource" => {
+            umf_core::postgresql_classification::recover_cardinality(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )
+        }
+        "postgresql.classifyNullability" => {
+            umf_core::postgresql_classification::classify_nullability(
+                required(request, "source")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.verifyNullabilityClassification" => {
+            umf_core::postgresql_classification::verify_nullability(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverNullabilitySource" => Ok(Value::String(
+            umf_core::postgresql_classification::recover_nullability(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )?,
+        )),
         "postgresql.import" => {
             let capture = pg::PostgresqlCatalogCapture::import(string(request, "source")?, ctx)?;
             pg::document_value(string(request, "id")?, &capture, ctx)

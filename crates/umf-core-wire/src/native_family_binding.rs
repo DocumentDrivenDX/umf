@@ -7,12 +7,14 @@ use umf_core::{Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
+    "relationship-extra-projection",
     "relationship-parquet-projection",
     "cardinality-sqlserver-projection",
     "avro-cardinality",
     "avro-classification",
     "record-type",
     "nullability-avro-projection",
+    "nullability-sqlserver-projection",
     "facets-avro-projection",
     "key-avro-projection",
     "avro-relationship-projection",
@@ -137,6 +139,10 @@ pub fn metadata_wire(family: &str) -> String {
             crate::nullability_avro_projection_binding::PROFILE,
             &["projectNullabilityToAvro", "recoverNullabilityFromAvro"],
         ),
+        "nullability-sqlserver-projection" => (
+            crate::nullability_sqlserver_projection_binding::PROFILE,
+            &["projectNullabilityToSqlServer", "recoverNullabilityFromSqlServer"],
+        ),
         "facets-avro-projection" => (
             crate::facets_avro_projection_binding::PROFILE,
             &["projectFacetsToAvro", "recoverFacetsFromAvro"],
@@ -187,6 +193,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverRelationshipsPostgresqlIdeal",
                 "recoverRelationshipsPostgresqlNative",
             ],
+        ),
+        "relationship-extra-projection" => (
+            crate::relationship_extra_projection_binding::PROFILE,
+            &["prepareRelationshipToExtra", "completeRelationshipToExtra", "classifyRelationshipExtra", "verifyRelationshipExtra", "recoverRelationshipExtraIdeal", "recoverRelationshipExtraNative"],
         ),
         "relationship-parquet-projection" => (
             crate::relationship_parquet_projection_binding::PROFILE,
@@ -406,6 +416,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "verifyTableSpecFieldClassification",
                 "classifyTableSpecRecord",
                 "verifyTableSpecRecordClassification",
+                "classifyTableSpecCardinality",
+                "verifyTableSpecCardinalityClassification",
+                "recoverTableSpecCardinalitySource",
             ],
         ),
         "jsonld" => (
@@ -438,6 +451,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyCardinality",
                 "verifyCardinalityClassification",
                 "recoverCardinalitySource",
+                "classifyNullability",
+                "verifyNullabilityClassification",
+                "recoverNullabilitySource",
             ],
         ),
         "sqlserver" => (
@@ -679,6 +695,9 @@ pub fn execute_wire_with_control(
         "nullability-avro-projection" => {
             crate::nullability_avro_projection_binding::execute_wire_with_control(wire, control)
         }
+        "nullability-sqlserver-projection" => {
+            crate::nullability_sqlserver_projection_binding::execute_wire_with_control(wire, control)
+        }
         "facets-avro-projection" => {
             crate::facets_avro_projection_binding::execute_wire_with_control(wire, control)
         }
@@ -699,6 +718,7 @@ pub fn execute_wire_with_control(
             )
         }
         "relationship-postgresql-projection" => crate::relationship_postgresql_projection_binding::execute_wire_with_control(wire, control),
+        "relationship-extra-projection" => crate::relationship_extra_projection_binding::execute_wire_with_control(wire, control),
         "relationship-parquet-projection" => {
             crate::relationship_parquet_projection_binding::execute_wire_with_control(wire, control)
         }

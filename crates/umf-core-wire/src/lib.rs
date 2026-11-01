@@ -17,6 +17,8 @@ pub mod avro_json_schema_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod nullability_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod nullability_sqlserver_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod facets_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod key_avro_projection_binding;
@@ -29,6 +31,8 @@ pub mod relationship_sqlserver_projection_binding;
 pub mod relationship_postgresql_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod relationship_parquet_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod relationship_extra_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection_binding;
 #[cfg(feature = "embedded-adapters")]

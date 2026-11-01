@@ -7,6 +7,7 @@ import manifest from '../../../spec/extensions/tablespec/package.json';
 import type {importTableSpec,exportTableSpec,getTableSpecColumn,getTableSpecTable,editTableSpecColumn,editTableSpecTable,importTableSpecBundle,exportTableSpecBundle} from './index';
 import type {TableSpecFieldClassification,TableSpecFieldRequest} from '../../core-ideals/tablespec-field';
 import type {TableSpecRecordClassification,TableSpecRecordRequest} from '../../core-ideals/tablespec-record-package';
+import type {TableSpecCardinalityClassification,TableSpecCardinalityRequest} from '../../core-ideals/cardinality-tablespec';
 
 export interface TableSpecNativeFamilyEngine {
  tablespec:{
@@ -23,6 +24,9 @@ export interface TableSpecNativeFamilyEngine {
   verifyTableSpecFieldClassification(fields:{receipt:TableSpecFieldClassification;current:Document}):unknown;
   classifyTableSpecRecord(fields:{document:Document;request:TableSpecRecordRequest}):unknown;
   verifyTableSpecRecordClassification(fields:{receipt:TableSpecRecordClassification;current:Document}):unknown;
+  classifyTableSpecCardinality(fields:{document:Document;request:TableSpecCardinalityRequest}):unknown;
+  verifyTableSpecCardinalityClassification(fields:{receipt:TableSpecCardinalityClassification;current:Document}):unknown;
+  recoverTableSpecCardinalitySource(fields:{receipt:TableSpecCardinalityClassification;current:Document}):unknown;
  }
 }
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
@@ -35,7 +39,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
+   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_CARDINALITY_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
@@ -54,5 +58,8 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   verifyTableSpecFieldClassification(receipt:TableSpecFieldClassification,current:Document):TableSpecFieldClassification{return call(()=>engine.tablespec.verifyTableSpecFieldClassification({receipt,current}) as TableSpecFieldClassification);},
   classifyTableSpecRecord(document:Document,request:TableSpecRecordRequest):TableSpecRecordClassification{return call(()=>engine.tablespec.classifyTableSpecRecord({document,request}) as TableSpecRecordClassification);},
   verifyTableSpecRecordClassification(receipt:TableSpecRecordClassification,current:Document):TableSpecRecordClassification{return call(()=>engine.tablespec.verifyTableSpecRecordClassification({receipt,current}) as TableSpecRecordClassification);},
+  classifyTableSpecCardinality(document:Document,request:TableSpecCardinalityRequest):TableSpecCardinalityClassification{return call(()=>engine.tablespec.classifyTableSpecCardinality({document,request}) as TableSpecCardinalityClassification);},
+  verifyTableSpecCardinalityClassification(receipt:TableSpecCardinalityClassification,current:Document):TableSpecCardinalityClassification{return call(()=>engine.tablespec.verifyTableSpecCardinalityClassification({receipt,current}) as TableSpecCardinalityClassification);},
+  recoverTableSpecCardinalitySource(receipt:TableSpecCardinalityClassification,current:Document):string|Record<string,string>{return call(()=>engine.tablespec.recoverTableSpecCardinalitySource({receipt,current}) as string|Record<string,string>);},
  });
 }

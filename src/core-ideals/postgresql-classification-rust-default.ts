@@ -3,6 +3,7 @@ import {UmfError,type Document} from '../model/types';
 import type {PostgresqlFieldClassification,PostgresqlFieldRequest} from './postgresql-field';
 import type {PostgresqlRecordClassification,PostgresqlRecordRequest} from './postgresql-record';
 import type {PostgresqlCardinalityClassification,PostgresqlCardinalityRequest} from './cardinality-postgresql';
+import type {PostgresqlNullabilityClassification,PostgresqlNullabilityRequest} from './nullability-postgresql';
 type Guard=(error:unknown)=>boolean;
 interface Engine { postgresql:{
  classifyField(fields:{source:Document;request:PostgresqlFieldRequest}):unknown;
@@ -14,6 +15,9 @@ interface Engine { postgresql:{
  classifyCardinality(fields:{source:Document;request:PostgresqlCardinalityRequest}):unknown;
  verifyCardinalityClassification(fields:{receipt:PostgresqlCardinalityClassification;current:Document}):unknown;
  recoverCardinalitySource(fields:{receipt:PostgresqlCardinalityClassification;current:Document}):unknown;
+ classifyNullability(fields:{source:Document;request:PostgresqlNullabilityRequest}):unknown;
+ verifyNullabilityClassification(fields:{receipt:PostgresqlNullabilityClassification;current:Document}):unknown;
+ recoverNullabilitySource(fields:{receipt:PostgresqlNullabilityClassification;current:Document}):unknown;
 }}
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
 function publicError(error:unknown,isNative:Guard):never{
@@ -33,5 +37,8 @@ export function createPostgresqlClassificationRustDefault(engine:Engine,isNative
   classifyPostgresqlCardinality(source:Document,request:PostgresqlCardinalityRequest):PostgresqlCardinalityClassification{try{return engine.postgresql.classifyCardinality({source,request}) as PostgresqlCardinalityClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
   verifyPostgresqlCardinalityClassification(receipt:PostgresqlCardinalityClassification,current:Document):PostgresqlCardinalityClassification{try{return engine.postgresql.verifyCardinalityClassification({receipt,current}) as PostgresqlCardinalityClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
   recoverPostgresqlCardinalitySource(receipt:PostgresqlCardinalityClassification,current:Document):{nativeSource:string;supplement:string}{try{return engine.postgresql.recoverCardinalitySource({receipt,current}) as {nativeSource:string;supplement:string}}catch(error){publicError(error,isNativeUmfCoreError)}},
+  classifyPostgresqlNullability(source:Document,request:PostgresqlNullabilityRequest):PostgresqlNullabilityClassification{try{return engine.postgresql.classifyNullability({source,request}) as PostgresqlNullabilityClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
+  verifyPostgresqlNullabilityClassification(receipt:PostgresqlNullabilityClassification,current:Document):PostgresqlNullabilityClassification{try{return engine.postgresql.verifyNullabilityClassification({receipt,current}) as PostgresqlNullabilityClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
+  recoverPostgresqlNullabilitySource(receipt:PostgresqlNullabilityClassification,current:Document):string{try{return engine.postgresql.recoverNullabilitySource({receipt,current}) as string}catch(error){publicError(error,isNativeUmfCoreError)}},
  });
 }
