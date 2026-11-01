@@ -98,32 +98,63 @@ fn created_command_only(
     let Some(body) = get(command, "body") else {
         return Ok(false);
     };
-    let Some(table_id) = get(body, "table").and_then(text) else {
-        return Ok(false);
-    };
-    if !created.contains(&table_id) {
+    if get(command, "id")
+        .and_then(text)
+        .is_none_or(|id| id.is_empty())
+        || (eq_text(get(command, "version"), "umf.table-operation/0.1")
+            && eq_text(get(body, "kind"), "query"))
+    {
         return Ok(false);
     }
-    if !supported_created_single_table_command(command, path, ctx)? {
+    let Some(tables) = payload(document, module_id)
+        .and_then(|value| get(value, "tables"))
+        .and_then(array_items)
+    else {
+        return Ok(false);
+    };
+    let refs = match super::command_refs::command_references(command, path, tables, ctx) {
+        Ok(refs) => refs,
+        Err(error) if !error.is_control_failure() => return Ok(false),
+        Err(error) => return Err(error),
+    };
+    if refs.tables.is_empty() || refs.tables.iter().any(|table| !created.contains(table)) {
         return Ok(false);
     }
-    let Some(table) = source_table(document, module_id, &table_id) else {
-        return Ok(false);
-    };
-    let Some(columns) = get(table, "columns").and_then(array_items) else {
-        return Ok(false);
-    };
-    for reference in command_field_refs(body, path, ctx)? {
-        ctx.charge_work(columns.len(), Utf16::from(path))?;
-        if !columns
+    if eq_text(get(command, "version"), "umf.table-operation/0.1") {
+        match command_parameter_domains(command, document, tables, path, ctx) {
+            Ok(_) => {}
+            Err(error) if !error.is_control_failure() => return Ok(false),
+            Err(error) => return Err(error),
+        }
+    }
+    for use_field in refs.fields {
+        if !created.contains(&use_field.table) {
+            return Ok(false);
+        }
+        let Some(table) = tables
             .iter()
-            .any(|column| get(column, "field").is_some_and(|field| ref_equal(field, &reference)))
-        {
+            .find(|table| eq_text(get(table, "id"), &use_field.table))
+        else {
+            return Ok(false);
+        };
+        let Some(columns) = get(table, "columns").and_then(array_items) else {
+            return Ok(false);
+        };
+        ctx.charge_work(columns.len(), Utf16::from(path))?;
+        if !columns.iter().any(|column| {
+            get(column, "field").is_some_and(|field| ref_equal(field, &use_field.field))
+        }) {
             return Ok(false);
         }
     }
-    if let Some(key) = get(body, "cursorKey").or_else(|| get(body, "conflictKey")) {
-        let Some(name) = text(key) else {
+    for use_key in refs.keys {
+        if !created.contains(&use_key.table) {
+            return Ok(false);
+        }
+        let Some(table) = tables
+            .iter()
+            .find(|table| eq_text(get(table, "id"), &use_key.table))
+        else {
             return Ok(false);
         };
         let Some(record) =
@@ -133,7 +164,7 @@ fn created_command_only(
         };
         if !get(record, "keys")
             .and_then(array_items)
-            .is_some_and(|keys| keys.iter().any(|key| eq_text(get(key, "id"), &name)))
+            .is_some_and(|keys| keys.iter().any(|key| eq_text(get(key, "id"), &use_key.key)))
         {
             return Ok(false);
         }
@@ -2264,6 +2295,9 @@ pub(super) fn discover_mixed_create_fill(
     let options = o(vec![
         ("tableIntents", a(intents.to_vec())),
         ("backfills", a(vec![backfill])),
+        // Discovery has no seed selection. The source-closure check still
+        // needs the explicit empty selection rather than a missing member.
+        ("seedSets", a(vec![])),
     ]);
     verify_mixed_create_source(&previous, &next, &options, &created, ctx)?;
     Ok(a(mixed_review_candidates(

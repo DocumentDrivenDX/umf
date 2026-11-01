@@ -93,59 +93,62 @@ remaining callable operations are integrated, and repair only actual failures.
 
 Current integration order:
 
-1. Verify the four repaired normal workflows from the last batch: G01 retained
-   Field backfill, G11 selected replacements, PostgreSQL→Avro and Arrow↔Spark.
-   G01 emitted NOT NULL twice; G11 validated selected markers against an
-   incomplete discovery sequence. Keep the existing refusal guards intact.
-2. Admit reviewed Security authority/catalog/purpose/obligation kernels and the
-   next projections: PostgreSQL row→JSON Schema, Parquet→Avro and the composed
-   source→Avro→TableSpec operation. Arrow uses the current FlatBuffer model
-   profile; its integration JSON schema is a different adapter.
-3. Keep Luna implementation lanes on the missing FlatBuffer binary codec and
-   cross-format projections, DDD GraphQL and subsequent binding projections.
-   Sol completes the current inventory compiler after the earlier Luna attempt
-   failed to implement its actual API. Activate existing Rust core-ideal kernels
-   through exact public default routes; do not rewrite implemented primitives.
-4. Delete public reference/candidate executable exports and their SDK bundles
-   once current defaults are callable. Complete local package/browser/consumer
-   integration, review, merge current main and publish binaries without Actions.
+1. Finish the fixed capability batch before admitting another: SQL Server full
+   physical projection, PostgreSQL relationship layout, Avro facets/nullability
+   classification, and inventory parameter/cross-table command references. Run
+   the new normal/refusal cases and the three previously failing public workflows
+   through one native build. Repair actual compile/runtime failures in this batch.
+2. Review and admit the next complete families: Parquet nullability and Field
+   classification, plus the full DDD PostgreSQL composer. Luna continues the
+   remaining classifier and relationship-projection families in parallel scratch
+   trees while Sol reviews and the shared build verifies the admitted batch.
+3. Close current inventory seed/history behavior, then the remaining reachable
+   adapter, model and extension semantics. Reuse existing Rust primitives and
+   common receipt mechanics. A wrapper calling a TypeScript composite around a
+   Rust inspector does not close the composite's ownership.
+4. Retire public reference/candidate executable exports and their SDK bundles
+   after all current defaults are callable. Run the complete local Cargo, host,
+   browser and installed-package integration once; repair actual failures, review,
+   merge current main and publish the complete successor release without Actions.
+
+Each capability has an implementation owner and a focused normal/refusal baseline.
+A passing baseline leaves the repair queue unless its behavior or dependency changes.
+Source review and metadata compilation precede a shared native build; they do not
+replace runtime tests. Do not grow an admitted batch while compiler fixes prevent
+it from reaching runtime.
 
 ## Latest focused capability results
 
-The latest production TypeScript and Rust metadata checks pass, as does the
-Python source-resource closure. The native build completes. Its focused Node
-batch passes eleven cases: Delta binding (normal and strict), Iceberg binding,
-authored Avro nullability and facets (normal/recovery and refusal), Parquet
-Relationship observation/verification/recovery, general nested Parquet Record
-classification, initial inventory and irreversible-purge disclosure. The utility
-error-mapping repair also passes. These passing cases are excluded from repair
-runs unless their behavior or dependencies change.
+The current production TypeScript, Python source-resource closure and Rust
+metadata checks pass. The native bindings and CLI build. The focused capability
+batch runs seven Rust cases and ten Node cases, with seven passing overall.
 
-The next repair batch passes Avro Key/Relationship classification, verification
-and recovery plus SQL Server table projection and scalar-mapping refusal. Three
-Node cases still fail: SQL Server layout wire admission, the observed-catalog
-table/index composite, and retained G02 discovery. All three Rust G02 cases also
-fail: the base case reaches discovery after successful compilation/verification,
-while selected seeds and created commands stop at reviewed-marker comparison.
-Exact synthetic-option, wire and tagged-catalog repairs are prepared. Strict
-marker equality remains required. Parameter, cross-table and history closure
-continues in scratch. Current TypeScript explicitly refuses removal compilation
-with `TABLE_REMOVAL_EFFECTS_NOT_LOWERED`; Rust preserves that refusal while
-supporting removal discovery and irreversible-purge disclosure.
+Passing cases cover initial inventory, cross-table command dependencies, invalid
+cross-table Field ownership refusal, retained G02 creation, the public retained
+G02 compile/discover/serialize/verify workflow, the SQL Server table/index composite,
+and Avro facet scalar-mismatch refusal. Exclude these from repair runs unless a
+later change affects their behavior or dependency.
 
-Sol reviewed the new Rust SQL Server relationship-layout kernel; it compiles and its first runtime baseline exposed the wire admission failure. The full outer SQL Server binding projection and Avro facets classifier have passed source review and are queued for compiler/runtime admission.
-Repeated classify/verify/recover families should share Rust receipt mechanics
-with format-specific observers. Authored projection mappers remain separate
-Rust kernels. Existing passing Action, Saga, Security, Bit128, migration,
-projection and browser workflows retain the scope recorded below.
+The remaining failures are three G02 created-command/seed cases, PostgreSQL and
+SQL Server relationship layout normals, two full SQL Server physical projections,
+Avro nullability classification routing, and Avro facets target construction.
+G02 discovery incorrectly counts independent created commands as the selected
+fill operation. The Avro repairs add the missing request admission and conform
+extension bindings to their declared schema. Layout and physical projection
+repairs address exact source identities and core schema-resource closure. Keep
+strict reviewed-marker equality and existing refusal guards.
 
-Current remaining implementation cuts are selected inventory seed/history
-closure; relationship and binding projection composites still executed in
-TypeScript; remaining adapter, model and core-ideal default activation; and
-browser/Python/CLI package integration. Retire executable reference/candidate
-SDK exports only after current public defaults are callable. Then run the
-complete local Rust, host, browser and installed-package suites, repair actual
-failures, review, merge and publish the successor release.
+The next new implementation batch is Parquet nullability, Field and Key
+classification plus the full DDD PostgreSQL composer. Luna continues remaining
+classifier and relationship-projection kernels while Sol reviews, integrates and
+completes linked inventory seed/history behavior after the earlier Luna failure.
+Preserve authored-projection regression tests when adding classifier baselines.
+Current removal compilation retains the existing
+`TABLE_REMOVAL_EFFECTS_NOT_LOWERED` refusal; discovery and irreversible-purge
+disclosure remain supported.
+
+Remaining work is current semantic ownership closure, executable SDK surface
+retirement, complete local integration, review, merge and the successor release.
 
 ## Current callable baseline
 
@@ -163,7 +166,7 @@ failures, review, merge and publish the successor release.
 | Saga | Supported Action declaration → inspect → edit → assessment and opaque-source refusal pass through Node, CLI and installed Python. JSON object member order no longer changes parameter identity. | Browser/package activation. |
 | Action selectors/rules/bulk | Native selector compilation, typed input admission, prepared identity selection, rule compilation and bulk-outcome validation pass all eight new Node normal/refusal cases. | Browser/package activation. |
 | Security | Native function/value/query properties, source/parameter/domain activation and V2 source migration/transport pass Node baselines; basic query join passes Chromium. | Legacy policy/evaluation/registration and V1/V2 disclosure pass Node; authority/catalog/purpose/obligation cut and final host activation remain. |
-| Migration and row-scope | Discovery `.2`/`.3`/`.4`, G04 recipes, caller row-scope, compiler `.4`/`.5`/`.7`, public compile/verify and reviewed digest pass focused baselines. G02 orders revoke before column changes and grant afterward. | G01 `.3` ordering and G11 `.6` supported replacement baseline; inventory compilation/discovery/serialization/verification. |
+| Migration and row-scope | Discovery `.2`/`.3`/`.4`, G04 recipes, caller row-scope, compiler `.4`/`.5`/`.7`, public compile/verify and reviewed digest pass focused baselines. G02 orders revoke before column changes and grant afterward. | G01 `.3` and G11 `.6` normal workflows pass; remaining inventory command/seed/history closure and final package integration. |
 | Python/CLI/package | Native adapters, Action Plan, callback semantics, Delta/RDF/Avro/PostgreSQL workflows and sdist include closure pass local focused cases without JavaScript on PATH. | Complete installed wheel/sdist, supported local platform builds and final CLI consumer. |
 
 ### Current public executable implementation queue (V4 barrel)

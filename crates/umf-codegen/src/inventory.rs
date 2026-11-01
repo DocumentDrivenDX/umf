@@ -2,6 +2,7 @@
 //! Current G10 initial-create inventory migration, derived from verified source.
 //! This module intentionally handles the original initial-create branch only.
 
+mod command_refs;
 mod g02;
 
 use std::collections::{BTreeMap, BTreeSet};
@@ -1108,43 +1109,12 @@ fn project_initial(
             "Renderer source binding is duplicated",
         ));
     }
-    // The source projector emits dependency categories in separate passes.
-    // Preserve that order across the complete table graph.
-    let mut ordered_dependencies = Vec::new();
-    for reason in [
-        "typed-field-reference",
-        "owned-by-table",
-        "grant-requires-column",
-        "key-requires-column",
-        "operation-requires-table",
-        "operation-requires-field",
-        "seed-set-requires-table",
-    ] {
-        for edge in &dependencies {
-            if eq_text(get(edge, "reason"), reason) {
-                ordered_dependencies.push(edge.clone());
-            }
-        }
-    }
-    if ordered_dependencies.len() != dependencies.len() {
-        return Err(err(
-            "TABLE_INVENTORY_UNSUPPORTED",
-            "/next/source",
-            "An unsupported cross-table dependency was projected",
-        ));
-    }
     let mut projected_operations = Vec::new();
+    let mut operation_dependencies = Vec::new();
     let mut command_ids = BTreeSet::new();
     for (index, command) in source_commands.iter().enumerate() {
         ctx.charge_work(1, Utf16::from("/next/source/commands"))?;
         let path = format!("{extension_path}/commands/{index}");
-        if !supported_created_single_table_command(command, &path, ctx)? {
-            return Err(err(
-                "TABLE_INVENTORY_UNSUPPORTED",
-                &path,
-                "Command references are not closed over one created table",
-            ));
-        }
         let id = member_text(command, "id", &path)?;
         if id.is_empty() || !command_ids.insert(id.clone()) {
             return Err(err(
@@ -1153,50 +1123,135 @@ fn project_initial(
                 "Duplicate or empty command identity",
             ));
         }
-        let body = val(command, "body", &path)?;
-        let table_id = member_text(body, "table", &path)?;
-        let table = tables
-            .iter()
-            .find(|table| eq_text(get(table, "id"), &table_id))
-            .ok_or_else(|| {
-                err(
-                    "TABLE_INVENTORY_UNSUPPORTED",
-                    &path,
-                    "Command table is unbound",
-                )
-            })?;
+        let refs = command_refs::command_references(command, &path, declarations, ctx)?;
         let command_identity = identity("operation", None, s(&id));
-        let source_key = hash(&command_identity, ctx)?;
-        if source_paths.insert(source_key, path.clone()).is_some() {
+        let command_key = hash(&command_identity, ctx)?;
+        if source_paths
+            .insert(command_key.clone(), path.clone())
+            .is_some()
+        {
             return Err(err(
                 "TABLE_INVENTORY_UNSUPPORTED",
                 &path,
                 "Duplicate source-derived command identity",
             ));
         }
-        let columns = items(val(table, "columns", &path)?, &path)?;
-        for field in command_field_refs(body, &path, ctx)? {
+        for table_id in &refs.tables {
+            let declared = declarations
+                .iter()
+                .find(|table| eq_text(get(table, "id"), table_id))
+                .ok_or_else(|| {
+                    err(
+                        "TABLE_INVENTORY_UNSUPPORTED",
+                        &path,
+                        "Command table is unbound",
+                    )
+                })?;
+            let target = hash(
+                &identity(
+                    "table",
+                    Some(table_id),
+                    val(declared, "record", &path)?.clone(),
+                ),
+                ctx,
+            )?;
+            if !source_paths.contains_key(&target) {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Command table has no catalog subject",
+                ));
+            }
+            operation_dependencies.push(edge(
+                &command_key,
+                &target,
+                "operation-requires-table",
+                &path,
+            ));
+        }
+        for binding in &refs.fields {
+            let table = declarations
+                .iter()
+                .find(|table| eq_text(get(table, "id"), &binding.table))
+                .ok_or_else(|| {
+                    err(
+                        "TABLE_INVENTORY_UNSUPPORTED",
+                        &path,
+                        "Command Field table is unbound",
+                    )
+                })?;
+            let columns = items(val(table, "columns", &path)?, &path)?;
             ctx.charge_work(columns.len(), Utf16::from(path.as_str()))?;
             if !columns.iter().any(|column| {
-                get(column, "field").is_some_and(|candidate| ref_equal(candidate, &field))
+                get(column, "field").is_some_and(|field| ref_equal(field, &binding.field))
             }) {
                 return Err(err(
                     "TABLE_INVENTORY_UNSUPPORTED",
                     &path,
-                    "Command Field is not bound to the exact source table",
+                    "Command Field is not bound to its exact source table",
                 ));
             }
+            let target = hash(
+                &identity("column", Some(&binding.table), binding.field.clone()),
+                ctx,
+            )?;
+            if !source_paths.contains_key(&target) {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Command Field has no catalog subject",
+                ));
+            }
+            operation_dependencies.push(edge(
+                &command_key,
+                &target,
+                "operation-requires-field",
+                &path,
+            ));
         }
+        for binding in &refs.keys {
+            let table = declarations
+                .iter()
+                .find(|table| eq_text(get(table, "id"), &binding.table))
+                .ok_or_else(|| {
+                    err(
+                        "TABLE_INVENTORY_UNSUPPORTED",
+                        &path,
+                        "Command Key table is unbound",
+                    )
+                })?;
+            let (record, _) = find_element(document, val(table, "record", &path)?)?;
+            let keys = items(val(record, "keys", &path)?, &path)?;
+            if !keys.iter().any(|key| eq_text(get(key, "id"), &binding.key)) {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Command Key is not bound to its Record",
+                ));
+            }
+            let target = hash(&identity("key", Some(&binding.table), s(&binding.key)), ctx)?;
+            if !source_paths.contains_key(&target) {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Command Key has no catalog subject",
+                ));
+            }
+            operation_dependencies.push(edge(&command_key, &target, binding.reason, &path));
+        }
+        let parameter_domains =
+            command_parameter_domains(command, document, declarations, &path, ctx)?;
         projected_operations.push(row(
             command_identity,
             o(vec![
                 ("operation", command.clone()),
-                ("logicalParameterDomains", a(vec![])),
+                ("logicalParameterDomains", a(parameter_domains)),
             ]),
             vec![],
         ));
     }
     let mut seed_operations = Vec::new();
+    let mut seed_dependencies = Vec::new();
     let mut seed_states = Vec::new();
     let mut seed_ids = BTreeSet::new();
     for (index, seed) in source_seed_sets.iter().enumerate() {
@@ -1245,10 +1300,111 @@ fn project_initial(
                         "Seed row table is unbound",
                     )
                 })?;
-            let _ = val(table, "record", &path)?;
+            let target = hash(
+                &identity(
+                    "table",
+                    Some(&table_id),
+                    val(table, "record", &path)?.clone(),
+                ),
+                ctx,
+            )?;
+            if !source_paths.contains_key(&target) {
+                return Err(err(
+                    "TABLE_INVENTORY_UNSUPPORTED",
+                    &path,
+                    "Seed row table has no catalog subject",
+                ));
+            }
+            seed_dependencies.push(edge(&source_key, &target, "seed-set-requires-table", &path));
         }
     }
     projected_operations.extend(seed_operations);
+    // The table catalog is projected by category; source operations and seed
+    // rows then retain their declaration order, including mixed reference kinds.
+    let mut ordered_dependencies = Vec::new();
+    for dependency in &dependencies {
+        if eq_text(get(dependency, "reason"), "typed-field-reference") {
+            ordered_dependencies.push(dependency.clone());
+        }
+    }
+    // The catalog projector emits ownership edges by collection, then by the
+    // declared source order within that collection.  This matters when one
+    // operation joins two tables into a single review closure.
+    let mut owned_count = 0usize;
+    for collection in [
+        "columns",
+        "keys",
+        "checks",
+        "foreignKeys",
+        "indexes",
+        "policies",
+        "grants",
+        "comments",
+    ] {
+        for subject in catalog.get(collection).expect("catalog collection") {
+            let id = val(subject, "identity", "/catalog/identity")?;
+            if get(id, "table") == Some(&Value::Null) {
+                continue;
+            }
+            let subject_key = hash(id, ctx)?;
+            let edge = dependencies
+                .iter()
+                .find(|dependency| {
+                    eq_text(get(dependency, "reason"), "owned-by-table")
+                        && eq_text(get(dependency, "from"), &subject_key)
+                })
+                .ok_or_else(|| {
+                    err(
+                        "TABLE_INVENTORY_UNSUPPORTED",
+                        "/catalog",
+                        "Catalog subject lacks table ownership",
+                    )
+                })?;
+            ordered_dependencies.push(edge.clone());
+            owned_count += 1;
+        }
+    }
+    if owned_count
+        != dependencies
+            .iter()
+            .filter(|edge| eq_text(get(edge, "reason"), "owned-by-table"))
+            .count()
+    {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/catalog",
+            "Table ownership is duplicated",
+        ));
+    }
+    for reason in ["grant-requires-column", "key-requires-column"] {
+        for dependency in &dependencies {
+            if eq_text(get(dependency, "reason"), reason) {
+                ordered_dependencies.push(dependency.clone());
+            }
+        }
+    }
+    if ordered_dependencies.len() != dependencies.len() {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/next/source",
+            "An unsupported table dependency was projected",
+        ));
+    }
+    ordered_dependencies.extend(operation_dependencies);
+    ordered_dependencies.extend(seed_dependencies);
+    rebuild_initial_reviews(
+        document,
+        &extension_path,
+        declarations,
+        source_seed_sets,
+        &catalog,
+        &ordered_dependencies,
+        &projected_operations,
+        &source_paths,
+        &mut reviews,
+        &mut inventory_tables,
+        ctx,
+    )?;
     Ok(Projection {
         catalog: o(COLLECTIONS
             .iter()
@@ -1263,6 +1419,219 @@ fn project_initial(
         reviews,
         inventory_tables,
     })
+}
+
+fn rebuild_initial_reviews(
+    document: &Value,
+    extension_path: &str,
+    declarations: &[Value],
+    source_seed_sets: &[Value],
+    catalog: &BTreeMap<String, Vec<Value>>,
+    dependencies: &[Value],
+    operations: &[Value],
+    source_subject_paths: &BTreeMap<String, String>,
+    reviews: &mut [Value],
+    inventory_tables: &mut [Value],
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    if declarations.len() != reviews.len() || declarations.len() != inventory_tables.len() {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            "/next/source",
+            "Table review count differs from source",
+        ));
+    }
+    let mut all_source_paths = Vec::new();
+    source_paths(document, String::new(), &mut all_source_paths, ctx)?;
+    let extension_parent = extension_path
+        .strip_suffix("/extensions/umf.tables")
+        .ok_or_else(|| {
+            err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                extension_path,
+                "Invalid table extension source path",
+            )
+        })?;
+    let other_extensions = format!("{extension_parent}/extensions");
+    for (index, declaration) in declarations.iter().enumerate() {
+        let table_id = member_text(declaration, "id", extension_path)?;
+        let table_path = format!("{extension_path}/tables/{index}");
+        let table_root = hash(
+            &identity(
+                "table",
+                Some(&table_id),
+                val(declaration, "record", &table_path)?.clone(),
+            ),
+            ctx,
+        )?;
+        let mut included = BTreeSet::from([table_root]);
+        loop {
+            let before = included.len();
+            for dependency in dependencies {
+                ctx.charge_work(1, Utf16::from(table_path.as_str()))?;
+                let from = member_text(dependency, "from", "/dependencies/from")?;
+                let to = member_text(dependency, "to", "/dependencies/to")?;
+                if included.contains(&from) {
+                    included.insert(to.clone());
+                }
+                if included.contains(&to) {
+                    included.insert(from);
+                }
+            }
+            if included.len() == before {
+                break;
+            }
+        }
+        let old_meaning = val(&reviews[index], "meaning", "/reviews/meaning")?;
+        let physical = val(
+            old_meaning,
+            "physicalTable",
+            "/reviews/meaning/physicalTable",
+        )?
+        .clone();
+        let record = val(
+            old_meaning,
+            "recordDefinition",
+            "/reviews/meaning/recordDefinition",
+        )?
+        .clone();
+        let fields = val(
+            old_meaning,
+            "fieldDefinitions",
+            "/reviews/meaning/fieldDefinitions",
+        )?
+        .clone();
+        let mut meaning_catalog = Vec::new();
+        for collection in COLLECTIONS {
+            let mut selected = Vec::new();
+            for subject in catalog.get(collection).expect("catalog collection") {
+                let id = val(subject, "identity", "/catalog/identity")?;
+                let global_grant = collection == "grants" && get(id, "table") == Some(&Value::Null);
+                if global_grant || included.contains(&hash(id, ctx)?) {
+                    selected.push(subject.clone());
+                }
+            }
+            meaning_catalog.push((collection, a(selected)));
+        }
+        let selected_edges = dependencies
+            .iter()
+            .filter(|edge| {
+                get(edge, "from")
+                    .and_then(text)
+                    .is_some_and(|from| included.contains(&from))
+                    && get(edge, "to")
+                        .and_then(text)
+                        .is_some_and(|to| included.contains(&to))
+            })
+            .cloned()
+            .collect::<Vec<_>>();
+        let mut selected_paths = BTreeSet::from([table_path]);
+        selected_paths.insert(member_text(
+            &record,
+            "path",
+            "/reviews/recordDefinition/path",
+        )?);
+        if source_at(document, "/vocabularies/umf.tables").is_some() {
+            selected_paths.insert("/vocabularies/umf.tables".to_owned());
+        }
+        if let Some(Value::Object(entries)) = source_at(document, &other_extensions) {
+            for (key, _) in entries {
+                let name = key.to_utf8().map_err(|_| {
+                    err(
+                        "TABLE_INVENTORY_UNSUPPORTED",
+                        &other_extensions,
+                        "Opaque extension name cannot form a source path",
+                    )
+                })?;
+                if name != "umf.tables" {
+                    selected_paths.insert(format!("{other_extensions}/{}", pointer(&name)));
+                    selected_paths.insert(format!("/vocabularies/{}", pointer(&name)));
+                }
+            }
+        }
+        for field in items(&fields, "/reviews/fieldDefinitions")? {
+            selected_paths.insert(member_text(
+                field,
+                "path",
+                "/reviews/fieldDefinitions/path",
+            )?);
+        }
+        for key in &included {
+            if let Some(path) = source_subject_paths.get(key) {
+                selected_paths.insert(path.clone());
+            }
+        }
+        let mut selected_operation_ids = Vec::new();
+        for operation in operations {
+            let id = val(operation, "identity", "/operations/identity")?;
+            if !included.contains(&hash(id, ctx)?) || !eq_text(get(id, "kind"), "operation") {
+                continue;
+            }
+            selected_operation_ids.push(val(id, "subject", "/operations/subject")?.clone());
+            let domains = items(
+                val(
+                    val(operation, "meaning", "/operations/meaning")?,
+                    "logicalParameterDomains",
+                    "/operations/logicalParameterDomains",
+                )?,
+                "/operations/logicalParameterDomains",
+            )?;
+            for domain in domains {
+                selected_paths.insert(member_text(
+                    domain,
+                    "definitionPath",
+                    "/operations/logicalParameterDomains/definitionPath",
+                )?);
+            }
+        }
+        for edge in &selected_edges {
+            selected_paths.insert(member_text(edge, "sourcePath", "/dependencies/sourcePath")?);
+        }
+        let mut closure = Vec::new();
+        for path in &all_source_paths {
+            if !selected_paths.contains(path) {
+                continue;
+            }
+            if let Some(value) = source_at(document, path) {
+                closure.push(o(vec![
+                    ("path", s(if path.is_empty() { "/" } else { path })),
+                    ("value", value.clone()),
+                ]));
+            }
+        }
+        let mut seed_definitions = Vec::new();
+        for (seed_index, seed) in source_seed_sets.iter().enumerate() {
+            let seed_id = member_text(seed, "id", "/next/source/seedSets/id")?;
+            let identity = identity("seed-set", None, s(&seed_id));
+            if !included.contains(&hash(&identity, ctx)?) {
+                continue;
+            }
+            let path = format!("{extension_path}/seedSets/{seed_index}");
+            seed_definitions.push(o(vec![
+                ("id", s(&seed_id)),
+                ("definitionDigest", s(&hash(seed, ctx)?)),
+                ("sourcePath", s(&path)),
+                ("definition", seed.clone()),
+            ]));
+        }
+        let meaning = o(vec![
+            ("physicalTable", physical),
+            ("recordDefinition", record),
+            ("fieldDefinitions", fields),
+            ("sourceClosure", a(closure)),
+            ("catalog", o(meaning_catalog)),
+            ("dependencies", a(selected_edges)),
+            ("operationIds", a(selected_operation_ids)),
+            ("seedDefinitions", a(seed_definitions)),
+        ]);
+        replace(&mut reviews[index], "meaning", meaning.clone())?;
+        replace(
+            &mut inventory_tables[index],
+            "meaningDigest",
+            s(&hash(&meaning, ctx)?),
+        )?;
+    }
+    Ok(())
 }
 
 fn renderer_operations(
@@ -1423,102 +1792,64 @@ fn renderer_operations(
     Ok(operations)
 }
 
-fn command_field_refs(
-    body: &Value,
+fn command_parameter_domains(
+    command: &Value,
+    document: &Value,
+    tables: &[Value],
     path: &str,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Value>, EngineError> {
-    let mut fields = Vec::new();
-    for key in ["fields", "returning", "updateFields"] {
-        if let Some(values) = get(body, key) {
-            for value in items(values, &format!("{path}/{key}"))? {
-                ctx.charge_work(1, Utf16::from(path))?;
-                if !exact_fields(value, &["module", "element"]) {
-                    return Err(err(
-                        "TABLE_INVENTORY_UNSUPPORTED",
-                        &format!("{path}/{key}"),
-                        "Command Field reference is malformed",
-                    ));
-                }
-                fields.push(value.clone());
+    let parameters = items(
+        val(command, "parameters", &format!("{path}/parameters"))?,
+        &format!("{path}/parameters"),
+    )?;
+    if eq_text(get(command, "version"), "umf.table-operation/0.2") && !parameters.is_empty() {
+        return Err(err(
+            "TABLE_INVENTORY_UNSUPPORTED",
+            &format!("{path}/parameters"),
+            "Typed row-expression operation has no logical parameters",
+        ));
+    }
+    let mut domains = Vec::new();
+    for (index, parameter) in parameters.iter().enumerate() {
+        let parameter_path = format!("{path}/parameters/{index}");
+        ctx.charge_work(1, Utf16::from(parameter_path.as_str()))?;
+        let id = member_text(parameter, "id", &format!("{parameter_path}/id"))?;
+        let field = val(parameter, "field", &format!("{parameter_path}/field"))?;
+        let (definition, definition_path) = find_element(document, field)?;
+        if !eq_text(get(definition, "kind"), "field") {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                &format!("{parameter_path}/field"),
+                "Logical parameter must bind a Field definition",
+            ));
+        }
+        let mut bound = false;
+        for table in tables {
+            let columns = items(val(table, "columns", path)?, path)?;
+            ctx.charge_work(columns.len(), Utf16::from(parameter_path.as_str()))?;
+            if columns.iter().any(|column| {
+                get(column, "field").is_some_and(|candidate| ref_equal(candidate, field))
+            }) {
+                bound = true;
             }
         }
-    }
-    let mut pending = vec![(None, body)];
-    while let Some((key, value)) = pending.pop() {
-        ctx.charge_work(1, Utf16::from(path))?;
-        if key.as_deref() == Some("field") {
-            if !exact_fields(value, &["module", "element"]) {
-                return Err(err(
-                    "TABLE_INVENTORY_UNSUPPORTED",
-                    path,
-                    "Typed command Field reference is malformed",
-                ));
-            }
-            fields.push(value.clone());
-            continue;
+        if !bound {
+            return Err(err(
+                "TABLE_INVENTORY_UNSUPPORTED",
+                &format!("{parameter_path}/field"),
+                "Logical parameter Field is not bound to a source table",
+            ));
         }
-        match value {
-            Value::Object(members) => {
-                for (name, child) in members.iter().rev() {
-                    pending.push((name.to_utf8().ok().as_deref().map(str::to_owned), child));
-                }
-            }
-            Value::Array(values) => {
-                for value in values.iter().rev() {
-                    pending.push((None, value));
-                }
-            }
-            _ => {}
-        }
+        domains.push(o(vec![
+            ("parameterId", s(&id)),
+            ("parameterPath", s(&format!("/parameters/{index}/field"))),
+            ("field", field.clone()),
+            ("definitionPath", s(&definition_path)),
+            ("definition", definition.clone()),
+        ]));
     }
-    Ok(fields)
-}
-
-fn supported_created_single_table_command(
-    command: &Value,
-    path: &str,
-    ctx: &mut Context<'_>,
-) -> Result<bool, EngineError> {
-    let Some(body) = get(command, "body") else {
-        return Ok(false);
-    };
-    if eq_text(get(command, "version"), "umf.table-operation/0.2") {
-        return Ok(eq_text(get(body, "kind"), "update"));
-    }
-    if !eq_text(get(command, "version"), "umf.table-operation/0.1")
-        || !matches!(
-            get(body, "kind").and_then(text).as_deref(),
-            Some("read" | "insert" | "update" | "delete" | "upsert")
-        )
-        || !get(command, "parameters")
-            .and_then(array_items)
-            .is_some_and(|items| items.is_empty())
-    {
-        return Ok(false);
-    }
-    // A related predicate, source-field assignment, or insertFrom command
-    // requires typed references to a second source table. This continuation
-    // only admits command references proven within one created table.
-    let mut pending = vec![body];
-    while let Some(value) = pending.pop() {
-        ctx.charge_work(1, Utf16::from(path))?;
-        match value {
-            Value::Object(members) => {
-                if eq_text(get(value, "op"), "related")
-                    || eq_text(get(value, "kind"), "sourceField")
-                {
-                    return Ok(false);
-                }
-                for (_, child) in members.iter().rev() {
-                    pending.push(child);
-                }
-            }
-            Value::Array(items) => pending.extend(items.iter().rev()),
-            _ => {}
-        }
-    }
-    Ok(true)
+    Ok(domains)
 }
 
 fn project_one_initial(
@@ -1874,140 +2205,11 @@ fn project_one_initial(
             ));
         }
     }
-    let mut operation_ids = Vec::new();
-    let mut command_paths = Vec::new();
-    for (index, command) in source_commands.iter().enumerate() {
-        ctx.charge_work(1, Utf16::from("/next/source/commands"))?;
-        let path = format!("{extension_path}/commands/{index}");
-        let body = val(command, "body", &format!("{path}/body"))?;
-        if !eq_text(get(body, "table"), &table_id) {
-            continue;
-        }
-        if !supported_created_single_table_command(command, &path, ctx)? {
-            return Err(err(
-                "TABLE_INVENTORY_UNSUPPORTED",
-                &path,
-                "Command references are not closed over one created table",
-            ));
-        }
-        let id = member_text(command, "id", &format!("{path}/id"))?;
-        if id.is_empty() || operation_ids.iter().any(|value| value == &s(&id)) {
-            return Err(err(
-                "TABLE_INVENTORY_UNSUPPORTED",
-                &path,
-                "Command identity is empty or repeated",
-            ));
-        }
-        let command_key = hash(&identity("operation", None, s(&id)), ctx)?;
-        dependencies.push(edge(
-            &command_key,
-            &table_key,
-            "operation-requires-table",
-            &path,
-        ));
-        for field in command_field_refs(body, &path, ctx)? {
-            let column = columns
-                .iter()
-                .find(|column| {
-                    get(column, "field").is_some_and(|candidate| ref_equal(candidate, &field))
-                })
-                .ok_or_else(|| {
-                    err(
-                        "TABLE_INVENTORY_UNSUPPORTED",
-                        &path,
-                        "Typed command Field is not bound to the table",
-                    )
-                })?;
-            let column_key = hash(
-                &identity(
-                    "column",
-                    Some(&table_id),
-                    val(column, "field", &path)?.clone(),
-                ),
-                ctx,
-            )?;
-            dependencies.push(edge(
-                &command_key,
-                &column_key,
-                "operation-requires-field",
-                &path,
-            ));
-        }
-        let (key, reason) = if eq_text(get(body, "kind"), "read") {
-            (get(body, "cursorKey"), "operation-requires-cursor-key")
-        } else if eq_text(get(body, "kind"), "upsert") {
-            (get(body, "conflictKey"), "operation-requires-conflict-key")
-        } else {
-            (None, "")
-        };
-        if let Some(key) = key {
-            let key_name = text(key).ok_or_else(|| {
-                err(
-                    "TABLE_INVENTORY_UNSUPPORTED",
-                    &path,
-                    "Command Key ID is malformed",
-                )
-            })?;
-            let key_hash = key_ids.get(&key_name).ok_or_else(|| {
-                err(
-                    "TABLE_INVENTORY_UNSUPPORTED",
-                    &path,
-                    "Command Key is not bound to its Record",
-                )
-            })?;
-            dependencies.push(edge(&command_key, key_hash, reason, &path));
-        }
-        operation_ids.push(s(&id));
-        command_paths.push(path);
-    }
-    let mut seed_definitions = Vec::new();
-    let mut seed_paths = Vec::new();
-    for (index, seed) in source_seed_sets.iter().enumerate() {
-        ctx.charge_work(1, Utf16::from("/next/source/seedSets"))?;
-        let path = format!("{extension_path}/seedSets/{index}");
-        let id = member_text(seed, "id", &path)?;
-        let rows = items(val(seed, "rows", &format!("{path}/rows"))?, &path)?;
-        let mut selected = false;
-        for row in rows {
-            let bound_table = member_text(row, "table", &format!("{path}/rows/table"))?;
-            if bound_table == table_id {
-                selected = true;
-            } else if selected {
-                return Err(err(
-                    "TABLE_INVENTORY_UNSUPPORTED",
-                    &path,
-                    "A seed set spanning tables requires the full dependency closure",
-                ));
-            }
-        }
-        if !selected {
-            continue;
-        }
-        if rows
-            .iter()
-            .any(|row| !eq_text(get(row, "table"), &table_id))
-        {
-            return Err(err(
-                "TABLE_INVENTORY_UNSUPPORTED",
-                &path,
-                "A seed set spanning tables requires the full dependency closure",
-            ));
-        }
-        let seed_key = hash(&identity("seed-set", None, s(&id)), ctx)?;
-        dependencies.push(edge(
-            &seed_key,
-            &table_key,
-            "seed-set-requires-table",
-            &path,
-        ));
-        seed_paths.push(path.clone());
-        seed_definitions.push(o(vec![
-            ("id", s(&id)),
-            ("definitionDigest", s(&hash(seed, ctx)?)),
-            ("sourcePath", s(&path)),
-            ("definition", seed.clone()),
-        ]));
-    }
+    let operation_ids = Vec::new();
+    let command_paths: Vec<String> = Vec::new();
+    let selected_parameter_paths: Vec<String> = Vec::new();
+    let seed_definitions: Vec<Value> = Vec::new();
+    let seed_paths: Vec<String> = Vec::new();
     let catalog = o(COLLECTIONS
         .iter()
         .map(|key| (*key, a(catalog.remove(*key).expect("catalog collection"))))
@@ -2021,6 +2223,7 @@ fn project_one_initial(
     selected.insert(format!("{table_path}/record"));
     selected.extend(seed_paths);
     selected.extend(command_paths);
+    selected.extend(selected_parameter_paths);
     let parent = extension_path
         .strip_suffix("/extensions/umf.tables")
         .ok_or_else(|| {
@@ -3326,5 +3529,50 @@ impl CodegenEngine<'_> {
     ) -> Result<Value, EngineError> {
         let verified = self.verify_table_inventory_initial(plan, original_history, ctx)?;
         Ok(s(&canonical_text(&verified, ctx)?))
+    }
+}
+
+#[cfg(test)]
+mod command_reference_tests {
+    use super::*;
+
+    #[test]
+    fn initial_projection_refuses_a_cross_table_field_not_owned_by_its_target() {
+        let fixture = read_json_value(
+            include_str!("../tests/fixtures/inventory-cross-table-command-request.json")
+                .encode_utf16()
+                .collect::<Vec<_>>()
+                .as_slice(),
+            Format::Json,
+            &mut Context::catalog(),
+        )
+        .unwrap();
+        let bundle = val(&fixture, "next", "/next").unwrap();
+        let source = val(
+            val(bundle, "source", "/next/source").unwrap(),
+            "utf8",
+            "/next/source/utf8",
+        )
+        .unwrap();
+        let source = text(source).unwrap();
+        let selected = "\"matches\":[{\"source\":{\"module\":\"demo\",\"element\":\"id\"},\"target\":{\"module\":\"demo\",\"element\":\"taskId\"}}]";
+        assert!(source.contains(selected));
+        let changed = source.replace(selected, "\"matches\":[{\"source\":{\"module\":\"demo\",\"element\":\"id\"},\"target\":{\"module\":\"demo\",\"element\":\"owner\"}}]");
+        let document = read_json_value(
+            changed.encode_utf16().collect::<Vec<_>>().as_slice(),
+            Format::Json,
+            &mut Context::catalog(),
+        )
+        .unwrap();
+        let error = match project_initial(&document, bundle, &mut Context::ordinary()) {
+            Ok(_) => panic!("unbound cross-table Field was admitted"),
+            Err(error) => error,
+        };
+        assert_eq!(error.code, "TABLE_INVENTORY_UNSUPPORTED");
+        assert!(error
+            .message
+            .to_utf8()
+            .unwrap()
+            .contains("not bound to its exact source table"));
     }
 }

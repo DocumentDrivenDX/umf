@@ -58,6 +58,56 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
     )
 }
 
+fn g02_review_mismatch(engine: &CodegenEngine<'_>, request: &Value) -> String {
+    let options = member(request, "options").expect("fixture options");
+    let selector = object(vec![
+        (
+            "version",
+            Value::string_utf8("umf.table-inventory-discovery/0.1"),
+        ),
+        (
+            "tableIntents",
+            member(options, "tableIntents")
+                .expect("fixture table intents")
+                .clone(),
+        ),
+        ("conversions", Value::Array(vec![])),
+        ("retiredSeedSets", Value::Array(vec![])),
+        ("retirements", Value::Array(vec![])),
+        ("restorations", Value::Array(vec![])),
+        ("archiveSources", Value::Array(vec![])),
+    ]);
+    let compact = |rows: &Value| -> Vec<Value> {
+        let Value::Array(rows) = rows else {
+            return vec![];
+        };
+        rows.iter()
+            .map(|row| {
+                object(
+                    ["id", "kind", "path", "oldDigest", "newDigest"]
+                        .into_iter()
+                        .filter_map(|key| member(row, key).map(|value| (key, value.clone())))
+                        .collect(),
+                )
+            })
+            .collect()
+    };
+    let expected = compact(member(options, "reviewedChanges").expect("fixture markers"));
+    match engine.discover_table_inventory_migration_changes(
+        member(request, "previous").expect("fixture previous"),
+        member(request, "next").expect("fixture next"),
+        &selector,
+        member(request, "history").expect("fixture history"),
+        &mut Context::ordinary(),
+    ) {
+        Ok(found) => format!(
+            "expected markers: {expected:?}; source-derived markers: {:?}",
+            compact(&found)
+        ),
+        Err(error) => format!("expected markers: {expected:?}; discovery refused: {error:?}"),
+    }
+}
+
 #[test]
 fn initial_inventory_compiles_serializes_and_verifies_complete_source_plan() {
     let resources = resources();
@@ -709,11 +759,9 @@ fn retained_g02_selected_created_seed_and_command_have_source_lineage() {
     let result = engine
         .compile_table_inventory_migration(&request, &mut Context::ordinary())
         .unwrap();
-    assert_eq!(
-        member(&result, "status"),
-        Some(&Value::string_utf8("compiled")),
-        "{result:?}"
-    );
+    if member(&result, "status") != Some(&Value::string_utf8("compiled")) {
+        panic!("{result:?}; {}", g02_review_mismatch(&engine, &request));
+    }
     let plan = member(&result, "plan").unwrap();
     let Value::Array(review) = member(plan, "review").unwrap() else {
         panic!("review")
@@ -789,11 +837,9 @@ fn retained_g02_created_read_command_has_source_bound_field_dependencies() {
     let result = engine
         .compile_table_inventory_migration(&request, &mut Context::ordinary())
         .unwrap();
-    assert_eq!(
-        member(&result, "status"),
-        Some(&Value::string_utf8("compiled")),
-        "{result:?}"
-    );
+    if member(&result, "status") != Some(&Value::string_utf8("compiled")) {
+        panic!("{result:?}; {}", g02_review_mismatch(&engine, &request));
+    }
     let plan = member(&result, "plan").unwrap();
     let Value::Array(review) = member(plan, "review").unwrap() else {
         panic!("review")
@@ -828,4 +874,139 @@ fn retained_g02_created_read_command_has_source_bound_field_dependencies() {
         "{refused:?}"
     );
     assert!(member(&refused, "plan").is_none());
+}
+
+#[test]
+fn retained_g02_created_parameter_read_preserves_logical_domain_and_source() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let request = load_text(include_str!(
+        "fixtures/inventory-g02-parameter-read-request.json"
+    ));
+    let result = engine
+        .compile_table_inventory_migration(&request, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&result, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{result:?}"
+    );
+    let plan = member(&result, "plan").unwrap();
+    let Value::Array(review) = member(plan, "review").unwrap() else {
+        panic!("review")
+    };
+    let command = review
+        .iter()
+        .find(|row| {
+            member(row, "path")
+                == Some(&Value::string_utf8(
+                    "/modules/0/extensions/umf.tables/commands/2",
+                ))
+        })
+        .unwrap();
+    let parameters = member(member(command, "newValue").unwrap(), "parameters").unwrap();
+    let Value::Array(parameters) = parameters else {
+        panic!("parameters")
+    };
+    assert_eq!(
+        member(&parameters[0], "id"),
+        Some(&Value::string_utf8("archive_lookup"))
+    );
+    assert_eq!(
+        engine
+            .verify_table_inventory_migration(
+                plan,
+                member(&request, "history").unwrap(),
+                &mut Context::ordinary(),
+            )
+            .unwrap(),
+        *plan
+    );
+    let mut missing_review = request;
+    let Value::Array(markers) = member_mut(
+        member_mut(&mut missing_review, "options"),
+        "reviewedChanges",
+    ) else {
+        panic!("reviewed changes")
+    };
+    markers.pop();
+    let refused = engine
+        .compile_table_inventory_migration(&missing_review, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&refused, "status"),
+        Some(&Value::string_utf8("blocked")),
+        "{refused:?}"
+    );
+    assert!(member(&refused, "plan").is_none());
+}
+
+#[test]
+fn initial_inventory_cross_table_command_retains_both_reference_closures() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let request = load_text(include_str!(
+        "fixtures/inventory-cross-table-command-request.json"
+    ));
+    let result = engine
+        .compile_table_inventory_initial(&request, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&result, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{result:?}"
+    );
+    let plan = member(&result, "plan").unwrap();
+    let Value::Array(reviews) = member(plan, "review").unwrap() else {
+        panic!("review")
+    };
+    assert_eq!(reviews.len(), 2);
+    for review in reviews {
+        let meaning = member(member(review, "newValue").unwrap(), "meaning").unwrap();
+        assert_eq!(
+            member(meaning, "operationIds"),
+            Some(&Value::Array(vec![Value::string_utf8(
+                "read_related_tasks"
+            )]))
+        );
+        let Value::Array(closure) = member(meaning, "sourceClosure").unwrap() else {
+            panic!("closure")
+        };
+        assert!(closure.iter().any(|entry| member(entry, "path")
+            == Some(&Value::string_utf8(
+                "/modules/0/extensions/umf.tables/commands/0"
+            ))));
+        let Value::Array(edges) = member(meaning, "dependencies").unwrap() else {
+            panic!("edges")
+        };
+        assert_eq!(
+            edges
+                .iter()
+                .filter(|edge| member(edge, "reason")
+                    == Some(&Value::string_utf8("operation-requires-table")))
+                .count(),
+            2
+        );
+        assert_eq!(
+            edges
+                .iter()
+                .filter(|edge| member(edge, "reason")
+                    == Some(&Value::string_utf8("operation-requires-field")))
+                .count(),
+            4
+        );
+    }
+    let history = member(&request, "history").unwrap();
+    assert_eq!(
+        engine
+            .verify_table_inventory_initial(plan, history, &mut Context::ordinary())
+            .unwrap(),
+        *plan
+    );
+    assert!(matches!(
+        engine
+            .serialize_table_inventory_initial(plan, history, &mut Context::ordinary())
+            .unwrap(),
+        Value::String(_)
+    ));
 }

@@ -42,6 +42,22 @@ fn scalar(v: Option<&Value>) -> Result<String, EngineError> {
                 .map_err(|_| err("SQLSERVER_IDENTIFIER", "Invalid UTF-16 SQL identifier"))
         })
 }
+fn tagged_native_text(value: Option<&Value>, name: &str) -> Option<String> {
+    let members = get(value?, "members")?;
+    let node = get(members, name)?;
+    if !eq(get(node, "kind"), "string") {
+        return None;
+    }
+    text(get(node, "value")).and_then(|value| value.to_utf8().ok())
+}
+fn tagged_native_integer(value: Option<&Value>, name: &str) -> Option<i64> {
+    let members = get(value?, "members")?;
+    let node = get(members, name)?;
+    if !eq(get(node, "kind"), "number") {
+        return None;
+    }
+    text(get(node, "value"))?.to_utf8().ok()?.parse().ok()
+}
 fn eq(v: Option<&Value>, value: &str) -> bool {
     text(v).is_some_and(|s| s.units().iter().copied().eq(value.encode_utf16()))
 }
@@ -1096,13 +1112,12 @@ fn validate_index_columns_against_native_archive(
                 && eq(get(get(row, "element").unwrap_or(&Value::Null), "name"), &column_name)
         }).and_then(|row| get(row, "nativeColumn"))
             .ok_or_else(|| err("SQLSERVER_TABLE_CATALOG", &format!("Native catalog does not match generated table column {schema}.{table}.{column_name}")))?;
-        let actual_name = scalar(get(native_column, "base_type_name"))?;
-        let actual_length = match get(native_column, "max_length") {
-            Some(Value::Number(value)) if value.is_finite() && value.fract() == 0.0 => {
-                Some(*value as i64)
-            }
-            _ => None,
-        };
+        // sqlserver_adapter exposes nativeColumn as a lossless tagged JSON tree,
+        // not a plain object. Read its members without flattening or coercing the
+        // retained representation.
+        let actual_name = tagged_native_text(Some(native_column), "base_type_name")
+            .ok_or_else(|| err("SQLSERVER_TABLE_CATALOG", "Native column type is unavailable"))?;
+        let actual_length = tagged_native_integer(Some(native_column), "max_length");
         if actual_name.to_ascii_lowercase() != expected_name
             || expected_length.is_some_and(|length| actual_length != Some(length))
         {
