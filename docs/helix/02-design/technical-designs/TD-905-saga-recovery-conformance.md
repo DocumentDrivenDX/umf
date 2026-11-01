@@ -42,7 +42,7 @@ submission/control commit, ticket issue, native admission, provider effect/outco
 commit, coordinator observation and acknowledgement. An assertion based only on
 the coordinator's own emitted history cannot qualify a provider guarantee.
 
-The first native target is the existing bounded PostgreSQL reference consumer,
+The current native target is the bounded PostgreSQL reference consumer,
 with isolated coordinator and two target stores. The harness pins actual source,
 server/driver/build and installed profile digests before results. Original tx/1
 outcomes must commit with business effects; coordinator updates may lag. Schema
@@ -56,17 +56,17 @@ creates a connection, installs code, selects a tenant or bypasses revocation.
 
 ## Component Changes
 
-Paths below are planned conformance locations. No production orchestrator is
-introduced into the portable library.
+The current native conformance implementation is test-only. No production
+orchestrator is introduced into the portable library.
 
 | Location | Owned responsibility | Boundary |
 | --- | --- | --- |
-| `tests/saga/recovery-cases.json` | Shared scenario names, injected cuts and independently specified outcomes | Inert fixtures; no vendor implementation types. |
-| `tests/saga/reference-consumer.py` | Qualified test-only coordinator/control registry and provider wiring | Host/native APIs here only; no import from portable library into this executor. |
-| `tests/saga/native-recovery.py` | Crash/restart, cancellation, authority, retirement and provider observations | Direct original custody queries; do not replace the native subject with a mock. |
-| `tests/saga/history-oracle.py` | Independently compare original requests/results and provider facts | No reuse of coordinator transition implementation to manufacture expected histories. |
-| `tests/saga/protocol.test.ts` | Closed request/result unions, protected refusal and witness transport | Shared schema/types and native fixture driver only. |
-| `docs/helix/02-design/experiments/saga/formal/` | Abstract coordination and two-stage admission analysis | Experiment only; no runtime provider code. |
+| `scripts/saga-reference/coordinator.ts`, `protocol.ts` | PostgreSQL-backed test-only state machine and runtime-schema adapter | Exercises the closed protocol through host-installed provider bindings; not production runtime code. |
+| `scripts/saga-reference/provider.ts`, `provider.sql` | Test-only admission/finality gateway around the existing action executor | Pins provider identity, tenant, store epoch and original request; reuses native action admission/effect semantics. |
+| `tests/saga/protocol.test.ts`, `native-recovery.test.ts` | Public-protocol fault cuts plus coordinator/provider restart and lower-boundary invariants | Isolated PostgreSQL stores and real executor; assertions query original custody independently. |
+| `tests/saga/native-observation.ts`, `history-oracle.ts`, `history-oracle.test.ts` | Query native ticket/attempt/action-outcome facts and compare against independent fixture expectations | Missing, pending, refused, duplicate and mismatched facts remain explicit; coordinator history does not manufacture expected provider facts. |
+| `tests/saga/protocol-coverage.json`, `protocol-coverage.test.ts` | Canonical AC allocation and source/test coverage checks | Traceability checks do not substitute for the native witnesses. |
+| `docs/helix/02-design/experiments/saga/formal/` | Abstract coordination and two-stage admission analysis | Formal experiment only; no runtime provider code. |
 
 The native test coordinator may use the existing PostgreSQL reference test
 infrastructure; it is not a product delivery or an implied Batten dependency.
@@ -126,7 +126,10 @@ implementation refinement follows.
 from current provider transaction stage. The late-failed-delivery mutant creates
 an actual effect after a final noncommit; it must violate NoncommitHasNoEffect.
 This is the reason CONTRACT-908 now requires gateway closure beyond tx/1 replay.
-Native all-attempt settlement and closure are still unexecuted qualification.
+The test-only PostgreSQL reference provider exercises all-attempt settlement,
+ticket closure and late-delivery fencing in the source-bound cohort allocated by
+STP-905. This is evidence for that reference consumer and captured environment;
+it does not qualify another provider or a production host.
 
 Stable liveness cuts separately weakly fair worker, native gateway, provider
 settlement and original observer. Faults/deadline expiry are disabled and responsive
@@ -180,8 +183,8 @@ entity identity or permission system replaces provider-native meaning.
 
 The coordinator's transactional lock cannot make a separate provider store atomic.
 Durable tickets and provider outcomes bridge that gap through reconciliation,
-not a distributed commit claim. A successful model or schema run does not prove
-that any planned consumer or native witness already exists.
+not a distributed commit claim. A successful model or schema run alone does not
+prove correctness for another consumer or an untested native witness.
 
 ## Recovery and closure review amendment
 
@@ -195,7 +198,7 @@ not covered by the original Saga.tla model.
 
 ## Combined-model correspondence
 
-| Formal property group | Governing obligation / planned native witness | Remaining implementation evidence |
+| Formal property group | Governing obligation / native correspondence | Provider/host scope beyond this reference cohort |
 | --- | --- | --- |
 | OutcomesSound, ProviderFinality, NoncommitHasNoEffect, NoDuplicateEffects | CONTRACT-900/901/908; AC4/5/6/10/25 | Atomic provider effects/outcomes, gateway closure of all attempts, late delivery after noncommit |
 | ForwardOrdered, ReverseRecovery, FailureStartsUnwind, NoFalseRestoration | SAGA-05/09/10/11/13; AC3/9/16/25/28 | Independent actual forward/compensation histories and no-effect enforcement |
@@ -205,6 +208,8 @@ not covered by the original Saga.tla model.
 | ClosedSettled, ClosedEvidence, HonestTermination | Original resolution and settled closure; AC1/2/18/26 | Scoped issuer verification, current authority and history-sequence race |
 | Per-actor EventuallyStopped / EventuallySucceeded | Conditional progress in protocol.md | Scheduling/provider responsiveness premises; no production liveness proof |
 
-The shared fixture requirements are not marked passed by the finite model. The
-provider gateway is still a planned host-owned enforcement mechanism; UMF portable
-analysis neither creates one nor grants native execution authority.
+The table identifies guarantees a finite model cannot establish for other
+providers or production hosts; STP-905 maps the separate reference-cohort native
+witnesses. The implemented gateway is a bounded test-only reference provider and
+does not qualify those other hosts. UMF portable analysis neither creates provider
+enforcement nor grants native execution authority.
