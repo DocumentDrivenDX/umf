@@ -15,11 +15,13 @@ ddx:
 Sagas are an explicit opt-in companion to actions in the UMF repository and SDK.
 The sequential declaration vocabulary is `umf.actions.saga` 0.1.0, with core
 0.10.0 and actions 0.1.0. The public SDK release is
-[0.10.0](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.0);
-the public Python package is [`umf-core` 0.10.4](https://pypi.org/project/umf-core/0.10.4/).
-The current product-release candidate is SDK 0.10.1 / Python 0.10.5; its
-publication and public-install checks are tracked by the
-[completion plan](../04-build/saga-public-library-completion-plan.md).
+[0.10.1](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.1);
+the public Python package is [`umf-core` 0.10.5](https://pypi.org/project/umf-core/0.10.5/).
+The coupled archives are also available in the
+[Python GitHub release](https://github.com/DocumentDrivenDX/umf/releases/tag/python-v0.10.5).
+Publication and public-install verification are tracked by the
+[completed plan](../04-build/saga-public-library-completion-plan.md) and
+[product release evidence](../04-build/evidence/saga-public-library-completion/README.md).
 The implementation plan and [saga qualification packet](../04-build/evidence/sagas/README.md)
 record source, CI, consumer and artifact-hash evidence. Do not replace an older
 published wheel with new bytes under its old version.
@@ -97,7 +99,7 @@ it does not import a provider or execute an action.
 
 ## Run a Python authoring lifecycle
 
-Install the selected public package with `python -m pip install umf-core==0.10.4`
+Install the selected public package with `python -m pip install umf-core==0.10.5`
 and save the same `portable.json` beside `author_saga.py`. Run
 `python author_saga.py`:
 

@@ -3,7 +3,7 @@ ddx:
   id: umf.saga-public-library-completion-plan
   type: implementation-plan
   activity: build
-  status: active
+  status: complete
   authoring:
     home: repo
   links:
@@ -128,14 +128,57 @@ are asserted in the installed witnesses. Package/resource/version metadata and
 the 43-input custody roster reflect the new cohort. Next: root refreshes boundary
 inventory, freezes source, qualifies exact artifacts in CI and publishes P5.
 
+Revision 5 — 2026-11-01: P4 complete. Qualified source
+`90cb61eb63aec3f5a77b5991a56e3dfc3d10bd27` passed
+[CI 41269415988](https://github.com/DocumentDrivenDX/umf/actions/runs/41269415988)
+and merged through [PR #80](https://github.com/DocumentDrivenDX/umf/pull/80) as
+`a42c64ada9f5d85f8e3582cc9706bc3e33b4e334`, preserving the exact qualified tree.
+Sol independently accepted source, complete hosted log, Linux retained artifact
+and macOS cohort. Native actions passed 125 tests / 1,997 assertions, portable
+actions 63 / 513, and saga/oracle/custody 60 / 768. Each of five portable host
+roles passed 19 vectors; SDK passed 139 existing cases plus 19 saga vectors and
+strict public consumer/lifecycle checks. Selected and source-rebuilt Python each
+passed two lifecycle tests; selected Python passed 35 resource, four helper and
+six installed-payload checks. Exact 43 input hashes, 23 retained files and 24
+checksum rows were verified separately in each platform packet.
+
+The original hosted artifact is 13069436184, 97,667,686 bytes, SHA-256
+`109c54dcceba56f01191d6f854b83ab435cf8afe0b88a82b13b568b9aaaff113`.
+The [completion evidence](evidence/saga-public-library-completion/README.md)
+records reviewed artifact hashes and qualification limits. The normal immutable
+SDK 0.10.1 and Python 0.10.5 GitHub releases target exact qualified source; root
+reports server asset digests verified and all Python release assets downloaded
+and matched. At this checkpoint P5 still required full SDK public-byte/consumer
+verification and PyPI/public-installed consumer results. The pre-existing manually disabled PyPI
+dispatcher is not enabled by this scope; root uses the owned main-branch OIDC
+publisher. Historical formal 43-check evidence is unchanged: the fixes implement
+existing control/finality requirements and do not constitute a new TLC run.
+
+Revision 6 — 2026-11-01: P5 and the goal are complete. All 13 SDK and ten Python
+GitHub assets were downloaded and matched against staged bytes/checksums; both
+immutable product tags resolve to exact qualified source. The public Linux-built
+SDK passed a fresh macOS installed strict TypeScript check, 139 existing cases,
+19 saga vectors and the positive/unknown/registry-refusal lifecycle. Owned
+[OIDC run 41271459809](https://github.com/DocumentDrivenDX/umf/actions/runs/41271459809)
+passed release verification, publication and a clean Linux public-index consumer.
+Independent registry metadata and downloads match all three Python archives.
+A fresh macOS public-index Python0.10.5 install confirmed site-packages/native
+origin without direct-URL metadata and passed 19 vectors plus two lifecycle tests.
+Its actual binding receipt records 44 installed files / 36 package files, stable
+before/after; candidate installation receipts separately record 46 / 36. These
+counts describe different installer metadata cohorts, not a payload discrepancy.
+The [final evidence](evidence/saga-public-library-completion/README.md) links all
+source/artifact reviews, publication and public-consumer receipts. Final review
+is clean; no required functional, qualification or publication step remains.
+
 ## Validation Plan
 
 - [x] Concrete gap inventory distinguishes promised behavior from excluded host work.
 - [x] Installed public loading/lifecycle examples pass without internal imports.
 - [x] Actual uncovered defects have independent failure and correction proof, or P2 is explicitly closed with no defect found.
 - [x] Canonical documents describe delivered APIs and retain governing semantics.
-- [ ] Exact fresh candidate artifacts pass required shared/native/installed checks.
-- [ ] Public product bytes and clean SDK/Python consumer installation pass after publication.
+- [x] Exact fresh candidate artifacts pass required shared/native/installed checks.
+- [x] Public product bytes and clean SDK/Python consumer installation pass after publication.
 
 ## Risks and Rollbacks
 
@@ -149,6 +192,6 @@ inventory, freezes source, qualifies exact artifacts in CI and publishes P5.
 ## Exit Criteria
 
 - [x] P0–P3 complete with no uncovered required functional defect remaining.
-- [ ] P4 review and qualification pass against exact final artifacts/source.
-- [ ] P5 publishes SDK0.10.1/Python0.10.5 and verifies public consumer behavior.
-- [ ] Final evidence records limits, source, runs, artifact identities and immutable prior releases; no material blocker remains.
+- [x] P4 review and qualification pass against exact final artifacts/source.
+- [x] P5 publishes SDK0.10.1/Python0.10.5 and verifies public consumer behavior.
+- [x] Final evidence records limits, source, runs, artifact identities and immutable prior releases; no material blocker remains.
