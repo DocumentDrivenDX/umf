@@ -4,11 +4,14 @@ import type {NativeJson} from '../../model/native-json';
 import {UmfError} from '../../model/errors';
 import {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/sqlserver/package.json';
+import cardinalityManifest from '../../../spec/extensions/sqlserver-cardinality/package.json';
 import type {importSqlServerCatalog,inspectSqlServer,exportSqlServerCatalog,proposeSqlServerCatalogEdit,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,getSqlServerIndexMetadata,SqlServerColumnMetadata,SqlServerConstraintMetadata,SqlServerIndexMetadata} from './index';
 import type {SqlServerFacetTypeInspection,inspectSqlServerFacetType} from './facet-type';
 import type {SqlServerFacetPredicateInspection,inspectSqlServerFacetPredicate} from './facet-predicate';
 import type {SqlServerFacetConstraintsInspection,inspectSqlServerFacetConstraints} from './facet-constraints';
 import type {SqlServerFieldClassification,SqlServerFieldRequest} from '../../core-ideals/sqlserver-field';
+import type {SqlServerRecordClassification,SqlServerRecordRequest} from '../../core-ideals/sqlserver-record';
+import type {SqlServerCardinalityClassification,SqlServerCardinalityRequest} from '../../core-ideals/cardinality-sqlserver';
 
 export interface SqlServerNativeFamilyEngine {
  sqlserver:{
@@ -26,6 +29,12 @@ export interface SqlServerNativeFamilyEngine {
   classifyField(fields:{source:Document;request:SqlServerFieldRequest}):unknown;
   verifyFieldClassification(fields:{receipt:SqlServerFieldClassification;current:Document}):unknown;
   recoverFieldCapture(fields:{receipt:SqlServerFieldClassification;current:Document}):unknown;
+  classifyRecord(fields:{source:Document;request:SqlServerRecordRequest}):unknown;
+  verifyRecordClassification(fields:{receipt:SqlServerRecordClassification;current:Document}):unknown;
+  recoverRecordCapture(fields:{receipt:SqlServerRecordClassification;current:Document}):unknown;
+  classifyCardinality(fields:{source:Document;request:SqlServerCardinalityRequest}):unknown;
+  verifyCardinalityClassification(fields:{receipt:SqlServerCardinalityClassification;current:Document}):unknown;
+  recoverCardinalitySource(fields:{receipt:SqlServerCardinalityClassification;current:Document}):unknown;
  }
 }
 
@@ -44,7 +53,7 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   }
  };
  return Object.freeze({
-  sqlserverRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload})));},
+  sqlserverRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload}))).register(cardinalityManifest as unknown as ExtensionPackage);},
   importSqlServerCatalog(text:string,options:Parameters<typeof importSqlServerCatalog>[1]):ReturnType<typeof importSqlServerCatalog>{return call(()=>engine.sqlserver.import({source:text,id:options.id}) as ReturnType<typeof importSqlServerCatalog>);},
   inspectSqlServer(document:Parameters<typeof inspectSqlServer>[0]):ReturnType<typeof inspectSqlServer>{return call(()=>engine.sqlserver.inspect({document}) as ReturnType<typeof inspectSqlServer>);},
   exportSqlServerCatalog(document:Parameters<typeof exportSqlServerCatalog>[0]):ReturnType<typeof exportSqlServerCatalog>{return call(()=>engine.sqlserver.export({document}) as ReturnType<typeof exportSqlServerCatalog>);},
@@ -60,5 +69,11 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   classifySqlServerField(source:Document,request:SqlServerFieldRequest):SqlServerFieldClassification{return call(()=>engine.sqlserver.classifyField({source,request}) as SqlServerFieldClassification);},
   verifySqlServerFieldClassification(receipt:SqlServerFieldClassification,current:Document):SqlServerFieldClassification{return call(()=>engine.sqlserver.verifyFieldClassification({receipt,current}) as SqlServerFieldClassification);},
   recoverSqlServerFieldCapture(receipt:SqlServerFieldClassification,current:Document):string{return call(()=>engine.sqlserver.recoverFieldCapture({receipt,current}) as string);},
+  classifySqlServerRecord(source:Document,request:SqlServerRecordRequest):SqlServerRecordClassification{return call(()=>engine.sqlserver.classifyRecord({source,request}) as SqlServerRecordClassification);},
+  verifySqlServerRecordClassification(receipt:SqlServerRecordClassification,current:Document):SqlServerRecordClassification{return call(()=>engine.sqlserver.verifyRecordClassification({receipt,current}) as SqlServerRecordClassification);},
+  recoverSqlServerRecordCapture(receipt:SqlServerRecordClassification,current:Document):string{return call(()=>engine.sqlserver.recoverRecordCapture({receipt,current}) as string);},
+  classifySqlServerCardinality(source:Document,request:SqlServerCardinalityRequest):SqlServerCardinalityClassification{return call(()=>engine.sqlserver.classifyCardinality({source,request}) as SqlServerCardinalityClassification);},
+  verifySqlServerCardinalityClassification(receipt:SqlServerCardinalityClassification,current:Document):SqlServerCardinalityClassification{return call(()=>engine.sqlserver.verifyCardinalityClassification({receipt,current}) as SqlServerCardinalityClassification);},
+  recoverSqlServerCardinalitySource(receipt:SqlServerCardinalityClassification,current:Document):string{return call(()=>engine.sqlserver.recoverCardinalitySource({receipt,current}) as string);},
  });
 }

@@ -616,13 +616,14 @@ fn classify_inner(
             }
             _ => None,
         })
+        .and_then(|index| usize::try_from(index).ok())
         .ok_or_else(|| {
             err(
                 "PARQUET_FACET_REQUEST",
                 "/location/index",
                 "Safe selected index required",
             )
-        })? as usize;
+        })?;
     let identity = get(&request, "identity")
         .ok_or_else(|| err("PARQUET_FACET_REQUEST", "/identity", "Identity is required"))?;
     let module = string(get(identity, "module").unwrap_or(&Value::Null))

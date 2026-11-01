@@ -186,11 +186,9 @@ export { classifyPostgresqlNullability } from './core-ideals/nullability-postgre
 export { classifyPostgresqlRecord } from './core-ideals/postgresql-record';
 export { classifyPostgresqlRelationships } from './core-ideals/relationship-postgresql-factory';
 export { classifyRelationshipExtra } from './core-ideals/relationship-extras-factory';
-export { classifySqlServerCardinality } from './core-ideals/cardinality-sqlserver';
 export { classifySqlServerFacets } from './core-ideals/facets-sqlserver';
 export { classifySqlServerKeys } from './core-ideals/key-sqlserver';
 export { classifySqlServerNullability } from './core-ideals/nullability-sqlserver';
-export { classifySqlServerRecord } from './core-ideals/sqlserver-record';
 export { classifySqlServerRelationships } from './core-ideals/relationship-sqlserver';
 export { classifyTableSpecCardinality } from './core-ideals/cardinality-tablespec';
 export { classifyTableSpecFacets } from './core-ideals/facets-tablespec';
@@ -855,8 +853,6 @@ export { projectCardinalityToPostgresql } from './core-ideals/cardinality-postgr
 export { projectCardinalityToSqlServer } from './core-ideals/cardinality-sqlserver-projection';
 export { projectCardinalityToTableSpec } from './core-ideals/cardinality-tablespec-projection';
 export { projectCdcMortality } from './domain-packs/medical';
-export { projectDddTablesAndIndexesToPostgresql } from './projections/ddd-postgresql/tables-indexes';
-export { projectDddTablesToPostgresql } from './projections/ddd-postgresql/tables';
 export { projectDicomMetadata } from './domain-packs/medical';
 export { projectFacetsToParquet } from './core-ideals/facets-parquet-projection';
 export { projectFacetsToPostgresql } from './core-ideals/facets-postgresql-projection';
@@ -974,11 +970,9 @@ export { recoverRecordFromParquet } from './core-ideals/record-parquet-projectio
 export { recoverRecordFromPostgresql } from './core-ideals/record-postgresql-projection';
 export { recoverRecordFromSqlServer } from './core-ideals/record-sqlserver-projection';
 export { recoverRecordFromTableSpec } from './core-ideals/record-tablespec-projection';
-export { recoverSqlServerCardinalitySource } from './core-ideals/cardinality-sqlserver';
 export { recoverSqlServerFacetSource } from './core-ideals/facets-sqlserver';
 export { recoverSqlServerKeySource } from './core-ideals/key-sqlserver';
 export { recoverSqlServerNullabilitySource } from './core-ideals/nullability-sqlserver';
-export { recoverSqlServerRecordCapture } from './core-ideals/sqlserver-record';
 export { recoverSqlServerRelationshipSource } from './core-ideals/relationship-sqlserver';
 export { recoverTableSpecCardinalitySource } from './core-ideals/cardinality-tablespec';
 export { recoverTableSpecFacetSource } from './core-ideals/facets-tablespec';
@@ -1359,7 +1353,6 @@ export { verifyPostgresqlKeyClassification } from './core-ideals/key-postgresql'
 export { verifyPostgresqlNullabilityClassification } from './core-ideals/nullability-postgresql';
 export { verifyPostgresqlRelationshipClassification } from './core-ideals/relationship-postgresql-factory';
 export { verifyRecordProjectionInspection } from './core-ideals/record-report';
-export { verifySqlServerCardinalityClassification } from './core-ideals/cardinality-sqlserver';
 export { verifySqlServerFacetClassification } from './core-ideals/facets-sqlserver';
 export { verifySqlServerKeyClassification } from './core-ideals/key-sqlserver';
 export { verifySqlServerNullabilityClassification } from './core-ideals/nullability-sqlserver';

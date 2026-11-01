@@ -14,6 +14,8 @@ pub const FAMILIES: &[&str] = &[
     "facets-avro-projection",
     "key-avro-projection",
     "avro-relationship-projection",
+    "tablespec-relationship-projection",
+    "relationship-sqlserver-projection",
     "avro",
     "avro-json-schema-projection",
     "arrow-spark-projection",
@@ -140,7 +142,31 @@ pub fn metadata_wire(family: &str) -> String {
         ),
         "avro-relationship-projection" => (
             crate::avro_relationship_projection_binding::PROFILE,
-            &["projectRelationshipToAvro", "verifyRelationshipAvroProjection", "recoverRelationshipAvroIdeal", "recoverRelationshipAvroNative"],
+            &[
+                "projectRelationshipToAvro",
+                "verifyRelationshipAvroProjection",
+                "recoverRelationshipAvroIdeal",
+                "recoverRelationshipAvroNative",
+            ],
+        ),
+        "tablespec-relationship-projection" => (
+            crate::relationship_tablespec_projection_binding::PROFILE,
+            &[
+                "projectRelationshipToTableSpec",
+                "verifyRelationshipTableSpecProjection",
+                "recoverRelationshipTableSpecIdeal",
+                "recoverRelationshipTableSpecNativeSources",
+            ],
+        ),
+        "relationship-sqlserver-projection" => (
+            crate::relationship_sqlserver_projection_binding::PROFILE,
+            &[
+                "projectRelationshipToSqlServer",
+                "verifyRelationshipSqlServerProjection",
+                "recoverRelationshipSqlServerIdeal",
+                "recoverRelationshipSqlServerBinding",
+                "recoverRelationshipSqlServerNative",
+            ],
         ),
         "avro" => (
             crate::avro_binding::PROFILE,
@@ -259,6 +285,12 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverDddPostgresqlIdeal",
                 "recoverDddPostgresqlNative",
                 "blockDddPostgresqlProjection",
+                "prepareDddPostgresqlTables",
+                "completeDddPostgresqlTables",
+                "blockDddPostgresqlTables",
+                "prepareDddPostgresqlTablesAndIndexes",
+                "completeDddPostgresqlTablesAndIndexes",
+                "prepareDddPostgresqlTablesAndIndexesCombined",
             ],
         ),
         "openapi-json-schema-projection" => (
@@ -370,6 +402,12 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyField",
                 "verifyFieldClassification",
                 "recoverFieldCapture",
+                "classifyRecord",
+                "verifyRecordClassification",
+                "recoverRecordCapture",
+                "classifyCardinality",
+                "verifyCardinalityClassification",
+                "recoverCardinalitySource",
             ],
         ),
         "shacl" => (
@@ -578,7 +616,19 @@ pub fn execute_wire_with_control(
         "key-avro-projection" => {
             crate::key_avro_projection_binding::execute_wire_with_control(wire, control)
         }
-        "avro-relationship-projection" => crate::avro_relationship_projection_binding::execute_wire_with_control(wire, control),
+        "avro-relationship-projection" => {
+            crate::avro_relationship_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "tablespec-relationship-projection" => {
+            crate::relationship_tablespec_projection_binding::execute_wire_with_control(
+                wire, control,
+            )
+        }
+        "relationship-sqlserver-projection" => {
+            crate::relationship_sqlserver_projection_binding::execute_wire_with_control(
+                wire, control,
+            )
+        }
         "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
         "avro-json-schema-projection" => {
             crate::avro_json_schema_projection_binding::execute_wire_with_control(wire, control)

@@ -149,21 +149,22 @@ refusal and stale-target checks after the fixture explicitly authored a Field.
 Authored Avro Relationship projection and SQL Server Field classification also
 pass their public normal/refusal workflows.
 
-Parquet Facets is the only remaining case from this runtime cohort. Its numeric
-request index was incorrectly sent through a native string-token reader; the
-separate typed-number repair passes Rust metadata and awaits the next runtime
-build. All eight passing cases leave this repair queue. Full tooling/test
-TypeScript and Rust metadata pass after the host/fixture/index corrections.
+The next five-family batch passes Rust metadata and the shared native build.
+Focused runtime results are eight passing and three failing cases: SQL Server
+Record and Cardinality normal/refusal workflows, authored SQL Server Relationship,
+the independent PostgreSQL table API and its unbound-index/quoted-column cases
+pass. The full PostgreSQL table/index report-plus-strict case passes its targeted
+retry with the source-reviewed bounded-runtime allowance (142 seconds). TableSpec Relationship rejects the schema's
+`example` annotation, and Parquet Facets reaches a target-validation failure.
+These two implementation fixes belong to their Luna owners. Passing cases leave
+the repair queue.
 
-The next complete source batch contains SQL Server Record and Cardinality,
-authored TableSpec and SQL Server Relationship projections, and both independent
-PostgreSQL table APIs. Luna implements the classifier and relationship lanes;
-Sol completed the table fallback after rejecting the synthetic-policy approach
-and reviewed semantic ownership and current baselines. Current source review
-fixes include tagged native values, Record-specific blocked residuals and scoped
-Rust borrows. Luna is combining the additive routes/resources in scratch before
-one shared compiler/native run; subsequent Nullability and Parquet Relationship
-kernels continue in parallel.
+Luna continues SQL Server Nullability/Keys/Relationship/Facets classifiers and
+remaining authored Relationship/index projections in parallel. Sol reviews the
+Rust decision ownership, ordinary behavior and resource propagation; the root
+integrates one source batch and performs one shared build. Compiler failures are
+fixed before runtime; only failed or newly changed workflows enter the next
+focused test run. Full local host/package integration follows semantic completion.
 Current removal compilation retains `TABLE_REMOVAL_EFFECTS_NOT_LOWERED`;
 discovery and irreversible-purge disclosure remain supported.
 
@@ -204,11 +205,11 @@ This queue tracks Rust ownership and remaining work for the current V4 exports i
 | Security policy/source meaning | `inspectSecurityPolicy`, `requireSecurityInterpretation`, `inspectSecurityPolicyV2Source`, `upgradeSecurityPolicySource`, `downgradeSecurityPolicySource`, `readSecuritySource`, `writeSecuritySource`, `securityPolicyDependencies`, `securityIdentityTransportDependencies` | Rust policy/V2 migration, dependency and source transport owners pass the focused Node workflows; final host/package integration remains. |
 | Security evaluation and authority | `evaluateSecurityAccess`, `evaluateSecurityCollection`, `evaluateSecurityWrite`, `evaluateSecurityPolicyV2LegacyAccess`, `SecurityAuthorityGuard`, `SecurityReadRegistration` | Rust evaluation, registration and stateful authority owners pass focused Node workflows with explicit caller capabilities; final host/package integration remains. |
 | Security disclosure/catalog | `inspectProtectionCatalog`, `requireProtectionInterpretation`, `inspectProtectionObligations`, `inspectSecurityActionPurposes`, `validateSecurityDisclosure`, `encodeSecurityDisclosure`, `decodeSecurityDisclosure`, `inspectSecurityDisclosureV2`, `encodeSecurityDisclosureV2`, `decodeSecurityDisclosureV2` | Rust V1/V2 disclosure, catalog, purpose and obligation workflows pass focused Node normal/refusal cases; final host/package integration remains. |
-| Core-ideal classifiers/projections/recovery | Avro/Parquet classification, authored projection and recovery exports; new SQL Server Field route. | Avro classification and authored nullability/facets/keys plus Parquet relationships, nested Records, Field, Keys and Cardinality pass focused Node baselines. Parquet nullability, authored Avro Relationship and SQL Server Field now pass. Parquet Facets has a compiler-checked request-index repair awaiting runtime; the next classifier and relationship families are queued. Remaining same-format classifiers and authored projections still need Rust kernels; legacy relationship factories retain TypeScript semantics until replaced. |
+| Core-ideal classifiers/projections/recovery | Avro/Parquet classification, authored projection and recovery exports; new SQL Server Field route. | Avro classification and authored nullability/facets/keys plus Parquet relationships, nested Records, Field, Keys and Cardinality pass focused Node baselines. Parquet nullability, authored Avro Relationship and SQL Server Field now pass. Parquet Facets reaches target validation and remains in repair. SQL Server Record/Cardinality and authored SQL Server Relationship now pass their normal/refusal baselines; further classifiers and projections are queued. Remaining same-format classifiers and authored projections still need Rust kernels; legacy relationship factories retain TypeScript semantics until replaced. |
 | Binding target projection | `projectBindingToDelta`, `projectBindingToIceberg`, `projectBindingToParquet`, `projectBindingToSqlServer`, `projectBindingTablesToSqlServer`, `projectBindingTablesAndIndexesToSqlServer`, `projectBindingTablesAndIndexesFromPlanToSqlServer`, `recoverBindingSqlServerNative`, `recoverBindingSqlServerSources`, `verifyBindingSqlServerProjection`, `validateSqlServerRelationshipLayout` | Delta, Iceberg and Parquet target workflows pass focused Node baselines. SQL Server tables and layout pass. Full outer SQL Server composition passes both focused public workflows; final host/package integration remains. |
 | Binding index projection | `projectBindingIndexesToPostgresql`, `projectBindingIndexesToSqlServer`, `projectBindingIndexesAgainstSqlServerPlan` | The planned SQL Server index route is active. Complete the PostgreSQL and direct SQL Server target-specific DDL/catalog admission and public routes using `binding_index_projection::project_binding_indexes`. |
 | Bit128 projection | `classifyBit128NativeType`, `decodeBit128FileRecord`, `encodeBit128FileRecord`, `projectBit128CarrierSchema`, `recoverBit128CarrierProjection`, `projectBit128Model`, `recoverBit128ModelProjection` | Classifier, Field authoring, binding inspection, full-row and file encode/decode, carrier/model projection/recovery pass Node; final host activation remains. |
-| DDD → GraphQL/PostgreSQL | `projectDddEntitiesToGraphql`, `projectDddToGraphql`, `recoverDddFromGraphql`, `recoverDddGraphqlNative`, `verifyDddGraphqlProjection`, `projectDddTablesToPostgresql`, `projectDddTablesAndIndexesToPostgresql`, `projectDddToPostgresql`, `recoverDddPostgresqlIdeal`, `recoverDddPostgresqlNative`, `verifyDddPostgresqlProjection`, `validatePostgresqlRelationshipLayout` | All five GraphQL projection/verification/recovery operations pass focused Node baselines. PostgreSQL layout and full composition pass. Both independent table APIs have a reviewed Rust fallback implementation awaiting the next runtime cohort. |
+| DDD → GraphQL/PostgreSQL | `projectDddEntitiesToGraphql`, `projectDddToGraphql`, `recoverDddFromGraphql`, `recoverDddGraphqlNative`, `verifyDddGraphqlProjection`, `projectDddTablesToPostgresql`, `projectDddTablesAndIndexesToPostgresql`, `projectDddToPostgresql`, `recoverDddPostgresqlIdeal`, `recoverDddPostgresqlNative`, `verifyDddPostgresqlProjection`, `validatePostgresqlRelationshipLayout` | All five GraphQL projection/verification/recovery operations pass focused Node baselines. PostgreSQL layout and full composition pass. The independent table API and table/index refusal/quoted-column cases pass; the combined report/strict baseline also passes its focused retry with its reviewed bounded-runtime allowance. |
 | DDD → JSON Schema | `dddFieldBinding`, `projectDddToJsonSchema` | Native DDD mapping kernel and Node public projection/edit/read/write/refusal baselines pass; browser/Python activation remains. |
 | Cross-format schema projections | `projectArrowToSpark`, `projectAvroToTableSpec`, `projectGraphqlInputToJsonSchema`, `projectJsonSchemaToProtobuf`, `projectOpenapiToJsonSchema`, `projectParquetToAvro`, `projectPostgresqlRowToJsonSchema`, `projectPostgresqlToAvro`, `projectSmithyToJsonSchema`, `projectSparkToArrow`, `projectSqlServerToAvro`, `projectSqlServerToDdl`, `projectTableSpecToAvro`, `projectToTableSpecViaAvro`, `projectTypeSpecToJsonSchema`, `createSmithyJavaScriptJsonSchemaBackend` | Focused Node workflows pass for the listed source-to-target Rust mappings. `createSmithyJavaScriptJsonSchemaBackend` is a host capability factory. Final browser/installed-package integration remains. |
 | Table inventory migration | `compileTableInventoryMigration`, `discoverTableInventoryMigrationChanges`, `serializeTableInventoryMigration`, `verifyTableInventoryMigration`, `irreversiblePurgeDisclosure` | Rust initial inventory compile/discover/serialize/verify and removal discovery/disclosure pass. Retained G02, selected seeds, created-table commands, parameter/cross-table references and linked seed/history normal/refusal baselines pass. Final package integration remains. |

@@ -22,6 +22,10 @@ pub mod facets_avro_projection_binding;
 pub mod key_avro_projection_binding;
 pub mod avro_relationship_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod relationship_tablespec_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod relationship_sqlserver_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod dbt_binding;

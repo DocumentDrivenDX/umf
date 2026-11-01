@@ -15,6 +15,7 @@ import type {CoreKindDeclaration} from '../model/field-kind';
 import type {KeyAvroProjection,KeyAvroRequest} from './key-avro-projection';
 import type {CoreKeyDeclaration} from '../model/keys';
 import type {RelationshipAvroProjection,RelationshipAvroRequest} from './relationship-avro-projection-factory';
+import type {RelationshipTableSpecProjection,RelationshipTableSpecRequest} from './relationship-tablespec-projection-factory';
 import type {AvroKeyClassification,AvroKeyRequest,AvroKeyArchive} from './key-avro';
 import type {AvroRelationshipClassification,AvroRelationshipRequest,AvroRelationshipArchive} from './relationship-avro';
 import type {AvroNullabilityClassification,AvroNullabilityRequest} from './nullability-avro';
@@ -25,6 +26,7 @@ import type {ParquetFieldClassification,ParquetFieldRequest} from './parquet-fie
 import type {ParquetKeyClassification,ParquetKeyRequest} from './key-parquet';
 import type {ParquetCardinalityClassification,ParquetCardinalityRequest} from './cardinality-parquet';
 import type {ParquetFacetClassification,ParquetFacetRequest} from './facets-parquet';
+import type {RelationshipSqlServerProjection,RelationshipSqlServerRequest} from './relationship-sqlserver-projection-factory';
 
 type NativeErrorGuard=(error:unknown)=>boolean;
 export interface CoreIdealNativeFamilies {
@@ -96,6 +98,19 @@ export interface CoreIdealNativeFamilies {
     recoverRelationshipAvroIdeal(fields:{receipt:RelationshipAvroProjection;current:Document}):unknown;
     recoverRelationshipAvroNative(fields:{receipt:RelationshipAvroProjection;current:Document}):unknown;
   };
+  ['relationship-sqlserver-projection']:{
+    projectRelationshipToSqlServer(fields:{source:Document;author:import('../model/relationships').CoreRelationshipDeclaration;bindingSource:Document;request:RelationshipSqlServerRequest}):unknown;
+    verifyRelationshipSqlServerProjection(fields:{receipt:RelationshipSqlServerProjection;current:NonNullable<RelationshipSqlServerProjection['target']>}):unknown;
+    recoverRelationshipSqlServerIdeal(fields:{receipt:RelationshipSqlServerProjection;current:NonNullable<RelationshipSqlServerProjection['target']>}):unknown;
+    recoverRelationshipSqlServerBinding(fields:{receipt:RelationshipSqlServerProjection;current:NonNullable<RelationshipSqlServerProjection['target']>}):unknown;
+    recoverRelationshipSqlServerNative(fields:{receipt:RelationshipSqlServerProjection;current:NonNullable<RelationshipSqlServerProjection['target']>}):unknown;
+  };
+  ['tablespec-relationship-projection']:{
+    projectRelationshipToTableSpec(fields:{source:Document;author:import('../model/relationships').CoreRelationshipDeclaration;nativeSource:Document;nativeTarget:Document;request:RelationshipTableSpecRequest}):unknown;
+    verifyRelationshipTableSpecProjection(fields:{receipt:RelationshipTableSpecProjection;current:Document}):unknown;
+    recoverRelationshipTableSpecIdeal(fields:{receipt:RelationshipTableSpecProjection;current:Document}):unknown;
+    recoverRelationshipTableSpecNativeSources(fields:{receipt:RelationshipTableSpecProjection;current:Document}):unknown;
+  };
 }
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
 
@@ -105,7 +120,7 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     try{return operation() as T;}catch(error){
       if(!isNativeUmfCoreError(error))throw error;
       const native=error as {code?:unknown;message?:unknown;path?:unknown};
-      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(AVRO_CARDINALITY_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&native.code!=='REQUEST'))throw error;
+      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(AVRO_CARDINALITY_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
       throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
     }
   }
@@ -168,5 +183,14 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     verifyRelationshipAvroProjection(receipt:RelationshipAvroProjection,current:Document):RelationshipAvroProjection{return call(()=>engine['avro-relationship-projection'].verifyRelationshipAvroProjection({receipt:copyJson(receipt) as unknown as RelationshipAvroProjection,current:copyJson(current) as unknown as Document}) as RelationshipAvroProjection);},
     recoverRelationshipAvroIdeal(receipt:RelationshipAvroProjection,current:Document):Document{return call(()=>engine['avro-relationship-projection'].recoverRelationshipAvroIdeal({receipt:copyJson(receipt) as unknown as RelationshipAvroProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
     recoverRelationshipAvroNative(receipt:RelationshipAvroProjection,current:Document):{schema:string;dependencies:[]}{return call(()=>engine['avro-relationship-projection'].recoverRelationshipAvroNative({receipt:copyJson(receipt) as unknown as RelationshipAvroProjection,current:copyJson(current) as unknown as Document}) as {schema:string;dependencies:[]});},
+    projectRelationshipToSqlServer(source:Document,author:import('../model/relationships').CoreRelationshipDeclaration,bindingSource:Document,request:RelationshipSqlServerRequest):RelationshipSqlServerProjection{return call(()=>engine['relationship-sqlserver-projection'].projectRelationshipToSqlServer({source:copyJson(source) as unknown as Document,author:copyJson(author) as unknown as import('../model/relationships').CoreRelationshipDeclaration,bindingSource:copyJson(bindingSource) as unknown as Document,request:copyJson(request) as unknown as RelationshipSqlServerRequest}) as RelationshipSqlServerProjection);},
+    verifyRelationshipSqlServerProjection(receipt:RelationshipSqlServerProjection,current:NonNullable<RelationshipSqlServerProjection['target']>):RelationshipSqlServerProjection{return call(()=>engine['relationship-sqlserver-projection'].verifyRelationshipSqlServerProjection({receipt:copyJson(receipt) as unknown as RelationshipSqlServerProjection,current:copyJson(current) as NonNullable<RelationshipSqlServerProjection['target']>}) as RelationshipSqlServerProjection);},
+    recoverRelationshipSqlServerIdeal(receipt:RelationshipSqlServerProjection,current:NonNullable<RelationshipSqlServerProjection['target']>):Document{return call(()=>engine['relationship-sqlserver-projection'].recoverRelationshipSqlServerIdeal({receipt:copyJson(receipt) as unknown as RelationshipSqlServerProjection,current:copyJson(current) as NonNullable<RelationshipSqlServerProjection['target']>}) as unknown as Document);},
+    recoverRelationshipSqlServerBinding(receipt:RelationshipSqlServerProjection,current:NonNullable<RelationshipSqlServerProjection['target']>):Document{return call(()=>engine['relationship-sqlserver-projection'].recoverRelationshipSqlServerBinding({receipt:copyJson(receipt) as unknown as RelationshipSqlServerProjection,current:copyJson(current) as NonNullable<RelationshipSqlServerProjection['target']>}) as unknown as Document);},
+    recoverRelationshipSqlServerNative(receipt:RelationshipSqlServerProjection,current:NonNullable<RelationshipSqlServerProjection['target']>):string{return call(()=>engine['relationship-sqlserver-projection'].recoverRelationshipSqlServerNative({receipt:copyJson(receipt) as unknown as RelationshipSqlServerProjection,current:copyJson(current) as NonNullable<RelationshipSqlServerProjection['target']>}) as string);},
+    projectRelationshipToTableSpec(source:Document,author:import('../model/relationships').CoreRelationshipDeclaration,nativeSource:Document,nativeTarget:Document,request:RelationshipTableSpecRequest):RelationshipTableSpecProjection{return call(()=>engine['tablespec-relationship-projection'].projectRelationshipToTableSpec({source:copyJson(source) as unknown as Document,author:copyJson(author) as unknown as import('../model/relationships').CoreRelationshipDeclaration,nativeSource:copyJson(nativeSource) as unknown as Document,nativeTarget:copyJson(nativeTarget) as unknown as Document,request:copyJson(request) as unknown as RelationshipTableSpecRequest}) as RelationshipTableSpecProjection);},
+    verifyRelationshipTableSpecProjection(receipt:RelationshipTableSpecProjection,current:Document):RelationshipTableSpecProjection{return call(()=>engine['tablespec-relationship-projection'].verifyRelationshipTableSpecProjection({receipt:copyJson(receipt) as unknown as RelationshipTableSpecProjection,current:copyJson(current) as unknown as Document}) as RelationshipTableSpecProjection);},
+    recoverRelationshipTableSpecIdeal(receipt:RelationshipTableSpecProjection,current:Document):Document{return call(()=>engine['tablespec-relationship-projection'].recoverRelationshipTableSpecIdeal({receipt:copyJson(receipt) as unknown as RelationshipTableSpecProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
+    recoverRelationshipTableSpecNativeSources(receipt:RelationshipTableSpecProjection,current:Document):{source:string|Record<string,string>;target:string|Record<string,string>}{return call(()=>engine['tablespec-relationship-projection'].recoverRelationshipTableSpecNativeSources({receipt:copyJson(receipt) as unknown as RelationshipTableSpecProjection,current:copyJson(current) as unknown as Document}) as {source:string|Record<string,string>;target:string|Record<string,string>});},
   });
 }

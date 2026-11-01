@@ -59,8 +59,19 @@ fn embedded_sqlserver_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry)
         include_str!("../../../spec/extensions/sqlserver/package.json"),
         ctx,
     )?;
+    let cardinality_package = parse_resource(
+        include_str!("../../../spec/extensions/sqlserver-cardinality/package.json"),
+        ctx,
+    )?;
     let mut registry = Registry::new();
     registry.register(&package, None, engine.package_schema(), &schemas, ctx)?;
+    registry.register(
+        &cardinality_package,
+        None,
+        engine.package_schema(),
+        &schemas,
+        ctx,
+    )?;
     Ok((engine, registry))
 }
 struct NoCapabilities;
@@ -88,10 +99,15 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         "sqlserver.facetType" => &["profile", "op", "native"],
         "sqlserver.facetPredicate" => &["profile", "op", "source", "columnName"],
         "sqlserver.facetConstraints" => &["profile", "op", "document", "columnPath"],
-        "sqlserver.classifyField" => &["profile", "op", "source", "request"],
-        "sqlserver.verifyFieldClassification" | "sqlserver.recoverFieldCapture" => {
-            &["profile", "op", "receipt", "current"]
-        }
+        "sqlserver.classifyField"
+        | "sqlserver.classifyRecord"
+        | "sqlserver.classifyCardinality" => &["profile", "op", "source", "request"],
+        "sqlserver.verifyFieldClassification"
+        | "sqlserver.recoverFieldCapture"
+        | "sqlserver.verifyRecordClassification"
+        | "sqlserver.recoverRecordCapture"
+        | "sqlserver.verifyCardinalityClassification"
+        | "sqlserver.recoverCardinalitySource" => &["profile", "op", "receipt", "current"],
         _ => return None,
     })
 }
@@ -122,6 +138,12 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         "sqlserver.classifyField",
         "sqlserver.verifyFieldClassification",
         "sqlserver.recoverFieldCapture",
+        "sqlserver.classifyRecord",
+        "sqlserver.verifyRecordClassification",
+        "sqlserver.recoverRecordCapture",
+        "sqlserver.classifyCardinality",
+        "sqlserver.verifyCardinalityClassification",
+        "sqlserver.recoverCardinalitySource",
     ]
     .into_iter()
     .find(|op| op.encode_utf16().eq(op_text.units().iter().copied()))
@@ -201,11 +223,18 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
                 ));
             }
         }
-        "sqlserver.classifyField" => {
+        "sqlserver.classifyField"
+        | "sqlserver.classifyRecord"
+        | "sqlserver.classifyCardinality" => {
             required(request, "source")?;
             required(request, "request")?;
         }
-        "sqlserver.verifyFieldClassification" | "sqlserver.recoverFieldCapture" => {
+        "sqlserver.verifyFieldClassification"
+        | "sqlserver.recoverFieldCapture"
+        | "sqlserver.verifyRecordClassification"
+        | "sqlserver.recoverRecordCapture"
+        | "sqlserver.verifyCardinalityClassification"
+        | "sqlserver.recoverCardinalitySource" => {
             required(request, "receipt")?;
             required(request, "current")?;
         }
@@ -288,6 +317,80 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             let (engine, registry) = embedded_sqlserver_engine(ctx)?;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::recover(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+            .map(Value::String)
+        }
+        "sqlserver.classifyRecord" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::classify_record(
+                required(request, "source")?,
+                required(request, "request")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.verifyRecordClassification" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::verify_record(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.recoverRecordCapture" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::recover_record(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+            .map(Value::String)
+        }
+        "sqlserver.classifyCardinality" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::classify_cardinality(
+                required(request, "source")?,
+                required(request, "request")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.verifyCardinalityClassification" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::verify_cardinality(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.recoverCardinalitySource" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_field_classification::recover_cardinality_source(
                 required(request, "receipt")?,
                 required(request, "current")?,
                 &engine,

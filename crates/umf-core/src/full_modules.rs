@@ -59,9 +59,13 @@ pub mod binding_index_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_relationship_layout;
 #[cfg(feature = "embedded-adapters")]
+pub mod relationship_sqlserver_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod postgresql_relationship_layout;
 #[cfg(feature = "embedded-adapters")]
 pub mod ddd_postgresql_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod ddd_postgresql_tables;
 #[cfg(feature = "embedded-adapters")]
 pub mod binding_sqlserver_tables;
 #[cfg(feature = "embedded-adapters")]
@@ -154,6 +158,8 @@ pub mod facets_avro_projection;
 pub mod key_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_relationship_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod relationship_tablespec_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod openapi_json_schema_projection;
 pub mod openapi_adapter;

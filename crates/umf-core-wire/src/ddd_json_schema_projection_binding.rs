@@ -27,6 +27,15 @@ const VALIDATE_SQLSERVER_LAYOUT: &str =
     "ddd-json-schema-projection.validateSqlServerRelationshipLayout";
 const VALIDATE_POSTGRESQL_LAYOUT: &str =
     "ddd-json-schema-projection.validatePostgresqlRelationshipLayout";
+const PREPARE_POSTGRESQL_TABLES: &str = "ddd-json-schema-projection.prepareDddPostgresqlTables";
+const COMPLETE_POSTGRESQL_TABLES: &str = "ddd-json-schema-projection.completeDddPostgresqlTables";
+const BLOCK_POSTGRESQL_TABLES: &str = "ddd-json-schema-projection.blockDddPostgresqlTables";
+const PREPARE_POSTGRESQL_TABLE_INDEXES: &str =
+    "ddd-json-schema-projection.prepareDddPostgresqlTablesAndIndexes";
+const COMPLETE_POSTGRESQL_TABLE_INDEXES: &str =
+    "ddd-json-schema-projection.completeDddPostgresqlTablesAndIndexes";
+const PREPARE_POSTGRESQL_TABLE_INDEXES_COMBINED: &str =
+    "ddd-json-schema-projection.prepareDddPostgresqlTablesAndIndexesCombined";
 const PREPARE_POSTGRESQL_PROJECTION: &str =
     "ddd-json-schema-projection.prepareDddPostgresqlProjection";
 const COMPLETE_POSTGRESQL_PROJECTION: &str =
@@ -183,6 +192,11 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             "replacement",
             "policy",
             "lossPolicy",
+            "tablePolicy",
+            "archive",
+            "tableArchive",
+            "indexArchives",
+            "combinedArchive",
             "receipt",
             "currentTarget",
             "nativeSource",
@@ -247,6 +261,81 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         )?));
     }
     let operation = text(field(value, "op"), "op")?;
+    if operation == &Utf16::from(PREPARE_POSTGRESQL_TABLE_INDEXES)
+        || operation == &Utf16::from(COMPLETE_POSTGRESQL_TABLE_INDEXES)
+        || operation == &Utf16::from(PREPARE_POSTGRESQL_TABLE_INDEXES_COMBINED)
+    {
+        let logical = field(value, "document").ok_or_else(|| request("document is required"))?;
+        let binding = field(value, "binding").ok_or_else(|| request("binding is required"))?;
+        let policy =
+            field(value, "tablePolicy").ok_or_else(|| request("tablePolicy is required"))?;
+        let table_archive =
+            field(value, "tableArchive").ok_or_else(|| request("tableArchive is required"))?;
+        let resources = BindingInspectionResources::new(ctx)?;
+        return if operation == &Utf16::from(PREPARE_POSTGRESQL_TABLE_INDEXES) {
+            umf_core::ddd_postgresql_tables::prepare_tables_indexes(
+                logical,
+                binding,
+                policy,
+                table_archive,
+                &resources,
+                ctx,
+            )
+        } else {
+            let loss = text(field(value, "lossPolicy"), "lossPolicy")?
+                .to_utf8()
+                .map_err(|_| request("lossPolicy must be valid UTF-16"))?;
+            let index_archives = field(value, "indexArchives")
+                .ok_or_else(|| request("indexArchives is required"))?;
+            let combined_archive =
+                if operation == &Utf16::from(PREPARE_POSTGRESQL_TABLE_INDEXES_COMBINED) {
+                    None
+                } else {
+                    Some(
+                        field(value, "combinedArchive")
+                            .ok_or_else(|| request("combinedArchive is required"))?,
+                    )
+                };
+            umf_core::ddd_postgresql_tables::complete_tables_indexes(
+                logical,
+                binding,
+                policy,
+                &loss,
+                table_archive,
+                index_archives,
+                combined_archive,
+                &resources,
+                ctx,
+            )
+        };
+    }
+    if operation == &Utf16::from(PREPARE_POSTGRESQL_TABLES)
+        || operation == &Utf16::from(COMPLETE_POSTGRESQL_TABLES)
+        || operation == &Utf16::from(BLOCK_POSTGRESQL_TABLES)
+    {
+        let logical = field(value, "document").ok_or_else(|| request("document is required"))?;
+        let binding = field(value, "binding").ok_or_else(|| request("binding is required"))?;
+        let policy =
+            field(value, "tablePolicy").ok_or_else(|| request("tablePolicy is required"))?;
+        let loss = text(field(value, "lossPolicy"), "lossPolicy")?
+            .to_utf8()
+            .map_err(|_| request("lossPolicy must be valid UTF-16"))?;
+        let resources = BindingInspectionResources::new(ctx)?;
+        return if operation == &Utf16::from(PREPARE_POSTGRESQL_TABLES) {
+            umf_core::ddd_postgresql_tables::prepare_tables(
+                logical, binding, policy, &loss, &resources, ctx,
+            )
+        } else if operation == &Utf16::from(COMPLETE_POSTGRESQL_TABLES) {
+            let archive = field(value, "archive").ok_or_else(|| request("archive is required"))?;
+            umf_core::ddd_postgresql_tables::complete_tables(
+                logical, binding, policy, &loss, &resources, archive, ctx,
+            )
+        } else {
+            umf_core::ddd_postgresql_tables::block_host_failure(
+                logical, binding, policy, &loss, &resources, ctx,
+            )
+        };
+    }
     if operation == &Utf16::from(PREPARE_POSTGRESQL_PROJECTION) {
         let logical = field(value, "document").ok_or_else(|| request("document is required"))?;
         let binding = field(value, "binding").ok_or_else(|| request("binding is required"))?;
