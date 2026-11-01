@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {Registry as BaseRegistry} from './registry';
+import type {ExtensionPackage} from '../model/types';
+import type {SemanticValidator} from './registry';
+import {actionSemanticParts,composeRustOwnedActionSemanticValidator} from '../extensions/actions/native-semantic-owner';
 import type {ExtensionKindRuntime} from './kind-runtime';
 import {UmfError} from '../model/errors';
 import {validateDocument as validateWithRegistry} from '../validation/document';
 import type {readDocument as ReadDocument,writeDocument as WriteDocument} from '../model/document';
-import {registerActions} from '../extensions/actions';
 
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
@@ -15,7 +17,7 @@ interface RegistryRustEngine extends ExtensionKindRuntime {
 }
 
 /** Host registry storage and callbacks over the initialized shared Rust engine. */
-export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean){
+export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean,registerActionsNative:(registry:BaseRegistry)=>BaseRegistry){
  const invoke=<T>(operation:()=>T):T=>{
   try{return operation();}
   catch(error){
@@ -35,9 +37,22 @@ export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfC
  Object.freeze(runtime);
  const Registry:typeof BaseRegistry=class Registry extends BaseRegistry {
   constructor(kindRuntime:ExtensionKindRuntime=runtime){super(kindRuntime);}
+  register(input:ExtensionPackage,semantics?:SemanticValidator,options:{kinds?:boolean;replaceActions?:boolean}={}):this {
+   if(input.id==='umf.actions'&&input.version==='0.1.0'){
+    const previous=this.get(input.id,input.version)?.semantics;
+    const before=actionSemanticParts(previous),next=actionSemanticParts(semantics);
+    const native=next.native??before.native;
+    if(native){
+     const callers=[...new Set([...before.callers,...next.callers])];
+     semantics=composeRustOwnedActionSemanticValidator(native,callers);
+     options={...options,replaceActions:true};
+    }
+   }
+   return super.register(input,semantics,options);
+  }
  };
  const validateDocument:typeof validateWithRegistry=(input,registry=new Registry(),meter)=>validateWithRegistry(input,registry,meter);
  const readDocument:typeof ReadDocument=(source,format='yaml')=>invoke(()=>engine.readDocument(source,format)) as ReturnType<typeof ReadDocument>;
  const writeDocument:typeof WriteDocument=(document,format='yaml')=>invoke(()=>engine.writeDocument(document,format));
- return Object.freeze({Registry,validateDocument,readDocument,writeDocument,createUmfRegistry:()=>registerActions(new Registry())});
+ return Object.freeze({Registry,validateDocument,readDocument,writeDocument,createUmfRegistry:()=>registerActionsNative(new Registry())});
 }

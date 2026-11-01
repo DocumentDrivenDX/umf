@@ -440,6 +440,118 @@ fn rule_with(kind: &str, key: &str, value: Value) -> Value {
 }
 
 impl CodegenEngine<'_> {
+    /// Run all native row-scope source mapping and existing lifecycle/Registry
+    /// admission before the host policy callback is invoked.
+    pub fn prepare_row_scope(
+        &self,
+        request: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        self.normalize_row_scope(request, ctx)
+    }
+
+    /// Finish a prepared result with bounded diagnostics from the caller's
+    /// `admitPolicy(policy)` callback. The callback can add diagnostics but
+    /// cannot replace the source, policy, provenance map, or native verdict.
+    pub fn complete_row_scope(
+        &self,
+        request: &Value,
+        prepared: &Value,
+        host_diagnostics: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        // The prepared value crosses a host callback boundary. Recompute it
+        // from the original request before accepting callback diagnostics so
+        // the host cannot replace the candidate policy or provenance map.
+        let expected = self.normalize_row_scope(request, ctx)?;
+        if &expected != prepared {
+            return Err(EngineError::new(
+                "ROW_SCOPE_CALLBACK",
+                Utf16::default(),
+                "Prepared row-scope result changed across the callback boundary",
+            ));
+        }
+        let Some(Value::Object(fields)) = Some(prepared) else {
+            return Err(EngineError::new(
+                "ROW_SCOPE_CALLBACK",
+                Utf16::default(),
+                "Prepared row-scope result is invalid",
+            ));
+        };
+        let allowed = ["valid", "source", "policy", "diagnostics", "sourceToOutput"];
+        if fields
+            .iter()
+            .any(|(key, _)| !allowed.iter().any(|name| key == &Utf16::from(*name)))
+            || member(prepared, "valid").is_none()
+            || member(prepared, "source").is_none()
+            || member(prepared, "diagnostics").is_none()
+            || member(prepared, "sourceToOutput").is_none()
+        {
+            return Err(EngineError::new(
+                "ROW_SCOPE_CALLBACK",
+                Utf16::default(),
+                "Prepared row-scope result is incomplete",
+            ));
+        }
+        let Some(Value::Array(host_rows)) = Some(host_diagnostics) else {
+            return Err(EngineError::new(
+                "ROW_SCOPE_CALLBACK",
+                Utf16::default(),
+                "admitPolicy must return a diagnostic array",
+            ));
+        };
+        if host_rows.len() > 256 {
+            return Err(EngineError::new(
+                "ROW_SCOPE_CALLBACK",
+                Utf16::default(),
+                "admitPolicy returned too many diagnostics",
+            ));
+        }
+        let mut result = copied(prepared, ctx)?;
+        let Some(Value::Array(native_rows)) = member_mut(&mut result, "diagnostics") else {
+            return Err(EngineError::new(
+                "ROW_SCOPE_CALLBACK",
+                Utf16::default(),
+                "Prepared diagnostics are invalid",
+            ));
+        };
+        ctx.charge_work(host_rows.len().saturating_add(1), Utf16::default())?;
+        native_rows.try_reserve(host_rows.len()).map_err(|_| {
+            EngineError::new("LIMIT", Utf16::default(), "Diagnostic allocation refused")
+        })?;
+        for (index, row) in host_rows.iter().enumerate() {
+            let Some(Value::Object(items)) = Some(row) else {
+                return Err(EngineError::new(
+                    "ROW_SCOPE_CALLBACK",
+                    Utf16::from(format!("/admitPolicy/{index}")),
+                    "Callback diagnostic must be an object",
+                ));
+            };
+            if items.len() != 3
+                || ["code", "path", "message"]
+                    .iter()
+                    .any(|key| !items.iter().any(|(name, _)| name == &Utf16::from(*key)))
+                || ["code", "path", "message"]
+                    .iter()
+                    .any(|key| !matches!(member(row, key), Some(Value::String(_))))
+            {
+                return Err(EngineError::new(
+                    "ROW_SCOPE_CALLBACK",
+                    Utf16::from(format!("/admitPolicy/{index}")),
+                    "Callback diagnostic requires exact string code, path, and message members",
+                ));
+            }
+            native_rows.push(copied(row, ctx)?);
+        }
+        let valid = native_rows.is_empty();
+        set_member(&mut result, "valid", Value::Bool(valid));
+        if !valid {
+            remove_member(&mut result, "policy");
+        }
+        charge_tree(&result, ctx)?;
+        Ok(result)
+    }
+
     /// Normalize `{input, context}` row-scope authoring into native policy
     /// vocabulary. Context bindings are trusted host data; source text never
     /// supplies a field or role reference by itself.
@@ -1254,6 +1366,18 @@ fn member_mut<'a>(v: &'a mut Value, key: &str) -> Option<&'a mut Value> {
             .map(|(_, v)| v)
     } else {
         None
+    }
+}
+fn set_member(value: &mut Value, key: &str, replacement: Value) {
+    if let Value::Object(items) = value {
+        if let Some((_, value)) = items.iter_mut().find(|(name, _)| name == &Utf16::from(key)) {
+            *value = replacement;
+        }
+    }
+}
+fn remove_member(value: &mut Value, key: &str) {
+    if let Value::Object(items) = value {
+        items.retain(|(name, _)| name != &Utf16::from(key));
     }
 }
 fn parse_commands(

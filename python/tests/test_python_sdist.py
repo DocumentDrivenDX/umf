@@ -30,6 +30,8 @@ ROOT_FILES = (
     ".cargo/config.toml",
     "spec/extensions/arrow/package.json",
     "spec/extensions/arrow/integration-schema.json",
+    "spec/extensions/ddd/package.json",
+    "spec/extensions/binding-128/package.json",
     "spec/extensions/avro/package.json",
     "spec/extensions/parquet/package.json",
     "spec/extensions/parquet/idl.json",
@@ -81,6 +83,7 @@ ROOT_FILES = (
     "spec/core/parquet-record-classification.schema.json",
     "spec/extensions/delta-log/package.json",
     "spec/extensions/delta-log/action-schema.json",
+    "spec/extensions/security/schema.json",
     "spec/extensions/security-v0.2/package.json",
     "spec/extensions/security-protection/package.json",
     "spec/extensions/security-protection/domain-resolution.schema.json",
@@ -107,11 +110,27 @@ ROOT_FILES = (
     "spec/extensions/iceberg/datatype-schema.json",
     "spec/extensions/iceberg-table/package.json",
     "spec/extensions/iceberg-table/datatype-schema.json",
+    "spec/extensions/spark/package.json",
+    "spec/extensions/spark/datatype-schema.json",
     "spec/extensions/typespec/package.json",
     "spec/extensions/typespec/compiler-report.schema.json",
     "spec/extensions/typespec/semantic-graph.schema.json",
     "spec/extensions/typespec/json-schema-emission.schema.json",
     "spec/extensions/typespec/libraries.json",
+    "spec/extensions/actions/plan.schema.json",
+    "spec/extensions/actions/plan-model.schema.json",
+    "spec/extensions/actions/plan-capabilities.schema.json",
+    "spec/extensions/actions/plan-inspection.schema.json",
+    "spec/extensions/actions/plan-assessment.schema.json",
+    "spec/extensions/actions/executor-profile.schema.json",
+    "spec/extensions/actions/manifest.schema.json",
+    "spec/extensions/actions/manifest-inspection.schema.json",
+    "spec/extensions/actions/tx-results.schema.json",
+    "spec/extensions/actions/bulk.schema.json",
+    "spec/extensions/actions/manifest.schema.json",
+    "spec/extensions/actions/manifest-inspection.schema.json",
+    "spec/extensions/actions/tx-results.schema.json",
+    "spec/extensions/actions/bulk.schema.json",
     "spec/extensions/smithy/package.json",
     "spec/extensions/smithy/native-assembly.schema.json",
     "spec/extensions/smithy/assembly-result.schema.json",
@@ -157,16 +176,26 @@ RESOURCES = (
     ("domainPolicy.json", "spec/metamodel/generated/domain-policy.json"),
     ("packageSchema.json", "spec/core/extension-package.schema.json"),
     ("referenceSchema.json", "spec/core/semantic-type-reference.schema.json"),
+    ("sagaPackage.json", "spec/extensions/saga/package.json"),
     ("stableBindingPackage.json", "spec/extensions/binding-stable/package.json"),
     ("tablesPackage.json", "spec/extensions/tables/package.json"),
 )
 FORCE_INCLUDE = {
     "../spec/extensions/tables/operation.schema.json": "spec/extensions/tables/operation.schema.json",
+    "../spec/extensions/tables/operation-0.2.schema.json": "spec/extensions/tables/operation-0.2.schema.json",
+    "../spec/extensions/ddd/package.json": "spec/extensions/ddd/package.json",
+    "../spec/extensions/binding-128/package.json": "spec/extensions/binding-128/package.json",
     "../spec/extensions/json-schema/package.json": "spec/extensions/json-schema/package.json",
     "../spec/extensions/protobuf/package.json": "spec/extensions/protobuf/package.json",
     "../spec/extensions/arrow-ipc/package.json": "spec/extensions/arrow-ipc/package.json",
     "../spec/extensions/tables/package.json": "spec/extensions/tables/package.json",
     "../spec/extensions/actions/package.json": "spec/extensions/actions/package.json",
+    "../spec/extensions/actions/executor-profile.schema.json": "spec/extensions/actions/executor-profile.schema.json",
+    "../spec/extensions/actions/manifest.schema.json": "spec/extensions/actions/manifest.schema.json",
+    "../spec/extensions/actions/manifest-inspection.schema.json": "spec/extensions/actions/manifest-inspection.schema.json",
+    "../spec/extensions/actions/tx-results.schema.json": "spec/extensions/actions/tx-results.schema.json",
+    "../spec/extensions/actions/bulk.schema.json": "spec/extensions/actions/bulk.schema.json",
+    "../spec/extensions/saga/package.json": "spec/extensions/saga/package.json",
     "../spec/extensions/binding/package.json": "spec/extensions/binding/package.json",
     "../spec/extensions/binding-stable/package.json": "spec/extensions/binding-stable/package.json",
     "../spec/core/schema.json": "spec/core/schema.json",
@@ -218,6 +247,7 @@ FORCE_INCLUDE = {
     "../spec/core/parquet-record-classification.schema.json": "spec/core/parquet-record-classification.schema.json",
     "../spec/extensions/delta-log/package.json": "spec/extensions/delta-log/package.json",
     "../spec/extensions/delta-log/action-schema.json": "spec/extensions/delta-log/action-schema.json",
+    "../spec/extensions/security/schema.json": "spec/extensions/security/schema.json",
     "../spec/extensions/security-v0.2/package.json": "spec/extensions/security-v0.2/package.json",
     "../spec/extensions/security-protection/package.json": "spec/extensions/security-protection/package.json",
     "../spec/extensions/security-protection/domain-resolution.schema.json": "spec/extensions/security-protection/domain-resolution.schema.json",
@@ -313,6 +343,7 @@ def _make_checkout(root: Path) -> dict[str, bytes]:
     files["fixtures/actions-binding/vector.json"] = b'{"fixture":true}\n'
     files["fixtures/metamodel/current-conformance.json"] = b'{"conformance":true}\n'
     files["spec/extensions/tables/operation.schema.json"] = b'{"operation":true}\n'
+    files["spec/extensions/tables/operation-0.2.schema.json"] = b'{"operation02":true}\n'
     files["spec/metamodel/generated/core.json"] = b'{"generated":true}\n'
     files["spec/extensions/domain-pack/domain.json"] = b'{"domain":true}\n'
     files["spec/extensions/dataset-source/source.json"] = b'{"dataset":true}\n'
@@ -438,6 +469,7 @@ def test_rust_include_authorities_are_in_sdist_closure() -> None:
     include_pattern = re.compile(r'include_(?:str|bytes)!\s*\(\s*"([^"]+)"')
     separately_forced = {source for _name, source in RESOURCES}
     separately_forced.add("spec/extensions/tables/operation.schema.json")
+    separately_forced.add("spec/extensions/tables/operation-0.2.schema.json")
     separately_forced_directories = (
         "spec/metamodel/generated/",
         "spec/extensions/domain-pack/",

@@ -6,7 +6,7 @@ use num_traits::{Signed, ToPrimitive, Zero};
 use crate::{
     context::Context,
     error::EngineError,
-    value::{Utf16, Value},
+    value::{copy_json, Utf16, Value},
 };
 
 const PROFILE: &str = "umf-128/1";
@@ -371,6 +371,98 @@ fn signedness(v: &Value) -> Result<bool, EngineError> {
     } else {
         Err(err("TYPE", "Signedness must be explicit"))
     }
+}
+
+/// Classify native UUID types only from explicit system/catalog identity metadata.
+pub fn classify_native_type(input: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    let source = copy_json(input, ctx)?;
+    exact_object(
+        &source,
+        &["definition", "system", "version"],
+        "PROJECTION",
+        "Explicit native type descriptor required",
+        ctx,
+    )?;
+    let invalid = || err("PROJECTION", "Explicit native type descriptor required");
+    let system_value = get(&source, "system").unwrap();
+    let version_value = get(&source, "version").unwrap();
+    let (Value::String(system_text), Value::String(version_text)) = (system_value, version_value)
+    else {
+        return Err(invalid());
+    };
+    let system = ascii(system_text).ok_or_else(invalid)?;
+    ctx.charge_text(
+        system_text.len().saturating_add(version_text.len()),
+        Utf16::default(),
+    )?;
+    if !["postgresql", "sqlserver", "avro", "parquet"].contains(&system.as_str())
+        || version_text.is_empty()
+    {
+        return Err(invalid());
+    }
+    let version = ascii(version_text).unwrap_or_default();
+    let definition = get(&source, "definition").unwrap();
+    let name = |value: Option<&Value>, expected: &str| matches!(value, Some(Value::String(v)) if v == &Utf16::from(expected));
+    let scalar_type = match system.as_str() {
+        "postgresql" if version.starts_with("17.") || version == "17" => {
+            if name(get(definition, "schema"), "pg_catalog")
+                && name(get(definition, "name"), "uuid")
+                && name(get(definition, "kind"), "b")
+            {
+                Some("uuid")
+            } else {
+                None
+            }
+        }
+        "sqlserver" if version == "2022" => {
+            if name(get(definition, "schema"), "sys")
+                && name(get(definition, "name"), "uniqueidentifier")
+                && get(definition, "systemTypeId") == Some(&Value::Number(36.0))
+            {
+                Some("uuid")
+            } else {
+                None
+            }
+        }
+        "avro" if version == "1.12.0" => {
+            if name(get(definition, "logicalType"), "uuid")
+                && (name(get(definition, "type"), "string")
+                    || name(get(definition, "type"), "fixed")
+                        && get(definition, "size") == Some(&Value::Number(16.0)))
+            {
+                Some("uuid")
+            } else {
+                None
+            }
+        }
+        "parquet" if version == "2.11.0" => {
+            if name(get(definition, "logicalType"), "UUID")
+                && name(get(definition, "physicalType"), "FIXED_LEN_BYTE_ARRAY")
+                && get(definition, "length") == Some(&Value::Number(16.0))
+            {
+                Some("uuid")
+            } else {
+                None
+            }
+        }
+        _ => None,
+    };
+    charge(ctx, 1)?;
+    let mut fields = vec![
+        (Utf16::from("source"), source),
+        (
+            Utf16::from("basis"),
+            Value::string_utf8(if scalar_type.is_some() {
+                "native-type-identity"
+            } else {
+                "unclassified"
+            }),
+        ),
+    ];
+    if let Some(scalar_type) = scalar_type {
+        fields.push((Utf16::from("scalarType"), Value::string_utf8(scalar_type)));
+    }
+    Ok(Value::Object(fields))
 }
 
 pub fn parse_bits128(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {

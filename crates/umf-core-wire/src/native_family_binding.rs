@@ -9,6 +9,7 @@ pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
     "avro",
     "avro-json-schema-projection",
+    "ddd-json-schema-projection",
     "openapi",
     "linkml",
     "odcs",
@@ -24,6 +25,7 @@ pub const FAMILIES: &[&str] = &[
     "delta-log",
     "delta-ddl",
     "delta-parquet",
+    "spark",
 ];
 
 fn bad_family() -> String {
@@ -54,6 +56,17 @@ pub fn metadata_wire(family: &str) -> String {
         "avro-json-schema-projection" => (
             crate::avro_json_schema_projection_binding::PROFILE,
             &["projectAvroToJsonSchema"],
+        ),
+        "ddd-json-schema-projection" => (
+            crate::ddd_json_schema_projection_binding::PROFILE,
+            &[
+                "projectDddToJsonSchema",
+                "dddFieldBinding",
+                "inspectDdd",
+                "validateDddPayload",
+                "getDddDefinition",
+                "editDddDefinition",
+            ],
         ),
         "openapi" => (
             crate::openapi_binding::PROFILE,
@@ -219,7 +232,23 @@ pub fn metadata_wire(family: &str) -> String {
         ),
         "delta-parquet" => (
             crate::parquet_capture_binding::PROFILE,
-            &["projectActions", "reconcileCheckpoint", "reconcileMultipart"],
+            &[
+                "projectActions",
+                "reconcileCheckpoint",
+                "reconcileMultipart",
+            ],
+        ),
+        "spark" => (
+            crate::spark_binding::PROFILE,
+            &[
+                "import",
+                "inspect",
+                "inspectPayload",
+                "export",
+                "getNode",
+                "editNode",
+                "renameField",
+            ],
         ),
         "delta-log" => (
             crate::delta_log_binding::PROFILE,
@@ -319,6 +348,9 @@ pub fn execute_wire_with_control(
         "avro-json-schema-projection" => {
             crate::avro_json_schema_projection_binding::execute_wire_with_control(wire, control)
         }
+        "ddd-json-schema-projection" => {
+            crate::ddd_json_schema_projection_binding::execute_wire_with_control(wire, control)
+        }
         "openapi" => crate::openapi_binding::execute_wire_with_control(wire, control),
         "linkml" => crate::native_contract_binding::execute_linkml_wire_with_control(wire, control),
         "odcs" => crate::native_contract_binding::execute_odcs_wire_with_control(wire, control),
@@ -335,6 +367,7 @@ pub fn execute_wire_with_control(
         "delta-log" => crate::delta_log_binding::execute_json_with_control(wire, control),
         "delta-ddl" => crate::delta_ddl_binding::execute_json_with_control(wire, control),
         "delta-parquet" => crate::parquet_capture_binding::execute_wire_with_control(wire, control),
+        "spark" => crate::spark_binding::execute_wire_with_control(wire, control),
         _ => bad_family(),
     }
 }

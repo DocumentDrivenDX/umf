@@ -5,6 +5,7 @@ import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-
 import {createPostgresqlParserSessionOperations, POSTGRESQL_PARSER_PROFILE} from './src/postgresql-parser-session.js';
 import {createTypeSpecSessionOperations, TYPESPEC_SESSION_PROFILE} from './src/typespec-session.js';
 import {createSmithySessionOperations, SMITHY_SESSION_PROFILE} from './src/smithy-session.js';
+import {createActionPlanSessionOperations, ACTION_PLAN_PROFILE} from './src/action-plan-session.js';
 import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
 export {POSTGRESQL_PARSER_PROFILE};
@@ -16,6 +17,8 @@ import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
 import {createSecurityFunctionsEngine as createSecurityFunctionsEngineWithWire, SECURITY_FUNCTIONS_PROFILE} from './src/security-functions.js';
 import {createSecurityProtectionSourceEngine as createSecurityProtectionSourceEngineWithWire, SECURITY_PROTECTION_SOURCE_PROFILE} from './src/security-protection-source.js';
+import {createSecurityPolicySourceEngine as createSecurityPolicySourceEngineWithWire, SECURITY_POLICY_SOURCE_PROFILE} from './src/security-policy-source.js';
+import {createSecurityProtectionDomainsEngine as createSecurityProtectionDomainsEngineWithWire, SECURITY_DOMAINS_PROFILE} from './src/security-domains.js';
 import {createSecurityQueryPropertiesEngine as createSecurityQueryPropertiesEngineWithWire, SECURITY_QUERY_PROPERTIES_PROFILE} from './src/security-query-properties.js';
 import {createSecurityProtectionParametersEngine as createSecurityProtectionParametersEngineWithWire, SECURITY_PROTECTION_PARAMETERS_PROFILE} from './src/security-protection-parameters.js';
 import {createCoreModelOperations} from './src/core-model.js';
@@ -131,6 +134,7 @@ export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
 export {SECURITY_FUNCTIONS_PROFILE};
 export {SECURITY_PROTECTION_SOURCE_PROFILE};
+export {SECURITY_POLICY_SOURCE_PROFILE};
 export {SECURITY_QUERY_PROPERTIES_PROFILE};
 export {SECURITY_PROTECTION_PARAMETERS_PROFILE};
 export {BIT128_PROFILE};
@@ -167,7 +171,13 @@ export function createSecurityFunctionsEngine() {
 /** Create the opt-in protection source identity and transform-reference resolver. */
 export function createSecurityProtectionSourceEngine() {
   if (typeof addon.executeSecurityProtectionSourceWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
-  return createSecurityProtectionSourceEngineWithWire(wire => addon.executeSecurityProtectionSourceWire(wire), UmfCoreError);
+  return createSecurityProtectionSourceEngineWithWire(wire => addon.executeSecurityProtectionSourceWire(wire), NativeCoreErrorType);
+}
+
+/** Create the Rust-owned Security policy source and V2 representation engine. */
+export function createSecurityPolicySourceEngine() {
+  if (typeof addon.executeSecurityPolicySourceWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityPolicySourceEngineWithWire(wire => addon.executeSecurityPolicySourceWire(wire), NativeCoreErrorType);
 }
 
 /** Create the opt-in Rust engine for bounded protection-query property inspection. */
@@ -176,10 +186,16 @@ export function createSecurityQueryPropertiesEngine() {
   return createSecurityQueryPropertiesEngineWithWire(wire => addon.executeSecurityQueryPropertiesWire(wire), NativeCoreErrorType);
 }
 
+/** Create the opt-in Rust engine for exact protection domain resolution. */
+export function createSecurityProtectionDomainsEngine() {
+  if (typeof addon.executeSecurityDomainsWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityProtectionDomainsEngineWithWire(wire => addon.executeSecurityDomainsWire(wire), NativeCoreErrorType);
+}
+
 /** Create the opt-in Rust engine for bounded typed protection-parameter literal admission. */
 export function createSecurityProtectionParametersEngine() {
   if (typeof addon.executeSecurityProtectionParametersWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
-  return createSecurityProtectionParametersEngineWithWire(wire => addon.executeSecurityProtectionParametersWire(wire), UmfCoreError);
+  return createSecurityProtectionParametersEngineWithWire(wire => addon.executeSecurityProtectionParametersWire(wire), NativeCoreErrorType);
 }
 
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
@@ -1923,6 +1939,17 @@ export function createCodegenEngine(resources, options = {}) {
   return Object.freeze({
     call,
     sagaRegistryProfile() { return fromWire(toWire({actionsPackage: fixedResources.actionsPackage, sagaPackage: fixedResources.sagaPackage})); },
+    inspectActions(source) { return result('inspectActions', {source}); },
+    declareAction(source, module, action) { return result('declareAction', {source, module, action}); },
+    editAction(source, identity, replacement) { return result('editAction', {source, identity, replacement}); },
+    assessAction(source, identity, profile) { return result('assessAction', {source, identity, profile}); },
+    validateBulkOutcome(artifact) { return result('validateBulkOutcome', {artifact}); },
+    compileActionRule(document, action, rule, phase) { return result('compileActionRule', {document, action, rule, phase}); },
+    admitActionDeclaration(document, action) { return result('admitActionDeclaration', {document, action}); },
+    admitActionInputs(document, action, inputs, outputs = false) { return result('admitActionInputs', {document, action, inputs, outputs}); },
+    selectActionIdentity(document, action, frame, inputs) { return result('selectActionIdentity', {document, action, frame, inputs}); },
+    actionFieldValueKey(reference) { return result('actionFieldValueKey', {reference}); },
+    compileActionSelector(document, action, frame) { return result('compileActionSelector', {document, action, frame}); },
     evaluateActionRule(document, action, rule, phase, state) { return result('evaluateActionRule', {document, action, rule, phase, state}); },
     inspectSagas(source) { return result('inspectSagas', {source}); },
     declareSaga(source, module, definition) { return result('declareSaga', {source, module, definition}); },
@@ -1930,12 +1957,15 @@ export function createCodegenEngine(resources, options = {}) {
     assessSaga(source, identity, capabilities) { return result('assessSaga', {source, identity, capabilities}); },
     generatePythonClient(request) { return result('generatePythonClient', request); },
     generatePythonClientWithHost(readHost, hostReadProfile) { return resultWithHostReads(readHost, hostReadProfile); },
+    reviewedValueDigest(value) { return result('reviewedValueDigest', {value}).digest; },
     compileTableDeployment(request) { return result('compileTableDeployment', request); },
     verifyTableDeployment(bundle) { return result('verifyTableDeployment', {bundle}); },
     compileTableMigration(request) { return result('compileTableMigration', request); },
     verifyTableMigration(plan) { return result('verifyTableMigration', {plan}); },
-    discoverTableMigrationChanges(previous, next) { return result('discoverTableMigrationChanges', {previous, next}).changes; },
+    discoverTableMigrationChanges(previous, next, selector) { return result('discoverTableMigrationChanges', selector === undefined ? {previous, next} : {previous, next, selector}).changes; },
     normalizeRowScope(input, context) { return result('normalizeRowScope', {input, context}); },
+    prepareRowScope(input, context) { return result('prepareRowScope', {input, context}); },
+    completeRowScope(input, context, prepared, admitPolicyDiagnostics) { return result('completeRowScope', {request: {input, context}, prepared, admitPolicyDiagnostics}); },
     generateAccessPackage(request, profile) { return result('generateAccessPackage', {request, profile}); },
     diffAccessPackages(before, after) { return result('diffAccessPackages', {before, after}); },
   });
@@ -2016,12 +2046,15 @@ export function createRetainedCodegenEngine(resources, options = {}) {
     generatePythonClient(request) { return result('generatePythonClient', request); },
     call(operation, request) { return run(operation, request); },
     generatePythonClientWithHost(readHost, hostReadProfile) { return hostRead(readHost, hostReadProfile); },
+    reviewedValueDigest(value) { return result('reviewedValueDigest', {value}).digest; },
     compileTableDeployment(request) { return result('compileTableDeployment', request); },
     verifyTableDeployment(bundle) { return result('verifyTableDeployment', {bundle}); },
     compileTableMigration(request) { return result('compileTableMigration', request); },
     verifyTableMigration(plan) { return result('verifyTableMigration', {plan}); },
-    discoverTableMigrationChanges(previous, next) { return result('discoverTableMigrationChanges', {previous, next}).changes; },
+    discoverTableMigrationChanges(previous, next, selector) { return result('discoverTableMigrationChanges', selector === undefined ? {previous, next} : {previous, next, selector}).changes; },
     normalizeRowScope(input, context) { return result('normalizeRowScope', {input, context}); },
+    prepareRowScope(input, context) { return result('prepareRowScope', {input, context}); },
+    completeRowScope(input, context, prepared, admitPolicyDiagnostics) { return result('completeRowScope', {request: {input, context}, prepared, admitPolicyDiagnostics}); },
     generateAccessPackage(request, profile) { return result('generateAccessPackage', {request, profile}); },
     diffAccessPackages(before, after) { return result('diffAccessPackages', {before, after}); },
   });
@@ -2036,6 +2069,17 @@ function admissionWork(bridge) {
       throw new UmfCoreError(failure.code, failure.message);
     }
   };
+}
+
+/** Create one closed Rust-owned Action Plan session. */
+export function createActionPlanSessionEngine(options = {}) {
+  if (typeof addon.ActionPlanSession !== 'function') throw new Error('RUST_ACTION_PLAN_SESSION_MISSING');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  const session = new addon.ActionPlanSession();
+  if (typeof session.executeActionPlanSessionWire !== 'function' || session.profileVersion() !== ACTION_PLAN_PROFILE) throw new Error('RUST_ACTION_PLAN_SESSION_PROFILE_MISMATCH');
+  return createActionPlanSessionOperations((wire, control) => session.executeActionPlanSessionWire(wire, control), controlBridge, hostWork, nativeCoreError);
 }
 
 // This private staged importer is opt-in and is not connected to the default adapter.

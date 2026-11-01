@@ -25,6 +25,19 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
 fn missing_argument() -> EngineError {
     EngineError::new("NON_JSON", Utf16::default(), "Value is not JSON-compatible")
 }
+fn exact_fields(value: &Value, names: &[&str]) -> bool {
+    let Value::Object(fields) = value else {
+        return false;
+    };
+    fields.len() == names.len()
+        && names.iter().all(|name| {
+            fields
+                .iter()
+                .filter(|(key, _)| key == &Utf16::from(*name))
+                .count()
+                == 1
+        })
+}
 fn invoke(
     engine: &CodegenEngine<'_>,
     operation: &str,
@@ -32,11 +45,114 @@ fn invoke(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     match operation {
+        "inspectActions" => {
+            engine.inspect_actions(field(request, "source").ok_or_else(missing_argument)?, ctx)
+        }
+        "declareAction" => engine.declare_action(
+            field(request, "source").ok_or_else(missing_argument)?,
+            match field(request, "module") {
+                Some(Value::String(value)) => value,
+                _ => return Err(missing_argument()),
+            },
+            field(request, "action").ok_or_else(missing_argument)?,
+            ctx,
+        ),
+        "editAction" => engine.edit_action(
+            field(request, "source").ok_or_else(missing_argument)?,
+            field(request, "identity").ok_or_else(missing_argument)?,
+            field(request, "replacement").ok_or_else(missing_argument)?,
+            ctx,
+        ),
+        "assessAction" => engine.assess_action(
+            field(request, "source").ok_or_else(missing_argument)?,
+            field(request, "identity").ok_or_else(missing_argument)?,
+            field(request, "profile").ok_or_else(missing_argument)?,
+            ctx,
+        ),
+        "admitActionDeclaration" => umf_codegen::actions::selectors::admit_action_declaration(
+            engine,
+            field(request, "document").ok_or_else(missing_argument)?,
+            field(request, "action").ok_or_else(missing_argument)?,
+            ctx,
+        ),
+        "admitActionInputs" => umf_codegen::actions::selectors::admit_action_inputs(
+            engine,
+            field(request, "document").ok_or_else(missing_argument)?,
+            field(request, "action").ok_or_else(missing_argument)?,
+            field(request, "inputs").ok_or_else(missing_argument)?,
+            matches!(field(request, "outputs"), Some(Value::Bool(true))),
+            ctx,
+        ),
+        "selectActionIdentity" => umf_codegen::actions::selectors::select_action_identity(
+            engine,
+            field(request, "document").ok_or_else(missing_argument)?,
+            field(request, "action").ok_or_else(missing_argument)?,
+            field(request, "frame").ok_or_else(missing_argument)?,
+            field(request, "inputs").ok_or_else(missing_argument)?,
+            ctx,
+        ),
+        "actionFieldValueKey" => {
+            let reference = field(request, "reference").ok_or_else(missing_argument)?;
+            if !exact_fields(reference, &["module", "element"]) {
+                return Err(EngineError::new(
+                    "ACTION_REFERENCE",
+                    Utf16::default(),
+                    "Expected exact module/element reference",
+                ));
+            }
+            let module = match field(reference, "module") {
+                Some(Value::String(value)) => value.to_utf8().map_err(|_| missing_argument())?,
+                _ => return Err(missing_argument()),
+            };
+            let element = match field(reference, "element") {
+                Some(Value::String(value)) => value.to_utf8().map_err(|_| missing_argument())?,
+                _ => return Err(missing_argument()),
+            };
+            Ok(Value::string_utf8(
+                serde_json::to_string(&[module, element]).map_err(|_| missing_argument())?,
+            ))
+        }
+        "compileActionSelector" => umf_codegen::actions::selectors::compile_action_selector(
+            engine,
+            field(request, "document").ok_or_else(missing_argument)?,
+            field(request, "action").ok_or_else(missing_argument)?,
+            field(request, "frame").ok_or_else(missing_argument)?,
+            ctx,
+        ),
+        "validateBulkOutcome" => umf_codegen::actions::bulk::validate_bulk_outcome(
+            engine,
+            field(request, "artifact").ok_or_else(missing_argument)?,
+            ctx,
+        ),
+        "compileActionRule" => {
+            let phase = match field(request, "phase") {
+                Some(Value::String(value)) => value.to_utf8().map_err(|_| missing_argument())?,
+                _ => return Err(missing_argument()),
+            };
+            umf_codegen::actions::selectors::compile_action_rule(
+                engine,
+                field(request, "document").ok_or_else(missing_argument)?,
+                field(request, "action").ok_or_else(missing_argument)?,
+                field(request, "rule").ok_or_else(missing_argument)?,
+                &phase,
+                ctx,
+            )
+        }
         "evaluateActionRule" => {
-            let Value::Object(fields) = request else { return Err(missing_argument()); };
+            let Value::Object(fields) = request else {
+                return Err(missing_argument());
+            };
             let names = ["document", "action", "rule", "phase", "state"];
-            if fields.len() != names.len() || fields.iter().any(|(key, _)| !names.iter().any(|name| key == &Utf16::from(*name))) {
-                return Err(EngineError::new("ACTION_RULE_SOURCE", Utf16::default(), "Expected exact document/action/rule/phase/state request"));
+            if fields.len() != names.len()
+                || fields
+                    .iter()
+                    .any(|(key, _)| !names.iter().any(|name| key == &Utf16::from(*name)))
+            {
+                return Err(EngineError::new(
+                    "ACTION_RULE_SOURCE",
+                    Utf16::default(),
+                    "Expected exact document/action/rule/phase/state request",
+                ));
             }
             let phase = match field(request, "phase") {
                 Some(Value::String(value)) => value.to_utf8().map_err(|_| missing_argument())?,
@@ -50,7 +166,8 @@ fn invoke(
                 &phase,
                 field(request, "state").ok_or_else(missing_argument)?,
                 ctx,
-            ).map(Value::Bool)
+            )
+            .map(Value::Bool)
         }
 
         "inspectSagas" => {
@@ -78,6 +195,16 @@ fn invoke(
             ctx,
         ),
         "generatePythonClient" => engine.generate_python_client(request, ctx),
+        "reviewedValueDigest" => {
+            if !exact_fields(request, &["value"]) {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact value member",
+                ));
+            }
+            engine.reviewed_value_digest(field(request, "value").ok_or_else(missing_argument)?, ctx)
+        }
         "compileTableDeployment" => engine.compile_table_deployment(request, ctx),
         "verifyTableDeployment" => engine
             .verify_table_deployment(field(request, "bundle").ok_or_else(missing_argument)?, ctx),
@@ -86,6 +213,34 @@ fn invoke(
             engine.verify_table_migration(field(request, "plan").ok_or_else(missing_argument)?, ctx)
         }
         "normalizeRowScope" => engine.normalize_row_scope(request, ctx),
+        "prepareRowScope" => {
+            if !exact_fields(request, &["input", "context"]) {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact input/context members",
+                ));
+            }
+            engine.prepare_row_scope(request, ctx)
+        }
+        "completeRowScope" => {
+            let source_request = field(request, "request").ok_or_else(missing_argument)?;
+            if !exact_fields(request, &["request", "prepared", "admitPolicyDiagnostics"])
+                || !exact_fields(source_request, &["input", "context"])
+            {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact row-scope callback members",
+                ));
+            }
+            engine.complete_row_scope(
+                source_request,
+                field(request, "prepared").ok_or_else(missing_argument)?,
+                field(request, "admitPolicyDiagnostics").ok_or_else(missing_argument)?,
+                ctx,
+            )
+        }
         "singleSetCapabilities" => engine.single_set_capabilities(request, ctx),
         "prepareSingleSetAction" => engine.prepare_single_set_action(request, ctx),
         "admitGeneratedActionInvocation" => engine.admit_generated_action_invocation(request, ctx),
@@ -101,7 +256,23 @@ fn invoke(
                     ));
                 }
             };
-            if fields.len() != 2
+            let has_selector = field(request, "selector").is_some();
+            let allowed = if has_selector {
+                ["previous", "next", "selector"].as_slice()
+            } else {
+                ["previous", "next"].as_slice()
+            };
+            if fields.len() != allowed.len()
+                || fields
+                    .iter()
+                    .any(|(key, _)| !allowed.iter().any(|name| key == &Utf16::from(*name)))
+                || allowed.iter().any(|name| {
+                    fields
+                        .iter()
+                        .filter(|(key, _)| key == &Utf16::from(*name))
+                        .count()
+                        != 1
+                })
                 || field(request, "previous").is_none()
                 || field(request, "next").is_none()
             {
@@ -113,9 +284,10 @@ fn invoke(
             }
             Ok(object(vec![(
                 "changes",
-                engine.discover_table_migration_changes(
+                engine.discover_table_migration_changes_selected(
                     field(request, "previous").unwrap(),
                     field(request, "next").unwrap(),
+                    field(request, "selector"),
                     ctx,
                 )?,
             )]))

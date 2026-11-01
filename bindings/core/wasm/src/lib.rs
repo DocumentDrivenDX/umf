@@ -1025,6 +1025,16 @@ pub fn execute_security_protection_source_wire(wire_json: &str) -> String {
     )
 }
 
+#[wasm_bindgen]
+pub fn execute_security_policy_source_wire(wire_json: &str) -> String {
+    umf_core_wire::security_policy_source_binding::execute_security_policy_source_wire(wire_json)
+}
+
+#[wasm_bindgen(js_name = executeSecurityDomainsWire)]
+pub fn execute_security_domains_wire(wire_json: &str) -> String {
+    umf_core_wire::security_domains_binding::execute_security_domains_wire(wire_json)
+}
+
 #[wasm_bindgen(js_name = executeSecurityQueryPropertiesWire)]
 pub fn execute_security_query_properties_wire(wire_json: &str) -> String {
     umf_core_wire::security_queries_binding::execute_security_queries_wire(wire_json)
@@ -1817,6 +1827,49 @@ impl SmithySession {
         } else {
             let mut no_control = |_amount| Ok(());
             umf_core_wire::smithy_binding::execute_wire_with_session(
+                &mut inner,
+                wire_json,
+                &mut no_control,
+            )
+        }
+    }
+}
+
+const ACTION_PLAN_PROFILE: &str = "umf.actions-plan-wire/1";
+
+#[wasm_bindgen]
+pub struct ActionPlanSession {
+    inner: std::sync::Mutex<umf_core_wire::action_plan_binding::Session>,
+}
+
+#[wasm_bindgen]
+impl ActionPlanSession {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> Self {
+        Self {
+            inner: std::sync::Mutex::new(umf_core_wire::action_plan_binding::Session::new()),
+        }
+    }
+
+    #[wasm_bindgen(js_name = profileVersion)]
+    pub fn profile_version(&self) -> String {
+        ACTION_PLAN_PROFILE.to_owned()
+    }
+
+    #[wasm_bindgen(js_name = executeActionPlanSessionWire)]
+    pub fn execute_wire(&self, wire_json: &str, control_dispatcher: Option<Function>) -> String {
+        let Ok(mut inner) = self.inner.try_lock() else {
+            return umf_core_wire::action_plan_binding::busy_session_envelope();
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::action_plan_binding::execute_wire_with_session(
+                &mut inner, wire_json, &mut hook,
+            )
+        } else {
+            let mut no_control = |_amount| Ok(());
+            umf_core_wire::action_plan_binding::execute_wire_with_session(
                 &mut inner,
                 wire_json,
                 &mut no_control,

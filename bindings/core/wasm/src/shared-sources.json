@@ -33,7 +33,7 @@
     {
       "source": "bindings/core/node/src/native-family.js",
       "generated": "bindings/core/wasm/src/native-family.js",
-      "sha256": "8c948d0a960af1e1f415a116cc9abeb111aa04886fe8826cbe63cd016fbb8a66"
+      "sha256": "10ae1cb9ebde76cede483a438ff0a48e8ff5d90c208ef1fd86c0bd5b882ceef9"
     },
     {
       "source": "bindings/core/node/src/postgresql-parser-session.js",
@@ -49,6 +49,11 @@
       "source": "bindings/core/node/src/smithy-session.js",
       "generated": "bindings/core/wasm/src/smithy-session.js",
       "sha256": "49d32751b8803ff99eb5767cf66d2bed09558b2f060c0a0cf5ba83493e6279e6"
+    },
+    {
+      "source": "bindings/core/node/src/action-plan-session.js",
+      "generated": "bindings/core/wasm/src/action-plan-session.js",
+      "sha256": "5545208c39cfac40db721efc1c7f6df53d314e0080b31d7b9a1e18a87012ad7d"
     },
     {
       "source": "bindings/core/node/src/jsonld.js",
@@ -81,6 +86,16 @@
       "sha256": "be148feb96f65f7bc2b1fc7efd49602a1dd75a7ac1270a4eab856b5a8059d474"
     },
     {
+      "source": "bindings/core/node/src/security-policy-source.js",
+      "generated": "bindings/core/wasm/src/security-policy-source.js",
+      "sha256": "db68a2dd91bff0b46067ef211bcc651543f5322470fb24a87f8e8b1b02372e0a"
+    },
+    {
+      "source": "bindings/core/node/src/security-domains.js",
+      "generated": "bindings/core/wasm/src/security-domains.js",
+      "sha256": "5fd4257c6f621bd1787e58adcf15c3295331777e616982f2ca02d6ff6eef8f55"
+    },
+    {
       "source": "bindings/core/node/src/security-query-properties.js",
       "generated": "bindings/core/wasm/src/security-query-properties.js",
       "sha256": "a89de04fd1376135831220f5896ceb2e076466fce9013783756d10a68ac27020"
@@ -93,7 +108,7 @@
     {
       "source": "bindings/core/node/src/bit128.js",
       "generated": "bindings/core/wasm/src/bit128.js",
-      "sha256": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a"
+      "sha256": "b2b272c473f2c1fc0369829c0cd192af0af1690f69d158821f4916fcea908f0f"
     },
     {
       "source": "bindings/core/node/src/json-number.js",

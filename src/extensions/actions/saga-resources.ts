@@ -9,7 +9,7 @@ import tablesPackage from '../../../spec/extensions/tables/package.json';
 import actionsPackage from '../../../spec/extensions/actions/package.json';
 import bindingPackage from '../../../spec/extensions/binding/package.json';
 import stableBindingPackage from '../../../spec/extensions/binding-stable/package.json';
-import sagaPackage from '../../../spec/extensions/saga/package.json';
+import {sagaPackage} from './saga-package';
 import {copyJson} from '../../model/json';
 /** The host selects and initializes native/WASM; resource data never loads code. */
 export function createSagaResources() {

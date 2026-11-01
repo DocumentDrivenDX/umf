@@ -40,7 +40,26 @@ export declare const BIT128_PROFILE: 'umf-128/1';
 export declare const JSON_NUMBER_PROFILE: 'umf-json-number/0.1';
 export interface Bit128Value { readonly profile: typeof BIT128_PROFILE; readonly hex: string }
 export interface UuidValue extends Bit128Value { readonly canonicalText: string; readonly originalText: string }
+export interface Bit128NativeTypeInput { system: 'postgresql'|'sqlserver'|'avro'|'parquet'; version: string; definition: unknown }
+export interface Bit128NativeTypeClassification { source: Bit128NativeTypeInput; scalarType?: 'uuid'|'bits128'; basis: 'native-type-identity'|'unclassified' }
+export type UmfJson = null|boolean|number|string|UmfJson[]|{[key:string]:UmfJson};
+export type Bit128ModelLiteral = null|{boolean:boolean}|{integerToken:string}|{decimalToken:string}|{string:string}|{binaryHex:string}|{floatToken:string}|{date:string}|{time:string}|{timestamp:string}|{bits128Hex:string}|{uuid:string}|{array:Bit128ModelLiteral[]}|{map:{[key:string]:Bit128ModelLiteral}}|{group:{field:{module:string;element:string};value:Bit128ModelLiteral}[]};
+export interface Bit128RecordValue { field: {module:string;element:string}; value: Bit128ModelLiteral }
+export interface Bit128ModelProjection { operation:'project-bit128-model'; version:'1.0.0'; source:unknown; binding:unknown; lossPolicy:'strict'|'report'; status:'projected'|'reported'|'blocked'; nativeRequirements:{scope:'connection';statements:string[]}[]; residuals:{path:string;reason:string}[]; mappings:{record:{module:string;element:string};table:string;fields:{identity:{module:string;element:string};slots:string[];paths:string[][]}[]}[]; compositeMappings?:{record:{module:string;element:string};root:{module:string;element:string};field:{module:string;element:string};column:string;storage:'json-column'|'native-nested';path:({kind:'member';name:string}|{kind:'array-item'}|{kind:'map-value'})[];slots:string[]}[]; candidate?:{format:'sql'|'avro'|'parquet'|'tablespec';text:string} }
+export interface Bit128NativeProjection { operation:'project-bit128-carrier-schema'; version:'1.0.0'; source:unknown; binding:unknown; identity:{module:string;element:string}; policy:{lossPolicy:'strict'|'report';obligations:('bits'|'availability'|'equality'|'ordering'|'enforcement')[]}; outcomes:{obligation:'bits'|'availability'|'equality'|'ordering'|'enforcement';outcome:'exact'|'unknown'|'not-expressible';reason:string}[]; diagnostics:{code:string;path:string;message:string;severity:'error'|'warning'}[]; mapping:{idealPath:string;targetSlots:string[];bindingVersion:'0.3.0';target:{system:string;version:string;subset:string}}; status:'projected'|'reported'|'blocked'; candidate?:{format:'sql'|'avro'|'parquet'|'tablespec';text:string} }
 export interface UmfBit128Engine {
+  classifyNativeType(input: Bit128NativeTypeInput): Bit128NativeTypeClassification;
+  inspectBit128Binding(binding: unknown, logical: unknown): unknown;
+  encodeBit128CarrierValue(binding: unknown, logical: unknown, identity: unknown, literal: unknown): unknown;
+  decodeBit128CarrierValue(binding: unknown, logical: unknown, identity: unknown, slots: unknown): unknown;
+  encodeBit128Record(binding: unknown, logical: unknown, identity: {module:string;element:string}, values: Bit128RecordValue[]): Record<string,string|null>;
+  decodeBit128Record(binding: unknown, logical: unknown, identity: {module:string;element:string}, slots: Record<string,string|null>): Bit128RecordValue[];
+  projectBit128Model(binding: unknown, logical: unknown, lossPolicy: 'strict'|'report'): Bit128ModelProjection;
+  recoverBit128ModelProjection(report: Bit128ModelProjection, text: string): {logical:unknown;binding:unknown};
+  encodeBit128FileRecord(binding: unknown, logical: unknown, identity: {module:string;element:string}, values: Bit128RecordValue[]): Record<string,UmfJson>;
+  decodeBit128FileRecord(binding: unknown, logical: unknown, identity: {module:string;element:string}, datum: Record<string,UmfJson>): Bit128RecordValue[];
+  projectBit128CarrierSchema(binding: unknown, logical: unknown, identity: {module:string;element:string}, policy: unknown): Bit128NativeProjection;
+  recoverBit128CarrierProjection(report: Bit128NativeProjection, text: string): {logical:unknown;binding:unknown};
   parseBits128(text: string): Bit128Value;
   parseUuid(text: string): UuidValue;
   bits128FromBytes(bytes: Uint8Array): Bit128Value;
@@ -83,6 +102,15 @@ export interface UmfSecurityLogicEngine {
 export declare function createSecurityLogicEngine(options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export declare const SECURITY_FUNCTIONS_PROFILE: 'umf.security-functions/1';
 export declare const SECURITY_PROTECTION_SOURCE_PROFILE: 'umf.security-protection-source/1';
+export declare const SECURITY_POLICY_SOURCE_PROFILE: 'umf.security-policy-source/1';
+export interface UmfSecurityPolicySourceEngine {
+  inspectSecurityPolicyV2Source(source: unknown): unknown;
+  upgradeSecurityPolicySource(source: unknown, revision: unknown): unknown;
+  downgradeSecurityPolicySource(source: unknown, revision: unknown): unknown;
+  readSecuritySource(source: string, format?: 'json' | 'yaml'): unknown;
+  writeSecuritySource(value: unknown, format?: 'json' | 'yaml'): string;
+}
+export declare function createSecurityPolicySourceEngine(): UmfSecurityPolicySourceEngine;
 export declare const SECURITY_QUERY_PROPERTIES_PROFILE: 'umf.security-queries/1';
 export declare const SECURITY_PROTECTION_PARAMETERS_PROFILE: 'umf.security-parameters/1';
 export interface SecurityQueryPropertiesResult {
@@ -605,10 +633,21 @@ export declare function createJsonSchemaEngine(options?: {profile?: 'cooperative
 export declare function createPreparedJsonSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): JsonSchemaEngine;
 
 export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage?: unknown}
-export type UmfCodegenOperation = 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
+export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
 export type UmfCodegenOutcome = {ok: true; result: unknown} | {ok: false; error: {code: string; message: string; path?: string; pointer?: string}};
 export type UmfCodegenHostReadEventV3 = 'InitialPackage' | 'ParseText' | 'ParseFormat' | 'DigestText' | 'SelectRecords' | 'NativeFormat' | 'SelectActions' | 'OutputPackageSuffix' | 'OutputSourceText';
 export interface UmfCodegenEngine {
+  inspectActions(source: unknown): unknown;
+  declareAction(source: unknown, module: string, action: unknown): unknown;
+  editAction(source: unknown, identity: unknown, replacement: unknown): unknown;
+  assessAction(source: unknown, identity: unknown, profile: unknown): unknown;
+  validateBulkOutcome(artifact: unknown): unknown;
+  compileActionRule(document: unknown, action: unknown, rule: unknown, phase: string): unknown;
+  admitActionDeclaration(document: unknown, action: unknown): unknown;
+  admitActionInputs(document: unknown, action: unknown, inputs: unknown, outputs?: boolean): unknown;
+  selectActionIdentity(document: unknown, action: unknown, frame: unknown, inputs: unknown): unknown;
+  actionFieldValueKey(reference: unknown): string;
+  compileActionSelector(document: unknown, action: unknown, frame: unknown): unknown;
   evaluateActionRule(document: unknown, action: unknown, rule: unknown, phase: string, state: unknown): boolean;
   call(operation: UmfCodegenOperation, request: unknown): UmfCodegenOutcome;
   sagaRegistryProfile(): {actionsPackage: unknown; sagaPackage: unknown};
@@ -618,12 +657,15 @@ export interface UmfCodegenEngine {
   assessSaga(source: unknown, identity: unknown, capabilities: unknown): unknown;
   generatePythonClient(request: unknown): unknown;
   generatePythonClientWithHost(readHost: (event: UmfCodegenHostReadEventV3, argument?: string) => unknown): unknown;
+  reviewedValueDigest(value: unknown): string;
   compileTableDeployment(request: unknown): unknown;
   verifyTableDeployment(bundle: unknown): unknown;
   compileTableMigration(request: unknown): unknown;
   verifyTableMigration(plan: unknown): unknown;
-  discoverTableMigrationChanges(previous: unknown, next: unknown): unknown[];
+  discoverTableMigrationChanges(previous: unknown, next: unknown, selector?: unknown): unknown[];
   normalizeRowScope(input: unknown, context: unknown): unknown;
+  prepareRowScope(input: unknown, context: unknown): unknown;
+  completeRowScope(input: unknown, context: unknown, prepared: unknown, admitPolicyDiagnostics: unknown): unknown;
   generateAccessPackage(request: unknown, profile: unknown): unknown;
   diffAccessPackages(before: unknown, after: unknown): unknown;
 }
@@ -715,6 +757,7 @@ export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknow
 export interface NativeFamilyOperations {
  readonly avro: Readonly<Record<'import'|'inspect'|'inspectPayload'|'fields'|'export'|'exportBundle'|'getNode'|'editNode'|'proposeNodeEdit', NativeFamilyOperation>>;
  readonly ['avro-json-schema-projection']: Readonly<Record<'projectAvroToJsonSchema', NativeFamilyOperation>>;
+ readonly ['ddd-json-schema-projection']: Readonly<Record<'projectDddToJsonSchema'|'dddFieldBinding'|'inspectDdd'|'validateDddPayload'|'getDddDefinition'|'editDddDefinition', NativeFamilyOperation>>;
  readonly openapi: Readonly<Record<'import'|'validate'|'inspectPayload'|'export'|'exportBundle'|'getNode'|'lookupResource'|'extractSchema'|'indexSchemas'|'resolveSchemaReference'|'resolveDynamicReference'|'resolveObjectReference'|'edit', NativeFamilyOperation>>;
  readonly linkml: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'classSlots'|'slotValues'|'importContext'|'importMerge', NativeFamilyOperation>>;
  readonly odcs: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'resolveReference'|'relationships'|'renameElement', NativeFamilyOperation>>;
@@ -725,6 +768,7 @@ export interface NativeFamilyOperations {
  readonly owl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getOntologyHeaders'|'getExpressionView'|'getListAxioms'|'getSpecialAxioms'|'getAxiomAnnotations'|'getDeclarations', NativeFamilyOperation>>;
  readonly ['delta-ddl']: Readonly<Record<'defineTable'|'generate'|'generateBundle'|'realizeSparkDelta4'|'inspectPayload', NativeFamilyOperation>>;
  readonly ['delta-parquet']: Readonly<Record<'projectActions'|'reconcileCheckpoint'|'reconcileMultipart', NativeFamilyOperation>>;
+ readonly spark: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'renameField', NativeFamilyOperation>>;
 }
 export declare function createNativeFamilyDispatcher(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;
 export type PostgresqlParserRequest = {token: string; backend: '@libpg-query/parser@17.6.10'; astVersion: 170004; work: 'parse'|'deparse'|'codecRoundTrip'; sql?: string; tree?: unknown};
@@ -792,3 +836,14 @@ export interface SmithySessionOperations {
  assembleSmithyDocument(document:unknown,backend:unknown,options:{id:string;signal?:AbortSignal}):Promise<unknown>; selectSmithyShapes(document:unknown,backend:unknown,selector:string,options:{id:string;signal?:AbortSignal}):Promise<unknown>;
 }
 export declare function createSmithySessionEngine(options?:{profile?:'cooperative'|'hard-isolated';controls?:UmfCoreControls}):SmithySessionOperations;
+
+export declare function createActionPlanSessionEngine(options?: {controls?: UmfCoreControls}): {
+  run(operation: 'prepareModel'|'prepareInspect'|'prepareAssess'|'completeRegistry'|'completeSelection'|'cancel', fields?: Record<string, unknown>): unknown;
+};
+export interface SecurityProtectionDomainsResult {
+  readonly status: 'resolved-domains' | 'refused'; readonly complete: false; readonly authority: false;
+  readonly policy: unknown; readonly catalog: unknown; readonly closure: unknown;
+  readonly domains: readonly unknown[]; readonly diagnostics: readonly {readonly code:string;readonly path:string;readonly message:string;readonly severity:'error'|'warning'}[];
+}
+export interface UmfSecurityProtectionDomainsEngine { resolveSecurityProtectionDomains(policy:unknown,catalog:unknown,closure:unknown):SecurityProtectionDomainsResult; }
+export declare function createSecurityProtectionDomainsEngine(): UmfSecurityProtectionDomainsEngine;

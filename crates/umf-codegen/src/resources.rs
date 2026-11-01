@@ -38,6 +38,8 @@ pub struct CodegenResources {
     saga_capabilities_compiled: Option<CompiledSchema>,
     operation_schema: Value,
     operation_compiled: CompiledSchema,
+    row_expression_operation_schema: Value,
+    row_expression_operation_compiled: CompiledSchema,
     schema_resources: SchemaResources,
 }
 
@@ -101,6 +103,19 @@ impl CodegenResources {
         )?;
         let operation_compiled =
             CompiledSchema::compile(&operation_schema, &schema_resources, ctx)?;
+        let row_expression_source_text =
+            include_str!("../../../spec/extensions/tables/operation-0.2.schema.json");
+        ctx.charge_work(
+            row_expression_source_text.encode_utf16().count(),
+            Utf16::default(),
+        )?;
+        let row_expression_operation_schema = umf_core::serialization::read_json_value(
+            Utf16::from(row_expression_source_text).units(),
+            umf_core::serialization::Format::Json,
+            ctx,
+        )?;
+        let row_expression_operation_compiled =
+            CompiledSchema::compile(&row_expression_operation_schema, &schema_resources, ctx)?;
         let binding_schema = member(&binding_package, "schema").ok_or_else(invalid_package)?;
         let stable_binding_schema =
             member(&stable_binding_package, "schema").ok_or_else(invalid_package)?;
@@ -199,6 +214,8 @@ impl CodegenResources {
             saga_capabilities_compiled: None,
             operation_schema,
             operation_compiled,
+            row_expression_operation_schema,
+            row_expression_operation_compiled,
             schema_resources,
         })
     }
@@ -257,6 +274,12 @@ impl CodegenResources {
     }
     pub fn operation_compiled(&self) -> &CompiledSchema {
         &self.operation_compiled
+    }
+    pub fn row_expression_operation_schema(&self) -> &Value {
+        &self.row_expression_operation_schema
+    }
+    pub fn row_expression_operation_compiled(&self) -> &CompiledSchema {
+        &self.row_expression_operation_compiled
     }
     pub fn schema_resources(&self) -> &SchemaResources {
         &self.schema_resources
@@ -326,7 +349,7 @@ impl CodegenResources {
         ]);
         let capabilities_compiled =
             CompiledSchema::compile(&capabilities_schema, &self.schema_resources, ctx)?;
-        let mut registry = Registry::new();
+        let mut registry = self.actions_registry.clone();
         register_package(
             &mut registry,
             &self.engine,

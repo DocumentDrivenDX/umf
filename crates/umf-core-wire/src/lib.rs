@@ -19,6 +19,8 @@ pub mod tablespec_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod spark_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod postgresql_catalog_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_sql_binding;
@@ -33,11 +35,15 @@ pub mod avro_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_json_schema_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod ddd_json_schema_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod iceberg_table_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod typespec_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod smithy_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod action_plan_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {
@@ -187,6 +193,7 @@ pub mod security_functions_binding;
 pub mod security_logic_binding;
 pub mod security_parameters_binding;
 pub mod security_protection_source_binding;
+pub mod security_policy_source_binding;
 pub mod security_queries_binding;
 pub mod semantic_value;
 #[cfg(feature = "codegen")]
@@ -567,6 +574,79 @@ pub fn execute_bit128_wire_with_control(
             "bits128FromInteger" => umf_core::bit128::bits128_from_integer(
                 value("literal")?,
                 value("signed")?,
+                &mut ctx,
+            )?,
+            "classifyNativeType" => umf_core::bit128::classify_native_type(value("input")?, &mut ctx)?,
+            "inspectBit128Binding" => validation_value(
+                umf_core::bit128_binding::inspect_bit128_binding(
+                    value("binding")?,
+                    value("logical")?,
+                    &mut ctx,
+                )?,
+            ),
+            "encodeBit128CarrierValue" => umf_core::bit128_binding::encode_carrier_value(
+                value("binding")?,
+                value("logical")?,
+                value("identity")?,
+                value("literal")?,
+                &mut ctx,
+            )?,
+            "decodeBit128CarrierValue" => umf_core::bit128_binding::decode_carrier_value(
+                value("binding")?,
+                value("logical")?,
+                value("identity")?,
+                value("slots")?,
+                &mut ctx,
+            )?,
+            "encodeBit128Record" => umf_core::bit128_binding::encode_record(
+                value("binding")?,
+                value("logical")?,
+                value("identity")?,
+                value("values")?,
+                &mut ctx,
+            )?,
+            "decodeBit128Record" => umf_core::bit128_binding::decode_record(
+                value("binding")?,
+                value("logical")?,
+                value("identity")?,
+                value("slots")?,
+                &mut ctx,
+            )?,
+            "projectBit128Model" => umf_core::bit128_binding::project_model(
+                value("binding")?,
+                value("logical")?,
+                value("lossPolicy")?,
+                &mut ctx,
+            )?,
+            "recoverBit128ModelProjection" => umf_core::bit128_binding::recover_model(
+                value("report")?,
+                value("text")?,
+                &mut ctx,
+            )?,
+            "encodeBit128FileRecord" => umf_core::bit128_binding::encode_file_record(
+                value("binding")?,
+                value("logical")?,
+                value("identity")?,
+                value("values")?,
+                &mut ctx,
+            )?,
+            "decodeBit128FileRecord" => umf_core::bit128_binding::decode_file_record(
+                value("binding")?,
+                value("logical")?,
+                value("identity")?,
+                value("datum")?,
+                &mut ctx,
+            )?,
+            "projectBit128CarrierSchema" => umf_core::bit128_binding::project_carrier_schema(
+                value("binding")?,
+                value("logical")?,
+                value("identity")?,
+                value("policy")?,
+                &mut ctx,
+            )?,
+            "recoverBit128CarrierProjection" => umf_core::bit128_binding::recover_carrier_projection(
+                value("report")?,
+                value("text")?,
                 &mut ctx,
             )?,
             _ => return Err(fail("REQUEST", "Unknown umf-128/1 operation")),

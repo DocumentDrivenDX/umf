@@ -1151,6 +1151,70 @@ impl TypeSpecSession {
 }
 
 /// Per-instance transport; all pending state and admission live in Rust.
+/// Per-instance Rust-owned Action Plan continuation state.
+#[pyclass]
+struct ActionPlanSession {
+    inner: Mutex<umf_core_wire::action_plan_binding::Session>,
+}
+
+#[pymethods]
+impl ActionPlanSession {
+    #[new]
+    fn new() -> Self {
+        Self {
+            inner: Mutex::new(umf_core_wire::action_plan_binding::Session::new()),
+        }
+    }
+
+    fn profile_version(&self) -> &'static str {
+        umf_core_wire::action_plan_binding::PROFILE
+    }
+
+    #[pyo3(signature = (wire_json, control=None))]
+    fn execute(
+        &self,
+        py: Python<'_>,
+        wire_json: &str,
+        control: Option<PyObject>,
+    ) -> PyResult<String> {
+        if control
+            .as_ref()
+            .is_some_and(|value| !value.bind(py).is_callable())
+        {
+            return Err(PyValueError::new_err("control must be callable"));
+        }
+        let Ok(mut session) = self.inner.try_lock() else {
+            return Ok(umf_core_wire::action_plan_binding::busy_session_envelope());
+        };
+        let mut hook = |amount: usize| {
+            let Some(control) = control.as_ref() else {
+                return Ok(());
+            };
+            let outcome = control
+                .bind(py)
+                .call1((amount,))
+                .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+            if outcome.is_none() {
+                return Ok(());
+            }
+            let (code, message, path): (String, String, String) = outcome
+                .extract()
+                .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+            Err(EngineError::new(
+                code,
+                Utf16::from(path),
+                Utf16::from(message),
+            ))
+        };
+        Ok(umf_core_wire::action_plan_binding::execute_wire_with_session(
+            &mut session,
+            wire_json,
+            &mut hook,
+        ))
+    }
+}
+
+
 #[pyclass]
 struct SmithySession {
     inner: Mutex<umf_core_wire::smithy_binding::Session>,
@@ -6506,6 +6570,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<CaptureResourceSession>()?;
     module.add_class::<TypeSpecSession>()?;
     module.add_class::<SmithySession>()?;
+    module.add_class::<ActionPlanSession>()?;
     module.add_function(wrap_pyfunction!(
         access_observe_capture_field_join_tuple,
         module

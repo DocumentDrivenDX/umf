@@ -63,6 +63,22 @@ const action=actionDocument.modules[0].extensions['umf.actions'].actions[0];
 const actionState={inputs:{order:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'o1'}]}},pre:{frames:{},links:[]}};
 const actionRule={language:'umf.actions.rules',version:'1',expression:JSON.stringify({op:'eq',args:[{literal:{integerToken:'1e2'}},{literal:{integerToken:'100'}}]}),references:[]};
 check(umf.evaluateActionRule(actionDocument,action,actionRule,'pre',actionState)===true,'Rust action evaluator');
+const actionFrame=action.writes[0];
+const compiledSelector=umf.compileActionSelector(actionDocument,action,actionFrame);
+check(compiledSelector.ast.entity==='order','Rust Action selector compiler');
+const selectedIdentity=umf.selectActionIdentity(actionDocument,action,actionFrame,actionState.inputs);
+check(selectedIdentity.entity.key.key==='pk'&&selectedIdentity.tupleHex.length>0,'Rust Action identity selection');
+const compiledRule=umf.compileActionRule(actionDocument,action,actionRule,'pre');
+check(compiledRule.type==='boolean'&&compiledRule.ast.op==='eq','Rust Action rule compiler');
+let selectorRefused=false;
+try{umf.compileActionSelector(actionDocument,action,{...actionFrame,selector:{...actionFrame.selector,version:'2'}});}catch(error){selectorRefused=error instanceof umf.UmfError&&error.code==='ACTION_SELECTOR_PROFILE';}
+check(selectorRefused,'Rust Action selector refusal');
+const bulkText=JSON.stringify({status:'not-found'});
+const bulkHash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(bulkText)))).map(byte=>byte.toString(16).padStart(2,'0')).join('');
+check(umf.validateBulkOutcome({mediaType:'application/json',utf8:bulkText,sha256:bulkHash}).valid,'Rust bulk result validation');
+const badBulkText=JSON.stringify({status:'failed',code:'PAP_CONTROL_NONCOMMIT'});
+const badBulkHash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(badBulkText)))).map(byte=>byte.toString(16).padStart(2,'0')).join('');
+check(!umf.validateBulkOutcome({mediaType:'application/json',utf8:badBulkText,sha256:badBulkHash}).valid,'Rust bulk result refusal');
 const deployment=umf.compileTableDeployment({text:JSON.stringify(${JSON.stringify(deploymentFixture)}),configuration:{module:'demo',schema:'browser_deployment',ownerRole:'browser_owner',personRole:'browser_person',batchRole:'browser_batch',groupRoles:{readers:'browser_readers'}}});
 check(deployment.status==='compiled'&&deployment.bundle.steps.some(step=>step.sql.includes('CREATE TABLE')),'Rust deployment compiler');
 check(umf.verifyTableDeployment(deployment.bundle).source.utf8===deployment.bundle.source.utf8,'Rust deployment verification');
@@ -77,7 +93,7 @@ let refused=false;
 try{umf.importRdfNQuads('invalid nquads',{id:'browser-invalid'});}catch(error){refused=error instanceof umf.UmfError&&error.code==='RDF_SYNTAX';}
 check(refused,'Public error mapping');
 check(typeof process==='undefined'&&typeof Buffer==='undefined','Browser has no Node globals');
-window.umfResult={status:'pass',capabilities:['registry','document','rdf-edit','shacl-validation','owl-view','avro-edit','jsonld-frame','delta-edit','delta-ddl','iceberg-table-rename','typespec-compiler-graph','action-rule','deployment','protection-query'],refusal:'RDF_SYNTAX'};
+window.umfResult={status:'pass',capabilities:['registry','document','rdf-edit','shacl-validation','owl-view','avro-edit','jsonld-frame','delta-edit','delta-ddl','iceberg-table-rename','typespec-compiler-graph','action-rule','action-selector','action-rule-compiler','action-identity','bulk-result','deployment','protection-query'],refusal:'RDF_SYNTAX'};
 `;
 const server=createServer(async(request,response)=>{
  const path=new URL(request.url??'/', 'http://127.0.0.1').pathname;

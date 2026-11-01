@@ -8,7 +8,7 @@ use std::collections::{BTreeMap, BTreeSet};
 
 use umf_core::{Context, Diagnostic, EngineError, Severity, Utf16, Value};
 
-use crate::actions::{inspect_document, ActionDeclaration};
+use crate::actions::{inspect_document_with_registry, ActionDeclaration};
 use crate::resources::CodegenEngine;
 use crate::value::{array_items, member, string_member};
 
@@ -224,8 +224,23 @@ fn same_parameter_type(source: &Value, destination: &Value) -> bool {
         return false;
     }
     match sk.to_utf8().ok().as_deref() {
-        Some("value") => get(source, "field") == get(destination, "field"),
-        Some("entity") => get(source, "target") == get(destination, "target"),
+        Some("value") => same_reference(get(source, "field"), get(destination, "field")),
+        Some("entity") => same_reference(get(source, "target"), get(destination, "target")),
+        _ => false,
+    }
+}
+// Reference identity depends on named coordinates, never JSON member order.
+// Schema admission limits these objects to scalar reference coordinates.
+fn same_reference(left: Option<&Value>, right: Option<&Value>) -> bool {
+    match (left, right) {
+        (Some(Value::Object(left)), Some(Value::Object(right))) => {
+            left.len() == right.len()
+                && left.iter().all(|(key, value)| {
+                    right
+                        .iter()
+                        .any(|(other_key, other)| key == other_key && value == other)
+                })
+        }
         _ => false,
     }
 }
@@ -848,22 +863,30 @@ impl CodegenEngine<'_> {
                 .and_then(|e| get(e, "umf.actions.saga"))
                 .is_some()
         });
-        let (actions, mut diagnostics) = match inspect_document(source, resources, None, ctx) {
-            Ok(action_inspection) => {
-                let actions = actions_by_identity(&action_inspection.actions);
-                let diagnostics = action_inspection
-                    .validation
-                    .diagnostics
-                    .into_iter()
-                    .filter(|d| {
-                        !(d.code == Utf16::from("UNKNOWN_EXTENSION")
-                            && d.path == Utf16::from("/vocabularies/umf.actions.saga"))
-                    })
-                    .collect();
-                (actions, diagnostics)
-            }
-            Err(error) => (BTreeMap::new(), vec![diagnostic(error)]),
-        };
+        let registry = resources.saga_registry().ok_or_else(|| {
+            fail(
+                "SAGA_UNAVAILABLE",
+                "",
+                "Explicit saga package installation is required",
+            )
+        })?;
+        let (actions, mut diagnostics) =
+            match inspect_document_with_registry(source, resources, None, registry, ctx) {
+                Ok(action_inspection) => {
+                    let actions = actions_by_identity(&action_inspection.actions);
+                    let diagnostics = action_inspection
+                        .validation
+                        .diagnostics
+                        .into_iter()
+                        .filter(|d| {
+                            !(d.code == Utf16::from("UNKNOWN_EXTENSION")
+                                && d.path == Utf16::from("/vocabularies/umf.actions.saga"))
+                        })
+                        .collect();
+                    (actions, diagnostics)
+                }
+                Err(error) => (BTreeMap::new(), vec![diagnostic(error)]),
+            };
         if has_payload && !version_ok {
             diagnostics.push(diagnostic(fail(
                 "SAGA_STRUCTURE",

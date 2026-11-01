@@ -353,6 +353,18 @@ export function createBit128Engine(invoke, options = {}) {
   const engine = {
     parseBits128(text) { beginOperation(); return presentObject(run('parseBits128', {text: textArgument(text, 'Expected hexadecimal text', 'BIT128_SYNTAX')}), ['profile', 'hex'], work); },
     parseUuid(text) { beginOperation(); return presentObject(run('parseUuid', {text: textArgument(text, 'Expected UUID text', 'UUID_SYNTAX')}), ['profile', 'hex', 'canonicalText', 'originalText'], work); },
+    classifyNativeType(input) { beginOperation(); return run('classifyNativeType', {input}); },
+    inspectBit128Binding(binding, logical) { beginOperation(); return run('inspectBit128Binding', {binding, logical}); },
+    encodeBit128CarrierValue(binding, logical, identity, literal) { beginOperation(); return run('encodeBit128CarrierValue', {binding, logical, identity, literal}); },
+    decodeBit128CarrierValue(binding, logical, identity, slots) { beginOperation(); return run('decodeBit128CarrierValue', {binding, logical, identity, slots}); },
+    encodeBit128Record(binding, logical, identity, values) { beginOperation(); return run('encodeBit128Record', {binding, logical, identity, values}); },
+    decodeBit128Record(binding, logical, identity, slots) { beginOperation(); return run('decodeBit128Record', {binding, logical, identity, slots}); },
+    projectBit128Model(binding, logical, lossPolicy) { beginOperation(); return run('projectBit128Model', {binding, logical, lossPolicy}); },
+    recoverBit128ModelProjection(report, text) { beginOperation(); return run('recoverBit128ModelProjection', {report, text}); },
+    encodeBit128FileRecord(binding, logical, identity, values) { beginOperation(); return run('encodeBit128FileRecord', {binding, logical, identity, values}); },
+    decodeBit128FileRecord(binding, logical, identity, datum) { beginOperation(); return run('decodeBit128FileRecord', {binding, logical, identity, datum}); },
+    projectBit128CarrierSchema(binding, logical, identity, policy) { beginOperation(); return run('projectBit128CarrierSchema', {binding, logical, identity, policy}); },
+    recoverBit128CarrierProjection(report, text) { beginOperation(); return run('recoverBit128CarrierProjection', {report, text}); },
     bits128FromBytes(bytes) { beginOperation(); return presentObject(run('bits128FromBytes', {bytes: typedArraySnapshot(bytes, work)}), ['profile', 'hex'], work); },
     bits128ToBytes(value) {
       beginOperation();

@@ -41,6 +41,12 @@ from .serialization import (
     write_json_value,
 )
 from .validation import inspect_extension_kinds, validate_document
+from .action_plan import (
+    ActionPlanSession,
+    assess_action_plan,
+    inspect_action_plan,
+    prepare_action_plan_model,
+)
 from .saga import SagaRuntime
 from .postgresql_sql import PostgresqlSqlEngine, create_postgresql_sql_engine
 from .rust_sec_projection import (
@@ -53,6 +59,7 @@ __version__ = "0.10.4"
 __all__ = [
     "TypeSpecSession",
     "SmithySession",
+    "ActionPlanSession",
     "adapter_info",
     "execute_adapter",
     "SagaRuntime",
@@ -90,6 +97,9 @@ __all__ = [
     "set_semantic_types",
     "validate_core_semantic_type_value",
     "validate_document",
+    "prepare_action_plan_model",
+    "inspect_action_plan",
+    "assess_action_plan",
     "validate_semantic_type_value",
     "verify_core_semantic_type_declaration",
     "write_document",

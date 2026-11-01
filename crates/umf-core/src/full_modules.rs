@@ -17,6 +17,8 @@ pub mod artifact_references;
 pub mod avro_document;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_json_schema_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod ddd_json_schema_projection;
 pub mod avro_cardinality;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_field_classifier;
@@ -38,6 +40,7 @@ pub mod avro_semantics;
 pub mod binding_index_projection;
 pub mod binding_inspection;
 pub mod bit128;
+pub mod bit128_binding;
 pub mod cardinality;
 pub mod cardinality_host_json;
 pub mod constraint_language;
@@ -73,9 +76,13 @@ pub mod delta_schema;
 pub mod delta_spark_hash;
 pub mod delta_table;
 #[cfg(feature = "embedded-adapters")]
+pub mod spark_schema;
+#[cfg(feature = "embedded-adapters")]
 pub mod typespec_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod smithy_adapter;
+#[cfg(feature = "embedded-adapters")]
+pub mod action_plan_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod dbt;
 #[cfg(feature = "embedded-adapters")]
@@ -166,6 +173,7 @@ pub mod schema_properties_host_json;
 pub mod security_domains;
 pub mod security_functions;
 pub mod security_logic;
+pub mod security_policy_source;
 pub mod security_parameters;
 pub mod security_queries;
 pub mod selection;

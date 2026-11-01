@@ -305,6 +305,10 @@ const RESOURCE_FILES: &[(&str, &[u8])] = &[
         include_bytes!("../../../spec/core/schema.json"),
     ),
     (
+        "saga.package.json",
+        include_bytes!("../../../spec/extensions/saga/package.json"),
+    ),
+    (
         "stable-binding.package.json",
         include_bytes!("../../../spec/extensions/binding-stable/package.json"),
     ),
@@ -456,6 +460,10 @@ fn parse_codegen_args(args: &[String]) -> Result<CodegenArgs, String> {
         "verify-migration",
         "discover-changes",
         "row-scope",
+        "inspect-sagas",
+        "declare-saga",
+        "edit-saga",
+        "assess-saga",
     ];
     let operation = args.first().ok_or("operation is required")?.clone();
     if !valid_ops.contains(&operation.as_str()) {
@@ -562,6 +570,14 @@ fn codegen_operation(
         stable_binding,
         &mut resource_ctx,
     )?;
+    let saga_package = embedded_json(
+        include_str!("../../../spec/extensions/saga/package.json"),
+        &mut resource_ctx,
+    )?;
+    let saga_schema = field(&saga_package, "schema")
+        .cloned()
+        .ok_or_else(resource_error)?;
+    let resources = resources.with_sagas(saga_package, saga_schema, &mut resource_ctx)?;
     let engine = umf_codegen::CodegenEngine::new(&resources);
     match operation {
         "generate" => engine.generate_python_client(request, ctx),
@@ -594,6 +610,33 @@ fn codegen_operation(
             Ok(object(vec![("changes", changes)]))
         }
         "row-scope" => engine.normalize_row_scope(request, ctx),
+        "inspect-sagas" => engine.inspect_sagas(
+            field(request, "source").ok_or_else(|| request_error("source is required"))?,
+            ctx,
+        ),
+        "declare-saga" => engine.declare_saga(
+            field(request, "source").ok_or_else(|| request_error("source is required"))?,
+            match field(request, "module") {
+                Some(Value::String(value)) => value,
+                _ => return Err(request_error("module is required")),
+            },
+            field(request, "definition").ok_or_else(|| request_error("definition is required"))?,
+            ctx,
+        ),
+        "edit-saga" => engine.edit_saga(
+            field(request, "source").ok_or_else(|| request_error("source is required"))?,
+            field(request, "identity").ok_or_else(|| request_error("identity is required"))?,
+            field(request, "replacement")
+                .ok_or_else(|| request_error("replacement is required"))?,
+            ctx,
+        ),
+        "assess-saga" => engine.assess_saga(
+            field(request, "source").ok_or_else(|| request_error("source is required"))?,
+            field(request, "identity").ok_or_else(|| request_error("identity is required"))?,
+            field(request, "capabilities")
+                .ok_or_else(|| request_error("capabilities are required"))?,
+            ctx,
+        ),
         _ => unreachable!(),
     }
 }
@@ -773,6 +816,10 @@ fn run(args: Vec<String>) -> Result<(), String> {
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("smithy") {
         return smithy_session_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("actions-plan") {
+        return action_plan_session_run(&args[1..]);
     }
 
     if args.first().map(String::as_str) == Some("domain-pack") {
@@ -1630,6 +1677,22 @@ fn smithy_session_run(args: &[String]) -> Result<(), String> {
 }
 
 #[cfg(feature = "embedded-adapters")]
+fn action_plan_session_run(args: &[String]) -> Result<(), String> {
+    let mut session = umf_core_wire::action_plan_binding::Session::new();
+    compiler_session_run(
+        args,
+        umf_core_wire::action_plan_binding::PROFILE,
+        |wire, control| {
+            umf_core_wire::action_plan_binding::execute_wire_with_session(
+                &mut session,
+                wire,
+                control,
+            )
+        },
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
 fn compiler_session_run(
     args: &[String],
     profile: &str,
@@ -1644,7 +1707,8 @@ fn compiler_session_run(
         );
         return Ok(());
     }
-    let usage = "usage: umf <typespec|smithy> --stdin-session [--max-work N] [--timeout-ms N]";
+    let usage =
+        "usage: umf <typespec|smithy|actions-plan> --stdin-session [--max-work N] [--timeout-ms N]";
     if args.first().map(String::as_str) != Some("--stdin-session") {
         return Err(usage.into());
     }
@@ -3756,8 +3820,139 @@ mod tests {
 
     #[test]
     #[cfg(feature = "codegen")]
-    fn codegen_cli_reports_the_nine_source_resource_manifest() {
-        assert_eq!(RESOURCE_FILES.len(), 9);
+    fn codegen_cli_saga_operations_declare_inspect_edit_assess_and_refuse() {
+        use super::codegen_operation;
+        use umf_core::serialization::read_json_value;
+        let parse = |source: &str| {
+            read_json_value(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                Format::Json,
+                &mut Context::catalog(),
+            )
+            .unwrap()
+        };
+        let source = parse(include_str!(
+            "../../../docs/helix/03-test/fixtures/saga/supported-action.json"
+        ));
+        let value: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../docs/helix/03-test/fixtures/saga/supported-action.json"
+        ))
+        .unwrap();
+        let initial_inspection = codegen_operation(
+            "inspect-sagas",
+            &Value::Object(vec![("source".into(), source.clone())]),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(matches!(
+            field(field(&initial_inspection, "validation").unwrap(), "valid"),
+            Some(Value::Bool(true))
+        ));
+        let entries = match field(&initial_inspection, "entries") {
+            Some(Value::Array(entries)) => entries,
+            _ => panic!("saga inspection entries are required"),
+        };
+        for entry in entries {
+            let obligations = match field(entry, "obligations") {
+                Some(Value::Array(obligations)) => obligations,
+                _ => panic!("saga inspection obligations are required"),
+            };
+            for obligation in obligations {
+                if let Some(Value::String(kind)) = field(obligation, "kind") {
+                    assert_ne!(kind.to_utf8().unwrap(), "unknown");
+                }
+            }
+        }
+        let mut definition_json =
+            value["modules"][0]["extensions"]["umf.actions.saga"]["sagas"][0].clone();
+        definition_json["id"] = serde_json::Value::String("set-active-saga-copy".into());
+        let definition = parse(&definition_json.to_string());
+        let declared = codegen_operation(
+            "declare-saga",
+            &Value::Object(vec![
+                ("source".into(), source.clone()),
+                ("module".into(), Value::string_utf8("sales")),
+                ("definition".into(), definition.clone()),
+            ]),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let inspected = codegen_operation(
+            "inspect-sagas",
+            &Value::Object(vec![("source".into(), declared.clone())]),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let identity = Value::Object(vec![
+            ("module".into(), Value::string_utf8("sales")),
+            ("saga".into(), Value::string_utf8("set-active-saga-copy")),
+        ]);
+        let mut replacement_json = definition_json.clone();
+        replacement_json["description"] =
+            serde_json::Value::String("Reviewed supported Action declaration".into());
+        let replacement = parse(&replacement_json.to_string());
+        let edited = codegen_operation(
+            "edit-saga",
+            &Value::Object(vec![
+                ("source".into(), declared.clone()),
+                ("identity".into(), identity.clone()),
+                ("replacement".into(), replacement),
+            ]),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let after = codegen_operation(
+            "inspect-sagas",
+            &Value::Object(vec![("source".into(), edited.clone())]),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let caps = Value::Object(vec![
+            ("id".into(), Value::string_utf8("fixture")),
+            ("version".into(), Value::string_utf8("1")),
+            ("coreVersion".into(), Value::string_utf8("0.10.0")),
+            ("sagaVersion".into(), Value::string_utf8("0.1.0")),
+            ("coordination".into(), Value::string_utf8("unknown")),
+            ("claims".into(), Value::Array(vec![])),
+            ("source".into(), edited.clone()),
+            ("identity".into(), identity.clone()),
+        ]);
+        let assessment = codegen_operation(
+            "assess-saga",
+            &Value::Object(vec![
+                ("source".into(), edited.clone()),
+                ("identity".into(), identity),
+                ("capabilities".into(), caps),
+            ]),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(
+            matches!(inspected, Value::Object(_))
+                && matches!(after, Value::Object(_))
+                && matches!(assessment, Value::Object(_))
+        );
+        assert_eq!(
+            field(&assessment, "executionVerified"),
+            Some(&Value::Bool(false))
+        );
+        let refused = codegen_operation(
+            "declare-saga",
+            &Value::Object(vec![
+                ("source".into(), source),
+                ("module".into(), Value::string_utf8("sales")),
+                ("definition".into(), Value::Object(vec![])),
+            ]),
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(refused.code, "SAGA_STRUCTURE");
+    }
+
+    #[test]
+    #[cfg(feature = "codegen")]
+    fn codegen_cli_reports_the_ten_source_resource_manifest() {
+        assert_eq!(RESOURCE_FILES.len(), 10);
         let digest = resource_manifest_sha256();
         assert_eq!(digest.len(), 64);
         assert!(digest.bytes().all(|byte| byte.is_ascii_hexdigit()));

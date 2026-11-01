@@ -6,6 +6,7 @@ export const NATIVE_FAMILY_PROFILE='umf.native-family-dispatch/1';
 const FAMILIES=Object.freeze({
  avro:{profile:'umf.avro-wire/1',operations:['import','inspect','inspectPayload','fields','export','exportBundle','getNode','editNode','proposeNodeEdit']},
  'avro-json-schema-projection':{profile:'umf.avro-json-schema-projection-wire/1',operations:['projectAvroToJsonSchema']},
+ 'ddd-json-schema-projection':{profile:'umf.ddd-json-schema-projection-wire/1',operations:['projectDddToJsonSchema','dddFieldBinding','inspectDdd','validateDddPayload','getDddDefinition','editDddDefinition']},
  openapi:{profile:'umf.openapi-wire/1',operations:['import','validate','inspectPayload','export','exportBundle','getNode','lookupResource','extractSchema','indexSchemas','resolveSchemaReference','resolveDynamicReference','resolveObjectReference','edit']},
  linkml:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','classSlots','slotValues','importContext','importMerge']},
  odcs:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','resolveReference','relationships','renameElement']},
@@ -20,6 +21,7 @@ const FAMILIES=Object.freeze({
  'delta-log':{profile:'umf-r8-delta-log/0.1.0',operations:['capture','export','inspect','inspectActions','reconcileCommits','reconcileCheckpointSidecars']},
  'delta-ddl':{profile:'umf-r8-delta-ddl/0.1.0',operations:['defineTable','generate','generateBundle','realizeSparkDelta4','inspectPayload']},
  'delta-parquet':{profile:'umf-r8-parquet-capture-inspection/0.1.0',operations:['projectActions','reconcileCheckpoint','reconcileMultipart']},
+ spark:{profile:'umf.spark-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','renameField']},
 });
 
 /** Route a closed adapter family and operation to Rust without reinterpreting its payload. */

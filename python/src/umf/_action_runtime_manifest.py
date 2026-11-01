@@ -14,6 +14,7 @@ RESOURCES = (
     ("domainPolicy", "domainPolicy.json", "spec/metamodel/generated/domain-policy.json"),
     ("packageSchema", "packageSchema.json", "spec/core/extension-package.schema.json"),
     ("referenceSchema", "referenceSchema.json", "spec/core/semantic-type-reference.schema.json"),
+    ("sagaPackage", "sagaPackage.json", "spec/extensions/saga/package.json"),
     ("stableBindingPackage", "stableBindingPackage.json", "spec/extensions/binding-stable/package.json"),
     ("tablesPackage", "tablesPackage.json", "spec/extensions/tables/package.json"),
 )

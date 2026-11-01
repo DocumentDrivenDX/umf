@@ -77,93 +77,113 @@ and explicit resource boundaries. Core is 0.10.0; the native Python candidate is
 Use the existing worktree. Luna handles implementation; Sol plans and reviews.
 Use one expensive build/test job at a time. Preserve user-owned `.tmp/`.
 
-## Current State
+## Execution order
 
-The focused native adapter checkpoint now passes SHACL/OWL 2/2,
-PostgreSQL catalog/raw-SQL 12/12, and five new native capability cases: pinned
-PostgreSQL C parse/edit/deparse/reparse and version refusal, JSON-LD frame
-options, Avro source operations, and parser-session codec-loss refusal. Fresh
-Node public-root tests pass for the retained-model Registry, document
-read/write, SHACL validation and OWL views, and RDF import/edit/export with its
-native payload inspector. A public `umf.adapters` Python test passes from a
-staged package and fresh extension with no PATH tools; the fresh CLI advertises
-SHACL, OWL and PostgreSQL routes. A fresh Node build passes the new PostgreSQL
-native SQL, Avro, Iceberg schema and Protobuf source callback flows. Python
-PostgreSQL native SQL and the public RDF
-edit/export/payload-inspector flow pass with no PATH tools. The SHACL
-language-range wire case passes.
-Fresh Node public-root Delta schema/table/log source flows and a malformed-source
-refusal pass, as does the public Python schema/table/log edit/export/refusal flow.
-These results do not establish a release wheel or release-profile browser build.
+Sol owns planning, admission, integration and review. Luna owns parallel
+implementation and focused test additions. Give each implementation lane one
+coherent callable capability, its exact existing contract, and one normal
+workflow plus a refusal baseline. Keep implementation lanes active while the
+shared native/browser build slot verifies the last admitted batch.
 
-The first development WASM Chromium public-root run completed positive checks
-for Registry/document validation, RDF edit, SHACL/OWL, Avro edit, JSON-LD frame,
-Delta schema/DDL, Iceberg table rename, TypeSpec compile/graph, Action rule,
-deployment compile/verify and protection query. Its final RDF refusal exposed
-unbranded WASM error forwarding; the corrected bundle passed an isolated
-`RDF_SYNTAX` public `UmfError` retry with Node globals absent. A separate Avro
-projection browser case passed normal and strict-loss paths with external
-requests blocked. These are development-WASM checks, not release SDK acceptance.
+Run a metadata/compiler check before optimized native builds. Batch independent
+new cases into one host build. After a case passes, exclude it from repair runs
+unless a later change affects its behavior or dependency. Do not reopen broad
+conformance campaigns during implementation. Run complete suites once the
+remaining callable operations are integrated, and repair only actual failures.
 
-| Capability | Present source and checked behavior | Next implementation |
+Current integration order:
+
+1. Finish the two remaining compiler baselines. G01 must move its already emitted
+   backfill before NOT NULL tightening, without inserting a duplicate. G11 uses
+   the supported two-nonkey-Field replacement workflow proved against the current
+   API, retaining its primary Key and adding a secondary Key dependency.
+2. Admit the reviewed cumulative Security and projection cuts. Security covers
+   legacy policy interpretation/dependencies, access/collection/write evaluation,
+   V2 legacy access and retained read registration. Projections cover Arrow/Spark,
+   Avro/TableSpec, PostgreSQL/SQL Server to Avro, and SQL Server DDL.
+3. Continue the parallel implementation lanes: Security disclosure and Rust-owned
+   authority state; remaining projections and binding targets; current table
+   inventory compilation, discovery, serialization and verification. Then close
+   remaining JSON-LD/SHACL semantics and host routes.
+4. Delete public reference/candidate executable exports and their SDK bundles
+   once current defaults are callable. Complete local package/browser/consumer
+   integration, review, merge current main and publish binaries without Actions.
+
+## Latest focused capability results
+
+The native build and compiler preflight pass. Action Manifest construction,
+inspection and assessment pass through the Node public root, together with
+caller-tampered and schema-invalid inspection refusal. Bit128 logical binding
+inspection and public full-row encode/decode/refusal pass after restoring the
+sole-owning-Record table fallback. Separate carrier/model/file projection
+baselines remain required. Security V2 upgrade, inspect, JSON/YAML round trip,
+downgrade and refusal pass. Reviewed-value digest positive/refusal and public
+migration compile/verify/refusal pass; the positive migration fixture now supplies
+its required `reviewedChanges` member and actual predecessor digest. Python's
+source-resource closure passes with the four newly embedded Action schemas.
+
+G01 and G11 are the only failed compiler baselines from this batch. G01 refused the raw step order; G11's original fixture attempted a forbidden primary
+Key backfill. Sol has repaired the ordering and replaced that fixture with the
+supported workflow already compiled by the current TypeScript API; the Rust
+repairs await their focused runtime check. These two
+cases join the new Security/projection cases in the next build. The passing
+Manifest, Bit128, digest and public migration cases are excluded from that repair
+run unless their dependencies change.
+
+Sol reviews each source cut before admission. Metadata checks precede native
+code generation; static checks do not substitute for callable runtime results.
+
+## Current callable baseline
+
+| Family | Current implemented and passing workflows | Remaining work |
 | --- | --- | --- |
-| OpenAPI, LinkML, ODCS, TableSpec and SQL Server | Rust wire/CLI routes and actual Node public-root flows pass. TableSpec's nine operations and SQL Server's catalog/facet routes are callable. | Finish browser and Python public activation for the remaining operations. |
-| Shared Registry and documents | Default Registry admits packages and validates extension structure through the retained Rust model; native read/write keeps the public YAML default. Actual Node public-root validation, callbacks, YAML roundtrip and refusal pass. | Exercise the same default path in the final browser and package integration. |
-| Table deployment | Existing Rust codegen compile/verify routes drive Node/browser default exports. Node public-root lifecycle fixture compiles to SQL, retains exact source, verifies its bundle, and refuses invalid configuration or modified SQL (2/2); development WASM Chromium compile/verify passes. | Complete the distinct migration and row-scope contracts below and verify the release-profile browser package. |
-| GraphQL | Rust pre/post-validation host callback and Node/WASM default routes are integrated; actual Node callback edit/export and prevalidation refusal pass. | Complete browser host integration. |
-| JSON-LD | Source, expansion, flattening, compaction, RDF conversion, compound literals, generalized input, framing and payload inspection are wired. Focused wire, Node public-root, Python extension, CLI and development WASM Chromium baselines pass. The new scalar-default, graph, pruning and compact-option frame wire case passes. | Implement structured `@default` and remaining frame semantics; the current Rust route explicitly refuses unsupported structures. Check the release-profile browser build at integration. |
-| RDF and generalized RDF | Seventeen existing Rust operations drive the Node/browser default roots. Node import/edit/export, native Registry inspection and refusal pass; Python RDF edit/export/payload inspection and refusal pass. The development WASM browser public root exercised RDF Registry validation and edit/export; its isolated `RDF_SYNTAX` public-error retry passed after aligning WASM error branding with Node, with `process` and `Buffer` absent. | Verify the remaining Python generalized-RDF operations and release-profile browser package. |
-| SHACL and OWL | Rust wire tests pass 2/2; Node public-root SHACL validation, OWL view and refusal pass. Development WASM Chromium validation/view checks pass. SHACL reports its real `umf-shacl-native-subset/2` identity and incomplete evidence for unsupported constraints; basic `languageIn` range/wildcard support passes its focused wire case. | Complete remaining supported constraint semantics, Python activation and release-profile browser checks. |
-| PostgreSQL | Catalog capture, supplement inspectors, resolved predicates and parser-session raw SQL routes pass 12/12 focused wire tests. The host-only `pg_query` 6.1.1 C path passes import→AST edit→deparse→reparse and unsupported-version refusal; codec-loss refusal also passes. Fresh Node and Python public native SQL flows pass. The caller-supplied parser's Rust-owned session wire and actual Node callback-failure→retry flows pass through the public root. | Verify the caller-supplied browser host route and published package declarations. |
-| Avro | The existing Rust document kernel is exposed through import/inspect/metadata/get/edit/export/bundle wire routes; focused source roundtrip/dependency refusal and fresh Node public-root flow pass. Development WASM browser public-root import/metadata/edit/export and the separate Avro→JSON Schema normal/strict-loss case pass with external requests blocked. | Verify Python public operations and release-profile browser package. |
-| Iceberg schema and table | The standalone schema Rust kernel drives default Node/browser wrappers for import/inspect/export/get/edit and a native Registry payload inspector; Node public-root import/edit/export and refusal pass. Table core/wire/CLI source, context, transform, rename and promotion operations pass seven focused wire cases; Node import→rename/promotion→export, native Registry validation and branded refusal pass, as does public Python edit/export. Development WASM Chromium table import→rename→export passes. | Verify browser promotion/refusal and the release-profile package. |
-| Parquet | The existing Rust capture, footer, schema, page, value and metadata-edit operations drive both default roots. The fresh Node public-root fixture capture→metadata append→export and oversized-source refusal pass. | Activate and verify browser and Python public routes. |
-| Protobuf sources | Existing Rust source sessions now back the Node/browser default `importProtobufSources` and `exportProtobufSources` Promise APIs; a fresh Node public-root tiny Go compile→descriptor edit→emit case passes. | Verify the browser callback flow. |
-| Delta schema, table and log | Existing Rust kernels drive the Node/browser default schema/table/log routes, including native payload inspection and table embedded-schema extraction. Node schema/table edit→export, log capture/inspect/export, Registry callbacks and malformed-source refusal pass; Python schema/table/log edit/export/refusal passes. Development WASM browser schema edit/export and managed DDL checks pass. The distinct JSONL sidecar route is now callable and has a focused wire success/missing-supply refusal and two Node public-root cases passing. | Implement mapped rename; verify JSONL sidecars and the remaining source routes in a browser and the final package. |
-| Python native transport and generic CLI | The public `umf.adapters` family dispatcher passes a staged-package roundtrip, refusal and resource-limit baseline with a fresh extension. The Rust `umf adapter FAMILY --stdin-wire` route passes a focused metadata→Delta import/export→malformed-source refusal case without JavaScript on `PATH`. | Include new adapter resources and verify the final wheel/sdist. |
-| Saga browser SDK subpath | Runtime source and default SDK asset integration are present. | Run one representative host baseline at the next SDK integration point. |
+| Registry/document | Rust-owned default package validation, caller callbacks, read/write and refusal pass through Node. | Final browser/installed-package integration. |
+| Native formats | OpenAPI, LinkML, ODCS, TableSpec, SQL Server, RDF, JSON-LD, SHACL/OWL, Avro, GraphQL, Parquet, Iceberg and Delta have Rust routes with ordinary source/edit/export or validation baselines. | Finish still-missing semantics listed below and final host/package activation. |
+| Compiler hosts | TypeSpec compile/graph and actual pinned Smithy assembly/selection pass in Chromium. Supplied PostgreSQL browser parse→callback failure→retry→edit→deparse passes after making the runtime asset loader relocatable. | Final release-profile SDK and remaining callback routes. |
+| Delta recovery | JSONL sidecar, Parquet actions/checkpoint and multipart routes pass focused wire/Node tests; new browser sidecar/checkpoint/multipart cases pass. Mapped rename passes Node. | Final package and remaining browser/Python activation. |
+| Spark | Rust import/inspect/get/edit/export and metadata/collation rename pass focused wire and Node public workflows, with unknown metadata and numeric tokens preserved. Invalid target refusal passes. | Browser/Python activation. |
+| DDD JSON Schema | Native projection → inspection → node access → edit → write/read workflow and refusal pass through Node; focused wire cases pass. | Browser/Python activation and the separate DDD GraphQL/PostgreSQL projections. |
+| Bit128 | Classifier, Field authoring, logical binding inspection and public full-row encode/decode/refusal pass native baselines. | Carrier/model/file projection/recovery baselines and host activation. |
+| Action Plan | Rust prepare/inspect/assess, blocked dependency, complete read-Field obligations and caller diagnostic handling pass Rust, Node and staged Python; Chromium prepare/inspect/blocked passes. | Final package integration and dependent Manifest activation. |
+| Action authoring | Node declaration → inspect → edit → assessment, custom caller validation and duplicate identity refusal pass with supported Actions. | Browser/Python activation, selector/rule/bulk and Manifest admission. |
+| Saga | Supported Action declaration → inspect → edit → assessment and opaque-source refusal pass through Node, CLI and installed Python. JSON object member order no longer changes parameter identity. | Browser/package activation. |
+| Action selectors/rules/bulk | Native selector compilation, typed input admission, prepared identity selection, rule compilation and bulk-outcome validation pass all eight new Node normal/refusal cases. | Browser/package activation; Manifest remains a separate cut. |
+| Security | Native function/value/query properties, source/parameter/domain activation and V2 source migration/transport pass Node baselines; basic query join passes Chromium. | Legacy policy/evaluation/registration cumulative cut admission; authority state and disclosure implementation. |
+| Migration and row-scope | Discovery `.2`/`.3`/`.4`, G04 recipes, caller row-scope, compiler `.4`/`.5`/`.7`, public compile/verify and reviewed digest pass focused baselines. G02 orders revoke before column changes and grant afterward. | G01 `.3` ordering and G11 `.6` supported replacement baseline; inventory compilation/discovery/serialization/verification. |
+| Python/CLI/package | Native adapters, Action Plan, callback semantics, Delta/RDF/Avro/PostgreSQL workflows and sdist include closure pass local focused cases without JavaScript on PATH. | Complete installed wheel/sdist, supported local platform builds and final CLI consumer. |
 
-## Active implementation queue
+### Remaining public executable export queue (current V4 barrel)
 
-Each row identifies a current public surface that still needs a Rust-owned
-semantic path or a verified default entry point. Focused tests exercise new
-behavior; already green targets are excluded from routine reruns.
+This queue names the current TypeScript-executed V4 exports in the Action, Security, Projection and migration families. Static package constants, type exports and host Registry registration helpers are omitted. A source-level native primitive is a reuse point, not proof that the composite public operation is callable. Each row closes only after its exact public export reaches Rust in Node and browser with one normal/refusal baseline; Python/CLI routes join where that API is exposed there.
 
-| Public capability | Work type and owner | Next baseline and done criterion |
+| Cut | Exact public exports | Rust owner / next change |
 | --- | --- | --- |
-| Caller-supplied PostgreSQL SQL backend | Existing session and Node/WASM default bridge are wired; Rust wire and actual Node callback retry pass. | Verify the same supplied-backend route in Chromium and the published Node types. Exact backend identity, one-shot tokens, cumulative controls and public Registry inspection must hold. |
-| Iceberg table source and evolution | Existing table kernel, Node/WASM FFI, native-family route and default facade are wired; Rust wire, Node normal/refusal and Python public flows pass. A development WASM Chromium import→rename→export check passes. | Verify promotion and refusal in the release-profile browser package. Preserve historical schemas, unknown fields and exact native numbers. |
-| Parquet capture and edit | Existing kernel drives both default roots; actual Node capture/edit/export and refusal pass. | Verify public browser and Python routes for the same operations. |
-| TypeSpec compiler and emit | Rust source admission and one-shot compiler prepare/complete wire pass 2/2. Node/Python/CLI builds pass, Python and interactive CLI session baselines pass 2/2. Public Node passes pinned compiler→qualified semantic graph→JSON Schema emitter and invalid-path refusal; development WASM Chromium passes pinned compiler and graph over a tiny source. | Verify browser emission/refusal and packaged declaration closure. |
-| Smithy assembly and selection | Rust now owns source/JSON import, exact get/edit/export, assembly and selection admission through a bounded host session. Its five focused wire cases pass; fresh Node public-root assembly→selection through pinned Smithy Model 1.73.0/TeaVM 0.15.0 and unsafe-source refusal pass 2/2. Public Python and interactive CLI prepare/complete/select with supplied schema-valid responses and path refusal pass 2/2. | Verify the supplied-backend browser route and packaged resource closure. The Python/CLI tests exercise Rust session admission with explicit responses, not TeaVM execution. |
-| Delta log capture and commit reconciliation | Existing kernel and default routes now cover capture, export, action inspection and `reconcileDeltaCommits`; fresh Node log capture/inspect/export and public Python capture/export pass. | Exercise commit reconciliation through the public route, then browser activation. |
-| Delta Parquet action projection | Rust decodes Parquet capture rows and projects exact Delta actions/scalars while retaining authoritative Parquet source. The focused wire target passes 2/2, the Node public-root normal/blocked cases pass 2/2, and the public Python projection/refusal case passes with no partial action/log on refusal. | Verify the browser route, then use this kernel for checkpoint, sidecar and multipart recovery without restoring the legacy projector. |
-| Delta checkpoint, sidecar and multipart recovery | Rust handles Parquet checkpoint replay at nonzero V1 and V2 with explicitly supplied sidecars; two focused wire cases, Node public-root normal/refusal and Python checkpoint/refusal pass. It also assembles explicit multipart Parquet checkpoints in ordinal order, preserving source/version and refusing duplicate part identities without a partial recovery; multipart wire 2/2, Node 2/2 and Python normal/refusal pass. The distinct JSONL checkpoint sidecar route now retains the complete derived source while filtering V2 control rows only for replay. Its new focused wire success/missing-supply refusal case and Node public-root normal/refusal cases pass. | Verify JSONL/Parquet checkpoint and multipart public browser routes and Python JSONL sidecar dispatch. |
-| Delta schema and table | Existing Rust import/get/edit/export and native Registry inspectors drive Node/browser defaults; fresh Node and Python table/schema edit→export and a malformed-source refusal pass. | Implement mapped rename and verify the new default routes in Chromium. |
-| Delta definition, DDL and Spark realization | Rust owns `defineDeltaTable`, `generateDeltaDDL`, ordered `generateDeltaDDLBundle` and local `realizeSparkDelta4DDL` through core/wire/default routes. DDL wire 2/2 and new Spark/bundle wire 3/3 pass; fresh Node public-root DDL/Spark normal/refusal cases pass 4/4, and public Python DDL/Spark cases pass 2/2. No Spark execution or remote target admission is claimed. | Verify the browser public route, then continue the separate Delta Parquet action/checkpoint/sidecar recovery kernels. |
-| Spark schema and metadata | New Rust semantics; next adapter lane ports import/inspect/export/get/edit, metadata/collation/parameter diagnostics and rename. | One public schema edit→export/inspect and one invalid-schema refusal. |
-| Action evaluation and planning | Existing Rust `evaluateActionRule` has codegen wire and Node/browser default routes; Node typed-integer equality and unknown-operator refusal pass 2/2, public Python action rule passes, and a development WASM Chromium equality check passes. `prepareActionPlanModel`, `inspectActionPlan` and `assessActionPlan` still need a registered Rust artifact/claim kernel and bounded explicit Registry/selection callback session; a scratch core/wire implementation is under review, not yet compiled. | Land and test the Rust-owned Action Plan session with one eligible and one blocked public flow, then verify its browser host boundary. |
-| Remaining action APIs | Classify the current default barrel's other executable `extensions/actions` exports against `umf-codegen` and port each unowned decision before removing the legacy barrel. | A representative public action inspection→execution workflow reaches Rust, with unsupported actions explicitly refused; every current action export has a Rust route or an intentional nonsemantic static export. |
-| Protection-value assessment | Existing Rust kernels now drive the Node/browser default `inspectProtectionFunction` and `evaluateProtectionValue` exports; focused Node public-root typed-constant transformation and wrong-input refusal pass (2/2). | Verify the browser public root, preserving immutable report presentation. |
-| Protection query properties and remaining security APIs | The Rust kernel drives the default `inspectProtectionQueryProperties` export; Node deterministic join and unknown-operator refusal pass (2/2), and a development WASM Chromium join check passes. Parameterized-range identity reuses the core typed literal primitive and supports distinct authored buckets; two focused Rust cases pass (2/2, 87 filtered), and the new public Node same/different-bucket case passes. Prefix/suffix object property identity now preserves unknown members and canonical key order; its new public Node same/different case passes. Other executable `extensions/security` exports need classification and Rust ownership. | Verify browser range/prefix cases, then route each remaining executable security export through Rust or identify it as intentional nonsemantic static data. |
-| Avro-to-JSON-Schema projection | Rust owns recursive Avro shape and loss decisions through a closed projection wire, native-family route and Node/browser default export. Focused wire 3/3 and Node public-root ordinary/strict-loss pass while retaining the source; a separate development WASM Chromium normal/strict-loss case passes with external requests blocked. | Verify the Python route and release-profile browser package, retaining explicit loss reports for unsupported Avro meaning. |
-| Remaining cross-format and model projections | The default barrel still exposes executable `projections` and `core-ideals` functions, including `projectBit128Model` and `projectDddToJsonSchema`; classify each against native kernels and port remaining shape/loss decisions. | Public representative projections preserve source and report loss through Rust; every current executable projection has a native route before reference retirement. |
-| Deployment, migration and row-scope APIs | Existing `umf-codegen` wire and Node/WASM engines implement compile/verify deployment and migration; default deployment Node normal/refusal passes 2/2 and development WASM Chromium compile/verify passes. Native discovery still needs the public versioned selector, and native row-scope forwarding cannot yet carry `admitPolicy`; a staged Rust/host callback and `.2`/`.3` selector cut is in scratch, not yet compiled. Valid G04 `.4` conversion/effects and other currently supported recipe kinds remain separate work. Inventory migration, `reviewedValueDigest` and `irreversiblePurgeDisclosure` also need Rust ownership review. | Activate and test `.2`/`.3` discovery plus row-scope callback first, then implement valid `.4` conversion/effects and the remaining named operations before reference retirement. |
-| JSON-LD framing | Extend existing kernel after larger missing family cuts: structured `@default` and still-refused current frame options. | One public structured-default selection plus a malformed-frame refusal, preserving graph identity and unknown metadata. |
-| SHACL Core validation | Extend existing kernel with remaining current constraint/path semantics and real RDF result rows. | One conforming and one violating public shape for each new coherent constraint group, then browser/Python validation routes. |
-| Browser and Python default adapter surfaces | Host activation; Root integrates public routes for newly callable Rust kernels. | Fresh Chromium public-root and staged Python package workflows for each newly exposed host boundary; do not replay green Node cases. |
-| Published reference and release package | Published-surface integration; Root redirects or retires shipped TypeScript semantic entry points, including `./reference`, legacy `dist/umf.js`, and the V2/V3 candidate subpaths after replacements are callable. | Published-package consumer test, release-profile browser build, and wheel/sdist source closure show that executable public semantics run through Rust. |
+| Action Plan staged artifact/session | `prepareActionPlanModel`, `inspectActionPlan`, `assessActionPlan` | Rust artifact/claim kernel and explicit Registry/selection session; native, Node, Python and Chromium baselines pass. |
+| Saga default activation | `inspectSagas`, `declareSaga`, `editSaga`, `assessSaga` | Rust kernels/codegen wire now own V4 defaults; Node, CLI and installed Python normal/refusal pass; browser/package activation remains. |
+| Action declaration and assessment | `inspectActions`, `declareAction`, `editAction`, `assessAction` | Rust authoring/assessment kernel drives V4 defaults; supported Action workflow and caller callback/refusal baselines pass. |
+| Action selector/expression | `admitActionInputs`, `compileActionRule`, `compileActionSelector`, `prepareActionIdentities`, `selectActionIdentity`, `actionFieldValueKey` | Rust default routes own all named operations; six new selector/identity/rule Node normal/refusal cases pass; browser/package activation remains. |
+| Action manifest/bulk | `constructActionManifest`, `inspectActionManifest`, `assessActionManifest`, `validateBulkOutcome` | Bulk-outcome Rust validation passes both new Node cases. Manifest construction/inspection/assessment and retained Rust session refusals pass focused Node baselines. |
+| Security existing-kernel activation | `composeSecurityRules`, `securityRefIdentity`, `resolveSecurityProtectionDomains`, `resolveSecurityProtectionSources`, `validateProtectionParameters`, `readProtectionSource`, `writeProtectionSource` | Existing `security_logic`, `security_domains`, `security_parameters`, `security_protection_source_binding` kernels/wires; add thin defaults with ordinary/refusal. |
+| Security policy/source meaning | `inspectSecurityPolicy`, `requireSecurityInterpretation`, `inspectSecurityPolicyV2Source`, `upgradeSecurityPolicySource`, `downgradeSecurityPolicySource`, `readSecuritySource`, `writeSecuritySource`, `securityPolicyDependencies`, `securityIdentityTransportDependencies` | Generic native JSON/YAML transport exists, but policy/V2 migration and dependency closure decisions still need Rust kernels/defaults. |
+| Security evaluation and authority | `evaluateSecurityAccess`, `evaluateSecurityCollection`, `evaluateSecurityWrite`, `evaluateSecurityPolicyV2LegacyAccess`, `SecurityAuthorityGuard`, `SecurityReadRegistration` | New Rust evaluation/stateful authority kernels with explicit caller capabilities; no JS policy decision fallback. |
+| Security disclosure/catalog | `inspectProtectionCatalog`, `requireProtectionInterpretation`, `inspectProtectionObligations`, `inspectSecurityActionPurposes`, `validateSecurityDisclosure`, `encodeSecurityDisclosure`, `decodeSecurityDisclosure`, `inspectSecurityDisclosureV2`, `encodeSecurityDisclosureV2`, `decodeSecurityDisclosureV2` | Reuse native source/literal/parameter primitives; add missing disclosure/catalog/obligation semantic kernels and exact source retention. |
+| Binding target projection | `projectBindingToDelta`, `projectBindingToIceberg`, `projectBindingToParquet`, `projectBindingToSqlServer`, `projectBindingTablesToSqlServer`, `projectBindingTablesAndIndexesToSqlServer`, `projectBindingTablesAndIndexesFromPlanToSqlServer`, `recoverBindingSqlServerNative`, `recoverBindingSqlServerSources`, `verifyBindingSqlServerProjection`, `validateSqlServerRelationshipLayout` | Native binding source/inspection and generic index projection are reuse points; target-specific composition/verification remains a Rust cut. |
+| Binding index projection | `projectBindingIndexesToPostgresql`, `projectBindingIndexesToSqlServer`, `projectBindingIndexesAgainstSqlServerPlan` | Reuse `binding_index_projection::project_binding_indexes`; add target-specific DDL/catalog admission and public routes. |
+| Bit128 projection | `classifyBit128NativeType`, `decodeBit128FileRecord`, `encodeBit128FileRecord`, `projectBit128CarrierSchema`, `recoverBit128CarrierProjection`, `projectBit128Model`, `recoverBit128ModelProjection` | Classifier, Field authoring, binding inspection and full-row encode/decode pass; carrier/model/file projection/recovery baselines remain. |
+| DDD → GraphQL/PostgreSQL | `projectDddEntitiesToGraphql`, `projectDddToGraphql`, `recoverDddFromGraphql`, `recoverDddGraphqlNative`, `verifyDddGraphqlProjection`, `projectDddTablesToPostgresql`, `projectDddTablesAndIndexesToPostgresql`, `projectDddToPostgresql`, `recoverDddPostgresqlIdeal`, `recoverDddPostgresqlNative`, `verifyDddPostgresqlProjection`, `validatePostgresqlRelationshipLayout` | Reuse native GraphQL/PostgreSQL source adapters; DDD mapping and recovery/loss kernel is absent. |
+| DDD → JSON Schema | `dddFieldBinding`, `projectDddToJsonSchema` | Native DDD mapping kernel and Node public projection/edit/read/write/refusal baselines pass; browser/Python activation remains. |
+| Cross-format schema projections | `projectArrowToSpark`, `projectAvroToTableSpec`, `projectGraphqlInputToJsonSchema`, `projectJsonSchemaToProtobuf`, `projectOpenapiToJsonSchema`, `projectParquetToAvro`, `projectPostgresqlRowToJsonSchema`, `projectPostgresqlToAvro`, `projectSmithyToJsonSchema`, `projectSparkToArrow`, `projectSqlServerToAvro`, `projectSqlServerToDdl`, `projectTableSpecToAvro`, `projectToTableSpecViaAvro`, `projectTypeSpecToJsonSchema`, `createSmithyJavaScriptJsonSchemaBackend` | Reuse existing Rust format/source adapters and explicit compiler backends; add one Rust-owned mapping/loss kernel per coherent source→target relation. The Smithy backend factory remains a host capability, but projected status/source/loss belongs to Rust. |
+| Table inventory migration | `compileTableInventoryMigration`, `discoverTableInventoryMigrationChanges`, `serializeTableInventoryMigration`, `verifyTableInventoryMigration`, `irreversiblePurgeDisclosure` | Separate new inventory kernel; `umf-codegen` current migration compiler does not own this public profile. |
+| Migration digest and selected compiler | `reviewedValueDigest`, `compileTableMigration`, `verifyTableMigration` | Native canonical digest and public compile/verify/refusal pass. Compiler `.4`/`.5`/`.7` baselines pass; `.3` ordering and `.6` supported replacement baseline remain in repair. |
+
+Host-only/static exports in these families: `actionExpressionLimits`, `actionsPackage`, `sagaPackage`, `createSagaResources`, `registerActions`, `registerSagas`, `protectionPackage`, `SECURITY_EXTENSION`, `securityPackage`, `securityV2Package`, and `securityRegistry`. Keep these as data/registration facades only; underlying validation and semantics must still use Rust. The broader `core-ideals` barrel has native classifier/recovery primitives in `umf-core` and needs a separate exact default-route audit, not a blanket new-kernel assignment.
 
 ## Remaining Port Work
 
-The current library is not the entire TypeScript port. Remaining work includes
-TypeSpec and Smithy browser host integration; JSON-LD frame options; SHACL
-constraint coverage; caller-supplied PostgreSQL browser activation; cross-format
-projections; action/security/table control operations; and browser, Python or
-release-package activation for Delta sidecars/multipart, Iceberg and Spark. New
-kernels also need Python, Node/Bun and browser WASM
-activation through the public defaults. A source or wire draft counts as
-implemented only after its callable operation passes a current baseline.
+Remaining work is the unclosed operations and host activation named above,
+legacy executable surface retirement, complete local integration tests, review,
+merge and publication. Scratch code and metadata checks alone do not close a
+capability: its public operation must pass its focused current baseline.
 
 ## Acceptance
 
