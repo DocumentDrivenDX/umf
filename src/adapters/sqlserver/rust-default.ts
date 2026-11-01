@@ -5,6 +5,9 @@ import {UmfError} from '../../model/errors';
 import {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/sqlserver/package.json';
 import cardinalityManifest from '../../../spec/extensions/sqlserver-cardinality/package.json';
+import {sqlserverNullabilityPackage} from '../../core-ideals/nullability-sqlserver-package';
+import {sqlserverKeysPackage} from '../../core-ideals/key-sqlserver-package';
+import {sqlserverRelationshipsPackage} from '../../core-ideals/relationship-sqlserver-package';
 import type {importSqlServerCatalog,inspectSqlServer,exportSqlServerCatalog,proposeSqlServerCatalogEdit,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,getSqlServerIndexMetadata,SqlServerColumnMetadata,SqlServerConstraintMetadata,SqlServerIndexMetadata} from './index';
 import type {SqlServerFacetTypeInspection,inspectSqlServerFacetType} from './facet-type';
 import type {SqlServerFacetPredicateInspection,inspectSqlServerFacetPredicate} from './facet-predicate';
@@ -12,6 +15,10 @@ import type {SqlServerFacetConstraintsInspection,inspectSqlServerFacetConstraint
 import type {SqlServerFieldClassification,SqlServerFieldRequest} from '../../core-ideals/sqlserver-field';
 import type {SqlServerRecordClassification,SqlServerRecordRequest} from '../../core-ideals/sqlserver-record';
 import type {SqlServerCardinalityClassification,SqlServerCardinalityRequest} from '../../core-ideals/cardinality-sqlserver';
+import type {SqlServerNullabilityClassification,SqlServerNullabilityRequest} from '../../core-ideals/nullability-sqlserver';
+import type {SqlServerKeyClassification,SqlServerKeyRequest} from '../../core-ideals/key-sqlserver';
+
+import type {SqlServerRelationshipClassification,SqlServerRelationshipRequest} from '../../core-ideals/relationship-sqlserver';
 
 export interface SqlServerNativeFamilyEngine {
  sqlserver:{
@@ -35,6 +42,15 @@ export interface SqlServerNativeFamilyEngine {
   classifyCardinality(fields:{source:Document;request:SqlServerCardinalityRequest}):unknown;
   verifyCardinalityClassification(fields:{receipt:SqlServerCardinalityClassification;current:Document}):unknown;
   recoverCardinalitySource(fields:{receipt:SqlServerCardinalityClassification;current:Document}):unknown;
+  classifyNullability(fields:{source:Document;request:SqlServerNullabilityRequest}):unknown;
+  verifyNullabilityClassification(fields:{receipt:SqlServerNullabilityClassification;current:Document}):unknown;
+  recoverNullabilitySource(fields:{receipt:SqlServerNullabilityClassification;current:Document}):unknown;
+  classifyKeys(fields:{source:Document;request:SqlServerKeyRequest}):unknown;
+  verifyKeyClassification(fields:{receipt:SqlServerKeyClassification;current:Document}):unknown;
+  recoverKeySource(fields:{receipt:SqlServerKeyClassification;current:Document}):unknown;
+  recoverRelationshipSource(fields:{receipt:SqlServerRelationshipClassification;current:Document}):unknown;
+  verifyRelationshipClassification(fields:{receipt:SqlServerRelationshipClassification;current:Document}):unknown;
+  classifyRelationships(fields:{source:Document;request:SqlServerRelationshipRequest}):unknown;
  }
 }
 
@@ -53,7 +69,7 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   }
  };
  return Object.freeze({
-  sqlserverRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload}))).register(cardinalityManifest as unknown as ExtensionPackage);},
+  sqlserverRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload}))).register(cardinalityManifest as unknown as ExtensionPackage).register(sqlserverNullabilityPackage).register(sqlserverKeysPackage).register(sqlserverRelationshipsPackage);},
   importSqlServerCatalog(text:string,options:Parameters<typeof importSqlServerCatalog>[1]):ReturnType<typeof importSqlServerCatalog>{return call(()=>engine.sqlserver.import({source:text,id:options.id}) as ReturnType<typeof importSqlServerCatalog>);},
   inspectSqlServer(document:Parameters<typeof inspectSqlServer>[0]):ReturnType<typeof inspectSqlServer>{return call(()=>engine.sqlserver.inspect({document}) as ReturnType<typeof inspectSqlServer>);},
   exportSqlServerCatalog(document:Parameters<typeof exportSqlServerCatalog>[0]):ReturnType<typeof exportSqlServerCatalog>{return call(()=>engine.sqlserver.export({document}) as ReturnType<typeof exportSqlServerCatalog>);},
@@ -75,5 +91,14 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   classifySqlServerCardinality(source:Document,request:SqlServerCardinalityRequest):SqlServerCardinalityClassification{return call(()=>engine.sqlserver.classifyCardinality({source,request}) as SqlServerCardinalityClassification);},
   verifySqlServerCardinalityClassification(receipt:SqlServerCardinalityClassification,current:Document):SqlServerCardinalityClassification{return call(()=>engine.sqlserver.verifyCardinalityClassification({receipt,current}) as SqlServerCardinalityClassification);},
   recoverSqlServerCardinalitySource(receipt:SqlServerCardinalityClassification,current:Document):string{return call(()=>engine.sqlserver.recoverCardinalitySource({receipt,current}) as string);},
+  classifySqlServerNullability(source:Document,request:SqlServerNullabilityRequest):SqlServerNullabilityClassification{return call(()=>engine.sqlserver.classifyNullability({source,request}) as SqlServerNullabilityClassification);},
+  verifySqlServerNullabilityClassification(receipt:SqlServerNullabilityClassification,current:Document):SqlServerNullabilityClassification{return call(()=>engine.sqlserver.verifyNullabilityClassification({receipt,current}) as SqlServerNullabilityClassification);},
+  recoverSqlServerNullabilitySource(receipt:SqlServerNullabilityClassification,current:Document):string{return call(()=>engine.sqlserver.recoverNullabilitySource({receipt,current}) as string);},
+  classifySqlServerKeys(source:Document,request:SqlServerKeyRequest):SqlServerKeyClassification{return call(()=>engine.sqlserver.classifyKeys({source,request}) as SqlServerKeyClassification);},
+  verifySqlServerKeyClassification(receipt:SqlServerKeyClassification,current:Document):SqlServerKeyClassification{return call(()=>engine.sqlserver.verifyKeyClassification({receipt,current}) as SqlServerKeyClassification);},
+  recoverSqlServerKeySource(receipt:SqlServerKeyClassification,current:Document):string{return call(()=>engine.sqlserver.recoverKeySource({receipt,current}) as string);},
+  classifySqlServerRelationships(source:Document,request:SqlServerRelationshipRequest):SqlServerRelationshipClassification{return call(()=>engine.sqlserver.classifyRelationships({source,request}) as SqlServerRelationshipClassification);},
+  verifySqlServerRelationshipClassification(receipt:SqlServerRelationshipClassification,current:Document):SqlServerRelationshipClassification{return call(()=>engine.sqlserver.verifyRelationshipClassification({receipt,current}) as SqlServerRelationshipClassification);},
+  recoverSqlServerRelationshipSource(receipt:SqlServerRelationshipClassification,current:Document):string{return call(()=>engine.sqlserver.recoverRelationshipSource({receipt,current}) as string);},
  });
 }

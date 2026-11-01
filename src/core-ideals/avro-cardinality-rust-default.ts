@@ -15,6 +15,7 @@ import type {CoreKindDeclaration} from '../model/field-kind';
 import type {KeyAvroProjection,KeyAvroRequest} from './key-avro-projection';
 import type {CoreKeyDeclaration} from '../model/keys';
 import type {RelationshipAvroProjection,RelationshipAvroRequest} from './relationship-avro-projection-factory';
+import type {RelationshipParquetProjection,RelationshipParquetRequest} from './relationship-parquet-projection-factory';
 import type {RelationshipTableSpecProjection,RelationshipTableSpecRequest} from './relationship-tablespec-projection-factory';
 import type {AvroKeyClassification,AvroKeyRequest,AvroKeyArchive} from './key-avro';
 import type {AvroRelationshipClassification,AvroRelationshipRequest,AvroRelationshipArchive} from './relationship-avro';
@@ -111,6 +112,12 @@ export interface CoreIdealNativeFamilies {
     recoverRelationshipTableSpecIdeal(fields:{receipt:RelationshipTableSpecProjection;current:Document}):unknown;
     recoverRelationshipTableSpecNativeSources(fields:{receipt:RelationshipTableSpecProjection;current:Document}):unknown;
   };
+  ['relationship-parquet-projection']:{
+    projectRelationshipToParquet(fields:{source:Document;author:import('../model/relationships').CoreRelationshipDeclaration;request:RelationshipParquetRequest}):unknown;
+    verifyRelationshipParquetProjection(fields:{receipt:RelationshipParquetProjection;current:Document}):unknown;
+    recoverRelationshipParquetIdeal(fields:{receipt:RelationshipParquetProjection;current:Document}):unknown;
+    recoverRelationshipParquetNative(fields:{receipt:RelationshipParquetProjection;current:Document}):unknown;
+  };
 }
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
 
@@ -120,7 +127,7 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     try{return operation() as T;}catch(error){
       if(!isNativeUmfCoreError(error))throw error;
       const native=error as {code?:unknown;message?:unknown;path?:unknown};
-      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(AVRO_CARDINALITY_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
+      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(AVRO_CARDINALITY_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|RELATIONSHIP_PARQUET_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
       throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
     }
   }
@@ -192,5 +199,9 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     verifyRelationshipTableSpecProjection(receipt:RelationshipTableSpecProjection,current:Document):RelationshipTableSpecProjection{return call(()=>engine['tablespec-relationship-projection'].verifyRelationshipTableSpecProjection({receipt:copyJson(receipt) as unknown as RelationshipTableSpecProjection,current:copyJson(current) as unknown as Document}) as RelationshipTableSpecProjection);},
     recoverRelationshipTableSpecIdeal(receipt:RelationshipTableSpecProjection,current:Document):Document{return call(()=>engine['tablespec-relationship-projection'].recoverRelationshipTableSpecIdeal({receipt:copyJson(receipt) as unknown as RelationshipTableSpecProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
     recoverRelationshipTableSpecNativeSources(receipt:RelationshipTableSpecProjection,current:Document):{source:string|Record<string,string>;target:string|Record<string,string>}{return call(()=>engine['tablespec-relationship-projection'].recoverRelationshipTableSpecNativeSources({receipt:copyJson(receipt) as unknown as RelationshipTableSpecProjection,current:copyJson(current) as unknown as Document}) as {source:string|Record<string,string>;target:string|Record<string,string>});},
+    projectRelationshipToParquet(source:Document,author:import('../model/relationships').CoreRelationshipDeclaration,request:RelationshipParquetRequest):RelationshipParquetProjection{return call(()=>engine['relationship-parquet-projection'].projectRelationshipToParquet({source:copyJson(source) as unknown as Document,author:copyJson(author) as unknown as import('../model/relationships').CoreRelationshipDeclaration,request:copyJson(request) as unknown as RelationshipParquetRequest}) as RelationshipParquetProjection);},
+    verifyRelationshipParquetProjection(receipt:RelationshipParquetProjection,current:Document):RelationshipParquetProjection{return call(()=>engine['relationship-parquet-projection'].verifyRelationshipParquetProjection({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as RelationshipParquetProjection);},
+    recoverRelationshipParquetIdeal(receipt:RelationshipParquetProjection,current:Document):Document{return call(()=>engine['relationship-parquet-projection'].recoverRelationshipParquetIdeal({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
+    recoverRelationshipParquetNative(receipt:RelationshipParquetProjection,current:Document):{hex:string}{return call(()=>engine['relationship-parquet-projection'].recoverRelationshipParquetNative({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as {hex:string});},
   });
 }

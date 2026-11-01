@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {parseNativeJson,renderTree} from '../model/native-json';
 import {exportSqlServerCatalog,getSqlServerIndexMetadata,getSqlServerColumnMetadata} from '../adapters/sqlserver';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import schema from '../../spec/core/sqlserver-key-classification.schema.json';
-import manifest from '../../spec/extensions/sqlserver-keys/package.json';
-export const SQLSERVER_KEYS_EXTENSION='umf.sqlserver.keys';
-export const sqlserverKeysPackage=manifest as unknown as ExtensionPackage;
-export {default as sqlserverKeyClassificationSchema} from '../../spec/core/sqlserver-key-classification.schema.json';
+import {SQLSERVER_KEYS_EXTENSION,sqlserverKeysPackage,sqlserverKeyClassificationSchema} from './key-sqlserver-package';
+export {SQLSERVER_KEYS_EXTENSION,sqlserverKeysPackage,sqlserverKeyClassificationSchema};
+const schema=sqlserverKeyClassificationSchema;
 export interface SqlServerKeyRequest {nativeSource:string;mode:'strict'|'report';profile:'captured-stored-values'}
 export interface SqlServerKeyObservation {
  identity:{schema:string;table:string;indexId:number;name:string|null};nativePath:string;fields:{module:string;element:string}[];primary:boolean;

@@ -1006,6 +1006,16 @@ fn classify_inner(
     ]);
     if !blocked {
         let mut target = copy_json(&source, ctx)?;
+        let target_vocabularies = get_mut(&mut target, "vocabularies").ok_or_else(|| {
+            err(
+                "PARQUET_FACET_TARGET",
+                "/vocabularies",
+                "Vocabulary inventory missing",
+            )
+        })?;
+        if get(target_vocabularies, EXT).is_none() {
+            set(target_vocabularies, EXT, obj(vec![("version", t("1.0.0"))]));
+        }
         let module_list = get_mut(&mut target, "modules")
             .and_then(|v| {
                 if let Value::Array(a) = v {

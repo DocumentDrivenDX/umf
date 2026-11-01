@@ -63,10 +63,37 @@ fn embedded_sqlserver_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry)
         include_str!("../../../spec/extensions/sqlserver-cardinality/package.json"),
         ctx,
     )?;
+    let nullability_package = parse_resource(
+        include_str!("../../../spec/extensions/sqlserver-nullability/package.json"),
+        ctx,
+    )?;
+    let keys_package = parse_resource(
+        include_str!("../../../spec/extensions/sqlserver-keys/package.json"),
+        ctx,
+    )?;
+    let relationship_package = parse_resource(
+        include_str!("../../../spec/extensions/sqlserver-relationships/package.json"),
+        ctx,
+    )?;
     let mut registry = Registry::new();
     registry.register(&package, None, engine.package_schema(), &schemas, ctx)?;
     registry.register(
         &cardinality_package,
+        None,
+        engine.package_schema(),
+        &schemas,
+        ctx,
+    )?;
+    registry.register(
+        &nullability_package,
+        None,
+        engine.package_schema(),
+        &schemas,
+        ctx,
+    )?;
+    registry.register(&keys_package, None, engine.package_schema(), &schemas, ctx)?;
+    registry.register(
+        &relationship_package,
         None,
         engine.package_schema(),
         &schemas,
@@ -101,13 +128,22 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         "sqlserver.facetConstraints" => &["profile", "op", "document", "columnPath"],
         "sqlserver.classifyField"
         | "sqlserver.classifyRecord"
-        | "sqlserver.classifyCardinality" => &["profile", "op", "source", "request"],
+        | "sqlserver.classifyCardinality"
+        | "sqlserver.classifyNullability"
+        | "sqlserver.classifyKeys"
+        | "sqlserver.classifyRelationships" => &["profile", "op", "source", "request"],
         "sqlserver.verifyFieldClassification"
         | "sqlserver.recoverFieldCapture"
         | "sqlserver.verifyRecordClassification"
         | "sqlserver.recoverRecordCapture"
         | "sqlserver.verifyCardinalityClassification"
-        | "sqlserver.recoverCardinalitySource" => &["profile", "op", "receipt", "current"],
+        | "sqlserver.recoverCardinalitySource"
+        | "sqlserver.verifyNullabilityClassification"
+        | "sqlserver.recoverNullabilitySource"
+        | "sqlserver.verifyKeyClassification"
+        | "sqlserver.recoverKeySource"
+        | "sqlserver.verifyRelationshipClassification"
+        | "sqlserver.recoverRelationshipSource" => &["profile", "op", "receipt", "current"],
         _ => return None,
     })
 }
@@ -144,6 +180,15 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         "sqlserver.classifyCardinality",
         "sqlserver.verifyCardinalityClassification",
         "sqlserver.recoverCardinalitySource",
+        "sqlserver.classifyNullability",
+        "sqlserver.verifyNullabilityClassification",
+        "sqlserver.recoverNullabilitySource",
+        "sqlserver.classifyKeys",
+        "sqlserver.verifyKeyClassification",
+        "sqlserver.recoverKeySource",
+        "sqlserver.classifyRelationships",
+        "sqlserver.verifyRelationshipClassification",
+        "sqlserver.recoverRelationshipSource",
     ]
     .into_iter()
     .find(|op| op.encode_utf16().eq(op_text.units().iter().copied()))
@@ -225,16 +270,55 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         }
         "sqlserver.classifyField"
         | "sqlserver.classifyRecord"
-        | "sqlserver.classifyCardinality" => {
+        | "sqlserver.classifyCardinality"
+        | "sqlserver.classifyRelationships" => {
             required(request, "source")?;
-            required(request, "request")?;
+            let input = required(request, "request")?;
+            let native_source = required_string(input, "nativeSource")?;
+            if native_source.len() > ctx.limits().max_text_units {
+                return Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "SQL Server native source exceeds the text limit",
+                ));
+            }
+        }
+        "sqlserver.classifyKeys" => {
+            required(request, "source")?;
+            let input = required(request, "request")?;
+            let native_source = required_string(input, "nativeSource")?;
+            if native_source.len() > ctx.limits().max_text_units {
+                return Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "SQL Server native source exceeds the text limit",
+                ));
+            }
+        }
+        "sqlserver.classifyNullability" => {
+            required(request, "source")?;
+            let input = required(request, "request")?;
+            let native_source = required_string(input, "nativeSource")?;
+            if native_source.len() > ctx.limits().max_text_units {
+                return Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "SQL Server native source exceeds the text limit",
+                ));
+            }
         }
         "sqlserver.verifyFieldClassification"
         | "sqlserver.recoverFieldCapture"
         | "sqlserver.verifyRecordClassification"
         | "sqlserver.recoverRecordCapture"
         | "sqlserver.verifyCardinalityClassification"
-        | "sqlserver.recoverCardinalitySource" => {
+        | "sqlserver.recoverCardinalitySource"
+        | "sqlserver.verifyNullabilityClassification"
+        | "sqlserver.recoverNullabilitySource"
+        | "sqlserver.verifyKeyClassification"
+        | "sqlserver.recoverKeySource"
+        | "sqlserver.verifyRelationshipClassification"
+        | "sqlserver.recoverRelationshipSource" => {
             required(request, "receipt")?;
             required(request, "current")?;
         }
@@ -391,6 +475,117 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             let (engine, registry) = embedded_sqlserver_engine(ctx)?;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::recover_cardinality_source(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+            .map(Value::String)
+        }
+        "sqlserver.classifyNullability" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_nullability_classification::classify(
+                required(request, "source")?,
+                required(request, "request")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.verifyNullabilityClassification" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_nullability_classification::verify(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.recoverNullabilitySource" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_nullability_classification::recover(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+            .map(Value::String)
+        }
+        "sqlserver.classifyKeys" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_key_classification::classify(
+                required(request, "source")?,
+                required(request, "request")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.verifyKeyClassification" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_key_classification::verify(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.recoverKeySource" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_key_classification::recover(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+            .map(Value::String)
+        }
+        "sqlserver.classifyRelationships" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_relationship_classification::classify(
+                required(request, "source")?,
+                required(request, "request")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.verifyRelationshipClassification" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_relationship_classification::verify(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                &engine,
+                &registry,
+                &mut caps,
+                ctx,
+            )
+        }
+        "sqlserver.recoverRelationshipSource" => {
+            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let mut caps = NoCapabilities;
+            umf_core::sqlserver_relationship_classification::recover(
                 required(request, "receipt")?,
                 required(request, "current")?,
                 &engine,

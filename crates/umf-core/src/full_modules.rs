@@ -61,6 +61,8 @@ pub mod sqlserver_relationship_layout;
 #[cfg(feature = "embedded-adapters")]
 pub mod relationship_sqlserver_projection;
 #[cfg(feature = "embedded-adapters")]
+pub mod relationship_parquet_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod postgresql_relationship_layout;
 #[cfg(feature = "embedded-adapters")]
 pub mod ddd_postgresql_projection;
@@ -259,6 +261,12 @@ pub mod sqlserver_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_field_classification;
 #[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_relationship_classification;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_nullability_classification;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_key_classification;
+#[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_ddl_projection;
@@ -272,3 +280,5 @@ pub mod typespec_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod typespec_smithy_jsonschema_projection;
 pub mod value;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_postgresql_indexes;

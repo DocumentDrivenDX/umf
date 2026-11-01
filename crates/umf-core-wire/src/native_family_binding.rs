@@ -7,6 +7,7 @@ use umf_core::{Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
+    "relationship-parquet-projection",
     "avro-cardinality",
     "avro-classification",
     "record-type",
@@ -29,6 +30,7 @@ pub const FAMILIES: &[&str] = &[
     "sqlserver-avro-projection",
     "sqlserver-ddl-projection",
     "binding-sqlserver-planned-index-projection",
+    "binding-index-projection",
     "binding-parquet-projection",
     "binding-delta-projection",
     "binding-sqlserver-tables",
@@ -168,6 +170,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverRelationshipSqlServerNative",
             ],
         ),
+        "relationship-parquet-projection" => (
+            crate::relationship_parquet_projection_binding::PROFILE,
+            &["projectRelationshipToParquet", "verifyRelationshipParquetProjection", "recoverRelationshipParquetIdeal", "recoverRelationshipParquetNative"],
+        ),
         "avro" => (
             crate::avro_binding::PROFILE,
             &[
@@ -237,6 +243,10 @@ pub fn metadata_wire(family: &str) -> String {
         "binding-sqlserver-planned-index-projection" => (
             crate::binding_sqlserver_planned_indexes_binding::PROFILE,
             &["projectBindingIndexesAgainstSqlServerPlan"],
+        ),
+        "binding-index-projection" => (
+            crate::binding_indexes_binding::PROFILE,
+            &["projectBindingIndexesToSqlServer", "prepareBindingIndexesToPostgresql", "completeBindingIndexesToPostgresql"],
         ),
         "binding-parquet-projection" => (
             crate::binding_parquet_projection_binding::PROFILE,
@@ -408,6 +418,15 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyCardinality",
                 "verifyCardinalityClassification",
                 "recoverCardinalitySource",
+                "classifyNullability",
+                "verifyNullabilityClassification",
+                "recoverNullabilitySource",
+                "classifyKeys",
+                "verifyKeyClassification",
+                "recoverKeySource",
+                "recoverRelationshipSource",
+                "verifyRelationshipClassification",
+                "classifyRelationships",
             ],
         ),
         "shacl" => (
@@ -629,6 +648,7 @@ pub fn execute_wire_with_control(
                 wire, control,
             )
         }
+        "relationship-parquet-projection" => crate::relationship_parquet_projection_binding::execute_wire_with_control(wire, control),
         "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
         "avro-json-schema-projection" => {
             crate::avro_json_schema_projection_binding::execute_wire_with_control(wire, control)
@@ -669,6 +689,9 @@ pub fn execute_wire_with_control(
             crate::binding_sqlserver_planned_indexes_binding::execute_wire_with_control(
                 wire, control,
             )
+        }
+        "binding-index-projection" => {
+            crate::binding_indexes_binding::execute_wire_with_control(wire, control)
         }
         "binding-parquet-projection" => {
             crate::binding_parquet_projection_binding::execute_wire_with_control(wire, control)

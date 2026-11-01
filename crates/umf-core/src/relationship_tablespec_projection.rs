@@ -439,7 +439,23 @@ fn schema_ok(
             relationship_schema,
         ));
     }
-    let compiled = crate::schema::CompiledSchema::compile(schema, &resources, c)?;
+    // The pinned TableSpec source schema carries OpenAPI's root-level `example`
+    // documentation member. It is not a JSON Schema validation keyword, so
+    // omit only that known metadata member before strict schema compilation.
+    let native_validation_schema = if code == "RELATIONSHIP_TABLESPEC_NATIVE" {
+        let mut schema = copy_json(schema, c)?;
+        if let Value::Object(members) = &mut schema {
+            members.retain(|(key, _)| key != &k("example"));
+        }
+        Some(schema)
+    } else {
+        None
+    };
+    let compiled = crate::schema::CompiledSchema::compile(
+        native_validation_schema.as_ref().unwrap_or(schema),
+        &resources,
+        c,
+    )?;
     Ok(compiled.validate_codegen_errors(v, c)?.is_empty())
 }
 fn native_issues(
