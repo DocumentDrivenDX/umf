@@ -1,0 +1,54 @@
+{
+  "implementationMerge": "a42c64ada9f5d85f8e3582cc9706bc3e33b4e334",
+  "mergeTreeEqualsQualifiedSource": true,
+  "pr": "https://github.com/DocumentDrivenDX/umf/pull/80",
+  "qualificationRun": "https://github.com/DocumentDrivenDX/umf/actions/runs/41269415988",
+  "qualifiedSource": "90cb61eb63aec3f5a77b5991a56e3dfc3d10bd27",
+  "releases": {
+    "python-v0.10.5": {
+      "files": {
+        "RELEASE_NOTES.md": "c86e777681b9b61933b3c92ab8d4fc4844955e38a353d5ca19710b224c03087c",
+        "SHA256SUMS": "2f3672c921ffe3e9f01e7acbef3e182efb7b281ab1527a32bc43c487734cf8c0",
+        "linux-custody.json": "d4da8da2a13c93abbe238f66df77362c537d4af0787256b2062575a481747c71",
+        "linux-selection.json": "05b07499f922a84ac4cfe3ce18b05a466534b3146cc590f871920bbb7038a4a8",
+        "macos-custody.json": "61635295db4c920d6896996773685bcef99c9a43149e5edd4ea1f43f54488039",
+        "macos-selection.json": "36f65ff6499c7e5dc2047eee8657417c045363e292aec9b0c98091c3acb8bbd5",
+        "release-pins.json": "57e8c90c2495d21e58057f2112696a385a670110df2987576ab96b0bf548af02",
+        "umf_core-0.10.5-cp311-abi3-macosx_11_0_arm64.whl": "9213ff4b87649f551abcfdff40cdb6b0d75d619260988fa8ea4fe26cac7f6788",
+        "umf_core-0.10.5-cp311-abi3-manylinux_2_34_x86_64.whl": "cf33b833ff4eaa080f459cf3c93baa7e3b4e436dab5cd7853dd748e3c220dd16",
+        "umf_core-0.10.5.tar.gz": "f56bcced69e701d76e28958b36767fe9c7471ed78e3c6ab8106bac818100ed2c"
+      },
+      "immutable": true,
+      "publicDownloadedBytesMatchStageAndChecksums": true,
+      "publishedAt": "2026-11-01T04:01:05Z",
+      "releaseId": 430350668,
+      "tagSource": "90cb61eb63aec3f5a77b5991a56e3dfc3d10bd27",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/tag/python-v0.10.5"
+    },
+    "umf-v0.10.1": {
+      "files": {
+        "CI.log": "621c881147e02ef951c2faacf467ab8329d329c50545d8464f65d2741161c458",
+        "RELEASE_NOTES.md": "c28aea7a1f40c940979a96f14d69c95d0180d7668cee1791bc8aca3a3ca3b2ff",
+        "SHA256SUMS": "554895b9e09a730a12e3462912a5bdb31e6d5a07cab32805dcdaa82ecccb2972",
+        "linux-custody.json": "d4da8da2a13c93abbe238f66df77362c537d4af0787256b2062575a481747c71",
+        "linux-qualification-evidence.zip": "109c54dcceba56f01191d6f854b83ab435cf8afe0b88a82b13b568b9aaaff113",
+        "macos-custody.json": "61635295db4c920d6896996773685bcef99c9a43149e5edd4ea1f43f54488039",
+        "macos-qualification-evidence.zip": "718065c24b7a44ee37b245ab11fbc60a432f2f02e664084470f52ec95a917704",
+        "release-pins.json": "0cea25b0280634a06fd6e150f5245fd16627507bdb31929abae56eccdab9aecc",
+        "sdk-installed-custody.json": "95be71e52509e979a54d4ebc756d2d8b61d90ec24c4788d0d78fc141526e8276",
+        "sdk-manifest.json": "a9f9b527ed9cdec61f5c2ef937af5da414dca6527c39eaac80acb08a55c9be2e",
+        "umf-darwin-arm64": "4cc6a82bdcb78c40498707aa9038666f342ed9685dd38bec2d72b7c07d089a01",
+        "umf-linux-x64": "f6747075a100e3d51ccb63b37393dbbdffd5612dc9c3385dac000705489cbb22",
+        "umf-sdk.tgz": "3d95fff822f4f44b3d1a8e56185c3697e94ee66f5315cda7389f5301f3d16d26"
+      },
+      "immutable": true,
+      "publicDownloadedBytesMatchStageAndChecksums": true,
+      "publishedAt": "2026-11-01T04:02:06Z",
+      "releaseId": 430350768,
+      "tagSource": "90cb61eb63aec3f5a77b5991a56e3dfc3d10bd27",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.1"
+    }
+  },
+  "schema": "umf.saga.public-product-release-verification/1",
+  "status": "passed"
+}

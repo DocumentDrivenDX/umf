@@ -1,3 +1,10 @@
+[Current saga library completion and release](04-build/evidence/saga-public-library-completion/README.md)
+records SDK 0.10.1 / Python 0.10.5, corrected original-control recovery,
+fresh qualification and verified public installed consumers.
+[Use the public APIs](05-deploy/sagas.md) for explicit initialization and runnable
+authoring examples. The earlier implementation packet below retains its original
+SDK 0.10.0 / Python 0.10.4 qualification scope.
+
 [Saga implementation and qualification](04-build/evidence/sagas/README.md)
 records the shared Rust authoring/assessment API, four runtime bindings and the
 PostgreSQL reference consumer. The [usage guide](05-deploy/sagas.md) explains

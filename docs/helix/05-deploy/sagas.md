@@ -15,8 +15,13 @@ ddx:
 Sagas are an explicit opt-in companion to actions in the UMF repository and SDK.
 The sequential declaration vocabulary is `umf.actions.saga` 0.1.0, with core
 0.10.0 and actions 0.1.0. The public SDK release is
-[0.10.0](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.0);
-the public Python package is [`umf-core` 0.10.4](https://pypi.org/project/umf-core/0.10.4/).
+[0.10.1](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.1);
+the public Python package is [`umf-core` 0.10.5](https://pypi.org/project/umf-core/0.10.5/).
+The coupled archives are also available in the
+[Python GitHub release](https://github.com/DocumentDrivenDX/umf/releases/tag/python-v0.10.5).
+Publication and public-install verification are tracked by the
+[completed plan](../04-build/saga-public-library-completion-plan.md) and
+[product release evidence](../04-build/evidence/saga-public-library-completion/README.md).
 The implementation plan and [saga qualification packet](../04-build/evidence/sagas/README.md)
 record source, CI, consumer and artifact-hash evidence. Do not replace an older
 published wheel with new bytes under its old version.
@@ -36,6 +41,100 @@ identity = {"module": "equipment", "saga": "reserve-allocate"}
 assessment = runtime.assess_saga(document, identity, capabilities)
 assert assessment["executionVerified"] is False
 ```
+
+## Run a JavaScript authoring lifecycle
+
+Download `umf-sdk.tgz` from the selected GitHub SDK release, then install it with
+`bun add ./umf-sdk.tgz`. Save the shared
+[portable examples](../../../fixtures/saga/portable.json) as `portable.json`
+beside `author-saga.ts`, then run `bun author-saga.ts`. The script selects the
+fully interpreted recipe example; the design allocation example below is useful
+for inspection but deliberately does not qualify safe declaration/editing.
+
+```ts
+import {
+  Registry, registerSagas, createSagaResources, readDocument, writeDocument,
+  inspectSagas, declareSaga, editSaga, assessSaga,
+} from '@umf/core';
+import {initializeWasm, initializeCodegenWasm} from '@umf/core/runtime/wasm';
+
+const resources = createSagaResources();
+const core = await initializeWasm(undefined, globalThis, resources);
+const engine = await initializeCodegenWasm(undefined, globalThis, resources);
+const registry = registerSagas(new Registry(core), engine);
+const examples = await Bun.file('portable.json').json();
+const example = examples.cases.find(item => item.id === 'recipe-declaration');
+if (!example) throw new Error('Recipe example not found');
+const source = readDocument(JSON.stringify(example.source), 'json');
+const original = inspectSagas(source, registry).entries.find(
+  entry => entry.module === 'sales' && entry.definition.id === 'approve-order',
+);
+if (!original) throw new Error('Recipe saga not found');
+const definition = structuredClone(original.definition);
+definition.id = 'my-allocation';
+const declared = declareSaga(source, 'sales', definition, registry);
+const identity = {module: 'sales', saga: definition.id};
+const edited = editSaga(declared, identity, {
+  ...definition, name: 'My approval recipe',
+}, registry);
+const exchanged = readDocument(writeDocument(edited, 'yaml'), 'yaml');
+const assessment = assessSaga(exchanged, identity, {
+  id: 'my-host', version: '1', coreVersion: '0.10.0', sagaVersion: '0.1.0',
+  coordination: 'unknown', claims: [], source: exchanged, identity,
+}, registry);
+console.log(assessment);
+if (assessment.executionVerified !== false) throw new Error('Unexpected execution claim');
+```
+
+The empty claim inventory deliberately reports unsupported or unknown obligations.
+An actual host must supply its independently established claims for the exact
+source and identity. Do not mark every inspected obligation supported merely to
+obtain a compatible assessment. Declare/edit return copies and preserve the
+original source; relevant unknown recovery meaning refuses unsafe edits.
+
+The default loader resolves the WASM shipped with this SDK. A browser deployment
+must serve the SDK runtime files together and support the module/WASM loading
+requirements of its host. It uses the same two public initialization functions;
+it does not import a provider or execute an action.
+
+## Run a Python authoring lifecycle
+
+Install the selected public package with `python -m pip install umf-core==0.10.5`
+and save the same `portable.json` beside `author_saga.py`. Run
+`python author_saga.py`:
+
+```python
+import copy
+from pathlib import Path
+from umf import SagaRuntime, read_json_value, write_json_value
+
+runtime = SagaRuntime()
+examples = read_json_value(Path('portable.json').read_text(encoding='utf-8'))
+source = next(case['source'] for case in examples['cases']
+              if case['id'] == 'recipe-declaration')
+original = next(entry for entry in runtime.inspect_sagas(source)['entries']
+                if entry['module'] == 'sales'
+                and entry['definition']['id'] == 'approve-order')
+definition = copy.deepcopy(original['definition'])
+definition['id'] = 'my-allocation'
+declared = runtime.declare_saga(source, 'sales', definition)
+identity = {'module': 'sales', 'saga': definition['id']}
+edited = runtime.edit_saga(declared, identity,
+                           {**definition, 'name': 'My approval recipe'})
+exchanged = read_json_value(write_json_value(edited))
+assessment = runtime.assess_saga(exchanged, identity, {
+    'id': 'my-host', 'version': '1', 'coreVersion': '0.10.0',
+    'sagaVersion': '0.1.0', 'coordination': 'unknown', 'claims': [],
+    'source': exchanged, 'identity': identity,
+})
+assert assessment['executionVerified'] is False
+print(assessment)
+```
+
+Python loads its integrity-checked installed resources and native engine; it does
+not require a JavaScript runtime. The native CLI also exposes these operations
+through `umf core --stdin-wire`; this is a tagged wire interface, not a direct
+JSON Document command. Use the Python/JavaScript APIs above when authoring by hand.
 
 Inspection preserves the source and reports exact action identities, mappings,
 compensation dispositions and unchecked obligations. Every forward and action

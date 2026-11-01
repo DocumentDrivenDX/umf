@@ -45,14 +45,16 @@ class ReleaseVersions(unittest.TestCase):
         self.assertTrue(any("stale normative core pin" in e for e in module.check(self.root)))
     def test_python_patch_drift(self):
         path = self.root / "python/pyproject.toml"
-        path.write_text(path.read_text().replace('version = "0.10.4"', 'version = "0.10.3"'))
+        version = json.loads((self.root / 'spec/release.json').read_text())['pythonVersion']
+        path.write_text(path.read_text().replace(f'version = "{version}"', 'version = "0.10.3"'))
         self.assertIn("Python exact cohort version", module.check(self.root))
     def test_saga_vocabulary_drift(self):
         self.change("spec/extensions/saga/package.json", lambda d: d.update(version="0.1.1"))
         self.assertIn("saga vocabulary version", module.check(self.root))
     def test_python_series_drift(self):
         path = self.root / "python/pyproject.toml"
-        path.write_text(path.read_text().replace('version = "0.10.4"', 'version = "0.9.3"'))
+        version = json.loads((self.root / 'spec/release.json').read_text())['pythonVersion']
+        path.write_text(path.read_text().replace(f'version = "{version}"', 'version = "0.9.3"'))
         self.assertIn("Python core release series", module.check(self.root))
 
 if __name__ == "__main__":
