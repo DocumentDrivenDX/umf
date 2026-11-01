@@ -418,7 +418,6 @@ export type { Document } from './generated/core-model';
 export { default as domainPackPackage } from '../spec/extensions/domain-pack/package.json';
 export { default as domainPackSchema } from '../spec/extensions/domain-pack/schema.json';
 export { editDashboardDefinition } from './extensions/dashboard/index';
-export { editExtension } from './model/document';
 export type { Element } from './generated/core-model';
 export { ELEMENT_KINDS } from './model/types';
 export type { ElementKind } from './model/types';
@@ -820,7 +819,6 @@ export type { PostgresqlRowProjection } from './projections/postgresql-json-sche
 export { default as postgresqlRowProjectionSchema } from '../spec/projections/postgresql-row-json-schema.schema.json';
 export { default as postgresqlSchema } from '../spec/extensions/postgresql/schema.json';
 export type { PostgresqlTypeIdentity } from './adapters/postgresql/cardinality-catalog';
-export { prepareCoreInspection } from './model/prepared-inspection';
 export type { PreparedActionIdentities } from './extensions/actions/selector';
 export type { PreparedActionPlanModel } from './extensions/actions/plan-types';
 export type { PreparedCoreKeyTuples } from './model/key-tuple';
@@ -828,7 +826,6 @@ export { projectBindingIndexes } from './extensions/binding/index';
 export { projectCardinalityToAvro } from './core-ideals/cardinality-avro-projection';
 export { projectCardinalityToParquet } from './core-ideals/cardinality-parquet-projection';
 export { projectCardinalityToPostgresql } from './core-ideals/cardinality-postgresql-projection';
-export { projectCardinalityToTableSpec } from './core-ideals/cardinality-tablespec-projection';
 export { projectFacetsToParquet } from './core-ideals/facets-parquet-projection';
 export { projectFacetsToPostgresql } from './core-ideals/facets-postgresql-projection';
 export { projectFacetsToTableSpec } from './core-ideals/facets-tablespec-projection';
@@ -841,7 +838,6 @@ export { projectKeysToPostgresql } from './core-ideals/key-postgresql-projection
 export { projectKeysToTableSpec } from './core-ideals/key-tablespec-projection';
 export { projectNullabilityToParquet } from './core-ideals/nullability-parquet-projection';
 export { projectNullabilityToPostgresql } from './core-ideals/nullability-postgresql-projection';
-export { projectNullabilityToTableSpec } from './core-ideals/nullability-tablespec-projection';
 export { projectRecordToAvro } from './core-ideals/record-avro-projection';
 export { projectRecordToParquet } from './core-ideals/record-parquet-projection';
 export { projectRecordToPostgresql } from './core-ideals/record-postgresql-projection';
@@ -904,7 +900,6 @@ export type { RecordTableSpecRequest } from './core-ideals/record-tablespec-proj
 export { recoverCardinalityFromAvro } from './core-ideals/cardinality-avro-projection';
 export { recoverCardinalityFromParquet } from './core-ideals/cardinality-parquet-projection';
 export { recoverCardinalityFromPostgresql } from './core-ideals/cardinality-postgresql-projection';
-export { recoverCardinalityFromTableSpec } from './core-ideals/cardinality-tablespec-projection';
 export { recoverFacetsFromParquet } from './core-ideals/facets-parquet-projection';
 export { recoverFacetsFromPostgresql } from './core-ideals/facets-postgresql-projection';
 export { recoverFacetsFromTableSpec } from './core-ideals/facets-tablespec-projection';
@@ -916,7 +911,6 @@ export { recoverKeysPostgresqlIdeal } from './core-ideals/key-postgresql-project
 export { recoverKeysTableSpecIdeal } from './core-ideals/key-tablespec-projection';
 export { recoverNullabilityFromParquet } from './core-ideals/nullability-parquet-projection';
 export { recoverNullabilityFromPostgresql } from './core-ideals/nullability-postgresql-projection';
-export { recoverNullabilityFromTableSpec } from './core-ideals/nullability-tablespec-projection';
 export { recoverPostgresqlCompositeCapture } from './core-ideals/postgresql-composite';
 export { recoverPostgresqlDdlKinds } from './core-ideals/postgresql-ddl-kinds';
 export { recoverRecordFromAvro } from './core-ideals/record-avro-projection';

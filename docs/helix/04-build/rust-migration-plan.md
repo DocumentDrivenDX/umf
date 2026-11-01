@@ -136,8 +136,8 @@ its public Rust route and one ordinary normal/refusal/recovery workflow as appli
 | --- | --- | --- |
 | PostgreSQL classifiers | Composite/DDL-kind classifier pairs, plus public DDL declaration access. | Facets and Relationships pass. Reuse their parser transport and Rust-owned catalog correlation. |
 | Authored Field/Record | Projection and recovery for Avro, Parquet and PostgreSQL. | Bundle Field and Record per target; share author verification, target import/export and receipt checks. SQL Server and TableSpec pass. |
-| Other authored projections | Cardinality for Avro/Parquet/PostgreSQL/TableSpec; Nullability for Parquet/PostgreSQL/TableSpec; Facets for Parquet/PostgreSQL/TableSpec; Keys for Parquet/PostgreSQL/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability, Keys and Facets pass. TableSpec Cardinality/Nullability is under bounded source correction; Keys/Facets follows. |
-| Model and reports | `editExtension`, `prepareCoreInspection` and generic Field/Record/Structured classification/projection report inspector/verify pairs. | Existing Rust extension edits and core inspectors own decisions; host retains only caller callbacks and object presentation. |
+| Other authored projections | Cardinality for Avro/Parquet/PostgreSQL; Nullability for Parquet/PostgreSQL; Facets for Parquet/PostgreSQL/TableSpec; Keys for Parquet/PostgreSQL/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability, Keys and Facets pass. TableSpec Cardinality/Nullability passes; authored Keys/Facets is under source review. |
+| Reports | Generic Field/Record/Structured classification/projection report inspector/verify pairs. | Model editing/prepared inspection now pass. Reuse current Rust inspectors and receipt mechanics. |
 | Binding and Dashboard | Binding validation, inspection/read/write/get, migration/rollback and dataset validation; Dashboard validation/read/write/get/edit. | Port meaning checks in factories and registration callbacks, alongside public operations. |
 | Adapter composites | Arrow IPC schema export, layout/consistency/rename/observation; embedded Parquet Arrow schema inspection/coordinated rename; PostgreSQL catalog public composites and correlation helpers; Delta checkpoint reconciliation; Protobuf descriptor edit. | Existing Rust capture/catalog primitives must own the complete public operation. |
 | Extension composites | Table lifecycle inspection and Relationship Extra archive import. | Reuse existing Rust validators, adapters and archive primitives; port the public composite decisions. |
@@ -256,10 +256,28 @@ resource closure pass. The host supplies parser ASTs only; Rust owns archive
 admission, observation, residuals and receipt verification. This case leaves the
 repair queue.
 
-Authored TableSpec Cardinality/Nullability is source-reviewed after ordinary
-receipt-shape, serialization and compiler corrections. It is queued for the next
-shared build with model editing/prepared inspection when source-ready. Luna is
-also implementing PostgreSQL Composite/DDL-kind and authored TableSpec Keys/Facets. The current
+Authored TableSpec Cardinality/Nullability now passes its two ordinary
+projection/refusal/exact-recovery cases (eight assertions). The same batch passes
+resource closure, full TypeScript and the corrected Cargo check that explicitly
+compiles Node, Python and WASM host libraries plus core/wire/codegen/CLI (14 seconds).
+Its Node-only build completes in 3m04s. The initial model edit failed because both
+JavaScript dispatchers dropped the updater argument. After forwarding that argument,
+the model-only retry passes ten assertions in eight seconds without a rebuild or
+repeating the passing projection cases. Model editing preserves the updater's error
+object identity and rejects invalid edits; prepared inspection retains a frozen
+source snapshot and Rust-owned identity/view decisions. These cases leave the
+repair queue. Actual Python/CLI executables and wasm32/browser runtime still join
+final integration.
+
+Use the corrected library preflight without the old explicit test/binary target
+selectors; those selectors omitted host libraries despite selecting their packages.
+The corrected baseline also checks the preceding committed source successfully.
+
+PostgreSQL Composite/DDL-kind and authored TableSpec Keys/Facets are under bounded
+source review after their ordinary-path corrections. Binding inspect/get/read/write,
+index projection, migration/rollback and registration meaning are implemented in
+scratch for review; dataset validation remains the next increment. PostgreSQL
+catalog composites and other authored targets continue in parallel. The current
 public callable inventory adds the composite operations named in the lanes above;
 no conformance campaign is required to identify these source gaps.
 

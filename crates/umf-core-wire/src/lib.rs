@@ -2301,8 +2301,39 @@ pub fn execute_request_with_engine_and_control(
             "HardIsolated resource profile is unavailable",
         ));
     }
-    let result = execute_request_inner(wire_json, capabilities, control, retained_engine);
+    let result = execute_request_inner(wire_json, capabilities, control, retained_engine, None);
     result_envelope(result)
+}
+
+/// Binding-owned extension updater supplied directly by the trusted host.
+pub trait ModelExtensionEditor {
+    fn update(&mut self, payload: Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>;
+}
+
+/// Execute a model request with a synchronous updater callback under one
+/// cumulative operation Context.
+pub fn execute_request_with_engine_editor_and_control(
+    wire_json: &str,
+    profile: ResourceProfile,
+    capabilities: &mut dyn Capabilities,
+    editor: &mut dyn ModelExtensionEditor,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    retained_engine: Option<&Engine>,
+) -> String {
+    if profile == ResourceProfile::HardIsolated {
+        return error_envelope(EngineError::new(
+            "RESOURCE_PROFILE_UNAVAILABLE",
+            Utf16::default(),
+            "HardIsolated resource profile is unavailable",
+        ));
+    }
+    result_envelope(execute_request_inner(
+        wire_json,
+        capabilities,
+        control,
+        retained_engine,
+        Some(editor),
+    ))
 }
 
 /// Execute the closed synchronous V3 codegen host-read route. The callback is
@@ -2348,6 +2379,7 @@ fn execute_request_inner(
     capabilities: &mut dyn Capabilities,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
     retained_engine: Option<&Engine>,
+    mut editor: Option<&mut dyn ModelExtensionEditor>,
 ) -> Result<String, EngineError> {
     // The outer request/result envelope adds transport tags and wrapper
     // members around independently bounded catalog resources and an ordinary
@@ -2703,6 +2735,9 @@ fn execute_request_inner(
             | "model/admitCoreKeyRequest"
             | "model/admitCoreKeyMemberRequest"
             | "model/prepareCoreKeyVerification"
+            | "model/prepareCoreInspection"
+            | "model/coreInspectionView"
+            | "model/editExtension"
             | "model/declareCoreRecordMembers"
             | "model/declareCoreKey"
             | "model/verifyCoreKeyOperation"
@@ -2748,6 +2783,7 @@ fn execute_request_inner(
                 &registry,
                 capabilities,
                 &mut operation,
+                &mut editor,
             )?,
             "validate-extension-payload" => {
                 let id = field(&request, "id")
@@ -2843,6 +2879,7 @@ fn model_operation(
     registry: &Registry,
     capabilities: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
+    editor: &mut Option<&mut dyn ModelExtensionEditor>,
 ) -> Result<Value, EngineError> {
     let value = |name: &str| {
         field(request, name).ok_or_else(|| fail("REQUEST", &format!("{name} is required")))
@@ -2895,6 +2932,51 @@ fn model_operation(
         Ok((module, element))
     };
     let result = match op {
+        "model/editExtension" => {
+            let module = field(request, "module")
+                .and_then(as_utf16)
+                .cloned()
+                .ok_or_else(|| fail("REQUEST", "module must be a string"))?;
+            let element = field(request, "element")
+                .and_then(as_utf16)
+                .cloned()
+                .ok_or_else(|| fail("REQUEST", "element must be a string"))?;
+            let extension = field(request, "extension")
+                .and_then(as_utf16)
+                .cloned()
+                .ok_or_else(|| fail("REQUEST", "extension must be a string"))?;
+            let updater = editor
+                .as_deref_mut()
+                .ok_or_else(|| fail("REQUEST", "Trusted extension updater callback is required"))?;
+            umf_core::edit_extension::edit_extension_with_context(
+                value("source")?,
+                registry,
+                &module,
+                &element,
+                &extension,
+                engine,
+                capabilities,
+                ctx,
+                |payload, ctx| updater.update(payload, ctx),
+            )?
+        }
+        "model/prepareCoreInspection" => umf_core::prepared_core_inspection::prepare(
+            value("source")?,
+            engine,
+            capabilities,
+            ctx,
+        )?,
+        "model/coreInspectionView" => umf_core::prepared_core_inspection::view(
+            value("source")?,
+            value("identity")?,
+            field(request, "view")
+                .and_then(as_utf16)
+                .ok_or_else(|| fail("REQUEST", "Inspection view is required"))?,
+            engine,
+            registry,
+            capabilities,
+            ctx,
+        )?,
         "model/validateCoreFieldValue" => {
             validation_value(engine.validate_core_field_value_public(
                 value("source")?,

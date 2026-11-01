@@ -14,6 +14,10 @@ import type {TableSpecFacetClassification,TableSpecFacetRequest} from '../../cor
 import type {TableSpecRelationshipClassification,TableSpecRelationshipRequest} from '../../core-ideals/relationship-tablespec';
 import type {FieldTableSpecProjection,FieldTableSpecRequest} from '../../core-ideals/field-tablespec-projection';
 import type {RecordTableSpecProjection,RecordTableSpecRequest} from '../../core-ideals/record-tablespec-projection';
+import type {CardinalityTableSpecProjection,CardinalityTableSpecRequest} from '../../core-ideals/cardinality-tablespec-projection';
+import type {NullabilityTableSpecProjection,NullabilityTableSpecRequest} from '../../core-ideals/nullability-tablespec-projection';
+import type {CoreCardinalityDeclaration} from '../../model/cardinality';
+import type {CoreNullabilityDeclaration} from '../../model/nullability';
 import type {CoreKindDeclaration} from '../../model/field-kind';
 
 export interface TableSpecNativeFamilyEngine {
@@ -34,6 +38,10 @@ export interface TableSpecNativeFamilyEngine {
   classifyTableSpecRecord(fields:{document:Document;request:TableSpecRecordRequest}):unknown;
   projectRecordToTableSpec(fields:{author:CoreKindDeclaration;request:RecordTableSpecRequest}):unknown;
   recoverRecordFromTableSpec(fields:{receipt:RecordTableSpecProjection;nativeText:string}):unknown;
+  projectCardinalityToTableSpec(fields:{author:CoreCardinalityDeclaration;request:CardinalityTableSpecRequest}):unknown;
+  recoverCardinalityFromTableSpec(fields:{receipt:CardinalityTableSpecProjection;nativeText:string}):unknown;
+  projectNullabilityToTableSpec(fields:{author:CoreNullabilityDeclaration;request:NullabilityTableSpecRequest}):unknown;
+  recoverNullabilityFromTableSpec(fields:{receipt:NullabilityTableSpecProjection;nativeText:string}):unknown;
   verifyTableSpecRecordClassification(fields:{receipt:TableSpecRecordClassification;current:Document}):unknown;
   classifyTableSpecCardinality(fields:{document:Document;request:TableSpecCardinalityRequest}):unknown;
   verifyTableSpecCardinalityClassification(fields:{receipt:TableSpecCardinalityClassification;current:Document}):unknown;
@@ -62,7 +70,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_CARDINALITY_')||native.code.startsWith('CORE_NULLABILITY_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_TABLESPEC_')||native.code.startsWith('RECORD_TABLESPEC_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
+   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_CARDINALITY_')||native.code.startsWith('CORE_NULLABILITY_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_TABLESPEC_')||native.code.startsWith('RECORD_TABLESPEC_')||native.code.startsWith('CARDINALITY_TABLESPEC_')||native.code.startsWith('NULLABILITY_TABLESPEC_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
@@ -81,6 +89,10 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   recoverFieldFromTableSpec(receipt:FieldTableSpecProjection,nativeText:string):Document{return call(()=>engine.tablespec.recoverFieldFromTableSpec({receipt,nativeText}) as Document);},
   projectRecordToTableSpec(author:CoreKindDeclaration,request:RecordTableSpecRequest):RecordTableSpecProjection{return call(()=>engine.tablespec.projectRecordToTableSpec({author,request}) as RecordTableSpecProjection);},
   recoverRecordFromTableSpec(receipt:RecordTableSpecProjection,nativeText:string):Document{return call(()=>engine.tablespec.recoverRecordFromTableSpec({receipt,nativeText}) as Document);},
+  projectCardinalityToTableSpec(author:CoreCardinalityDeclaration,request:CardinalityTableSpecRequest):CardinalityTableSpecProjection & {diagnostics:Diagnostic[]}{return call(()=>engine.tablespec.projectCardinalityToTableSpec({author,request}) as CardinalityTableSpecProjection & {diagnostics:Diagnostic[]});},
+  recoverCardinalityFromTableSpec(receipt:CardinalityTableSpecProjection,nativeText:string):Document{return call(()=>engine.tablespec.recoverCardinalityFromTableSpec({receipt,nativeText}) as Document);},
+  projectNullabilityToTableSpec(author:CoreNullabilityDeclaration,request:NullabilityTableSpecRequest):NullabilityTableSpecProjection & {diagnostics:Diagnostic[]}{return call(()=>engine.tablespec.projectNullabilityToTableSpec({author,request}) as NullabilityTableSpecProjection & {diagnostics:Diagnostic[]});},
+  recoverNullabilityFromTableSpec(receipt:NullabilityTableSpecProjection,nativeText:string):Document{return call(()=>engine.tablespec.recoverNullabilityFromTableSpec({receipt,nativeText}) as Document);},
   classifyTableSpecField(document:Document,request:TableSpecFieldRequest):TableSpecFieldClassification & {diagnostics:Diagnostic[]}{return call(()=>engine.tablespec.classifyTableSpecField({document,request}) as TableSpecFieldClassification & {diagnostics:Diagnostic[]});},
   verifyTableSpecFieldClassification(receipt:TableSpecFieldClassification,current:Document):TableSpecFieldClassification{return call(()=>engine.tablespec.verifyTableSpecFieldClassification({receipt,current}) as TableSpecFieldClassification);},
   classifyTableSpecRecord(document:Document,request:TableSpecRecordRequest):TableSpecRecordClassification{return call(()=>engine.tablespec.classifyTableSpecRecord({document,request}) as TableSpecRecordClassification);},

@@ -35,6 +35,10 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "verifyTableSpecRecordClassification",
     "projectRecordToTableSpec",
     "recoverRecordFromTableSpec",
+    "projectCardinalityToTableSpec",
+    "recoverCardinalityFromTableSpec",
+    "projectNullabilityToTableSpec",
+    "recoverNullabilityFromTableSpec",
     "classifyTableSpecCardinality",
     "verifyTableSpecCardinalityClassification",
     "recoverTableSpecCardinalitySource",
@@ -224,6 +228,19 @@ impl TableSpecRuntime {
             &mut capabilities,
             ctx,
         )
+    }
+
+    pub fn project_authored_cardinality(&self, author: &Value, request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        crate::tablespec_authored_projection::project_cardinality(author, request, ctx)
+    }
+    pub fn recover_authored_cardinality(&self, receipt: &Value, native_text: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        crate::tablespec_authored_projection::recover(receipt, native_text, false, ctx)
+    }
+    pub fn project_authored_nullability(&self, author: &Value, request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        crate::tablespec_authored_projection::project_nullability(author, request, ctx)
+    }
+    pub fn recover_authored_nullability(&self, receipt: &Value, native_text: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        crate::tablespec_authored_projection::recover(receipt, native_text, true, ctx)
     }
 
     pub fn classify_cardinality(

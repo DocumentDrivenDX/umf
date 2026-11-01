@@ -298,6 +298,8 @@ pub mod sqlserver_avro_projection;
 pub mod sqlserver_ddl_projection;
 pub mod structural_diff;
 pub mod tablespec_adapter;
+#[cfg(feature = "embedded-adapters")]
+pub mod tablespec_authored_projection;
 pub(crate) mod tablespec_field_classification;
 pub(crate) mod tablespec_record_classification;
 pub(crate) mod tablespec_cardinality_classification;
@@ -315,3 +317,5 @@ pub mod typespec_smithy_jsonschema_projection;
 pub mod value;
 #[cfg(feature = "embedded-adapters")]
 pub mod binding_postgresql_indexes;
+
+pub mod prepared_core_inspection;

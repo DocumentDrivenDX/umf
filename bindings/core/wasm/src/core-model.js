@@ -14,6 +14,12 @@ export function createCoreModelOperations(invoke, {ErrorType = Error} = {}) {
   };
   return Object.freeze({
     scalarTypesForVersion(version) { return invoke('model/scalarTypesForVersion', {version}); },
+    prepareCoreInspection(source) { return invoke('model/prepareCoreInspection', {source}); },
+    coreInspectionView(source, identity, view) { return invoke('model/coreInspectionView', {source, identity, view}); },
+    editExtension(source, module, element, extension, update, registry = []) {
+      if (typeof update !== 'function') throw new TypeError('Extension updater must be callable');
+      return invoke('model/editExtension', {source, module, element, extension}, registry, update);
+    },
     selectCoreElements(source, query, extensions = []) { return invoke('model/selectCoreElements', {source, query}, extensions); },
     validateCoreFieldValue(source, field, value) {
       try { return invoke('model/validateCoreFieldValue', {source, field, value}); }

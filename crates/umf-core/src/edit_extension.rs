@@ -6,7 +6,7 @@ use crate::{
     error::{EngineError, Severity, Validation},
     registry::Registry,
     serialization::stringify_compact_metered,
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 
 fn key(name: &str) -> Utf16 {
@@ -201,6 +201,37 @@ pub fn edit_extension<F>(
 where
     F: FnOnce(Value) -> Result<Value, EngineError>,
 {
+    edit_extension_with_context(
+        input,
+        registry,
+        module_id,
+        element_id,
+        extension_id,
+        engine,
+        capabilities,
+        ctx,
+        |payload, _ctx| update(payload),
+    )
+}
+
+/// Callback-capable counterpart used by host bindings. The updater receives
+/// the same operation Context so callback copies and document validation share
+/// one cumulative budget and preserve prevalidation → callback → candidate
+/// validation ordering.
+pub fn edit_extension_with_context<F>(
+    input: &Value,
+    registry: &Registry,
+    module_id: &Utf16,
+    element_id: &Utf16,
+    extension_id: &Utf16,
+    engine: &Engine,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+    update: F,
+) -> Result<Value, EngineError>
+where
+    F: FnOnce(Value, &mut Context<'_>) -> Result<Value, EngineError>,
+{
     if ctx.profile() == ResourceProfile::HardIsolated {
         return Err(EngineError::new(
             "RESOURCE_PROFILE_UNAVAILABLE",
@@ -274,7 +305,7 @@ where
         )
     })?;
     let isolated_payload = copy_json(payload, ctx)?;
-    let updated_payload = update(isolated_payload)?;
+    let updated_payload = update(isolated_payload, ctx)?;
     let Some((module_index, element_index)) = target_index else {
         return Err(EngineError::new(
             "MISSING_ELEMENT",

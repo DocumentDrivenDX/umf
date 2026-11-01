@@ -334,6 +334,88 @@ impl CoreKindNullabilityRuntime {
         };
         umf_core_wire::result_envelope(result)
     }
+    /// Execute the Rust-owned extension edit with one cumulative operation
+    /// Context across prevalidation, callback and postvalidation.
+    #[wasm_bindgen(js_name = executeModelEditWire)]
+    pub fn execute_model_edit_wire(
+        &self,
+        wire_json: &str,
+        profile: &str,
+        editor: Function,
+        dispatcher: Function,
+        control_dispatcher: Option<Function>,
+    ) -> String {
+        let profile = match profile {
+            "cooperative" => umf_core::ResourceProfile::Cooperative,
+            "hard-isolated" => umf_core::ResourceProfile::HardIsolated,
+            _ => {
+                return umf_core_wire::error_envelope(EngineError::new(
+                    "RESOURCE_PROFILE",
+                    Utf16::default(),
+                    "Unknown resource profile",
+                ))
+            }
+        };
+        let mut capabilities = super::WasmCapabilities { dispatcher };
+        let mut host_editor = WasmModelEditor { editor };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::execute_request_with_engine_editor_and_control(
+                wire_json,
+                profile,
+                &mut capabilities,
+                &mut host_editor,
+                &mut hook,
+                Some(&self.engine),
+            )
+        } else {
+            let mut hook = |_amount| Ok(());
+            umf_core_wire::execute_request_with_engine_editor_and_control(
+                wire_json,
+                profile,
+                &mut capabilities,
+                &mut host_editor,
+                &mut hook,
+                Some(&self.engine),
+            )
+        }
+    }
+}
+
+struct WasmModelEditor {
+    editor: Function,
+}
+impl umf_core_wire::ModelExtensionEditor for WasmModelEditor {
+    fn update(&mut self, payload: Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let wire = umf_core_wire::encode_host_callback_value(&payload, ctx)?;
+        let output = self
+            .editor
+            .call1(&JsValue::NULL, &JsValue::from_str(&wire))
+            .map_err(|_| {
+                EngineError::new(
+                    "MODEL_EDIT_CALLBACK",
+                    Utf16::default(),
+                    "Extension updater threw",
+                )
+            })?;
+        let text = output.as_string().ok_or_else(|| {
+            EngineError::new(
+                "MODEL_EDIT_CALLBACK",
+                Utf16::default(),
+                "Extension updater must return tagged JSON text",
+            )
+        })?;
+        if text.encode_utf16().count() > 32 * 1024 * 1024 {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Extension updater result exceeds transport limit",
+            ));
+        }
+        ctx.charge_work(text.encode_utf16().count(), Utf16::default())?;
+        ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode_host_callback_value(&text, ctx))
+    }
 }
 
 #[wasm_bindgen(js_name = executeCoreKindNullabilityHostJson)]
@@ -525,8 +607,7 @@ pub fn execute_copy_json_host_json(
             })
             .collect();
         let value_wire = umf_core_wire::encode(&copied.value, ctx)?;
-        let holes_wire =
-            umf_core_wire::encode(&umf_core::Value::Array(holes), ctx)?;
+        let holes_wire = umf_core_wire::encode(&umf_core::Value::Array(holes), ctx)?;
         Ok(format!(
             r#"{{"kind":"object","members":[{{"key":[95,95,117,109,102,95,99,111,112,121,95,106,115,111,110,95,104,111,115,116,95,105,110,112,117,116,95,118,49],"value":{{"kind":"boolean","value":true}}}},{{"key":[118,97,108,117,101],"value":{value_wire}}},{{"key":[115,112,97,114,115,101,65,114,114,97,121,115],"value":{holes_wire}}}]}}"#
         ))

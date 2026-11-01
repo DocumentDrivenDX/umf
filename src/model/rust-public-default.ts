@@ -13,6 +13,8 @@ type Direct=DatasetMethods & EvolutionMethods;
 type EngineMethods<T>={[K in keyof T]:T[K] extends (...args:infer A)=>unknown ? (...args:A)=>unknown : never};
 type Registrations=Parameters<ExtensionKindRuntime['listKinds']>[0];
 export interface CoreModelPublicEngine extends EngineMethods<Direct> {
+ prepareCoreInspection(source:unknown):unknown;
+ coreInspectionView(source:unknown,identity:unknown,view:string):unknown;
  selectCoreElements(source:unknown,query:unknown,registry?:Registrations):unknown;
  selectCoreRelationships(source:unknown,query:unknown,registry?:Registrations):unknown;
 }

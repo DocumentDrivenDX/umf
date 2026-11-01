@@ -348,7 +348,7 @@ function callbackFailureText(error) {
   return 'Host callback failed';
 }
 
-function runRequest(request, callbacks, profile, controls, accountHost = false, sharedControlBridge = undefined, sharedHostWork = undefined, retainedRuntime = undefined) {
+function runRequest(request, callbacks, profile, controls, accountHost = false, sharedControlBridge = undefined, sharedHostWork = undefined, retainedRuntime = undefined, editor = undefined) {
   if (profile === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
   const callbackBridge = (token, requestWire) => {
     const callback = callbacks.get(token);
@@ -365,9 +365,26 @@ function runRequest(request, callbacks, profile, controls, accountHost = false, 
   const controlBridge = sharedControlBridge ?? (hasControls(controls) ? createControlBridge(controls) : undefined);
   const hostWork = accountHost ? (sharedHostWork ?? admissionWork(controlBridge)) : undefined;
   const requestWire = encodeRequestWire(request, hostWork);
-  const responseText = retainedRuntime
-    ? retainedRuntime.executeModelRequestWire(requestWire, profile, callbackBridge, controlBridge)
-    : addon.executeRequestWire(requestWire, profile, callbackBridge, controlBridge);
+  let responseText;
+  if (editor) {
+    if (typeof retainedRuntime?.executeModelEditWire !== 'function') throw new UmfCoreError('RUST_BINDING_MISSING', 'The Rust extension edit callback route is unavailable');
+    let callbackThrew = false, callbackError;
+    const editorBridge = payloadWire => {
+      try {
+        hostWork?.(payloadWire.length);
+        const payload = fromWire(JSON.parse(payloadWire), hostWork);
+        const updated = editor(payload);
+        return encodeRequestWire(updated, hostWork);
+      } catch (error) { callbackThrew = true; callbackError = error; throw error; }
+    };
+    try { responseText = retainedRuntime.executeModelEditWire(requestWire, profile, editorBridge, callbackBridge, controlBridge); }
+    catch (error) { if (callbackThrew) throw callbackError; throw error; }
+    if (callbackThrew) throw callbackError;
+  } else {
+    responseText = retainedRuntime
+      ? retainedRuntime.executeModelRequestWire(requestWire, profile, callbackBridge, controlBridge)
+      : addon.executeRequestWire(requestWire, profile, callbackBridge, controlBridge);
+  }
   hostWork?.(responseText.length);
   const response = JSON.parse(responseText);
   const failure = resultError(response);
@@ -1761,7 +1778,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
     for (const name of names) if (!Object.hasOwn(snapshot, name)) throw new TypeError(`Missing explicit engine resource ${name}`);
     fixedResources = Object.fromEntries(names.map((name) => [name, snapshot[name]]));
   }
-  function invoke(op, args = {}, extensions = []) {
+  function invoke(op, args = {}, extensions = [], editor = undefined) {
     const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
     const hostWork = withModel ? admissionWork(controlBridge) : undefined;
     hostWork?.(1);
@@ -1798,7 +1815,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
     hostWork?.(1);
     const requiresResourceWitness = ['model/inspectCoreRecordMembers', 'model/declareCoreRecordType', 'model/verifyCoreRecordTypeDeclaration'].includes(op);
     const request = retainedRuntime && !requiresResourceWitness ? {op, registry, ...args} : {op, resources: fixedResources, registry, ...args};
-    return runRequest(request, callbackMap, profile, controls, withModel, controlBridge, hostWork, retainedRuntime);
+    return runRequest(request, callbackMap, profile, controls, withModel, controlBridge, hostWork, retainedRuntime, editor);
   }
   const api = {
     engineVersion,
@@ -1821,7 +1838,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
     },
   };
   if (withModel) {
-    const call = (op, args, extensions) => invoke(op, args, extensions);
+    const call = (op, args, extensions, editor) => invoke(op, args, extensions, editor);
     if (recordTypeOnly) {
       Object.assign(api, createCoreRecordTypeOperations(call, createNativeCoreRecordTypeVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork}), {ErrorType:UmfCoreError}));
     } else {

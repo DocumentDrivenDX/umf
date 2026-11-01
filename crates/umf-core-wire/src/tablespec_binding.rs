@@ -51,6 +51,10 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "verifyTableSpecRecordClassification",
         "projectRecordToTableSpec",
         "recoverRecordFromTableSpec",
+        "projectCardinalityToTableSpec",
+        "recoverCardinalityFromTableSpec",
+        "projectNullabilityToTableSpec",
+        "recoverNullabilityFromTableSpec",
         "classifyTableSpecCardinality",
         "verifyTableSpecCardinalityClassification",
         "recoverTableSpecCardinalitySource",
@@ -83,6 +87,8 @@ fn allowed(op: &str) -> &'static [&'static str] {
         "importTableSpecBundle" => &["profile", "op", "files", "id"],
         "exportTableSpecBundle" => &["profile", "op", "document"],
         "classifyTableSpecField" => &["profile", "op", "document", "request"],
+        "projectCardinalityToTableSpec" | "projectNullabilityToTableSpec" => &["profile", "op", "author", "request"],
+        "recoverCardinalityFromTableSpec" | "recoverNullabilityFromTableSpec" => &["profile", "op", "receipt", "nativeText"],
         "projectFieldToTableSpec" | "projectRecordToTableSpec" => &["profile", "op", "author", "request"],
         "recoverFieldFromTableSpec" | "recoverRecordFromTableSpec" => &["profile", "op", "receipt", "nativeText"],
         "verifyTableSpecFieldClassification" => &["profile", "op", "receipt", "current"],
@@ -250,6 +256,14 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
             required_value(request, "document")?;
             required_value(request, "request")?;
         }
+        "projectCardinalityToTableSpec" | "projectNullabilityToTableSpec" => {
+            required_value(request, "author")?;
+            required_value(request, "request")?;
+        }
+        "recoverCardinalityFromTableSpec" | "recoverNullabilityFromTableSpec" => {
+            required_value(request, "receipt")?;
+            required_string(request, "nativeText")?;
+        }
         "projectFieldToTableSpec" | "projectRecordToTableSpec" => {
             required_value(request, "author")?;
             required_value(request, "request")?;
@@ -376,6 +390,10 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
         "recoverFieldFromTableSpec" => runtime.recover_field_from_tablespec(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
         "projectRecordToTableSpec" => runtime.project_record_to_tablespec(required_value(request, "author")?, required_value(request, "request")?, ctx),
         "recoverRecordFromTableSpec" => runtime.recover_record_from_tablespec(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
+        "projectCardinalityToTableSpec" => runtime.project_authored_cardinality(required_value(request, "author")?, required_value(request, "request")?, ctx),
+        "recoverCardinalityFromTableSpec" => runtime.recover_authored_cardinality(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
+        "projectNullabilityToTableSpec" => runtime.project_authored_nullability(required_value(request, "author")?, required_value(request, "request")?, ctx),
+        "recoverNullabilityFromTableSpec" => runtime.recover_authored_nullability(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
         "classifyTableSpecField" => runtime.classify_field(
             required_value(request, "document")?,
             required_value(request, "request")?,

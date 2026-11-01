@@ -126,6 +126,8 @@ SDIST_SOURCE_FILES = (
     "spec/core/tablespec-record-classification.schema.json",
     "spec/core/field-tablespec-projection.schema.json",
     "spec/core/record-tablespec-projection.schema.json",
+    "spec/core/cardinality-tablespec-projection.schema.json",
+    "spec/core/nullability-tablespec-projection.schema.json",
     "spec/core/tablespec-cardinality-classification.schema.json",
     "spec/core/tablespec-key-classification.schema.json",
     "spec/core/tablespec-facet-classification.schema.json",
