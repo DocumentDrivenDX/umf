@@ -23,6 +23,7 @@
       "python/tests/test_extension_kinds.py",
       "python/tests/test_python_artifact_version.py",
       "python/tests/test_rust_core.py",
+      "python/tests/test_saga_lifecycle.py",
       "python/umf_access/src/umf_access/build/catalog.py",
       "python/umf_access/src/umf_access/generated_core.py",
       "python/umf_access/src/umf_access/lifecycle/cli.py",
@@ -289,16 +290,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "ae63abfd5126d67e686b4b3ee46f09f685898385cd48acb14bf7ca31111f4df0",
+    "sourceCohortSha256": "2a4e66f1c39fbd0a155d9e5705879407c7c641639451873eba141d14eb85ba46",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 453,
-    "algorithmSymbols": 12826,
+    "activeScriptFiles": 454,
+    "algorithmSymbols": 12830,
     "pythonModules": 127,
     "rustBuildInputs": 79,
     "rustModules": 130,
-    "scriptFiles": 3092,
+    "scriptFiles": 3093,
     "sourceModules": 627,
     "typescriptModules": 500
   },
@@ -5584,8 +5585,8 @@
       "projects": [
         {
           "path": "python/pyproject.toml",
-          "sha256": "373db3493819c250eb4e11987b9af91ee9b4463eae8d18fea61fbc27cde35ba2",
-          "text": "[build-system]\nrequires = [\"hatchling>=1.27,<2\"]\nbuild-backend = \"hatchling.build\"\n\n[project]\nlicense = \"MIT OR Apache-2.0\"\nlicense-files = [\"LICENSE.md\", \"LICENSE-MIT\", \"LICENSE-APACHE\"]\nname = \"umf-core\"\nversion = \"0.10.4\"\ndescription = \"Official Python document models and extension machinery for UMF\"\nreadme = \"README.md\"\nrequires-python = \">=3.11,<3.15\"\ndependencies = [\"pydantic>=2.11,<3\"]\n\n[project.urls]\nRepository = \"https://github.com/DocumentDrivenDX/umf\"\n\n[tool.hatch.build.targets.wheel]\npackages = [\"src/umf\"]\n\n[tool.hatch.build.targets.sdist.force-include]\n\"../spec/extensions/tables/operation.schema.json\" = \"spec/extensions/tables/operation.schema.json\"\n\"../spec/core/schema.json\" = \"spec/core/schema.json\"\n\"../spec/core/semantic-type-reference.schema.json\" = \"spec/core/semantic-type-reference.schema.json\"\n\"../spec/core/extension-package.schema.json\" = \"spec/core/extension-package.schema.json\"\n\"../spec/metamodel/generated\" = \"spec/metamodel/generated\"\n\"../spec/extensions/domain-pack\" = \"spec/extensions/domain-pack\"\n\"../spec/extensions/dataset-source\" = \"spec/extensions/dataset-source\"\n\"../fixtures/metamodel/current-conformance.json\" = \"fixtures/metamodel/current-conformance.json\"\n\"../fixtures/actions-binding\" = \"fixtures/actions-binding\"\n\"../spec/extensions/saga\" = \"spec/extensions/saga\"\n\"../spec/release.json\" = \"spec/release.json\"\n\"../docs/helix/02-design/examples/saga/allocation.json\" = \"docs/helix/02-design/examples/saga/allocation.json\"\n\n[dependency-groups]\ndev = [\"pytest>=8.4,<10\", \"ruff>=0.13\", \"hatchling>=1.27,<2\"]\n\n[tool.hatch.build.hooks.custom]\n\n[tool.pytest.ini_options]\ntestpaths = [\"tests\"]\n"
+          "sha256": "2672c7353c689c5ab29c4e1927ee23b0a32f77d3f3434480426a5e16ed6fd6a7",
+          "text": "[build-system]\nrequires = [\"hatchling>=1.27,<2\"]\nbuild-backend = \"hatchling.build\"\n\n[project]\nlicense = \"MIT OR Apache-2.0\"\nlicense-files = [\"LICENSE.md\", \"LICENSE-MIT\", \"LICENSE-APACHE\"]\nname = \"umf-core\"\nversion = \"0.10.5\"\ndescription = \"Official Python document models and extension machinery for UMF\"\nreadme = \"README.md\"\nrequires-python = \">=3.11,<3.15\"\ndependencies = [\"pydantic>=2.11,<3\"]\n\n[project.urls]\nRepository = \"https://github.com/DocumentDrivenDX/umf\"\n\n[tool.hatch.build.targets.wheel]\npackages = [\"src/umf\"]\n\n[tool.hatch.build.targets.sdist.force-include]\n\"../spec/extensions/tables/operation.schema.json\" = \"spec/extensions/tables/operation.schema.json\"\n\"../spec/core/schema.json\" = \"spec/core/schema.json\"\n\"../spec/core/semantic-type-reference.schema.json\" = \"spec/core/semantic-type-reference.schema.json\"\n\"../spec/core/extension-package.schema.json\" = \"spec/core/extension-package.schema.json\"\n\"../spec/metamodel/generated\" = \"spec/metamodel/generated\"\n\"../spec/extensions/domain-pack\" = \"spec/extensions/domain-pack\"\n\"../spec/extensions/dataset-source\" = \"spec/extensions/dataset-source\"\n\"../fixtures/metamodel/current-conformance.json\" = \"fixtures/metamodel/current-conformance.json\"\n\"../fixtures/actions-binding\" = \"fixtures/actions-binding\"\n\"../spec/extensions/saga\" = \"spec/extensions/saga\"\n\"../spec/release.json\" = \"spec/release.json\"\n\"../docs/helix/02-design/examples/saga/allocation.json\" = \"docs/helix/02-design/examples/saga/allocation.json\"\n\n[dependency-groups]\ndev = [\"pytest>=8.4,<10\", \"ruff>=0.13\", \"hatchling>=1.27,<2\"]\n\n[tool.hatch.build.hooks.custom]\n\n[tool.pytest.ini_options]\ntestpaths = [\"tests\"]\n"
         },
         {
           "path": "python/umf_access/pyproject.toml",
@@ -8896,7 +8897,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/src/umf/__init__.py",
-      "sha256": "0901152c767a224ca1996dff509b80af916c364e0dd4d9485cc750a71b5f9b31"
+      "sha256": "340f7d7609ba5fb71b552560b50b88b01d3b30f72bd90c36a7d561461fc05eb8"
     },
     {
       "activationEvidence": [
@@ -9569,6 +9570,24 @@
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "python/tests/test_rust_core.py",
       "sha256": "1e8f25b8c39c7f4b45b832dd82bea1cf68751470fa59335f9803f6ff13c9ede6"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/sagas.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "InstalledSagaLifecycle",
+        "_case",
+        "test_author_declare_edit_exchange_and_assess",
+        "test_unknown_recovery_meaning_refuses_edit"
+      ],
+      "bytes": 4549,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "python/tests/test_saga_lifecycle.py",
+      "sha256": "7c6b00892392613f44201214b92f13302e278b15ec4109a6425e3f5aca8707ce"
     },
     {
       "activationEvidence": [],
@@ -32596,12 +32615,12 @@
       ],
       "active": true,
       "algorithmSymbols": [],
-      "bytes": 2261,
+      "bytes": 2969,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/package-sdk.ts",
-      "sha256": "2a0ac24a8ed3e1f13115c0cc78a672ac5e42c58217b2f6527b193fcb15c2d758"
+      "sha256": "0bbd900524f30588fc2dcb727d31408ed9dc86e53c2c6bad890f10bbad2f7b9c"
     },
     {
       "activationEvidence": [],
@@ -36489,12 +36508,12 @@
         "verifyPortableProducerSnapshot",
         "verifyPortableResult"
       ],
-      "bytes": 10602,
+      "bytes": 10640,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/custody.ts",
-      "sha256": "760f1f1549cf7ab4ddf1e56cd58eeab5eb2717d69d4b675a4b41ca8a5e2b28f6"
+      "sha256": "478abc65e2859e90da0444c003eacbc63dcf109259ba5b20fc01412b63371bb9"
     },
     {
       "activationEvidence": [
@@ -36582,12 +36601,12 @@
         "issueId",
         "snapshotActor"
       ],
-      "bytes": 46856,
+      "bytes": 47393,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/saga-reference/protocol.ts",
-      "sha256": "d1f711a0a6e1d24e70f3a8957d33f93cd98a712d9d9bbfe254105f8091ee5c44"
+      "sha256": "4d67c61fd93d9af86ea06781829607b7a9d0f585ebaa9e7bf6ff7489d43d50be"
     },
     {
       "activationEvidence": [],
@@ -38068,16 +38087,16 @@
       ],
       "active": true,
       "algorithmSymbols": [
-        "loader",
+        "publicSagaConsumer",
         "run",
         "sha256"
       ],
-      "bytes": 10239,
+      "bytes": 16334,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/test-sdk-install.ts",
-      "sha256": "914164dd04cd46371ac51d806169ba6058aca2e04794e2df0aae14f92b6911e1"
+      "sha256": "188e778780bd1936cf9d077ba922493f8b225b3207b804a4d5867870bd76ea11"
     },
     {
       "activationEvidence": [],
@@ -48876,12 +48895,12 @@
         "test_saga_vocabulary_drift",
         "test_sdk_drift"
       ],
-      "bytes": 3354,
+      "bytes": 3548,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/release/test_release_versions.py",
-      "sha256": "deaf48603d8a8bb25b2e8e96fc7c47fa440ad38381ce93729927b09aa0b182b0"
+      "sha256": "bc921cd15e251316cd69af3af03fa265ee6900b5d2ccdd30ea0f390aae36636f"
     },
     {
       "activationEvidence": [],
@@ -49168,12 +49187,12 @@
         "submit",
         "withHistoryProtocol"
       ],
-      "bytes": 117711,
+      "bytes": 122197,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/protocol.test.ts",
-      "sha256": "4662fb3d1e3ccb372a5dda87e85c29a7763072181b0fac3f60246e53c97299b1"
+      "sha256": "1f604e9ff5f95bc69b43f943cbad5c1a9cc0446a14897732d0bb035ec3083722"
     },
     {
       "activationEvidence": [],
@@ -58353,7 +58372,7 @@
         "write_json_value"
       ],
       "resolvedInternalImports": [],
-      "sha256": "0901152c767a224ca1996dff509b80af916c364e0dd4d9485cc750a71b5f9b31"
+      "sha256": "340f7d7609ba5fb71b552560b50b88b01d3b30f72bd90c36a7d561461fc05eb8"
     },
     {
       "bytes": 13793,
@@ -70794,7 +70813,7 @@
         "actionPlanProducerBuild"
       ],
       "resolvedImports": [],
-      "sha256": "f0af8d7ccaa5751167ffc800b3d6090c253ef2052daa3080165a6fcf4ac591b8"
+      "sha256": "5d3cdbbe3263e3b84da3199fb08116789e7f5166690d04c7854d843ac23fc865"
     },
     {
       "bytes": 4286,

@@ -143,7 +143,8 @@ earlier compensation. Compensation may fail against concurrent legitimate state.
 
 ### Portable library boundary
 
-These are planned public operations, not currently exported implementations.
+The public operations below share Rust semantics through the SDK and installed
+bindings. Their portable results do not establish consumer execution support.
 Inspection and assessment MUST report SAGA_PIVOT when an irreversible step
 precedes later work, including compensable steps. The warning does not make the
 definition malformed or assert a pivot transaction; supported hosts must expose

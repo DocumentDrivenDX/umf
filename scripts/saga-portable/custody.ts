@@ -10,7 +10,7 @@ export const SAGA_QUALIFICATION_INPUTS=[
  'scripts/check-core-authority.ts',
  'tools/verify_python_artifacts.py',
  'tests/saga/portable-oracle.test.ts','tests/saga/custody.test.ts','tests/actions/assessment.test.ts','package.json','spec/release.json',
- 'python/tests/test_python_artifact_version.py',
+ 'python/tests/test_python_artifact_version.py','python/tests/test_saga_lifecycle.py',
  'fixtures/saga/portable.json','src/extensions/actions/saga.ts','src/extensions/actions/saga-resources.ts','src/registry/registry.ts',
  'crates/umf-codegen/src/actions/saga/mod.rs','crates/umf-codegen/src/actions/saga/tests.rs',
  'bindings/core/node/index.js','bindings/core/node/src/wire.js','python/src/umf/saga.py','python/pyproject.toml','python/hatch_build.py','python/umf_codegen/pyproject.toml','python/umf_codegen/hatch_build.py',
