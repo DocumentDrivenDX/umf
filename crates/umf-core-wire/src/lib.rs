@@ -21,6 +21,8 @@ pub mod nullability_sqlserver_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod facets_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod facets_sqlserver_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod key_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod key_sqlserver_projection_binding;
@@ -55,6 +57,8 @@ pub mod jsonld_binding;
 pub mod native_contract_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_family_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod medical_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod openapi_binding;
 #[cfg(feature = "embedded-adapters")]

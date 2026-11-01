@@ -29,8 +29,12 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "exportTableSpecBundle",
     "classifyTableSpecField",
     "verifyTableSpecFieldClassification",
+    "projectFieldToTableSpec",
+    "recoverFieldFromTableSpec",
     "classifyTableSpecRecord",
     "verifyTableSpecRecordClassification",
+    "projectRecordToTableSpec",
+    "recoverRecordFromTableSpec",
     "classifyTableSpecCardinality",
     "verifyTableSpecCardinalityClassification",
     "recoverTableSpecCardinalitySource",
@@ -43,6 +47,9 @@ pub const TABLESPEC_WIRE_CAPABILITIES: &[&str] = &[
     "classifyTableSpecFacets",
     "verifyTableSpecFacetClassification",
     "recoverTableSpecFacetSource",
+    "classifyTableSpecRelationships",
+    "verifyTableSpecRelationshipClassification",
+    "recoverTableSpecRelationshipSource",
 ];
 
 #[cfg(test)]
@@ -129,6 +136,23 @@ impl TableSpecRuntime {
             ctx,
         )?;
         Ok(Self { engine, registry })
+    }
+
+    pub fn project_field_to_tablespec(&self, author: &Value, request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_projection::project_field(author, request, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
+    pub fn recover_field_from_tablespec(&self, receipt: &Value, native_text: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_projection::recover_field(receipt, native_text, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
+    pub fn project_record_to_tablespec(&self, author: &Value, request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_projection::project_record(author, request, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
+    pub fn recover_record_from_tablespec(&self, receipt: &Value, native_text: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_projection::recover_record(receipt, native_text, self, &self.engine, &self.registry, &mut capabilities, ctx)
     }
 
     pub fn classify_field(
@@ -310,6 +334,19 @@ impl TableSpecRuntime {
     pub fn classify_facets(&self,input:&Value,request:&Value,ctx:&mut Context<'_>)->Result<Value,EngineError>{let mut capabilities=StructuralOnly;crate::tablespec_facets_classification::classify_table_spec_facets(input,request,self,&self.engine,&self.registry,&mut capabilities,ctx)}
     pub fn verify_facet_classification(&self,receipt:&Value,current:&Value,ctx:&mut Context<'_>)->Result<Value,EngineError>{let mut capabilities=StructuralOnly;crate::tablespec_facets_classification::verify_table_spec_facet_classification(receipt,current,self,&self.engine,&self.registry,&mut capabilities,ctx)}
     pub fn recover_facet_source(&self,receipt:&Value,current:&Value,ctx:&mut Context<'_>)->Result<Value,EngineError>{let mut capabilities=StructuralOnly;crate::tablespec_facets_classification::recover_table_spec_facet_source(receipt,current,self,&self.engine,&self.registry,&mut capabilities,ctx)}
+
+    pub fn classify_relationships(&self, input: &Value, request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_relationship_classification::classify_table_spec_relationships(input, request, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
+    pub fn verify_relationship_classification(&self, receipt: &Value, current: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_relationship_classification::verify_table_spec_relationship_classification(receipt, current, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
+    pub fn recover_relationship_source(&self, receipt: &Value, current: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let mut capabilities = StructuralOnly;
+        crate::tablespec_relationship_classification::recover_table_spec_relationship_source(receipt, current, self, &self.engine, &self.registry, &mut capabilities, ctx)
+    }
 
     pub fn import(
         &self,

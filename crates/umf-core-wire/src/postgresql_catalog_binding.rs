@@ -22,7 +22,10 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         | "postgresql.classifyCardinality"
         | "postgresql.classifyNullability" => &["profile", "op", "source", "request"],
         "postgresql.prepareKeyParserRequests" => &["profile", "op", "source", "request"],
-        "postgresql.classifyKeys" => &["profile", "op", "source", "request", "parser"],
+        "postgresql.prepareFacetParserRequests" => &["profile", "op", "request"],
+        "postgresql.classifyKeys" | "postgresql.classifyFacets" => {
+            &["profile", "op", "source", "request", "parser"]
+        }
         "postgresql.verifyFieldClassification"
         | "postgresql.recoverFieldCapture"
         | "postgresql.verifyRecordClassification"
@@ -31,9 +34,10 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         | "postgresql.recoverCardinalitySource"
         | "postgresql.verifyNullabilityClassification"
         | "postgresql.recoverNullabilitySource" => &["profile", "op", "receipt", "current"],
-        "postgresql.verifyKeyClassification" | "postgresql.recoverKeySource" => {
-            &["profile", "op", "receipt", "current", "parser"]
-        }
+        "postgresql.verifyKeyClassification"
+        | "postgresql.recoverKeySource"
+        | "postgresql.verifyFacetClassification"
+        | "postgresql.recoverFacetSource" => &["profile", "op", "receipt", "current", "parser"],
         "postgresql.inspect"
         | "postgresql.export"
         | "postgresql.columns"
@@ -87,6 +91,10 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.classifyKeys",
         "postgresql.verifyKeyClassification",
         "postgresql.recoverKeySource",
+        "postgresql.prepareFacetParserRequests",
+        "postgresql.classifyFacets",
+        "postgresql.verifyFacetClassification",
+        "postgresql.recoverFacetSource",
         "postgresql.inspect",
         "postgresql.export",
         "postgresql.columns",
@@ -143,7 +151,18 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
                 required(request, "parser")?;
             }
         }
-        "postgresql.verifyKeyClassification" | "postgresql.recoverKeySource" => {
+        "postgresql.prepareFacetParserRequests" => {
+            required(request, "request")?;
+        }
+        "postgresql.classifyFacets" => {
+            required(request, "source")?;
+            required(request, "request")?;
+            required(request, "parser")?;
+        }
+        "postgresql.verifyKeyClassification"
+        | "postgresql.recoverKeySource"
+        | "postgresql.verifyFacetClassification"
+        | "postgresql.recoverFacetSource" => {
             required(request, "receipt")?;
             required(request, "current")?;
             required(request, "parser")?;
@@ -334,6 +353,32 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
                 ctx,
             )
         }
+        "postgresql.prepareFacetParserRequests" => {
+            umf_core::postgresql_facets_classification::prepare_parser_requests(
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.classifyFacets" => umf_core::postgresql_facets_classification::classify(
+            required(request, "source")?,
+            required(request, "request")?,
+            required(request, "parser")?,
+            ctx,
+        ),
+        "postgresql.verifyFacetClassification" => {
+            umf_core::postgresql_facets_classification::verify(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                required(request, "parser")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverFacetSource" => umf_core::postgresql_facets_classification::recover(
+            required(request, "receipt")?,
+            required(request, "current")?,
+            required(request, "parser")?,
+            ctx,
+        ),
         "postgresql.classifyKeys" => umf_core::postgresql_keys_classification::classify_keys(
             required(request, "source")?,
             required(request, "request")?,

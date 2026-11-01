@@ -159,6 +159,7 @@ pub mod literal;
 pub mod literal_policy;
 pub mod native_contract_adapters;
 pub mod native_json;
+pub mod medical_projection;
 pub mod nullability;
 #[cfg(feature = "embedded-adapters")]
 pub mod nullability_avro_projection;
@@ -167,6 +168,8 @@ pub mod nullability_sqlserver_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod facets_avro_projection;
 #[cfg(feature = "embedded-adapters")]
+pub mod facets_sqlserver_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod key_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod key_sqlserver_projection;
@@ -174,6 +177,7 @@ pub mod key_sqlserver_projection;
 pub mod avro_relationship_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod relationship_tablespec_projection;
+pub mod tablespec_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod openapi_json_schema_projection;
 pub mod openapi_adapter;
@@ -216,6 +220,8 @@ pub mod pg_query_native_ffi;
 pub mod postgresql_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_catalog;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_facets_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_keys_classification;
 #[cfg(feature = "embedded-adapters")]
@@ -296,6 +302,7 @@ pub(crate) mod tablespec_cardinality_classification;
 pub(crate) mod tablespec_nullability_classification;
 pub(crate) mod tablespec_key_classification;
 pub(crate) mod tablespec_facets_classification;
+pub(crate) mod tablespec_relationship_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_via_avro_projection;
 pub mod target_pin;

@@ -10,6 +10,7 @@ import type {ParquetRecordClassification,ParquetRecordRequest} from './parquet-r
 import type {NullabilityAvroProjection,NullabilityAvroRequest} from './nullability-avro-projection';
 import type {CoreNullabilityDeclaration} from '../model/nullability';
 import type {FacetsAvroProjection,FacetsAvroRequest} from './facets-avro-projection';
+import type {FacetsSqlServerProjection,FacetsSqlServerRequest} from './facets-sqlserver-projection';
 import type {CoreFacetDeclaration} from '../model/facets';
 import type {CoreKindDeclaration} from '../model/field-kind';
 import type {KeyAvroProjection,KeyAvroRequest} from './key-avro-projection';
@@ -98,6 +99,10 @@ export interface CoreIdealNativeFamilies {
     projectNullabilityToAvro(fields:{author:CoreNullabilityDeclaration;request:NullabilityAvroRequest}):unknown;
     recoverNullabilityFromAvro(fields:{receipt:NullabilityAvroProjection;nativeText:string}):unknown;
   };
+  ['facets-sqlserver-projection']:{
+    projectFacetsToSqlServer(fields:{author:CoreFacetDeclaration|CoreKindDeclaration;request:FacetsSqlServerRequest}):unknown;
+    recoverFacetsFromSqlServer(fields:{receipt:FacetsSqlServerProjection;nativeText:string}):unknown;
+  };
   ['facets-avro-projection']:{
     projectFacetsToAvro(fields:{author:CoreFacetDeclaration|CoreKindDeclaration;request:FacetsAvroRequest}):unknown;
     recoverFacetsFromAvro(fields:{receipt:FacetsAvroProjection;nativeText:string}):unknown;
@@ -141,7 +146,7 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     try{return operation() as T;}catch(error){
       if(!isNativeUmfCoreError(error))throw error;
       const native=error as {code?:unknown;message?:unknown;path?:unknown};
-      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(FIELD_SQLSERVER_|RECORD_SQLSERVER_|AVRO_CARDINALITY_|CARDINALITY_SQLSERVER_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|RELATIONSHIP_PARQUET_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
+      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(FACETS_SQLSERVER_|SQLSERVER_|FIELD_SQLSERVER_|RECORD_SQLSERVER_|AVRO_CARDINALITY_|CARDINALITY_SQLSERVER_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|RELATIONSHIP_PARQUET_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
       throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
     }
   }
@@ -195,6 +200,8 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     },
     projectNullabilityToAvro(author:CoreNullabilityDeclaration,request:NullabilityAvroRequest):NullabilityAvroProjection{return call(()=>engine['nullability-avro-projection'].projectNullabilityToAvro({author:copyJson(author) as unknown as CoreNullabilityDeclaration,request:copyJson(request) as unknown as NullabilityAvroRequest}) as NullabilityAvroProjection);},
     recoverNullabilityFromAvro(receipt:NullabilityAvroProjection,nativeText:string):Document{return call(()=>engine['nullability-avro-projection'].recoverNullabilityFromAvro({receipt:copyJson(receipt) as unknown as NullabilityAvroProjection,nativeText}) as unknown as Document);},
+    projectFacetsToSqlServer(author:CoreFacetDeclaration|CoreKindDeclaration,request:FacetsSqlServerRequest):FacetsSqlServerProjection{return call(()=>engine['facets-sqlserver-projection'].projectFacetsToSqlServer({author:copyJson(author) as unknown as CoreFacetDeclaration|CoreKindDeclaration,request:copyJson(request) as unknown as FacetsSqlServerRequest}) as FacetsSqlServerProjection);},
+    recoverFacetsFromSqlServer(receipt:FacetsSqlServerProjection,nativeText:string):Document{return call(()=>engine['facets-sqlserver-projection'].recoverFacetsFromSqlServer({receipt:copyJson(receipt) as unknown as FacetsSqlServerProjection,nativeText}) as unknown as Document);},
     projectFacetsToAvro(author:CoreFacetDeclaration|CoreKindDeclaration,request:FacetsAvroRequest):FacetsAvroProjection{return call(()=>engine['facets-avro-projection'].projectFacetsToAvro({author:copyJson(author) as unknown as CoreFacetDeclaration|CoreKindDeclaration,request:copyJson(request) as unknown as FacetsAvroRequest}) as FacetsAvroProjection);},
     recoverFacetsFromAvro(receipt:FacetsAvroProjection,nativeText:string):Document{return call(()=>engine['facets-avro-projection'].recoverFacetsFromAvro({receipt:copyJson(receipt) as unknown as FacetsAvroProjection,nativeText}) as unknown as Document);},
     projectKeysToAvro(source:Document,authors:CoreKeyDeclaration[],request:KeyAvroRequest):KeyAvroProjection{return call(()=>engine['key-avro-projection'].projectKeysToAvro({source:copyJson(source) as unknown as Document,authors:copyJson(authors) as unknown as CoreKeyDeclaration[],request:copyJson(request) as unknown as KeyAvroRequest}) as KeyAvroProjection);},

@@ -11,6 +11,10 @@ import type {TableSpecCardinalityClassification,TableSpecCardinalityRequest} fro
 import type {TableSpecNullabilityClassification,TableSpecNullabilityRequest} from '../../core-ideals/nullability-tablespec';
 import type {TableSpecKeyClassification,TableSpecKeyRequest} from '../../core-ideals/key-tablespec';
 import type {TableSpecFacetClassification,TableSpecFacetRequest} from '../../core-ideals/facets-tablespec';
+import type {TableSpecRelationshipClassification,TableSpecRelationshipRequest} from '../../core-ideals/relationship-tablespec';
+import type {FieldTableSpecProjection,FieldTableSpecRequest} from '../../core-ideals/field-tablespec-projection';
+import type {RecordTableSpecProjection,RecordTableSpecRequest} from '../../core-ideals/record-tablespec-projection';
+import type {CoreKindDeclaration} from '../../model/field-kind';
 
 export interface TableSpecNativeFamilyEngine {
  tablespec:{
@@ -24,8 +28,12 @@ export interface TableSpecNativeFamilyEngine {
   importTableSpecBundle(fields:{files:Record<string,string>;id:string}):unknown;
   exportTableSpecBundle(fields:{document:Document}):unknown;
   classifyTableSpecField(fields:{document:Document;request:TableSpecFieldRequest}):unknown;
+  projectFieldToTableSpec(fields:{author:CoreKindDeclaration;request:FieldTableSpecRequest}):unknown;
+  recoverFieldFromTableSpec(fields:{receipt:FieldTableSpecProjection;nativeText:string}):unknown;
   verifyTableSpecFieldClassification(fields:{receipt:TableSpecFieldClassification;current:Document}):unknown;
   classifyTableSpecRecord(fields:{document:Document;request:TableSpecRecordRequest}):unknown;
+  projectRecordToTableSpec(fields:{author:CoreKindDeclaration;request:RecordTableSpecRequest}):unknown;
+  recoverRecordFromTableSpec(fields:{receipt:RecordTableSpecProjection;nativeText:string}):unknown;
   verifyTableSpecRecordClassification(fields:{receipt:TableSpecRecordClassification;current:Document}):unknown;
   classifyTableSpecCardinality(fields:{document:Document;request:TableSpecCardinalityRequest}):unknown;
   verifyTableSpecCardinalityClassification(fields:{receipt:TableSpecCardinalityClassification;current:Document}):unknown;
@@ -39,6 +47,9 @@ export interface TableSpecNativeFamilyEngine {
   classifyTableSpecFacets(fields:{document:Document;request:TableSpecFacetRequest}):unknown;
   verifyTableSpecFacetClassification(fields:{receipt:TableSpecFacetClassification;current:Document}):unknown;
   recoverTableSpecFacetSource(fields:{receipt:TableSpecFacetClassification;current:Document}):unknown;
+  classifyTableSpecRelationships(fields:{document:Document;request:TableSpecRelationshipRequest}):unknown;
+  verifyTableSpecRelationshipClassification(fields:{receipt:TableSpecRelationshipClassification;current:Document}):unknown;
+  recoverTableSpecRelationshipSource(fields:{receipt:TableSpecRelationshipClassification;current:Document}):unknown;
  }
 }
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
@@ -51,7 +62,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_CARDINALITY_')||native.code.startsWith('CORE_NULLABILITY_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
+   if(typeof native.code==='string'&&(native.code.startsWith('TABLESPEC_')||native.code.startsWith('CORE_KIND_')||native.code.startsWith('CORE_CARDINALITY_')||native.code.startsWith('CORE_NULLABILITY_')||native.code.startsWith('CORE_MEMBERS_')||native.code.startsWith('FIELD_TABLESPEC_')||native.code.startsWith('RECORD_TABLESPEC_')||native.code.startsWith('FIELD_CLASSIFICATION_')||native.code==='FIELD_KIND_CONFLICT'||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
@@ -66,6 +77,10 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   editTableSpecTable(document:Parameters<typeof editTableSpecTable>[0],changes:Parameters<typeof editTableSpecTable>[1]):ReturnType<typeof editTableSpecTable>{return call(()=>engine.tablespec.editTableSpecTable({document,changes}) as ReturnType<typeof editTableSpecTable>);},
   importTableSpecBundle(files:Parameters<typeof importTableSpecBundle>[0],options:Parameters<typeof importTableSpecBundle>[1]):ReturnType<typeof importTableSpecBundle>{return call(()=>engine.tablespec.importTableSpecBundle({files,id:options.id}) as ReturnType<typeof importTableSpecBundle>);},
   exportTableSpecBundle(document:Parameters<typeof exportTableSpecBundle>[0]):ReturnType<typeof exportTableSpecBundle>{return call(()=>engine.tablespec.exportTableSpecBundle({document}) as ReturnType<typeof exportTableSpecBundle>);},
+  projectFieldToTableSpec(author:CoreKindDeclaration,request:FieldTableSpecRequest):FieldTableSpecProjection & {diagnostics:Diagnostic[]}{return call(()=>engine.tablespec.projectFieldToTableSpec({author,request}) as FieldTableSpecProjection & {diagnostics:Diagnostic[]});},
+  recoverFieldFromTableSpec(receipt:FieldTableSpecProjection,nativeText:string):Document{return call(()=>engine.tablespec.recoverFieldFromTableSpec({receipt,nativeText}) as Document);},
+  projectRecordToTableSpec(author:CoreKindDeclaration,request:RecordTableSpecRequest):RecordTableSpecProjection{return call(()=>engine.tablespec.projectRecordToTableSpec({author,request}) as RecordTableSpecProjection);},
+  recoverRecordFromTableSpec(receipt:RecordTableSpecProjection,nativeText:string):Document{return call(()=>engine.tablespec.recoverRecordFromTableSpec({receipt,nativeText}) as Document);},
   classifyTableSpecField(document:Document,request:TableSpecFieldRequest):TableSpecFieldClassification & {diagnostics:Diagnostic[]}{return call(()=>engine.tablespec.classifyTableSpecField({document,request}) as TableSpecFieldClassification & {diagnostics:Diagnostic[]});},
   verifyTableSpecFieldClassification(receipt:TableSpecFieldClassification,current:Document):TableSpecFieldClassification{return call(()=>engine.tablespec.verifyTableSpecFieldClassification({receipt,current}) as TableSpecFieldClassification);},
   classifyTableSpecRecord(document:Document,request:TableSpecRecordRequest):TableSpecRecordClassification{return call(()=>engine.tablespec.classifyTableSpecRecord({document,request}) as TableSpecRecordClassification);},
@@ -82,5 +97,8 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   classifyTableSpecFacets(document:Document,request:TableSpecFacetRequest):TableSpecFacetClassification{return call(()=>engine.tablespec.classifyTableSpecFacets({document,request}) as TableSpecFacetClassification);},
   verifyTableSpecFacetClassification(receipt:TableSpecFacetClassification,current:Document):TableSpecFacetClassification{return call(()=>engine.tablespec.verifyTableSpecFacetClassification({receipt,current}) as TableSpecFacetClassification);},
   recoverTableSpecFacetSource(receipt:TableSpecFacetClassification,current:Document):string|Record<string,string>{return call(()=>engine.tablespec.recoverTableSpecFacetSource({receipt,current}) as string|Record<string,string>);},
+  classifyTableSpecRelationships(document:Document,request:TableSpecRelationshipRequest):TableSpecRelationshipClassification{return call(()=>engine.tablespec.classifyTableSpecRelationships({document,request}) as TableSpecRelationshipClassification);},
+  verifyTableSpecRelationshipClassification(receipt:TableSpecRelationshipClassification,current:Document):TableSpecRelationshipClassification{return call(()=>engine.tablespec.verifyTableSpecRelationshipClassification({receipt,current}) as TableSpecRelationshipClassification);},
+  recoverTableSpecRelationshipSource(receipt:TableSpecRelationshipClassification,current:Document):string|Record<string,string>{return call(()=>engine.tablespec.recoverTableSpecRelationshipSource({receipt,current}) as string|Record<string,string>);},
  });
 }

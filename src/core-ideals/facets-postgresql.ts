@@ -2,7 +2,7 @@
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {readJsonValue} from '../model/serialization';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {type NativeJson} from '../model/native-json';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
 import {exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../adapters/postgresql/catalog';
@@ -15,9 +15,8 @@ import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';import authorSchema from '../../spec/core/facet-operation-v3.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/postgresql-facet-classification.schema.json';
 import supplementSchema from '../../spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json';
-import manifest from '../../spec/extensions/postgresql-facets/package.json';
-export const POSTGRESQL_FACETS_EXTENSION='umf.postgresql.facets';
-export const postgresqlFacetsPackage=manifest as unknown as ExtensionPackage;
+import {POSTGRESQL_FACETS_EXTENSION} from './facets-postgresql-package';
+export {POSTGRESQL_FACETS_EXTENSION,postgresqlFacetsPackage} from './facets-postgresql-package';
 export {default as postgresqlFacetClassificationSchema} from '../../spec/core/postgresql-facet-classification.schema.json';
 export type PostgresqlFacetProfile='stored-value'|'new-value'|'unresolved';
 export interface PostgresqlFacetRequest {column:string;nativeSource:string;supplement:string;mode:'strict'|'report';profile:PostgresqlFacetProfile;datumFormat:'little-endian-datum64'|'unresolved';obligation:'value-domain'|'exact-input';author?:CoreFacetDeclaration}

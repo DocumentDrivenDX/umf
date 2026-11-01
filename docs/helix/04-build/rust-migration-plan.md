@@ -101,9 +101,9 @@ Current integration order:
    Server Nullability and TableSpec Cardinality now pass their focused public
    workflows. Authored SQL Server Keys and TableSpec Nullability now also pass.
    PostgreSQL and TableSpec Keys also pass their current public workflows.
-   Authored SQL Server Field/Record and TableSpec Facets also pass. Sol reviews
-   corrected PostgreSQL Facets and TableSpec Relationships next. Luna implements
-   authored SQL Server Facets and TableSpec Field/Record in parallel. Parser
+   Authored SQL Server Field/Record and TableSpec Facets also pass. PostgreSQL
+   Facets, TableSpec Relationships, authored SQL Server Facets and TableSpec
+   Field/Record now pass. The four medical public functions also pass. Parser
    callbacks supply AST transport only.
 3. Continue the remaining TableSpec classifiers and authored scalar target
    projections in bounded parallel cuts. Use existing pinned contracts and one
@@ -134,14 +134,13 @@ its public Rust route and one ordinary normal/refusal/recovery workflow as appli
 
 | Lane | Concrete remaining implementation | Reuse and next cut |
 | --- | --- | --- |
-| PostgreSQL classifiers | Facets, Relationships and Composite/DDL-kind classifier pairs. | Reuse the passing Keys bridge: Rust prepares parser requests, the host returns ASTs, and Rust computes catalog correlation. |
-| TableSpec classifiers | Relationships. | Reuse the admitted Field/Record/Cardinality adapter and core authoring kernels. |
-| Authored Field/Record | Projection and recovery for TableSpec, Avro, Parquet and PostgreSQL. | Bundle Field and Record per target; share author verification, target import/export and receipt checks. SQL Server passes; TableSpec is active. |
-| Other authored projections | Cardinality for Avro/Parquet/PostgreSQL/TableSpec; Nullability for Parquet/PostgreSQL/TableSpec; Facets for Parquet/PostgreSQL/SQL Server/TableSpec; Keys for Parquet/PostgreSQL/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability and Keys pass their focused workflows. |
+| PostgreSQL classifiers | Relationships and Composite/DDL-kind classifier pairs, plus public DDL declaration access. | Facets passes; Relationships is source-reviewed for the next baseline. Reuse the passing Keys parser transport and Rust-owned catalog correlation. |
+| Authored Field/Record | Projection and recovery for Avro, Parquet and PostgreSQL. | Bundle Field and Record per target; share author verification, target import/export and receipt checks. SQL Server and TableSpec pass. |
+| Other authored projections | Cardinality for Avro/Parquet/PostgreSQL/TableSpec; Nullability for Parquet/PostgreSQL/TableSpec; Facets for Parquet/PostgreSQL/TableSpec; Keys for Parquet/PostgreSQL/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability, Keys and Facets pass. TableSpec Cardinality/Nullability is under bounded source correction; Keys/Facets follows. |
 | Model and reports | `editExtension`, `prepareCoreInspection` and generic Field/Record/Structured classification/projection report inspector/verify pairs. | Existing Rust extension edits and core inspectors own decisions; host retains only caller callbacks and object presentation. |
 | Binding and Dashboard | Binding validation, inspection/read/write/get, migration/rollback and dataset validation; Dashboard validation/read/write/get/edit. | Port meaning checks in factories and registration callbacks, alongside public operations. |
-| Medical | FHIR, CDC mortality, DICOM metadata and terminology lookup. | Use exact native-JSON traversal and existing domain-pack wire patterns. |
-| Adapter composites | Arrow IPC schema export, layout/consistency/rename/observation; PostgreSQL catalog public composites and correlation helpers. | Existing Rust capture/catalog primitives must own the complete public operation. |
+| Adapter composites | Arrow IPC schema export, layout/consistency/rename/observation; embedded Parquet Arrow schema inspection/coordinated rename; PostgreSQL catalog public composites and correlation helpers; Delta checkpoint reconciliation; Protobuf descriptor edit. | Existing Rust capture/catalog primitives must own the complete public operation. |
+| Extension composites | Table lifecycle inspection and Relationship Extra archive import. | Reuse existing Rust validators, adapters and archive primitives; port the public composite decisions. |
 
 Luna owns implementation and focused test additions. Sol reviews each source cut
 and its additive integration before the shared compiler/build slot. Source patches,
@@ -238,10 +237,27 @@ Facets passes classification, verification, exact source recovery and refusal.
 These workflows leave the repair queue. The Node results do not replace final
 Python/CLI executable and browser integration.
 
-Corrected PostgreSQL Facets and TableSpec Relationships are under Sol review.
-Authored SQL Server Facets and TableSpec Field/Record are active Luna cuts. The PostgreSQL Field/Record baseline now selects an existing
-ordinary two-column relation while retaining the same assertions; final integration
-will validate that smaller fixture. Compiler checks precede native builds; only
+PostgreSQL Facets and authored SQL Server Facets pass their focused runtime
+baselines in the preceding batch. The repaired TableSpec Relationships binding
+constant then passes classification, verification, recovery and strict refusal.
+Authored TableSpec Field/Record pass ordinary projection, source recovery and
+strict-loss/missing-member refusal. FHIR, CDC mortality, DICOM metadata and
+terminology lookup pass their focused public workflow and invalid-input refusal.
+The latter batch passes all four tests across three files with 32 assertions in
+26 seconds, after a Node-only build of 3m33s. All-host Rust metadata, full
+TypeScript and Python source-resource closure pass. These passing workflows leave
+the repair queue; Node results do not establish Python/CLI/browser execution.
+
+PostgreSQL Relationships is source-reviewed for the next runtime baseline.
+Authored TableSpec Cardinality/Nullability remains excluded pending ordinary
+receipt-shape, serialization and compiler corrections. Luna is also implementing
+PostgreSQL Composite/DDL-kind and model editing/prepared inspection. The current
+public callable inventory adds the composite operations named in the lanes above;
+no conformance campaign is required to identify these source gaps.
+
+The PostgreSQL Field/Record baseline now selects an existing ordinary two-column
+relation while retaining the same assertions; final integration will validate that
+smaller fixture. Compiler checks precede native builds; only
 new or failed workflows enter each focused runtime. Complete local host and package
 integration follows semantic completion.
 Current removal compilation retains `TABLE_REMOVAL_EFFECTS_NOT_LOWERED`;

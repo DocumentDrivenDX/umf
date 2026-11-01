@@ -45,8 +45,12 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "exportTableSpecBundle",
         "classifyTableSpecField",
         "verifyTableSpecFieldClassification",
+        "projectFieldToTableSpec",
+        "recoverFieldFromTableSpec",
         "classifyTableSpecRecord",
         "verifyTableSpecRecordClassification",
+        "projectRecordToTableSpec",
+        "recoverRecordFromTableSpec",
         "classifyTableSpecCardinality",
         "verifyTableSpecCardinalityClassification",
         "recoverTableSpecCardinalitySource",
@@ -59,6 +63,9 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "classifyTableSpecFacets",
         "verifyTableSpecFacetClassification",
         "recoverTableSpecFacetSource",
+        "classifyTableSpecRelationships",
+        "verifyTableSpecRelationshipClassification",
+        "recoverTableSpecRelationshipSource",
     ]
     .into_iter()
     .find(|candidate| op == &Utf16::from(*candidate))
@@ -76,6 +83,8 @@ fn allowed(op: &str) -> &'static [&'static str] {
         "importTableSpecBundle" => &["profile", "op", "files", "id"],
         "exportTableSpecBundle" => &["profile", "op", "document"],
         "classifyTableSpecField" => &["profile", "op", "document", "request"],
+        "projectFieldToTableSpec" | "projectRecordToTableSpec" => &["profile", "op", "author", "request"],
+        "recoverFieldFromTableSpec" | "recoverRecordFromTableSpec" => &["profile", "op", "receipt", "nativeText"],
         "verifyTableSpecFieldClassification" => &["profile", "op", "receipt", "current"],
         "classifyTableSpecRecord" => &["profile", "op", "document", "request"],
         "verifyTableSpecRecordClassification"
@@ -86,8 +95,14 @@ fn allowed(op: &str) -> &'static [&'static str] {
         | "verifyTableSpecKeyClassification"
         | "recoverTableSpecKeySource"
         | "verifyTableSpecFacetClassification"
-        | "recoverTableSpecFacetSource" => &["profile", "op", "receipt", "current"],
-        "classifyTableSpecCardinality" | "classifyTableSpecNullability" | "classifyTableSpecKeys" | "classifyTableSpecFacets" => &["profile", "op", "document", "request"],
+        | "recoverTableSpecFacetSource"
+        | "verifyTableSpecRelationshipClassification"
+        | "recoverTableSpecRelationshipSource" => &["profile", "op", "receipt", "current"],
+        "classifyTableSpecCardinality"
+        | "classifyTableSpecNullability"
+        | "classifyTableSpecKeys"
+        | "classifyTableSpecFacets"
+        | "classifyTableSpecRelationships" => &["profile", "op", "document", "request"],
         _ => &[],
     }
 }
@@ -235,6 +250,14 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
             required_value(request, "document")?;
             required_value(request, "request")?;
         }
+        "projectFieldToTableSpec" | "projectRecordToTableSpec" => {
+            required_value(request, "author")?;
+            required_value(request, "request")?;
+        }
+        "recoverFieldFromTableSpec" | "recoverRecordFromTableSpec" => {
+            required_value(request, "receipt")?;
+            required_string(request, "nativeText")?;
+        }
         "verifyTableSpecFieldClassification" => {
             required_value(request, "receipt")?;
             required_value(request, "current")?;
@@ -247,11 +270,18 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         | "verifyTableSpecKeyClassification"
         | "recoverTableSpecKeySource"
         | "verifyTableSpecFacetClassification"
-        | "recoverTableSpecFacetSource" => {
+        | "recoverTableSpecFacetSource"
+        | "verifyTableSpecRelationshipClassification"
+        | "recoverTableSpecRelationshipSource" => {
             required_value(request, "receipt")?;
             required_value(request, "current")?;
         }
-        "classifyTableSpecRecord" | "classifyTableSpecCardinality" | "classifyTableSpecNullability" | "classifyTableSpecKeys" | "classifyTableSpecFacets" => {
+        "classifyTableSpecRecord"
+        | "classifyTableSpecCardinality"
+        | "classifyTableSpecNullability"
+        | "classifyTableSpecKeys"
+        | "classifyTableSpecFacets"
+        | "classifyTableSpecRelationships" => {
             required_value(request, "document")?;
             required_value(request, "request")?;
         }
@@ -342,6 +372,10 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             ctx,
         ),
         "exportTableSpecBundle" => runtime.export_bundle(required_value(request, "document")?, ctx),
+        "projectFieldToTableSpec" => runtime.project_field_to_tablespec(required_value(request, "author")?, required_value(request, "request")?, ctx),
+        "recoverFieldFromTableSpec" => runtime.recover_field_from_tablespec(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
+        "projectRecordToTableSpec" => runtime.project_record_to_tablespec(required_value(request, "author")?, required_value(request, "request")?, ctx),
+        "recoverRecordFromTableSpec" => runtime.recover_record_from_tablespec(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
         "classifyTableSpecField" => runtime.classify_field(
             required_value(request, "document")?,
             required_value(request, "request")?,
@@ -377,15 +411,66 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             required_value(request, "current")?,
             ctx,
         ),
-        "classifyTableSpecNullability" => runtime.classify_nullability(required_value(request, "document")?, required_value(request, "request")?, ctx),
-        "verifyTableSpecNullabilityClassification" => runtime.verify_nullability_classification(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
-        "recoverTableSpecNullabilitySource" => runtime.recover_nullability_source(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
-        "classifyTableSpecKeys" => runtime.classify_keys(required_value(request, "document")?, required_value(request, "request")?, ctx),
-        "verifyTableSpecKeyClassification" => runtime.verify_key_classification(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
-        "recoverTableSpecKeySource" => runtime.recover_key_source(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
-        "classifyTableSpecFacets" => runtime.classify_facets(required_value(request, "document")?, required_value(request, "request")?, ctx),
-        "verifyTableSpecFacetClassification" => runtime.verify_facet_classification(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
-        "recoverTableSpecFacetSource" => runtime.recover_facet_source(required_value(request, "receipt")?, required_value(request, "current")?, ctx),
+        "classifyTableSpecNullability" => runtime.classify_nullability(
+            required_value(request, "document")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "verifyTableSpecNullabilityClassification" => runtime.verify_nullability_classification(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "recoverTableSpecNullabilitySource" => runtime.recover_nullability_source(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "classifyTableSpecKeys" => runtime.classify_keys(
+            required_value(request, "document")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "verifyTableSpecKeyClassification" => runtime.verify_key_classification(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "recoverTableSpecKeySource" => runtime.recover_key_source(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "classifyTableSpecFacets" => runtime.classify_facets(
+            required_value(request, "document")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "verifyTableSpecFacetClassification" => runtime.verify_facet_classification(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "recoverTableSpecFacetSource" => runtime.recover_facet_source(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "classifyTableSpecRelationships" => runtime.classify_relationships(
+            required_value(request, "document")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "verifyTableSpecRelationshipClassification" => runtime.verify_relationship_classification(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "recoverTableSpecRelationshipSource" => runtime.recover_relationship_source(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
         _ => Err(request_error("unknown TableSpec operation")),
     }
 }

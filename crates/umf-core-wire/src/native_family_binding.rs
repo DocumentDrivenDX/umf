@@ -7,6 +7,7 @@ use umf_core::{Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
+    "medical-projection",
     "relationship-extra-projection",
     "relationship-parquet-projection",
     "cardinality-sqlserver-projection",
@@ -17,6 +18,7 @@ pub const FAMILIES: &[&str] = &[
     "nullability-avro-projection",
     "nullability-sqlserver-projection",
     "facets-avro-projection",
+    "facets-sqlserver-projection",
     "key-avro-projection",
     "key-sqlserver-projection",
     "avro-relationship-projection",
@@ -158,6 +160,10 @@ pub fn metadata_wire(family: &str) -> String {
             crate::facets_avro_projection_binding::PROFILE,
             &["projectFacetsToAvro", "recoverFacetsFromAvro"],
         ),
+        "facets-sqlserver-projection" => (
+            crate::facets_sqlserver_projection_binding::PROFILE,
+            &["projectFacetsToSqlServer", "recoverFacetsFromSqlServer"],
+        ),
         "key-avro-projection" => (
             crate::key_avro_projection_binding::PROFILE,
             &[
@@ -208,6 +214,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverRelationshipsPostgresqlIdeal",
                 "recoverRelationshipsPostgresqlNative",
             ],
+        ),
+        "medical-projection" => (
+            crate::medical_projection_binding::PROFILE,
+            &["projectMedicalFhir", "projectCdcMortality", "projectDicomMetadata", "lookupMedicalTerminology"],
         ),
         "relationship-extra-projection" => (
             crate::relationship_extra_projection_binding::PROFILE,
@@ -429,8 +439,12 @@ pub fn metadata_wire(family: &str) -> String {
                 "exportTableSpecBundle",
                 "classifyTableSpecField",
                 "verifyTableSpecFieldClassification",
+                "projectFieldToTableSpec",
+                "recoverFieldFromTableSpec",
                 "classifyTableSpecRecord",
                 "verifyTableSpecRecordClassification",
+                "projectRecordToTableSpec",
+                "recoverRecordFromTableSpec",
                 "classifyTableSpecCardinality",
                 "verifyTableSpecCardinalityClassification",
                 "recoverTableSpecCardinalitySource",
@@ -443,6 +457,9 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyTableSpecFacets",
                 "verifyTableSpecFacetClassification",
                 "recoverTableSpecFacetSource",
+                "classifyTableSpecRelationships",
+                "verifyTableSpecRelationshipClassification",
+                "recoverTableSpecRelationshipSource",
             ],
         ),
         "jsonld" => (
@@ -482,6 +499,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyKeys",
                 "verifyKeyClassification",
                 "recoverKeySource",
+                "prepareFacetParserRequests",
+                "classifyFacets",
+                "verifyFacetClassification",
+                "recoverFacetSource",
             ],
         ),
         "sqlserver" => (
@@ -731,6 +752,9 @@ pub fn execute_wire_with_control(
         "facets-avro-projection" => {
             crate::facets_avro_projection_binding::execute_wire_with_control(wire, control)
         }
+        "facets-sqlserver-projection" => {
+            crate::facets_sqlserver_projection_binding::execute_wire_with_control(wire, control)
+        }
         "key-avro-projection" => {
             crate::key_avro_projection_binding::execute_wire_with_control(wire, control)
         },
@@ -751,6 +775,7 @@ pub fn execute_wire_with_control(
             )
         }
         "relationship-postgresql-projection" => crate::relationship_postgresql_projection_binding::execute_wire_with_control(wire, control),
+        "medical-projection" => crate::medical_projection_binding::execute_wire_with_control(wire, control),
         "relationship-extra-projection" => crate::relationship_extra_projection_binding::execute_wire_with_control(wire, control),
         "relationship-parquet-projection" => {
             crate::relationship_parquet_projection_binding::execute_wire_with_control(wire, control)

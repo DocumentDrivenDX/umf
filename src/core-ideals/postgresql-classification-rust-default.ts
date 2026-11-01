@@ -5,6 +5,7 @@ import type {PostgresqlRecordClassification,PostgresqlRecordRequest} from './pos
 import type {PostgresqlCardinalityClassification,PostgresqlCardinalityRequest} from './cardinality-postgresql';
 import type {PostgresqlNullabilityClassification,PostgresqlNullabilityRequest} from './nullability-postgresql';
 import type {PostgresqlKeyClassification,PostgresqlKeyRequest} from './key-postgresql';
+import type {PostgresqlFacetClassification,PostgresqlFacetRequest} from './facets-postgresql';
 import type {PostgresqlBackend} from '../adapters/postgresql';
 type Guard=(error:unknown)=>boolean;
 interface Engine { postgresql:{
@@ -24,6 +25,10 @@ interface Engine { postgresql:{
  classifyKeys(fields:{source:Document;request:PostgresqlKeyRequest;parser:{responses:{id:string;sql:string;ast:unknown}[]}}):unknown;
  verifyKeyClassification(fields:{receipt:PostgresqlKeyClassification;current:Document;parser:{responses:{id:string;sql:string;ast:unknown}[]}}):unknown;
  recoverKeySource(fields:{receipt:PostgresqlKeyClassification;current:Document;parser:{responses:{id:string;sql:string;ast:unknown}[]}}):unknown;
+ prepareFacetParserRequests(fields:{request:PostgresqlFacetRequest}):unknown;
+ classifyFacets(fields:{source:Document;request:PostgresqlFacetRequest;parser:{responses:{id:string;sql:string;ast:unknown}[]}}):unknown;
+ verifyFacetClassification(fields:{receipt:PostgresqlFacetClassification;current:Document;parser:{responses:{id:string;sql:string;ast:unknown}[]}}):unknown;
+ recoverFacetSource(fields:{receipt:PostgresqlFacetClassification;current:Document;parser:{responses:{id:string;sql:string;ast:unknown}[]}}):unknown;
 }}
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
 function publicError(error:unknown,isNative:Guard):never{
@@ -38,6 +43,15 @@ async function parserEvidence(engine:Engine,source:Document,request:PostgresqlKe
  try{prepared=engine.postgresql.prepareKeyParserRequests({source,request}) as {queries:{id:string;sql:string}[]}}catch(error){publicError(error,isNative)}
  const responses=[];
  for(const query of prepared.queries){const ast=await backend.parse(query.sql);responses.push({id:query.id,sql:query.sql,ast});}
+ return {responses};
+}
+async function facetParserEvidence(engine:Engine,request:PostgresqlFacetRequest,backend:PostgresqlBackend,isNative:Guard){
+ if(backend?.identity!=='@libpg-query/parser@17.6.10'||typeof backend.parse!=='function')throw new UmfError('POSTGRESQL_FACET_PARSER','Pinned PostgreSQL parser backend required');
+ let prepared:unknown;
+ try{prepared=engine.postgresql.prepareFacetParserRequests({request})}catch(error){publicError(error,isNative)}
+ const queries=(prepared as {queries:{id:string;sql:string}[]}).queries;
+ const responses=[];
+ for(const query of queries){const ast=await backend.parse(query.sql);responses.push({id:query.id,sql:query.sql,ast});}
  return {responses};
 }
 export function createPostgresqlClassificationRustDefault(engine:Engine,isNativeUmfCoreError:Guard=()=>false){
@@ -57,5 +71,8 @@ export function createPostgresqlClassificationRustDefault(engine:Engine,isNative
   async classifyPostgresqlKeys(source:Document,request:PostgresqlKeyRequest,backend:PostgresqlBackend):Promise<PostgresqlKeyClassification>{const parser=await parserEvidence(engine,source,request,backend,isNativeUmfCoreError);try{return engine.postgresql.classifyKeys({source,request,parser}) as PostgresqlKeyClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
   async verifyPostgresqlKeyClassification(receipt:PostgresqlKeyClassification,current:Document,backend:PostgresqlBackend):Promise<PostgresqlKeyClassification>{const parser=await parserEvidence(engine,receipt.source,receipt.request,backend,isNativeUmfCoreError);try{return engine.postgresql.verifyKeyClassification({receipt,current,parser}) as PostgresqlKeyClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
   async recoverPostgresqlKeySource(receipt:PostgresqlKeyClassification,current:Document,backend:PostgresqlBackend):Promise<{nativeSource:string;supplement:string}>{const parser=await parserEvidence(engine,receipt.source,receipt.request,backend,isNativeUmfCoreError);try{return engine.postgresql.recoverKeySource({receipt,current,parser}) as {nativeSource:string;supplement:string}}catch(error){publicError(error,isNativeUmfCoreError)}},
+  async classifyPostgresqlFacets(source:Document,request:PostgresqlFacetRequest,backend:PostgresqlBackend):Promise<PostgresqlFacetClassification>{const parser=await facetParserEvidence(engine,request,backend,isNativeUmfCoreError);try{return engine.postgresql.classifyFacets({source,request,parser}) as PostgresqlFacetClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
+  async verifyPostgresqlFacetClassification(receipt:PostgresqlFacetClassification,current:Document,backend:PostgresqlBackend):Promise<PostgresqlFacetClassification>{const parser=await facetParserEvidence(engine,receipt.request,backend,isNativeUmfCoreError);try{return engine.postgresql.verifyFacetClassification({receipt,current,parser}) as PostgresqlFacetClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
+  async recoverPostgresqlFacetSource(receipt:PostgresqlFacetClassification,current:Document,backend:PostgresqlBackend):Promise<{nativeSource:string;supplement:string}>{const parser=await facetParserEvidence(engine,receipt.request,backend,isNativeUmfCoreError);try{return engine.postgresql.recoverFacetSource({receipt,current,parser}) as {nativeSource:string;supplement:string}}catch(error){publicError(error,isNativeUmfCoreError)}},
  });
 }
