@@ -32,10 +32,26 @@ import type {RelationshipSqlServerProjection,RelationshipSqlServerRequest} from 
 import type {CardinalitySqlServerProjection,CardinalitySqlServerRequest} from './cardinality-sqlserver-projection';
 import type {FieldSqlServerProjection,FieldSqlServerRequest} from './field-sqlserver-projection';
 import type {RecordSqlServerProjection,RecordSqlServerRequest} from './record-sqlserver-projection';
+import type {FieldAvroProjection,FieldAvroRequest} from './field-avro-projection';
+import type {RecordAvroProjection,RecordAvroRequest} from './record-avro-projection';
+import type {FieldParquetProjection,FieldParquetRequest} from './field-parquet-projection';
+import type {RecordParquetProjection,RecordParquetRequest} from './record-parquet-projection';
 import type {CoreCardinalityDeclaration} from '../model/cardinality';
 
 type NativeErrorGuard=(error:unknown)=>boolean;
 export interface CoreIdealNativeFamilies {
+  ['field-record-parquet-projection']:{
+    projectFieldToParquet(fields:{author:CoreKindDeclaration;request:FieldParquetRequest}):unknown;
+    recoverFieldFromParquet(fields:{receipt:FieldParquetProjection;nativeHex:string}):unknown;
+    projectRecordToParquet(fields:{author:CoreKindDeclaration;request:RecordParquetRequest}):unknown;
+    recoverRecordFromParquet(fields:{receipt:RecordParquetProjection;nativeHex:string}):unknown;
+  };
+  ['field-record-avro-projection']:{
+    projectFieldToAvro(fields:{author:CoreKindDeclaration;request:FieldAvroRequest}):unknown;
+    recoverFieldFromAvro(fields:{receipt:FieldAvroProjection;nativeText:string}):unknown;
+    projectRecordToAvro(fields:{author:CoreKindDeclaration;request:RecordAvroRequest}):unknown;
+    recoverRecordFromAvro(fields:{receipt:RecordAvroProjection;nativeText:string}):unknown;
+  };
   ['field-record-sqlserver-projection']:{
     projectFieldToSqlServer(fields:{author:CoreKindDeclaration;request:FieldSqlServerRequest}):unknown;
     recoverFieldFromSqlServer(fields:{receipt:FieldSqlServerProjection;nativeText:string}):unknown;
@@ -142,11 +158,12 @@ const CONTROL_CODES=new Set(['LIMIT','CAPACITY','RESOURCE_LIMIT','CANCELLED','ME
 
 /** Public classifier and native recovery facades over existing Rust wire owners. */
 export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNativeUmfCoreError:NativeErrorGuard=()=>false){
+  const bytesHex=(bytes:Uint8Array):string=>{let out='';for(const byte of bytes)out+=byte.toString(16).padStart(2,'0');return out;};
   function call<T>(operation:()=>unknown):T{
     try{return operation() as T;}catch(error){
       if(!isNativeUmfCoreError(error))throw error;
       const native=error as {code?:unknown;message?:unknown;path?:unknown};
-      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(FACETS_SQLSERVER_|SQLSERVER_|FIELD_SQLSERVER_|RECORD_SQLSERVER_|AVRO_CARDINALITY_|CARDINALITY_SQLSERVER_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|RELATIONSHIP_PARQUET_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
+      if(typeof native.code!=='string'||CONTROL_CODES.has(native.code)||(!/^(FACETS_SQLSERVER_|SQLSERVER_|FIELD_SQLSERVER_|RECORD_SQLSERVER_|FIELD_AVRO_|RECORD_AVRO_|CORE_KIND_|AVRO_|AVRO_CARDINALITY_|CARDINALITY_SQLSERVER_|AVRO_FIELD_|AVRO_RECORD_|AVRO_RECORD_TYPE_|AVRO_KEY_|AVRO_RELATIONSHIP_|RELATIONSHIP_SQLSERVER_|RELATIONSHIP_TABLESPEC_|RELATIONSHIP_PARQUET_|AVRO_FACET_|PARQUET_|NULLABILITY_AVRO_|FACETS_AVRO_|KEY_AVRO_)/.test(native.code)&&!['REQUEST','BINDING_DOCUMENT','BINDING_PROFILE'].includes(native.code)))throw error;
       throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
     }
   }
@@ -207,6 +224,10 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     projectKeysToAvro(source:Document,authors:CoreKeyDeclaration[],request:KeyAvroRequest):KeyAvroProjection{return call(()=>engine['key-avro-projection'].projectKeysToAvro({source:copyJson(source) as unknown as Document,authors:copyJson(authors) as unknown as CoreKeyDeclaration[],request:copyJson(request) as unknown as KeyAvroRequest}) as KeyAvroProjection);},
     verifyKeysAvroProjection(receipt:KeyAvroProjection,current:Document):KeyAvroProjection{return call(()=>engine['key-avro-projection'].verifyKeysAvroProjection({receipt:copyJson(receipt) as unknown as KeyAvroProjection,current:copyJson(current) as unknown as Document}) as KeyAvroProjection);},
     recoverKeysAvroIdeal(receipt:KeyAvroProjection,current:Document):Document{return call(()=>engine['key-avro-projection'].recoverKeysAvroIdeal({receipt:copyJson(receipt) as unknown as KeyAvroProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
+    projectFieldToAvro(author:CoreKindDeclaration,request:FieldAvroRequest):FieldAvroProjection{return call(()=>engine['field-record-avro-projection'].projectFieldToAvro({author:copyJson(author) as unknown as CoreKindDeclaration,request:copyJson(request) as unknown as FieldAvroRequest}) as FieldAvroProjection);},
+    recoverFieldFromAvro(receipt:FieldAvroProjection,nativeText:string):Document{return call(()=>engine['field-record-avro-projection'].recoverFieldFromAvro({receipt:copyJson(receipt) as unknown as FieldAvroProjection,nativeText}) as unknown as Document);},
+    projectRecordToAvro(author:CoreKindDeclaration,request:RecordAvroRequest):RecordAvroProjection{return call(()=>engine['field-record-avro-projection'].projectRecordToAvro({author:copyJson(author) as unknown as CoreKindDeclaration,request:copyJson(request) as unknown as RecordAvroRequest}) as RecordAvroProjection);},
+    recoverRecordFromAvro(receipt:RecordAvroProjection,nativeText:string):Document{return call(()=>engine['field-record-avro-projection'].recoverRecordFromAvro({receipt:copyJson(receipt) as unknown as RecordAvroProjection,nativeText}) as unknown as Document);},
     projectRelationshipToAvro(source:Document,author:import('../model/relationships').CoreRelationshipDeclaration,request:RelationshipAvroRequest):RelationshipAvroProjection{return call(()=>engine['avro-relationship-projection'].projectRelationshipToAvro({source:copyJson(source) as unknown as Document,author:copyJson(author) as unknown as import('../model/relationships').CoreRelationshipDeclaration,request:copyJson(request) as unknown as RelationshipAvroRequest}) as RelationshipAvroProjection);},
     verifyRelationshipAvroProjection(receipt:RelationshipAvroProjection,current:Document):RelationshipAvroProjection{return call(()=>engine['avro-relationship-projection'].verifyRelationshipAvroProjection({receipt:copyJson(receipt) as unknown as RelationshipAvroProjection,current:copyJson(current) as unknown as Document}) as RelationshipAvroProjection);},
     recoverRelationshipAvroIdeal(receipt:RelationshipAvroProjection,current:Document):Document{return call(()=>engine['avro-relationship-projection'].recoverRelationshipAvroIdeal({receipt:copyJson(receipt) as unknown as RelationshipAvroProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
@@ -224,6 +245,10 @@ export function createCoreIdealRustDefault(engine:CoreIdealNativeFamilies,isNati
     verifyRelationshipParquetProjection(receipt:RelationshipParquetProjection,current:Document):RelationshipParquetProjection{return call(()=>engine['relationship-parquet-projection'].verifyRelationshipParquetProjection({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as RelationshipParquetProjection);},
     recoverRelationshipParquetIdeal(receipt:RelationshipParquetProjection,current:Document):Document{return call(()=>engine['relationship-parquet-projection'].recoverRelationshipParquetIdeal({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as unknown as Document);},
     recoverRelationshipParquetNative(receipt:RelationshipParquetProjection,current:Document):{hex:string}{return call(()=>engine['relationship-parquet-projection'].recoverRelationshipParquetNative({receipt:copyJson(receipt) as unknown as RelationshipParquetProjection,current:copyJson(current) as unknown as Document}) as {hex:string});},
+    projectFieldToParquet(author:CoreKindDeclaration,request:FieldParquetRequest):FieldParquetProjection{return call(()=>engine['field-record-parquet-projection'].projectFieldToParquet({author:copyJson(author) as unknown as CoreKindDeclaration,request:copyJson(request) as unknown as FieldParquetRequest}) as FieldParquetProjection);},
+    recoverFieldFromParquet(receipt:FieldParquetProjection,nativeBytes:Uint8Array):Document{return call(()=>engine['field-record-parquet-projection'].recoverFieldFromParquet({receipt:copyJson(receipt) as unknown as FieldParquetProjection,nativeHex:bytesHex(nativeBytes)}) as unknown as Document);},
+    projectRecordToParquet(author:CoreKindDeclaration,request:RecordParquetRequest):RecordParquetProjection{return call(()=>engine['field-record-parquet-projection'].projectRecordToParquet({author:copyJson(author) as unknown as CoreKindDeclaration,request:copyJson(request) as unknown as RecordParquetRequest}) as RecordParquetProjection);},
+    recoverRecordFromParquet(receipt:RecordParquetProjection,nativeBytes:Uint8Array):Document{return call(()=>engine['field-record-parquet-projection'].recoverRecordFromParquet({receipt:copyJson(receipt) as unknown as RecordParquetProjection,nativeHex:bytesHex(nativeBytes)}) as unknown as Document);},
     projectFieldToSqlServer(author:CoreKindDeclaration,request:FieldSqlServerRequest):FieldSqlServerProjection{return call(()=>engine['field-record-sqlserver-projection'].projectFieldToSqlServer({author:copyJson(author) as unknown as CoreKindDeclaration,request:copyJson(request) as unknown as FieldSqlServerRequest}) as FieldSqlServerProjection);},
     recoverFieldFromSqlServer(receipt:FieldSqlServerProjection,nativeText:string):Document{return call(()=>engine['field-record-sqlserver-projection'].recoverFieldFromSqlServer({receipt:copyJson(receipt) as unknown as FieldSqlServerProjection,nativeText}) as unknown as Document);},
     projectRecordToSqlServer(author:CoreKindDeclaration,request:RecordSqlServerRequest):RecordSqlServerProjection{return call(()=>engine['field-record-sqlserver-projection'].projectRecordToSqlServer({author:copyJson(author) as unknown as CoreKindDeclaration,request:copyJson(request) as unknown as RecordSqlServerRequest}) as RecordSqlServerProjection);},

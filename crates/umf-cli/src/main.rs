@@ -1798,6 +1798,10 @@ fn adapter_family_run(args: &[String]) -> Result<(), String> {
         umf_core_wire::native_family_binding::PROFILE,
         "[]",
         |wire, control| {
+            #[cfg(feature = "native-postgresql")]
+            if family == "postgresql" {
+                return umf_core_wire::postgresql_native_binding::execute_catalog_wire_with_control(wire, control);
+            }
             umf_core_wire::native_family_binding::execute_wire_with_control(family, wire, control)
         },
         &args[1..],

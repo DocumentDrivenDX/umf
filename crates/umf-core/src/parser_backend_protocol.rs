@@ -20,6 +20,17 @@ pub const PARSER_AST_VERSION: u32 = 170004;
 pub const PARSER_PROTOCOL: &str = "umf.postgresql-parser/1";
 pub const MAX_PARSER_TEXT_UNITS: usize = 4_000_000;
 
+pub fn backend_identity_is_admitted(identity: &str) -> bool {
+    if identity == PARSER_BACKEND_IDENTITY {
+        return true;
+    }
+    #[cfg(feature = "native-postgresql")]
+    if identity == NATIVE_PARSER_BACKEND_IDENTITY {
+        return true;
+    }
+    false
+}
+
 /// Synchronous backend used by native adapters that can call a vetted
 /// PostgreSQL 17.4/libpg_query implementation directly.
 pub trait PostgresqlParserBackend {

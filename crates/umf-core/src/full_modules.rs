@@ -57,6 +57,8 @@ pub mod avro_semantics;
 pub mod avro_tablespec_projection;
 pub mod binding_index_projection;
 #[cfg(feature = "embedded-adapters")]
+pub mod dashboard;
+#[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_relationship_layout;
 #[cfg(feature = "embedded-adapters")]
 pub mod relationship_sqlserver_projection;
@@ -85,6 +87,8 @@ pub mod binding_delta_projection;
 pub mod binding_inspection;
 pub mod bit128;
 pub mod bit128_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod bit128_dataset;
 pub mod cardinality;
 #[cfg(feature = "embedded-adapters")]
 pub mod cardinality_sqlserver_projection;
@@ -170,7 +174,11 @@ pub mod facets_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod facets_sqlserver_projection;
 #[cfg(feature = "embedded-adapters")]
+pub mod parquet_field_record_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod key_avro_projection;
+#[cfg(feature = "embedded-adapters")]
+pub mod avro_field_record_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod key_sqlserver_projection;
 #[cfg(feature = "embedded-adapters")]
@@ -220,6 +228,10 @@ pub mod pg_query_native_ffi;
 pub mod postgresql_avro_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_catalog;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_composite_classification;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_ddl_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_facets_classification;
 #[cfg(feature = "embedded-adapters")]
@@ -298,6 +310,7 @@ pub mod sqlserver_avro_projection;
 pub mod sqlserver_ddl_projection;
 pub mod structural_diff;
 pub mod tablespec_adapter;
+pub(crate) mod tablespec_authored_key_facets;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_authored_projection;
 pub(crate) mod tablespec_field_classification;

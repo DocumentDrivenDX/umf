@@ -51,9 +51,22 @@ def execute_adapter(
                       ensure_ascii=True, separators=(",", ":"))
     has_controls = any(value is not None for value in
                        (max_work, meter, is_cancelled, now, deadline_ms))
-    response = (_rust._rust_core.execute_native_family_wire(family, wire, charge)
-                if has_controls else
-                _rust._rust_core.execute_native_family_wire(family, wire))
+    native_parser_ops = {
+        "classifyDdlRecord", "verifyDdlKinds", "recoverDdlKinds", "facetCorrelate",
+        "classifyKeys", "keyCorrelate", "verifyKeyClassification", "recoverKeySource",
+        "classifyFacets", "verifyFacetClassification", "recoverFacetSource",
+        "classifyRelationships", "verifyRelationshipClassification", "recoverRelationshipSource",
+    }
+    native_pg = (family == "postgresql" and operation in native_parser_ops
+                 and "parser" not in fields
+                 and hasattr(_rust._rust_core, "execute_postgresql_native_catalog_wire"))
+    if native_pg:
+        run = _rust._rust_core.execute_postgresql_native_catalog_wire
+        response = run(wire, charge) if has_controls else run(wire)
+    else:
+        response = (_rust._rust_core.execute_native_family_wire(family, wire, charge)
+                    if has_controls else
+                    _rust._rust_core.execute_native_family_wire(family, wire))
     host_work(len(response))
     result = _rust._checked_envelope(response)
     host_work(len(result))

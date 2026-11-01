@@ -1376,6 +1376,31 @@ fn execute_postgresql_native_sql_wire(
     Ok(umf_core_wire::postgresql_native_binding::execute_wire_with_control(wire_json, &mut hook))
 }
 
+#[cfg(feature = "native-postgresql")]
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_postgresql_native_catalog_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control.as_ref().is_some_and(|value| !value.bind(py).is_callable()) {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::postgresql_native_binding::execute_catalog_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control.bind(py).call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() { return Ok(()); }
+        let (code, message, path): (String, String, String) = outcome.extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(code, Utf16::from(path), Utf16::from(message)))
+    };
+    Ok(umf_core_wire::postgresql_native_binding::execute_catalog_wire_with_control(wire_json, &mut hook))
+}
+
 #[pyfunction]
 #[pyo3(signature = (wire_json, control=None))]
 fn execute_rdf_wire(
@@ -6653,6 +6678,8 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
         execute_postgresql_native_sql_wire,
         module
     )?)?;
+    #[cfg(feature = "native-postgresql")]
+    module.add_function(wrap_pyfunction!(execute_postgresql_native_catalog_wire, module)?)?;
     module.add_function(wrap_pyfunction!(graphql_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_graphql_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_graphql_edit_wire, module)?)?;

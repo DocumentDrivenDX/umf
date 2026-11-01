@@ -3,7 +3,7 @@
 
 use serde_json::Value as Json;
 use umf_core::{Context, Utf16, Value};
-use umf_core_wire::postgresql_native_binding::{PROFILE, execute_wire_with_control};
+use umf_core_wire::postgresql_native_binding::{execute_wire_with_control, PROFILE};
 
 fn call(op: &str, fields: impl IntoIterator<Item = (&'static str, Value)>) -> Result<Value, Json> {
     let mut request = vec![
@@ -19,6 +19,40 @@ fn call(op: &str, fields: impl IntoIterator<Item = (&'static str, Value)>) -> Re
     let mut control = |_| Ok(());
     let envelope: Json =
         serde_json::from_str(&execute_wire_with_control(&wire, &mut control)).unwrap();
+    if envelope["status"] != "ok" {
+        return Err(envelope);
+    }
+    Ok(
+        umf_core_wire::decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary())
+            .unwrap(),
+    )
+}
+
+fn call_catalog(
+    op: &str,
+    fields: impl IntoIterator<Item = (&'static str, Value)>,
+) -> Result<Value, Json> {
+    let mut request = vec![
+        (
+            Utf16::from("profile"),
+            Value::string_utf8(umf_core_wire::postgresql_catalog_binding::PROFILE),
+        ),
+        (Utf16::from("op"), Value::string_utf8(op)),
+    ];
+    request.extend(
+        fields
+            .into_iter()
+            .map(|(name, value)| (Utf16::from(name), value)),
+    );
+    let wire = umf_core_wire::encode(&Value::Object(request), &mut Context::ordinary()).unwrap();
+    let mut control = |_| Ok(());
+    let envelope: Json = serde_json::from_str(
+        &umf_core_wire::postgresql_native_binding::execute_catalog_wire_with_control(
+            &wire,
+            &mut control,
+        ),
+    )
+    .unwrap();
     if envelope["status"] != "ok" {
         return Err(envelope);
     }
@@ -123,4 +157,73 @@ fn native_postgresql_refuses_an_unsupported_ast_version() {
     .unwrap_err();
     assert_eq!(error["status"], "error");
     assert_eq!(error["code"], "POSTGRESQL_AST_VERSION");
+}
+
+#[test]
+fn native_postgresql_catalog_classifies_and_recovers_ddl_without_parser_values() {
+    let sql = "-- retained comment\nCREATE TABLE sales.simple (id pg_catalog.int8, payload pg_catalog.text);\n";
+    let source = call(
+        "postgresql-sql.import",
+        [
+            ("source", Value::string_utf8(sql)),
+            ("id", Value::string_utf8("native-ddl")),
+        ],
+    )
+    .unwrap();
+    let inventory = call_catalog(
+        "postgresql.getDdlDeclarations",
+        [("document", source.clone())],
+    )
+    .unwrap();
+    let declarations = member(&inventory, "declarations");
+    let Value::Array(declarations) = declarations else {
+        panic!("expected declaration array")
+    };
+    let declaration = declarations
+        .iter()
+        .find(|declaration| member(declaration, "kind") == &Value::string_utf8("create-table"))
+        .expect("CREATE TABLE declaration");
+    let declaration_path = member(declaration, "path").clone();
+    let request = Value::Object(vec![
+        (Utf16::from("module"), Value::string_utf8("native-derived")),
+        (Utf16::from("recordId"), Value::string_utf8("simple")),
+        (Utf16::from("declaration"), declaration_path),
+        (Utf16::from("mode"), Value::string_utf8("strict")),
+    ]);
+    let receipt = call_catalog(
+        "postgresql.classifyDdlRecord",
+        [("source", source.clone()), ("request", request.clone())],
+    )
+    .unwrap();
+    assert_eq!(
+        member(&receipt, "status"),
+        &Value::string_utf8("classified")
+    );
+    let current_target = member(&receipt, "target").clone();
+    let recovered = call_catalog(
+        "postgresql.recoverDdlKinds",
+        [("receipt", receipt), ("current", current_target)],
+    )
+    .unwrap();
+    assert_eq!(recovered, Value::string_utf8(sql));
+
+    let Value::Array(modules) = member(&source, "modules") else {
+        panic!("expected source module array")
+    };
+    let existing_module_id = member(modules.first().expect("source module"), "id").clone();
+    let collision_request = Value::Object(vec![
+        (Utf16::from("module"), existing_module_id),
+        (Utf16::from("recordId"), Value::string_utf8("simple")),
+        (
+            Utf16::from("declaration"),
+            member(declaration, "path").clone(),
+        ),
+        (Utf16::from("mode"), Value::string_utf8("strict")),
+    ]);
+    let refused = call_catalog(
+        "postgresql.classifyDdlRecord",
+        [("source", source), ("request", collision_request)],
+    )
+    .unwrap();
+    assert_eq!(member(&refused, "status"), &Value::string_utf8("blocked"));
 }

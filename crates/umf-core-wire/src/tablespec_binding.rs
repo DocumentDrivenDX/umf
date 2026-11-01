@@ -63,6 +63,11 @@ fn operation(value: &Value) -> Result<&'static str, EngineError> {
         "recoverTableSpecNullabilitySource",
         "classifyTableSpecKeys",
         "verifyTableSpecKeyClassification",
+        "projectKeysToTableSpec",
+        "verifyKeysTableSpecProjection",
+        "recoverKeysTableSpecIdeal",
+        "projectFacetsToTableSpec",
+        "recoverFacetsFromTableSpec",
         "recoverTableSpecKeySource",
         "classifyTableSpecFacets",
         "verifyTableSpecFacetClassification",
@@ -87,10 +92,19 @@ fn allowed(op: &str) -> &'static [&'static str] {
         "importTableSpecBundle" => &["profile", "op", "files", "id"],
         "exportTableSpecBundle" => &["profile", "op", "document"],
         "classifyTableSpecField" => &["profile", "op", "document", "request"],
-        "projectCardinalityToTableSpec" | "projectNullabilityToTableSpec" => &["profile", "op", "author", "request"],
-        "recoverCardinalityFromTableSpec" | "recoverNullabilityFromTableSpec" => &["profile", "op", "receipt", "nativeText"],
-        "projectFieldToTableSpec" | "projectRecordToTableSpec" => &["profile", "op", "author", "request"],
-        "recoverFieldFromTableSpec" | "recoverRecordFromTableSpec" => &["profile", "op", "receipt", "nativeText"],
+        "projectCardinalityToTableSpec" | "projectNullabilityToTableSpec" => {
+            &["profile", "op", "author", "request"]
+        }
+        "recoverCardinalityFromTableSpec" | "recoverNullabilityFromTableSpec" => {
+            &["profile", "op", "receipt", "nativeText"]
+        }
+        "projectFieldToTableSpec" | "projectRecordToTableSpec" | "projectFacetsToTableSpec" => {
+            &["profile", "op", "author", "request"]
+        }
+        "projectKeysToTableSpec" => &["profile", "op", "source", "authors", "request"],
+        "recoverFieldFromTableSpec"
+        | "recoverRecordFromTableSpec"
+        | "recoverFacetsFromTableSpec" => &["profile", "op", "receipt", "nativeText"],
         "verifyTableSpecFieldClassification" => &["profile", "op", "receipt", "current"],
         "classifyTableSpecRecord" => &["profile", "op", "document", "request"],
         "verifyTableSpecRecordClassification"
@@ -100,6 +114,8 @@ fn allowed(op: &str) -> &'static [&'static str] {
         | "recoverTableSpecNullabilitySource"
         | "verifyTableSpecKeyClassification"
         | "recoverTableSpecKeySource"
+        | "verifyKeysTableSpecProjection"
+        | "recoverKeysTableSpecIdeal"
         | "verifyTableSpecFacetClassification"
         | "recoverTableSpecFacetSource"
         | "verifyTableSpecRelationshipClassification"
@@ -264,11 +280,18 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
             required_value(request, "receipt")?;
             required_string(request, "nativeText")?;
         }
-        "projectFieldToTableSpec" | "projectRecordToTableSpec" => {
+        "projectKeysToTableSpec" => {
+            required_value(request, "source")?;
+            required_value(request, "authors")?;
+            required_value(request, "request")?;
+        }
+        "projectFieldToTableSpec" | "projectRecordToTableSpec" | "projectFacetsToTableSpec" => {
             required_value(request, "author")?;
             required_value(request, "request")?;
         }
-        "recoverFieldFromTableSpec" | "recoverRecordFromTableSpec" => {
+        "recoverFieldFromTableSpec"
+        | "recoverRecordFromTableSpec"
+        | "recoverFacetsFromTableSpec" => {
             required_value(request, "receipt")?;
             required_string(request, "nativeText")?;
         }
@@ -283,6 +306,8 @@ fn validate_request(request: &Value, ctx: &mut Context<'_>) -> Result<&'static s
         | "recoverTableSpecNullabilitySource"
         | "verifyTableSpecKeyClassification"
         | "recoverTableSpecKeySource"
+        | "verifyKeysTableSpecProjection"
+        | "recoverKeysTableSpecIdeal"
         | "verifyTableSpecFacetClassification"
         | "recoverTableSpecFacetSource"
         | "verifyTableSpecRelationshipClassification"
@@ -386,14 +411,72 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             ctx,
         ),
         "exportTableSpecBundle" => runtime.export_bundle(required_value(request, "document")?, ctx),
-        "projectFieldToTableSpec" => runtime.project_field_to_tablespec(required_value(request, "author")?, required_value(request, "request")?, ctx),
-        "recoverFieldFromTableSpec" => runtime.recover_field_from_tablespec(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
-        "projectRecordToTableSpec" => runtime.project_record_to_tablespec(required_value(request, "author")?, required_value(request, "request")?, ctx),
-        "recoverRecordFromTableSpec" => runtime.recover_record_from_tablespec(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
-        "projectCardinalityToTableSpec" => runtime.project_authored_cardinality(required_value(request, "author")?, required_value(request, "request")?, ctx),
-        "recoverCardinalityFromTableSpec" => runtime.recover_authored_cardinality(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
-        "projectNullabilityToTableSpec" => runtime.project_authored_nullability(required_value(request, "author")?, required_value(request, "request")?, ctx),
-        "recoverNullabilityFromTableSpec" => runtime.recover_authored_nullability(required_value(request, "receipt")?, required_value(request, "nativeText")?, ctx),
+        "projectFieldToTableSpec" => runtime.project_field_to_tablespec(
+            required_value(request, "author")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "recoverFieldFromTableSpec" => runtime.recover_field_from_tablespec(
+            required_value(request, "receipt")?,
+            required_value(request, "nativeText")?,
+            ctx,
+        ),
+        "projectRecordToTableSpec" => runtime.project_record_to_tablespec(
+            required_value(request, "author")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "recoverRecordFromTableSpec" => runtime.recover_record_from_tablespec(
+            required_value(request, "receipt")?,
+            required_value(request, "nativeText")?,
+            ctx,
+        ),
+        "projectCardinalityToTableSpec" => runtime.project_authored_cardinality(
+            required_value(request, "author")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "recoverCardinalityFromTableSpec" => runtime.recover_authored_cardinality(
+            required_value(request, "receipt")?,
+            required_value(request, "nativeText")?,
+            ctx,
+        ),
+        "projectNullabilityToTableSpec" => runtime.project_authored_nullability(
+            required_value(request, "author")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "recoverNullabilityFromTableSpec" => runtime.recover_authored_nullability(
+            required_value(request, "receipt")?,
+            required_value(request, "nativeText")?,
+            ctx,
+        ),
+        "projectKeysToTableSpec" => runtime.project_keys_to_tablespec(
+            required_value(request, "source")?,
+            required_value(request, "authors")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "verifyKeysTableSpecProjection" => runtime.verify_keys_tablespec_projection(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "recoverKeysTableSpecIdeal" => runtime.recover_keys_tablespec_ideal(
+            required_value(request, "receipt")?,
+            required_value(request, "current")?,
+            ctx,
+        ),
+        "projectFacetsToTableSpec" => runtime.project_facets_to_tablespec(
+            required_value(request, "author")?,
+            required_value(request, "request")?,
+            ctx,
+        ),
+        "recoverFacetsFromTableSpec" => runtime.recover_facets_from_tablespec(
+            required_value(request, "receipt")?,
+            required_value(request, "nativeText")?,
+            ctx,
+        ),
         "classifyTableSpecField" => runtime.classify_field(
             required_value(request, "document")?,
             required_value(request, "request")?,

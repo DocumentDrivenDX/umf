@@ -20,18 +20,26 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         "postgresql.classifyField"
         | "postgresql.classifyRecord"
         | "postgresql.classifyCardinality"
-        | "postgresql.classifyNullability" => &["profile", "op", "source", "request"],
-        "postgresql.prepareKeyParserRequests" => &["profile", "op", "source", "request"],
+        | "postgresql.classifyNullability"
+        | "postgresql.classifyComposite" => &["profile", "op", "source", "request"],
+        "postgresql.prepareDdlParserRequest" => &["profile", "op", "source", "request"],
+        "postgresql.classifyDdlRecord" => &["profile", "op", "source", "request", "parser"],
+        "postgresql.getDdlDeclarations" => &["profile", "op", "document"],
+        "postgresql.prepareKeyParserRequests" | "postgresql.prepareKeyCorrelation" => {
+            &["profile", "op", "source", "request"]
+        },
         "postgresql.prepareRelationshipParserRequests" => &["profile", "op", "source", "request"],
         "postgresql.classifyRelationships" => &["profile", "op", "source", "request", "parser"],
         "postgresql.verifyRelationshipClassification" | "postgresql.recoverRelationshipSource" => {
             &["profile", "op", "receipt", "current", "parser"]
         }
         "postgresql.prepareFacetParserRequests" => &["profile", "op", "request"],
-        "postgresql.classifyKeys" | "postgresql.classifyFacets" => {
+        "postgresql.classifyKeys" | "postgresql.classifyFacets" | "postgresql.keyCorrelate" => {
             &["profile", "op", "source", "request", "parser"]
         }
-        "postgresql.verifyFieldClassification"
+        "postgresql.verifyCompositeClassification"
+        | "postgresql.recoverCompositeCapture"
+        | "postgresql.verifyFieldClassification"
         | "postgresql.recoverFieldCapture"
         | "postgresql.verifyRecordClassification"
         | "postgresql.recoverRecordCapture"
@@ -43,13 +51,19 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         | "postgresql.recoverKeySource"
         | "postgresql.verifyFacetClassification"
         | "postgresql.recoverFacetSource" => &["profile", "op", "receipt", "current", "parser"],
+        "postgresql.verifyDdlKinds" | "postgresql.recoverDdlKinds" => {
+            &["profile", "op", "receipt", "current", "parser"]
+        }
         "postgresql.inspect"
         | "postgresql.export"
         | "postgresql.columns"
         | "postgresql.reconstruction" => &["profile", "op", "document"],
+        "postgresql.inspectPayload" => &["profile", "op", "payload"],
         "postgresql.getNode" => &["profile", "op", "document", "pointer"],
         "postgresql.findRelation" => &["profile", "op", "document", "schema", "name"],
-        "postgresql.edit" => &["profile", "op", "document", "path", "text"],
+        "postgresql.edit" | "postgresql.proposeCatalogEdit" => {
+            &["profile", "op", "document", "path", "text"]
+        }
         "postgresql.dependencies" => &["profile", "op", "document", "side", "object"],
         "postgresql.facetType" => &["profile", "op", "native"],
         "postgresql.facetPredicate" => &["profile", "op", "native", "columnName"],
@@ -80,6 +94,14 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
     let op = string(request, "op")?;
     let names = [
         "postgresql.import",
+        "postgresql.classifyComposite",
+        "postgresql.getDdlDeclarations",
+        "postgresql.prepareDdlParserRequest",
+        "postgresql.classifyDdlRecord",
+        "postgresql.verifyDdlKinds",
+        "postgresql.recoverDdlKinds",
+        "postgresql.verifyCompositeClassification",
+        "postgresql.recoverCompositeCapture",
         "postgresql.classifyField",
         "postgresql.verifyFieldClassification",
         "postgresql.recoverFieldCapture",
@@ -93,6 +115,8 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.verifyNullabilityClassification",
         "postgresql.recoverNullabilitySource",
         "postgresql.prepareKeyParserRequests",
+        "postgresql.prepareKeyCorrelation",
+        "postgresql.keyCorrelate",
         "postgresql.classifyKeys",
         "postgresql.verifyKeyClassification",
         "postgresql.recoverKeySource",
@@ -105,11 +129,13 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.verifyFacetClassification",
         "postgresql.recoverFacetSource",
         "postgresql.inspect",
+        "postgresql.inspectPayload",
         "postgresql.export",
         "postgresql.columns",
         "postgresql.getNode",
         "postgresql.findRelation",
         "postgresql.edit",
+        "postgresql.proposeCatalogEdit",
         "postgresql.reconstruction",
         "postgresql.dependencies",
         "postgresql.facetType",
@@ -138,11 +164,22 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.classifyField"
         | "postgresql.classifyRecord"
         | "postgresql.classifyCardinality"
-        | "postgresql.classifyNullability" => {
+        | "postgresql.classifyNullability"
+        | "postgresql.classifyComposite" => {
             required(request, "source")?;
             required(request, "request")?;
         }
-        "postgresql.verifyFieldClassification"
+        "postgresql.classifyDdlRecord" => {
+            required(request, "source")?;
+            required(request, "request")?;
+        }
+        "postgresql.verifyDdlKinds" | "postgresql.recoverDdlKinds" => {
+            required(request, "receipt")?;
+            required(request, "current")?;
+        }
+        "postgresql.verifyCompositeClassification"
+        | "postgresql.recoverCompositeCapture"
+        | "postgresql.verifyFieldClassification"
         | "postgresql.recoverFieldCapture"
         | "postgresql.verifyRecordClassification"
         | "postgresql.recoverRecordCapture"
@@ -153,12 +190,12 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
             required(request, "receipt")?;
             required(request, "current")?;
         }
-        "postgresql.prepareKeyParserRequests" | "postgresql.classifyKeys" => {
+        "postgresql.prepareKeyParserRequests"
+        | "postgresql.prepareKeyCorrelation"
+        | "postgresql.classifyKeys"
+        | "postgresql.keyCorrelate" => {
             required(request, "source")?;
             required(request, "request")?;
-            if op == "postgresql.classifyKeys" {
-                required(request, "parser")?;
-            }
         }
         "postgresql.prepareFacetParserRequests" => {
             required(request, "request")?;
@@ -170,12 +207,10 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.classifyRelationships" => {
             required(request, "source")?;
             required(request, "request")?;
-            required(request, "parser")?;
         }
         "postgresql.classifyFacets" => {
             required(request, "source")?;
             required(request, "request")?;
-            required(request, "parser")?;
         }
         "postgresql.verifyKeyClassification"
         | "postgresql.recoverKeySource"
@@ -185,7 +220,6 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         | "postgresql.recoverRelationshipSource" => {
             required(request, "receipt")?;
             required(request, "current")?;
-            required(request, "parser")?;
         }
         "postgresql.import" => {
             let source = string(request, "source")?;
@@ -198,11 +232,21 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
                 ));
             }
         }
+        "postgresql.getDdlDeclarations" => {
+            required(request, "document")?;
+        }
+        "postgresql.prepareDdlParserRequest" => {
+            required(request, "source")?;
+            required(request, "request")?;
+        }
         "postgresql.inspect"
         | "postgresql.export"
         | "postgresql.columns"
         | "postgresql.reconstruction" => {
             required(request, "document")?;
+        }
+        "postgresql.inspectPayload" => {
+            required(request, "payload")?;
         }
         "postgresql.getNode" => {
             required(request, "document")?;
@@ -213,7 +257,7 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
             string(request, "schema")?;
             string(request, "name")?;
         }
-        "postgresql.edit" => {
+        "postgresql.edit" | "postgresql.proposeCatalogEdit" => {
             required(request, "document")?;
             string(request, "path")?;
             let text = string(request, "text")?;
@@ -272,7 +316,187 @@ pub fn execute_with_parser_backend(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let op = validate(request, ctx)?;
+    if !umf_core::parser_backend_protocol::backend_identity_is_admitted(backend.identity()) {
+        return Err(EngineError::new(
+            "POSTGRESQL_BACKEND",
+            Utf16::default(),
+            "Pinned PostgreSQL parser backend required",
+        ));
+    }
+    // An explicit parser response remains an explicit caller capability. The
+    // native backend is selected only when the caller supplied none.
+    if field(request, "parser").is_some()
+        && matches!(
+            op,
+            "postgresql.classifyDdlRecord"
+                | "postgresql.verifyDdlKinds"
+                | "postgresql.recoverDdlKinds"
+                | "postgresql.classifyKeys"
+                | "postgresql.keyCorrelate"
+                | "postgresql.verifyKeyClassification"
+                | "postgresql.recoverKeySource"
+                | "postgresql.classifyFacets"
+                | "postgresql.verifyFacetClassification"
+                | "postgresql.recoverFacetSource"
+                | "postgresql.classifyRelationships"
+                | "postgresql.verifyRelationshipClassification"
+                | "postgresql.recoverRelationshipSource"
+        )
+    {
+        return execute_validated(request, op, ctx);
+    }
     match op {
+        "postgresql.classifyDdlRecord" => {
+            let prepared = umf_core::postgresql_ddl_classification::prepare_parser_request(
+                required(request, "source")?,
+                required(request, "request")?,
+                ctx,
+            )?;
+            let sql = string(&prepared, "sql")?;
+            let ast = backend.parse(sql, ctx)?;
+            umf_core::postgresql_ddl_classification::classify(
+                required(request, "source")?,
+                required(request, "request")?,
+                &ast,
+                ctx,
+            )
+        }
+        "postgresql.verifyDdlKinds" | "postgresql.recoverDdlKinds" => {
+            let receipt = required(request, "receipt")?;
+            let prepared = umf_core::postgresql_ddl_classification::prepare_parser_request(
+                required(receipt, "source")?,
+                required(receipt, "request")?,
+                ctx,
+            )?;
+            let ast = backend.parse(string(&prepared, "sql")?, ctx)?;
+            if op == "postgresql.verifyDdlKinds" {
+                umf_core::postgresql_ddl_classification::verify(
+                    receipt,
+                    required(request, "current")?,
+                    &ast,
+                    ctx,
+                )
+            } else {
+                Ok(Value::String(
+                    umf_core::postgresql_ddl_classification::recover(
+                        receipt,
+                        required(request, "current")?,
+                        &ast,
+                        ctx,
+                    )?,
+                ))
+            }
+        }
+        "postgresql.classifyKeys" => {
+            let source = required(request, "source")?;
+            let req = required(request, "request")?;
+            let prepared = umf_core::postgresql_keys_classification::prepare_key_parser_requests(
+                source, req, ctx,
+            )?;
+            let parser = parser_responses_from_prepared(&prepared, backend, ctx)?;
+            umf_core::postgresql_keys_classification::classify_keys(source, req, &parser, ctx)
+        }
+        "postgresql.keyCorrelate" => {
+            let source = required(request, "source")?;
+            let req = required(request, "request")?;
+            let prepared = umf_core::postgresql_keys_classification::prepare_catalog_correlation(
+                source, req, ctx,
+            )?;
+            let parser = parser_responses_from_prepared(&prepared, backend, ctx)?;
+            umf_core::postgresql_keys_classification::correlate_catalog(
+                source, req, &parser, ctx,
+            )
+        }
+        "postgresql.verifyKeyClassification" | "postgresql.recoverKeySource" => {
+            let receipt = required(request, "receipt")?;
+            let prepared = umf_core::postgresql_keys_classification::prepare_key_parser_requests(
+                required(receipt, "source")?,
+                required(receipt, "request")?,
+                ctx,
+            )?;
+            let parser = parser_responses_from_prepared(&prepared, backend, ctx)?;
+            if op == "postgresql.verifyKeyClassification" {
+                umf_core::postgresql_keys_classification::verify_keys(
+                    receipt,
+                    required(request, "current")?,
+                    &parser,
+                    ctx,
+                )
+            } else {
+                umf_core::postgresql_keys_classification::recover_keys(
+                    receipt,
+                    required(request, "current")?,
+                    &parser,
+                    ctx,
+                )
+            }
+        }
+        "postgresql.classifyFacets" => {
+            let source = required(request, "source")?;
+            let req = required(request, "request")?;
+            let prepared =
+                umf_core::postgresql_facets_classification::prepare_parser_requests(req, ctx)?;
+            let parser = parser_responses_from_prepared(&prepared, backend, ctx)?;
+            umf_core::postgresql_facets_classification::classify(source, req, &parser, ctx)
+        }
+        "postgresql.verifyFacetClassification" | "postgresql.recoverFacetSource" => {
+            let receipt = required(request, "receipt")?;
+            let prepared = umf_core::postgresql_facets_classification::prepare_parser_requests(
+                required(receipt, "request")?,
+                ctx,
+            )?;
+            let parser = parser_responses_from_prepared(&prepared, backend, ctx)?;
+            if op == "postgresql.verifyFacetClassification" {
+                umf_core::postgresql_facets_classification::verify(
+                    receipt,
+                    required(request, "current")?,
+                    &parser,
+                    ctx,
+                )
+            } else {
+                umf_core::postgresql_facets_classification::recover(
+                    receipt,
+                    required(request, "current")?,
+                    &parser,
+                    ctx,
+                )
+            }
+        }
+        "postgresql.classifyRelationships" => {
+            let source = required(request, "source")?;
+            let req = required(request, "request")?;
+            let prepared =
+                umf_core::postgresql_relationship_classification::prepare_parser_requests(
+                    source, req, ctx,
+                )?;
+            let parser = parser_responses_from_prepared(&prepared, backend, ctx)?;
+            umf_core::postgresql_relationship_classification::classify(source, req, &parser, ctx)
+        }
+        "postgresql.verifyRelationshipClassification" | "postgresql.recoverRelationshipSource" => {
+            let receipt = required(request, "receipt")?;
+            let prepared =
+                umf_core::postgresql_relationship_classification::prepare_parser_requests(
+                    required(receipt, "source")?,
+                    required(receipt, "request")?,
+                    ctx,
+                )?;
+            let parser = parser_responses_from_prepared(&prepared, backend, ctx)?;
+            if op == "postgresql.verifyRelationshipClassification" {
+                umf_core::postgresql_relationship_classification::verify(
+                    receipt,
+                    required(request, "current")?,
+                    &parser,
+                    ctx,
+                )
+            } else {
+                umf_core::postgresql_relationship_classification::recover(
+                    receipt,
+                    required(request, "current")?,
+                    &parser,
+                    ctx,
+                )
+            }
+        }
         "postgresql.facetCorrelate" => pg::correlate_facet_catalog_with_backend(
             required(request, "document")?,
             string(request, "source")?,
@@ -280,12 +504,118 @@ pub fn execute_with_parser_backend(
             backend,
             ctx,
         ),
-        _ => execute(request, ctx),
+        _ => execute_validated(request, op, ctx),
     }
 }
+
+fn parser_responses_from_prepared(
+    prepared: &Value,
+    backend: &dyn umf_core::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let Some(Value::Array(queries)) = field(prepared, "queries") else {
+        return Err(EngineError::new(
+            "POSTGRESQL_BACKEND_RESPONSE",
+            Utf16::default(),
+            "Rust parser request list is malformed",
+        ));
+    };
+    let mut responses = Vec::with_capacity(queries.len());
+    for query in queries {
+        let id = match field(query, "id") {
+            Some(Value::String(id)) => id.clone(),
+            _ => {
+                return Err(EngineError::new(
+                    "POSTGRESQL_BACKEND_RESPONSE",
+                    Utf16::default(),
+                    "Rust parser request lacks an id",
+                ))
+            }
+        };
+        let sql = match field(query, "sql") {
+            Some(Value::String(sql)) => sql.clone(),
+            _ => {
+                return Err(EngineError::new(
+                    "POSTGRESQL_BACKEND_RESPONSE",
+                    Utf16::default(),
+                    "Rust parser request lacks SQL",
+                ))
+            }
+        };
+        ctx.charge_work(id.len().saturating_add(sql.len()), Utf16::default())?;
+        let ast = backend.parse(&sql, ctx)?;
+        responses.push(Value::Object(vec![
+            (Utf16::from("id"), Value::String(id)),
+            (Utf16::from("sql"), Value::String(sql)),
+            (Utf16::from("ast"), ast),
+        ]));
+    }
+    Ok(Value::Object(vec![(
+        Utf16::from("responses"),
+        Value::Array(responses),
+    )]))
+}
+
 fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let op = validate(request, ctx)?;
+    execute_validated(request, op, ctx)
+}
+fn execute_validated(
+    request: &Value,
+    op: &str,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     match op {
+        "postgresql.classifyComposite" => umf_core::postgresql_composite_classification::classify(
+            required(request, "source")?,
+            required(request, "request")?,
+            ctx,
+        ),
+        "postgresql.getDdlDeclarations" => umf_core::postgresql_ddl_classification::declarations(
+            required(request, "document")?,
+            ctx,
+        ),
+        "postgresql.prepareDdlParserRequest" => {
+            umf_core::postgresql_ddl_classification::prepare_parser_request(
+                required(request, "source")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.classifyDdlRecord" => umf_core::postgresql_ddl_classification::classify(
+            required(request, "source")?,
+            required(request, "request")?,
+            required(request, "parser")?,
+            ctx,
+        ),
+        "postgresql.verifyDdlKinds" => umf_core::postgresql_ddl_classification::verify(
+            required(request, "receipt")?,
+            required(request, "current")?,
+            required(request, "parser")?,
+            ctx,
+        ),
+        "postgresql.recoverDdlKinds" => Ok(Value::String(
+            umf_core::postgresql_ddl_classification::recover(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                required(request, "parser")?,
+                ctx,
+            )?,
+        )),
+        "postgresql.verifyCompositeClassification" => {
+            umf_core::postgresql_composite_classification::verify(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverCompositeCapture" => Ok(Value::String(
+            umf_core::postgresql_composite_classification::recover(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                ctx,
+            )?,
+        )),
         "postgresql.classifyField" => umf_core::postgresql_classification::classify_field(
             required(request, "source")?,
             required(request, "request")?,
@@ -373,6 +703,21 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
                 ctx,
             )
         }
+        "postgresql.prepareKeyCorrelation" => {
+            umf_core::postgresql_keys_classification::prepare_catalog_correlation(
+                required(request, "source")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.keyCorrelate" => {
+            umf_core::postgresql_keys_classification::correlate_catalog(
+                required(request, "source")?,
+                required(request, "request")?,
+                required(request, "parser")?,
+                ctx,
+            )
+        }
         "postgresql.prepareFacetParserRequests" => {
             umf_core::postgresql_facets_classification::prepare_parser_requests(
                 required(request, "request")?,
@@ -455,6 +800,7 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             pg::document_value(string(request, "id")?, &capture, ctx)
         }
         "postgresql.inspect" => pg::inspect_document(required(request, "document")?, ctx),
+        "postgresql.inspectPayload" => pg::inspect_payload(required(request, "payload")?, ctx),
         "postgresql.export" => Ok(Value::String(pg::export_document(
             required(request, "document")?,
             ctx,
@@ -501,6 +847,19 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             string(request, "text")?,
             ctx,
         ),
+        "postgresql.proposeCatalogEdit" => {
+            let document = pg::propose_edit(
+                required(request, "document")?,
+                string(request, "path")?,
+                string(request, "text")?,
+                ctx,
+            )?;
+            let validation = pg::inspect_document(&document, ctx)?;
+            Ok(Value::Object(vec![
+                (Utf16::from("document"), document),
+                (Utf16::from("validation"), validation),
+            ]))
+        }
         "postgresql.reconstruction" => pg::get_reconstruction(required(request, "document")?, ctx),
         "postgresql.facetType" => pg::inspect_facet_type(required(request, "native")?, ctx),
         "postgresql.facetPredicate" => pg::inspect_facet_predicate(

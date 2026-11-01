@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {expect,test} from 'bun:test';
+import {backend} from '../../native/postgresql/runtime';
+import {correlatePostgresqlKeyCatalog,importPostgresqlCatalogCapture,inspectPostgresqlCardinalityCatalog,inspectPostgresqlKeyCatalog,correlatePostgresqlCardinalityCatalog,resolvePostgresqlCardinalityType} from '../../src/index-node-v4';
+import keyProof from '../../fixtures/validation/key-postgresql-discovery-native.json';
+const keyCaptureRoot=JSON.parse(await Bun.file('fixtures/validation/key-postgresql-catalog-capture.json').text());
+keyCaptureRoot.snapshot.relations=keyCaptureRoot.snapshot.relations.filter((r:any)=>r.schema==='umf_key_probe'&&r.name==='enforced');
+const keyCapture=JSON.stringify(keyCaptureRoot);
+const keyQuery=await Bun.file('native/postgresql/keys/query.sql').text();
+const keySupplement=()=>JSON.stringify({profile:'umf-postgresql-key-observations-17-v1',serverVersion:170004,encoding:'UTF8',query:keyQuery,indexes:structuredClone(keyProof.indexes.filter((i:any)=>i.schema==='umf_key_probe'&&i.table==='enforced'))});
+const pgCardinality=await Bun.file('fixtures/validation/cardinality-postgresql-catalog-native.json').json();
+const captureCardinality=JSON.parse(pgCardinality.captureSource);
+captureCardinality.snapshot.relations=captureCardinality.snapshot.relations.filter((r:any)=>r.schema==='cardinality'&&r.name==='declared');
+const sourceCardinality=JSON.stringify(captureCardinality);
+const supplementCardinality=structuredClone(pgCardinality.supplement);
+supplementCardinality.columns=supplementCardinality.columns.filter((c:any)=>c.schema==='cardinality'&&c.relation==='declared');
+const cardinalityText=JSON.stringify(supplementCardinality);
+test('Rust public root inspects and correlates PostgreSQL key catalog observations while retaining caller parser behavior',async()=>{
+ const inspected=inspectPostgresqlKeyCatalog(keySupplement());
+ expect(inspected.indexes).toHaveLength(2);expect(inspected.provenance).toBe('unverified');
+ const document=importPostgresqlCatalogCapture(keyCapture,{id:'public-key-observations'});
+ const result=await correlatePostgresqlKeyCatalog(document,keySupplement(),backend);
+ expect(result.matches).toHaveLength(2);expect(result.authenticated).toBe(false);expect(result.sameSnapshotVerified).toBe(false);expect(result.idealEqualityVerified).toBe(false);
+ const invalid=structuredClone(keyProof.indexes.filter((i:any)=>i.schema==='umf_key_probe'&&i.table==='enforced'));invalid.pop();
+ await expect(correlatePostgresqlKeyCatalog(document,JSON.stringify({profile:'umf-postgresql-key-observations-17-v1',serverVersion:170004,encoding:'UTF8',query:keyQuery,indexes:invalid}),backend)).rejects.toThrow();
+ const modifiedRoot=JSON.parse(keyCapture);modifiedRoot.state='modified';
+ const modified=importPostgresqlCatalogCapture(JSON.stringify(modifiedRoot),{id:'modified-key-observations'});let parserCalls=0;
+ const observedBackend={...backend,async parse(sql:string){parserCalls++;return backend.parse(sql)}};
+ await expect(correlatePostgresqlKeyCatalog(modified,keySupplement(),observedBackend)).rejects.toThrow();
+ expect(parserCalls).toBe(0);
+});
+test('Rust public root inspects, resolves and correlates PostgreSQL cardinality catalog observations with a bounded refusal',()=>{
+ const inspected=inspectPostgresqlCardinalityCatalog(cardinalityText);expect(inspected.columns).toHaveLength(1);expect(inspected.qualifiedVersion).toBe(true);
+ const resolved=resolvePostgresqlCardinalityType(cardinalityText,{schema:'cardinality',relation:'declared',name:'value'});
+ expect(resolved.native.identity).toEqual({schema:'pg_catalog',name:'_int4'});expect(resolved.standardArray).toBe(true);
+ const document=importPostgresqlCatalogCapture(sourceCardinality,{id:'public-cardinality-observations'});
+ const result=correlatePostgresqlCardinalityCatalog(document,cardinalityText);
+ expect(result.matches).toHaveLength(1);expect(result.sameSnapshotVerified).toBe(false);
+ expect(()=>resolvePostgresqlCardinalityType(cardinalityText,{schema:'cardinality',relation:'missing',name:'value'})).toThrow();
+});

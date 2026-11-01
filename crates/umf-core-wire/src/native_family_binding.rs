@@ -7,11 +7,13 @@ use umf_core::{Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
+    "field-record-parquet-projection",
     "medical-projection",
     "relationship-extra-projection",
     "relationship-parquet-projection",
     "cardinality-sqlserver-projection",
     "field-record-sqlserver-projection",
+    "field-record-avro-projection",
     "avro-cardinality",
     "avro-classification",
     "record-type",
@@ -39,6 +41,8 @@ pub const FAMILIES: &[&str] = &[
     "sqlserver-ddl-projection",
     "binding-sqlserver-planned-index-projection",
     "binding-index-projection",
+    "binding-public",
+    "dashboard-public",
     "binding-parquet-projection",
     "binding-delta-projection",
     "binding-sqlserver-tables",
@@ -88,6 +92,15 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverFieldFromSqlServer",
                 "projectRecordToSqlServer",
                 "recoverRecordFromSqlServer",
+            ],
+        ),
+        "field-record-avro-projection" => (
+            crate::avro_field_record_projection_binding::PROFILE,
+            &[
+                "projectFieldToAvro",
+                "recoverFieldFromAvro",
+                "projectRecordToAvro",
+                "recoverRecordFromAvro",
             ],
         ),
         "avro-cardinality" => (
@@ -232,6 +245,15 @@ pub fn metadata_wire(family: &str) -> String {
                 "recoverRelationshipParquetNative",
             ],
         ),
+        "field-record-parquet-projection" => (
+            crate::parquet_field_record_projection_binding::PROFILE,
+            &[
+                "projectFieldToParquet",
+                "recoverFieldFromParquet",
+                "projectRecordToParquet",
+                "recoverRecordFromParquet",
+            ],
+        ),
         "avro" => (
             crate::avro_binding::PROFILE,
             &[
@@ -309,6 +331,14 @@ pub fn metadata_wire(family: &str) -> String {
                 "prepareBindingIndexesToPostgresql",
                 "completeBindingIndexesToPostgresql",
             ],
+        ),
+        "binding-public" => (
+            crate::binding_public_binding::PROFILE,
+            &["inspectBinding", "getBinding", "readBindingDocument", "writeBindingDocument", "projectBindingIndexes", "migrateBindingRelationships", "rollbackBindingRelationships", "validateBindingSemantics", "validateBit128Dataset"],
+        ),
+        "dashboard-public" => (
+            crate::dashboard_binding::PROFILE,
+            &["inspectDashboard", "readDashboardDocument", "writeDashboardDocument", "getDashboardDefinition", "validateDashboardSemantics"],
         ),
         "binding-parquet-projection" => (
             crate::binding_parquet_projection_binding::PROFILE,
@@ -458,6 +488,11 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyTableSpecKeys",
                 "verifyTableSpecKeyClassification",
                 "recoverTableSpecKeySource",
+                "projectKeysToTableSpec",
+                "verifyKeysTableSpecProjection",
+                "recoverKeysTableSpecIdeal",
+                "projectFacetsToTableSpec",
+                "recoverFacetsFromTableSpec",
                 "classifyTableSpecFacets",
                 "verifyTableSpecFacetClassification",
                 "recoverTableSpecFacetSource",
@@ -487,6 +522,33 @@ pub fn metadata_wire(family: &str) -> String {
         "postgresql" => (
             crate::postgresql_catalog_binding::PROFILE,
             &[
+                "import",
+                "inspect",
+                "inspectPayload",
+                "export",
+                "columns",
+                "getNode",
+                "findRelation",
+                "edit",
+                "proposeCatalogEdit",
+                "reconstruction",
+                "dependencies",
+                "facetCatalog",
+                "cardinalityCatalog",
+                "cardinalityType",
+                "cardinalityCorrelate",
+                "keyCatalog",
+                "prepareKeyCorrelation",
+                "keyCorrelate",
+                "facetCorrelate",
+                "classifyComposite",
+                "verifyCompositeClassification",
+                "recoverCompositeCapture",
+                "getDdlDeclarations",
+                "prepareDdlParserRequest",
+                "classifyDdlRecord",
+                "verifyDdlKinds",
+                "recoverDdlKinds",
                 "classifyField",
                 "verifyFieldClassification",
                 "recoverFieldCapture",
@@ -697,6 +759,8 @@ pub fn metadata_wire(family: &str) -> String {
         .iter()
         .map(|operation| {
             let wire_operation = if family == "field-record-sqlserver-projection"
+                || family == "field-record-parquet-projection"
+                || family == "field-record-avro-projection"
                 || family == "cardinality-sqlserver-projection"
                 || family == "avro-cardinality"
                 || family == "avro-classification"
@@ -744,6 +808,7 @@ pub fn execute_wire_with_control(
     match family {
         "cardinality-sqlserver-projection" => crate::cardinality_sqlserver_projection_binding::execute_wire_with_control(wire, control),
         "field-record-sqlserver-projection" => crate::sqlserver_field_record_projection_binding::execute_wire_with_control(wire, control),
+        "field-record-avro-projection" => crate::avro_field_record_projection_binding::execute_wire_with_control(wire, control),
         "avro-classification" => {
             crate::avro_classification_binding::execute_wire_with_control(wire, control)
         }
@@ -787,6 +852,9 @@ pub fn execute_wire_with_control(
         "relationship-extra-projection" => crate::relationship_extra_projection_binding::execute_wire_with_control(wire, control),
         "relationship-parquet-projection" => {
             crate::relationship_parquet_projection_binding::execute_wire_with_control(wire, control)
+        }
+        "field-record-parquet-projection" => {
+            crate::parquet_field_record_projection_binding::execute_wire_with_control(wire, control)
         }
         "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
         "avro-json-schema-projection" => {
@@ -832,6 +900,8 @@ pub fn execute_wire_with_control(
         "binding-index-projection" => {
             crate::binding_indexes_binding::execute_wire_with_control(wire, control)
         }
+        "binding-public" => crate::binding_public_binding::execute_wire_with_control(wire, control),
+        "dashboard-public" => crate::dashboard_binding::execute_wire_with_control(wire, control),
         "binding-parquet-projection" => {
             crate::binding_parquet_projection_binding::execute_wire_with_control(wire, control)
         }

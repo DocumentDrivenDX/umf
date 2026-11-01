@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/postgresql-catalog/package.json';
+import {POSTGRESQL_CATALOG_EXTENSION,postgresqlCatalogPackage,type PostgresqlCatalogObjectIdentity} from './catalog-package';
+export {POSTGRESQL_CATALOG_EXTENSION,postgresqlCatalogPackage} from './catalog-package';
+export type {PostgresqlCatalogObjectIdentity} from './catalog-package';
 import {derivePostgresqlColumns} from './column-metadata';
 export type {PostgresqlColumnMetadata} from './column-metadata';
 import schema from '../../../spec/extensions/postgresql-catalog/capture.schema.json';
@@ -10,9 +12,7 @@ import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {catalogIntegerErrors} from '../../validation/catalog-integers';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const POSTGRESQL_CATALOG_EXTENSION='umf.postgresql.catalog';
-export const postgresqlCatalogPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,type Document,type Json,type Diagnostic} from '../../model/types';
 type Payload={profile:'postgresql-catalog-capture';state:'captured'|'modified';root:NativeJson};
 let check:ReturnType<ReturnType<typeof createValidator>['compile']>|undefined;
 function inspect(value:Json):Diagnostic[]{
@@ -93,7 +93,6 @@ export function getPostgresqlCatalogReconstruction(document:Document){
  const n=getPostgresqlCatalogNode(document,'/reconstruction/sql');if(n.kind!=='string')throw new UmfError('POSTGRESQL_CATALOG_SQL','Expected SQL archive');
  return {sql:n.value,complete:false as const,provenance:'original-capture-archive' as const};
 }
-export interface PostgresqlCatalogObjectIdentity {catalog:string;type:string;identity:string;}
 /** Observed pg_depend edges only. Missing coverage is distinct from no matches.
  * Native dependency kinds and multiplicity are retained; this is not a DDL plan. */
 export function queryPostgresqlCatalogDependencies(document:Document,filter?:{side:'dependent'|'referenced';object:PostgresqlCatalogObjectIdentity}){

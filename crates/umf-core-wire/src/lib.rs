@@ -36,6 +36,8 @@ pub mod relationship_postgresql_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod relationship_parquet_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod parquet_field_record_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod relationship_extra_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection_binding;
@@ -95,6 +97,10 @@ pub mod sqlserver_ddl_projection_binding;
 pub mod binding_sqlserver_planned_indexes_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod binding_indexes_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_public_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod dashboard_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod binding_parquet_projection_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -247,6 +253,8 @@ pub use parquet_capture_binding::{
 pub mod cardinality_sqlserver_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_field_record_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod avro_field_record_projection_binding;
 pub mod avro_cardinality_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod protobuf_document;

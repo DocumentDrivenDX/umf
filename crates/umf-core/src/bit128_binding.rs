@@ -396,7 +396,7 @@ fn validate_model_scalar(field: &Value) -> Result<(), EngineError> {
     Ok(())
 }
 
-fn validate_model_layout(
+pub fn validate_model_layout(
     payload: &Value,
     logical: &Value,
     ctx: &mut Context<'_>,
@@ -1015,7 +1015,7 @@ fn report(diagnostics: Vec<Diagnostic>) -> Validation {
         diagnostics,
     }
 }
-fn resources(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
+pub fn resources(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
     fn read(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         let units: Vec<u16> = source.encode_utf16().collect();
         ctx.charge_text(units.len(), Utf16::default())?;
@@ -1292,9 +1292,7 @@ pub fn inspect_bit128_binding(
             if let [(_, owner_module, owner_element)] = owners.as_slice() {
                 table = table_bindings
                     .iter()
-                    .find(|(module, element, _)| {
-                        module == owner_module && element == owner_element
-                    })
+                    .find(|(module, element, _)| module == owner_module && element == owner_element)
                     .map(|(_, _, table)| table.clone());
             }
         }
@@ -1858,7 +1856,15 @@ fn scalar_literal_token(
     literal: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let validation = engine.validate_core_field_value_public(logical, identity, literal, ctx)?;
+    let validation = if ["float", "date", "time", "timestamp"]
+        .iter()
+        .any(|scalar| eq(get(field, "scalarType"), scalar))
+    {
+        engine
+            .validate_schema_literal_with_refinements_public(logical, field, literal, false, ctx)?
+    } else {
+        engine.validate_core_field_value_public(logical, identity, literal, ctx)?
+    };
     if !validation.valid {
         return Err(EngineError::new(
             "BIT128_FILE_VALUE",
@@ -1975,10 +1981,16 @@ fn decode_scalar_literal(
         };
         Value::Object(vec![(key(member), value)])
     };
-    if !engine
-        .validate_core_field_value_public(logical, identity, &literal, ctx)?
-        .valid
+    let validation = if ["float", "date", "time", "timestamp"]
+        .iter()
+        .any(|scalar| eq(get(field, "scalarType"), scalar))
     {
+        engine
+            .validate_schema_literal_with_refinements_public(logical, field, &literal, false, ctx)?
+    } else {
+        engine.validate_core_field_value_public(logical, identity, &literal, ctx)?
+    };
+    if !validation.valid {
         return Err(EngineError::new(
             "BIT128_FILE_VALUE",
             Utf16::default(),

@@ -750,6 +750,37 @@ impl Engine {
         })
     }
 
+    /// Evaluate a Field literal with the caller-selected refinement mode.
+    /// Model scalar adapters use the unrefined form for declared opaque token
+    /// families such as float/date/time/timestamp while retaining wrapper and
+    /// exact text admission.
+    pub fn validate_schema_literal_with_refinements_public(
+        &self,
+        source: &Value,
+        field: &Value,
+        value: &Value,
+        refinements: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        let diagnostics = crate::literal::literal_field_value_errors_admitted(
+            source,
+            field,
+            value,
+            refinements,
+            &self.policy,
+            ctx,
+        )?;
+        let valid = !diagnostics
+            .iter()
+            .any(|item| item.severity == Severity::Error);
+        let complete = diagnostics.is_empty();
+        Ok(Validation {
+            valid,
+            complete,
+            diagnostics,
+        })
+    }
+
     /// Apply the direct `checkSchemaLiteral` contract to an already admitted
     /// source, selected Field and literal. Unlike the validation projection,
     /// this returns the first literal diagnostic as an operation error.

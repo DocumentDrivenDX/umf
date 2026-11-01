@@ -14,6 +14,8 @@ use std::collections::BTreeSet;
 
 const PROFILE: &str = "postgresql-catalog-capture-v1";
 const EXTENSION: &str = "umf.postgresql.catalog";
+const CAPTURE_SCHEMA: &str =
+    include_str!("../../../spec/extensions/postgresql-catalog/capture.schema.json");
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PostgresqlColumnMetadata {
@@ -571,7 +573,7 @@ pub fn correlate_facet_catalog_with_backend(
     backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    if backend.identity() != crate::parser_backend_protocol::PARSER_BACKEND_IDENTITY {
+    if !crate::parser_backend_protocol::backend_identity_is_admitted(backend.identity()) {
         return Err(fail(
             "POSTGRESQL_BACKEND",
             "Pinned PostgreSQL parser backend required",
@@ -2124,6 +2126,97 @@ fn diagnostic(code: &str, path: &str, message: &str, severity: &str) -> Value {
         ("severity", Value::string_utf8(severity)),
     ])
 }
+fn diagnostic_path(code: &str, path: Utf16, message: &str, severity: &str) -> Value {
+    make_object(vec![
+        ("code", Value::string_utf8(code)),
+        ("path", Value::String(path)),
+        ("message", Value::string_utf8(message)),
+        ("severity", Value::string_utf8(severity)),
+    ])
+}
+fn unknown_native_diagnostics(
+    node: &NativeJsonNode,
+    schema: &Value,
+    definitions: &Value,
+    path: &Utf16,
+    ctx: &mut Context<'_>,
+    out: &mut Vec<Value>,
+) -> Result<(), EngineError> {
+    ctx.charge_work(1, path.clone())?;
+    ctx.charge_text(path.len(), path.clone())?;
+    let schema = if let Some(Value::String(reference)) = value_field(schema, "$ref") {
+        let name = reference
+            .to_utf8()
+            .ok()
+            .and_then(|reference| reference.strip_prefix("#/$defs/").map(str::to_owned));
+        match name
+            .as_deref()
+            .and_then(|name| value_field(definitions, name))
+        {
+            Some(schema) => schema,
+            None => return Ok(()),
+        }
+    } else if let Some(Value::Array(branches)) = value_field(schema, "anyOf") {
+        if matches!(node, NativeJsonNode::Null) {
+            return Ok(());
+        }
+        let Some(branch) = branches
+            .iter()
+            .find(|branch| value_field(branch, "$ref").is_some())
+        else {
+            return Ok(());
+        };
+        return unknown_native_diagnostics(node, branch, definitions, path, ctx, out);
+    } else {
+        schema
+    };
+    match node {
+        NativeJsonNode::Array(items) => {
+            if let Some(item_schema) = value_field(schema, "items") {
+                for (index, item) in items.iter().enumerate() {
+                    let child = pointer_child(path, &Utf16::from(index.to_string()), ctx)?;
+                    unknown_native_diagnostics(item, item_schema, definitions, &child, ctx, out)?;
+                }
+            }
+        }
+        NativeJsonNode::Object(fields) => {
+            let properties = value_field(schema, "properties");
+            for (name, value) in fields {
+                let property_schema = match properties {
+                    Some(Value::Object(property_fields)) => {
+                        ctx.charge_work(property_fields.len(), path.clone())?;
+                        property_fields
+                            .iter()
+                            .find(|(property_name, _)| property_name == name)
+                            .map(|(_, property)| property)
+                    }
+                    _ => None,
+                };
+                let child = pointer_child(path, name, ctx)?;
+                if let Some(property_schema) = property_schema {
+                    unknown_native_diagnostics(
+                        value,
+                        property_schema,
+                        definitions,
+                        &child,
+                        ctx,
+                        out,
+                    )?;
+                } else {
+                    ctx.charge_text(child.len(), child.clone())?;
+                    out.push(diagnostic_path(
+                        "POSTGRESQL_CATALOG_UNKNOWN",
+                        child,
+                        "Unknown native capture field retained without interpretation",
+                        "warning",
+                    ));
+                }
+            }
+        }
+        _ => {}
+    }
+    Ok(())
+}
 fn document_module<'a>(document: &'a Value, id: &str) -> Option<&'a Value> {
     let Value::Array(modules) = value_field(document, "modules")? else {
         return None;
@@ -2275,6 +2368,7 @@ pub fn document_value(
 }
 pub fn inspect_document(document: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let capture = catalog_from_document(document, ctx)?;
+    let payload = capture_payload(document)?;
     let mut diagnostics = vec![diagnostic(
         "POSTGRESQL_CATALOG_SCOPE",
         "",
@@ -2289,6 +2383,30 @@ pub fn inspect_document(document: &Value, ctx: &mut Context<'_>) -> Result<Value
             "warning",
         ));
     }
+    if matches!(payload, Value::Object(fields) if fields.iter().any(|(name, _)| !["profile", "state", "root"].iter().any(|known| name == &key(known))))
+    {
+        diagnostics.push(diagnostic(
+            "POSTGRESQL_CATALOG_REPRESENTATION",
+            "",
+            "Unknown extension representation fields must remain in UMF",
+            "warning",
+        ));
+    }
+    let schema = serialization::read_json_value(
+        CAPTURE_SCHEMA.encode_utf16().collect::<Vec<_>>().as_slice(),
+        Format::Json,
+        ctx,
+    )?;
+    let empty_definitions = Value::Null;
+    let definitions = value_field(&schema, "$defs").unwrap_or(&empty_definitions);
+    unknown_native_diagnostics(
+        capture.root.root(),
+        &schema,
+        definitions,
+        &Utf16::default(),
+        ctx,
+        &mut diagnostics,
+    )?;
     if !matches!(field(capture.root.root(),"serverVersion"),Some(NativeJsonNode::Number(n)) if n=="170004")
     {
         diagnostics.push(diagnostic(
@@ -2312,6 +2430,48 @@ pub fn inspect_document(document: &Value, ctx: &mut Context<'_>) -> Result<Value
         ("complete", Value::Bool(false)),
         ("diagnostics", Value::Array(diagnostics)),
     ]))
+}
+/// Inspect the extension payload through the same native document path used by
+/// public catalog operations. The registry adapter uses this entry point so
+/// extension validation does not fall back to the TypeScript schema walker.
+pub fn inspect_payload(payload: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    let profile = value_text(value_field(payload, "profile"));
+    if profile != Some(&key("postgresql-catalog-capture")) {
+        return Err(fail(
+            "POSTGRESQL_CATALOG_PAYLOAD",
+            "Unsupported capture profile",
+        ));
+    }
+    let state = value_text(value_field(payload, "state"))
+        .ok_or_else(|| fail("POSTGRESQL_CATALOG_STATE", "Missing capture state"))?;
+    let root = value_field(payload, "root")
+        .ok_or_else(|| fail("POSTGRESQL_CATALOG_PAYLOAD", "Missing tagged capture root"))?;
+    let tree = NativeJsonTree::from_tagged_value(root, ctx)?;
+    let admitted_state = validate_root(&tree, ctx)?;
+    if &admitted_state != state {
+        return Err(fail(
+            "POSTGRESQL_CATALOG_STATE",
+            "Payload and native capture states disagree",
+        ));
+    }
+    let capture = PostgresqlCatalogCapture {
+        root: tree,
+        state: admitted_state,
+    };
+    let document = document_value(&key("postgresql-catalog-inspection"), &capture, ctx)?;
+    let mut report = inspect_document(&document, ctx)?;
+    if matches!(payload, Value::Object(fields) if fields.iter().any(|(name, _)| !["profile", "state", "root"].iter().any(|known| name == &key(known))))
+    {
+        if let Some(Value::Array(diagnostics)) = value_field_mut(&mut report, "diagnostics") {
+            diagnostics.push(diagnostic(
+                "POSTGRESQL_CATALOG_REPRESENTATION",
+                "",
+                "Unknown extension representation fields must remain in UMF",
+                "warning",
+            ));
+        }
+    }
+    Ok(report)
 }
 pub fn export_document(document: &Value, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
     let capture = catalog_from_document(document, ctx)?;
@@ -2473,6 +2633,9 @@ pub fn propose_edit(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let original = catalog_from_document(document, ctx)?;
+    // Preserve the existing public admission rule: unknown extension or
+    // native representation content blocks edits that rebuild the payload.
+    let _ = export_document(document, ctx)?;
     if original.root.has_representation_extras() {
         return Err(fail(
             "POSTGRESQL_CATALOG_REPRESENTATION",

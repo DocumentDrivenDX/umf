@@ -206,6 +206,19 @@ fn invoke(
             engine.reviewed_value_digest(field(request, "value").ok_or_else(missing_argument)?, ctx)
         }
         "compileTableDeployment" => engine.compile_table_deployment(request, ctx),
+        "inspectTableLifecycle" => {
+            if !exact_fields(request, &["source"]) {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected exact table lifecycle source member",
+                ));
+            }
+            engine.inspect_table_lifecycle(
+                field(request, "source").ok_or_else(missing_argument)?,
+                ctx,
+            )
+        }
         "verifyTableDeployment" => engine
             .verify_table_deployment(field(request, "bundle").ok_or_else(missing_argument)?, ctx),
         "compileTableMigration" => engine.compile_table_migration(request, ctx),

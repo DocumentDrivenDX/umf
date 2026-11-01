@@ -6,7 +6,7 @@ import {parseNativeJson,renderTree,type NativeJson} from '../../model/native-jso
 import {UmfError,type Document} from '../../model/types';
 import {exportPostgresqlCatalogCapture,getPostgresqlCatalogNode,getPostgresqlColumnMetadata} from './catalog';
 export interface PostgresqlTypeIdentity {schema:string;name:string;}
-interface ObservedType {identity:PostgresqlTypeIdentity;kind:string;category:string;element:PostgresqlTypeIdentity|null;base:PostgresqlTypeIdentity|null;standardArray:boolean;}
+export interface ObservedType {identity:PostgresqlTypeIdentity;kind:string;category:string;element:PostgresqlTypeIdentity|null;base:PostgresqlTypeIdentity|null;standardArray:boolean;}
 interface ObservedColumn {schema:string;relation:string;name:string;ordinal:number;declaredDimensions:number;type:PostgresqlTypeIdentity;}
 interface Supplement {profile:string;version:string;serverVersion:number;columns:ObservedColumn[];types:ObservedType[];}
 const check=createValidator().compile<Supplement>(schema);

@@ -7,8 +7,12 @@ import type {PostgresqlNullabilityClassification,PostgresqlNullabilityRequest} f
 import type {PostgresqlKeyClassification,PostgresqlKeyRequest} from './key-postgresql';
 import type {PostgresqlFacetClassification,PostgresqlFacetRequest} from './facets-postgresql';
 import type {PostgresqlBackend} from '../adapters/postgresql';
+import type {PostgresqlCompositeClassification,PostgresqlCompositeRequest} from './postgresql-composite';
 type Guard=(error:unknown)=>boolean;
 interface Engine { postgresql:{
+ classifyComposite(fields:{source:Document;request:PostgresqlCompositeRequest}):unknown;
+ verifyCompositeClassification(fields:{receipt:PostgresqlCompositeClassification;current:Document}):unknown;
+ recoverCompositeCapture(fields:{receipt:PostgresqlCompositeClassification;current:Document}):unknown;
  classifyField(fields:{source:Document;request:PostgresqlFieldRequest}):unknown;
  verifyFieldClassification(fields:{receipt:PostgresqlFieldClassification;current:Document}):unknown;
  recoverFieldCapture(fields:{receipt:PostgresqlFieldClassification;current:Document}):unknown;
@@ -56,6 +60,9 @@ async function facetParserEvidence(engine:Engine,request:PostgresqlFacetRequest,
 }
 export function createPostgresqlClassificationRustDefault(engine:Engine,isNativeUmfCoreError:Guard=()=>false){
  return Object.freeze({
+  classifyPostgresqlComposite(source:Document,request:PostgresqlCompositeRequest):PostgresqlCompositeClassification{try{return engine.postgresql.classifyComposite({source,request}) as PostgresqlCompositeClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
+  verifyPostgresqlCompositeClassification(receipt:PostgresqlCompositeClassification,current:Document):PostgresqlCompositeClassification{try{return engine.postgresql.verifyCompositeClassification({receipt,current}) as PostgresqlCompositeClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
+  recoverPostgresqlCompositeCapture(receipt:PostgresqlCompositeClassification,current:Document):string{try{return engine.postgresql.recoverCompositeCapture({receipt,current}) as string}catch(error){publicError(error,isNativeUmfCoreError)}},
   classifyPostgresqlField(source:Document,request:PostgresqlFieldRequest):PostgresqlFieldClassification{try{return engine.postgresql.classifyField({source,request}) as PostgresqlFieldClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
   verifyPostgresqlFieldClassification(receipt:PostgresqlFieldClassification,current:Document):PostgresqlFieldClassification{try{return engine.postgresql.verifyFieldClassification({receipt,current}) as PostgresqlFieldClassification}catch(error){publicError(error,isNativeUmfCoreError)}},
   recoverPostgresqlFieldCapture(receipt:PostgresqlFieldClassification,current:Document):string{try{return engine.postgresql.recoverFieldCapture({receipt,current}) as string}catch(error){publicError(error,isNativeUmfCoreError)}},

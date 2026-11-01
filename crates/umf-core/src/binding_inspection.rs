@@ -380,7 +380,7 @@ impl Capabilities for BindingSemantics {
         if token != BINDING_01 && token != BINDING_02 {
             return Ok(Vec::new());
         }
-        binding_semantics(
+        validate_binding_semantics(
             payload,
             &context.document,
             &context.path,
@@ -408,7 +408,7 @@ struct ElementIdentity(Option<Utf16>, Option<Utf16>);
 #[derive(Clone, Debug, Eq, PartialEq)]
 struct FieldIdentity(Option<Utf16>, Option<Utf16>, Option<Utf16>);
 
-fn binding_semantics(
+pub fn validate_binding_semantics(
     payload: &Value,
     document: &Value,
     base: &Utf16,

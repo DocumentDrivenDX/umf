@@ -1871,6 +1871,46 @@ pub fn prepare_key_parser_requests(
     let rt = runtime(ctx)?;
     parser_queries(source, request, &rt, ctx)
 }
+pub fn correlate_catalog(
+    source: &Value,
+    request: &Value,
+    parser_responses: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let capture = pg::catalog_from_document(source, ctx)?;
+    if capture.state() != &u("captured") {
+        return Err(err(
+            "POSTGRESQL_KEY_CORRELATION",
+            "/state",
+            "Modified catalog cannot establish observation correspondence",
+        ));
+    }
+    let rt = runtime(ctx)?;
+    let correlation = correlate_keys(source, request, parser_responses, &rt, ctx)?;
+    validate(
+        &correlation,
+        &rt.correlation,
+        ctx,
+        "POSTGRESQL_KEY_CORRELATION",
+    )?;
+    Ok(correlation)
+}
+pub fn prepare_catalog_correlation(
+    source: &Value,
+    request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let capture = pg::catalog_from_document(source, ctx)?;
+    if capture.state() != &u("captured") {
+        return Err(err(
+            "POSTGRESQL_KEY_CORRELATION",
+            "",
+            "Modified catalog cannot establish observation correspondence",
+        ));
+    }
+    let rt = runtime(ctx)?;
+    parser_queries(source, request, &rt, ctx)
+}
 pub fn classify_keys(
     source: &Value,
     request: &Value,

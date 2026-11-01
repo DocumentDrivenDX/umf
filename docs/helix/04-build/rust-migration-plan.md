@@ -105,13 +105,13 @@ Current integration order:
    Facets, TableSpec Relationships, authored SQL Server Facets and TableSpec
    Field/Record now pass. The four medical public functions also pass. Parser
    callbacks supply AST transport only.
-3. Continue the remaining TableSpec classifiers and authored scalar target
-   projections in bounded parallel cuts. Use existing pinned contracts and one
-   normal/refusal workflow per capability. Preserve legacy direct consumers until
-   their replacements are available while routing public V4 defaults to Rust.
-4. Close the remaining reachable adapter, model, extension and authored-projection
-   semantics. Reuse existing Rust primitives and common receipt mechanics. A
-   TypeScript composite around a Rust inspector does not close its ownership.
+3. Complete authored target operations in coherent parallel cuts: Field/Record
+   together per target, then related Cardinality/Nullability and Keys/Facets.
+   TableSpec classifiers and authored operations pass their current baselines.
+   PostgreSQL classifiers, including Composite and DDL-kind, also pass.
+4. Close generic report inspectors/verifiers and the remaining adapter/extension
+   composites listed below. Reuse current Rust primitives for the full public
+   operation; a TypeScript composite around a Rust inspector retains ownership.
 5. Retire public reference/candidate executable exports and their SDK bundles
    after all current defaults are callable. Run the complete local Cargo, host,
    browser and installed-package integration once; repair actual failures, review,
@@ -134,171 +134,81 @@ its public Rust route and one ordinary normal/refusal/recovery workflow as appli
 
 | Lane | Concrete remaining implementation | Reuse and next cut |
 | --- | --- | --- |
-| PostgreSQL classifiers | Composite/DDL-kind classifier pairs, plus public DDL declaration access. | Facets and Relationships pass. Reuse their parser transport and Rust-owned catalog correlation. |
-| Authored Field/Record | Projection and recovery for Avro, Parquet and PostgreSQL. | Bundle Field and Record per target; share author verification, target import/export and receipt checks. SQL Server and TableSpec pass. |
-| Other authored projections | Cardinality for Avro/Parquet/PostgreSQL; Nullability for Parquet/PostgreSQL; Facets for Parquet/PostgreSQL/TableSpec; Keys for Parquet/PostgreSQL/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability, Keys and Facets pass. TableSpec Cardinality/Nullability passes; authored Keys/Facets is under source review. |
-| Reports | Generic Field/Record/Structured classification/projection report inspector/verify pairs. | Model editing/prepared inspection now pass. Reuse current Rust inspectors and receipt mechanics. |
-| Binding and Dashboard | Binding validation, inspection/read/write/get, migration/rollback and dataset validation; Dashboard validation/read/write/get/edit. | Port meaning checks in factories and registration callbacks, alongside public operations. |
-| Adapter composites | Arrow IPC schema export, layout/consistency/rename/observation; embedded Parquet Arrow schema inspection/coordinated rename; PostgreSQL catalog public composites and correlation helpers; Delta checkpoint reconciliation; Protobuf descriptor edit. | Existing Rust capture/catalog primitives must own the complete public operation. |
-| Extension composites | Table lifecycle inspection and Relationship Extra archive import. | Reuse existing Rust validators, adapters and archive primitives; port the public composite decisions. |
+| Authored targets | PostgreSQL Field/Record, Cardinality/Nullability and Keys/Facets; Avro Cardinality; Parquet Cardinality/Nullability and Keys/Facets. | Bundle Field/Record per target and related scalar operations; reuse target adapters, author verification and exact receipt/native recovery. Avro and Parquet Field/Record pass; PostgreSQL Field/Record is source-ready for review. |
+| Generic reports | Field classification/projection, Record projection and Structured classification inspector/verify pairs. | Reuse Rust kind/schema and receipt primitives; preserve exact current diagnostic and integrity meaning. |
+| Adapter composites | Arrow IPC schema export, layout/consistency/rename/observation; embedded Parquet Arrow schema inspection/coordinated rename; Delta checkpoint reconciliation; Protobuf descriptor edit. | Implement each complete public composite on its existing Rust capture/schema primitive, including ordinary edit/refusal behavior and caller controls. |
+| Extension composites | Relationship Extra archive import. | Reuse the existing Rust importer, classification and archive validation; preserve parser injection and exact retained-source meaning. |
+
+Implement the remaining queue through three parallel Luna lanes. The PostgreSQL
+lane finishes observation helpers, then authored Field/Record followed by its
+related scalar pairs. The authored-format lane finishes Parquet Field/Record,
+then Avro/Parquet Cardinality/Nullability and Parquet Keys/Facets. The composite
+lane finishes generic reports, Arrow IPC plus embedded Parquet Arrow operations,
+then Delta reconciliation, Protobuf edit and Relationship Extra archive import.
+Sol reviews additive integration and batches source-ready cuts into the single
+build slot; an independent correction does not hold other ready capabilities.
 
 Luna owns implementation and focused test additions. Sol reviews each source cut
 and its additive integration before the shared compiler/build slot. Source patches,
 facade counts and a Rust inspector inside a TypeScript composite do not close a cut.
 
-## Latest focused capability results
+## Current capability status
 
-Production and full tooling/test TypeScript checks pass. The Python source-resource
-closure and Rust metadata checks pass, and native bindings plus CLI build. The
-changed facade fixtures pass their focused checks: 25 cases passed initially and
-the single DBT staging-mock correction passes its targeted retry, retaining all
-existing object-prototype and argument-identity assertions.
+All core-ideal classifiers for Avro, Parquet, SQL Server, TableSpec and PostgreSQL
+have current focused public Rust baselines, including verification and available
+source/native recovery. PostgreSQL Composite and DDL-kind each pass two cases.
+TableSpec authored Field/Record, Cardinality/Nullability and Keys/Facets pass;
+the Keys/Facets pair passes both current cases. Authored SQL Server Field/Record,
+Cardinality/Nullability, Keys/Facets and Relationship pass. Authored Avro
+Nullability, Keys/Facets and Relationship, Parquet Relationship, and PostgreSQL
+Relationship also pass. Extra Relationship for GraphQL/RDF/LinkML and all four
+medical public operations pass.
 
-All four targeted Rust inventory cases pass: created parameter reads, created
-read-command dependencies, selected seed/command lineage, and linked confirmed
-seed history with replay refusal. The public retained G02 workflow, initial
-inventory and cross-table dependency/refusal cases also pass their focused
-baselines. Preserve exact discovered review-marker order and equality.
+The PostgreSQL and SQL Server physical composers, standalone table/index APIs,
+Binding target/index projections and Bit128 carrier/model/file operations pass.
+Binding inspect/get/read/write, index projection, migration/rollback and registration
+meaning pass three public cases. Model editing/prepared inspection pass, preserving
+updater error identity, frozen source snapshots and Rust-owned identity/view
+admission. These workflows leave the repair queue unless a dependent change
+materially affects their behavior.
 
-Node workflows now pass for PostgreSQL and SQL Server relationship layout,
-SQL Server table/index composition, Avro nullability and facets classification,
-and Parquet Field, Key and Cardinality classification with verification/recovery.
-These passing cases leave the implementation repair queue unless their dependencies
-change.
+Authored Avro Field/Record passes projection, refusal and receipt recovery. The
+actual native Rust PostgreSQL bridge classifies an ordinary two-column table,
+recovers its exact SQL and refuses a module collision without supplied parser ASTs.
+Catalog public editing passes its result-shape and representation-loss baselines,
+including exact raw native numeric-token retention. The small association dataset
+also passes. The separate ordinary timestamp/float case now passes with the
+existing mixed-column uuid-model2 profile; production admission remains intact.
+Both dataset cases leave the repair queue.
 
-The complete PostgreSQL composer now passes projection, verification, ideal/native
-recovery and strict refusal after the host stage retained original generated SQL
-and used deparse only for codec validation, matching the existing public contract.
-Both full SQL Server physical workflows pass, including anonymous relationship
-tables and multiplicity indexes. Parquet nullability passes normal, write-input
-refusal and stale-target checks after the fixture explicitly authored a Field.
-Authored Avro Relationship projection and SQL Server Field classification also
-pass their public normal/refusal workflows.
+Dashboard read/inspection/selection and invalid-order refusal, public table
+lifecycle inspection, authored Parquet Field/Record projection/refusal/byte recovery,
+and PostgreSQL Key/Cardinality observation helpers all pass their current public
+baselines (seven cases). Full TypeScript, actual host-library compilation and
+resource closure also pass. These capabilities leave the repair queue.
 
-SQL Server Record/Cardinality, authored SQL Server Relationship and both
-independent PostgreSQL table APIs now pass their focused current baselines,
-including table/index report-plus-strict after the reviewed runtime allowance.
+PostgreSQL authored Field/Record and the first generic classification-report cut
+are source-ready for review. The remaining authored targets, report APIs and
+adapter composites continue in parallel. Run only new or affected cases during
+these batches, then perform complete current host/package integration once.
 
-SQL Server Nullability and Keys normal/refusal, authored Parquet Relationship,
-direct SQL Server indexes and Parquet Facets classification/verification/recovery
-pass and leave the repair queue.
+Preserve current meaning constraints during integration: PostgreSQL generated SQL
+retains its original text while deparse validates the codec; parser AST admission
+and index outcomes remain Rust-owned. Native unknown values and exact tokens stay
+retained, every unprojected meaning is disclosed, whole receipts and supplied native
+sources are checked for recovery, and controls propagate through the caller Context.
+Preserve discovered table review-marker order and equality. Table-removal compilation
+still reports `TABLE_REMOVAL_EFFECTS_NOT_LOWERED`; discovery and irreversible-purge
+disclosure remain supported.
 
-The latest cohort passes Python resource closure, full TypeScript, Rust metadata
-and a shared native build (3m54s). All six focused public workflows pass with
-49 assertions in 219 seconds: authored PostgreSQL Relationship projection, verify,
-ideal/native recovery and strict refusal; TableSpec Field and SQL Server Facets;
-and the three repairs for PostgreSQL expression-index ownership, SQL Server
-Relationship's retained unsafe native number, and pinned TableSpec schema
-annotations. These capabilities leave the repair queue. PostgreSQL index initial
-admission and AST derivation now run inside Rust; the host supplies parser/deparser
-transport only.
-
-The subsequent cohort passes full TypeScript and Rust metadata compilation, and
-its shared native build completes in 1m47s. PostgreSQL Field/Record and Cardinality,
-authored SQL Server Cardinality and TableSpec Record pass the four focused public
-test files. Their normal, refusal, verification and available recovery paths use
-the Rust defaults. Corrections registered the transitive native-JSON schema,
-aligned the SQL Server transport profile and made the Record refusal fixture
-structurally valid. These passing capabilities leave the repair queue.
-
-The next four-capability cohort also passes Python resource closure, full
-TypeScript and Rust metadata checks. The shared native build completes in 3m35s;
-all seven focused tests pass with 79 assertions in 107 seconds. Extra Relationship
-passes authored projection, classification, verification, ideal/native recovery
-and strict refusal for GraphQL, RDF and LinkML. PostgreSQL Nullability, authored
-SQL Server Nullability and TableSpec Cardinality pass their current workflows.
-These capabilities leave the repair queue.
-
-Authored SQL Server Keys and TableSpec Nullability also pass full TypeScript,
-Rust metadata and Python resource closure. Their shared native build completes in
-3m45s, and both focused tests pass with 17 assertions in 23 seconds. SQL Server
-Keys passes projection, verification, ideal recovery and strict refusal after
-caller-context traversal/copy corrections. TableSpec Nullability passes
-classification, verification, exact source recovery and authored-conflict refusal.
-These capabilities leave the repair queue.
-
-PostgreSQL Keys and TableSpec Keys now pass resource closure, full TypeScript and
-Rust metadata checks, a shared native build (3m49s), and all four focused tests
-with 16 assertions in 42 seconds. PostgreSQL catalog correlation is Rust-owned:
-Rust prepares the SQL list, the supplied backend only returns parser ASTs, and
-Rust validates correspondence and computes observations. Classification,
-verification, exact archive recovery, strict refusal and parser-error identity
-pass on a derived ordinary two-column/two-index input. The original 17-relation
-fixture remains unchanged for integration. TableSpec native key observation,
-verification, source recovery and strict refusal also pass. These workflows leave
-the repair queue.
-
-Authored SQL Server Field and Record plus TableSpec Facets now pass all-host
-Cargo metadata, full TypeScript and Python resource closure. Their Node-only
-native build completes in 3m07s; all three focused tests pass with 20 assertions
-in 19 seconds. Field/Record preserve source and authored member order, recover
-from retained receipts and refuse strict loss or stale native targets. TableSpec
-Facets passes classification, verification, exact source recovery and refusal.
-These workflows leave the repair queue. The Node results do not replace final
-Python/CLI executable and browser integration.
-
-PostgreSQL Facets and authored SQL Server Facets pass their focused runtime
-baselines in the preceding batch. The repaired TableSpec Relationships binding
-constant then passes classification, verification, recovery and strict refusal.
-Authored TableSpec Field/Record pass ordinary projection, source recovery and
-strict-loss/missing-member refusal. FHIR, CDC mortality, DICOM metadata and
-terminology lookup pass their focused public workflow and invalid-input refusal.
-The latter batch passes all four tests across three files with 32 assertions in
-26 seconds, after a Node-only build of 3m33s. All-host Rust metadata, full
-TypeScript and Python source-resource closure pass. These passing workflows leave
-the repair queue; Node results do not establish Python/CLI/browser execution.
-
-PostgreSQL Relationships now passes its first focused public baseline: one
-ordinary two-table foreign key with ON DELETE CASCADE, verification, exact native
-archive recovery and strict refusal. All seven assertions pass in 23 seconds after
-a Node-only build of 3m48s. Full TypeScript, all-host Rust metadata and Python
-resource closure pass. The host supplies parser ASTs only; Rust owns archive
-admission, observation, residuals and receipt verification. This case leaves the
-repair queue.
-
-Authored TableSpec Cardinality/Nullability now passes its two ordinary
-projection/refusal/exact-recovery cases (eight assertions). The same batch passes
-resource closure, full TypeScript and the corrected Cargo check that explicitly
-compiles Node, Python and WASM host libraries plus core/wire/codegen/CLI (14 seconds).
-Its Node-only build completes in 3m04s. The initial model edit failed because both
-JavaScript dispatchers dropped the updater argument. After forwarding that argument,
-the model-only retry passes ten assertions in eight seconds without a rebuild or
-repeating the passing projection cases. Model editing preserves the updater's error
-object identity and rejects invalid edits; prepared inspection retains a frozen
-source snapshot and Rust-owned identity/view decisions. These cases leave the
-repair queue. Actual Python/CLI executables and wasm32/browser runtime still join
-final integration.
-
-Use the corrected library preflight without the old explicit test/binary target
-selectors; those selectors omitted host libraries despite selecting their packages.
-The corrected baseline also checks the preceding committed source successfully.
-
-PostgreSQL Composite/DDL-kind and authored TableSpec Keys/Facets are under bounded
-source review after their ordinary-path corrections. Binding inspect/get/read/write,
-index projection, migration/rollback and registration meaning are implemented in
-scratch for review; dataset validation remains the next increment. PostgreSQL
-catalog composites and other authored targets continue in parallel. The current
-public callable inventory adds the composite operations named in the lanes above;
-no conformance campaign is required to identify these source gaps.
-
-The PostgreSQL Field/Record baseline now selects an existing ordinary two-column
-relation while retaining the same assertions; final integration will validate that
-smaller fixture. Compiler checks precede native builds; only
-new or failed workflows enter each focused runtime. Complete local host and package
-integration follows semantic completion.
-Current removal compilation retains `TABLE_REMOVAL_EFFECTS_NOT_LOWERED`;
-discovery and irreversible-purge disclosure remain supported.
-
-The current batch has complete shared routing after Sol corrected dropped
-integration hunks. Full TypeScript/Rust metadata, native builds and all six focused public
-workflows pass; the current source frontier is recorded above. PostgreSQL index initial admission now
-inspects the retained archive and derives/validates its AST inside Rust; hosts
-supply only parser/deparser transport. The new standalone index baseline uses one
-expression candidate and one declined clustering choice, preserving the broader
-fixture for final integration.
-
-Remaining work is current semantic ownership closure, executable SDK surface
-retirement, complete local integration, review, merge and the successor release.
+Use ordinary complete capability inputs. Keep broad existing captures for the final
+suite; do not inherit their full edge collections into each new baseline. Batch
+related new capabilities and actual failures in one build, then remove passing cases
+from later repair runs. Compile the actual Rust host libraries without explicit
+test/binary-only selectors; Node-focused batches build Node only. After the remaining
+callable owners are complete, run one full current Rust/CLI, Python, Node/Bun,
+wasm32/browser and installed-package integration, then fix actual failures and
+complete review, main integration and the successor release.
 
 ## Current callable baseline
 
@@ -309,17 +219,17 @@ retirement, complete local integration, review, merge and the successor release.
 | Compiler hosts | TypeSpec compile/graph and actual pinned Smithy assembly/selection pass in Chromium. Supplied PostgreSQL browser parse→callback failure→retry→edit→deparse passes after making the runtime asset loader relocatable. | Final release-profile SDK and remaining callback routes. |
 | Delta recovery | JSONL sidecar, Parquet actions/checkpoint and multipart routes pass focused wire/Node tests; new browser sidecar/checkpoint/multipart cases pass. Mapped rename passes Node. | Final package and remaining browser/Python activation. |
 | Spark | Rust import/inspect/get/edit/export and metadata/collation rename pass focused wire and Node public workflows, with unknown metadata and numeric tokens preserved. Invalid target refusal passes. | Browser/Python activation. |
-| DDD JSON Schema | Native projection → inspection → node access → edit → write/read workflow and refusal pass through Node; focused wire cases pass. | Browser/Python activation and the separate DDD GraphQL/PostgreSQL projections. |
+| DDD JSON Schema | Native projection → inspection → node access → edit → write/read workflow and refusal pass through Node; focused wire cases pass. | Final browser/Python/package activation; DDD GraphQL/PostgreSQL workflows also pass. |
 | Bit128 | Classifier, Field authoring, logical binding inspection and public full-row encode/decode/refusal pass native baselines. | Carrier/model/file projection/recovery now pass Node; final host activation. |
 | Action Plan | Rust prepare/inspect/assess, blocked dependency, complete read-Field obligations and caller diagnostic handling pass Rust, Node and staged Python; Chromium prepare/inspect/blocked passes. | Final package integration and dependent Manifest activation. |
 | Action authoring | Node declaration → inspect → edit → assessment, custom caller validation and duplicate identity refusal pass with supported Actions. | Browser/Python/package activation. |
 | Saga | Supported Action declaration → inspect → edit → assessment and opaque-source refusal pass through Node, CLI and installed Python. JSON object member order no longer changes parameter identity. | Browser/package activation. |
 | Action selectors/rules/bulk | Native selector compilation, typed input admission, prepared identity selection, rule compilation and bulk-outcome validation pass all eight new Node normal/refusal cases. | Browser/package activation. |
 | Security | Native function/value/query properties, source/parameter/domain activation and V2 source migration/transport pass Node baselines; basic query join passes Chromium. | Legacy policy/evaluation/registration, authority, catalog, purpose, obligation and V1/V2 disclosure workflows pass Node; final host activation remains. |
-| Migration and row-scope | Discovery `.2`/`.3`/`.4`, G04 recipes, caller row-scope, compiler `.4`/`.5`/`.7`, public compile/verify and reviewed digest pass focused baselines. G02 orders revoke before column changes and grant afterward. | G01 `.3` and G11 `.6` normal workflows pass; remaining inventory command/seed/history closure and final package integration. |
+| Migration and row-scope | Discovery `.2`/`.3`/`.4`, G04 recipes, caller row-scope, compiler `.4`/`.5`/`.7`, public compile/verify and reviewed digest pass focused baselines. G02 orders revoke before column changes and grant afterward. | G01 `.3`, G11 `.6`, inventory command/seed/history and replay-refusal workflows pass; final package integration remains. |
 | Python/CLI/package | Native adapters, Action Plan, callback semantics, Delta/RDF/Avro/PostgreSQL workflows and sdist include closure pass local focused cases without JavaScript on PATH. | Complete installed wheel/sdist, supported local platform builds and final CLI consumer. |
 
-### Current public executable implementation queue (V4 barrel)
+### Implemented public families and final host activation
 
 This queue tracks Rust ownership and remaining work for the current V4 exports in the Action, Security, Projection and migration families. Static package constants, type exports and host Registry registration helpers are omitted. A source-level native primitive is a reuse point, not proof that the composite public operation is callable. Each row closes only after its exact public export reaches Rust in Node and browser with one normal/refusal baseline; Python/CLI routes join where that API is exposed there.
 
@@ -334,7 +244,7 @@ This queue tracks Rust ownership and remaining work for the current V4 exports i
 | Security policy/source meaning | `inspectSecurityPolicy`, `requireSecurityInterpretation`, `inspectSecurityPolicyV2Source`, `upgradeSecurityPolicySource`, `downgradeSecurityPolicySource`, `readSecuritySource`, `writeSecuritySource`, `securityPolicyDependencies`, `securityIdentityTransportDependencies` | Rust policy/V2 migration, dependency and source transport owners pass the focused Node workflows; final host/package integration remains. |
 | Security evaluation and authority | `evaluateSecurityAccess`, `evaluateSecurityCollection`, `evaluateSecurityWrite`, `evaluateSecurityPolicyV2LegacyAccess`, `SecurityAuthorityGuard`, `SecurityReadRegistration` | Rust evaluation, registration and stateful authority owners pass focused Node workflows with explicit caller capabilities; final host/package integration remains. |
 | Security disclosure/catalog | `inspectProtectionCatalog`, `requireProtectionInterpretation`, `inspectProtectionObligations`, `inspectSecurityActionPurposes`, `validateSecurityDisclosure`, `encodeSecurityDisclosure`, `decodeSecurityDisclosure`, `inspectSecurityDisclosureV2`, `encodeSecurityDisclosureV2`, `decodeSecurityDisclosureV2` | Rust V1/V2 disclosure, catalog, purpose and obligation workflows pass focused Node normal/refusal cases; final host/package integration remains. |
-| Core-ideal classifiers/projections/recovery | Avro/Parquet classification, authored projection and recovery exports; new SQL Server Field route. | Avro classification and authored nullability/facets/keys plus Parquet relationships, nested Records, Field, Keys and Cardinality pass focused Node baselines. Parquet nullability, authored Avro Relationship and SQL Server Field now pass. Parquet Facets now passes classification/verification/recovery/refusal. SQL Server Nullability/Keys and authored Parquet Relationship also pass. SQL Server Record/Cardinality and authored SQL Server Relationship now pass their normal/refusal baselines; SQL Server Facets and Relationship classification plus TableSpec Field now pass; PostgreSQL/TableSpec classifiers and authored scalar projections are next. Remaining same-format classifiers and authored projections still need Rust kernels; legacy relationship factories retain TypeScript semantics until replaced. |
+| Core-ideal classifiers/projections/recovery | Classification, verification and available native/source recovery for Avro, Parquet, SQL Server, TableSpec and PostgreSQL; authored target projection/recovery. | Classifiers and the authored targets listed in current status pass. Complete only the remaining authored operations in the implementation lanes above, then final host activation. |
 | Binding target projection | `projectBindingToDelta`, `projectBindingToIceberg`, `projectBindingToParquet`, `projectBindingToSqlServer`, `projectBindingTablesToSqlServer`, `projectBindingTablesAndIndexesToSqlServer`, `projectBindingTablesAndIndexesFromPlanToSqlServer`, `recoverBindingSqlServerNative`, `recoverBindingSqlServerSources`, `verifyBindingSqlServerProjection`, `validateSqlServerRelationshipLayout` | Delta, Iceberg and Parquet target workflows pass focused Node baselines. SQL Server tables and layout pass. Full outer SQL Server composition passes both focused public workflows; final host/package integration remains. |
 | Binding index projection | `projectBindingIndexesToPostgresql`, `projectBindingIndexesToSqlServer`, `projectBindingIndexesAgainstSqlServerPlan` | Direct SQL Server index projection passes its focused normal/refusal baseline. PostgreSQL native admission, parser-AST acceptance and outcomes are Rust-owned; the focused expression-index and strict-refusal workflow passes. |
 | Bit128 projection | `classifyBit128NativeType`, `decodeBit128FileRecord`, `encodeBit128FileRecord`, `projectBit128CarrierSchema`, `recoverBit128CarrierProjection`, `projectBit128Model`, `recoverBit128ModelProjection` | Classifier, Field authoring, binding inspection, full-row and file encode/decode, carrier/model projection/recovery pass Node; final host activation remains. |
