@@ -503,6 +503,10 @@ pub fn metadata_wire(family: &str) -> String {
                 "classifyFacets",
                 "verifyFacetClassification",
                 "recoverFacetSource",
+                "prepareRelationshipParserRequests",
+                "classifyRelationships",
+                "verifyRelationshipClassification",
+                "recoverRelationshipSource",
             ],
         ),
         "sqlserver" => (

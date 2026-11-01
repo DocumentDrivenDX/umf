@@ -225,6 +225,8 @@ pub mod postgresql_facets_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_keys_classification;
 #[cfg(feature = "embedded-adapters")]
+pub mod postgresql_relationship_classification;
+#[cfg(feature = "embedded-adapters")]
 pub mod postgresql_classification;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_json_schema_projection;

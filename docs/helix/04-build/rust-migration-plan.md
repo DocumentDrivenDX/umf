@@ -134,7 +134,7 @@ its public Rust route and one ordinary normal/refusal/recovery workflow as appli
 
 | Lane | Concrete remaining implementation | Reuse and next cut |
 | --- | --- | --- |
-| PostgreSQL classifiers | Relationships and Composite/DDL-kind classifier pairs, plus public DDL declaration access. | Facets passes; Relationships is source-reviewed for the next baseline. Reuse the passing Keys parser transport and Rust-owned catalog correlation. |
+| PostgreSQL classifiers | Composite/DDL-kind classifier pairs, plus public DDL declaration access. | Facets and Relationships pass. Reuse their parser transport and Rust-owned catalog correlation. |
 | Authored Field/Record | Projection and recovery for Avro, Parquet and PostgreSQL. | Bundle Field and Record per target; share author verification, target import/export and receipt checks. SQL Server and TableSpec pass. |
 | Other authored projections | Cardinality for Avro/Parquet/PostgreSQL/TableSpec; Nullability for Parquet/PostgreSQL/TableSpec; Facets for Parquet/PostgreSQL/TableSpec; Keys for Parquet/PostgreSQL/TableSpec. | Reuse each concrete target adapter and existing authored scalar kernels. SQL Server Nullability, Keys and Facets pass. TableSpec Cardinality/Nullability is under bounded source correction; Keys/Facets follows. |
 | Model and reports | `editExtension`, `prepareCoreInspection` and generic Field/Record/Structured classification/projection report inspector/verify pairs. | Existing Rust extension edits and core inspectors own decisions; host retains only caller callbacks and object presentation. |
@@ -248,10 +248,18 @@ The latter batch passes all four tests across three files with 32 assertions in
 TypeScript and Python source-resource closure pass. These passing workflows leave
 the repair queue; Node results do not establish Python/CLI/browser execution.
 
-PostgreSQL Relationships is source-reviewed for the next runtime baseline.
-Authored TableSpec Cardinality/Nullability remains excluded pending ordinary
-receipt-shape, serialization and compiler corrections. Luna is also implementing
-PostgreSQL Composite/DDL-kind and model editing/prepared inspection. The current
+PostgreSQL Relationships now passes its first focused public baseline: one
+ordinary two-table foreign key with ON DELETE CASCADE, verification, exact native
+archive recovery and strict refusal. All seven assertions pass in 23 seconds after
+a Node-only build of 3m48s. Full TypeScript, all-host Rust metadata and Python
+resource closure pass. The host supplies parser ASTs only; Rust owns archive
+admission, observation, residuals and receipt verification. This case leaves the
+repair queue.
+
+Authored TableSpec Cardinality/Nullability is source-reviewed after ordinary
+receipt-shape, serialization and compiler corrections. It is queued for the next
+shared build with model editing/prepared inspection when source-ready. Luna is
+also implementing PostgreSQL Composite/DDL-kind and authored TableSpec Keys/Facets. The current
 public callable inventory adds the composite operations named in the lanes above;
 no conformance campaign is required to identify these source gaps.
 

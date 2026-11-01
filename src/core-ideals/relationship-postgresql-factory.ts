@@ -11,10 +11,9 @@ import {validatePostgresqlRelationshipLayout,type PostgresqlRelationshipLayoutPo
 import {identifier,literal} from './postgresql-syntax';
 import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';import operation from '../../spec/core/relationship-operation.schema.json';import native from '../../spec/core/native-json.schema.json';import layoutSchema from '../../spec/projections/postgresql-relationship-layout.schema.json';import layoutResult from '../../spec/projections/postgresql-relationship-layout-result.schema.json';
-import classificationSchema from '../../spec/core/postgresql-relationship-classification.schema.json';import projectionSchema from '../../spec/core/relationship-postgresql-projection.schema.json';import manifest from '../../spec/extensions/postgresql-relationships/package.json';
-export const POSTGRESQL_RELATIONSHIPS_EXTENSION='umf.postgresql.relationships';
-export const postgresqlRelationshipsPackage=manifest as unknown as ExtensionPackage;
-export {default as postgresqlRelationshipClassificationSchema} from '../../spec/core/postgresql-relationship-classification.schema.json';
+import classificationSchema from '../../spec/core/postgresql-relationship-classification.schema.json';import projectionSchema from '../../spec/core/relationship-postgresql-projection.schema.json';import {POSTGRESQL_RELATIONSHIPS_EXTENSION,postgresqlRelationshipsPackage} from './relationship-postgresql-package';
+export {POSTGRESQL_RELATIONSHIPS_EXTENSION,postgresqlRelationshipsPackage} from './relationship-postgresql-package';
+export {postgresqlRelationshipClassificationSchema} from './relationship-postgresql-package';
 export {default as relationshipPostgresqlProjectionSchema} from '../../spec/core/relationship-postgresql-projection.schema.json';
 const validator=createValidator(false);for(const schema of [core,operation,native,layoutSchema,layoutResult])validator.addSchema(schema);
 const classificationCheck=validator.compile(classificationSchema),classificationRequestCheck=validator.compile(classificationSchema.properties.request),projectionCheck=validator.compile(projectionSchema),projectionRequestCheck=validator.compile(projectionSchema.properties.request);

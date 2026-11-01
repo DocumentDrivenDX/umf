@@ -188,6 +188,8 @@ SDIST_SOURCE_FILES = (
     "native/tablespec/relationship-runtime/domain-base-types.json",
     "spec/core/relationship-operation.schema.json",
     "spec/core/relationship-extras.schema.json",
+    "spec/core/postgresql-relationship-classification.schema.json",
+    "spec/extensions/postgresql-relationships/package.json",
     "spec/core/relationship-postgresql-projection.schema.json",
     "spec/projections/postgresql-relationship-layout-result.schema.json",
     "spec/core/relationship-avro-projection.schema.json",

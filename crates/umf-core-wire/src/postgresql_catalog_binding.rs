@@ -22,6 +22,11 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         | "postgresql.classifyCardinality"
         | "postgresql.classifyNullability" => &["profile", "op", "source", "request"],
         "postgresql.prepareKeyParserRequests" => &["profile", "op", "source", "request"],
+        "postgresql.prepareRelationshipParserRequests" => &["profile", "op", "source", "request"],
+        "postgresql.classifyRelationships" => &["profile", "op", "source", "request", "parser"],
+        "postgresql.verifyRelationshipClassification" | "postgresql.recoverRelationshipSource" => {
+            &["profile", "op", "receipt", "current", "parser"]
+        }
         "postgresql.prepareFacetParserRequests" => &["profile", "op", "request"],
         "postgresql.classifyKeys" | "postgresql.classifyFacets" => {
             &["profile", "op", "source", "request", "parser"]
@@ -92,6 +97,10 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.verifyKeyClassification",
         "postgresql.recoverKeySource",
         "postgresql.prepareFacetParserRequests",
+        "postgresql.prepareRelationshipParserRequests",
+        "postgresql.classifyRelationships",
+        "postgresql.verifyRelationshipClassification",
+        "postgresql.recoverRelationshipSource",
         "postgresql.classifyFacets",
         "postgresql.verifyFacetClassification",
         "postgresql.recoverFacetSource",
@@ -154,6 +163,15 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.prepareFacetParserRequests" => {
             required(request, "request")?;
         }
+        "postgresql.prepareRelationshipParserRequests" => {
+            required(request, "source")?;
+            required(request, "request")?;
+        }
+        "postgresql.classifyRelationships" => {
+            required(request, "source")?;
+            required(request, "request")?;
+            required(request, "parser")?;
+        }
         "postgresql.classifyFacets" => {
             required(request, "source")?;
             required(request, "request")?;
@@ -162,7 +180,9 @@ fn validate<'a>(request: &'a Value, ctx: &mut Context<'_>) -> Result<&'static st
         "postgresql.verifyKeyClassification"
         | "postgresql.recoverKeySource"
         | "postgresql.verifyFacetClassification"
-        | "postgresql.recoverFacetSource" => {
+        | "postgresql.recoverFacetSource"
+        | "postgresql.verifyRelationshipClassification"
+        | "postgresql.recoverRelationshipSource" => {
             required(request, "receipt")?;
             required(request, "current")?;
             required(request, "parser")?;
@@ -356,6 +376,37 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
         "postgresql.prepareFacetParserRequests" => {
             umf_core::postgresql_facets_classification::prepare_parser_requests(
                 required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.prepareRelationshipParserRequests" => {
+            umf_core::postgresql_relationship_classification::prepare_parser_requests(
+                required(request, "source")?,
+                required(request, "request")?,
+                ctx,
+            )
+        }
+        "postgresql.classifyRelationships" => {
+            umf_core::postgresql_relationship_classification::classify(
+                required(request, "source")?,
+                required(request, "request")?,
+                required(request, "parser")?,
+                ctx,
+            )
+        }
+        "postgresql.verifyRelationshipClassification" => {
+            umf_core::postgresql_relationship_classification::verify(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                required(request, "parser")?,
+                ctx,
+            )
+        }
+        "postgresql.recoverRelationshipSource" => {
+            umf_core::postgresql_relationship_classification::recover(
+                required(request, "receipt")?,
+                required(request, "current")?,
+                required(request, "parser")?,
                 ctx,
             )
         }
