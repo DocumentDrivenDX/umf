@@ -60,7 +60,7 @@ function registryDiagnostics(document: Document, registry: Registry) {
   for (const registration of registry.registrations()) {
     validationRegistry.register(
       registration.manifest,
-      actionCallerSemanticValidator(registration.semantics) as SemanticValidator | undefined,
+      actionCallerSemanticValidator(registration.semantics,registration.manifest) as SemanticValidator | undefined,
       registration.kinds === undefined ? {} : {kinds: registration.kinds},
     );
   }

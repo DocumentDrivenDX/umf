@@ -6,7 +6,7 @@ import {canonicalSchemaJson} from '../model/schema-literals';
 import { UmfError, type ExtensionPackage, type Diagnostic, type Document, type Json, type Scope } from '../model/types';
 import type {ExtensionKindDefinition,ExtensionKindReference,ExtensionKindListResult} from '../generated/core-model';
 import type {ExtensionKindRuntime,KindRegistration} from './kind-runtime';
-import {actionSemanticParts,composeRustOwnedActionSemanticValidator,isRustOwnedActionSemanticValidator} from '../extensions/actions/native-semantic-owner';
+import {composeOwnedSemanticValidator,semanticOwnerMatches,semanticValidatorComposition} from './semantic-owner';
 export type SemanticValidator = (payload: Json, context: {document: Document; path: string; scope: Scope}) => Diagnostic[];
 export interface Registration { manifest: ExtensionPackage; structure: ValidateFunction; semantics?: SemanticValidator; kinds?:boolean }
 function freeze(value: unknown): void {
@@ -19,7 +19,7 @@ export class Registry {
     return [...this.#entries.values()].flatMap(versions=>[...versions.values()].map(entry=>this.#registration(entry.manifest,entry.semantics,entry.kinds)));
   }
   #registration(manifest:ExtensionPackage,semantics?:SemanticValidator,kinds=false):KindRegistration {
-    return {manifest,kinds,...(semantics?{semantics:(payload:unknown,context:{document:unknown;path:string;scope:string})=>semantics(payload as Json,{...context,document:context.document as Document,scope:context.scope as Scope})}:{})};
+    return {manifest,kinds,...(semantics?{semantics:semantics as NonNullable<KindRegistration['semantics']>}:{})};
   }
   #runtime():ExtensionKindRuntime {
     if(!this.kindRuntime)throw new UmfError('EXTENSION_KIND_RUNTIME_REQUIRED','Initialize the shared native/WASM engine and pass it to Registry');
@@ -34,20 +34,33 @@ export class Registry {
     if (!this.kindRuntime && !checkPackage(manifest)) throw new UmfError('PACKAGE_STRUCTURE', JSON.stringify(checkPackage.errors));
     const existing=this.get(manifest.id,manifest.version);
     let admittedSemantics=semantics;
-    const callerActionReplacement=manifest.id==='umf.actions'&&manifest.version==='0.1.0'&&!!existing&&
-      canonicalSchemaJson(existing.manifest)===canonicalSchemaJson(manifest)&&
-      isRustOwnedActionSemanticValidator(existing.semantics)&&!!semantics&&!isRustOwnedActionSemanticValidator(semantics);
-    if(callerActionReplacement){
-      const parts=actionSemanticParts(existing!.semantics);
-      if(!parts.native)throw new UmfError('DUPLICATE_VERSION','Native Action owner is unavailable');
-      admittedSemantics=composeRustOwnedActionSemanticValidator(parts.native,[...parts.callers,semantics!]);
+    const owner={id:manifest.id,version:manifest.version};
+    const existingComposition=semanticValidatorComposition(existing?.semantics);
+    const suppliedComposition=semanticValidatorComposition(semantics);
+    const sameManifest=!!existing&&canonicalSchemaJson(existing.manifest)===canonicalSchemaJson(manifest);
+    const existingOwned=semanticOwnerMatches(existingComposition,owner);
+    const suppliedOwned=semanticOwnerMatches(suppliedComposition,owner);
+    // A caller may add checks or repeat registration without replacing the
+    // retained native owner. Undefined semantics keeps the existing callbacks.
+    const retainedCallerReplacement=sameManifest&&existingOwned&&!suppliedComposition;
+    if(retainedCallerReplacement){
+      if(!existingComposition)throw new UmfError('DUPLICATE_VERSION','Native semantic owner is unavailable');
+      admittedSemantics=composeOwnedSemanticValidator(owner,existingComposition.native,[...existingComposition.callers,...(semantics?[semantics]:[])]);
     }
-    const replacingActions=request.replaceActions===true&&manifest.id==='umf.actions'&&manifest.version==='0.1.0'&&!!this.kindRuntime&&isRustOwnedActionSemanticValidator(admittedSemantics);
-    if(request.replaceActions&&!replacingActions)throw new UmfError('DUPLICATE_VERSION','Only the native Action registration may replace the distributed Action package');
-    const mayReplaceAction=callerActionReplacement||replacingActions;
-    if (existing&&!mayReplaceAction) throw new UmfError('DUPLICATE_VERSION', 'Extension version is already registered');
+    const replacingNativeOwner=!!this.kindRuntime&&suppliedOwned&&
+      (!existing||(sameManifest&&(!existingComposition||existingOwned)))&&
+      (request.replaceActions===true||existingOwned);
+    if(replacingNativeOwner){
+      if(!suppliedComposition)throw new UmfError('DUPLICATE_VERSION','Native semantic owner is unavailable');
+      const retained=existingOwned&&existingComposition?existingComposition.callers:existing?.semantics?[existing.semantics]:[];
+      admittedSemantics=composeOwnedSemanticValidator(owner,suppliedComposition.native,[...retained,...suppliedComposition.callers]);
+    }
+    const replacingOwnedRegistration=replacingNativeOwner||(request.replaceActions===true&&!!this.kindRuntime&&retainedCallerReplacement);
+    if(request.replaceActions&&!replacingOwnedRegistration)throw new UmfError('DUPLICATE_VERSION','Only the native semantic owner may replace its unchanged package registration');
+    const mayReplaceOwned=retainedCallerReplacement||replacingOwnedRegistration;
+    if (existing&&!mayReplaceOwned) throw new UmfError('DUPLICATE_VERSION', 'Extension version is already registered');
     if(this.kindRuntime){
-      const candidate=mayReplaceAction?this.registrations().filter(entry=>entry.manifest.id!==manifest.id||entry.manifest.version!==manifest.version):this.registrations();
+      const candidate=mayReplaceOwned?this.registrations().filter(entry=>entry.manifest.id!==manifest.id||entry.manifest.version!==manifest.version):this.registrations();
       this.kindRuntime.listKinds([...candidate,this.#registration(manifest,admittedSemantics,request.kinds)]);
     }
     else if(request.kinds)this.#runtime();

@@ -31,8 +31,9 @@ export function createActionRegistryRustDefault(createEngine:()=>ActionValidatio
   registerActions(registry:Registry):Registry {
    const existing=registry.get(actionsPackage.id,actionsPackage.version);
    if(existing&&canonicalSchemaJson(existing.manifest)!==canonicalSchemaJson(actionsPackage))throw new UmfError('ACTION_STRUCTURE','Existing Action registration differs from the distributed package');
-   const callers=actionSemanticParts(existing?.semantics).callers;
-   return registry.register(actionsPackage,composeRustOwnedActionSemanticValidator(nativeSemantic,callers),{replaceActions:true});
+   const owner={id:actionsPackage.id,version:actionsPackage.version};
+   const callers=actionSemanticParts(existing?.semantics,owner).callers;
+   return registry.register(actionsPackage,composeRustOwnedActionSemanticValidator(owner,nativeSemantic,callers),{replaceActions:true});
   },
  });
 }

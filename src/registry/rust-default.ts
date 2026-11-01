@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {Registry as BaseRegistry} from './registry';
-import type {ExtensionPackage} from '../model/types';
-import type {SemanticValidator} from './registry';
-import {actionSemanticParts,composeRustOwnedActionSemanticValidator} from '../extensions/actions/native-semantic-owner';
 import type {ExtensionKindRuntime} from './kind-runtime';
 import {UmfError} from '../model/errors';
 import {validateDocument as validateWithRegistry} from '../validation/document';
@@ -37,19 +34,6 @@ export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfC
  Object.freeze(runtime);
  const Registry:typeof BaseRegistry=class Registry extends BaseRegistry {
   constructor(kindRuntime:ExtensionKindRuntime=runtime){super(kindRuntime);}
-  register(input:ExtensionPackage,semantics?:SemanticValidator,options:{kinds?:boolean;replaceActions?:boolean}={}):this {
-   if(input.id==='umf.actions'&&input.version==='0.1.0'){
-    const previous=this.get(input.id,input.version)?.semantics;
-    const before=actionSemanticParts(previous),next=actionSemanticParts(semantics);
-    const native=next.native??before.native;
-    if(native){
-     const callers=[...new Set([...before.callers,...next.callers])];
-     semantics=composeRustOwnedActionSemanticValidator(native,callers);
-     options={...options,replaceActions:true};
-    }
-   }
-   return super.register(input,semantics,options);
-  }
  };
  const validateDocument:typeof validateWithRegistry=(input,registry=new Registry(),meter)=>validateWithRegistry(input,registry,meter);
  const readDocument:typeof ReadDocument=(source,format='yaml')=>invoke(()=>engine.readDocument(source,format)) as ReturnType<typeof ReadDocument>;

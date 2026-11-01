@@ -175,13 +175,21 @@ pub fn execute_wire_with_control(
         }
         if operation == "parquet.encodeWire" {
             let mut value = field(&request, "value")
-                .ok_or_else(|| request_error("value is required"))?.clone();
+                .ok_or_else(|| request_error("value is required"))?
+                .clone();
             if let Some(Value::Array(paths)) = field(&request, "__umfUndefinedPaths") {
                 for path in paths {
-                    let Value::String(path) = path else { return Err(request_error("Invalid undefined-field marker")); };
+                    let Value::String(path) = path else {
+                        return Err(request_error("Invalid undefined-field marker"));
+                    };
                     let mut segments = parse_transport_path(path)?;
-                    if segments.first().is_some_and(|segment| segment == "value") { segments.remove(0); }
-                    if !matches!(segments.last().map(String::as_str), Some("keyType" | "valueType")) {
+                    if segments.first().is_some_and(|segment| segment == "value") {
+                        segments.remove(0);
+                    }
+                    if !matches!(
+                        segments.last().map(String::as_str),
+                        Some("keyType" | "valueType")
+                    ) {
                         continue;
                     }
                     remove_undefined_map_type(&mut value, &segments, &mut ctx)?;
@@ -199,13 +207,16 @@ pub fn execute_wire_with_control(
                 Some(Value::Number(value))
                     if value.is_finite()
                         && value.fract() == 0.0
-                        && (2.0..=9_007_199_254_740_991.0).contains(value) => *value as usize,
+                        && (2.0..=9_007_199_254_740_991.0).contains(value) =>
+                {
+                    *value as usize
+                }
                 _ => return Err(request_error("partCount must be a safe positive integer")),
             };
-            let parts = field(&request, "parts")
-                .ok_or_else(|| request_error("parts is required"))?;
-            let commits = field(&request, "commits")
-                .ok_or_else(|| request_error("commits is required"))?;
+            let parts =
+                field(&request, "parts").ok_or_else(|| request_error("parts is required"))?;
+            let commits =
+                field(&request, "commits").ok_or_else(|| request_error("commits is required"))?;
             let log_resources = DeltaLogResources::new(&mut ctx)?;
             let action_resources = DeltaActionResources::new(&mut ctx)?;
             let recovered = reconcile_delta_multipart_checkpoint(
@@ -227,8 +238,8 @@ pub fn execute_wire_with_control(
                 .ok_or_else(|| request_error("checkpoint is required"))?;
             let commits =
                 field(&request, "commits").ok_or_else(|| request_error("commits is required"))?;
-            let spec = text_field(&request, "spec")
-                .ok_or_else(|| request_error("spec is required"))?;
+            let spec =
+                text_field(&request, "spec").ok_or_else(|| request_error("spec is required"))?;
             let empty_sidecars = Value::Array(Vec::new());
             let sidecars = field(&request, "sidecars").unwrap_or(&empty_sidecars);
             let log_resources = DeltaLogResources::new(&mut ctx)?;
@@ -295,6 +306,21 @@ pub fn execute_wire_with_control(
                     &mut ctx,
                 )?))
             }
+            #[cfg(feature = "embedded-adapters")]
+            "parquet.inspectArrowSchema" => {
+                let document = field(&request, "document")
+                    .ok_or_else(|| request_error("document is required"))?;
+                let inspected = inspect_parquet_metadata(
+                    document,
+                    &resources.engine,
+                    &resources.registry,
+                    &mut capabilities,
+                    &mut ctx,
+                )?;
+                umf_core::arrow_ipc_inspection::get_parquet_arrow_schema(
+                    document, &inspected, &mut ctx,
+                )?
+            }
             "parquet.inspectFraming"
             | "parquet.decodeFooter"
             | "parquet.inspectMetadata"
@@ -315,6 +341,7 @@ pub fn execute_wire_with_control(
                 let document = field(&request, "document")
                     .ok_or_else(|| request_error("document is required"))?;
                 match operation.as_str() {
+                    #[cfg(feature = "embedded-adapters")]
                     "parquet.repairDictionaryOffsets" => repair_parquet_dictionary_offsets(
                         document,
                         &resources.engine,
@@ -459,27 +486,51 @@ pub fn execute_wire_with_control(
 }
 
 fn parse_transport_path(path: &Utf16) -> Result<Vec<String>, EngineError> {
-    let text = path.to_utf8().map_err(|_| request_error("Invalid undefined-field marker"))?;
-    if !text.starts_with('/') { return Err(request_error("Invalid undefined-field marker")); }
-    text[1..].split('/').map(|segment| {
-        let mut out = String::new();
-        let mut chars = segment.chars();
-        while let Some(ch) = chars.next() {
-            if ch == '~' {
-                match chars.next() { Some('0') => out.push('~'), Some('1') => out.push('/'), _ => return Err(request_error("Invalid undefined-field marker")) }
-            } else { out.push(ch); }
-        }
-        Ok(out)
-    }).collect()
+    let text = path
+        .to_utf8()
+        .map_err(|_| request_error("Invalid undefined-field marker"))?;
+    if !text.starts_with('/') {
+        return Err(request_error("Invalid undefined-field marker"));
+    }
+    text[1..]
+        .split('/')
+        .map(|segment| {
+            let mut out = String::new();
+            let mut chars = segment.chars();
+            while let Some(ch) = chars.next() {
+                if ch == '~' {
+                    match chars.next() {
+                        Some('0') => out.push('~'),
+                        Some('1') => out.push('/'),
+                        _ => return Err(request_error("Invalid undefined-field marker")),
+                    }
+                } else {
+                    out.push(ch);
+                }
+            }
+            Ok(out)
+        })
+        .collect()
 }
 
-fn remove_undefined_map_type(value: &mut Value, path: &[String], ctx: &mut Context<'_>) -> Result<(), EngineError> {
+fn remove_undefined_map_type(
+    value: &mut Value,
+    path: &[String],
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
     ctx.charge_work(1, Utf16::default())?;
-    if path.is_empty() { return Ok(()); }
+    if path.is_empty() {
+        return Ok(());
+    }
     let segment = &path[0];
     if path.len() == 1 {
-        let Value::Object(fields) = value else { return Ok(()); };
-        let is_map = fields.iter().any(|(key, value)| key == &Utf16::from("kind") && matches!(value, Value::String(kind) if kind == &Utf16::from("map")));
+        let Value::Object(fields) = value else {
+            return Ok(());
+        };
+        let is_map = fields.iter().any(|(key, value)| {
+            key == &Utf16::from("kind")
+                && matches!(value, Value::String(kind) if kind == &Utf16::from("map"))
+        });
         if is_map && matches!(segment.as_str(), "keyType" | "valueType") {
             fields.retain(|(key, _)| key != &Utf16::from(segment.as_str()));
         }
@@ -487,13 +538,18 @@ fn remove_undefined_map_type(value: &mut Value, path: &[String], ctx: &mut Conte
     }
     match value {
         Value::Object(fields) => {
-            if let Some((_, child)) = fields.iter_mut().find(|(key, _)| key == &Utf16::from(segment.as_str())) {
+            if let Some((_, child)) = fields
+                .iter_mut()
+                .find(|(key, _)| key == &Utf16::from(segment.as_str()))
+            {
                 remove_undefined_map_type(child, &path[1..], ctx)?;
             }
         }
         Value::Array(items) => {
             if let Ok(index) = segment.parse::<usize>() {
-                if let Some(child) = items.get_mut(index) { remove_undefined_map_type(child, &path[1..], ctx)?; }
+                if let Some(child) = items.get_mut(index) {
+                    remove_undefined_map_type(child, &path[1..], ctx)?;
+                }
             }
         }
         _ => {}

@@ -188,9 +188,11 @@ baselines (seven cases). Full TypeScript, actual host-library compilation and
 resource closure also pass. These capabilities leave the repair queue.
 
 PostgreSQL authored Field/Record passes staged public projection, refusal and
-exact recovery, including whole-target integrity. The native Rust/Python/CLI
-backend composites remain a separate implementation closure item and are not
-established by this staged Node flow.
+exact recovery, including whole-target integrity. The native Rust bridge now also
+passes authored Field/Record/Cardinality projection and exact SQL recovery without
+supplied parser values. Native authored Nullability passes its normal/recovery and
+refusal baseline. Public Node Cardinality/Nullability workflows also pass; installed
+Python and CLI activation join final integration.
 
 Common Field/Record classification and projection reports, authored Avro/Parquet
 Cardinality, and authored Parquet Nullability now pass their six focused public
@@ -199,14 +201,22 @@ The Avro projection excludes the inspector's informational scope notice from los
 actual native diagnostics still contribute losses. These cases leave the repair queue.
 Full TypeScript, actual host-library compilation and source resource closure pass.
 
-The next reviewed batch closes PostgreSQL native authored Field/Record/Cardinality
-and the affected source boundaries: exact audited type-only grants, generic Registry
-ownership transport and portable JSON-LD hashing/clock dependencies. Independent
-PostgreSQL Nullability and Arrow inspection work joins the next shared build after
-source review. Parquet Keys/Facets has concrete implementation corrections with its
-Luna owner. PostgreSQL Keys/Facets and Arrow editing continue in parallel. Run only
-new or affected ordinary baselines during implementation; perform complete current
-host/package integration once the remaining callable operations are integrated.
+Arrow IPC layout/footer consistency and embedded Parquet Arrow schema reading now
+pass their ordinary source-retention and refusal workflows. Exact access-import
+policy checks and portable Rust dependency checks pass. The affected Action caller
+and native-callback workflows and JSON-LD parse/edit/frame/export/refusal workflow
+also pass. Registry transport retains callback identity and exact semantic-owner
+provenance. Full TypeScript, actual host-library/native-test compilation and resource
+closure pass. These capabilities leave the repair queue.
+
+The next reviewed implementation pair is authored Parquet Keys/Facets. PostgreSQL
+Keys/Facets, Delta checkpoint reconciliation, Protobuf descriptor editing and
+RelationshipExtra archive import have source cuts under review. Arrow schema export,
+IPC editing and embedded Parquet coordinated rename still need the shared native
+encoder closure; explicit host encoder callbacks alone do not finish that capability.
+Luna owns focused test execution and failed-baseline repair while Sol reviews and
+integrates. Run only new or affected ordinary baselines during implementation;
+perform complete current host/package integration once callable operations are complete.
 
 Preserve current meaning constraints during integration: PostgreSQL generated SQL
 retains its original text while deparse validates the codec; parser AST admission

@@ -336,3 +336,27 @@ test('ordinary Rust JSON facade allows only its audited error and type imports',
 	expect(denied).toContain('read-json-value-ordinary.ts: value import from type-only module ../model/types');
 	expect(denied).toContain('read-json-value-ordinary.ts: host or executable hook process');
 });
+
+
+test('the Bit128 Rust facades admit only their audited type-only imports', () => {
+ const bit128Allowed=checkAccessSource('rust-bit128-default.ts',[
+  "import {BIT128_PROFILE} from '../model/bit128';",
+  "import type {Bit128NativeTypeInput} from '../projections/bit128';",
+  "import type {Bit128ModelProjection} from '../projections/bit128-model';",
+  "import type {Bit128RecordValue} from '../extensions/binding/bit128-record';",
+  "import type {Document} from '../model/types';",
+  "import type {CoreLiteral} from '../model/schema-literals';",
+ ].join('\n'));
+ expect(bit128Allowed).toEqual([]);
+ expect(checkAccessSource('rust-bit128-default.ts',"import {projectBit128Model} from '../projections/bit128-model';\n"))
+  .toContain('rust-bit128-default.ts: value import from type-only module ../projections/bit128-model');
+ expect(checkAccessSource('rust-bit128-default.ts',"export * from '../extensions/binding/bit128-record';\n"))
+  .toContain('rust-bit128-default.ts: value re-export from type-only module ../extensions/binding/bit128-record');
+ expect(checkAccessSource('rust-bit128-default.ts',"import type {Document} from '../model/document';\n"))
+  .toContain('rust-bit128-default.ts: unapproved import ../model/document');
+ const fieldAllowed=checkAccessSource('rust-core-bit128-field-default.ts',"import type {Document} from '../model/types';\n");
+ expect(fieldAllowed).toEqual([]);
+ expect(checkAccessSource('rust-core-bit128-field-default.ts',"import {Document} from '../model/types';\n"))
+  .toContain('rust-core-bit128-field-default.ts: value import from type-only module ../model/types');
+ expect(checkAccessSource('rust-core-bit128-field-default.ts',"export type {Document} from '../model/types';\n")).toEqual([]);
+});

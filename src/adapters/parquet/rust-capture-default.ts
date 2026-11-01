@@ -34,6 +34,7 @@ import type {inspectParquetContainers} from './containers';
 import type {getParquetFieldMetadata} from './field-metadata';
 import type {appendParquetKeyValueMetadata} from './transform';
 import type {renameParquetField} from './rename';
+import type {getParquetArrowSchema} from './arrow-schema';
 
 type ErrorGuard=(error:unknown)=>boolean;
 
@@ -48,6 +49,7 @@ export interface ParquetCaptureRustEngine {
  inspectParquetFraming(document:unknown):unknown;
  decodeParquetFooter(document:unknown):unknown;
  inspectParquetMetadata(document:unknown):unknown;
+ getParquetArrowSchema(document:unknown):unknown;
  inspectParquetSchema(document:unknown):unknown;
  inspectParquetPages(document:unknown):unknown;
  decodeParquetPageBodies(document:unknown):unknown;
@@ -92,6 +94,7 @@ export function bindParquetCaptureRust(
   inspectParquetFraming(document:Document):ReturnType<typeof inspectParquetFraming>{return call(()=>engine.inspectParquetFraming(document)) as ParquetFraming;},
   decodeParquetFooter(document:Document):ReturnType<typeof decodeParquetFooter>{return call(()=>engine.decodeParquetFooter(document)) as ParquetFooterDecode;},
   inspectParquetMetadata(document:Document):ReturnType<typeof inspectParquetMetadata>{return call(()=>engine.inspectParquetMetadata(document)) as ParquetMetadataInspection;},
+  getParquetArrowSchema(document:Document):ReturnType<typeof getParquetArrowSchema>{return call(()=>engine.getParquetArrowSchema(document)) as ReturnType<typeof getParquetArrowSchema>;},
   inspectParquetSchema(document:Document):ReturnType<typeof inspectParquetSchema>{return call(()=>engine.inspectParquetSchema(document)) as ParquetSchemaInspection;},
   inspectParquetPages(document:Document):ReturnType<typeof inspectParquetPages>{return call(()=>engine.inspectParquetPages(document)) as ParquetPageInspection;},
   decodeParquetPageBodies(document:Document):ReturnType<typeof decodeParquetPageBodies>{return call(()=>engine.decodeParquetPageBodies(document)) as ParquetPageBodies;},

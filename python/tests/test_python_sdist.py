@@ -24,6 +24,7 @@ PKG_INFO = (
     b"Requires-Python: >=3.11\n\n"
 )
 ROOT_FILES = (
+    'spec/core/cardinality-postgresql-projection.schema.json',
     'spec/core/cardinality-parquet-projection.schema.json',
     "Cargo.toml",
     "Cargo.lock",
@@ -236,6 +237,7 @@ ROOT_FILES = (
     "spec/core/postgresql-cardinality-classification.schema.json",
     "spec/extensions/postgresql-nullability/package.json",
     "spec/core/postgresql-nullability-classification.schema.json",
+    "spec/core/nullability-postgresql-projection.schema.json",
     "spec/core/postgresql-field-classification.schema.json",
     "spec/core/postgresql-record-classification.schema.json",
     "spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json",
@@ -282,6 +284,8 @@ RESOURCES = (
     ("tablesPackage.json", "spec/extensions/tables/package.json"),
 )
 FORCE_INCLUDE = {
+    '../spec/core/nullability-postgresql-projection.schema.json': 'spec/core/nullability-postgresql-projection.schema.json',
+    '../spec/core/cardinality-postgresql-projection.schema.json': 'spec/core/cardinality-postgresql-projection.schema.json',
     '../spec/core/cardinality-parquet-projection.schema.json': 'spec/core/cardinality-parquet-projection.schema.json',
     "../spec/extensions/arrow/flatbuffer-inventory.json": "spec/extensions/arrow/flatbuffer-inventory.json",
     "../spec/extensions/arrow-flatbuffer/package.json": "spec/extensions/arrow-flatbuffer/package.json",

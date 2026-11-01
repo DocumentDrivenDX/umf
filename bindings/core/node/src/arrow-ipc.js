@@ -38,5 +38,11 @@ export function createArrowIpcOperations(call) {
     inspectArrowIpcCapture(document) {
       return call('inspect', {document});
     },
+    inspectArrowIpcLayout(document) {
+      return call('layout', {document});
+    },
+    inspectArrowIpcConsistency(document) {
+      return call('consistency', {document});
+    },
   });
 }

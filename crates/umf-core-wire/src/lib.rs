@@ -214,6 +214,18 @@ pub mod arrow_ipc_capture_binding {
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
                     inspect_arrow_ipc_capture(document, &resources, &mut ctx)?
                 }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.layout" => {
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    umf_core::arrow_ipc_inspection::inspect_arrow_ipc_layout(document, &resources, &mut ctx)?
+                }
+                #[cfg(feature = "embedded-adapters")]
+                "arrow.ipc.consistency" => {
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    umf_core::arrow_ipc_inspection::inspect_arrow_ipc_consistency(document, &resources, &mut ctx)?
+                }
                 _ => return Err(err("Unknown Arrow IPC capture operation")),
             };
             encode(&result, &mut ctx)

@@ -10,7 +10,7 @@ import legacy from '../../spec/core/schema.json';
 import kinds from '../../spec/core/cardinality-operation-v4.schema.json';
 
 import schema from '../../spec/core/cardinality-postgresql-projection.schema.json';
-export {default as cardinalityPostgresqlProjectionSchema} from '../../spec/core/cardinality-postgresql-projection.schema.json';
+export {cardinalityPostgresqlProjectionSchema} from './cardinality-postgresql-package';
 import {carriers,identifier,literal} from './postgresql-syntax';
 export interface CardinalityPostgresqlRequest {id:string;namespace:string;tableName:string;columnName:string;nativeType:keyof typeof carriers|'jsonb';mode:'strict'|'report';storage:'scalar'|'array'|'jsonb-object';requireExactValues:boolean}
 const binding=schema.properties.binding.const;

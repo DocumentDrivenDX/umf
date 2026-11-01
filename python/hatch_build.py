@@ -56,6 +56,7 @@ CORE_RESOURCES = (
 )
 
 SDIST_SOURCE_FILES = (
+    'spec/core/cardinality-postgresql-projection.schema.json',
     'spec/core/cardinality-parquet-projection.schema.json',
     "Cargo.toml",
     "Cargo.lock",
@@ -267,6 +268,7 @@ SDIST_SOURCE_FILES = (
     "spec/core/postgresql-cardinality-classification.schema.json",
     "spec/extensions/postgresql-nullability/package.json",
     "spec/core/postgresql-nullability-classification.schema.json",
+    "spec/core/nullability-postgresql-projection.schema.json",
     "spec/core/postgresql-field-classification.schema.json",
     "spec/core/postgresql-composite-classification.schema.json",
     "spec/core/postgresql-ddl-kinds.schema.json",

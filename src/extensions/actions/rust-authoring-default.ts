@@ -17,7 +17,7 @@ function actionRegistryDiagnostics(source:Document,registry:Registry) {
  if (!(registry instanceof Registry)) throw new UmfError('ACTION_STRUCTURE','Explicit action semantic registration is required');
  const reduced = new Registry(registry.kindRuntime);
  for (const registration of registry.registrations()) {
-  reduced.register(registration.manifest, actionCallerSemanticValidator(registration.semantics) as SemanticValidator | undefined, registration.kinds === undefined ? {} : {kinds:registration.kinds});
+  reduced.register(registration.manifest, actionCallerSemanticValidator(registration.semantics,registration.manifest) as SemanticValidator | undefined, registration.kinds === undefined ? {} : {kinds:registration.kinds});
  }
  return validateDocument(source,reduced).diagnostics;
 }

@@ -13,12 +13,12 @@ const allowedImports:Record<string,readonly string[]>={
  'index.ts':['../model/document','../model/types','../extensions/actions/structure','../extensions/actions/analysis','../extensions/actions/types','../compilation/bundle/index','./python-runtime','./table-runtime','./table-client','./constants','./types'],
  'python-runtime.ts':['./constants'],
  'read-json-value-ordinary.ts':['../model/errors','../model/types'],
- 'rust-bit128-default.ts':['../model/bit128','../model/uuid','../model/errors'],
+ 'rust-bit128-default.ts':['../model/bit128','../model/uuid','../model/errors','../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
  'rust-candidate.ts':[],
  'rust-cardinality-default.ts':['../model/cardinality','../model/types','../model/errors'],
  'rust-kind-nullability-default.ts':['../model/field-kind','../model/nullability','../model/types','../model/errors'],
  'rust-core-inspectors-default.ts':['../model/scalar-type','../model/record-members','../model/reference-links','../model/types','../model/errors'],
- 'rust-core-bit128-field-default.ts':['../model/errors'],
+ 'rust-core-bit128-field-default.ts':['../model/errors','../model/types'],
  'rust-core-semantic-types-default.ts':['../model/errors','../model/semantic-types','../model/types'],
  'rust-core-evolution-candidate.ts':['../model/types','../model/evolution','../model/errors'],
  'rust-csv-boolean-default.ts':['../model/csv-boolean-lexical','../model/types','../model/errors'],
@@ -54,6 +54,8 @@ const typeOnlyImports:Record<string,readonly string[]>={
  'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],
  'rust-semantic-types-default.ts':['../model/semantic-types','../model/types','../extensions/semantic-types'],
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric'],
+ 'rust-bit128-default.ts':['../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
+ 'rust-core-bit128-field-default.ts':['../model/types'],
  'rust-key-tuple-default.ts':['../model/key-tuple','../model/types'],
 };
 // Block host roots as well as the commonly used hooks themselves. Checking

@@ -17,6 +17,8 @@ pub mod arrow_flatbuffer_model;
 #[cfg(feature = "embedded-adapters")]
 pub mod arrow_flatbuffer_binary;
 pub mod arrow_ipc_capture;
+#[cfg(feature = "embedded-adapters")]
+pub mod arrow_ipc_inspection;
 pub mod arrow_schema;
 #[cfg(feature = "embedded-adapters")]
 pub mod arrow_spark_projection;

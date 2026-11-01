@@ -116,6 +116,7 @@ export function createParquetCaptureOperations(call, host = {}) {
     inspectParquetFraming(source) { return document('inspectFraming', source); },
     decodeParquetFooter(source) { return document('decodeFooter', source); },
     inspectParquetMetadata(source) { return document('inspectMetadata', source); },
+    getParquetArrowSchema(source) { return document('inspectArrowSchema', source); },
     inspectParquetSchema(source) { return document('inspectSchema', source); },
     inspectParquetPages(source) { return document('inspectPages', source); },
     decodeParquetPageBodies(source) { return document('decodePageBodies', source); },

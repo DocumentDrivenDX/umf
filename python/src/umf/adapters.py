@@ -56,6 +56,10 @@ def execute_adapter(
         "classifyKeys", "keyCorrelate", "verifyKeyClassification", "recoverKeySource",
         "classifyFacets", "verifyFacetClassification", "recoverFacetSource",
         "classifyRelationships", "verifyRelationshipClassification", "recoverRelationshipSource",
+        "projectFieldWithNativeBackend", "projectRecordWithNativeBackend",
+        "projectCardinalityWithNativeBackend", "projectNullabilityWithNativeBackend",
+        "recoverFieldWithNativeBackend", "recoverRecordWithNativeBackend",
+        "recoverCardinalityWithNativeBackend", "recoverNullabilityWithNativeBackend",
     }
     native_pg = (family == "postgresql" and operation in native_parser_ops
                  and "parser" not in fields

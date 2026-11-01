@@ -20,6 +20,8 @@ _MAX_TOTAL_BYTES = 512 * 1024 * 1024
 _MAX_MANIFEST_BYTES = 1024 * 1024
 _VERSION = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+\Z")
 _EXPECTED_ROOT_FILES = {
+    'spec/core/nullability-postgresql-projection.schema.json',
+    'spec/core/cardinality-postgresql-projection.schema.json',
     'spec/core/cardinality-parquet-projection.schema.json',
     "Cargo.toml",
     "Cargo.lock",
@@ -254,6 +256,8 @@ _PYTHON_BUILD_DIRS = {
 }
 _PYTHON_BUILD_SUFFIXES = {".pyc", ".pyo"}
 _REQUIRED_ARCHIVE_PATHS = {
+    'spec/core/nullability-postgresql-projection.schema.json',
+    'spec/core/cardinality-postgresql-projection.schema.json',
     'spec/core/cardinality-parquet-projection.schema.json',
     "Cargo.toml",
     "Cargo.lock",
@@ -405,6 +409,8 @@ _REQUIRED_ARCHIVE_PATHS = {
     "spec/extensions/dashboard/package.json",
 }
 _EXPECTED_FORCE_INCLUDE = {
+    '../spec/core/nullability-postgresql-projection.schema.json': 'spec/core/nullability-postgresql-projection.schema.json',
+    '../spec/core/cardinality-postgresql-projection.schema.json': 'spec/core/cardinality-postgresql-projection.schema.json',
     '../spec/core/cardinality-parquet-projection.schema.json': 'spec/core/cardinality-parquet-projection.schema.json',
     "../spec/extensions/dashboard/package.json": "spec/extensions/dashboard/package.json",
     "../spec/extensions/tables/operation.schema.json": "spec/extensions/tables/operation.schema.json",

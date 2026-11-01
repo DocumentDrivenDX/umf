@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
 import type {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture} from './capture';
+import type {inspectArrowIpcLayout} from './ipc-layout';
+import type {inspectArrowIpcConsistency} from './ipc-consistency';
 
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
 type BindingUmfErrorGuard=(error:unknown)=>boolean;
@@ -9,6 +11,8 @@ export interface ArrowIpcRustEngine {
  captureArrowIpc(bytes:Uint8Array,options:{id:string}):unknown;
  exportArrowIpcCapture(document:unknown):Uint8Array;
  inspectArrowIpcCapture(document:unknown):unknown;
+ inspectArrowIpcLayout(document:unknown):unknown;
+ inspectArrowIpcConsistency(document:unknown):unknown;
 }
 
 function publicError(error:unknown,isNativeUmfCoreError:NativeCoreErrorGuard,isBindingUmfError:BindingUmfErrorGuard):never {
@@ -40,6 +44,12 @@ export function bindArrowIpcRust(
   },
   inspectArrowIpcCapture(document:unknown):ReturnType<typeof inspectArrowIpcCapture>{
    return call(()=>engine.inspectArrowIpcCapture(document)) as ReturnType<typeof inspectArrowIpcCapture>;
+  },
+  inspectArrowIpcLayout(document:unknown):ReturnType<typeof inspectArrowIpcLayout>{
+   return call(()=>engine.inspectArrowIpcLayout(document)) as ReturnType<typeof inspectArrowIpcLayout>;
+  },
+  inspectArrowIpcConsistency(document:unknown):ReturnType<typeof inspectArrowIpcConsistency>{
+   return call(()=>engine.inspectArrowIpcConsistency(document)) as ReturnType<typeof inspectArrowIpcConsistency>;
   },
  });
 }

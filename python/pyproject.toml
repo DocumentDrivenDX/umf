@@ -19,6 +19,7 @@ Repository = "https://github.com/DocumentDrivenDX/umf"
 packages = ["src/umf"]
 
 [tool.hatch.build.targets.sdist.force-include]
+"../spec/core/cardinality-postgresql-projection.schema.json" = "spec/core/cardinality-postgresql-projection.schema.json"
 "../spec/core/cardinality-avro-projection.schema.json" = "spec/core/cardinality-avro-projection.schema.json"
 "../spec/core/facets-tablespec-projection.schema.json" = "spec/core/facets-tablespec-projection.schema.json"
 "../spec/core/key-tablespec-projection.schema.json" = "spec/core/key-tablespec-projection.schema.json"
@@ -153,6 +154,7 @@ packages = ["src/umf"]
 "../spec/core/postgresql-cardinality-classification.schema.json" = "spec/core/postgresql-cardinality-classification.schema.json"
 "../spec/extensions/postgresql-nullability/package.json" = "spec/extensions/postgresql-nullability/package.json"
 "../spec/core/postgresql-nullability-classification.schema.json" = "spec/core/postgresql-nullability-classification.schema.json"
+"../spec/core/nullability-postgresql-projection.schema.json" = "spec/core/nullability-postgresql-projection.schema.json"
 "../spec/core/postgresql-field-classification.schema.json" = "spec/core/postgresql-field-classification.schema.json"
 "../spec/core/postgresql-composite-classification.schema.json" = "spec/core/postgresql-composite-classification.schema.json"
 "../spec/core/postgresql-ddl-kinds.schema.json" = "spec/core/postgresql-ddl-kinds.schema.json"

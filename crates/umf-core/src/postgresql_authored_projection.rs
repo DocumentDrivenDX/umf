@@ -16,9 +16,19 @@ const CORE: &str = include_str!("../../../spec/core/schema.json");
 const KIND: &str = include_str!("../../../spec/core/kind-operation-v6.schema.json");
 const FIELD: &str = include_str!("../../../spec/core/field-postgresql-projection.schema.json");
 const RECORD: &str = include_str!("../../../spec/core/record-postgresql-projection.schema.json");
+const CARDINALITY: &str =
+    include_str!("../../../spec/core/cardinality-postgresql-projection.schema.json");
+const CARDINALITY_DECLARATION: &str =
+    include_str!("../../../spec/core/cardinality-operation-v4.schema.json");
+const NULLABILITY: &str =
+    include_str!("../../../spec/core/nullability-postgresql-projection.schema.json");
+const NULLABILITY_DECLARATION: &str =
+    include_str!("../../../spec/core/nullability-operation-v5.schema.json");
 const RECOVERY: &str = "Recover source meaning with retained projection receipt; native-only import does not recover author intent";
 const FIELD_SUBSET: &str = "Single authored Field with explicit pg_catalog carrier; no value-domain or execution equivalence";
 const RECORD_SUBSET: &str = "Authored record with explicit pg_catalog field carriers; no value-domain or execution equivalence";
+const CARDINALITY_SUBSET: &str = "Single authored Field with explicit scalar, checked sequence or JSONB object carrier; item/value conversion and native equivalence are not implied";
+const NULLABILITY_SUBSET: &str = "Single authored Field availability with explicit pg_catalog carrier and stored-relation SQL-NULL policy; excludes input omission, query guarantees and native equivalence";
 
 fn k(value: &str) -> Utf16 {
     Utf16::from(value)
@@ -1450,7 +1460,8 @@ fn complete(
     let mut unavailable = !matches!(get(&target_report, "valid"), Some(Value::Bool(true)));
     for diagnostic in array(get(&target_report, "diagnostics")) {
         ctx.charge_work(1, k("/target"))?;
-        if matches!(text(get(diagnostic, "code")), Some(code) if code == &k("POSTGRESQL_VERSION") || code == &k("POSTGRESQL_REPRESENTATION")) {
+        if matches!(text(get(diagnostic, "code")), Some(code) if code == &k("POSTGRESQL_VERSION") || code == &k("POSTGRESQL_REPRESENTATION"))
+        {
             unavailable = true;
         }
     }
@@ -1624,4 +1635,1421 @@ pub fn recover_record_projection(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     recover(receipt, fresh, native_text, false, ctx)
+}
+
+fn cardinality_schemas(
+    rt: &Runtime,
+    ctx: &mut Context<'_>,
+) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+    let source = parse(CARDINALITY, ctx)?;
+    let mut resources = rt.engine.schema_resources_with_context(ctx)?;
+    resources.entries.push((
+        k("urn:umf:core:cardinality-operation:4.0.0"),
+        parse(CARDINALITY_DECLARATION, ctx)?,
+    ));
+    let result = CompiledSchema::compile(&source, &resources, ctx)?;
+    let request = get(
+        get(&source, "properties").unwrap_or(&Value::Null),
+        "request",
+    )
+    .ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_SCHEMA",
+            "Request schema missing",
+            "",
+        )
+    })?;
+    Ok((result, CompiledSchema::compile(request, &resources, ctx)?))
+}
+
+fn cardinality_native_type(native: &str) -> Option<(&'static str, Option<&'static str>)> {
+    Some(match native {
+        "boolean" => ("bool", Some("boolean")),
+        "smallint" => ("int2", Some("integer")),
+        "integer" => ("int4", Some("integer")),
+        "bigint" => ("int8", Some("integer")),
+        "numeric" => ("numeric", Some("decimal")),
+        "real" => ("float4", Some("float")),
+        "double precision" => ("float8", Some("float")),
+        "text" => ("text", Some("string")),
+        "bytea" => ("bytea", Some("binary")),
+        "date" => ("date", Some("date")),
+        "time" => ("time", Some("time")),
+        "time with time zone" => ("timetz", Some("time")),
+        "timestamp" => ("timestamp", Some("timestamp")),
+        "timestamp with time zone" => ("timestamptz", Some("timestamp")),
+        "jsonb" => ("jsonb", None),
+        _ => return None,
+    })
+}
+
+fn cardinality_project(
+    author_input: &Value,
+    request_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    let (result_schema, request_schema) = cardinality_schemas(&rt, ctx)?;
+    let request = copy_json(request_input, ctx)?;
+    validate(
+        &request_schema,
+        &request,
+        "CARDINALITY_POSTGRESQL_REQUEST",
+        ctx,
+    )?;
+    let native = text_owned(get(&request, "nativeType")).ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_REQUEST",
+            "nativeType must be text",
+            "/request/nativeType",
+        )
+    })?;
+    let (native_name, native_family) = cardinality_native_type(&native).ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_REQUEST",
+            "Unsupported PostgreSQL native type",
+            "/request/nativeType",
+        )
+    })?;
+    let author_input = copy_json(author_input, ctx)?;
+    let target = get(&author_input, "target").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_AUTHOR",
+            "Author target is required",
+            "/author/target",
+        )
+    })?;
+    let mut caps = NoCapabilities;
+    let author = crate::cardinality::verify_core_cardinality_declaration(
+        &author_input,
+        target,
+        &rt.engine,
+        &rt.registry,
+        &mut caps,
+        ctx,
+    )?;
+    let source = copy_json(
+        get(&author, "target").ok_or_else(|| {
+            err(
+                "CARDINALITY_POSTGRESQL_AUTHOR",
+                "Author target is required",
+                "/author/target",
+            )
+        })?,
+        ctx,
+    )?;
+    if text(get(&source, "umf"))
+        .and_then(|value| value.to_utf8().ok())
+        .as_deref()
+        != Some("0.10.0")
+    {
+        return Err(err("CARDINALITY_POSTGRESQL_VERSION", "This binding requires a core 0.10.0 declaration; facet-envelope projection requires a separately qualified binding", "/author/target/umf"));
+    }
+    let (element, mi, ei, path) = locate(&source, &author, ctx)?;
+    let provenance = get(&author, "provenance").unwrap_or(&Value::Null);
+    let cardinality = text_owned(get(provenance, "cardinality")).ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_AUTHOR",
+            "Authored cardinality is missing",
+            "/author/provenance/cardinality",
+        )
+    })?;
+    let storage = text_owned(get(&request, "storage")).unwrap_or_default();
+    let mode = text_owned(get(&request, "mode")).unwrap_or_default();
+    let namespace = text_owned(get(&request, "namespace")).unwrap_or_default();
+    let table = text_owned(get(&request, "tableName")).unwrap_or_default();
+    let column = text_owned(get(&request, "columnName")).unwrap_or_default();
+    let namespace_sql =
+        quote_identifier(&Utf16::from(namespace.as_str()), "/request/namespace", ctx)?;
+    let table_sql = quote_identifier(&Utf16::from(table.as_str()), "/request/tableName", ctx)?;
+    let column_sql = quote_identifier(&Utf16::from(column.as_str()), "/request/columnName", ctx)?;
+    let check_sql = match storage.as_str() {
+        "array" => format!(" CHECK ({column_sql} IS NULL OR pg_catalog.cardinality({column_sql})=0 OR (pg_catalog.array_ndims({column_sql})=1 AND pg_catalog.array_lower({column_sql},1)=1))"),
+        "jsonb-object" => format!(" CHECK (pg_catalog.jsonb_typeof({column_sql})='object')"),
+        _ => String::new(),
+    };
+    let mut sql = format!("CREATE TABLE {namespace_sql}.{table_sql} ({column_sql} pg_catalog.{native_name}{}{check_sql});\n", if storage == "array" { "[]" } else { "" });
+    if let Some(description) = text(get(element, "description")) {
+        let literal = quote_literal(description, &format!("{path}/description"), ctx)?;
+        let comment =
+            format!("COMMENT ON COLUMN {namespace_sql}.{table_sql}.{column_sql} IS {literal};\n");
+        ctx.charge_work(comment.len(), k(""))?;
+        sql.push_str(&comment);
+    }
+    let base = obj(vec![
+        ("basis", s("Explicit author declaration and requested native carrier; retained residuals qualify unrepresented obligations")),
+        ("origin", s("authored")),
+        ("cardinality", s(&cardinality)),
+        ("encoding", s(match storage.as_str() { "array" => "sequence-check", "jsonb-object" => "object-check", _ => "scalar" })),
+        ("idealPath", s(&format!("{path}/cardinality"))),
+        ("nativePath", s("/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef")),
+        ("outcome", s("exact")),
+    ]);
+    let mut result = obj(vec![
+        ("operation", s("project-cardinality-postgresql")),
+        ("version", s("1.0.0")),
+        ("status", s("projected")),
+        ("source", copy_json(&source, ctx)?),
+        ("author", copy_json(&author, ctx)?),
+        ("request", copy_json(&request, ctx)?),
+        (
+            "binding",
+            obj(vec![
+                ("id", s("umf.core.cardinality.postgresql")),
+                ("version", s("1.0.0")),
+                ("nativeVersion", s("17.4")),
+                ("subset", s(CARDINALITY_SUBSET)),
+            ]),
+        ),
+        ("mapping", base),
+        ("residuals", Value::Array(Vec::new())),
+        ("diagnostics", Value::Array(Vec::new())),
+    ]);
+    let mut residuals = Vec::new();
+    macro_rules! loss {
+        ($loss_path:expr, $value:expr, $reason:expr, $outcome:expr $(,)?) => {
+            push_residual(&mut residuals, $loss_path, $value, $reason, $outcome, ctx)
+        };
+    }
+    if let Some(name) = get(element, "name") {
+        if text(Some(name))
+            .and_then(|value| value.to_utf8().ok())
+            .as_deref()
+            != Some(column.as_str())
+        {
+            loss!(
+                k(&format!("{path}/name")),
+                name,
+                "Explicit native column name differs from ideal name",
+                "not-expressible",
+            )?;
+        }
+    }
+    if let Value::Object(fields) = &source {
+        for (key, value) in fields {
+            if !["umf", "id", "modules", "vocabularies"]
+                .iter()
+                .any(|known| key == &k(known))
+            {
+                loss!(
+                    pointer_path("", key, ctx)?,
+                    value,
+                    "Document metadata is retained but not projected",
+                    "unknown",
+                )?;
+            }
+        }
+    }
+    if matches!(get(&source, "vocabularies"), Some(Value::Object(fields)) if !fields.is_empty()) {
+        loss!(
+            k("/vocabularies"),
+            get(&source, "vocabularies").unwrap(),
+            "Native vocabulary semantics are not projected",
+            "unknown",
+        )?;
+    }
+    let modules = array(get(&source, "modules"));
+    for (index, module) in modules.iter().enumerate() {
+        ctx.charge_work(1, k("/modules"))?;
+        if index != mi {
+            loss!(
+                k(&format!("/modules/{index}")),
+                module,
+                "Other module is outside selected Field projection",
+                "unknown",
+            )?;
+            continue;
+        }
+        if let Some(ns) = get(module, "namespace") {
+            if text(Some(ns))
+                .and_then(|value| value.to_utf8().ok())
+                .as_deref()
+                .is_some_and(|v| !v.is_empty() && v != namespace.as_str())
+            {
+                loss!(
+                    k(&format!("/modules/{index}/namespace")),
+                    ns,
+                    "Native schema name differs from ideal namespace",
+                    "not-expressible",
+                )?;
+            }
+        }
+        if let Value::Object(fields) = module {
+            for (key, value) in fields {
+                if !["id", "namespace", "elements"]
+                    .iter()
+                    .any(|known| key == &k(known))
+                {
+                    loss!(
+                        pointer_path(&format!("/modules/{index}"), key, ctx)?,
+                        value,
+                        "Module metadata is not projected",
+                        "unknown",
+                    )?;
+                }
+            }
+        }
+        for (element_index, other) in array(get(module, "elements")).iter().enumerate() {
+            ctx.charge_work(1, k("/modules/elements"))?;
+            if element_index != ei {
+                loss!(
+                    k(&format!("/modules/{index}/elements/{element_index}")),
+                    other,
+                    "Other element is outside selected Field projection",
+                    "unknown",
+                )?;
+            }
+        }
+    }
+    if let Value::Object(fields) = element {
+        for (key, value) in fields {
+            if ![
+                "id",
+                "kind",
+                "name",
+                "description",
+                "scalarType",
+                "cardinality",
+                "itemType",
+            ]
+            .iter()
+            .any(|known| key == &k(known))
+                && !(key == &k("extensions")
+                    && matches!(value, Value::Object(entries) if entries.is_empty()))
+            {
+                loss!(
+                    pointer_path(&path, key, ctx)?,
+                    value,
+                    "Field metadata is retained but not projected",
+                    "unknown",
+                )?;
+            }
+        }
+    }
+    let expected = match storage.as_str() {
+        "array" => "array",
+        "jsonb-object" => "map",
+        _ => "one",
+    };
+    if cardinality != "unspecified" && cardinality != expected {
+        let mut mapping = copy_json(get(&result, "mapping").unwrap(), ctx)?;
+        set(&mut mapping, "encoding", s("carrier-only"))?;
+        set(&mut result, "mapping", mapping)?;
+        loss!(k(&format!("{path}/cardinality")), get(provenance, "cardinality").unwrap_or(&Value::Null), "Selected storage does not express the declared shape; no implicit value conversion is performed", "not-expressible")?;
+    }
+    if matches!(get(&request, "requireExactValues"), Some(Value::Bool(true))) {
+        let reason = if native == "real" {
+            "Binary32 cannot preserve binary64 1.0000000000000002; narrowing changes it to 1.0"
+        } else {
+            "This shape binding does not establish exact value-domain conversion"
+        };
+        loss!(k(&path), element, reason, "approximated")?;
+    }
+    if storage == "array" {
+        loss!(k(&format!("{path}/cardinality")), get(provenance, "cardinality").unwrap_or(&Value::Null), "Native homogeneous item type constrains a general ideal sequence; arbitrary item domains require explicit conversion evidence", "approximated")?;
+    }
+    if storage == "jsonb-object" {
+        loss!(k(&format!("{path}/cardinality")), get(provenance, "cardinality").unwrap_or(&Value::Null), "JSONB rejects NUL keys and out-of-range numeric values and normalizes duplicate keys; no unrestricted ideal-map equivalence", "approximated")?;
+    }
+    if let Some(item_type) = get(element, "itemType") {
+        loss!(k(&format!("{path}/itemType")), item_type, "Item reference remains authored metadata; nested types, item availability and value domains are not implicitly converted", "approximated")?;
+        if let (Some(module_id), Some(element_id)) = (
+            text(get(item_type, "module")),
+            text(get(item_type, "element")),
+        ) {
+            if let Some((im, module)) = modules
+                .iter()
+                .enumerate()
+                .find(|(_, module)| text(get(module, "id")) == Some(module_id))
+            {
+                if let Some((ie, referenced)) = array(get(module, "elements"))
+                    .iter()
+                    .enumerate()
+                    .find(|(_, candidate)| text(get(candidate, "id")) == Some(element_id))
+                {
+                    loss!(k(&format!("/modules/{im}/elements/{ie}")), referenced, "Full item definition retained for recovery; recursive native types are not fabricated", "unknown")?;
+                }
+            }
+        }
+    }
+    if let Some(scalar_type) = get(element, "scalarType") {
+        if native_family.is_none_or(|family| {
+            text(Some(scalar_type))
+                .and_then(|value| value.to_utf8().ok())
+                .as_deref()
+                != Some(family)
+        }) {
+            loss!(
+                k(&format!("{path}/scalarType")),
+                scalar_type,
+                "Explicit native type does not establish the stated scalar family",
+                "not-expressible",
+            )?;
+        }
+    }
+    let outcome = if residuals.is_empty() {
+        "exact"
+    } else if residuals
+        .iter()
+        .any(|r| text_owned(get(r, "outcome")).as_deref() == Some("not-expressible"))
+    {
+        "not-expressible"
+    } else if residuals
+        .iter()
+        .any(|r| text_owned(get(r, "outcome")).as_deref() == Some("unknown"))
+    {
+        "unknown"
+    } else {
+        "approximated"
+    };
+    let blocked = mode == "strict" && !residuals.is_empty();
+    let mut mapping = copy_json(get(&result, "mapping").unwrap(), ctx)?;
+    set(&mut mapping, "outcome", s(outcome))?;
+    set(&mut result, "mapping", mapping)?;
+    if blocked {
+        set(&mut result, "status", s("blocked"))?;
+    }
+    let residual_values = residuals
+        .iter()
+        .map(|residual| copy_json(residual, ctx))
+        .collect::<Result<Vec<_>, _>>()?;
+    set(&mut result, "residuals", Value::Array(residual_values))?;
+    set(
+        &mut result,
+        "diagnostics",
+        diagnostics(
+            &residuals,
+            blocked,
+            "CARDINALITY_MEANING_NOT_PROJECTED",
+            ctx,
+        )?,
+    )?;
+    if blocked {
+        validate(
+            &result_schema,
+            &result,
+            "CARDINALITY_POSTGRESQL_RESULT",
+            ctx,
+        )?;
+    } else {
+        set(&mut result, "nativeSql", s(&sql))?;
+    }
+    Ok(result)
+}
+
+fn target_admissible(
+    target: &Value,
+    expected_id: &Value,
+    code: &str,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    if !same(get(target, "id").unwrap_or(&Value::Null), expected_id, ctx)? {
+        return Err(err(
+            code,
+            "Parsed target id differs from the prepared request",
+            "/target/id",
+        ));
+    }
+    let report = crate::postgresql_sql_runtime::inspect_postgresql_sql(target, ctx)?;
+    if !matches!(get(&report, "valid"), Some(Value::Bool(true))) {
+        return Err(err(
+            code,
+            "Parsed PostgreSQL target is not valid",
+            "/target",
+        ));
+    }
+    for diagnostic in array(get(&report, "diagnostics")) {
+        let diagnostic_code = text_owned(get(diagnostic, "code")).unwrap_or_default();
+        if diagnostic_code == "POSTGRESQL_VERSION" || diagnostic_code == "POSTGRESQL_REPRESENTATION"
+        {
+            return Err(err(
+                code,
+                "Parsed PostgreSQL target has an invalid version or representation",
+                "/target",
+            ));
+        }
+    }
+    Ok(())
+}
+
+fn complete_cardinality(
+    prepared_input: &Value,
+    target: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    let (result_schema, _) = cardinality_schemas(&rt, ctx)?;
+    let prepared = copy_json(prepared_input, ctx)?;
+    let status = text_owned(get(&prepared, "status"));
+    if status.as_deref() != Some("projected") && status.as_deref() != Some("blocked") {
+        return Err(err(
+            "CARDINALITY_POSTGRESQL_RESULT",
+            "Expected Rust-prepared result",
+            "/prepared/status",
+        ));
+    }
+    let author = get(&prepared, "author").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RESULT",
+            "Prepared author is missing",
+            "/prepared/author",
+        )
+    })?;
+    let request = get(&prepared, "request").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RESULT",
+            "Prepared request is missing",
+            "/prepared/request",
+        )
+    })?;
+    let recomputed = cardinality_project(author, request, ctx)?;
+    if !same(&prepared, &recomputed, ctx)? {
+        return Err(err(
+            "CARDINALITY_POSTGRESQL_RESULT",
+            "Prepared projection differs from Rust recomputation",
+            "/prepared",
+        ));
+    }
+    if status.as_deref() == Some("blocked") {
+        validate(
+            &result_schema,
+            &prepared,
+            "CARDINALITY_POSTGRESQL_RESULT",
+            ctx,
+        )?;
+        return Ok(prepared);
+    }
+    let request_id = get(request, "id").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RESULT",
+            "Request id is missing",
+            "/prepared/request/id",
+        )
+    })?;
+    target_admissible(target, request_id, "CARDINALITY_POSTGRESQL_RESULT", ctx)?;
+    let expected_sql = get(&prepared, "nativeSql").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RESULT",
+            "Prepared SQL is missing",
+            "/prepared/nativeSql",
+        )
+    })?;
+    let actual_sql = crate::postgresql_sql_runtime::get_postgresql_source(target, ctx)?;
+    if !same(&actual_sql, expected_sql, ctx)? {
+        return Err(err(
+            "CARDINALITY_POSTGRESQL_RESULT",
+            "Parsed target does not retain the Rust-prepared SQL",
+            "/target",
+        ));
+    }
+    let mut output = prepared;
+    set(&mut output, "target", copy_json(target, ctx)?)?;
+    validate(
+        &result_schema,
+        &output,
+        "CARDINALITY_POSTGRESQL_RESULT",
+        ctx,
+    )?;
+    Ok(output)
+}
+
+fn validate_cardinality_recovery(
+    receipt_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    let (schema, _) = cardinality_schemas(&rt, ctx)?;
+    let receipt = copy_json(receipt_input, ctx)?;
+    validate(&schema, &receipt, "CARDINALITY_POSTGRESQL_RECEIPT", ctx)?;
+    if text_owned(get(&receipt, "status")).as_deref() != Some("projected")
+        || get(&receipt, "target").is_none()
+        || get(&receipt, "nativeSql").is_none()
+        || get(&receipt, "author").is_none()
+        || get(&receipt, "request").is_none()
+    {
+        return Err(err(
+            "CARDINALITY_POSTGRESQL_RECEIPT",
+            "Expected complete projected receipt",
+            "/receipt/status",
+        ));
+    }
+    Ok(Value::Bool(true))
+}
+
+fn nullability_schemas(
+    rt: &Runtime,
+    ctx: &mut Context<'_>,
+) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+    let schema = parse(NULLABILITY, ctx)?;
+    let mut resources = rt.engine.schema_resources_with_context(ctx)?;
+    resources.entries.push((
+        k("urn:umf:core:nullability-operation:5.0.0"),
+        parse(NULLABILITY_DECLARATION, ctx)?,
+    ));
+    let compiled = CompiledSchema::compile(&schema, &resources, ctx)?;
+    let request = get(
+        get(&schema, "properties").unwrap_or(&Value::Null),
+        "request",
+    )
+    .ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RESULT",
+            "Request schema missing",
+            "",
+        )
+    })?;
+    Ok((compiled, CompiledSchema::compile(request, &resources, ctx)?))
+}
+
+fn nullability_project(
+    author_input: &Value,
+    request_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    let (result_schema, request_schema) = nullability_schemas(&rt, ctx)?;
+    let request = copy_json(request_input, ctx)?;
+    validate(
+        &request_schema,
+        &request,
+        "NULLABILITY_POSTGRESQL_REQUEST",
+        ctx,
+    )?;
+    let author_input = copy_json(author_input, ctx)?;
+    let author_target = get(&author_input, "target").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RECEIPT",
+            "Author target is required",
+            "/author/target",
+        )
+    })?;
+    let mut caps = NoCapabilities;
+    let author = crate::nullability::verify_core_nullability_declaration(
+        &author_input,
+        author_target,
+        &rt.engine,
+        &rt.registry,
+        &mut caps,
+        ctx,
+    )?;
+    let source = copy_json(
+        get(&author, "target").ok_or_else(|| {
+            err(
+                "NULLABILITY_POSTGRESQL_RECEIPT",
+                "Author target is missing",
+                "/author/target",
+            )
+        })?,
+        ctx,
+    )?;
+    if text_owned(get(&source, "umf")).as_deref() != Some("0.10.0") {
+        return Err(err(
+            "NULLABILITY_POSTGRESQL_SOURCE",
+            "This binding requires a core 0.10.0 declaration",
+            "/author/target/umf",
+        ));
+    }
+    let (element, mi, ei, path) = locate(&source, &author, ctx)?;
+    let provenance = get(&author, "provenance").unwrap_or(&Value::Null);
+    let nullability =
+        text_owned(get(provenance, "nullability")).unwrap_or_else(|| "unspecified".into());
+    let namespace = text(get(&request, "namespace")).ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_REQUEST",
+            "namespace is required",
+            "/request/namespace",
+        )
+    })?;
+    let table = text(get(&request, "tableName")).ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_REQUEST",
+            "tableName is required",
+            "/request/tableName",
+        )
+    })?;
+    let column = text(get(&request, "columnName")).ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_REQUEST",
+            "columnName is required",
+            "/request/columnName",
+        )
+    })?;
+    let native = text_owned(get(&request, "nativeType")).ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_REQUEST",
+            "nativeType is required",
+            "/request/nativeType",
+        )
+    })?;
+    let mode = text_owned(get(&request, "mode")).unwrap_or_default();
+    let scope = text_owned(get(&request, "scope")).unwrap_or_default();
+    let carrier = text_owned(get(&request, "carrier")).unwrap_or_default();
+    let (native_name, native_family) = field_native_type(&native).ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_REQUEST",
+            "Unsupported PostgreSQL native carrier",
+            "/request/nativeType",
+        )
+    })?;
+    let namespace_sql = quote_identifier(namespace, "/request/namespace", ctx)?;
+    let table_sql = quote_identifier(table, "/request/tableName", ctx)?;
+    let column_sql = quote_identifier(column, "/request/columnName", ctx)?;
+    let mut residuals = Vec::new();
+    if let Some(name) = get(element, "name") {
+        if text(Some(name)) != Some(column) {
+            push_residual(
+                &mut residuals,
+                format!("{path}/name"),
+                name,
+                "Explicit native column name differs from ideal name",
+                "not-expressible",
+                ctx,
+            )?;
+        }
+    }
+    if let Value::Object(fields) = &source {
+        for (key, value) in fields {
+            ctx.charge_work(1, k("/source"))?;
+            if !["umf", "id", "modules", "vocabularies"]
+                .iter()
+                .any(|known| key == &k(known))
+            {
+                push_residual(
+                    &mut residuals,
+                    pointer_path("", key, ctx)?,
+                    value,
+                    "Document metadata is retained but not projected",
+                    "unknown",
+                    ctx,
+                )?;
+            }
+        }
+    }
+    if matches!(get(&source, "vocabularies"), Some(Value::Object(fields)) if !fields.is_empty()) {
+        push_residual(
+            &mut residuals,
+            "/vocabularies",
+            get(&source, "vocabularies").unwrap(),
+            "Native vocabulary semantics are not projected",
+            "unknown",
+            ctx,
+        )?;
+    }
+    let modules = array(get(&source, "modules"));
+    for (index, module) in modules.iter().enumerate() {
+        ctx.charge_work(1, k("/modules"))?;
+        if index != mi {
+            push_residual(
+                &mut residuals,
+                format!("/modules/{index}"),
+                module,
+                "Other module is outside selected Field projection",
+                "unknown",
+                ctx,
+            )?;
+            continue;
+        }
+        if let Some(actual) = text(get(module, "namespace")) {
+            if !actual.is_empty() && actual != namespace {
+                push_residual(
+                    &mut residuals,
+                    format!("/modules/{index}/namespace"),
+                    &Value::String(actual.clone()),
+                    "Native schema name differs from ideal namespace",
+                    "not-expressible",
+                    ctx,
+                )?;
+            }
+        }
+        if let Value::Object(members) = module {
+            for (key, value) in members {
+                ctx.charge_work(1, k("/modules"))?;
+                if !["id", "namespace", "elements"]
+                    .iter()
+                    .any(|known| key == &k(known))
+                {
+                    push_residual(
+                        &mut residuals,
+                        pointer_path(&format!("/modules/{index}"), key, ctx)?,
+                        value,
+                        "Module metadata is not projected",
+                        "unknown",
+                        ctx,
+                    )?;
+                }
+            }
+        }
+        for (element_index, item) in array(get(module, "elements")).iter().enumerate() {
+            ctx.charge_work(1, k("/modules"))?;
+            if element_index != ei {
+                push_residual(
+                    &mut residuals,
+                    format!("/modules/{index}/elements/{element_index}"),
+                    item,
+                    "Other element is outside selected Field projection",
+                    "unknown",
+                    ctx,
+                )?;
+            }
+        }
+    }
+    if let Value::Object(members) = element {
+        for (key, value) in members {
+            ctx.charge_work(1, k(&path))?;
+            let known = [
+                "id",
+                "kind",
+                "name",
+                "description",
+                "scalarType",
+                "nullability",
+            ]
+            .iter()
+            .any(|name| key == &k(name));
+            let empty_extensions = key == &k("extensions")
+                && matches!(value, Value::Object(fields) if fields.is_empty());
+            if !known && !empty_extensions {
+                push_residual(
+                    &mut residuals,
+                    pointer_path(&path, key, ctx)?,
+                    value,
+                    "Field metadata is retained but not projected",
+                    "unknown",
+                    ctx,
+                )?;
+            }
+        }
+    }
+    let mut encoding = "omitted";
+    let mut null_clause = "";
+    if nullability != "unspecified" {
+        if scope != "stored-relation" {
+            push_residual(&mut residuals, format!("{path}/nullability"), get(provenance, "nullability").unwrap_or(&Value::Null), "Only stored-relation availability is implemented; query guarantees and omitted inputs require other bindings", "not-expressible", ctx)?;
+        } else if carrier != "sql-null" {
+            push_residual(&mut residuals, format!("{path}/nullability"), get(provenance, "nullability").unwrap_or(&Value::Null), "Explicit SQL-NULL absence carrier required; no equivalence with omitted members is inferred", "unknown", ctx)?;
+        } else if nullability == "required" {
+            encoding = "not-null";
+            null_clause = " NOT NULL";
+        } else {
+            encoding = "null";
+            null_clause = " NULL";
+        }
+    }
+    let mut sql = format!("CREATE TABLE {namespace_sql}.{table_sql} ({column_sql} pg_catalog.{native_name}{null_clause});\n");
+    if let Some(description) = text(get(element, "description")) {
+        let comment = format!(
+            "COMMENT ON COLUMN {namespace_sql}.{table_sql}.{column_sql} IS {};\n",
+            quote_literal(description, &format!("{path}/description"), ctx)?
+        );
+        ctx.charge_work(comment.len(), k(""))?;
+        sql.push_str(&comment);
+    }
+    if let Some(scalar) = text(get(element, "scalarType")) {
+        if scalar != &k(native_family) {
+            push_residual(
+                &mut residuals,
+                format!("{path}/scalarType"),
+                get(element, "scalarType").unwrap(),
+                "Explicit native type does not establish the stated scalar family",
+                "not-expressible",
+                ctx,
+            )?;
+        }
+    }
+    let blocked = mode == "strict" && !residuals.is_empty();
+    let outcome = if residuals
+        .iter()
+        .any(|r| text_owned(get(r, "outcome")).as_deref() == Some("not-expressible"))
+    {
+        "not-expressible"
+    } else if residuals.is_empty() {
+        "exact"
+    } else {
+        "unknown"
+    };
+    let diagnostic_values = diagnostics(
+        &residuals,
+        blocked,
+        "NULLABILITY_MEANING_NOT_PROJECTED",
+        ctx,
+    )?;
+    let result = obj(vec![
+        ("operation", s("project-nullability-postgresql")),
+        ("version", s("1.0.0")),
+        ("status", s(if blocked { "blocked" } else { "projected" })),
+        ("source", copy_json(&source, ctx)?),
+        ("author", copy_json(&author, ctx)?),
+        ("request", copy_json(&request, ctx)?),
+        (
+            "binding",
+            obj(vec![
+                ("id", s("umf.core.nullability.postgresql")),
+                ("version", s("1.0.0")),
+                ("nativeVersion", s("17.4")),
+                ("subset", s(NULLABILITY_SUBSET)),
+            ]),
+        ),
+        (
+            "mapping",
+            obj(vec![
+                ("origin", s("authored")),
+                ("nullability", s(&nullability)),
+                ("encoding", s(encoding)),
+                ("scope", s(&scope)),
+                ("carrier", s(&carrier)),
+                ("idealPath", s(&format!("{path}/nullability"))),
+                (
+                    "nativePath",
+                    s("/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef"),
+                ),
+                ("outcome", s(outcome)),
+            ]),
+        ),
+        ("residuals", Value::Array(residuals)),
+        ("diagnostics", diagnostic_values),
+    ]);
+    if blocked {
+        validate(
+            &result_schema,
+            &result,
+            "NULLABILITY_POSTGRESQL_RESULT",
+            ctx,
+        )?;
+    }
+    let mut prepared = result;
+    if !blocked {
+        set(&mut prepared, "nativeSql", s(&sql))?;
+    }
+    Ok(prepared)
+}
+
+fn complete_nullability(
+    prepared_input: &Value,
+    target_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    let (result_schema, _) = nullability_schemas(&rt, ctx)?;
+    let prepared = copy_json(prepared_input, ctx)?;
+    let target = copy_json(target_input, ctx)?;
+    let author = get(&prepared, "author").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RESULT",
+            "Prepared author is missing",
+            "/prepared/author",
+        )
+    })?;
+    let request = get(&prepared, "request").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RESULT",
+            "Prepared request is missing",
+            "/prepared/request",
+        )
+    })?;
+    let recomputed = nullability_project(author, request, ctx)?;
+    if !same(&prepared, &recomputed, ctx)? {
+        return Err(err(
+            "NULLABILITY_POSTGRESQL_RESULT",
+            "Prepared projection differs from Rust recomputation",
+            "/prepared",
+        ));
+    }
+    if text_owned(get(&prepared, "status")).as_deref() == Some("blocked") {
+        validate(
+            &result_schema,
+            &prepared,
+            "NULLABILITY_POSTGRESQL_RESULT",
+            ctx,
+        )?;
+        return Ok(prepared);
+    }
+    let request_id = get(request, "id").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RESULT",
+            "Request id is missing",
+            "/prepared/request/id",
+        )
+    })?;
+    target_admissible(&target, request_id, "NULLABILITY_POSTGRESQL_RESULT", ctx)?;
+    let expected_sql = get(&prepared, "nativeSql").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RESULT",
+            "Prepared SQL is missing",
+            "/prepared/nativeSql",
+        )
+    })?;
+    let actual_sql = crate::postgresql_sql_runtime::get_postgresql_source(&target, ctx)?;
+    if !same(&actual_sql, expected_sql, ctx)? {
+        return Err(err(
+            "NULLABILITY_POSTGRESQL_RESULT",
+            "Parsed target does not retain the Rust-prepared SQL",
+            "/target",
+        ));
+    }
+    let mut output = prepared;
+    set(&mut output, "target", target)?;
+    validate(
+        &result_schema,
+        &output,
+        "NULLABILITY_POSTGRESQL_RESULT",
+        ctx,
+    )?;
+    Ok(output)
+}
+
+fn validate_nullability_recovery(
+    receipt_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    let (schema, _) = nullability_schemas(&rt, ctx)?;
+    let receipt = copy_json(receipt_input, ctx)?;
+    validate(&schema, &receipt, "NULLABILITY_POSTGRESQL_RECEIPT", ctx)?;
+    if text_owned(get(&receipt, "status")).as_deref() != Some("projected")
+        || get(&receipt, "target").is_none()
+        || get(&receipt, "nativeSql").is_none()
+        || get(&receipt, "author").is_none()
+        || get(&receipt, "request").is_none()
+    {
+        return Err(err(
+            "NULLABILITY_POSTGRESQL_RECEIPT",
+            "Expected complete projected receipt",
+            "/receipt/status",
+        ));
+    }
+    Ok(Value::Bool(true))
+}
+
+fn recover_nullability(
+    receipt_input: &Value,
+    fresh_input: &Value,
+    native_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    let (schema, _) = nullability_schemas(&rt, ctx)?;
+    let receipt = copy_json(receipt_input, ctx)?;
+    let fresh = copy_json(fresh_input, ctx)?;
+    validate(&schema, &receipt, "NULLABILITY_POSTGRESQL_RECEIPT", ctx)?;
+    validate(&schema, &fresh, "NULLABILITY_POSTGRESQL_RECEIPT", ctx)?;
+    if text_owned(get(&receipt, "status")).as_deref() != Some("projected")
+        || get(&fresh, "target").is_none()
+    {
+        return Err(err(
+            "NULLABILITY_POSTGRESQL_RECEIPT",
+            "Expected complete projected receipt",
+            "/receipt/status",
+        ));
+    }
+    let author = get(&receipt, "author").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RECEIPT",
+            "Author is missing",
+            "/receipt/author",
+        )
+    })?;
+    let request = get(&receipt, "request").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RECEIPT",
+            "Request is missing",
+            "/receipt/request",
+        )
+    })?;
+    let prepared = nullability_project(author, request, ctx)?;
+    let expected = complete_nullability(&prepared, get(&fresh, "target").unwrap(), ctx)?;
+    if !same(&fresh, &expected, ctx)? || !same(&receipt, &fresh, ctx)? {
+        return Err(err(
+            "NULLABILITY_POSTGRESQL_RECEIPT",
+            "Receipt differs from the fresh Rust projection, including its parsed target",
+            "/receipt",
+        ));
+    }
+    let native = match native_input {
+        Value::String(value) => value,
+        _ => {
+            return Err(err(
+                "NULLABILITY_POSTGRESQL_STALE",
+                "Native SQL text is required",
+                "/nativeText",
+            ))
+        }
+    };
+    let current = crate::postgresql_sql_runtime::get_postgresql_source(
+        get(&receipt, "target").unwrap(),
+        ctx,
+    )?;
+    if !same(
+        get(&receipt, "nativeSql").unwrap_or(&Value::Null),
+        &Value::String(native.clone()),
+        ctx,
+    )? || !same(&current, &Value::String(native.clone()), ctx)?
+    {
+        return Err(err(
+            "NULLABILITY_POSTGRESQL_STALE",
+            "Native target changed; retained report cannot assert recovery",
+            "/nativeText",
+        ));
+    }
+    copy_json(
+        get(&receipt, "source").ok_or_else(|| {
+            err(
+                "NULLABILITY_POSTGRESQL_RECEIPT",
+                "Source is missing",
+                "/receipt/source",
+            )
+        })?,
+        ctx,
+    )
+}
+
+fn recover_cardinality(
+    receipt_input: &Value,
+    fresh_input: &Value,
+    native_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let rt = runtime(ctx)?;
+    let (schema, _) = cardinality_schemas(&rt, ctx)?;
+    let receipt = copy_json(receipt_input, ctx)?;
+    let fresh = copy_json(fresh_input, ctx)?;
+    validate(&schema, &receipt, "CARDINALITY_POSTGRESQL_RECEIPT", ctx)?;
+    validate(&schema, &fresh, "CARDINALITY_POSTGRESQL_RECEIPT", ctx)?;
+    if text_owned(get(&receipt, "status")).as_deref() != Some("projected")
+        || get(&fresh, "target").is_none()
+    {
+        return Err(err(
+            "CARDINALITY_POSTGRESQL_RECEIPT",
+            "Expected complete projected receipt",
+            "/receipt/status",
+        ));
+    }
+    let author = get(&receipt, "author").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RECEIPT",
+            "Author is missing",
+            "/receipt/author",
+        )
+    })?;
+    let request = get(&receipt, "request").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RECEIPT",
+            "Request is missing",
+            "/receipt/request",
+        )
+    })?;
+    let prepared = cardinality_project(author, request, ctx)?;
+    let expected_fresh = complete_cardinality(&prepared, get(&fresh, "target").unwrap(), ctx)?;
+    if !same(&fresh, &expected_fresh, ctx)? || !same(&receipt, &fresh, ctx)? {
+        return Err(err(
+            "CARDINALITY_POSTGRESQL_RECEIPT",
+            "Receipt differs from the fresh Rust projection, including its parsed target",
+            "/receipt",
+        ));
+    }
+    let Value::String(native) = native_input else {
+        return Err(err(
+            "CARDINALITY_POSTGRESQL_STALE",
+            "Native SQL text is required",
+            "/nativeText",
+        ));
+    };
+    let current = crate::postgresql_sql_runtime::get_postgresql_source(
+        get(&receipt, "target").unwrap(),
+        ctx,
+    )?;
+    if !same(
+        get(&receipt, "nativeSql").unwrap_or(&Value::Null),
+        &Value::String(native.clone()),
+        ctx,
+    )? || !same(&current, &Value::String(native.clone()), ctx)?
+    {
+        return Err(err(
+            "CARDINALITY_POSTGRESQL_STALE",
+            "Native target changed; retained report cannot assert recovery",
+            "/nativeText",
+        ));
+    }
+    copy_json(
+        get(&receipt, "source").ok_or_else(|| {
+            err(
+                "CARDINALITY_POSTGRESQL_RECEIPT",
+                "Source is missing",
+                "/receipt/source",
+            )
+        })?,
+        ctx,
+    )
+}
+
+pub fn prepare_cardinality_projection(
+    author: &Value,
+    request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    cardinality_project(author, request, ctx)
+}
+pub fn complete_cardinality_projection(
+    prepared: &Value,
+    target: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    complete_cardinality(prepared, target, ctx)
+}
+pub fn prepare_cardinality_recovery(
+    receipt: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    validate_cardinality_recovery(receipt, ctx)
+}
+pub fn recover_cardinality_projection(
+    receipt: &Value,
+    fresh: &Value,
+    native_text: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    recover_cardinality(receipt, fresh, native_text, ctx)
+}
+
+pub fn prepare_nullability_projection(
+    author: &Value,
+    request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    nullability_project(author, request, ctx)
+}
+pub fn complete_nullability_projection(
+    prepared: &Value,
+    target: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    complete_nullability(prepared, target, ctx)
+}
+pub fn prepare_nullability_recovery(
+    receipt: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    validate_nullability_recovery(receipt, ctx)
+}
+pub fn recover_nullability_projection(
+    receipt: &Value,
+    fresh: &Value,
+    native_text: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    recover_nullability(receipt, fresh, native_text, ctx)
+}
+
+/// Complete an authored Field projection with an explicitly admitted parser in
+/// the same caller context. The parser contributes syntax only; projection and
+/// receipt admission remain Rust-owned.
+pub fn project_field_with_backend(
+    author: &Value,
+    request: &Value,
+    backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let prepared = field_project(author, request, ctx)?;
+    if text_owned(get(&prepared, "status")).as_deref() == Some("blocked") {
+        return Ok(prepared);
+    }
+    let sql = text(get(&prepared, "nativeSql")).ok_or_else(|| {
+        err(
+            "FIELD_POSTGRESQL_RESULT",
+            "Prepared SQL is missing",
+            "/nativeSql",
+        )
+    })?;
+    let id = text(get(request, "id")).ok_or_else(|| {
+        err(
+            "FIELD_POSTGRESQL_REQUEST",
+            "Target id is missing",
+            "/request/id",
+        )
+    })?;
+    let target = crate::postgresql_sql_runtime::import_postgresql_sql(sql, id, backend, ctx)?;
+    complete_field_projection(&prepared, &target, ctx)
+}
+
+pub fn project_record_with_backend(
+    author: &Value,
+    request: &Value,
+    backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let prepared = record_project(author, request, ctx)?;
+    if text_owned(get(&prepared, "status")).as_deref() == Some("blocked") {
+        return Ok(prepared);
+    }
+    let sql = text(get(&prepared, "nativeSql")).ok_or_else(|| {
+        err(
+            "RECORD_POSTGRESQL_RESULT",
+            "Prepared SQL is missing",
+            "/nativeSql",
+        )
+    })?;
+    let id = text(get(request, "id")).ok_or_else(|| {
+        err(
+            "RECORD_POSTGRESQL_REQUEST",
+            "Target id is missing",
+            "/request/id",
+        )
+    })?;
+    let target = crate::postgresql_sql_runtime::import_postgresql_sql(sql, id, backend, ctx)?;
+    complete_record_projection(&prepared, &target, ctx)
+}
+
+pub fn project_cardinality_with_backend(
+    author: &Value,
+    request: &Value,
+    backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let prepared = cardinality_project(author, request, ctx)?;
+    if text_owned(get(&prepared, "status")).as_deref() == Some("blocked") {
+        return Ok(prepared);
+    }
+    let sql = text(get(&prepared, "nativeSql")).ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RESULT",
+            "Prepared SQL is missing",
+            "/nativeSql",
+        )
+    })?;
+    let id = text(get(request, "id")).ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_REQUEST",
+            "Target id is missing",
+            "/request/id",
+        )
+    })?;
+    let target = crate::postgresql_sql_runtime::import_postgresql_sql(sql, id, backend, ctx)?;
+    complete_cardinality(&prepared, &target, ctx)
+}
+
+pub fn project_nullability_with_backend(
+    author: &Value,
+    request: &Value,
+    backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let prepared = nullability_project(author, request, ctx)?;
+    if text_owned(get(&prepared, "status")).as_deref() == Some("blocked") {
+        return Ok(prepared);
+    }
+    let sql = text(get(&prepared, "nativeSql")).ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RESULT",
+            "Prepared SQL is missing",
+            "/nativeSql",
+        )
+    })?;
+    let id = text(get(request, "id")).ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_REQUEST",
+            "Target id is missing",
+            "/request/id",
+        )
+    })?;
+    let target = crate::postgresql_sql_runtime::import_postgresql_sql(sql, id, backend, ctx)?;
+    complete_nullability(&prepared, &target, ctx)
+}
+
+pub fn recover_field_with_backend(
+    receipt: &Value,
+    native_text: &Value,
+    backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    prepare_field_recovery(receipt, ctx)?;
+    let author = get(receipt, "author").ok_or_else(|| {
+        err(
+            "FIELD_POSTGRESQL_RECEIPT",
+            "Author is missing",
+            "/receipt/author",
+        )
+    })?;
+    let request = get(receipt, "request").ok_or_else(|| {
+        err(
+            "FIELD_POSTGRESQL_RECEIPT",
+            "Request is missing",
+            "/receipt/request",
+        )
+    })?;
+    let fresh = project_field_with_backend(author, request, backend, ctx)?;
+    recover_field_projection(receipt, &fresh, native_text, ctx)
+}
+
+pub fn recover_record_with_backend(
+    receipt: &Value,
+    native_text: &Value,
+    backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    prepare_record_recovery(receipt, ctx)?;
+    let author = get(receipt, "author").ok_or_else(|| {
+        err(
+            "RECORD_POSTGRESQL_RECEIPT",
+            "Author is missing",
+            "/receipt/author",
+        )
+    })?;
+    let request = get(receipt, "request").ok_or_else(|| {
+        err(
+            "RECORD_POSTGRESQL_RECEIPT",
+            "Request is missing",
+            "/receipt/request",
+        )
+    })?;
+    let fresh = project_record_with_backend(author, request, backend, ctx)?;
+    recover_record_projection(receipt, &fresh, native_text, ctx)
+}
+
+pub fn recover_cardinality_with_backend(
+    receipt: &Value,
+    native_text: &Value,
+    backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    prepare_cardinality_recovery(receipt, ctx)?;
+    let author = get(receipt, "author").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RECEIPT",
+            "Author is missing",
+            "/receipt/author",
+        )
+    })?;
+    let request = get(receipt, "request").ok_or_else(|| {
+        err(
+            "CARDINALITY_POSTGRESQL_RECEIPT",
+            "Request is missing",
+            "/receipt/request",
+        )
+    })?;
+    let fresh = project_cardinality_with_backend(author, request, backend, ctx)?;
+    recover_cardinality_projection(receipt, &fresh, native_text, ctx)
+}
+
+pub fn recover_nullability_with_backend(
+    receipt: &Value,
+    native_text: &Value,
+    backend: &dyn crate::parser_backend_protocol::PostgresqlParserBackend,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    prepare_nullability_recovery(receipt, ctx)?;
+    let author = get(receipt, "author").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RECEIPT",
+            "Author is missing",
+            "/receipt/author",
+        )
+    })?;
+    let request = get(receipt, "request").ok_or_else(|| {
+        err(
+            "NULLABILITY_POSTGRESQL_RECEIPT",
+            "Request is missing",
+            "/receipt/request",
+        )
+    })?;
+    let fresh = project_nullability_with_backend(author, request, backend, ctx)?;
+    recover_nullability_projection(receipt, &fresh, native_text, ctx)
 }
