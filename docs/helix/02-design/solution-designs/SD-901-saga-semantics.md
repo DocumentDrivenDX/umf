@@ -116,18 +116,23 @@ TypeScript compiled to JavaScript, loading the same Rust WASM semantics. Bun
 remains the JavaScript development/test runner. Rust placement follows current
 main's ADR-006, which supersedes the earlier TypeScript engine preference.
 
-The proposal JSON Schemas are design authority for their structures and are
-explicitly unregistered. Production promotion goes through authored metamodel
-and generated package/type workflows; no hand-maintained parallel generated model.
+The extension schemas remain owned by CONTRACT-908 and are generated into
+`spec/extensions/saga/` by `scripts/build-saga-package.py`. A consumer explicitly
+installs the exact action and saga packages through its engine resources and
+registry; neither package is added to the core default registry. This keeps saga
+shape authority with the contract without a parallel hand-maintained model or a
+core metamodel rewrite.
 
 ## Traceability
 
 [STP-906](../../03-test/test-plans/STP-906-author-and-assess-sagas.md) maps every
 portable story criterion. [STP-905](../../03-test/test-plans/STP-905-saga-recovery-conformance.md)
-maps every consumer criterion. The design-schema verifier exercises structural
-examples only. [SPIKE-901](../spikes/SPIKE-901-saga-recovery.md) records the bounded
-TLC evidence and residual gaps. None of these artifacts marks future native tests
-as passed or declaration claims as authorization.
+maps every consumer criterion. Portable semantic checks use the shared corpus and
+independent expected diagnostics and obligation inventories across the selected
+bindings; native protocol checks compare public history with independent provider
+observations. [SPIKE-901](../spikes/SPIKE-901-saga-recovery.md) records bounded
+abstract evidence and its assumptions. None of these forms of evidence makes a
+declaration claim equivalent to host authorization or qualifies production hosting.
 
 ## Concern Alignment
 
@@ -135,7 +140,8 @@ Fidelity, exact vocabulary identity, offline processing, bounded work and explic
 diagnostics remain mandatory. Formal methods is adopted only for saga coordination:
 finite executable safety/progress analysis with named assumptions and native
 correspondence obligations. It is not a new requirement on unrelated UMF work.
-Architecture records allowed imports and the future boundary-check adoption.
+Architecture records allowed imports; boundary checks enforce the Rust and
+wrapper ownership rules.
 No interactive UI is designed; Batten screens remain consumer work.
 
 ## Constraints & Assumptions
@@ -147,11 +153,11 @@ selected in CONTRACT-908. These caps select safe refusal behavior, not workload
 or latency service commitments. Original custody and nonreuse last for the trusted
 namespace lifetime; no automatic data deletion is introduced.
 
-The first native qualification target is the existing bounded PostgreSQL reference
-consumer, exercised with isolated coordinator and two target stores. The test run
-must pin actual binary/build, adapter and source digests; no version-independent
-PostgreSQL or production support is claimed by this selection. Other providers
-can implement the same contract with independent evidence.
+The bounded native reference profile uses PostgreSQL with an isolated coordinator
+and two target stores. Its evidence applies to the exact provider, action, source
+and binary cohort; it does not establish version-independent PostgreSQL or
+production-host support. Other providers must qualify independently against the
+same contract.
 
 ## Risks
 
@@ -161,15 +167,15 @@ can implement the same contract with independent evidence.
 | Incorrectly treating a queued ticket as native admission | Preserve separate native current-authority/revision checks; explicitly test retirement between ticket and provider admission. |
 | Provider cannot bound outcome/custody | Refuse eligibility before effects; reserve capacity and test the outcome boundary. |
 | In-flight retirement blocks compensation | Retain facts and pending obligations; intervention without implicit rebind or new privilege. |
-| Model pass mistaken for implementation proof | Separate all abstract properties, structural examples, planned semantic suites and native witnesses. |
+| Model pass mistaken for implementation proof | Keep abstract properties, structural examples, portable semantic tests and native witnesses as distinct evidence. |
 
 ## Review Readiness
 
-The review packet contains requirements, exact proposal schemas and protocol,
-solution/story designs, exhaustive AC mappings, structural example checks and
-bounded formal evidence. No unresolved decision blocks the selected profile's
-semantic implementation. External declarations, production host implementation,
-provider qualification, workload SLOs and release approval remain separate work.
+The design separates portable declaration/assessment semantics from a host-owned
+runtime protocol. The bounded reference consumer demonstrates one provider
+profile; external providers and production hosting require their own architecture,
+authority and qualification evidence. Workload SLOs are not inferred from the
+selected safety bounds.
 
 **Identity migration:** the reviewed authoring story originally used US-904.
 Current main already assigns US-904 to extension-defined kinds. This packet

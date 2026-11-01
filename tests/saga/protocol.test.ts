@@ -191,6 +191,19 @@ test('retiring an action at the native admission cut prevents a fresh effect',as
   expect(stopped.forward[0]!.state).toBe('refused');
   const nativeOutcome=await inventory.store.transaction(inventory.storeName,async(tx,control)=>tx`select count(*)::int as n from action_outcome where store=${control.id}`);
   expect(nativeOutcome[0]!.n).toBe(0);
+  const [coordinatorTicket]=await cluster.coordinator.sql`select ticket from saga_ticket where instance_id=${submitted.instance.id} and ordinal=0 and direction='f'`;
+  expect(coordinatorTicket).toBeDefined();
+  const ticket=String(coordinatorTicket!.ticket),[gatewayTicket]=await inventory.gateway.sql`select intent,state,final_disposition from saga_provider_ticket where ticket=${ticket}`;
+  expect(gatewayTicket).toBeDefined();expect(gatewayTicket!.state).toBe('closed');
+  const originalRequest=decodeReferenceJson(gatewayTicket!.intent) as unknown as ReferenceInvokeRequest;
+  const retainedDisposition=decodeReferenceJson(gatewayTicket!.final_disposition) as any;
+  expect(retainedDisposition).toEqual(result.result);
+  const providerFact=await observeNativeProvider({store:inventory.store,storeName:inventory.storeName,gateway:inventory.gateway},ticket,key);
+  expect(providerFact).toMatchObject({ticket,status:'unsupported',provider:inventory.gateway.issuerId,tenant:'tenant-a',storeEpoch:'epoch-retirement-cut',actionRevision:'saga-r1',originalTicket:ticket,key:originalRequest.key,gatewayClosed:true,attemptsTerminal:true,attemptCount:1,outcomeCount:0,entityKey:key,entityStatus:'pending',source:'native-provider-ticket',finalDisposition:{status:'unsupported',code:'REVISION'}});
+  expect(await inventory.gateway.lookup(ticket,inventory.credential,originalRequest)).toEqual(retainedDisposition);
+  expect(await inventory.gateway.deliver(ticket,inventory.credential,originalRequest)).toEqual(retainedDisposition);
+  const postReplay=await observeNativeProvider({store:inventory.store,storeName:inventory.storeName,gateway:inventory.gateway},ticket,key);
+  expect(postReplay).toEqual(providerFact);
  });
 },{timeout:30_000});
 
@@ -244,6 +257,7 @@ test('expired submission identities remain nonreusable after coordinator restart
  });
 },{timeout:30_000});
 
+/** @covers US-906-AC14 */
 test('public success history agrees with independently queried native provider outcomes',async()=>{
  await withSagaNativeCluster(async cluster=>{
   const [inventory,allocation]=await Promise.all([installSagaProvider(cluster.providers[0],'history-oracle-a'),installSagaProvider(cluster.providers[1],'history-oracle-b')]),definition=sagaRuntimePlan(inventory,allocation),target={module:definition.module,saga:definition.id,revision:definition.revision},directory=new Map([[JSON.stringify([target.module,target.saga,target.revision]),definition]]),protocol='umf.actions.saga/1',actor={tenant:'tenant-a',principal:'history-oracle-worker',service:'saga-test-worker',worker:'history-oracle-worker'},adapter=new SagaProtocolCoordinator(cluster.coordinator,directory,async a=>a.tenant==='tenant-a'),key='history-oracle-order';
@@ -306,6 +320,7 @@ test('a nondeterministic declared output survives execute acknowledgement loss a
  });
 },{timeout:60_000});
 
+/** @covers US-906-AC14 */
 test('a rejected allocation unwinds with the original typed output from its prior commit',async()=>{
  await withSagaNativeCluster(async cluster=>{
   const inventory=await installSagaProvider(cluster.providers[0],'rejected-unwind-a'),allocation=await installSagaProvider(cluster.providers[1],'rejected-unwind-b');
