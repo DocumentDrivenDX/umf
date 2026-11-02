@@ -25,6 +25,10 @@ initializers, and completes the packed native binding's JavaScript/type closure.
 It also retains the genuine host-only handler timing diagnostics and independent
 ontology browser assertions from outstanding work. The current Rust pack-tools
 workspace is included in rebuildable Python source archives.
+Duplicate fragment-navigation events no longer replace a newly focused definition
+finder. Twenty real-browser ontology checks pass on rebuilt, verified assets.
+The trusted Python publisher allows the exact 0.10.7 successor while retaining
+its historical 0.10.2 route and refusing unqualified versions.
 Core documents remain 0.10.0. Existing public archives remain unchanged.
 
 ## Audience and Channels

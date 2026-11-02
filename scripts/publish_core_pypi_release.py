@@ -20,7 +20,7 @@ from typing import Any
 SHA = re.compile(r"[0-9a-f]{64}\Z")
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
-QUALIFIED_CORE_VERSION = "0.10.2"
+QUALIFIED_CORE_VERSIONS = frozenset({"0.10.2", "0.10.7"})
 
 
 class ReleaseError(ValueError):
@@ -256,8 +256,9 @@ def prepare_release(
         "release pins do not identify a numeric core version",
     )
     _require(
-        version == QUALIFIED_CORE_VERSION,
-        f"Core version {QUALIFIED_CORE_VERSION} is the only qualified version for this publisher",
+        version in QUALIFIED_CORE_VERSIONS,
+        "Core versions " + ", ".join(sorted(QUALIFIED_CORE_VERSIONS))
+        + " are the only qualified versions for this publisher",
     )
     archives = sorted(
         name for name in sums if name.startswith(wheel_prefix) and name.endswith(".whl")

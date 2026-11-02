@@ -18,13 +18,14 @@
     "Run native regression files through the repository\u2019s existing isolated runner, preserving explicit test and product budgets."
   ],
   "checks": {
-    "typecheck": "Pending final combined-source check; earlier reconciliation passed.",
+    "typecheck": "pass on final combined source including navigation race correction",
     "rust_core": "688 core, 4 Lakeview and 1 concurrent cache regression passed after the shared 31-site publication correction.",
     "rust_wire": "89 passed after the shared correction.",
     "bun": "48 passed / 217 assertions through the existing isolated runner; all five files retained. Hosted five-second-default attempts are retained as failed attempts, not passing qualification.",
     "handler_timing": "9 tests / 145 assertions pass; source-only observer controls. Existing product execution and cleanup budgets unchanged.",
-    "ontology_browser": "Pending rebuilt current reference site; stale generated source rejected as intended.",
-    "hosted": "Old-head runs 41505343561 and 41505343180 failed test-harness default timeouts after Rust/native component stages passed. Final exact-source hosted acceptance pending."
+    "ontology_browser": "20 checks pass in real Chromium with no page errors or unexpected external requests. Duplicate popstate/hashchange rendering corrected; dropdown click bound to its listbox. Verified mounted released renderer assets were required.",
+    "hosted": "Old-head runs 41505343561 and 41505343180 failed test-harness default timeouts after Rust/native component stages passed. Final exact-source hosted acceptance pending.",
+    "publisher": "9 Python publisher validator tests pass, including exact-byte standalone profiles for historical 0.10.2 and the 0.10.7 successor; unqualified 0.11.0 and altered file maps refuse. Publication remains gated on final exact artifacts."
   },
   "qualification_limits": [
     "Local feature binaries preceded the separate Avro cache correction; the core unit suite qualifies that correction. Hosted CI rebuilds and tests the exact combined source before merge.",
@@ -75,6 +76,14 @@
     "handler_timing_current": {
       "sha256": "696f0bcf0df58ed4953b3d90739ccb0f5040b5710c76538cc7695430263432c7",
       "size": 1137
+    },
+    "ontology_browser_current": {
+      "sha256": "237a89f53a4ec6bc0d4213967e76cfdc66741d3d8550241caf94cdb93d639ca3",
+      "size": 2088
+    },
+    "ontology_build_manifest": {
+      "sha256": "8e2cedccccd266fd723aa430ced265ed804f750b0c8e2ebe68909cde8c784e4f",
+      "size": 5220215
     }
   },
   "sources": {

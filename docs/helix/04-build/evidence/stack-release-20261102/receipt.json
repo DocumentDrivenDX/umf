@@ -140,7 +140,7 @@
     "weft": "Main tree equals v0.4.56. Two old source topics were adopted under different commits; historical proof/harness branches need their own remaining disposition. Active migration work remains owner-qualified.",
     "umf-visual": "All audited committed tips accounted for by merged PRs; active dirty examples/geometry work remains with its owner.",
     "tether": "All audited committed tips accounted for by merged PRs; active dirty API/web work remains with its owner.",
-    "batten": "Storage preview published. New enterprise planning documents remain uncommitted and must be preserved/reconciled; full host acceptance remains open.",
+    "batten": "Storage preview published. Another owner is actively implementing local approval/runtime packages in the primary checkout; these uncommitted changes are protected and not claimed released.",
     "concourse": "0.1.1 preview published with complete third-party notices. Release-note link tooling merged. Production gates remain explicit.",
     "tablespec": "Both previously open feature PRs integrated and released; no open PR remains after publisher hardening."
   },
@@ -171,5 +171,16 @@
       "head": "236c32f1fee17cfc949c4eb0479765d4797af165",
       "proof": "Clean tracked/untracked state, current-main ancestor; ignored roots only Ruff and Python bytecode caches. Removed after original PR48 integrated in PR51."
     }
-  ]
+  ],
+  "additional_semantic_cleanup": {
+    "deleted": 5,
+    "local": 4,
+    "remote": 1,
+    "receipts": [
+      "semantic-supersession-cleanup.json",
+      "visual-extraction-cleanup.json"
+    ],
+    "reason": "Four Parquet candidate tips are adopted into current main; the visual topic is fully extracted and released with frozen 1.0.0 semantics."
+  },
+  "total_root_managed_ref_deletions": 338
 }

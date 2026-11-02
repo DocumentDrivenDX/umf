@@ -4,7 +4,11 @@
 [Pre-cleanup inventory](inventory-before-cleanup.json) preserves the original
 ref/worktree observations and source-blob reconciliation, with its own timestamp.
 [Deletion receipt](branch-cleanup-result.json) records all 333 verified redundant
-refs removed across eight repositories: 164 local and 169 remote. Exact source
+refs removed across eight repositories: 164 local and 169 remote. A further
+four Parquet candidate heads and the extracted visual topic were deleted after
+semantic reconciliation (338 refs total; 168 local and 170 remote). Their
+[adoption proof](semantic-supersession-cleanup.json) and
+[released extraction proof](visual-extraction-cleanup.json) are separate. Exact source
 heads, current-main or merged-PR proof, and execution results are retained.
 Open PRs, registered worktree heads, active checkouts and unresolved unique work
 were protected. The superseded TableSpec PR48 worktree was also removed after

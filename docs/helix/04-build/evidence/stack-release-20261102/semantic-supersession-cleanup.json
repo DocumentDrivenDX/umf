@@ -1,0 +1,75 @@
+{
+  "observed_main": "22e24acfd921958c08d723c8370959a26558ba08",
+  "authorization": "Owner: delete completely superseded work, integrate genuine gaps.",
+  "proof": [
+    {
+      "source": "aab13a2d057bc583067d86583efcf2df2b46ad3c",
+      "adopted": "7eed31fce6f031e9f919062b05f6dfa50c23d134",
+      "identical_paths": [
+        "crates/umf-core/src/parquet_physical.rs"
+      ]
+    },
+    {
+      "source": "bdeac9c807c3c17a02aec4dec9d606c3314f7076",
+      "adopted": "e13f70f307b207c0ed69abf29290b89b9dc75829",
+      "identical_paths": [
+        "crates/umf-core/src/parquet_rows.rs",
+        "crates/umf-core/src/parquet_values.rs"
+      ]
+    },
+    {
+      "source": "81a667281285c2e1b4f0f29dd71e2d84834ac1df",
+      "adopted": "ef97a2ba2753112d47e77b49e0a0d7238fbe80a0",
+      "identical_paths": [
+        "crates/umf-core/src/parquet_repair_offsets.rs"
+      ]
+    },
+    {
+      "source": "f749b43a60f9298d9e0e4af2768b794e3a5e71ae",
+      "adopted": "9da14b69376f6ada7e086361e375e56956fe9b73",
+      "identical_paths": [
+        "python/tests/test_rust_parquet_edits.py"
+      ]
+    },
+    {
+      "source": "aee8094599b2f7df8293d754b197482fc9abc7e7",
+      "adopted": "dfc67922e82ca3b2831f901260d1ceb57398b1bc",
+      "identical_paths": [
+        "crates/umf-core/src/parquet_edits.rs",
+        "tests/rust-core/fixtures/parquet-edits-ts-freeze.json",
+        "tests/rust-core/parquet-edits-parity.ts",
+        "docs/helix/04-build/evidence/rust-migration/r8-parquet-edits/README.md"
+      ]
+    }
+  ],
+  "reviewed_integration_differences": [
+    "Full module rosters add the separately integrated edits/levels modules.",
+    "Integrated edit host/type/CLI wrappers add decodeLevels and formatting; original append/rename dispatch and API preserved.",
+    "Integrated Python edit wrapper adds decode_levels; frozen-result and boolean/number checks match original adopted commits.",
+    "Old gap-ledger claims were held during integration, then superseded by the completed Rust default-route migration; its TS-era ledger and harness were explicitly retired.",
+    "No new runtime feature was found in these four candidates beyond the main-ancestor adoptions above."
+  ],
+  "results": [
+    {
+      "ref": "refs/heads/codex/rust-parquet-edits-candidate",
+      "sha": "f749b43a60f9298d9e0e4af2768b794e3a5e71ae",
+      "result": "deleted"
+    },
+    {
+      "ref": "refs/heads/codex/rust-parquet-levels-candidate",
+      "sha": "aab13a2d057bc583067d86583efcf2df2b46ad3c",
+      "result": "deleted"
+    },
+    {
+      "ref": "refs/heads/codex/rust-parquet-repair-candidate",
+      "sha": "81a667281285c2e1b4f0f29dd71e2d84834ac1df",
+      "result": "deleted"
+    },
+    {
+      "ref": "refs/heads/codex/rust-parquet-values-candidate",
+      "sha": "bdeac9c807c3c17a02aec4dec9d606c3314f7076",
+      "result": "deleted"
+    }
+  ],
+  "executed_at_utc": "2026-11-02T19:40:47.977016+00:00"
+}

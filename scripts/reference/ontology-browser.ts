@@ -89,7 +89,7 @@ try{
   await page.waitForFunction(()=>document.activeElement?.id==='ontology-detail');
   assert(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('node')===JSON.stringify(['umf','module']),'Autocomplete selected wrong identity');
   const nextFinder=page.getByRole('combobox',{name:'Find a definition'});
-  await nextFinder.fill('scalarType');await page.getByRole('option').first().click();
+  await nextFinder.fill('scalarType');await page.getByRole('listbox',{name:'Matching definitions'}).getByRole('option').first().click();
   await page.locator('#ontology-detail h3').filter({hasText:/^scalarType$/}).waitFor();
   await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();
   const currentFinder=page.getByRole('combobox',{name:'Find a definition'});
