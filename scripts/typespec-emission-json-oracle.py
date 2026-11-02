@@ -37,15 +37,3 @@ for case in json.loads(Path('fixtures/typespec/emission/numeric-results.json').r
         numeric_checks.append({'strategy': strategy, 'case': name, 'before': expected_before, 'after': expected_after})
 Path('fixtures/typespec/emission/numeric-oracle-results.json').write_text(json.dumps({'validator': 'jsonschema 4.26.0', 'comparisons': len(numeric_checks)*2, 'checks': numeric_checks, 'scope': 'Native-emitter numeric losses and edited bounds; exact Python integers expose rounded literals. Acceptance of out-of-domain values is a demonstrated loss, not conformance.'}, indent=2)+'\n')
 print(f'TypeSpec numeric emission: {len(numeric_checks)*2} independent comparisons expose losses and enforce edited bounds')
-
-projected = json.loads(Path('fixtures/typespec/emission/projection.json').read_text())
-projected_registry = Registry().with_resources([(uri, Resource.from_contents(json.loads(text))) for uri, text in projected['resources'].items()])
-root_uri = next(x['retrievalUri'] for x in projected['result']['resources'] if x['file'] == projected['result']['policy']['rootFile'])
-projected_registry = projected_registry.with_resource(root_uri, Resource.from_contents(json.loads(projected['native'])))
-projected_validator = Draft202012Validator({'$ref': root_uri}, registry=projected_registry)
-for value, expected in cases:
-    assert projected_validator.is_valid(value) == expected, value
-codes = {x['code'] for x in projected['result']['issues']}
-assert {'TYPESPEC_UNREVIEWED_SEMANTICS', 'TYPESPEC_NUMERIC_PRECISION', 'TYPESPEC_INT64_CONSTRAINTS'} <= codes
-Path('fixtures/typespec/emission/projection-oracle-results.json').write_text(json.dumps({'validator': 'jsonschema 4.26.0', 'cases': len(cases), 'scope': 'Target UMF native re-export and registered dependency URIs preserve emitted validator behavior; not source semantic equivalence.'}, indent=2)+'\n')
-print(f'TypeSpec materialized projection: {len(cases)} independent target instance checks passed')

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
-import type {SmithyJsonSchemaBackend} from '../../projections/smithy-json-schema';
+import type {SmithyJsonSchemaBackend} from '../../projections/smithy-json-schema-types';
 import {createSmithyJavaScriptBackend} from './host-backends';
 
 /** Bind the explicit pinned JSON Schema converter to the already admitted Smithy host backend. */

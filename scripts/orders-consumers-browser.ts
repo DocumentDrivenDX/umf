@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-const built=await Bun.build({entrypoints:['scripts/examples/orders-consumers.ts'],target:'browser',format:'esm',outdir:'.cache/orders-consumers-browser',naming:'demo.js'});if(!built.success)throw Error(String(built.logs));
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/demo.js'?new Response(Bun.file('.cache/orders-consumers-browser/demo.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Orders consumers</title><main></main>',{headers:{'content-type':'text/html'}});}});
+const built=await Bun.build({entrypoints:['scripts/examples/orders-consumers-browser.ts'],target:'browser',format:'esm',outdir:'.cache/orders-consumers-browser',naming:'demo.js'});if(!built.success)throw Error(String(built.logs));
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const path=new URL(req.url).pathname;if(path==='/demo.js')return new Response(Bun.file('.cache/orders-consumers-browser/demo.js'),{headers:{'content-type':'text/javascript'}});if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file('bindings/core/wasm/pkg/umf_core_wasm_bg.wasm'),{headers:{'content-type':'application/wasm'}});return new Response('<!doctype html><title>Orders consumers</title><main></main>',{headers:{'content-type':'text/html'}});}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>{if(!r.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return r.abort();}return r.continue();});await page.goto('http://127.0.0.1:'+server.port);

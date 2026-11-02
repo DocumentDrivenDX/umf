@@ -62,8 +62,8 @@ object does not cross the JavaScript boundary.
 
 ## Implementation and test discipline
 
-Luna agents implement and test independent capabilities in parallel; Sol plans,
-reviews and integrates their source cuts. Give each capability a concrete public
+GPT-6 Luna agents implement and test independent capabilities in parallel;
+GPT-6.1 Sol plans and reviews their source cuts. Give each capability a concrete public
 operation and an ordinary normal/refusal workflow, with recovery where relevant.
 Repair observed failures and rerun affected workflows. A passing capability stays
 closed unless its implementation or dependencies change. Batch native compilation
@@ -71,6 +71,56 @@ and retain incremental build outputs. Preserve user `.tmp/`.
 
 All testing and CI work runs locally. Do not wait for GitHub Actions or dispatch
 publication builds. Publish the locally tested binaries directly.
+
+## Remove superseded TypeScript semantics
+
+The current public runtime routes execute Rust, but superseded TypeScript semantic
+implementations still remain in the source tree. Remove those implementations and
+their obsolete consumers. Keep purposeful host wrappers, examples, development
+tooling and TypeSpec interop. Extract live type contracts and static package data
+where necessary; do not replace deleted engines with compatibility shims. Earlier
+retention or archive requirements do not constrain this cleanup.
+
+The completed first cleanup batch removes nine semantic implementations:
+
+1. Delete `src/projections/openapi-json-schema.ts`. Keep the Rust default wrapper,
+   extract its two live public interfaces, and update its type, barrel and direct
+   consumers. The public Node/browser operation continues through the Rust owner.
+2. Delete the four TypeScript report engines in
+   `src/core-ideals/classification-report.ts`, `structured-report.ts`,
+   `field-report.ts` and `record-report.ts`. Extract the live report contracts and
+   update consumers to `reports-rust-default.ts` through the current public root.
+   Remove obsolete corpus/parity drivers instead of retaining old engines for them.
+3. Delete the GraphQL-input and Avro JSON Schema projectors. Retain their types and
+   update Orders to receive Rust-backed projectors from Node or browser hosts.
+4. Delete the TypeSpec and Smithy JSON Schema projectors. Keep their type contracts,
+   compiler/emitter integration and explicit Smithy JavaScript backend. Route the
+   surviving Smithy oracle through the current Rust public root.
+
+The historical field-conformance checker and its caller entry are also removed.
+Its useful current group/opaque-metadata refusal case now exercises the Rust
+public API. Old implementation test suites, report corpus/browser drivers and the
+obsolete TypeSpec materializer outputs are deleted; no compatibility delegates or
+empty legacy modules are retained.
+
+Sol reviews each deletion and combines shared barrel/generator changes. Check
+that deleted imports are absent, regenerate the affected facade/source inventories,
+run TypeScript checks, and execute one existing ordinary Rust public-root workflow
+for each affected capability. Do not rerun a broad predecessor corpus.
+
+Both TypeScript configurations, facade freshness and core authority checks pass.
+Affected native public-root baselines and Orders tests pass. Five tests exceeded
+Bun's default five-second timeout; only those cases were retried with
+`--timeout 60000`, and all passed. The changed Orders browser consumer passes in
+Chromium 153.0.8010.12 with its served WASM asset, no external requests, no Node
+globals and unknown metadata preserved. Rust executable sources are unchanged;
+the checks reuse the released native addon and WASM build.
+
+Continue with adjacent projection families, classifiers and adapters as coherent
+source cuts. Update their purposeful consumers directly, preserving TypeSpec and
+other explicit host interop. Remove a shared semantic helper when its last live
+consumer has been removed or moved to Rust. Keep each cut reviewable and advance
+independent ready deletions without an exhaustive inventory gate.
 
 ## Completed verification
 

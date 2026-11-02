@@ -4,7 +4,7 @@ import type {GraphqlPayload} from './index';
 import {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/graphql/package.json';
 import {UmfError} from '../../model/errors';
-import type {GraphqlInputBindings,GraphqlInputProjection} from '../../projections/graphql-input-json-schema';
+import type {GraphqlInputBindings,GraphqlInputProjection} from '../../projections/graphql-input-json-schema-types';
 
 export interface GraphqlRustEngine {
   importGraphqlSchema(source:string,options:{id:string;mode?:'schema'|'fragment'}):Document;

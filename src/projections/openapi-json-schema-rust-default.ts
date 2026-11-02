@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../model/types';
-import type {OpenapiJsonSchemaPolicy,OpenapiJsonSchemaProjection} from './openapi-json-schema';
+import type {OpenapiJsonSchemaPolicy,OpenapiJsonSchemaProjection} from './openapi-json-schema-types';
 type Guard=(error:unknown)=>boolean;
 interface Engine{['openapi-json-schema-projection']:{projectOpenapiToJsonSchema(fields:{source:Document;policy:OpenapiJsonSchemaPolicy}):unknown}}
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
