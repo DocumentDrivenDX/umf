@@ -220,74 +220,120 @@ immutability or silently stop at GitHub if PyPI delivery remains unfinished.
 
 ## Continuation evidence and unknowns
 
-Initial distribution metadata was checked on 2026-11-02: PyPI 0.10.5, no public
-npm SDK/native package, and the nine prior GitHub assets described above. Source
-versions at that check were SDK 0.10.2, Python 0.10.6 and Rust/native packages 0.1.0. The owner
-resolved the version clarification explicitly as one 0.10.7 artifact cohort while
-retaining core 0.10.0. The later explicit upstream asset gate expands the release
-to `umf-codegen==0.10.7` with `umf-core==0.10.7`; `umf_access` 0.1.0.dev8 remains
-outside the selected cohort.
+The selected cohort is UMF 0.10.7: two SDK archives, two CLI archives, two core
+wheels, core sdist, repaired codegen wheel/sdist, full source archive, release pins
+and SHA256SUMS. Core data remains 0.10.0. SDK/Node and codegen delivery use the
+existing GitHub archives; core PyPI publication remains required. No new npm or
+codegen PyPI publisher is assumed.
 
-Implementation lanes are bounded and active. The reported stale asset is the
-checked-in `python/umf_codegen/src/umf_codegen/_resources` cohort: six canonical
-copies plus its manifest and _release.py resource pin fail
-`scripts/rust-migration/r4/sync_codegen_resources.py --check`. The installed pair
-then exposed a stale inventory: the native CLI correctly includes ten resources,
-including Saga, while Python's three inventories allowed only nine. Add the exact
-canonical Saga package to producer/build/runtime inventories and keep native
-capability equality strict. The corrected ten-resource manifest is
-`9da1c47959a2bc9403a94c908ce032f44a3742b974244b047c6be8760f9be101`;
-Saga bytes are independently equal to the canonical SHA-256
-`4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940`.
-Freeze the canonical metamodel first, then run the canonical `--write` producer
-and its unchanged check. The public companion must contain these repaired assets,
-not merely the source repository. This R0 gate is separate from the SDK private
-snapshot fixed point. The core action-runtime ten-resource manifest/pin also
-required canonical sync; the helper `scripts/sync-python-resources.py` composes
-both normal checks without weakening either build hook.
-Final Linux compatibility tag,
-exact native build/cache locations, available registry authentication, publication
-receipt and public installed-consumer results are not yet established. Record
-actual outcomes here and in a source-bound release evidence directory as work
-proceeds; registry absence or authentication failure is not inferred in advance.
+The canonical Python resource repair is checked in. The last checked source has
+ten codegen resources, including Saga, with strict producer/build/runtime
+inventory equality and native capability equality. Both Python resource cohorts
+pass their normal canonical check through `scripts/sync-python-resources.py`.
+SDK packaging requires canonical generated assets to be a checked-in fixed point:
+no private transformations, equal captured/compiled maps and unchanged source
+hashes. These controls remain active for the final source and published archives.
 
-The macOS core native wheel and CLI built successfully. The corrected installed
-pair now runs the same 28 requests through core and codegen public APIs with exact
-parity. The isolated companion sdist rebuild reproduced 25 wheel-member contents
-byte-for-byte, including RECORD. The direct core wheel passes its source payload,
-native platform and resource checks; four focused installed tests also pass. Companion-only resource and
-inventory corrections do not change the already built core/native input closure.
+Frozen source 434f390 produced the macOS core wheel/sdist/CLI; installed core and
+codegen public APIs passed the captured 28-pack comparison and four focused host
+tests. The companion sdist reproduced its wheel-member bytes. These are selected
+artifact results, not acceptance of a later changed archive. Batch 14879 failed
+in Rust's metamodel debug incremental cache before SDK generation checks
+completed; its independent source rebuild was canceled. Neither final SDK nor
+independent-sdist success is claimed.
 
-Local release-policy checks pass: 17 publisher/dispatcher unit tests and seven
-focused wheel-qualifier cases. The dispatcher no longer imports the removed
-hardcoded qualified-version constant: it selects a matching numeric tag/wheel
-cohort. `umf-v0.10.7` explicitly skips automatic dispatch in release and producer
-paths, so the existing main-only OIDC publisher is invoked manually with
-`locally_qualified=true`; immutable tag/source/checksum/metadata/collision checks
-remain. The exact 0.10.7 native-wheel profile permits 64 MiB archive/family and
-128 MiB expanded bytes while preserving historical bounds; positive and oversize
-controls pass. No hosted test job or registry upload has run for this candidate.
+Current main through a5e24d170 is integrated for the final input cut. Both
+canonical refreshes pass with CARGO_INCREMENTAL=0, preserving locked compilation,
+source fingerprints, binary hashing and every generated-output check. The Rust
+installation guide selects the unified release tag. The SDK custody roster binds
+the current Node/browser entries and native addon; its 13 focused checks and both
+source/tools typechecks pass. The package/Bun-lock change updates packaged
+metamodel attestations, so the final Python archives require their normal strict
+source verification and independent source rebuild. Linux artifacts, final SDKs,
+fresh-sdist proof, publication and public-consumer results remain open.
 
-A first SDK attempt was stopped after a measured 15-minute pre-Cargo snapshot
-bottleneck. The reviewed correction batches at most eight reads/copies, retains
-only digest strings outside each read batch, and preserves sorted hash ordering
-and all fixed-point/source checks. The SDK retry is active; no success or new native/portable artifact is inferred
-from inventory/copy progress.
+The reviewed stager binds every declared SDK source input to both genuine
+qualification commit Q and final merged release commit M. It retains actual
+build/consumer receipt identities, requires the same source-tree hash and does
+not relabel receipts. The public source asset is a complete Git archive of M;
+private selected build staging is not substituted for it. Its twelve-file roster
+contains ten payloads, release-pins.json and SHA256SUMS; the latter hashes the
+other eleven assets and is itself separately pinned for publication.
 
-The Linux driver is prepared but not run. It checks the actual mounted source
-against the qualified Mac SDK liveInputs/tree digest before and after locked,
-offline native builds; its receipt matches the reviewed Linux assembler. The
-assembler anchors the parent archive's expected SHA-256, preserves portable
-bytes/toolchain and replaces only the source-matching Linux addon. The driver
-measures auditwheel's actual platform floor, repairs and rechecks the wheel, and
-records DOCS_RS honestly: pinned pg_query still compiles C and runs bindgen,
-while optional protoc regeneration of registry sources is suppressed.
+## Remaining artifact gates
 
-Sol reviewed PR #42 separately. Its Lakeview, cache-identity, timing and ontology
-changes belong to a successor; no missing pack-generator artifact or output
-failure was demonstrated. This release includes the applicable wheel-qualifier
-bounds and already contains the required pack-tools workspace sdist member.
-The owner's unified 0.10.7 artifact version remains authoritative.
+1. Finish canonical regeneration/checks and freeze the final source. Compare exact
+   declared Python/native source/resource maps with the qualified candidate;
+   rebuild every changed archive. Preserve strict source-payload equality.
+2. Build the final SDKs and Python/CLI artifacts with locked inputs and warm
+   dependency caches. Require zero-exit canonical SDK packaging, direct-wheel
+   verification and the unchanged independent fresh-target core-sdist verifier.
+3. Qualify the Linux wheel with the exact pinned auditwheel repair tool cohort.
+   Verify final installed Python/CLI/Node/Bun and packaged browser surfaces against
+   the captured pack baseline; complete the repaired installed Python pair.
+   Retain existing semantic evidence only for unchanged source/runtime bytes.
+4. Review the final twelve assets and Q-to-M source equivalence; freeze checksums
+   and release pins. Pin only the three selected core Python archives in
+   `release-pins.files`. Refresh/sign the microsite from the final focused SDK
+   resource trio and verify its normal flow.
+5. Publish immutable GitHub assets and core PyPI 0.10.7. The existing upload-only
+   route uses `locally_qualified=true`, exact merged source SHA and exact public
+   SHA256SUMS digest; all identity/metadata/OIDC/collision checks stay enabled.
+6. Fetch and verify every public asset and PyPI file. Run the full-source pinned
+   checks below and isolated public installed consumers; record actual hashes,
+   versions and receipt identities before closing.
+
+## Public pinned dependency and resource acceptance
+
+In a new temporary directory, fetch the exact immutable umf-v0.10.7 full source,
+platform SDK and matching Python archives. Verify the public checksum file against
+its separately pinned digest, every selected file against that checksum file, and
+the tag against `release-pins.commit`. Extract the complete declared build and check inputs directly from the verified
+full source asset, preserving their exact paths and bytes. Use the recorded input
+inventories to avoid expanding unrelated documentation. Keep the shared original
+checkout untouched; do not derive source from an SDK or regenerate assets during
+acceptance.
+
+Inside that extracted source, using the recorded Bun/Python/Rust tool cohort:
+
+```sh
+bun install --frozen-lockfile --ignore-scripts
+python3 scripts/check-release-versions.py
+bun scripts/rust-migration/r8/v4-default-facade.mjs --check
+bun scripts/metamodel/build.ts --check
+bun scripts/actions-plan-identity.ts --check
+python3 scripts/sync-python-resources.py --check
+```
+
+No `--write`, replacement checker or source edit is allowed during this acceptance.
+The normal checks must establish canonical bytes, exact resource inventory and
+manifest pins. With RELEASE_SOURCE and SDK_PACKAGE naming only the verified
+extracted directories, check the downloaded SDK's complete source binding through
+the canonical verifier:
+
+```sh
+python3 - "$RELEASE_SOURCE" "$SDK_PACKAGE" <<'PYTHON'
+import importlib.util, json, sys
+from pathlib import Path
+source, sdk = (Path(value).resolve() for value in sys.argv[1:])
+spec = importlib.util.spec_from_file_location('release_sdk_verifier', source / 'scripts/package-sdk.py')
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+module.verify_source_closure(source, json.loads((sdk / 'dist/rust-default-manifest.json').read_text()))
+print('Public full-source SDK closure verified')
+PYTHON
+```
+
+Check the downloaded Python archives against the same full source and the
+passing local source-rebuild receipt, bound to their exact public digests. Install the verified SDK into a new consumer
+directory and the exact core/codegen pair into a new virtual environment. Disable
+checkout imports (`python -I`, no PYTHONPATH), assert installed import paths and
+0.10.7 artifact versions, and exercise the public pack generator plus the repaired
+companion's normal strict native-resource check. The installed-pair verifier binds
+codegen sdist inputs, rebuilds its pure wheel and exercises generation; its core
+receipt must identify the exact final core archive digest. Probe CLI from the
+public platform archive and one public site flow. Upload success alone does not
+establish these results.
 
 ## Risks and rollback
 
