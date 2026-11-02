@@ -68,7 +68,9 @@ if(browserMode){
   page.on('pageerror',error=>errors.push(String(error)));
   await page.route('**/*',route=>{const url=new URL(route.request().url());if(url.hostname!=='127.0.0.1'){external.push(url.href);return route.abort();}return route.continue();});
   await page.goto(`http://127.0.0.1:${address.port}/`,{timeout:120000});
-  await page.waitForFunction(()=>window.__umfConsumer,undefined,{timeout:120000});
+  assert.deepEqual(errors,[]);
+  const pageError=new Promise((_,reject)=>page.once('pageerror',reject));
+  await Promise.race([page.waitForFunction(()=>window.__umfConsumer,undefined,{timeout:120000}),pageError]);
   const report=await page.evaluate(()=>window.__umfConsumer);
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.deepEqual(report,{status:'passed',nodeGlobalsAbsent:true});
   result.chromium={version:browser.version(),...report};
