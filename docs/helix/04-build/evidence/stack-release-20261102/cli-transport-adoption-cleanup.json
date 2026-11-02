@@ -1,0 +1,15 @@
+{
+  "executed_at_utc": "2026-11-02T21:44:06.309388+00:00",
+  "ref": "refs/heads/codex/ci-stdin-eof",
+  "head": "cf8d0547e4fdf86867566ff7121e569a9ae967ab",
+  "adopted_main_commit": "04ce37ce1b3f22013de1baa2ba83d81bf60f988c",
+  "changed_files": [
+    "scripts/rust-core/cli-core-conformance.mjs",
+    "scripts/rust-core/cli-wire-transport.mjs",
+    "scripts/rust-core/cli-wire-transport.test.mjs",
+    "scripts/rust-core/full-conformance.ts",
+    "scripts/rust-migration/r3/host-replay.mjs"
+  ],
+  "proof": "All five changed source and test blobs are byte-identical at the current-main adoption commit. Current transport/host replay are unchanged; later edits only relocated fixture paths and retired obsolete pre-migration harnesses. Exact ref not checked out.",
+  "result": "deleted"
+}

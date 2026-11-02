@@ -12,12 +12,17 @@ semantic reconciliation (338 refs total; 168 local and 170 remote). Their
 
 [Further worktree cleanup](obsolete-worktree-cleanup.json) removes three clean
 obsolete copies and two associated branches. [Praxis reconciliation](praxis-adoption-cleanup.json)
-accounts for three more superseded branches. Total: 354 refs (179 local,
+accounts for three more superseded branches. Total: 360 refs (185 local,
 175 remote) and four worktrees removed by this audit, separate from the delegated Truss/Arras cleanup. Exact source
 heads, current-main or merged-PR proof, and execution results are retained.
 [Historical delivery cleanup](obsolete-proof-cleanup.json) accounts for seven
 more superseded refs; [completed release cleanup](completed-primary-branch-cleanup.json)
 accounts for four merged TableSpec/Concourse topic refs.
+[Recovery alias cleanup](consolidation-alias-cleanup.json),
+[CLI adoption](cli-transport-adoption-cleanup.json) and
+[G02 staged-index adoption](g02-index-adoption-cleanup.json) account for six
+additional local refs. One [abandoned initialization registration](stale-initialization-cleanup.json)
+was removed after proving its checkout/index absent, lock unowned and HEAD merged.
 Open PRs, registered worktree heads, active checkouts and unresolved unique work
 were protected. The superseded TableSpec PR48 worktree was also removed after
 clean-state and ignored-cache inspection. Arras and Truss cleanup is managed by
@@ -35,3 +40,7 @@ is delivered on GitHub, PyPI and npm, with independent fresh public installs
 verified. Truss temporal work, Ashlar managed-target qualification, other
 historical unique tips and active dirty owner work remain explicitly open. Historical qualification
 is not current release acceptance; this audit does not claim the family is done.
+
+The newly authorized Arras embedding/vocabulary and Truss temporal programs are
+active, separately owned work. Their worker checkouts are protected until review,
+integration and release; completed component releases do not qualify those changes.
