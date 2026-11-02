@@ -126,3 +126,28 @@ compatibility behavior is preserved until the independent browser release.
 The source candidate is built with Bun 1.4.2. Pinned native font/icon license
 texts and their upstream manifest travel with the runtime in both package asset
 locations and the reference host, in addition to the Lini license.
+
+## 2.1 publication integration — 2026-11-02
+
+The owner explicitly requested schema-browser 2.1 publication, an exact microsite
+pin update and deployment. The renderer port is integrated on current main
+`22e24acfd921958c08d723c8370959a26558ba08`, preserving the Rust/WASM-owned
+structural comparison runtime and the 2.0.1 license/publication fixes. The parent
+CSP permits WebAssembly compilation while continuing to deny JavaScript eval;
+Lini's same-origin worker has its separate execution policy. Both native runtime
+asset families are copied from the verified package by the reference host.
+
+The release driver uses the source-bound Rust producer, Rust 1.90.0,
+wasm-bindgen 0.2.100, Bun 1.4.2 and frozen Cargo/npm dependency locks. Transitive
+local Cargo and patched vendor source inventories are included; bounded parallel
+reads preserve their deterministic ordering. The generated WASM loader remains
+an external, packaged runtime resource rather than an unresolved generated source
+input. Immutable release source qualification and trusted npm OIDC publishing
+remain separate from the subsequent consumer pin and signed site deployment.
+
+Integrated checks so far: 20 package/projection/embedding/integrity tests with
+138 assertions; two Rust provenance controls with 16 assertions; 17 focused Lini
+Chromium checks; and all ten action-guide pages at 1440 and 390 pixels, with zero
+external requests or page errors. These checks do not yet claim successful
+publication or deployment. The full source-bound package/browser qualification
+and public receipt will establish those later milestones.
