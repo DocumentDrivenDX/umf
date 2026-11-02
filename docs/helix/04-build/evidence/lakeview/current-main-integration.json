@@ -1,27 +1,30 @@
 {
   "profile": "umf.lakeview.current-main-integration/1",
   "date": "2026-11-02",
-  "base_main": "18f3a99e0b1b98fd0b686ee0d13f9ccd66880af3",
+  "base_main": "22e24acfd",
   "topic": "edcd16c79b96c9599d62bfe567d835594eb63e15",
   "core": "0.10.0",
-  "sdk_source": "0.10.2",
-  "python_source": "0.10.6",
+  "sdk_source": "0.10.3",
+  "python_source": "0.10.7",
   "changes": [
     "Retain current resource accounting, retained-runtime routing and native semantic-owner registration; add Lakeview as explicit capability.",
     "Use the current shared lossless native JSON parser and classify its malformed-source error as LAKEVIEW_SOURCE_INVALID during inspection.",
     "Refresh generated V4 facade so the current SDK roots expose the new explicit-runtime APIs.",
     "Include the complete native JavaScript/type module closure in private packed binding qualification.",
-    "Return the published immutable Avro resource cache instance after competing initializers; preserve caller controls and avoid locks across callbacks."
+    "Return the published immutable Avro resource cache instance after competing initializers; preserve caller controls and avoid locks across callbacks.",
+    "Use shared completed-resource publication across all 31 affected sites, with an independent failing old-algorithm control and deterministic concurrent regression.",
+    "Merge current Rust pack-tools main and include its new workspace member in the Python source archive, guarded against the actual Cargo workspace roster.",
+    "Merge the genuine handler timing diagnostics and independent authored ontology oracle without dropping current Saga reservation/before-commit behavior.",
+    "Run native regression files through the repository\u2019s existing isolated runner, preserving explicit test and product budgets."
   ],
   "checks": {
-    "typecheck": "pass",
-    "rust_boundaries": "pass: 1061 source modules, nine positive/negative controls, zero findings",
-    "rust_lakeview": "4 passed",
-    "rust_core": "688 passed after fixing four cache return paths in three modules; original prior attempt retained 685 pass / 3 fail",
-    "rust_wire": "89 passed",
-    "browser": "Chromium 153.0.8010.12; three originals through direct/JSON/YAML paths, discovery/selection/edit refusal and compatibility controls; no page errors or external requests",
-    "installed": "Fresh npm-packed private binding installed outside checkout; Node/Bun and independent native CLI with empty PATH reconstruct all three originals through direct/JSON/YAML with zero mismatches",
-    "bun": "Combined run: 47 passed / 1 capability-control timeout at 5.232 seconds under concurrent builds. The identical control passes separately at 4.518 seconds with its original 5-second deadline. Exact combined Linux CI remains a mandatory gate."
+    "typecheck": "Pending final combined-source check; earlier reconciliation passed.",
+    "rust_core": "688 core, 4 Lakeview and 1 concurrent cache regression passed after the shared 31-site publication correction.",
+    "rust_wire": "89 passed after the shared correction.",
+    "bun": "48 passed / 217 assertions through the existing isolated runner; all five files retained. Hosted five-second-default attempts are retained as failed attempts, not passing qualification.",
+    "handler_timing": "9 tests / 145 assertions pass; source-only observer controls. Existing product execution and cleanup budgets unchanged.",
+    "ontology_browser": "Pending rebuilt current reference site; stale generated source rejected as intended.",
+    "hosted": "Old-head runs 41505343561 and 41505343180 failed test-harness default timeouts after Rust/native component stages passed. Final exact-source hosted acceptance pending."
   },
   "qualification_limits": [
     "Local feature binaries preceded the separate Avro cache correction; the core unit suite qualifies that correction. Hosted CI rebuilds and tests the exact combined source before merge.",
@@ -56,6 +59,22 @@
     "browser": {
       "sha256": "c926e770579c062740ccc6ecbfd30e0c4a25ca70f7ed20f6722d3529d805a307",
       "size": 4198
+    },
+    "rust_core_final": {
+      "sha256": "e4570be96053ded0bf7f0841bf169145f96999dae6d54f97bc0531f60e348ccb",
+      "size": 140562
+    },
+    "rust_wire_final": {
+      "sha256": "4db41f01fbf519cc435532227faf460384e0edb62eb74046befa5324ec0bba51",
+      "size": 99582
+    },
+    "bun_isolated_final": {
+      "sha256": "1a1488e166aff9f126bd1f5041fd537b4509664a85b59d6c81b006d2d51ef7c2",
+      "size": 7576
+    },
+    "handler_timing_current": {
+      "sha256": "696f0bcf0df58ed4953b3d90739ccb0f5040b5710c76538cc7695430263432c7",
+      "size": 1137
     }
   },
   "sources": {
@@ -188,5 +207,15 @@
       "tests/lakeview/legacy-fixture.ts": "5ecd5661cc7c026e7fbd757298cbc9e7c28b4fd557498048320ae7c9fa31a435",
       "tests/lakeview/legacy-projection.test.ts": "d2f10f2e79a3777d239fcdc4a93fb1e50c62c041ebc865a2bc07acfd4b121e81"
     }
+  },
+  "historical_local_feature_checks": {
+    "typecheck": "pass",
+    "rust_boundaries": "pass: 1061 source modules, nine positive/negative controls, zero findings",
+    "rust_lakeview": "4 passed",
+    "rust_core": "688 passed after fixing four cache return paths in three modules; original prior attempt retained 685 pass / 3 fail",
+    "rust_wire": "89 passed",
+    "browser": "Chromium 153.0.8010.12; three originals through direct/JSON/YAML paths, discovery/selection/edit refusal and compatibility controls; no page errors or external requests",
+    "installed": "Fresh npm-packed private binding installed outside checkout; Node/Bun and independent native CLI with empty PATH reconstruct all three originals through direct/JSON/YAML with zero mismatches",
+    "bun": "Combined run: 47 passed / 1 capability-control timeout at 5.232 seconds under concurrent builds. The identical control passes separately at 4.518 seconds with its original 5-second deadline. Exact combined Linux CI remains a mandatory gate."
   }
 }

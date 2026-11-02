@@ -22,6 +22,9 @@ ddx:
 The candidate adds the Lakeview 0.2.0 explicit composition adapter to the current
 Rust runtime and SDK roots, fixes immutable resource publication after racing
 initializers, and completes the packed native binding's JavaScript/type closure.
+It also retains the genuine host-only handler timing diagnostics and independent
+ontology browser assertions from outstanding work. The current Rust pack-tools
+workspace is included in rebuildable Python source archives.
 Core documents remain 0.10.0. Existing public archives remain unchanged.
 
 ## Audience and Channels
@@ -41,7 +44,9 @@ paths. Unsupported edits refuse. Native validator activation is caller-selected.
 One shared primitive returns the published immutable instance when another
 initializer wins. All 31 affected sites retain their admission and cache-eligibility
 rules; no caller work or callbacks run under an initialization lock. A concurrent
-regression rejects the prior algorithm. No assertion deadline is increased.
+regression rejects the prior algorithm. Product execution and cleanup limits remain unchanged. Native regression commands
+use the existing isolated test runner (30-second harness default), rather than
+Bun’s five-second default; explicit test and product limits remain enforced.
 
 Current-main reconciliation evidence and hosted results remain separate from the
 earlier branch's versions and subset. The November 2 owner direction authorizes

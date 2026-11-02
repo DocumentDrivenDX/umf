@@ -112,7 +112,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p .cache/saga
-          bun test tests/saga/*.test.ts 2>&1 | tee saga-native.log
+          bun scripts/run-tests.ts tests/saga 2>&1 | tee saga-native.log
       - name: Install SDK and qualify portable Saga hosts
         if: needs.impact.outputs.packages == 'true'
         run: |
