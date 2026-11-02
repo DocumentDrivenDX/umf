@@ -1,0 +1,15 @@
+[package]
+name = "umf-pack-tools-wasm"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.100"
+js-sys = "=0.3.77"
+umf-core = { path = "../../../crates/umf-core", default-features = false, features = ["full-core"] }
+umf-core-wire = { path = "../../../crates/umf-core-wire", default-features = false, features = ["codegen"] }

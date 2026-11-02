@@ -4,6 +4,7 @@ import {encodeRequestWire,fromWire,resultError} from './wire.js';
 export const NATIVE_FAMILY_PROFILE='umf.native-family-dispatch/1';
 
 const FAMILIES=Object.freeze({
+ 'pack-tools':{profile:'umf.pack-tools-wire/1',operations:['generatePackTools']},
  'core-ideal-reports':{profile:'umf.core-ideal-reports-binding/1.0.0',operations:['inspectFieldClassification','verifyFieldClassificationInspection','inspectFieldProjection','verifyFieldProjectionInspection','inspectRecordProjection','verifyRecordProjectionInspection','inspectStructuredClassification','verifyStructuredClassificationInspection']},
  'field-record-parquet-projection':{profile:'umf.field-record-parquet-projection-binding/1.0.0',operations:['projectFieldToParquet','recoverFieldFromParquet','projectRecordToParquet','recoverRecordFromParquet']},
  'medical-projection':{profile:'umf.medical-projection-binding/1.0.0',operations:['projectMedicalFhir','projectCdcMortality','projectDicomMetadata','lookupMedicalTerminology']},
