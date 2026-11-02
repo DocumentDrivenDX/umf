@@ -10,7 +10,7 @@ name = "umf-metamodel"
 path = "src/main.rs"
 
 [dependencies]
-sha2 = "=0.10.8"
+sha2 = "=0.10.9"
 umf-core = { path = "../umf-core", default-features = false, features = ["metamodel-compiler"] }
 umf-metamodel = { path = "../umf-metamodel", default-features = false, features = ["compiler-bootstrap"] }
 umf-tagged-wire = { path = "../umf-tagged-wire" }
