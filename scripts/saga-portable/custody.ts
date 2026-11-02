@@ -19,8 +19,11 @@ export const SAGA_QUALIFICATION_INPUTS=[
  'spec/extensions/tables/package.json','spec/extensions/actions/package.json','spec/extensions/actions/schema.json','spec/extensions/binding/package.json',
  'spec/extensions/binding-stable/package.json','spec/extensions/saga/package.json','spec/extensions/saga/schema.json','spec/extensions/saga/runtime.schema.json'
 ] as const;
+export const SDK_SAGA_NODE_ENTRY='dist/umf-node.js';
+export const SDK_SAGA_BROWSER_ENTRY='dist/umf-browser.js';
 export const SDK_SAGA_MEMBERS=[
- 'package.json','manifest.json','dist/umf.js','dist/loader-contract.js','dist/runtime/wasm/index.js',
+ 'package.json','manifest.json',SDK_SAGA_NODE_ENTRY,SDK_SAGA_BROWSER_ENTRY,
+ 'dist/rust-default-manifest.json','dist/umf_core_node.node','dist/loader-contract.js','dist/runtime/wasm/index.js',
  'dist/runtime/wasm/pkg/umf_core_wasm.js','dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm'
 ] as const;
 export type PortableCase={id:string;covers:number[]};
@@ -33,6 +36,16 @@ export type PortableCohortExpectation={root:string;cases:PortableCase[];inputPat
 const sha=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
 const insist:(condition:unknown,message:string)=>asserts condition=(condition,message)=>{if(!condition)throw new Error(message);};
+
+export function verifySdkMemberCustody(metadata:any,manifest:any,members:Record<string,{size:number;sha256:string}>):void{
+ insist(metadata?.name==='@umf/core','SDK package name differs from the consumed public package');
+ insist(metadata?.exports?.['.']?.node===`./${SDK_SAGA_NODE_ENTRY}`&&metadata?.exports?.['.']?.browser===`./${SDK_SAGA_BROWSER_ENTRY}`,'SDK exports do not identify the current Node and browser entries');
+ for(const member of SDK_SAGA_MEMBERS){
+  const info=members[`package/${member}`];
+  insist(info&&Number.isSafeInteger(info.size)&&info.size>0&&/^[0-9a-f]{64}$/.test(info.sha256),`SDK custody omits a consumed member: ${member}`);
+  if(member.startsWith('dist/'))insist(manifest?.sha256?.[member]===info.sha256,`SDK manifest does not bind consumed runtime member: ${member}`);
+ }
+}
 
 export async function sha256File(path:string):Promise<string>{return sha(await readFile(path));}
 export function validatePortableCaseRoster(cases:unknown):asserts cases is PortableCase[]{
