@@ -1,6 +1,6 @@
 # UMF Python client generator
 
-`umf-codegen` exposes the seven Python code generation, deployment, migration,
+`umf-codegen` exposes Python client and pack generation, deployment, migration,
 verification, change discovery, and row-scope operations through the native
 Rust compiler in `umf-core==0.10.7`. The package requires that exact core
 release and checks its native ABI and codegen protocol before use. It has no
