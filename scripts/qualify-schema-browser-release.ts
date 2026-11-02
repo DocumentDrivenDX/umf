@@ -208,7 +208,7 @@ async function verifyAssets(args:Record<string,string>):Promise<void>{
  assert(Array.isArray(receipt.browser?.errors)&&receipt.browser.errors.length===0&&
   Array.isArray(receipt.browser?.externalRequests)&&receipt.browser.externalRequests.length===0&&
   receipt.browser.selectedRecord==='Customer'&&typeof receipt.browser.csp==='string'&&
-  !receipt.browser.csp.includes('unsafe-eval'),'producer receipt browser proof is incomplete');
+  !receipt.browser.csp.includes("'unsafe-eval'"),'producer receipt browser proof is incomplete');
  const archiveSha=await hashFile(join(directory,archiveName));
  assert(archiveSha===receipt.archiveSha256,'release archive differs from producer receipt');
  const sums=await Bun.file(join(directory,'SHA256SUMS')).bytes();
