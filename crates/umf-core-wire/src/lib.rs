@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
+use std::collections::BTreeSet;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -14,59 +15,65 @@ pub mod avro_binding;
 pub mod avro_classification_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_json_schema_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod nullability_avro_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod nullability_sqlserver_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod facets_avro_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod facets_sqlserver_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod key_avro_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod key_sqlserver_projection_binding;
 pub mod avro_relationship_projection_binding;
 #[cfg(feature = "embedded-adapters")]
-pub mod relationship_tablespec_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod relationship_sqlserver_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod relationship_postgresql_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod relationship_parquet_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod parquet_field_record_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod relationship_extra_projection_binding;
-#[cfg(feature = "embedded-adapters")]
 pub mod avro_tablespec_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_delta_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_iceberg_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_indexes_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_parquet_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_public_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_sqlserver_physical_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_sqlserver_planned_indexes_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod binding_sqlserver_tables_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod dashboard_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod dbt_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod ddd_json_schema_projection_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod facets_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod facets_sqlserver_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod graphql_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod iceberg_table_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod binding_iceberg_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod json_schema_protobuf_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod jsonld_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod key_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod key_sqlserver_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod medical_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod native_contract_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_family_binding;
 #[cfg(feature = "embedded-adapters")]
-pub mod medical_projection_binding;
+pub mod nullability_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod nullability_sqlserver_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod openapi_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod openapi_json_schema_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod parquet_avro_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod parquet_field_record_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -82,6 +89,16 @@ pub mod postgresql_sql_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod rdf_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod relationship_extra_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod relationship_parquet_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod relationship_postgresql_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod relationship_sqlserver_projection_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod relationship_tablespec_projection_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod shacl_owl_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod smithy_binding;
@@ -93,22 +110,6 @@ pub mod sqlserver_avro_projection_binding;
 pub mod sqlserver_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_ddl_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod binding_sqlserver_planned_indexes_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod binding_indexes_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod binding_public_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod dashboard_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod binding_parquet_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod binding_delta_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod binding_sqlserver_tables_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod binding_sqlserver_physical_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod tablespec_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -215,17 +216,17 @@ pub mod arrow_ipc_capture_binding {
                     inspect_arrow_ipc_capture(document, &resources, &mut ctx)?
                 }
                 "arrow.ipc.prepareObserve" => {
-                    let document = field(&request, "document")
-                        .ok_or_else(|| err("document is required"))?;
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
                     umf_core::arrow_ipc_capture::prepare_arrow_ipc_observation(
                         document, &resources, &mut ctx,
                     )?
                 }
                 "arrow.ipc.completeObserve" => {
-                    let prepared = field(&request, "prepared")
-                        .ok_or_else(|| err("prepared is required"))?;
-                    let outcome = field(&request, "outcome")
-                        .ok_or_else(|| err("outcome is required"))?;
+                    let prepared =
+                        field(&request, "prepared").ok_or_else(|| err("prepared is required"))?;
+                    let outcome =
+                        field(&request, "outcome").ok_or_else(|| err("outcome is required"))?;
                     umf_core::arrow_ipc_capture::complete_arrow_ipc_observation(
                         prepared, outcome, &resources, &mut ctx,
                     )?
@@ -234,58 +235,103 @@ pub mod arrow_ipc_capture_binding {
                 "arrow.ipc.layout" => {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    umf_core::arrow_ipc_inspection::inspect_arrow_ipc_layout(document, &resources, &mut ctx)?
+                    umf_core::arrow_ipc_inspection::inspect_arrow_ipc_layout(
+                        document, &resources, &mut ctx,
+                    )?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.consistency" => {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    umf_core::arrow_ipc_inspection::inspect_arrow_ipc_consistency(document, &resources, &mut ctx)?
+                    umf_core::arrow_ipc_inspection::inspect_arrow_ipc_consistency(
+                        document, &resources, &mut ctx,
+                    )?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.prepareSchemaExport" => {
-                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
                     umf_core::arrow_ipc_inspection::prepare_arrow_schema_ipc(document, &mut ctx)?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.completeSchemaExport" => {
-                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    let before = match field(&request, "beforeJson") { Some(Value::String(value)) => value, _ => return Err(err("beforeJson is required")) };
-                    let after = match field(&request, "afterJson") { Some(Value::String(value)) => value, _ => return Err(err("afterJson is required")) };
-                    let bytes = match field(&request, "bytesHex") { Some(Value::String(value)) => value, _ => return Err(err("bytesHex is required")) };
-                    umf_core::arrow_ipc_inspection::complete_arrow_schema_ipc(document, before, after, bytes, &mut ctx)?
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let before = match field(&request, "beforeJson") {
+                        Some(Value::String(value)) => value,
+                        _ => return Err(err("beforeJson is required")),
+                    };
+                    let after = match field(&request, "afterJson") {
+                        Some(Value::String(value)) => value,
+                        _ => return Err(err("afterJson is required")),
+                    };
+                    let bytes = match field(&request, "bytesHex") {
+                        Some(Value::String(value)) => value,
+                        _ => return Err(err("bytesHex is required")),
+                    };
+                    umf_core::arrow_ipc_inspection::complete_arrow_schema_ipc(
+                        document, before, after, bytes, &mut ctx,
+                    )?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.exportSchemaNative" => {
-                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    Value::string_utf8(hex(&umf_core::arrow_ipc_inspection::encode_arrow_schema_ipc_native(document, &resources, &mut ctx)?))
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    Value::string_utf8(hex(
+                        &umf_core::arrow_ipc_inspection::encode_arrow_schema_ipc_native(
+                            document, &resources, &mut ctx,
+                        )?,
+                    ))
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.prepareRename" => {
-                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    let policy = field(&request, "request").ok_or_else(|| err("request is required"))?;
-                    umf_core::arrow_ipc_inspection::prepare_arrow_ipc_rename(document, policy, &resources, &mut ctx)?
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let policy =
+                        field(&request, "request").ok_or_else(|| err("request is required"))?;
+                    umf_core::arrow_ipc_inspection::prepare_arrow_ipc_rename(
+                        document, policy, &resources, &mut ctx,
+                    )?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.prepareRenameFooter" => {
-                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    let policy = field(&request, "request").ok_or_else(|| err("request is required"))?;
-                    let schema_hex = match field(&request, "schemaHex") { Some(Value::String(value)) => value, _ => return Err(err("schemaHex is required")) };
-                    umf_core::arrow_ipc_inspection::prepare_arrow_ipc_rename_footer(document, policy, schema_hex, &resources, &mut ctx)?
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let policy =
+                        field(&request, "request").ok_or_else(|| err("request is required"))?;
+                    let schema_hex = match field(&request, "schemaHex") {
+                        Some(Value::String(value)) => value,
+                        _ => return Err(err("schemaHex is required")),
+                    };
+                    umf_core::arrow_ipc_inspection::prepare_arrow_ipc_rename_footer(
+                        document, policy, schema_hex, &resources, &mut ctx,
+                    )?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.completeRename" => {
-                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    let policy = field(&request, "request").ok_or_else(|| err("request is required"))?;
-                    let schema_hex = match field(&request, "schemaHex") { Some(Value::String(value)) => value, _ => return Err(err("schemaHex is required")) };
-                    let footer_hex = field(&request, "footerHex").ok_or_else(|| err("footerHex is required"))?;
-                    umf_core::arrow_ipc_inspection::complete_arrow_ipc_rename(document, policy, schema_hex, footer_hex, &resources, &mut ctx)?
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let policy =
+                        field(&request, "request").ok_or_else(|| err("request is required"))?;
+                    let schema_hex = match field(&request, "schemaHex") {
+                        Some(Value::String(value)) => value,
+                        _ => return Err(err("schemaHex is required")),
+                    };
+                    let footer_hex =
+                        field(&request, "footerHex").ok_or_else(|| err("footerHex is required"))?;
+                    umf_core::arrow_ipc_inspection::complete_arrow_ipc_rename(
+                        document, policy, schema_hex, footer_hex, &resources, &mut ctx,
+                    )?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.renameNative" => {
-                    let document = field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    let policy = field(&request, "request").ok_or_else(|| err("request is required"))?;
-                    umf_core::arrow_ipc_inspection::rename_arrow_ipc_field_native(document, policy, &resources, &mut ctx)?
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
+                    let policy =
+                        field(&request, "request").ok_or_else(|| err("request is required"))?;
+                    umf_core::arrow_ipc_inspection::rename_arrow_ipc_field_native(
+                        document, policy, &resources, &mut ctx,
+                    )?
                 }
                 _ => return Err(err("Unknown Arrow IPC capture operation")),
             };
@@ -322,13 +368,11 @@ pub use parquet_capture_binding::{
     execute_wire as execute_parquet_capture_wire,
     execute_wire_with_control as execute_parquet_capture_wire_with_control,
 };
-#[cfg(feature = "embedded-adapters")]
-pub mod cardinality_sqlserver_projection_binding;
-#[cfg(feature = "embedded-adapters")]
-pub mod sqlserver_field_record_projection_binding;
+pub mod avro_cardinality_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_field_record_projection_binding;
-pub mod avro_cardinality_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod cardinality_sqlserver_projection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod protobuf_document;
 #[cfg(feature = "embedded-adapters")]
@@ -348,6 +392,8 @@ pub mod security_protection_source_binding;
 pub mod security_queries_binding;
 pub mod security_read_registration_binding;
 pub mod semantic_value;
+#[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_field_record_projection_binding;
 #[cfg(feature = "codegen")]
 pub use umf_codegen::generation::PythonClientHostReadV3;
 
@@ -2475,6 +2521,68 @@ fn execute_codegen_host_read_v3_inner(
     codegen::execute_host_read_v3(&mut request, host_read, &mut context)
 }
 
+// Validator capabilities come only from trusted caller registration, never
+// package metadata. Unknown identities refuse; no dynamic loading or I/O.
+struct NativeCapabilities<'a> {
+    inner: &'a mut dyn Capabilities,
+    tokens: BTreeSet<u64>,
+    core: Value,
+}
+impl Capabilities for NativeCapabilities<'_> {
+    fn validate_extension(
+        &mut self,
+        token: u64,
+        payload: &Value,
+        context: &umf_core::SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        self.validate_extension_with_context(token, payload, context, &mut Context::ordinary())
+            .map_err(|e| match e {
+                umf_core::CapabilityError::Host(s) => s,
+                umf_core::CapabilityError::HostPython { message, .. } => message,
+                umf_core::CapabilityError::Engine(e) => e.message,
+            })
+    }
+    fn validate_extension_with_context(
+        &mut self,
+        token: u64,
+        payload: &Value,
+        context: &umf_core::SemanticContext,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<Diagnostic>, umf_core::CapabilityError> {
+        if !self.tokens.contains(&token) {
+            return self
+                .inner
+                .validate_extension_with_context(token, payload, context, ctx);
+        }
+        if context.scope != "document" {
+            return Ok(vec![]);
+        }
+        let value = umf_core::lakeview::diagnostics(&context.document, &self.core, ctx)
+            .map_err(umf_core::CapabilityError::Engine)?;
+        let Value::Array(values) = value else {
+            unreachable!()
+        };
+        Ok(values
+            .iter()
+            .map(|v| Diagnostic {
+                code: field(v, "code").and_then(as_utf16).unwrap().clone(),
+                path: field(v, "path").and_then(as_utf16).unwrap().clone(),
+                message: field(v, "message").and_then(as_utf16).unwrap().clone(),
+                severity: if field(v, "severity") == Some(&Value::string_utf8("warning")) {
+                    Severity::Warning
+                } else {
+                    Severity::Error
+                },
+                python_text_origin: None,
+                python_source_path: false,
+            })
+            .collect())
+    }
+    fn python_source_document(&self) -> Option<&umf_core::PythonConsumerValue> {
+        self.inner.python_source_document()
+    }
+}
+
 fn execute_request_inner(
     wire_json: &str,
     capabilities: &mut dyn Capabilities,
@@ -2647,6 +2755,7 @@ fn execute_request_inner(
     }
     let mut resources = supplied_resources.unwrap_or_else(|| Value::Object(Vec::new()));
     let registry_value = take_field(&mut request, "registry");
+    let mut native_tokens = BTreeSet::new();
     let prior_work = operation_context.charged_work();
     let prior_constraint_steps = operation_context.constraint_steps();
     drop(operation_context);
@@ -2678,6 +2787,7 @@ fn execute_request_inner(
         let engine = retained_engine
             .or(owned_engine.as_ref())
             .expect("engine selected");
+
         let mut registry = engine.registry(catalog)?;
         if let Some(Value::Array(extensions)) = registry_value {
             let mut schema_resources = engine.schema_resources_with_context(catalog)?;
@@ -2713,7 +2823,9 @@ fn execute_request_inner(
                 if let Some(manifest) = take_field(&mut extension, "manifest") {
                     if let Value::Object(fields) = &extension {
                         if fields.iter().any(|(key, _)| {
-                            key != &Utf16::from("semantic") && key != &Utf16::from("kinds")
+                            key != &Utf16::from("semantic")
+                                && key != &Utf16::from("kinds")
+                                && key != &Utf16::from("nativeValidator")
                         }) {
                             return Err(fail(
                                 "REQUEST",
@@ -2731,10 +2843,30 @@ fn execute_request_inner(
                         Some(Value::Bool(true)) => true,
                         _ => return Err(fail("REQUEST", "kinds must be a boolean")),
                     };
+                    let native = match take_field(&mut extension, "nativeValidator") {
+                        None => false,
+                        Some(Value::String(name))
+                            if name == Utf16::from("lakeview/0.2.0")
+                                && field(&manifest, "id")
+                                    == Some(&Value::string_utf8("umf.lakeview"))
+                                && field(&manifest, "version")
+                                    == Some(&Value::string_utf8("0.2.0"))
+                                && !semantic =>
+                        {
+                            native_tokens.insert(index as u64 + 1);
+                            true
+                        }
+                        _ => {
+                            return Err(fail(
+                                "NATIVE_VALIDATOR",
+                                "Unknown, mismatched or conflicting explicit native validator",
+                            ))
+                        }
+                    };
                     if kinds {
                         registry.register_kind_package(
                             &manifest,
-                            semantic.then_some(index as u64 + 1),
+                            (semantic || native).then_some(index as u64 + 1),
                             engine.package_schema(),
                             &schema_resources,
                             catalog,
@@ -2742,7 +2874,7 @@ fn execute_request_inner(
                     } else {
                         registry.register(
                             &manifest,
-                            semantic.then_some(index as u64 + 1),
+                            (semantic || native).then_some(index as u64 + 1),
                             engine.package_schema(),
                             &schema_resources,
                             catalog,
@@ -2800,6 +2932,13 @@ fn execute_request_inner(
     let engine = retained_engine
         .or(owned_engine.as_ref())
         .expect("engine selected");
+    let mut native_capabilities = NativeCapabilities {
+        inner: capabilities,
+        tokens: native_tokens,
+        core: engine.core_version().cloned().unwrap_or(Value::Null),
+    };
+    let capabilities: &mut dyn Capabilities = &mut native_capabilities;
+
     let value = {
         match op.as_str() {
             "model/inspectCoreCardinality"
@@ -2916,6 +3055,33 @@ fn execute_request_inner(
                         .collect(),
                 )
             }
+            "lakeview-import" => umf_core::lakeview::import(
+                field(&request, "source")
+                    .and_then(as_utf16)
+                    .ok_or_else(|| fail("REQUEST", "Source must be a string"))?,
+                field(&request, "options")
+                    .ok_or_else(|| fail("REQUEST", "Lakeview options are required"))?,
+                engine
+                    .core_version()
+                    .ok_or_else(|| fail("REQUEST", "Missing current core version"))?,
+                &mut operation,
+            )?,
+            "lakeview-export" => Value::String(umf_core::lakeview::export(
+                field(&request, "document")
+                    .ok_or_else(|| fail("REQUEST", "Document is required"))?,
+                engine
+                    .core_version()
+                    .ok_or_else(|| fail("REQUEST", "Missing current core version"))?,
+                &mut operation,
+            )?),
+            "lakeview-diagnostics" => umf_core::lakeview::diagnostics(
+                field(&request, "document")
+                    .ok_or_else(|| fail("REQUEST", "Document is required"))?,
+                engine
+                    .core_version()
+                    .ok_or_else(|| fail("REQUEST", "Missing current core version"))?,
+                &mut operation,
+            )?,
             "list-kinds" => registry.list_kinds(&mut operation)?,
             "get-kind" => registry
                 .get_kind(

@@ -31,6 +31,9 @@ export interface UmfCoreControls {
   deadlineMs?: number;
 }
 export interface UmfCoreDocumentEngine extends UmfCoreEngine {
+  importLakeviewDashboard(source: string, options: {id:string;title?:string;namespace?:string}): unknown;
+  exportLakeviewDashboard(document: unknown): string;
+  lakeviewDiagnostics(document: unknown): {code:string;path:string;message:string;severity:'error'|'warning'}[];
   validateExtensionPayload(id: string, version: string, payload: unknown, registry?: UmfCoreRegistration[]): unknown;
   listKinds(registry?: UmfCoreRegistration[]): unknown;
   getKind(reference: unknown, registry?: UmfCoreRegistration[]): unknown;
@@ -700,7 +703,7 @@ export declare function createCodegenEngine(module: any, resources: UmfCodegenRe
 export declare function createRetainedCodegenEngine(module: any, resources: UmfCodegenResources, options?: {profile?: 'cooperative' | 'hard-isolated'; setupControls?: UmfCoreControls; controls?: UmfCoreControls}): RetainedUmfCodegenEngine;
 export declare function initializeCodegenWasm(loader: (() => Promise<any>) | undefined, host: typeof globalThis | undefined, resources: UmfCodegenResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<UmfCodegenEngine>;
 
-export interface UmfCorePackage { manifest: unknown; kinds?: boolean; semantics?: (payload: unknown, context: {document: unknown; path: string; scope: string}) => {code:string;path:string;message:string;severity:"error"|"warning"}[]; }
+export interface UmfCorePackage { manifest: unknown; kinds?: boolean; nativeValidator?: string; semantics?: (payload: unknown, context: {document: unknown; path: string; scope: string}) => {code:string;path:string;message:string;severity:"error"|"warning"}[]; }
 export type UmfCoreRegistration = UmfCoreExtension | UmfCorePackage;
 
 export declare const DBT_PROFILE: 'umf-r9-dbt-preservation/0.1.0';

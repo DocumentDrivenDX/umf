@@ -524,3 +524,5 @@ export {default as fieldProjectionInspectionSchema} from '../spec/core/field-pro
 export {default as recordProjectionInspectionSchema} from '../spec/core/record-projection-inspection.schema.json';
 export {default as fieldClassificationInspectionSchema} from '../spec/core/field-classification-inspection.schema.json';
 export {default as structuredClassificationInspectionSchema} from '../spec/core/structured-classification-inspection.schema.json';
+
+export * from './adapters/lakeview';

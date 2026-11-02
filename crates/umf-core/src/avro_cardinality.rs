@@ -192,6 +192,8 @@ fn runtime(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Runtime>, EngineError
     let resources = Arc::new(build_runtime(ctx)?);
     if ordinary {
         let _ = RESOURCES.set(Arc::clone(&resources));
+        // A racing initializer may have published first; return its shared instance.
+        return Ok(Arc::clone(RESOURCES.get().expect("resource cache initialized")));
     }
     Ok(resources)
 }

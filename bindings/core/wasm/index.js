@@ -1936,12 +1936,15 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
         const semantics = descriptor(extension, 'semantics', false, hostWork);
         if (semantics !== undefined && typeof semantics !== 'function') throw new TypeError('Extension semantics must be a host callback function');
         if (semantics) { hostWork?.(1); callbacks.set(index + 1, semantics); }
-        if (Reflect.ownKeys(extension).some(key => !['manifest','semantics','kinds'].includes(key))) throw new TypeError('Full manifest and legacy registration fields cannot be mixed');
+        if (Reflect.ownKeys(extension).some(key => !['manifest','semantics','kinds','nativeValidator'].includes(key))) throw new TypeError('Full manifest and legacy registration fields cannot be mixed');
         const kindOption = descriptor(extension, 'kinds', false, hostWork);
         const kinds = kindOption === undefined ? false : kindOption;
         if (typeof kinds !== 'boolean') throw new TypeError('kinds must be a boolean');
         hostWork?.(3);
-        registry.push({manifest, kinds, semantic: Boolean(semantics)});
+        const nativeValidator = descriptor(extension, 'nativeValidator', false, hostWork);
+        if (nativeValidator !== undefined && (typeof nativeValidator !== 'string' || !nativeValidator)) throw new TypeError('nativeValidator must be a nonempty string');
+        hostWork?.(1);
+        registry.push({manifest, kinds, ...(nativeValidator === undefined ? {} : {nativeValidator}), semantic: Boolean(semantics)});
         continue;
       }
       const id = descriptor(extension, 'id', true, hostWork);
@@ -1960,6 +1963,9 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
     return invoke(module, request, callbacks, profile, controls, withModel, controlBridge, hostWork, retainedRuntime, editor);
   }
   const api = {...base,
+    importLakeviewDashboard(source, options) { return call('lakeview-import', {source,options}); },
+    exportLakeviewDashboard(document) { return call('lakeview-export', {document}); },
+    lakeviewDiagnostics(document) { return call('lakeview-diagnostics', {document}); },
     validateExtensionPayload(id, version, payload, registry = []) { return call('validate-extension-payload', {id, version, payload}, registry); },
     listKinds(registry = []) { return call('list-kinds', {}, registry); },
     getKind(reference, registry = []) { return call('get-kind', {reference}, registry) ?? undefined; },

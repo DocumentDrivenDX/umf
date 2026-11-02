@@ -163,6 +163,7 @@ pub mod json_schema_protobuf_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod jsonld_source;
 pub mod kinds;
+pub mod lakeview;
 pub mod literal;
 pub mod literal_policy;
 pub mod native_contract_adapters;

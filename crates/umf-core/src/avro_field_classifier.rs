@@ -86,6 +86,8 @@ fn operation_schemas(
     let schemas = Arc::new(build_operation_schemas(ctx)?);
     if ordinary {
         let _ = SCHEMAS.set(Arc::clone(&schemas));
+        // A racing initializer may have published first; return its shared instance.
+        return Ok(Arc::clone(SCHEMAS.get().expect("resource cache initialized")));
     }
     Ok(schemas)
 }
@@ -145,6 +147,8 @@ fn engine(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Runtime>, EngineError>
     let runtime = Arc::new(build_engine(ctx)?);
     if ordinary {
         let _ = RUNTIME.set(Arc::clone(&runtime));
+        // A racing initializer may have published first; return its shared instance.
+        return Ok(Arc::clone(RUNTIME.get().expect("resource cache initialized")));
     }
     Ok(runtime)
 }

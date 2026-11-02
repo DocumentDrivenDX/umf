@@ -5,9 +5,9 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 837,
+  "total": 841,
   "counts": {
-    "SATISFIED": 180,
+    "SATISFIED": 184,
     "UNTESTED": 407,
     "UNCITED_COVERAGE": 233,
     "ASSERTED_UNBACKED": 0,
@@ -7160,6 +7160,42 @@
       "status": "UNTESTED",
       "evidence": [],
       "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-093-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-093-lakeview-dashboard-interchange.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/lakeview/interchange.test.ts:19"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-093-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-093-lakeview-dashboard-interchange.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/lakeview/interchange.test.ts:29"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-093-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-093-lakeview-dashboard-interchange.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/lakeview/interchange.test.ts:51"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-093-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-093-lakeview-dashboard-interchange.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/lakeview/interchange.test.ts:65"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
     },
     {
       "id": "US-900-AC1",

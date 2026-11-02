@@ -1,0 +1,246 @@
+# Lakeview kinds and original-byte reconstruction — 2026-10-23
+
+Implements [CONTRACT-083 0.2](../../../02-design/contracts/CONTRACT-083-lakeview-dashboard-interchange.md)
+and [US-093](../../../01-frame/user-stories/US-093-lakeview-dashboard-interchange.md),
+using [CONTRACT-907 kinds](../../../02-design/contracts/CONTRACT-907-extension-defined-kinds.md).
+See the [usage guide](../../../05-deploy/lakeview.md).
+
+## Change and rationale
+
+The source PR is [#42](https://github.com/DocumentDrivenDX/umf/pull/42), inspected
+at head `27e36277376b18fd7cbf0a80fb3d3e2b57ba22c8`. Its committed marketing input
+is imported unchanged. Its SHA-256 is
+`ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5`, verified
+against that Git blob and the current original file.
+
+The new native representation uses seven extension-owned kinds: dashboard,
+data, page, dataset, layout-item, query-result and field. Dataset and query-result
+owners are core Records, with ordered core Fields and qualified graph references.
+They carry explicit native declarations, not inferred SQL types or a physical
+table assertion. The root and layout objects remain Lakeview compositions.
+The default document has no parallel field dictionary or `umf.dashboard` 0.1
+projection. PR42's unchanged projection helper is explicitly named as a legacy
+compatibility view; its narrower field model is not silently presented as core.
+
+Rust owns native parsing, partition, shape derivation, original-source consistency
+and untouched export. The native builder shares the bounded JSON scanner and
+preserves numeric lexemes as strings. Byte APIs strictly decode UTF-8 while
+preserving an optional BOM. A raw source archive preserves lexical information
+that the split tree alone cannot: whitespace, string escape spelling and all
+native member order. Export compares the current representation with a fresh
+derivation from that source and refuses unqualified edits.
+
+The built-in native validator is selected only through trusted registration.
+Unknown/mismatched validators and simultaneous callbacks reject atomically;
+putting its name into package metadata does not activate code. Native source
+semantics remain incomplete even after consistency and byte recovery pass.
+
+## Direct original comparisons
+
+[`browser.json`](browser.json) records actual Chromium WASM execution, with no
+external requests or page errors. All three files recover directly and through
+both UMF JSON and YAML. Tests compare every output byte to the original bytes;
+SHA-256 receipts additionally bind results to the committed originals.
+Generic discovery finds 163 attachments on the marketing fixture and ordinary
+selection resolves `ds_metric` to its core `Metric Value` Field.
+
+[`installed.json`](installed.json) records the packed Node binding under Node
+and Bun, plus the native CLI with empty PATH. All three hosts agree with zero
+mismatches. Both UMF serialization paths in this harness use the Rust serializers,
+not JavaScript normalization. Each host makes nine direct original comparisons
+(three files × direct/JSON/YAML). The CLI needs no JavaScript executable.
+
+The files are the PR42 original (54,077 bytes), a 772-byte synthetic lexical
+fixture and a 79-byte empty-section fixture. The lexical case includes BOM,
+CRLF/trailing whitespace, numeric/integer-like and prototype-like keys,
+non-ASCII UTF-8, alternate escapes, an escaped isolated surrogate, negative zero,
+huge integers, an inexact-binary64 decimal and `1e400`. Neither side of a byte
+assertion is compacted or normalized.
+The fixture paths have `-text` Git attributes so checkout/commit filtering cannot
+normalize CRLF or trailing whitespace. Filtered and unfiltered Git blob hashes
+are checked for equality before handoff.
+
+## Verification
+
+Qualification uses macOS arm64, Rust 1.90.0, Bun 1.4.3, Node 26.12.1 and Chromium
+153.0.8010.12. The native Node/CLI and WASM artifacts use optimized release builds;
+macOS native modules retain symbols to avoid the already documented linker
+stripping issue. The ordinary test prerequisite builds/stages that Node artifact.
+
+| Check | Result |
+| --- | --- |
+| Lakeview tests plus existing kind/core/dashboard suites | 193 passed, 4,217 assertions |
+| Rust core/wire libraries and integration tests | 221 passed across 30 result groups, including four native Lakeview tests, eight kind tests and frozen runtime/schema corpora |
+| Installed Python core, Rust compatibility and kinds tests | 212 passed on Python 3.13.16/Pydantic 2.14.1; generic regression, not a new Python Lakeview API claim |
+| Existing metamodel tests | 59 passed, 405 assertions; source-only cold compilation, fixed point, no-write and extra-output rejection all pass |
+| Generic kind installed parity | 15 cases across CLI, Node, Bun, Python and Chromium; zero mismatches in the refreshed [kind receipt](../extension-kinds/receipt.json) |
+| Extension and JSON Schema audits | 72/72 packages and 382/382 schemas pass |
+| Combined type checking, Python lint, generated-resource check and Rust boundary controls | Pass; 28 Python controls plus linked-dependency resolution regression pass |
+| Core authority, compilation boundaries and acceptance traceability | Pass; 841 criteria; 5 ledger tests with 1,272 assertions pass |
+
+The shared interpreter is unchanged from the #46 prerequisite; current main
+already shares immutable lexical snapshots. Native/core edits, broken members
+or references, unknown wrappers, malformed source, duplicate decoded JSON keys,
+invalid UTF-8 and work-budget failures have explicit negative controls.
+
+## Limits
+
+The recorded corpus qualifies untouched original-source preservation and explicit
+metadata composition. It does not establish a published Databricks format/schema
+version, live workspace acceptance, rendering, query execution, inferred source
+types, a complete row schema, edited native rewrites or cross-BI equivalence.
+No private dashboard is used as passing evidence. Native fragment root shape is
+structurally checked; full nested consistency requires the explicitly selected
+Rust validator. Missing capabilities remain incomplete, not implicitly trusted.
+
+This revision builds on [PR #46](https://github.com/DocumentDrivenDX/umf/pull/46)
+with current-main integration at `2610e47e9def4248ab74f525b44fc8849f85f7f9`. Generic kind admission,
+discovery and interpretation remain in that prerequisite; this PR owns the
+Lakeview package, adapter/runtime integration and original-byte tests. Receipts
+are refreshed on the stacked source cohort and qualify local built artifacts,
+not hosted CI, a package release or native workspace acceptance.
+
+## Clean-validation follow-up — 2026-10-23
+
+The earlier metamodel/ledger timeouts and command-redaction type error are
+resolved in the shared prerequisite. This stacked revision passes combined
+`bun run typecheck`, all 59 metamodel tests (405 assertions, 120.60 seconds
+including cold preparation), and all five ledger tests (1,272 assertions,
+7.67 seconds). The scanner reads fresh files with bounded concurrency rather
+than serializing more than a thousand reads. No ledger classifications change.
+
+Semantic assertions use an immutable compiler freshly qualified from source.
+Clean-room compilation still copies the declared sources and removes any
+installed-compiler override. Its cold preparation, existing fixed-point/no-write
+assertion budget and native temporary-tree cleanup are bounded separately; all
+assertions and negative controls remain enabled. Both subprocess pipes drain
+concurrently. This is the same fix exercised by #46, with no Lakeview-specific
+exception or skipped test.
+
+Python lint, logical dependency census paths, reference graph identity checks and
+the regenerated Bun 1.4.3 compiler payload also pass. Core/package versions are
+unchanged. The 193-test Lakeview/kind/core/dashboard suite, 212 installed Python
+regressions, nine CLI transport controls, five-host kind parity and four-host
+original-byte reconstruction pass again. The native engine and Lakeview source
+semantics are unchanged by these build/test fixes.
+
+Those results preceded the current-main integration recorded below; their
+source hashes and timings remain historical qualification.
+
+
+## Current-main integration — 2026-10-23
+
+The stack includes main `259bf1ed91466ff7e9782d7517c14f2112282026` through
+#46 at `2610e47e9def4248ab74f525b44fc8849f85f7f9`. Main's SDK 0.5.6,
+Python distribution 0.10.1, action runtime and packaging fixes are preserved.
+Core document 0.10.0 and Lakeview 0.2.0 remain unchanged. To avoid IDs introduced
+independently on main, extension kinds uses CONTRACT-907 and Lakeview uses
+CONTRACT-083; main's CONTRACT-906 single-SET and CONTRACT-082 Spark contracts
+are preserved. All Lakeview traceability references follow the new IDs.
+
+Metamodel outputs, codegen assets and the Python action-runtime integrity
+inventory are rebuilt for this source cohort. Fresh installed Node/Bun, the
+native CLI with empty PATH, and real Chromium WASM compare directly with all
+three original files through direct import, UMF JSON and UMF YAML: all bytes
+agree. The 15-case generic-kind corpus agrees across all five hosts, including
+the fresh Python 0.10.1 wheel. Current receipts are `installed.json`,
+`browser.json` and `../extension-kinds/receipt.json`; `main-integration.json`
+records the other repeated checks and source hashes. Hosted CI and publication
+remain separate gates; no live Databricks or edited-source claim is added.
+
+Combined typechecking, 211 focused Bun tests, 328 Rust tests, 254 installed
+Python tests, and all 64 metamodel/ledger tests (1,677 assertions) pass. The
+clean-room assertion phase took 77.00 seconds within its existing 120-second
+bound. Python lint, 72 package/382 schema audits, core and native architecture
+checks, codegen custody, nine CLI transport tests, four reference/gzip tests and
+Chromium's 138 core vectors plus one callback control also pass.
+
+
+## Legacy compatibility corrections — 2026-10-24
+
+A follow-up prepared against `26b0360d19abb8ca59fbc4302d5c00b0fcc14773`
+addresses the three original projection review findings in the still-exported
+`projectLakeviewToLegacyDashboard` helper. Field dictionaries use own keys, so
+`constructor`, `toString` and `__proto__` do not collide with inherited members;
+real measure/column collisions still refuse. Unknown empty objects and arrays
+now receive source-pointer loss reports.
+
+The helper receives parsed JavaScript values, not original numeric tokens. It
+cannot prove whether any numeric default has already rounded, even when the
+parsed result is an integer. It therefore omits the complete default selection
+when any member is numeric and reports `LAKEVIEW_FILTER_DEFAULT` as unsupported.
+Mixed selections are never silently narrowed. String and boolean defaults remain
+representable. The core Record/Field importer and exact native source archive
+retain their existing Rust implementation and byte-preservation contract.
+
+The focused legacy regressions first reproduced 10 failures (with two controls
+passing), then all 12 passed. The combined Lakeview/dashboard/kind run passes 28
+tests and 232 assertions. Combined typechecking passes. Real Chromium passes
+three hostile-name, three numeric-precision and two empty-container controls;
+all three committed originals still match byte for byte through direct, JSON
+and YAML paths. `browser.json` records those controls and source hashes;
+`legacy-fixes.json` records the scoped follow-up checks. Existing broader native
+and installed receipts retain their historical source-cohort qualifications.
+No distribution or core-document version changes belong to this follow-up;
+release integration must use the settled upstream producer/migration cohort.
+
+
+### Mixed-member source-review correction — 2026-10-24
+
+Source review of `f5700828cbfaa272176d9d70809a336fd62d2331` found that
+whole-array primitive admission could bypass the required precision diagnostic
+when numeric defaults were mixed with null or unknown values. Numeric detection
+now runs first, with an optional member lookup so a null entry cannot throw.
+The whole selection remains omitted with `LAKEVIEW_FILTER_DEFAULT`; no subset
+is projected. The three added regressions first failed against the frozen
+candidate, then all 15 focused legacy tests passed (45 assertions). Combined
+typechecking passes. Chromium passes 11 compatibility controls, including all
+three new mixed-member cases, and retains exact byte comparisons for the three
+originals through direct/JSON/YAML paths. `legacy-mixed-defaults.json` records
+this successor's scoped evidence. The generated payload remains current and
+source inventory is refreshed; no native rebuild or release integration was
+performed. Independent review remains a separate pending gate.
+
+
+### Discriminator source-review correction — 2026-10-24
+
+Independent review of `4308be2597166c86adab6230ec9619f5952338f0` found
+that the legacy widget-control, format and encoding-channel tables could accept
+inherited object members. All three lookups now require an own string key.
+Unknown or coerced widget types omit the widget with `LAKEVIEW_WIDGET_TYPE`;
+unknown formats and channels remain unconsumed and receive attributable
+`LAKEVIEW_UNMAPPED` reports. Recognized visual output is preserved, and native
+input is unchanged.
+
+The 34 focused regressions pass with 101 assertions. Combined typechecking and
+generated-payload custody pass. Real Chromium passes 30 compatibility controls
+and compares all three originals byte for byte through direct, JSON and YAML
+paths. Independent review of the frozen seven-path patch and those results
+found no actionable application issue. `legacy-discriminators.json` records the
+source and log hashes and the bounded review scope.
+
+The first runner stopped only the inventory refresh after rejecting a transient
+process-state value; its original terminal remains a failure, and the exact
+rejected token was not retained. A separately reviewed, bounded inventory-only
+successor completed successfully, retaining the first four passing checks.
+Inventory records 580 source modules, 340 active scripts and 244 locked JavaScript
+packages. A pre-existing Python invalid-escape warning is recorded without a
+support claim for that unrelated security probe. Final process/source custody
+checks returned the shared host. No native rebuild, upstream release integration,
+hosted-CI qualification or publication is claimed by this local correction.
+
+## Current-main reconciliation — 2026-11-02
+
+[The current integration receipt](current-main-integration.json) distinguishes
+the new Rust/default-root and package-closure reconciliation from earlier
+qualification. Current core unit tests pass 688 cases after correcting an Avro
+cache-initialization race; wire tests pass 89 cases and Lakeview passes four
+native cases. Installed Node/Bun/CLI and Chromium reconstruct the three originals
+exactly, with source-bound host receipts. The combined Bun run retains a
+capability-control timeout; the unchanged control passes separately. Exact-source
+Linux CI must pass the complete combined gate before merge or release.
+
+This integration retains current generated core/compiler resources instead of
+restoring obsolete snapshots. The legacy package/schema audit failures are
+recorded, not converted into passing support claims. Live Databricks acceptance
+and edited native rewrites remain unqualified.
