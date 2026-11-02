@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/tablespec/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,parseNativeYaml,renderTree,type NativeJson} from '../../model/native-json';
-import {UmfError,type Document,type Element,type ExtensionPackage,type Json,type ScalarType} from '../../model/types';
-export const TABLESPEC_EXTENSION='umf.tablespec';
-export const tablespecPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,type Document,type Element,type Json,type ScalarType} from '../../model/types';
+import { TABLESPEC_EXTENSION, tablespecPackage } from './package';
+export { TABLESPEC_EXTENSION, tablespecPackage };
 type Payload={profile:'tablespec-table-1';root:NativeJson;originalSource:string;originalFormat:'json'|'yaml';splitFiles?:Record<string,string>};
 const scalar:Record<string,ScalarType>={VARCHAR:'string',TEXT:'string',CHAR:'string',BOOLEAN:'boolean',INTEGER:'integer',DECIMAL:'decimal',FLOAT:'float',DATE:'date',DATETIME:'timestamp',TIMESTAMP:'timestamp'};
 const parse=(text:string,format:'json'|'yaml')=>format==='json'?parseNativeJson(text):parseNativeYaml(text);

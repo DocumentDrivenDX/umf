@@ -1,32 +1,28 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {join} from 'node:path';
-import {parse} from 'yaml';
-import {selfModelGraph,type SelfModelCatalog} from '../../docs/helix/05-deploy/reference/model';
-import {source,text,read,json} from './io';
+import type {SelfModelCatalog} from '../../docs/helix/05-deploy/reference/model';
+import {rustReferenceSelfModel} from '../metamodel/rust';
+import {sourceText,read,json} from './io';
 
 export const modelPath='spec/metamodel/umf.yaml';
 
-/** Parse the authored language definition directly; generated schemas are outputs, never source inputs. */
+/** Return the document admitted from authored source; generated schemas are never source inputs. */
 export async function expectedSelfModel():Promise<SelfModelCatalog['document']>{
- const document=parse(await text(modelPath));
- if(document.umf!=='0.10.0'||document.id!=='urn:umf:metamodel')throw Error('SELF_MODEL_SOURCE unexpected authored metamodel identity');
- return document;
+ return (await loadSelfModel()).document;
 }
 
 export async function loadSelfModel(){
- const [document,manifest]=await Promise.all([expectedSelfModel(),read('spec/metamodel/generated/manifest.json')]);
- const modelSource=await source(modelPath);
- if(manifest.profile!=='umf.metamodel.outputs/1'||manifest.sources?.[modelPath]!==modelSource.sha256
-   ||manifest.provenance?.modelSha256!==modelSource.sha256)throw Error('SELF_MODEL_PROVENANCE authored model/compiler manifest mismatch');
- const catalog:SelfModelCatalog={profile:'umf.metamodel/1',document:document as any,sources:[modelSource],provenance:manifest.provenance};
- selfModelGraph(catalog);
- return catalog;
+ const [modelText,manifest]=await Promise.all([sourceText(modelPath),read('spec/metamodel/generated/manifest.json')]);
+ // Rust owns parsing, provenance admission and graph validation. This boundary
+ // intentionally covers the authored string-ID profile; dynamic non-string
+ // identifiers/reference targets remain an explicit refusal in Rust.
+ return rustReferenceSelfModel(modelText,manifest) as SelfModelCatalog;
 }
 
 export async function buildSelfModel(stage:string){
  const catalog=await loadSelfModel();
  await Bun.write(join(stage,'metamodel.json'),json(catalog));
- await Bun.write(join(stage,'umf.yaml'),await text(modelPath));
+ await Bun.write(join(stage,'umf.yaml'),await sourceText(modelPath));
  await Bun.write(join(stage,'umf.json'),json(catalog.document));
 }
 if(import.meta.main){const catalog=await loadSelfModel();console.log(catalog.document.id);}

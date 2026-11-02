@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {exportParquetCapture} from '../adapters/parquet';
 import {getParquetFieldMetadata} from '../adapters/parquet/field-metadata';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
 import schema from '../../spec/core/parquet-key-classification.schema.json';
-import manifest from '../../spec/extensions/parquet-keys/package.json';
-export const PARQUET_KEYS_EXTENSION='umf.parquet.keys';
-export const parquetKeysPackage=manifest as unknown as ExtensionPackage;
-export {default as parquetKeyClassificationSchema} from '../../spec/core/parquet-key-classification.schema.json';
+import {PARQUET_KEYS_EXTENSION} from './parquet-key-package';
+export {PARQUET_KEYS_EXTENSION,parquetKeysPackage,parquetKeyClassificationSchema} from './parquet-key-package';
 export interface ParquetKeyRequest {mode:'strict'|'report';profile:'file-schema'}
 export interface ParquetKeyObservation {nativePath:string;index:number;path:string[];kind:'physical-leaf'|'physical-group';definitionLevel:number;repetitionLevel:number;nativeField:Json;enforcement:'not-expressible';authorIntent:'unknown';provenance:'inferred';scope:'file-schema'}
 const binding=schema.properties.binding.const,recovery='Original native archive retained; no authored key inferred' as const;

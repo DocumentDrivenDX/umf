@@ -393,3 +393,24 @@ byte sequences independently checked by PyArrow. Corpus scripts fail if the expe
 counts or specific blocked cases change. These results materially expand native evidence;
 they do not complete dictionary-state/body semantic validation, general type migrations,
 fuzz robustness, cross-system projections or all Arrow/UMF completion requirements.
+
+## Rust host-boundary parity
+
+The Node and WASM host adapters preserve the TypeScript predecessor admission
+for `captureArrowIpc`: first require `bytes instanceof Uint8Array` in the
+calling realm, then reject `byteLength > 1_000_000`, then iterate the
+accepted view and format its values as lowercase hex, then read and type-check `options.id`, then dispatch. The first two failures
+both throw the public `UmfError` with code `ARROW_IPC_LIMIT` and message
+`Expected at most 1000000 source bytes`. A non-string id follows the
+predecessor's envelope failure and throws `UmfError('ARROW_IPC_CAPTURE',
+'Invalid IPC capture envelope')`. This intentionally excludes cross-realm
+Uint8Arrays and does not broaden acceptance through the typed-array tag.
+
+The raw-host packet records native class identity, iterator/getter/proxy access
+order, thrown error identity and copy behavior against the TypeScript predecessor.
+Ordinary JSON data is the supported bridge input for `exportArrowIpcCapture`
+and `inspectArrowIpcCapture`. Proxies, accessors, custom prototypes and other
+host objects are outside the Rust bridge contract; any difference in their
+trap order or native exception class must be reported as unsupported host-object
+behavior, rather than described as semantic parity. The frozen predecessor is
+at `04-build/evidence/rust-migration/r8-arrow-ipc-host-boundary-20261028/`.

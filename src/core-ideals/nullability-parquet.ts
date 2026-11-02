@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type Nullability,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic,type Nullability} from '../model/types';
 import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '../model/nullability';
 import {exportParquetCapture} from '../adapters/parquet';
 import {getParquetFieldMetadata} from '../adapters/parquet/field-metadata';
@@ -14,10 +14,8 @@ import core from '../../spec/core/schema.json';
 import authorSchema from '../../spec/core/nullability-operation-v5.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/parquet-nullability-classification.schema.json';
-import manifest from '../../spec/extensions/parquet-nullability/package.json';
-export const PARQUET_NULLABILITY_EXTENSION='umf.parquet.nullability';
-export const parquetNullabilityPackage=manifest as unknown as ExtensionPackage;
-export {default as parquetNullabilityClassificationSchema} from '../../spec/core/parquet-nullability-classification.schema.json';
+import {PARQUET_NULLABILITY_EXTENSION} from './parquet-nullability-package';
+export {PARQUET_NULLABILITY_EXTENSION,parquetNullabilityPackage,parquetNullabilityClassificationSchema} from './parquet-nullability-package';
 export interface ParquetNullabilityRequest {
  index:number;mode:'strict'|'report';scope:'row-leaf-value'|'repeated-element-value'|'write-input'|'unresolved';carrier:'definition-level'|'unresolved';author?:CoreNullabilityDeclaration;
 }

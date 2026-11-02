@@ -132,6 +132,57 @@ pub(super) struct Evolution {
     pub drops: Vec<Value>,
     pub policies: Vec<String>,
 }
+fn g11(options: Option<&Value>) -> bool {
+    text(
+        options
+            .and_then(|value| get(value, "version"))
+            .unwrap_or(&Value::Null),
+    )
+    .as_deref()
+        == Some("umf.table-migration-options/0.6")
+}
+fn mark_g11_field_step(
+    step: &mut Value,
+    operation: &str,
+    column: &Value,
+    table: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let field = get(column, "field").ok_or_else(|| {
+        fail(
+            "G11 Field effect has no Field reference",
+            txt(column, "sourcePath"),
+        )
+    })?;
+    let target = object(vec![
+        ("table", cp(v(table, "id"), ctx)?),
+        ("field", cp(field, ctx)?),
+    ]);
+    if let Value::Object(fields) = step {
+        fields.push((Utf16::from("operation"), s(operation)));
+        fields.push((Utf16::from("phaseOperation"), s(operation)));
+        fields.push((Utf16::from("phaseTarget"), target));
+    }
+    Ok(())
+}
+fn mark_g11_dependency_step(
+    step: &mut Value,
+    role: &str,
+    kind: &str,
+    id: &str,
+    table_id: &str,
+    bundle: &Value,
+    source_path: &str,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let subject = super::g06::dependency_subject(bundle, table_id, kind, id, source_path, ctx)?;
+    if let Value::Object(fields) = step {
+        fields.push((Utf16::from("operation"), s(role)));
+        fields.push((Utf16::from("phaseOperation"), s(role)));
+        fields.push((Utf16::from("phaseDependency"), subject));
+    }
+    Ok(())
+}
 fn v<'a>(value: &'a Value, key: &str) -> &'a Value {
     get(value, key).unwrap_or(&Value::Null)
 }
@@ -463,26 +514,60 @@ pub(super) fn evolve(
         let ne = items(get(fresh, "elements"));
         let or = items(get(old, "relationships"));
         let nr = items(get(fresh, "relationships"));
-        if ne.len() < oe.len()
-            || nr.len() < or.len()
-            || !same_list(
-                &or.iter().collect::<Vec<_>>(),
-                &nr[..or.len()].iter().collect::<Vec<_>>(),
-                ctx,
-            )?
+        if (!g11(options) && ne.len() < oe.len())
+            || (!g11(options) && nr.len() < or.len())
+            || if g11(options) {
+                !same_list(
+                    &or.iter().collect::<Vec<_>>(),
+                    &nr.iter().collect::<Vec<_>>(),
+                    ctx,
+                )?
+            } else {
+                !same_list(
+                    &or.iter().collect::<Vec<_>>(),
+                    &nr[..or.len()].iter().collect::<Vec<_>>(),
+                    ctx,
+                )?
+            }
         {
             return Err(fail(
                 "Existing relationships must remain exact; only append is qualified",
                 "/next/source",
             ));
         }
-        let new_fields = ne[oe.len()..]
-            .iter()
-            .metered_filter(ctx, |e, _ctx| Ok(txt(e, "kind") == "field"))?
+        let new_field_items = if g11(options) {
+            ne.iter()
+                .filter(|fresh| {
+                    txt(fresh, "kind") == "field"
+                        && !oe.iter().any(|old| get(old, "id") == get(fresh, "id"))
+                })
+                .collect::<Vec<_>>()
+        } else {
+            ne[oe.len()..]
+                .iter()
+                .filter(|fresh| txt(fresh, "kind") == "field")
+                .collect::<Vec<_>>()
+        };
+        let new_fields = new_field_items
             .into_iter()
             .map(|e| txt(e, "id"))
             .collect::<BTreeSet<_>>();
-        for (j, (before, after)) in oe.iter().zip(ne).enumerate() {
+        for (j, before) in oe.iter().enumerate() {
+            let after = if g11(options) {
+                ne.iter()
+                    .find(|fresh| get(fresh, "id") == get(before, "id"))
+            } else {
+                ne.get(j)
+            };
+            let Some(after) = after else {
+                if g11(options) && txt(before, "kind") == "field" {
+                    continue;
+                }
+                return Err(fail(
+                    "Retained source element is missing",
+                    format!("/next/source/modules/{i}/elements/{j}"),
+                ));
+            };
             precharge(before, ctx)?;
             precharge(after, ctx)?;
             charge(ctx, ne.len().saturating_add(64), "/next/source")?;
@@ -587,7 +672,20 @@ pub(super) fn evolve(
                 })?
                 .into_iter()
                 .collect::<Vec<_>>();
-            let prefix = nm.len().saturating_sub(ne.len() - oe.len());
+            let prefix = nm.len().saturating_sub(ne.len().saturating_sub(oe.len()));
+            let retained_order_matches = if g11(options) {
+                let retained_new = nm
+                    .iter()
+                    .filter(|reference| {
+                        om.iter()
+                            .any(|old_reference| refs_equal(old_reference, reference))
+                            && !removed.iter().any(|removed| refs_equal(removed, reference))
+                    })
+                    .collect::<Vec<_>>();
+                same_list(&retained, &retained_new, ctx)?
+            } else {
+                same_list(&retained, &nm[..prefix].iter().collect::<Vec<_>>(), ctx)?
+            };
             if txt(before, "kind") != "record"
                 || txt(after, "kind") != "record"
                 || !eq(
@@ -595,7 +693,7 @@ pub(super) fn evolve(
                     &omit(after, &["members", "description", "keys"], ctx)?,
                     ctx,
                 )?
-                || !same_list(&retained, &nm[..prefix].iter().collect::<Vec<_>>(), ctx)?
+                || !retained_order_matches
             {
                 return Err(fail("Existing logical elements must remain exact except explicitly reviewed column removal and key evolution",path));
             }
@@ -628,7 +726,17 @@ pub(super) fn evolve(
                     ));
                 }
             }
-            for reference in nm.iter().skip(om.len()) {
+            for (member_index, reference) in nm.iter().enumerate() {
+                let added_member = if g11(options) {
+                    !om.iter().metered_any(ctx, |old_reference, _ctx| {
+                        Ok(refs_equal(old_reference, reference))
+                    })?
+                } else {
+                    member_index >= om.len()
+                };
+                if !added_member {
+                    continue;
+                }
                 precharge(reference, ctx)?;
                 let key = ref_key(reference).unwrap_or_default();
                 if get(reference, "module") != get(old, "id")
@@ -709,7 +817,7 @@ pub(super) fn evolve(
                 .collect::<Vec<_>>(),
             ctx,
         )?;
-        if !c.drops.is_empty() && !c.append.is_empty() {
+        if !c.drops.is_empty() && !c.append.is_empty() && !g11(options) {
             return Err(fail("Combining column removal with appended columns on one existing table is not yet qualified",format!("{tp}/columns")));
         }
         let mut evolved = BTreeSet::new();
@@ -946,7 +1054,9 @@ pub(super) fn evolve(
                     "/next/expectedCatalog/columns",
                 ));
             }
-            assert_no_dependents(column, previous, next, &docs, ctx)?;
+            if !g11(options) {
+                assert_no_dependents(column, previous, next, &docs, ctx)?;
+            }
         }
         for column in &c.append {
             precharge(column, ctx)?;
@@ -964,7 +1074,7 @@ pub(super) fn evolve(
                 || txt(column, "sourcePath").is_empty()
                 || (get(column, "nullable") != Some(&Value::Bool(true)) && !backfill)
                 || txt(column, "identity") != ""
-                || (get(mapping, "default").is_some() && !backfill)
+                || (get(mapping, "default").is_some() && !backfill && !g11(options))
                 || get(mapping, "generated").is_some()
             {
                 return Err(fail("Appended required columns require explicit scoped backfills; defaults/identity evolution is unsupported",format!("{tp}/columns")));
@@ -1080,7 +1190,7 @@ pub(super) fn evolve(
                             .into_iter()
                             .map(|fk| txt(fk, "name"))
                             .collect::<Vec<_>>();
-                        if !inbound.is_empty() {
+                        if !inbound.is_empty() && !g11(options) {
                             return Err(fail(
                                 format!(
                                     "Primary key {} has inbound foreign-key dependents: {}",
@@ -1140,7 +1250,7 @@ pub(super) fn evolve(
                     }
                 }
             }
-            if kind == "keys" {
+            if kind == "keys" && !g11(options) {
                 for x in fresh
                     .iter()
                     .metered_filter(ctx, |x, ctx| {
@@ -1151,6 +1261,19 @@ pub(super) fn evolve(
                     .into_iter()
                 {
                     return Err(fail("Adding a new key alongside an existing key requires separate qualification",txt(x,"definitionSql")));
+                }
+            }
+            if kind == "keys" && g11(options) {
+                for x in fresh
+                    .iter()
+                    .metered_filter(ctx, |x, ctx| {
+                        Ok(!old
+                            .iter()
+                            .metered_any(ctx, |o, _ctx| Ok(get(o, "id") == get(x, "id")))?)
+                    })?
+                    .into_iter()
+                {
+                    c.key_adds.push(cp(x, ctx)?);
                 }
             }
             if kind == "foreignKeys" && options.is_none() && !same_list(&old, &fresh, ctx)? {
@@ -1197,6 +1320,51 @@ pub(super) fn evolve(
             "Every appended Field on an existing Record needs one nullable native column mapping",
             "/next/expectedCatalog/tables",
         ));
+    }
+    if g11(options) {
+        let changed_keys = changes
+            .iter()
+            .enumerate()
+            .flat_map(|(table_index, change)| {
+                change
+                    .key_drops
+                    .iter()
+                    .map(move |key| (table_index, txt(key, "name")))
+            })
+            .collect::<Vec<_>>();
+        for (table_index, key_name) in changed_keys {
+            for fk in items(get(v(previous, "expectedCatalog"), "foreignKeys")) {
+                let key = changes[table_index]
+                    .key_drops
+                    .iter()
+                    .find(|key| txt(key, "name") == key_name)
+                    .unwrap_or(&Value::Null);
+                if !super::g06::foreign_key_targets_key(
+                    previous,
+                    fk,
+                    &txt(&ot[table_index], "id"),
+                    &txt(key, "id"),
+                    ctx,
+                )? {
+                    continue;
+                }
+                let Some(local_index) = ot
+                    .iter()
+                    .position(|table| get(table, "id") == get(fk, "table"))
+                else {
+                    continue;
+                };
+                if changes[local_index]
+                    .fk_drops
+                    .iter()
+                    .any(|old| get(old, "id") == get(fk, "id"))
+                {
+                    continue;
+                }
+                changes[local_index].fk_drops.push(cp(fk, ctx)?);
+                changes[local_index].fk_replace.insert(txt(fk, "id"));
+            }
+        }
     }
     emit(previous, next, options, mi, &changes, ctx)
 }
@@ -1492,11 +1660,28 @@ fn emit(
                         quote_ident(&txt(fresh, "name"))
                     ),
                     ctx,
-                )?)
+                )?);
             }
             for col in &c.tighten {
                 precharge(col, ctx)?;
-                steps.push(sql_step(
+                // G01's selected retained-field backfill emits its paired
+                // tightening after the backfill below. Emitting this ordinary
+                // tightening as well would duplicate the same SQL effect.
+                let selected_g01 = options
+                    .and_then(|value| get(value, "version"))
+                    .and_then(text)
+                    .as_deref()
+                    == Some("umf.table-migration-options/0.3")
+                    && items(options.and_then(|value| get(value, "backfills")))
+                        .iter()
+                        .any(|backfill| {
+                            txt(backfill, "table") == txt(table, "id")
+                                && refs_equal(v(backfill, "column"), v(col, "field"))
+                        });
+                if selected_g01 {
+                    continue;
+                }
+                let mut step = sql_step(
                     "table",
                     &txt(col, "sourcePath"),
                     format_args!(
@@ -1504,7 +1689,11 @@ fn emit(
                         quote_ident(&txt(col, "name"))
                     ),
                     ctx,
-                )?)
+                )?;
+                if g11(options) {
+                    mark_g11_field_step(&mut step, "tighten-not-null", col, table, ctx)?;
+                }
+                steps.push(step)
             }
             for col in &c.relax {
                 precharge(col, ctx)?;
@@ -1540,16 +1729,40 @@ fn emit(
             }
             for old in &c.index_drops {
                 precharge(old, ctx)?;
-                steps.push(sql_step(
+                let source_path = if g11(options) {
+                    super::g06::source_path(
+                        previous,
+                        &txt(&nt[ti], "id"),
+                        "index",
+                        &txt(old, "id"),
+                        ctx,
+                    )?
+                } else {
+                    format!("/next/expectedCatalog/indexes/{}", txt(old, "id"))
+                };
+                let mut step = sql_step(
                     "index",
-                    &format!("/next/expectedCatalog/indexes/{}", txt(old, "id")),
+                    &source_path,
                     format_args!(
                         "DROP INDEX {}.{}",
                         quote_ident(&schema),
                         quote_ident(&txt(old, "name"))
                     ),
                     ctx,
-                )?)
+                )?;
+                if g11(options) {
+                    mark_g11_dependency_step(
+                        &mut step,
+                        "dependency-drop",
+                        "index",
+                        &txt(old, "id"),
+                        &txt(&nt[ti], "id"),
+                        previous,
+                        &source_path,
+                        ctx,
+                    )?;
+                }
+                steps.push(step)
             }
             for (kind, drops) in [
                 ("checks", &c.check_drops),
@@ -1558,25 +1771,76 @@ fn emit(
             ] {
                 for old in drops {
                     precharge(old, ctx)?;
-                    steps.push(sql_step(
-                        "table",
-                        &format!("/next/expectedCatalog/{kind}/{}", txt(old, "id")),
+                    let dep_kind = match kind {
+                        "checks" => "check",
+                        "foreignKeys" => "foreignKey",
+                        _ => "key",
+                    };
+                    let source_path = if g11(options) {
+                        super::g06::source_path(
+                            previous,
+                            &txt(&nt[ti], "id"),
+                            dep_kind,
+                            &txt(old, "id"),
+                            ctx,
+                        )?
+                    } else {
+                        format!("/next/expectedCatalog/{kind}/{}", txt(old, "id"))
+                    };
+                    let mut step = sql_step(
+                        if g11(options) && dep_kind == "foreignKey" {
+                            "foreignKey"
+                        } else {
+                            "table"
+                        },
+                        &source_path,
                         format_args!(
                             "ALTER TABLE {relation} DROP CONSTRAINT {}",
                             quote_ident(&txt(old, "name"))
                         ),
                         ctx,
-                    )?);
+                    )?;
+                    if g11(options) {
+                        mark_g11_dependency_step(
+                            &mut step,
+                            "dependency-drop",
+                            dep_kind,
+                            &txt(old, "id"),
+                            &txt(&nt[ti], "id"),
+                            previous,
+                            &source_path,
+                            ctx,
+                        )?;
+                    }
+                    steps.push(step);
                 }
             }
             for key in &c.key_adds {
                 precharge(key, ctx)?;
-                steps.push(sql_step(
+                let source_path = if g11(options) {
+                    super::g06::source_path(next, &txt(&nt[ti], "id"), "key", &txt(key, "id"), ctx)?
+                } else {
+                    format!("/next/expectedCatalog/keys/{}", txt(key, "id"))
+                };
+                let mut step = sql_step(
                     "table",
-                    &format!("/next/expectedCatalog/keys/{}", txt(key, "id")),
+                    &source_path,
                     format_args!("ALTER TABLE {relation} ADD {}", txt(key, "definitionSql")),
                     ctx,
-                )?)
+                )?;
+                if g11(options) {
+                    mark_g11_dependency_step(
+                        &mut step,
+                        "dependency-add",
+                        "key",
+                        &txt(key, "id"),
+                        &txt(&nt[ti], "id"),
+                        next,
+                        &source_path,
+                        ctx,
+                    )?;
+                }
+                steps.push(step)
             }
             for col in &c.append {
                 precharge(col, ctx)?;
@@ -1586,7 +1850,7 @@ fn emit(
                     .unwrap();
                 precharge(v(mapping, "nativeType"), ctx)?;
                 let ty = native_type(v(mapping, "nativeType"));
-                steps.push(sql_step(
+                let mut step = sql_step(
                     "table",
                     &txt(col, "sourcePath"),
                     format_args!(
@@ -1599,7 +1863,11 @@ fn emit(
                         }
                     ),
                     ctx,
-                )?)
+                )?;
+                if g11(options) {
+                    mark_g11_field_step(&mut step, "add-column", col, table, ctx)?;
+                }
+                steps.push(step)
             }
             for (index, backfill) in items(options.and_then(|o| get(o, "backfills")))
                 .iter()
@@ -1622,6 +1890,16 @@ fn emit(
                 )?;
                 if let Value::Object(fields) = &mut bf {
                     fields.push((Utf16::from("operation"), cp(v(backfill, "operation"), ctx)?));
+                    if g11(options) {
+                        fields.push((Utf16::from("phaseOperation"), s("backfill")));
+                        fields.push((
+                            Utf16::from("phaseTarget"),
+                            object(vec![
+                                ("table", cp(v(table, "id"), ctx)?),
+                                ("field", cp(v(col, "field"), ctx)?),
+                            ]),
+                        ));
+                    }
                 }
                 steps.push(bf);
                 if let Some(default) = get(mapping, "default") {
@@ -1632,7 +1910,7 @@ fn emit(
                         "randomUuid" => "pg_catalog.gen_random_uuid()".into(),
                         _ => "CURRENT_TIMESTAMP".into(),
                     };
-                    steps.push(sql_step(
+                    let mut default_step = sql_step(
                         "table",
                         &txt(col, "sourcePath"),
                         format_args!(
@@ -1640,10 +1918,14 @@ fn emit(
                             quote_ident(&txt(col, "name"))
                         ),
                         ctx,
-                    )?)
+                    )?;
+                    if g11(options) {
+                        mark_g11_field_step(&mut default_step, "install-default", col, table, ctx)?;
+                    }
+                    steps.push(default_step)
                 }
                 if get(col, "nullable") != Some(&Value::Bool(true)) {
-                    steps.push(sql_step(
+                    let mut tighten_step = sql_step(
                         "table",
                         &txt(col, "sourcePath"),
                         format_args!(
@@ -1651,7 +1933,55 @@ fn emit(
                             quote_ident(&txt(col, "name"))
                         ),
                         ctx,
-                    )?)
+                    )?;
+                    if g11(options) {
+                        mark_g11_field_step(
+                            &mut tighten_step,
+                            "tighten-not-null",
+                            col,
+                            table,
+                            ctx,
+                        )?;
+                    }
+                    steps.push(tighten_step)
+                }
+            }
+            if g11(options) {
+                for col in &c.append {
+                    let filled = items(options.and_then(|value| get(value, "backfills")))
+                        .iter()
+                        .any(|fill| {
+                            txt(fill, "table") == txt(table, "id")
+                                && refs_equal(v(fill, "column"), v(col, "field"))
+                        });
+                    if filled {
+                        continue;
+                    }
+                    let mapping = items(get(table, "columns"))
+                        .iter()
+                        .find(|item| field_refs_equal(item, col))
+                        .unwrap_or(&Value::Null);
+                    let Some(default) = get(mapping, "default") else {
+                        continue;
+                    };
+                    let sql = match txt(default, "kind").as_str() {
+                        "literal" => {
+                            crate::deployment::literal_sql_for_migration(v(default, "value"), ctx)?
+                        }
+                        "randomUuid" => "pg_catalog.gen_random_uuid()".into(),
+                        _ => "CURRENT_TIMESTAMP".into(),
+                    };
+                    let mut step = sql_step(
+                        "table",
+                        &txt(col, "sourcePath"),
+                        format_args!(
+                            "ALTER TABLE {relation} ALTER COLUMN {} SET DEFAULT {sql}",
+                            quote_ident(&txt(col, "name"))
+                        ),
+                        ctx,
+                    )?;
+                    mark_g11_field_step(&mut step, "install-default", col, table, ctx)?;
+                    steps.push(step);
                 }
             }
             for check in &c.check_adds {
@@ -1707,6 +2037,40 @@ fn emit(
                     ),
                     ctx,
                 )?;
+                if g11(options) && path.ends_with("/domain") {
+                    if let Some(col) = c
+                        .append
+                        .iter()
+                        .find(|col| format!("{}/domain", txt(col, "sourcePath")) == path)
+                    {
+                        mark_g11_field_step(&mut add, "target-check", col, table, ctx)?;
+                    }
+                }
+                if g11(options) && !path.ends_with("/domain") {
+                    let source_path = super::g06::source_path(
+                        next,
+                        &txt(table, "id"),
+                        "check",
+                        &txt(check, "id"),
+                        ctx,
+                    )?;
+                    add = sql_step(
+                        "table",
+                        &source_path,
+                        format_args!("ALTER TABLE {relation} ADD {}", txt(check, "definitionSql")),
+                        ctx,
+                    )?;
+                    mark_g11_dependency_step(
+                        &mut add,
+                        "dependency-add",
+                        "check",
+                        &txt(check, "id"),
+                        &txt(table, "id"),
+                        next,
+                        &source_path,
+                        ctx,
+                    )?;
+                }
                 if selected {
                     if let Value::Object(fields) = &mut add {
                         fields.push((Utf16::from("operation"), s("add-not-valid")));
@@ -1762,6 +2126,26 @@ fn emit(
                         ctx,
                     )?;
                     let mut add = cp(step, ctx)?;
+                    if g11(options) {
+                        let source_path = super::g06::source_path(
+                            next,
+                            &txt(table, "id"),
+                            "foreignKey",
+                            &txt(fk, "id"),
+                            ctx,
+                        )?;
+                        set(&mut add, "sourcePath", s(&source_path));
+                        mark_g11_dependency_step(
+                            &mut add,
+                            "dependency-add",
+                            "foreignKey",
+                            &txt(fk, "id"),
+                            &txt(table, "id"),
+                            next,
+                            &source_path,
+                            ctx,
+                        )?;
+                    }
                     if selected {
                         set(&mut add, "sql", s(&(txt(step, "sql") + " NOT VALID")));
                         if let Value::Object(fields) = &mut add {
@@ -1798,7 +2182,28 @@ fn emit(
                     .metered_any(ctx, |x, _ctx| Ok(get(x, "id") == get(index, "id")))?
                     || c.index_replace.contains(&txt(index, "id"))
                 {
-                    steps.push(cp(step, ctx)?);
+                    let mut add = cp(step, ctx)?;
+                    if g11(options) {
+                        let source_path = super::g06::source_path(
+                            next,
+                            &txt(table, "id"),
+                            "index",
+                            &txt(index, "id"),
+                            ctx,
+                        )?;
+                        set(&mut add, "sourcePath", s(&source_path));
+                        mark_g11_dependency_step(
+                            &mut add,
+                            "dependency-add",
+                            "index",
+                            &txt(index, "id"),
+                            &txt(table, "id"),
+                            next,
+                            &source_path,
+                            ctx,
+                        )?;
+                    }
+                    steps.push(add);
                     continue;
                 }
             }
@@ -1812,12 +2217,46 @@ fn emit(
                 return Err(fail("Unexpected compiler policy source path", &path));
             }
             if c.policies.contains(&path) {
-                steps.push(sql_step(
-                    "policy",
-                    &path,
-                    format_args!("{}", alter_policy_sql(step, table, config, audience)?),
-                    ctx,
-                )?)
+                if g11(options) {
+                    let name = format!("umf_{audience}_{command}");
+                    let mut drop = sql_step(
+                        "policy",
+                        &path,
+                        format_args!("DROP POLICY {} ON {relation}", quote_ident(&name)),
+                        ctx,
+                    )?;
+                    mark_g11_dependency_step(
+                        &mut drop,
+                        "dependency-drop",
+                        "policy",
+                        "",
+                        &txt(table, "id"),
+                        previous,
+                        &path,
+                        ctx,
+                    )?;
+                    let mut add = cp(step, ctx)?;
+                    set(&mut add, "id", s(""));
+                    mark_g11_dependency_step(
+                        &mut add,
+                        "dependency-add",
+                        "policy",
+                        "",
+                        &txt(table, "id"),
+                        next,
+                        &path,
+                        ctx,
+                    )?;
+                    steps.push(drop);
+                    steps.push(add);
+                } else {
+                    steps.push(sql_step(
+                        "policy",
+                        &path,
+                        format_args!("{}", alter_policy_sql(step, table, config, audience)?),
+                        ctx,
+                    )?);
+                }
             }
             if c.grants
                 .iter()
@@ -1837,7 +2276,11 @@ fn emit(
                 if grants.insert(path.clone()) {
                     revoke(&path, table, config, c, &mut revoked, &mut steps, ctx)?;
                     for grant in after {
-                        steps.push(cp(grant, ctx)?);
+                        let mut grant = cp(grant, ctx)?;
+                        if g11(options) {
+                            set(&mut grant, "id", s(""));
+                        }
+                        steps.push(grant);
                     }
                 }
             }
@@ -1906,7 +2349,7 @@ fn emit(
                 quote_ident(&schema),
                 quote_ident(&txt(&nt[ti], "name"))
             );
-            steps.push(sql_step(
+            let mut step = sql_step(
                 "table",
                 &txt(col, "sourcePath"),
                 format_args!(
@@ -1914,12 +2357,47 @@ fn emit(
                     quote_ident(&txt(col, "name"))
                 ),
                 ctx,
-            )?);
+            )?;
+            if g11(options) {
+                mark_g11_field_step(&mut step, "drop-column", col, &nt[ti], ctx)?;
+            }
+            steps.push(step);
             drops.push(cp(col, ctx)?);
         }
         for p in &c.policies {
             charge(ctx, p.len(), p)?;
             policies.push(p.clone());
+        }
+    }
+    if g11(options) {
+        for step in &mut steps {
+            if txt(step, "kind") != "grant" || get(step, "phaseDependency").is_some() {
+                continue;
+            }
+            let path = txt(step, "sourcePath");
+            let is_drop = txt(step, "sql").starts_with("REVOKE ");
+            let table_index = path
+                .split('/')
+                .nth(6)
+                .and_then(|part| part.parse::<usize>().ok())
+                .unwrap_or(usize::MAX);
+            let table = nt
+                .get(table_index)
+                .ok_or_else(|| fail("G11 grant table path is invalid", &path))?;
+            mark_g11_dependency_step(
+                step,
+                if is_drop {
+                    "dependency-drop"
+                } else {
+                    "dependency-add"
+                },
+                "grant",
+                "",
+                &txt(table, "id"),
+                if is_drop { previous } else { next },
+                &path,
+                ctx,
+            )?;
         }
     }
     Ok(Evolution {
@@ -1954,7 +2432,7 @@ mod inner_scan_controls {
         // migration control independently checks the complete plan, so these
         // scans use accepted compiler records rather than synthetic lookalikes.
         let input=umf_core::serialization::read_json_value(
-            &include_str!("../../../../docs/helix/04-build/evidence/rust-migration/r3/sol-final-migration-meter-review/scan-inputs.json").encode_utf16().collect::<Vec<_>>(),
+            &include_str!("../../../../tests/rust-core/fixtures/r3/sol-final-migration-meter-review/scan-inputs.json").encode_utf16().collect::<Vec<_>>(),
             Format::Json,&mut Context::catalog()).unwrap();
         let previous = v(&input, "previous");
         let options = v(&input, "options");

@@ -44,6 +44,7 @@ class Registry:
     def __init__(self):
         self._entries = {}
         self._packages = {}
+        self._package_kinds = {}
         self._rust_registry = new_registry()
 
     def register(self, extension: Extension) -> None:
@@ -65,6 +66,7 @@ class Registry:
             _raise_native(error)
         key = (extension.id, extension.version)
         self._entries[key] = (Extension(extension.id, extension.version, tuple(extension.scopes), schema, extension.semantics), None)
+        self._package_kinds[key] = False
 
     def get(self, id: str, version: str):
         return self._entries.get((id, version))
@@ -82,11 +84,29 @@ class Registry:
             _raise_native(error)
         key = (snapshot["id"], snapshot["version"])
         self._packages[key] = snapshot
+        self._package_kinds[key] = kinds
         self._entries[key] = (Extension(snapshot["id"], snapshot["version"], tuple(snapshot["scopes"]), copy_json(snapshot["schema"]), semantics), None)
 
     def get_package(self, id: str, version: str):
         package = self._packages.get((id, version))
         return copy_json(package) if package is not None else None
+
+    def registrations(self):
+        """Return an immutable snapshot for wrappers that clone a Registry."""
+        return tuple(
+            (
+                Extension(
+                    entry[0].id,
+                    entry[0].version,
+                    entry[0].scopes,
+                    copy_python_consumer_value(entry[0].schema),
+                    entry[0].semantics,
+                ),
+                self.get_package(*key),
+                self._package_kinds.get(key, False),
+            )
+            for key, entry in self._entries.items()
+        )
 
     def list_kinds(self):
         try:

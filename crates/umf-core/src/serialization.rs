@@ -106,6 +106,37 @@ pub fn read_json_value(
     format: Format,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
+    read_json_value_inner(source, format, ctx, false)
+}
+
+/// Read a JSON-compatible value with the TypeScript JSON preflight ordering.
+/// This is intended for the explicitly selected Node/WASM serialization alias;
+/// generic Rust callers retain `read_json_value` behavior.
+pub fn read_json_value_typescript_order(
+    source: &[u16],
+    format: Format,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    read_json_value_inner(source, format, ctx, true)
+}
+
+/// Read the TypeScript `readJsonValue` profile with its YAML default.
+pub fn read_typescript_json_value(
+    source: &[u16],
+    format: Option<Format>,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    read_json_value_typescript_order(source, format.unwrap_or(Format::Yaml), ctx)
+}
+
+/// Continue ordinary JSON reading after the host's live `JSON.parse` preflight
+/// has succeeded. The caller performs that host operation in source order;
+/// Rust then composes through YAML and supplies duplicate-key positioning.
+/// Broader flow-syntax diagnostic parity remains open.
+pub fn read_typescript_json_value_after_json_preflight(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     if ctx.profile() == crate::ResourceProfile::HardIsolated {
         return Err(EngineError::new(
             "RESOURCE_PROFILE_UNAVAILABLE",
@@ -114,14 +145,872 @@ pub fn read_json_value(
         ));
     }
     if source.len() > ctx.limits().max_text_units {
-        return Err(fail("LIMIT", "Source text limit exceeded"));
+        return Err(fail("LIMIT", "Source text exceeds limit"));
+    }
+    ctx.charge_text(source.len(), Utf16::default())?;
+    let value = parse_yaml_utf16(source, ctx, true)?;
+    crate::copy_json(&value, ctx)
+}
+
+fn read_json_value_inner(
+    source: &[u16],
+    format: Format,
+    ctx: &mut Context<'_>,
+    typescript_json_order: bool,
+) -> Result<Value, EngineError> {
+    if ctx.profile() == crate::ResourceProfile::HardIsolated {
+        return Err(EngineError::new(
+            "RESOURCE_PROFILE_UNAVAILABLE",
+            Utf16::default(),
+            "HardIsolated resource profile is unavailable",
+        ));
+    }
+    if source.len() > ctx.limits().max_text_units {
+        return Err(if typescript_json_order {
+            fail("LIMIT", "Source text exceeds limit")
+        } else {
+            fail("LIMIT", "Source text limit exceeded")
+        });
     }
     ctx.charge_text(source.len(), Utf16::default())?;
     let value = match format {
-        Format::Yaml => parse_yaml_utf16(source, ctx)?,
-        Format::Json => JsonParser::<_, CoreJsonBuilder>::new(source, ctx).parse()?,
+        Format::Yaml => parse_yaml_utf16(source, ctx, typescript_json_order)?,
+        Format::Json => {
+            // The TypeScript predecessor runs JSON.parse before YAML's unique-key
+            // admission. Preflight syntax without acting on the duplicate result,
+            // then let the bounded UMF parser report duplicate keys.
+            if typescript_json_order {
+                preflight_native_json(source, ctx).map_err(|error| {
+                    if matches!(error.code.as_str(), "SYNTAX" | "DUPLICATE_KEY") {
+                        fail("SYNTAX", "Invalid JSON syntax")
+                    } else {
+                        error
+                    }
+                })?;
+            }
+            let parsed = JsonParser::<_, CoreJsonBuilder>::new(source, ctx).parse();
+            if typescript_json_order {
+                parsed.map_err(|error| {
+                    let message = error.message.to_utf8().unwrap_or_default();
+                    if error.code == "LIMIT"
+                        && matches!(
+                            message.as_str(),
+                            "Nesting depth exceeded" | "JSON structural value limit exceeded"
+                        )
+                    {
+                        EngineError::new("LIMIT", error.path, "Source structural limit exceeded")
+                    } else {
+                        error
+                    }
+                })?
+            } else {
+                parsed?
+            }
+        }
     };
     crate::copy_json(&value, ctx)
+}
+
+/// Parse native JSON while retaining exact number tokens and arbitrary UTF-16
+/// code units. A syntax-only pass establishes predecessor JSON.parse precedence;
+/// a second pass rejects duplicate decoded keys; bounded tree admission runs
+/// only after both whole-source checks have completed.
+pub(crate) fn read_native_json_tree(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<crate::native_json::NativeJsonTree, EngineError> {
+    if ctx.profile() == crate::ResourceProfile::HardIsolated {
+        return Err(EngineError::new(
+            "RESOURCE_PROFILE_UNAVAILABLE",
+            Utf16::default(),
+            "HardIsolated resource profile is unavailable",
+        ));
+    }
+    if source.len() > ctx.limits().max_text_units {
+        return Err(fail("LIMIT", "Native JSON exceeds text limit"));
+    }
+    ctx.charge_text(source.len(), Utf16::default())?;
+    // Precharge the complete syntax scan. The grammar walk below also charges
+    // token and structural work as it proceeds, allowing host controls to stop
+    // long scans before any caller-visible result is produced.
+    ctx.charge_work(source.len(), Utf16::default())?;
+    let duplicate = preflight_native_json(source, ctx).map_err(native_json_parse_error)?;
+    if let Some(offset) = duplicate {
+        let message = native_duplicate_key_message(source, offset, ctx)?;
+        return Err(EngineError::new(
+            "JSON_SCHEMA_SYNTAX",
+            Utf16::default(),
+            message,
+        ));
+    }
+    let raw = JsonParser::<_, NativeJsonBuilder>::native(source, ctx)
+        .parse()
+        .map_err(native_json_parse_error)?;
+    crate::native_json::finish_parsed_tree(raw, ctx)
+}
+
+/// Parse the bounded YAML 1.2 core scalar profile into an exact native tree.
+/// This operation intentionally does not inherit `read_json_value`'s
+/// floating-point number admission rules.
+pub(crate) fn read_native_yaml_tree(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<crate::native_json::NativeJsonTree, EngineError> {
+    read_native_yaml_tree_with_options(source, None, None, None, ctx)
+}
+
+pub(crate) fn read_native_yaml_tree_with_options(
+    source: &[u16],
+    version: Option<&str>,
+    date_only: Option<&str>,
+    boolean_lexicon: Option<&str>,
+    ctx: &mut Context<'_>,
+) -> Result<crate::native_json::NativeJsonTree, EngineError> {
+    let yaml_11 = match version.unwrap_or("1.2") {
+        "1.1" => true,
+        "1.2" => false,
+        _ => return Err(fail("NATIVE_YAML_VERSION", "Expected YAML 1.1 or 1.2 scalar profile")),
+    };
+    if source.len() > ctx.limits().max_text_units {
+        return Err(fail("LIMIT", "Native YAML exceeds text limit"));
+    }
+    ctx.charge_text(source.len(), Utf16::default())?;
+    let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx, true, true, yaml_11)
+        .map_err(native_yaml_error_code)?;
+    preflight_native_yaml_duplicates(&events, source, ctx).map_err(native_yaml_error_code)?;
+    let builder = NativeYamlBuilder { yaml_11, date_only_string: date_only == Some("string"), pyyaml_booleans: boolean_lexicon == Some("pyyaml") };
+    let mut root = parse_yaml_events::<NativeYamlBuilder>(events, ctx, builder, Some(source))
+        .map_err(native_yaml_error_code)?;
+    decode_native_private(&mut root, prefix)?;
+    crate::native_json::finish_parsed_tree(root, ctx)
+}
+
+enum NativeYamlPreflightFrame {
+    Sequence,
+    Mapping {
+        expect_key: bool,
+        string_keys: std::collections::BTreeSet<Vec<u16>>,
+    },
+}
+
+/// Match the predecessor's document-level `uniqueKeys` diagnostics before
+/// value admission can reject an earlier alias, tag, or non-string key.
+fn preflight_native_yaml_duplicates(
+    events: &[LocatedEvent],
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let mut stack = Vec::<NativeYamlPreflightFrame>::new();
+    for located in events {
+        match &located.event {
+            Event::MappingStart(_, _) => stack.push(NativeYamlPreflightFrame::Mapping {
+                expect_key: true,
+                string_keys: std::collections::BTreeSet::new(),
+            }),
+            Event::SequenceStart(_, _) => stack.push(NativeYamlPreflightFrame::Sequence),
+            Event::Scalar(raw, style, _, tag) => {
+                if let Some(NativeYamlPreflightFrame::Mapping { expect_key, string_keys }) = stack.last_mut() {
+                    if *expect_key {
+                        let raw = raw.as_ref();
+                        let tagged_string = tag.as_ref().is_some_and(|value| value.is_yaml_core_schema() && value.suffix == "str");
+                        if *style != ScalarStyle::Plain || tagged_string || (tag.is_none() && native_yaml_string_scalar(raw)) {
+                            ctx.charge_work(raw.encode_utf16().count(), Utf16::default())?;
+                            let key: Vec<u16> = raw.encode_utf16().collect();
+                            if !string_keys.insert(key) {
+                                return Err(yaml_source_diagnostic(source, located.source_start, "Map keys must be unique", ctx)?);
+                            }
+                        }
+                        *expect_key = false;
+                    } else {
+                        *expect_key = true;
+                    }
+                }
+            }
+            Event::Alias(_) => {
+                if let Some(NativeYamlPreflightFrame::Mapping { expect_key, .. }) = stack.last_mut() {
+                    if !*expect_key { *expect_key = true; }
+                }
+            }
+            Event::MappingEnd | Event::SequenceEnd => {
+                stack.pop();
+                if let Some(NativeYamlPreflightFrame::Mapping { expect_key, .. }) = stack.last_mut() {
+                    if !*expect_key { *expect_key = true; }
+                }
+            }
+            Event::StreamStart | Event::StreamEnd | Event::DocumentStart(_) | Event::DocumentEnd | Event::Nothing => {}
+        }
+    }
+    Ok(())
+}
+
+fn native_yaml_error_code(mut error: EngineError) -> EngineError {
+    if error.code == "SYNTAX" {
+        error.code = "NATIVE_YAML_SYNTAX".to_owned();
+    }
+    error
+}
+
+struct NativeYamlBuilder {
+    yaml_11: bool,
+    date_only_string: bool,
+    pyyaml_booleans: bool,
+}
+
+impl YamlBuilder for NativeYamlBuilder {
+    type Text = Utf16;
+    type Value = crate::native_json::NativeJsonNode;
+
+    fn scalar(
+        &self,
+        raw: &str,
+        style: ScalarStyle,
+        tagged: bool,
+        _path: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self::Value, EngineError> {
+        use crate::native_json::NativeJsonNode as Node;
+        if tagged {
+            return Err(fail(
+                "NATIVE_YAML_TAG",
+                "Explicit YAML tags are outside the JSON-compatible profile",
+            ));
+        }
+        if style != ScalarStyle::Plain {
+            return Ok(Node::String(Utf16::from(raw)));
+        }
+        ctx.charge_work(raw.encode_utf16().count(), Utf16::default())?;
+        match raw {
+            "" | "~" | "null" | "Null" | "NULL" => return Ok(Node::Null),
+            "true" | "True" | "TRUE" => return Ok(Node::Boolean(true)),
+            "false" | "False" | "FALSE" => return Ok(Node::Boolean(false)),
+            "yes" | "Yes" | "YES" | "on" | "On" | "ON"
+                if self.yaml_11 => return Ok(Node::Boolean(true)),
+            "no" | "No" | "NO" | "off" | "Off" | "OFF"
+                if self.yaml_11 => return Ok(Node::Boolean(false)),
+            "y" | "Y" | "n" | "N" if self.yaml_11 && !self.pyyaml_booleans => {
+                return Ok(Node::Boolean(matches!(raw, "y" | "Y")));
+            }
+            _ => {}
+        }
+        if self.yaml_11 && native_yaml_date_only(raw) {
+            if self.date_only_string {
+                return Ok(Node::String(Utf16::from(raw)));
+            }
+            return Err(fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported"));
+        }
+        if self.yaml_11 && native_yaml_timestamp(raw) {
+            return Err(fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported"));
+        }
+        if let Some(number) = native_yaml_integer(raw) {
+            return Ok(Node::Number(number));
+        }
+        if native_yaml_float(raw) {
+            let number = normalize_native_yaml_float(raw).ok_or_else(|| {
+                fail("NATIVE_YAML_NUMBER", "Unsupported exact numeric spelling")
+            })?;
+            return Ok(Node::Number(number));
+        }
+        if matches!(raw, ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF" | ".nan" | ".NaN" | ".NAN") {
+            return Err(fail(
+                "NATIVE_YAML_NUMBER",
+                "Unsupported exact numeric spelling",
+            ));
+        }
+        Ok(Node::String(Utf16::from(raw)))
+    }
+
+    fn error_path(&self, _stack: &[YamlFrame<Utf16, Self::Value>]) -> Utf16 {
+        Utf16::default()
+    }
+    fn alias_error(&self, _path: &Utf16) -> EngineError {
+        fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported")
+    }
+    fn tag_error(&self, _path: &Utf16) -> EngineError {
+        fail("NATIVE_YAML_TAG", "Explicit YAML tags are outside the JSON-compatible profile")
+    }
+    fn depth_error(&self, _path: &Utf16) -> EngineError {
+        fail("LIMIT", "Native YAML structural limit exceeded")
+    }
+    fn value_limit_error(&self, _path: &Utf16) -> EngineError {
+        fail("LIMIT", "Native YAML structural limit exceeded")
+    }
+    fn typescript_profile(&self) -> bool {
+        true
+    }
+    fn validate_key_scalar(
+        &self,
+        raw: &str,
+        style: ScalarStyle,
+        tagged: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        ctx.charge_work(raw.encode_utf16().count(), Utf16::default())?;
+        if tagged || (style == ScalarStyle::Plain && !native_yaml_string_scalar_profile(raw, self.yaml_11, self.pyyaml_booleans)) {
+            return Err(fail(
+                "NATIVE_YAML_KEY",
+                "JSON-compatible YAML requires untagged string keys",
+            ));
+        }
+        Ok(())
+    }
+    fn into_key(&self, value: Self::Value) -> Result<Self::Text, EngineError> {
+        let Self::Value::String(key) = value else {
+            return Err(fail(
+                "NATIVE_YAML_KEY",
+                "JSON-compatible YAML requires untagged string keys",
+            ));
+        };
+        Ok(key)
+    }
+    fn key_len(&self, text: &Self::Text) -> usize {
+        text.len()
+    }
+    fn array(&self, items: Vec<Self::Value>) -> Self::Value {
+        Self::Value::Array(items)
+    }
+    fn object(&self, items: Vec<(Self::Text, Self::Value)>) -> Self::Value {
+        let mut items: Vec<_> = items.into_iter().map(|(key, value)| (key, value)).collect();
+        crate::native_json::order_members(&mut items);
+        Self::Value::Object(items)
+    }
+    fn null(&self) -> Self::Value {
+        Self::Value::Null
+    }
+}
+
+fn native_yaml_string_scalar(raw: &str) -> bool {
+    !matches!(raw, "" | "~" | "null" | "Null" | "NULL" | "true" | "True" | "TRUE" | "false" | "False" | "FALSE")
+        && native_yaml_integer(raw).is_none()
+        && !native_yaml_float(raw)
+        && !matches!(raw, ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF" | ".nan" | ".NaN" | ".NAN")
+}
+
+fn native_yaml_string_scalar_profile(raw: &str, yaml_11: bool, pyyaml_booleans: bool) -> bool {
+    if yaml_11 {
+        let yaml11_bool = matches!(raw, "yes" | "Yes" | "YES" | "no" | "No" | "NO" | "true" | "True" | "TRUE" | "false" | "False" | "FALSE" | "on" | "On" | "ON" | "off" | "Off" | "OFF")
+            || (!pyyaml_booleans && matches!(raw, "y" | "Y" | "n" | "N"));
+        if yaml11_bool { return false; }
+    }
+    native_yaml_string_scalar(raw)
+}
+
+fn native_yaml_date_only(raw: &str) -> bool {
+    let bytes = raw.as_bytes();
+    bytes.len() == 10
+        && bytes[4] == b'-'
+        && bytes[7] == b'-'
+        && bytes.iter().enumerate().all(|(index, byte)| {
+            index == 4 || index == 7 || byte.is_ascii_digit()
+        })
+}
+
+fn native_yaml_timestamp(raw: &str) -> bool {
+    raw.len() >= 19
+        && raw.is_char_boundary(10)
+        && native_yaml_date_only(&raw[..10])
+        && matches!(raw.as_bytes()[10], b'T' | b't' | b' ')
+        && raw[11..].contains(':')
+}
+
+fn native_yaml_integer(raw: &str) -> Option<String> {
+    if let Some(digits) = raw.strip_prefix("0x") {
+        return yaml_radix_integer(digits, 16);
+    }
+    if let Some(digits) = raw.strip_prefix("0o") {
+        return yaml_radix_integer(digits, 8);
+    }
+    let digits = raw.strip_prefix('+').or_else(|| raw.strip_prefix('-')).unwrap_or(raw);
+    if digits.is_empty() || !digits.bytes().all(|byte| byte.is_ascii_digit()) {
+        return None;
+    }
+    if raw == "-0" {
+        return Some("-0".to_owned());
+    }
+    let negative = raw.starts_with('-');
+    let integer = BigInt::parse_bytes(digits.as_bytes(), 10)?;
+    Some(if negative { format!("-{integer}") } else { integer.to_string() })
+}
+
+fn yaml_radix_integer(digits: &str, radix: u32) -> Option<String> {
+    if digits.is_empty() || !digits.bytes().all(|byte| (byte as char).to_digit(radix).is_some()) {
+        return None;
+    }
+    BigInt::parse_bytes(digits.as_bytes(), radix).map(|value| value.to_string())
+}
+
+fn native_yaml_float(raw: &str) -> bool {
+    let body = raw.strip_prefix('+').or_else(|| raw.strip_prefix('-')).unwrap_or(raw);
+    if body.is_empty() { return false; }
+    if let Some((mantissa, exponent)) = body.split_once(['e', 'E']) {
+        return !exponent.is_empty()
+            && exponent.strip_prefix('+').or_else(|| exponent.strip_prefix('-')).unwrap_or(exponent).bytes().all(|b| b.is_ascii_digit())
+            && !exponent.strip_prefix('+').or_else(|| exponent.strip_prefix('-')).unwrap_or(exponent).is_empty()
+            && native_yaml_float_mantissa(mantissa, true);
+    }
+    native_yaml_float_mantissa(body, false)
+}
+
+fn native_yaml_float_mantissa(body: &str, exponent: bool) -> bool {
+    if exponent && !body.is_empty() && body.bytes().all(|b| b.is_ascii_digit()) {
+        return true;
+    }
+    if let Some(digits) = body.strip_prefix('.') {
+        return !digits.is_empty() && digits.bytes().all(|b| b.is_ascii_digit());
+    }
+    let Some((whole, fraction)) = body.split_once('.') else { return false; };
+    if whole.is_empty() || !whole.bytes().all(|b| b.is_ascii_digit()) { return false; }
+    if exponent { fraction.is_empty() || fraction.bytes().all(|b| b.is_ascii_digit()) }
+    else { fraction.bytes().all(|b| b.is_ascii_digit()) }
+}
+
+fn normalize_native_yaml_float(raw: &str) -> Option<String> {
+    let mut value = raw.to_owned();
+    if value.starts_with('+') { value.remove(0); }
+    if value.starts_with(".") { value.insert(0, '0'); }
+    if value.starts_with("-.") { value.insert(1, '0'); }
+    if let Some(index) = value.find('.') {
+        if index + 1 == value.len() || matches!(value.as_bytes().get(index + 1), Some(b'e' | b'E')) {
+            value.insert(index + 1, '0');
+        }
+    }
+    let sign_len = usize::from(value.starts_with('-'));
+    let bytes = value.as_bytes();
+    let end = bytes[sign_len..]
+        .iter()
+        .position(|byte| matches!(*byte, b'.' | b'e' | b'E'))
+        .map_or(bytes.len(), |offset| sign_len + offset);
+    let mut first = sign_len;
+    while first + 1 < end && bytes[first] == b'0' && bytes[first + 1].is_ascii_digit() {
+        first += 1;
+    }
+    if first > sign_len {
+        value.replace_range(sign_len..first, "");
+    }
+    if !native_yaml_float(&value) { return None; }
+    Some(value)
+}
+
+fn decode_native_private(
+    value: &mut crate::native_json::NativeJsonNode,
+    prefix: (char, char),
+) -> Result<(), EngineError> {
+    use crate::native_json::NativeJsonNode;
+    match value {
+        NativeJsonNode::String(text) => decode_private_utf16(text, prefix)?,
+        NativeJsonNode::Array(items) => for item in items { decode_native_private(item, prefix)?; },
+        NativeJsonNode::Object(items) => for (key, child) in items {
+            decode_private_utf16(key, prefix)?;
+            decode_native_private(child, prefix)?;
+        },
+        NativeJsonNode::Null | NativeJsonNode::Boolean(_) | NativeJsonNode::Number(_) => {}
+    }
+    Ok(())
+}
+
+#[derive(Clone, Copy)]
+enum NativeArrayState {
+    ValueOrEnd,
+    Value,
+    Separator,
+}
+
+#[derive(Clone, Copy)]
+enum NativeObjectState {
+    KeyOrEnd,
+    Key,
+    Colon,
+    Value,
+    Separator,
+}
+
+enum NativeFrame {
+    Array(NativeArrayState),
+    Object(NativeObjectState, std::collections::BTreeSet<Vec<u16>>),
+}
+
+#[derive(Clone, Copy)]
+enum NativeAction {
+    TopValue,
+    TopEnd,
+    ArrayValue(bool),
+    ArraySeparator,
+    ObjectKey(bool),
+    ObjectColon,
+    ObjectValue,
+    ObjectSeparator,
+}
+
+/// Validate the complete JSON source without using the Rust call stack. A
+/// duplicate is remembered while syntax scanning continues, preserving
+/// syntax-before-duplicate-before-structural-limit precedence.
+fn preflight_native_json(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<Option<usize>, EngineError> {
+    let mut at = 0usize;
+    let mut stack = Vec::<NativeFrame>::new();
+    let mut root_done = false;
+    let mut duplicate = None;
+    loop {
+        while source
+            .get(at)
+            .is_some_and(|unit| matches!(*unit, 0x20 | 0x09 | 0x0a | 0x0d))
+        {
+            at += 1;
+            ctx.charge_work(1, Utf16::default())?;
+        }
+        let action = match stack.last() {
+            None if root_done => NativeAction::TopEnd,
+            None => NativeAction::TopValue,
+            Some(NativeFrame::Array(NativeArrayState::ValueOrEnd)) => {
+                NativeAction::ArrayValue(true)
+            }
+            Some(NativeFrame::Array(NativeArrayState::Value)) => NativeAction::ArrayValue(false),
+            Some(NativeFrame::Array(NativeArrayState::Separator)) => NativeAction::ArraySeparator,
+            Some(NativeFrame::Object(NativeObjectState::KeyOrEnd, _)) => {
+                NativeAction::ObjectKey(true)
+            }
+            Some(NativeFrame::Object(NativeObjectState::Key, _)) => NativeAction::ObjectKey(false),
+            Some(NativeFrame::Object(NativeObjectState::Colon, _)) => NativeAction::ObjectColon,
+            Some(NativeFrame::Object(NativeObjectState::Value, _)) => NativeAction::ObjectValue,
+            Some(NativeFrame::Object(NativeObjectState::Separator, _)) => {
+                NativeAction::ObjectSeparator
+            }
+        };
+        match action {
+            NativeAction::TopEnd => {
+                if at != source.len() {
+                    return Err(fail("SYNTAX", "Trailing JSON source"));
+                }
+                return Ok(duplicate);
+            }
+            NativeAction::TopValue | NativeAction::ArrayValue(_) | NativeAction::ObjectValue => {
+                let allow_end = matches!(action, NativeAction::ArrayValue(true));
+                if allow_end && source.get(at) == Some(&(b']' as u16)) {
+                    at += 1;
+                    stack.pop();
+                    complete_native_value(&mut stack, &mut root_done);
+                    continue;
+                }
+                let Some(unit) = source.get(at).copied() else {
+                    return Err(fail("SYNTAX", "Expected JSON value"));
+                };
+                ctx.charge_work(1, Utf16::default())?;
+                match unit {
+                    0x7b => {
+                        at += 1;
+                        stack.push(NativeFrame::Object(
+                            NativeObjectState::KeyOrEnd,
+                            std::collections::BTreeSet::new(),
+                        ));
+                    }
+                    0x5b => {
+                        at += 1;
+                        stack.push(NativeFrame::Array(NativeArrayState::ValueOrEnd));
+                    }
+                    0x22 => {
+                        scan_native_string(source, &mut at, ctx, false)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    0x6e => {
+                        scan_native_literal(source, &mut at, b"null", ctx)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    0x74 => {
+                        scan_native_literal(source, &mut at, b"true", ctx)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    0x66 => {
+                        scan_native_literal(source, &mut at, b"false", ctx)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    0x2d | 0x30..=0x39 => {
+                        scan_native_number(source, &mut at, ctx)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    _ => return Err(fail("SYNTAX", "Expected JSON value")),
+                }
+            }
+            NativeAction::ArraySeparator => match source.get(at).copied() {
+                Some(0x5d) => {
+                    at += 1;
+                    stack.pop();
+                    complete_native_value(&mut stack, &mut root_done);
+                }
+                Some(0x2c) => {
+                    at += 1;
+                    if let Some(NativeFrame::Array(state)) = stack.last_mut() {
+                        *state = NativeArrayState::Value;
+                    }
+                }
+                _ => return Err(fail("SYNTAX", "Expected comma or closing bracket")),
+            },
+            NativeAction::ObjectKey(allow_end) => {
+                if allow_end && source.get(at) == Some(&(b'}' as u16)) {
+                    at += 1;
+                    stack.pop();
+                    complete_native_value(&mut stack, &mut root_done);
+                    continue;
+                }
+                if source.get(at) != Some(&(b'"' as u16)) {
+                    return Err(fail("SYNTAX", "JSON object keys must be strings"));
+                }
+                let key_offset = at;
+                let key =
+                    scan_native_string(source, &mut at, ctx, true)?.expect("decoded native key");
+                if let Some(NativeFrame::Object(state, seen)) = stack.last_mut() {
+                    let comparisons = btree_search_comparisons(seen.len());
+                    ctx.charge_work_u64(
+                        (key.len() as u64).saturating_mul(comparisons),
+                        Utf16::default(),
+                    )?;
+                    if !seen.insert(key) && duplicate.is_none() {
+                        duplicate = Some(key_offset);
+                    }
+                    *state = NativeObjectState::Colon;
+                }
+            }
+            NativeAction::ObjectColon => {
+                if source.get(at) != Some(&(b':' as u16)) {
+                    return Err(fail("SYNTAX", "Expected colon after JSON object key"));
+                }
+                at += 1;
+                if let Some(NativeFrame::Object(state, _)) = stack.last_mut() {
+                    *state = NativeObjectState::Value;
+                }
+            }
+            NativeAction::ObjectSeparator => match source.get(at).copied() {
+                Some(0x7d) => {
+                    at += 1;
+                    stack.pop();
+                    complete_native_value(&mut stack, &mut root_done);
+                }
+                Some(0x2c) => {
+                    at += 1;
+                    if let Some(NativeFrame::Object(state, _)) = stack.last_mut() {
+                        *state = NativeObjectState::Key;
+                    }
+                }
+                _ => return Err(fail("SYNTAX", "Expected comma or closing brace")),
+            },
+        }
+    }
+}
+
+fn complete_native_value(stack: &mut [NativeFrame], root_done: &mut bool) {
+    match stack.last_mut() {
+        Some(NativeFrame::Array(state)) => *state = NativeArrayState::Separator,
+        Some(NativeFrame::Object(state, _)) => *state = NativeObjectState::Separator,
+        None => *root_done = true,
+    }
+}
+
+fn scan_native_string(
+    source: &[u16],
+    at: &mut usize,
+    ctx: &mut Context<'_>,
+    decode: bool,
+) -> Result<Option<Vec<u16>>, EngineError> {
+    if source.get(*at) != Some(&(b'"' as u16)) {
+        return Err(fail("SYNTAX", "Expected JSON string"));
+    }
+    *at += 1;
+    let mut decoded = decode.then(Vec::new);
+    loop {
+        let Some(unit) = source.get(*at).copied() else {
+            return Err(fail("SYNTAX", "Unterminated JSON string"));
+        };
+        *at += 1;
+        ctx.charge_work(1, Utf16::default())?;
+        match unit {
+            0x22 => return Ok(decoded),
+            0x5c => {
+                let Some(escape) = source.get(*at).copied() else {
+                    return Err(fail("SYNTAX", "Incomplete JSON escape"));
+                };
+                *at += 1;
+                let value = match escape {
+                    0x22 | 0x5c | 0x2f => escape,
+                    0x62 => 8,
+                    0x66 => 12,
+                    0x6e => 10,
+                    0x72 => 13,
+                    0x74 => 9,
+                    0x75 => scan_native_hex_escape(source, at, ctx)?,
+                    _ => return Err(fail("SYNTAX", "Invalid JSON escape")),
+                };
+                if let Some(output) = decoded.as_mut() {
+                    output.push(value);
+                }
+            }
+            0x00..=0x1f => {
+                return Err(fail("SYNTAX", "Unescaped control character in JSON string"));
+            }
+            other => {
+                if let Some(output) = decoded.as_mut() {
+                    output.push(other);
+                }
+            }
+        }
+    }
+}
+
+fn scan_native_hex_escape(
+    source: &[u16],
+    at: &mut usize,
+    ctx: &mut Context<'_>,
+) -> Result<u16, EngineError> {
+    let mut value = 0u16;
+    for _ in 0..4 {
+        let Some(unit) = source.get(*at).copied() else {
+            return Err(fail("SYNTAX", "Incomplete Unicode escape"));
+        };
+        *at += 1;
+        ctx.charge_work(1, Utf16::default())?;
+        let digit = match unit {
+            0x30..=0x39 => unit - 0x30,
+            0x41..=0x46 => unit - 0x41 + 10,
+            0x61..=0x66 => unit - 0x61 + 10,
+            _ => return Err(fail("SYNTAX", "Invalid Unicode escape")),
+        };
+        value = value * 16 + digit;
+    }
+    Ok(value)
+}
+
+fn scan_native_literal(
+    source: &[u16],
+    at: &mut usize,
+    literal: &[u8],
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    for expected in literal {
+        if source.get(*at).copied() != Some(u16::from(*expected)) {
+            return Err(fail("SYNTAX", "Malformed JSON literal"));
+        }
+        *at += 1;
+        ctx.charge_work(1, Utf16::default())?;
+    }
+    Ok(())
+}
+
+fn scan_native_number(
+    source: &[u16],
+    at: &mut usize,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let start = *at;
+    if source.get(*at) == Some(&(b'-' as u16)) {
+        *at += 1;
+    }
+    match source.get(*at).copied() {
+        Some(0x30) => {
+            *at += 1;
+            if source
+                .get(*at)
+                .is_some_and(|unit| (0x30..=0x39).contains(unit))
+            {
+                return Err(fail("SYNTAX", "Leading zero in JSON number"));
+            }
+        }
+        Some(0x31..=0x39) => {
+            while source
+                .get(*at)
+                .is_some_and(|unit| (0x30..=0x39).contains(unit))
+            {
+                *at += 1;
+            }
+        }
+        _ => return Err(fail("SYNTAX", "Malformed JSON number")),
+    }
+    if source.get(*at) == Some(&(b'.' as u16)) {
+        *at += 1;
+        let fraction = *at;
+        while source
+            .get(*at)
+            .is_some_and(|unit| (0x30..=0x39).contains(unit))
+        {
+            *at += 1;
+        }
+        if fraction == *at {
+            return Err(fail("SYNTAX", "Malformed JSON fraction"));
+        }
+    }
+    if source
+        .get(*at)
+        .is_some_and(|unit| matches!(*unit, 0x65 | 0x45))
+    {
+        *at += 1;
+        if source
+            .get(*at)
+            .is_some_and(|unit| matches!(*unit, 0x2b | 0x2d))
+        {
+            *at += 1;
+        }
+        let exponent = *at;
+        while source
+            .get(*at)
+            .is_some_and(|unit| (0x30..=0x39).contains(unit))
+        {
+            *at += 1;
+        }
+        if exponent == *at {
+            return Err(fail("SYNTAX", "Malformed JSON exponent"));
+        }
+    }
+    ctx.charge_work(*at - start, Utf16::default())
+}
+
+fn native_json_parse_error(error: EngineError) -> EngineError {
+    if error.code == "SYNTAX" || error.code == "DUPLICATE_KEY" {
+        EngineError::new("JSON_SCHEMA_SYNTAX", error.path, "Invalid native JSON")
+    } else if error.code == "LIMIT"
+        && matches!(
+            error.message.to_utf8().ok().as_deref(),
+            Some("Nesting depth exceeded" | "JSON structural value limit exceeded")
+        )
+    {
+        EngineError::new("LIMIT", error.path, "Native JSON structural limit exceeded")
+    } else {
+        error
+    }
+}
+
+fn native_duplicate_key_message(
+    source: &[u16],
+    offset: usize,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let offset = offset.min(source.len());
+    let line = source[..offset]
+        .iter()
+        .filter(|unit| **unit == b'\n' as u16)
+        .count()
+        + 1;
+    let line_start = source[..offset]
+        .iter()
+        .rposition(|unit| *unit == b'\n' as u16)
+        .map_or(0, |index| index + 1);
+    let line_end = source[offset..]
+        .iter()
+        .position(|unit| *unit == b'\n' as u16)
+        .map_or(source.len(), |index| offset + index);
+    let column = offset.saturating_sub(line_start) + 1;
+    let label = format!("Map keys must be unique at line {line}, column {column}:\n\n");
+    let message_units = label
+        .encode_utf16()
+        .count()
+        .saturating_add(line_end.saturating_sub(line_start))
+        .saturating_add(1)
+        .saturating_add(column.saturating_sub(1))
+        .saturating_add(2);
+    ctx.charge_text(message_units, Utf16::default())?;
+    let excerpt = String::from_utf16_lossy(&source[line_start..line_end]);
+    let message = format!(
+        "{label}{excerpt}\n{}^\n",
+        " ".repeat(column.saturating_sub(1))
+    );
+    Ok(Utf16::from(message))
 }
 
 /// Read JSON or YAML into Python's source-preserving value profile. Unlike
@@ -264,6 +1153,8 @@ trait JsonBuilder {
 struct CoreJsonBuilder;
 #[derive(Default)]
 struct PythonJsonBuilder;
+#[derive(Default)]
+struct NativeJsonBuilder;
 impl JsonBuilder for CoreJsonBuilder {
     type Text = Utf16;
     type Value = Value;
@@ -398,12 +1289,58 @@ impl JsonBuilder for PythonJsonBuilder {
         text.to_utf16(ctx)
     }
 }
+impl JsonBuilder for NativeJsonBuilder {
+    type Text = Utf16;
+    type Value = crate::native_json::NativeJsonNode;
+    fn null(&self) -> Self::Value {
+        crate::native_json::NativeJsonNode::Null
+    }
+    fn boolean(&self, value: bool) -> Self::Value {
+        crate::native_json::NativeJsonNode::Boolean(value)
+    }
+    fn string(&self, points: Vec<(u32, bool)>) -> Result<Utf16, EngineError> {
+        Ok(Utf16::new(
+            points
+                .into_iter()
+                .map(|(point, _)| {
+                    u16::try_from(point)
+                        .map_err(|_| fail("SOURCE_ENCODING", "Invalid UTF-16 source"))
+                })
+                .collect::<Result<_, _>>()?,
+        ))
+    }
+    fn string_value(&self, text: Utf16) -> Self::Value {
+        crate::native_json::NativeJsonNode::String(text)
+    }
+    fn number(
+        &self,
+        token: &str,
+        _: bool,
+        _: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self::Value, EngineError> {
+        ctx.charge_work(token.len(), Utf16::default())?;
+        Ok(crate::native_json::NativeJsonNode::Number(token.to_owned()))
+    }
+    fn array(&self, items: Vec<Self::Value>) -> Self::Value {
+        crate::native_json::NativeJsonNode::Array(items)
+    }
+    fn object(&self, members: Vec<(Utf16, Self::Value)>) -> Self::Value {
+        crate::native_json::NativeJsonNode::Object(members)
+    }
+    fn path_text(&self, text: &Utf16, _: &mut Context<'_>) -> Result<Utf16, EngineError> {
+        Ok(text.clone())
+    }
+}
 struct JsonParser<'a, 'b, 'c, S: ?Sized, B> {
     units: &'a S,
     at: usize,
     ctx: &'b mut Context<'c>,
     values: usize,
     builder: B,
+    enforce_tree_limits: bool,
+    detect_duplicates: bool,
+    create_paths: bool,
 }
 impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a, 'b, 'c, S, B> {
     fn new(units: &'a S, ctx: &'b mut Context<'c>) -> Self {
@@ -413,6 +1350,17 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             ctx,
             values: 0,
             builder: B::default(),
+            enforce_tree_limits: true,
+            detect_duplicates: true,
+            create_paths: true,
+        }
+    }
+    fn native(units: &'a S, ctx: &'b mut Context<'c>) -> Self {
+        Self {
+            enforce_tree_limits: true,
+            detect_duplicates: false,
+            create_paths: false,
+            ..Self::new(units, ctx)
         }
     }
     fn parse(&mut self) -> Result<B::Value, EngineError> {
@@ -442,19 +1390,28 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
         }
     }
     fn value(&mut self, depth: usize, path: &Utf16) -> Result<B::Value, EngineError> {
-        if depth > self.ctx.limits().max_depth {
+        if self.enforce_tree_limits && depth > self.ctx.limits().max_depth {
             return Err(EngineError::new(
                 "LIMIT",
                 path.clone(),
                 "Nesting depth exceeded",
             ));
         }
-        self.values = self
-            .values
-            .checked_add(1)
-            .ok_or_else(|| EngineError::new("LIMIT", path.clone(), "Value counter overflow"))?;
-        self.ctx.check_tree_value_count(self.values, path.clone())?;
-        self.ctx.charge_work(1, path.clone())?;
+        if self.enforce_tree_limits {
+            self.values = self
+                .values
+                .checked_add(1)
+                .ok_or_else(|| EngineError::new("LIMIT", path.clone(), "Value counter overflow"))?;
+            self.ctx.check_tree_value_count(self.values, path.clone())?;
+        }
+        self.ctx.charge_work(
+            1,
+            if self.create_paths {
+                path.clone()
+            } else {
+                Utf16::default()
+            },
+        )?;
         self.ws();
         match self.units.point(self.at) {
             Some(0x6e) => {
@@ -520,7 +1477,7 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
                     }
                 }
                 0x00..=0x1f => {
-                    return Err(fail("SYNTAX", "Unescaped control character in JSON string"))
+                    return Err(fail("SYNTAX", "Unescaped control character in JSON string"));
                 }
                 other => output.push((other, false)),
             }
@@ -644,7 +1601,11 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             return Ok(self.builder.array(items));
         }
         loop {
-            let item_path = append_path(path, &Utf16::from(items.len().to_string()));
+            let item_path = if self.create_paths {
+                append_path(path, &Utf16::from(items.len().to_string()))
+            } else {
+                Utf16::default()
+            };
             items.push(self.value(depth + 1, &item_path)?);
             self.ws();
             if self.take(0x5d) {
@@ -679,11 +1640,17 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             }
             let key = self.string()?;
             let key_path = self.builder.path_text(&key, self.ctx)?;
-            self.ctx.charge_work_u64(
-                (key_path.len() as u64).saturating_mul(btree_search_comparisons(seen.len())),
-                path.clone(),
-            )?;
-            if !seen.insert(key.clone()) {
+            if self.detect_duplicates {
+                self.ctx.charge_work_u64(
+                    (key_path.len() as u64).saturating_mul(btree_search_comparisons(seen.len())),
+                    if self.create_paths {
+                        path.clone()
+                    } else {
+                        Utf16::default()
+                    },
+                )?;
+            }
+            if self.detect_duplicates && !seen.insert(key.clone()) {
                 return Err(EngineError::new(
                     "DUPLICATE_KEY",
                     path.clone(),
@@ -699,7 +1666,11 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
                 ));
             }
             self.ws();
-            let child_path = append_path(path, &key_path);
+            let child_path = if self.create_paths {
+                append_path(path, &key_path)
+            } else {
+                Utf16::default()
+            };
             let value = self.value(depth + 1, &child_path)?;
             members.push((key, value));
             self.ws();
@@ -804,6 +1775,40 @@ pub fn write_json_value(
             write_json_pretty(OutputValue::Core(&value), Format::Json, &mut out, 0, ctx)?
         }
         Format::Yaml => write_yaml(&value, &mut out, 0, ctx)?,
+    }
+    out.push('\n');
+    debug_assert_eq!(out.len(), count.bytes);
+    Ok(Utf16::from(out))
+}
+
+/// Write through the TypeScript `writeJsonValue` profile. This keeps the
+/// legacy generic writer unchanged while matching the predecessor's YAML
+/// defaults and its conservative plain-key spelling.
+pub fn write_typescript_json_value(
+    value: &Value,
+    format: Option<Format>,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let format = format.unwrap_or(Format::Yaml);
+    let value = crate::copy_json(value, ctx)?;
+    let mut count = CountSink::default();
+    match format {
+        Format::Json => {
+            write_json_pretty(OutputValue::Core(&value), Format::Json, &mut count, 0, ctx)?
+        }
+        Format::Yaml => write_yaml_typescript(&value, &mut count, 0, ctx)?,
+    }
+    count.push_char('\n');
+    if count.units > ctx.limits().max_text_units {
+        return Err(fail("LIMIT", "Serialized text exceeds limit"));
+    }
+    ctx.charge_text(count.units, Utf16::default())?;
+    let mut out = String::with_capacity(count.bytes);
+    match format {
+        Format::Json => {
+            write_json_pretty(OutputValue::Core(&value), Format::Json, &mut out, 0, ctx)?
+        }
+        Format::Yaml => write_yaml_typescript(&value, &mut out, 0, ctx)?,
     }
     out.push('\n');
     debug_assert_eq!(out.len(), count.bytes);
@@ -1150,6 +2155,338 @@ fn write_yaml<S: OutputSink>(
     Ok(())
 }
 
+fn write_typescript_yaml_string<S: OutputSink>(
+    value: &Utf16,
+    out: &mut S,
+    block_indent: Option<usize>,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    ctx.charge_work(value.len(), Utf16::default())?;
+    let text = match String::from_utf16(value.units()) {
+        Ok(text) => text,
+        Err(_) => return write_yaml_string(value, out, ctx),
+    };
+    let document_marker = text
+        .lines()
+        .any(|line| line.starts_with('%') || line.starts_with("---") || line.starts_with("..."));
+    let root_document_marker = block_indent == Some(0) && document_marker;
+    if block_indent.is_some()
+        && (text.contains('\n') || root_document_marker)
+        && text.chars().all(|ch| ch == '\n' || !ch.is_control())
+    {
+        // The TypeScript YAML package chooses literal block scalars for safe
+        // multiline strings. Keep the body unallocated and write it directly
+        // to the bounded sink.
+        let trailing_breaks = text.chars().rev().take_while(|ch| *ch == '\n').count();
+        let body_end = text.len() - trailing_breaks;
+        out.push_str(if trailing_breaks == 0 {
+            "|-"
+        } else if trailing_breaks == 1 && body_end > 0 {
+            "|"
+        } else {
+            "|+"
+        });
+        out.push_char('\n');
+        let body = &text[..body_end];
+        for (index, line) in body.split('\n').enumerate() {
+            if index > 0 {
+                out.push_char('\n');
+            }
+            if !line.is_empty() {
+                pad(
+                    out,
+                    if root_document_marker {
+                        2
+                    } else {
+                        block_indent.expect("block scalar indentation")
+                    },
+                    ' ',
+                );
+                out.push_str(line);
+            }
+        }
+        if trailing_breaks > 1 {
+            for _ in 1..trailing_breaks {
+                out.push_char('\n');
+            }
+        }
+    } else if (block_indent.is_some() || !document_marker) && typescript_yaml_plain_string(&text) {
+        out.push_str(&text);
+    } else {
+        write_typescript_yaml_quoted(&text, out, ctx)?;
+    }
+    Ok(())
+}
+
+fn write_typescript_yaml_quoted<S: OutputSink>(
+    value: &str,
+    out: &mut S,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let control = value
+        .chars()
+        .any(|ch| matches!(ch as u32, 0..=8 | 11..=31 | 127..=159));
+    if value.contains('"') && !value.contains('\'') && !value.contains('\n') && !control {
+        out.push_char('\'');
+        out.push_str(value);
+        out.push_char('\'');
+        return Ok(());
+    }
+    out.push_char('"');
+    for (index, ch) in value.chars().enumerate() {
+        if index % 1024 == 0 {
+            poll_output(ctx)?;
+        }
+        match ch {
+            '"' => out.push_str("\\\""),
+            '\\' => out.push_str("\\\\"),
+            '\0' => out.push_str("\\0"),
+            '\u{7}' => out.push_str("\\a"),
+            '\u{8}' => out.push_str("\\b"),
+            '\t' => out.push_str("\\t"),
+            '\n' => out.push_str("\\n"),
+            '\u{b}' => out.push_str("\\v"),
+            '\u{c}' => out.push_str("\\f"),
+            '\r' => out.push_str("\\r"),
+            '\u{1b}' => out.push_str("\\e"),
+            c if (c as u32) < 0x20 => {
+                let digits = b"0123456789abcdef";
+                out.push_str("\\x");
+                out.push_char(digits[(c as usize >> 4) & 0xf] as char);
+                out.push_char(digits[(c as usize) & 0xf] as char);
+            }
+            c => out.push_char(c),
+        }
+    }
+    out.push_char('"');
+    Ok(())
+}
+
+fn typescript_yaml_plain_string(value: &str) -> bool {
+    let date_like = value.len() == 10
+        && value.as_bytes()[..4].iter().all(u8::is_ascii_digit)
+        && value.as_bytes()[4] == b'-'
+        && value.as_bytes()[5..7].iter().all(u8::is_ascii_digit)
+        && value.as_bytes()[7] == b'-'
+        && value.as_bytes()[8..].iter().all(u8::is_ascii_digit);
+    let bytes = value.as_bytes();
+    let first = bytes.first().copied().unwrap_or_default();
+    let yaml_radix_number = value.strip_prefix("0x").is_some_and(|digits| {
+        !digits.is_empty() && digits.bytes().all(|byte| byte.is_ascii_hexdigit())
+    }) || value.strip_prefix("0o").is_some_and(|digits| {
+        !digits.is_empty() && digits.bytes().all(|byte| matches!(byte, b'0'..=b'7'))
+    });
+    if value.is_empty()
+        || value.contains('\n')
+        || value
+            .chars()
+            .any(|ch| matches!(ch as u32, 0..=8 | 11..=31 | 127..=159))
+        || matches!(
+            first,
+            b' ' | b'\t'
+                | b','
+                | b'['
+                | b']'
+                | b'{'
+                | b'}'
+                | b'#'
+                | b'&'
+                | b'*'
+                | b'!'
+                | b'|'
+                | b'>'
+                | b'\''
+                | b'"'
+                | b'%'
+                | b'@'
+                | b'`'
+        )
+        || matches!(bytes.last(), Some(&b' ' | &b'\t' | &b':'))
+        || matches!(first, b'?' | b'-')
+            && (bytes.len() == 1 || matches!(bytes.get(1), Some(&b' ' | &b'\t')))
+        || bytes
+            .windows(2)
+            .any(|pair| pair[0] == b':' && matches!(pair[1], b' ' | b'\t'))
+        || bytes
+            .windows(2)
+            .any(|pair| matches!(pair[0], b' ' | b'\t') && pair[1] == b'#')
+        || !date_like && (value.parse::<f64>().is_ok() || yaml_radix_number)
+        || value == "~"
+    {
+        return false;
+    }
+    !matches!(
+        value.to_ascii_lowercase().as_str(),
+        "null" | "true" | "false" | ".nan" | ".inf" | "-.inf" | "+.inf"
+    )
+}
+
+fn write_typescript_yaml_scalar<S: OutputSink>(
+    value: &Value,
+    out: &mut S,
+    block_indent: usize,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    match value {
+        Value::Null => out.push_str("null"),
+        Value::Bool(value) => out.push_str(if *value { "true" } else { "false" }),
+        Value::Number(value) => out.push_str(&crate::ecma_number_to_string(*value)),
+        Value::String(value) => write_typescript_yaml_string(value, out, Some(block_indent), ctx)?,
+        Value::Array(_) | Value::Object(_) => write_yaml_typescript(value, out, 0, ctx)?,
+    }
+    Ok(())
+}
+
+fn write_yaml_typescript<S: OutputSink>(
+    value: &Value,
+    out: &mut S,
+    indent: usize,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    poll_output(ctx)?;
+    match value {
+        Value::Object(items) if items.is_empty() => out.push_str("{}"),
+        Value::Array(items) if items.is_empty() => out.push_str("[]"),
+        Value::Object(items) => {
+            for (index, member) in enumerable_order_metered(items, ctx)?
+                .into_iter()
+                .enumerate()
+            {
+                let (key, value) = &items[member];
+                if index > 0 {
+                    out.push_char('\n');
+                }
+                pad(out, indent, ' ');
+                write_typescript_yaml_string(key, out, None, ctx)?;
+                match value {
+                    Value::Array(children) if !children.is_empty() => {
+                        out.push_str(":\n");
+                        write_yaml_typescript(value, out, indent + 2, ctx)?;
+                    }
+                    Value::Object(children) if !children.is_empty() => {
+                        out.push_str(":\n");
+                        write_yaml_typescript(value, out, indent + 2, ctx)?;
+                    }
+                    _ => {
+                        out.push_str(": ");
+                        write_typescript_yaml_scalar(value, out, indent + 2, ctx)?;
+                    }
+                }
+            }
+        }
+        Value::Array(items) => {
+            for (index, value) in items.iter().enumerate() {
+                if index > 0 {
+                    out.push_char('\n');
+                }
+                pad(out, indent, ' ');
+                out.push_char('-');
+                match value {
+                    Value::Array(children) if !children.is_empty() => {
+                        out.push_char('\n');
+                        write_yaml_typescript(value, out, indent + 2, ctx)?;
+                    }
+                    Value::Object(children) if !children.is_empty() => {
+                        out.push_char('\n');
+                        write_yaml_typescript(value, out, indent + 2, ctx)?;
+                    }
+                    _ => {
+                        out.push_char(' ');
+                        write_typescript_yaml_scalar(value, out, indent + 2, ctx)?;
+                    }
+                }
+            }
+        }
+        _ => write_typescript_yaml_scalar(value, out, indent, ctx)?,
+    }
+    Ok(())
+}
+
+fn yaml_source_diagnostic(
+    source: &[u16],
+    offset: usize,
+    headline: &str,
+    ctx: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
+    // Account for the source-location scan before doing it. Excerpt storage
+    // below is capped at the formatter's 80-unit line limit plus one context line.
+    ctx.charge_work(source.len(), Utf16::default())?;
+    let mut line = 1usize;
+    let mut line_start = 0usize;
+    let mut previous_line_start = 0usize;
+    for (index, unit) in source.iter().take(offset).enumerate() {
+        if *unit == 0x0a {
+            line += 1;
+            previous_line_start = line_start;
+            line_start = index + 1;
+        }
+    }
+    let col = offset.saturating_sub(line_start) + 1;
+    let line_end = source[offset..]
+        .iter()
+        .position(|unit| *unit == 0x0a)
+        .map_or(source.len(), |relative| offset + relative + 1);
+    let mut end = line_end;
+    while end > line_start && matches!(source[end - 1], 0x0a | 0x0d) {
+        end -= 1;
+    }
+    let line_len = end - line_start;
+    let mut caret = col - 1;
+    let mut line_text = Vec::with_capacity(80);
+    if caret >= 60 && line_len > 80 {
+        let trim = (caret - 39).min(line_len - 79);
+        line_text.push(0x2026);
+        line_text.extend_from_slice(
+            &source[line_start + trim..line_start + trim + 79.min(line_len - trim)],
+        );
+        caret = caret.saturating_sub(trim).saturating_add(1);
+    } else if line_len > 80 {
+        line_text.extend_from_slice(&source[line_start..line_start + 79]);
+        line_text.truncate(79);
+        line_text.push(0x2026);
+    } else {
+        line_text.extend_from_slice(&source[line_start..end]);
+    }
+    if line > 1
+        && line_text[..caret.min(line_text.len())]
+            .iter()
+            .all(|unit| *unit == 0x20)
+    {
+        let prev_end = line_start;
+        let prev_start = previous_line_start;
+        let prev_len = prev_end - prev_start;
+        let prev_excerpt_len = if prev_len > 80 { 81 } else { prev_len };
+        ctx.charge_work(prev_excerpt_len + line_text.len(), Utf16::default())?;
+        let mut previous = Vec::with_capacity(prev_excerpt_len + line_text.len());
+        if prev_len > 80 {
+            previous.extend_from_slice(&source[prev_start..prev_start + 79]);
+            previous.extend([0x2026, 0x0a]);
+        } else {
+            previous.extend_from_slice(&source[prev_start..prev_end]);
+        }
+        previous.extend_from_slice(&line_text);
+        line_text = previous;
+    } else {
+        ctx.charge_work(line_text.len(), Utf16::default())?;
+    }
+    let mut message: Vec<u16> = format!("{headline} at line {line}, column {col}")
+        .encode_utf16()
+        .collect();
+    if line_text.iter().any(|unit| *unit != 0x20) {
+        message.push(0x3a);
+        message.extend([0x0a, 0x0a]);
+        message.extend_from_slice(&line_text);
+        message.push(0x0a);
+        message.extend(std::iter::repeat(0x20).take(caret));
+        message.extend([0x5e, 0x0a]);
+    }
+    Ok(EngineError::new(
+        "SYNTAX",
+        Utf16::default(),
+        Utf16::new(message),
+    ))
+}
+
 fn fail(code: &str, message: &str) -> EngineError {
     EngineError::new(code, Utf16::default(), message)
 }
@@ -1157,7 +2494,12 @@ fn fail(code: &str, message: &str) -> EngineError {
 #[derive(Debug)]
 enum YamlFrame<T, V> {
     Seq(Vec<V>),
-    Map { values: Vec<(T, V)>, key: Option<T> },
+    Map {
+        values: Vec<(T, V)>,
+        key: Option<T>,
+        key_start: usize,
+        key_positions: Vec<usize>,
+    },
 }
 
 #[derive(Clone)]
@@ -1165,11 +2507,17 @@ struct LocatedEvent {
     event: Event<'static>,
     start: usize,
     end: usize,
+    source_start: usize,
 }
 
 fn yaml_events_with_profile(
     text: &str,
     profile: ScanProfile,
+    typescript_profile: bool,
+    native_yaml_diagnostics: bool,
+    diagnostic_source: Option<&[u16]>,
+    source_offsets: Option<&[usize]>,
+    ctx: &mut Context<'_>,
 ) -> Result<Vec<LocatedEvent>, EngineError> {
     struct Events(Vec<LocatedEvent>);
     impl<'a> saphyr_parser::SpannedEventReceiver<'a> for Events {
@@ -1200,20 +2548,271 @@ fn yaml_events_with_profile(
                 event,
                 start: span.start.index(),
                 end: span.end.index(),
+                source_start: span.start.index(),
             });
         }
     }
     let mut events = Events(Vec::new());
-    Parser::new_from_str_with_profile(text, profile)
+    let parse_result = Parser::new_from_str_with_profile(text, profile)
         .keep_tags(true)
-        .load(&mut events, true)
-        .map_err(|e| fail("YAML_SYNTAX", &e.to_string()))?;
+        .load(&mut events, true);
+    if let Err(error) = parse_result {
+        if typescript_profile && profile == ScanProfile::Yaml12 {
+            if let Some(source) = diagnostic_source {
+                // The vendored scanner's marker index counts Unicode scalar
+                // positions even though its Display text labels them bytes.
+                let char_offset = error.marker().index().min(text.chars().count());
+                let offset = source_offsets
+                    .and_then(|offsets| offsets.get(char_offset))
+                    .copied()
+                    .unwrap_or(char_offset)
+                    .min(source.len());
+                // `yaml` reports an unresolved alias as a node-admission
+                // failure, even though the Rust scanner calls it syntax.
+                if native_yaml_diagnostics && error.info().starts_with("while parsing node, found unknown anchor") {
+                    return Err(fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported"));
+                }
+                let mut diagnostic = typescript_yaml_parser_diagnostic(
+                    source,
+                    offset,
+                    error.info(),
+                    ctx,
+                )?;
+                let is_tagged_alias = native_yaml_diagnostics && source.get(offset) == Some(&0x2a)
+                    && yaml_tag_precedes_alias(source, offset);
+                if is_tagged_alias {
+                    let alias_len = source[offset..]
+                        .iter()
+                        .take_while(|unit| !matches!(unit, 0x20 | 0x09 | 0x0a | 0x0d | 0x2c | 0x5d | 0x7d))
+                        .count();
+                    let mut message = diagnostic.message.units().to_vec();
+                    let old_headline = error.info().encode_utf16().collect::<Vec<_>>();
+                    let new_headline = "An alias node must not specify any properties".encode_utf16().collect::<Vec<_>>();
+                    if let Some(at) = message.windows(old_headline.len()).position(|window| window == old_headline) {
+                        message.splice(at..at + old_headline.len(), new_headline);
+                    }
+                    if alias_len > 1 {
+                        if let Some(caret) = message.iter().rposition(|unit| *unit == 0x5e) {
+                            message.splice(caret + 1..caret + 1, std::iter::repeat(0x5e).take(alias_len - 1));
+                        }
+                    }
+                    diagnostic.message = Utf16::new(message);
+                }
+                // Keep already observed duplicate keys when a later scanner
+                // error aborts event production; the predecessor aggregates
+                // both diagnostics in source order.
+                if native_yaml_diagnostics {
+                    match preflight_native_yaml_duplicates(&events.0, source, ctx) {
+                        Err(duplicate) if duplicate.code == "SYNTAX" => {
+                            let mut message = duplicate.message.into_units();
+                            message.extend("; ".encode_utf16());
+                            message.extend(diagnostic.message.into_units());
+                            diagnostic.message = Utf16::new(message);
+                        }
+                        _ => {}
+                    }
+                    // Match the native-tree predecessor's more specific
+                    // wording for this scanner paraphrase.
+                    diagnostic.message = replace_utf16_text(
+                        diagnostic.message,
+                        "Flow sequence must end with a ]",
+                        "Flow sequence in block collection must be sufficiently indented and end with a ]",
+                    );
+                }
+                return Err(diagnostic);
+            }
+        }
+        return Err(fail("YAML_SYNTAX", &error.to_string()));
+    }
     Ok(events.0)
 }
 
-fn parse_yaml_utf16(source: &[u16], ctx: &mut Context<'_>) -> Result<Value, EngineError> {
-    let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx)?;
-    let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, CoreYamlBuilder)?;
+fn yaml_tag_precedes_alias(source: &[u16], alias: usize) -> bool {
+    let line_start = source[..alias]
+        .iter()
+        .rposition(|unit| matches!(unit, 0x0a | 0x0d))
+        .map_or(0, |at| at + 1);
+    let mut at = alias;
+    while at > line_start && matches!(source[at - 1], 0x20 | 0x09) { at -= 1; }
+    let token_end = at;
+    while at > line_start && !matches!(source[at - 1], 0x20 | 0x09 | 0x3a | 0x5b | 0x7b | 0x2c) { at -= 1; }
+    token_end > at && source[at] == 0x21
+}
+
+fn replace_utf16_text(value: Utf16, from: &str, to: &str) -> Utf16 {
+    let mut units = value.into_units();
+    let from: Vec<u16> = from.encode_utf16().collect();
+    let to: Vec<u16> = to.encode_utf16().collect();
+    if let Some(at) = units.windows(from.len()).position(|window| window == from) {
+        units.splice(at..at + from.len(), to);
+    }
+    Utf16::new(units)
+}
+
+fn typescript_yaml_parser_diagnostic(
+    source: &[u16],
+    error_offset: usize,
+    parser_info: &str,
+    ctx: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
+    const MAX_DIAGNOSTIC_PARTS: usize = 32;
+    ctx.charge_work(source.len(), Utf16::default())?;
+    let mut headlines = Vec::<(usize, String)>::new();
+    let mut stack = Vec::<(u16, usize)>::new();
+    let mut quote = None::<(u16, usize)>;
+    let mut escaped = false;
+    let mut line_comment = false;
+    let mut previous_nonspace = None::<u16>;
+    let mut invalid_escape = None::<(usize, u16)>;
+    let mut mismatched_closer = None::<(usize, u16)>;
+    let mut at = 0usize;
+    while at < source.len() {
+        let unit = source[at];
+        if line_comment {
+            if unit == 0x0a || unit == 0x0d {
+                line_comment = false;
+                previous_nonspace = None;
+            }
+            at += 1;
+            continue;
+        }
+        if let Some((delimiter, _)) = quote {
+            if escaped {
+                if delimiter == 0x22
+                    && !matches!(unit, 0x22 | 0x5c | 0x2f | 0x62 | 0x66 | 0x6e | 0x72 | 0x74 | 0x75)
+                    && invalid_escape.is_none()
+                {
+                    invalid_escape = Some((at - 1, unit));
+                }
+                escaped = false;
+            } else if delimiter == 0x22 && unit == 0x5c {
+                escaped = true;
+            } else if unit == delimiter {
+                quote = None;
+            }
+            at += 1;
+            continue;
+        }
+        if unit == 0x22 || unit == 0x27 {
+            quote = Some((unit, at));
+        } else if unit == 0x23 && !stack.is_empty() {
+            line_comment = true;
+            previous_nonspace = None;
+        } else if unit == 0x7b || unit == 0x5b {
+            stack.push((unit, at));
+        } else if unit == 0x7d || unit == 0x5d {
+            let expected = if unit == 0x7d { 0x7b } else { 0x5b };
+            if stack.last().is_some_and(|(opening, _)| *opening == expected) {
+                stack.pop();
+            } else {
+                // A mismatched closer ends this lexical walk. Later closers
+                // cannot repair the collection that the parser already rejected.
+                mismatched_closer = Some((at, unit));
+                break;
+            }
+        } else if unit == 0x2c && stack.last().is_some_and(|(opening, _)| *opening == 0x5b) {
+            if (previous_nonspace == Some(0x5b) || previous_nonspace == Some(0x2c))
+                && headlines.is_empty()
+            {
+                headlines.push((at, "Unexpected , in flow sequence".to_owned()));
+            }
+        }
+        if !matches!(unit, 0x20 | 0x09 | 0x0a | 0x0d) {
+            previous_nonspace = Some(unit);
+        }
+        at += 1;
+    }
+
+    if let Some((delimiter, _)) = quote {
+        headlines.push((source.len(), format!("Missing closing {}quote", delimiter as u8 as char)));
+    }
+    if let Some((slash, escaped)) = invalid_escape {
+        headlines.push((slash, format!("Invalid escape sequence \\{}", escaped as u8 as char)));
+    }
+    if parser_info.contains("invalid trailing content after double-quoted scalar") {
+        headlines.push((error_offset, "Missing , or : between flow map items".to_owned()));
+    }
+    if parser_info.contains("unknown escape character") {
+        if invalid_escape.is_none() && !(quote.is_some() && escaped) {
+            headlines.push((error_offset, "Invalid escape sequence".to_owned()));
+        }
+    }
+    let mut trailing = Vec::<(usize, String)>::new();
+    if let Some((offset, closer)) = mismatched_closer {
+        if closer == 0x5d
+            && source.get(error_offset) == Some(&0x7d)
+            && parser_info.contains("misplaced bracket")
+        {
+            trailing.push((error_offset, "Unexpected flow-map-end token in YAML stream: \"}\"".to_owned()));
+        }
+        let _ = offset;
+    }
+    if !stack.is_empty() {
+        let collection_offset = quote.map_or_else(
+            || mismatched_closer.map_or(error_offset, |(offset, _)| offset),
+            |_| source.len(),
+        );
+        let remaining = MAX_DIAGNOSTIC_PARTS.saturating_sub(headlines.len());
+        let visible = remaining.saturating_sub(1).min(stack.len());
+        for index in (stack.len() - visible..stack.len()).rev() {
+            let (opening, _) = stack[index];
+            let is_map = opening == 0x7b;
+            let parent_is_collection = index > 0;
+            let parent_is_seq = index > 0 && stack[index - 1].0 == 0x5b;
+            let headline = match (is_map, parent_is_collection, parent_is_seq) {
+                (true, true, true) => "Flow map in block collection must be sufficiently indented and end with a }",
+                (false, true, false) => "Flow sequence in block collection must be sufficiently indented and end with a ]",
+                (true, _, _) => "Flow map must end with a }",
+                (false, _, _) => "Flow sequence must end with a ]",
+            };
+            headlines.push((collection_offset, headline.to_owned()));
+        }
+        if stack.len() > visible {
+            headlines.push((
+                collection_offset,
+                format!(
+                    "{} additional nested collection diagnostics omitted",
+                    stack.len() - visible
+                ),
+            ));
+        }
+    }
+    headlines.extend(trailing);
+    if headlines.is_empty() {
+        headlines.push((error_offset, parser_info.to_owned()));
+    }
+    let mut rendered = Vec::new();
+    for (offset, headline) in headlines {
+        match yaml_source_diagnostic(source, offset.min(source.len()), &headline, ctx) {
+            Ok(error) => rendered.push(error.message),
+            Err(error) => return Err(error),
+        }
+    }
+    let mut message = Vec::new();
+    for (index, part) in rendered.iter().enumerate() {
+        if index > 0 {
+            message.extend("; ".encode_utf16());
+        }
+        message.extend_from_slice(part.units());
+    }
+    Ok(EngineError::new("SYNTAX", Utf16::default(), Utf16::new(message)))
+}
+
+fn parse_yaml_utf16(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+    typescript_profile: bool,
+) -> Result<Value, EngineError> {
+    let (events, prefix) = prepare_yaml_events(
+        source,
+        ScanProfile::Yaml12,
+        ctx,
+        typescript_profile,
+        false,
+        false,
+    )?;
+    let builder = CoreYamlBuilder { typescript_profile };
+    let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, builder, Some(source))?;
     decode_private_value(&mut value, prefix)?;
     Ok(value)
 }
@@ -1222,18 +2821,26 @@ fn prepare_yaml_events(
     source: &[u16],
     profile: ScanProfile,
     ctx: &mut Context<'_>,
+    typescript_profile: bool,
+    native_yaml_diagnostics: bool,
+    allow_yaml_11: bool,
 ) -> Result<(Vec<LocatedEvent>, (char, char)), EngineError> {
     // YAML permits one stream BOM; keeping it out of both private views
     // leaves their spans aligned with the corresponding original source slice.
+    let original_source = source;
+    let source_base = usize::from(source.starts_with(&[0xfeff]));
     let source = source.strip_prefix(&[0xfeff]).unwrap_or(source);
-    // Budget both private source views before allocating either one. The final
-    // adapter can expand each isolated unit to a seven-character token.
+    // Budget both private source views and the original-source offset map
+    // before allocating them. The final adapter can expand an isolated unit
+    // to a seven-character token.
     let private_work = source
         .len()
-        .checked_mul(8)
+        .checked_mul(9)
+        .and_then(|work| work.checked_add(1))
         .ok_or_else(|| fail("LIMIT", "YAML private-view size overflow"))?;
     ctx.charge_work(private_work, Utf16::default())?;
     let mut first_chars = Vec::with_capacity(source.len());
+    let mut first_source_offsets = Vec::with_capacity(source.len() + 1);
     let mut i = 0;
     let mut next_poll = 0;
     while i < source.len() {
@@ -1242,6 +2849,7 @@ fn prepare_yaml_events(
             next_poll = i + 1024;
         }
         let u = source[i];
+        first_source_offsets.push(i + source_base);
         if (0xd800..=0xdbff).contains(&u)
             && source
                 .get(i + 1)
@@ -1258,10 +2866,19 @@ fn prepare_yaml_events(
             i += 1;
         }
     }
+    first_source_offsets.push(source.len() + source_base);
     rewrite_surrogate_escape_slashes(&mut first_chars, None, ctx)?;
     let first_text: String = first_chars.iter().collect();
-    reject_yaml_11_directive(&first_text, profile)?;
-    let first = yaml_events_with_profile(&first_text, profile)?;
+    reject_yaml_11_directive(&first_text, profile, allow_yaml_11)?;
+    let first = yaml_events_with_profile(
+        &first_text,
+        profile,
+        typescript_profile,
+        native_yaml_diagnostics,
+        Some(original_source),
+        Some(&first_source_offsets),
+        ctx,
+    )?;
     let quoted_ranges: Vec<(usize, usize)> = first
         .iter()
         .filter_map(|located| match &located.event {
@@ -1277,6 +2894,7 @@ fn prepare_yaml_events(
     }
     let prefix = choose_private_prefix(&decoded, ctx)?;
     let mut final_chars = Vec::with_capacity(first_chars.len());
+    let mut source_offsets = Vec::with_capacity(first_chars.len() + 1);
     let mut source_index = 0usize;
     let mut char_index = 0usize;
     let mut next_poll = 0;
@@ -1293,10 +2911,14 @@ fn prepare_yaml_events(
         {
             let cp = 0x10000
                 + (((u as u32 - 0xd800) << 10) + (source[source_index + 1] as u32 - 0xdc00));
+            source_offsets.push(source_index + source_base);
             final_chars.push(char::from_u32(cp).unwrap());
             source_index += 2;
             char_index += 1;
         } else if (0xd800..=0xdfff).contains(&u) {
+            for _ in 0..7 {
+                source_offsets.push(source_index + source_base);
+            }
             push_private_token(&mut final_chars, prefix, u);
             source_index += 1;
             char_index += 1;
@@ -1320,6 +2942,9 @@ fn prepare_yaml_events(
                         })
                         .unwrap_or(0);
                     if preceding % 2 == 0 {
+                        for _ in 0..7 {
+                            source_offsets.push(source_index + source_base);
+                        }
                         push_private_token(&mut final_chars, prefix, unit);
                         source_index += length;
                         char_index += length;
@@ -1327,13 +2952,29 @@ fn prepare_yaml_events(
                     }
                 }
             }
+            source_offsets.push(source_index + source_base);
             final_chars.push(c);
             source_index += 1;
             char_index += 1;
         }
     }
     let final_text: String = final_chars.iter().collect();
-    let final_events = yaml_events_with_profile(&final_text, profile)?;
+    source_offsets.push(source.len() + source_base);
+    let mut final_events = yaml_events_with_profile(
+        &final_text,
+        profile,
+        typescript_profile,
+        native_yaml_diagnostics,
+        Some(original_source),
+        Some(&source_offsets),
+        ctx,
+    )?;
+    for located in &mut final_events {
+        located.source_start = source_offsets
+            .get(located.start)
+            .copied()
+            .unwrap_or(source.len() + source_base);
+    }
     if !same_yaml_structure(&first, &final_events) {
         return Err(fail(
             "YAML_PROFILE",
@@ -1566,7 +3207,7 @@ fn decode_private_utf16(text: &mut Utf16, prefix: (char, char)) -> Result<(), En
     *text = Utf16::new(units);
     Ok(())
 }
-fn reject_yaml_11_directive(text: &str, profile: ScanProfile) -> Result<(), EngineError> {
+fn reject_yaml_11_directive(text: &str, profile: ScanProfile, allow_yaml_11: bool) -> Result<(), EngineError> {
     // YAML directive separation is space or tab, and an initial BOM is legal.
     let text = text.strip_prefix('\u{feff}').unwrap_or(text);
     let mut start = 0usize;
@@ -1596,7 +3237,8 @@ fn reject_yaml_11_directive(text: &str, profile: ScanProfile) -> Result<(), Engi
                 .filter(|token| !token.is_empty());
             match tokens.next() {
                 Some("YAML") => match tokens.next() {
-                    Some("1.1") => return Err(fail("YAML_VERSION", "YAML 1.1 is not supported")),
+                    Some("1.1") if !allow_yaml_11 => return Err(fail("YAML_VERSION", "YAML 1.1 is not supported")),
+                    Some("1.1") => {}
                     Some("1.2") => {}
                     _ => return Err(fail("YAML_DIRECTIVE", "Unsupported YAML version")),
                 },
@@ -1610,7 +3252,7 @@ fn reject_yaml_11_directive(text: &str, profile: ScanProfile) -> Result<(), Engi
                     return Err(fail(
                         "YAML_DIRECTIVE",
                         "Unknown or unsupported YAML directive",
-                    ))
+                    ));
                 }
             }
         } else {
@@ -1633,8 +3275,15 @@ trait YamlBuilder {
         raw: &str,
         style: ScalarStyle,
         tagged: bool,
+        path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Self::Value, EngineError>;
+    fn error_path(&self, stack: &[YamlFrame<Self::Text, Self::Value>]) -> Utf16;
+    fn alias_error(&self, path: &Utf16) -> EngineError;
+    fn tag_error(&self, path: &Utf16) -> EngineError;
+    fn depth_error(&self, path: &Utf16) -> EngineError;
+    fn value_limit_error(&self, path: &Utf16) -> EngineError;
+    fn typescript_profile(&self) -> bool;
     fn validate_key_scalar(
         &self,
         _raw: &str,
@@ -1650,8 +3299,9 @@ trait YamlBuilder {
     fn object(&self, items: Vec<(Self::Text, Self::Value)>) -> Self::Value;
     fn null(&self) -> Self::Value;
 }
-#[derive(Default)]
-struct CoreYamlBuilder;
+struct CoreYamlBuilder {
+    typescript_profile: bool,
+}
 #[derive(Default)]
 struct PythonYamlBuilder;
 impl YamlBuilder for CoreYamlBuilder {
@@ -1662,9 +3312,66 @@ impl YamlBuilder for CoreYamlBuilder {
         raw: &str,
         style: ScalarStyle,
         tagged: bool,
+        path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
-        resolve_scalar(raw, style, tagged, ctx)
+        resolve_scalar(raw, style, tagged, path, self.typescript_profile, ctx)
+    }
+    fn error_path(&self, stack: &[YamlFrame<Utf16, Value>]) -> Utf16 {
+        if !self.typescript_profile {
+            return Utf16::default();
+        }
+        let mut path = Utf16::default();
+        for frame in stack {
+            let segment = match frame {
+                YamlFrame::Seq(values) => Some(Utf16::from(values.len().to_string())),
+                YamlFrame::Map { key: Some(key), .. } => Some(key.clone()),
+                YamlFrame::Map { key: None, .. } => None,
+            };
+            if let Some(segment) = segment {
+                path = append_path(&path, &segment);
+            }
+        }
+        path
+    }
+    fn alias_error(&self, path: &Utf16) -> EngineError {
+        if self.typescript_profile {
+            EngineError::new(
+                "ALIAS",
+                path.clone(),
+                "YAML aliases are outside the JSON-compatible profile",
+            )
+        } else {
+            fail("YAML_ALIAS", "YAML aliases are not allowed")
+        }
+    }
+    fn tag_error(&self, path: &Utf16) -> EngineError {
+        if self.typescript_profile {
+            EngineError::new(
+                "TAG",
+                path.clone(),
+                "Explicit YAML tags are outside the profile",
+            )
+        } else {
+            fail("YAML_TAG", "Explicit YAML tags are not allowed")
+        }
+    }
+    fn depth_error(&self, path: &Utf16) -> EngineError {
+        if self.typescript_profile {
+            EngineError::new("LIMIT", path.clone(), "Source structural limit exceeded")
+        } else {
+            fail("LIMIT", "Nesting depth exceeded")
+        }
+    }
+    fn value_limit_error(&self, path: &Utf16) -> EngineError {
+        if self.typescript_profile {
+            EngineError::new("LIMIT", path.clone(), "Source structural limit exceeded")
+        } else {
+            fail("LIMIT", "JSON structural value limit exceeded")
+        }
+    }
+    fn typescript_profile(&self) -> bool {
+        self.typescript_profile
     }
     fn into_key(&self, value: Value) -> Result<Utf16, EngineError> {
         let Value::String(key) = value else {
@@ -1693,9 +3400,28 @@ impl YamlBuilder for PythonYamlBuilder {
         raw: &str,
         style: ScalarStyle,
         tagged: bool,
+        _path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Self::Value, EngineError> {
         resolve_python_scalar(raw, style, tagged, ctx)
+    }
+    fn error_path(&self, _stack: &[YamlFrame<PyText, PythonConsumerValue>]) -> Utf16 {
+        Utf16::default()
+    }
+    fn alias_error(&self, _path: &Utf16) -> EngineError {
+        fail("YAML_ALIAS", "YAML aliases are not allowed")
+    }
+    fn tag_error(&self, _path: &Utf16) -> EngineError {
+        fail("YAML_TAG", "Explicit YAML tags are not allowed")
+    }
+    fn depth_error(&self, _path: &Utf16) -> EngineError {
+        fail("LIMIT", "Nesting depth exceeded")
+    }
+    fn value_limit_error(&self, _path: &Utf16) -> EngineError {
+        fail("LIMIT", "JSON structural value limit exceeded")
+    }
+    fn typescript_profile(&self) -> bool {
+        false
     }
     fn validate_key_scalar(
         &self,
@@ -1733,6 +3459,7 @@ fn parse_yaml_events<B: YamlBuilder>(
     events: Vec<LocatedEvent>,
     ctx: &mut Context<'_>,
     builder: B,
+    diagnostic_source: Option<&[u16]>,
 ) -> Result<B::Value, EngineError> {
     let mut stack: Vec<YamlFrame<B::Text, B::Value>> = Vec::new();
     let mut root = None;
@@ -1740,69 +3467,96 @@ fn parse_yaml_events<B: YamlBuilder>(
     let mut values = 0usize;
     for located in events {
         let event = located.event;
+        let source_start = located.source_start;
         ctx.charge_work(1, Utf16::default())?;
         match event {
             Event::DocumentStart(_) => {
                 documents += 1;
                 if documents > 1 {
+                    if builder.typescript_profile() {
+                        if let Some(source) = diagnostic_source {
+                            return Err(yaml_source_diagnostic(
+                                source,
+                                source_start,
+                                "Source contains multiple documents; please use YAML.parseAllDocuments()",
+                                ctx,
+                            )?);
+                        }
+                    }
                     return Err(fail(
                         "YAML_DOCUMENTS",
                         "Exactly one YAML document is required",
                     ));
                 }
             }
-            Event::Alias(_) => return Err(fail("YAML_ALIAS", "YAML aliases are not allowed")),
+            Event::Alias(_) => return Err(builder.alias_error(&builder.error_path(&stack))),
             Event::Scalar(raw, style, anchor, tag) => {
                 let _ = anchor;
                 let is_key = matches!(stack.last(), Some(YamlFrame::Map { key: None, .. }));
+                let path = builder.error_path(&stack);
                 if is_key {
                     builder.validate_key_scalar(&raw, style, tag.is_some(), ctx)?;
                 }
                 if !is_key {
                     if stack.len() > ctx.limits().max_depth {
-                        return Err(fail("LIMIT", "Nesting depth exceeded"));
+                        return Err(builder.depth_error(&path));
                     }
                     values += 1;
-                    ctx.check_tree_value_count(values, Utf16::default())?;
+                    if builder.typescript_profile() && values > ctx.limits().max_values {
+                        return Err(builder.value_limit_error(&path));
+                    }
+                    if !builder.typescript_profile() {
+                        ctx.check_tree_value_count(values, Utf16::default())?;
+                    }
                 }
-                let scalar = builder.scalar(&raw, style, tag.is_some(), ctx)?;
-                add_yaml_value(scalar, &mut stack, &mut root, &builder)?;
+                let scalar = builder.scalar(&raw, style, tag.is_some(), &path, ctx)?;
+                add_yaml_value(scalar, source_start, &mut stack, &mut root, &builder)?;
             }
             Event::SequenceStart(anchor, tag) => {
                 let _ = anchor;
                 if tag.is_some() {
-                    return Err(fail("YAML_TAG", "Explicit YAML tags are not allowed"));
+                    return Err(builder.tag_error(&builder.error_path(&stack)));
                 }
                 if stack.len() > ctx.limits().max_depth {
-                    return Err(fail("LIMIT", "Nesting depth exceeded"));
+                    return Err(builder.depth_error(&builder.error_path(&stack)));
                 }
                 stack.push(YamlFrame::Seq(Vec::new()));
             }
             Event::MappingStart(anchor, tag) => {
                 let _ = anchor;
                 if tag.is_some() {
-                    return Err(fail("YAML_TAG", "Explicit YAML tags are not allowed"));
+                    return Err(builder.tag_error(&builder.error_path(&stack)));
                 }
                 if stack.len() > ctx.limits().max_depth {
-                    return Err(fail("LIMIT", "Nesting depth exceeded"));
+                    return Err(builder.depth_error(&builder.error_path(&stack)));
                 }
                 stack.push(YamlFrame::Map {
                     values: Vec::new(),
                     key: None,
+                    key_start: 0,
+                    key_positions: Vec::new(),
                 });
             }
             Event::SequenceEnd => {
                 let Some(YamlFrame::Seq(items)) = stack.pop() else {
                     return Err(fail("YAML_SYNTAX", "Unexpected sequence end"));
                 };
-                add_yaml_value(builder.array(items), &mut stack, &mut root, &builder)?;
+                add_yaml_value(
+                    builder.array(items),
+                    source_start,
+                    &mut stack,
+                    &mut root,
+                    &builder,
+                )?;
                 values += 1;
-                ctx.check_tree_value_count(values, Utf16::default())?;
+                check_yaml_value_count(values, &builder, &stack, ctx)?;
             }
             Event::MappingEnd => {
                 let Some(YamlFrame::Map {
                     values: members,
                     key: None,
+                    key_positions,
+                    ..
                 }) = stack.pop()
                 else {
                     return Err(fail("YAML_SYNTAX", "Unexpected or incomplete mapping"));
@@ -1816,12 +3570,28 @@ fn parse_yaml_events<B: YamlBuilder>(
                         Utf16::default(),
                     )?;
                     if !seen.insert(name) {
+                        if builder.typescript_profile() {
+                            if let Some(source) = diagnostic_source {
+                                return Err(yaml_source_diagnostic(
+                                    source,
+                                    key_positions[index],
+                                    "Map keys must be unique",
+                                    ctx,
+                                )?);
+                            }
+                        }
                         return Err(fail("DUPLICATE_KEY", "Duplicate mapping key"));
                     }
                 }
-                add_yaml_value(builder.object(members), &mut stack, &mut root, &builder)?;
+                add_yaml_value(
+                    builder.object(members),
+                    source_start,
+                    &mut stack,
+                    &mut root,
+                    &builder,
+                )?;
                 values += 1;
-                ctx.check_tree_value_count(values, Utf16::default())?;
+                check_yaml_value_count(values, &builder, &stack, ctx)?;
             }
             Event::StreamStart | Event::StreamEnd | Event::DocumentEnd | Event::Nothing => {}
         }
@@ -1831,8 +3601,24 @@ fn parse_yaml_events<B: YamlBuilder>(
     }
     Ok(root.unwrap_or_else(|| builder.null()))
 }
+
+fn check_yaml_value_count<B: YamlBuilder>(
+    values: usize,
+    builder: &B,
+    stack: &[YamlFrame<B::Text, B::Value>],
+    ctx: &Context<'_>,
+) -> Result<(), EngineError> {
+    if values > ctx.limits().max_values {
+        if builder.typescript_profile() {
+            return Err(builder.value_limit_error(&builder.error_path(stack)));
+        }
+        ctx.check_tree_value_count(values, Utf16::default())?;
+    }
+    Ok(())
+}
 fn add_yaml_value<B: YamlBuilder>(
     value: B::Value,
+    source_start: usize,
     stack: &mut [YamlFrame<B::Text, B::Value>],
     root: &mut Option<B::Value>,
     builder: &B,
@@ -1844,11 +3630,18 @@ fn add_yaml_value<B: YamlBuilder>(
             }
         }
         Some(YamlFrame::Seq(items)) => items.push(value),
-        Some(YamlFrame::Map { values, key }) => {
+        Some(YamlFrame::Map {
+            values,
+            key,
+            key_start,
+            key_positions,
+        }) => {
             if let Some(name) = key.take() {
                 values.push((name, value));
+                key_positions.push(*key_start);
             } else {
                 *key = Some(builder.into_key(value)?);
+                *key_start = source_start;
             }
         }
     }
@@ -1880,8 +3673,15 @@ fn parse_python_yaml(
         ));
     }
     let units = source.to_utf16(ctx)?;
-    let (events, prefix) = prepare_yaml_events(units.units(), ScanProfile::PythonRuamel12, ctx)?;
-    let mut value = parse_yaml_events::<PythonYamlBuilder>(events, ctx, PythonYamlBuilder)?;
+    let (events, prefix) = prepare_yaml_events(
+        units.units(),
+        ScanProfile::PythonRuamel12,
+        ctx,
+        false,
+        false,
+        false,
+    )?;
+    let mut value = parse_yaml_events::<PythonYamlBuilder>(events, ctx, PythonYamlBuilder, None)?;
     decode_private_python_value(&mut value, prefix, ctx)?;
     check_python_duplicate_keys(&value, ctx)?;
     Ok(value)
@@ -1911,7 +3711,7 @@ fn resolve_python_scalar(
         "false" | "False" | "FALSE" => return Ok(PythonConsumerValue::Bool(false)),
         ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF"
         | ".nan" | ".NaN" | ".NAN" => {
-            return Err(fail("NUMBER", "Non-finite numbers are not supported"))
+            return Err(fail("NUMBER", "Non-finite numbers are not supported"));
         }
         _ => {}
     }
@@ -2388,10 +4188,20 @@ fn resolve_scalar(
     value: &str,
     style: ScalarStyle,
     tagged: bool,
+    path: &Utf16,
+    typescript_profile: bool,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     if tagged {
-        return Err(fail("YAML_TAG", "Explicit YAML tags are not allowed"));
+        return Err(if typescript_profile {
+            EngineError::new(
+                "TAG",
+                path.clone(),
+                "Explicit YAML tags are outside the profile",
+            )
+        } else {
+            fail("YAML_TAG", "Explicit YAML tags are not allowed")
+        });
     }
     if style != ScalarStyle::Plain {
         return Ok(Value::string_utf8(value));
@@ -2403,39 +4213,86 @@ fn resolve_scalar(
         "false" | "False" | "FALSE" => return Ok(Value::Bool(false)),
         ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF"
         | ".nan" | ".NaN" | ".NAN" => {
-            return Err(fail("NUMBER", "Non-finite numbers are not supported"))
+            return Err(fail("NUMBER", "Non-finite numbers are not supported"));
         }
         _ => {}
     }
     let Some(numeric) = yaml_number_token(value) else {
         return Ok(Value::string_utf8(value));
     };
+    if typescript_profile
+        && matches!(&numeric, YamlNumber::Decimal)
+        && value.starts_with('-')
+        && decimal_canonical(value).is_some_and(|(_, digits, _)| digits == "0")
+    {
+        return Err(EngineError::new(
+            "NUMBER",
+            path.clone(),
+            "Negative zero is outside the numeric profile",
+        ));
+    }
     ctx.charge_work(value.len().saturating_mul(3), Utf16::default())?;
     let number = match &numeric {
         YamlNumber::Decimal => value.parse::<f64>().ok(),
         YamlNumber::Radix { digits, radix } => {
             ctx.charge_work(digits.len(), Utf16::default())?;
             let magnitude = parse_safe_magnitude(digits, *radix).ok_or_else(|| {
-                fail(
+                if !typescript_profile {
+                    return fail(
+                        "NUMBER",
+                        "Radix number is outside the supported numeric range",
+                    );
+                }
+                EngineError::new(
                     "NUMBER",
-                    "Radix number is outside the supported numeric range",
+                    path.clone(),
+                    "Integer exceeds exact JavaScript range",
                 )
             })?;
             Some(magnitude as f64)
         }
     };
-    let number = number.ok_or_else(|| fail("NUMBER", "Invalid numeric scalar"))?;
+    let number = number
+        .ok_or_else(|| yaml_number_error(typescript_profile, path, "Invalid numeric scalar"))?;
     if matches!(&numeric, YamlNumber::Decimal) {
-        let source = decimal_canonical(value)
-            .ok_or_else(|| fail("NUMBER", "Malformed decimal source token"))?;
+        let source = decimal_canonical(value).ok_or_else(|| {
+            yaml_number_error(typescript_profile, path, "Malformed decimal source token")
+        })?;
         let rendered = crate::ecma_number_to_string(number);
-        let converted = decimal_canonical(&rendered)
-            .ok_or_else(|| fail("NUMBER", "Malformed converted number"))?;
+        let converted = decimal_canonical(&rendered).ok_or_else(|| {
+            yaml_number_error(typescript_profile, path, "Malformed converted number")
+        })?;
         if source != converted {
-            return Err(fail("NUMBER", "Parsing would change the decimal value"));
+            return Err(yaml_number_error(
+                typescript_profile,
+                path,
+                "Parsing would change the decimal value",
+            ));
         }
     }
-    Value::number(number, Utf16::default())
+    if typescript_profile && number.fract() == 0.0 && number.abs() > 9_007_199_254_740_991.0 {
+        return Err(yaml_number_error(
+            true,
+            path,
+            "Integer exceeds exact JavaScript range",
+        ));
+    }
+    if typescript_profile {
+        Value::number(number, path.clone()).map_err(|mut error| {
+            error.path = path.clone();
+            error
+        })
+    } else {
+        Value::number(number, Utf16::default())
+    }
+}
+
+fn yaml_number_error(profile: bool, path: &Utf16, message: &str) -> EngineError {
+    if profile {
+        EngineError::new("NUMBER", path.clone(), message)
+    } else {
+        fail("NUMBER", message)
+    }
 }
 
 #[derive(Clone)]
@@ -2504,7 +4361,7 @@ fn yaml_number_token(raw: &str) -> Option<YamlNumber> {
     }
     None
 }
-fn decimal_canonical(source: &str) -> Option<(bool, String, i64)> {
+pub(crate) fn decimal_canonical(source: &str) -> Option<(bool, String, i64)> {
     let (negative, body) = if let Some(body) = source.strip_prefix('-') {
         (true, body)
     } else if let Some(body) = source.strip_prefix('+') {
@@ -2728,6 +4585,363 @@ mod tests {
     }
 
     #[test]
+    fn r8_frozen_json_value_read_error_inventory() {
+        let packet: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/rust-core/fixtures/r8-json-value-serialization/predecessor.json"
+        ))
+        .unwrap();
+        for case in packet["cases"].as_array().unwrap() {
+            let id = case["id"].as_str().unwrap();
+            if !id.starts_with("read.") {
+                continue;
+            }
+            let input = &case["input"];
+            let source = if let Some(source) = input["source"].as_str() {
+                source.to_owned()
+            } else if let Some(depth) = input["depth"].as_u64() {
+                format!(
+                    "{}0{}",
+                    "[".repeat(depth as usize),
+                    "]".repeat(depth as usize)
+                )
+            } else if let Some(count) = input["arrayItems"].as_u64() {
+                format!("[{}]", vec!["null"; count as usize].join(","))
+            } else {
+                panic!("unhandled frozen read input {id}");
+            };
+            let format = match input["format"].as_str().unwrap_or("yaml") {
+                "json" => Format::Json,
+                "yaml" => Format::Yaml,
+                other => panic!("unhandled format {other}"),
+            };
+            let actual = read_json_value_typescript_order(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                format,
+                &mut Context::ordinary(),
+            );
+            let expected = &case["outcome"];
+            if expected["status"] == "returned" {
+                let value = actual.unwrap_or_else(|error| panic!("{id}: {error}"));
+                let mut context = Context::ordinary();
+                let rendered = write_json_value(&value, Format::Json, &mut context).unwrap();
+                let rendered =
+                    serde_json::from_str::<serde_json::Value>(&rendered.to_utf8().unwrap())
+                        .unwrap();
+                assert_eq!(rendered, expected["value"], "{id}");
+            } else {
+                let error = actual.expect_err(id);
+                let code = error.code.as_str();
+                let path = error.path.to_utf8().unwrap();
+                let message = error.message.to_utf8().unwrap();
+                assert_eq!(code, expected["code"], "{id}");
+                assert_eq!(path, expected["path"], "{id}");
+                assert_eq!(message, expected["message"], "{id}");
+            }
+        }
+    }
+
+    #[test]
+    fn typescript_yaml_diagnostics_retain_original_source_locations() {
+        for (source, expected) in [
+            (
+                "é: 1\né: 2\n",
+                "Map keys must be unique at line 2, column 1:\n\né: 1\né: 2\n^\n".to_owned(),
+            ),
+            (
+                "\"a\\u0062\": 1\nab: 2\n",
+                "Map keys must be unique at line 2, column 1:\n\n\"a\\u0062\": 1\nab: 2\n^\n".to_owned(),
+            ),
+            (
+                "\u{feff}x: 1\nx: 2\n",
+                "Map keys must be unique at line 2, column 1:\n\n\u{feff}x: 1\nx: 2\n^\n".to_owned(),
+            ),
+            (
+                "x: 1\n---\ny: 2\n",
+                "Source contains multiple documents; please use YAML.parseAllDocuments() at line 2, column 1:\n\nx: 1\n---\n^\n".to_owned(),
+            ),
+        ] {
+            let error = read_json_value_typescript_order(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                Format::Yaml,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err();
+            assert_eq!(error.code, "SYNTAX", "{source:?}");
+            assert_eq!(error.path, Utf16::default(), "{source:?}");
+            assert_eq!(error.message.to_utf8().unwrap(), expected, "{source:?}");
+        }
+    }
+
+    #[test]
+    fn json_after_live_preflight_uses_typescript_duplicate_diagnostic() {
+        let duplicate = r#"{"x":1,"x":2}"#;
+        let error = read_typescript_json_value_after_json_preflight(
+            &duplicate.encode_utf16().collect::<Vec<_>>(),
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "SYNTAX");
+        assert_eq!(error.path, Utf16::default());
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "Map keys must be unique at line 1, column 8:\n\n{\"x\":1,\"x\":2}\n       ^\n"
+        );
+    }
+
+    #[test]
+    fn typescript_yaml_diagnostic_preserves_bom_source_position() {
+        let source = "\u{feff}{";
+        let error = read_typescript_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            Some(Format::Yaml),
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "SYNTAX");
+        assert_eq!(error.path, Utf16::default());
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "Flow map must end with a } at line 1, column 3:\n\n\u{feff}{\n  ^\n"
+        );
+    }
+
+    #[test]
+    fn r8_json_after_live_preflight_matches_diagnostic_source_oracle() {
+        const SOURCE_ORACLE: &str = r###"{"count":40,"rows":[{"id":"map-empty-head","source":"{","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map must end with a } at line 1, column 2:\n\n{\n ^\n"}},{"id":"map-missing-value","source":"{\"a\":}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"map-truncated-key","source":"{\"a\": 1, \"b\"","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map must end with a } at line 1, column 13:\n\n{\"a\": 1, \"b\"\n            ^\n"}},{"id":"map-missing-colon","source":"{\"a\" 1}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing , or : between flow map items at line 1, column 6:\n\n{\"a\" 1}\n     ^\n"}},{"id":"map-trailing-comma","source":"{\"a\":1,}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"map-adjacent-members","source":"{\"a\":1 \"b\":2}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":7,"utf16Sha256":"53ae612831e776f7d3a648485e668cdd66717d193d0e757c4a0c2c323e156818"}}]}}},{"id":"map-unquoted-key","source":"{a:1}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a:1"],"descriptors":[{"key":"a:1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"map-comment-line","source":"{\"a\":1 // trailing comment\n}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":21,"utf16Sha256":"6707ab9dd28f382ea0fb8ed6a556f72b898c78c2e3215bc2566ef40166b19fb7"}}]}}},{"id":"map-comment-hash","source":"{\"a\":1 # trailing comment\n}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"map-block-comment","source":"{/* comment */\"a\":1}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["/* comment */\"a\":1"],"descriptors":[{"key":"/* comment */\"a\":1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"map-single-quoted-key","source":"{'a':1}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"map-unterminated-key","source":"{\"a:1}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 7:\n\n{\"a:1}\n      ^\n; Flow map must end with a } at line 1, column 7:\n\n{\"a:1}\n      ^\n"}},{"id":"map-unterminated-double-value","source":"{\"a\":\"value}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 13:\n\n{\"a\":\"value}\n            ^\n; Flow map must end with a } at line 1, column 13:\n\n{\"a\":\"value}\n            ^\n"}},{"id":"map-single-quoted-value","source":"{\"a\":'value'}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":5,"utf16Sha256":"6c5d15002e0d0e64e65846c5bddd6c4fb059504262397e76b9a385ef7337669d"}}]}}},{"id":"map-bad-escape","source":"{\"a\":\"\\q\"}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Invalid escape sequence \\q at line 1, column 7:\n\n{\"a\":\"\\q\"}\n      ^\n"}},{"id":"sequence-empty-head","source":"[","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow sequence must end with a ] at line 1, column 2:\n\n[\n ^\n"}},{"id":"sequence-leading-comma","source":"[,1]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Unexpected , in flow sequence at line 1, column 2:\n\n[,1]\n ^\n"}},{"id":"sequence-double-comma","source":"[1,,2]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Unexpected , in flow sequence at line 1, column 4:\n\n[1,,2]\n   ^\n"}},{"id":"sequence-trailing-comma","source":"[1,]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"sequence-missing-separator","source":"[1 2]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":3,"utf16Sha256":"ef680b19553f69fcadd5c677e14f93de788778a6b67f4e0c63ca4b8f9002595d"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"sequence-truncated-nested-map","source":"[{\"a\":1]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map in block collection must be sufficiently indented and end with a } at line 1, column 8:\n\n[{\"a\":1]\n       ^\n; Flow sequence must end with a ] at line 1, column 8:\n\n[{\"a\":1]\n       ^\n"}},{"id":"sequence-comment-between-values","source":"[1 // comment\n,2]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","1","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":12,"utf16Sha256":"8b69410cee7c8d169d1c543de28b6bd4d4cd52fb782eb0a913c1b25d863fd771"}},{"key":"1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":2}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":2}}]}}},{"id":"nested-map-truncated-inner","source":"{\"a\":{\"b\":1}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map must end with a } at line 1, column 13:\n\n{\"a\":{\"b\":1}\n            ^\n"}},{"id":"nested-sequence-truncated-inner","source":"{\"a\":[1,2}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow sequence in block collection must be sufficiently indented and end with a ] at line 1, column 10:\n\n{\"a\":[1,2}\n         ^\n; Flow map must end with a } at line 1, column 10:\n\n{\"a\":[1,2}\n         ^\n"}},{"id":"nested-flow-mixed-truncated","source":"[{\"a\":[1,{\"b\":2}]}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow sequence must end with a ] at line 1, column 19:\n\n[{\"a\":[1,{\"b\":2}]}\n                  ^\n"}},{"id":"nested-extra-close","source":"{\"a\":[1,2]]}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map must end with a } at line 1, column 11:\n\n{\"a\":[1,2]]}\n          ^\n; Unexpected flow-map-end token in YAML stream: \"}\" at line 1, column 12:\n\n{\"a\":[1,2]]}\n           ^\n"}},{"id":"multiline-map-missing-value","source":"{\n  \"first\": 1,\n  \"second\":\n}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["first","second"],"descriptors":[{"key":"first","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"second","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"multiline-sequence-truncated","source":"[\n  1,\n  {\"x\": 2\n]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map in block collection must be sufficiently indented and end with a } at line 4, column 1:\n\n  {\"x\": 2\n]\n^\n; Flow sequence must end with a ] at line 4, column 1:\n\n  {\"x\": 2\n]\n^\n"}},{"id":"multiline-comment-separator","source":"[1,\n // comment\n 2,]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","1","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":12,"utf16Sha256":"519030ea252d0765e3d374b305b9dabd190ead9e615d7a1036b50dce48f17347"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":2}}]}}},{"id":"unicode-key-bad-member","source":"{\"名\":1, \"壊れ\":}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["名","壊れ"],"descriptors":[{"key":"名","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"壊れ","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"unicode-astral-truncated-quote","source":"{\"😀\":\"値}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 10:\n\n{\"😀\":\"値}\n         ^\n; Flow map must end with a } at line 1, column 10:\n\n{\"😀\":\"値}\n         ^\n"}},{"id":"unicode-line-separator","source":"[\"a b\",]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":3,"utf16Sha256":"57a277ce899a6413dc55fb22c8882eba680c5385317f83082e2ca90c51ca1a90"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"unicode-crlf-comment","source":"{\r\n \"é\": 1, // comment\r\n}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["é","// comment"],"descriptors":[{"key":"é","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"// comment","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"quote-unclosed-single","source":"['unterminated]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing 'quote at line 1, column 16:\n\n['unterminated]\n               ^\n; Flow sequence must end with a ] at line 1, column 16:\n\n['unterminated]\n               ^\n"}},{"id":"quote-unclosed-double","source":"[\"unterminated]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 16:\n\n[\"unterminated]\n               ^\n; Flow sequence must end with a ] at line 1, column 16:\n\n[\"unterminated]\n               ^\n"}},{"id":"quote-after-escape-truncated","source":"[\"trailing\\","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 12:\n\n[\"trailing\\\n           ^\n; Flow sequence must end with a ] at line 1, column 12:\n\n[\"trailing\\\n           ^\n"}},{"id":"truncated-exponent","source":"[1e+]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":3,"utf16Sha256":"ffb499b0c4ae623700331950af01615e7b1dc7111fc5ed14f554c78bca3435c3"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"truncated-literal","source":"[tru]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":3,"utf16Sha256":"9e224e14adb868dcdc6f4777d83b08054d97b04191383b773a79bc561ea29b25"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"leading-zero","source":"[01]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"valid-json-control","source":"{\"ok\":[1,true,null,\"x\"]}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["ok"],"descriptors":[{"key":"ok","enumerable":true,"configurable":true,"writable":true,"value":{"type":"array","id":1,"prototype":"Array.prototype","keys":["0","1","2","3","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"boolean","value":true}},{"key":"2","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}},{"key":"3","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":1,"utf16Sha256":"14f825b2bbc32dd8d196367fa8776873069c12a8954d8da7513aa7704ddd09eb"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":4}}]}}]}}}]}"###;
+        let packet: serde_json::Value = serde_json::from_str(SOURCE_ORACLE).unwrap();
+        let mut matches = 0usize;
+        let mut mismatches = Vec::new();
+        for row in packet["rows"].as_array().unwrap() {
+            let id = row["id"].as_str().unwrap();
+            let source = row["source"].as_str().unwrap();
+            let actual = read_typescript_json_value_after_json_preflight(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                &mut Context::ordinary(),
+            );
+            let expected = &row["reference"];
+            let same = if expected["kind"] == "throw" {
+                actual.as_ref().is_err_and(|error| {
+                    error.code == expected["code"].as_str().unwrap()
+                        && error.path.to_utf8().unwrap() == expected["path"].as_str().unwrap()
+                        && error.message.to_utf8().unwrap() == expected["message"].as_str().unwrap()
+                })
+            } else {
+                actual.as_ref().is_ok_and(|value| {
+                    let mut next_id = 0;
+                    value_matches_oracle_shape(value, &expected["shape"], &mut next_id)
+                })
+            };
+            if same {
+                matches += 1;
+            } else {
+                let got = match actual {
+                    Ok(value) => {
+                        let mut context = Context::ordinary();
+                        let rendered = write_json_value(&value, Format::Json, &mut context)
+                            .unwrap()
+                            .to_utf8()
+                            .unwrap();
+                        format!("return {rendered}")
+                    }
+                    Err(error) => format!(
+                        "throw {} {} {:?}",
+                        error.code,
+                        error.path.to_utf8().unwrap(),
+                        error.message.to_utf8().unwrap()
+                    ),
+                };
+                mismatches.push(format!("{id}: expected {:?}; got {got}", expected));
+            }
+        }
+        eprintln!(
+            "ordinary JSON diagnostic oracle: {matches}/{} matched; {} mismatched",
+            packet["rows"].as_array().unwrap().len(),
+            mismatches.len()
+        );
+        for mismatch in &mismatches {
+            eprintln!("{mismatch}");
+        }
+        assert!(mismatches.is_empty());
+    }
+
+    #[test]
+    fn typescript_diagnostic_source_walk_respects_work_meter_before_allocation() {
+        let source = "[".repeat(100_000);
+        let units = source.encode_utf16().collect::<Vec<_>>();
+        let mut charged = 0usize;
+        let mut meter = |amount: usize| {
+            if charged.saturating_add(amount) > 1_050_000 {
+                return Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "Host work budget exceeded",
+                ));
+            }
+            charged += amount;
+            Ok(())
+        };
+        let error = read_typescript_json_value_after_json_preflight(
+            &units,
+            &mut Context::ordinary().with_meter(&mut meter),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "RESOURCE_LIMIT");
+        assert_eq!(error.message.to_utf8().unwrap(), "Host work budget exceeded");
+        assert!(charged <= 1_050_000);
+    }
+
+    fn value_matches_oracle_shape(
+        value: &Value,
+        shape: &serde_json::Value,
+        next_id: &mut usize,
+    ) -> bool {
+        let id = *next_id;
+        *next_id += 1;
+        match value {
+            Value::Null => shape["type"] == "null" && shape["value"].is_null(),
+            Value::Bool(value) => {
+                shape["type"] == "boolean" && shape["value"] == *value
+            }
+            Value::Number(value) => {
+                shape["type"] == "number" && shape["value"].as_f64() == Some(*value)
+            }
+            Value::String(value) => {
+                let units = value.units();
+                let mut bytes = Vec::with_capacity(units.len() * 2);
+                for unit in units {
+                    bytes.extend_from_slice(&unit.to_le_bytes());
+                }
+                use sha2::{Digest, Sha256};
+                let digest = Sha256::digest(&bytes);
+                let digest = digest.iter().map(|byte| format!("{byte:02x}")).collect::<String>();
+                shape["type"] == "string"
+                    && shape["utf16Length"] == units.len()
+                    && shape["utf16Sha256"] == digest
+            }
+            Value::Array(values) => {
+                shape["type"] == "array"
+                    && shape["id"] == id
+                    && shape["prototype"] == "Array.prototype"
+                    && shape["descriptors"].as_array().is_some_and(|descriptors| {
+                        descriptors.len() == values.len() + 1
+                            && values.iter().zip(descriptors).enumerate().all(
+                                |(index, (value, descriptor))| {
+                                    descriptor["key"] == index.to_string()
+                                        && descriptor["enumerable"] == true
+                                        && descriptor["configurable"] == true
+                                        && descriptor["writable"] == true
+                                        && value_matches_oracle_shape(
+                                            value,
+                                            &descriptor["value"],
+                                            next_id,
+                                        )
+                                },
+                            )
+                            && descriptors.last().is_some_and(|descriptor| {
+                                descriptor["key"] == "length"
+                                    && descriptor["value"]["value"] == values.len()
+                                    && descriptor["enumerable"] == false
+                                    && descriptor["configurable"] == false
+                                    && descriptor["writable"] == true
+                            })
+                    })
+            }
+            Value::Object(values) => {
+                shape["type"] == "object"
+                    && shape["id"] == id
+                    && shape["prototype"] == "null"
+                    && shape["descriptors"].as_array().is_some_and(|descriptors| {
+                        descriptors.len() == values.len()
+                            && shape["keys"].as_array().is_some_and(|keys| {
+                                keys.len() == values.len()
+                                    && values.iter().zip(keys).all(|((key, _), expected)| {
+                                        key.to_utf8().ok().as_deref() == expected.as_str()
+                                    })
+                            })
+                            && values.iter().zip(descriptors).all(|((key, value), descriptor)| {
+                                descriptor["key"].as_str().is_some_and(|expected_key| {
+                                    key.to_utf8().ok().as_deref() == Some(expected_key)
+                                        && descriptor["enumerable"] == true
+                                        && descriptor["configurable"] == true
+                                        && descriptor["writable"] == true
+                                        && value_matches_oracle_shape(
+                                            value,
+                                            &descriptor["value"],
+                                            next_id,
+                                        )
+                                })
+                            })
+                    })
+            }
+        }
+    }
+
+    #[test]
+    fn r8_json_value_profile_preserves_generic_reader_and_host_controls() {
+        let source = "{\"x\":1,\"x\":2,}";
+        assert_eq!(
+            parse(source, Format::Json).unwrap_err().code,
+            "DUPLICATE_KEY"
+        );
+        assert_eq!(
+            read_json_value_typescript_order(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                Format::Json,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err()
+            .message
+            .to_utf8()
+            .unwrap(),
+            "Invalid JSON syntax"
+        );
+
+        let generic_alias = parse("é/~x: &a value\nnext: *a\n", Format::Yaml).unwrap_err();
+        assert_eq!(generic_alias.code, "YAML_ALIAS");
+        assert_eq!(generic_alias.path.to_utf8().unwrap(), "");
+
+        let alias = read_typescript_json_value(
+            &"é/~x: &a value\nnext: *a\n"
+                .encode_utf16()
+                .collect::<Vec<_>>(),
+            None,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(alias.code, "ALIAS");
+        assert_eq!(alias.path.to_utf8().unwrap(), "/next");
+        let escaped = read_typescript_json_value(
+            &"anchor: &a value\n\"é/~x\": *a\n"
+                .encode_utf16()
+                .collect::<Vec<_>>(),
+            None,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(escaped.path.to_utf8().unwrap(), "/é~1~0x");
+
+        let mut control = |_amount: usize| {
+            Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Host work budget exceeded",
+            ))
+        };
+        let mut ctx = Context::ordinary().with_host_control(&mut control);
+        let error = read_json_value_typescript_order(
+            &"{bad".encode_utf16().collect::<Vec<_>>(),
+            Format::Json,
+            &mut ctx,
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "RESOURCE_LIMIT");
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "Host work budget exceeded"
+        );
+    }
+
+    #[test]
     fn yaml_empty_stream_and_directive_whitespace_match_predecessor() {
         for source in ["", " \n\t", "# comment\n", "...\n", "---\n", "\u{feff}"] {
             assert_eq!(
@@ -2762,7 +4976,7 @@ mod tests {
     #[test]
     fn python_unknown_directives_match_the_frozen_174_case_oracle() {
         const RECEIPT: &str = include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-directive-predecessor.json"
+            "../../../tests/rust-core/fixtures/r2/sol-python-yaml-directive-predecessor.json"
         );
         let receipt: serde_json::Value = serde_json::from_str(RECEIPT).unwrap();
         assert_eq!(
@@ -2807,7 +5021,7 @@ mod tests {
     #[test]
     fn python_unknown_directive_tails_match_the_frozen_48_observations() {
         const RECEIPT: &str = include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-directive-tail-predecessor.json"
+            "../../../tests/rust-core/fixtures/r2/sol-python-yaml-directive-tail-predecessor.json"
         );
         let receipt: serde_json::Value = serde_json::from_str(RECEIPT).unwrap();
         assert_eq!(
@@ -3020,6 +5234,148 @@ mod tests {
             read_json_value(yaml.units(), Format::Yaml, &mut Context::ordinary()).unwrap(),
             lone
         );
+    }
+
+    #[test]
+    fn typescript_yaml_writer_matches_proven_scalar_corpus() {
+        let cases = [
+            (Value::String(Utf16::from("hello")), "hello\n"),
+            (Value::String(Utf16::from("123")), "\"123\"\n"),
+            (Value::String(Utf16::from("TRUE")), "\"TRUE\"\n"),
+            (Value::String(Utf16::from("null")), "\"null\"\n"),
+            (Value::String(Utf16::from("one # two")), "\"one # two\"\n"),
+            (Value::String(Utf16::from("a b")), "a b\n"),
+            (Value::String(Utf16::from("a:b")), "a:b\n"),
+            (Value::String(Utf16::from("foo/bar")), "foo/bar\n"),
+            (Value::String(Utf16::from("a,b")), "a,b\n"),
+            (Value::String(Utf16::from("a#b")), "a#b\n"),
+            (Value::String(Utf16::from("-leading")), "-leading\n"),
+            (Value::String(Utf16::from("?mark")), "?mark\n"),
+            (Value::String(Utf16::from("a\tb")), "a\tb\n"),
+            (Value::String(Utf16::from("a\0b")), "\"a\\0b\"\n"),
+            (Value::String(Utf16::from("a\u{1}b")), "\"a\\x01b\"\n"),
+            (Value::String(Utf16::from("a\u{1b}b")), "\"a\\eb\"\n"),
+            (Value::String(Utf16::from("a\" b:")), "'a\" b:'\n"),
+            (Value::String(Utf16::from("a: b")), "\"a: b\"\n"),
+            (Value::String(Utf16::from("a #b")), "\"a #b\"\n"),
+            (Value::String(Utf16::from("[foo]")), "\"[foo]\"\n"),
+            (Value::String(Utf16::from("~")), "\"~\"\n"),
+            (Value::String(Utf16::from("-1")), "\"-1\"\n"),
+            (Value::String(Utf16::from("+1")), "\"+1\"\n"),
+            (Value::String(Utf16::from(".1")), "\".1\"\n"),
+            (Value::String(Utf16::from("0x10")), "\"0x10\"\n"),
+            (Value::String(Utf16::from("0o10")), "\"0o10\"\n"),
+            (Value::String(Utf16::from("0b10")), "0b10\n"),
+            (Value::String(Utf16::from("1_000")), "1_000\n"),
+            (Value::String(Utf16::from("1abc")), "1abc\n"),
+            (Value::String(Utf16::from("---x")), "|-\n  ---x\n"),
+            (Value::String(Utf16::from("...x")), "|-\n  ...x\n"),
+            (Value::String(Utf16::from("2024-01-01")), "2024-01-01\n"),
+            (Value::String(Utf16::from("café")), "café\n"),
+            (Value::String(Utf16::from("東京")), "東京\n"),
+            (Value::String(Utf16::from("🙂")), "🙂\n"),
+            (Value::String(Utf16::new(vec![0xd800])), "\"\\ud800\"\n"),
+            (
+                Value::String(Utf16::new(vec![b'x' as u16, 0xd800, b'y' as u16])),
+                "\"x\\ud800y\"\n",
+            ),
+            (Value::String(Utf16::new(vec![0xdc00])), "\"\\udc00\"\n"),
+            (Value::String(Utf16::from("x\ny")), "|-\nx\ny\n"),
+            (Value::String(Utf16::from("x\n")), "|\nx\n"),
+            (Value::String(Utf16::from("x\n\ny\n\n")), "|+\nx\n\ny\n\n"),
+            (
+                Value::Object(vec![
+                    (Utf16::from("multi"), Value::String(Utf16::from("x\ny"))),
+                    (
+                        Utf16::from("date"),
+                        Value::String(Utf16::from("2024-01-01")),
+                    ),
+                ]),
+                "multi: |-\n  x\n  y\ndate: 2024-01-01\n",
+            ),
+            (
+                Value::Array(vec![Value::String(Utf16::from("x\ny"))]),
+                "- |-\n  x\n  y\n",
+            ),
+            (
+                Value::Object(vec![(Utf16::from("x\ny"), Value::Number(1.0))]),
+                "\"x\\ny\": 1\n",
+            ),
+            (
+                Value::Object(vec![(Utf16::from("---x"), Value::Number(1.0))]),
+                "\"---x\": 1\n",
+            ),
+        ];
+        for (value, expected) in cases {
+            let actual =
+                write_typescript_json_value(&value, Some(Format::Yaml), &mut Context::ordinary())
+                    .unwrap()
+                    .to_utf8()
+                    .unwrap();
+            assert_eq!(actual, expected);
+            if matches!(value, Value::String(_)) {
+                let decoded = read_json_value_typescript_order(
+                    &actual.encode_utf16().collect::<Vec<_>>(),
+                    Format::Yaml,
+                    &mut Context::ordinary(),
+                )
+                .unwrap();
+                assert_eq!(decoded, value);
+            }
+        }
+
+        let original = Value::Object(vec![(
+            Utf16::from("x\ny"),
+            Value::String(Utf16::from("root\nmultiline")),
+        )]);
+        let encoded =
+            write_typescript_json_value(&original, Some(Format::Yaml), &mut Context::ordinary())
+                .unwrap();
+        assert_eq!(
+            encoded.to_utf8().unwrap(),
+            "\"x\\ny\": |-\n  root\n  multiline\n"
+        );
+        let decoded = read_json_value_typescript_order(
+            encoded.units(),
+            Format::Yaml,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert_eq!(decoded, original);
+
+        let root = Value::String(Utf16::from("root\nmultiline"));
+        let encoded =
+            write_typescript_json_value(&root, Some(Format::Yaml), &mut Context::ordinary())
+                .unwrap();
+        assert_eq!(encoded.to_utf8().unwrap(), "|-\nroot\nmultiline\n");
+        assert_eq!(
+            read_json_value_typescript_order(
+                encoded.units(),
+                Format::Yaml,
+                &mut Context::ordinary(),
+            )
+            .unwrap(),
+            root
+        );
+
+        for (root, expected) in [
+            (Value::String(Utf16::from("\n")), "|+\n\n"),
+            (Value::String(Utf16::from("\n\n")), "|+\n\n\n"),
+        ] {
+            let encoded =
+                write_typescript_json_value(&root, Some(Format::Yaml), &mut Context::ordinary())
+                    .unwrap();
+            assert_eq!(encoded.to_utf8().unwrap(), expected);
+            assert_eq!(
+                read_json_value_typescript_order(
+                    encoded.units(),
+                    Format::Yaml,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+                root
+            );
+        }
     }
 
     #[test]

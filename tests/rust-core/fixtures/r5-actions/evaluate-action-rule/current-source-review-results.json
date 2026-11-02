@@ -1,0 +1,82 @@
+{
+  "cases": [
+    {
+      "id": "unknown-input-precedes-invalid-known-value",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_PARAMETER",
+          "message": "Unknown input/output identity",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "declared-order-precedes-map-order-and-preserves-schema-error",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Integer outside width/signedness",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "required-input-preserves-exact-predecessor-path",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_PARAMETER",
+          "message": "Required value is absent",
+          "path": "/inputs/quantity"
+        }
+      }
+    },
+    {
+      "id": "parameter-wrapper-refusal-is-distinct",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_PARAMETER",
+          "message": "Expected exact typed literal",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "stored-wrapper-refusal-is-distinct",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Expected exact typed field literal",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "stored-schema-diagnostic-is-preserved",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Integer outside width/signedness",
+          "path": ""
+        }
+      }
+    },
+    {
+      "id": "falsy-output-false-is-ignored",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "falsy-output-zero-is-ignored",
+      "outcome": {
+        "value": true
+      }
+    },
+    {
+      "id": "falsy-output-empty-string-is-ignored",
+      "outcome": {
+        "value": true
+      }
+    }
+  ]
+}

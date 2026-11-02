@@ -1,0 +1,2346 @@
+{
+  "cases": [
+    {
+      "id": "negative-zero-canonicalizes",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "-0"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fractional-trailing-zero-normalizes",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "1.0"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "positive-exponent-normalizes",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "1e3"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "1000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "negative-exponent-with-trailing-zero-normalizes",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "10e-1"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fractional-nonzero-refuses-rounding",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "1.5"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "zero-bypasses-oversized-exponent-spelling",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "0e9999999999999999999999999999999999999999"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "nonzero-oversized-exponent-refuses",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "1e9999999999999999999999999999999999999999"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "precision-check-after-coefficient-normalization",
+      "kind": "coefficient",
+      "token": "123",
+      "precision": 2
+    },
+    {
+      "id": "positive-scale-normalizes-fraction",
+      "kind": "coefficient",
+      "token": "12.3",
+      "scale": 1
+    },
+    {
+      "id": "negative-scale-normalizes-trailing-zeroes",
+      "kind": "coefficient",
+      "token": "1200",
+      "scale": -2
+    },
+    {
+      "id": "precision-check-after-scale-normalization",
+      "kind": "coefficient",
+      "token": "1.20",
+      "scale": 1,
+      "precision": 2
+    },
+    {
+      "id": "zero-short-circuits-before-precision",
+      "kind": "coefficient",
+      "token": "0e9999999999999999999999999999999999999999",
+      "precision": 0
+    },
+    {
+      "id": "exponent-spelling-refusal-precedes-resource-and-precision",
+      "kind": "coefficient",
+      "token": "1e9999999999999999999999999999999999999999",
+      "precision": 1
+    },
+    {
+      "id": "resource-check-precedes-precision-after-exponent-expansion",
+      "kind": "coefficient",
+      "token": "1e4000000",
+      "precision": 1
+    },
+    {
+      "id": "opposite-sign-cancellation-produces-zero",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-37"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "37"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "addition-carry-crosses-all-decimal-digits",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "999999"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "1"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "subtraction-borrow-crosses-all-decimal-digits",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "1000000"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "1"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "999999"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "subtraction-produces-negative-result",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "1"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "2"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "equality-across-signs-is-false",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "-1"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "less-than-across-signs",
+      "kind": "evaluate",
+      "expression": {
+        "op": "lt",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "-1"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "less-than-zero-versus-negative-is-false",
+      "kind": "evaluate",
+      "expression": {
+        "op": "lt",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "0"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "-1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "less-than-or-equal-equal-negative-magnitudes",
+      "kind": "evaluate",
+      "expression": {
+        "op": "le",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "-9"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "-9"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "greater-than-or-equal-different-digit-lengths",
+      "kind": "evaluate",
+      "expression": {
+        "op": "ge",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "10"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "greater-than-across-signs",
+      "kind": "evaluate",
+      "expression": {
+        "op": "gt",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "1"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "-1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "greater-than-shorter-positive-is-false",
+      "kind": "evaluate",
+      "expression": {
+        "op": "gt",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "2"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "10"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "less-than-or-equal-positive-equal",
+      "kind": "evaluate",
+      "expression": {
+        "op": "le",
+        "args": [
+          {
+            "literal": {
+              "integerToken": "7"
+            }
+          },
+          {
+            "literal": {
+              "integerToken": "7"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "signed-eight-bit-minimum-is-admitted",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "input": "tiny"
+          },
+          {
+            "literal": {
+              "integerToken": "-128"
+            }
+          }
+        ]
+      },
+      "input": {
+        "id": "tiny",
+        "token": "-128"
+      }
+    },
+    {
+      "id": "signed-eight-bit-underflow-refuses",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "input": "tiny"
+          },
+          {
+            "literal": {
+              "integerToken": "-128"
+            }
+          }
+        ]
+      },
+      "input": {
+        "id": "tiny",
+        "token": "-129"
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-00-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-12848"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-914919"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-927767"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-00-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-12848"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-914919"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "902071"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-01-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-374820"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-484912"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-859732"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-01-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-374820"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-484912"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "110092"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-02-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "176741"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-607366"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-430625"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-02-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "176741"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-607366"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "784107"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-03-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "83098"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "513244"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "596342"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-03-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "83098"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "513244"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-430146"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-04-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "888999"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-210349"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "678650"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-04-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "888999"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-210349"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1099348"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-05-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-997610"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-391178"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-1388788"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-05-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-997610"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-391178"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-606432"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-06-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "289125"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-880517"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-591392"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-06-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "289125"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-880517"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1169642"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-07-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-599404"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "9997"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-589407"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-07-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-599404"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "9997"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-609401"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-08-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "370449"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-640763"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-270314"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-08-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "370449"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-640763"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1011212"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-09-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-199957"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-515038"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-714995"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-09-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-199957"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-515038"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "315081"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-10-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "858250"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-777868"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "80382"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-10-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "858250"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-777868"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1636118"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-11-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "642441"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "739870"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1382311"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-11-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "642441"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "739870"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-97429"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-12-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "909334"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "158354"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1067688"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-12-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "909334"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "158354"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "750980"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-13-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-97308"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-648446"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-745754"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-13-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-97308"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-648446"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "551138"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-14-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-657119"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "417857"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-239262"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-14-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-657119"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "417857"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-1074976"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-15-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-33504"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-141144"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-174648"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-15-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-33504"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-141144"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "107640"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-16-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "576395"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "858680"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1435075"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-16-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "576395"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "858680"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-282285"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-17-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "601760"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-189303"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "412457"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-17-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "601760"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-189303"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "791063"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-18-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "962060"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "472545"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1434605"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-18-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "962060"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "472545"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "489515"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-19-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "187602"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-491218"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-303616"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-19-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "187602"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-491218"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "678820"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-20-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-367002"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "386353"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "19351"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-20-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-367002"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "386353"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-753355"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-21-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "130174"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "655955"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "786129"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-21-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "130174"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "655955"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-525781"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-22-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "385817"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-833407"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-447590"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-22-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "385817"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-833407"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1219224"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-23-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-156466"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-451136"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-607602"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-23-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-156466"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-451136"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "294670"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-24-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "180802"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-192738"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-11936"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-24-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "180802"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-192738"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "373540"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-25-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-675990"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-979365"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-1655355"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-25-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-675990"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-979365"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "303375"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-26-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "279439"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "233652"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "513091"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-26-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "279439"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "233652"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "45787"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-27-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "39456"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-361867"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-322411"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-27-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "39456"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-361867"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "401323"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-28-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-439591"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "557856"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "118265"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-28-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "-439591"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "557856"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-997447"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-29-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "236882"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "737532"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "974414"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-29-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "236882"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "737532"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-500650"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-30-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "829977"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "819142"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "1649119"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-30-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "829977"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "819142"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "10835"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-31-add",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "175415"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-714640"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "-539225"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "deterministic-small-arithmetic-31-sub",
+      "kind": "evaluate",
+      "expression": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              {
+                "literal": {
+                  "integerToken": "175415"
+                }
+              },
+              {
+                "literal": {
+                  "integerToken": "-714640"
+                }
+              }
+            ]
+          },
+          {
+            "literal": {
+              "integerToken": "890055"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

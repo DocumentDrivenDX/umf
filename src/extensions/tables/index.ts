@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import manifest from '../../../spec/extensions/tables/package.json';
+import {tableLifecyclePackage} from './package';
 import {CURRENT_CORE_VERSION,UmfError,type Diagnostic,type Document,type ExtensionPackage,type Json,type Validation} from '../../model/types';
 import {copyJson,copyJsonCharged} from '../../model/json';
 import type {AccountingContext} from '../../model/internal/accounting-context';
@@ -13,7 +14,7 @@ import {inspectOperations} from './operations';
 import type {TableLifecyclePayload} from './types';
 export * from './types';
 export const TABLES_EXTENSION='umf.tables';
-export const tableLifecyclePackage=manifest as unknown as ExtensionPackage;
+export {tableLifecyclePackage};
 export interface TableLifecycleInspection extends Validation {
  source?:Json;
  modules:{module:string;payload:TableLifecyclePayload}[];

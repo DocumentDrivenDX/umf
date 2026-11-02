@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/sqlserver/package.json';
 import captureSchema from '../../../spec/extensions/sqlserver/capture.schema.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -8,9 +7,9 @@ import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {catalogIntegerErrors} from '../../validation/catalog-integers';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,type Document,type Json,type Element,type Diagnostic,type ExtensionPackage,type ScalarType} from '../../model/types';
-export const SQLSERVER_EXTENSION='umf.sqlserver';
-export const sqlserverPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,type Document,type Json,type Element,type Diagnostic,type ScalarType} from '../../model/types';
+import { SQLSERVER_EXTENSION, sqlserverPackage } from './package';
+export { SQLSERVER_EXTENSION, sqlserverPackage };
 type Payload={profile:'sqlserver-catalog-v1';root:NativeJson};
 export interface SqlServerColumnMetadata {path:string;table:{schema:string;name:string};element:Element;nativeColumn:NativeJson;}
 const check=createValidator().compile<any>(captureSchema);

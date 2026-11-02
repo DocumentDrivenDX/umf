@@ -315,9 +315,9 @@ source_hashes={
     'native_catalog_runtime':sha256(root/'python/umf_access/src/umf_access/lifecycle/catalog.py'),
     'ledger_runtime':sha256(root/'python/umf_access/src/umf_access/lifecycle/ledger.py'),
     'privilege_runtime':sha256(root/'python/umf_access/src/umf_access/lifecycle/privileges.py'),
-    'codegen_build_script':sha256(root/'scripts/build-codegen.ts'),
-    'embedded_asset_manifest':sha256(root/'python/umf_codegen/src/umf_codegen/_assets/manifest.json'),
-    'embedded_asset':sha256(root/'python/umf_codegen/src/umf_codegen/_assets/generator.js.gz'),
+    'native_codegen_engine':sha256(root/'crates/umf-codegen/src/lib.rs'),
+    'native_codegen_wrapper':sha256(root/'python/umf_codegen/src/umf_codegen/_native.py'),
+    'native_resource_manifest':sha256(root/'python/umf_codegen/src/umf_codegen/_resources/manifest.json'),
 }
 args.report.write_text(json.dumps({'fixtureVersion':fixture['version'],'serverVersion':server_version,
     'scope':'fabricated legal source-derived reviewed migration v0.2; no managed/private-consumer or release claim',

@@ -65,7 +65,7 @@ def test_installed_codegen_late_controls_and_output_isolation():
                            'spec/metamodel/generated/domain-policy.json', 'spec/extensions/tables/package.json',
                            'spec/extensions/actions/package.json', 'spec/extensions/binding/package.json', 'spec/extensions/binding-stable/package.json')))
     resources = {key: json.loads((root / path).read_text()) for key, path in paths.items()}
-    corpus = json.loads((root / 'docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json').read_text())
+    corpus = json.loads((root / 'tests/rust-core/fixtures/r3/baseline/operations.json').read_text())
     row = next(row for row in corpus['cases'] if row['operation'] == 'generatePythonClient' and row['expected']['ok'])
     state = {'active': False, 'charged': 0, 'stop': float('inf'), 'mode': 'observe'}
     def meter(amount):

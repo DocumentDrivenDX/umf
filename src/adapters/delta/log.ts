@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/delta-log/package.json';
+import {DELTA_LOG_EXTENSION,deltaLogPackage} from './package';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,type NativeJson} from '../../model/native-json';
-import {UmfError,type Document,type ExtensionPackage,type Diagnostic} from '../../model/types';
-export const DELTA_LOG_EXTENSION='umf.delta.log';
-export const deltaLogPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,type Document,type Diagnostic} from '../../model/types';
 export function deltaLogRegistry(){return new Registry().register(deltaLogPackage);}
 export function captureDeltaLog(text:string,options:{id:string}):Document{
  if(typeof text!=='string'||text.length>1000000)throw new UmfError('DELTA_LOG_LIMIT','Expected at most 1000000 UTF-16 code units');

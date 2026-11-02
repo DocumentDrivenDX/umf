@@ -324,15 +324,18 @@ union. `coreBit128DocumentSchema`, `coreBit128SelectionSchema`,
 `coreBit128TransitionSchema` and `coreBit128KeyTupleSchema` expose new independently
 identified schema resources. Earlier resources remain unchanged.
 
-`declareCoreBit128Field(source,identity,scalarType)` accepts core0.9.0, exact
-`identity:{module,element}` and `scalarType:'bits128'|'uuid'`. It returns a copied,
-validated Document directly, with no declaration receipt. The target must already
-be a singular Field; container item meaning is declared on the referenced Field.
-Unknown scalar meaning or relevant unknown qualifiers block replacement; incompatible
-existing facets/literals block the whole edit. This is explicit metadata authoring,
-not stored-value conversion. Historical kind/key/relationship/facet declaration
-helpers retain their earlier version restrictions; no historical receipt is reused
-as0.9 authoring authority. Authors may construct and validate ordinary0.9 metadata.
+`declareCoreBit128Field(source,identity,scalarType)` accepts only a valid current
+core0.10.0 Document, exact `identity:{module,element}` and
+`scalarType:'bits128'|'uuid'`. It returns a copied, validated Document directly,
+with no declaration receipt. Core0.9.0 is the historical profile version in the
+original design; it is not an accepted source version for this current public
+helper. This boundary is specific to `declareCoreBit128Field` and does not revise
+other operation predicates in this contract. The target must already be a singular
+Field; container item meaning is declared on the referenced Field. Unknown scalar
+meaning or relevant unknown qualifiers block replacement; incompatible existing
+facets/literals block the whole edit. This is explicit metadata authoring, not
+stored-value conversion. The function does not upgrade a 0.9.0 source; callers
+must explicitly migrate to the current core profile before authoring.
 
 The current read-only inspection result versions are kind8, nullability7,
 cardinality6, facets5, Key4, relationship3 and scalar/member/reference inspection0.3.

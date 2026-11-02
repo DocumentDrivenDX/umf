@@ -1,0 +1,398 @@
+{
+  "scope": "TypeScript decodeParquetFooter full enumerable envelope, source reconstructed from bytes and id; synthetic PAR1 footer captures",
+  "cases": [
+    {
+      "id": "unknownWire",
+      "bytes": "504152311f0100000050415231",
+      "sha256": "ccdd6f989a1cf12be26ead3fe063aadb32e3fe2449d385158942762cb7c5c434",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Unknown Compact Protocol wire type 15"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "invalidBoolean",
+      "bytes": "504152311911000300000050415231",
+      "sha256": "de89f1baf479f1709b00285766b11088e0fc0449c641711ba8a909bdcf1b89a2",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Invalid boolean encoding"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "oversizedBinary",
+      "bytes": "50415231187f0200000050415231",
+      "sha256": "6aad4da4ec576a72cc7c8d5f47f56233aa0a06ddae5915447472c303f63495a7",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Binary value exceeds footer region"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "oversizedLength",
+      "bytes": "5041523118ffffffff0f0600000050415231",
+      "sha256": "aa123b30047f18a8ea72074677e389bb4d43be253fa4f41649edf90788ec3291",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Length exceeds signed int32"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "unknownEmptyList",
+      "bytes": "50415231190f000300000050415231",
+      "sha256": "714f628a0847be53ec4a9dc3a7b80a4e9bbd6de30704e2c6ca9b06490179c044",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Unknown Compact Protocol wire type 15"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "unknownMapKey",
+      "bytes": "504152311b01f50300000050415231",
+      "sha256": "bae1c73b80121429f0e56e774402734cba3657cd8705d14bd68791f1ff80b866",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Unknown Compact Protocol wire type 15"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fieldIdOverflow",
+      "bytes": "5041523105feff0300f5000700000050415231",
+      "sha256": "9d6f730fdfb215bf218543820622d391ae1818258b11bbc8ea16b862d4b8c782",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Field ID exceeds signed int16"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "truncatedDouble",
+      "bytes": "5041523117000200000050415231",
+      "sha256": "97bfaef837d8c5beb33c603b89f6a0c50c45b356dfb8a918d89fdeba3c970db9",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Binary value exceeds footer region"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "truncatedUuid",
+      "bytes": "504152311d000200000050415231",
+      "sha256": "e4883d3963895b6b69e9bc4f87485b76a5bffc5381c8f33ef79d4e0b7be461c2",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Binary value exceeds footer region"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "emptyStruct",
+      "bytes": "50415231000100000050415231",
+      "sha256": "fb99744058435ded7ac4e2f6fc25d9b80475e444ac2c37f7bd013b9f95576c0d",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "decoded",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+            }
+          ],
+          "value": {
+            "kind": "struct",
+            "fields": []
+          },
+          "consumedBytes": 1,
+          "trailingBytes": 0
+        }
+      }
+    },
+    {
+      "id": "emptyList",
+      "bytes": "504152311905000300000050415231",
+      "sha256": "683badf250b38f08c14b8574b75052fb6e2ed3a0f1803a7c51cd4cdd8a051803",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "decoded",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+            }
+          ],
+          "value": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "list",
+                  "elementType": "i32",
+                  "items": []
+                }
+              }
+            ]
+          },
+          "consumedBytes": 3,
+          "trailingBytes": 0
+        }
+      }
+    },
+    {
+      "id": "emptyMap",
+      "bytes": "504152311b00000300000050415231",
+      "sha256": "3dbcf5a40570b8cfccd5912c77fa82a5237d0b5125daf6f94e5bc8aec91d7669",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "decoded",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+            }
+          ],
+          "value": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "map",
+                  "entries": []
+                }
+              }
+            ]
+          },
+          "consumedBytes": 3,
+          "trailingBytes": 0
+        }
+      }
+    },
+    {
+      "id": "wideVarint",
+      "bytes": "5041523115ffffffffff0600000050415231",
+      "sha256": "7c99274d03b95ddc47548d6dfa024901fc198dbf48cf2569f3069b42c095ebdd",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_UNINTERPRETED",
+              "path": "",
+              "severity": "warning",
+              "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+            },
+            {
+              "code": "PARQUET_FOOTER_DECODE",
+              "path": "",
+              "severity": "error",
+              "message": "Varint exceeds declared width"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "zeroFooter",
+      "bytes": "504152310000000050415231",
+      "sha256": "d1109236fd4a396184161b3b7cbd8efde297fc1421a6592935bdb00572c8eadc",
+      "typescript": {
+        "status": "returned",
+        "value": {
+          "status": "blocked",
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "PARQUET_FOOTER_BOUNDS",
+              "path": "",
+              "severity": "error",
+              "message": "Footer region is empty or overlaps the file header"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -33,7 +33,7 @@ test('resource and accessor refusal precede any accepted receipt',()=>{
 test('known breaking changes retain unknown residuals; wrong versions and identity refuse preservation',()=>{
  const b=source(),a=source();a.opaque={native:'uninterpreted'};a.modules[0].elements.find((e:any)=>e.id==='order_lines.quantity').scalarType='string';const r=inspectCoreEvolution(b,a,policy)as any;expect(r.classification).toBe('breaking');expect(r.residuals.some((x:string)=>x.includes('Unknown'))).toBe(true);
  const identity=source();identity.id='urn:other';expect((inspectCoreEvolution(b,identity,policy)as any).classification).toBe('breaking');
- const old=source();old.umf='0.7.0';expect(()=>inspectCoreEvolution(old,b,policy)).toThrow();
+ const old=source();old.umf='0.8.0';expect(()=>inspectCoreEvolution(old,b,policy)).toThrow();
 });
 test('schema exports are snapshots and original inputs/results are independent copies',()=>{
  const b=source(),a=added(),r=inspectCoreEvolution(b,a,policy)as any;const before=JSON.stringify(r);a.modules[0].elements.pop();expect(JSON.stringify(r)).toBe(before);expect(()=>verifyCoreEvolution(r,b,a,policy)).toThrow();

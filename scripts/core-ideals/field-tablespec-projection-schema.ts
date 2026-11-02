@@ -14,4 +14,10 @@ const schema={
 // Optional only for receipt compatibility; every newly emitted result includes diagnostics.
 Object.assign(schema.properties,{diagnostics:{type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string',minLength:1},path:{type:'string'},message:{type:'string',minLength:1},severity:{enum:['error','warning']}}}}});
 enforceProjectionPolicy(schema);
-await Bun.write('spec/core/field-tablespec-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
+const output='spec/core/field-tablespec-projection.schema.json';
+const rendered=JSON.stringify(schema,null,2)+'\n';
+if(process.argv.includes('--check')){
+ const current=await Bun.file(output).text();
+ if(current!==rendered)throw new Error(`${output} is stale; regenerate deliberately.`);
+ console.log(`${output} is current.`);
+}else await Bun.write(output,rendered);

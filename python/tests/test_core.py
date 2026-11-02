@@ -82,7 +82,7 @@ def test_only_generated_current_core_schema_is_active():
 
 
 def test_distribution_version_is_distinct_from_semantic_core_version():
-    assert umf.__version__ == "0.10.3"
+    assert umf.__version__ == "0.11.0"
     assert current_core_version() == "0.10.0"
 
 

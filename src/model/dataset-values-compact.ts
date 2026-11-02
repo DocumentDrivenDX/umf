@@ -11,7 +11,7 @@ import {createValidator} from '../validation/schema';
 import keySchema from '../../spec/core/key-tuple-operation-v4.schema.json';
 import coreSchema from '../../spec/core/schema.json';
 import operationSchema from '../../spec/core/dataset-value-compact-operation.schema.json';
-export {operationSchema as coreDatasetValueCompactOperationSchema};
+export {coreDatasetValueCompactOperationSchema} from './operation-schemas';
 export type CoreCompactRecordValueCheck=Omit<CoreRecordValueCheck,'source'>&{sourceRef:'#/source'};
 export type CoreCompactKeyTupleReceipt=Omit<CoreKeyTupleReceipt,'source'>&{sourceRef:'#/source'};
 export interface CoreDatasetCompactValueCheck extends Omit<CoreDatasetValueCheck,'operation'|'records'|'keys'|'relationships'>{
@@ -36,8 +36,7 @@ export function evaluateCompactWithWork(source:Document,input:CoreDatasetInput,w
 export function validateCoreDatasetValuesCompact(source:Document,input:CoreDatasetInput):CoreDatasetCompactValueCheck{return evaluateCompactWithWork(source,input).receipt;}
 export function verifyCoreDatasetValuesCompact(receiptInput:CoreDatasetCompactValueCheck,current:Document,expectedInput:CoreDatasetInput):CoreDatasetCompactValueCheck{return verifyCompactWithWork(receiptInput,current,expectedInput).receipt;}
 /** Internal accounting receipt for tests, not exported from package API. */
-export function verifyCompactWithWork(receiptInput:CoreDatasetCompactValueCheck,current:Document,expectedInput:CoreDatasetInput){
- const work=new ValueWork();
+export function verifyCompactWithWork(receiptInput:CoreDatasetCompactValueCheck,current:Document,expectedInput:CoreDatasetInput,work=new ValueWork()){
  try{
   const receipt=work.copy(receiptInput) as unknown as CoreDatasetCompactValueCheck;
   reserveCompactSchemaWork(receipt,work);

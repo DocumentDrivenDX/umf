@@ -1,0 +1,67 @@
+{
+  "sources": [
+    {
+      "path": "spec/domain-packs/public-company-intelligence/sources/scoped-submissions-0000004962.json",
+      "sha256": "3fd08f1e186117f2bdbef85d8ec3be74f908414818332de92d92d5152cb8bd65",
+      "bytes": 6042
+    },
+    {
+      "path": "spec/domain-packs/public-company-intelligence/sources/scoped-companyfacts-0000004962.json",
+      "sha256": "ca5aae9506442a20cbe660225c7de4a85558ce9078196130368a33edc715e3bd",
+      "bytes": 22895
+    }
+  ],
+  "assertions": [
+    {
+      "id": "fixture-submissions-name-and-padded-cik",
+      "independent": {
+        "name": "AMERICAN EXPRESS CO",
+        "cik": "0000004962"
+      },
+      "projection": {
+        "name": "AMERICAN EXPRESS CO",
+        "cik": "0000004962"
+      },
+      "pass": true
+    },
+    {
+      "id": "fixture-submissions-array-cardinality",
+      "independent": {
+        "recentCount": 27,
+        "allColumnLengths": {
+          "accessionNumber": 27,
+          "filingDate": 27,
+          "reportDate": 27,
+          "acceptanceDateTime": 27,
+          "act": 27,
+          "form": 27,
+          "fileNumber": 27,
+          "filmNumber": 27,
+          "items": 27,
+          "core_type": 27,
+          "size": 27,
+          "isXBRL": 27,
+          "isInlineXBRL": 27,
+          "isXBRLNumeric": 27,
+          "primaryDocument": 27,
+          "primaryDocDescription": 27
+        }
+      },
+      "projection": {
+        "filingRows": 27
+      },
+      "pass": true
+    },
+    {
+      "id": "fixture-companyfacts-observation-cardinality",
+      "independent": {
+        "taxonomyCount": 1,
+        "observationCount": 144
+      },
+      "projection": {
+        "rowCount": 144
+      },
+      "pass": true
+    }
+  ]
+}

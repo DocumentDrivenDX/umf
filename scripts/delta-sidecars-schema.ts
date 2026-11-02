@@ -10,4 +10,6 @@ const projection=await Bun.file('spec/extensions/delta-log/parquet-actions.schem
 schema.allOf.push({if:{properties:{status:{const:'reconciled'}}},then:{required:['derivedCheckpoint','origins','omittedNullFields','scalarConversions']}});
 schema.dependentRequired={scalarConversions:['derivedCheckpoint','origins','omittedNullFields'],derivedCheckpoint:['origins','omittedNullFields'],origins:['derivedCheckpoint','omittedNullFields'],omittedNullFields:['derivedCheckpoint','origins']};
 for(const k of ['derivedCheckpoint','origins','omittedNullFields','scalarConversions'])schema.dependentRequired[k]=['derivedCheckpoint','origins','omittedNullFields','scalarConversions'].filter(x=>x!==k);
-await Bun.write('spec/extensions/delta-log/sidecar-reconciliation.schema.json',JSON.stringify(schema,null,2)+'\n');
+const output='spec/extensions/delta-log/sidecar-reconciliation.schema.json',text=JSON.stringify(schema,null,2)+'\n';
+if(process.argv.includes('--check')){if(!await Bun.file(output).exists()||await Bun.file(output).text()!==text)throw Error('Generated drift '+output);}
+else await Bun.write(output,text);

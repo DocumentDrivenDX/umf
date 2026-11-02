@@ -1,0 +1,255 @@
+{
+  "source": {
+    "path": "src/domain-packs/public-company.ts",
+    "sha256": "a7037ce5ce74be713c20b61231f81179d352ec7da4553e8a19920f4cd8bf02b0"
+  },
+  "contracts": [
+    "CONTRACT-059",
+    "CONTRACT-052",
+    "CONTRACT-053"
+  ],
+  "submissions": [
+    {
+      "id": "submissions-empty-recent-and-unknown-column",
+      "input": "{\"cik\":42,\"name\":\"Example Corp\",\"tickers\":[\"EX\"],\"exchanges\":[\"NYSE\"],\"filings\":{\"recent\":{\"accessionNumber\":[],\"filingDate\":[],\"reportDate\":[],\"form\":[],\"primaryDocument\":[],\"items\":[],\"futureColumn\":[]}},\"unknown_root\":{\"keep\":true}}",
+      "sourceId": "case/sub-1",
+      "expected": {
+        "ok": true,
+        "value": {
+          "companies": [
+            {
+              "id": "0000000042",
+              "name": "Example Corp",
+              "source_id": "case/sub-1"
+            }
+          ],
+          "identifiers": [
+            {
+              "id": "[\"case/sub-1\",\"cik\"]",
+              "company_id": "0000000042",
+              "scheme": "SEC-CIK",
+              "native_value": "0000000042",
+              "source_id": "case/sub-1"
+            },
+            {
+              "id": "[\"case/sub-1\",\"tickers\",\"0\"]",
+              "company_id": "0000000042",
+              "scheme": "tickers",
+              "native_value": "EX",
+              "source_id": "case/sub-1"
+            },
+            {
+              "id": "[\"case/sub-1\",\"exchanges\",\"0\"]",
+              "company_id": "0000000042",
+              "scheme": "exchanges",
+              "native_value": "NYSE",
+              "source_id": "case/sub-1"
+            }
+          ],
+          "filings": []
+        }
+      }
+    },
+    {
+      "id": "submissions-preserve-extra-column-and-safe-primary",
+      "input": "{\"cik\":\"7\",\"name\":\"Seven Co\",\"filings\":{\"recent\":{\"accessionNumber\":[\"0000000007-24-000001\"],\"filingDate\":[\"2024-02-29\"],\"reportDate\":[null],\"form\":[\"8-K\"],\"primaryDocument\":[\"a/b.html\"],\"items\":[\"2.01\"],\"futureColumn\":[\"opaque\"]}}}",
+      "sourceId": "case/sub-2",
+      "expected": {
+        "ok": true,
+        "value": {
+          "companies": [
+            {
+              "id": "0000000007",
+              "name": "Seven Co",
+              "source_id": "case/sub-2"
+            }
+          ],
+          "identifiers": [
+            {
+              "id": "[\"case/sub-2\",\"cik\"]",
+              "company_id": "0000000007",
+              "scheme": "SEC-CIK",
+              "native_value": "0000000007",
+              "source_id": "case/sub-2"
+            }
+          ],
+          "filings": [
+            {
+              "id": "[\"0000000007\",\"0000000007-24-000001\"]",
+              "company_id": "0000000007",
+              "snapshot_id": "case/sub-2",
+              "accession": "0000000007-24-000001",
+              "filing_date": "2024-02-29",
+              "report_date": null,
+              "form": "8-K",
+              "items": "2.01",
+              "primary_document": "a/b.html",
+              "primary_url": "https://www.sec.gov/Archives/edgar/data/7/000000000724000001/a/b.html",
+              "native_path": "/filings/recent/0",
+              "native_json": "{\"accessionNumber\":\"0000000007-24-000001\",\"filingDate\":\"2024-02-29\",\"reportDate\":null,\"form\":\"8-K\",\"primaryDocument\":\"a/b.html\",\"items\":\"2.01\",\"futureColumn\":\"opaque\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "submissions-unequal-parallel-arrays",
+      "input": "{\"cik\":\"7\",\"name\":\"Seven Co\",\"filings\":{\"recent\":{\"accessionNumber\":[\"0000000007-24-000001\"],\"filingDate\":[],\"reportDate\":[],\"form\":[],\"primaryDocument\":[],\"items\":[]}}}",
+      "sourceId": "case/sub-3",
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "message": "Unequal SEC recent arrays"
+        }
+      }
+    },
+    {
+      "id": "submissions-duplicate-accession",
+      "input": "{\"cik\":\"7\",\"name\":\"Seven Co\",\"filings\":{\"recent\":{\"accessionNumber\":[\"0000000007-24-000001\",\"0000000007-24-000001\"],\"filingDate\":[\"2024-01-01\",\"2024-01-02\"],\"reportDate\":[null,null],\"form\":[\"8-K\",\"8-K\"],\"primaryDocument\":[null,null],\"items\":[null,null]}}}",
+      "sourceId": "case/sub-4",
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "message": "Invalid or duplicate SEC accession"
+        }
+      }
+    },
+    {
+      "id": "submissions-unsafe-primary-document",
+      "input": "{\"cik\":\"7\",\"name\":\"Seven Co\",\"filings\":{\"recent\":{\"accessionNumber\":[\"0000000007-24-000001\"],\"filingDate\":[\"2024-01-01\"],\"reportDate\":[null],\"form\":[\"8-K\"],\"primaryDocument\":[\"../evil.html\"],\"items\":[null]}}}",
+      "sourceId": "case/sub-5",
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "message": "Unsafe SEC primary document"
+        }
+      }
+    },
+    {
+      "id": "submissions-zero-cik",
+      "input": "{\"cik\":\"000\",\"name\":\"Zero Co\",\"filings\":{\"recent\":{\"accessionNumber\":[],\"filingDate\":[],\"reportDate\":[],\"form\":[],\"primaryDocument\":[],\"items\":[]}}}",
+      "sourceId": "case/sub-6",
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "message": "Invalid SEC CIK"
+        }
+      }
+    }
+  ],
+  "companyFacts": [
+    {
+      "id": "facts-absent-null-zero-large-token-and-escaped-pointer",
+      "input": "{\"cik\":\"7\",\"facts\":{\"us-gaap\":{\"A/B~C\":{\"label\":\"Opaque\",\"units\":{\"USD\":[{\"start\":\"2024-01-01\",\"end\":\"2024-12-31\",\"val\":9007199254740993.0100,\"future\":\"kept\"},{\"val\":null},{\"val\":0}]}}}}}",
+      "sourceId": "case/facts-1",
+      "expected": {
+        "ok": true,
+        "value": [
+          {
+            "id": "[\"case/facts-1\",\"us-gaap\",\"A/B~C\",\"USD\",\"0\"]",
+            "company_id": "0000000007",
+            "snapshot_id": "case/facts-1",
+            "taxonomy": "us-gaap",
+            "concept": "A/B~C",
+            "unit": "USD",
+            "ordinal": "0",
+            "value": "9007199254740993.0100",
+            "value_state": "present",
+            "start_date": "2024-01-01",
+            "end_date": "2024-12-31",
+            "accession": null,
+            "filed_date": null,
+            "form": null,
+            "fiscal_year": null,
+            "fiscal_period": null,
+            "frame": null,
+            "native_path": "/facts/us-gaap/A~1B~0C/units/USD/0",
+            "native_json": "{\"start\":\"2024-01-01\",\"end\":\"2024-12-31\",\"val\":9007199254740993.0100,\"future\":\"kept\"}",
+            "concept_json": "{\"label\":\"Opaque\"}"
+          },
+          {
+            "id": "[\"case/facts-1\",\"us-gaap\",\"A/B~C\",\"USD\",\"1\"]",
+            "company_id": "0000000007",
+            "snapshot_id": "case/facts-1",
+            "taxonomy": "us-gaap",
+            "concept": "A/B~C",
+            "unit": "USD",
+            "ordinal": "1",
+            "value": null,
+            "value_state": "null",
+            "start_date": null,
+            "end_date": null,
+            "accession": null,
+            "filed_date": null,
+            "form": null,
+            "fiscal_year": null,
+            "fiscal_period": null,
+            "frame": null,
+            "native_path": "/facts/us-gaap/A~1B~0C/units/USD/1",
+            "native_json": "{\"val\":null}",
+            "concept_json": "{\"label\":\"Opaque\"}"
+          },
+          {
+            "id": "[\"case/facts-1\",\"us-gaap\",\"A/B~C\",\"USD\",\"2\"]",
+            "company_id": "0000000007",
+            "snapshot_id": "case/facts-1",
+            "taxonomy": "us-gaap",
+            "concept": "A/B~C",
+            "unit": "USD",
+            "ordinal": "2",
+            "value": "0",
+            "value_state": "present",
+            "start_date": null,
+            "end_date": null,
+            "accession": null,
+            "filed_date": null,
+            "form": null,
+            "fiscal_year": null,
+            "fiscal_period": null,
+            "frame": null,
+            "native_path": "/facts/us-gaap/A~1B~0C/units/USD/2",
+            "native_json": "{\"val\":0}",
+            "concept_json": "{\"label\":\"Opaque\"}"
+          }
+        ]
+      }
+    },
+    {
+      "id": "facts-no-observations",
+      "input": "{\"cik\":7,\"facts\":{\"custom\":{\"Empty\":{\"label\":\"empty\",\"units\":{\"USD\":[]}}}}}",
+      "sourceId": "case/facts-2",
+      "expected": {
+        "ok": true,
+        "value": []
+      }
+    },
+    {
+      "id": "facts-string-valued-numeric",
+      "input": "{\"cik\":\"7\",\"facts\":{\"us-gaap\":{\"Revenue\":{\"units\":{\"USD\":[{\"val\":\"100\"}]}}}}}",
+      "sourceId": "case/facts-3",
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "message": "Expected SEC numeric token"
+        }
+      }
+    },
+    {
+      "id": "facts-root-not-object",
+      "input": "[]",
+      "sourceId": "case/facts-4",
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "message": "Expected SEC object"
+        }
+      }
+    }
+  ]
+}

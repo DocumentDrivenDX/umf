@@ -1,0 +1,144 @@
+{
+  "schema": "umf-r5-dataset-values-freeze-index/1",
+  "cases": {
+    "commerce": {
+      "file": "frozen-commerce.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "nested_key_control": {
+      "file": "frozen-nested_key_control.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "closed_scope": {
+      "file": "frozen-closed_scope.json",
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Dataset request violates its versioned operation schema",
+          "code": "CORE_DATASET_INPUT"
+        }
+      }
+    },
+    "unknown_input_member": {
+      "file": "frozen-unknown_input_member.json",
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Dataset request violates its versioned operation schema",
+          "code": "CORE_DATASET_INPUT"
+        }
+      }
+    },
+    "duplicate_instance": {
+      "file": "frozen-duplicate_instance.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "unknown_source_meaning": {
+      "file": "frozen-unknown_source_meaning.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "supplementary_and_surrogate": {
+      "file": "frozen-supplementary_and_surrogate.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "unsupported_lifecycle": {
+      "file": "frozen-unsupported_lifecycle.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "unknown_relationship_declaration": {
+      "file": "frozen-unknown_relationship_declaration.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "surrogate_unknown_path": {
+      "file": "frozen-surrogate_unknown_path.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "duplicate_locator_first_wins": {
+      "file": "frozen-duplicate_locator_first_wins.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "duplicate_key_path": {
+      "file": "frozen-duplicate_key_path.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "unknown_key_residual": {
+      "file": "frozen-unknown_key_residual.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "unsupported_relationship_order": {
+      "file": "frozen-unsupported_relationship_order.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "oversized": {
+      "file": "frozen-oversized.json",
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Dataset work/retained receipt budget exceeded",
+          "code": "LIMIT"
+        }
+      }
+    },
+    "unknown_source_value_count": {
+      "file": "frozen-unknown_source_value_count.json",
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Dataset work/retained receipt budget exceeded",
+          "code": "LIMIT"
+        }
+      }
+    },
+    "invalid_target_key_updates_key_obligation": {
+      "file": "frozen-invalid_target_key_updates_key_obligation.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "unknown_target_key_updates_key_obligation": {
+      "file": "frozen-unknown_target_key_updates_key_obligation.json",
+      "outcome": {
+        "ok": true
+      }
+    },
+    "wrong_version_document_validation_order": {
+      "file": "frozen-wrong_version_document_validation_order.json",
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Valid current core 0.10.0 source required",
+          "code": "CORE_DATASET_SOURCE"
+        }
+      }
+    }
+  }
+}

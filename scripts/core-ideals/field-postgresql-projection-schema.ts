@@ -10,4 +10,10 @@ schema.properties.mapping.properties.nativePath.const='/stmts/0/stmt/CreateStmt/
 schema.properties.nativeSql={type:'string',minLength:1};schema.allOf[0].then.required.push('nativeSql');schema.allOf[0].then.properties.nativeSql=true;schema.allOf[0].else.properties.nativeSql=false;
 schema.required.push('diagnostics');schema.properties.diagnostics={type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string'},path:{type:'string'},message:{type:'string'},severity:{enum:['error','warning']}}}};
 enforceProjectionPolicy(schema);
-await Bun.write('spec/core/field-postgresql-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
+const output='spec/core/field-postgresql-projection.schema.json';
+const rendered=JSON.stringify(schema,null,2)+'\n';
+if(process.argv.includes('--check')){
+ const current=await Bun.file(output).text();
+ if(current!==rendered)throw new Error(`${output} is stale; regenerate deliberately.`);
+ console.log(`${output} is current.`);
+}else await Bun.write(output,rendered);

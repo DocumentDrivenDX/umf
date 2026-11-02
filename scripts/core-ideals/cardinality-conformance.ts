@@ -23,7 +23,9 @@ const digest=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex'
 const file=(name:string)=>`fixtures/validation/${name}.json`;
 /** Re-author a retained explicit Cardinality decision under current core, preserving its authored item reference. */
 export function replayCurrentCardinalityAuthor(row:any):u.CoreCardinalityDeclaration {
- const source=u.copyJson(row.author.source) as u.Document;assert.notEqual(source.umf,u.CURRENT_CORE_VERSION);source.umf=u.CURRENT_CORE_VERSION;
+ const source=u.copyJson(row.author.source) as u.Document;
+ if(source.umf===u.CURRENT_CORE_VERSION)return u.verifyCoreCardinalityDeclaration(row.author,row.author.target);
+ assert.notEqual(source.umf,u.CURRENT_CORE_VERSION);source.umf=u.CURRENT_CORE_VERSION;
  const field=source.modules.find(module=>module.id===row.author.identity.module)?.elements.find(element=>element.id===row.author.identity.element);
  const authoredField=row.author.target.modules.find((module:any)=>module.id===row.author.identity.module)?.elements.find((element:any)=>element.id===row.author.identity.element);
  assert.ok(field,'historical author source must contain the declared element');assert.ok(authoredField,'historical author target must contain the declared element');
@@ -129,9 +131,9 @@ export async function verifyCardinalityRoundTrips(){
   avro:{rows:avroCardinalityProjectionCases(),project:r=>u.projectCardinalityToAvro(r.author,r.request),recover:r=>u.recoverCardinalityFromAvro(r,r.nativeBundle),compose:verifyAvroCardinalityComposition},
   parquet:{rows:parquetCardinalityProjectionCases(),project:r=>u.projectCardinalityToParquet(r.author,r.request),recover:r=>u.recoverCardinalityFromParquet(r,u.exportParquetCapture(r.target)),compose:verifyParquetCardinalityComposition},
  };
- const coverage={} as Record<System,{authoredCases:number;strictBlocks:number;reportResiduals:number;idealRecoveries:number;nativeCases:number;nativeBlocks:number;nativeRecoveries:number;compositions:number;labels:string[];historicalReplayCases:number;historicalReplayInputsEqual:number}>;
+ const coverage={} as Record<System,{authoredCases:number;strictBlocks:number;reportResiduals:number;idealRecoveries:number;nativeCases:number;nativeBlocks:number;nativeRecoveries:number;compositions:number;labels:string[];historicalReplayCases:number;historicalReplayInputsEqual:number;currentReplayCases:number;currentReplayInputsEqual:number}>;
  for(const system of cardinalitySystems){
-  const b=bindings[system],counts={authoredCases:0,strictBlocks:0,reportResiduals:0,idealRecoveries:0,nativeCases:0,nativeBlocks:0,nativeRecoveries:0,compositions:0,labels:[] as string[],historicalReplayCases:0,historicalReplayInputsEqual:0};coverage[system]=counts;
+  const b=bindings[system],counts={authoredCases:0,strictBlocks:0,reportResiduals:0,idealRecoveries:0,nativeCases:0,nativeBlocks:0,nativeRecoveries:0,compositions:0,labels:[] as string[],historicalReplayCases:0,historicalReplayInputsEqual:0,currentReplayCases:0,currentReplayInputsEqual:0};coverage[system]=counts;
   // Cover every ideal independently of whether the binding can express it.
   const base=b.rows.find(r=>r.author.provenance.cardinality==='one')!;
   for(const cardinality of ['one','array','map','unspecified'] as const)for(const mode of ['strict','report'] as const){
@@ -187,11 +189,14 @@ export async function verifyCardinalityRoundTrips(){
   for(const row of proof.rows){
    if(row.result.status==='blocked')continue;
    // Re-author the recorded declaration under current core; do not infer item meaning from native storage.
-   const currentAuthor=replayCurrentCardinalityAuthor(row);
-   const currentRow={author:currentAuthor,request:row.request},result=await bindings[system].project(currentRow);coverage[system].historicalReplayCases++;
+   // Current receipts verify in place; only older receipts are re-authored under the current core.
+   const isHistorical=row.author.source.umf!==u.CURRENT_CORE_VERSION,currentAuthor=replayCurrentCardinalityAuthor(row);
+   const currentRow={author:currentAuthor,request:row.request},result=await bindings[system].project(currentRow);
+   if(isHistorical)coverage[system].historicalReplayCases++;else coverage[system].currentReplayCases++;
    const historicalInput=system==='postgresql'?row.result.target.modules[0]?.elements[0]?.extensions?.['umf.postgresql']?.source:row.result.target.sql;
    const currentInput=system==='postgresql'?result.target?.modules[0]?.elements[0]?.extensions?.['umf.postgresql']?.source:result.target?.sql;
-   assert.equal(typeof historicalInput,'string');assert.equal(currentInput,historicalInput,`${system} current authored replay differs from archived native input ${row.request.id}`);coverage[system].historicalReplayInputsEqual++;
+   assert.equal(typeof historicalInput,'string');assert.equal(currentInput,historicalInput,`${system} current authored replay differs from native input ${row.request.id}`);
+   if(isHistorical)coverage[system].historicalReplayInputsEqual++;else coverage[system].currentReplayInputsEqual++;
    let classified:any;
    if(system==='postgresql'){
     const column=u.getPostgresqlColumnMetadata(source).find(c=>c.relation.name===row.request.tableName)!;assert.ok(column);

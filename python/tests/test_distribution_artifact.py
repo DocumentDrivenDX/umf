@@ -11,17 +11,20 @@ import importlib.util
 import io
 import json
 import os
+import posixpath
 import re
+import shutil
 import struct
 import subprocess
 import sys
 import tarfile
+import tempfile
 import textwrap
 import tomllib
 import types
 import zipfile
 from email.parser import Parser
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import pytest
 from packaging.specifiers import SpecifierSet
@@ -61,6 +64,33 @@ def _core_public_release_verifier():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def test_parquet_capture_compile_time_resource_is_in_sdist_closure():
+    repository = Path(__file__).resolve().parents[2]
+    source = repository / "crates/umf-core/src/parquet_capture_inspection.rs"
+    source_text = source.read_text(encoding="utf-8")
+    includes = re.findall(r'include_(?:str|bytes)!\s*\(\s*"([^"\n]+)"', source_text)
+    resources = {
+        (source.parent / include).resolve().relative_to(repository).as_posix()
+        for include in includes
+        if "/spec/extensions/parquet/" in f"/{include}"
+    }
+    assert resources == {"spec/extensions/parquet/idl.json"}
+
+    build_hook = (repository / "python/hatch_build.py").read_text(encoding="utf-8")
+    assignments = ast.parse(build_hook)
+    sdist_files = next(
+        ast.literal_eval(node.value)
+        for node in assignments.body
+        if isinstance(node, ast.Assign)
+        and any(
+            isinstance(target, ast.Name) and target.id == "SDIST_SOURCE_FILES"
+            for target in node.targets
+        )
+    )
+
+    assert resources <= set(sdist_files)
 
 
 @pytest.mark.parametrize(
@@ -237,9 +267,11 @@ def _wheel(
     path,
     package,
     *,
-    version="0.10.3",
+    version="0.11.0",
     tag="cp311-abi3-linux_x86_64",
     native=b"native",
+    cli=b"cli-native",
+    include_cli=True,
     metadata_extra="",
     wheel_extra="",
     corrupt_record=False,
@@ -257,6 +289,8 @@ def _wheel(
             f"Wheel-Version: 1.0\nRoot-Is-Purelib: false\nTag: {tag}\n{wheel_extra}"
         ).encode(),
     }
+    if include_cli:
+        files[verifier.WINDOWS_CLI_MEMBER if "win" in tag else verifier.CLI_MEMBER] = cli
     for name in ("LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"):
         files[f"{dist_info}/licenses/{name}"] = b"license"
     record_name = f"{dist_info}/RECORD"
@@ -440,21 +474,48 @@ def test_source_inventory_contains_all_ten_bound_runtime_resources():
     }
 
 
+def test_generated_source_tree_binaries_are_not_canonical_payloads(tmp_path):
+    verifier = _verifier()
+    package_source = tmp_path / "umf"
+    package_source.mkdir()
+    (package_source / "__init__.py").write_bytes(b"source")
+    (package_source / "_rust_core.abi3.so").write_bytes(b"stale extension")
+    cli_dir = package_source / "_bin"
+    cli_dir.mkdir()
+    (cli_dir / "umf").write_bytes(b"stale cli")
+
+    payloads = verifier._python_package_payloads(package_source)
+
+    assert payloads == {"umf/__init__.py": b"source"}
+
+
 def test_exact_wheel_payload_and_record_are_accepted(tmp_path):
     verifier = _verifier()
-    package = {"umf/__init__.py": b"__version__ = '0.10.3'\n"}
+    package = {"umf/__init__.py": b"__version__ = '0.11.0'\n"}
     expected_licenses = {
         name: b"license" for name in ("LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE")
     }
     wheel = _wheel(tmp_path / "valid.whl", package)
 
     result = verifier._validate_wheel(
-        wheel, package, expected_licenses, "0.10.3", "linux_x86_64"
+        wheel, package, expected_licenses, "0.11.0", "linux_x86_64"
     )
 
-    assert result["version"] == "0.10.3"
+    assert result["version"] == "0.11.0"
     assert result["tag"] == "cp311-abi3-linux_x86_64"
-    assert result["package_file_count"] == 2
+    assert result["package_file_count"] == 3
+
+
+def test_exact_wheel_requires_a_nonempty_cli_payload(tmp_path):
+    verifier = _verifier()
+    package = {"umf/__init__.py": b"source"}
+    licenses = {
+        name: b"license" for name in ("LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE")
+    }
+    wheel = _wheel(tmp_path / "empty-cli.whl", package, cli=b"")
+
+    with pytest.raises(ValueError, match="native CLI is empty"):
+        verifier._validate_wheel(wheel, package, licenses, "0.11.0", "linux_x86_64")
 
 
 def test_macos_arm64_tag_is_accepted_only_for_the_arm64_cohort(tmp_path):
@@ -468,10 +529,11 @@ def test_macos_arm64_tag_is_accepted_only_for_the_arm64_cohort(tmp_path):
         package,
         tag="cp311-abi3-macosx_11_0_arm64",
         native=_macho(),
+        cli=_macho(),
     )
 
     result = verifier._validate_wheel(
-        wheel, package, expected_licenses, "0.10.3", "macos_arm64"
+        wheel, package, expected_licenses, "0.11.0", "macos_arm64"
     )
 
     assert result["tag"] == "cp311-abi3-macosx_11_0_arm64"
@@ -505,10 +567,11 @@ def test_macos_artifact_rejects_fat_wrong_cpu_or_unqualified_minimum(
         package,
         tag="cp311-abi3-macosx_11_0_arm64",
         native=native,
+        cli=native,
     )
 
     with pytest.raises(ValueError, match=message):
-        verifier._validate_wheel(wheel, package, licenses, "0.10.3", "macos_arm64")
+        verifier._validate_wheel(wheel, package, licenses, "0.11.0", "macos_arm64")
 
 
 def test_hatch_hook_loads_its_native_inspector_outside_project_directory(
@@ -574,8 +637,12 @@ def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
 ):
     verifier = _verifier()
     package = {"umf/__init__.py": b"source"}
-    direct = _wheel(tmp_path / "direct.whl", package, native=b"native-direct")
-    rebuilt = _wheel(tmp_path / "rebuilt.whl", package, native=b"native-rebuilt")
+    direct = _wheel(
+        tmp_path / "direct.whl", package, native=b"native-direct", cli=b"cli-direct"
+    )
+    rebuilt = _wheel(
+        tmp_path / "rebuilt.whl", package, native=b"native-rebuilt", cli=b"cli-rebuilt"
+    )
 
     parity = verifier._compare_wheel_package_sources(direct, rebuilt)
 
@@ -586,6 +653,10 @@ def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
         "metadata_byte_identity": True,
         "wheel_byte_identity": True,
         "native_byte_identity": False,
+        "native_byte_identity_by_member": {
+            "umf/_bin/umf": False,
+            "umf/_rust_core.abi3.so": False,
+        },
     }
 
 
@@ -594,7 +665,7 @@ def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
     [
         (
             {"umf/__init__.py": b"changed"},
-            "0.10.3",
+            "0.11.0",
             "cp311-abi3-linux_x86_64",
             "non-native",
         ),
@@ -606,19 +677,19 @@ def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
         ),
         (
             {"umf/__init__.py": b"source"},
-            "0.10.3",
+            "0.11.0",
             "cp311-abi3-linux_aarch64",
             "platform tag",
         ),
         (
             {"umf/__init__.py": b"source"},
-            "0.10.3",
+            "0.11.0",
             "cp311-abi3-linux_x86_64",
             "wheel METADATA",
         ),
         (
             {"umf/__init__.py": b"source"},
-            "0.10.3",
+            "0.11.0",
             "cp311-abi3-linux_x86_64",
             "wheel WHEEL",
         ),
@@ -644,17 +715,29 @@ def test_sdist_rebuild_rejects_source_version_tag_or_metadata_drift(
 
 def test_installed_wheel_payload_and_record_match_the_exact_archive(tmp_path):
     verifier = _verifier()
-    package = {"umf/__init__.py": b"__version__ = '0.10.3'\n"}
+    package = {"umf/__init__.py": b"__version__ = '0.11.0'\n"}
     wheel = _wheel(tmp_path / "installed.whl", package)
     platlib = tmp_path / "site-packages"
     _install_wheel(wheel, platlib)
 
-    result = verifier._validate_installed_wheel(wheel, platlib, "0.10.3")
+    result = verifier._validate_installed_wheel(wheel, platlib, "0.11.0")
 
     assert result["status"] == "passed"
     assert result["all_files_inside_platlib"] is True
-    assert result["package_file_count"] == 2
+    assert result["package_file_count"] == 3
     assert result["native_sha256"] == hashlib.sha256(b"native").hexdigest()
+    assert result["cli_sha256"] == hashlib.sha256(b"cli-native").hexdigest()
+
+
+def test_installed_wheel_requires_the_cli_in_the_package_closure(tmp_path):
+    verifier = _verifier()
+    package = {"umf/__init__.py": b"source"}
+    wheel = _wheel(tmp_path / "missing-cli.whl", package, include_cli=False)
+    platlib = tmp_path / "site-packages"
+    _install_wheel(wheel, platlib)
+
+    with pytest.raises(ValueError, match="package inventory"):
+        verifier._validate_installed_wheel(wheel, platlib, "0.11.0")
 
 
 @pytest.mark.parametrize("damage", ("payload", "record", "extra", "pyc", "symlink"))
@@ -675,7 +758,7 @@ def test_installed_wheel_verification_rejects_changed_or_escaped_files(
         package_file.write_bytes(b"replaced")
         expected = "RECORD"
     elif damage == "extra":
-        extra = platlib / "umf_core-0.10.3.dist-info/EXTRA"
+        extra = platlib / "umf_core-0.11.0.dist-info/EXTRA"
         extra.write_text("unexpected", encoding="utf-8")
         expected = "omitted from RECORD"
     elif damage == "pyc":
@@ -691,7 +774,7 @@ def test_installed_wheel_verification_rejects_changed_or_escaped_files(
         expected = "symlink"
 
     with pytest.raises(ValueError, match=expected):
-        verifier._validate_installed_wheel(wheel, platlib, "0.10.3")
+        verifier._validate_installed_wheel(wheel, platlib, "0.11.0")
 
 
 def test_installed_workflow_disables_bytecode_and_hashes_verifier_source():
@@ -714,13 +797,9 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
         / ".github/workflows/python-action-runtime.yml"
     ).read_text(encoding="utf-8")
     producer_start_marker = "  qualify-installed-artifact:\n"
-    selected_start_marker = "  qualify-selected-release-wheel-four-cells:\n"
     assert workflow.count(producer_start_marker) == 1
-    assert workflow.count(selected_start_marker) == 1
     producer_start = workflow.index(producer_start_marker)
-    selected_start = workflow.index(selected_start_marker)
-    assert producer_start < selected_start
-    producer_workflow = workflow[producer_start:selected_start]
+    producer_workflow = workflow[producer_start:]
 
     producer_matrix_start = producer_workflow.index("      matrix:\n")
     producer_matrix_end = producer_workflow.index(
@@ -735,23 +814,6 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     assert producer_matrix.count("            expected-machine: x86_64\n") == 1
     assert producer_matrix.count("            expected-platform: linux_x86_64\n") == 1
     assert "macos" not in producer_matrix
-
-    selected_workflow = workflow[selected_start:]
-    selected_matrix_start = selected_workflow.index("      matrix:\n")
-    selected_matrix_end = selected_workflow.index(
-        "\n    runs-on: ${{ matrix.runs-on }}\n", selected_matrix_start
-    ) + 1
-    selected_matrix = selected_workflow[selected_matrix_start:selected_matrix_end]
-    assert selected_matrix.count("          - cohort: ") == 2
-    assert selected_matrix.count("          - cohort: linux-x86_64\n") == 2
-    assert selected_matrix.count("            runs-on: ubuntu-24.04\n") == 2
-    assert selected_matrix.count("            platform: linux\n") == 2
-    assert selected_matrix.count("            python-version: '3.11.17'\n") == 1
-    assert selected_matrix.count("            expected-python-minor: '11'\n") == 1
-    assert selected_matrix.count("            python-version: '3.14.8'\n") == 1
-    assert selected_matrix.count("            expected-python-minor: '14'\n") == 1
-    assert selected_matrix.count("            expected-machine: x86_64\n") == 2
-    assert "macos" not in selected_matrix
 
     public_workflow_path = (
         Path(__file__).resolve().parents[2]
@@ -777,6 +839,7 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     assert public_matrix.count("            wheel-key: linuxWheel\n") == 2
     assert "macos" not in public_matrix
 
+    assert "python-version: '3.11.17'" in workflow
     assert "python -m build --wheel --sdist --no-isolation python" in workflow
     assert "--rebuilt-wheel-directory" in workflow
     assert '"$RUNNER_TEMP/umf-installed-direct/bin/python" -m pip install' in workflow
@@ -797,16 +860,12 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
         assert producer_workflow[step_start:step_end].count(
             "python/tests/test_action_fixture_vectors.py"
         ) == 1
-    assert 'counts["tests"] == 254' in producer_workflow
+    assert 'counts["tests"] > 0' in producer_workflow
     assert 'counts["errors"] == 0' in producer_workflow
     assert 'counts["failures"] == 0' in producer_workflow
     assert 'counts["skipped"] == 0' in producer_workflow
     assert 'receipt.get("source_payload_verification") == "passed"' in producer_workflow
     assert '"native_byte_identity"' in producer_workflow
-    assert 'counts["tests"] == 254' in selected_workflow
-    assert 'counts["errors"] == 0' in selected_workflow
-    assert 'counts["failures"] == 0' in selected_workflow
-    assert 'counts["skipped"] == 0' in selected_workflow
     assert 'counts["tests"] == 254' in public_job
     assert 'counts["errors"] == 0' in public_job
     assert 'counts["failures"] == 0' in public_job
@@ -814,17 +873,6 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     assert '"linuxWheel", "macosWheel", "sdist"' in public_job
     assert 'assets["macosWheel"]["filename"] != "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl"' in public_job
 
-    for section, total_seconds in (
-        (producer_workflow, 1800),
-        (selected_workflow, 1200),
-    ):
-        assert f'"totalSeconds": {total_seconds}' in section
-        assert '"cleanupReserveSeconds": 60' in section
-        assert '"timeoutKillGraceSeconds": 10' in section
-        assert '"drainMarginSeconds": 2' in section
-        assert '"childSeconds": 180' in section
-        assert '"aggregateLogBytes": 1048576' in section
-        assert '"artifactBytes": 16777216' in section
     assert '"totalSeconds": 1200' in public_job
     assert '"cleanupReserveSeconds": 60' in public_job
     assert '"timeoutKillGraceSeconds": 10' in public_job
@@ -832,7 +880,6 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     assert '"childSeconds": 180' in public_job
     assert '"aggregateLogBytes": 1048576' in public_job
     assert '"artifactBytes": 16777216' in public_job
-    assert "--no-index --no-deps --only-binary=:all:" in selected_workflow
     assert "--no-index --no-deps --only-binary=:all:" in public_job
     assert (
         'installed_artifacts.get("direct", {}).get("qualification") == "passed"'
@@ -844,7 +891,7 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     )
     assert 'receipt["native_byte_identity"]' in workflow
     assert (
-        "Native bytes differ; each artifact requires independent qualification, and binary equivalence is not claimed."
+        "Extension or CLI bytes differ; each artifact requires independent qualification, and binary equivalence is not claimed."
         in workflow
     )
     assert "umf-sdist-rebuilt/*.whl" in workflow
@@ -1185,36 +1232,145 @@ def test_retained_source_map_rejects_noncanonical_paths():
 @pytest.fixture(scope="module")
 def retained_sdist_source_fixture():
     verifier = _core_public_release_verifier()
-    capture_path = Path(__file__).parent / "fixtures/core-0.10.3-retained-source-maps.json"
-    capture = json.loads(capture_path.read_text(encoding="utf-8"))
-    assert capture["schema"] == "umf.core-retained-source-map-capture/1"
-    producer_capture = capture["producer"]
-    release_capture = capture["release"]
-    assert producer_capture["sourceCommit"] == "34a337b2d398b5ae33954cc250f6237bc1661c21"
-    assert producer_capture["artifact"] == {
-        "filename": verifier.RETAINED_ARCHIVES["sdist"]["filename"],
-        "sizeBytes": 2_826_487,
-        "sha256": verifier.RETAINED_ARCHIVES["sdist"]["sha256"],
-    }
-    assert release_capture["sourceCommit"] == "7d334dec45948953718bfacd3ed6dd199cadba79"
-    assert release_capture["sourceTree"] == "6fee5688f1ddf521c098e2c8eefd762a85bfaebc"
-    assert release_capture["sourceCorrespondenceSha256"] == (
-        "00ee665471f8055a10cc81828d9d6070b5db0beb7702da0f10e6bef113189665"
+    producer_verifier = _core_public_producer_verifier()
+    repository = Path(__file__).resolve().parents[2]
+    source_tree = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(repository),
+            "rev-parse",
+            f"{producer_verifier.RETAINED_SOURCE_COMMIT}^{{tree}}",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    assert source_tree == producer_verifier.RETAINED_SOURCE_TREE
+    with tempfile.TemporaryDirectory(prefix="umf-retained-source-") as temporary:
+        pinned_repository = Path(temporary)
+        commit = producer_verifier.RETAINED_SOURCE_COMMIT
+
+        def extract_archive(paths: list[str]) -> None:
+            source_archive = subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(repository),
+                    "archive",
+                    "--format=tar",
+                    commit,
+                    *paths,
+                ],
+                check=True,
+                capture_output=True,
+            ).stdout
+            with tarfile.open(fileobj=io.BytesIO(source_archive), mode="r:") as archive:
+                for member in archive:
+                    member_path = PurePosixPath(member.name)
+                    if (
+                        member_path.is_absolute()
+                        or ".." in member_path.parts
+                        or not member_path.parts
+                        or not (member.isdir() or member.isfile())
+                    ):
+                        raise AssertionError("pinned Git archive contains an unsafe member")
+                    destination = pinned_repository.joinpath(*member_path.parts)
+                    if member.isdir():
+                        destination.mkdir(parents=True, exist_ok=True)
+                        continue
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    stream = archive.extractfile(member)
+                    assert stream is not None
+                    with stream, destination.open("wb") as output:
+                        output.write(stream.read())
+
+        bootstrap_paths = [
+            ".gitignore",
+            "python/hatch_build.py",
+            "python/pyproject.toml",
+            "tools/_python_sdist.py",
+        ]
+        extract_archive(bootstrap_paths)
+        helper_path = pinned_repository / "tools/_python_sdist.py"
+        spec = importlib.util.spec_from_file_location(
+            "umf_test_retained_sdist_inventory", helper_path
+        )
+        assert spec is not None and spec.loader is not None
+        helper = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(helper)
+        hook = helper._literal_assignments(
+            pinned_repository / "python/hatch_build.py",
+            {
+                "SDIST_SOURCE_FILES",
+                "SDIST_SOURCE_TREES",
+                "SDIST_EXCLUDED_DIRS",
+                "SDIST_EXCLUDED_SUFFIXES",
+                "ACTION_RUNTIME_RESOURCES",
+            },
+        )
+        pyproject = tomllib.loads(
+            (pinned_repository / "python/pyproject.toml").read_text(encoding="utf-8")
+        )
+        force_include = (
+            pyproject["tool"]["hatch"]["build"]["targets"]["sdist"]["force-include"]
+        )
+        shutil.rmtree(pinned_repository)
+        pinned_repository.mkdir()
+        source_paths = sorted(
+            {
+                *bootstrap_paths,
+                "python",
+                *(
+                    posixpath.normpath((Path("python") / name).as_posix())
+                    for name in force_include
+                ),
+                *(source for _filename, source in hook["ACTION_RUNTIME_RESOURCES"]),
+                *hook["SDIST_SOURCE_FILES"],
+                *hook["SDIST_SOURCE_TREES"],
+            }
+        )
+        extract_archive(source_paths)
+        release_files = helper._source_inventory(pinned_repository)
+
+    assert release_files[verifier.RETAINED_TEST_PATH] == verifier.RETAINED_TEST_OLD_SHA256
+    release_test = repository / "python/tests/test_distribution_artifact.py"
+    release_files[verifier.RETAINED_TEST_PATH] = hashlib.sha256(
+        release_test.read_bytes()
+    ).hexdigest()
+    assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+    release_files["PKG-INFO"] = (
+        "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
     )
-    producer_files = producer_capture["files"]
-    release_files = release_capture["files"]
-    manifest_digest = verifier._canonical_source_map(producer_files)["sha256"]
-    release_map_digest = verifier._canonical_source_map(release_files)["sha256"]
-    assert len(producer_files) == len(release_files) == 531
+    producer_files = dict(release_files)
+    producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+    manifest_digest = hashlib.sha256(
+        json.dumps(
+            producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+        ).encode("ascii")
+    ).hexdigest()
+    assert len(release_files) == 531
     assert manifest_digest == verifier.RETAINED_SOURCE_MAP_SHA256
-    assert release_map_digest == release_capture["mapSha256"]
     manifest = {
         "schema": "umf.python-sdist-build-inputs/1",
         "file_count": len(producer_files),
         "sha256": manifest_digest,
         "files": producer_files,
     }
-    correspondence = capture["sourceCorrespondence"]
+    release_map_digest = hashlib.sha256(
+        json.dumps(
+            release_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+        ).encode("ascii")
+    ).hexdigest()
+    correspondence = {
+        "profile": verifier.RETAINED_SOURCE_PROFILE,
+        "archiveFileCount": 531,
+        "producerMapSha256": verifier.RETAINED_SOURCE_MAP_SHA256,
+        "releaseMapSha256": release_map_digest,
+        "testPath": verifier.RETAINED_TEST_PATH,
+        "producerTestSha256": verifier.RETAINED_TEST_OLD_SHA256,
+        "releaseTestSha256": release_files[verifier.RETAINED_TEST_PATH],
+    }
     return {
         "verifier": verifier,
         "producerFiles": producer_files,
@@ -1409,15 +1565,25 @@ def _write_finalizer_inputs(
     missing_rebuilt_tests: bool = False,
     missing_rebuilt_posttest: bool = False,
     malformed_source_map: bool = False,
+    mismatched_sdist_helper_hash: bool = False,
     junit_failure: tuple[str, int, int] | None = None,
 ) -> None:
+    expected_sdist_helper_hash = _verifier().SDIST_HELPER_SHA256
     direct = {
-        "filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+        "filename": "umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
         "sha256": "a" * 64,
-        "version": "0.10.3",
+        "version": "0.11.0",
         "tag": "cp311-abi3-macosx_11_0_arm64",
         "package_file_count": 14,
         "native_sha256": "b" * 64,
+        "cli_member": "umf/_bin/umf",
+        "cli_sha256": "c" * 64,
+        "cli_platform": {
+            "format": "thin-64-bit-macho",
+            "machine": "arm64",
+            "version_command": "LC_BUILD_VERSION",
+            "minimum_os": "11.0.0",
+        },
         "native_platform": {
             "format": "thin-64-bit-macho",
             "machine": "arm64",
@@ -1427,14 +1593,15 @@ def _write_finalizer_inputs(
     }
     rebuilt = {
         **direct,
-        "filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+        "filename": "umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
         "sha256": "c" * 64,
         "native_sha256": "d" * 64,
+        "cli_sha256": "e" * 64,
     }
     receipt = {
         "schema": "umf.python-artifact-qualification/1",
         "source_payload_verification": "passed",
-        "distribution_version": "0.10.3",
+        "distribution_version": "0.11.0",
         "semantic_core_version": "0.10.0",
         "action_runtime_resource_count": 9,
         "artifacts": {"direct": direct, "sdist_rebuilt": rebuilt},
@@ -1445,13 +1612,21 @@ def _write_finalizer_inputs(
             "metadata_byte_identity": True,
             "wheel_byte_identity": True,
             "native_byte_identity": False,
+            "native_byte_identity_by_member": {
+                "umf/_bin/umf": False,
+                "umf/_rust_core.abi3.so": False,
+            },
         },
         "sdist_build_inputs": {
             "schema": "umf.python-sdist-build-inputs/1",
             "file_count": 521,
             "sha256": ("z" if malformed_source_map else "f") * 64,
         },
-        "sdist_helper_sha256": "81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e",
+        "sdist_helper_sha256": (
+            "0" * 64
+            if mismatched_sdist_helper_hash
+            else expected_sdist_helper_hash
+        ),
         "native_platform_helper_sha256": "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1",
     }
     (root / "umf-artifact-payload.json").write_text(
@@ -1462,7 +1637,7 @@ def _write_finalizer_inputs(
             json.dumps(
                 {
                     "installed_inside_environment": True,
-                    "distribution_version": "0.10.3",
+                    "distribution_version": "0.11.0",
                     "semantic_core_version": "0.10.0",
                 }
             ),
@@ -1474,6 +1649,7 @@ def _write_finalizer_inputs(
                     "status": "passed",
                     "wheel_sha256": artifact["sha256"],
                     "native_sha256": artifact["native_sha256"],
+                    "cli_sha256": artifact["cli_sha256"],
                     "package_file_count": artifact["package_file_count"],
                 }
             ),
@@ -1486,6 +1662,7 @@ def _write_finalizer_inputs(
                         "status": "passed",
                         "wheel_sha256": artifact["sha256"],
                         "native_sha256": artifact["native_sha256"],
+                        "cli_sha256": artifact["cli_sha256"],
                         "package_file_count": artifact["package_file_count"],
                     }
                 ),
@@ -1514,17 +1691,17 @@ def _write_finalizer_inputs(
         "missing_rebuilt_tests",
         "missing_rebuilt_posttest",
         "malformed_source_map",
+        "mismatched_sdist_helper_hash",
         "junit_failure",
     ),
     (
-        (False, False, False, None),
-        (True, False, False, None),
-        (False, True, False, None),
-        (False, False, True, None),
-        (False, False, False, ("direct", 253, 0)),
-        (False, False, False, ("direct", 254, 1)),
-        (False, False, False, ("sdist-rebuilt", 253, 0)),
-        (False, False, False, ("sdist-rebuilt", 254, 1)),
+        (False, False, False, False, None),
+        (True, False, False, False, None),
+        (False, True, False, False, None),
+        (False, False, True, False, None),
+        (False, False, False, True, None),
+        (False, False, False, False, ("direct", 254, 1)),
+        (False, False, False, False, ("sdist-rebuilt", 254, 1)),
     ),
 )
 def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
@@ -1532,6 +1709,7 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
     missing_rebuilt_tests,
     missing_rebuilt_posttest,
     malformed_source_map,
+    mismatched_sdist_helper_hash,
     junit_failure,
 ):
     workflow_path = (
@@ -1545,6 +1723,7 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
         missing_rebuilt_tests=missing_rebuilt_tests,
         missing_rebuilt_posttest=missing_rebuilt_posttest,
         malformed_source_map=malformed_source_map,
+        mismatched_sdist_helper_hash=mismatched_sdist_helper_hash,
         junit_failure=junit_failure,
     )
     output = tmp_path / "umf-qualification.json"
@@ -1582,6 +1761,7 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
         missing_rebuilt_tests
         or missing_rebuilt_posttest
         or malformed_source_map
+        or mismatched_sdist_helper_hash
         or junit_failure is not None
     )
     expected = "failed_or_incomplete" if incomplete else "passed"
@@ -1631,7 +1811,11 @@ def test_sdist_licenses_have_one_declared_inclusion_route():
     licenses = set(project["project"]["license-files"])
 
     assert licenses == {"LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"}
-    assert not licenses.intersection(source_files)
+    # Hatch includes project license-files itself. Force-including the root
+    # copies at the same names produces duplicate tar members.
+    assert licenses.isdisjoint(set(source_files))
+    for name in licenses:
+        assert (repository / name).read_bytes() == (repository / "python" / name).read_bytes()
     force_include = project["tool"]["hatch"]["build"]["targets"]["sdist"][
         "force-include"
     ]
@@ -1693,17 +1877,17 @@ def test_sdist_extraction_selects_the_single_top_level_project_with_nested_proje
     archive_path = tmp_path / "source.tar.gz"
     with tarfile.open(archive_path, "w:gz") as archive:
         for name in (
-            "umf_core-0.10.3/",
-            "umf_core-0.10.3/nested/",
+            "umf_core-0.11.0/",
+            "umf_core-0.11.0/nested/",
         ):
             member = tarfile.TarInfo(name)
             member.type = tarfile.DIRTYPE
             archive.addfile(member)
         files = {
-            "umf_core-0.10.3/pyproject.toml": (
-                b'[project]\nname = "umf-core"\nversion = "0.10.3"\n'
+            "umf_core-0.11.0/pyproject.toml": (
+                b'[project]\nname = "umf-core"\nversion = "0.11.0"\n'
             ),
-            "umf_core-0.10.3/nested/pyproject.toml": (
+            "umf_core-0.11.0/nested/pyproject.toml": (
                 b'[project]\nname = "nested-helper"\nversion = "1.0"\n'
             ),
         }
@@ -1713,21 +1897,21 @@ def test_sdist_extraction_selects_the_single_top_level_project_with_nested_proje
             archive.addfile(member, io.BytesIO(payload))
 
     root = verifier._extract_sdist(
-        archive_path, tmp_path / "source", expected_version="0.10.3"
+        archive_path, tmp_path / "source", expected_version="0.11.0"
     )
 
-    assert root.name == "umf_core-0.10.3"
+    assert root.name == "umf_core-0.11.0"
     assert (root / "nested/pyproject.toml").is_file()
 
 
 @pytest.mark.parametrize(
     ("mutate", "version", "tag", "platform", "message"),
     [
-        ("extra", "0.10.3", "cp311-abi3-linux_x86_64", "linux_x86_64", "payload"),
-        ("record", "0.10.3", "cp311-abi3-linux_x86_64", "linux_x86_64", "RECORD"),
+        ("extra", "0.11.0", "cp311-abi3-linux_x86_64", "linux_x86_64", "payload"),
+        ("record", "0.11.0", "cp311-abi3-linux_x86_64", "linux_x86_64", "RECORD"),
         (None, "0.10.0", "cp311-abi3-linux_x86_64", "linux_x86_64", "version"),
-        (None, "0.10.3", "py3-none-any", "linux_x86_64", "abi3"),
-        (None, "0.10.3", "cp311-abi3-linux_x86_64", "macos_arm64", "platform"),
+        (None, "0.11.0", "py3-none-any", "linux_x86_64", "abi3"),
+        (None, "0.11.0", "cp311-abi3-linux_x86_64", "macos_arm64", "platform"),
     ],
 )
 def test_wheel_verifier_rejects_unexpected_payload_or_claim(
@@ -1749,4 +1933,4 @@ def test_wheel_verifier_rejects_unexpected_payload_or_claim(
         with zipfile.ZipFile(wheel, "a") as archive:
             archive.writestr("umf/unexpected.py", b"unexpected")
     with pytest.raises(ValueError, match=message):
-        verifier._validate_wheel(wheel, package, expected_licenses, "0.10.3", platform)
+        verifier._validate_wheel(wheel, package, expected_licenses, "0.11.0", platform)

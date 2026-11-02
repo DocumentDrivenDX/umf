@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Generic extension classifications. Ecosystem meaning stays in packages.
 use crate::{
-    copy_json, Capabilities, Context, Diagnostic, Engine, EngineError, Registry, Severity, Utf16,
-    Validation, Value,
+    Capabilities, Context, Diagnostic, Engine, EngineError, Registry, Severity, Utf16, Validation,
+    Value, copy_json,
 };
 use std::collections::BTreeSet;
 
@@ -264,6 +264,7 @@ fn diagnostic_value(d: &Diagnostic, ctx: &mut Context<'_>) -> Result<Value, Engi
 
 impl Registry {
     pub fn list_kinds(&self, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        self.require_kind_runtime()?;
         let mut registrations = self.entries().iter().collect::<Vec<_>>();
         ctx.charge_work(
             registrations
@@ -334,6 +335,7 @@ impl Registry {
         reference: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Option<Value>, EngineError> {
+        self.require_kind_runtime()?;
         let reference = copy_json(reference, ctx)?;
         if members(&reference).len() != 3
             || !["extension", "version", "kind"]

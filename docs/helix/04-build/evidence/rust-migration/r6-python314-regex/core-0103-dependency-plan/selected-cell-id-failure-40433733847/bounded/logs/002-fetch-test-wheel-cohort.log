@@ -1,9 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/runner/work/umf/umf/tools/core_python_qualification_runner.py", line 334, in <module>
-    raise SystemExit(main())
-                     ^^^^^^
-  File "/Users/runner/work/umf/umf/tools/core_python_qualification_runner.py", line 327, in main
-    fetch_locked(args.lock, args.profile, args.cell, args.output)
-  File "/Users/runner/work/umf/umf/tools/core_python_qualification_runner.py", line 261, in fetch_locked
-    raise ValueError("Wheel lock has no unique selected closed set for this cell")
-ValueError: Wheel lock has no unique selected closed set for this cell

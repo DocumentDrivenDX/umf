@@ -1,0 +1,218 @@
+{
+  "fixtureProfile": "umf-r5-avro-candidate-wire-cases/0.1.0",
+  "wireProtocol": "umf.core-wire/1",
+  "operationProfile": "umf-r5-avro-candidate/0.1.0",
+  "operation": "avro.schema.proposeNodeEdit",
+  "sourceFixture": {
+    "path": "fixtures/avro/candidate-edits.json",
+    "sha256": "1f2c092908ed239890df44d795cb8eb4438ec0c0a0119e85768acad3c4856108",
+    "sourcePointers": {
+      "invoice": "/cases/3/result/source",
+      "dependency": "/cases/4/result/source",
+      "attachedMetadata": "/cases/0/result/source"
+    }
+  },
+  "requestEncoding": "Pass requestValue through the existing core-wire encoder. documentRef resolves to a plain UMF Value from sourceFixture; documentPatches are RFC 6902 operations applied before encoding.",
+  "cases": [
+    {
+      "id": "root-exact-int64-json-text",
+      "sourceRef": "invoice",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/fields/2/default",
+        "replacementJson": "9223372036854775807"
+      },
+      "expected": {
+        "envelope": { "profile": "umf.core-wire/1", "status": "ok" },
+        "report": {
+          "profile": "umf-r5-avro-candidate/0.1.0",
+          "status": "candidate",
+          "requiredMembers": ["profile", "status", "source", "document", "edit", "admission", "nativeInspection"],
+          "forbiddenMembers": ["validation"],
+          "edit": {
+            "path": "/fields/2/default",
+            "replacement": { "kind": "number", "value": "9223372036854775807" }
+          },
+          "admission": { "source": { "valid": true, "complete": true }, "candidate": { "valid": true, "complete": true } },
+          "sourceAndDocumentDetached": true
+        }
+      }
+    },
+    {
+      "id": "dependency-edit-uses-artifact-id",
+      "sourceRef": "dependency",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/scale",
+        "replacementJson": "3",
+        "dependencyId": "money.avsc"
+      },
+      "expected": {
+        "envelope": { "profile": "umf.core-wire/1", "status": "ok" },
+        "report": {
+          "profile": "umf-r5-avro-candidate/0.1.0",
+          "edit": {
+            "path": "/scale",
+            "dependencyId": "money.avsc",
+            "replacement": { "kind": "number", "value": "3" }
+          },
+          "dependencyOrderAndMemberOrderPreserved": true
+        }
+      }
+    },
+    {
+      "id": "candidate-admission-succeeds-with-inspector-error",
+      "sourceRef": "invoice",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/fields/0/type",
+        "replacementJson": "\"MissingName\""
+      },
+      "expected": {
+        "envelope": { "status": "ok" },
+        "report": {
+          "admission": { "candidate": { "valid": true, "complete": true } },
+          "nativeInspection": { "candidate": { "valid": false, "complete": false } }
+        }
+      }
+    },
+    {
+      "id": "source-admission-precedes-invalid-pointer",
+      "sourceRef": "invoice",
+      "documentPatches": [{ "op": "remove", "path": "/vocabularies" }],
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "not-a-pointer",
+        "replacementJson": "{"
+      },
+      "expected": { "envelope": { "status": "error", "code": "AVRO_DOCUMENT" } }
+    },
+    {
+      "id": "stale-field-projection-precedes-representation-and-pointer",
+      "sourceRef": "invoice",
+      "documentPatches": [{ "op": "replace", "path": "/modules/1/elements/0/scalarType", "value": "string" }],
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "not-a-pointer",
+        "replacementJson": "{"
+      },
+      "expected": { "envelope": { "status": "error", "code": "AVRO_FIELD_METADATA" } }
+    },
+    {
+      "id": "unknown-tagged-representation-precedes-pointer-and-replacement",
+      "sourceRef": "invoice",
+      "documentPatches": [{ "op": "add", "path": "/modules/0/elements/0/extensions/umf.avro/root/futureRepresentation", "value": true }],
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "not-a-pointer",
+        "replacementJson": "{"
+      },
+      "expected": { "envelope": { "status": "error", "code": "AVRO_REPRESENTATION" } }
+    },
+    {
+      "id": "dependency-representation-precedes-root-edit",
+      "sourceRef": "dependency",
+      "documentPatches": [{ "op": "add", "path": "/modules/0/elements/0/extensions/umf.avro/dependencies/0/root/futureRepresentation", "value": true }],
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/fields/0/name",
+        "replacementJson": "\"after\""
+      },
+      "expected": { "envelope": { "status": "error", "code": "AVRO_REPRESENTATION" } }
+    },
+    {
+      "id": "pointer-syntax-precedes-replacement-parse",
+      "sourceRef": "invoice",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "not-a-pointer",
+        "replacementJson": "{"
+      },
+      "expected": { "envelope": { "status": "error", "code": "JSON_SCHEMA_POINTER" } }
+    },
+    {
+      "id": "replacement-parse-precedes-dependency-and-target-resolution",
+      "sourceRef": "dependency",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/missing",
+        "replacementJson": "{",
+        "dependencyId": "absent.avsc"
+      },
+      "expected": { "envelope": { "status": "error", "code": "JSON_SCHEMA_SYNTAX" } }
+    },
+    {
+      "id": "dependency-id-precedes-target-resolution",
+      "sourceRef": "dependency",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/missing",
+        "replacementJson": "null",
+        "dependencyId": "absent.avsc"
+      },
+      "expected": { "envelope": { "status": "error", "code": "AVRO_DEPENDENCY_ID" } }
+    },
+    {
+      "id": "target-resolution-after-valid-replacement",
+      "sourceRef": "invoice",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/missing",
+        "replacementJson": "null"
+      },
+      "expected": { "envelope": { "status": "error", "code": "JSON_SCHEMA_POINTER" } }
+    },
+    {
+      "id": "attached-field-metadata-rename-refusal",
+      "sourceRef": "attachedMetadata",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/fields/0/name",
+        "replacementJson": "\"renamed\""
+      },
+      "expected": { "envelope": { "status": "error", "code": "AVRO_FIELD_METADATA" } }
+    },
+    {
+      "id": "unknown-operation",
+      "requestValue": { "op": "avro.schema.export" },
+      "expected": { "envelope": { "status": "error", "code": "REQUEST" } }
+    },
+    {
+      "id": "missing-document-request-member",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/fields/0/name",
+        "replacementJson": "\"renamed\""
+      },
+      "expected": { "envelope": { "status": "error", "code": "REQUEST" } }
+    },
+    {
+      "id": "replacement-json-type-refusal",
+      "sourceRef": "invoice",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/fields/0/name",
+        "replacementJson": 3
+      },
+      "expected": { "envelope": { "status": "error", "code": "REQUEST" } }
+    },
+    {
+      "id": "host-control-refusal",
+      "sourceRef": "invoice",
+      "requestValue": {
+        "op": "avro.schema.proposeNodeEdit",
+        "path": "/fields/0/name",
+        "replacementJson": "\"renamed\""
+      },
+      "control": { "rejectFirstCharge": true, "expectedCode": "HOST_BUDGET" },
+      "expected": { "envelope": { "status": "error", "code": "HOST_BUDGET" } }
+    }
+  ],
+  "cliCases": [
+    { "id": "version", "argv": ["avro", "candidate-edit", "--version"], "expectedProfile": "umf-r5-avro-candidate/0.1.0" },
+    { "id": "capabilities", "argv": ["avro", "candidate-edit", "--capabilities"], "expectedOperations": ["avro.schema.proposeNodeEdit"], "defaultAdapterActivation": false },
+    { "id": "max-work-zero", "argv": ["avro", "candidate-edit", "--stdin-wire", "--max-work", "0"], "expectedCode": "RESOURCE_LIMIT" },
+    { "id": "timeout-zero", "argv": ["avro", "candidate-edit", "--stdin-wire", "--timeout-ms", "0"], "expectedCode": "DEADLINE" },
+    { "id": "unsupported-option", "argv": ["avro", "candidate-edit", "--unknown"], "expectedExit": "error" }
+  ]
+}

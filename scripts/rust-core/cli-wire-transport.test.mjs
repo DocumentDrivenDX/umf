@@ -60,7 +60,7 @@ test('stages exact UTF-8 bytes privately, supplies EOF, and removes staging file
 
 test('the unmodified public pipe path still accepts the production CLI wire protocol', () => {
   const executable = process.env.UMF_CLI_PATH ?? join(root, 'target/release/umf');
-  const fixture = JSON.parse(readFileSync(join(root, 'docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json'), 'utf8'));
+  const fixture = JSON.parse(readFileSync(join(root, 'tests/rust-core/fixtures/r2/baseline-current-conformance.json'), 'utf8'));
   const resources = {
     coreSchema: JSON.parse(readFileSync(join(root, 'spec/core/schema.json'))),
     referenceSchema: JSON.parse(readFileSync(join(root, 'spec/core/semantic-type-reference.schema.json'))),
@@ -230,7 +230,7 @@ test('empty, malformed, extra, and mismatching CLI output never produce a passin
   const tempRoot = await temporaryRoot();
   const fakeCli = join(tempRoot, 'bad-cli');
   const report = join(tempRoot, 'report.json');
-  const fixture = 'docs/helix/04-build/evidence/rust-migration/r3/sol-final-row-property-admission-review/frozen.json';
+  const fixture = 'tests/rust-core/fixtures/r3/baseline/operations.json';
   try {
     await writeFile(fakeCli, '#!/usr/bin/env node\nprocess.stdin.resume();process.stdin.on(\'end\',()=>{});\n', {mode: 0o700, flag: 'wx'});
     await chmod(fakeCli, 0o700);

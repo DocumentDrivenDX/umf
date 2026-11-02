@@ -2,14 +2,13 @@
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import nativeAstSchema from '../../../spec/extensions/postgresql/native-ast.schema.json';
 import {createValidator} from '../../validation/schema';
-import manifest from '../../../spec/extensions/postgresql/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson,LIMITS} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const POSTGRESQL_EXTENSION='umf.postgresql';
-export const postgresqlPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,type Document,type Json,type Diagnostic} from '../../model/types';
+import {POSTGRESQL_EXTENSION,postgresqlPackage} from './package';
+export {POSTGRESQL_EXTENSION,postgresqlPackage} from './package';
 export interface PostgresqlBackend {identity:'@libpg-query/parser@17.6.10';parse(sql:string):Promise<unknown>;deparse(tree:unknown):Promise<string>;codecRoundTrip(tree:unknown):unknown;}
 let nativeCheck:ReturnType<ReturnType<typeof createValidator>['compile']>|undefined;
 /** Validate the known native JSON vocabulary without removing unknown fields. */

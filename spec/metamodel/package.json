@@ -1,6 +1,6 @@
 {
   "id": "umf.metamodel",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "coreVersion": "0.10.0",
   "description": "Authored UMF language definitions and inert ordered constraints",
   "schema": {
@@ -14,6 +14,12 @@
       },
       "domains": {
         "type": "object"
+      },
+      "resources": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
       },
       "description": {
         "type": "string"

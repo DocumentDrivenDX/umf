@@ -1,0 +1,581 @@
+{
+  "capture": "R5 Iceberg Gate 0 additive predecessor controls",
+  "generatedBy": "scripts/rust-migration/r5/iceberg-gate0-controls.ts",
+  "runtime": {
+    "bunVersion": "1.4.3",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "authority": {
+    "contract": "CONTRACT-020",
+    "normativeAndPredecessorDifferencesExplicit": true,
+    "notFullEditParity": true
+  },
+  "probes": [
+    {
+      "id": "int32-min",
+      "category": "exact-id-lexeme",
+      "note": "Signed int32 lower boundary; normative CONTRACT-020 range.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":-2147483648,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "int32-min",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            },
+            {
+              "code": "ICEBERG_ID_CONTEXT",
+              "path": "/fields/0/id",
+              "message": "Nonpositive ID retained; allocation legality requires table context",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":-2147483648,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "int32-max",
+      "category": "exact-id-lexeme",
+      "note": "Signed int32 upper boundary; normative CONTRACT-020 range.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483647,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "int32-max",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            },
+            {
+              "code": "ICEBERG_RESERVED_ID",
+              "path": "/fields/0/id",
+              "message": "Reserved metadata-column range requires table context",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483647,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "int32-max-plus-fraction",
+      "category": "exact-id-lexeme",
+      "note": "Predecessor binary64 projection may round this non-integer token to the max integer; record behavior without treating it as normative.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483647.0000001,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "int32-max-plus-fraction",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            },
+            {
+              "code": "ICEBERG_RESERVED_ID",
+              "path": "/fields/0/id",
+              "message": "Reserved metadata-column range requires table context",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483647.0000001,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "one-past-int32",
+      "category": "exact-id-lexeme",
+      "note": "One past signed int32; normative structural rejection.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483648,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "rejected",
+        "error": {
+          "name": "UmfError",
+          "code": "ICEBERG_DOCUMENT",
+          "message": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_STRUCTURE\",\"path\":\"/fields/0/id\",\"message\":\"must be <= 2147483647\",\"severity\":\"error\"}]"
+        }
+      }
+    },
+    {
+      "id": "one-point-zero",
+      "category": "exact-id-lexeme",
+      "note": "Integral numeric value with decimal-point lexeme; preserve lexical spelling.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1.0,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "one-point-zero",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":1.0,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "one-exponent-zero",
+      "category": "exact-id-lexeme",
+      "note": "Integral numeric value with exponent lexeme; preserve lexical spelling.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1e0,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "one-exponent-zero",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":1e0,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "negative-zero",
+      "category": "exact-id-lexeme",
+      "note": "Signed zero lexeme; record whether predecessor preserves it.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":-0,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "negative-zero",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            },
+            {
+              "code": "ICEBERG_ID_CONTEXT",
+              "path": "/fields/0/id",
+              "message": "Nonpositive ID retained; allocation legality requires table context",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":-0,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "reserved-below",
+      "category": "reserved-id-context",
+      "note": "Immediately below reserved metadata-column boundary.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483446,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "reserved-below",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483446,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "reserved-boundary",
+      "category": "reserved-id-context",
+      "note": "Boundary value from CONTRACT-020 adapter check.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483447,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "reserved-boundary",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483447,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "reserved-above",
+      "category": "reserved-id-context",
+      "note": "Immediately above reserved metadata-column boundary.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483448,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "reserved-above",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            },
+            {
+              "code": "ICEBERG_RESERVED_ID",
+              "path": "/fields/0/id",
+              "message": "Reserved metadata-column range requires table context",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":2147483448,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "field-vs-list-component",
+      "note": "Field id collides globally with list element id.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"a\",\"type\":\"long\",\"required\":true},{\"id\":2,\"name\":\"b\",\"type\":{\"type\":\"list\",\"element-id\":1,\"element-required\":true,\"element\":\"string\"},\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "category": "global-id-collision",
+      "observed": {
+        "status": "rejected",
+        "error": {
+          "name": "UmfError",
+          "code": "ICEBERG_DOCUMENT",
+          "message": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_DUPLICATE_ID\",\"path\":\"/fields/1/type/element-id\",\"message\":\"Field IDs must be unique across fields and list/map components\",\"severity\":\"error\"}]"
+        }
+      }
+    },
+    {
+      "id": "map-key-vs-value",
+      "note": "Map key-id collides with value-id.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"m\",\"type\":{\"type\":\"map\",\"key-id\":4,\"key\":\"string\",\"value-id\":4,\"value-required\":true,\"value\":\"long\"},\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "category": "global-id-collision",
+      "observed": {
+        "status": "rejected",
+        "error": {
+          "name": "UmfError",
+          "code": "ICEBERG_DOCUMENT",
+          "message": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_DUPLICATE_ID\",\"path\":\"/fields/0/type/value-id\",\"message\":\"Field IDs must be unique across fields and list/map components\",\"severity\":\"error\"}]"
+        }
+      }
+    },
+    {
+      "id": "map-component-vs-field",
+      "note": "Map value-id collides with a sibling field id.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"m\",\"type\":{\"type\":\"map\",\"key-id\":2,\"key\":\"string\",\"value-id\":3,\"value-required\":true,\"value\":\"long\"},\"required\":true},{\"id\":3,\"name\":\"x\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "category": "global-id-collision",
+      "observed": {
+        "status": "rejected",
+        "error": {
+          "name": "UmfError",
+          "code": "ICEBERG_DOCUMENT",
+          "message": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_DUPLICATE_ID\",\"path\":\"/fields/1/id\",\"message\":\"Field IDs must be unique across fields and list/map components\",\"severity\":\"error\"}]"
+        }
+      }
+    },
+    {
+      "id": "unknown-primitive",
+      "category": "unknown-type",
+      "note": "Unknown primitive spelling is retained and warns; interpretation remains incomplete.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"x\",\"type\":\"future_primitive\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "unknown-primitive",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            },
+            {
+              "code": "ICEBERG_UNKNOWN_TYPE",
+              "path": "/fields/0/type",
+              "message": "Uninterpreted native type spelling; geospatial and future type parameters require separate checks",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"x\",\"type\":\"future_primitive\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+      }
+    },
+    {
+      "id": "unknown-primitive-identifier",
+      "category": "unknown-identifier-eligibility",
+      "note": "Unknown primitive does not receive a guessed identifier-eligibility result.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"x\",\"type\":\"future_primitive\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[1]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "unknown-primitive-identifier",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            },
+            {
+              "code": "ICEBERG_UNKNOWN_TYPE",
+              "path": "/fields/0/type",
+              "message": "Uninterpreted native type spelling; geospatial and future type parameters require separate checks",
+              "severity": "warning"
+            },
+            {
+              "code": "ICEBERG_IDENTIFIER_UNVERIFIED",
+              "path": "/identifier-field-ids/0",
+              "message": "Unknown primitive meaning cannot establish identifier eligibility",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"x\",\"type\":\"future_primitive\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[1]}"
+      }
+    },
+    {
+      "id": "required-struct-ancestry",
+      "category": "identifier-required-ancestry",
+      "note": "Identifier under required struct ancestry is eligible.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"parent\",\"type\":{\"type\":\"struct\",\"fields\":[{\"id\":2,\"name\":\"child\",\"type\":\"long\",\"required\":true}]},\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[2]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "required-struct-ancestry",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"parent\",\"type\":{\"type\":\"struct\",\"fields\":[{\"id\":2,\"name\":\"child\",\"type\":\"long\",\"required\":true}]},\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[2]}"
+      }
+    },
+    {
+      "id": "optional-struct-ancestry",
+      "category": "identifier-required-ancestry",
+      "note": "Identifier beneath optional struct ancestry is invalid.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"parent\",\"type\":{\"type\":\"struct\",\"fields\":[{\"id\":2,\"name\":\"child\",\"type\":\"long\",\"required\":true}]},\"required\":false}],\"schema-id\":0,\"identifier-field-ids\":[2]}",
+      "observed": {
+        "status": "rejected",
+        "error": {
+          "name": "UmfError",
+          "code": "ICEBERG_DOCUMENT",
+          "message": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_IDENTIFIER\",\"path\":\"/identifier-field-ids/0\",\"message\":\"Identifier requires a required primitive field under required structs, outside collections\",\"severity\":\"error\"}]"
+        }
+      }
+    },
+    {
+      "id": "canonical-array-pointer-zero",
+      "category": "pointer-index",
+      "note": "Canonical RFC 6901 array index `/0`.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "pointer-zero",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+        "get": {
+          "status": "ok",
+          "path": "/fields/0/name",
+          "value": {
+            "kind": "string",
+            "value": "zero"
+          }
+        }
+      }
+    },
+    {
+      "id": "noncanonical-array-pointer-zero",
+      "category": "pointer-index",
+      "note": "Leading-zero `/00` must not alias array index zero.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "observed": {
+        "status": "imported",
+        "documentId": "pointer-00",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+        "get": {
+          "status": "error",
+          "path": "/fields/00/name",
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_POINTER",
+            "message": "Native JSON Pointer target does not exist"
+          }
+        }
+      }
+    },
+    {
+      "id": "utf16-and-prototype-keys",
+      "category": "string-key-preservation",
+      "note": "Prototype-like, supplementary-plane field/property names stay data; exact native strings recover.",
+      "input": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"__proto__\",\"type\":\"long\",\"required\":true},{\"id\":2,\"name\":\"😀\",\"type\":\"string\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[],\"__proto__\":{\"opaque\":true},\"😀\":{\"opaque\":\"unicode-key\"}}",
+      "observed": {
+        "status": "imported",
+        "inspect": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "ICEBERG_CONTEXT_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+            },
+            {
+              "code": "ICEBERG_UNKNOWN",
+              "path": "/__proto__",
+              "message": "Unknown native property preserved without interpretation",
+              "severity": "warning"
+            },
+            {
+              "code": "ICEBERG_UNKNOWN",
+              "path": "/😀",
+              "message": "Unknown native property preserved without interpretation",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"__proto__\",\"type\":\"long\",\"required\":true},{\"id\":2,\"name\":\"😀\",\"type\":\"string\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[],\"__proto__\":{\"opaque\":true},\"😀\":{\"opaque\":\"unicode-key\"}}",
+        "proto": {
+          "kind": "object",
+          "members": {
+            "opaque": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        },
+        "emoji": {
+          "kind": "object",
+          "members": {
+            "opaque": {
+              "kind": "string",
+              "value": "unicode-key"
+            }
+          }
+        },
+        "prototypeField": {
+          "kind": "string",
+          "value": "__proto__"
+        },
+        "astralField": {
+          "kind": "string",
+          "value": "😀"
+        }
+      }
+    }
+  ],
+  "replacementOrder": {
+    "source": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+    "rootReplacement": {
+      "status": "accepted",
+      "candidate": "{\"type\":\"struct\",\"fields\":[],\"schema-id\":7}",
+      "sourceAfter": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}",
+      "sourceUnchanged": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "ICEBERG_CONTEXT_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+          }
+        ]
+      }
+    },
+    "missingTargetValidReplacement": {
+      "status": "rejected",
+      "error": {
+        "name": "UmfError",
+        "code": "JSON_SCHEMA_POINTER",
+        "message": "Native JSON Pointer target does not exist"
+      },
+      "sourceAfter": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    "missingTargetMalformedReplacement": {
+      "status": "rejected",
+      "error": {
+        "name": "UmfError",
+        "code": "JSON_SCHEMA_SYNTAX",
+        "message": "Invalid native JSON"
+      },
+      "sourceAfter": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    "existingTargetMalformedReplacement": {
+      "status": "rejected",
+      "error": {
+        "name": "UmfError",
+        "code": "JSON_SCHEMA_SYNTAX",
+        "message": "Invalid native JSON"
+      },
+      "sourceAfter": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"zero\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    }
+  }
+}

@@ -18,6 +18,9 @@ class Boundaries(unittest.TestCase):
 
     def test_negative_controls(self):
         cases = [('__init__.py','import subprocess\n'),('_writer.py','import py_mini_racer\n'),
+                 ('__init__.py','from collections.abc import Iterator\n'),
+                 ('_native.py','import py_mini_racer\n'),
+                 ('_native.py','subprocess.Popen(["/tmp/foreign-umf"] )\n'),
                  ('__init__.py','exec("print(1)")\n'),('__init__.py','engine.eval("1")\n'),
                  ('_embedded.py','import urllib.request\n'),('_embedded.py','__import__("socket")\n'),
                  ('_writer.py','os.system("node")\n'),('_writer.py','from os import system\n')]

@@ -17,6 +17,18 @@ export interface CoreCardinalityDeclaration {operation:'declare-core-cardinality
 const validator=createValidator();validator.addSchema(snapshotSchema(currentCore));const checkInspection=validator.compile(snapshotSchema(inspectionSchema)),checkDeclaration=validator.compile(snapshotSchema(declarationSchema));
 const checker=(version:unknown)=>version==='6.0.0'?checkInspection:checkDeclaration;
 const checkRequest=validator.compile({$defs:declarationSchema.$defs,$ref:'#/$defs/request'});
+/** Internal source-route admission hook to preserve TS request copy/schema precedence. */
+export function admitCoreCardinalityRequest(input:unknown):CoreCardinalityRequest {
+ const request=copyJson(input) as unknown as CoreCardinalityRequest;
+ if(!checkRequest(request))throw new UmfError("CORE_CARDINALITY_REQUEST",JSON.stringify(checkRequest.errors));
+ return request;
+}
+/** Internal source-route receipt admission hook to preserve verify-before-current precedence. */
+export function admitCoreCardinalityReceipt(input:unknown):CoreCardinalityDeclaration {
+ const receipt=copyJson(input) as unknown as CoreCardinalityDeclaration;
+ if(!checker(receipt?.version)(receipt)||receipt.operation!=='declare-core-cardinality')throw new UmfError('CORE_CARDINALITY_RECEIPT','Malformed cardinality declaration');
+ return receipt;
+}
 function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_CARDINALITY_RESULT',JSON.stringify(check.errors));return result as T;}
 function locate(input:Document,identityInput:CoreCardinalityIdentity){
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreCardinalityIdentity;
@@ -38,8 +50,7 @@ export function inspectCoreCardinality(input:Document,identity:CoreCardinalityId
 }
 /** Explicit author action; archives previous meaning and makes no native classification claim. */
 export function declareCoreCardinality(input:Document,identity:CoreCardinalityIdentity,options:CoreCardinalityRequest):CoreCardinalityDeclaration {
- const request=copyJson(options) as unknown as CoreCardinalityRequest;
- if(!checkRequest(request))throw new UmfError("CORE_CARDINALITY_REQUEST",JSON.stringify(checkRequest.errors));
+ const request=admitCoreCardinalityRequest(options);
  const cardinality=request.cardinality;
  const located=locate(input,identity);const {source,element,mi,ei,path}=located;
  if(source.umf!==CURRENT_CORE_VERSION)throw new UmfError('CORE_CARDINALITY_VERSION','Current core 0.10.0 source required');
@@ -56,8 +67,7 @@ export function declareCoreCardinality(input:Document,identity:CoreCardinalityId
 }
 /** Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration. */
 export function verifyCoreCardinalityDeclaration(input:CoreCardinalityDeclaration,current:Document):CoreCardinalityDeclaration {
- const receipt=copyJson(input) as unknown as CoreCardinalityDeclaration;
- if(!checker(receipt?.version)(receipt)||receipt.operation!=='declare-core-cardinality')throw new UmfError('CORE_CARDINALITY_RECEIPT','Malformed cardinality declaration');
+ const receipt=admitCoreCardinalityReceipt(input);
  const expected=declareCoreCardinality(receipt.source,receipt.identity,receipt.request);
  const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+canonical(value[key]!)).join(',')+'}':JSON.stringify(value);
  if(canonical(copyJson(receipt))!==canonical(copyJson(expected)))throw new UmfError('CORE_CARDINALITY_RECEIPT','Declaration does not match its archived input');

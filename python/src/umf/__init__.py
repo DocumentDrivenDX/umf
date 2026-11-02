@@ -1,6 +1,9 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Official Python UMF support; consumer extensions remain consumer-owned."""
 
+from .adapters import adapter_info, execute_adapter
+from .typespec import TypeSpecSession
+from .smithy import SmithySession
 from .models import (
     CoreItemTypeReference,
     CoreSemanticTypeReference,
@@ -19,6 +22,18 @@ from .schemas import (
     schema_validator,
     semantic_type_reference_schema,
 )
+from .semantic_types import (
+    SemanticTypeRegistry,
+    SemanticValidatorContextV1,
+    declare_core_semantic_types,
+    get_core_semantic_types,
+    get_semantic_types,
+    inspect_core_semantic_types,
+    set_semantic_types,
+    validate_core_semantic_type_value,
+    validate_semantic_type_value,
+    verify_core_semantic_type_declaration,
+)
 from .serialization import (
     read_document,
     read_json_value,
@@ -26,11 +41,27 @@ from .serialization import (
     write_json_value,
 )
 from .validation import inspect_extension_kinds, validate_document
-
+from .action_plan import (
+    ActionPlanSession,
+    assess_action_plan,
+    inspect_action_plan,
+    prepare_action_plan_model,
+)
 from .saga import SagaRuntime
+from .postgresql_sql import PostgresqlSqlEngine, create_postgresql_sql_engine
+from .rust_sec_projection import (
+    SecProjectionError,
+    project_sec_company_facts,
+    project_sec_submissions,
+)
 
-__version__ = "0.10.5"
+__version__ = "0.10.6"
 __all__ = [
+    "TypeSpecSession",
+    "SmithySession",
+    "ActionPlanSession",
+    "adapter_info",
+    "execute_adapter",
     "SagaRuntime",
     "CoreItemTypeReference",
     "CoreSemanticTypeReference",
@@ -39,20 +70,38 @@ __all__ = [
     "Element",
     "Extension",
     "Module",
+    "PostgresqlSqlEngine",
     "Reference",
     "Registry",
+    "SemanticTypeRegistry",
+    "SecProjectionError",
+    "SemanticValidatorContextV1",
     "Validation",
     "Vocabulary",
     "core_schema",
     "current_core_version",
+    "create_postgresql_sql_engine",
     "dataset_source_schema",
+    "declare_core_semantic_types",
     "domain_pack_schema",
+    "get_core_semantic_types",
+    "get_semantic_types",
+    "inspect_core_semantic_types",
     "inspect_extension_kinds",
     "read_document",
+    "project_sec_company_facts",
+    "project_sec_submissions",
     "read_json_value",
     "schema_validator",
     "semantic_type_reference_schema",
+    "set_semantic_types",
+    "validate_core_semantic_type_value",
     "validate_document",
+    "prepare_action_plan_model",
+    "inspect_action_plan",
+    "assess_action_plan",
+    "validate_semantic_type_value",
+    "verify_core_semantic_type_declaration",
     "write_document",
     "write_json_value",
 ]

@@ -56,6 +56,9 @@ has one member. `kind` is one of `postgresql`, `lakebase`, `spark-delta`,
 `unity-catalog`, `truss` or `ashlar`. Catalog entries execute only on a target
 whose identity equals their pins (CONTRACT-071).
 
+Platform component names MUST be unique in both the catalog pin and observed
+identity; a repeated name cannot satisfy a different pinned component.
+
 `verify()` MUST run before a target's first statement on a database. It observes, through the host connection, the server or runtime
 version and, for every table a catalog entry references, its native identity and
 column shape, then compares them with the binding and CONTRACT-070 ColumnSets:

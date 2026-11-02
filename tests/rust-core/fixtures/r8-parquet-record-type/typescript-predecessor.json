@@ -1,0 +1,3759 @@
+{
+  "packet": "umf-r8-parquet-record-type-typescript-predecessor-v1",
+  "operations": [
+    "classifyParquetRecordType",
+    "recoverParquetRecordTypeBytes"
+  ],
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "sourceAndFixturePins": {
+    "src/core-ideals/parquet-record-type.ts": "a1fcfef747b3843dd532ac700046950264ebbaec9f4a529d5b2aea7c78911b4c",
+    "src/core-ideals/parquet-record.ts": "4a4e396af18daa8b94bd5fdf24a785a8e09d85266babee9073ba58550aac9117",
+    "src/core-ideals/parquet-field.ts": "92a41c113645378e552ce0309c9258c2eda6b08adb40945b140d44cdfff6b19a",
+    "src/adapters/parquet/index.ts": "81238e0a13603c4838d135af569473dace9d4f5d6ff27e4591b52114d6c35dfe",
+    "src/adapters/parquet/field-metadata.ts": "afb503ea2febab046b9c4f2232ba8d126a0eb09ddf605397397aa2db2048399e",
+    "src/adapters/parquet/containers.ts": "12a092e7cf311fb8cc7a38e65a2dad60bf15d5505f0cf0f2ab093236d2cf2c64",
+    "src/adapters/parquet/schema.ts": "a3e606269c89c71e9dd974a37bfc5dd7121593a2c260039b6951e1e41d1514bb",
+    "src/model/field-kind.ts": "a69f00bede03467e3a9ecce0ad00bcddf916e5e7c6341933be64e37e670177b7",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/model/serialization.ts": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
+    "spec/core/parquet-record-type-classification.schema.json": "a8c8333ee1ef797ca45b6ba6d427dc02f531331f1b64092ed6e58c2e54d77f33",
+    "spec/core/parquet-record-classification.schema.json": "4c435f049410d255a4b4a2fb3fb5bba60e658e942e9e2260c640c2169166a079",
+    "spec/core/schema.json": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
+    "spec/core/kind-operation-v6.schema.json": "e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8",
+    "spec/extensions/parquet/schema.json": "9600ee4599b65705a9eb186b751fb9fcbd712a813b5f5e32de6ff6e8abe1cfa7",
+    "spec/extensions/parquet/package.json": "eba2d6528e6c5345dc37c63678cba0564f8ab26aaa55c04dcaf4da761402a6ec",
+    "tests/core-ideals/parquet-record-type.test.ts": "756d9b969628f73621bffda122bf78a6698b12dcf110da3864770b240219c25f",
+    "src/index.ts": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da",
+    "crates/umf-core/src/lib.rs": "39923628822b717e9481921d9a06f7e423824dbeb885f2be484ed3a9d8d4ba52",
+    "crates/umf-core/src/core_record_type.rs": "83121cd7ba53db4c3b2665d80f68b98cf1bb4d14d74ad06867ceb8d3141c6582",
+    "docs/helix/02-design/contracts/CONTRACT-019-parquet.md": "e47f7bf0ab24b0d3a65808c70a2c53867bbf24f9a992ce11485c10f078eab696",
+    "fixtures/parquet/containers/list-tuple.parquet": "d865757dae18e11d4e0f071356aa3d8cac7e4a3b63269932404d39dbf3c6f5a5",
+    "fixtures/parquet/containers/list-array.parquet": "6df1f25f59236fcd69c98d68f919fb05068c398196f3ca46010a9f87d625c246",
+    "fixtures/parquet/containers/list-items_tuple.parquet": "2c018ed431f7ff0b1dcaab6782ae94050eb404c2043702a7f1c75278f3d5f144",
+    "fixtures/parquet/containers/list-three-element.parquet": "58a190c2de19268f8111c042882952fa53806dfbbe3262f9b7fbf94840e60253",
+    "fixtures/parquet/containers/map-canonical.parquet": "2c1ec4e20d355a6f85df8d12650c8524a43608d513abfd17d54d50ed66b35b31"
+  },
+  "counts": {
+    "classified": 6,
+    "blocked": 12,
+    "recovered": 12
+  },
+  "outcomes": {
+    "classified/list-tuple/strict": {
+      "result": {
+        "operation": "classify-parquet-record-type",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "list-tuple",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "tuple",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:4",
+                  "name": "b",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "index": 2,
+          "recordModule": "records",
+          "recordId": "type",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.parquet.record-type",
+          "version": "1.0.0",
+          "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+        },
+        "mappings": [
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/schema/3",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "0",
+              "name": "a"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/3/kind",
+            "nativePath": "/schema/4",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "b"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record",
+            "idealPath": "/modules/2/elements/0/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "tuple",
+              "num_children": "2"
+            },
+            "basis": "checked-record-declaration",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "tuple",
+              "num_children": "2"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record-type",
+            "idealPath": "/modules/1/elements/1/references/0",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "tuple",
+              "num_children": "2"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.10.0",
+          "id": "list-tuple",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "tuple",
+                  "extensions": {},
+                  "kind": "field",
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "records",
+                      "element": "type"
+                    }
+                  ]
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                },
+                {
+                  "id": "schema:4",
+                  "name": "b",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "records",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "type",
+                  "name": "tuple",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:3"
+                    },
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "recoveryHex": {
+        "json": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231",
+        "yaml": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+      }
+    },
+    "classified/list-tuple/report": {
+      "result": {
+        "operation": "classify-parquet-record-type",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "list-tuple",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "tuple",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:4",
+                  "name": "b",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "index": 2,
+          "recordModule": "records",
+          "recordId": "type",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.parquet.record-type",
+          "version": "1.0.0",
+          "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+        },
+        "mappings": [
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/schema/3",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "0",
+              "name": "a"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/3/kind",
+            "nativePath": "/schema/4",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "b"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record",
+            "idealPath": "/modules/2/elements/0/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "tuple",
+              "num_children": "2"
+            },
+            "basis": "checked-record-declaration",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "tuple",
+              "num_children": "2"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record-type",
+            "idealPath": "/modules/1/elements/1/references/0",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "tuple",
+              "num_children": "2"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.10.0",
+          "id": "list-tuple",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "tuple",
+                  "extensions": {},
+                  "kind": "field",
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "records",
+                      "element": "type"
+                    }
+                  ]
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                },
+                {
+                  "id": "schema:4",
+                  "name": "b",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "records",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "type",
+                  "name": "tuple",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:3"
+                    },
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "recoveryHex": {
+        "json": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231",
+        "yaml": "504152311504195c4806736368656d61150200350218056974656d731502150600350418057475706c65150400150225001801610015022502180162001600190c003e00000050415231"
+      }
+    },
+    "classified/list-array/strict": {
+      "result": {
+        "operation": "classify-parquet-record-type",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "list-array",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "array",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "index": 2,
+          "recordModule": "records",
+          "recordId": "type",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.parquet.record-type",
+          "version": "1.0.0",
+          "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+        },
+        "mappings": [
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/schema/3",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "a"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record",
+            "idealPath": "/modules/2/elements/0/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-record-declaration",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record-type",
+            "idealPath": "/modules/1/elements/1/references/0",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.10.0",
+          "id": "list-array",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "array",
+                  "extensions": {},
+                  "kind": "field",
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "records",
+                      "element": "type"
+                    }
+                  ]
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "records",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "type",
+                  "name": "array",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "recoveryHex": {
+        "json": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231",
+        "yaml": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+      }
+    },
+    "classified/list-array/report": {
+      "result": {
+        "operation": "classify-parquet-record-type",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "list-array",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "array",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "index": 2,
+          "recordModule": "records",
+          "recordId": "type",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.parquet.record-type",
+          "version": "1.0.0",
+          "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+        },
+        "mappings": [
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/schema/3",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "a"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record",
+            "idealPath": "/modules/2/elements/0/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-record-declaration",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record-type",
+            "idealPath": "/modules/1/elements/1/references/0",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.10.0",
+          "id": "list-array",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "array",
+                  "extensions": {},
+                  "kind": "field",
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "records",
+                      "element": "type"
+                    }
+                  ]
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "records",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "type",
+                  "name": "array",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "recoveryHex": {
+        "json": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231",
+        "yaml": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+      }
+    },
+    "classified/list-items_tuple/strict": {
+      "result": {
+        "operation": "classify-parquet-record-type",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "list-items_tuple",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d7315021506003504180b6974656d735f7475706c6515020015022502180161001600190c003c00000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "items_tuple",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "index": 2,
+          "recordModule": "records",
+          "recordId": "type",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.parquet.record-type",
+          "version": "1.0.0",
+          "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+        },
+        "mappings": [
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/schema/3",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "a"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record",
+            "idealPath": "/modules/2/elements/0/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "items_tuple",
+              "num_children": "1"
+            },
+            "basis": "checked-record-declaration",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "items_tuple",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record-type",
+            "idealPath": "/modules/1/elements/1/references/0",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "items_tuple",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.10.0",
+          "id": "list-items_tuple",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d7315021506003504180b6974656d735f7475706c6515020015022502180161001600190c003c00000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "items_tuple",
+                  "extensions": {},
+                  "kind": "field",
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "records",
+                      "element": "type"
+                    }
+                  ]
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "records",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "type",
+                  "name": "items_tuple",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "recoveryHex": {
+        "json": "504152311504194c4806736368656d61150200350218056974656d7315021506003504180b6974656d735f7475706c6515020015022502180161001600190c003c00000050415231",
+        "yaml": "504152311504194c4806736368656d61150200350218056974656d7315021506003504180b6974656d735f7475706c6515020015022502180161001600190c003c00000050415231"
+      }
+    },
+    "classified/list-items_tuple/report": {
+      "result": {
+        "operation": "classify-parquet-record-type",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "list-items_tuple",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d7315021506003504180b6974656d735f7475706c6515020015022502180161001600190c003c00000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "items_tuple",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "index": 2,
+          "recordModule": "records",
+          "recordId": "type",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.parquet.record-type",
+          "version": "1.0.0",
+          "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+        },
+        "mappings": [
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/schema/3",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "a"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record",
+            "idealPath": "/modules/2/elements/0/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "items_tuple",
+              "num_children": "1"
+            },
+            "basis": "checked-record-declaration",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "items_tuple",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record-type",
+            "idealPath": "/modules/1/elements/1/references/0",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "items_tuple",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.10.0",
+          "id": "list-items_tuple",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d7315021506003504180b6974656d735f7475706c6515020015022502180161001600190c003c00000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "items_tuple",
+                  "extensions": {},
+                  "kind": "field",
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "records",
+                      "element": "type"
+                    }
+                  ]
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "records",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "type",
+                  "name": "items_tuple",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "recoveryHex": {
+        "json": "504152311504194c4806736368656d61150200350218056974656d7315021506003504180b6974656d735f7475706c6515020015022502180161001600190c003c00000050415231",
+        "yaml": "504152311504194c4806736368656d61150200350218056974656d7315021506003504180b6974656d735f7475706c6515020015022502180161001600190c003c00000050415231"
+      }
+    },
+    "blocked/list-three-element/1/strict": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "list-three-element",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504194c4806736368656d61150200350218056974656d731502150600350418046c697374150200150225021807656c656d656e74001600190c003b00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "items",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "list",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "element",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 1,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "strict"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/1/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "items",
+            "num_children": "1",
+            "converted_type": "3"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/0/kind",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "items",
+            "num_children": "1",
+            "converted_type": "3"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/0/references/0",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "items",
+            "num_children": "1",
+            "converted_type": "3"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/1",
+          "value": {
+            "repetition_type": "1",
+            "name": "items",
+            "num_children": "1",
+            "converted_type": "3"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/1",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/list-three-element/1/report": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "list-three-element",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504194c4806736368656d61150200350218056974656d731502150600350418046c697374150200150225021807656c656d656e74001600190c003b00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "items",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "list",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "element",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 1,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "report"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/1/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "items",
+            "num_children": "1",
+            "converted_type": "3"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/0/kind",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "items",
+            "num_children": "1",
+            "converted_type": "3"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/0/references/0",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "items",
+            "num_children": "1",
+            "converted_type": "3"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/1",
+          "value": {
+            "repetition_type": "1",
+            "name": "items",
+            "num_children": "1",
+            "converted_type": "3"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/1",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/list-three-element/2/strict": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "list-three-element",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504194c4806736368656d61150200350218056974656d731502150600350418046c697374150200150225021807656c656d656e74001600190c003b00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "items",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "list",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "element",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 2,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "strict"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/2/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/1/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/1/references/0",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/2",
+          "value": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/2",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/list-three-element/2/report": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "list-three-element",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504194c4806736368656d61150200350218056974656d731502150600350418046c697374150200150225021807656c656d656e74001600190c003b00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "items",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "list",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "element",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 2,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "report"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/2/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/1/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/1/references/0",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/2",
+          "value": {
+            "repetition_type": "2",
+            "name": "list",
+            "num_children": "1"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/2",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/list-three-element/3/strict": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "list-three-element",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504194c4806736368656d61150200350218056974656d731502150600350418046c697374150200150225021807656c656d656e74001600190c003b00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "items",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "list",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "element",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 3,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "strict"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/2/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/2/references/0",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/3",
+          "value": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        },
+        {
+          "path": "/modules/1/elements/2",
+          "value": {
+            "id": "schema:3",
+            "name": "element",
+            "scalarType": "integer",
+            "extensions": {}
+          },
+          "reason": "Scalar metadata or an existing record-type assertion prevents implicit reconciliation",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/3",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        },
+        {
+          "code": "PARQUET_RECORD_TYPE_CONFLICT",
+          "path": "/modules/1/elements/2",
+          "message": "Scalar metadata or an existing record-type assertion prevents implicit reconciliation",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/list-three-element/3/report": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "list-three-element",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504194c4806736368656d61150200350218056974656d731502150600350418046c697374150200150225021807656c656d656e74001600190c003b00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "items",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "list",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "element",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 3,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "report"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/2/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/2/references/0",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/3",
+          "value": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "element"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        },
+        {
+          "path": "/modules/1/elements/2",
+          "value": {
+            "id": "schema:3",
+            "name": "element",
+            "scalarType": "integer",
+            "extensions": {}
+          },
+          "reason": "Scalar metadata or an existing record-type assertion prevents implicit reconciliation",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/3",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        },
+        {
+          "code": "PARQUET_RECORD_TYPE_CONFLICT",
+          "path": "/modules/1/elements/2",
+          "message": "Scalar metadata or an existing record-type assertion prevents implicit reconciliation",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/map-canonical/1/strict": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "map-canonical",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504195c4806736368656d61150200350218076d617070696e671502150200350418096b65795f76616c756515041504001502250018036b65790015022502180576616c7565001600190c004c00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "mapping",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "key_value",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "key",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "schema:4",
+                "name": "value",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 1,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "strict"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/1/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "mapping",
+            "num_children": "1",
+            "converted_type": "1"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/0/kind",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "mapping",
+            "num_children": "1",
+            "converted_type": "1"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/0/references/0",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "mapping",
+            "num_children": "1",
+            "converted_type": "1"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/1",
+          "value": {
+            "repetition_type": "1",
+            "name": "mapping",
+            "num_children": "1",
+            "converted_type": "1"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/1",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/map-canonical/1/report": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "map-canonical",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504195c4806736368656d61150200350218076d617070696e671502150200350418096b65795f76616c756515041504001502250018036b65790015022502180576616c7565001600190c004c00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "mapping",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "key_value",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "key",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "schema:4",
+                "name": "value",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 1,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "report"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/1/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "mapping",
+            "num_children": "1",
+            "converted_type": "1"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/0/kind",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "mapping",
+            "num_children": "1",
+            "converted_type": "1"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/0/references/0",
+          "nativePath": "/schema/1",
+          "nativeFragment": {
+            "repetition_type": "1",
+            "name": "mapping",
+            "num_children": "1",
+            "converted_type": "1"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/1",
+          "value": {
+            "repetition_type": "1",
+            "name": "mapping",
+            "num_children": "1",
+            "converted_type": "1"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/1",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/map-canonical/2/strict": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "map-canonical",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504195c4806736368656d61150200350218076d617070696e671502150200350418096b65795f76616c756515041504001502250018036b65790015022502180576616c7565001600190c004c00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "mapping",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "key_value",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "key",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "schema:4",
+                "name": "value",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 2,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "strict"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/2/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/3/kind",
+          "nativePath": "/schema/4",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "value"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/1/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/1/references/0",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/2",
+          "value": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/2",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/map-canonical/2/report": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "map-canonical",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504195c4806736368656d61150200350218076d617070696e671502150200350418096b65795f76616c756515041504001502250018036b65790015022502180576616c7565001600190c004c00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "mapping",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "key_value",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "key",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "schema:4",
+                "name": "value",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 2,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "report"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/2/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/3/kind",
+          "nativePath": "/schema/4",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "1",
+            "name": "value"
+          },
+          "basis": "checked-record-field-membership",
+          "outcome": "exact"
+        },
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/1/kind",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/1/references/0",
+          "nativePath": "/schema/2",
+          "nativeFragment": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/2",
+          "value": {
+            "repetition_type": "2",
+            "name": "key_value",
+            "num_children": "2",
+            "converted_type": "2"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/2",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/map-canonical/3/strict": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "map-canonical",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504195c4806736368656d61150200350218076d617070696e671502150200350418096b65795f76616c756515041504001502250018036b65790015022502180576616c7565001600190c004c00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "mapping",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "key_value",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "key",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "schema:4",
+                "name": "value",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 3,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "strict"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/2/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/2/references/0",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/3",
+          "value": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        },
+        {
+          "path": "/modules/1/elements/2",
+          "value": {
+            "id": "schema:3",
+            "name": "key",
+            "scalarType": "integer",
+            "extensions": {}
+          },
+          "reason": "Scalar metadata or an existing record-type assertion prevents implicit reconciliation",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/3",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        },
+        {
+          "code": "PARQUET_RECORD_TYPE_CONFLICT",
+          "path": "/modules/1/elements/2",
+          "message": "Scalar metadata or an existing record-type assertion prevents implicit reconciliation",
+          "severity": "error"
+        }
+      ]
+    },
+    "blocked/map-canonical/3/report": {
+      "operation": "classify-parquet-record-type",
+      "version": "1.0.0",
+      "status": "blocked",
+      "source": {
+        "umf": "0.10.0",
+        "id": "map-canonical",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504195c4806736368656d61150200350218076d617070696e671502150200350418096b65795f76616c756515041504001502250018036b65790015022502180576616c7565001600190c004c00000050415231"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "parquet.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema:1",
+                "name": "mapping",
+                "extensions": {}
+              },
+              {
+                "id": "schema:2",
+                "name": "key_value",
+                "extensions": {}
+              },
+              {
+                "id": "schema:3",
+                "name": "key",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "schema:4",
+                "name": "value",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "index": 3,
+        "recordModule": "records",
+        "recordId": "type",
+        "mode": "report"
+      },
+      "binding": {
+        "id": "umf.parquet.record-type",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+      },
+      "mappings": [
+        {
+          "origin": "classified",
+          "kind": "record",
+          "idealPath": "/modules/2/elements/0/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "basis": "checked-record-declaration",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "field",
+          "idealPath": "/modules/1/elements/2/kind",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        },
+        {
+          "origin": "classified",
+          "kind": "record-type",
+          "idealPath": "/modules/1/elements/2/references/0",
+          "nativePath": "/schema/3",
+          "nativeFragment": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "basis": "checked-struct-valued-member",
+          "outcome": "unknown"
+        }
+      ],
+      "residuals": [
+        {
+          "path": "/schema/3",
+          "value": {
+            "type": "1",
+            "repetition_type": "0",
+            "name": "key"
+          },
+          "reason": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        },
+        {
+          "path": "/modules/1/elements/2",
+          "value": {
+            "id": "schema:3",
+            "name": "key",
+            "scalarType": "integer",
+            "extensions": {}
+          },
+          "reason": "Scalar metadata or an existing record-type assertion prevents implicit reconciliation",
+          "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "RECORD_ROLE_UNKNOWN",
+          "path": "/schema/3",
+          "message": "Selected node is primitive, annotated, unknown or a LIST/MAP encoding wrapper; no record assertion is implied",
+          "severity": "error"
+        },
+        {
+          "code": "PARQUET_RECORD_TYPE_CONFLICT",
+          "path": "/modules/1/elements/2",
+          "message": "Scalar metadata or an existing record-type assertion prevents implicit reconciliation",
+          "severity": "error"
+        }
+      ]
+    },
+    "controls": {
+      "rootIndex": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "[{\"instancePath\":\"/index\",\"schemaPath\":\"#/properties/index/minimum\",\"keyword\":\"minimum\",\"params\":{\"comparison\":\">=\",\"limit\":1},\"message\":\"must be >= 1\"}]",
+          "code": "PARQUET_RECORD_TYPE_REQUEST"
+        }
+      },
+      "wrongFieldAuthor": {
+        "operation": "classify-parquet-record-type",
+        "version": "1.0.0",
+        "status": "blocked",
+        "source": {
+          "umf": "0.10.0",
+          "id": "list-array",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "array",
+                  "extensions": {},
+                  "kind": "record"
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "index": 2,
+          "recordModule": "records",
+          "recordId": "type",
+          "mode": "strict",
+          "fieldAuthor": {
+            "operation": "declare-core-kind",
+            "version": "6.0.0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "list-array",
+              "vocabularies": {
+                "umf.parquet": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "parquet",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.parquet": {
+                          "profile": "parquet-file-source",
+                          "encoding": "hex",
+                          "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "parquet.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema:1",
+                      "name": "items",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "schema:2",
+                      "name": "array",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "schema:3",
+                      "name": "a",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "target": {
+              "umf": "0.10.0",
+              "id": "list-array",
+              "vocabularies": {
+                "umf.parquet": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "parquet",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.parquet": {
+                          "profile": "parquet-file-source",
+                          "encoding": "hex",
+                          "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "parquet.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema:1",
+                      "name": "items",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "schema:2",
+                      "name": "array",
+                      "extensions": {},
+                      "kind": "record"
+                    },
+                    {
+                      "id": "schema:3",
+                      "name": "a",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "identity": {
+              "module": "parquet.fields",
+              "element": "schema:2"
+            },
+            "provenance": {
+              "origin": "authored",
+              "idealPath": "/modules/1/elements/1/kind",
+              "kind": "record",
+              "binding": {
+                "id": "umf.core.kind.authoring",
+                "version": "6.0.0"
+              },
+              "basis": "explicit-author-declaration",
+              "nativePath": null
+            }
+          }
+        },
+        "binding": {
+          "id": "umf.parquet.record-type",
+          "version": "1.0.0",
+          "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+        },
+        "mappings": [
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/schema/3",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "a"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record",
+            "idealPath": "/modules/2/elements/0/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-record-declaration",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "unknown"
+          },
+          {
+            "origin": "classified",
+            "kind": "record-type",
+            "idealPath": "/modules/1/elements/1/references/0",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "unknown"
+          }
+        ],
+        "residuals": [
+          {
+            "path": "/modules/1/elements/1",
+            "value": {
+              "id": "schema:2",
+              "name": "array",
+              "extensions": {},
+              "kind": "record"
+            },
+            "reason": "Author receipt does not assert this Field role",
+            "recovery": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_RECORD_TYPE_CONFLICT",
+            "path": "/modules/1/elements/1",
+            "message": "Author receipt does not assert this Field role",
+            "severity": "error"
+          }
+        ]
+      },
+      "validFieldAuthor": {
+        "operation": "classify-parquet-record-type",
+        "version": "1.0.0",
+        "status": "classified",
+        "source": {
+          "umf": "0.10.0",
+          "id": "list-array",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "array",
+                  "extensions": {},
+                  "kind": "field"
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "request": {
+          "index": 2,
+          "recordModule": "records",
+          "recordId": "type",
+          "mode": "strict",
+          "fieldAuthor": {
+            "operation": "declare-core-kind",
+            "version": "6.0.0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "list-array",
+              "vocabularies": {
+                "umf.parquet": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "parquet",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.parquet": {
+                          "profile": "parquet-file-source",
+                          "encoding": "hex",
+                          "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "parquet.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema:1",
+                      "name": "items",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "schema:2",
+                      "name": "array",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "schema:3",
+                      "name": "a",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "target": {
+              "umf": "0.10.0",
+              "id": "list-array",
+              "vocabularies": {
+                "umf.parquet": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "parquet",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.parquet": {
+                          "profile": "parquet-file-source",
+                          "encoding": "hex",
+                          "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "parquet.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema:1",
+                      "name": "items",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "schema:2",
+                      "name": "array",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "schema:3",
+                      "name": "a",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "identity": {
+              "module": "parquet.fields",
+              "element": "schema:2"
+            },
+            "provenance": {
+              "origin": "authored",
+              "idealPath": "/modules/1/elements/1/kind",
+              "kind": "field",
+              "binding": {
+                "id": "umf.core.kind.authoring",
+                "version": "6.0.0"
+              },
+              "basis": "explicit-author-declaration",
+              "nativePath": null
+            }
+          }
+        },
+        "binding": {
+          "id": "umf.parquet.record-type",
+          "version": "1.0.0",
+          "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+          "subset": "Non-root interpreted struct-valued members; native repetition retained, LIST/MAP wrappers excluded"
+        },
+        "mappings": [
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/schema/3",
+            "nativeFragment": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "a"
+            },
+            "basis": "checked-record-field-membership",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record",
+            "idealPath": "/modules/2/elements/0/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-record-declaration",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          },
+          {
+            "origin": "classified",
+            "kind": "record-type",
+            "idealPath": "/modules/1/elements/1/references/0",
+            "nativePath": "/schema/2",
+            "nativeFragment": {
+              "repetition_type": "2",
+              "name": "array",
+              "num_children": "1"
+            },
+            "basis": "checked-struct-valued-member",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.10.0",
+          "id": "list-array",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504194c4806736368656d61150200350218056974656d73150215060035041805617272617915020015022502180161001600190c003600000050415231"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "parquet.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema:1",
+                  "name": "items",
+                  "extensions": {}
+                },
+                {
+                  "id": "schema:2",
+                  "name": "array",
+                  "extensions": {},
+                  "kind": "field",
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "records",
+                      "element": "type"
+                    }
+                  ]
+                },
+                {
+                  "id": "schema:3",
+                  "name": "a",
+                  "scalarType": "integer",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            },
+            {
+              "id": "records",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "type",
+                  "name": "array",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "parquet.fields",
+                      "element": "schema:3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "tamperedTargetRecovery": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Receipt or current target changed",
+          "code": "PARQUET_RECORD_TYPE_STALE"
+        }
+      },
+      "tamperedReceiptRecovery": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Receipt or current target changed",
+          "code": "PARQUET_RECORD_TYPE_STALE"
+        }
+      },
+      "changedCurrentRecovery": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Receipt or current target changed",
+          "code": "PARQUET_RECORD_TYPE_STALE"
+        }
+      },
+      "missingCurrentRecovery": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Receipt or current target changed",
+          "code": "PARQUET_RECORD_TYPE_STALE"
+        }
+      },
+      "wrongId": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "Selected schema index is missing",
+          "code": "PARQUET_RECORD_IDENTITY"
+        }
+      },
+      "resourceBoundary": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "message": "JSON structural limit exceeded",
+          "code": "LIMIT"
+        }
+      }
+    }
+  }
+}

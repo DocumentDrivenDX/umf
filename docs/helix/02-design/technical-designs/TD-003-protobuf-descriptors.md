@@ -19,9 +19,12 @@ ddx:
 
 ## Approach
 
-Use the pinned protobuf-es descriptor reflection graph to generate the complete
-JSON Schema and encode typed native descriptor fields into portable JSON. Read
-only explicitly present fields, preserve unknown fields recursively, represent
+Use the pinned protobuf-es descriptor reflection graph to generate the JSON
+Schema and encode typed native descriptor fields into portable JSON. The schema
+generator enumerates the complete 34-message pinned runtime graph, including
+messages that are not reachable from `FileDescriptorSet`; source-bound tests
+check exact type and field closure. Read only explicitly present fields,
+preserve unknown fields recursively, represent
 64-bit values and bytes without host coercion, and retain all source metadata.
 CONTRACT-003 owns normative surfaces. Runtime code compiles to browser JavaScript.
 

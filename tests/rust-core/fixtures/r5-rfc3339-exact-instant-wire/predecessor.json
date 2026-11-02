@@ -1,0 +1,250 @@
+{
+  "schema": "umf-rust-rfc3339-wire-predecessor/1",
+  "sources": {
+    "src/adapters/rfc3339-exact-instant.ts": "17f524ce64ea0ddca713b3d5c2e3105b3f6dfcf4bb52ae903c19b01388edd84e"
+  },
+  "cases": [
+    {
+      "id": "offset-equivalent",
+      "kind": "same",
+      "input": {
+        "left": "2024-01-01T00:00:00.123456789Z",
+        "right": "2023-12-31T19:00:00.1234567890-05:00"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": true
+      }
+    },
+    {
+      "id": "fraction-diff",
+      "kind": "same",
+      "input": {
+        "left": "2024-01-01T00:00:00.1234567Z",
+        "right": "2024-01-01T00:00:00.1234568Z"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": false
+      }
+    },
+    {
+      "id": "negative-epoch",
+      "kind": "parse",
+      "input": {
+        "token": "1969-12-31T23:59:59.5000Z"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-rfc3339-exact-instant/1.0.0",
+          "originalText": "1969-12-31T23:59:59.5000Z",
+          "utcSeconds": "-1",
+          "fractionalDigits": "5",
+          "originalOffset": "Z",
+          "localOffsetKnown": true
+        }
+      }
+    },
+    {
+      "id": "unknown-offset",
+      "kind": "parse",
+      "input": {
+        "token": "2024-01-01T00:00:00-00:00"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-rfc3339-exact-instant/1.0.0",
+          "originalText": "2024-01-01T00:00:00-00:00",
+          "utcSeconds": "1704067200",
+          "fractionalDigits": "",
+          "originalOffset": "-00:00",
+          "localOffsetKnown": false
+        }
+      }
+    },
+    {
+      "id": "lowercase",
+      "kind": "parse",
+      "input": {
+        "token": "2024-01-01t00:00:00z"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-rfc3339-exact-instant/1.0.0",
+          "originalText": "2024-01-01t00:00:00z",
+          "utcSeconds": "1704067200",
+          "fractionalDigits": "",
+          "originalOffset": "z",
+          "localOffsetKnown": true
+        }
+      }
+    },
+    {
+      "id": "offset-minute-range",
+      "kind": "parse",
+      "input": {
+        "token": "2024-01-01T00:00:00+00:60"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "RFC3339 exact instant offset"
+      }
+    },
+    {
+      "id": "invalid-calendar-before-offset",
+      "kind": "parse",
+      "input": {
+        "token": "2024-02-30T00:00:00+24:00"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "RFC3339 exact instant calendar"
+      }
+    },
+    {
+      "id": "final-line-terminator",
+      "kind": "parse",
+      "input": {
+        "token": "2024-01-01T00:00:00Z\n"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "RFC3339 exact instant syntax"
+      }
+    },
+    {
+      "id": "utf16-nonstring",
+      "kind": "parse",
+      "input": {
+        "token": {
+          "valueOf": "not-called"
+        }
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "RFC3339 exact instant requires text"
+      }
+    },
+    {
+      "id": "raw-null",
+      "kind": "parse",
+      "input": {
+        "token": null
+      },
+      "hostOnly": true,
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "RFC3339 exact instant requires text"
+      }
+    },
+    {
+      "id": "raw-array",
+      "kind": "parse",
+      "input": {
+        "token": []
+      },
+      "hostOnly": true,
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "RFC3339 exact instant requires text"
+      }
+    },
+    {
+      "id": "raw-boxed-string",
+      "kind": "parse",
+      "input": {
+        "token": {
+          "hostValue": "boxed-string"
+        }
+      },
+      "hostOnly": true,
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "RFC3339 exact instant requires text"
+      }
+    },
+    {
+      "id": "raw-proxy",
+      "kind": "parse",
+      "input": {
+        "token": {
+          "hostValue": "proxy-no-trap"
+        }
+      },
+      "hostOnly": true,
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "RFC3339 exact instant requires text"
+      }
+    },
+    {
+      "id": "same-left-first",
+      "kind": "same",
+      "input": {
+        "left": null,
+        "right": "malformed"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "RFC3339 exact instant requires text"
+      }
+    },
+    {
+      "id": "same-right-error",
+      "kind": "same",
+      "input": {
+        "left": "2024-01-01T00:00:00Z",
+        "right": "malformed"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "RFC3339 exact instant syntax"
+      }
+    },
+    {
+      "id": "fraction-precision",
+      "kind": "parse",
+      "input": {
+        "token": "2024-01-01T00:00:00.12345678901234567890Z"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-rfc3339-exact-instant/1.0.0",
+          "originalText": "2024-01-01T00:00:00.12345678901234567890Z",
+          "utcSeconds": "1704067200",
+          "fractionalDigits": "1234567890123456789",
+          "originalOffset": "Z",
+          "localOffsetKnown": true
+        }
+      }
+    }
+  ],
+  "boundaryCases": [
+    {
+      "lengthUtf16": 1048576,
+      "status": "ok",
+      "utcSeconds": "0",
+      "fractionDigitsLength": 1048555
+    },
+    {
+      "lengthUtf16": 1048577,
+      "status": "error",
+      "name": "RangeError",
+      "message": "RFC3339 exact instant token limit"
+    }
+  ]
+}

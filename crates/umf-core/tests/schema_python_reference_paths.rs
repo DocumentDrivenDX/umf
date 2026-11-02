@@ -9,9 +9,9 @@ use umf_core::{
     PythonSchemaEvaluationMode, PythonSchemaResources,
 };
 
-const REFERENCES: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-reference-terminals-predecessor.json");
-const REFERENCE_INDICES: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-reference-indices-predecessor.json");
-const PATH_SEGMENTS: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-path-segments-predecessor.json");
+const REFERENCES: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-reference-terminals-predecessor.json");
+const REFERENCE_INDICES: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-reference-indices-predecessor.json");
+const PATH_SEGMENTS: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-path-segments-predecessor.json");
 
 fn recipe(value: &Json) -> Py {
     match value["kind"].as_str().expect("recipe kind") {

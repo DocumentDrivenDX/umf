@@ -143,4 +143,4 @@ AC11–16 can be designed against the existing exact-source single-document tabl
 profile before cross-document revision support. Their implementation first needs
 the contract, technical-design and story-test allocations in the migration build
 plan. AC1–10 retain their US-050 dependency. This story authorizes no implicit
-core revision fields or widening of CONTRACT-058's preservation profile.
+core revision fields or widening of CONTRACT-083's preservation profile.

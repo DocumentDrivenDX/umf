@@ -1,0 +1,122 @@
+{
+  "profile": "semantic-type-registry-data/1.0.0",
+  "predecessor": "src/extensions/semantic-types/index.ts",
+  "sourceClosureSha256": {
+    "src/extensions/semantic-types/index.ts": "64482ca4d9d8abd65b19b342e1722eaff8497ce52ff44bf5dc3a7ca6f415c6e2",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/model/types.ts": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "spec/extensions/semantic-types/package.json": "c73620865e153b94d236384231bc94df9100568029dbe1e95e97bc44dad87a30"
+  },
+  "caseInputs": {
+    "reference": {
+      "vocabulary": "example.contact",
+      "version": "1.0.0",
+      "term": "email"
+    },
+    "malformed_reference": {
+      "vocabulary": "",
+      "version": "1.0.0",
+      "term": "email"
+    },
+    "malformed_definition": [],
+    "unknown_registration_qualifier": {
+      "vocabulary": "example.contact",
+      "version": "1.0.0",
+      "term": "email",
+      "future": true
+    },
+    "duplicate": [
+      {
+        "vocabulary": "example.contact",
+        "version": "1.0.0",
+        "term": "email"
+      },
+      {
+        "vocabulary": "example.contact",
+        "version": "1.0.0",
+        "term": "email"
+      }
+    ],
+    "distinct": [
+      {
+        "vocabulary": "example.contact",
+        "version": "1.0.0",
+        "term": "email"
+      },
+      {
+        "vocabulary": "example.contact",
+        "version": "2.0.0",
+        "term": "email"
+      }
+    ],
+    "mutation": {
+      "nested": {
+        "label": "original"
+      }
+    },
+    "utf16": {
+      "astral": "🪼",
+      "loneSurrogate": "\ud800"
+    }
+  },
+  "outcomes": {
+    "lookup_missing": {
+      "ok": true
+    },
+    "malformed_reference": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_STRUCTURE",
+        "message": "Expected vocabulary, exact version and term strings"
+      }
+    },
+    "malformed_definition": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_STRUCTURE",
+        "message": "Expected JSON object definition"
+      }
+    },
+    "unknown_registration_qualifier": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_STRUCTURE",
+        "message": "Registration identity cannot contain unknown qualifiers"
+      }
+    },
+    "duplicate_exact_triple": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_DUPLICATE",
+        "message": "Exact semantic term already registered"
+      }
+    },
+    "distinct_triples_coexist": {
+      "ok": true,
+      "value": [
+        {
+          "owner": "a"
+        },
+        {
+          "owner": "b"
+        }
+      ]
+    },
+    "registration_and_lookup_isolation": {
+      "ok": true,
+      "value": {
+        "nested": {
+          "label": "original"
+        }
+      }
+    },
+    "utf16_definition_roundtrip": {
+      "ok": true,
+      "value": {
+        "astral": "🪼",
+        "loneSurrogate": "\ud800"
+      }
+    }
+  }
+}

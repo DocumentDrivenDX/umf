@@ -7,7 +7,7 @@ import {canonicalSchemaJson} from '../../src/model/schema-literals';
 import {securityPolicyDependencies} from '../../src/extensions/security/dependencies';
 import {evaluateSecurityWrite} from '../../src/extensions/security/write';
 import {writeFixture} from './write-fixture';
-import {SecurityAuthorityGuard} from '../../src/extensions/security/authority-guard';
+import {SecurityAuthorityGuard} from '../../src/index-browser-v4';
 import {SecurityReadRegistration} from '../../src/extensions/security/registration';
 import {evaluationFixture} from './evaluation-fixture';
 import {evaluateSecurityAccess,evaluateSecurityCollection} from '../../src/extensions/security/evaluate';

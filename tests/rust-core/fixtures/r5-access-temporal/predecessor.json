@@ -1,0 +1,783 @@
+{
+  "format": "umf-r5-access-temporal-typescript-predecessor/1",
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "profile": "umf-access-temporal/0.1.0",
+  "caseCount": 56,
+  "captureScriptSha256": "c39770243b0160a3816e3bafac5be1365f5b0fc9a39b7b43b95a4a5b2f2a8075",
+  "sourceHashes": {
+    "src/adapters/access-temporal.ts": "aecc4b45d5ce53b5cc9d0bca6f3897b42aea0eb4cdedbf3ae6c0dbcaf1bc10f2",
+    "src/adapters/gregorian-date.ts": "af5b02baa1bdef53ee4291cccc78586d0f2162a217a4241fd9d9a8a93dba069c",
+    "src/adapters/rfc3339-exact-instant.ts": "17f524ce64ea0ddca713b3d5c2e3105b3f6dfcf4bb52ae903c19b01388edd84e",
+    "fixtures/access/golden-vectors/temporal-profile.json": "33e246d47ead263e9b2467b57a46811cdd3628d703d91b5f4fa564b1d207f9c2",
+    "tests/access-temporal-profile.test.ts": "e70b1cd9a715a2bd57666ae3e485dbd046648b28c6cd28abf4fa4e46b16b5f38",
+    "docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md": "f5fd731cba3d7bf985c489c6e561e1ce58b79621d486724ca7329057bc7a7615"
+  },
+  "cases": [
+    {
+      "id": "date-1",
+      "input": {
+        "kind": "date",
+        "token": "2000-02-29"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "date",
+          "originalText": "2000-02-29",
+          "canonicalText": "2000-02-29"
+        }
+      }
+    },
+    {
+      "id": "date-2",
+      "input": {
+        "kind": "date",
+        "token": "0001-01-01"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "date",
+          "originalText": "0001-01-01",
+          "canonicalText": "0001-01-01"
+        }
+      }
+    },
+    {
+      "id": "date-3",
+      "input": {
+        "kind": "date",
+        "token": "9999-12-31"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "date",
+          "originalText": "9999-12-31",
+          "canonicalText": "9999-12-31"
+        }
+      }
+    },
+    {
+      "id": "date-4",
+      "input": {
+        "kind": "date",
+        "token": "1900-02-29"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "id": "date-5",
+      "input": {
+        "kind": "date",
+        "token": "0000-01-01"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "id": "date-6",
+      "input": {
+        "kind": "date",
+        "token": "2024-04-31"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "id": "date-7",
+      "input": {
+        "kind": "date",
+        "token": "2024-01-01T00:00:00Z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "id": "date-8",
+      "input": {
+        "kind": "date",
+        "token": "2024-01-01\n"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "id": "date-9",
+      "input": {
+        "kind": "date",
+        "token": "２０２４-01-01"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date syntax"
+      }
+    },
+    {
+      "id": "instant-10",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T01:30:00.123456+01:30"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "instant",
+          "originalText": "2024-01-01T01:30:00.123456+01:30",
+          "canonicalText": "2024-01-01T00:00:00.123456Z",
+          "microsecond": 123456,
+          "utcSeconds": "1704067200",
+          "originalOffset": "+01:30"
+        }
+      }
+    },
+    {
+      "id": "instant-11",
+      "input": {
+        "kind": "instant",
+        "token": "2023-12-31T19:00:00-05:00"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "instant",
+          "originalText": "2023-12-31T19:00:00-05:00",
+          "canonicalText": "2024-01-01T00:00:00.000000Z",
+          "microsecond": 0,
+          "utcSeconds": "1704067200",
+          "originalOffset": "-05:00"
+        }
+      }
+    },
+    {
+      "id": "instant-12",
+      "input": {
+        "kind": "instant",
+        "token": "0001-01-01T00:00:00Z"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "instant",
+          "originalText": "0001-01-01T00:00:00Z",
+          "canonicalText": "0001-01-01T00:00:00.000000Z",
+          "microsecond": 0,
+          "utcSeconds": "-62135596800",
+          "originalOffset": "Z"
+        }
+      }
+    },
+    {
+      "id": "instant-13",
+      "input": {
+        "kind": "instant",
+        "token": "9999-12-31T23:59:59.999999Z"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "instant",
+          "originalText": "9999-12-31T23:59:59.999999Z",
+          "canonicalText": "9999-12-31T23:59:59.999999Z",
+          "microsecond": 999999,
+          "utcSeconds": "253402300799",
+          "originalOffset": "Z"
+        }
+      }
+    },
+    {
+      "id": "instant-14",
+      "input": {
+        "kind": "instant",
+        "token": "2024-02-29T12:00:00+23:59"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "instant",
+          "originalText": "2024-02-29T12:00:00+23:59",
+          "canonicalText": "2024-02-28T12:01:00.000000Z",
+          "microsecond": 0,
+          "utcSeconds": "1709121660",
+          "originalOffset": "+23:59"
+        }
+      }
+    },
+    {
+      "id": "instant-15",
+      "input": {
+        "kind": "instant",
+        "token": "0001-01-01T00:00:00+00:01"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access instant UTC year range"
+      }
+    },
+    {
+      "id": "instant-16",
+      "input": {
+        "kind": "instant",
+        "token": "9999-12-31T23:59:59-00:01"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access instant UTC year range"
+      }
+    },
+    {
+      "id": "instant-17",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00-00:00"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access instant requires known offset"
+      }
+    },
+    {
+      "id": "instant-18",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access instant requires known offset"
+      }
+    },
+    {
+      "id": "instant-19",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00.1234567Z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "instant-20",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00.1234560Z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "instant-21",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:60Z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal clock"
+      }
+    },
+    {
+      "id": "instant-22",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T24:00:00Z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal clock"
+      }
+    },
+    {
+      "id": "instant-23",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00+24:00"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "RFC3339 exact instant offset"
+      }
+    },
+    {
+      "id": "instant-24",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01t00:00:00z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "instant-25",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01 00:00:00Z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "instant-26",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00Z\n"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "instant-27",
+      "input": {
+        "kind": "instant",
+        "token": "2023-02-29T00:00:00Z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "id": "instant-28",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00+01:00:30"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "local-29",
+      "input": {
+        "kind": "local",
+        "token": "2024-02-29T12:34:56.1"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "local",
+          "originalText": "2024-02-29T12:34:56.1",
+          "canonicalText": "2024-02-29T12:34:56.100000",
+          "microsecond": 100000
+        }
+      }
+    },
+    {
+      "id": "local-30",
+      "input": {
+        "kind": "local",
+        "token": "0001-01-01T00:00:00"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "local",
+          "originalText": "0001-01-01T00:00:00",
+          "canonicalText": "0001-01-01T00:00:00.000000",
+          "microsecond": 0
+        }
+      }
+    },
+    {
+      "id": "local-31",
+      "input": {
+        "kind": "local",
+        "token": "9999-12-31T23:59:59.999999"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "local",
+          "originalText": "9999-12-31T23:59:59.999999",
+          "canonicalText": "9999-12-31T23:59:59.999999",
+          "microsecond": 999999
+        }
+      }
+    },
+    {
+      "id": "local-32",
+      "input": {
+        "kind": "local",
+        "token": "2024-01-01T00:00:00+00:00"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access local requires no offset"
+      }
+    },
+    {
+      "id": "local-33",
+      "input": {
+        "kind": "local",
+        "token": "2024-01-01T00:00:00Z"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access local requires no offset"
+      }
+    },
+    {
+      "id": "local-34",
+      "input": {
+        "kind": "local",
+        "token": "2023-02-29T12:00:00"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "id": "local-35",
+      "input": {
+        "kind": "local",
+        "token": "2024-01-01T00:00:00.0000000"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "local-36",
+      "input": {
+        "kind": "local",
+        "token": "2024-01-01T00:00:00."
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "local-37",
+      "input": {
+        "kind": "local",
+        "token": "2024-01-01T00:00:00\n"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal syntax or precision"
+      }
+    },
+    {
+      "id": "local-38",
+      "input": {
+        "kind": "local",
+        "token": "2024-01-01T00:60:00"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal clock"
+      }
+    },
+    {
+      "id": "offset-minute-60-positive",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00+23:60"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "RFC3339 exact instant offset"
+      }
+    },
+    {
+      "id": "offset-minute-60-negative",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00-23:60"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "RFC3339 exact instant offset"
+      }
+    },
+    {
+      "id": "negative-23-59-offset",
+      "input": {
+        "kind": "instant",
+        "token": "2024-06-15T12:34:56.123456-23:59"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "instant",
+          "originalText": "2024-06-15T12:34:56.123456-23:59",
+          "canonicalText": "2024-06-16T12:33:56.123456Z",
+          "microsecond": 123456,
+          "utcSeconds": "1718541236",
+          "originalOffset": "-23:59"
+        }
+      }
+    },
+    {
+      "id": "underflow-max-positive-offset",
+      "input": {
+        "kind": "instant",
+        "token": "0001-01-01T00:00:00+23:59"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access instant UTC year range"
+      }
+    },
+    {
+      "id": "overflow-max-negative-offset",
+      "input": {
+        "kind": "instant",
+        "token": "9999-12-31T23:59:59.999999-23:59"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access instant UTC year range"
+      }
+    },
+    {
+      "id": "zero-six-fraction-digits",
+      "input": {
+        "kind": "instant",
+        "token": "2024-01-01T00:00:00.000000Z"
+      },
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-access-temporal/0.1.0",
+          "kind": "instant",
+          "originalText": "2024-01-01T00:00:00.000000Z",
+          "canonicalText": "2024-01-01T00:00:00.000000Z",
+          "microsecond": 0,
+          "utcSeconds": "1704067200",
+          "originalOffset": "Z"
+        }
+      }
+    },
+    {
+      "id": "raw-null",
+      "hostOnly": true,
+      "input": {
+        "kind": "instant",
+        "tokenType": "[object Null]",
+        "tokenPreview": "null"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text"
+      }
+    },
+    {
+      "id": "raw-number",
+      "hostOnly": true,
+      "input": {
+        "kind": "instant",
+        "tokenType": "[object Number]",
+        "tokenPreview": "42"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text"
+      }
+    },
+    {
+      "id": "raw-object",
+      "hostOnly": true,
+      "input": {
+        "kind": "instant",
+        "tokenType": "[object Object]",
+        "tokenPreview": "[object Object]"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text"
+      }
+    },
+    {
+      "id": "raw-array",
+      "hostOnly": true,
+      "input": {
+        "kind": "instant",
+        "tokenType": "[object Array]",
+        "tokenPreview": ""
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text"
+      }
+    },
+    {
+      "id": "raw-date",
+      "hostOnly": true,
+      "input": {
+        "kind": "instant",
+        "tokenType": "[object Date]",
+        "tokenPreview": "Wed Dec 31 1969 19:00:00 GMT-0500 (Eastern Standard Time)"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text"
+      }
+    },
+    {
+      "id": "raw-boxed-string",
+      "hostOnly": true,
+      "input": {
+        "kind": "instant",
+        "tokenType": "[object String]",
+        "tokenPreview": "2024-01-01"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text"
+      }
+    },
+    {
+      "id": "raw-proxy-token",
+      "hostOnly": true,
+      "input": {
+        "kind": "date",
+        "tokenType": "proxy-object"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text",
+        "trace": []
+      }
+    },
+    {
+      "id": "raw-accessor-object-token",
+      "hostOnly": true,
+      "input": {
+        "kind": "date",
+        "tokenType": "accessor-object"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text",
+        "getterCalls": 0
+      }
+    },
+    {
+      "id": "kind-before-length",
+      "input": {
+        "kind": "other",
+        "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal kind"
+      }
+    },
+    {
+      "id": "token-type-before-kind",
+      "input": {
+        "kind": "other",
+        "token": null
+      },
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Access temporal requires text"
+      }
+    },
+    {
+      "id": "utf16-length-limit",
+      "input": {
+        "kind": "instant",
+        "token": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal token limit"
+      }
+    },
+    {
+      "id": "ascii-limit-before-syntax",
+      "input": {
+        "kind": "date",
+        "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Access temporal token limit"
+      }
+    }
+  ]
+}

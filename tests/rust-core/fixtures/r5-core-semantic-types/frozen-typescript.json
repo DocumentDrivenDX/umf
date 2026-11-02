@@ -1,0 +1,396 @@
+{
+  "schema": "umf.r5.core-semantic-types.typescript-freeze.v1",
+  "capturedAt": "2026-10-24T12:51:31.339Z",
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "sourceHashes": {
+    "src/model/semantic-types.ts": "f1be6e2ed74adbc0bf0d3b7e96a2c62e6b5b9a7321cdaad402aecb861110bd20",
+    "src/model/semantic-types-receipts.ts": "8d53a3a7d464cf2915bc643312209f0144e78b6ddbfd4b5e236700a035a3539d",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/model/types.ts": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "src/validation/semantic-types.ts": "6d1040586302e698a5a0d3171ab3caf4148d22ba28c5e2bee0121609e14893ac",
+    "src/generated/core-validators.ts": "3a654aa2e944959ba07ec9c1b5692f83a5b7e7a06652bf76ca666649e0e3d095",
+    "spec/core/schema.json": "1cef049948bf2c743dacf0348f0f17444e72f81d9a74034ff823429f4c7c4fb1",
+    "spec/core/semantic-type-reference.schema.json": "adca63532b1424637f49f7e2c8e1c35ce68edd71b3904f476d28322e54d24747",
+    "spec/core/semantic-types-operation.schema.json": "021935d916e82ea471500dffadf2830469c782b28382d71aeea195df724fe727",
+    "spec/metamodel/generated/core-constraints.json": "0972db27e5d272dd4ca6a978e33a55e5e8b0406edc3a01f0856e71de30708c13",
+    "spec/metamodel/generated/domain-policy.json": "0dd7b527889037d849452410bf662b285a9c74d70ce8f6449e792b02270313cd"
+  },
+  "cases": {
+    "inspect": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-semantic-types",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "r5-semantic-types",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "https://example.test",
+              "elements": [
+                {
+                  "id": "e",
+                  "extensions": {},
+                  "semanticTypes": [
+                    {
+                      "vocabulary": "example.contact",
+                      "version": "1.0.0",
+                      "term": "email",
+                      "qualifier": {
+                        "future": "preserve"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "path": "/modules/0/elements/0/semanticTypes",
+        "meaning": {
+          "state": "declared",
+          "types": [
+            {
+              "vocabulary": "example.contact",
+              "version": "1.0.0",
+              "term": "email",
+              "qualifier": {
+                "future": "preserve"
+              }
+            }
+          ]
+        },
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/0/semanticTypes/0/qualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "inspect_missing": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-semantic-types",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "r5-semantic-types",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "https://example.test",
+              "elements": [
+                {
+                  "id": "e",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "path": "/modules/0/elements/0/semanticTypes",
+        "meaning": {
+          "state": "missing"
+        },
+        "diagnostics": []
+      }
+    },
+    "get": {
+      "ok": true,
+      "value": [
+        {
+          "vocabulary": "example.contact",
+          "version": "1.0.0",
+          "term": "email",
+          "qualifier": {
+            "future": "preserve"
+          }
+        }
+      ]
+    },
+    "declare": {
+      "ok": true,
+      "value": {
+        "operation": "declare-core-semantic-types",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "r5-semantic-types",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "https://example.test",
+              "elements": [
+                {
+                  "id": "e",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.10.0",
+          "id": "r5-semantic-types",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "https://example.test",
+              "elements": [
+                {
+                  "id": "e",
+                  "extensions": {},
+                  "semanticTypes": [
+                    {
+                      "vocabulary": "example.contact",
+                      "version": "1.0.0",
+                      "term": "email",
+                      "qualifier": {
+                        "future": "preserve"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "request": {
+          "types": [
+            {
+              "vocabulary": "example.contact",
+              "version": "1.0.0",
+              "term": "email",
+              "qualifier": {
+                "future": "preserve"
+              }
+            }
+          ]
+        },
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/0/semanticTypes/0/qualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ],
+        "provenance": {
+          "origin": "authored",
+          "path": "/modules/0/elements/0/semanticTypes",
+          "basis": "explicit-author-declaration"
+        }
+      }
+    },
+    "declare_missing_types": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Value is not JSON-compatible",
+        "path": ""
+      }
+    },
+    "clear": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_UNKNOWN",
+        "message": "Unknown existing qualifiers prevent replacement or removal",
+        "path": "/modules/0/elements/0/semanticTypes"
+      }
+    },
+    "invalid_identity_precedes_document": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_IDENTITY",
+        "message": "Expected exact nonempty module/element IDs",
+        "path": ""
+      }
+    },
+    "invalid_reference_precedes_document": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_STRUCTURE",
+        "message": "Expected nonempty array of exact semantic references or null to clear",
+        "path": ""
+      }
+    },
+    "old_version_inspect_refusal": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_DOCUMENT",
+        "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/umf\",\"message\":\"must pass \\\"const\\\" keyword validation\",\"severity\":\"error\"}]",
+        "path": ""
+      }
+    },
+    "old_version_get_refusal": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_DOCUMENT",
+        "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/umf\",\"message\":\"must pass \\\"const\\\" keyword validation\",\"severity\":\"error\"}]",
+        "path": ""
+      }
+    },
+    "old_version_declare_refusal": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_DOCUMENT",
+        "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/umf\",\"message\":\"must pass \\\"const\\\" keyword validation\",\"severity\":\"error\"}]",
+        "path": ""
+      }
+    },
+    "verify": {
+      "ok": true,
+      "value": {
+        "operation": "declare-core-semantic-types",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "r5-semantic-types",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "https://example.test",
+              "elements": [
+                {
+                  "id": "e",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.10.0",
+          "id": "r5-semantic-types",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "https://example.test",
+              "elements": [
+                {
+                  "id": "e",
+                  "extensions": {},
+                  "semanticTypes": [
+                    {
+                      "vocabulary": "example.contact",
+                      "version": "1.0.0",
+                      "term": "email",
+                      "qualifier": {
+                        "future": "preserve"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "request": {
+          "types": [
+            {
+              "vocabulary": "example.contact",
+              "version": "1.0.0",
+              "term": "email",
+              "qualifier": {
+                "future": "preserve"
+              }
+            }
+          ]
+        },
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/semanticTypes",
+            "message": "Exact external semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+            "path": "/modules/0/elements/0/semanticTypes/0/qualifier",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          }
+        ],
+        "provenance": {
+          "origin": "authored",
+          "path": "/modules/0/elements/0/semanticTypes",
+          "basis": "explicit-author-declaration"
+        }
+      }
+    },
+    "verify_unknown_qualifier_recompute": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_UNKNOWN",
+        "message": "Unknown existing qualifiers prevent replacement or removal",
+        "path": "/modules/0/elements/0/semanticTypes"
+      }
+    },
+    "verify_forged": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_RECEIPT",
+        "message": "Malformed declaration receipt",
+        "path": ""
+      }
+    },
+    "verify_extra_receipt_field": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_RECEIPT",
+        "message": "Malformed declaration receipt",
+        "path": ""
+      }
+    },
+    "verify_malformed_request": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_RECEIPT",
+        "message": "Malformed declaration receipt",
+        "path": ""
+      }
+    }
+  }
+}

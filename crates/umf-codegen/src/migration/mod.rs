@@ -7,6 +7,9 @@
 
 mod discovery;
 mod evolution;
+mod g03;
+mod g04_compile;
+mod g06;
 use crate::{
     canonical::canonical_json_admitted,
     resources::CodegenEngine,
@@ -177,6 +180,31 @@ fn set(value: &mut Value, key: &str, replacement: Value) -> bool {
     }
     false
 }
+fn set_or_insert(value: &mut Value, key: &str, replacement: Value) -> bool {
+    if let Value::Object(items) = value {
+        if let Some((_, v)) = items.iter_mut().find(|(k, _)| k == &Utf16::from(key)) {
+            *v = replacement;
+        } else {
+            items.push((Utf16::from(key), replacement));
+        }
+        return true;
+    }
+    false
+}
+fn remove_member(value: &mut Value, key: &str) -> bool {
+    let Value::Object(fields) = value else {
+        return false;
+    };
+    if let Some(index) = fields
+        .iter()
+        .position(|(name, _)| name == &Utf16::from(key))
+    {
+        fields.remove(index);
+        true
+    } else {
+        false
+    }
+}
 fn member_mut<'a>(value: &'a mut Value, key: &str) -> Option<&'a mut Value> {
     if let Value::Object(items) = value {
         items
@@ -223,6 +251,363 @@ fn command_only(
         }
     }
     eq(&docs[0], &docs[1], ctx)
+}
+
+fn validate_g02_source_delta(
+    previous: &Value,
+    next: &Value,
+    table_id: &str,
+    field_ref: &Value,
+    operation_id: &str,
+    existing: bool,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let mut old = source_document(previous, ctx)?;
+    let mut fresh = source_document(next, ctx)?;
+    let module_id = text(get(next, "module").unwrap_or(&Value::Null)).unwrap_or_default();
+    let find_module = |document: &Value| {
+        items(get(document, "modules")).iter().position(|module| {
+            get(module, "id").and_then(text).as_deref() == Some(module_id.as_str())
+        })
+    };
+    let old_index = find_module(&old).ok_or_else(|| {
+        error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/previous/source",
+            "G02 source module is missing",
+        )
+    })?;
+    let new_index = find_module(&fresh).ok_or_else(|| {
+        error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source",
+            "G02 source module is missing",
+        )
+    })?;
+    if old_index != new_index {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source",
+            "G02 preserves module order",
+        ));
+    }
+    let old_module = items(get(&old, "modules"))[old_index].clone();
+    let new_modules = member_mut(&mut fresh, "modules").ok_or_else(|| {
+        error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source/modules",
+            "G02 modules are malformed",
+        )
+    })?;
+    let Value::Array(new_modules) = new_modules else {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source/modules",
+            "G02 modules are malformed",
+        ));
+    };
+    let new_module = new_modules.get_mut(new_index).ok_or_else(|| {
+        error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source/modules",
+            "G02 module is missing",
+        )
+    })?;
+    let old_payload = get(
+        get(&old_module, "extensions").unwrap_or(&Value::Null),
+        "umf.tables",
+    )
+    .unwrap_or(&Value::Null);
+    let old_commands = items(get(old_payload, "commands"));
+    let new_payload = member_mut(new_module, "extensions")
+        .and_then(|ext| member_mut(ext, "umf.tables"))
+        .ok_or_else(|| {
+            error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source/modules/extensions/umf.tables",
+                "G02 table payload is missing",
+            )
+        })?;
+    let Value::Object(payload) = new_payload else {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source",
+            "G02 table payload is malformed",
+        ));
+    };
+    let commands = payload
+        .iter_mut()
+        .find(|(key, _)| key == &Utf16::from("commands"))
+        .map(|(_, value)| value);
+    let Some(Value::Array(commands)) = commands else {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source",
+            "G02 command list is missing",
+        ));
+    };
+    if old_commands
+        .iter()
+        .any(|command| get(command, "id").and_then(text).as_deref() == Some(operation_id))
+        || commands
+            .iter()
+            .filter(|command| get(command, "id").and_then(text).as_deref() == Some(operation_id))
+            .count()
+            != 1
+    {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source",
+            "G02 operation must be newly appended exactly once",
+        ));
+    }
+    commands.retain(|command| get(command, "id").and_then(text).as_deref() != Some(operation_id));
+
+    let old_elements = items(get(&old_module, "elements"));
+    if existing {
+        let id = get(field_ref, "element").cloned().unwrap_or(Value::Null);
+        let old_field = old_elements
+            .iter()
+            .find(|element| get(element, "id") == Some(&id))
+            .ok_or_else(|| {
+                error(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/previous/source",
+                    "G02 Field is missing",
+                )
+            })?;
+        let new_module = &new_modules[new_index];
+        let elements = items(get(new_module, "elements"));
+        if !elements
+            .iter()
+            .any(|element| get(element, "id") == Some(&id))
+        {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 Field is missing",
+            ));
+        }
+        let nullability = get(old_field, "nullability").cloned();
+        let new_module = &mut new_modules[new_index];
+        let Value::Array(elements) = member_mut(new_module, "elements").ok_or_else(|| {
+            error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 elements are malformed",
+            )
+        })?
+        else {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 elements are malformed",
+            ));
+        };
+        let new_field = elements
+            .iter_mut()
+            .find(|element| get(element, "id") == Some(&id))
+            .unwrap();
+        if let Some(nullability) = nullability {
+            set(new_field, "nullability", nullability);
+        }
+    } else {
+        let field_id = get(field_ref, "element").cloned().unwrap_or(Value::Null);
+        if old_elements
+            .iter()
+            .any(|element| get(element, "id") == Some(&field_id))
+        {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 appended Field already exists",
+            ));
+        }
+        let new_module = &new_modules[new_index];
+        let elements = items(get(new_module, "elements"));
+        let field_index = elements
+            .iter()
+            .position(|element| get(element, "id") == Some(&field_id))
+            .ok_or_else(|| {
+                error(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/next/source",
+                    "G02 appended Field is missing",
+                )
+            })?;
+        if field_index < old_elements.len() {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 Field must be appended after retained elements",
+            ));
+        }
+        let old_record_id = items(get(old_payload, "tables"))
+            .iter()
+            .find(|table| get(table, "id").and_then(text).as_deref() == Some(table_id))
+            .and_then(|table| get(table, "record"))
+            .and_then(|record| get(record, "element"));
+        let new_payload_view = get(
+            get(new_module, "extensions").unwrap_or(&Value::Null),
+            "umf.tables",
+        )
+        .unwrap_or(&Value::Null);
+        let new_table = items(get(new_payload_view, "tables"))
+            .iter()
+            .find(|table| get(table, "id").and_then(text).as_deref() == Some(table_id))
+            .ok_or_else(|| {
+                error(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/next/source",
+                    "G02 table is missing",
+                )
+            })?;
+        let new_record_id = get(new_table, "record").and_then(|record| get(record, "element"));
+        if old_record_id != new_record_id {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 preserves target Record identity",
+            ));
+        }
+        let old_member_count = old_record_id
+            .and_then(|record_id| {
+                old_elements
+                    .iter()
+                    .find(|element| get(element, "id") == Some(record_id))
+            })
+            .map(|record| items(get(record, "members")).len())
+            .unwrap_or(usize::MAX);
+        let new_record = old_record_id
+            .and_then(|record_id| {
+                elements
+                    .iter()
+                    .find(|element| get(element, "id") == Some(record_id))
+            })
+            .ok_or_else(|| {
+                error(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/next/source",
+                    "G02 Record is missing",
+                )
+            })?;
+        let member_index = items(get(new_record, "members"))
+            .iter()
+            .position(|member| member == field_ref)
+            .ok_or_else(|| {
+                error(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/next/source",
+                    "G02 target Record member is missing",
+                )
+            })?;
+        if member_index < old_member_count {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 Record member must be appended",
+            ));
+        }
+        if items(get(new_table, "columns"))
+            .last()
+            .and_then(|column| get(column, "field"))
+            != Some(field_ref)
+        {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 mapping must be appended last",
+            ));
+        }
+        let new_module = &mut new_modules[new_index];
+        let Value::Array(elements) = member_mut(new_module, "elements").ok_or_else(|| {
+            error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 elements are malformed",
+            )
+        })?
+        else {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source",
+                "G02 elements are malformed",
+            ));
+        };
+        let record = elements
+            .iter_mut()
+            .find(|element| {
+                get(element, "id") == old_record_id
+                    && get(element, "kind").and_then(text).as_deref() == Some("record")
+            })
+            .ok_or_else(|| {
+                error(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/next/source",
+                    "G02 Record is missing",
+                )
+            })?;
+        if let Some(Value::Array(members)) = member_mut(record, "members") {
+            members.retain(|member| member != field_ref);
+        }
+        elements.retain(|element| get(element, "id") != Some(&field_id));
+        let new_payload = member_mut(new_module, "extensions")
+            .and_then(|ext| member_mut(ext, "umf.tables"))
+            .unwrap();
+        let tables = member_mut(new_payload, "tables")
+            .and_then(|value| match value {
+                Value::Array(values) => values
+                    .iter_mut()
+                    .find(|table| get(table, "id").and_then(text).as_deref() == Some(table_id)),
+                _ => None,
+            })
+            .unwrap();
+        if let Some(Value::Array(columns)) = member_mut(tables, "columns") {
+            columns.retain(|column| get(column, "field") != Some(field_ref));
+        }
+    }
+    if !eq(&old, &fresh, ctx)? {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/next/source",
+            "G02 source changes exceed the selected operation and requiredness/mapping change",
+        ));
+    }
+    Ok(())
+}
+
+fn collect_g02_expression_refs(
+    value: &Value,
+    out: &mut Vec<Value>,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    charge(
+        ctx,
+        1,
+        "/options/backfills/0/operation/body/values/0/value/expression",
+    )?;
+    match value {
+        Value::Object(fields) => {
+            if get(value, "op").and_then(text).as_deref() == Some("field") {
+                if let Some(field) = get(value, "field") {
+                    out.try_reserve(1).map_err(|_| {
+                        error("LIMIT", "/options/backfills/0", "Allocation refused")
+                    })?;
+                    out.push(copy_value(field, ctx)?);
+                }
+            }
+            for (_, child) in fields {
+                collect_g02_expression_refs(child, out, ctx)?;
+            }
+        }
+        Value::Array(items) => {
+            for child in items {
+                collect_g02_expression_refs(child, out, ctx)?;
+            }
+        }
+        _ => {}
+    }
+    Ok(())
 }
 
 fn charge_tree(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
@@ -397,9 +782,10 @@ fn reviewed_kind(kind: &str) -> &str {
 fn discover_verified(
     previous: &Value,
     next: &Value,
+    domain_aware: bool,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Value>, EngineError> {
-    discovery::discover(previous, next, ctx)
+    discovery::discover(previous, next, domain_aware, ctx)
 }
 fn migration_options(
     value: Option<&Value>,
@@ -424,9 +810,12 @@ fn migration_options(
     };
     let v1 = version == "umf.table-migration-options/0.1";
     let v2 = version == "umf.table-migration-options/0.2";
+    let v3 = version == "umf.table-migration-options/0.3";
+    let v4 = version == "umf.table-migration-options/0.4";
+    let v6 = version == "umf.table-migration-options/0.6";
     let allowed: &[&str] = if v1 {
         &["version", "backfills", "concurrentIndexes"]
-    } else if v2 {
+    } else if v2 || v3 || v4 || v6 {
         &[
             "version",
             "backfills",
@@ -455,7 +844,7 @@ fn migration_options(
         || items(get(value, "concurrentIndexes")).len() > 256
         || !matches!(get(value, "backfills"), Some(Value::Array(_)))
         || !matches!(get(value, "concurrentIndexes"), Some(Value::Array(_)))
-        || (v2
+        || ((v2 || v3 || v4 || v6)
             && (!matches!(get(value, "reviewedChanges"), Some(Value::Array(_)))
                 || !matches!(get(value, "validations"), Some(Value::Array(_)))
                 || items(get(value, "validations")).len() > 256))
@@ -467,14 +856,37 @@ fn migration_options(
     }
     let Some(previous) = previous else {
         return Err(fail(
-            if v2 {
-                "Version 0.2 phased plans require a previous installed source; initial publication is not supported"
+            if v2 || v3 || v4 || v6 {
+                "Phased plans require a previous installed source; initial publication is not supported"
             } else {
                 "Options require a previous installed source"
             },
             "/options",
         ));
     };
+    if v4 || v6 {
+        for (bundle, path) in [
+            (previous, "/previous/source/format"),
+            (next, "/next/source/format"),
+        ] {
+            if text(
+                get(get(bundle, "source").unwrap_or(&Value::Null), "format")
+                    .unwrap_or(&Value::Null),
+            )
+            .as_deref()
+                != Some("json")
+            {
+                return Err(fail(
+                    if v6 {
+                        "Version 0.6 Field replacement requires exact JSON source"
+                    } else {
+                        "Version 0.4 derived backfills require exact retained JSON source"
+                    },
+                    path,
+                ));
+            }
+        }
+    }
     let exact = |item: &Value, names: &[&str]| -> bool {
         let Some(Value::Object(members)) = Some(item) else {
             return false;
@@ -501,14 +913,39 @@ fn migration_options(
         get(previous, "expectedCatalog").unwrap_or(&Value::Null),
         "columns",
     ));
-    if v2 {
+    if v2 || v3 || v4 || v6 {
         if items(get(value, "reviewedChanges")).len() > 512 {
             return Err(fail(
                 "reviewedChanges must be an array of at most512 exact markers",
                 "/options",
             ));
         }
-        let candidates = discover_verified(previous, next, ctx)?;
+        // The 0.6 plan reviews the complete 0.3 source discovery. The base
+        // discovery alone omits added constraints and operation-context
+        // changes, so a valid selected marker would otherwise be rejected.
+        let candidates = if v6 {
+            let base = discover_verified(previous, next, true, ctx)?;
+            let added = discovery::discover_added_constraints(previous, next, ctx)?;
+            let mut changes = interleave_g03_added_constraints(
+                base,
+                added,
+                get(next, "expectedCatalog")
+                    .and_then(|catalog| get(catalog, "tables"))
+                    .and_then(|tables| match tables {
+                        Value::Array(tables) => Some(tables.as_slice()),
+                        _ => None,
+                    })
+                    .unwrap_or(&[]),
+                ctx,
+            )?;
+            changes.extend(discovery::discover_default_changes(previous, next, ctx)?);
+            changes.extend(discovery::discover_operation_context_changes(
+                previous, next, ctx,
+            )?);
+            changes
+        } else {
+            discover_verified(previous, next, false, ctx)?
+        };
         let mut seen = Vec::<String>::new();
         for (index, marker) in items(get(value, "reviewedChanges")).iter().enumerate() {
             charge(ctx, 128, "")?;
@@ -641,8 +1078,29 @@ fn migration_options(
                 ));
             }
         }
+        if v6 {
+            if !items(get(value, "concurrentIndexes")).is_empty()
+                || !items(get(value, "validations")).is_empty()
+            {
+                return Err(fail(
+                    "G11 does not admit concurrent indexes or deferred validations",
+                    "/options",
+                ));
+            }
+            if items(get(value, "reviewedChanges"))
+                .iter()
+                .any(|marker| get(marker, "conversion").is_some())
+            {
+                return Err(fail(
+                    "G11 reviewed markers do not admit conversion qualifiers",
+                    "/options/reviewedChanges",
+                ));
+            }
+            g06::validate_mapping_replacement(previous, next, value, ctx)?;
+        }
     }
     let mut seen_backfills = Vec::<String>::new();
+    let reviewed_changes = items(get(value, "reviewedChanges"));
     for (index, backfill) in items(get(value, "backfills")).iter().enumerate() {
         charge(ctx, 128, "")?;
         let path = format!("/options/backfills/{index}");
@@ -676,7 +1134,11 @@ fn migration_options(
             text(get(item, "table").unwrap_or(&Value::Null)).as_deref() == Some(table_id.as_str())
                 && ref_id(get(item, "field").unwrap_or(&Value::Null)) == column_key
         });
-        if fresh_table.is_none() || old_table.is_none() || fresh_column.is_none() || old_column {
+        if fresh_table.is_none()
+            || old_table.is_none()
+            || fresh_column.is_none()
+            || (old_column && !v3 && !v4)
+        {
             return Err(fail(
                 "Backfill must select an appended column on an existing table",
                 &path,
@@ -717,7 +1179,7 @@ fn migration_options(
             .unwrap_or(&Value::Null);
         let supported_value = matches!(
             text(get(value, "kind").unwrap_or(&Value::Null)).as_deref(),
-            Some("literal" | "currentTimestamp")
+            Some("literal" | "currentTimestamp" | "rowExpression")
         );
         let valid_command = command.is_some_and(|item| {
             items(get(item, "parameters")).is_empty() && !js_truthy(get(item, "batch"))
@@ -728,14 +1190,221 @@ fn migration_options(
             && items(get(body, "returning")).is_empty()
             && values.len() == 1
             && ref_id(get(&values[0], "field").unwrap_or(&Value::Null)) == column_key
-            && supported_value
+            && (v3 || v4 || v6 || supported_value)
             && text(get(where_clause, "op").unwrap_or(&Value::Null)).as_deref() == Some("isNull")
             && ref_id(get(where_clause, "field").unwrap_or(&Value::Null)) == column_key;
+        if v3 {
+            let selected_path = get(fresh_column.unwrap(), "sourcePath");
+            let candidates = discover_verified(previous, next, false, ctx)?;
+            let reviewed = reviewed_changes.iter().any(|marker| {
+                text(get(marker, "kind").unwrap_or(&Value::Null)).as_deref()
+                    == Some("tighten-not-null")
+                    && get(marker, "path") == selected_path
+                    && candidates.iter().any(|candidate| {
+                        text(get(candidate, "kind").unwrap_or(&Value::Null)).as_deref()
+                            == Some("tighten-not-null")
+                            && get(candidate, "path") == selected_path
+                            && get(candidate, "id") == get(marker, "id")
+                            && get(candidate, "oldDigest") == get(marker, "oldDigest")
+                            && get(candidate, "newDigest") == get(marker, "newDigest")
+                    })
+            });
+            if old_column && !reviewed {
+                return Err(fail(
+                    "Existing-field fill requires its exact reviewed NOT NULL change",
+                    &path,
+                ));
+            }
+            let max_rows = get(body, "maxRows").and_then(|value| match value {
+                Value::Number(number)
+                    if number.fract() == 0.0 && *number >= 1.0 && *number <= 10_000.0 =>
+                {
+                    Some(())
+                }
+                _ => None,
+            });
+            let value_domain_valid =
+                match text(get(value, "kind").unwrap_or(&Value::Null)).as_deref() {
+                    Some("literal") => match crate::deployment::literal_sql_for_migration(
+                        get(value, "value").unwrap_or(&Value::Null),
+                        ctx,
+                    ) {
+                        Ok(_) => true,
+                        Err(error) if error.is_control_failure() => return Err(error),
+                        Err(_) => false,
+                    },
+                    Some("currentTimestamp") => {
+                        text(
+                            get(
+                                get(fresh_column.unwrap(), "nativeType").unwrap_or(&Value::Null),
+                                "kind",
+                            )
+                            .unwrap_or(&Value::Null),
+                        )
+                        .as_deref()
+                            == Some("timestamptz")
+                    }
+                    _ => false,
+                };
+            if command.is_none_or(|item| {
+                text(get(item, "version").unwrap_or(&Value::Null)).as_deref()
+                    != Some("umf.table-operation/0.1")
+            }) || max_rows.is_none()
+                || !value_domain_valid
+                || (text(get(value, "kind").unwrap_or(&Value::Null)).as_deref() == Some("literal")
+                    && get(value, "value") == Some(&Value::Null))
+            {
+                return Err(fail("Version 0.3 backfills require a bounded parameter-free operation 0.1 NULL-only UPDATE with a compatible non-null literal or timestamp", &path));
+            }
+        }
         if !valid_command {
             return Err(fail(
                 "Backfill requires an original parameter-free bounded UPDATE of only its selected NULL column",
                 &path,
             ));
+        }
+        if v4 || v6 {
+            let operation_version = command.and_then(|item| get(item, "version")).and_then(text);
+            let is_expression =
+                get(value, "kind").and_then(text).as_deref() == Some("rowExpression");
+            if operation_version.as_deref() != Some("umf.table-operation/0.2")
+                || !is_expression
+                || get(body, "maxRows")
+                    .and_then(|v| match v {
+                        Value::Number(n) if n.fract() == 0.0 && *n >= 1.0 && *n <= 10_000.0 => {
+                            Some(())
+                        }
+                        _ => None,
+                    })
+                    .is_none()
+            {
+                return Err(fail(
+                    "G02 requires one bounded operation 0.2 derived UPDATE",
+                    &path,
+                ));
+            }
+            let expression = get(value, "expression").unwrap_or(&Value::Null);
+            let mut expression_refs = Vec::new();
+            collect_g02_expression_refs(expression, &mut expression_refs, ctx)?;
+            if expression_refs.is_empty() {
+                return Err(fail(
+                    "G02 requires a derived expression with existing input fields",
+                    &path,
+                ));
+            }
+            for input_ref in expression_refs {
+                if ref_key(&input_ref) == ref_key(column_ref)
+                    || (!v6 && get(&input_ref, "module") != get(column_ref, "module"))
+                {
+                    return Err(fail("G02 expression inputs must be unchanged same-table fields and cannot read the target", &path));
+                }
+                let old_input = previous_columns.iter().find(|column| {
+                    text(get(column, "table").unwrap_or(&Value::Null)).as_deref()
+                        == Some(table_id.as_str())
+                        && ref_key(get(column, "field").unwrap_or(&Value::Null))
+                            == ref_key(&input_ref)
+                });
+                let new_input = catalog_columns.iter().find(|column| {
+                    text(get(column, "table").unwrap_or(&Value::Null)).as_deref()
+                        == Some(table_id.as_str())
+                        && ref_key(get(column, "field").unwrap_or(&Value::Null))
+                            == ref_key(&input_ref)
+                });
+                let old_mapping = old_table.and_then(|table| {
+                    items(get(table, "columns")).iter().find(|column| {
+                        ref_key(get(column, "field").unwrap_or(&Value::Null)) == ref_key(&input_ref)
+                    })
+                });
+                let new_mapping = fresh_table.and_then(|table| {
+                    items(get(table, "columns")).iter().find(|column| {
+                        ref_key(get(column, "field").unwrap_or(&Value::Null)) == ref_key(&input_ref)
+                    })
+                });
+                if old_input.is_none()
+                    || new_input.is_none()
+                    || old_mapping.is_none()
+                    || new_mapping.is_none()
+                    || !(if v6 {
+                        eq(
+                            &without(old_input.unwrap(), &["sourcePath"]),
+                            &without(new_input.unwrap(), &["sourcePath"]),
+                            ctx,
+                        )?
+                    } else {
+                        eq(old_input.unwrap(), new_input.unwrap(), ctx)?
+                    })
+                    || !eq(old_mapping.unwrap(), new_mapping.unwrap(), ctx)?
+                {
+                    return Err(fail("G02 expression inputs must be unchanged existing columns on the selected table", &path));
+                }
+            }
+            if v4 {
+                validate_g02_source_delta(
+                    previous,
+                    next,
+                    &table_id,
+                    column_ref,
+                    &operation_id,
+                    old_column,
+                    ctx,
+                )?;
+            } else {
+                let next_document = source_document(next, ctx)?;
+                let target_field = logical_field(&next_document, column_ref);
+                let mapping = fresh_table.and_then(|table| {
+                    items(get(table, "columns")).iter().find(|item| {
+                        ref_id(get(item, "field").unwrap_or(&Value::Null)) == column_key
+                    })
+                });
+                if old_column
+                    || target_field.is_none_or(|field| {
+                        text(get(field, "kind").unwrap_or(&Value::Null)).as_deref() != Some("field")
+                            || text(get(field, "nullability").unwrap_or(&Value::Null)).as_deref()
+                                != Some("required")
+                    })
+                    || mapping.is_none_or(|item| {
+                        js_truthy(get(item, "generated"))
+                            || get(item, "immutable") == Some(&Value::Bool(true))
+                    })
+                {
+                    return Err(fail(
+                        "G11 backfill target must be a newly declared ordinary required Field",
+                        &path,
+                    ));
+                }
+            }
+        }
+    }
+    if v3 {
+        let existing_backfills = items(get(value, "backfills"))
+            .iter()
+            .filter(|backfill| {
+                let table =
+                    text(get(backfill, "table").unwrap_or(&Value::Null)).unwrap_or_default();
+                let field = get(backfill, "column").unwrap_or(&Value::Null);
+                previous_columns.iter().any(|column| {
+                    text(get(column, "table").unwrap_or(&Value::Null)).as_deref()
+                        == Some(table.as_str())
+                        && ref_key(get(column, "field").unwrap_or(&Value::Null)) == ref_key(field)
+                })
+            })
+            .count();
+        if existing_backfills > 0 {
+            if existing_backfills != 1
+                || items(get(value, "backfills")).len() != 1
+                || !items(get(value, "concurrentIndexes")).is_empty()
+                || !items(get(value, "validations")).is_empty()
+                || items(get(value, "reviewedChanges")).len() != 1
+            {
+                return Err(fail("Existing-field fill and NOT NULL tightening must be the only migration effect in this profile", "/options"));
+            }
+            let selected = &items(get(value, "backfills"))[0];
+            if !g01_source_delta_is_exact(previous, next, selected, ctx)? {
+                return Err(fail(
+                    "Existing-field fill may change only the selected operation and requiredness",
+                    "/next/source",
+                ));
+            }
         }
     }
     let mut seen_indexes = Vec::<String>::new();
@@ -796,11 +1465,530 @@ fn raw_step(kind: &str, path: &str, sql: &str, extra: Vec<(&str, Value)>) -> Val
     object(fields)
 }
 fn plan_version_is_v2(options: Option<&Value>) -> bool {
+    matches!(
+        options
+            .and_then(|value| get(value, "version"))
+            .and_then(text)
+            .as_deref(),
+        Some(
+            "umf.table-migration-options/0.2"
+                | "umf.table-migration-options/0.3"
+                | "umf.table-migration-options/0.4"
+        )
+    )
+}
+fn plan_version_is_g01(options: Option<&Value>) -> bool {
     options
         .and_then(|value| get(value, "version"))
         .and_then(text)
         .as_deref()
-        == Some("umf.table-migration-options/0.2")
+        == Some("umf.table-migration-options/0.3")
+}
+fn plan_version_is_g11(options: Option<&Value>) -> bool {
+    options
+        .and_then(|value| get(value, "version"))
+        .and_then(text)
+        .as_deref()
+        == Some("umf.table-migration-options/0.6")
+}
+
+fn annotate_g02_step(step: &mut Value, role: &str, target: &Value) -> Result<(), EngineError> {
+    let Value::Object(fields) = step else {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/steps",
+            "G02 compiler step is malformed",
+        ));
+    };
+    fields.push((Utf16::from("phaseOperation"), s(role)));
+    fields.push((Utf16::from("phaseTarget"), target.clone()));
+    Ok(())
+}
+
+fn g02_steps(
+    steps: &mut Vec<Value>,
+    previous: &Value,
+    next: &Value,
+    options: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let backfill = items(get(options, "backfills")).first().ok_or_else(|| {
+        error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/options/backfills",
+            "G02 backfill is missing",
+        )
+    })?;
+    let table_id = text(get(backfill, "table").unwrap_or(&Value::Null)).unwrap_or_default();
+    let field = get(backfill, "column").unwrap_or(&Value::Null);
+    let column = items(get(
+        get(next, "expectedCatalog").unwrap_or(&Value::Null),
+        "columns",
+    ))
+    .iter()
+    .find(|column| {
+        text(get(column, "table").unwrap_or(&Value::Null)).as_deref() == Some(table_id.as_str())
+            && ref_key(get(column, "field").unwrap_or(&Value::Null)) == ref_key(field)
+    })
+    .ok_or_else(|| {
+        error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/options/backfills/0/column",
+            "G02 target column is missing",
+        )
+    })?;
+    let source_path = text(get(column, "sourcePath").unwrap_or(&Value::Null)).unwrap_or_default();
+    let target = object(vec![
+        ("table", copy_value(&s(&table_id), ctx)?),
+        ("field", copy_value(field, ctx)?),
+    ]);
+    let existing = items(get(
+        get(previous, "expectedCatalog").unwrap_or(&Value::Null),
+        "columns",
+    ))
+    .iter()
+    .any(|old| {
+        get(old, "table") == Some(&s(&table_id))
+            && ref_key(get(old, "field").unwrap_or(&Value::Null)) == ref_key(field)
+    });
+    let mut tighten = None;
+    if !existing {
+        for (index, step) in steps.iter_mut().enumerate() {
+            let sql = text(get(step, "sql").unwrap_or(&Value::Null)).unwrap_or_default();
+            let kind = text(get(step, "kind").unwrap_or(&Value::Null)).unwrap_or_default();
+            if kind == "table"
+                && sql.contains(" ADD COLUMN ")
+                && sql.contains(&quote_ident(
+                    text(get(column, "name").unwrap_or(&Value::Null))
+                        .as_deref()
+                        .unwrap_or_default(),
+                ))
+            {
+                annotate_g02_step(step, "add-column", &target)?;
+            } else if kind == "table"
+                && sql.contains(" SET NOT NULL")
+                && sql.contains(&quote_ident(
+                    text(get(column, "name").unwrap_or(&Value::Null))
+                        .as_deref()
+                        .unwrap_or_default(),
+                ))
+            {
+                annotate_g02_step(step, "tighten-not-null", &target)?;
+                tighten = Some(index);
+            } else if kind == "table"
+                && sql.contains("CHECK")
+                && sql.contains(&quote_ident(
+                    text(get(column, "name").unwrap_or(&Value::Null))
+                        .as_deref()
+                        .unwrap_or_default(),
+                ))
+            {
+                annotate_g02_step(step, "target-check", &target)?;
+            } else if kind == "table"
+                && sql.contains(" SET DEFAULT")
+                && sql.contains(&quote_ident(
+                    text(get(column, "name").unwrap_or(&Value::Null))
+                        .as_deref()
+                        .unwrap_or_default(),
+                ))
+            {
+                annotate_g02_step(step, "install-default", &target)?;
+            }
+        }
+    } else {
+        for (index, step) in steps.iter_mut().enumerate() {
+            let sql = text(get(step, "sql").unwrap_or(&Value::Null)).unwrap_or_default();
+            if sql.contains(" SET NOT NULL")
+                && get(step, "sourcePath").and_then(text).as_deref() == Some(source_path.as_str())
+            {
+                annotate_g02_step(step, "tighten-not-null", &target)?;
+                tighten = Some(index);
+            }
+        }
+    }
+    let tighten = tighten.ok_or_else(|| {
+        error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/options/backfills/0",
+            "G02 requiredness step is missing",
+        )
+    })?;
+    let operation = copy_value(get(backfill, "operation").unwrap_or(&Value::Null), ctx)?;
+    let mut fill = object(vec![
+        ("id", s("")),
+        ("kind", s("backfill")),
+        ("sourcePath", s("/options/backfills/0")),
+        ("transaction", s("required")),
+        ("sql", s("")),
+        ("operation", operation),
+        ("phaseOperation", s("backfill")),
+        ("phaseTarget", target.clone()),
+    ]);
+    if let Some(index) = steps.iter().position(|step| {
+        text(get(step, "kind").unwrap_or(&Value::Null)).as_deref() == Some("backfill")
+            && text(get(step, "operation").unwrap_or(&Value::Null)).as_deref()
+                == text(get(backfill, "operation").unwrap_or(&Value::Null)).as_deref()
+    }) {
+        annotate_g02_step(&mut steps[index], "backfill", &target)?;
+    } else {
+        steps.insert(tighten, fill.clone());
+    }
+    if existing {
+        let fill_index = steps
+            .iter()
+            .position(|step| {
+                get(step, "phaseOperation").and_then(text).as_deref() == Some("backfill")
+                    && get(step, "phaseTarget") == Some(&target)
+            })
+            .unwrap();
+        let tighten_index = steps
+            .iter()
+            .position(|step| {
+                get(step, "phaseOperation").and_then(text).as_deref() == Some("tighten-not-null")
+                    && get(step, "phaseTarget") == Some(&target)
+            })
+            .unwrap();
+        if fill_index > tighten_index {
+            let value = steps.remove(fill_index);
+            steps.insert(tighten_index, value);
+        }
+    } else {
+        let mut group = Vec::new();
+        let mut rest = Vec::new();
+        for step in steps.drain(..) {
+            if get(&step, "phaseTarget") == Some(&target) {
+                group.push(step);
+            } else {
+                rest.push(step);
+            }
+        }
+        group.sort_by_key(|step| {
+            match text(get(step, "phaseOperation").unwrap_or(&Value::Null)).as_deref() {
+                Some("add-column") => 0,
+                Some("target-check") => 1,
+                Some("backfill") => 2,
+                Some("install-default") => 3,
+                Some("tighten-not-null") => 4,
+                _ => 5,
+            }
+        });
+        let grant_path = source_path
+            .split_once("/columns/")
+            .map(|(table_path, _)| format!("{table_path}/policy/person/update"));
+        let first = rest
+            .iter()
+            .position(|step| {
+                text(get(step, "sourcePath").unwrap_or(&Value::Null)).as_deref()
+                    == Some(source_path.as_str())
+            })
+            .or_else(|| {
+                grant_path.as_ref().and_then(|path| {
+                    rest.iter().position(|step| {
+                        text(get(step, "kind").unwrap_or(&Value::Null)).as_deref() == Some("grant")
+                            && text(get(step, "sourcePath").unwrap_or(&Value::Null)).as_deref()
+                                == Some(path.as_str())
+                            && text(get(step, "sql").unwrap_or(&Value::Null))
+                                .is_some_and(|sql| sql.starts_with("GRANT UPDATE "))
+                    })
+                })
+            })
+            .unwrap_or(rest.len());
+        rest.splice(first..first, group);
+        *steps = rest;
+    }
+    Ok(())
+}
+
+fn g01_source_delta_is_exact(
+    previous: &Value,
+    next: &Value,
+    backfill: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<bool, EngineError> {
+    let field = get(backfill, "column").unwrap_or(&Value::Null);
+    let module_id = text(get(field, "module").unwrap_or(&Value::Null)).unwrap_or_default();
+    let element_id = text(get(field, "element").unwrap_or(&Value::Null)).unwrap_or_default();
+    let operation_id = text(get(backfill, "operation").unwrap_or(&Value::Null)).unwrap_or_default();
+    let mut old_doc = source_document(previous, ctx)?;
+    let mut new_doc = source_document(next, ctx)?;
+    let mutate =
+        |doc: &mut Value, restore: Option<&Value>, expected_count: Option<usize>| -> bool {
+            let Some(Value::Array(modules)) = member_mut(doc, "modules") else {
+                return false;
+            };
+            let Some(module) = modules.iter_mut().find(|module| {
+                text(get(module, "id").unwrap_or(&Value::Null)).as_deref()
+                    == Some(module_id.as_str())
+            }) else {
+                return false;
+            };
+            {
+                let Some(Value::Array(elements)) = member_mut(module, "elements") else {
+                    return false;
+                };
+                let Some(element) = elements.iter_mut().find(|element| {
+                    text(get(element, "id").unwrap_or(&Value::Null)).as_deref()
+                        == Some(element_id.as_str())
+                }) else {
+                    return false;
+                };
+                if let Some(restore) = restore {
+                    if let Some(nullability) = get(restore, "nullability") {
+                        set(element, "nullability", nullability.clone());
+                    } else {
+                        remove_member(element, "nullability");
+                    }
+                }
+            }
+            if let Some(Value::Object(extensions)) = member_mut(module, "extensions") {
+                if let Some(Value::Object(payload)) = extensions
+                    .iter_mut()
+                    .find(|(key, _)| key == &Utf16::from("umf.tables"))
+                    .map(|(_, value)| value)
+                {
+                    if let Some(Value::Array(commands)) = payload
+                        .iter_mut()
+                        .find(|(key, _)| key == &Utf16::from("commands"))
+                        .map(|(_, value)| value)
+                    {
+                        let count = commands
+                            .iter()
+                            .filter(|command| {
+                                text(get(command, "id").unwrap_or(&Value::Null)).as_deref()
+                                    == Some(operation_id.as_str())
+                            })
+                            .count();
+                        if expected_count.is_some_and(|expected| count != expected) {
+                            return false;
+                        }
+                        commands.retain(|command| {
+                            text(get(command, "id").unwrap_or(&Value::Null)).as_deref()
+                                != Some(operation_id.as_str())
+                        });
+                    }
+                }
+            }
+            true
+        };
+    let old_module = items(get(&old_doc, "modules")).iter().find(|module| {
+        text(get(module, "id").unwrap_or(&Value::Null)).as_deref() == Some(module_id.as_str())
+    });
+    let Some(old_module) = old_module else {
+        return Ok(false);
+    };
+    let Some(old_element) = items(get(&old_module, "elements")).iter().find(|element| {
+        text(get(element, "id").unwrap_or(&Value::Null)).as_deref() == Some(element_id.as_str())
+    }) else {
+        return Ok(false);
+    };
+    let old_element = copy_value(old_element, ctx)?;
+    let old_payload = get(
+        get(old_module, "extensions").unwrap_or(&Value::Null),
+        "umf.tables",
+    )
+    .unwrap_or(&Value::Null);
+    if items(get(old_payload, "commands")).iter().any(|command| {
+        text(get(command, "id").unwrap_or(&Value::Null)).as_deref() == Some(operation_id.as_str())
+    }) {
+        return Ok(false);
+    }
+    let table_id = text(get(backfill, "table").unwrap_or(&Value::Null)).unwrap_or_default();
+    let mapping_for = |bundle: &Value| {
+        items(get(
+            get(bundle, "expectedCatalog").unwrap_or(&Value::Null),
+            "tables",
+        ))
+        .iter()
+        .find(|table| {
+            text(get(table, "id").unwrap_or(&Value::Null)).as_deref() == Some(table_id.as_str())
+        })
+        .and_then(|table| {
+            items(get(table, "columns")).iter().find(|column| {
+                ref_key(get(column, "field").unwrap_or(&Value::Null)).as_deref()
+                    == ref_key(field).as_deref()
+            })
+        })
+        .cloned()
+    };
+    let old_mapping = mapping_for(previous);
+    let new_mapping = mapping_for(next);
+    if old_mapping.as_ref().is_none_or(|mapping| {
+        get(mapping, "generated").is_some() || get(mapping, "immutable") == Some(&Value::Bool(true))
+    }) || new_mapping.as_ref().is_none_or(|mapping| {
+        get(mapping, "generated").is_some() || get(mapping, "immutable") == Some(&Value::Bool(true))
+    }) {
+        return Ok(false);
+    }
+    let new_module = items(get(&new_doc, "modules")).iter().find(|module| {
+        text(get(module, "id").unwrap_or(&Value::Null)).as_deref() == Some(module_id.as_str())
+    });
+    let new_element = new_module.and_then(|module| {
+        items(get(module, "elements")).iter().find(|element| {
+            text(get(element, "id").unwrap_or(&Value::Null)).as_deref() == Some(element_id.as_str())
+        })
+    });
+    if text(get(&old_element, "kind").unwrap_or(&Value::Null)).as_deref() != Some("field")
+        || text(get(&old_element, "nullability").unwrap_or(&Value::Null)).as_deref()
+            != Some("absent-allowed")
+        || new_element.is_none_or(|element| {
+            text(get(element, "kind").unwrap_or(&Value::Null)).as_deref() != Some("field")
+                || text(get(element, "nullability").unwrap_or(&Value::Null)).as_deref()
+                    != Some("required")
+        })
+        || !mutate(&mut old_doc, None, None)
+        || !mutate(&mut new_doc, Some(&old_element), Some(1))
+    {
+        return Ok(false);
+    }
+    if !eq(&old_doc, &new_doc, ctx)? {
+        return Ok(false);
+    }
+    let mut old_catalog = copy_value(
+        get(previous, "expectedCatalog").unwrap_or(&Value::Null),
+        ctx,
+    )?;
+    let mut new_catalog = copy_value(get(next, "expectedCatalog").unwrap_or(&Value::Null), ctx)?;
+    let table_id = text(get(backfill, "table").unwrap_or(&Value::Null)).unwrap_or_default();
+    let key = ref_key(field).unwrap_or_default();
+    let old_col = items(get(&old_catalog, "columns")).iter().find(|column| {
+        text(get(column, "table").unwrap_or(&Value::Null)).as_deref() == Some(table_id.as_str())
+            && ref_key(get(column, "field").unwrap_or(&Value::Null)).as_deref()
+                == Some(key.as_str())
+    });
+    let new_col = items(get(&new_catalog, "columns")).iter().find(|column| {
+        text(get(column, "table").unwrap_or(&Value::Null)).as_deref() == Some(table_id.as_str())
+            && ref_key(get(column, "field").unwrap_or(&Value::Null)).as_deref()
+                == Some(key.as_str())
+    });
+    if old_col.is_none_or(|column| get(column, "nullable") != Some(&Value::Bool(true)))
+        || new_col.is_none_or(|column| get(column, "nullable") != Some(&Value::Bool(false)))
+    {
+        return Ok(false);
+    }
+    for catalog in [&mut old_catalog, &mut new_catalog] {
+        let Some(Value::Array(columns)) = member_mut(catalog, "columns") else {
+            return Ok(false);
+        };
+        let Some(column) = columns.iter_mut().find(|column| {
+            text(get(column, "table").unwrap_or(&Value::Null)).as_deref() == Some(table_id.as_str())
+                && ref_key(get(column, "field").unwrap_or(&Value::Null)).as_deref()
+                    == Some(key.as_str())
+        }) else {
+            return Ok(false);
+        };
+        for member in ["nullable", "definitionSql", "sourcePath"] {
+            remove_member(column, member);
+        }
+    }
+    eq(&old_catalog, &new_catalog, ctx)
+}
+
+fn insert_g01_backfill_steps(
+    steps: &mut Vec<Value>,
+    options: &Value,
+    next: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let backfills = items(get(options, "backfills"));
+    if backfills.len() != 1 {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/options/backfills",
+            "Version 0.3 selects exactly one retained-field backfill",
+        ));
+    }
+    let backfill = &backfills[0];
+    let table = text(get(backfill, "table").unwrap_or(&Value::Null)).unwrap_or_default();
+    let field = get(backfill, "column").unwrap_or(&Value::Null);
+    let key = ref_key(field).unwrap_or_default();
+    let column = items(get(
+        get(next, "expectedCatalog").unwrap_or(&Value::Null),
+        "columns",
+    ))
+    .iter()
+    .find(|item| {
+        text(get(item, "table").unwrap_or(&Value::Null)).as_deref() == Some(table.as_str())
+            && ref_key(get(item, "field").unwrap_or(&Value::Null)).as_deref() == Some(key.as_str())
+    })
+    .ok_or_else(|| {
+        error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/options/backfills/0/column",
+            "Selected field is missing from the verified next catalog",
+        )
+    })?;
+    let source_path = text(get(column, "sourcePath").unwrap_or(&Value::Null)).unwrap_or_default();
+    let target = object(vec![
+        ("table", s(&table)),
+        ("field", copy_value(field, ctx)?),
+    ]);
+    let tighten = steps.iter_mut().find(|step| {
+        text(get(step, "kind").unwrap_or(&Value::Null)).as_deref() == Some("table")
+            && text(get(step, "sourcePath").unwrap_or(&Value::Null)).as_deref()
+                == Some(source_path.as_str())
+            && text(get(step, "sql").unwrap_or(&Value::Null))
+                .is_some_and(|sql| sql.contains("SET NOT NULL"))
+    });
+    let Some(tighten) = tighten else {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/options/backfills/0/column",
+            "Selected backfill must pair with one NOT NULL tightening step",
+        ));
+    };
+    set_or_insert(tighten, "phaseOperation", s("tighten-not-null"));
+    set_or_insert(tighten, "phaseTarget", copy_value(&target, ctx)?);
+    let tighten_index = steps
+        .iter()
+        .position(|step| {
+            text(get(step, "sourcePath").unwrap_or(&Value::Null)).as_deref()
+                == Some(source_path.as_str())
+                && text(get(step, "phaseOperation").unwrap_or(&Value::Null)).as_deref()
+                    == Some("tighten-not-null")
+        })
+        .ok_or_else(|| error("TABLE_MIGRATION_OPTIONS", "/steps", "Missing tighten step"))?;
+    // The ordinary evolution compiler already emits the selected backfill.
+    // Bind that exact source-derived step to the G01 phase instead of
+    // introducing a second backfill before the NOT NULL step.
+    let selected_operation = get(backfill, "operation");
+    let mut matching_backfill = None;
+    for (index, step) in steps.iter().enumerate() {
+        charge(ctx, 1, "/options/backfills/0")?;
+        if text(get(step, "kind").unwrap_or(&Value::Null)).as_deref() == Some("backfill")
+            && text(get(step, "sourcePath").unwrap_or(&Value::Null)).as_deref()
+                == Some("/options/backfills/0")
+            && get(step, "operation") == selected_operation
+        {
+            if matching_backfill.replace(index).is_some() {
+                return Err(error(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/options/backfills/0",
+                    "Selected operation produced duplicate backfill steps",
+                ));
+            }
+        }
+    }
+    let Some(mut backfill_index) = matching_backfill else {
+        return Err(error(
+            "TABLE_MIGRATION_OPTIONS",
+            "/options/backfills/0",
+            "Selected operation has no source-derived backfill step",
+        ));
+    };
+    if backfill_index > tighten_index {
+        charge(ctx, steps.len().max(1), "/options/backfills/0")?;
+        let selected = steps.remove(backfill_index);
+        steps.insert(tighten_index, selected);
+        backfill_index = tighten_index;
+    }
+    charge(ctx, 128, "/options/backfills/0")?;
+    set_or_insert(&mut steps[backfill_index], "phaseOperation", s("backfill"));
+    set_or_insert(
+        &mut steps[backfill_index],
+        "phaseTarget",
+        copy_value(&target, ctx)?,
+    );
+    Ok(())
 }
 
 fn validation_selected(options: Option<&Value>, table: &str, constraint: &str, kind: &str) -> bool {
@@ -870,6 +2058,15 @@ fn retained_seed_sets(
 }
 
 impl CodegenEngine<'_> {
+    /// Compute the JCS SHA-256 used by reviewed migration markers.
+    pub fn reviewed_value_digest(
+        &self,
+        value: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        Ok(object(vec![("digest", digest(value, ctx)?)]))
+    }
+
     /// Discover reviewed changes between two source-recompiled deployment bundles.
     pub fn discover_table_migration_changes(
         &self,
@@ -879,7 +2076,124 @@ impl CodegenEngine<'_> {
     ) -> Result<Value, EngineError> {
         let previous = self.verify_table_deployment(previous, ctx)?;
         let next = self.verify_table_deployment(next, ctx)?;
-        Ok(array(discover_verified(&previous, &next, ctx)?))
+        Ok(array(discover_verified(&previous, &next, false, ctx)?))
+    }
+
+    /// Versioned selector entry point. A newer profile is never interpreted
+    /// by the older unselected discovery path.
+    pub fn discover_table_migration_changes_selected(
+        &self,
+        previous: &Value,
+        next: &Value,
+        selector: Option<&Value>,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let previous = self.verify_table_deployment(previous, ctx)?;
+        let next = self.verify_table_deployment(next, ctx)?;
+        let Some(selector) = selector else {
+            return Ok(array(discover_verified(&previous, &next, false, ctx)?));
+        };
+        let profile = get(selector, "version").and_then(text).ok_or_else(|| {
+            error(
+                "MIGRATION_CHANGES_FAILED",
+                "/selector",
+                "Unknown table-migration discovery selector",
+            )
+        })?;
+        let valid_shape = match profile.as_str() {
+            "umf.table-migration-discovery/0.2" | "umf.table-migration-discovery/0.3" => {
+                exact_members(selector, &["version"])
+            }
+            "umf.table-migration-discovery/0.4" => {
+                exact_members(selector, &["version", "conversionIntents"])
+                    && valid_g04_discovery_intents(get(selector, "conversionIntents"))
+            }
+            _ => false,
+        };
+        if !valid_shape {
+            return Err(error(
+                "MIGRATION_CHANGES_FAILED",
+                "/selector",
+                "Unknown selector members or invalid resource bounds",
+            ));
+        }
+        if !matches!(
+            get(&previous, "source").and_then(|source| get(source, "format")),
+            Some(Value::String(format)) if format == &Utf16::from("json")
+        ) || !matches!(
+            get(&next, "source").and_then(|source| get(source, "format")),
+            Some(Value::String(format)) if format == &Utf16::from("json")
+        ) {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/previous/source/format",
+                "Versioned migration discovery requires exact JSON retained sources",
+            ));
+        }
+        let mut changes = discover_verified(
+            &previous,
+            &next,
+            matches!(
+                profile.as_str(),
+                "umf.table-migration-discovery/0.3" | "umf.table-migration-discovery/0.4"
+            ),
+            ctx,
+        )?;
+        match profile.as_str() {
+            "umf.table-migration-discovery/0.2" => {
+                changes.extend(discovery::discover_default_changes(&previous, &next, ctx)?);
+            }
+            "umf.table-migration-discovery/0.3" => {
+                let added = discovery::discover_added_constraints(&previous, &next, ctx)?;
+                changes = interleave_g03_added_constraints(
+                    changes,
+                    added,
+                    get(&next, "expectedCatalog")
+                        .and_then(|catalog| get(catalog, "tables"))
+                        .and_then(|tables| match tables {
+                            Value::Array(tables) => Some(tables.as_slice()),
+                            _ => None,
+                        })
+                        .unwrap_or(&[]),
+                    ctx,
+                )?;
+                changes.extend(discovery::discover_default_changes(&previous, &next, ctx)?);
+                changes.extend(discovery::discover_operation_context_changes(
+                    &previous, &next, ctx,
+                )?);
+            }
+            "umf.table-migration-discovery/0.4" => {
+                let added = discovery::discover_added_constraints(&previous, &next, ctx)?;
+                changes = interleave_g03_added_constraints(
+                    changes,
+                    added,
+                    get(&next, "expectedCatalog")
+                        .and_then(|catalog| get(catalog, "tables"))
+                        .and_then(|tables| match tables {
+                            Value::Array(tables) => Some(tables.as_slice()),
+                            _ => None,
+                        })
+                        .unwrap_or(&[]),
+                    ctx,
+                )?;
+                changes.extend(discovery::discover_default_changes(&previous, &next, ctx)?);
+                changes.extend(discovery::discover_operation_context_changes(
+                    &previous, &next, ctx,
+                )?);
+                let intents = get(selector, "conversionIntents")
+                    .and_then(|value| match value {
+                        Value::Array(values) => Some(values.as_slice()),
+                        _ => None,
+                    })
+                    .unwrap_or(&[]);
+                changes.extend(discovery::discover_g04_conversions(
+                    &previous, &next, intents, ctx,
+                )?);
+            }
+            _ => unreachable!("selector was validated above"),
+        }
+        charge(ctx, changes.len().saturating_add(1), "/changes")?;
+        Ok(array(changes))
     }
 
     /// Compile an initial plan or a command/seed-only source revision.
@@ -1017,6 +2331,43 @@ impl CodegenEngine<'_> {
             ));
         }
         let bundle = next;
+        if get(input, "options")
+            .and_then(|options| get(options, "version"))
+            .and_then(text)
+            .as_deref()
+            == Some("umf.table-migration-options/0.5")
+        {
+            let Some(previous) = previous.as_ref() else {
+                return Ok(blocked(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/options",
+                    "Version 0.5 default changes require a previous installed source",
+                ));
+            };
+            return match g03::compile(
+                input,
+                previous,
+                &bundle,
+                get(input, "options").unwrap(),
+                ctx,
+            ) {
+                Ok(result) => Ok(result),
+                Err(error) if error.is_control_failure() => Err(error),
+                Err(error) => Ok(portable_blocked(&error, ctx)?),
+            };
+        }
+        if get(input, "options")
+            .and_then(|options| get(options, "version"))
+            .and_then(text)
+            .as_deref()
+            == Some("umf.table-migration-options/0.7")
+        {
+            return match g04_compile::compile(input, previous.as_ref(), &bundle, ctx) {
+                Ok(result) => Ok(result),
+                Err(error) if error.is_control_failure() => Err(error),
+                Err(error) => Ok(portable_blocked(&error, ctx)?),
+            };
+        }
         let options =
             match migration_options(get(input, "options"), previous.as_ref(), &bundle, ctx) {
                 Ok(value) => value,
@@ -1027,7 +2378,7 @@ impl CodegenEngine<'_> {
                     return Ok(portable_blocked(&error, ctx)?);
                 }
             };
-        if plan_version_is_v2(options.as_ref()) {
+        if plan_version_is_v2(options.as_ref()) || plan_version_is_g11(options.as_ref()) {
             if let Some(previous) = previous.as_ref() {
                 let ids = |deployment: &Value| {
                     let mut values = items(get(
@@ -1108,6 +2459,40 @@ impl CodegenEngine<'_> {
                 .map(|value| copy_value(value, ctx))
                 .collect::<Result<Vec<_>, _>>()?
         };
+        if plan_version_is_g01(options.as_ref()) {
+            let selected = items(get(options.as_ref().unwrap(), "backfills"));
+            if selected.len() == 1 {
+                let target = get(&selected[0], "column").unwrap_or(&Value::Null);
+                let table =
+                    text(get(&selected[0], "table").unwrap_or(&Value::Null)).unwrap_or_default();
+                let exists = items(get(
+                    get(previous.as_ref().unwrap(), "expectedCatalog").unwrap_or(&Value::Null),
+                    "columns",
+                ))
+                .iter()
+                .any(|column| {
+                    text(get(column, "table").unwrap_or(&Value::Null)).as_deref()
+                        == Some(table.as_str())
+                        && ref_key(get(column, "field").unwrap_or(&Value::Null)) == ref_key(target)
+                });
+                if exists {
+                    insert_g01_backfill_steps(&mut steps, options.as_ref().unwrap(), &bundle, ctx)?;
+                }
+            }
+        }
+        if get(options.as_ref().unwrap_or(&Value::Null), "version")
+            .and_then(text)
+            .as_deref()
+            == Some("umf.table-migration-options/0.4")
+        {
+            g02_steps(
+                &mut steps,
+                previous.as_ref().unwrap(),
+                &bundle,
+                options.as_ref().unwrap(),
+                ctx,
+            )?;
+        }
         if let Some(previous) = &previous {
             if steps.is_empty() && !command_only(previous, &bundle, ctx)? {
                 return Ok(blocked(
@@ -1255,6 +2640,21 @@ impl CodegenEngine<'_> {
                 }
             }
         }
+        if plan_version_is_g11(options.as_ref()) {
+            let Some(previous) = previous.as_ref() else {
+                return Ok(blocked(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/previous",
+                    "G11 requires an installed predecessor",
+                ));
+            };
+            if let Err(error) = g06::order_steps(previous, &bundle, &mut steps, ctx) {
+                if error.is_control_failure() {
+                    return Err(error);
+                }
+                return Ok(portable_blocked(&error, ctx)?);
+            }
+        }
         if steps.len() > 8192 {
             return Ok(blocked(
                 "TABLE_MIGRATION_UNSUPPORTED",
@@ -1350,6 +2750,13 @@ impl CodegenEngine<'_> {
                     fields.push((Utf16::from("constraintKind"), constraint_kind.clone()));
                 }
             }
+            for key in ["phaseOperation", "phaseTarget", "phaseDependency"] {
+                if let Some(value) = get(step, key) {
+                    if let Value::Object(fields) = &mut planned {
+                        fields.push((Utf16::from(key), copy_value(value, ctx)?));
+                    }
+                }
+            }
             migration_steps.push(planned);
         }
         let all_seed_sets: &[Value] = match get(&bundle, "seedSets") {
@@ -1395,6 +2802,18 @@ impl CodegenEngine<'_> {
                     "Native seeds require JSON source, at most128 new sets/10000 rows, and256-byte IDs",
                 ));
             }
+        }
+        if plan_version_is_g01(options.as_ref())
+            && migration_steps
+                .iter()
+                .any(|step| get(step, "phaseOperation").is_some())
+            && (!seed_sets.is_empty() || migration_steps.len() != 2)
+        {
+            return Ok(blocked(
+                "TABLE_MIGRATION_UNSUPPORTED",
+                "/options/backfills",
+                "Existing-field fill cannot share a migration with other effects or seeds",
+            ));
         }
         let seed_execution = if seed_sets.is_empty() {
             s("none")
@@ -1485,81 +2904,290 @@ impl CodegenEngine<'_> {
         }
         let mut phases = Vec::new();
         let mut execution_profile = None;
-        if plan_version_is_v2(options.as_ref()) {
-            let mut groups: Vec<(String, String, Vec<Value>)> = Vec::new();
-            for step in &migration_steps {
-                charge(ctx, 128, "")?;
-                let kind = text(get(step, "kind").unwrap_or(&Value::Null)).unwrap_or_default();
-                let transaction = text(get(step, "transaction").unwrap_or(&Value::Null))
-                    .unwrap_or_else(|| "required".into());
-                let operation =
-                    text(get(step, "operation").unwrap_or(&Value::Null)).unwrap_or_default();
-                let phase_kind = if kind == "backfill" {
-                    "backfill"
-                } else if kind == "seed" {
-                    "seed"
-                } else if kind == "index" && transaction == "forbidden" {
-                    "concurrent-index"
-                } else if operation == "add-not-valid" {
-                    "constraint-add"
-                } else if operation == "validate" {
-                    "constraint-validation"
-                } else {
-                    "transaction"
-                }
-                .to_string();
-                let isolated = phase_kind != "transaction";
-                if isolated && !groups.is_empty() { /* flushed below by forcing a new group */ }
-                if isolated || groups.last().is_none_or(|(_, tx, _)| tx != &transaction) {
-                    groups.push((phase_kind.clone(), transaction.clone(), Vec::new()));
-                }
-                groups
-                    .last_mut()
-                    .unwrap()
-                    .2
-                    .push(get(step, "id").cloned().unwrap_or(Value::Null));
-                if isolated {
-                    groups.push(("__flush__".into(), String::new(), Vec::new()));
-                }
+        if plan_version_is_g01(options.as_ref())
+            && migration_steps
+                .iter()
+                .any(|step| get(step, "phaseOperation").is_some())
+        {
+            let pair = migration_steps.as_slice();
+            if pair.len() != 2
+                || get(&pair[0], "phaseOperation").and_then(text).as_deref() != Some("backfill")
+                || get(&pair[1], "phaseOperation").and_then(text).as_deref()
+                    != Some("tighten-not-null")
+                || get(&pair[0], "phaseTarget") != get(&pair[1], "phaseTarget")
+            {
+                return Ok(blocked(
+                    "TABLE_MIGRATION_UNSUPPORTED",
+                    "/options/backfills",
+                    "Existing-field fill requires one ordered backfill and NOT NULL pair",
+                ));
             }
-            groups.retain(|(kind, _, _)| kind != "__flush__");
-            let mut compact: Vec<(String, String, Vec<Value>)> = Vec::new();
-            for group in groups {
-                charge(ctx, 128, "")?;
-                if group.0 == "__flush__" {
-                    continue;
-                }
-                if compact.last().is_some_and(|(kind, tx, _)| {
-                    kind == &group.0 && tx == &group.1 && group.0 == "transaction"
-                }) {
-                    compact.last_mut().unwrap().2.extend(group.2);
-                } else {
-                    compact.push(group);
-                }
-            }
-            for (index, (kind, transaction, ids)) in compact.iter().enumerate() {
-                charge(ctx, 128, "")?;
-                phases.push(object(vec![
-                    ("id", s(&format!("phase-{:05}", index + 1))),
-                    ("kind", s(kind)),
-                    ("transaction", s(transaction)),
-                    ("steps", array(ids.clone())),
-                ]));
-            }
+            let ids = pair
+                .iter()
+                .map(|step| get(step, "id").cloned().unwrap_or(Value::Null))
+                .collect();
+            phases.push(object(vec![
+                ("id", s("phase-00001")),
+                ("kind", s("backfill-tighten")),
+                ("transaction", s("required")),
+                ("steps", array(ids)),
+            ]));
             execution_profile = Some(object(vec![
-                ("version", s("umf.table-migration-execution/0.1")),
+                ("version", s("umf.table-migration-execution/0.2")),
                 ("progressRelation", s("umf_lifecycle_progress")),
                 ("ownerOnly", Value::Bool(true)),
             ]));
+        } else if plan_version_is_g11(options.as_ref()) {
+            let valid_roles = [
+                "drop-column",
+                "add-column",
+                "target-check",
+                "backfill",
+                "install-default",
+                "tighten-not-null",
+                "dependency-drop",
+                "dependency-add",
+            ];
+            if migration_steps.len() < 2
+                || seed_execution != s("none")
+                || migration_steps.iter().any(|step| {
+                    let role = text(get(step, "phaseOperation").unwrap_or(&Value::Null))
+                        .unwrap_or_default();
+                    let target = get(step, "phaseTarget");
+                    let dependency = get(step, "phaseDependency");
+                    let is_dependency = role == "dependency-drop" || role == "dependency-add";
+                    let dependency_kind = dependency
+                        .and_then(|item| get(item, "kind"))
+                        .and_then(text)
+                        .unwrap_or_default();
+                    let expected_kind = match dependency_kind.as_str() {
+                        "index" => "index",
+                        "foreignKey" => "foreignKey",
+                        "policy" => "policy",
+                        "grant" => "grant",
+                        "check" | "key" => "table",
+                        _ => "",
+                    };
+                    let digest_ok = dependency
+                        .and_then(|item| get(item, "meaningDigest"))
+                        .and_then(text)
+                        .is_some_and(|digest| {
+                            digest.len() == 64
+                                && digest
+                                    .bytes()
+                                    .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+                        });
+                    let target_ok = target.is_some_and(|target| {
+                        get(target, "table")
+                            .and_then(text)
+                            .is_some_and(|id| !id.is_empty())
+                            && get(target, "field").is_some_and(|field| {
+                                get(field, "module")
+                                    .and_then(text)
+                                    .is_some_and(|id| !id.is_empty())
+                                    && get(field, "element")
+                                        .and_then(text)
+                                        .is_some_and(|id| !id.is_empty())
+                            })
+                    });
+                    let operation =
+                        text(get(step, "operation").unwrap_or(&Value::Null)).unwrap_or_default();
+                    let subject_ok = if is_dependency {
+                        dependency
+                            .and_then(|item| get(item, "id"))
+                            .and_then(text)
+                            .is_some_and(|id| !id.is_empty())
+                            && dependency
+                                .and_then(|item| get(item, "sourcePath"))
+                                .and_then(text)
+                                .is_some_and(|path| !path.is_empty())
+                            && digest_ok
+                            && text(get(step, "kind").unwrap_or(&Value::Null)).as_deref()
+                                == Some(expected_kind)
+                            && operation == role
+                    } else {
+                        target_ok
+                            && (if role == "backfill" {
+                                text(get(step, "kind").unwrap_or(&Value::Null)).as_deref()
+                                    == Some("backfill")
+                                    && get(step, "sql").and_then(text).as_deref() == Some("")
+                                    && !operation.is_empty()
+                            } else {
+                                text(get(step, "kind").unwrap_or(&Value::Null)).as_deref()
+                                    == Some("table")
+                                    && operation == role
+                            })
+                    };
+                    !valid_roles.contains(&role.as_str())
+                        || get(step, "transaction").and_then(text).as_deref() != Some("required")
+                        || target.is_some() == dependency.is_some()
+                        || ((role == "dependency-drop" || role == "dependency-add")
+                            != dependency.is_some())
+                        || !subject_ok
+                })
+            {
+                return Ok(blocked(
+                    "TABLE_MIGRATION_OPTIONS",
+                    "/steps",
+                    "G11 field replacement effects require typed transactional subjects",
+                ));
+            }
+            let ids = migration_steps
+                .iter()
+                .map(|step| get(step, "id").cloned().unwrap_or(Value::Null))
+                .collect();
+            phases.push(object(vec![
+                ("id", s("phase-00001")),
+                ("kind", s("field-replacement")),
+                ("transaction", s("required")),
+                ("steps", array(ids)),
+            ]));
+            execution_profile = Some(object(vec![
+                ("version", s("umf.table-migration-execution/0.5")),
+                ("progressRelation", s("umf_lifecycle_progress")),
+                ("ownerOnly", Value::Bool(true)),
+            ]));
+        } else if plan_version_is_v2(options.as_ref()) {
+            let g02 = get(options.as_ref().unwrap_or(&Value::Null), "version")
+                .and_then(text)
+                .as_deref()
+                == Some("umf.table-migration-options/0.4");
+            if g02 {
+                let selected = migration_steps
+                    .iter()
+                    .enumerate()
+                    .filter(|(_, step)| get(step, "phaseTarget").is_some())
+                    .collect::<Vec<_>>();
+                if selected.is_empty() {
+                    return Ok(blocked(
+                        "TABLE_MIGRATION_OPTIONS",
+                        "/options/backfills/0",
+                        "G02 field-effect group is missing",
+                    ));
+                }
+                let first = selected.first().unwrap().0;
+                let last = selected.last().unwrap().0;
+                if migration_steps[first..=last]
+                    .iter()
+                    .any(|step| get(step, "phaseTarget").is_none())
+                {
+                    return Ok(blocked(
+                        "TABLE_MIGRATION_OPTIONS",
+                        "/steps",
+                        "G02 field-effect steps must be executable in one contiguous group",
+                    ));
+                }
+                let added = selected.iter().any(|(_, step)| {
+                    get(step, "phaseOperation").and_then(text).as_deref() == Some("add-column")
+                });
+                let mut add_phase = |kind: &str, steps: &[Value]| {
+                    if steps.is_empty() {
+                        return;
+                    }
+                    let ids = steps
+                        .iter()
+                        .map(|step| get(step, "id").cloned().unwrap_or(Value::Null))
+                        .collect::<Vec<_>>();
+                    let id = format!("phase-{:05}", phases.len() + 1);
+                    phases.push(object(vec![
+                        ("id", s(&id)),
+                        ("kind", s(kind)),
+                        ("transaction", s("required")),
+                        ("steps", array(ids)),
+                    ]));
+                };
+                add_phase("transaction", &migration_steps[..first]);
+                add_phase(
+                    if added {
+                        "backfill-add"
+                    } else {
+                        "backfill-tighten"
+                    },
+                    &migration_steps[first..=last],
+                );
+                add_phase("transaction", &migration_steps[last + 1..]);
+                execution_profile = Some(object(vec![
+                    ("version", s("umf.table-migration-execution/0.3")),
+                    ("progressRelation", s("umf_lifecycle_progress")),
+                    ("ownerOnly", Value::Bool(true)),
+                ]));
+            } else {
+                let mut groups: Vec<(String, String, Vec<Value>)> = Vec::new();
+                for step in &migration_steps {
+                    charge(ctx, 128, "")?;
+                    let kind = text(get(step, "kind").unwrap_or(&Value::Null)).unwrap_or_default();
+                    let transaction = text(get(step, "transaction").unwrap_or(&Value::Null))
+                        .unwrap_or_else(|| "required".into());
+                    let operation =
+                        text(get(step, "operation").unwrap_or(&Value::Null)).unwrap_or_default();
+                    let phase_kind = if kind == "backfill" {
+                        "backfill"
+                    } else if kind == "seed" {
+                        "seed"
+                    } else if kind == "index" && transaction == "forbidden" {
+                        "concurrent-index"
+                    } else if operation == "add-not-valid" {
+                        "constraint-add"
+                    } else if operation == "validate" {
+                        "constraint-validation"
+                    } else {
+                        "transaction"
+                    }
+                    .to_string();
+                    let isolated = phase_kind != "transaction";
+                    if isolated && !groups.is_empty() { /* flushed below by forcing a new group */ }
+                    if isolated || groups.last().is_none_or(|(_, tx, _)| tx != &transaction) {
+                        groups.push((phase_kind.clone(), transaction.clone(), Vec::new()));
+                    }
+                    groups
+                        .last_mut()
+                        .unwrap()
+                        .2
+                        .push(get(step, "id").cloned().unwrap_or(Value::Null));
+                    if isolated {
+                        groups.push(("__flush__".into(), String::new(), Vec::new()));
+                    }
+                }
+                groups.retain(|(kind, _, _)| kind != "__flush__");
+                let mut compact: Vec<(String, String, Vec<Value>)> = Vec::new();
+                for group in groups {
+                    charge(ctx, 128, "")?;
+                    if group.0 == "__flush__" {
+                        continue;
+                    }
+                    if compact.last().is_some_and(|(kind, tx, _)| {
+                        kind == &group.0 && tx == &group.1 && group.0 == "transaction"
+                    }) {
+                        compact.last_mut().unwrap().2.extend(group.2);
+                    } else {
+                        compact.push(group);
+                    }
+                }
+                for (index, (kind, transaction, ids)) in compact.iter().enumerate() {
+                    charge(ctx, 128, "")?;
+                    phases.push(object(vec![
+                        ("id", s(&format!("phase-{:05}", index + 1))),
+                        ("kind", s(kind)),
+                        ("transaction", s(transaction)),
+                        ("steps", array(ids.clone())),
+                    ]));
+                }
+                execution_profile = Some(object(vec![
+                    ("version", s("umf.table-migration-execution/0.1")),
+                    ("progressRelation", s("umf_lifecycle_progress")),
+                    ("ownerOnly", Value::Bool(true)),
+                ]));
+            }
         }
-        let plan_version = if get(options.as_ref().unwrap_or(&Value::Null), "version")
+        let option_version = get(options.as_ref().unwrap_or(&Value::Null), "version")
             .and_then(text)
-            .as_deref()
-            == Some("umf.table-migration-options/0.2")
-        {
-            "umf.table-migration/0.2"
-        } else {
-            "umf.table-migration/0.1"
+            .unwrap_or_default();
+        let plan_version = match option_version.as_str() {
+            "umf.table-migration-options/0.2" => "umf.table-migration/0.2",
+            "umf.table-migration-options/0.3" => "umf.table-migration/0.3",
+            "umf.table-migration-options/0.4" => "umf.table-migration/0.4",
+            "umf.table-migration-options/0.6" => "umf.table-migration/0.6",
+            _ => "umf.table-migration/0.1",
         };
         charge_tree(input, ctx)?;
         charge_tree(&bundle, ctx)?;
@@ -1588,11 +3216,51 @@ impl CodegenEngine<'_> {
             if let Value::Object(fields) = &mut body {
                 fields.push((Utf16::from("options"), options.clone()));
                 fields.push((Utf16::from("review"), array(review_items)));
-                if plan_version == "umf.table-migration/0.2" {
+                if plan_version == "umf.table-migration/0.2"
+                    || plan_version == "umf.table-migration/0.3"
+                    || plan_version == "umf.table-migration/0.4"
+                    || plan_version == "umf.table-migration/0.6"
+                {
                     fields.push((Utf16::from("phases"), array(phases)));
+                    if plan_version == "umf.table-migration/0.3"
+                        || plan_version == "umf.table-migration/0.4"
+                        || plan_version == "umf.table-migration/0.6"
+                    {
+                        fields.push((
+                            Utf16::from("approvalProfile"),
+                            object(vec![
+                                ("version", s("umf.table-migration-approval/0.1")),
+                                ("relation", s("umf_lifecycle_approvals")),
+                                ("ownerOnly", Value::Bool(true)),
+                            ]),
+                        ));
+                    }
                     fields.push((
                         Utf16::from("executionProfile"),
-                        execution_profile.unwrap_or(Value::Null),
+                        if plan_version == "umf.table-migration/0.3" {
+                            object(vec![
+                                ("version", s("umf.table-migration-execution/0.2")),
+                                ("progressRelation", s("umf_lifecycle_progress")),
+                                ("ownerOnly", Value::Bool(true)),
+                            ])
+                        } else if plan_version == "umf.table-migration/0.4"
+                            || plan_version == "umf.table-migration/0.6"
+                        {
+                            object(vec![
+                                (
+                                    "version",
+                                    s(if plan_version == "umf.table-migration/0.6" {
+                                        "umf.table-migration-execution/0.5"
+                                    } else {
+                                        "umf.table-migration-execution/0.3"
+                                    }),
+                                ),
+                                ("progressRelation", s("umf_lifecycle_progress")),
+                                ("ownerOnly", Value::Bool(true)),
+                            ])
+                        } else {
+                            execution_profile.unwrap_or(Value::Null)
+                        },
                     ));
                 }
             }
@@ -1639,7 +3307,15 @@ impl CodegenEngine<'_> {
         let plan = crate::value::admit_json(input, ctx)?;
         if !matches!(
             get(&plan, "version").and_then(text).as_deref(),
-            Some("umf.table-migration/0.1" | "umf.table-migration/0.2")
+            Some(
+                "umf.table-migration/0.1"
+                    | "umf.table-migration/0.2"
+                    | "umf.table-migration/0.3"
+                    | "umf.table-migration/0.4"
+                    | "umf.table-migration/0.5"
+                    | "umf.table-migration/0.6"
+                    | "umf.table-migration/0.7"
+            )
         ) {
             return Err(error(
                 "TABLE_MIGRATION_UNSUPPORTED",
@@ -1684,5 +3360,279 @@ impl CodegenEngine<'_> {
             ));
         }
         Ok(plan)
+    }
+}
+
+/// Selector 0.3 emits added constraints inside each table's candidate group,
+/// after replaced/removed constraints and before policy changes. The base
+/// discovery kernel already emits table-local columns, constraints, and
+/// policies in that order; insert the newly added constraints at the policy
+/// boundary without disturbing the existing candidate order.
+fn interleave_g03_added_constraints(
+    base: Vec<Value>,
+    added: Vec<Value>,
+    tables: &[Value],
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Value>, EngineError> {
+    fn candidate_table(candidate: &Value) -> Option<&Value> {
+        for name in ["oldValue", "newValue"] {
+            if let Some(value) = get(candidate, name) {
+                if let Some(physical) = get(value, "physical") {
+                    if let Some(table) = get(physical, "table") {
+                        return Some(table);
+                    }
+                }
+            }
+        }
+        None
+    }
+    fn policy_for(candidate: &Value, table_index: usize) -> bool {
+        if get(candidate, "kind").and_then(text).as_deref() != Some("change-policy") {
+            return false;
+        }
+        let Some(path) = get(candidate, "path").and_then(text) else {
+            return false;
+        };
+        path.starts_with(&format!(
+            "/modules/extensions/umf.tables/tables/{table_index}/policy/"
+        ))
+    }
+
+    ctx.charge_work(
+        tables
+            .len()
+            .saturating_add(base.len())
+            .saturating_add(added.len())
+            .saturating_add(1),
+        Utf16::from("/changes"),
+    )?;
+    let mut result = Vec::new();
+    result
+        .try_reserve(base.len().saturating_add(added.len()))
+        .map_err(|_| {
+            EngineError::new(
+                "LIMIT",
+                Utf16::from("/changes"),
+                "Candidate allocation refused",
+            )
+        })?;
+    let mut used_base = vec![false; base.len()];
+    let mut used_added = vec![false; added.len()];
+    for (table_index, table) in tables.iter().enumerate() {
+        ctx.charge_work(
+            base.len().saturating_add(added.len()).saturating_add(1),
+            Utf16::from("/expectedCatalog/tables"),
+        )?;
+        let table_id = get(table, "id").unwrap_or(&Value::Null);
+        let base_indexes = base
+            .iter()
+            .enumerate()
+            .filter_map(|(index, candidate)| {
+                if candidate_table(candidate) == Some(table_id)
+                    || policy_for(candidate, table_index)
+                {
+                    Some(index)
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+        let added_indexes = added
+            .iter()
+            .enumerate()
+            .filter_map(|(index, candidate)| {
+                (candidate_table(candidate) == Some(table_id)).then_some(index)
+            })
+            .collect::<Vec<_>>();
+        ctx.charge_work(
+            base_indexes
+                .len()
+                .saturating_add(added_indexes.len())
+                .saturating_add(1),
+            Utf16::from("/expectedCatalog/tables"),
+        )?;
+        let mut inserted = false;
+        for index in base_indexes {
+            if !inserted && policy_for(&base[index], table_index) {
+                for added_index in &added_indexes {
+                    charge_tree(&added[*added_index], ctx)?;
+                    result.push(added[*added_index].clone());
+                    used_added[*added_index] = true;
+                }
+                inserted = true;
+            }
+            charge_tree(&base[index], ctx)?;
+            result.push(base[index].clone());
+            used_base[index] = true;
+        }
+        if !inserted {
+            for added_index in added_indexes {
+                charge_tree(&added[added_index], ctx)?;
+                result.push(added[added_index].clone());
+                used_added[added_index] = true;
+            }
+        }
+    }
+    for (index, candidate) in base.into_iter().enumerate() {
+        if !used_base[index] {
+            ctx.charge_work(1, Utf16::from("/changes"))?;
+            result.push(candidate);
+        }
+    }
+    for (index, candidate) in added.into_iter().enumerate() {
+        if !used_added[index] {
+            ctx.charge_work(1, Utf16::from("/changes"))?;
+            result.push(candidate);
+        }
+    }
+    Ok(result)
+}
+
+fn exact_members(value: &Value, names: &[&str]) -> bool {
+    let Some(Value::Object(fields)) = Some(value) else {
+        return false;
+    };
+    fields.len() == names.len()
+        && names.iter().all(|name| {
+            fields
+                .iter()
+                .filter(|(key, _)| key == &Utf16::from(*name))
+                .count()
+                == 1
+        })
+}
+
+fn bounded_text_identity(value: Option<&Value>, max_bytes: usize) -> bool {
+    let Some(Value::String(value)) = value else {
+        return false;
+    };
+    if value.is_empty() || value.units().contains(&0) {
+        return false;
+    }
+    value.to_utf8().is_ok_and(|text| text.len() <= max_bytes)
+}
+
+fn valid_g04_discovery_intents(value: Option<&Value>) -> bool {
+    let Some(Value::Array(items)) = value else {
+        return false;
+    };
+    if items.is_empty() || items.len() > 256 {
+        return false;
+    }
+    items.iter().all(|intent| {
+        if !exact_members(intent, &["table", "field", "recipe", "nulls", "invalid", "recovery"])
+            || !bounded_text_identity(get(intent, "table"), 256)
+            || !matches!(get(intent, "nulls"), Some(Value::String(value)) if value == &Utf16::from("preserve"))
+            || !matches!(get(intent, "invalid"), Some(Value::String(value)) if value == &Utf16::from("abort"))
+        { return false; }
+        let field = get(intent, "field").unwrap();
+        if !exact_members(field, &["module", "element"])
+            || !bounded_text_identity(get(field, "module"), 256)
+            || !bounded_text_identity(get(field, "element"), 256)
+        { return false; }
+        let recipe = get(intent, "recipe").unwrap();
+        let Some(kind) = get(recipe, "kind").and_then(text) else { return false };
+        let parameter_names: &[&str] = match kind.as_str() {
+            "numeric-exact" | "text-date" | "date-text" | "text-instant" | "instant-text" | "text-uuid" | "uuid-text" => &[],
+            "numeric-rescale" => &["rounding"],
+            "date-instant" => &["at", "offset"],
+            "instant-date" => &["time", "offset"],
+            "text-boolean" | "boolean-text" => &["trueToken", "falseToken"],
+            _ => return false,
+        };
+        if !exact_members(recipe, &["version", "kind", "parameters"])
+            || !matches!(get(recipe, "version"), Some(Value::String(value)) if value == &Utf16::from("umf.conversion-recipe/0.1"))
+            || !exact_members(get(recipe, "parameters").unwrap(), parameter_names)
+        { return false; }
+        let parameters = get(recipe, "parameters").unwrap();
+        let parameters_valid = match kind.as_str() {
+            "numeric-rescale" => matches!(get(parameters, "rounding"), Some(Value::String(value)) if value == &Utf16::from("half-even") || value == &Utf16::from("toward-zero")),
+            "date-instant" => matches!(get(parameters, "at"), Some(Value::String(value)) if value == &Utf16::from("00:00:00"))
+                && matches!(get(parameters, "offset"), Some(Value::String(value)) if value == &Utf16::from("Z")),
+            "instant-date" => matches!(get(parameters, "time"), Some(Value::String(value)) if value == &Utf16::from("require-midnight") || value == &Utf16::from("discard"))
+                && matches!(get(parameters, "offset"), Some(Value::String(value)) if value == &Utf16::from("Z")),
+            "text-boolean" | "boolean-text" => {
+                let Some(yes) = get(parameters, "trueToken").and_then(text) else { return false };
+                let Some(no) = get(parameters, "falseToken").and_then(text) else { return false };
+                bounded_text_identity(get(parameters, "trueToken"), 128)
+                    && bounded_text_identity(get(parameters, "falseToken"), 128)
+                    && yes != no
+            }
+            _ => true,
+        };
+        if !parameters_valid { return false; }
+        let recovery = get(intent, "recovery").unwrap();
+        match get(recovery, "mode").and_then(text).as_deref() {
+            Some("irreversible") => exact_members(recovery, &["mode"]),
+            Some("retained-originals") => {
+                exact_members(recovery, &["mode", "policy"])
+                    && exact_members(get(recovery, "policy").unwrap(), &["id", "revision"])
+                    && bounded_text_identity(get(get(recovery, "policy").unwrap(), "id"), 256)
+                    && bounded_text_identity(get(get(recovery, "policy").unwrap(), "revision"), 256)
+            }
+            Some("round-trip") => {
+                exact_members(recovery, &["mode", "proofProfile"])
+                    && matches!(get(recovery, "proofProfile"), Some(Value::String(value)) if value == &Utf16::from("umf.exact-integer-widening-roundtrip/0.1"))
+            }
+            _ => false,
+        }
+    })
+}
+
+#[cfg(test)]
+mod selector_order_tests {
+    use super::*;
+
+    fn object(fields: Vec<(&str, Value)>) -> Value {
+        Value::Object(
+            fields
+                .into_iter()
+                .map(|(key, value)| (Utf16::from(key), value))
+                .collect(),
+        )
+    }
+
+    fn candidate(kind: &str, path: &str, table: Option<&str>) -> Value {
+        let meaning = table.map_or(Value::Null, |table| {
+            object(vec![(
+                "physical",
+                object(vec![("table", Value::String(Utf16::from(table)))]),
+            )])
+        });
+        object(vec![
+            ("kind", Value::String(Utf16::from(kind))),
+            ("path", Value::String(Utf16::from(path))),
+            ("oldValue", meaning.clone()),
+            ("newValue", meaning),
+        ])
+    }
+
+    #[test]
+    fn added_constraints_stay_between_table_changes_and_policy() {
+        let base = vec![
+            candidate("change-column-type", "/columns/0", Some("orders")),
+            candidate(
+                "change-policy",
+                "/modules/extensions/umf.tables/tables/0/policy/person/select",
+                None,
+            ),
+        ];
+        let added = vec![candidate(
+            "replace-index",
+            "/modules/extensions/umf.tables/tables/0/indexes/1",
+            Some("orders"),
+        )];
+        let tables = vec![object(vec![("id", Value::String(Utf16::from("orders")))])];
+        let ordered =
+            interleave_g03_added_constraints(base, added, &tables, &mut Context::ordinary())
+                .unwrap();
+        let kinds = ordered
+            .iter()
+            .map(|row| text(get(row, "kind").unwrap()).unwrap())
+            .collect::<Vec<_>>();
+        assert_eq!(
+            kinds,
+            ["change-column-type", "replace-index", "change-policy"]
+        );
     }
 }

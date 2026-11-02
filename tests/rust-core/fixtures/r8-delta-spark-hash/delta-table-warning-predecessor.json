@@ -1,0 +1,541 @@
+{
+  "profile": "Current TypeScript Delta table warning predecessor",
+  "runner": "scripts/rust-migration/r8/freeze-delta-table-warnings.ts",
+  "runnerSha256": "4f9a3c5e855dfa157c454da31574228a6eca85d6335686e2683c16eac3482192",
+  "sources": {
+    "src/adapters/delta/table.ts": "90f86c40ac4fa10e17fc3119299cbfc1cdbcf0ab61d0b7812b1aaab32d8fd10c",
+    "src/adapters/delta/column-mapping.ts": "b42274f91055c509bc767beb9ebabd6f6001772195a0363c0a4d7c573a7d2c40",
+    "src/adapters/delta/index.ts": "3b432e603dc96bc0d9cfbb36584f0d87286daba89e4b713460e126c22f8fe4bb",
+    "src/model/native-json.ts": "9f8402db883a0d211c86e4a5a00e037a40410a2bf2bbfa3cf1cc288772c205f7"
+  },
+  "cases": [
+    {
+      "id": "unknownProperties",
+      "source": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[],\"writerFeatures\":[],\"futureProtocol\":1},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\",\"options\":{},\"futureFormat\":true},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{},\"futureMetadata\":true},\"futureRoot\":true,\"future/🚀\":true}",
+      "sourceSha256": "38af3d660b9ec43a3ca4568bbc541a727b8a07e3f4d674edb5f5b4025da2cb1b",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_TABLE_UNKNOWN",
+          "path": "/futureRoot",
+          "message": "Unknown native property retained",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_TABLE_UNKNOWN",
+          "path": "/future~1🚀",
+          "message": "Unknown native property retained",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_TABLE_UNKNOWN",
+          "path": "/protocol/futureProtocol",
+          "message": "Unknown native property retained",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_TABLE_UNKNOWN",
+          "path": "/metaData/futureMetadata",
+          "message": "Unknown native property retained",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_TABLE_UNKNOWN",
+          "path": "/metaData/format/futureFormat",
+          "message": "Unknown native property retained",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "featureRulesAndFutureProtocol",
+      "source": "{\"protocol\":{\"minReaderVersion\":4,\"minWriterVersion\":8,\"readerFeatures\":[\"x\",\"x\"],\"writerFeatures\":[\"y\"]},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"csv\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{\"alpha\":\"x\"}}}",
+      "sourceSha256": "e0df7bdab1e258f50760ba0cfa9593a5d88f68979e8309f08d6f7668abf8085f",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_VERSION",
+          "path": "/protocol/readerFeatures",
+          "message": "Feature-list presence does not match the pinned protocol version rule",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FUTURE_PROTOCOL",
+          "path": "/protocol",
+          "message": "Future protocol version remains uninterpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_DUPLICATE_FEATURE",
+          "path": "/protocol/readerFeatures",
+          "message": "Feature names must be unique",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_UNVERIFIED",
+          "path": "/protocol/readerFeatures/0",
+          "message": "Feature preserved; implementation capability is not asserted: x",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_UNVERIFIED",
+          "path": "/protocol/readerFeatures/1",
+          "message": "Feature preserved; implementation capability is not asserted: x",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_VERSION",
+          "path": "/protocol/writerFeatures",
+          "message": "Feature-list presence does not match the pinned protocol version rule",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FUTURE_PROTOCOL",
+          "path": "/protocol",
+          "message": "Future protocol version remains uninterpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_UNVERIFIED",
+          "path": "/protocol/writerFeatures/0",
+          "message": "Feature preserved; implementation capability is not asserted: y",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_READER_FEATURE_WRITER",
+          "path": "/protocol/readerFeatures",
+          "message": "Reader feature absent from writer feature list: x",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_READER_FEATURE_WRITER",
+          "path": "/protocol/readerFeatures",
+          "message": "Reader feature absent from writer feature list: x",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FORMAT_UNVERIFIED",
+          "path": "/metaData/format/provider",
+          "message": "Storage provider is outside the verified examples",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/alpha",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "missingFeatureListsAtPinnedVersions",
+      "source": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}",
+      "sourceSha256": "9df55a249d0ec39d78a4cce53125e70bbab3c557a8c9d56196d637e4774d5efc",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_VERSION",
+          "path": "/protocol/readerFeatures",
+          "message": "Feature-list presence does not match the pinned protocol version rule",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_VERSION",
+          "path": "/protocol/writerFeatures",
+          "message": "Feature-list presence does not match the pinned protocol version rule",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "embeddedSchemaAndPartitions",
+      "source": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[],\"writerFeatures\":[]},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"future\\\":1,\\\"fields\\\":[{\\\"name\\\":\\\"x\\\",\\\"type\\\":\\\"mystery\\\",\\\"nullable\\\":true,\\\"metadata\\\":{},\\\"extra\\\":true},{\\\"name\\\":\\\"x\\\",\\\"type\\\":\\\"timestamp_ntz\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"m\\\",\\\"type\\\":{\\\"type\\\":\\\"map\\\",\\\"keyType\\\":\\\"string\\\",\\\"valueType\\\":\\\"long\\\"},\\\"nullable\\\":true,\\\"metadata\\\":{\\\"comment\\\":\\\"retained\\\"}}]}\",\"partitionColumns\":[\"missing\",\"missing\"],\"configuration\":{}}}",
+      "sourceSha256": "01a70b0d704082cfb241f0540ba385cbd3715e226985d329518a6422cdb671c3",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_UNKNOWN",
+          "path": "/metaData/schemaString/future",
+          "message": "Unknown native property preserved; native normalization may discard it",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_UNKNOWN",
+          "path": "/metaData/schemaString/fields/0/extra",
+          "message": "Unknown native property preserved; native normalization may discard it",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_UNKNOWN_TYPE",
+          "path": "/metaData/schemaString/fields/0/type",
+          "message": "Type spelling is outside the declared protocol vocabulary; native parser acceptance is insufficient",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_DUPLICATE_NAME",
+          "path": "/metaData/schemaString/fields/1/name",
+          "message": "Case-insensitive duplicate name; preserved source is not a valid Delta table schema",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_FEATURE_REQUIRED",
+          "path": "/metaData/schemaString/fields/1/type",
+          "message": "Type requires matching table protocol/features; schema-only import cannot verify them",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_DEFAULT_NULLABILITY",
+          "path": "/metaData/schemaString/fields/2/type",
+          "message": "Native parser may insert valueContainsNull=true; source absence is retained",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_METADATA_UNVERIFIED",
+          "path": "/metaData/schemaString/fields/2/metadata/comment",
+          "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARTITION_UNRESOLVED",
+          "path": "/metaData/partitionColumns/0",
+          "message": "Partition name does not exactly match a top-level field",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARTITION_UNRESOLVED",
+          "path": "/metaData/partitionColumns/1",
+          "message": "Partition name does not exactly match a top-level field",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARTITION_DUPLICATE",
+          "path": "/metaData/partitionColumns/1",
+          "message": "Duplicate partition column",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_TIMESTAMP_NTZ_FEATURE",
+          "path": "/metaData/schemaString/fields/1/type",
+          "message": "timestamp_ntz requires reader and writer feature declarations",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "configurationAndMappingMode",
+      "source": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{\"delta.columnMapping.mode\":\"mystery\",\"delta.columnMapping.maxColumnId\":\"x\",\"arbitrary\":\"preserved\"}}}",
+      "sourceSha256": "31cd06a34af4ca6b6264cebc99289fe48ce1aec3d59ca706f8c6adeed6d46ad7",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/delta.columnMapping.mode",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/arbitrary",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_MODE",
+          "path": "/metaData/configuration/delta.columnMapping.mode",
+          "message": "Unknown mapping mode remains uninterpreted",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "mappingPartialState",
+      "source": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[],\"writerFeatures\":[]},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"a\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":2,\\\"delta.columnMapping.physicalName\\\":\\\"physical\\\"}},{\\\"name\\\":\\\"b\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":2,\\\"delta.columnMapping.physicalName\\\":\\\"physical\\\"}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"1\"}}}",
+      "sourceSha256": "79e69f1dfbf1797d296a39ad38693099cbbbf761e5707bf131f9502c35a8a58c",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/delta.columnMapping.mode",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_METADATA_UNVERIFIED",
+          "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.id",
+          "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_METADATA_UNVERIFIED",
+          "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.physicalName",
+          "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_METADATA_UNVERIFIED",
+          "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.id",
+          "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_METADATA_UNVERIFIED",
+          "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.physicalName",
+          "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_READER_PROTOCOL",
+          "path": "/protocol",
+          "message": "Mapping requires reader 2 or reader 3 with columnMapping",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_WRITER_PROTOCOL",
+          "path": "/protocol",
+          "message": "Mapping requires writer 5/6 or writer 7 with columnMapping",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_HISTORY_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Historical physical-path uniqueness, monotonic maxColumnId and actual Parquet field IDs are not verified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_MAX_ID_BELOW_FIELD",
+          "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+          "message": "Declared maximum is below an assigned field ID",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_DUPLICATE_ID",
+          "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.id",
+          "message": "Column ID is reused in the current schema",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_MAX_ID_BELOW_FIELD",
+          "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+          "message": "Declared maximum is below an assigned field ID",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_DUPLICATE_PATH",
+          "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.physicalName",
+          "message": "Physical field path is reused in the current schema",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "mappingMissingMetadataAndInvalidMaximum",
+      "source": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"a\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.columnMapping.mode\":\"id\",\"delta.columnMapping.maxColumnId\":\"2147483648\"}}}",
+      "sourceSha256": "6f42fb99a186ba8c7bb1cd3e2d1589cca26bb2c9a0238e0859569e19e171ab37",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/delta.columnMapping.mode",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_HISTORY_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Historical physical-path uniqueness, monotonic maxColumnId and actual Parquet field IDs are not verified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_MAX_ID",
+          "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+          "message": "Expected a string containing a signed int32 maximum column ID",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_ID",
+          "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.id",
+          "message": "Every mapped field requires an exact signed int32 column ID",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_PHYSICAL_NAME",
+          "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.physicalName",
+          "message": "Every mapped field requires a nonempty physical name",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "mappingLexicalVersionTokens",
+      "source": "{\"protocol\":{\"minReaderVersion\":2.0,\"minWriterVersion\":5.0},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"0\"}}}",
+      "sourceSha256": "8bba7050413be7ca62eba19aac2d73f40337bacc5b7b578246c8ab3bbe9874bb",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/delta.columnMapping.mode",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONFIGURATION_UNVERIFIED",
+          "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+          "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_CONTEXT_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_READER_PROTOCOL",
+          "path": "/protocol",
+          "message": "Mapping requires reader 2 or reader 3 with columnMapping",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_WRITER_PROTOCOL",
+          "path": "/protocol",
+          "message": "Mapping requires writer 5/6 or writer 7 with columnMapping",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_MAPPING_HISTORY_UNVERIFIED",
+          "path": "/metaData/schemaString",
+          "message": "Historical physical-path uniqueness, monotonic maxColumnId and actual Parquet field IDs are not verified",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "invalidEmbeddedSchema",
+      "source": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[],\"writerFeatures\":[]},\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"not-json\",\"partitionColumns\":[],\"configuration\":{}}}",
+      "sourceSha256": "a6a0ec60452c6c7c09c6496027904aff10c2ba0fca97243d6c9e546fa1548476",
+      "status": "ok",
+      "diagnostics": [
+        {
+          "code": "DELTA_TABLE_UNVERIFIED",
+          "path": "",
+          "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_EMBEDDED_SCHEMA",
+          "path": "/metaData/schemaString",
+          "message": "Embedded schema is invalid or outside known shape; exact string retained",
+          "severity": "warning"
+        }
+      ]
+    }
+  ]
+}

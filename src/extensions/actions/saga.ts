@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Typed presentation only. The explicitly initialized shared Rust engine owns semantics. */
 import trustedActionsPackage from '../../../spec/extensions/actions/package.json';
-import generatedPackage from '../../../spec/extensions/saga/package.json';
+import {sagaPackage} from './saga-package';
 import type {Document, Diagnostic, Validation, ExtensionPackage} from '../../model/types';
 import {UmfError} from '../../model/types';
 import {Registry, type Registration} from '../../registry/registry';
 import {canonicalSchemaJson} from '../../model/schema-literals';
 import type {ActionParameter} from './types';
-export const sagaPackage = generatedPackage as unknown as ExtensionPackage;
+export {sagaPackage};
 export interface SagaIdentity {module:string; saga:string}
 export interface SagaActionReference {module:string; action:string}
 export type SagaSource = {input:string} | {step:string; output:string};

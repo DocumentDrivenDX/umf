@@ -26,8 +26,7 @@ fn independent_cpython_314_regex_corpus() {
                     failures.push(format!("row {} unexpectedly compiled", line_number + 1));
                 }
             }
-            "N" | "M" => match PythonRegex::compile_codepoints(&pattern, PythonReVersion::V3_14)
-            {
+            "N" | "M" => match PythonRegex::compile_codepoints(&pattern, PythonReVersion::V3_14) {
                 Err(error) => failures.push(format!(
                     "row {} unexpectedly rejected: {}",
                     line_number + 1,
@@ -57,6 +56,11 @@ fn independent_cpython_314_regex_corpus() {
         failures.is_empty(),
         "{} CPython 3.14 regex mismatches:\n{}",
         failures.len(),
-        failures.iter().take(100).cloned().collect::<Vec<_>>().join("\n")
+        failures
+            .iter()
+            .take(100)
+            .cloned()
+            .collect::<Vec<_>>()
+            .join("\n")
     );
 }

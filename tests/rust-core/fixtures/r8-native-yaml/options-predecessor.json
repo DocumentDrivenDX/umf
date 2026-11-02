@@ -1,0 +1,134 @@
+{
+  "profile": "umf-r8-native-yaml-options-predecessor/0.1.0",
+  "source": "direct TypeScript parseNativeYaml predecessor",
+  "cases": [
+    {
+      "id": "yaml11-boolean-lexicon",
+      "source": "a: yes\nb: ON\nc: no\nd: OFF",
+      "options": {
+        "version": "1.1"
+      },
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "a": {
+            "kind": "boolean",
+            "value": true
+          },
+          "b": {
+            "kind": "boolean",
+            "value": true
+          },
+          "c": {
+            "kind": "boolean",
+            "value": false
+          },
+          "d": {
+            "kind": "boolean",
+            "value": false
+          }
+        }
+      }
+    },
+    {
+      "id": "yaml11-date-unsupported",
+      "source": "value: 2024-02-29",
+      "options": {
+        "version": "1.1"
+      },
+      "outcome": "throw",
+      "code": "NATIVE_YAML_NODE",
+      "message": "Aliases and non-JSON YAML nodes are unsupported"
+    },
+    {
+      "id": "yaml11-date-as-string",
+      "source": "value: 2024-02-29",
+      "options": {
+        "version": "1.1",
+        "dateOnly": "string"
+      },
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "value": {
+            "kind": "string",
+            "value": "2024-02-29"
+          }
+        }
+      }
+    },
+    {
+      "id": "yaml11-time-as-string",
+      "source": "value: 2024-02-29T12:30:00Z",
+      "options": {
+        "version": "1.1",
+        "dateOnly": "string"
+      },
+      "outcome": "throw",
+      "code": "NATIVE_YAML_NODE",
+      "message": "Aliases and non-JSON YAML nodes are unsupported"
+    },
+    {
+      "id": "yaml11-pyyaml-boolean-lexicon",
+      "source": "a: y\nb: n\nc: yes\nd: on",
+      "options": {
+        "version": "1.1",
+        "booleanLexicon": "pyyaml"
+      },
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "a": {
+            "kind": "string",
+            "value": "y"
+          },
+          "b": {
+            "kind": "string",
+            "value": "n"
+          },
+          "c": {
+            "kind": "boolean",
+            "value": true
+          },
+          "d": {
+            "kind": "boolean",
+            "value": true
+          }
+        }
+      }
+    },
+    {
+      "id": "invalid-version-precedes-syntax",
+      "source": "x: [",
+      "options": {
+        "version": "1.0"
+      },
+      "outcome": "throw",
+      "code": "NATIVE_YAML_VERSION",
+      "message": "Expected YAML 1.1 or 1.2 scalar profile"
+    },
+    {
+      "id": "null-version-precedes-syntax",
+      "source": "x: [",
+      "options": {
+        "version": null
+      },
+      "outcome": "throw",
+      "code": "NATIVE_YAML_VERSION",
+      "message": "Expected YAML 1.1 or 1.2 scalar profile"
+    },
+    {
+      "id": "numeric-version-precedes-syntax",
+      "source": "x: [",
+      "options": {
+        "version": 11
+      },
+      "outcome": "throw",
+      "code": "NATIVE_YAML_VERSION",
+      "message": "Expected YAML 1.1 or 1.2 scalar profile"
+    }
+  ]
+}

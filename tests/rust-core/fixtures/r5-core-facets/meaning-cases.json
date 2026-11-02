@@ -1,0 +1,199 @@
+{
+  "typescriptSourceSha256": "4f875d0e2561fa5f7949f72db8d16b8199f03841b6fb40ed1af5e9efe5f59465",
+  "testSourceSha256": "bea16015123f62688e6a04d90a6ba09e16c839eba9dfe1e55debb4e818857363",
+  "source": {
+    "umf": "0.10.0",
+    "id": "facet-meaning",
+    "vocabularies": {},
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "v",
+            "extensions": {},
+            "kind": "field",
+            "scalarType": "integer",
+            "facets": {
+              "range": {
+                "min": {
+                  "integerToken": "1"
+                },
+                "max": {
+                  "integerToken": "5"
+                },
+                "minInclusive": false,
+                "maxInclusive": true
+              }
+            }
+          },
+          {
+            "id": "a",
+            "extensions": {},
+            "kind": "field",
+            "cardinality": "array",
+            "facets": {
+              "collectionSize": {
+                "min": 2,
+                "max": 9
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "inspections": [
+    {
+      "operation": "inspect-core-facets",
+      "version": "5.0.0",
+      "source": {
+        "umf": "0.10.0",
+        "id": "facet-meaning",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "v",
+                "extensions": {},
+                "kind": "field",
+                "scalarType": "integer",
+                "facets": {
+                  "range": {
+                    "min": {
+                      "integerToken": "1"
+                    },
+                    "max": {
+                      "integerToken": "5"
+                    },
+                    "minInclusive": false,
+                    "maxInclusive": true
+                  }
+                }
+              },
+              {
+                "id": "a",
+                "extensions": {},
+                "kind": "field",
+                "cardinality": "array",
+                "facets": {
+                  "collectionSize": {
+                    "min": 2,
+                    "max": 9
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "v"
+      },
+      "path": "/modules/0/elements/0/facets",
+      "meaning": {
+        "state": "known",
+        "facets": {
+          "range": {
+            "min": {
+              "integerToken": "1"
+            },
+            "max": {
+              "integerToken": "5"
+            },
+            "minInclusive": false,
+            "maxInclusive": true
+          }
+        },
+        "interpreted": {
+          "range": {
+            "min": {
+              "integerToken": "1"
+            },
+            "max": {
+              "integerToken": "5"
+            },
+            "minInclusive": false,
+            "maxInclusive": true
+          }
+        },
+        "uninterpretedPaths": []
+      },
+      "provenance": "unverified"
+    },
+    {
+      "operation": "inspect-core-facets",
+      "version": "5.0.0",
+      "source": {
+        "umf": "0.10.0",
+        "id": "facet-meaning",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "v",
+                "extensions": {},
+                "kind": "field",
+                "scalarType": "integer",
+                "facets": {
+                  "range": {
+                    "min": {
+                      "integerToken": "1"
+                    },
+                    "max": {
+                      "integerToken": "5"
+                    },
+                    "minInclusive": false,
+                    "maxInclusive": true
+                  }
+                }
+              },
+              {
+                "id": "a",
+                "extensions": {},
+                "kind": "field",
+                "cardinality": "array",
+                "facets": {
+                  "collectionSize": {
+                    "min": 2,
+                    "max": 9
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "a"
+      },
+      "path": "/modules/0/elements/1/facets",
+      "meaning": {
+        "state": "known",
+        "facets": {
+          "collectionSize": {
+            "min": 2,
+            "max": 9
+          }
+        },
+        "interpreted": {
+          "collectionSize": {
+            "min": 2,
+            "max": 9
+          }
+        },
+        "uninterpretedPaths": []
+      },
+      "provenance": "unverified"
+    }
+  ]
+}

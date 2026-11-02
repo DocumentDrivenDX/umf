@@ -98,8 +98,11 @@ It is not a Truss/Ashlar native artifact or an ontology conformance certificate.
 
 The caller-selected profile `umf.csv-boolean-lexical/1.0.0` MUST interpret only
 exact supplied CSV cell tokens `true`, `false`, `True` and `False` for an authored
-core 0.8.0 scalar Boolean Field. Lowercase spellings are the original medical
-source CSV grammar; title-case spellings are retained TableSpec normalized ZIP
+core 0.10.0 scalar Boolean Field. The operation's published request schema and
+current public Field-value admission both require core 0.10.0; the historical
+graph schema selection above remains core 0.8.0 and is a separate source
+profile. Lowercase spellings are the original medical source CSV grammar;
+title-case spellings are retained TableSpec normalized ZIP
 CSV output. This named finite grammar is not universal CSV semantics. Whitespace,
 other case patterns, numeric spellings and every other token MUST refuse. The
 profile MUST NOT apply to String Fields, reinterpret JSON strings, or activate

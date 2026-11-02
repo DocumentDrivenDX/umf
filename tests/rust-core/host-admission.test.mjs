@@ -25,6 +25,20 @@ test('@covers US-089-AC20 admission rejects getters without invoking them', () =
   assert.equal(reads, 0);
 });
 
+test('@covers US-089-AC20 object admission reports the exact member from its descriptor snapshot', () => {
+  const value = {valid: true};
+  Object.defineProperty(value, 'hidden', {value: 1, enumerable: false});
+  assert.throws(() => toWire(value), {code: 'NON_ENUMERABLE_PROPERTY', path: '/hidden'});
+  const accessor = {};
+  Object.defineProperty(accessor, 'nested/key', {enumerable: true, get() { throw new Error('must not run'); }});
+  assert.throws(() => toWire(accessor), {code: 'ACCESSOR_PROPERTY', path: '/nested~1key'});
+  const withProtoKey = Object.create(null);
+  Object.defineProperty(withProtoKey, '__proto__', {value: {safe: true}, enumerable: true});
+  const copied = fromWire(toWire(withProtoKey));
+  assert.equal(Object.getPrototypeOf(copied), null);
+  assert.deepEqual(copied.__proto__, Object.assign(Object.create(null), {safe: true}));
+});
+
 test('@covers US-089-AC22 admission rejects sparse arrays, custom prototypes, symbols and non-finite values', () => {
   const sparse = new Array(2); sparse[1] = 1;
   assert.throws(() => toWire(sparse), {code: 'SPARSE_OR_EXTENDED_ARRAY'});

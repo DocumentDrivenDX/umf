@@ -2,7 +2,8 @@
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import Ajv2020 from 'ajv/dist/2020';
 import schema from '../../../spec/extensions/json-schema/schema.json';
-import packageData from '../../../spec/extensions/json-schema/package.json';
+import {JSON_SCHEMA_DIALECT,JSON_SCHEMA_EXTENSION,jsonSchemaPackage} from './package';
+export {JSON_SCHEMA_DIALECT,JSON_SCHEMA_EXTENSION,jsonSchemaPackage} from './package';
 import { createValidator } from '../../validation/schema';
 import { Registry } from '../../registry/registry';
 import { copyJson, LIMITS } from '../../model/json';
@@ -12,9 +13,6 @@ import { validateDocument } from '../../validation/document';
 import { UmfError,pointer,type Json,type Document,type Diagnostic,type ExtensionPackage,type Validation } from '../../model/types';
 import {parseNativeJson,renderTree,cloneTree,nativePointer,treeChild,type NativeJson} from './tree';
 export {parseNativeJson,type NativeJson} from './tree';
-export const JSON_SCHEMA_DIALECT='https://json-schema.org/draft/2020-12/schema';
-export const JSON_SCHEMA_EXTENSION='umf.json-schema';
-export const jsonSchemaPackage=packageData as unknown as ExtensionPackage;
 export interface JsonSchemaPayload {dialect:typeof JSON_SCHEMA_DIALECT;baseUri:string;root:NativeJson;resources:Record<string,NativeJson>}
 const checkPayload=createValidator().compile(schema);
 const single=new Set(['items','additionalProperties','contains','not','if','then','else','unevaluatedItems','unevaluatedProperties','propertyNames','contentSchema']);

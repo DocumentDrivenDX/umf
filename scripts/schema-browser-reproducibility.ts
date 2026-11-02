@@ -9,8 +9,9 @@ const producerRuntime='1.4.2',producerVersion='2.0.0';
 const producerLock='35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04';
 const root=await mkdtemp(join(tmpdir(),'umf-browser-repro-'));
 const hash=async(path:string)=>new Bun.CryptoHasher('sha256').update(await Bun.file(path).bytes()).digest('hex');
-async function build(source:string,output:string){
- const child=Bun.spawn([process.execPath,join(source,'docs/helix/05-deploy/schema-browser/build.ts'),output],{cwd:source,stdout:'inherit',stderr:'inherit'});
+async function build(source:string,output:string,sourceBoundWasm=true){
+ const script=sourceBoundWasm?'scripts/build-schema-browser.ts':'docs/helix/05-deploy/schema-browser/build.ts';
+ const child=Bun.spawn([process.execPath,join(source,script),output],{cwd:source,stdout:'inherit',stderr:'inherit'});
  if(await child.exited)throw Error('Producer build failed');
 }
 try{
@@ -33,7 +34,7 @@ try{
    const path=resolve(source,file);
    if(!path.startsWith(source+'/')||await hash(path)!==digest)throw Error('Released producer input mismatch: '+file);
   }
-  const output=join(root,'producer');await build(source,output);
+  const output=join(root,'producer');await build(source,output,false);
   const produced=await Bun.file(join(output,'asset-manifest.json')).json(),released=await Bun.file(join(installed,'asset-manifest.json')).json();
   if(JSON.stringify(produced)!==JSON.stringify(released))throw Error('Released producer runtime assets differ from exact installed release');
   verifyCleanBuilds(await verifyPackage(output),await verifyPackage(installed));

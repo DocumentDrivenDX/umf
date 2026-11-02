@@ -13,6 +13,10 @@ ddx:
       kind: informed_by
     - id: CONTRACT-078
       kind: informed_by
+    - id: ADR-006
+      kind: references
+    - id: CONTRACT-080
+      kind: references
 ---
 
 # CONTRACT-079: Unified generated Python access
@@ -37,6 +41,51 @@ The generated package uses Python 3.11+ standard library imports only. It ships
 frozen row/key dataclasses, typed columns, relationship builders, Actions,
 transport protocol, exact codecs, `py.typed`, description and inventory manifest.
 The host CLI reuses the existing atomic writer and read-only drift checker.
+
+### Rust production host-read profile — `umf.python-client-host-read/4`
+
+The Rust-backed production `generatePythonClient` export remains synchronous
+after module import. Its Node/Bun addon or browser WASM asset MUST initialize
+before that export is callable; a missing, damaged or incompatible asset MUST
+refuse loading rather than execute a second semantic implementation. V3 remains
+an opt-in historical profile. V4 is an explicit behavior change for host-read
+resource admission, not a claim of byte-for-byte parity for every hostile
+JavaScript request object.
+
+Rust drives the checkpoints in this order: initial package admission; source
+text and format parsing; source digest text; record selection; conditional
+native format; action selection; output package suffix and source text in their
+existing construction order. Later request properties MUST NOT be read early.
+For each non-null selected record/action list, V4 captures its array identity
+and length once, counts sparse positions, and refuses a raw length over 10,000
+records or 1,000 actions before reading any position. V4 traverses the captured
+positions with intrinsic indexed reads rather than invoking a caller-supplied
+`map` or iterator. Appends beyond that length are ignored; changes to unread
+positions remain observable. Each resulting selected identity string is frozen
+before a control-meter callback can mutate a later position. The combined text
+of those strings, including duplicates before deduplication, MUST NOT exceed
+4,000,000 UTF-16 units across both selections. This changes the prior result
+for a long duplicate list that deduplicated to an allowed selection, and for
+custom `map`/iterator behavior. No selection is silently truncated.
+
+The first raw or combined-text excess refuses with code `RESOURCE_LIMIT`,
+message `V4 host-read resource limit exceeded`, and path `/records` or
+`/actions` for the event that crosses the limit. After each bounded host read,
+the binding charges the same invocation context before copying or inserting
+the value. Responses use at most 8,192 UTF-16 units per primitive ASCII frame;
+Rust verifies call token, offset, count and digits before allocating the next
+frame. Work and constraint counters, cancellation and deadline controls carry
+across all events and frames. `HardIsolated` refuses before any request callback.
+The source-text limit remains governed by core admission; V4 adds no blanket
+ceiling to other computed strings. Arbitrary getters, coercions and Proxy traps
+remain cooperative host work, without a hard memory or preemption guarantee.
+
+A host read that throws stores the original value call-locally without
+inspection or stringification, sends only a closed abort marker to Rust, and
+rethrows that identical value synchronously before result conversion. Meter,
+cancellation and deadline failures retain their own provenance and publish no
+partial success. Exact source-cohort, selected boundary, mutation, counter and
+installed-host evidence is required before making V4 the default package route.
 
 ## Application surface
 
@@ -222,7 +271,14 @@ Driver-specific references: [Psycopg2 transaction contexts](https://www.psycopg.
 [SQLAlchemy Core transactions and autocommit](https://docs.sqlalchemy.org/en/20/core/connections.html),
 and [SQLAlchemy async Core connections](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html).
 
-## Proposed installed Python generator (P1-05)
+## Historical proposed installed Python generator (P1-05; superseded)
+
+The MiniRacer/V8 implementation direction in this section records the P1-05
+proposal and its earlier evidence. ADR-006 and the R4 Rust migration supersede
+that engine choice for current source and future releases. The byte, refusal,
+CLI writer and drift-check obligations below remain migration comparisons;
+the embedded-V8 and no-executable-fallback requirements are historical and
+do not govern the native Rust successor.
 
 `umf_codegen.generate_python_client(text, *, package, format="json", records=None,
 actions=None, timeout_seconds=30)` MUST return the same sourceDigest, description,
@@ -251,6 +307,19 @@ refuse; host filesystem races and untrusted concurrent filesystem writers are
 outside the authoring boundary. No published release is inferred from this
 proposed surface; wheel, sdist and installed parity evidence remain required.
 
+
+## Native Rust installed-generator successor
+
+`umf-codegen` 0.2.0 source depends on exactly `umf-core` 0.11.0 and invokes
+the bundled native UMF CLI from that wheel. The bridge checks the installed
+core version, Rust engine/protocol identities, resource manifest and matching
+core resource bytes before execution. It has no MiniRacer, V8, Node or Bun
+runtime dependency and no alternate executable or semantic fallback. The same
+Python call and authoring CLI retain the P1-05 output, refusal and atomic-writer
+obligations. A 16 MiB source ceiling, bounded request/response, positive
+deadline and native-process cleanup remain explicit host controls. These
+source declarations do not establish platform wheel publication; R4/R8
+installed-artifact evidence must qualify each distributed wheel and sdist.
 
 ## Declared native table operation candidate — 2026-10-19
 
@@ -645,8 +714,10 @@ neither approach establishes whether a write committed.
 
 ### Platform and integration qualification
 
-Build-time requirements are Python 3.11–3.14 and mini-racer 0.14.1. Declared Python
-support is distinct from wheel availability and executed platform qualification.
+The historical P1-05 build required Python 3.11–3.14 and mini-racer 0.14.1.
+Current native source builds instead require the pinned Rust/Cargo toolchain and
+must install without MiniRacer or a V8 runtime. Declared Python support is
+distinct from wheel availability and executed platform qualification.
 Before claiming Linux x86_64/aarch64 support across these interpreters, execute
 wheel-only installs and compare complete generated bytes for identical exact
 source/package/selection and pinned generator payload. Current Bun/Chromium

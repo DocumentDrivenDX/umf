@@ -1,9 +1,0 @@
-# Bounded migration scan correction
-
-The source freeze and focused test receipt are in implementation-review.json. This is an implementation handoff requiring separate independent review. No new migration semantic branch is introduced.
-
-The retained TypeScript compiler produced two complete258-column deployment bundles and256 exact source-bound review markers; its migration compiler accepted the accompanying256-step plan. scan-inputs.json retains those actual compiler records. The new private control scans the final catalog field, the final review marker and the complete filtered catalog, then independently interrupts each at75% of measured work with LIMIT, NUMBER and VALUE_INVALID host failures. Every failure retains private terminal origin and /host/inner-scan. This checks work inside the actual long scan, rather than admission or fixture-result equality alone.
-
-All input-derived predicate scans in evolution.rs now propagate fallible live-Context callbacks, including nested predicates. Known source rows reserve conversions/copies before repeated use; reference equality borrows UTF-16 identities rather than constructing repeated UTF-8 keys. Dependency strings retain first-source occurrence order, with charged deduplication and joined text. JSON recursion remains bounded by already-admitted source/artifact depth.
-
-The additive immutable public frozen.json.gz checks the complete large plan. A fresh release CLI incremental replay remains active at handoff. Read-only process sampling identifies unchanged core constraint runtime clone_env/runtime_copy during deployment verification as the dominant large-case cost, before migration evolution; that observation is a performance limit, not a semantic pass. Final coherent native/Node/WASM/Python qualification remains separate. The earlier six-file shared source freeze is unchanged. No commits were made.

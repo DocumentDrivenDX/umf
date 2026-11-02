@@ -4,10 +4,241 @@ use num_traits::{Signed, ToPrimitive, Zero};
 
 use crate::{
     context::Context,
+    ecma_coercion::{Primitive, to_number},
     error::{Diagnostic, EngineError, Severity},
     literal_policy::PreparedPolicy,
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
+
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+use crate::host_json::{HostJsonReflection, unicode_count_host_copy};
+#[cfg(all(test, not(all(feature = "metamodel-compiler", not(feature = "full-core")))))]
+use crate::host_json;
+
+// The compiler-only metamodel closure excludes runtime host adapters. Literal
+// APIs in that closure never receive a host, but share the evaluator's type
+// shape with full-core builds. Keep only an unreachable local shim here rather
+// than pulling the runtime reflection module into the compiler closure.
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
+mod host_json {
+    use crate::{Context, EngineError, Utf16, Value};
+
+    #[derive(Clone, Debug, PartialEq)]
+    pub enum HostJsonEvent {
+        UnicodeCount { value: Value },
+    }
+
+    #[derive(Clone, Debug, PartialEq)]
+    pub enum HostJsonReply {
+        Count(usize),
+    }
+
+    pub trait HostJsonReflection {
+        fn reflect(&mut self, event: HostJsonEvent) -> Result<HostJsonReply, EngineError>;
+        fn release_descriptor_snapshot(&mut self, token: u64);
+    }
+
+    pub fn unicode_count_host_copy(
+        _: &Value,
+        _: &mut dyn HostJsonReflection,
+        _: &mut Context<'_>,
+    ) -> Result<usize, EngineError> {
+        Err(EngineError::new(
+            "HOST_JSON_UNAVAILABLE",
+            Utf16::default(),
+            "Host JSON reflection is unavailable in the metamodel compiler closure",
+        ))
+    }
+}
+
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
+use host_json::{HostJsonReflection, unicode_count_host_copy};
+
+/// Canonical base-10 integer coefficient used when decimal text must stay
+/// linear in its number of digits instead of passing through BigInt radix
+/// conversion. Zero is always positive and has the single digit `0`.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct CanonicalInteger {
+    negative: bool,
+    digits: String,
+}
+
+impl CanonicalInteger {
+    pub fn is_negative(&self) -> bool {
+        self.negative
+    }
+
+    pub fn digits(&self) -> &str {
+        &self.digits
+    }
+
+    pub fn decimal_len(&self) -> usize {
+        self.digits.len() + usize::from(self.negative)
+    }
+
+    pub fn compare(&self, other: &Self) -> std::cmp::Ordering {
+        match (self.negative, other.negative) {
+            (true, false) => std::cmp::Ordering::Less,
+            (false, true) => std::cmp::Ordering::Greater,
+            (negative, _) => {
+                let magnitude = self
+                    .digits
+                    .len()
+                    .cmp(&other.digits.len())
+                    .then_with(|| self.digits.cmp(&other.digits));
+                if negative {
+                    magnitude.reverse()
+                } else {
+                    magnitude
+                }
+            }
+        }
+    }
+
+    /// Add or subtract two canonical values with work admitted before output
+    /// allocation. The decimal algorithm is linear in the input digit count.
+    pub fn arithmetic(
+        &self,
+        other: &Self,
+        subtract: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        let rhs_negative = other.negative ^ subtract;
+        let maximum = self.digits.len().max(other.digits.len());
+        let estimate = maximum.saturating_mul(3).saturating_add(1);
+        ctx.charge_work(estimate, Utf16::default())?;
+        let (negative, digits) = if self.negative == rhs_negative {
+            (
+                self.negative,
+                add_magnitudes(&self.digits, &other.digits, ctx)?,
+            )
+        } else {
+            match compare_magnitudes(&self.digits, &other.digits) {
+                std::cmp::Ordering::Equal => (false, "0".to_owned()),
+                std::cmp::Ordering::Greater => (
+                    self.negative,
+                    subtract_magnitudes(&self.digits, &other.digits, ctx)?,
+                ),
+                std::cmp::Ordering::Less => (
+                    rhs_negative,
+                    subtract_magnitudes(&other.digits, &self.digits, ctx)?,
+                ),
+            }
+        };
+        let is_zero = digits == "0";
+        Ok(Self {
+            negative: negative && !is_zero,
+            digits,
+        })
+    }
+
+    /// Produce the public exact decimal spelling after its text/work precharge.
+    pub fn to_decimal_string(&self, ctx: &mut Context<'_>) -> Result<String, EngineError> {
+        let length = self.decimal_len();
+        ctx.charge_work(length, Utf16::default())?;
+        let mut out = String::new();
+        reserve_numeric_string(&mut out, length)?;
+        if self.negative {
+            out.push('-');
+        }
+        out.push_str(&self.digits);
+        ctx.check_cancelled(Utf16::default())?;
+        ctx.check_deadline(Utf16::default())?;
+        Ok(out)
+    }
+}
+
+fn allocation_refusal() -> EngineError {
+    EngineError::new(
+        "LIMIT",
+        Utf16::default(),
+        "Numeric work allocation exceeds resource limit",
+    )
+}
+
+fn reserve_numeric<T>(buffer: &mut Vec<T>, capacity: usize) -> Result<(), EngineError> {
+    buffer
+        .try_reserve_exact(capacity)
+        .map_err(|_| allocation_refusal())
+}
+
+fn reserve_numeric_string(buffer: &mut String, capacity: usize) -> Result<(), EngineError> {
+    buffer
+        .try_reserve_exact(capacity)
+        .map_err(|_| allocation_refusal())
+}
+
+fn compare_magnitudes(left: &str, right: &str) -> std::cmp::Ordering {
+    left.len().cmp(&right.len()).then_with(|| left.cmp(right))
+}
+
+fn checkpoint(ctx: &mut Context<'_>, completed: usize) -> Result<(), EngineError> {
+    if completed.is_multiple_of(65_536) {
+        ctx.check_cancelled(Utf16::default())?;
+        ctx.check_deadline(Utf16::default())?;
+    }
+    Ok(())
+}
+
+fn add_magnitudes(left: &str, right: &str, ctx: &mut Context<'_>) -> Result<String, EngineError> {
+    let capacity = left.len().max(right.len()).saturating_add(1);
+    let mut reversed = Vec::new();
+    reserve_numeric(&mut reversed, capacity)?;
+    let (mut i, mut j, mut carry) = (left.len(), right.len(), 0u8);
+    while i > 0 || j > 0 || carry > 0 {
+        let a = if i > 0 {
+            left.as_bytes()[i - 1] - b'0'
+        } else {
+            0
+        };
+        let b = if j > 0 {
+            right.as_bytes()[j - 1] - b'0'
+        } else {
+            0
+        };
+        let sum = a + b + carry;
+        reversed.push(b'0' + sum % 10);
+        carry = sum / 10;
+        i = i.saturating_sub(1);
+        j = j.saturating_sub(1);
+        checkpoint(ctx, reversed.len())?;
+    }
+    reversed.reverse();
+    Ok(String::from_utf8(reversed).expect("decimal digits are ASCII"))
+}
+
+fn subtract_magnitudes(
+    larger: &str,
+    smaller: &str,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
+    debug_assert!(compare_magnitudes(larger, smaller) != std::cmp::Ordering::Less);
+    let mut reversed = Vec::new();
+    reserve_numeric(&mut reversed, larger.len())?;
+    let (mut i, mut j, mut borrow) = (larger.len(), smaller.len(), 0i8);
+    while i > 0 {
+        let a = (larger.as_bytes()[i - 1] - b'0') as i8 - borrow;
+        let b = if j > 0 {
+            (smaller.as_bytes()[j - 1] - b'0') as i8
+        } else {
+            0
+        };
+        let mut digit = a - b;
+        borrow = i8::from(digit < 0);
+        if digit < 0 {
+            digit += 10;
+        }
+        reversed.push(b'0' + digit as u8);
+        i -= 1;
+        j = j.saturating_sub(1);
+        checkpoint(ctx, reversed.len())?;
+    }
+    while reversed.len() > 1 && reversed.last() == Some(&b'0') {
+        reversed.pop();
+    }
+    reversed.reverse();
+    Ok(String::from_utf8(reversed).expect("decimal digits are ASCII"))
+}
 
 #[derive(Debug)]
 struct LiteralFault {
@@ -60,16 +291,407 @@ fn text(value: &Value) -> Option<&Utf16> {
         _ => None,
     }
 }
+
+/// Compatibility for the public TypeScript field-value API's dynamic
+/// `value.length` / `value.charCodeAt(i)` sequence. JSON copying creates
+/// null-prototype objects, so object-to-primitive conversion has no default.
+fn public_string_carrier_count(
+    raw: &Value,
+    host: &mut Option<&mut dyn HostJsonReflection>,
+    ctx: &mut Context<'_>,
+) -> Result<usize, EngineError> {
+    // These text values remain only for the historical direct-Rust R5
+    // compatibility surface. The installed host route replaces each native
+    // TypeError case with an adapter-local probe and never exposes this text
+    // as canonical JavaScript wording.
+    let type_error = |message: &str| EngineError::new("TYPE_ERROR", Utf16::default(), message);
+    let native_error = |host: &mut Option<&mut dyn HostJsonReflection>,
+                        ctx: &mut Context<'_>,
+                        probe: Value,
+                        message: &str|
+     -> Result<usize, EngineError> {
+        if let Some(host) = host.as_deref_mut() {
+            unicode_count_host_copy(&probe, host, ctx)
+        } else {
+            Err(type_error(message))
+        }
+    };
+    enum LengthValue<'a> {
+        Borrowed(&'a Value),
+        Number(f64),
+        Undefined,
+    }
+    let length = match raw {
+        Value::Null => {
+            return native_error(
+                host,
+                ctx,
+                Value::Null,
+                "null is not an object (evaluating 'value.length')",
+            );
+        }
+        Value::Array(values) => LengthValue::Number(values.len() as f64),
+        Value::Object(_) => get(raw, "length")
+            .map(LengthValue::Borrowed)
+            .unwrap_or(LengthValue::Undefined),
+        _ => LengthValue::Undefined,
+    };
+    let length = match length {
+        LengthValue::Borrowed(value) => value,
+        LengthValue::Undefined => return Ok(0),
+        LengthValue::Number(value) => {
+            if value > 0.0 {
+                return native_error(
+                    host,
+                    ctx,
+                    Value::Object(vec![(key("length"), Value::Number(1.0))]),
+                    "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)",
+                );
+            }
+            return Ok(0);
+        }
+    };
+
+    fn array_to_string(values: &[Value], out: &mut Vec<u16>) -> Result<(), EngineError> {
+        for (index, value) in values.iter().enumerate() {
+            if index != 0 {
+                out.push(b',' as u16);
+            }
+            match value {
+                Value::Null => {}
+                Value::String(s) => out.extend_from_slice(s.units()),
+                Value::Bool(v) => out.extend(v.to_string().encode_utf16()),
+                Value::Number(v) => out.extend(v.to_string().encode_utf16()),
+                Value::Array(nested) => array_to_string(nested, out)?,
+                Value::Object(_) => {
+                    return Err(EngineError::new(
+                        "TYPE_ERROR",
+                        Utf16::default(),
+                        "No default value",
+                    ));
+                }
+            }
+        }
+        Ok(())
+    }
+
+    let number = match length {
+        Value::Null => to_number(Primitive::Null, ctx)?,
+        Value::Bool(value) => to_number(Primitive::Bool(*value), ctx)?,
+        Value::Number(value) => to_number(Primitive::Number(*value), ctx)?,
+        Value::String(value) => to_number(Primitive::String(value), ctx)?,
+        Value::Array(values) => {
+            // First walk the whole JSON subtree, admitting each node and its
+            // copied text before allocating the recursive Array#join result.
+            let mut pending = vec![values.as_slice()];
+            let mut text_units = 0usize;
+            while let Some(items) = pending.pop() {
+                ctx.charge_work(items.len().saturating_add(1), Utf16::default())?;
+                text_units = text_units.saturating_add(items.len().saturating_sub(1));
+                for item in items {
+                    match item {
+                        Value::String(s) => {
+                            ctx.charge_work(s.len(), Utf16::default())?;
+                            text_units = text_units.saturating_add(s.len());
+                        }
+                        Value::Bool(_) => {
+                            ctx.charge_work(5, Utf16::default())?;
+                            text_units = text_units.saturating_add(5);
+                        }
+                        Value::Number(_) => {
+                            // Fixed-point Display of the smallest f64
+                            // subnormal is 326 characters; 400 safely admits
+                            // the conversion and output slot before formatting.
+                            ctx.charge_work(400, Utf16::default())?;
+                            text_units = text_units.saturating_add(400);
+                        }
+                        Value::Array(children) => pending.push(children),
+                        Value::Null | Value::Object(_) => {
+                            ctx.charge_work(1, Utf16::default())?;
+                        }
+                    }
+                }
+            }
+            ctx.charge_work(text_units, Utf16::default())?;
+            let mut joined = Vec::with_capacity(text_units);
+            if let Err(error) = array_to_string(values, &mut joined) {
+                if host.is_some() {
+                    return native_error(
+                        host,
+                        ctx,
+                        Value::Object(vec![(key("length"), Value::Object(Vec::new()))]),
+                        "No default value",
+                    );
+                }
+                return Err(error);
+            }
+            to_number(Primitive::String(&Utf16::new(joined)), ctx)?
+        }
+        Value::Object(_) => {
+            return native_error(
+                host,
+                ctx,
+                Value::Object(vec![(key("length"), Value::Object(Vec::new()))]),
+                "No default value",
+            );
+        }
+    };
+    if number > 0.0 {
+        return native_error(
+            host,
+            ctx,
+            Value::Object(vec![(key("length"), Value::Number(1.0))]),
+            "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)",
+        );
+    }
+    Ok(0)
+}
+
+#[cfg(test)]
+mod public_carrier_tests {
+    use super::*;
+
+    struct ErrorProbeHost(Vec<super::host_json::HostJsonEvent>);
+    impl HostJsonReflection for ErrorProbeHost {
+        fn reflect(
+            &mut self,
+            event: super::host_json::HostJsonEvent,
+        ) -> Result<super::host_json::HostJsonReply, EngineError> {
+            self.0.push(event);
+            Err(EngineError::new(
+                "HOST_JSON_CALLBACK",
+                Utf16::default(),
+                "native host exception probe",
+            ))
+        }
+        fn release_descriptor_snapshot(&mut self, _: u64) {}
+    }
+
+    struct ZeroCountHost;
+    impl HostJsonReflection for ZeroCountHost {
+        fn reflect(
+            &mut self,
+            _: super::host_json::HostJsonEvent,
+        ) -> Result<super::host_json::HostJsonReply, EngineError> {
+            Ok(super::host_json::HostJsonReply::Count(0))
+        }
+        fn release_descriptor_snapshot(&mut self, _: u64) {}
+    }
+
+    #[test]
+    fn decimal_precision_limits_saturate_by_target_width_but_reject_invalid_facets() {
+        let max_safe = Some(9_007_199_254_740_991i64);
+        let expected = usize::try_from(9_007_199_254_740_991u64).unwrap_or(usize::MAX);
+        assert_eq!(precision_limit(max_safe), Some(expected));
+        assert_eq!(precision_limit(Some(-1)), None);
+        assert_eq!(num_at(&Value::Object(vec![(key("p"), Value::Number(1.5))]), "p"), None);
+    }
+
+    #[test]
+    fn array_length_coercion_is_stopped_by_the_cooperative_meter_before_join() {
+        let values = (0..128)
+            .map(|_| Value::String(Utf16::default()))
+            .collect::<Vec<_>>();
+        let raw = Value::Object(vec![(key("length"), Value::Array(values))]);
+        let mut meter = |_: usize| {
+            Err(EngineError::new(
+                "METER_STOP",
+                Utf16::default(),
+                "work denied",
+            ))
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let error = public_string_carrier_count(&raw, &mut None, &mut ctx).unwrap_err();
+        assert_eq!(error.code, "METER_STOP");
+    }
+
+    #[test]
+    fn long_numeric_array_text_is_admitted_before_float_formatting() {
+        let raw = Value::Object(vec![(
+            key("length"),
+            Value::Array(vec![Value::Number(1e-300)]),
+        )]);
+        let mut meter = |amount: usize| {
+            if amount >= 400 {
+                Err(EngineError::new(
+                    "METER_STOP",
+                    Utf16::default(),
+                    "formatting work denied",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let error = public_string_carrier_count(&raw, &mut None, &mut ctx).unwrap_err();
+        assert_eq!(error.code, "METER_STOP");
+    }
+
+    #[test]
+    fn native_unicode_errors_send_only_minimal_dynamic_length_copies() {
+        let cases = [
+            (
+                Value::Null,
+                Value::Null,
+            ),
+            (
+                Value::Array(vec![Value::Null]),
+                Value::Object(vec![(key("length"), Value::Number(1.0))]),
+            ),
+            (
+                Value::Array(vec![Value::Number(1.0)]),
+                Value::Object(vec![(key("length"), Value::Number(1.0))]),
+            ),
+            (
+                Value::Object(vec![(key("length"), Value::Object(vec![(key("ignored"), Value::Bool(true))]))]),
+                Value::Object(vec![(key("length"), Value::Object(Vec::new()))]),
+            ),
+            (
+                Value::Object(vec![(key("length"), Value::Array(vec![Value::Object(Vec::new())]))]),
+                Value::Object(vec![(key("length"), Value::Object(Vec::new()))]),
+            ),
+        ];
+        for (raw, expected_probe) in cases {
+            let mut probe = ErrorProbeHost(Vec::new());
+            let mut host = Some(&mut probe as &mut dyn HostJsonReflection);
+            let error = public_string_carrier_count(
+                &raw,
+                &mut host,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err();
+            drop(host);
+            assert_eq!(error.code, "HOST_JSON_CALLBACK");
+            assert_eq!(probe.0.len(), 1);
+            assert_eq!(
+                probe.0[0],
+                super::host_json::HostJsonEvent::UnicodeCount {
+                    value: expected_probe,
+                }
+            );
+        }
+    }
+
+    #[test]
+    fn successful_zero_length_carriers_do_not_need_a_native_error_probe() {
+        for raw in [
+            Value::Object(vec![(key("length"), Value::Number(0.0))]),
+            Value::Object(vec![(key("length"), Value::Array(Vec::new()))]),
+            Value::Object(Vec::new()),
+            Value::Array(Vec::new()),
+        ] {
+            let mut probe = ErrorProbeHost(Vec::new());
+            let mut host = Some(&mut probe as &mut dyn HostJsonReflection);
+            let count = public_string_carrier_count(
+                &raw,
+                &mut host,
+                &mut Context::ordinary(),
+            )
+            .unwrap();
+            drop(host);
+            assert_eq!(count, 0);
+            assert!(probe.0.is_empty());
+        }
+    }
+
+    #[test]
+    fn zero_count_malformed_unicode_identity_uses_ecmascript_json_value() {
+        let family = Value::Object(vec![
+            (key("carrier"), Value::string_utf8("string")),
+            (key("mechanic"), Value::string_utf8("unicode")),
+            (key("equality"), Value::Bool(true)),
+        ]);
+        let field = Value::Object(vec![(key("family"), Value::string_utf8("unicode"))]);
+        let wanted = Value::Object(vec![(key("string"), Value::Number(7.0))]);
+        let candidate = Value::Object(vec![(key("string"), Value::string_utf8("7"))]);
+        let policy = Value::Object(vec![
+            (key("fields"), Value::Object(vec![(key("family"), Value::string_utf8("family"))])),
+            (key("families"), Value::Object(vec![(key("unicode"), family)])),
+            (key("wrapperKeys"), Value::Number(1.0)),
+        ]);
+        let mut host: Option<&mut dyn HostJsonReflection> = Some(&mut ZeroCountHost);
+        let wanted_identity = exact_identity_with_host(&field, &wanted, &policy, &mut host, &mut Context::ordinary()).unwrap();
+        let candidate_identity = exact_identity(&field, &candidate, &policy, &mut Context::ordinary()).unwrap();
+        assert_eq!(wanted_identity, "unicode:7");
+        assert_eq!(candidate_identity, "unicode:\"7\"");
+        assert_ne!(wanted_identity, candidate_identity);
+    }
+
+    #[test]
+    fn zero_count_malformed_unicode_allowed_value_refuses_nonmatching_identity() {
+        let policy = Value::Object(vec![
+            (
+                key("fields"),
+                Value::Object(vec![
+                    (key("family"), Value::string_utf8("family")),
+                    (key("facets"), Value::string_utf8("facets")),
+                ]),
+            ),
+            (
+                key("families"),
+                Value::Object(vec![(
+                    key("unicode"),
+                    Value::Object(vec![
+                        (key("carrier"), Value::string_utf8("string")),
+                        (key("mechanic"), Value::string_utf8("unicode")),
+                        (key("equality"), Value::Bool(true)),
+                    ]),
+                )]),
+            ),
+            (key("wrapperKeys"), Value::Number(1.0)),
+            (
+                key("refinements"),
+                Value::Array(vec![Value::Object(vec![
+                    (key("mechanic"), Value::string_utf8("allowed-membership")),
+                    (key("selector"), Value::Array(vec![Value::string_utf8("allowedValues")])),
+                    (key("applies"), Value::string_utf8("all")),
+                    (key("mode"), Value::string_utf8("refinements")),
+                    (key("phase"), Value::string_utf8("after")),
+                    (key("error"), Value::string_utf8("allowed")),
+                ])]),
+            ),
+        ]);
+        let family = get(&policy, "families").and_then(|families| get(families, "unicode")).unwrap();
+        let field = Value::Object(vec![
+            (key("family"), Value::string_utf8("unicode")),
+            (key("facets"), Value::Object(Vec::new())),
+            (key("allowedValues"), Value::Array(vec![Value::Object(vec![(key("string"), Value::string_utf8("new"))])])),
+        ]);
+        let wanted = Value::Object(vec![(key("string"), Value::Number(7.0))]);
+        let mut host: Option<&mut dyn HostJsonReflection> = Some(&mut ZeroCountHost);
+        let error = apply_refinements(
+            &field,
+            &wanted,
+            true,
+            &policy,
+            "scalar",
+            Some(family),
+            Some(0),
+            "after",
+            &mut host,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.reason, "allowed");
+    }
+
+    #[test]
+    fn shared_literal_bound_counts_exponent_sign() {
+        let negative = Utf16::from(format!("1e-{}", "1".repeat(32)));
+        let error = exact_coefficient(&negative, 0, None, &mut Context::ordinary()).unwrap_err();
+        assert_eq!(error.code, "numeric-exponent");
+
+        let positive = Utf16::from(format!("1e+{}", "1".repeat(32)));
+        let error = exact_coefficient(&positive, 0, None, &mut Context::ordinary()).unwrap_err();
+        assert_eq!(error.code, "numeric-exponent");
+    }
+}
 fn utf8(value: &Value) -> Option<String> {
     text(value)?.to_utf8().ok()
 }
 fn ascii(value: &Value) -> Option<String> {
     let s = utf8(value)?;
-    if s.is_ascii() {
-        Some(s)
-    } else {
-        None
-    }
+    if s.is_ascii() { Some(s) } else { None }
 }
 fn object(value: &Value) -> Option<&[(Utf16, Value)]> {
     match value {
@@ -102,6 +724,16 @@ fn num_at(value: &Value, name: &str) -> Option<i64> {
         _ => None,
     }
 }
+/// Precision limits are counts compared with bounded input digits. On a
+/// narrower target, preserve any nonnegative i64 limit by saturating to the
+/// largest representable count; reachable input remains bounded by Context.
+fn precision_limit(value: Option<i64>) -> Option<usize> {
+    let value = value?;
+    if value < 0 {
+        return None;
+    }
+    Some(usize::try_from(value).unwrap_or(usize::MAX))
+}
 fn ptr_escape(source: &Utf16) -> Utf16 {
     let mut out = Vec::new();
     for u in source.units() {
@@ -119,13 +751,24 @@ fn append_path(base: &Utf16, segment: &Utf16) -> Utf16 {
     out.extend(ptr_escape(segment).units());
     Utf16::new(out)
 }
+fn append_raw_path(base: &Utf16, segment: &Utf16) -> Utf16 {
+    let mut out = base.units().to_vec();
+    out.push(0x2f);
+    out.extend(segment.units());
+    Utf16::new(out)
+}
 fn append_ascii(base: &Utf16, segment: &str) -> Utf16 {
     append_path(base, &key(segment))
 }
 fn fail(reason: &str) -> LiteralFault {
     LiteralFault::new(reason)
 }
-fn known(value: &Value, allowed: &[String], path: &Utf16) -> Result<(), LiteralFault> {
+fn known(
+    value: &Value,
+    allowed: &[String],
+    path: &Utf16,
+    raw_unknown_path: bool,
+) -> Result<(), LiteralFault> {
     let Some(members) = object(value) else {
         return Err(fail("object").at(path.clone()));
     };
@@ -133,7 +776,11 @@ fn known(value: &Value, allowed: &[String], path: &Utf16) -> Result<(), LiteralF
         if !allowed.iter().any(|s| name == &key(s)) {
             return Err(LiteralFault {
                 reason: "unknown".into(),
-                path: append_path(path, name),
+                path: if raw_unknown_path {
+                    append_raw_path(path, name)
+                } else {
+                    append_path(path, name)
+                },
                 detail: name.clone(),
                 engine_error: None,
             });
@@ -283,19 +930,35 @@ fn format_decimal(value: &BigInt, ctx: &mut Context<'_>) -> Result<String, Liter
     Ok(text)
 }
 
-fn parse_token(
+/// Format a numeric BigInt for the JavaScript numeric adapter using the same
+/// precharged radix-10 work estimate and post-format cooperative checks as
+/// core literal evaluation.
+pub(crate) fn format_bigint_decimal_for_numeric(
+    value: &BigInt,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
+    if value.is_zero() {
+        return Ok("0".to_owned());
+    }
+    ctx.charge_work_u64(decimal_format_work(value), Utf16::default())?;
+    let text = value.to_string();
+    ctx.check_cancelled(Utf16::default())?;
+    ctx.check_deadline(Utf16::default())?;
+    Ok(text)
+}
+
+fn parse_token_digits(
     token: &Utf16,
     scale: i64,
     precision: Option<usize>,
     ctx: &mut Context<'_>,
-) -> Result<BigInt, LiteralFault> {
+) -> Result<CanonicalInteger, LiteralFault> {
     let units = token.units();
     // Numeric tokens are typed carrier strings, not serialized source text.
-    // Bound their actual processing through the operation meter without
-    // applying the 4M source/output text ceiling.
+    // Bound scanning before materializing ASCII digits; do not apply the
+    // source/output text ceiling to an admitted coefficient.
     ctx.charge_work(units.len(), Utf16::default())
         .map_err(LiteralFault::from_engine)?;
-    // The typed numeric carrier is ASCII JSON number text. Do not round-trip it through f64.
     let s = token.to_utf8().map_err(|_| fail("numeric-token"))?;
     let bytes = s.as_bytes();
     if bytes.is_empty() {
@@ -359,22 +1022,29 @@ fn parse_token(
     let digit_count = int_end - int_start + frac_len;
     ctx.charge_work(digit_count, Utf16::default())
         .map_err(LiteralFault::from_engine)?;
-    let mut digits = String::with_capacity(digit_count);
+    let mut digits = String::new();
+    digits
+        .try_reserve_exact(digit_count)
+        .map_err(|_| LiteralFault::from_engine(allocation_refusal()))?;
     digits.push_str(&s[int_start..int_end]);
     if frac_len > 0 {
         digits.push_str(&s[frac_start..frac_start + frac_len]);
     }
     let trimmed = digits.trim_start_matches('0');
+    // The predecessor canonicalizes zero before applying the exponent spelling
+    // bound; retain that behavior, including negative zero.
     if trimmed.is_empty() {
-        return Ok(BigInt::zero());
+        return Ok(CanonicalInteger {
+            negative: false,
+            digits: "0".to_owned(),
+        });
     }
     let digits = trimmed;
-    // The predecessor returns zero before applying its exponent-spelling
-    // limit. For nonzero coefficients retain that spelling limit, but parse
-    // the exponent exactly so large values classify as rounding/resource
-    // outcomes instead of an i64 conversion failure.
     let exponent = if let Some((start, end)) = exponent_range {
         let source = &s[start..end];
+        // Preserve the shared literal/schema contract: the bound includes an
+        // optional sign. The tuple encoder applies its specific admission
+        // before calling this parser.
         if source.len() > 32 {
             return Err(fail("numeric-exponent"));
         }
@@ -387,11 +1057,7 @@ fn parse_token(
             .map_err(LiteralFault::from_engine)?;
         let parsed = BigInt::parse_bytes(magnitude.as_bytes(), 10)
             .ok_or_else(|| fail("numeric-exponent"))?;
-        if negative {
-            -parsed
-        } else {
-            parsed
-        }
+        if negative { -parsed } else { parsed }
     } else {
         BigInt::zero()
     };
@@ -418,7 +1084,7 @@ fn parse_token(
         let bound = precision
             .unwrap_or(ctx.limits().max_coefficient_digits)
             .min(ctx.limits().max_coefficient_digits);
-        let size = BigInt::from(digits.len()) + shift;
+        let size = BigInt::from(digits.len()) + &shift;
         if size > BigInt::from(bound) {
             return Err(fail("numeric-resource"));
         }
@@ -426,7 +1092,9 @@ fn parse_token(
         let shift = size - digits.len();
         ctx.charge_work(size, Utf16::default())
             .map_err(LiteralFault::from_engine)?;
-        let mut out = String::with_capacity(size);
+        let mut out = String::new();
+        out.try_reserve_exact(size)
+            .map_err(|_| LiteralFault::from_engine(allocation_refusal()))?;
         out.push_str(digits);
         out.extend(std::iter::repeat_n('0', shift));
         out
@@ -445,14 +1113,36 @@ fn parse_token(
     }
     ctx.charge_work(significant.len(), Utf16::default())
         .map_err(LiteralFault::from_engine)?;
-    ctx.charge_work_u64(decimal_parse_work(significant.len()), Utf16::default())
-        .map_err(LiteralFault::from_engine)?;
-    let mut result =
-        BigInt::parse_bytes(significant.as_bytes(), 10).ok_or_else(|| fail("numeric-token"))?;
-    if negative && !result.is_zero() {
-        result = -result;
+    if significant.is_empty() {
+        return Ok(CanonicalInteger {
+            negative: false,
+            digits: "0".to_owned(),
+        });
     }
-    Ok(result)
+    Ok(CanonicalInteger {
+        negative,
+        digits: significant.to_owned(),
+    })
+}
+
+fn parse_token(
+    token: &Utf16,
+    scale: i64,
+    precision: Option<usize>,
+    ctx: &mut Context<'_>,
+) -> Result<BigInt, LiteralFault> {
+    let canonical = parse_token_digits(token, scale, precision, ctx)?;
+    if canonical.digits == "0" {
+        return Ok(BigInt::zero());
+    }
+    ctx.charge_work_u64(decimal_parse_work(canonical.digits.len()), Utf16::default())
+        .map_err(LiteralFault::from_engine)?;
+    let mut value = BigInt::parse_bytes(canonical.digits.as_bytes(), 10)
+        .ok_or_else(|| fail("numeric-token"))?;
+    if canonical.negative {
+        value = -value;
+    }
+    Ok(value)
 }
 
 pub fn exact_coefficient(
@@ -466,6 +1156,22 @@ pub fn exact_coefficient(
             .unwrap_or_else(|| EngineError::new(e.reason, e.path, "Invalid exact numeric token"))
     })
 }
+
+/// Parse an exact numeric token into canonical sign/digits without constructing
+/// a BigInt. The parser is shared with [`exact_coefficient`] so grammar,
+/// exponent, scale, precision, and resource refusal order stay aligned.
+pub fn exact_coefficient_digits(
+    token: &Utf16,
+    scale: i64,
+    precision: Option<usize>,
+    ctx: &mut Context<'_>,
+) -> Result<CanonicalInteger, EngineError> {
+    parse_token_digits(token, scale, precision, ctx).map_err(|e| {
+        e.engine_error
+            .unwrap_or_else(|| EngineError::new(e.reason, e.path, "Invalid exact numeric token"))
+    })
+}
+
 fn family<'a>(field: &Value, policy: &'a Value) -> Option<&'a Value> {
     let scalar = get(field, &selector(policy, "family"))?;
     let scalar = text(scalar)?.to_utf8().ok()?;
@@ -531,19 +1237,23 @@ fn exact_identity(
             let Some(s) = text(raw) else {
                 return Err(fail("numeric-token"));
             };
-            format_decimal(&parse_token(s, 0, None, ctx)?, ctx)?
+            parse_token_digits(s, 0, None, ctx)?
+                .to_decimal_string(ctx)
+                .map_err(LiteralFault::from_engine)?
         }
         "decimal" => {
             let facets = get(field, &selector(policy, "facets")).unwrap_or(&Value::Null);
             let scale =
                 num_at(facets, &selector(policy, "scale")).ok_or_else(|| fail("decimal-domain"))?;
             let precision = num_at(facets, &selector(policy, "precision"))
-                .and_then(|v| usize::try_from(v).ok())
+                .and_then(|v| precision_limit(Some(v)))
                 .ok_or_else(|| fail("decimal-domain"))?;
             let Some(s) = text(raw) else {
                 return Err(fail("numeric-token"));
             };
-            format_decimal(&parse_token(s, scale, Some(precision), ctx)?, ctx)?
+            parse_token_digits(s, scale, Some(precision), ctx)?
+                .to_decimal_string(ctx)
+                .map_err(LiteralFault::from_engine)?
         }
         "unicode" => {
             let Some(s) = text(raw) else {
@@ -570,6 +1280,39 @@ fn exact_identity(
         _ => return Err(fail("mechanic")),
     };
     Ok(format!("{scalar}:{result}"))
+}
+
+fn exact_identity_with_host(
+    field: &Value,
+    value: &Value,
+    policy: &Value,
+    host: &mut Option<&mut dyn HostJsonReflection>,
+    ctx: &mut Context<'_>,
+) -> Result<String, LiteralFault> {
+    let fam = family(field, policy).ok_or_else(|| fail("equality"))?;
+    let mechanic = str_at(fam, "mechanic").unwrap_or_default();
+    let Some(raw) = carrier(value, fam) else {
+        return exact_identity(field, value, policy, ctx);
+    };
+    if mechanic != "unicode" || matches!(raw, Value::String(_)) || host.is_none() {
+        return exact_identity(field, value, policy, ctx);
+    }
+    if matches!(value, Value::Null) || !truth_at(fam, "equality") {
+        return Err(fail(if matches!(value, Value::Null) { "null-equality" } else { "equality" }));
+    }
+    let Some(members) = object(value) else { return Err(fail("equality")); };
+    if members.len() != num_at(policy, "wrapperKeys").unwrap_or(1) as usize {
+        return Err(fail("equality"));
+    }
+    let count = public_string_carrier_count(raw, host, ctx).map_err(LiteralFault::from_engine)?;
+    debug_assert_eq!(count, 0, "positive malformed Unicode lengths fail in host reflection");
+    let family_name = utf8(get(field, &selector(policy, "family")).ok_or_else(|| fail("equality"))?)
+        .ok_or_else(|| fail("equality"))?;
+    let encoded = crate::serialization::stringify_compact_metered(raw, ctx)
+        .map_err(LiteralFault::from_engine)?
+        .to_utf8()
+        .map_err(|_| fail("text"))?;
+    Ok(format!("{family_name}:{encoded}"))
 }
 fn json_string(value: &Utf16) -> String {
     let mut out = String::from("\"");
@@ -640,6 +1383,7 @@ fn apply_refinements(
     fam: Option<&Value>,
     count: Option<usize>,
     phase: &str,
+    host: &mut Option<&mut dyn HostJsonReflection>,
     ctx: &mut Context<'_>,
 ) -> Result<(), LiteralFault> {
     let selector_fields = field_names(policy);
@@ -739,7 +1483,7 @@ fn apply_refinements(
                 let token = text(carrier(value, family).ok_or_else(|| fail("family"))?)
                     .ok_or_else(|| fail("numeric-token"))?;
                 let precision = num_at(facets, &selector(policy, "precision"))
-                    .and_then(|n| usize::try_from(n).ok());
+                    .and_then(|n| precision_limit(Some(n)));
                 let number = parse_token(token, facet_scale, precision, ctx)?;
                 for (bound, inclusive, lower) in [
                     (
@@ -787,10 +1531,10 @@ fn apply_refinements(
                 let Some(candidates) = array(constraint) else {
                     return Err(fail("allowed"));
                 };
-                let wanted = exact_identity(field, value, policy, ctx)?;
+                let wanted = exact_identity_with_host(field, value, policy, host, ctx)?;
                 let mut found = false;
                 for candidate in candidates {
-                    if exact_identity(field, candidate, policy, ctx)? == wanted {
+                    if exact_identity_with_host(field, candidate, policy, host, ctx)? == wanted {
                         found = true;
                         break;
                     }
@@ -813,6 +1557,8 @@ fn evaluate(
     enabled: bool,
     policy: &Value,
     depth: usize,
+    public_field_value: bool,
+    host: &mut Option<&mut dyn HostJsonReflection>,
     ctx: &mut Context<'_>,
 ) -> Result<(), LiteralFault> {
     ctx.charge_work(1, Utf16::default())
@@ -837,7 +1583,12 @@ fn evaluate(
     let item_key = selector(policy, "item");
     if let Some(item) = get(field, &item_key) {
         let allowed = prop_list(policy, "itemReferenceKeys");
-        known(item, &allowed, &append_ascii(&Utf16::default(), &item_key))?;
+        known(
+            item,
+            &allowed,
+            &append_ascii(&Utf16::default(), &item_key),
+            public_field_value,
+        )?;
     }
     let facets_key = selector(policy, "facets");
     let empty_facets = Value::Object(Vec::new());
@@ -846,6 +1597,7 @@ fn evaluate(
         facets,
         &prop_list(policy, "facetKeys"),
         &append_ascii(&Utf16::default(), &facets_key),
+        public_field_value,
     )?;
     for (group, keys) in object(get(policy, "facetGroups").unwrap_or(&Value::Null)).unwrap_or(&[]) {
         let Some(group) = group.to_utf8().ok() else {
@@ -861,6 +1613,7 @@ fn evaluate(
                         .filter_map(ascii)
                         .collect::<Vec<_>>(),
                     &append_ascii(&append_ascii(&Utf16::default(), &facets_key), &group),
+                    public_field_value,
                 )?;
             }
         }
@@ -928,6 +1681,7 @@ fn evaluate(
             None,
             Some(count),
             "before",
+            host,
             ctx,
         )?;
         if sequence {
@@ -939,6 +1693,8 @@ fn evaluate(
                     enabled,
                     policy,
                     depth + 1,
+                    public_field_value,
+                    host,
                     ctx,
                 )?
             }
@@ -951,6 +1707,8 @@ fn evaluate(
                     enabled,
                     policy,
                     depth + 1,
+                    public_field_value,
+                    host,
                     ctx,
                 )?
             }
@@ -964,6 +1722,7 @@ fn evaluate(
             None,
             Some(count),
             "after",
+            host,
             ctx,
         )?;
         return Ok(());
@@ -982,6 +1741,72 @@ fn evaluate(
             return Err(fail("text"));
         }
         return Ok(());
+    }
+    if public_field_value
+        && str_at(fam, "mechanic").as_deref() == Some("unicode")
+        && !matches!(raw, Value::String(_))
+    {
+        // `identity()` calls unicodeCount first, then evaluate computes the
+        // count used by before/after refinements. The host path runs both
+        // checkpoints against the admitted copy; direct Rust callers retain
+        // their existing single portable compatibility pass.
+        let count = if host.is_some() {
+            let _ = public_string_carrier_count(raw, host, ctx)
+                .map_err(LiteralFault::from_engine)?;
+            public_string_carrier_count(raw, host, ctx)
+                .map_err(LiteralFault::from_engine)?
+        } else {
+            public_string_carrier_count(raw, host, ctx).map_err(LiteralFault::from_engine)?
+        };
+        let has_length = get(facets, "length").is_some();
+        let has_allowed = get(field, "allowedValues").is_some();
+        apply_refinements(
+            field,
+            value,
+            enabled,
+            policy,
+            "scalar",
+            Some(fam),
+            Some(count),
+            "before",
+            host,
+            ctx,
+        )?;
+        if !has_allowed {
+            apply_refinements(
+                field,
+                value,
+                enabled,
+                policy,
+                "scalar",
+                Some(fam),
+                Some(count),
+                "after",
+                host,
+                ctx,
+            )?;
+            return Ok(());
+        }
+        if host.is_some() && count == 0 {
+            apply_refinements(
+                field,
+                value,
+                enabled,
+                policy,
+                "scalar",
+                Some(fam),
+                Some(count),
+                "after",
+                host,
+                ctx,
+            )?;
+            return Ok(());
+        }
+        if has_length {
+            // The dynamic unicode loop fails for positive lengths above; for
+            // zero-length carriers, continue through normal allowed-value
+            // evaluation rather than silently accepting them.
+        }
     }
     let _identity = exact_identity(field, value, policy, ctx)?;
     let mechanic = str_at(fam, "mechanic").unwrap_or_default();
@@ -1002,6 +1827,7 @@ fn evaluate(
         Some(fam),
         count,
         "all",
+        host,
         ctx,
     )?;
     Ok(())
@@ -1032,7 +1858,78 @@ pub(crate) fn literal_errors_admitted(
     policy: &PreparedPolicy,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
-    match evaluate(document, field, value, enabled, policy.value(), 0, ctx) {
+    let mut host = None;
+    match evaluate(
+        document,
+        field,
+        value,
+        enabled,
+        policy.value(),
+        0,
+        false,
+        &mut host,
+        ctx,
+    ) {
+        Ok(()) => Ok(Vec::new()),
+        Err(error) => match error.engine_error {
+            Some(engine_error) => Err(engine_error),
+            None => Ok(vec![policy_error(&error, policy.value(), ctx)?]),
+        },
+    }
+}
+
+pub(crate) fn literal_field_value_errors_admitted(
+    document: &Value,
+    field: &Value,
+    value: &Value,
+    enabled: bool,
+    policy: &PreparedPolicy,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    literal_field_value_errors_host_admitted(document, field, value, enabled, policy, None, ctx)
+}
+
+pub(crate) fn literal_field_value_errors_with_host_admitted(
+    document: &Value,
+    field: &Value,
+    value: &Value,
+    enabled: bool,
+    policy: &PreparedPolicy,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    literal_field_value_errors_host_admitted(
+        document,
+        field,
+        value,
+        enabled,
+        policy,
+        Some(host),
+        ctx,
+    )
+}
+
+fn literal_field_value_errors_host_admitted(
+    document: &Value,
+    field: &Value,
+    value: &Value,
+    enabled: bool,
+    policy: &PreparedPolicy,
+    host: Option<&mut dyn HostJsonReflection>,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    let mut host = host;
+    match evaluate(
+        document,
+        field,
+        value,
+        enabled,
+        policy.value(),
+        0,
+        true,
+        &mut host,
+        ctx,
+    ) {
         Ok(()) => Ok(Vec::new()),
         Err(error) => match error.engine_error {
             Some(engine_error) => Err(engine_error),
@@ -1107,7 +2004,8 @@ pub(crate) fn numeric_interval_admitted(
     } else {
         0
     };
-    let precision = num_at(facets, &selector(p, "precision")).and_then(|n| usize::try_from(n).ok());
+    let precision = num_at(facets, &selector(p, "precision"))
+        .and_then(|n| precision_limit(Some(n)));
     let field_members = object(field).ok_or_else(|| {
         EngineError::new(
             "CONSTRAINT_POLICY",
@@ -1179,7 +2077,8 @@ pub(crate) fn numeric_interval_admitted(
                 diagnostics.push(policy_error(&error, p, ctx)?);
                 return Ok(diagnostics);
             }
-            if let Err(error) = evaluate(&doc, &base, bound, true, p, 0, ctx) {
+            let mut host = None;
+            if let Err(error) = evaluate(&doc, &base, bound, true, p, 0, false, &mut host, ctx) {
                 if let Some(engine_error) = error.engine_error {
                     return Err(engine_error);
                 }

@@ -4,7 +4,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 from dataclasses import field as dataclass_field
-from typing import Generic, TypeVar
+from typing import Any, Generic, TypeVar
 
 from .types import SnapshotVersions, validate_snapshot_versions
 
@@ -77,31 +77,64 @@ def stream_page_size(
     artifact: Mapping[str, object], requested: int | None
 ) -> int | None:
     """Validate the original owner's optional bounded stream-size parameter."""
-    if requested is not None and (
-        type(requested) is not int or not 1 <= requested <= 1000
-    ):
+    native = _native_stream_page_size_bridge()
+    if not native.access_stream_page_size_request_valid(requested):
         raise ValueError("page_size must be an integer from 1 through 1000")
     obligations = artifact.get("obligations")
     domain = (
         obligations.get("streamPageSize") if isinstance(obligations, Mapping) else None
     )
     if domain is None:
-        if requested is not None:
+        if not native.access_stream_page_size_missing_domain_valid(
+            requested is not None
+        ):
             raise ReadObligationUnmet(
                 "STREAM_PAGE_SIZE_UNSUPPORTED: original owner parameter required"
             )
         return None
-    if (
-        type(domain) is not dict
-        or set(domain) != {"parameter", "minimum", "maximum"}
-        or domain["parameter"] != "__umf_page_size"
-        or type(domain["minimum"]) is not int
-        or domain["minimum"] != 1
-        or type(domain["maximum"]) is not int
-        or not 1 <= domain["maximum"] <= 1000
-        or type(obligations.get("rowCap")) is not int
-        or domain["maximum"] > obligations["rowCap"]
+    if not native.access_stream_page_size_domain_type_valid(type(domain) is dict):
+        raise ReadObligationUnmet("invalid original stream page-size obligation")
+    if not native.access_stream_page_size_domain_keys_valid(
+        not (set(domain) != {"parameter", "minimum", "maximum"})
     ):
+        raise ReadObligationUnmet("invalid original stream page-size obligation")
+    if not native.access_stream_page_size_domain_parameter_valid(
+        not (domain["parameter"] != "__umf_page_size")
+    ):
+        raise ReadObligationUnmet("invalid original stream page-size obligation")
+    minimum_is_exact_integer = type(domain["minimum"]) is int
+    if not native.access_stream_page_size_minimum_valid(minimum_is_exact_integer):
+        raise ReadObligationUnmet("invalid original stream page-size obligation")
+    minimum_value = domain["minimum"]
+    if type(minimum_value) is int:
+        minimum_matches = native.access_stream_page_size_minimum_exact_value_valid(
+            minimum_value
+        )
+    else:
+        minimum_matches = native.access_stream_page_size_minimum_comparison_valid(
+            not (minimum_value != 1)  # noqa: SIM202 - preserve a non-exact-int object's __ne__ semantics.
+        )
+    if not minimum_matches:
+        raise ReadObligationUnmet("invalid original stream page-size obligation")
+    maximum_is_exact_integer = type(domain["maximum"]) is int
+    if not native.access_stream_page_size_maximum_valid(maximum_is_exact_integer):
+        raise ReadObligationUnmet("invalid original stream page-size obligation")
+    maximum_value = domain["maximum"]
+    if type(maximum_value) is int:
+        maximum_within_range = native.access_stream_page_size_maximum_exact_value_valid(
+            maximum_value
+        )
+    else:
+        maximum_within_range = native.access_stream_page_size_maximum_comparison_valid(
+            True if 1 <= maximum_value <= 1000 else False  # noqa: SIM210 - preserve truth conversion at the comparison boundary.
+        )
+    if not maximum_within_range:
+        raise ReadObligationUnmet("invalid original stream page-size obligation")
+    row_cap = obligations.get("rowCap")
+    if type(row_cap) is not int:
+        raise ReadObligationUnmet("invalid original stream page-size obligation")
+    row_cap_fits = not (domain["maximum"] > obligations["rowCap"])
+    if not native.access_stream_page_size_row_cap_valid(True, row_cap_fits):
         raise ReadObligationUnmet("invalid original stream page-size obligation")
     parameters = artifact.get("cursorParameters")
     slots = (
@@ -113,13 +146,58 @@ def stream_page_size(
         if type(parameters) is list
         else []
     )
-    if (
-        len(slots) != 1
-        or slots[0].get("carrier") != "integer"
-        or slots[0].get("nullable", False) is not False
-    ):
+    if not native.access_stream_page_size_slot_count_valid(len(slots)):
+        raise ReadObligationUnmet("original stream page-size parameter differs")
+    carrier_matches = not (slots[0].get("carrier") != "integer")  # noqa: SIM202 - preserve arbitrary carrier value __ne__ semantics.
+    if not native.access_stream_page_size_slot_carrier_valid(carrier_matches):
+        raise ReadObligationUnmet("original stream page-size parameter differs")
+    is_exact_false = slots[0].get("nullable", False) is False
+    if not native.access_stream_page_size_slot_nullability_valid(is_exact_false):
         raise ReadObligationUnmet("original stream page-size parameter differs")
     size = domain["maximum"] if requested is None else requested
-    if size > domain["maximum"]:
+    if not native.access_stream_page_size_final_maximum_valid(
+        not (size > domain["maximum"])
+    ):
         raise ValueError("page_size exceeds the original compiled maximum")
     return size
+
+
+def _native_stream_page_size_bridge() -> Any:
+    """Require the installed Rust capability; never fall back to Python rules."""
+    try:
+        from umf import rust_streams
+    except ImportError:
+        raise ReadObligationUnmet(
+            "installed umf-core Rust stream page-size engine required"
+        ) from None
+    version = getattr(rust_streams, "access_stream_page_size_profile_version", None)
+    functions = (
+        getattr(rust_streams, "access_stream_page_size_request_valid", None),
+        getattr(rust_streams, "access_stream_page_size_missing_domain_valid", None),
+        getattr(rust_streams, "access_stream_page_size_domain_type_valid", None),
+        getattr(rust_streams, "access_stream_page_size_domain_keys_valid", None),
+        getattr(rust_streams, "access_stream_page_size_domain_parameter_valid", None),
+        getattr(rust_streams, "access_stream_page_size_minimum_valid", None),
+        getattr(rust_streams, "access_stream_page_size_minimum_comparison_valid", None),
+        getattr(rust_streams, "access_stream_page_size_minimum_exact_value_valid", None),
+        getattr(rust_streams, "access_stream_page_size_maximum_valid", None),
+        getattr(rust_streams, "access_stream_page_size_maximum_comparison_valid", None),
+        getattr(rust_streams, "access_stream_page_size_maximum_exact_value_valid", None),
+        getattr(rust_streams, "access_stream_page_size_row_cap_valid", None),
+        getattr(rust_streams, "access_stream_page_size_slot_count_valid", None),
+        getattr(rust_streams, "access_stream_page_size_slot_carrier_valid", None),
+        getattr(rust_streams, "access_stream_page_size_slot_nullability_valid", None),
+        getattr(rust_streams, "access_stream_page_size_final_maximum_valid", None),
+    )
+    try:
+        matches = (
+            callable(version)
+            and version() == "umf-access-stream-page-size/0.1.0"
+        )
+    except (TypeError, ValueError, OverflowError):
+        matches = False
+    if not (matches and all(callable(function) for function in functions)):
+        raise ReadObligationUnmet(
+            "installed umf-core lacks the required stream page-size profile"
+        )
+    return rust_streams

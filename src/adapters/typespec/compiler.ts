@@ -9,6 +9,7 @@ import * as standardJs from '../../../node_modules/@typespec/compiler/dist/src/l
 import * as intrinsicJs from '../../../node_modules/@typespec/compiler/dist/src/lib/intrinsic/tsp-index.js';
 const trustedJs:Record<string,Record<string,any>>={'/compiler/dist/src/lib/tsp-index.js':standardJs,'/compiler/dist/src/lib/intrinsic/tsp-index.js':intrinsicJs};
 import standard from '../../../spec/extensions/typespec/standard-library.json';
+import type {TypeSpecCompilerReport} from './report-types';
 export async function compileTypeSpecProgram(files:Record<string,string>,entrypoint:string,libraries:Record<string,string>={},emission?:{options:JsonObject;outputs:Record<string,string>}){
  const texts=new Map(Object.entries(standard));
  const modules={...trustedJs};
@@ -43,7 +44,7 @@ export async function compileTypeSpecProgram(files:Record<string,string>,entrypo
  const program=await compile(host,'/project/'+entrypoint,emission?{noEmit:false,outputDir:'/output',emit:['@typespec/json-schema'],options:{'@typespec/json-schema':emission.options}}:{noEmit:true});
  return program;
 }
-export function typeSpecCompilerReport(program:Program,libraries:Record<string,string>={}){
+export function typeSpecCompilerReport(program:Program,libraries:Record<string,string>={}):TypeSpecCompilerReport{
  const diagnostics=program.diagnostics.map(d=>{const at=getSourceLocation(d.target);return {code:d.code,severity:d.severity,message:d.message,...(at?{file:at.file.path,start:at.pos,end:at.end}:{})};});
  return {compiler:'@typespec/compiler@1.16.0',libraries:{...libraries},valid:!program.hasError(),complete:false as const,diagnostics,limitations:['Compiler checks supplied TypeSpec and the pinned standard library; only explicitly selected registered libraries are available; arbitrary JavaScript and emitters are not loaded','Compiler validity does not establish cross-system projection equivalence']};
 }

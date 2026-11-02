@@ -1,0 +1,137 @@
+{
+  "input": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "facets",
+      "vocabularies": {
+        "future": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "future": {
+          "opaque": "9007199254740993"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "v",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {
+                "future": {
+                  "unknown": [
+                    null,
+                    "keep"
+                  ]
+                }
+              },
+              "facets": {
+                "integerWidth": {
+                  "bits": 8,
+                  "signed": true,
+                  "comparison": {
+                    "native": "opaque"
+                  }
+                },
+                "future": {
+                  "token": "9007199254740993"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "identity": {
+      "module": "m",
+      "element": "v"
+    }
+  },
+  "expected": {
+    "operation": "inspect-core-facets",
+    "version": "5.0.0",
+    "source": {
+      "umf": "0.10.0",
+      "id": "facets",
+      "vocabularies": {
+        "future": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "future": {
+          "opaque": "9007199254740993"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "v",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {
+                "future": {
+                  "unknown": [
+                    null,
+                    "keep"
+                  ]
+                }
+              },
+              "facets": {
+                "integerWidth": {
+                  "bits": 8,
+                  "signed": true,
+                  "comparison": {
+                    "native": "opaque"
+                  }
+                },
+                "future": {
+                  "token": "9007199254740993"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "identity": {
+      "module": "m",
+      "element": "v"
+    },
+    "path": "/modules/0/elements/0/facets",
+    "meaning": {
+      "state": "partial",
+      "facets": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true,
+          "comparison": {
+            "native": "opaque"
+          }
+        },
+        "future": {
+          "token": "9007199254740993"
+        }
+      },
+      "interpreted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "uninterpretedPaths": [
+        "/modules/0/elements/0/facets/future",
+        "/modules/0/elements/0/facets/integerWidth/comparison"
+      ]
+    },
+    "provenance": "unverified"
+  }
+}

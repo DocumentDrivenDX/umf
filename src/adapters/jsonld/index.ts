@@ -5,14 +5,13 @@ import {importGeneralizedRdfDataset,getGeneralizedRdfQuads} from '../generalized
 import {wellFormedIri,wellFormedLanguage} from './rdf-terms';
 import {importRdfNQuads,inspectRdfDocument,getRdfQuads,getRdfNamedGraphs,exportRdfNQuads,RDF_EXTENSION} from '../rdf';
 import {flatten as flattenExpanded} from 'jsonld/lib/flatten';
-import manifest from '../../../spec/extensions/jsonld/package.json';
+import {JSONLD_EXTENSION,jsonldPackage} from './package';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const JSONLD_EXTENSION='umf.jsonld';
-export const jsonldPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+export {JSONLD_EXTENSION,jsonldPackage};
 interface Context {url:string;documentUrl:string;root:NativeJson;originalSource:string}
 interface Payload {profile:'jsonld-source';processingMode:'json-ld-1.0'|'json-ld-1.1';baseIRI:string;root:NativeJson;originalSource:string;contexts:Context[];expandContext?:NativeJson}
 function absolute(value:string){try{new URL(value);}catch{throw new UmfError('JSONLD_IRI','Expected absolute document/base URL');}}

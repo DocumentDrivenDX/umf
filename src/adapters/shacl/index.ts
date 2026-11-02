@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/shacl/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document,type Diagnostic,type Json,type ExtensionPackage} from '../../model/types';
 import {RDF_EXTENSION,importRdfTurtle,exportRdfTurtle,getRdfQuads,getRdfNamedGraphs,inspectRdfDocument,proposeRdfQuadEdit,type RdfNode,type RdfLiteral,type RdfQuad} from '../rdf';
-export const SHACL_EXTENSION='umf.shacl';
-export const shaclPackage=manifest as unknown as ExtensionPackage;
+import {SHACL_EXTENSION,shaclPackage} from './package';
+export {SHACL_EXTENSION,shaclPackage} from './package';
 type Value=RdfNode|RdfLiteral;
 export type ShaclPath={kind:'predicate';iri:string}|{kind:'sequence'|'alternative';paths:ShaclPath[]}|{kind:'inverse'|'zeroOrMore'|'oneOrMore'|'zeroOrOne';path:ShaclPath};
 const SH='http://www.w3.org/ns/shacl#',RDF='http://www.w3.org/1999/02/22-rdf-syntax-ns#';

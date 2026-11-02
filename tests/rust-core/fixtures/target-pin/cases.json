@@ -1,0 +1,277 @@
+{
+  "cases": [
+    {
+      "name": "exact-identity",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": true
+    },
+    {
+      "name": "identity-field-kind-differs",
+      "identity": {
+        "kind": "lakebase",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "identity-field-backend_id-differs",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "other",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "identity-field-backend_version-differs",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "19",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "identity-field-target_profile-differs",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-b",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "identity-field-binding_sha256-differs",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "platform-version-alternative-in-qualified-set",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.3"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": true
+    },
+    {
+      "name": "platform-version-outside-qualified-set",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.4"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "platform-cardinality-one-missing",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "platform-cardinality-one-extra",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ],
+          [
+            "tls",
+            "1"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "same-cardinality-name-absent-from-pin",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "other",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "duplicate-observed-name-misses-other-pinned-name",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "driver",
+            "3.3"
+          ]
+        ]
+      },
+      "expected": false
+    },
+    {
+      "name": "duplicate-observed-name-bad-version",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.4"
+          ],
+          [
+            "driver",
+            "3.2"
+          ]
+        ]
+      },
+      "expected": false
+    }
+  ]
+}

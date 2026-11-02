@@ -1,0 +1,982 @@
+{
+  "format": "umf-r8-delta-rename-predecessor/1",
+  "cases": [
+    {
+      "id": "name-mode-partition-update",
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"id\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 1, \\\"delta.columnMapping.physicalName\\\": \\\"col-id\\\"}}, {\\\"name\\\": \\\"region\\\", \\\"type\\\": \\\"string\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 2, \\\"delta.columnMapping.physicalName\\\": \\\"col-region\\\"}}, {\\\"name\\\": \\\"details\\\", \\\"type\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"amount\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 4, \\\"delta.columnMapping.physicalName\\\": \\\"col-amount\\\"}}]}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 3, \\\"delta.columnMapping.physicalName\\\": \\\"col-details\\\"}}]}\",\"partitionColumns\":[\"region\"],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"4\"}}}",
+      "tableId": "name",
+      "options": {
+        "fieldPointer": "/fields/1",
+        "name": "area",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "d8161b7eb60f709de0446436822866d9a3779dd5b1699ef5e37cd236335908a7",
+      "result": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "name",
+          "vocabularies": {
+            "umf.delta.table": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "table",
+                  "extensions": {
+                    "umf.delta.table": {
+                      "profile": "delta-table-context",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "protocol": {
+                            "kind": "object",
+                            "members": {
+                              "minReaderVersion": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "minWriterVersion": {
+                                "kind": "number",
+                                "value": "5"
+                              }
+                            }
+                          },
+                          "metaData": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+                              },
+                              "format": {
+                                "kind": "object",
+                                "members": {
+                                  "provider": {
+                                    "kind": "string",
+                                    "value": "parquet"
+                                  },
+                                  "options": {
+                                    "kind": "object",
+                                    "members": {}
+                                  }
+                                }
+                              },
+                              "schemaString": {
+                                "kind": "string",
+                                "value": "{\"type\": \"struct\", \"fields\": [{\"name\": \"id\", \"type\": \"long\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 1, \"delta.columnMapping.physicalName\": \"col-id\"}}, {\"name\": \"region\", \"type\": \"string\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 2, \"delta.columnMapping.physicalName\": \"col-region\"}}, {\"name\": \"details\", \"type\": {\"type\": \"struct\", \"fields\": [{\"name\": \"amount\", \"type\": \"long\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 4, \"delta.columnMapping.physicalName\": \"col-amount\"}}]}, \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 3, \"delta.columnMapping.physicalName\": \"col-details\"}}]}"
+                              },
+                              "partitionColumns": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "region"
+                                  }
+                                ]
+                              },
+                              "configuration": {
+                                "kind": "object",
+                                "members": {
+                                  "delta.columnMapping.mode": {
+                                    "kind": "string",
+                                    "value": "name"
+                                  },
+                                  "delta.columnMapping.maxColumnId": {
+                                    "kind": "string",
+                                    "value": "4"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "document": {
+          "umf": "0.10.0",
+          "id": "name",
+          "vocabularies": {
+            "umf.delta.table": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "table",
+                  "extensions": {
+                    "umf.delta.table": {
+                      "profile": "delta-table-context",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "protocol": {
+                            "kind": "object",
+                            "members": {
+                              "minReaderVersion": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "minWriterVersion": {
+                                "kind": "number",
+                                "value": "5"
+                              }
+                            }
+                          },
+                          "metaData": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+                              },
+                              "format": {
+                                "kind": "object",
+                                "members": {
+                                  "provider": {
+                                    "kind": "string",
+                                    "value": "parquet"
+                                  },
+                                  "options": {
+                                    "kind": "object",
+                                    "members": {}
+                                  }
+                                }
+                              },
+                              "schemaString": {
+                                "kind": "string",
+                                "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":1,\"delta.columnMapping.physicalName\":\"col-id\"}},{\"name\":\"area\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":2,\"delta.columnMapping.physicalName\":\"col-region\"}},{\"name\":\"details\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"amount\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":4,\"delta.columnMapping.physicalName\":\"col-amount\"}}]},\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":3,\"delta.columnMapping.physicalName\":\"col-details\"}}]}"
+                              },
+                              "partitionColumns": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "area"
+                                  }
+                                ]
+                              },
+                              "configuration": {
+                                "kind": "object",
+                                "members": {
+                                  "delta.columnMapping.mode": {
+                                    "kind": "string",
+                                    "value": "name"
+                                  },
+                                  "delta.columnMapping.maxColumnId": {
+                                    "kind": "string",
+                                    "value": "4"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "complete": false,
+        "partitionUpdates": [
+          {
+            "index": 0,
+            "from": "region",
+            "to": "area"
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "DELTA_TABLE_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified"
+            },
+            {
+              "code": "DELTA_CONFIGURATION_UNVERIFIED",
+              "path": "/metaData/configuration/delta.columnMapping.mode",
+              "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_CONFIGURATION_UNVERIFIED",
+              "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+              "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_CONTEXT_UNVERIFIED",
+              "path": "/metaData/schemaString",
+              "severity": "warning",
+              "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/type/fields/0/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/type/fields/0/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_MAPPING_HISTORY_UNVERIFIED",
+              "path": "/metaData/schemaString",
+              "message": "Historical physical-path uniqueness, monotonic maxColumnId and actual Parquet field IDs are not verified",
+              "severity": "warning"
+            }
+          ]
+        },
+        "diagnostics": [
+          {
+            "code": "DELTA_RENAME_EXTERNAL_STATE",
+            "path": "/fields/1",
+            "severity": "warning",
+            "message": "Physical names/IDs retained; historical uniqueness, data-file mappings, transaction concurrency and uninterpreted external references remain unverified"
+          }
+        ]
+      }
+    },
+    {
+      "id": "id-mode-partition-update",
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"id\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 1, \\\"delta.columnMapping.physicalName\\\": \\\"col-id\\\"}}, {\\\"name\\\": \\\"region\\\", \\\"type\\\": \\\"string\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 2, \\\"delta.columnMapping.physicalName\\\": \\\"col-region\\\"}}, {\\\"name\\\": \\\"details\\\", \\\"type\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"amount\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 4, \\\"delta.columnMapping.physicalName\\\": \\\"col-amount\\\"}}]}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 3, \\\"delta.columnMapping.physicalName\\\": \\\"col-details\\\"}}]}\",\"partitionColumns\":[\"region\"],\"configuration\":{\"delta.columnMapping.mode\":\"id\",\"delta.columnMapping.maxColumnId\":\"4\"}}}",
+      "tableId": "id",
+      "options": {
+        "fieldPointer": "/fields/1",
+        "name": "area",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "817da43b295958fcc9557f930afd14af5b9925164b11c3a15b88f84a4b55cfb1",
+      "result": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "id",
+          "vocabularies": {
+            "umf.delta.table": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "table",
+                  "extensions": {
+                    "umf.delta.table": {
+                      "profile": "delta-table-context",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "protocol": {
+                            "kind": "object",
+                            "members": {
+                              "minReaderVersion": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "minWriterVersion": {
+                                "kind": "number",
+                                "value": "5"
+                              }
+                            }
+                          },
+                          "metaData": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+                              },
+                              "format": {
+                                "kind": "object",
+                                "members": {
+                                  "provider": {
+                                    "kind": "string",
+                                    "value": "parquet"
+                                  },
+                                  "options": {
+                                    "kind": "object",
+                                    "members": {}
+                                  }
+                                }
+                              },
+                              "schemaString": {
+                                "kind": "string",
+                                "value": "{\"type\": \"struct\", \"fields\": [{\"name\": \"id\", \"type\": \"long\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 1, \"delta.columnMapping.physicalName\": \"col-id\"}}, {\"name\": \"region\", \"type\": \"string\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 2, \"delta.columnMapping.physicalName\": \"col-region\"}}, {\"name\": \"details\", \"type\": {\"type\": \"struct\", \"fields\": [{\"name\": \"amount\", \"type\": \"long\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 4, \"delta.columnMapping.physicalName\": \"col-amount\"}}]}, \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 3, \"delta.columnMapping.physicalName\": \"col-details\"}}]}"
+                              },
+                              "partitionColumns": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "region"
+                                  }
+                                ]
+                              },
+                              "configuration": {
+                                "kind": "object",
+                                "members": {
+                                  "delta.columnMapping.mode": {
+                                    "kind": "string",
+                                    "value": "id"
+                                  },
+                                  "delta.columnMapping.maxColumnId": {
+                                    "kind": "string",
+                                    "value": "4"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "document": {
+          "umf": "0.10.0",
+          "id": "id",
+          "vocabularies": {
+            "umf.delta.table": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "table",
+                  "extensions": {
+                    "umf.delta.table": {
+                      "profile": "delta-table-context",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "protocol": {
+                            "kind": "object",
+                            "members": {
+                              "minReaderVersion": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "minWriterVersion": {
+                                "kind": "number",
+                                "value": "5"
+                              }
+                            }
+                          },
+                          "metaData": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+                              },
+                              "format": {
+                                "kind": "object",
+                                "members": {
+                                  "provider": {
+                                    "kind": "string",
+                                    "value": "parquet"
+                                  },
+                                  "options": {
+                                    "kind": "object",
+                                    "members": {}
+                                  }
+                                }
+                              },
+                              "schemaString": {
+                                "kind": "string",
+                                "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":1,\"delta.columnMapping.physicalName\":\"col-id\"}},{\"name\":\"area\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":2,\"delta.columnMapping.physicalName\":\"col-region\"}},{\"name\":\"details\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"amount\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":4,\"delta.columnMapping.physicalName\":\"col-amount\"}}]},\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":3,\"delta.columnMapping.physicalName\":\"col-details\"}}]}"
+                              },
+                              "partitionColumns": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "area"
+                                  }
+                                ]
+                              },
+                              "configuration": {
+                                "kind": "object",
+                                "members": {
+                                  "delta.columnMapping.mode": {
+                                    "kind": "string",
+                                    "value": "id"
+                                  },
+                                  "delta.columnMapping.maxColumnId": {
+                                    "kind": "string",
+                                    "value": "4"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "complete": false,
+        "partitionUpdates": [
+          {
+            "index": 0,
+            "from": "region",
+            "to": "area"
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "DELTA_TABLE_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified"
+            },
+            {
+              "code": "DELTA_CONFIGURATION_UNVERIFIED",
+              "path": "/metaData/configuration/delta.columnMapping.mode",
+              "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_CONFIGURATION_UNVERIFIED",
+              "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+              "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_CONTEXT_UNVERIFIED",
+              "path": "/metaData/schemaString",
+              "severity": "warning",
+              "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/type/fields/0/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/type/fields/0/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_MAPPING_HISTORY_UNVERIFIED",
+              "path": "/metaData/schemaString",
+              "message": "Historical physical-path uniqueness, monotonic maxColumnId and actual Parquet field IDs are not verified",
+              "severity": "warning"
+            }
+          ]
+        },
+        "diagnostics": [
+          {
+            "code": "DELTA_RENAME_EXTERNAL_STATE",
+            "path": "/fields/1",
+            "severity": "warning",
+            "message": "Physical names/IDs retained; historical uniqueness, data-file mappings, transaction concurrency and uninterpreted external references remain unverified"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nested-array-field",
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"id\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 1, \\\"delta.columnMapping.physicalName\\\": \\\"col-id\\\"}}, {\\\"name\\\": \\\"items\\\", \\\"type\\\": {\\\"type\\\": \\\"array\\\", \\\"elementType\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"count\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 3, \\\"delta.columnMapping.physicalName\\\": \\\"col-count\\\"}}]}, \\\"containsNull\\\": true}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 2, \\\"delta.columnMapping.physicalName\\\": \\\"col-items\\\"}}, {\\\"name\\\": \\\"attributes\\\", \\\"type\\\": {\\\"type\\\": \\\"map\\\", \\\"keyType\\\": \\\"string\\\", \\\"valueType\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"qty\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 5, \\\"delta.columnMapping.physicalName\\\": \\\"col-qty\\\"}}]}, \\\"valueContainsNull\\\": true}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 4, \\\"delta.columnMapping.physicalName\\\": \\\"col-attrs\\\"}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"5\"}}}",
+      "tableId": "nested",
+      "options": {
+        "fieldPointer": "/fields/1/type/elementType/fields/0",
+        "name": "quantity",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "704a7bfc671ef63e20ca4700a08cc237c57ec0663b86ac8ba96bc925277cd771",
+      "result": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "nested",
+          "vocabularies": {
+            "umf.delta.table": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "table",
+                  "extensions": {
+                    "umf.delta.table": {
+                      "profile": "delta-table-context",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "protocol": {
+                            "kind": "object",
+                            "members": {
+                              "minReaderVersion": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "minWriterVersion": {
+                                "kind": "number",
+                                "value": "5"
+                              }
+                            }
+                          },
+                          "metaData": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+                              },
+                              "format": {
+                                "kind": "object",
+                                "members": {
+                                  "provider": {
+                                    "kind": "string",
+                                    "value": "parquet"
+                                  },
+                                  "options": {
+                                    "kind": "object",
+                                    "members": {}
+                                  }
+                                }
+                              },
+                              "schemaString": {
+                                "kind": "string",
+                                "value": "{\"type\": \"struct\", \"fields\": [{\"name\": \"id\", \"type\": \"long\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 1, \"delta.columnMapping.physicalName\": \"col-id\"}}, {\"name\": \"items\", \"type\": {\"type\": \"array\", \"elementType\": {\"type\": \"struct\", \"fields\": [{\"name\": \"count\", \"type\": \"long\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 3, \"delta.columnMapping.physicalName\": \"col-count\"}}]}, \"containsNull\": true}, \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 2, \"delta.columnMapping.physicalName\": \"col-items\"}}, {\"name\": \"attributes\", \"type\": {\"type\": \"map\", \"keyType\": \"string\", \"valueType\": {\"type\": \"struct\", \"fields\": [{\"name\": \"qty\", \"type\": \"long\", \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 5, \"delta.columnMapping.physicalName\": \"col-qty\"}}]}, \"valueContainsNull\": true}, \"nullable\": true, \"metadata\": {\"delta.columnMapping.id\": 4, \"delta.columnMapping.physicalName\": \"col-attrs\"}}]}"
+                              },
+                              "partitionColumns": {
+                                "kind": "array",
+                                "items": []
+                              },
+                              "configuration": {
+                                "kind": "object",
+                                "members": {
+                                  "delta.columnMapping.mode": {
+                                    "kind": "string",
+                                    "value": "name"
+                                  },
+                                  "delta.columnMapping.maxColumnId": {
+                                    "kind": "string",
+                                    "value": "5"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "document": {
+          "umf": "0.10.0",
+          "id": "nested",
+          "vocabularies": {
+            "umf.delta.table": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "table",
+                  "extensions": {
+                    "umf.delta.table": {
+                      "profile": "delta-table-context",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "protocol": {
+                            "kind": "object",
+                            "members": {
+                              "minReaderVersion": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "minWriterVersion": {
+                                "kind": "number",
+                                "value": "5"
+                              }
+                            }
+                          },
+                          "metaData": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+                              },
+                              "format": {
+                                "kind": "object",
+                                "members": {
+                                  "provider": {
+                                    "kind": "string",
+                                    "value": "parquet"
+                                  },
+                                  "options": {
+                                    "kind": "object",
+                                    "members": {}
+                                  }
+                                }
+                              },
+                              "schemaString": {
+                                "kind": "string",
+                                "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":1,\"delta.columnMapping.physicalName\":\"col-id\"}},{\"name\":\"items\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"struct\",\"fields\":[{\"name\":\"quantity\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":3,\"delta.columnMapping.physicalName\":\"col-count\"}}]},\"containsNull\":true},\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":2,\"delta.columnMapping.physicalName\":\"col-items\"}},{\"name\":\"attributes\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":{\"type\":\"struct\",\"fields\":[{\"name\":\"qty\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":5,\"delta.columnMapping.physicalName\":\"col-qty\"}}]},\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":4,\"delta.columnMapping.physicalName\":\"col-attrs\"}}]}"
+                              },
+                              "partitionColumns": {
+                                "kind": "array",
+                                "items": []
+                              },
+                              "configuration": {
+                                "kind": "object",
+                                "members": {
+                                  "delta.columnMapping.mode": {
+                                    "kind": "string",
+                                    "value": "name"
+                                  },
+                                  "delta.columnMapping.maxColumnId": {
+                                    "kind": "string",
+                                    "value": "5"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "complete": false,
+        "partitionUpdates": [],
+        "validation": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "DELTA_TABLE_UNVERIFIED",
+              "path": "",
+              "severity": "warning",
+              "message": "Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified"
+            },
+            {
+              "code": "DELTA_CONFIGURATION_UNVERIFIED",
+              "path": "/metaData/configuration/delta.columnMapping.mode",
+              "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_CONFIGURATION_UNVERIFIED",
+              "path": "/metaData/configuration/delta.columnMapping.maxColumnId",
+              "message": "Table configuration and embedded SQL preserved without execution or enforcement",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_CONTEXT_UNVERIFIED",
+              "path": "/metaData/schemaString",
+              "severity": "warning",
+              "message": "Schema alone cannot establish Delta protocol/features, table configuration or read/write validity"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/0/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/1/type/elementType/fields/0/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/1/type/elementType/fields/0/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/1/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/type/valueType/fields/0/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/type/valueType/fields/0/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/metadata/delta.columnMapping.id",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_METADATA_UNVERIFIED",
+              "path": "/metaData/schemaString/fields/2/metadata/delta.columnMapping.physicalName",
+              "message": "Column metadata retained exactly; constraints, identity, mapping and defaults are not executed or validated against table context",
+              "severity": "warning"
+            },
+            {
+              "code": "DELTA_MAPPING_HISTORY_UNVERIFIED",
+              "path": "/metaData/schemaString",
+              "message": "Historical physical-path uniqueness, monotonic maxColumnId and actual Parquet field IDs are not verified",
+              "severity": "warning"
+            }
+          ]
+        },
+        "diagnostics": [
+          {
+            "code": "DELTA_RENAME_EXTERNAL_STATE",
+            "path": "/fields/1/type/elementType/fields/0",
+            "severity": "warning",
+            "message": "Physical names/IDs retained; historical uniqueness, data-file mappings, transaction concurrency and uninterpreted external references remain unverified"
+          }
+        ]
+      }
+    },
+    {
+      "id": "collision",
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"id\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 1, \\\"delta.columnMapping.physicalName\\\": \\\"col-id\\\"}}, {\\\"name\\\": \\\"region\\\", \\\"type\\\": \\\"string\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 2, \\\"delta.columnMapping.physicalName\\\": \\\"col-region\\\"}}, {\\\"name\\\": \\\"details\\\", \\\"type\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"amount\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 4, \\\"delta.columnMapping.physicalName\\\": \\\"col-amount\\\"}}]}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 3, \\\"delta.columnMapping.physicalName\\\": \\\"col-details\\\"}}]}\",\"partitionColumns\":[\"region\"],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"4\"}}}",
+      "tableId": "collision",
+      "options": {
+        "fieldPointer": "/fields/1",
+        "name": "ID",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "d8161b7eb60f709de0446436822866d9a3779dd5b1699ef5e37cd236335908a7",
+      "error": {
+        "code": "DELTA_RENAME_COLLISION",
+        "message": "Candidate name collides or invalidates partition references",
+        "path": ""
+      }
+    },
+    {
+      "id": "non-field-pointer",
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"id\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 1, \\\"delta.columnMapping.physicalName\\\": \\\"col-id\\\"}}, {\\\"name\\\": \\\"region\\\", \\\"type\\\": \\\"string\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 2, \\\"delta.columnMapping.physicalName\\\": \\\"col-region\\\"}}, {\\\"name\\\": \\\"details\\\", \\\"type\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"amount\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 4, \\\"delta.columnMapping.physicalName\\\": \\\"col-amount\\\"}}]}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 3, \\\"delta.columnMapping.physicalName\\\": \\\"col-details\\\"}}]}\",\"partitionColumns\":[\"region\"],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"4\"}}}",
+      "tableId": "bad-pointer",
+      "options": {
+        "fieldPointer": "/fields/1/metadata",
+        "name": "x",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "d8161b7eb60f709de0446436822866d9a3779dd5b1699ef5e37cd236335908a7",
+      "error": {
+        "code": "DELTA_RENAME_PATH",
+        "message": "Pointer must select an actual mapped StructField",
+        "path": ""
+      }
+    },
+    {
+      "id": "constraint-reference",
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"id\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 1, \\\"delta.columnMapping.physicalName\\\": \\\"col-id\\\"}}, {\\\"name\\\": \\\"region\\\", \\\"type\\\": \\\"string\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 2, \\\"delta.columnMapping.physicalName\\\": \\\"col-region\\\"}}, {\\\"name\\\": \\\"details\\\", \\\"type\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"amount\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 4, \\\"delta.columnMapping.physicalName\\\": \\\"col-amount\\\"}}]}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 3, \\\"delta.columnMapping.physicalName\\\": \\\"col-details\\\"}}]}\",\"partitionColumns\":[\"region\"],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"4\",\"delta.constraints.positive\":\"id > 0\"}}}",
+      "tableId": "constraint",
+      "options": {
+        "fieldPointer": "/fields/1",
+        "name": "area",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "7f903d7ff9ab5009fef35a5326f15c10488e3d675a7b1d8d2d26aa21f1db2ce9",
+      "error": {
+        "code": "DELTA_RENAME_DEPENDENCY",
+        "message": "Constraint or clustering references require explicit rewriting",
+        "path": ""
+      }
+    },
+    {
+      "id": "unknown-feature",
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"columnMapping\",\"futureFeature\"],\"writerFeatures\":[\"columnMapping\",\"futureFeature\"]},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"id\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 1, \\\"delta.columnMapping.physicalName\\\": \\\"col-id\\\"}}, {\\\"name\\\": \\\"region\\\", \\\"type\\\": \\\"string\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 2, \\\"delta.columnMapping.physicalName\\\": \\\"col-region\\\"}}, {\\\"name\\\": \\\"details\\\", \\\"type\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"amount\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 4, \\\"delta.columnMapping.physicalName\\\": \\\"col-amount\\\"}}]}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 3, \\\"delta.columnMapping.physicalName\\\": \\\"col-details\\\"}}]}\",\"partitionColumns\":[\"region\"],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"4\"}}}",
+      "tableId": "future-feature",
+      "options": {
+        "fieldPointer": "/fields/1",
+        "name": "area",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "b270f23b9fd315a5afdda4d11b205db3c12f275fca0e2d8facbc80361eb950a4",
+      "error": {
+        "code": "DELTA_RENAME_FEATURE",
+        "message": "Feature requires an explicit rename contract",
+        "path": ""
+      }
+    },
+    {
+      "id": "column-expression",
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":1,\\\"delta.columnMapping.physicalName\\\":\\\"col-id\\\"}},{\\\"name\\\":\\\"region\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":2,\\\"delta.columnMapping.physicalName\\\":\\\"col-region\\\"}},{\\\"name\\\":\\\"details\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"amount\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":4,\\\"delta.columnMapping.physicalName\\\":\\\"col-amount\\\",\\\"delta.generationExpression\\\":\\\"id + 1\\\"}}]},\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":3,\\\"delta.columnMapping.physicalName\\\":\\\"col-details\\\"}}]}\",\"partitionColumns\":[\"region\"],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"4\"}}}",
+      "tableId": "expression",
+      "options": {
+        "fieldPointer": "/fields/1",
+        "name": "area",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "2e176a2a9420649844aab2cd5ded2ac34ca73ece585a6401cf436ceb5f2b17fa",
+      "error": {
+        "code": "DELTA_RENAME_DEPENDENCY",
+        "message": "Column expression/default dependencies require explicit rewriting",
+        "path": ""
+      }
+    },
+    {
+      "id": "unknown-provider",
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"format\":{\"provider\":\"future\",\"options\":{}},\"schemaString\":\"{\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"id\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 1, \\\"delta.columnMapping.physicalName\\\": \\\"col-id\\\"}}, {\\\"name\\\": \\\"region\\\", \\\"type\\\": \\\"string\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 2, \\\"delta.columnMapping.physicalName\\\": \\\"col-region\\\"}}, {\\\"name\\\": \\\"details\\\", \\\"type\\\": {\\\"type\\\": \\\"struct\\\", \\\"fields\\\": [{\\\"name\\\": \\\"amount\\\", \\\"type\\\": \\\"long\\\", \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 4, \\\"delta.columnMapping.physicalName\\\": \\\"col-amount\\\"}}]}, \\\"nullable\\\": true, \\\"metadata\\\": {\\\"delta.columnMapping.id\\\": 3, \\\"delta.columnMapping.physicalName\\\": \\\"col-details\\\"}}]}\",\"partitionColumns\":[\"region\"],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"4\"}}}",
+      "tableId": "provider",
+      "options": {
+        "fieldPointer": "/fields/1",
+        "name": "area",
+        "uninterpretedReferences": "preserve-and-report"
+      },
+      "sourceSha256": "0eeac9731fbbee8b50b73069f84acc44c6e3e7cdf7e3eb915a6431dc3f88d34a",
+      "error": {
+        "code": "DELTA_RENAME_CONTEXT",
+        "message": "[{\"code\":\"DELTA_FORMAT_UNVERIFIED\",\"path\":\"/metaData/format/provider\",\"message\":\"Storage provider is outside the verified examples\",\"severity\":\"warning\"}]",
+        "path": ""
+      }
+    }
+  ]
+}

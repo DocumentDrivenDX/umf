@@ -103,17 +103,41 @@ Metadata-dependent details link to their source overview when it is not yet load
 
 ## Build
 
-The 2.0.1 producer uses Bun 1.4.2. Build an isolated
-package directory and pack it with:
+The current-source default producer builds the required comparison WASM from
+the repository's pinned Rust sources, then bundles it with the browser package:
 
 ```sh
-bun docs/helix/05-deploy/schema-browser/build.ts /tmp/schema-browser-a
-cd /tmp/schema-browser-a
-npm pack
+bun run build:schema-browser /tmp/schema-browser-a
+```
+
+It uses Bun and requires the preinstalled Rust 1.90.0 toolchain with its
+`wasm32-unknown-unknown` target, and the preinstalled `wasm-bindgen 0.2.100`
+CLI on `PATH`. The build is offline and does not install tools or targets.
+Generated Cargo output stays under `target/schema-browser-rust-wasm/`; the
+build verifies tool versions, generated files and the WASM header before
+replacing the destination. Package provenance records hashes for the build
+wrapper, Cargo manifests/lockfile, WASM binding and core Rust sources. The
+loader and asset ship beside the package entrypoint and in `assets/`. Both the
+public API module and browser renderer use top-level-await initialization;
+their comparison function remains synchronous once the module import resolves.
+Missing or invalid assets reject module loading without a TypeScript fallback.
+
+The lower-level `build.ts` is an implementation detail and requires the
+wrapper-produced WASM output. Normal consumers should use the command above;
+there is no caller-provided WASM package override.
+
+Build an isolated package directory and pack it with:
+
+```sh
+npm pack /tmp/schema-browser-a
 ```
 
 The reusable package contains no sample dataset archives; users supply their
 catalog and original assets.
+
+The released 2.0.1 producer used Bun 1.4.2 and its own committed `build.ts`
+entrypoint. Reproduce that release from its source commit; the current-source
+Rust build instructions above describe the later worktree.
 
 ## npm release publication
 
@@ -171,12 +195,11 @@ token is stored. The private `@umf/core` development package and its GitHub SDK
 archive are not part of this publication.
 
 To reproduce a candidate, build it twice into separate output directories with
-Bun 1.4.2, then compare `release-manifest.json` and `asset-manifest.json` byte
-for byte. Each output's `provenance.json` records hashes for the actual source,
-model, schema, lockfile and renderer inputs; it does not require a fixed source
-commit hash in this documentation. Package the reviewed output with `npm pack`
-and verify the archive against its `SHA256SUMS` and release manifest. This proves
-reproducibility of that source candidate, not publication or a consumer pin.
+Bun 1.4.2, then compare `release-manifest.json`, `asset-manifest.json` and
+`provenance.json` byte for byte. Package the reviewed output with `npm pack`
+and verify the archive against its `SHA256SUMS` and release manifest. This
+proves reproducibility of that source candidate, not publication or a consumer
+pin.
 
 ## License
 

@@ -2,13 +2,12 @@
 """Value-graph and inventory boundaries for generated codecs, without I/O."""
 
 from collections.abc import Sequence
-from datetime import UTC
 from typing import Annotated, Any, TypedDict, TypeVar, cast, get_args, get_origin
 
 from pydantic import BaseModel, ValidationError
 
 from .types import MISSING, CodecError, StrictModel
-from .values import validate_instant
+from .values import normalize_instant
 
 M = TypeVar("M", bound=BaseModel)
 
@@ -167,7 +166,7 @@ def _convert(value: object, field: CodecField) -> object:
     if value is None or value is MISSING:
         return value
     if field["kind"] == "instant":
-        return validate_instant(value).astimezone(UTC)
+        return normalize_instant(value)
     if field["kind"] in ("array", "map"):
         child = field["item"]
         if child is None:

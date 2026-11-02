@@ -4,17 +4,16 @@ import {Type} from 'avsc/etc/browser/avsc-types';
 import {deriveAvroFields} from './metadata';
 export type {AvroFieldMetadata} from './metadata';
 import manifest from '../../../spec/extensions/avro/package.json';
-export {default as avroNativeSchema} from '../../../spec/extensions/avro/native-schema.schema.json';
+import {AVRO_EXTENSION, avroPackage} from './package';
+export {AVRO_EXTENSION, avroPackage, avroNativeSchema} from './package';
 import {createValidator} from '../../validation/schema';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson,LIMITS} from '../../model/json';
 import {readJsonValue} from '../../model/serialization';
 import {editExtension} from '../../model/document';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage,type Validation} from '../../model/types';
+import {UmfError,pointer,type Document,type Json,type Diagnostic,type Validation} from '../../model/types';
 import {parseNativeJson,renderTree,treeChild,nativePointer,cloneTree,type NativeJson} from '../json-schema/tree';
-export const AVRO_EXTENSION='umf.avro';
-export const avroPackage=manifest as unknown as ExtensionPackage;
 export interface AvroPayload {version:'1.12.0';root:NativeJson;dependencies?:{id:string;root:NativeJson}[];}
 const structure=createValidator().compile(manifest.schema);
 function representation(node:NativeJson,path:string,out:Diagnostic[]){

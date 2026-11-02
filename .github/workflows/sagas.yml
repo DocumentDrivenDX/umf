@@ -79,7 +79,7 @@ jobs:
         if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
         run: |
           cargo test --locked -p umf-codegen saga
-          cargo build --locked --release -p umf-core-node -p umf-cli
+          cargo build --locked --release -p umf-core-node -p umf-cli --features umf-core-node/native-postgresql,umf-cli/native-postgresql
           cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
           bun run typecheck
           bun test tests/saga/registry-resources.test.mjs tests/metamodel/accounted-provenance.test.ts

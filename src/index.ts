@@ -285,7 +285,8 @@ export * from './core-ideals/nullability-avro-projection';
 export * from './core-ideals/nullability-parquet';
 export * from './core-ideals/nullability-parquet-projection';
 
-export * from './model/cardinality';
+export {coreCardinalityOperationV4Schema,coreCardinalityOperationSchema,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration} from './model/cardinality';
+export type {CoreCardinalityIdentity,CoreCardinalityMeaning,CoreCardinalityInspection,CoreCardinalityRequest,CoreCardinalityDeclaration} from './model/cardinality';
 
 export * from './core-ideals/cardinality-tablespec';
 export * from './core-ideals/cardinality-tablespec-projection';
@@ -519,3 +520,5 @@ export * from './table-authoring/row-scope';
 
 export * from './extensions/actions/saga';
 export {createSagaResources} from './extensions/actions/saga-resources';
+
+export type {TypeSpecCompilerReport,TypeSpecGraphReport,TypeSpecJsonSchemaEmission} from './adapters/typespec/report-types';

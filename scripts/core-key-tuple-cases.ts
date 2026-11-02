@@ -22,6 +22,7 @@ export function tupleCases(){
  add('decimal-zero',dec,{decimalToken:'-0.00'},'554d464b310103020230');
  add('decimal-precision-boundary',dec,{decimalToken:'999.99'},'554d464b31010306023939393939');
  add('decimal-precision-overflow',dec,{decimalToken:'1000'});
+ add('decimal-precision-before-expansion-limit',dec,{decimalToken:'1e4000000'});
  add('decimal-negative-exponent-rounding',dec,{decimalToken:'1e-3'});
  add('unpaired-high-surrogate',str,{string:'\ud800'});
  add('unpaired-low-surrogate',str,{string:'\udc00'});
@@ -39,6 +40,7 @@ export function tupleCases(){
  add('extra-wrapper',str,{string:'x',future:true});
  add('wide-metadata-no-power-allocation',{...int,facets:{integerWidth:{bits:9007199254740991,signed:true}}},{integerToken:'1'},'554d464b3101020131');
  add('signed-minimum',{...int,facets:{integerWidth:{bits:8,signed:true}}},{integerToken:'-128'},'554d464b310102042d313238');
+ add('signed-one-bit-zero',{...int,facets:{integerWidth:{bits:1,signed:true}}},{integerToken:'0'},'554d464b3101020130');
  add('signed-maximum',{...int,facets:{integerWidth:{bits:8,signed:true}}},{integerToken:'127'},'554d464b31010203313237');
  for(const token of ['128','-129'])add('signed-overflow-'+token,{...int,facets:{integerWidth:{bits:8,signed:true}}},{integerToken:token});
  add('unsigned-max',{...int,facets:{integerWidth:{bits:8,signed:false}}},{integerToken:'255'},'554d464b31010203323535');

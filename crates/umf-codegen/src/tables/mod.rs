@@ -16,6 +16,41 @@ use umf_core::{
 };
 
 impl CodegenEngine<'_> {
+    /// Inspect one table lifecycle payload with the native module context supplied by Registry.
+    /// This avoids revalidating a whole document or filtering unrelated diagnostics in the host.
+    pub fn inspect_table_lifecycle_payload(
+        &self,
+        payload: &Value,
+        document: &Value,
+        path: &Utf16,
+        scope: &str,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let context = SemanticContext {
+            document: umf_core::copy_json(document, ctx)?,
+            source_document: None,
+            source_payload: None,
+            path: path.clone(),
+            scope: scope.to_owned(),
+        };
+        let diagnostics = inspect_module_semantics(payload, &context, self.resources(), ctx)?;
+        ctx.charge_work(diagnostics.len().saturating_mul(8), Utf16::default())?;
+        let mut values = Vec::with_capacity(diagnostics.len());
+        for diagnostic in &diagnostics {
+            ctx.charge_work(
+                diagnostic
+                    .code
+                    .len()
+                    .saturating_add(diagnostic.path.len())
+                    .saturating_add(diagnostic.message.len())
+                    .saturating_add(8),
+                Utf16::default(),
+            )?;
+            values.push(diagnostic_value(diagnostic));
+        }
+        Ok(Value::Array(values))
+    }
+
     /// Admit, structurally validate, and inspect table lifecycle declarations.
     /// The returned value is the stable wire-shaped inspection result used by
     /// generators and review tools; it does not qualify native execution.
@@ -302,6 +337,8 @@ fn inspect_module_semantics(
         &mut out,
         resources.operation_compiled(),
         resources.operation_schema(),
+        resources.row_expression_operation_compiled(),
+        resources.row_expression_operation_schema(),
         resources.tables_schema(),
         &mut nodes,
         resources.engine().policy(),
@@ -985,6 +1022,8 @@ fn inspect_operations(
     out: &mut Vec<Diagnostic>,
     compiled: &umf_core::schema::CompiledSchema,
     operation_schema: &Value,
+    row_expression_operation_compiled: &umf_core::schema::CompiledSchema,
+    row_expression_operation_schema: &Value,
     tables_schema: &Value,
     rule_nodes: &mut usize,
     policy: &umf_core::literal_policy::PreparedPolicy,
@@ -996,6 +1035,42 @@ fn inspect_operations(
         ctx.charge_work(1, Utf16::default())?;
         let p = append_path(&append_path(path, "commands"), &i.to_string());
         let version = string_member(command, "version");
+        if version == Some(&Utf16::from("umf.table-operation/0.2")) {
+            // G02 is a closed operation profile with its own schema and semantic
+            // interpreter. Admit its shape before interpreting its expression.
+            let shape_errors = row_expression_operation_compiled.validate(command, ctx)?;
+            if !shape_errors.is_empty() {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_SHAPE",
+                    &p,
+                    "Invalid typed row-expression operation shape",
+                    Severity::Error,
+                ));
+                continue;
+            }
+            inspect_unknown(
+                command,
+                &[row_expression_operation_schema, tables_schema],
+                row_expression_operation_schema,
+                &p,
+                out,
+                0,
+                0,
+                ctx,
+            )?;
+            let Some(id) = string_member(command, "id") else {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_SHAPE",
+                    &p,
+                    "Invalid typed row-expression operation shape",
+                    Severity::Error,
+                ));
+                continue;
+            };
+            admitted_ids.push((i, id.clone()));
+            inspect_row_expression_operation(command, payload, document, &p, policy, ctx, out)?;
+            continue;
+        }
         if version != Some(&Utf16::from("umf.table-operation/0.1")) {
             out.push_capped(core_diag(
                 "TABLES_COMMAND_PENDING",
@@ -1049,6 +1124,1086 @@ fn inspect_operations(
                 "TABLES_DUPLICATE",
                 &item_path,
                 "Duplicate operation ID",
+                Severity::Error,
+            ));
+        }
+    }
+    Ok(())
+}
+
+#[derive(Clone)]
+struct RowShape {
+    scalar: Option<String>,
+    nullable: bool,
+    native: String,
+    integral: usize,
+    fractional: usize,
+    statically_integral: bool,
+}
+fn row_native(native: &Value) -> String {
+    match string_member(native, "kind")
+        .and_then(|v| v.to_utf8().ok())
+        .as_deref()
+    {
+        Some("bool" | "boolean") => "boolean".into(),
+        Some("int2" | "int4" | "int8") => "integer".into(),
+        Some("numeric") => "decimal".into(),
+        Some("text" | "varchar") => "string".into(),
+        Some("timestamptz") => "instant".into(),
+        Some(kind) => kind.into(),
+        None => String::new(),
+    }
+}
+fn row_numeric_bound(native: &Value) -> Option<(usize, usize)> {
+    match string_member(native, "kind")
+        .and_then(|v| v.to_utf8().ok())
+        .as_deref()
+    {
+        Some("int2") => Some((5, 0)),
+        Some("int4") => Some((10, 0)),
+        Some("int8") => Some((19, 0)),
+        Some("numeric") => {
+            let precision = number_member(native, "precision")?;
+            let scale = number_member(native, "scale")?;
+            if precision.fract() != 0.0
+                || scale.fract() != 0.0
+                || precision < 1.0
+                || precision > 1000.0
+                || scale < 0.0
+                || scale > precision
+            {
+                return None;
+            }
+            Some(((precision - scale) as usize, scale as usize))
+        }
+        _ => None,
+    }
+}
+fn row_literal_utf8_bytes(value: &Value) -> Option<usize> {
+    let fields = object_members(value)?;
+    if fields.len() != 1 {
+        return None;
+    }
+    match &fields[0].1 {
+        Value::String(text) => text.to_utf8().ok().map(|text| text.len()),
+        _ => Some(0),
+    }
+}
+fn row_literal_text_valid(value: &Value) -> bool {
+    let Some(fields) = object_members(value) else {
+        return true;
+    };
+    fields.len() == 1
+        && match &fields[0].1 {
+            Value::String(text) => !text.units().contains(&0) && text.to_utf8().is_ok(),
+            _ => true,
+        }
+}
+fn row_literal_shape(value: &Value) -> Option<RowShape> {
+    if value == &Value::Null {
+        return Some(RowShape {
+            scalar: None,
+            nullable: true,
+            native: "null".into(),
+            integral: 0,
+            fractional: 0,
+            statically_integral: true,
+        });
+    }
+    let fields = object_members(value)?;
+    if fields.len() != 1 {
+        return None;
+    }
+    let (key, inner) = &fields[0];
+    let kind = key.to_utf8().ok()?;
+    let (scalar, native) = match kind.as_str() {
+        "boolean" if matches!(inner, Value::Bool(_)) => ("boolean", "boolean"),
+        "string" if matches!(inner, Value::String(_)) => ("string", "string"),
+        "date" if matches!(inner, Value::String(_)) => ("date", "date"),
+        "timestamp" if matches!(inner, Value::String(_)) => ("timestamp", "instant"),
+        "uuid" if matches!(inner, Value::String(_)) => ("uuid", "uuid"),
+        "integerToken" | "decimalToken" if matches!(inner, Value::String(_)) => {
+            let Value::String(token) = inner else {
+                return None;
+            };
+            let token = token.to_utf8().ok()?;
+            let token = token.as_str();
+            let unsigned = token.strip_prefix('-').unwrap_or(token);
+            let (mantissa, exponent) =
+                if let Some(index) = unsigned.find(|ch| ch == 'e' || ch == 'E') {
+                    (&unsigned[..index], &unsigned[index + 1..])
+                } else {
+                    (unsigned, "0")
+                };
+            let exponent = exponent.parse::<i32>().ok()?;
+            let fraction = mantissa.split_once('.').map_or(0, |(_, tail)| tail.len());
+            let mut digits = mantissa
+                .chars()
+                .filter(|c| c.is_ascii_digit())
+                .collect::<String>();
+            let nonzero = digits.chars().any(|c| c != '0');
+            let mut scale = (fraction as i32).saturating_sub(exponent);
+            while digits.len() > 1 && digits.ends_with('0') {
+                digits.pop();
+                scale = scale.saturating_sub(1);
+            }
+            let digit_count = digits.trim_start_matches('0').len().max(1);
+            let integral = if !nonzero {
+                1
+            } else if scale < 0 {
+                digit_count.saturating_add(scale.unsigned_abs() as usize)
+            } else {
+                digit_count.saturating_sub(scale as usize)
+            };
+            let fractional = if !nonzero {
+                0
+            } else {
+                (scale.max(0) as usize).min(1001)
+            };
+            return Some(RowShape {
+                scalar: Some(
+                    (if kind == "integerToken" {
+                        "integer"
+                    } else {
+                        "decimal"
+                    })
+                    .into(),
+                ),
+                nullable: false,
+                native: (if kind == "integerToken" {
+                    "integer"
+                } else {
+                    "decimal"
+                })
+                .into(),
+                integral,
+                fractional,
+                statically_integral: fractional == 0,
+            });
+        }
+        _ => return None,
+    };
+    Some(RowShape {
+        scalar: Some(scalar.into()),
+        nullable: false,
+        native: native.into(),
+        integral: 0,
+        fractional: 0,
+        statically_integral: false,
+    })
+}
+fn row_literal_field(target: &Value, shape: &RowShape) -> Value {
+    let mut fields = object_members(target)
+        .unwrap_or(&[])
+        .iter()
+        .filter(|(key, _)| {
+            key != &Utf16::from("allowedValues")
+                && key != &Utf16::from("facets")
+                && key != &Utf16::from("scalarType")
+        })
+        .map(|(key, value)| (key.clone(), value.clone()))
+        .collect::<Vec<_>>();
+    if let Some(scalar) = shape.scalar.as_ref() {
+        fields.push((Utf16::from("scalarType"), Value::string_utf8(scalar)));
+    }
+    let mut facets = Vec::new();
+    if shape.scalar.as_deref() == Some("decimal") {
+        facets.push((
+            Utf16::from("precision"),
+            Value::Number((shape.integral + shape.fractional).max(1) as f64),
+        ));
+        facets.push((Utf16::from("scale"), Value::Number(shape.fractional as f64)));
+    }
+    fields.push((Utf16::from("facets"), Value::Object(facets)));
+    Value::Object(fields)
+}
+fn row_compatible(left: &RowShape, right: &RowShape) -> bool {
+    if left.scalar.is_none() || right.scalar.is_none() {
+        return true;
+    }
+    let numeric = |shape: &RowShape| matches!(shape.scalar.as_deref(), Some("integer" | "decimal"));
+    if numeric(left) && numeric(right) {
+        return true;
+    }
+    if left.scalar != right.scalar {
+        return false;
+    }
+    if matches!(
+        left.native.as_str(),
+        "boolean" | "date" | "instant" | "uuid"
+    ) || matches!(
+        right.native.as_str(),
+        "boolean" | "date" | "instant" | "uuid"
+    ) {
+        left.native == right.native
+    } else {
+        left.scalar.as_deref() == Some("string") || left.native == right.native
+    }
+}
+fn inspect_row_predicate(
+    node: &Value,
+    table: &Value,
+    document: &Value,
+    target: &Value,
+    path: &Utf16,
+    depth: usize,
+    nodes: &mut usize,
+    policy: &umf_core::literal_policy::PreparedPolicy,
+    ctx: &mut Context<'_>,
+    out: &mut Vec<Diagnostic>,
+) -> Result<(), EngineError> {
+    *nodes = nodes.saturating_add(1);
+    ctx.charge_work(1, path.clone())?;
+    if *nodes > 256 || depth > 16 {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_CAPACITY",
+            path,
+            "Row expression exceeds its node or depth limit",
+            Severity::Error,
+        ));
+        return Ok(());
+    }
+    let op = string_member(node, "op")
+        .and_then(|v| v.to_utf8().ok())
+        .unwrap_or_default();
+    if op == "all" {
+        return Ok(());
+    }
+    if op == "and" || op == "or" {
+        for (i, child) in array_items(member(node, "args").unwrap_or(&Value::Null))
+            .unwrap_or(&[])
+            .iter()
+            .enumerate()
+        {
+            inspect_row_predicate(
+                child,
+                table,
+                document,
+                target,
+                &append_path(&append_path(path, "args"), &i.to_string()),
+                depth + 1,
+                nodes,
+                policy,
+                ctx,
+                out,
+            )?;
+        }
+        return Ok(());
+    }
+    if op == "not" {
+        return inspect_row_predicate(
+            member(node, "arg").unwrap_or(&Value::Null),
+            table,
+            document,
+            target,
+            &append_path(path, "arg"),
+            depth + 1,
+            nodes,
+            policy,
+            ctx,
+            out,
+        );
+    }
+    let field_ref = member(node, "field").unwrap_or(&Value::Null);
+    let field_path = append_path(path, "field");
+    let Some(column) = array_items(member(table, "columns").unwrap_or(&Value::Null))
+        .unwrap_or(&[])
+        .iter()
+        .find(|column| {
+            member(column, "field").is_some_and(|reference| refs_equal(reference, field_ref))
+        })
+    else {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &field_path,
+            "Predicate input Field must be mapped by the selected table",
+            Severity::Error,
+        ));
+        return Ok(());
+    };
+    let Some(field) = resolve_ref(document, field_ref) else {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &field_path,
+            "Predicate input Field is missing",
+            Severity::Error,
+        ));
+        return Ok(());
+    };
+    if refs_equal(field_ref, target) {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &field_path,
+            "Expression cannot read its assignment target",
+            Severity::Error,
+        ));
+    }
+    if member(column, "generated") == Some(&Value::Bool(true))
+        || array_items(member(field, "semanticTypes").unwrap_or(&Value::Null))
+            .is_some_and(|a| !a.is_empty())
+        || object_members(member(field, "extensions").unwrap_or(&Value::Null))
+            .is_some_and(|a| !a.is_empty())
+    {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &field_path,
+            "Generated or separately interpreted input meaning is unsupported",
+            Severity::Error,
+        ));
+    }
+    if op == "isNull" {
+        return Ok(());
+    }
+    let values: Vec<&Value> = if op == "in" {
+        array_items(member(node, "values").unwrap_or(&Value::Null))
+            .unwrap_or(&[])
+            .iter()
+            .collect()
+    } else {
+        vec![member(node, "value").unwrap_or(&Value::Null)]
+    };
+    let scalar = string_member(field, "scalarType").and_then(|v| v.to_utf8().ok());
+    let native = row_native(member(column, "nativeType").unwrap_or(&Value::Null));
+    for (index, wrapper) in values.into_iter().enumerate() {
+        *nodes = nodes.saturating_add(1);
+        ctx.charge_work(1, path.clone())?;
+        let value = member(wrapper, "value").unwrap_or(&Value::Null);
+        if row_literal_utf8_bytes(value).is_some_and(|bytes| bytes > 1_048_576) {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_CAPACITY",
+                path,
+                "Literal exceeds its byte limit",
+                Severity::Error,
+            ));
+            continue;
+        }
+        if !row_literal_text_valid(value) {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_SHAPE",
+                path,
+                "Text literal contains NUL or invalid UTF-16",
+                Severity::Error,
+            ));
+            continue;
+        }
+        let Some(shape) = row_literal_shape(value) else {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_SHAPE",
+                path,
+                "Predicate operands must be finite literal values",
+                Severity::Error,
+            ));
+            continue;
+        };
+        let wrapper_kind = string_member(wrapper, "kind");
+        if wrapper_kind != Some(&Utf16::from("literal")) {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_SOURCE",
+                path,
+                "Predicate values must be literal-only wrappers",
+                Severity::Error,
+            ));
+            continue;
+        }
+        if shape.scalar.is_some() && shape.scalar != scalar {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_DOMAIN",
+                path,
+                "Predicate literal carrier must match its input Field",
+                Severity::Error,
+            ));
+        }
+        if matches!(
+            shape.native.as_str(),
+            "boolean" | "date" | "instant" | "uuid"
+        ) && shape.native != native
+        {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_DOMAIN",
+                path,
+                "Predicate literal carrier must match its input Field",
+                Severity::Error,
+            ));
+        }
+        let item_path = if op == "in" {
+            append_path(&append_path(path, "values"), &index.to_string())
+        } else {
+            append_path(path, "value")
+        };
+        let errors = literal_errors(document, field, value, true, policy, ctx)?;
+        if let Some(first) = errors.first() {
+            out.push_capped(core_diag(
+                "TABLES_LITERAL",
+                &item_path,
+                &first.message.to_utf8().unwrap_or_default(),
+                Severity::Error,
+            ));
+        }
+    }
+    if op == "startsWith" && scalar.as_deref() != Some("string")
+        || matches!(op.as_str(), "lt" | "le" | "gt" | "ge")
+            && !matches!(
+                scalar.as_deref(),
+                Some("integer" | "decimal" | "string" | "date" | "timestamp")
+            )
+    {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_DOMAIN",
+            path,
+            "Predicate operator is not defined for this input carrier",
+            Severity::Error,
+        ));
+    }
+    Ok(())
+}
+
+fn row_expression_infer(
+    node: &Value,
+    table: &Value,
+    document: &Value,
+    target: &Value,
+    target_field: &Value,
+    path: &Utf16,
+    depth: usize,
+    nodes: &mut usize,
+    policy: &umf_core::literal_policy::PreparedPolicy,
+    ctx: &mut Context<'_>,
+    out: &mut Vec<Diagnostic>,
+) -> Result<Option<RowShape>, EngineError> {
+    *nodes = nodes.saturating_add(1);
+    ctx.charge_work(1, path.clone())?;
+    if *nodes > 256 || depth > 16 {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_CAPACITY",
+            path,
+            "Row expression exceeds its node or depth limit",
+            Severity::Error,
+        ));
+        return Ok(None);
+    }
+    let op = string_member(node, "op")
+        .and_then(|v| v.to_utf8().ok())
+        .unwrap_or_default();
+    match op.as_str() {
+        "field" => {
+            let reference = member(node, "field").unwrap_or(&Value::Null);
+            let Some(column) = array_items(member(table, "columns").unwrap_or(&Value::Null))
+                .unwrap_or(&[])
+                .iter()
+                .find(|column| {
+                    member(column, "field").is_some_and(|item| refs_equal(item, reference))
+                })
+            else {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_SOURCE",
+                    &append_path(path, "field"),
+                    "Input Field must be mapped by the selected table",
+                    Severity::Error,
+                ));
+                return Ok(None);
+            };
+            let Some(field) = resolve_ref(document, reference) else {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_SOURCE",
+                    &append_path(path, "field"),
+                    "Input Field is missing",
+                    Severity::Error,
+                ));
+                return Ok(None);
+            };
+            if refs_equal(reference, target) {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_SOURCE",
+                    &append_path(path, "field"),
+                    "Expression cannot read its assignment target",
+                    Severity::Error,
+                ));
+            }
+            if member(column, "generated") == Some(&Value::Bool(true))
+                || array_items(member(field, "semanticTypes").unwrap_or(&Value::Null))
+                    .is_some_and(|a| !a.is_empty())
+                || object_members(member(field, "extensions").unwrap_or(&Value::Null))
+                    .is_some_and(|a| !a.is_empty())
+            {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_SOURCE",
+                    path,
+                    "Generated or separately interpreted input meaning is unsupported",
+                    Severity::Error,
+                ));
+            }
+            let scalar = string_member(field, "scalarType").and_then(|v| v.to_utf8().ok());
+            let allowed = matches!(
+                scalar.as_deref(),
+                Some("boolean" | "integer" | "decimal" | "string" | "date" | "timestamp" | "uuid")
+            );
+            let native =
+                string_member(member(column, "nativeType").unwrap_or(&Value::Null), "kind")
+                    .and_then(|v| v.to_utf8().ok())
+                    .unwrap_or_default();
+            if !allowed || matches!(native.as_str(), "float4" | "float8" | "char" | "bytea") {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_DOMAIN",
+                    path,
+                    "Input carrier is outside the finite row-expression profile",
+                    Severity::Error,
+                ));
+            }
+            let native_type = member(column, "nativeType").unwrap_or(&Value::Null);
+            let bounds = row_numeric_bound(native_type);
+            if matches!(scalar.as_deref(), Some("integer" | "decimal"))
+                && string_member(native_type, "kind") == Some(&Utf16::from("numeric"))
+                && bounds.is_none()
+            {
+                out.push_capped(core_diag("TABLES_OPERATION_DOMAIN",path,"Numeric source requires explicit finite precision and nonnegative scale no greater than precision",Severity::Error));
+            }
+            let (integral, fractional) = bounds.unwrap_or((0, 0));
+            Ok(Some(RowShape {
+                scalar,
+                nullable: string_member(field, "nullability") != Some(&Utf16::from("required")),
+                native: row_native(member(column, "nativeType").unwrap_or(&Value::Null)),
+                integral,
+                fractional,
+                statically_integral: fractional == 0,
+            }))
+        }
+        "literal" => {
+            let literal = member(node, "value").unwrap_or(&Value::Null);
+            if row_literal_utf8_bytes(literal).is_some_and(|bytes| bytes > 1_048_576) {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_CAPACITY",
+                    path,
+                    "Literal exceeds its byte limit",
+                    Severity::Error,
+                ));
+                return Ok(None);
+            }
+            if !row_literal_text_valid(literal) {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_SHAPE",
+                    path,
+                    "Text literal contains NUL or invalid UTF-16",
+                    Severity::Error,
+                ));
+                return Ok(None);
+            }
+            let Some(shape) = row_literal_shape(literal) else {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_SHAPE",
+                    path,
+                    "Literal wrapper is not an admitted finite scalar",
+                    Severity::Error,
+                ));
+                return Ok(None);
+            };
+            if let Some(field_scalar) = string_member(target_field, "scalarType") {
+                if shape
+                    .scalar
+                    .as_ref()
+                    .is_some_and(|scalar| scalar != &field_scalar.to_utf8().unwrap_or_default())
+                    && !matches!(shape.scalar.as_deref(), Some("integer" | "decimal"))
+                {
+                    out.push_capped(core_diag(
+                        "TABLES_OPERATION_DOMAIN",
+                        path,
+                        "Literal carrier is incompatible with its target Field",
+                        Severity::Error,
+                    ));
+                }
+                if !(shape.scalar.as_deref() == Some("decimal")
+                    && field_scalar == &Utf16::from("integer"))
+                {
+                    let literal_field = row_literal_field(target_field, &shape);
+                    let errors =
+                        literal_errors(document, &literal_field, literal, true, policy, ctx)?;
+                    if let Some(first) = errors.first() {
+                        out.push_capped(core_diag(
+                            "TABLES_LITERAL",
+                            path,
+                            &first.message.to_utf8().unwrap_or_default(),
+                            Severity::Error,
+                        ));
+                    }
+                }
+            }
+            Ok(Some(shape))
+        }
+        "coalesce" | "concat" => {
+            let args = array_items(member(node, "args").unwrap_or(&Value::Null)).unwrap_or(&[]);
+            let mut shapes = Vec::new();
+            for (index, arg) in args.iter().enumerate() {
+                if let Some(shape) = row_expression_infer(
+                    arg,
+                    table,
+                    document,
+                    target,
+                    target_field,
+                    &append_path(&append_path(path, "args"), &index.to_string()),
+                    depth + 1,
+                    nodes,
+                    policy,
+                    ctx,
+                    out,
+                )? {
+                    shapes.push(shape);
+                }
+            }
+            if shapes.len() != args.len() {
+                return Ok(None);
+            }
+            if op == "concat" {
+                if shapes.iter().any(|shape| {
+                    shape.scalar.is_some() && shape.scalar.as_deref() != Some("string")
+                }) {
+                    out.push_capped(core_diag(
+                        "TABLES_OPERATION_DOMAIN",
+                        path,
+                        "Concatenation operands must be text or NULL",
+                        Severity::Error,
+                    ));
+                }
+                return Ok(Some(RowShape {
+                    scalar: Some("string".into()),
+                    nullable: shapes.iter().any(|s| s.nullable),
+                    native: "string".into(),
+                    integral: 0,
+                    fractional: 0,
+                    statically_integral: false,
+                }));
+            }
+            let nonnull = shapes
+                .iter()
+                .filter(|shape| shape.scalar.is_some())
+                .collect::<Vec<_>>();
+            let base = nonnull.first().map(|s| (*s).clone()).unwrap_or(RowShape {
+                scalar: None,
+                nullable: true,
+                native: "null".into(),
+                integral: 0,
+                fractional: 0,
+                statically_integral: true,
+            });
+            if nonnull.iter().any(|shape| !row_compatible(shape, &base)) {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_DOMAIN",
+                    path,
+                    "Coalesce operands require compatible logical and native carriers",
+                    Severity::Error,
+                ));
+            }
+            let decimal = nonnull
+                .iter()
+                .any(|s| s.scalar.as_deref() == Some("decimal"));
+            Ok(Some(RowShape {
+                scalar: if decimal {
+                    Some("decimal".into())
+                } else {
+                    base.scalar
+                },
+                nullable: shapes.iter().all(|s| s.nullable),
+                native: if decimal {
+                    "decimal".into()
+                } else {
+                    base.native
+                },
+                integral: shapes.iter().map(|s| s.integral).max().unwrap_or(0),
+                fractional: shapes.iter().map(|s| s.fractional).max().unwrap_or(0),
+                statically_integral: shapes.iter().all(|s| s.statically_integral),
+            }))
+        }
+        "add" | "subtract" | "multiply" => {
+            let left = row_expression_infer(
+                member(node, "left").unwrap_or(&Value::Null),
+                table,
+                document,
+                target,
+                target_field,
+                &append_path(path, "left"),
+                depth + 1,
+                nodes,
+                policy,
+                ctx,
+                out,
+            )?;
+            let right = row_expression_infer(
+                member(node, "right").unwrap_or(&Value::Null),
+                table,
+                document,
+                target,
+                target_field,
+                &append_path(path, "right"),
+                depth + 1,
+                nodes,
+                policy,
+                ctx,
+                out,
+            )?;
+            let (Some(left), Some(right)) = (left, right) else {
+                return Ok(None);
+            };
+            let numeric =
+                |shape: &RowShape| matches!(shape.scalar.as_deref(), Some("integer" | "decimal"));
+            if (left.scalar.is_some() && !numeric(&left))
+                || (right.scalar.is_some() && !numeric(&right))
+            {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_DOMAIN",
+                    path,
+                    "Arithmetic operands must be exact integer or decimal values",
+                    Severity::Error,
+                ));
+            }
+            if left.scalar.is_none() || right.scalar.is_none() {
+                if left.scalar.is_none() && right.scalar.is_none() {
+                    return Ok(Some(RowShape {
+                        scalar: Some("decimal".into()),
+                        nullable: true,
+                        native: "decimal".into(),
+                        integral: 0,
+                        fractional: 0,
+                        statically_integral: true,
+                    }));
+                }
+                let mut base = if left.scalar.is_none() { right } else { left };
+                base.nullable = true;
+                return Ok(Some(base));
+            }
+            let integral = if op == "multiply" {
+                left.integral.saturating_add(right.integral)
+            } else {
+                left.integral.max(right.integral).saturating_add(1)
+            };
+            let fractional = if op == "multiply" {
+                left.fractional.saturating_add(right.fractional)
+            } else {
+                left.fractional.max(right.fractional)
+            };
+            if integral.saturating_add(fractional) > 1000 {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_CAPACITY",
+                    path,
+                    "Numeric result exceeds the 1000 digit inference limit",
+                    Severity::Error,
+                ));
+            }
+            let decimal = left.scalar.as_deref() == Some("decimal")
+                || right.scalar.as_deref() == Some("decimal");
+            Ok(Some(RowShape {
+                scalar: Some(if decimal { "decimal" } else { "integer" }.into()),
+                nullable: left.nullable || right.nullable,
+                native: "decimal".into(),
+                integral,
+                fractional,
+                statically_integral: left.statically_integral && right.statically_integral,
+            }))
+        }
+        "conditional" => {
+            inspect_row_predicate(
+                member(node, "when").unwrap_or(&Value::Null),
+                table,
+                document,
+                target,
+                &append_path(path, "when"),
+                depth + 1,
+                nodes,
+                policy,
+                ctx,
+                out,
+            )?;
+            let then_shape = row_expression_infer(
+                member(node, "then").unwrap_or(&Value::Null),
+                table,
+                document,
+                target,
+                target_field,
+                &append_path(path, "then"),
+                depth + 1,
+                nodes,
+                policy,
+                ctx,
+                out,
+            )?;
+            let else_shape = row_expression_infer(
+                member(node, "else").unwrap_or(&Value::Null),
+                table,
+                document,
+                target,
+                target_field,
+                &append_path(path, "else"),
+                depth + 1,
+                nodes,
+                policy,
+                ctx,
+                out,
+            )?;
+            let (Some(a), Some(b)) = (then_shape, else_shape) else {
+                return Ok(None);
+            };
+            if !row_compatible(&a, &b) {
+                out.push_capped(core_diag(
+                    "TABLES_OPERATION_DOMAIN",
+                    path,
+                    "Conditional branches require compatible logical and native carriers",
+                    Severity::Error,
+                ));
+            }
+            let decimal =
+                a.scalar.as_deref() == Some("decimal") || b.scalar.as_deref() == Some("decimal");
+            let base = if a.scalar.is_none() {
+                b.clone()
+            } else {
+                a.clone()
+            };
+            Ok(Some(RowShape {
+                scalar: if decimal {
+                    Some("decimal".into())
+                } else {
+                    base.scalar
+                },
+                nullable: a.nullable || b.nullable,
+                native: if decimal {
+                    "decimal".into()
+                } else {
+                    base.native
+                },
+                integral: a.integral.max(b.integral),
+                fractional: a.fractional.max(b.fractional),
+                statically_integral: a.statically_integral && b.statically_integral,
+            }))
+        }
+        _ => Ok(None),
+    }
+}
+fn inspect_row_expression_operation(
+    command: &Value,
+    payload: &Value,
+    document: &Value,
+    path: &Utf16,
+    policy: &umf_core::literal_policy::PreparedPolicy,
+    ctx: &mut Context<'_>,
+    out: &mut Vec<Diagnostic>,
+) -> Result<(), EngineError> {
+    let body = member(command, "body").unwrap_or(&Value::Null);
+    let table_id = string_member(body, "table");
+    let tables = array_items(member(payload, "tables").unwrap_or(&Value::Null)).unwrap_or(&[]);
+    ctx.charge_work(tables.len(), path.clone())?;
+    let Some(table) = tables
+        .iter()
+        .find(|table| string_member(table, "id") == table_id)
+    else {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &append_path(&append_path(path, "body"), "table"),
+            "Operation requires a table in its owning module",
+            Severity::Error,
+        ));
+        return Ok(());
+    };
+    let assignment = &array_items(member(body, "values").unwrap_or(&Value::Null)).unwrap_or(&[])[0];
+    let target = member(assignment, "field").unwrap_or(&Value::Null);
+    let target_path = append_path(
+        &append_path(&append_path(&append_path(path, "body"), "values"), "0"),
+        "field",
+    );
+    let columns = array_items(member(table, "columns").unwrap_or(&Value::Null)).unwrap_or(&[]);
+    ctx.charge_work(columns.len(), target_path.clone())?;
+    let Some(column) = columns.iter().find(|column| {
+        member(column, "field").is_some_and(|reference| refs_equal(reference, target))
+    }) else {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &target_path,
+            "Target must be a mapped Field of the selected table",
+            Severity::Error,
+        ));
+        return Ok(());
+    };
+    let Some(target_field) = resolve_ref(document, target) else {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &target_path,
+            "Target must be a mapped Field of the selected table",
+            Severity::Error,
+        ));
+        return Ok(());
+    };
+    let where_field =
+        member(member(body, "where").unwrap_or(&Value::Null), "field").unwrap_or(&Value::Null);
+    if !refs_equal(target, where_field) {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &append_path(&append_path(&append_path(path, "body"), "where"), "field"),
+            "Only NULL rows of the assignment target may be selected",
+            Severity::Error,
+        ));
+    }
+    if !operation_mutable(table, target, column, document) {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &target_path,
+            "Row-expression target cannot be a Key or immutable Field",
+            Severity::Error,
+        ));
+    }
+    if member(column, "generated") == Some(&Value::Bool(true)) {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_SOURCE",
+            &target_path,
+            "Generated columns cannot be assigned",
+            Severity::Error,
+        ));
+    }
+    let allowed_facets = ["precision", "scale", "integerWidth", "range", "length"];
+    let facets =
+        object_members(member(target_field, "facets").unwrap_or(&Value::Null)).unwrap_or(&[]);
+    if facets.iter().any(|(key, _)| {
+        !allowed_facets
+            .iter()
+            .any(|allowed| key == &Utf16::from(*allowed))
+    }) || facets.iter().any(|(key, _)| {
+        key == &Utf16::from("range")
+            && !matches!(
+                string_member(target_field, "scalarType")
+                    .and_then(|v| v.to_utf8().ok())
+                    .as_deref(),
+                Some("integer" | "decimal")
+            )
+    }) || facets.iter().any(|(key, _)| {
+        key == &Utf16::from("integerWidth")
+            && string_member(target_field, "scalarType") != Some(&Utf16::from("integer"))
+    }) || facets.iter().any(|(key, _)| {
+        matches!(key.to_utf8().ok().as_deref(), Some("precision" | "scale"))
+            && string_member(target_field, "scalarType") != Some(&Utf16::from("decimal"))
+    }) || facets.iter().any(|(key, value)| {
+        key == &Utf16::from("length")
+            && (!matches!(
+                string_member(target_field, "scalarType")
+                    .and_then(|v| v.to_utf8().ok())
+                    .as_deref(),
+                Some("string" | "binary")
+            ) || string_member(value, "unit")
+                != Some(&Utf16::from(
+                    if string_member(target_field, "scalarType") == Some(&Utf16::from("string")) {
+                        "unicode-scalar"
+                    } else {
+                        "byte"
+                    },
+                )))
+    }) {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_DOMAIN",
+            &target_path,
+            "Target refinements are outside the qualified native domain profile",
+            Severity::Error,
+        ));
+    }
+    if member(target_field, "allowedValues").is_some()
+        && !matches!(
+            string_member(target_field, "scalarType")
+                .and_then(|v| v.to_utf8().ok())
+                .as_deref(),
+            Some("string" | "boolean" | "integer" | "decimal")
+        )
+    {
+        out.push_capped(core_diag(
+            "TABLES_OPERATION_DOMAIN",
+            &target_path,
+            "Target refinements are outside the qualified native domain profile",
+            Severity::Error,
+        ));
+    }
+    if let Some(scalar) = string_member(target_field, "scalarType").and_then(|v| v.to_utf8().ok()) {
+        if matches!(scalar.as_str(), "integer" | "decimal")
+            && string_member(member(column, "nativeType").unwrap_or(&Value::Null), "kind")
+                == Some(&Utf16::from("numeric"))
+            && row_numeric_bound(member(column, "nativeType").unwrap_or(&Value::Null)).is_none()
+        {
+            out.push_capped(core_diag("TABLES_OPERATION_DOMAIN",&target_path,"Numeric target requires explicit finite precision and nonnegative scale no greater than precision",Severity::Error));
+        }
+    }
+    let expression = member(
+        member(assignment, "value").unwrap_or(&Value::Null),
+        "expression",
+    )
+    .unwrap_or(&Value::Null);
+    let mut nodes = 0;
+    let expr_path = append_path(
+        &append_path(
+            &append_path(&append_path(&append_path(path, "body"), "values"), "0"),
+            "value",
+        ),
+        "expression",
+    );
+    let result = row_expression_infer(
+        expression,
+        table,
+        document,
+        target,
+        target_field,
+        &expr_path,
+        0,
+        &mut nodes,
+        policy,
+        ctx,
+        out,
+    )?;
+    if let Some(result) = result {
+        let scalar = string_member(target_field, "scalarType").and_then(|v| v.to_utf8().ok());
+        let result_is_null = result.scalar.is_none();
+        let target_native = row_native(member(column, "nativeType").unwrap_or(&Value::Null));
+        let numeric =
+            |shape: &RowShape| matches!(shape.scalar.as_deref(), Some("integer" | "decimal"));
+        if !result_is_null
+            && result.scalar != scalar
+            && !(matches!(scalar.as_deref(), Some("integer" | "decimal"))
+                && numeric(&result)
+                && (scalar.as_deref() == Some("decimal") || result.statically_integral))
+        {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_DOMAIN",
+                &expr_path,
+                "Expression result scalar type differs from its target Field",
+                Severity::Error,
+            ));
+        }
+        if scalar.as_deref() == Some("integer") && numeric(&result) && !result.statically_integral {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_DOMAIN",
+                &expr_path,
+                "Integer targets require a statically integral expression",
+                Severity::Error,
+            ));
+        }
+        let identity = matches!(
+            result.native.as_str(),
+            "boolean" | "date" | "instant" | "uuid"
+        );
+        if identity && result.native != target_native {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_DOMAIN",
+                &expr_path,
+                "Identity-sensitive expression carrier must match target native storage exactly",
+                Severity::Error,
+            ));
+        } else if !result_is_null
+            && result.scalar.as_deref() != Some(target_native.as_str())
+            && !(result.scalar.as_deref() == Some("integer") && target_native == "decimal")
+            && !(result.scalar.as_deref() == Some("decimal")
+                && target_native == "integer"
+                && result.statically_integral)
+        {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_DOMAIN",
+                &expr_path,
+                "Expression carrier does not match target native storage",
+                Severity::Error,
+            ));
+        }
+        if result.integral.saturating_add(result.fractional) > 1000 {
+            out.push_capped(core_diag(
+                "TABLES_OPERATION_CAPACITY",
+                &expr_path,
+                "Target numeric inference exceeds 1000 digits",
                 Severity::Error,
             ));
         }

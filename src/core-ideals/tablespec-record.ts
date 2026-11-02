@@ -3,6 +3,9 @@ import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {type CoreKindDeclaration,verifyCoreKindDeclaration} from '../model/field-kind';
+import type {TableSpecRecordClassification,TableSpecRecordRequest} from './tablespec-record-package';
+export {tableSpecRecordClassificationSchema} from './tablespec-record-package';
+export type {TableSpecRecordClassification,TableSpecRecordMapping,TableSpecRecordRequest} from './tablespec-record-package';
 import {classifyTableSpecField,type TableSpecFieldClassification} from './tablespec-field';
 import {getTableSpecTable,exportTableSpec,exportTableSpecBundle,TABLESPEC_EXTENSION} from '../adapters/tablespec';
 import {validateDocument} from '../validation/document';
@@ -11,14 +14,7 @@ import legacy from '../../spec/core/schema.json';
 
 import kinds from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/tablespec-record-classification.schema.json';
-export {default as tableSpecRecordClassificationSchema} from '../../spec/core/tablespec-record-classification.schema.json';
-export interface TableSpecRecordRequest {recordModule:string;recordId:string;mode:'strict'|'report';authors?:CoreKindDeclaration[]}
 const binding={id:'umf.tablespec.record',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Captured table defines named column members; contextual groups and execution remain native'} as const;
-type Mapping=Omit<TableSpecFieldClassification['mapping'],'kind'|'basis'>&{kind:'field'|'record';basis:'checked-native-column-membership'|'checked-native-table-members'};
-export interface TableSpecRecordClassification {
- operation:'classify-tablespec-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:TableSpecRecordRequest;binding:typeof binding;mappings:Mapping[];
- residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];
-}
 const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 /** One record and its named members; atomic across every column. Physical/context groupings stay native. */
 export function classifyTableSpecRecord(input:Document,options:TableSpecRecordRequest):TableSpecRecordClassification {

@@ -1,0 +1,716 @@
+{
+  "malformed": [
+    {
+      "id": "malformed-basic",
+      "input": "{\"cik\":",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Invalid native JSON"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Invalid native JSON"
+        }
+      }
+    },
+    {
+      "id": "duplicate-key-cik",
+      "input": "{\"cik\":\"1\",\"cik\":\"2\",\"name\":\"A\",\"filings\":{\"recent\":{\"accessionNumber\":[],\"filingDate\":[],\"reportDate\":[],\"form\":[],\"primaryDocument\":[],\"items\":[]}}}",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Map keys must be unique at line 1, column 12:\n\n{\"cik\":\"1\",\"cik\":\"2\",\"name\":\"A\",\"filings\":{\"recent\":{\"accessionNumber\":[],\"fili…\n           ^\n"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Map keys must be unique at line 1, column 12:\n\n{\"cik\":\"1\",\"cik\":\"2\",\"name\":\"A\",\"filings\":{\"recent\":{\"accessionNumber\":[],\"fili…\n           ^\n"
+        }
+      }
+    },
+    {
+      "id": "duplicate-plus-malformed",
+      "input": "{\"cik\":\"1\",\"cik\":\"2\",}",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Invalid native JSON"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Invalid native JSON"
+        }
+      }
+    },
+    {
+      "id": "duplicate-decoded-escape",
+      "input": "{\"cik\":\"1\",\"c\\u0069k\":\"2\",\"facts\":{}}",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Map keys must be unique at line 1, column 12:\n\n{\"cik\":\"1\",\"c\\u0069k\":\"2\",\"facts\":{}}\n           ^\n"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Map keys must be unique at line 1, column 12:\n\n{\"cik\":\"1\",\"c\\u0069k\":\"2\",\"facts\":{}}\n           ^\n"
+        }
+      }
+    },
+    {
+      "id": "duplicate-late-long-line",
+      "input": "{\"padding\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"cik\":\"1\",\"cik\":\"2\",\"facts\":{}}",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Map keys must be unique at line 1, column 125:\n\n…xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"cik\":\"1\",\"cik\":\"2\",\"facts\":{}}\n                                                           ^\n"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Map keys must be unique at line 1, column 125:\n\n…xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"cik\":\"1\",\"cik\":\"2\",\"facts\":{}}\n                                                           ^\n"
+        }
+      }
+    },
+    {
+      "id": "duplicate-middle-long-line",
+      "input": "{\"padding\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"cik\":\"1\",\"cik\":\"2\",\"tail\":\"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\",\"facts\":{}}",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Map keys must be unique at line 1, column 85:\n\n…xxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"cik\":\"1\",\"cik\":\"2\",\"tail\":\"yyyyyyyyyyyyyyyyyyyyy…\n                                        ^\n"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Map keys must be unique at line 1, column 85:\n\n…xxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"cik\":\"1\",\"cik\":\"2\",\"tail\":\"yyyyyyyyyyyyyyyyyyyyy…\n                                        ^\n"
+        }
+      }
+    }
+  ],
+  "surrogates": [
+    {
+      "id": "lone-high-in-company-name",
+      "operation": "submissions",
+      "input": "{\"cik\":\"1\",\"name\":\"\\ud800\",\"filings\":{\"recent\":{\"accessionNumber\":[],\"filingDate\":[],\"reportDate\":[],\"form\":[],\"primaryDocument\":[],\"items\":[]}}}",
+      "result": {
+        "ok": true,
+        "wire": "{\"companies\":[{\"id\":\"0000000001\",\"name\":\"\\ud800\",\"source_id\":\"probe\"}],\"identifiers\":[{\"id\":\"[\\\"probe\\\",\\\"cik\\\"]\",\"company_id\":\"0000000001\",\"scheme\":\"SEC-CIK\",\"native_value\":\"0000000001\",\"source_id\":\"probe\"}],\"filings\":[]}"
+      }
+    },
+    {
+      "id": "lone-surrogate-primary-doc",
+      "operation": "submissions",
+      "input": "{\"cik\":\"1\",\"name\":\"A\",\"filings\":{\"recent\":{\"accessionNumber\":[\"0000000001-24-000001\"],\"filingDate\":[\"2024-01-01\"],\"reportDate\":[null],\"form\":[\"8-K\"],\"primaryDocument\":[\"x\\ud800.html\"],\"items\":[null]}}}",
+      "result": {
+        "ok": true,
+        "wire": "{\"companies\":[{\"id\":\"0000000001\",\"name\":\"A\",\"source_id\":\"probe\"}],\"identifiers\":[{\"id\":\"[\\\"probe\\\",\\\"cik\\\"]\",\"company_id\":\"0000000001\",\"scheme\":\"SEC-CIK\",\"native_value\":\"0000000001\",\"source_id\":\"probe\"}],\"filings\":[{\"id\":\"[\\\"0000000001\\\",\\\"0000000001-24-000001\\\"]\",\"company_id\":\"0000000001\",\"snapshot_id\":\"probe\",\"accession\":\"0000000001-24-000001\",\"filing_date\":\"2024-01-01\",\"report_date\":null,\"form\":\"8-K\",\"items\":null,\"primary_document\":\"x\\ud800.html\",\"primary_url\":\"https://www.sec.gov/Archives/edgar/data/1/000000000124000001/x\\ud800.html\",\"native_path\":\"/filings/recent/0\",\"native_json\":\"{\\\"accessionNumber\\\":\\\"0000000001-24-000001\\\",\\\"filingDate\\\":\\\"2024-01-01\\\",\\\"reportDate\\\":null,\\\"form\\\":\\\"8-K\\\",\\\"primaryDocument\\\":\\\"x\\\\ud800.html\\\",\\\"items\\\":null}\"}]}"
+      }
+    },
+    {
+      "id": "lone-surrogate-taxonomy",
+      "operation": "facts",
+      "input": "{\"cik\":\"1\",\"facts\":{\"\\ud800\":{\"C\":{\"units\":{\"USD\":[{\"val\":1}]}}}}}",
+      "result": {
+        "ok": true,
+        "wire": "[{\"id\":\"[\\\"probe\\\",\\\"\\\\ud800\\\",\\\"C\\\",\\\"USD\\\",\\\"0\\\"]\",\"company_id\":\"0000000001\",\"snapshot_id\":\"probe\",\"taxonomy\":\"\\ud800\",\"concept\":\"C\",\"unit\":\"USD\",\"ordinal\":\"0\",\"value\":\"1\",\"value_state\":\"present\",\"start_date\":null,\"end_date\":null,\"accession\":null,\"filed_date\":null,\"form\":null,\"fiscal_year\":null,\"fiscal_period\":null,\"frame\":null,\"native_path\":\"/facts/\\ud800/C/units/USD/0\",\"native_json\":\"{\\\"val\\\":1}\",\"concept_json\":\"{}\"}]"
+      }
+    }
+  ],
+  "nonString": [
+    {
+      "label": "null",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "path": null,
+          "message": "null is not an object (evaluating 'text.length')"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "path": null,
+          "message": "null is not an object (evaluating 'text.length')"
+        }
+      }
+    },
+    {
+      "label": "number",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "path": null,
+          "message": "source is not a string"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "path": null,
+          "message": "source is not a string"
+        }
+      }
+    },
+    {
+      "label": "boolean",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "path": null,
+          "message": "source is not a string"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "path": null,
+          "message": "source is not a string"
+        }
+      }
+    },
+    {
+      "label": "array",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Invalid native JSON"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Invalid native JSON"
+        }
+      }
+    },
+    {
+      "label": "plain-object",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Invalid native JSON"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "path": "",
+          "message": "Invalid native JSON"
+        }
+      }
+    },
+    {
+      "label": "undefined",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "path": null,
+          "message": "undefined is not an object (evaluating 'text.length')"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "path": null,
+          "message": "undefined is not an object (evaluating 'text.length')"
+        }
+      }
+    }
+  ],
+  "sourceIds": [
+    {
+      "label": "null",
+      "value": null,
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      }
+    },
+    {
+      "label": "number",
+      "value": 7,
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      }
+    },
+    {
+      "label": "boolean",
+      "value": true,
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      }
+    },
+    {
+      "label": "object",
+      "value": {},
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      }
+    },
+    {
+      "label": "string-0",
+      "value": "",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      }
+    },
+    {
+      "label": "string-1025",
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "submissions": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      },
+      "companyFacts": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "code": null,
+          "path": null,
+          "message": "Invalid SEC source identity"
+        }
+      }
+    }
+  ],
+  "integerKeys": {
+    "input": "{\"cik\":\"1\",\"facts\":{\"z\":{\"C\":{\"units\":{\"USD\":[{\"val\":1}]}}},\"10\":{\"C\":{\"units\":{\"USD\":[{\"val\":10}]}}},\"2\":{\"C\":{\"units\":{\"USD\":[{\"val\":2}]}}}}}",
+    "result": {
+      "ok": true,
+      "value": [
+        {
+          "id": "[\"probe\",\"2\",\"C\",\"USD\",\"0\"]",
+          "company_id": "0000000001",
+          "snapshot_id": "probe",
+          "taxonomy": "2",
+          "concept": "C",
+          "unit": "USD",
+          "ordinal": "0",
+          "value": "2",
+          "value_state": "present",
+          "start_date": null,
+          "end_date": null,
+          "accession": null,
+          "filed_date": null,
+          "form": null,
+          "fiscal_year": null,
+          "fiscal_period": null,
+          "frame": null,
+          "native_path": "/facts/2/C/units/USD/0",
+          "native_json": "{\"val\":2}",
+          "concept_json": "{}"
+        },
+        {
+          "id": "[\"probe\",\"10\",\"C\",\"USD\",\"0\"]",
+          "company_id": "0000000001",
+          "snapshot_id": "probe",
+          "taxonomy": "10",
+          "concept": "C",
+          "unit": "USD",
+          "ordinal": "0",
+          "value": "10",
+          "value_state": "present",
+          "start_date": null,
+          "end_date": null,
+          "accession": null,
+          "filed_date": null,
+          "form": null,
+          "fiscal_year": null,
+          "fiscal_period": null,
+          "frame": null,
+          "native_path": "/facts/10/C/units/USD/0",
+          "native_json": "{\"val\":10}",
+          "concept_json": "{}"
+        },
+        {
+          "id": "[\"probe\",\"z\",\"C\",\"USD\",\"0\"]",
+          "company_id": "0000000001",
+          "snapshot_id": "probe",
+          "taxonomy": "z",
+          "concept": "C",
+          "unit": "USD",
+          "ordinal": "0",
+          "value": "1",
+          "value_state": "present",
+          "start_date": null,
+          "end_date": null,
+          "accession": null,
+          "filed_date": null,
+          "form": null,
+          "fiscal_year": null,
+          "fiscal_period": null,
+          "frame": null,
+          "native_path": "/facts/z/C/units/USD/0",
+          "native_json": "{\"val\":1}",
+          "concept_json": "{}"
+        }
+      ]
+    }
+  },
+  "rawSurrogate": {
+    "inputUnits": [
+      123,
+      34,
+      99,
+      105,
+      107,
+      34,
+      58,
+      34,
+      49,
+      34,
+      44,
+      34,
+      110,
+      97,
+      109,
+      101,
+      34,
+      58,
+      34,
+      55296,
+      34,
+      44,
+      34,
+      102,
+      105,
+      108,
+      105,
+      110,
+      103,
+      115,
+      34,
+      58,
+      123,
+      34,
+      114,
+      101,
+      99,
+      101,
+      110,
+      116,
+      34,
+      58,
+      123,
+      34,
+      97,
+      99,
+      99,
+      101,
+      115,
+      115,
+      105,
+      111,
+      110,
+      78,
+      117,
+      109,
+      98,
+      101,
+      114,
+      34,
+      58,
+      91,
+      93,
+      44,
+      34,
+      102,
+      105,
+      108,
+      105,
+      110,
+      103,
+      68,
+      97,
+      116,
+      101,
+      34,
+      58,
+      91,
+      93,
+      44,
+      34,
+      114,
+      101,
+      112,
+      111,
+      114,
+      116,
+      68,
+      97,
+      116,
+      101,
+      34,
+      58,
+      91,
+      93,
+      44,
+      34,
+      102,
+      111,
+      114,
+      109,
+      34,
+      58,
+      91,
+      93,
+      44,
+      34,
+      112,
+      114,
+      105,
+      109,
+      97,
+      114,
+      121,
+      68,
+      111,
+      99,
+      117,
+      109,
+      101,
+      110,
+      116,
+      34,
+      58,
+      91,
+      93,
+      44,
+      34,
+      105,
+      116,
+      101,
+      109,
+      115,
+      34,
+      58,
+      91,
+      93,
+      125,
+      125,
+      125
+    ],
+    "result": {
+      "ok": true,
+      "wire": "{\"companies\":[{\"id\":\"0000000001\",\"name\":\"\\ud800\",\"source_id\":\"probe\"}],\"identifiers\":[{\"id\":\"[\\\"probe\\\",\\\"cik\\\"]\",\"company_id\":\"0000000001\",\"scheme\":\"SEC-CIK\",\"native_value\":\"0000000001\",\"source_id\":\"probe\"}],\"filings\":[]}"
+    }
+  },
+  "textLimits": [
+    {
+      "inputLength": 4000000,
+      "padding": 3999965,
+      "result": {
+        "ok": true,
+        "value": []
+      }
+    },
+    {
+      "inputLength": 4000001,
+      "padding": 3999966,
+      "result": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Native JSON exceeds text limit"
+        }
+      }
+    }
+  ],
+  "valueLimits": [
+    {
+      "observationCount": 49996,
+      "inputLength": 500027,
+      "result": {
+        "ok": true,
+        "rowCount": 49996
+      }
+    },
+    {
+      "observationCount": 49997,
+      "inputLength": 500037,
+      "result": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Native JSON structural limit exceeded"
+        }
+      }
+    }
+  ],
+  "depthLimits": [
+    {
+      "arrayDepth": 127,
+      "result": {
+        "ok": true,
+        "value": []
+      }
+    },
+    {
+      "arrayDepth": 128,
+      "result": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Native JSON structural limit exceeded"
+        }
+      }
+    }
+  ]
+}

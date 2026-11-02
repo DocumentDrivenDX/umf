@@ -1,0 +1,654 @@
+{
+  "format": "umf-r5-gregorian-date-typescript-predecessor/1",
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "profile": "umf-gregorian-date/1.0.0",
+  "sourceHashes": {
+    "src/adapters/gregorian-date.ts": "af5b02baa1bdef53ee4291cccc78586d0f2162a217a4241fd9d9a8a93dba069c"
+  },
+  "cases": [
+    {
+      "name": "valid-0001-01-01",
+      "op": "parseGregorianDate",
+      "args": [
+        "0001-01-01"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-gregorian-date/1.0.0",
+          "originalText": "0001-01-01",
+          "year": 1,
+          "month": 1,
+          "day": 1
+        }
+      }
+    },
+    {
+      "name": "valid-0099-12-31",
+      "op": "parseGregorianDate",
+      "args": [
+        "0099-12-31"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-gregorian-date/1.0.0",
+          "originalText": "0099-12-31",
+          "year": 99,
+          "month": 12,
+          "day": 31
+        }
+      }
+    },
+    {
+      "name": "valid-0400-02-29",
+      "op": "parseGregorianDate",
+      "args": [
+        "0400-02-29"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-gregorian-date/1.0.0",
+          "originalText": "0400-02-29",
+          "year": 400,
+          "month": 2,
+          "day": 29
+        }
+      }
+    },
+    {
+      "name": "valid-1600-02-29",
+      "op": "parseGregorianDate",
+      "args": [
+        "1600-02-29"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-gregorian-date/1.0.0",
+          "originalText": "1600-02-29",
+          "year": 1600,
+          "month": 2,
+          "day": 29
+        }
+      }
+    },
+    {
+      "name": "valid-1900-02-28",
+      "op": "parseGregorianDate",
+      "args": [
+        "1900-02-28"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-gregorian-date/1.0.0",
+          "originalText": "1900-02-28",
+          "year": 1900,
+          "month": 2,
+          "day": 28
+        }
+      }
+    },
+    {
+      "name": "valid-2000-02-29",
+      "op": "parseGregorianDate",
+      "args": [
+        "2000-02-29"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-gregorian-date/1.0.0",
+          "originalText": "2000-02-29",
+          "year": 2000,
+          "month": 2,
+          "day": 29
+        }
+      }
+    },
+    {
+      "name": "valid-9999-12-31",
+      "op": "parseGregorianDate",
+      "args": [
+        "9999-12-31"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": {
+          "profile": "umf-gregorian-date/1.0.0",
+          "originalText": "9999-12-31",
+          "year": 9999,
+          "month": 12,
+          "day": 31
+        }
+      }
+    },
+    {
+      "name": "invalid-\"0000-01-01\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "0000-01-01"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"10000-01-01\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "10000-01-01"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "name": "invalid-\"-001-01-01\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "-001-01-01"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date syntax"
+      }
+    },
+    {
+      "name": "invalid-\"1900-02-29\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "1900-02-29"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"2100-02-29\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2100-02-29"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"2000-02-30\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2000-02-30"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"2026-04-31\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-04-31"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"2026-00-01\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-00-01"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"2026-13-01\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-13-01"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"2026-01-00\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-01-00"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"2026-01-32\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-01-32"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-\"2026-1-01\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-1-01"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "name": "invalid-\"2026-01-1\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-01-1"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "name": "invalid-\"2026-01-01\\n\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-01-01\n"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "name": "invalid-\" 2026-01-01\"",
+      "op": "parseGregorianDate",
+      "args": [
+        " 2026-01-01"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "name": "invalid-\"２０２６-01-01\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "２０２６-01-01"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date syntax"
+      }
+    },
+    {
+      "name": "invalid-\"2026-W01-1\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-W01-1"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date syntax"
+      }
+    },
+    {
+      "name": "invalid-\"2026-001\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-001"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "name": "invalid-\"2026-01-01T00:00:00Z\"",
+      "op": "parseGregorianDate",
+      "args": [
+        "2026-01-01T00:00:00Z"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date requires ten ASCII characters"
+      }
+    },
+    {
+      "name": "raw-host-null",
+      "op": "parseGregorianDate",
+      "args": [
+        null
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Gregorian date requires text"
+      }
+    },
+    {
+      "name": "raw-host-1",
+      "op": "parseGregorianDate",
+      "args": [
+        1
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Gregorian date requires text"
+      }
+    },
+    {
+      "name": "raw-host-true",
+      "op": "parseGregorianDate",
+      "args": [
+        true
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Gregorian date requires text"
+      }
+    },
+    {
+      "name": "raw-host-{}",
+      "op": "parseGregorianDate",
+      "args": [
+        {}
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Gregorian date requires text"
+      }
+    },
+    {
+      "name": "raw-host-[]",
+      "op": "parseGregorianDate",
+      "args": [
+        []
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Gregorian date requires text"
+      }
+    },
+    {
+      "name": "truncate-year",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        "year"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2026-01-01"
+      }
+    },
+    {
+      "name": "truncate-quarter",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2026-10-01"
+      }
+    },
+    {
+      "name": "truncate-month",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        "month"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2026-10-01"
+      }
+    },
+    {
+      "name": "truncate-day",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        "day"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2026-10-15"
+      }
+    },
+    {
+      "name": "quarter-1",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2000-01-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2000-01-01"
+      }
+    },
+    {
+      "name": "quarter-3",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2000-03-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2000-01-01"
+      }
+    },
+    {
+      "name": "quarter-4",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2000-04-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2000-04-01"
+      }
+    },
+    {
+      "name": "quarter-6",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2000-06-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2000-04-01"
+      }
+    },
+    {
+      "name": "quarter-7",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2000-07-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2000-07-01"
+      }
+    },
+    {
+      "name": "quarter-9",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2000-09-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2000-07-01"
+      }
+    },
+    {
+      "name": "quarter-10",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2000-10-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2000-10-01"
+      }
+    },
+    {
+      "name": "quarter-12",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2000-12-15",
+        "quarter"
+      ],
+      "outcome": {
+        "status": "ok",
+        "value": "2000-10-01"
+      }
+    },
+    {
+      "name": "unit-\"Year\"",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        "Year"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date truncation unit"
+      }
+    },
+    {
+      "name": "unit-\"\"",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        ""
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date truncation unit"
+      }
+    },
+    {
+      "name": "unit-null",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        null
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date truncation unit"
+      }
+    },
+    {
+      "name": "unit-{}",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        {}
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date truncation unit"
+      }
+    },
+    {
+      "name": "unit-\"week\"",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-10-15",
+        "week"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date truncation unit"
+      }
+    },
+    {
+      "name": "date-before-unit-error",
+      "op": "truncateGregorianDate",
+      "args": [
+        "2026-02-30",
+        "week"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "RangeError",
+        "message": "Gregorian date calendar"
+      }
+    },
+    {
+      "name": "invalid-token-type-before-invalid-unit",
+      "op": "truncateGregorianDate",
+      "args": [
+        null,
+        "week"
+      ],
+      "outcome": {
+        "status": "error",
+        "name": "TypeError",
+        "message": "Gregorian date requires text"
+      }
+    }
+  ]
+}

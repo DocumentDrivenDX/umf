@@ -5,4 +5,14 @@ function schema(t:any):any{if(t.ref)return {$ref:'#/$defs/'+t.ref};if(t.kind==='
 for(const [name,d] of Object.entries(idl.definitions) as [string,any][]){if(d.kind==='enum'){defs[name]={...integer,description:'Signed i32 enumeration; unknown numeric values are retained. Known values: '+JSON.stringify(d.values)};continue;}const properties:Record<string,any>={};for(const f of d.fields)properties[f.name]={...schema(f.type),$comment:'Thrift field '+f.id+(f.default===undefined?'':' has effective default '+JSON.stringify(f.default)+'; absence is preserved')};properties.$unknown={type:'array',items:object({id:{type:'integer',minimum:-32768,maximum:32767},value:{$ref:'#/$defs/wireValue'}}),...(d.kind==='union'?{maxItems:1}:{})};defs[name]={...object(properties,d.fields.filter((f:any)=>f.required).map((f:any)=>f.name)),...(d.kind==='union'?{maxProperties:1}:{}),description:d.kind+' '+name+' from parquet-format '+idl.commit};}
 const metadata={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:parquet:metadata:0.1.0',$ref:'#/$defs/FileMetaData',$defs:defs};
 const report={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:parquet:metadata-inspection:0.1.0',...object({source:{$ref:'urn:umf:core:0.10.0'},status:{enum:['mapped','blocked']},complete:{const:false},diagnostics:footer.properties.diagnostics,wire:{$ref:'#/$defs/wireValue'},metadata:{$ref:'#/$defs/FileMetaData'}},['source','status','complete','diagnostics']),$defs:defs};
-await Bun.write('spec/extensions/parquet/metadata.schema.json',JSON.stringify(metadata,null,2)+'\n');await Bun.write('spec/extensions/parquet/metadata-inspection.schema.json',JSON.stringify(report,null,2)+'\n');
+const outputs=new Map([
+ ['spec/extensions/parquet/metadata.schema.json',JSON.stringify(metadata,null,2)+'\n'],
+ ['spec/extensions/parquet/metadata-inspection.schema.json',JSON.stringify(report,null,2)+'\n'],
+]);
+if(process.argv.includes('--check')){
+ for(const [output,rendered] of outputs){
+  const current=await Bun.file(output).text();
+  if(current!==rendered)throw new Error(`${output} is stale; regenerate deliberately.`);
+ }
+ for(const output of outputs.keys())console.log(`${output} is current.`);
+}else for(const [output,rendered] of outputs)await Bun.write(output,rendered);

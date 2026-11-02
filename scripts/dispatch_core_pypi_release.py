@@ -9,7 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from publish_core_pypi_release import ReleaseError
+from publish_core_pypi_release import QUALIFIED_CORE_VERSION, ReleaseError
 
 TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
 
@@ -23,7 +23,7 @@ def core_release(release: dict[str, Any]) -> bool:
         and any(
             isinstance(a, dict)
             and isinstance(a.get("name"), str)
-            and a["name"].startswith("umf_core-")
+            and a["name"].startswith(f"umf_core-{QUALIFIED_CORE_VERSION}-")
             and a["name"].endswith(".whl")
             for a in release.get("assets", [])
         )

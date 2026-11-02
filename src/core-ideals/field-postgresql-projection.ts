@@ -8,7 +8,7 @@ import legacy from '../../spec/core/schema.json';
 
 import kinds from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/field-postgresql-projection.schema.json';
-export {default as fieldPostgresqlProjectionSchema} from '../../spec/core/field-postgresql-projection.schema.json';
+export {fieldPostgresqlProjectionSchema} from './field-postgresql-package';
 import {carriers,identifier,literal} from './postgresql-syntax';
 export interface FieldPostgresqlRequest {id:string;namespace:string;tableName:string;columnName:string;nativeType:keyof typeof carriers;mode:'strict'|'report'}
 const binding={id:'umf.core.field.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Single authored Field with explicit pg_catalog carrier; no value-domain or execution equivalence'} as const;

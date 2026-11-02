@@ -2,38 +2,140 @@
 """Exact native operation values, bounded frames and opaque page tokens."""
 from __future__ import annotations
 
-import base64
-import hashlib
-import hmac
 import json
 import math
 import re
 import struct
 from datetime import date, datetime
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, getcontext
 from uuid import UUID
 
 from .session_policy import SessionError
 
 MAX_FRAME=8*1024*1024
+_READ_FRAME_PROFILE='umf-python-read-frame/0.1.0'
+_READ_FRAME_REFUSALS={
+    'count_cardinality':'native count cardinality differs',
+    'result_arity':'native result arity differs',
+    'required_row_missing':'required row not found',
+    'single_row_exceeded':'native single-row cardinality exceeded',
+    'row_bound_exceeded':'native result row bound exceeded',
+    'page_bound_exceeded':'native page bound exceeded',
+}
+
+
+def _json_input(value):
+    """Serialize the explicitly supported Python JSON-like carrier for Rust."""
+    def admit(item):
+        kind = type(item)
+        if item is None or kind in (bool, int, float, str):
+            if kind is str:
+                item.encode("utf-8")
+            if kind is float and not math.isfinite(item):
+                raise SessionError("invalid operation JSON")
+            return
+        if kind in (list, tuple):
+            for child in item:
+                admit(child)
+            return
+        if kind is dict:
+            for key, child in item.items():
+                if type(key) is not str:
+                    raise SessionError("invalid operation JSON")
+                key.encode("utf-8")
+                admit(child)
+            return
+        raise SessionError("invalid operation JSON")
+
+    try:
+        admit(value)
+        return json.dumps(value, ensure_ascii=False, sort_keys=True,
+                          separators=(",", ":"), allow_nan=False)
+    except (ValueError, TypeError, UnicodeError, RecursionError):
+        raise SessionError("invalid operation JSON") from None
+
+
+def _rust_values():
+    from umf import rust_operation_values
+
+    try:
+        rust_operation_values.require_operation_values_profile()
+    except (ImportError, AttributeError, RuntimeError) as error:
+        raise SessionError("native operation-values capability unavailable") from error
+    return rust_operation_values
+
+
+def _native_error(error, default):
+    message = str(error)
+    allowed = {
+        "invalid operation JSON", "native wire frame bound exceeded",
+        "cursor capacity exceeded", "invalid cursor", "native cursor key is absent",
+    }
+    return SessionError(message if message in allowed else default)
+
+
+def _native_result_classify(kind, token):
+    try:
+        return _rust_values().operation_native_result_classify(kind, token)
+    except SessionError:
+        raise
+    except (AttributeError, RuntimeError) as error:
+        raise SessionError('native operation-values capability unavailable') from error
+    except (ValueError, TypeError, UnicodeError) as error:
+        raise _native_error(error, 'native result value differs from its declared carrier') from None
+
+
+def _count_token_nonnegative_rust(token):
+    """Private exact-token stage; the public result_frame route is unchanged."""
+    if type(token) is not str:
+        raise SessionError('exact native count token required')
+    try:
+        from umf import rust_operation_values
+    except ImportError as error:
+        raise SessionError('native count-token capability unavailable') from error
+    try:
+        profile = rust_operation_values.operation_count_token_profile_version()
+    except AttributeError as error:
+        raise SessionError('native count-token capability unavailable') from error
+    if profile != 'umf-operation-count-token/0.1.0':
+        raise SessionError('native count-token capability profile mismatch')
+    try:
+        decision = rust_operation_values.operation_count_token_nonnegative(token)
+    except AttributeError as error:
+        raise SessionError('native count-token capability unavailable') from error
+    if type(decision) is not bool:
+        raise RuntimeError('invalid native count-token decision')
+    return decision
 
 
 def canonical(value):
-    return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
+    try:
+        return _rust_values().operation_canonical(_json_input(value))
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def bounded_size(value, limit=MAX_FRAME):
-    """Stop before assembling a potentially huge repeated-key JSON frame."""
-    size=0
-    encoder=json.JSONEncoder(ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
-    for chunk in encoder.iterencode(value):
-        size+=len(chunk.encode('utf-8'))
-        if size>limit:raise SessionError('native wire frame bound exceeded')
-    return size
+    """Stop Rust canonical encoding as soon as the UTF-8 frame limit is crossed."""
+    if type(limit) is int and limit < 0:
+        raise SessionError("native wire frame bound exceeded")
+    try:
+        return _rust_values().operation_bounded_size(value, limit)
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def digest(value):
-    return hashlib.sha256(canonical(value).encode('utf-8')).hexdigest()
+    try:
+        return _rust_values().operation_digest(_json_input(value))
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def _unique(pairs):
@@ -45,31 +147,38 @@ def _unique(pairs):
 
 
 def loads(raw):
-    try:return json.loads(raw,object_pairs_hook=_unique,parse_constant=lambda _:(_ for _ in ()).throw(ValueError()))
-    except (ValueError,TypeError,RecursionError):raise SessionError('invalid operation JSON') from None
+    try:
+        raw_bytes = raw.encode("utf-8") if type(raw) is str else bytes(raw)
+        validated = _rust_values().operation_loads(raw_bytes)
+        return json.loads(validated, object_pairs_hook=_unique,
+                          parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
+    except SessionError:
+        raise
+    except (ValueError, TypeError, RecursionError, UnicodeError) as error:
+        if isinstance(error, SessionError):
+            raise
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def token_encode(secret,scope,after):
-    raw=canonical({'version':'umf.table-cursor/0.1','scope':scope,'after':after}).encode('utf-8')
-    encoded=base64.urlsafe_b64encode(raw).rstrip(b'=').decode('ascii')
-    result=encoded+'.'+hmac.new(secret,encoded.encode('ascii'),hashlib.sha256).hexdigest()
-    if len(result)>16384:raise SessionError('cursor capacity exceeded')
-    return result
+    try:
+        return _rust_values().operation_token_encode(
+            secret, _json_input(scope), _json_input(after))
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def token_decode(secret,token):
     if type(token) is not str or len(token)>16384:raise SessionError('invalid cursor')
     try:
-        encoded,signature=token.split('.')
-        if not re.fullmatch('[A-Za-z0-9_-]+',encoded) or not re.fullmatch('[a-f0-9]{64}',signature):raise ValueError()
-        expected=hmac.new(secret,encoded.encode('ascii'),hashlib.sha256).hexdigest()
-        if not hmac.compare_digest(signature,expected):raise ValueError()
-        raw=base64.b64decode(encoded+'='*(-len(encoded)%4),altchars=b'-_',validate=True)
-        parsed=loads(raw)
-        if type(parsed) is not dict or set(parsed)!={'version','scope','after'} or parsed['version']!='umf.table-cursor/0.1' or type(parsed['scope']) is not dict or type(parsed['after']) is not list:raise ValueError()
-        return parsed
-    except (ValueError,TypeError,UnicodeError):raise SessionError('invalid cursor') from None
-
+        decoded = _rust_values().operation_token_decode(secret, token)
+        return json.loads(decoded, object_pairs_hook=_unique)
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid cursor") from None
 
 def native_arguments(program, item=0):
     sources={slot['id']:slot['source'] for slot in program['parameterSources']}
@@ -108,6 +217,43 @@ def value_from_native(value,output):
     if type(value) is not str:raise SessionError('native result carrier differs')
     value.encode('utf-8')
     if kind=='string':return value
+    if type(kind) is str and kind in ('integer','decimal','uuid','bits128'):
+        try:
+            decision = _rust_values().operation_native_token_classify(kind, value)
+        except SessionError:
+            raise
+        except (AttributeError, RuntimeError) as error:
+            raise SessionError('native operation-values capability unavailable') from error
+        except (ValueError, TypeError, UnicodeError) as error:
+            raise _native_error(error, 'native result value differs from its declared carrier') from None
+        if decision == 'accepted':
+            key = {'integer':'integerToken','decimal':'decimalToken','uuid':'uuid','bits128':'bits128Hex'}[kind]
+            return {key:value}
+        if kind == 'decimal' and decision == 'decimal-invalid-operation':
+            getcontext().flags[InvalidOperation] = True
+        raise SessionError('native result value differs from its declared carrier')
+    if type(kind) is str and kind == 'date':
+        if _native_result_classify('date', value) == 'accepted':
+            return {'date':value}
+        raise SessionError('native result value differs from its declared carrier')
+    if type(kind) is str and kind == 'timestamp':
+        if _native_result_classify('timestamp', value) == 'candidate':
+            try:
+                datetime.fromisoformat(value)
+                return {'timestamp':value}
+            except ValueError:
+                pass
+        raise SessionError('native result value differs from its declared carrier')
+    if type(kind) is str and kind == 'float':
+        native_encoding = output.get('nativeEncoding')
+        if native_encoding == 'ieee754-binary64-hex':
+            if _native_result_classify('float-ieee754-binary64-hex', value) == 'accepted':
+                number=struct.unpack('!d',bytes.fromhex(value))[0]
+                return {'floatToken':repr(number)}
+            raise SessionError('native result value differs from its declared carrier')
+        if _native_result_classify('float', value) == 'accepted':
+            return {'floatToken':value}
+        raise SessionError('native result value differs from its declared carrier')
     if kind=='date':
         try:
             if re.fullmatch('[0-9]{4}-[0-9]{2}-[0-9]{2}',value) and date.fromisoformat(value).isoformat()==value:return {'date':value}
@@ -118,8 +264,10 @@ def value_from_native(value,output):
                 datetime.fromisoformat(value)
                 return {'timestamp':value}
         except ValueError:pass
-    if kind=='integer' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)',value):return {'integerToken':value}
-    if kind=='decimal' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?',value):
+    # Dynamic carrier objects keep the predecessor's Python comparison path;
+    # exact built-in token kinds were decided by Rust above.
+    if type(kind) is not str and kind=='integer' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)',value):return {'integerToken':value}
+    if type(kind) is not str and kind=='decimal' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?',value):
         try:
             if Decimal(value).is_finite():return {'decimalToken':value}
         except InvalidOperation:pass
@@ -132,28 +280,79 @@ def value_from_native(value,output):
         try:
             if math.isfinite(float(value)):return {'floatToken':value}
         except ValueError:pass
-    if kind=='uuid':
+    if type(kind) is not str and kind=='uuid':
         try:
             if str(UUID(value))==value:return {'uuid':value}
         except ValueError:pass
-    if kind=='bits128' and re.fullmatch('[a-f0-9]{32}',value):return {'bits128Hex':value}
+    if type(kind) is not str and kind=='bits128' and re.fullmatch('[a-f0-9]{32}',value):return {'bits128Hex':value}
     raise SessionError('native result value differs from its declared carrier')
 
 
 def key_literal(value,carrier):
     if value is None:raise SessionError('native cursor key is absent')
+    if type(carrier) is str:
+        try:
+            mode = _rust_values().operation_key_literal_mode(carrier, False)
+        except SessionError:
+            raise
+        except (AttributeError, RuntimeError) as error:
+            raise SessionError('native operation-values capability unavailable') from error
+        except ValueError as error:
+            raise _native_error(error, 'invalid operation JSON') from None
+        if mode == 'string':return {'string':value}
+        if mode == 'boolean':return {'boolean':value}
+        return value
     if carrier=='string':return {'string':value}
     if carrier=='boolean':return {'boolean':value}
     return value
 
 
+_COUNT_RESULT_FRAME_PROFILE = 'umf-operation-count-result-frame/0.1.0'
+
+def _count_result_frame_rust(program,integer_token):
+    if type(integer_token) is not str:
+        raise SessionError('exact native count token required')
+    try:
+        from umf import rust_operation_values
+    except ImportError as error:
+        raise SessionError('native count-result-frame capability unavailable') from error
+    try:
+        profile=rust_operation_values.operation_count_result_frame_profile_version()
+    except AttributeError as error:
+        raise SessionError('native count-result-frame capability unavailable') from error
+    if profile!=_COUNT_RESULT_FRAME_PROFILE:
+        raise SessionError('native count-result-frame capability profile mismatch')
+    try:
+        result=rust_operation_values.operation_count_result_frame(
+            program['module'],program['operation'],program['binding']['modelSha256'],integer_token)
+    except AttributeError as error:
+        raise SessionError('native count-result-frame capability unavailable') from error
+    except (ValueError,TypeError,UnicodeError) as error:
+        message=str(error)
+        if message in ('native count is negative','native result value differs from its declared carrier',
+                       'native wire frame bound exceeded'):
+            raise SessionError(message) from None
+        raise SessionError('native count-result-frame capability refused the DTO') from None
+    if type(result) is not str:
+        raise SessionError('native count-result-frame capability returned an invalid result')
+    return result
+
+
 def result_frame(program,rows,scope,secret):
     outputs=program['outputs'];result=program['result'];kind=result['kind'];bound=result['maxRows']
     if kind=='count':
-        if len(rows)!=1 or len(rows[0])!=1:raise SessionError('native count cardinality differs')
+        _read_frame_shape_rust(kind,0,rows)
         count=value_from_native(rows[0][0],outputs[0])
-        if count['integerToken'].startswith('-'):raise SessionError('native count is negative')
-        response={'kind':'count','count':count}
+        # Keep the predecessor's lookup/type failure order, then send only the
+        # exact built-in decoded integer-token DTO across the Rust boundary.
+        integer_token=count['integerToken']
+        if type(count) is not dict or set(count)!={'integerToken'} or type(integer_token) is not str:
+            raise SessionError('native count result DTO is unsupported')
+        if not _count_token_nonnegative_rust(integer_token):
+            raise SessionError('native count is negative')
+        response_json=_count_result_frame_rust(program,integer_token)
+        try:return json.loads(response_json)
+        except (ValueError,TypeError,RecursionError):raise SessionError('native count result DTO is invalid') from None
     else:
         if any(len(row)!=len(outputs) for row in rows):raise SessionError('native result arity differs')
         decoded=[{out['field']['element']:value_from_native(value,out) for out,value in zip(outputs,row)} for row in rows]
@@ -171,3 +370,58 @@ def result_frame(program,rows,scope,secret):
                      'sourceDigest':program['binding']['modelSha256']})
     bounded_size(response)
     return response
+
+
+def _read_frame_rust():
+    try:
+        from umf import rust_values
+    except ImportError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+
+    try:
+        profile = rust_values.access_stream_read_frame_profile_version
+    except AttributeError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+    try:
+        version = profile()
+    except AttributeError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+    if version != _READ_FRAME_PROFILE:
+        raise SessionError('native read-frame capability profile mismatch')
+    return rust_values
+
+
+def _read_frame_shape_rust(kind, outputs, rows):
+    """Private post-host shape seam; host row reads and failures stay in Python."""
+    native = _read_frame_rust()
+    try:
+        operation = native.access_stream_read_frame_shape
+    except AttributeError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+    result = operation(kind, outputs, rows)
+    if type(result) is not str:
+        raise SessionError('native read-frame capability returned an invalid result')
+    if result == 'admitted':
+        return
+    refusal = _READ_FRAME_REFUSALS.get(result)
+    if refusal is None:
+        raise SessionError('native read-frame capability returned an invalid result')
+    raise SessionError(refusal)
+
+
+def _read_frame_cardinality_rust(kind, row_count, bound):
+    """Private post-decode seam; callers must decode all rows before invoking."""
+    native = _read_frame_rust()
+    try:
+        operation = native.access_stream_read_frame_cardinality
+    except AttributeError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+    result = operation(kind, row_count, bound)
+    if type(result) is not str:
+        raise SessionError('native read-frame capability returned an invalid result')
+    if result == 'admitted':
+        return
+    refusal = _READ_FRAME_REFUSALS.get(result)
+    if refusal is None:
+        raise SessionError('native read-frame capability returned an invalid result')
+    raise SessionError(refusal)

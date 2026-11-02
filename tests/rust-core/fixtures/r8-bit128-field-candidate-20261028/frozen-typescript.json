@@ -1,0 +1,860 @@
+{
+  "format": "umf.r8.bit128-field-typescript-reference/1",
+  "captureDate": "2026-10-28",
+  "typescriptSource": {
+    "path": "src/model/bit128-field.ts",
+    "sha256": "07ee2a1dcb14c491774f3902e3788454615af17a25166efd04e014001e9a6c27"
+  },
+  "typescriptTest": {
+    "path": "tests/core-uuid.test.ts",
+    "sha256": "872b14a0fd4f76523122ec6086f7b1c9c70d368be60c70f0f55f44d90fd50bce"
+  },
+  "cases": [
+    {
+      "name": "success_preserves_unknown_content",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {
+            "future.extension": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {
+                    "future.extension": {
+                      "opaque": {
+                        "x": 2
+                      }
+                    }
+                  }
+                }
+              ],
+              "extensions": {
+                "future.extension": {
+                  "opaque": [
+                    1,
+                    {
+                      "keep": true
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value"
+        },
+        "scalarType": "uuid"
+      },
+      "expected": {
+        "ok": true,
+        "value": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {
+            "future.extension": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {
+                    "future.extension": {
+                      "opaque": {
+                        "x": 2
+                      }
+                    }
+                  }
+                }
+              ],
+              "extensions": {
+                "future.extension": {
+                  "opaque": [
+                    1,
+                    {
+                      "keep": true
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "success_bits128_preserves_unknown_content",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {
+            "future.extension": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {
+                    "future.extension": {
+                      "opaque": {
+                        "x": 2
+                      }
+                    }
+                  }
+                }
+              ],
+              "extensions": {
+                "future.extension": {
+                  "opaque": [
+                    1,
+                    {
+                      "keep": true
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value"
+        },
+        "scalarType": "bits128"
+      },
+      "expected": {
+        "ok": true,
+        "value": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {
+            "future.extension": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "bits128",
+                  "extensions": {
+                    "future.extension": {
+                      "opaque": {
+                        "x": 2
+                      }
+                    }
+                  }
+                }
+              ],
+              "extensions": {
+                "future.extension": {
+                  "opaque": [
+                    1,
+                    {
+                      "keep": true
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "malformed_identity_extra_member",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value",
+          "extra": true
+        },
+        "scalarType": "string"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "Exact Field identity required",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "malformed_identity_wrong_member_type",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": 7,
+          "element": "value"
+        },
+        "scalarType": "uuid"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "Exact Field identity required",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "current_version_refusal_precedes_identity",
+      "input": {
+        "source": {
+          "umf": "0.9.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "bad": true
+        },
+        "scalarType": "uuid"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "Valid current core 0.10.0 source required",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "source_validation_precedes_identity",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {}
+        },
+        "identity": {
+          "bad": true
+        },
+        "scalarType": "uuid"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "Valid current core 0.10.0 source required",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "scalar_type_refusal_precedes_field_lookup",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "absent"
+        },
+        "scalarType": "string"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "Explicit128-bit domain required",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "unknown_field_qualifier_refusal",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {},
+                  "facets": {
+                    "futureRule": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value"
+        },
+        "scalarType": "uuid"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "Unknown selected Field meaning blocks authoring",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "incompatible_existing_facets_refusal",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 16,
+                      "max": 16,
+                      "unit": "byte"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value"
+        },
+        "scalarType": "uuid"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/1/scalarType\",\"message\":\"must pass \\\"enum\\\" keyword validation\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/1\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/1/scalarType\",\"message\":\"must pass \\\"const\\\" keyword validation\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/1\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "incompatible_existing_literal_refusal",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {},
+                  "allowedValues": [
+                    {
+                      "binaryHex": "00112233445566778899aabbccddeeff"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value"
+        },
+        "scalarType": "uuid"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "[{\"code\":\"CORE_SCHEMA_PROPERTIES\",\"path\":\"/modules/0/elements/1/allowedValues\",\"message\":\"Literal does not match scalar family\",\"severity\":\"error\"}]",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    },
+    {
+      "name": "container_field_refusal",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "binary",
+                  "extensions": {}
+                },
+                {
+                  "id": "list",
+                  "kind": "field",
+                  "cardinality": "array",
+                  "itemType": {
+                    "module": "m",
+                    "element": "value"
+                  },
+                  "nullability": "required",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "list"
+        },
+        "scalarType": "uuid"
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_FIELD",
+          "message": "Singular Field required; container values use itemType",
+          "path": ""
+        }
+      },
+      "sourceUnchangedAfterCall": true
+    }
+  ]
+}

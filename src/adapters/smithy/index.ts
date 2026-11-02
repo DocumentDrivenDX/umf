@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {inspectSmithySourcesPayload} from './source-profile';
-import manifest from '../../../spec/extensions/smithy/package.json';
+import {SMITHY_EXTENSION,smithyPackage} from './package';
+export {SMITHY_EXTENSION,smithyPackage} from './package';
 import nativeStructure from '../../../spec/extensions/smithy/native-structure.schema.json';
 import {createValidator} from '../../validation/schema';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,cloneTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const SMITHY_EXTENSION='umf.smithy';
-export const smithyPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+
 const check=createValidator(false).compile(nativeStructure);
 type Payload={profile:'smithy-json-ast';root:NativeJson;dependencies?:{id:string;root:NativeJson}[]};
 const knownTypes=new Set('blob boolean document string byte short integer long float double bigInteger bigDecimal timestamp list map structure union enum intEnum service resource operation apply'.split(' '));

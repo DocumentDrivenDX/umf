@@ -11,9 +11,15 @@ ddx:
       kind: informed_by
     - id: CONTRACT-001
       kind: references
+    - id: CONTRACT-040
+      kind: informed_by
+    - id: CONTRACT-076
+      kind: informed_by
     - id: CONTRACT-077
       kind: references
     - id: CONTRACT-078
+      kind: references
+    - id: CONTRACT-079
       kind: references
 ---
 
@@ -53,6 +59,89 @@ standalone structural validation, `spec/metamodel/generated/python-shapes.json`,
 generated `spec/metamodel/package.json` vocabulary manifest, and shared
 `spec/metamodel/generated/{core-constraints,domain-policy}.json`. Exact export
 names and program grammar MUST be frozen here before delegated integration.
+
+### Versioned Core operation-resource outputs (2026-10-26 amendments)
+
+The canonical output inventory above is preserved. The metamodel additionally
+declares operation-resource outputs through a closed `umf.metamodel.resources`
+sequence. Version 1.1.0 authorized Facets v3 and Cardinality v4; version
+1.2.0 additionally authorized Kind v6 and Nullability v5; version 1.3.0 adds
+Key v2 and Record Type v6:
+
+| Model binding path | Schema `$id` | Title |
+|---|---|---|
+| `spec/core/facet-operation-v3.schema.json` | `urn:umf:core:facet-operation:3.0.0` | `Facet inspection and authoring receipts (Key envelope) (Relationship envelope)` |
+| `spec/core/cardinality-operation-v4.schema.json` | `urn:umf:core:cardinality-operation:4.0.0` | `Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)` |
+| `spec/core/kind-operation-v6.schema.json` | `urn:umf:core:kind-operation:6.0.0` | `Core kind author declaration receipt` |
+| `spec/core/nullability-operation-v5.schema.json` | `urn:umf:core:nullability-operation:5.0.0` | `Core nullability inspection and explicit author declaration results (Key envelope) (Relationship envelope)` |
+| `spec/core/key-operation-v2.schema.json` | `urn:umf:core:key-operation:2.0.0` | `Core Key and Record membership authoring and inspection receipts (Relationship envelope)` |
+| `spec/core/record-type-operation-v6.schema.json` | `urn:umf:core:record-type-operation:6.0.0` | `Core record type declaration receipt` |
+
+Each resource declaration has exactly `path`, `id`, `title`, ordered
+`externalResourceIds`, ordered `definitions`, and `root` fields.
+`externalResourceIds` lists the only permitted external resource targets in
+that resource, in first-use order; entries must name a declared output ID and
+must be unique. Facets, Cardinality, Kind, Nullability and Key list exactly
+`urn:umf:core:0.10.0`, the ID of the generated `spec/core/schema.json` output.
+Record Type lists that ID followed by `urn:umf:core:kind-operation:6.0.0`, the
+declared Kind v6 output. Resource-local links resolve only to a definition in
+that resource. External links resolve only to an ID in its
+`externalResourceIds` list or to a declared `$defs` member of that exact
+listed output, using a `#/$defs/{name}` fragment. No other fragment form is
+admitted. `path` is a unique normalized relative path under
+`spec/core/` ending in `.schema.json`; absolute paths, traversal components,
+duplicates, and paths outside that directory reject. `id` is unique among
+declared resources. `title` is a nonempty string. `definitions` is an ordered
+sequence of unique `{name, shape}` declarations and MAY be empty; `root` is
+one shape from the frozen neutral grammar. No resource declaration accepts raw
+JSON Schema or arbitrary keywords.
+
+For these resources, emitted document members are ordered `$schema`, `$id`,
+`title`, optional `$defs`, followed by root-shape keywords. `$defs` is omitted
+for an empty declaration list; otherwise its member order is the declaration
+order. Object shapes accept the existing closed fields plus the
+optional nonnegative integer `minProperties`; it is emitted only when present.
+The compiler's fixed object-schema keyword order for Facets, Cardinality,
+Kind, and Nullability is `type`, `additionalProperties`, `required`,
+`properties`, `dependentRequired`, `minProperties`, followed by the existing
+conditional keywords. The Facets request declares `minProperties: 1`; the
+Cardinality request omits it. Existing
+canonical outputs retain their frozen byte representation.
+
+Key v2 retains its current exact serialization order: object keywords are
+`type`, `required`, `additionalProperties`, `properties`; array keywords are
+`type`, `uniqueItems`, `items`, `minItems`; root `oneOf` precedes its
+`description`. Record Type v6 has no definitions, so its generated resource
+omits `$defs`. These are fixed compiler rules for the two exact bindings, not
+model-controlled keyword-order or raw-schema escape hatches. Generation MUST
+preserve both current resource byte sequences exactly.
+
+These operation resources additionally admit a resource-only neutral shape
+`object-fragment`, only beneath a resource `conditional` shape's `condition`
+or `yes` subtree. Its exact fields are `tag`, optional ordered `required`,
+and optional ordered `properties`; at least one of `required` or `properties`
+is required. `properties` maps property names to neutral shapes. It emits only
+the present `required` keyword followed by the present `properties` keyword,
+with no `type` or `additionalProperties`. It is rejected in ordinary core,
+reference, package, constraint, and domain declarations. This preserves the
+existing Cardinality conditional fragments without widening the normal
+`object` shape.
+
+The six operation-resource paths are additional outputs in the metamodel's
+generated manifest. Each path/hash entry is bound to that manifest's model and
+compiler source hashes. The compiler does not inject `$comment` or other
+provenance keywords into these resources; the manifest is their provenance
+record. The operation-resource declarations establish authority for the current
+resource bytes from their respective amendments forward. They do not reconstruct
+or validate historical edits that produced those bytes. Generation MUST
+preserve all six current resource byte sequences exactly and reach the same
+clean-tree fixed point required above. No other operation-resource path or
+unresolved resource alias is authorized or resolved by these amendments.
+
+The vocabulary manifest advanced to `umf.metamodel` 1.1.0 for Facets v3,
+Cardinality v4, and their resource grammar, to 1.2.0 for Kind v6 and
+Nullability v5, then to 1.3.0 for Key v2 and Record Type v6. Each grammar remains closed as specified for its version;
+consumers MUST reject declarations outside the version they advertise.
 
 ## Portable rule execution
 
@@ -300,6 +389,14 @@ meters remain cumulative where contracted. Private wire tags/code-unit arrays
 are transport overhead, not extra semantic JSON values. The R1 8-MiB request
 ceiling MUST NOT narrow the production 4-million-code-unit profile. No parser/regex/trusted-callback
 preemption claim follows from cooperative checks around those calls.
+
+The separately versioned `umf.python-client-host-read/4` selection profile in
+CONTRACT-079 admits at most 4,000,000 cumulative UTF-16 units of selected
+record/action identity strings before deduplication. This is a specific new
+host-selection admission rule, not a reinterpretation of the ordinary source
+limit and not a general ceiling on private copied values, generated output or
+other computed text. Its raw-reference and frame limits, ordered controls and
+cooperative-host qualification are governed by CONTRACT-079.
 
 `crates/umf-metamodel` exposes `parse_model`, `compile_model` and `render_outputs`;
 the compiler accepts independently admitted source, then checks the complete closed

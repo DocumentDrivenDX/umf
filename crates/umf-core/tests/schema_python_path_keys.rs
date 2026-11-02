@@ -6,7 +6,7 @@ use umf_core::{
     PythonConsumerValue as Py, PythonReVersion, PythonSchemaEvaluationMode, PythonSchemaResources,
 };
 
-const PATH_KEYS: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-path-keys-predecessor.json");
+const PATH_KEYS: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-path-keys-predecessor.json");
 
 fn recipe(value: &Json) -> Py {
     match value["kind"].as_str().expect("recipe kind") {

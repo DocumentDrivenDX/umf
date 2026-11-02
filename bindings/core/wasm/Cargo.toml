@@ -8,6 +8,7 @@ publish = false
 [features]
 default = []
 conformance = []
+parquet-test-hooks = ["umf-core/parquet-test-hooks"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

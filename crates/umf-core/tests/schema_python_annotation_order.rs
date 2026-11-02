@@ -7,7 +7,7 @@ use umf_core::{
     Context, EngineError, PyText, PythonConsumerValue as Py, PythonReVersion,
     PythonSchemaEvaluationMode, PythonStructuralError, Utf16,
 };
-const FROZEN: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-annotation-order-predecessor.json");
+const FROZEN: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-annotation-order-predecessor.json");
 
 fn recipe(value: &Json) -> Py {
     match value["kind"].as_str().unwrap() {

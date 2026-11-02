@@ -54,7 +54,7 @@ fn aggregate_archive_is_not_a_single_source_document() {
     let resources = resources();
     let engine = CodegenEngine::new(&resources);
     let corpus =
-        load("docs/helix/04-build/evidence/rust-migration/r3/generation-review/frozen.json");
+        load("tests/rust-core/fixtures/r3/generation-review/frozen.json");
     let cases =
         umf_codegen::value::array_items(umf_codegen::value::member(&corpus, "cases").unwrap())
             .unwrap();

@@ -1,0 +1,2041 @@
+{
+  "format": "umf-r8-delta-reconcile-predecessor/1",
+  "cases": [
+    {
+      "id": "empty-history",
+      "commits": [],
+      "result": {
+        "status": "blocked",
+        "complete": false,
+        "sources": [],
+        "diagnostics": [
+          {
+            "code": "DELTA_HISTORY_EMPTY",
+            "path": "",
+            "message": "A history must begin with version zero",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "version-gap",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}",
+          "sourceSha256": "673428d3932e7e26cb67ad130051985e0760d722aafe008445c2cac3e4f24c84"
+        },
+        {
+          "version": "2",
+          "text": "",
+          "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "result": {
+        "status": "blocked",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "version": "2",
+            "source": {
+              "umf": "0.10.0",
+              "id": "2",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": ""
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_SEQUENCE",
+            "path": "/sources/1/version",
+            "message": "Require ascending contiguous versions beginning at zero",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-initial-metadata",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}",
+          "sourceSha256": "cc1a7ac7b43c5683c260cfc3b202855e63919cfa6eb6d1eae664e62a80a30d9f"
+        }
+      ],
+      "result": {
+        "status": "blocked",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_INITIAL_CONTEXT",
+            "path": "/sources/0",
+            "message": "Version zero must establish protocol and metadata",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "valid-state-and-deferred-unknown",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"txn\":{\"appId\":\"client\",\"version\":9223372036854775807}}\n{\"futureAction\":{\"opaque\":[1,\"x\"]}}\n{\"commitInfo\":42}",
+          "sourceSha256": "1673368b8360b34533b6758591261acd2791e56579b4f860bd040d6da97e52f2"
+        }
+      ],
+      "result": {
+        "status": "reconciled",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"txn\":{\"appId\":\"client\",\"version\":9223372036854775807}}\n{\"futureAction\":{\"opaque\":[1,\"x\"]}}\n{\"commitInfo\":42}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_LOG_UNKNOWN_ACTION",
+            "path": "/sources/0/lines/3",
+            "message": "Unknown action retained without interpretation: futureAction",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_UNVERIFIED",
+            "path": "",
+            "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+            "severity": "warning"
+          }
+        ],
+        "state": {
+          "version": "0",
+          "protocol": {
+            "kind": "object",
+            "members": {
+              "minReaderVersion": {
+                "kind": "number",
+                "value": "1"
+              },
+              "minWriterVersion": {
+                "kind": "number",
+                "value": "2"
+              }
+            }
+          },
+          "metaData": {
+            "kind": "object",
+            "members": {
+              "id": {
+                "kind": "string",
+                "value": "t"
+              },
+              "format": {
+                "kind": "object",
+                "members": {
+                  "provider": {
+                    "kind": "string",
+                    "value": "parquet"
+                  }
+                }
+              },
+              "schemaString": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[]}"
+              },
+              "partitionColumns": {
+                "kind": "array",
+                "items": []
+              },
+              "configuration": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          },
+          "adds": [],
+          "removes": [],
+          "transactions": [
+            {
+              "kind": "object",
+              "members": {
+                "appId": {
+                  "kind": "string",
+                  "value": "client"
+                },
+                "version": {
+                  "kind": "number",
+                  "value": "9223372036854775807"
+                }
+              }
+            }
+          ],
+          "domains": [],
+          "commitInfo": [
+            {
+              "kind": "number",
+              "value": "42"
+            }
+          ],
+          "deferred": [
+            {
+              "version": "0",
+              "line": 4,
+              "action": "futureAction",
+              "value": {
+                "kind": "object",
+                "members": {
+                  "opaque": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "number",
+                        "value": "1"
+                      },
+                      {
+                        "kind": "string",
+                        "value": "x"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "duplicate-protocol-actions",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}",
+          "sourceSha256": "10398fad79d79c6d339e174d74e3f3f925b2d6cceb83201e13618295001dfe5f"
+        }
+      ],
+      "result": {
+        "status": "blocked",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_DUPLICATE",
+            "path": "/sources/0/lines/1",
+            "message": "Duplicate action identity in one commit",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cross-commit-map-set-retains-order",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"txn\":{\"appId\":\"app-a\",\"version\":1}}\n{\"txn\":{\"appId\":\"app-b\",\"version\":1}}\n{\"domainMetadata\":{\"domain\":\"domain-a\",\"configuration\":\"old-a\",\"removed\":false}}\n{\"domainMetadata\":{\"domain\":\"domain-b\",\"configuration\":\"old-b\",\"removed\":false}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true}}\n{\"add\":{\"path\":\"file-b\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true}}",
+          "sourceSha256": "efd463b530c24174dc5a42cbaae02404bb31bc2b04fab9b7a129b62cb38c92c0"
+        },
+        {
+          "version": "1",
+          "text": "{\"txn\":{\"appId\":\"app-a\",\"version\":2}}\n{\"domainMetadata\":{\"domain\":\"domain-a\",\"configuration\":\"new-a\",\"removed\":false}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":2,\"modificationTime\":2,\"dataChange\":true}}",
+          "sourceSha256": "9b9641f58015d96b7fa13a4efb96fb92949705a8f71eb1c28e67fcaf2981bcc6"
+        }
+      ],
+      "result": {
+        "status": "reconciled",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"txn\":{\"appId\":\"app-a\",\"version\":1}}\n{\"txn\":{\"appId\":\"app-b\",\"version\":1}}\n{\"domainMetadata\":{\"domain\":\"domain-a\",\"configuration\":\"old-a\",\"removed\":false}}\n{\"domainMetadata\":{\"domain\":\"domain-b\",\"configuration\":\"old-b\",\"removed\":false}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true}}\n{\"add\":{\"path\":\"file-b\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "version": "1",
+            "source": {
+              "umf": "0.10.0",
+              "id": "1",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"txn\":{\"appId\":\"app-a\",\"version\":2}}\n{\"domainMetadata\":{\"domain\":\"domain-a\",\"configuration\":\"new-a\",\"removed\":false}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":2,\"modificationTime\":2,\"dataChange\":true}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/1",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/1",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_UNVERIFIED",
+            "path": "",
+            "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+            "severity": "warning"
+          }
+        ],
+        "state": {
+          "version": "1",
+          "protocol": {
+            "kind": "object",
+            "members": {
+              "minReaderVersion": {
+                "kind": "number",
+                "value": "1"
+              },
+              "minWriterVersion": {
+                "kind": "number",
+                "value": "2"
+              }
+            }
+          },
+          "metaData": {
+            "kind": "object",
+            "members": {
+              "id": {
+                "kind": "string",
+                "value": "t"
+              },
+              "format": {
+                "kind": "object",
+                "members": {
+                  "provider": {
+                    "kind": "string",
+                    "value": "parquet"
+                  }
+                }
+              },
+              "schemaString": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[]}"
+              },
+              "partitionColumns": {
+                "kind": "array",
+                "items": []
+              },
+              "configuration": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          },
+          "adds": [
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-a"
+                },
+                "partitionValues": {
+                  "kind": "object",
+                  "members": {}
+                },
+                "size": {
+                  "kind": "number",
+                  "value": "2"
+                },
+                "modificationTime": {
+                  "kind": "number",
+                  "value": "2"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-b"
+                },
+                "partitionValues": {
+                  "kind": "object",
+                  "members": {}
+                },
+                "size": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "modificationTime": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            }
+          ],
+          "removes": [],
+          "transactions": [
+            {
+              "kind": "object",
+              "members": {
+                "appId": {
+                  "kind": "string",
+                  "value": "app-a"
+                },
+                "version": {
+                  "kind": "number",
+                  "value": "2"
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "appId": {
+                  "kind": "string",
+                  "value": "app-b"
+                },
+                "version": {
+                  "kind": "number",
+                  "value": "1"
+                }
+              }
+            }
+          ],
+          "domains": [
+            {
+              "kind": "object",
+              "members": {
+                "domain": {
+                  "kind": "string",
+                  "value": "domain-a"
+                },
+                "configuration": {
+                  "kind": "string",
+                  "value": "new-a"
+                },
+                "removed": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "domain": {
+                  "kind": "string",
+                  "value": "domain-b"
+                },
+                "configuration": {
+                  "kind": "string",
+                  "value": "old-b"
+                },
+                "removed": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            }
+          ],
+          "commitInfo": [],
+          "deferred": []
+        }
+      }
+    },
+    {
+      "id": "same-commit-add-remove-conflict",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"same-file\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true}}\n{\"remove\":{\"path\":\"same-file\",\"deletionTimestamp\":1,\"dataChange\":true}}",
+          "sourceSha256": "f8ca82ac36c5aca4a6a5a13d4b15ac71ed3dd0e31ed2d5e440314f9228c9695c"
+        }
+      ],
+      "result": {
+        "status": "blocked",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"same-file\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true}}\n{\"remove\":{\"path\":\"same-file\",\"deletionTimestamp\":1,\"dataChange\":true}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_FILE_CONFLICT",
+            "path": "/sources/0",
+            "message": "Same logical file is both added and removed in one commit",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cross-commit-remove-clears-prior-add",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"gone-file\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true}}",
+          "sourceSha256": "8e62891fd8b682d973088c15696e9b004aec4d0bc768bb8bac1b03de005cc815"
+        },
+        {
+          "version": "1",
+          "text": "{\"remove\":{\"path\":\"gone-file\",\"deletionTimestamp\":2,\"dataChange\":true}}",
+          "sourceSha256": "8f12636d8f1033c3892dc1196154c9aeddb419dc0d34bb0f311ea5107c3f4206"
+        }
+      ],
+      "result": {
+        "status": "reconciled",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"gone-file\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "version": "1",
+            "source": {
+              "umf": "0.10.0",
+              "id": "1",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"remove\":{\"path\":\"gone-file\",\"deletionTimestamp\":2,\"dataChange\":true}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/1",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/1",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_UNVERIFIED",
+            "path": "",
+            "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+            "severity": "warning"
+          }
+        ],
+        "state": {
+          "version": "1",
+          "protocol": {
+            "kind": "object",
+            "members": {
+              "minReaderVersion": {
+                "kind": "number",
+                "value": "1"
+              },
+              "minWriterVersion": {
+                "kind": "number",
+                "value": "2"
+              }
+            }
+          },
+          "metaData": {
+            "kind": "object",
+            "members": {
+              "id": {
+                "kind": "string",
+                "value": "t"
+              },
+              "format": {
+                "kind": "object",
+                "members": {
+                  "provider": {
+                    "kind": "string",
+                    "value": "parquet"
+                  }
+                }
+              },
+              "schemaString": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[]}"
+              },
+              "partitionColumns": {
+                "kind": "array",
+                "items": []
+              },
+              "configuration": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          },
+          "adds": [],
+          "removes": [
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "gone-file"
+                },
+                "deletionTimestamp": {
+                  "kind": "number",
+                  "value": "2"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            }
+          ],
+          "transactions": [],
+          "domains": [],
+          "commitInfo": [],
+          "deferred": []
+        }
+      }
+    },
+    {
+      "id": "malformed-utf16-txn-identity",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"txn\":{\"appId\":\"\\ud800\",\"version\":1}}",
+          "sourceSha256": "bc0780e248166c5dbb0083ea9c2623cce80d53dec754b0a42e5361a099cf4bc7"
+        }
+      ],
+      "result": {
+        "status": "reconciled",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"txn\":{\"appId\":\"\\ud800\",\"version\":1}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_UNVERIFIED",
+            "path": "",
+            "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+            "severity": "warning"
+          }
+        ],
+        "state": {
+          "transactions": [
+            {
+              "appIdCodeUnits": [
+                55296
+              ],
+              "version": "1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cross-commit-same-path-same-dv-replacement-retains-order",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"add\":{\"path\":\"file-b\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-b\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "77054876903820572b3be5c8c9ca98164a9e42b0a1eb4192e833aa033006e670"
+        },
+        {
+          "version": "1",
+          "text": "{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":2,\"modificationTime\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "717e05b0a52466aa4f46fecd3a5799381acb8cb0a9380a1cc738e7159d053a96"
+        }
+      ],
+      "result": {
+        "status": "reconciled",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"add\":{\"path\":\"file-b\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-b\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "version": "1",
+            "source": {
+              "umf": "0.10.0",
+              "id": "1",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":2,\"modificationTime\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/1",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/1",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_UNVERIFIED",
+            "path": "",
+            "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+            "severity": "warning"
+          }
+        ],
+        "state": {
+          "version": "1",
+          "protocol": {
+            "kind": "object",
+            "members": {
+              "minReaderVersion": {
+                "kind": "number",
+                "value": "1"
+              },
+              "minWriterVersion": {
+                "kind": "number",
+                "value": "2"
+              }
+            }
+          },
+          "metaData": {
+            "kind": "object",
+            "members": {
+              "id": {
+                "kind": "string",
+                "value": "t"
+              },
+              "format": {
+                "kind": "object",
+                "members": {
+                  "provider": {
+                    "kind": "string",
+                    "value": "parquet"
+                  }
+                }
+              },
+              "schemaString": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[]}"
+              },
+              "partitionColumns": {
+                "kind": "array",
+                "items": []
+              },
+              "configuration": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          },
+          "adds": [
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-a"
+                },
+                "partitionValues": {
+                  "kind": "object",
+                  "members": {}
+                },
+                "size": {
+                  "kind": "number",
+                  "value": "2"
+                },
+                "modificationTime": {
+                  "kind": "number",
+                  "value": "2"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "deletionVector": {
+                  "kind": "object",
+                  "members": {
+                    "storageType": {
+                      "kind": "string",
+                      "value": "i"
+                    },
+                    "pathOrInlineDv": {
+                      "kind": "string",
+                      "value": "dv-a"
+                    },
+                    "offset": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "sizeInBytes": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "cardinality": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-b"
+                },
+                "partitionValues": {
+                  "kind": "object",
+                  "members": {}
+                },
+                "size": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "modificationTime": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "deletionVector": {
+                  "kind": "object",
+                  "members": {
+                    "storageType": {
+                      "kind": "string",
+                      "value": "i"
+                    },
+                    "pathOrInlineDv": {
+                      "kind": "string",
+                      "value": "dv-b"
+                    },
+                    "offset": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "sizeInBytes": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "cardinality": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "removes": [],
+          "transactions": [],
+          "domains": [],
+          "commitInfo": [],
+          "deferred": []
+        }
+      }
+    },
+    {
+      "id": "cross-commit-dv-change-without-removal-refused",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "55fb867736e8a41b8d67a75436fe6f0a5b4235e51134f7cdacc83bcae3ac5e2e"
+        },
+        {
+          "version": "1",
+          "text": "{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":2,\"modificationTime\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-b\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "f113c12e4d43e7ad57dd1990714c4f9fb017ac60f826f2f4b68acf8869c7ebc1"
+        }
+      ],
+      "result": {
+        "status": "blocked",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "version": "1",
+            "source": {
+              "umf": "0.10.0",
+              "id": "1",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":2,\"modificationTime\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-b\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/1",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/1",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_DV_REPLACEMENT",
+            "path": "/sources/1",
+            "message": "Changing a live file deletion vector requires removal of the prior logical file",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cross-commit-remove-old-dv-before-new-dv",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"add\":{\"path\":\"file-b\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-b\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "77054876903820572b3be5c8c9ca98164a9e42b0a1eb4192e833aa033006e670"
+        },
+        {
+          "version": "1",
+          "text": "{\"remove\":{\"path\":\"file-a\",\"deletionTimestamp\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":2,\"modificationTime\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-new\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "9e6fd15bbe63fe456cef65acf346cf4344b3eb8eda864cf1d6e104add0d382bd"
+        }
+      ],
+      "result": {
+        "status": "reconciled",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"add\":{\"path\":\"file-b\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-b\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "version": "1",
+            "source": {
+              "umf": "0.10.0",
+              "id": "1",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"remove\":{\"path\":\"file-a\",\"deletionTimestamp\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":2,\"modificationTime\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-new\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/1",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/1",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_UNVERIFIED",
+            "path": "",
+            "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+            "severity": "warning"
+          }
+        ],
+        "state": {
+          "version": "1",
+          "protocol": {
+            "kind": "object",
+            "members": {
+              "minReaderVersion": {
+                "kind": "number",
+                "value": "1"
+              },
+              "minWriterVersion": {
+                "kind": "number",
+                "value": "2"
+              }
+            }
+          },
+          "metaData": {
+            "kind": "object",
+            "members": {
+              "id": {
+                "kind": "string",
+                "value": "t"
+              },
+              "format": {
+                "kind": "object",
+                "members": {
+                  "provider": {
+                    "kind": "string",
+                    "value": "parquet"
+                  }
+                }
+              },
+              "schemaString": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[]}"
+              },
+              "partitionColumns": {
+                "kind": "array",
+                "items": []
+              },
+              "configuration": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          },
+          "adds": [
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-b"
+                },
+                "partitionValues": {
+                  "kind": "object",
+                  "members": {}
+                },
+                "size": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "modificationTime": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "deletionVector": {
+                  "kind": "object",
+                  "members": {
+                    "storageType": {
+                      "kind": "string",
+                      "value": "i"
+                    },
+                    "pathOrInlineDv": {
+                      "kind": "string",
+                      "value": "dv-b"
+                    },
+                    "offset": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "sizeInBytes": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "cardinality": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-a"
+                },
+                "partitionValues": {
+                  "kind": "object",
+                  "members": {}
+                },
+                "size": {
+                  "kind": "number",
+                  "value": "2"
+                },
+                "modificationTime": {
+                  "kind": "number",
+                  "value": "2"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "deletionVector": {
+                  "kind": "object",
+                  "members": {
+                    "storageType": {
+                      "kind": "string",
+                      "value": "i"
+                    },
+                    "pathOrInlineDv": {
+                      "kind": "string",
+                      "value": "dv-new"
+                    },
+                    "offset": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "sizeInBytes": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "cardinality": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "removes": [
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-a"
+                },
+                "deletionTimestamp": {
+                  "kind": "number",
+                  "value": "2"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "deletionVector": {
+                  "kind": "object",
+                  "members": {
+                    "storageType": {
+                      "kind": "string",
+                      "value": "i"
+                    },
+                    "pathOrInlineDv": {
+                      "kind": "string",
+                      "value": "dv-a"
+                    },
+                    "offset": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "sizeInBytes": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "cardinality": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "transactions": [],
+          "domains": [],
+          "commitInfo": [],
+          "deferred": []
+        }
+      }
+    },
+    {
+      "id": "cross-commit-remove-unknown-dv-retains-ordered-tombstones",
+      "commits": [
+        {
+          "version": "0",
+          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"add\":{\"path\":\"file-b\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-b\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "77054876903820572b3be5c8c9ca98164a9e42b0a1eb4192e833aa033006e670"
+        },
+        {
+          "version": "1",
+          "text": "{\"remove\":{\"path\":\"file-a\",\"deletionTimestamp\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"remove\":{\"path\":\"file-c\",\"deletionTimestamp\":3,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-c\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "925c5d384ea83f076c37e3f051f1a0447f8bed56a136c7d9f29de7fcb212b5e4"
+        },
+        {
+          "version": "2",
+          "text": "{\"remove\":{\"path\":\"file-a\",\"deletionTimestamp\":4,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}",
+          "sourceSha256": "fc3b6ab78f4187e6d03a8921dcf7c0133edaee7acf7b653ca8a2b08d94e29962"
+        }
+      ],
+      "result": {
+        "status": "reconciled",
+        "complete": false,
+        "sources": [
+          {
+            "version": "0",
+            "source": {
+              "umf": "0.10.0",
+              "id": "0",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2}}\n{\"metaData\":{\"id\":\"t\",\"format\":{\"provider\":\"parquet\"},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[]}\",\"partitionColumns\":[],\"configuration\":{}}}\n{\"add\":{\"path\":\"file-a\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"add\":{\"path\":\"file-b\",\"partitionValues\":{},\"size\":1,\"modificationTime\":1,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-b\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "version": "1",
+            "source": {
+              "umf": "0.10.0",
+              "id": "1",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"remove\":{\"path\":\"file-a\",\"deletionTimestamp\":2,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}\n{\"remove\":{\"path\":\"file-c\",\"deletionTimestamp\":3,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-c\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "version": "2",
+            "source": {
+              "umf": "0.10.0",
+              "id": "2",
+              "vocabularies": {
+                "umf.delta.log": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "log",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "source",
+                      "extensions": {
+                        "umf.delta.log": {
+                          "profile": "delta-jsonl-source",
+                          "text": "{\"remove\":{\"path\":\"file-a\",\"deletionTimestamp\":4,\"dataChange\":true,\"deletionVector\":{\"storageType\":\"i\",\"pathOrInlineDv\":\"dv-a\",\"offset\":0,\"sizeInBytes\":1,\"cardinality\":1}}}"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/0",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/0",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/1",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/1",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_LOG_UNVERIFIED",
+            "path": "/sources/2",
+            "severity": "warning",
+            "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+          },
+          {
+            "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+            "path": "/sources/2",
+            "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+            "severity": "warning"
+          },
+          {
+            "code": "DELTA_HISTORY_UNVERIFIED",
+            "path": "",
+            "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+            "severity": "warning"
+          }
+        ],
+        "state": {
+          "version": "2",
+          "protocol": {
+            "kind": "object",
+            "members": {
+              "minReaderVersion": {
+                "kind": "number",
+                "value": "1"
+              },
+              "minWriterVersion": {
+                "kind": "number",
+                "value": "2"
+              }
+            }
+          },
+          "metaData": {
+            "kind": "object",
+            "members": {
+              "id": {
+                "kind": "string",
+                "value": "t"
+              },
+              "format": {
+                "kind": "object",
+                "members": {
+                  "provider": {
+                    "kind": "string",
+                    "value": "parquet"
+                  }
+                }
+              },
+              "schemaString": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[]}"
+              },
+              "partitionColumns": {
+                "kind": "array",
+                "items": []
+              },
+              "configuration": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          },
+          "adds": [
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-b"
+                },
+                "partitionValues": {
+                  "kind": "object",
+                  "members": {}
+                },
+                "size": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "modificationTime": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "deletionVector": {
+                  "kind": "object",
+                  "members": {
+                    "storageType": {
+                      "kind": "string",
+                      "value": "i"
+                    },
+                    "pathOrInlineDv": {
+                      "kind": "string",
+                      "value": "dv-b"
+                    },
+                    "offset": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "sizeInBytes": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "cardinality": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "removes": [
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-a"
+                },
+                "deletionTimestamp": {
+                  "kind": "number",
+                  "value": "4"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "deletionVector": {
+                  "kind": "object",
+                  "members": {
+                    "storageType": {
+                      "kind": "string",
+                      "value": "i"
+                    },
+                    "pathOrInlineDv": {
+                      "kind": "string",
+                      "value": "dv-a"
+                    },
+                    "offset": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "sizeInBytes": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "cardinality": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "path": {
+                  "kind": "string",
+                  "value": "file-c"
+                },
+                "deletionTimestamp": {
+                  "kind": "number",
+                  "value": "3"
+                },
+                "dataChange": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "deletionVector": {
+                  "kind": "object",
+                  "members": {
+                    "storageType": {
+                      "kind": "string",
+                      "value": "i"
+                    },
+                    "pathOrInlineDv": {
+                      "kind": "string",
+                      "value": "dv-c"
+                    },
+                    "offset": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "sizeInBytes": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "cardinality": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "transactions": [],
+          "domains": [],
+          "commitInfo": [],
+          "deferred": []
+        }
+      }
+    }
+  ]
+}

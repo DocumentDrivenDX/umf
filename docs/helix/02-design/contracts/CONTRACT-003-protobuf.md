@@ -27,10 +27,15 @@ binary `google.protobuf.FileDescriptorSet`. A descriptor is the compiler's nativ
 schema representation, not a serialized application message. Source `.proto`
 compilation and emission are available through explicit compiler/emitter interfaces. No concepts are promoted to core.
 
-The 30 recursive definitions in `spec/extensions/protobuf/schema.json` cover the
-complete descriptor message graph exposed by @bufbuild/protobuf 2.15.0. Unknown
-wire fields include custom options and newer descriptor fields; preserve their
-number, wire type and exact value bytes without claiming their interpretation.
+`spec/extensions/protobuf/schema.json` contains 34 descriptor message
+definitions and one shared unknown-field definition, exactly closing the
+@bufbuild/protobuf 2.15.0 runtime descriptor message graph. The additive
+[R5 descriptor-schema closure evidence](../../04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/README.md#descriptor-schema-graph-closure)
+records the exact runtime/schema set and source-bound field-closure test. This
+qualifies schema generation for the pinned runtime graph; it does not establish
+Node or browser JSON Schema evaluation. Unknown wire fields include custom
+options and newer descriptor fields; preserve their number, wire type and exact
+value bytes without claiming their interpretation.
 
 ## Normative Representation
 

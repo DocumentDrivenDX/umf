@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
 import {exportAvroBundle,getAvroNode} from '../adapters/avro';
@@ -11,9 +11,9 @@ import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';import authorSchema from '../../spec/core/facet-operation-v3.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/avro-facet-classification.schema.json';
-import manifest from '../../spec/extensions/avro-facets/package.json';
-export const AVRO_FACETS_EXTENSION='umf.avro.facets';
-export const avroFacetsPackage=manifest as unknown as ExtensionPackage;
+import {AVRO_FACETS_EXTENSION,avroFacetsPackage} from './avro-facets-package';
+export {AVRO_FACETS_EXTENSION,avroFacetsPackage} from './avro-facets-package';
+
 export {default as avroFacetClassificationSchema} from '../../spec/core/avro-facet-classification.schema.json';
 export interface AvroFacetRequest {location:AvroTypeLocation;nativeSource:string;dependencies?:{id:string;schema:string}[];identity:{module:string;element:string};mode:'strict'|'report';profile:'declared-schema'|'apache-datum-writer'|'fastavro-schemaless-writer'|'unresolved';obligation:'value-domain'|'exact-input';author?:CoreFacetDeclaration;}
 type Outcome='exact'|'approximated'|'not-expressible'|'unknown';

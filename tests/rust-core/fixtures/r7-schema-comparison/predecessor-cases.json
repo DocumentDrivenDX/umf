@@ -1,0 +1,80 @@
+{
+  "profile": "umf.r7.schema-comparison.predecessor/1",
+  "cases": [
+    {
+      "id": "object-key-order-and-rfc6901",
+      "before": { "z": 1, "a/b~c": "old", "tail": true },
+      "after": { "z": 2, "a/b~c": "new", "added": false },
+      "expected": [
+        { "path": "/z", "status": "changed", "before": 1, "after": 2 },
+        { "path": "/a~1b~0c", "status": "changed", "before": "old", "after": "new" },
+        { "path": "/tail", "status": "removed", "before": true },
+        { "path": "/added", "status": "created", "after": false }
+      ]
+    },
+    {
+      "id": "keyed-array-reorder-add-remove-and-escaped-id",
+      "before": [
+        { "id": "a/b~c", "value": "old" },
+        { "id": "gone", "value": 0 },
+        { "id": "stay", "value": 1 }
+      ],
+      "after": [
+        { "id": "stay", "value": 1 },
+        { "id": "a/b~c", "value": "new" },
+        { "id": "new", "value": 2 }
+      ],
+      "expected": [
+        { "path": "/order", "status": "changed", "before": ["a/b~c", "gone", "stay"], "after": ["stay", "a/b~c", "new"] },
+        { "path": "/id:a~1b~0c/value", "status": "changed", "before": "old", "after": "new" },
+        { "path": "/id:gone", "status": "removed", "before": { "id": "gone", "value": 0 } },
+        { "path": "/id:new", "status": "created", "after": { "id": "new", "value": 2 } }
+      ]
+    },
+    {
+      "id": "duplicate-id-array-fallback",
+      "before": [{ "id": "dup", "v": 1 }, { "id": "dup", "v": 2 }],
+      "after": [{ "id": "dup", "v": 1 }, { "id": "dup", "v": 3 }],
+      "expected": [{ "path": "", "status": "changed", "before": [{ "id": "dup", "v": 1 }, { "id": "dup", "v": 2 }], "after": [{ "id": "dup", "v": 1 }, { "id": "dup", "v": 3 }] }]
+    },
+    {
+      "id": "duplicate-id-only-on-before-falls-back",
+      "before": [{ "id": "dup", "v": 1 }, { "id": "dup", "v": 2 }],
+      "after": [{ "id": "dup", "v": 3 }],
+      "expected": [{ "path": "", "status": "changed", "before": [{ "id": "dup", "v": 1 }, { "id": "dup", "v": 2 }], "after": [{ "id": "dup", "v": 3 }] }]
+    },
+    {
+      "id": "duplicate-id-only-on-after-falls-back",
+      "before": [{ "id": "dup", "v": 1 }],
+      "after": [{ "id": "dup", "v": 2 }, { "id": "dup", "v": 3 }],
+      "expected": [{ "path": "", "status": "changed", "before": [{ "id": "dup", "v": 1 }], "after": [{ "id": "dup", "v": 2 }, { "id": "dup", "v": 3 }] }]
+    },
+    {
+      "id": "non-string-id-falls-back",
+      "before": [{ "id": 1, "v": 1 }],
+      "after": [{ "id": 1, "v": 2 }],
+      "expected": [{ "path": "", "status": "changed", "before": [{ "id": 1, "v": 1 }], "after": [{ "id": 1, "v": 2 }] }]
+    },
+    {
+      "id": "special-own-keys-and-exact-numeric-lexemes",
+      "before": { "__proto__": "before", "constructor": "old", "token": "9007199254740993", "zero": "-0" },
+      "after": { "__proto__": "after", "constructor": "new", "token": "9007199254740994", "zero": "0" },
+      "expected": [
+        { "path": "/__proto__", "status": "changed", "before": "before", "after": "after" },
+        { "path": "/constructor", "status": "changed", "before": "old", "after": "new" },
+        { "path": "/token", "status": "changed", "before": "9007199254740993", "after": "9007199254740994" },
+        { "path": "/zero", "status": "changed", "before": "-0", "after": "0" }
+      ]
+    },
+    {
+      "id": "numeric-looking-keys-follow-ecmascript-enumeration",
+      "before": { "tail": 0, "2": "two-before", "1": "one-before" },
+      "after": { "1": "one-after", "2": "two-after", "tail": 1 },
+      "expected": [
+        { "path": "/1", "status": "changed", "before": "one-before", "after": "one-after" },
+        { "path": "/2", "status": "changed", "before": "two-before", "after": "two-after" },
+        { "path": "/tail", "status": "changed", "before": 0, "after": 1 }
+      ]
+    }
+  ]
+}

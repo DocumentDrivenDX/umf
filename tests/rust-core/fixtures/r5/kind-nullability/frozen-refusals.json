@@ -1,0 +1,106 @@
+{
+  "sourceInvalidKind": {
+    "ok": false,
+    "error": {
+      "code": "CORE_KIND_SOURCE",
+      "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/1/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"}]",
+      "path": ""
+    }
+  },
+  "sourceInvalidNullability": {
+    "ok": false,
+    "error": {
+      "code": "CORE_NULLABILITY_SOURCE",
+      "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/1/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"}]",
+      "path": ""
+    }
+  },
+  "kindConflict": {
+    "ok": false,
+    "error": {
+      "code": "CORE_KIND_CONFLICT",
+      "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/scalarType\",\"message\":\"boolean schema is false\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/kind\",\"message\":\"must pass \\\"const\\\" keyword validation\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]",
+      "path": "/modules/0/elements/0/kind"
+    }
+  },
+  "malformedKindReceipt": {
+    "ok": false,
+    "error": {
+      "code": "CORE_KIND_RECEIPT",
+      "message": "Malformed kind declaration",
+      "path": ""
+    }
+  },
+  "malformedNullabilityReceipt": {
+    "ok": false,
+    "error": {
+      "code": "CORE_NULLABILITY_RECEIPT",
+      "message": "Malformed nullability declaration",
+      "path": ""
+    }
+  },
+  "invalidKindReceiptSource": {
+    "ok": false,
+    "error": {
+      "code": "CORE_KIND_RECEIPT",
+      "message": "Malformed kind declaration",
+      "path": ""
+    }
+  },
+  "invalidKindReceiptTarget": {
+    "ok": false,
+    "error": {
+      "code": "CORE_KIND_RECEIPT",
+      "message": "Malformed kind declaration",
+      "path": ""
+    }
+  },
+  "invalidNullabilityReceiptSource": {
+    "ok": false,
+    "error": {
+      "code": "CORE_NULLABILITY_RECEIPT",
+      "message": "Malformed nullability declaration",
+      "path": ""
+    }
+  },
+  "invalidNullabilityReceiptTarget": {
+    "ok": false,
+    "error": {
+      "code": "CORE_NULLABILITY_RECEIPT",
+      "message": "Malformed nullability declaration",
+      "path": ""
+    }
+  },
+  "staleKindReceipt": {
+    "ok": false,
+    "error": {
+      "code": "CORE_KIND_STALE",
+      "message": "Document changed since kind was declared",
+      "path": ""
+    }
+  },
+  "staleNullabilityReceipt": {
+    "ok": false,
+    "error": {
+      "code": "CORE_NULLABILITY_STALE",
+      "message": "Document changed since nullability was declared",
+      "path": ""
+    }
+  },
+  "nullabilityRole": {
+    "ok": false,
+    "error": {
+      "code": "CORE_NULLABILITY_ROLE",
+      "message": "Availability applies only to an explicit Field",
+      "path": "/modules/0/elements/3/nullability"
+    }
+  },
+  "missingIdentity": {
+    "ok": false,
+    "error": {
+      "code": "CORE_KIND_MISSING",
+      "message": "Element identity is absent",
+      "path": ""
+    }
+  }
+}

@@ -5,9 +5,9 @@ import {parseNativeJson,renderTree} from '../model/native-json';
 import {exportSqlServerCatalog,getSqlServerConstraintMetadata,getSqlServerColumnMetadata} from '../adapters/sqlserver';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import schema from '../../spec/core/sqlserver-relationship-classification.schema.json';import manifest from '../../spec/extensions/sqlserver-relationships/package.json';
-export const SQLSERVER_RELATIONSHIPS_EXTENSION='umf.sqlserver.relationships';export const sqlserverRelationshipsPackage=manifest as unknown as ExtensionPackage;
-export {default as sqlserverRelationshipClassificationSchema} from '../../spec/core/sqlserver-relationship-classification.schema.json';
+import {SQLSERVER_RELATIONSHIPS_EXTENSION,sqlserverRelationshipsPackage,sqlserverRelationshipClassificationSchema as schema} from './relationship-sqlserver-package';
+export {SQLSERVER_RELATIONSHIPS_EXTENSION,sqlserverRelationshipsPackage};
+export {sqlserverRelationshipClassificationSchema} from './relationship-sqlserver-package';
 export interface SqlServerRelationshipRequest {nativeSource:string;mode:'strict'|'report';profile:'captured-foreign-keys'}
 export interface SqlServerRelationshipObservation {nativePath:string;table:{schema:string;name:string};name:string;nativeForeignKey:Json;referencedKeys:{path:string;nativeKey:Json}[];sourceFields:{module:string;element:string}[];targetFields:{module:string;element:string}[];enforcement:'enabled-trusted'|'enabled-untrusted'|'disabled'|'unknown';authorIntent:'unknown';provenance:'inferred';deleteAction:string;updateAction:string;notForReplication:boolean;resolution:'captured-tuple-candidate'|'unresolved'}
 const binding=schema.properties.binding.const;

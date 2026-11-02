@@ -27,7 +27,10 @@
       ]
     },
     "engine": {
-      "const": "rdf-validate-shacl@0.6.5"
+      "enum": [
+        "rdf-validate-shacl@0.6.5",
+        "umf-shacl-native-subset/2"
+      ]
     },
     "status": {
       "enum": [

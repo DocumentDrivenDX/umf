@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage,type Element} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic,type Cardinality,type Element} from '../model/types';
 import {exportParquetCapture} from '../adapters/parquet';
 import {inspectParquetCardinalityShape,type ParquetCardinalityNode} from './parquet-cardinality-shape';
 import {validateDocument} from '../validation/document';
@@ -9,10 +9,8 @@ import {createValidator} from '../validation/schema';
 
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/core/parquet-cardinality-classification.schema.json';
-import manifest from '../../spec/extensions/parquet-cardinality/package.json';
-export const PARQUET_CARDINALITY_EXTENSION='umf.parquet.cardinality';
-export const parquetCardinalityPackage=manifest as unknown as ExtensionPackage;
-export {default as parquetCardinalityClassificationSchema} from '../../spec/core/parquet-cardinality-classification.schema.json';
+import {PARQUET_CARDINALITY_EXTENSION} from './cardinality-parquet-package';
+export {PARQUET_CARDINALITY_EXTENSION,parquetCardinalityPackage,parquetCardinalityClassificationSchema} from './cardinality-parquet-package';
 export interface ParquetCardinalityRequest {index:number;identity:{module:string;element:string};profile:'present-value-schema'|'unresolved';mode:'strict'|'report';}
 const binding=schema.properties.binding.const,basis=binding.subset;
 const recovery='Retain original native archive and author assertions; classification does not replace native meaning' as const;

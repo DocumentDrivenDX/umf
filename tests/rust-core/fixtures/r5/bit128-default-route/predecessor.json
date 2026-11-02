@@ -1,0 +1,691 @@
+{
+  "format": "umf-bit128-default-route-predecessor/1",
+  "runtime": "Bun 1.4.3",
+  "profile": "umf-128/1",
+  "publicFunctions": [
+    "parseBits128",
+    "parseUuid",
+    "bits128FromBytes",
+    "bits128ToBytes",
+    "uuidFromBits128",
+    "uuidToBits128",
+    "compareBits128",
+    "bits128ToWords",
+    "bits128FromWords",
+    "bits128ToInteger",
+    "bits128FromInteger"
+  ],
+  "cases": {
+    "parseBits128": {
+      "ok": true,
+      "value": {
+        "profile": "umf-128/1",
+        "hex": "8000000000000000ffffffffffffffff",
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": true,
+          "keys": [
+            "profile",
+            "hex"
+          ],
+          "descriptors": {
+            "profile": "readonly",
+            "hex": "readonly"
+          }
+        }
+      }
+    },
+    "parseUuid": {
+      "ok": true,
+      "value": {
+        "profile": "umf-128/1",
+        "hex": "8000000000000000ffffffffffffffff",
+        "canonicalText": "80000000-0000-0000-ffff-ffffffffffff",
+        "originalText": "80000000-0000-0000-FFFF-FFFFFFFFFFFF",
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": true,
+          "keys": [
+            "profile",
+            "hex",
+            "canonicalText",
+            "originalText"
+          ],
+          "descriptors": {
+            "profile": "readonly",
+            "hex": "readonly",
+            "canonicalText": "readonly",
+            "originalText": "readonly"
+          }
+        }
+      }
+    },
+    "bits128FromBytes": {
+      "ok": true,
+      "value": {
+        "profile": "umf-128/1",
+        "hex": "02030405060708090a0b0c0d0e0f1011",
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": true,
+          "keys": [
+            "profile",
+            "hex"
+          ],
+          "descriptors": {
+            "profile": "readonly",
+            "hex": "readonly"
+          }
+        }
+      }
+    },
+    "bits128ToBytes": {
+      "ok": true,
+      "value": {
+        "type": "Uint8Array",
+        "bytes": [
+          128,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "shape": {
+          "prototype": "Uint8Array",
+          "frozen": false,
+          "keys": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"
+          ],
+          "descriptors": {
+            "0": "mutable",
+            "1": "mutable",
+            "2": "mutable",
+            "3": "mutable",
+            "4": "mutable",
+            "5": "mutable",
+            "6": "mutable",
+            "7": "mutable",
+            "8": "mutable",
+            "9": "mutable",
+            "10": "mutable",
+            "11": "mutable",
+            "12": "mutable",
+            "13": "mutable",
+            "14": "mutable",
+            "15": "mutable"
+          }
+        }
+      }
+    },
+    "uuidFromBits128": {
+      "ok": true,
+      "value": {
+        "profile": "umf-128/1",
+        "hex": "8000000000000000ffffffffffffffff",
+        "canonicalText": "80000000-0000-0000-ffff-ffffffffffff",
+        "originalText": "80000000-0000-0000-ffff-ffffffffffff",
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": true,
+          "keys": [
+            "profile",
+            "hex",
+            "canonicalText",
+            "originalText"
+          ],
+          "descriptors": {
+            "profile": "readonly",
+            "hex": "readonly",
+            "canonicalText": "readonly",
+            "originalText": "readonly"
+          }
+        }
+      }
+    },
+    "uuidToBits128": {
+      "ok": true,
+      "value": {
+        "profile": "umf-128/1",
+        "hex": "8000000000000000ffffffffffffffff",
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": true,
+          "keys": [
+            "profile",
+            "hex"
+          ],
+          "descriptors": {
+            "profile": "readonly",
+            "hex": "readonly"
+          }
+        }
+      }
+    },
+    "compareBits128": {
+      "ok": true,
+      "value": [
+        -1,
+        0,
+        -1
+      ]
+    },
+    "bits128ToWords": {
+      "ok": true,
+      "value": {
+        "unsigned": {
+          "high": "9223372036854775808",
+          "low": "18446744073709551615",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": false,
+            "keys": [
+              "high",
+              "low"
+            ],
+            "descriptors": {
+              "high": "mutable",
+              "low": "mutable"
+            }
+          }
+        },
+        "signed": {
+          "high": "-9223372036854775808",
+          "low": "-1",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": false,
+            "keys": [
+              "high",
+              "low"
+            ],
+            "descriptors": {
+              "high": "mutable",
+              "low": "mutable"
+            }
+          }
+        },
+        "unsignedShape": {
+          "prototype": "Object.prototype",
+          "frozen": false,
+          "keys": [
+            "high",
+            "low"
+          ],
+          "descriptors": {
+            "high": "mutable",
+            "low": "mutable",
+            "$shape": {
+              "prototype": "Object.prototype",
+              "frozen": false,
+              "keys": [
+                "high",
+                "low"
+              ],
+              "descriptors": {
+                "high": "mutable",
+                "low": "mutable"
+              }
+            }
+          },
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": false,
+            "keys": [
+              "prototype",
+              "frozen",
+              "keys",
+              "descriptors"
+            ],
+            "descriptors": {
+              "prototype": "mutable",
+              "frozen": "mutable",
+              "keys": "mutable",
+              "descriptors": "mutable"
+            }
+          }
+        },
+        "signedShape": {
+          "prototype": "Object.prototype",
+          "frozen": false,
+          "keys": [
+            "high",
+            "low"
+          ],
+          "descriptors": {
+            "high": "mutable",
+            "low": "mutable",
+            "$shape": {
+              "prototype": "Object.prototype",
+              "frozen": false,
+              "keys": [
+                "high",
+                "low"
+              ],
+              "descriptors": {
+                "high": "mutable",
+                "low": "mutable"
+              }
+            }
+          },
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": false,
+            "keys": [
+              "prototype",
+              "frozen",
+              "keys",
+              "descriptors"
+            ],
+            "descriptors": {
+              "prototype": "mutable",
+              "frozen": "mutable",
+              "keys": "mutable",
+              "descriptors": "mutable"
+            }
+          }
+        },
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": false,
+          "keys": [
+            "unsigned",
+            "signed",
+            "unsignedShape",
+            "signedShape"
+          ],
+          "descriptors": {
+            "unsigned": "mutable",
+            "signed": "mutable",
+            "unsignedShape": "mutable",
+            "signedShape": "mutable"
+          }
+        }
+      }
+    },
+    "bits128FromWords": {
+      "ok": true,
+      "value": {
+        "unsigned": {
+          "profile": "umf-128/1",
+          "hex": "8000000000000000ffffffffffffffff",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": true,
+            "keys": [
+              "profile",
+              "hex"
+            ],
+            "descriptors": {
+              "profile": "readonly",
+              "hex": "readonly"
+            }
+          }
+        },
+        "signed": {
+          "profile": "umf-128/1",
+          "hex": "8000000000000000ffffffffffffffff",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": true,
+            "keys": [
+              "profile",
+              "hex"
+            ],
+            "descriptors": {
+              "profile": "readonly",
+              "hex": "readonly"
+            }
+          }
+        },
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": false,
+          "keys": [
+            "unsigned",
+            "signed"
+          ],
+          "descriptors": {
+            "unsigned": "mutable",
+            "signed": "mutable"
+          }
+        }
+      }
+    },
+    "bits128ToInteger": {
+      "ok": true,
+      "value": {
+        "unsigned": {
+          "integerToken": "170141183460469231750134047789593657343",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": false,
+            "keys": [
+              "integerToken"
+            ],
+            "descriptors": {
+              "integerToken": "mutable"
+            }
+          }
+        },
+        "signed": {
+          "integerToken": "-170141183460469231713240559642174554113",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": false,
+            "keys": [
+              "integerToken"
+            ],
+            "descriptors": {
+              "integerToken": "mutable"
+            }
+          }
+        },
+        "unsignedShape": {
+          "prototype": "Object.prototype",
+          "frozen": false,
+          "keys": [
+            "integerToken"
+          ],
+          "descriptors": {
+            "integerToken": "mutable",
+            "$shape": {
+              "prototype": "Object.prototype",
+              "frozen": false,
+              "keys": [
+                "integerToken"
+              ],
+              "descriptors": {
+                "integerToken": "mutable"
+              }
+            }
+          },
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": false,
+            "keys": [
+              "prototype",
+              "frozen",
+              "keys",
+              "descriptors"
+            ],
+            "descriptors": {
+              "prototype": "mutable",
+              "frozen": "mutable",
+              "keys": "mutable",
+              "descriptors": "mutable"
+            }
+          }
+        },
+        "signedShape": {
+          "prototype": "Object.prototype",
+          "frozen": false,
+          "keys": [
+            "integerToken"
+          ],
+          "descriptors": {
+            "integerToken": "mutable",
+            "$shape": {
+              "prototype": "Object.prototype",
+              "frozen": false,
+              "keys": [
+                "integerToken"
+              ],
+              "descriptors": {
+                "integerToken": "mutable"
+              }
+            }
+          },
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": false,
+            "keys": [
+              "prototype",
+              "frozen",
+              "keys",
+              "descriptors"
+            ],
+            "descriptors": {
+              "prototype": "mutable",
+              "frozen": "mutable",
+              "keys": "mutable",
+              "descriptors": "mutable"
+            }
+          }
+        },
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": false,
+          "keys": [
+            "unsigned",
+            "signed",
+            "unsignedShape",
+            "signedShape"
+          ],
+          "descriptors": {
+            "unsigned": "mutable",
+            "signed": "mutable",
+            "unsignedShape": "mutable",
+            "signedShape": "mutable"
+          }
+        }
+      }
+    },
+    "bits128FromInteger": {
+      "ok": true,
+      "value": {
+        "zero": {
+          "profile": "umf-128/1",
+          "hex": "00000000000000000000000000000000",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": true,
+            "keys": [
+              "profile",
+              "hex"
+            ],
+            "descriptors": {
+              "profile": "readonly",
+              "hex": "readonly"
+            }
+          }
+        },
+        "maxUnsigned": {
+          "profile": "umf-128/1",
+          "hex": "ffffffffffffffffffffffffffffffff",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": true,
+            "keys": [
+              "profile",
+              "hex"
+            ],
+            "descriptors": {
+              "profile": "readonly",
+              "hex": "readonly"
+            }
+          }
+        },
+        "minSigned": {
+          "profile": "umf-128/1",
+          "hex": "80000000000000000000000000000000",
+          "$shape": {
+            "prototype": "Object.prototype",
+            "frozen": true,
+            "keys": [
+              "profile",
+              "hex"
+            ],
+            "descriptors": {
+              "profile": "readonly",
+              "hex": "readonly"
+            }
+          }
+        },
+        "$shape": {
+          "prototype": "Object.prototype",
+          "frozen": false,
+          "keys": [
+            "zero",
+            "maxUnsigned",
+            "minSigned"
+          ],
+          "descriptors": {
+            "zero": "mutable",
+            "maxUnsigned": "mutable",
+            "minSigned": "mutable"
+          }
+        }
+      }
+    },
+    "typedArray": {
+      "offset": "02030405060708090a0b0c0d0e0f1011",
+      "subclass": "accepted",
+      "copiedBeforeMutation": true
+    },
+    "descriptorAndErrorOrder": {
+      "bitProfileBeforeHex": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_VALUE",
+          "message": "Accessors are not value snapshots",
+          "path": ""
+        }
+      },
+      "bitAccessorWithExtra": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_VALUE",
+          "message": "Invalid bit value snapshot",
+          "path": ""
+        }
+      },
+      "uuidOriginalBeforeConsistency": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_VALUE",
+          "message": "Invalid original UUID text in snapshot",
+          "path": ""
+        }
+      },
+      "symbolMember": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_VALUE",
+          "message": "Invalid bit value snapshot",
+          "path": ""
+        }
+      },
+      "integerShapeBeforeType": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_TYPE",
+          "message": "Expected one integerToken",
+          "path": ""
+        }
+      },
+      "wordsShapeBeforeAccessor": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_TYPE",
+          "message": "Expected exactly high and low words",
+          "path": ""
+        }
+      }
+    },
+    "syntaxAndBoundaries": {
+      "utf16SurrogateBits": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_SYNTAX",
+          "message": "Expected exactly 32 hexadecimal digits",
+          "path": ""
+        }
+      },
+      "uuidUpperOriginal": "80000000-0000-0000-ffff-ffffffffffff",
+      "negativeZeroInteger": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_RANGE",
+          "message": "Negative zero loses sign",
+          "path": ""
+        }
+      },
+      "noncanonicalInteger": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_SYNTAX",
+          "message": "Expected JSON integer token",
+          "path": ""
+        }
+      },
+      "unsignedOverflow": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_RANGE",
+          "message": "Integer outside selected 128-bit domain",
+          "path": ""
+        }
+      },
+      "signedMinimumAndMaximum": [
+        "80000000000000000000000000000000",
+        "7fffffffffffffffffffffffffffffff"
+      ],
+      "signedWordMinimumAndMaximum": [
+        "80000000000000007fffffffffffffff",
+        "7fffffffffffffff8000000000000000"
+      ],
+      "invalidSignedness": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "BIT128_TYPE",
+          "message": "Signedness must be explicit",
+          "path": ""
+        }
+      }
+    }
+  },
+  "sourceClosure": {
+    "src/model/bit128.ts": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
+    "src/model/uuid.ts": "43b2ea37b050a835e7723c9ea9b32f886fca63f5bb94eb5f8b17b242cf4444f7",
+    "tests/bit128.test.ts": "2c1f5b54c2ed4924588f2f2d43f2f7c4f89c631765f3ea0cf243fd3f9938948b",
+    "tests/uuid.test.ts": "549836713a191175f2ee088194aaf57a1d1654809ddfbe4c6a3fb65151715171",
+    "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+  }
+}

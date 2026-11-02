@@ -1,0 +1,2735 @@
+{
+  "format": "umf-r8-security-protection-resolution-typescript-predecessor/1",
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "sourceHashes": {
+    "src/extensions/security/policy-representation-v2.ts": "1c3c66650203235da4832c68e88a08401e53db29deeb9bd1cfa92540b81a3464",
+    "src/extensions/security/protection/catalog.ts": "52efc07592dbf5b61fb1fbb156ef19d14bb38747a98b4286295fd48ef6e7f448",
+    "src/extensions/security/protection/references.ts": "6f007187301fb67118bccfb21fa6908dde32813ee15d307b5a5bb9e8f71eb83c",
+    "src/extensions/security/protection/domains.ts": "0e8fa68ef906e7f6bac290813f7fef61846d9aeb17fadb5b7a3717680047005a",
+    "src/extensions/security/protection/core-fields.ts": "7d9cd5c9eb55f224a226f38c7989ff86086c36c77480472887b1799c5807d01f",
+    "src/extensions/security/core-source-candidate.ts": "8c44132fc0c073fa6c01327daa9c2111138fd9da5f0cbd418a96b69bdc3b14bb",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "tests/security/protection/domain-fixture.ts": "077bf045c70964d90c0788b6c2eb22565611672420370b4c7a1c97730e0a1d18",
+    "spec/extensions/security-v0.2/package.json": "92dff4ec035a8f9c4da5b4bb73981b786d9cf53d9f50aedfbe22b8b350394dfd",
+    "spec/extensions/security-protection/package.json": "30ec4eed50b7e0113fbf64289df6a210f59477409409c52e9269e68d7708294a",
+    "spec/extensions/security-protection/domain-resolution.schema.json": "205d7e1e96912785ffdc9d8add009b6316e81e0754b45e5824ea04a2a316c75b",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "1183e2ea8ba55fade4007554905b7175d7796e867a67814f511e9cd3ee514800"
+  },
+  "captureScriptSha256": "750746a5d1dadaa4436d53e9ee11ef00687b2a3a9fdfcbb358a22c82bb0662ca",
+  "caseCount": 16,
+  "cases": [
+    {
+      "id": "source.exact-policy-catalog-pins",
+      "stage": "source",
+      "input": {
+        "policyPin": {
+          "id": "catalog",
+          "revision": "c1"
+        },
+        "catalog": {
+          "id": "catalog",
+          "revision": "c1"
+        }
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "resolved-source",
+          "complete": false,
+          "authority": false,
+          "references": [
+            {
+              "ruleIndex": 0,
+              "disclosureIndex": 0,
+              "transformIndex": 0
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.catalog-pin-id-mismatch",
+      "stage": "source",
+      "input": {
+        "policyPin": {
+          "id": "catalog",
+          "revision": "c1"
+        },
+        "catalogPin": {
+          "id": "foreign",
+          "revision": "c1"
+        }
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "foreign",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "references": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            },
+            {
+              "code": "SECURITY_PROTECTION_PIN",
+              "path": "/protection",
+              "message": "Exact catalog id/revision required",
+              "severity": "error"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.catalog-pin-revision-mismatch",
+      "stage": "source",
+      "input": {
+        "policyPin": {
+          "id": "catalog",
+          "revision": "c1"
+        },
+        "catalogPin": {
+          "id": "catalog",
+          "revision": "stale"
+        }
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "stale",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "references": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            },
+            {
+              "code": "SECURITY_PROTECTION_PIN",
+              "path": "/protection",
+              "message": "Exact catalog id/revision required",
+              "severity": "error"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.policy-protection-pin-missing",
+      "stage": "source",
+      "input": {},
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "references": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_STRUCTURE",
+              "path": "",
+              "message": "must have required property 'protection'",
+              "severity": "error"
+            },
+            {
+              "code": "SECURITY_V2_STRUCTURE",
+              "path": "",
+              "message": "must match \"then\" schema",
+              "severity": "error"
+            },
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.transform-version-reference-missing",
+      "stage": "source",
+      "input": {
+        "transform": "transform",
+        "version": "stale"
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "stale",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "references": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            },
+            {
+              "code": "SECURITY_PROTECTION_REFERENCE",
+              "path": "/rules/0/disclosure/0/disposition",
+              "message": "Exact transform id/version missing",
+              "severity": "error"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.policy-unknown-member-retained",
+      "stage": "source",
+      "input": {
+        "member": "/futurePolicy"
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "futurePolicy": {
+            "opaque": "kept"
+          }
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "resolved-source",
+          "complete": false,
+          "authority": false,
+          "references": [
+            {
+              "ruleIndex": 0,
+              "disclosureIndex": 0,
+              "transformIndex": 0
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_UNKNOWN",
+              "path": "/futurePolicy",
+              "message": "Uninterpreted policy source retained",
+              "severity": "warning"
+            },
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.catalog-unknown-member-retained",
+      "stage": "source",
+      "input": {
+        "member": "/transforms/0/futureTransform"
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ],
+              "futureTransform": {
+                "opaque": "kept"
+              }
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "resolved-source",
+          "complete": false,
+          "authority": false,
+          "references": [
+            {
+              "ruleIndex": 0,
+              "disclosureIndex": 0,
+              "transformIndex": 0
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNKNOWN",
+              "path": "/transforms/0/futureTransform",
+              "message": "Uninterpreted protection member retained",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.catalog-unknown-retained-despite-policy-schema-error",
+      "stage": "source",
+      "input": {
+        "policyVersion": "future",
+        "member": "/futureCatalog"
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "future",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          },
+          "futureCatalog": {
+            "opaque": "kept"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "references": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_STRUCTURE",
+              "path": "/version",
+              "message": "must pass \"const\" keyword validation",
+              "severity": "error"
+            },
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNKNOWN",
+              "path": "/futureCatalog",
+              "message": "Uninterpreted protection member retained",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.duplicate-transform-identity-refused-before-lookup",
+      "stage": "source",
+      "input": {
+        "identity": [
+          "transform",
+          "t1"
+        ]
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ],
+              "futureTransform": {
+                "distinct": true
+              }
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "references": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_DUPLICATE",
+              "path": "/transforms/1",
+              "message": "Duplicate transform id/version pair",
+              "severity": "error"
+            },
+            {
+              "code": "PROTECTION_UNKNOWN",
+              "path": "/transforms/1/futureTransform",
+              "message": "Uninterpreted protection member retained",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "source.policy-errors-precede-catalog-errors",
+      "stage": "source",
+      "input": {
+        "policyVersion": "future",
+        "catalogVersion": "future"
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "future",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "future",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "references": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_STRUCTURE",
+              "path": "/version",
+              "message": "must pass \"const\" keyword validation",
+              "severity": "error"
+            },
+            {
+              "code": "SECURITY_V2_UNIMPLEMENTED",
+              "path": "",
+              "message": "Representation only; no0.2 domain/function/query interpretation or native activation",
+              "severity": "warning"
+            },
+            {
+              "code": "PROTECTION_STRUCTURE",
+              "path": "/version",
+              "message": "must pass \"const\" keyword validation",
+              "severity": "error"
+            },
+            {
+              "code": "PROTECTION_UNIMPLEMENTED",
+              "path": "",
+              "message": "Wire structure and local bounds only; domain/function/query closure, action binding and native custody remain unimplemented",
+              "severity": "warning"
+            }
+          ],
+          "retainsPolicy": true,
+          "retainsCatalog": true
+        }
+      }
+    },
+    {
+      "id": "domains.exact-pins-qualified-fields",
+      "stage": "domains",
+      "input": {
+        "policyPin": {
+          "id": "catalog",
+          "revision": "c1"
+        },
+        "catalogPin": {
+          "id": "catalog",
+          "revision": "c1"
+        },
+        "domainPins": [
+          {
+            "documentId": "domain",
+            "revision": "schema1"
+          }
+        ]
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        },
+        "closure": {
+          "pins": [
+            {
+              "documentId": "domain",
+              "revision": "schema1"
+            }
+          ],
+          "documents": [
+            {
+              "revision": "schema1",
+              "document": {
+                "umf": "0.10.0",
+                "id": "domain",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "m",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "input",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "output",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "parameter",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "record",
+                        "kind": "record",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "resolved-domains",
+          "complete": false,
+          "authority": false,
+          "domains": [
+            {
+              "source": "catalog",
+              "path": "/transforms/0/inputDomain",
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "definition": {
+                "documentIndex": 0,
+                "moduleIndex": 0,
+                "elementIndex": 0
+              }
+            },
+            {
+              "source": "catalog",
+              "path": "/transforms/0/outputDomain",
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "definition": {
+                "documentIndex": 0,
+                "moduleIndex": 0,
+                "elementIndex": 1
+              }
+            },
+            {
+              "source": "catalog",
+              "path": "/transforms/0/parameters/0/field",
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "parameter"
+              },
+              "definition": {
+                "documentIndex": 0,
+                "moduleIndex": 0,
+                "elementIndex": 2
+              }
+            },
+            {
+              "source": "catalog",
+              "path": "/transforms/0/disclosureProfile/0/bucket/field",
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "parameter"
+              },
+              "definition": {
+                "documentIndex": 0,
+                "moduleIndex": 0,
+                "elementIndex": 2
+              }
+            },
+            {
+              "source": "policy",
+              "path": "/rules/0/disclosure/0/field",
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "definition": {
+                "documentIndex": 0,
+                "moduleIndex": 0,
+                "elementIndex": 0
+              }
+            },
+            {
+              "source": "policy",
+              "path": "/rules/0/disclosure/0/disposition/field",
+              "ref": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "definition": {
+                "documentIndex": 0,
+                "moduleIndex": 0,
+                "elementIndex": 1
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "PROTECTION_DOMAIN_ONLY",
+              "path": "",
+              "severity": "warning",
+              "message": "Core definitions resolved only; domain compatibility, literal/function/query semantics, ontology and native authority remain separate"
+            }
+          ],
+          "retainsClosure": true
+        }
+      }
+    },
+    {
+      "id": "domains.stale-domain-revision",
+      "stage": "domains",
+      "input": {
+        "domainPin": {
+          "documentId": "domain",
+          "revision": "schema1"
+        },
+        "documentRevision": "stale"
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        },
+        "closure": {
+          "pins": [
+            {
+              "documentId": "domain",
+              "revision": "schema1"
+            }
+          ],
+          "documents": [
+            {
+              "revision": "stale",
+              "document": {
+                "umf": "0.10.0",
+                "id": "domain",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "m",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "input",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "output",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "parameter",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "record",
+                        "kind": "record",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "domains": [],
+          "diagnostics": [
+            {
+              "code": "PROTECTION_DOMAIN_PIN",
+              "path": "/closure/documents/0",
+              "message": "Unpinned, stale or duplicate document",
+              "severity": "error"
+            },
+            {
+              "code": "PROTECTION_DOMAIN_PIN",
+              "path": "/closure/pins",
+              "message": "Pinned document missing",
+              "severity": "error"
+            }
+          ],
+          "retainsClosure": true
+        }
+      }
+    },
+    {
+      "id": "domains.unknown-core-member-blocks-resolution",
+      "stage": "domains",
+      "input": {
+        "member": "/documents/0/document/modules/0/elements/0/futureMeaning"
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        },
+        "closure": {
+          "pins": [
+            {
+              "documentId": "domain",
+              "revision": "schema1"
+            }
+          ],
+          "documents": [
+            {
+              "revision": "schema1",
+              "document": {
+                "umf": "0.10.0",
+                "id": "domain",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "m",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "input",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {},
+                        "futureMeaning": true
+                      },
+                      {
+                        "id": "output",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "parameter",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "record",
+                        "kind": "record",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "domains": [],
+          "diagnostics": [
+            {
+              "code": "PROTECTION_DOMAIN_DOCUMENT",
+              "path": "/closure/documents/0",
+              "message": "Known core0.10 security domain required",
+              "severity": "error"
+            },
+            {
+              "code": "UNKNOWN_CORE_FIELD",
+              "path": "/closure/documents/0/document/modules/0/elements/0/futureMeaning",
+              "message": "Field retained without interpretation",
+              "severity": "warning"
+            }
+          ],
+          "retainsClosure": true
+        }
+      }
+    },
+    {
+      "id": "domains.unknown-policy-member-blocks-resolution",
+      "stage": "domains",
+      "input": {
+        "member": "/futurePolicy"
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "futurePolicy": {
+            "kept": true
+          }
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        },
+        "closure": {
+          "pins": [
+            {
+              "documentId": "domain",
+              "revision": "schema1"
+            }
+          ],
+          "documents": [
+            {
+              "revision": "schema1",
+              "document": {
+                "umf": "0.10.0",
+                "id": "domain",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "m",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "input",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "output",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "parameter",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "record",
+                        "kind": "record",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "domains": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_V2_UNKNOWN",
+              "path": "/futurePolicy",
+              "message": "Uninterpreted policy source retained",
+              "severity": "warning"
+            }
+          ],
+          "retainsClosure": true
+        }
+      }
+    },
+    {
+      "id": "domains.closure-schema-diagnostic-before-source-refusal",
+      "stage": "domains",
+      "input": {
+        "policyPin": {
+          "id": "stale",
+          "revision": "c1"
+        },
+        "closure": {
+          "pins": [],
+          "documents": [],
+          "future": true
+        }
+      },
+      "sources": {
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "stale",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "value",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "100"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        },
+        "closure": {
+          "pins": [],
+          "documents": [],
+          "future": true
+        }
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "complete": false,
+          "authority": false,
+          "domains": [],
+          "diagnostics": [
+            {
+              "code": "SECURITY_PROTECTION_PIN",
+              "path": "/protection",
+              "message": "Exact catalog id/revision required",
+              "severity": "error"
+            },
+            {
+              "code": "PROTECTION_DOMAIN_STRUCTURE",
+              "path": "/closure",
+              "message": "must NOT have additional properties",
+              "severity": "error"
+            }
+          ],
+          "retainsClosure": true
+        }
+      }
+    },
+    {
+      "id": "domains.accessor-closure-refused-without-getter",
+      "stage": "domains",
+      "input": {
+        "hostShape": "pins accessor"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "status": "refused",
+          "diagnostics": [
+            {
+              "code": "NON_JSON",
+              "path": "/pins",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "severity": "error"
+            }
+          ],
+          "getterCalls": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "format": "umf.r8.scalar-types-for-version.predecessor/1",
+  "status": "frozen-before-implementation",
+  "capturedWith": {
+    "runtime": "Bun 1.4.3",
+    "entrypoint": "src/model/types.ts",
+    "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+    "generatedModelSha256": "29d5ffb1049f7ca258073cdab358eff0a983303763d01d3313ee0fa59f161dc2",
+    "metamodelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
+    "generatedCoreSchemaSha256": "3995088010b051e7d982c3ae51e93ed166e4b475186e02cfd9c19d9446b9eb60"
+  },
+  "cases": [
+    {
+      "id": "current-version",
+      "version": "0.10.0",
+      "result": ["boolean", "integer", "decimal", "float", "string", "binary", "date", "time", "timestamp", "bits128", "uuid"]
+    },
+    {"id": "previous-version", "version": "0.9.0", "result": []},
+    {"id": "empty-version", "version": "", "result": []},
+    {"id": "trailing-space", "version": "0.10.0 ", "result": []},
+    {"id": "future-version", "version": "0.10.1", "result": []}
+  ],
+  "authority": "The current vocabulary is generated from spec/metamodel/umf.yaml. spec/core/schema.json is the generated resource used as the Rust test oracle at $defs.knownScalarType.enum."
+}

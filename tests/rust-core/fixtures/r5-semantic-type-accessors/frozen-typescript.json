@@ -1,0 +1,456 @@
+{
+  "profile": "semantic-types-extension-accessors/1.0.0",
+  "predecessor": "src/extensions/semantic-types/index.ts",
+  "sourceClosureSha256": {
+    "src/extensions/semantic-types/index.ts": "64482ca4d9d8abd65b19b342e1722eaff8497ce52ff44bf5dc3a7ca6f415c6e2",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/model/types.ts": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
+    "src/validation/internal-schema.ts": "df2f752489b4cf90c083c1411f88e2ff2952c8269f50810308cab65b0106d237",
+    "src/validation/current-policy.ts": "010d8dcc062363592713d68fcd54000775420cae779a074474bcca19b862cd33",
+    "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
+    "src/registry/registry.ts": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1",
+    "src/generated/core-validators.ts": "3a654aa2e944959ba07ec9c1b5692f83a5b7e7a06652bf76ca666649e0e3d095",
+    "src/generated/core-model.ts": "b3bf98b99bbc6dd21ab355454fabc925b914676a9c43a2227e6de6a77e90cfbd",
+    "spec/core/schema.json": "1cef049948bf2c743dacf0348f0f17444e72f81d9a74034ff823429f4c7c4fb1",
+    "spec/core/semantic-type-reference.schema.json": "adca63532b1424637f49f7e2c8e1c35ce68edd71b3904f476d28322e54d24747",
+    "spec/core/extension-package.schema.json": "3b47c85750357831c13d902c9375a081c8ed97bc16db5df71fb7607523d9cd2a",
+    "spec/extensions/semantic-types/package.json": "c73620865e153b94d236384231bc94df9100568029dbe1e95e97bc44dad87a30",
+    "spec/metamodel/generated/core-constraints.json": "0972db27e5d272dd4ca6a978e33a55e5e8b0406edc3a01f0856e71de30708c13",
+    "spec/metamodel/generated/domain-policy.json": "0dd7b527889037d849452410bf662b285a9c74d70ce8f6449e792b02270313cd",
+    "src/model/bit128.ts": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
+    "src/model/uuid.ts": "43b2ea37b050a835e7723c9ea9b32f886fca63f5bb94eb5f8b17b242cf4444f7",
+    "src/registry/kind-runtime.ts": "9cfb57d1cf2331107e8cf756538d3bd698d2c03cad77aa8d2d43d046b2b89745",
+    "src/validation/constraint-language.ts": "decf47ca801a2c03d0c01b92ef3418813c79992c042be879ba0c1d2561678597",
+    "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
+    "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
+    "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08"
+  },
+  "caseInputs": {
+    "reference": {
+      "vocabulary": "example.contact",
+      "version": "1.0.0",
+      "term": "email"
+    },
+    "document": {
+      "umf": "0.10.0",
+      "id": "semantic-accessors",
+      "vocabularies": {
+        "umf.semantic-types": {
+          "version": "0.1.0"
+        },
+        "future": {
+          "version": "9.0.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "https://example.test",
+          "elements": [
+            {
+              "id": "e",
+              "scalarType": "string",
+              "extensions": {
+                "umf.semantic-types": {
+                  "types": [
+                    {
+                      "vocabulary": "example.contact",
+                      "version": "1.0.0",
+                      "term": "email"
+                    }
+                  ],
+                  "future": {
+                    "opaque": true
+                  }
+                },
+                "future": {
+                  "domain_type": "email",
+                  "recipe": {
+                    "type": "native"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "warningDocument": {
+      "umf": "0.10.0",
+      "id": "semantic-accessors",
+      "vocabularies": {
+        "umf.semantic-types": {
+          "version": "0.1.0"
+        },
+        "future": {
+          "version": "9.0.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "https://example.test",
+          "elements": [
+            {
+              "id": "e",
+              "scalarType": "string",
+              "extensions": {
+                "umf.semantic-types": {
+                  "types": [
+                    {
+                      "vocabulary": "example.contact",
+                      "version": "1.0.0",
+                      "term": "email",
+                      "second": true,
+                      "first": true
+                    }
+                  ],
+                  "z": 1,
+                  "a": 2
+                },
+                "future": {
+                  "domain_type": "email",
+                  "recipe": {
+                    "type": "native"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "outcomes": {
+    "get_copy_success": {
+      "ok": true,
+      "value": {
+        "again": {
+          "types": [
+            {
+              "vocabulary": "example.contact",
+              "version": "1.0.0",
+              "term": "email"
+            }
+          ],
+          "future": {
+            "opaque": true
+          }
+        },
+        "source": {
+          "umf": "0.10.0",
+          "id": "semantic-accessors",
+          "vocabularies": {
+            "umf.semantic-types": {
+              "version": "0.1.0"
+            },
+            "future": {
+              "version": "9.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "https://example.test",
+              "elements": [
+                {
+                  "id": "e",
+                  "scalarType": "string",
+                  "extensions": {
+                    "umf.semantic-types": {
+                      "types": [
+                        {
+                          "vocabulary": "example.contact",
+                          "version": "1.0.0",
+                          "term": "email"
+                        }
+                      ],
+                      "future": {
+                        "opaque": true
+                      }
+                    },
+                    "future": {
+                      "domain_type": "email",
+                      "recipe": {
+                        "type": "native"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "get_wrong_profile": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_PROFILE",
+        "message": "Expected umf.semantic-types 0.1.0",
+        "path": ""
+      }
+    },
+    "get_missing_profile": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_PROFILE",
+        "message": "Expected umf.semantic-types 0.1.0",
+        "path": ""
+      }
+    },
+    "get_missing_annotation": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_PROFILE",
+        "message": "Missing semantic type annotation at requested element",
+        "path": ""
+      }
+    },
+    "get_missing_element": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_PROFILE",
+        "message": "Missing semantic type annotation at requested element",
+        "path": ""
+      }
+    },
+    "get_invalid_payload": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_DOCUMENT",
+        "message": "[{\"code\":\"UNKNOWN_EXTENSION\",\"path\":\"/vocabularies/future\",\"message\":\"Exact extension version unavailable; content retained\",\"severity\":\"warning\"},{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/modules/0/elements/0/extensions/umf.semantic-types/types\",\"message\":\"must NOT have fewer than 1 items\",\"severity\":\"error\"}]",
+        "path": ""
+      }
+    },
+    "set_copy_on_write": {
+      "ok": true,
+      "value": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "semantic-accessors",
+          "vocabularies": {
+            "umf.semantic-types": {
+              "version": "0.1.0"
+            },
+            "future": {
+              "version": "9.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "https://example.test",
+              "elements": [
+                {
+                  "id": "e",
+                  "scalarType": "string",
+                  "extensions": {
+                    "umf.semantic-types": {
+                      "types": [
+                        {
+                          "vocabulary": "example.contact",
+                          "version": "1.0.0",
+                          "term": "email"
+                        }
+                      ],
+                      "future": {
+                        "opaque": true
+                      }
+                    },
+                    "future": {
+                      "domain_type": "email",
+                      "recipe": {
+                        "type": "native"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "result": {
+          "types": [
+            {
+              "vocabulary": "example.contact",
+              "version": "1.0.0",
+              "term": "phone"
+            }
+          ],
+          "future": {
+            "kept": true
+          }
+        },
+        "unknownExtension": {
+          "domain_type": "email",
+          "recipe": {
+            "type": "native"
+          }
+        },
+        "profile": {
+          "version": "0.1.0"
+        }
+      }
+    },
+    "set_adds_profile": {
+      "ok": true,
+      "value": {
+        "profile": {
+          "version": "0.1.0"
+        },
+        "annotation": {
+          "types": [
+            {
+              "vocabulary": "example.contact",
+              "version": "1.0.0",
+              "term": "email"
+            }
+          ]
+        }
+      }
+    },
+    "set_wrong_profile_precedes_missing_element": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_PROFILE",
+        "message": "Cannot overwrite a different semantic type profile",
+        "path": ""
+      }
+    },
+    "set_missing_element": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_PROFILE",
+        "message": "Missing requested element",
+        "path": ""
+      }
+    },
+    "set_missing_annotation": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Value is not JSON-compatible",
+        "path": ""
+      }
+    },
+    "set_missing_annotation_missing_target": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_PROFILE",
+        "message": "Missing requested element",
+        "path": ""
+      }
+    },
+    "set_malformed_vocabulary_container": {
+      "ok": false,
+      "error": {
+        "code": "",
+        "message": "null is not an object (evaluating 'candidate.vocabularies[SEMANTIC_TYPES_EXTENSION]')",
+        "path": ""
+      }
+    },
+    "set_invalid_annotation": {
+      "ok": false,
+      "error": {
+        "code": "SEMANTIC_TYPE_DOCUMENT",
+        "message": "[{\"code\":\"UNKNOWN_EXTENSION\",\"path\":\"/vocabularies/future\",\"message\":\"Exact extension version unavailable; content retained\",\"severity\":\"warning\"},{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/modules/0/elements/0/extensions/umf.semantic-types/types\",\"message\":\"must NOT have fewer than 1 items\",\"severity\":\"error\"}]",
+        "path": ""
+      }
+    },
+    "set_unknown_content": {
+      "ok": true,
+      "value": {
+        "annotation": {
+          "types": [
+            {
+              "vocabulary": "example.contact",
+              "version": "1.0.0",
+              "term": "email",
+              "future": {
+                "x": 1
+              }
+            }
+          ],
+          "opaque": {
+            "x": 2
+          }
+        },
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_UNKNOWN",
+            "path": "/modules/0/elements/0/extensions/umf.semantic-types/opaque",
+            "message": "Unknown annotation retained",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_UNKNOWN",
+            "path": "/modules/0/elements/0/extensions/umf.semantic-types/types/0/future",
+            "message": "Unknown reference qualifier retained",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/extensions/umf.semantic-types",
+            "message": "External semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "diagnostics_warning_order": {
+      "ok": true,
+      "value": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_UNKNOWN",
+            "path": "/modules/0/elements/0/extensions/umf.semantic-types/z",
+            "message": "Unknown annotation retained",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_UNKNOWN",
+            "path": "/modules/0/elements/0/extensions/umf.semantic-types/a",
+            "message": "Unknown annotation retained",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_UNKNOWN",
+            "path": "/modules/0/elements/0/extensions/umf.semantic-types/types/0/second",
+            "message": "Unknown reference qualifier retained",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_UNKNOWN",
+            "path": "/modules/0/elements/0/extensions/umf.semantic-types/types/0/first",
+            "message": "Unknown reference qualifier retained",
+            "severity": "warning"
+          },
+          {
+            "code": "SEMANTIC_TYPE_EXTERNAL",
+            "path": "/modules/0/elements/0/extensions/umf.semantic-types",
+            "message": "External semantic definitions and value validators are resolved separately",
+            "severity": "warning"
+          }
+        ]
+      }
+    }
+  }
+}

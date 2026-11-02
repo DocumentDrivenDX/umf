@@ -1,0 +1,222 @@
+{
+  "source": {
+    "umf": "0.10.0",
+    "id": "fixture:domain",
+    "vocabularies": {
+      "urn:test:note": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "m",
+        "elements": [
+          {
+            "id": "e",
+            "extensions": {
+              "urn:test:note": {
+                "label": "Buyer",
+                "opaque": {
+                  "keep": [
+                    1,
+                    true
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "other",
+        "namespace": "other",
+        "elements": [
+          {
+            "id": "e",
+            "extensions": {
+              "urn:test:note": {
+                "label": "Contact"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "extensionSchema": {
+    "type": "object",
+    "required": [
+      "label"
+    ],
+    "properties": {
+      "label": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": true
+  },
+  "success": {
+    "umf": "0.10.0",
+    "id": "fixture:domain",
+    "vocabularies": {
+      "urn:test:note": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "m",
+        "elements": [
+          {
+            "id": "e",
+            "extensions": {
+              "urn:test:note": {
+                "label": "Buyer",
+                "opaque": {
+                  "keep": [
+                    1,
+                    true
+                  ]
+                },
+                "edited": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "other",
+        "namespace": "other",
+        "elements": [
+          {
+            "id": "e",
+            "extensions": {
+              "urn:test:note": {
+                "label": "Contact"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "surrogateSource": {
+    "umf": "0.10.0",
+    "id": "fixture:domain",
+    "vocabularies": {
+      "urn:test:note": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "\ud800",
+        "namespace": "m",
+        "elements": [
+          {
+            "id": "\ud800",
+            "extensions": {
+              "urn:test:note": {
+                "label": "Buyer",
+                "opaque": {
+                  "keep": [
+                    1,
+                    true
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "other",
+        "namespace": "other",
+        "elements": [
+          {
+            "id": "e",
+            "extensions": {
+              "urn:test:note": {
+                "label": "Contact"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "surrogateSuccess": {
+    "umf": "0.10.0",
+    "id": "fixture:domain",
+    "vocabularies": {
+      "urn:test:note": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "\ud800",
+        "namespace": "m",
+        "elements": [
+          {
+            "id": "\ud800",
+            "extensions": {
+              "urn:test:note": {
+                "label": "Buyer",
+                "opaque": {
+                  "keep": [
+                    1,
+                    true
+                  ]
+                },
+                "surrogate": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "other",
+        "namespace": "other",
+        "elements": [
+          {
+            "id": "e",
+            "extensions": {
+              "urn:test:note": {
+                "label": "Contact"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "updaterTrace": [
+    "Buyer"
+  ],
+  "validationTrace": [
+    "Buyer",
+    "Contact",
+    "Buyer",
+    "Contact"
+  ],
+  "unsafeRefusal": {
+    "code": "UNSAFE_EDIT",
+    "message": "All present semantics must be validated before editing"
+  },
+  "missingRefusal": {
+    "code": "MISSING_ELEMENT",
+    "message": "Extension instance not found"
+  },
+  "invalidEdit": {
+    "code": "INVALID_EDIT",
+    "message": "[{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/modules/0/elements/0/extensions/urn:test:note/label\",\"message\":\"must be string\",\"severity\":\"error\"}]"
+  },
+  "invalidEditValidationTrace": [
+    "Buyer",
+    "Contact",
+    "Contact"
+  ]
+}

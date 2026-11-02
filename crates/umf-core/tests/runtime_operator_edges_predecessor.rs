@@ -7,7 +7,7 @@ use umf_core::{
 };
 
 const ORACLE: &str = include_str!(
-    "../../../docs/helix/04-build/evidence/rust-migration/r2/sol-runtime-operator-edges-predecessor.json"
+    "../../../tests/rust-core/fixtures/r2/sol-runtime-operator-edges-predecessor.json"
 );
 
 fn parse(source: &str) -> Value {

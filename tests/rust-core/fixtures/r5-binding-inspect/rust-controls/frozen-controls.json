@@ -1,0 +1,215 @@
+{
+  "bun": "1.4.3",
+  "cases": {
+    "schema/missing-target": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/umf.binding",
+          "message": "must have required property 'target'",
+          "severity": "error"
+        }
+      ]
+    },
+    "scope/nonempty-binding-modules": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_SCOPE",
+          "path": "/extensions/umf.binding/modules",
+          "message": "A binding document does not contain logical modules",
+          "severity": "error"
+        }
+      ]
+    },
+    "duplicate/element-assignment": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_DUPLICATE",
+          "path": "/extensions/umf.binding/elements/1",
+          "message": "Duplicate elements assignment",
+          "severity": "error"
+        }
+      ]
+    },
+    "duplicate/field-assignment": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_DUPLICATE",
+          "path": "/extensions/umf.binding/fields/6",
+          "message": "Duplicate fields assignment",
+          "severity": "error"
+        }
+      ]
+    },
+    "duplicate/index-name": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_DUPLICATE",
+          "path": "/extensions/umf.binding/indexes/8/name",
+          "message": "Duplicate index name in table scope",
+          "severity": "error"
+        }
+      ]
+    },
+    "duplicate/index-target": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_INDEX",
+          "path": "/extensions/umf.binding/indexes/0/on/1",
+          "message": "Duplicate ordered index target",
+          "severity": "error"
+        }
+      ]
+    },
+    "storage/column-with-path": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/umf.binding/fields/0",
+          "message": "must NOT be valid",
+          "severity": "error"
+        },
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/umf.binding/fields/0",
+          "message": "must match \"else\" schema",
+          "severity": "error"
+        }
+      ]
+    },
+    "storage/embedded-with-column": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_COLUMN",
+          "path": "/extensions/umf.binding/fields/5/column",
+          "message": "Embedded storage cannot also declare a standalone column",
+          "severity": "error"
+        }
+      ]
+    },
+    "reference/exact-ddd-field-required": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_REFERENCE",
+          "path": "/extensions/umf.binding/fields/0",
+          "message": "Missing exact logical Field or DDD owner/field",
+          "severity": "error"
+        }
+      ]
+    },
+    "relationship/stable-id-exact-match": {
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/vocabularies/umf.binding/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/future",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/relationships/0/future",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        }
+      ]
+    },
+    "relationship/stable-id-survives-name-change": {
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/vocabularies/umf.binding/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/future",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/relationships/0/future",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        }
+      ]
+    },
+    "relationship/stable-id-missing": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/vocabularies/umf.binding/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/future",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/relationships/0/future",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_REFERENCE",
+          "path": "/extensions/umf.binding/relationships/0",
+          "message": "Missing authored relationship",
+          "severity": "error"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "source": "src/model/bit128.ts and src/model/uuid.ts; directly executed with Bun 1.4.3",
+  "cases": [
+    {
+      "operation": "integer",
+      "token": "1.00e-9223372036854775807",
+      "signed": false,
+      "error": {"code": "BIT128_RANGE", "message": "Nonintegral value"}
+    },
+    {
+      "operation": "integer",
+      "token": "1e9223372036854775807",
+      "signed": false,
+      "error": {"code": "BIT128_RANGE", "message": "Integer outside 128-bit domain"}
+    },
+    {
+      "operation": "integer",
+      "token": "0e9223372036854775808",
+      "signed": false,
+      "result": {"profile": "umf-128/1", "hex": "00000000000000000000000000000000"}
+    },
+    {
+      "operation": "integer",
+      "token": "-0e9223372036854775808",
+      "signed": false,
+      "error": {"code": "BIT128_RANGE", "message": "Negative zero loses sign"}
+    },
+    {
+      "operation": "integer",
+      "token": "1e+00000000000000000000000000000000",
+      "signed": false,
+      "error": {"code": "BIT128_LIMIT", "message": "Exponent exceeds bound"}
+    },
+    {
+      "operation": "integer",
+      "token": "1e000000000000000000000000000000000x",
+      "signed": false,
+      "error": {"code": "BIT128_SYNTAX", "message": "Expected JSON integer token"}
+    },
+    {
+      "operation": "words",
+      "high": "--1",
+      "low": "0",
+      "signed": false,
+      "error": {"code": "BIT128_SYNTAX", "message": "Expected canonical decimal word"}
+    },
+    {
+      "operation": "bits-snapshot",
+      "value": {"profile": "other", "hex": 0},
+      "error": {"code": "BIT128_VALUE", "message": "Unknown bit profile"}
+    },
+    {
+      "operation": "uuid-snapshot",
+      "value": {"profile": "umf-128/1", "hex": "00000000000000000000000000000000", "canonicalText": "00000000-0000-0000-0000-000000000000", "unexpected": null},
+      "error": {"code": "BIT128_VALUE", "message": "Unknown UUID snapshot members or accessors"}
+    },
+    {
+      "operation": "uuid-snapshot-shape",
+      "shape": "null",
+      "error": {"code": "BIT128_VALUE", "message": "Invalid UUID snapshot"}
+    },
+    {
+      "operation": "uuid-snapshot-shape",
+      "shape": "three",
+      "error": {"code": "BIT128_VALUE", "message": "Invalid UUID snapshot"}
+    },
+    {
+      "operation": "uuid-snapshot-shape",
+      "shape": "five",
+      "error": {"code": "BIT128_VALUE", "message": "Invalid UUID snapshot"}
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "cases": [
+    {
+      "name": "two-variants",
+      "outcome": {
+        "result": "success",
+        "entry": "second",
+        "parameters": {},
+        "after": null
+      },
+      "trace": [
+        "artifact:first",
+        "artifact:second",
+        "target.identity",
+        "identity.platform",
+        "identity.platform",
+        "artifact:second",
+        "parameters.model_validate:second"
+      ]
+    },
+    {
+      "name": "no-match",
+      "outcome": {
+        "error": "NotCompiledForTarget",
+        "message": "no unique compiled variant for target identity and argument presence"
+      },
+      "trace": [
+        "artifact:only",
+        "target.identity",
+        "identity.platform",
+        "identity.platform"
+      ]
+    },
+    {
+      "name": "identity-error",
+      "outcome": {
+        "error": "RuntimeError",
+        "message": "identity failed"
+      },
+      "trace": [
+        "artifact:only",
+        "target.identity"
+      ]
+    },
+    {
+      "name": "artifact-error",
+      "outcome": {
+        "error": "RuntimeError",
+        "message": "artifact second failed"
+      },
+      "trace": [
+        "artifact:first",
+        "artifact:second"
+      ]
+    },
+    {
+      "name": "inventory-error",
+      "outcome": {
+        "error": "CatalogError",
+        "message": "exact catalog argument inventory required"
+      },
+      "trace": []
+    },
+    {
+      "name": "platform-error",
+      "outcome": {
+        "error": "RuntimeError",
+        "message": "platform observation failed"
+      },
+      "trace": [
+        "artifact:only",
+        "target.identity",
+        "identity.platform"
+      ]
+    }
+  ]
+}

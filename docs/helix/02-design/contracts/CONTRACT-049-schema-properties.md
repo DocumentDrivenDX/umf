@@ -13,6 +13,12 @@ ddx:
       kind: informed_by
     - id: CONTRACT-048
       kind: informed_by
+    - id: FEAT-028
+      kind: informed_by
+    - id: CONTRACT-001
+      kind: references
+    - id: CONTRACT-068
+      kind: references
 ---
 
 # CONTRACT-049: Shared schema properties
@@ -242,8 +248,56 @@ have valid=true/complete=false. Larger native/validator isolation claims remain 
 Acceptance coverage must include the exact original Ashlar core0.7 schema-v3 example;
 explicit upgrade must precede value checking. Bun tests and real Chromium must verify logical
 presence/membership/value checks, original document diagnostics/results, unknown scope, key
-context and old-version refusal. This is a new operation on 0.8, not a mutation of
-older envelope semantics or replacement of native enforcement.
+context and old-version refusal. This is a historical operation profile for 1.0.0/core 0.8.0;
+it does not assert that the current public export dispatches that profile or provide a
+mutation path for older envelope semantics.
+
+## Current logical Record value checks — operation 2.0.0 over core 0.10.0
+
+The current public `validateCoreRecordValues(source, identity, values)` operation
+accepts only a valid core 0.10.0 source. Its current operation result version is
+2.0.0. It requires an explicit qualified Record identity and an array of explicit
+field states. It refuses older core source versions; it does not dispatch to the
+historical 1.0.0/core 0.8.0 profile above, upgrade a source, insert defaults, convert
+values, acquire native resources, or establish physical or dataset-level behavior.
+
+The operation copies the source, identity, and values before semantic checks. A
+valid source is checked before the selected identity, then the values array. Identity
+objects are closed `{module,element}` pairs with nonempty strings, and must resolve
+to a Record. A value entry is a closed object with `field` and `state`, plus `value`
+only when `state` is `present`. States are exactly `absent` or `present`. Duplicate
+input identities are diagnosed at the later input and the first supplied state is
+used for member evaluation. Values for undeclared Fields are errors. No input for a
+declared Record member means logical absence. Required absence is an error; an
+absent-allowed Field accepts absence. Present values are checked by the current
+`validateCoreFieldValue` semantics.
+
+The result preserves the copied original source, identity, values, and
+`documentValidation`; it returns the selected Record validation and ordered Field
+results. Field results follow source member order, not input value order. Source
+validation warnings are retained in their original order except warnings whose
+diagnostic code begins `EXPERIMENTAL_`. A nonempty key declaration on the selected Record
+adds an unresolved dataset-context warning. Any relationship declaration anywhere
+in the source adds the corresponding unresolved relationship-context warning;
+this scope is document-wide. These warnings do not invalidate otherwise valid
+logical values but make the selected result incomplete. `valid` is false exactly
+when an error diagnostic exists; `complete` is false when any diagnostic exists.
+Unsupported member interpretation and unknown availability/cardinality remain
+incomplete rather than being approximated. Unknown source meaning is retained and
+prevents completeness. No complete result proves native enforcement, dataset
+coverage, key uniqueness/equality, relationship endpoints, or graph invariants.
+
+The preceding warning scope and filtering rule describe the current public
+operation exactly. Whether relationship obligations should be narrowed to the
+selected Record, whether any non-experimental document warning should be omitted,
+and whether a separately versioned operation schema or broader memory-isolation
+profile should be added are unresolved refinements; none changes this contract's
+current behavior. The frozen predecessor and host-admission vectors, current
+installed Node/Bun/Chromium replays, and their package/archive provenance are
+recorded in `docs/helix/04-build/evidence/rust-migration/r5-record-values/` and
+`docs/helix/04-build/evidence/rust-migration/r8-record-values-current-darwin-20261027/`.
+That evidence qualifies only the stated versions, cases, hosts, and packaged build;
+it does not support retirement or release claims.
 
 ## Supplied dataset context checks — experimental operation 1.0.0
 

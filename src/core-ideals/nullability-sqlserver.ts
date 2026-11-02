@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type Nullability,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic,type Nullability} from '../model/types';
 import {type NativeJson,parseNativeJson,renderTree} from '../model/native-json';
 import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '../model/nullability';
 import {exportSqlServerCatalog,getSqlServerColumnMetadata} from '../adapters/sqlserver';
 import evidenceSchema from '../../spec/extensions/sqlserver-nullability/native.schema.json';
 import {catalogIntegerErrors} from '../validation/catalog-integers';
-export {default as sqlserverNullabilityEvidenceSchema} from '../../spec/extensions/sqlserver-nullability/native.schema.json';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 
@@ -15,10 +14,9 @@ import core from '../../spec/core/schema.json';
 import authorSchema from '../../spec/core/nullability-operation-v5.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/sqlserver-nullability-classification.schema.json';
-import manifest from '../../spec/extensions/sqlserver-nullability/package.json';
-export const SQLSERVER_NULLABILITY_EXTENSION='umf.sqlserver.nullability';
-export const sqlserverNullabilityPackage=manifest as unknown as ExtensionPackage;
-export {default as sqlserverNullabilityClassificationSchema} from '../../spec/core/sqlserver-nullability-classification.schema.json';
+import {SQLSERVER_NULLABILITY_EXTENSION,sqlserverNullabilityPackage,sqlserverNullabilityClassificationSchema} from './nullability-sqlserver-package';
+export {SQLSERVER_NULLABILITY_EXTENSION,sqlserverNullabilityPackage,sqlserverNullabilityClassificationSchema};
+export {sqlserverNullabilityEvidenceSchema} from './nullability-sqlserver-package';
 export interface SqlServerNullabilityRequest {
  column:string;nativeSource:string;mode:'strict'|'report';scope:'stored-relation'|'query-result'|'write-input'|'unresolved';carrier:'sql-null'|'unresolved';author?:CoreNullabilityDeclaration;
 }

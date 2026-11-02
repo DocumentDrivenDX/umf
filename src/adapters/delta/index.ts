@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/delta/package.json';
+import {DELTA_EXTENSION,deltaPackage} from './package';
 import grammar from '../../../spec/extensions/delta/datatype-schema.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const DELTA_EXTENSION='umf.delta';
-export const deltaPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
 type Payload={profile:'delta-schema-json';root:NativeJson};
 let check:ReturnType<ReturnType<typeof createValidator>['compile']>|undefined;
 const atomic=new Set(['string','long','integer','short','byte','float','double','boolean','binary','date','timestamp','timestamp_ntz','void','variant']);

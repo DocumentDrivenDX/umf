@@ -8,7 +8,7 @@ import {generate} from '../../scripts/metamodel/build';
 import {nativeMetamodelExecutable,rustMetamodel} from '../../scripts/metamodel/rust';
 const root=resolve(import.meta.dir,'../..');
 const digest=(source:string)=>createHash('sha256').update(source).digest('hex');
-const baseline=JSON.parse(await readFile(resolve(root,'docs/helix/04-build/evidence/rust-migration/r2/predecessor-outputs.json'),'utf8'));
+const baseline=JSON.parse(await readFile(resolve(root,'tests/rust-core/fixtures/r2/predecessor-outputs.json'),'utf8'));
 function semantic(value:any,path:string):any {
  const copy=structuredClone(value);
  // Only these exact generator-owned locations intentionally change ownership.

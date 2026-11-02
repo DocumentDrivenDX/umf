@@ -1,0 +1,227 @@
+{
+  "source": "src/adapters/parquet/encode.ts",
+  "outcomes": [
+    {
+      "status": "ok",
+      "hex": "01"
+    },
+    {
+      "status": "ok",
+      "hex": "02"
+    },
+    {
+      "status": "ok",
+      "hex": "80"
+    },
+    {
+      "status": "ok",
+      "hex": "7f"
+    },
+    {
+      "status": "ok",
+      "hex": "ffff03"
+    },
+    {
+      "status": "ok",
+      "hex": "feffffff0f"
+    },
+    {
+      "status": "ok",
+      "hex": "ffffffffffffffffff01"
+    },
+    {
+      "status": "ok",
+      "hex": "feffffffffffffffff01"
+    },
+    {
+      "status": "ok",
+      "hex": "8000000000000000"
+    },
+    {
+      "status": "ok",
+      "hex": "0300abff"
+    },
+    {
+      "status": "ok",
+      "hex": "00112233445566778899aabbccddeeff"
+    },
+    {
+      "status": "ok",
+      "hex": "03"
+    },
+    {
+      "status": "ok",
+      "hex": "f30f808080808080808080808080808080"
+    },
+    {
+      "status": "ok",
+      "hex": "210102"
+    },
+    {
+      "status": "ok",
+      "hex": "00"
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Map entry kind differs",
+      "path": ""
+    },
+    {
+      "status": "ok",
+      "hex": "1124ffff0308030300abff00"
+    },
+    {
+      "status": "ok",
+      "hex": "1c1100"
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Expected canonical signed decimal integer",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Integer exceeds declared width",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Expected canonical signed decimal integer",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Binary length exceeds limit",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Invalid exact byte encoding",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Invalid exact byte encoding",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Expected boolean",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Unknown wire kind",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Unknown wire representation fields cannot be discarded",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Collection element kind differs",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Empty Compact Protocol maps cannot encode type information",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Field ID exceeds int16",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Unknown struct field properties",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Encoded value exceeds 1000000 bytes",
+      "path": ""
+    },
+    {
+      "status": "ok",
+      "hex": "0148ffff030300abff"
+    },
+    {
+      "status": "ok",
+      "hex": "00"
+    },
+    {
+      "status": "ok",
+      "hex": "11020203ffff038000"
+    },
+    {
+      "status": "ok",
+      "hex": "210101"
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Expected canonical signed decimal integer",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Integer exceeds declared width",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Expected canonical signed decimal integer",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Binary length exceeds limit",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Unknown map entry fields",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Unknown wire representation fields cannot be discarded",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Expected boolean",
+      "path": ""
+    },
+    {
+      "status": "error",
+      "code": "PARQUET_WIRE_ENCODE",
+      "message": "Unknown wire kind",
+      "path": ""
+    }
+  ]
+}

@@ -3,7 +3,9 @@ import {test,expect} from 'bun:test';
 import {selectCoreElements,readDocument,writeDocument,coreSchema,Registry,importTableSpec,importPostgresqlCatalogCapture,importSqlServerCatalog,importAvroSchema,importParquetSchema,exportTableSpec,exportPostgresqlCatalogCapture,exportSqlServerCatalog,exportAvroSchema,exportParquetCapture,type Document,type ExtensionPackage} from '../../src';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/core/element-selection.schema.json';
+import {generateSelectionSchema} from '../../scripts/core-selection-schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(schema);
+test('selection schema generator reproduces the complete current schema',()=>expect(generateSelectionSchema(coreSchema)).toEqual(schema));
 const mixed:Document={umf:'0.10.0',id:'mixed',vocabularies:{'future.meaning':{version:'1.0.0'}},extensions:{'future.meaning':{unknownDependency:{module:'support',element:'customer'}}},modules:[
  {id:'sales',namespace:'sales',elements:[{id:'customer',name:'Customer',scalarType:'integer',extensions:{'future.meaning':{opaque:'keep'}},references:[{role:'account',module:'billing',element:'account',future:'edge annotation'},{role:'account',module:'billing',element:'account'}]}]},
  {id:'support',namespace:'support',elements:[{id:'customer',name:'Customer',scalarType:'future-scalar',extensions:{}}]},
@@ -22,6 +24,11 @@ test('CONTRACT-001 malformed queries and unresolved core sources fail without in
  const bad=structuredClone(mixed);bad.modules[0]!.elements[0]!.references![0]!.element='missing';expect(()=>selectCoreElements(bad,{references:'none'})).toThrow('UNRESOLVED_REFERENCE');
  let invoked=false;const query={references:'none',get names(){invoked=true;return ['Customer'];}};expect(()=>selectCoreElements(mixed,query as any)).toThrow('accessors');expect(invoked).toBe(false);
  const large:Document={umf:'0.10.0',id:'large',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'e',extensions:{},future:Array(51000).fill('opaque')}]}]};expect(()=>selectCoreElements(large,{references:'none'})).toThrow('limit');
+});
+test('CONTRACT-001 cardinality filters select and validate current result envelopes',()=>{
+ const source:Document={umf:'0.10.0',id:'cardinality',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'array',kind:'field',cardinality:'array',itemType:{module:'m',element:'item'},extensions:{}},{id:'item',kind:'field',extensions:{}}]}]};
+ const result=selectCoreElements(source,{references:'none',cardinalities:['array']});
+ expect(result.selection.map(entry=>entry.element.id)).toEqual(['array']);expect(check(result)).toBe(true);
 });
 test('CONTRACT-001 callers can supply semantic validation without confusing selection with native dependency discovery',()=>{
  const manifest:ExtensionPackage={id:'future.meaning',version:'1.0.0',coreVersion:'0.10.0',description:'Synthetic validation probe',schema:{type:'object'},semantics:'Synthetic validator controls acceptance',scopes:['document','element'],capabilities:{validation:'semantic',directions:[],evidence:[]}};

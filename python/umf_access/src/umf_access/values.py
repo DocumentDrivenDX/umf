@@ -5,11 +5,9 @@ No native transport is guessed here. temporal_token implements only the selected
 CONTRACT-075 oracle serialization, not a backend or permissive token parser.
 """
 
-from datetime import UTC, date, datetime, timezone
+from datetime import UTC, date, datetime, timedelta, timezone
 from decimal import Decimal
-from math import isfinite
-from struct import pack, unpack
-from typing import Literal, TypeVar, cast
+from typing import Any, Literal, TypeVar, cast
 
 from .types import ValueRuleError, Vector
 
@@ -34,21 +32,17 @@ def validate_integer(
         and (type(bits) is not int or bits < 1)
     ):
         raise ValueRuleError("invalid authored integer width")
-    if bits is not None:
-        magnitude = abs(value)
-        width = magnitude.bit_length()
-        fits = (
-            (
-                width < bits
-                or value < 0
-                and width == bits
-                and magnitude & (magnitude - 1) == 0
-            )
-            if signed
-            else value >= 0 and width <= bits
-        )
-        if not fits:
-            raise ValueRuleError("integer outside authored width")
+    native = _native_values_bridge()
+    try:
+        fits = native.access_values_integer_fits(value, bits, signed)
+    except ValueError as error:
+        if str(error) == "invalid authored integer width":
+            raise ValueRuleError("invalid authored integer width") from None
+        raise ValueRuleError("native integer width decision failed") from None
+    if type(fits) is not bool:
+        raise ValueRuleError("native integer width result differs")
+    if not fits:
+        raise ValueRuleError("integer outside authored width")
     return value
 
 
@@ -64,32 +58,78 @@ def validate_decimal(
     ):
         raise ValueRuleError("invalid authored decimal precision or scale")
     _, digits, exponent = value.as_tuple()
-    # is_finite above makes the exponent an int. Never expand huge exponents.
-    assert isinstance(exponent, int)
-    if not any(digits):
-        return value
-    if scale is not None:
-        shift = exponent + scale
-        length = len(digits) + shift
-        if shift < 0:
-            cut = -shift
-            if cut > len(digits) or any(digits[len(digits) - cut :]):
-                raise ValueRuleError("decimal requires rounding at authored scale")
-        if precision is not None and length > precision:
-            raise ValueRuleError("decimal outside authored precision")
-    elif precision is not None:
-        # No target scale is invented. Count significant coefficient digits.
-        if len(digits) > precision:
-            raise ValueRuleError("decimal outside authored precision")
+    # Python retains Decimal carrier and tuple extraction. Rust owns all
+    # coefficient/exponent comparisons and never constructs 10**exponent.
+    native = _native_values_bridge()
+    try:
+        result = native.access_values_validate_decimal(
+            digits, exponent, precision, scale
+        )
+    except ValueError as error:
+        message = str(error)
+        if message in {
+            "decimal requires rounding at authored scale",
+            "decimal outside authored precision",
+            "invalid authored decimal precision or scale",
+        }:
+            raise ValueRuleError(message) from None
+        raise ValueRuleError("native decimal decision failed") from None
+    if result is not None:
+        raise ValueRuleError("native decimal result differs")
     return value
+
+
+def _native_values_bridge() -> Any:
+    """Require the exact installed core capability; never use a Python fallback."""
+    try:
+        from umf import rust_values
+    except ImportError:
+        raise ValueRuleError("installed umf-core Rust values engine required") from None
+    version = getattr(rust_values, "access_values_profile_version", None)
+    integer = getattr(rust_values, "access_values_integer_fits", None)
+    decimal = getattr(rust_values, "access_values_validate_decimal", None)
+    try:
+        matches = callable(version) and version() == "umf-access-values/0.1.0"
+    except (TypeError, ValueError, OverflowError):
+        matches = False
+    if not (matches and callable(integer) and callable(decimal)):
+        raise ValueRuleError("installed umf-core lacks the required values profile")
+    return rust_values
 
 
 def validate_string(value: object) -> str:
     if not isinstance(value, str):
         raise ValueRuleError("string carrier required")
-    if any(0xD800 <= ord(char) <= 0xDFFF for char in value):
+    if type(value) is not str:
+        # Subclasses can replace iteration. Keep their Python protocol,
+        # short-circuiting, and original exceptions exactly as before.
+        if any(0xD800 <= ord(char) <= 0xDFFF for char in value):
+            raise ValueRuleError("string contains unpaired surrogate")
+        return value
+    native = _native_string_bridge()
+    result = native.access_values_validate_string(value)
+    if type(result) is not bool:
+        raise ValueRuleError("native string result differs")
+    if not result:
         raise ValueRuleError("string contains unpaired surrogate")
     return value
+
+
+def _native_string_bridge() -> Any:
+    """Require the exact installed Rust string profile; never use a fallback."""
+    try:
+        from umf import rust_values
+    except ImportError:
+        raise ValueRuleError("installed umf-core Rust string engine required") from None
+    version = getattr(rust_values, "access_values_string_profile_version", None)
+    validate = getattr(rust_values, "access_values_validate_string", None)
+    try:
+        matches = callable(version) and version() == "umf-access-string/0.1.0"
+    except (TypeError, ValueError, OverflowError):
+        matches = False
+    if not (matches and callable(validate)):
+        raise ValueRuleError("installed umf-core lacks the required string profile")
+    return rust_values
 
 
 def validate_binary(value: object) -> bytes:
@@ -105,6 +145,14 @@ def validate_date(value: object) -> date:
 
 
 def validate_instant(value: object) -> datetime:
+    instant, offset_microseconds = _instant_carrier_fields(value)
+    # Range validation belongs to the shared native temporal profile. This
+    # still preserves the validator's public refusal for unrepresentable UTC.
+    _native_temporal_token("instant", instant, offset_microseconds)
+    return instant
+
+
+def _instant_carrier_fields(value: object) -> tuple[datetime, int]:
     if (
         type(value) is not datetime
         or type(value.tzinfo) is not timezone
@@ -112,12 +160,15 @@ def validate_instant(value: object) -> datetime:
     ):
         raise ValueRuleError("instant requires fixed-offset datetime with default fold")
     try:
-        value.astimezone(UTC)
+        offset = value.utcoffset()
     except (OverflowError, ValueError):
-        raise ValueRuleError(
-            "instant UTC normalization outside supported years"
-        ) from None
-    return value
+        raise ValueRuleError("instant requires an explicit fixed offset") from None
+    if type(offset) is not timedelta:
+        raise ValueRuleError("instant requires an explicit fixed offset")
+    return (
+        value,
+        (offset.days * 86_400 + offset.seconds) * 1_000_000 + offset.microseconds,
+    )
 
 
 def validate_local(value: object) -> datetime:
@@ -126,28 +177,92 @@ def validate_local(value: object) -> datetime:
     return value
 
 
+def _native_temporal_token(
+    kind: str,
+    value: date | datetime,
+    offset_microseconds: int | None = None,
+) -> str:
+    """Delegate canonicalization to the installed shared Rust engine."""
+    try:
+        from umf import rust_temporal
+    except ImportError:
+        raise ValueRuleError("installed umf-core Rust temporal engine required") from None
+    canonicalize = getattr(rust_temporal, "access_temporal_canonical_token", None)
+    profile_version = getattr(rust_temporal, "access_temporal_profile_version", None)
+    if (
+        not callable(canonicalize)
+        or not callable(profile_version)
+        or profile_version() != "umf-access-temporal/0.1.0"
+    ):
+        raise ValueRuleError("installed umf-core lacks the required temporal profile")
+    try:
+        token = canonicalize(
+            kind,
+            value.year,
+            value.month,
+            value.day,
+            value.hour if type(value) is datetime else 0,
+            value.minute if type(value) is datetime else 0,
+            value.second if type(value) is datetime else 0,
+            value.microsecond if type(value) is datetime else 0,
+            offset_microseconds,
+        )
+    except ValueError as error:
+        if str(error) == "normalized instant is outside years 0001 through 9999":
+            raise ValueRuleError(
+                "instant UTC normalization outside supported years"
+            ) from None
+        raise ValueRuleError("temporal carrier cannot be canonicalized") from None
+    except (TypeError, OverflowError):
+        raise ValueRuleError("temporal carrier cannot be canonicalized") from None
+    if type(token) is not str:
+        raise ValueRuleError("native temporal result differs")
+    return token
+
+
 def temporal_token(kind: Literal["date", "instant", "local"], value: object) -> str:
     """Serialize an admitted carrier canonically for umf-access-temporal/0.1.0."""
     if kind == "date":
         day = validate_date(value)
-        return f"{day.year:04d}-{day.month:02d}-{day.day:02d}"
+        return _native_temporal_token("date", day)
     if kind == "instant":
-        instant = validate_instant(value)
-        try:
-            stamp = instant.astimezone(UTC)
-        except (OverflowError, ValueError):
-            raise ValueRuleError(
-                "instant UTC normalization outside supported years"
-            ) from None
+        instant, offset_microseconds = _instant_carrier_fields(value)
+        return _native_temporal_token("instant", instant, offset_microseconds)
     elif kind == "local":
         stamp = validate_local(value)
     else:
         raise ValueRuleError("unsupported temporal kind")
-    return (
-        f"{stamp.year:04d}-{stamp.month:02d}-{stamp.day:02d}T"
-        f"{stamp.hour:02d}:{stamp.minute:02d}:{stamp.second:02d}."
-        f"{stamp.microsecond:06d}" + ("Z" if kind == "instant" else "")
-    )
+    return _native_temporal_token("local", stamp)
+
+
+def normalize_instant(value: object) -> datetime:
+    """Return the codec's UTC datetime carrier from Rust-canonical token fields."""
+    instant, offset_microseconds = _instant_carrier_fields(value)
+    token = _native_temporal_token("instant", instant, offset_microseconds)
+    separators = ((4, "-"), (7, "-"), (10, "T"), (13, ":"), (16, ":"), (19, "."), (26, "Z"))
+    if (
+        len(token) != 27
+        or any(token[index] != marker for index, marker in separators)
+        or any(
+            not "0" <= character <= "9"
+            for index, character in enumerate(token)
+            if index not in {position for position, _ in separators}
+        )
+    ):
+        raise ValueRuleError("native temporal result differs")
+    try:
+        return datetime(
+            int(token[0:4]),
+            int(token[5:7]),
+            int(token[8:10]),
+            int(token[11:13]),
+            int(token[14:16]),
+            int(token[17:19]),
+            int(token[20:26]),
+            tzinfo=UTC,
+        )
+    except (TypeError, ValueError, OverflowError):
+        raise ValueRuleError("native temporal result differs") from None
 
 
 def validate_length(
@@ -162,10 +277,35 @@ def validate_length(
             value,
         )
     )
-    if (minimum is not None and size < minimum) or (
-        maximum is not None and size > maximum
-    ):
-        raise ValueRuleError("length outside authored bounds")
+    # Preserve Python's exact comparison protocol for unusual bounds. Exact
+    # integer bounds use Rust, one at a time, so minimum failure still prevents
+    # even inspecting/comparing maximum.
+    if minimum is not None:
+        if type(minimum) in (int, bool):
+            native = _native_constraints_bridge()
+            try:
+                within = native.access_constraints_length_within(size, int(minimum), None)
+            except (TypeError, ValueError, OverflowError):
+                raise ValueRuleError("native length decision failed") from None
+            if type(within) is not bool:
+                raise ValueRuleError("native length result differs")
+            if not within:
+                raise ValueRuleError("length outside authored bounds")
+        elif size < minimum:
+            raise ValueRuleError("length outside authored bounds")
+    if maximum is not None:
+        if type(maximum) in (int, bool):
+            native = _native_constraints_bridge()
+            try:
+                within = native.access_constraints_length_within(size, None, int(maximum))
+            except (TypeError, ValueError, OverflowError):
+                raise ValueRuleError("native length decision failed") from None
+            if type(within) is not bool:
+                raise ValueRuleError("native length result differs")
+            if not within:
+                raise ValueRuleError("length outside authored bounds")
+        elif size > maximum:
+            raise ValueRuleError("length outside authored bounds")
     return value
 
 
@@ -186,22 +326,126 @@ def validate_range(
             raise ValueRuleError("range bound carrier mismatch")
         if isinstance(bound, Decimal):
             validate_decimal(bound)
-    if (
-        minimum is not None
-        and (value < minimum or value == minimum and not min_inclusive)
-        or maximum is not None
-        and (value > maximum or value == maximum and not max_inclusive)
-    ):
-        raise ValueRuleError("value outside authored range")
+    if minimum is None and maximum is None:
+        return value
+    native = _native_range_bridge()
+    if minimum is not None:
+        ordering = _compare_range_values(native, value, minimum)
+        if ordering < 0 or ordering == 0 and not min_inclusive:
+            raise ValueRuleError("value outside authored range")
+    if maximum is not None:
+        ordering = _compare_range_values(native, value, maximum)
+        if ordering > 0 or ordering == 0 and not max_inclusive:
+            raise ValueRuleError("value outside authored range")
     return value
+
+
+def _native_range_bridge() -> Any:
+    """Require the exact installed Rust range capability; never fall back."""
+    try:
+        from umf import rust_values
+    except ImportError:
+        raise ValueRuleError("installed umf-core Rust range engine required") from None
+    version = getattr(rust_values, "access_range_profile_version", None)
+    integer = getattr(rust_values, "access_range_compare_integer", None)
+    decimal = getattr(rust_values, "access_range_compare_decimal", None)
+    try:
+        matches = callable(version) and version() == "umf-access-range/0.1.0"
+    except (TypeError, ValueError, OverflowError):
+        matches = False
+    if not (matches and callable(integer) and callable(decimal)):
+        raise ValueRuleError("installed umf-core lacks the required range profile")
+    return rust_values
+
+
+def _native_constraints_bridge() -> Any:
+    """Require the exact installed Rust constraint capability; never fall back."""
+    try:
+        from umf import rust_values
+    except ImportError:
+        raise ValueRuleError("installed umf-core Rust constraints engine required") from None
+    version = getattr(rust_values, "access_constraints_profile_version", None)
+    length = getattr(rust_values, "access_constraints_length_within", None)
+    equal = (
+        getattr(rust_values, "access_constraints_equal_boolean", None),
+        getattr(rust_values, "access_constraints_equal_integer", None),
+        getattr(rust_values, "access_constraints_equal_text", None),
+        getattr(rust_values, "access_constraints_equal_bytes", None),
+        getattr(rust_values, "access_constraints_equal_decimal", None),
+    )
+    try:
+        matches = callable(version) and version() == "umf-access-constraints/0.1.0"
+    except (TypeError, ValueError, OverflowError):
+        matches = False
+    if not (
+        matches
+        and callable(length)
+        and all(callable(function) for function in equal)
+    ):
+        raise ValueRuleError("installed umf-core lacks the required constraints profile")
+    return rust_values
+
+
+def _compare_range_values(native: Any, value: int | Decimal, bound: int | Decimal) -> int:
+    try:
+        if type(value) is int:
+            ordering = native.access_range_compare_integer(value, bound)
+        else:
+            ordering = native.access_range_compare_decimal(
+                value.as_tuple(), bound.as_tuple()
+            )
+    except (TypeError, ValueError, OverflowError):
+        raise ValueRuleError("native range comparison failed") from None
+    if type(ordering) is not int or ordering not in (-1, 0, 1):
+        raise ValueRuleError("native range comparison result differs")
+    return ordering
 
 
 def validate_allowed(value: T, allowed: tuple[T, ...]) -> T:
-    if not any(
-        type(candidate) is type(value) and candidate == value for candidate in allowed
-    ):
-        raise ValueRuleError("value outside authored allowed values")
-    return value
+    for candidate in allowed:
+        if type(candidate) is not type(value):
+            continue
+        equal: Any
+        arguments: tuple[Any, ...]
+        if type(value) is bool:
+            native = _native_constraints_bridge()
+            equal = native.access_constraints_equal_boolean
+            arguments = (candidate, value)
+        elif type(value) is int:
+            native = _native_constraints_bridge()
+            equal = native.access_constraints_equal_integer
+            arguments = (candidate, value)
+        elif type(value) is str and type(candidate) is str and not any(
+            0xD800 <= ord(character) <= 0xDFFF
+            for text in (candidate, value)
+            for character in text
+        ):
+            native = _native_constraints_bridge()
+            equal = native.access_constraints_equal_text
+            arguments = (candidate, value)
+        elif type(value) is bytes:
+            native = _native_constraints_bridge()
+            equal = native.access_constraints_equal_bytes
+            arguments = (candidate, value)
+        elif type(value) is Decimal and value.is_finite() and candidate.is_finite():
+            native = _native_constraints_bridge()
+            equal = native.access_constraints_equal_decimal
+            arguments = (candidate.as_tuple(), value.as_tuple())
+        else:
+            # Preserve candidate.__eq__(value), its truth conversion and any
+            # host exception for custom, nested, float, non-finite or exotic data.
+            if candidate == value:
+                return value
+            continue
+        try:
+            outcome = equal(*arguments)
+        except (TypeError, ValueError, OverflowError):
+            raise ValueRuleError("native allowed-value comparison failed") from None
+        if type(outcome) is not bool:
+            raise ValueRuleError("native allowed-value result differs")
+        if outcome:
+            return value
+    raise ValueRuleError("value outside authored allowed values")
 
 
 def validate_vector(value: object, *, dimensions: int) -> Vector:
@@ -210,16 +454,43 @@ def validate_vector(value: object, *, dimensions: int) -> Vector:
     items = value
     if len(items) != dimensions:
         raise ValueRuleError("vector dimension or carrier mismatch")
+    native = None
     for item in items:
-        if type(item) is not float or not isfinite(item):
+        if type(item) is not float:
             raise ValueRuleError("vector requires finite float32 values")
+        if native is None:
+            native = _float32_bridge()
         try:
-            exact = unpack("!f", pack("!f", item))[0]
-        except OverflowError:
-            raise ValueRuleError("vector value outside float32") from None
-        if exact != item:
+            outcome = native.access_float32_classify(item)
+        except (TypeError, ValueError, OverflowError):
+            raise ValueRuleError("native float32 validation failed") from None
+        if type(outcome) is not int:
+            raise ValueRuleError("native float32 validation result differs")
+        if outcome == 1:
+            raise ValueRuleError("vector requires finite float32 values")
+        if outcome == 2:
+            raise ValueRuleError("vector value outside float32")
+        if outcome == 3:
             raise ValueRuleError("vector value requires float32 rounding")
+        if outcome != 0:
+            raise ValueRuleError("native float32 validation result differs")
     return cast(Vector, value)
+
+
+def _float32_bridge() -> Any:
+    try:
+        from umf import rust_values
+    except ImportError:
+        raise ValueRuleError("installed umf-core lacks the required float32 profile") from None
+    version = getattr(rust_values, "access_float32_profile_version", None)
+    classify = getattr(rust_values, "access_float32_classify", None)
+    try:
+        matches = callable(version) and version() == "umf-access-float32/0.1.0"
+    except (TypeError, ValueError, OverflowError):
+        matches = False
+    if not (matches and callable(classify)):
+        raise ValueRuleError("installed umf-core lacks the required float32 profile")
+    return rust_values
 
 
 # Generated packages carry instances of this metadata-driven callable, not
@@ -277,4 +548,5 @@ class FieldValidator:
             checked = validate_allowed(checked, self.allowed)
         return checked
 def validate_float32(value: object) -> float:
-    return validate_vector((value,), dimensions=1)[0]
+    checked = validate_vector((value,), dimensions=1)
+    return checked[0]

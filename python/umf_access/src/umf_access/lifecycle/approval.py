@@ -363,4 +363,3 @@ FROM """ + _q(schema) + "." + _q(APPROVAL_PROFILE["relation"])
           or receipt.evidence_digest != binding.evidence_digest):
         raise CatalogError("approval-receipt-mismatch")
     return receipt
-

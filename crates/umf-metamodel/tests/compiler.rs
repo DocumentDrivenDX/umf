@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-089-AC20, US-089-AC24
+use sha2::{Digest, Sha256};
 use umf_core::{
+    Diagnostic, Engine, Registry, Utf16, Value,
     context::Context,
     engine::{Capabilities, ResourceSet, SemanticContext},
-    Diagnostic, Engine, Registry, Utf16, Value,
 };
 use umf_metamodel::{compile_model, parse_model};
 
@@ -86,6 +87,283 @@ fn replace_string(value: &mut Value, old: &str, new: &str) {
     }
 }
 
+fn operation_outputs(model: &Value) -> Vec<umf_metamodel::Output> {
+    let compiled = compile_model(model, &mut Context::ordinary()).unwrap();
+    umf_metamodel::render_outputs(
+        &compiled,
+        &umf_metamodel::CompilerProvenance {
+            model_sha256: "test-model".into(),
+            compiler_sha256: "test-compiler".into(),
+        },
+    )
+    .unwrap()
+}
+
+fn resources_mut(model: &mut Value) -> &mut Vec<Value> {
+    get_mut(
+        get_mut(get_mut(model, "extensions").unwrap(), "umf.metamodel").unwrap(),
+        "resources",
+    )
+    .and_then(|value| match value {
+        Value::Array(items) => Some(items),
+        _ => None,
+    })
+    .unwrap()
+}
+
+#[test]
+fn operation_resources_match_frozen_bytes_and_follow_declaration_order() {
+    let model = canonical_model();
+    let outputs = operation_outputs(&model);
+    let operation: Vec<_> = outputs
+        .iter()
+        .filter(|output| output.path.contains("operation-v"))
+        .collect();
+    assert_eq!(operation.len(), 6);
+    assert_eq!(
+        operation[0].path,
+        "spec/core/facet-operation-v3.schema.json"
+    );
+    assert_eq!(
+        operation[1].path,
+        "spec/core/cardinality-operation-v4.schema.json"
+    );
+    assert_eq!(
+        operation[0].contents,
+        include_str!("../../../spec/core/facet-operation-v3.schema.json")
+    );
+    assert_eq!(
+        operation[1].contents,
+        include_str!("../../../spec/core/cardinality-operation-v4.schema.json")
+    );
+    assert_eq!(operation[2].path, "spec/core/kind-operation-v6.schema.json");
+    assert_eq!(
+        operation[2].contents,
+        include_str!("../../../spec/core/kind-operation-v6.schema.json")
+    );
+    assert_eq!(
+        format!("{:x}", Sha256::digest(operation[2].contents.as_bytes())),
+        "e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8"
+    );
+    assert_eq!(
+        operation[3].path,
+        "spec/core/nullability-operation-v5.schema.json"
+    );
+    assert_eq!(
+        operation[3].contents,
+        include_str!("../../../spec/core/nullability-operation-v5.schema.json")
+    );
+    assert_eq!(
+        format!("{:x}", Sha256::digest(operation[3].contents.as_bytes())),
+        "442cc69c8998da361b775251b2e8842cece0d700fb1fa59dad4bd3de03f13c92"
+    );
+    assert_eq!(operation[4].path, "spec/core/key-operation-v2.schema.json");
+    assert_eq!(
+        operation[4].contents,
+        include_str!("../../../spec/core/key-operation-v2.schema.json")
+    );
+    assert_eq!(
+        format!("{:x}", Sha256::digest(operation[4].contents.as_bytes())),
+        "67c35f417d940d9d3ff8c4fe7ca57ea29d319a1da4310ea3f9d2437160e9095b"
+    );
+    assert_eq!(
+        operation[5].path,
+        "spec/core/record-type-operation-v6.schema.json"
+    );
+    assert_eq!(
+        operation[5].contents,
+        include_str!("../../../spec/core/record-type-operation-v6.schema.json")
+    );
+    assert_eq!(
+        format!("{:x}", Sha256::digest(operation[5].contents.as_bytes())),
+        "2b40d2be0562794f918738d96ee8f974f7133f26ee8476583b944c9f676a255d"
+    );
+
+    let mut reversed = model;
+    resources_mut(&mut reversed).reverse();
+    let outputs = operation_outputs(&reversed);
+    let operation: Vec<_> = outputs
+        .iter()
+        .filter(|output| output.path.contains("operation-v"))
+        .collect();
+    assert_eq!(
+        operation[0].path,
+        "spec/core/record-type-operation-v6.schema.json"
+    );
+    assert_eq!(operation[1].path, "spec/core/key-operation-v2.schema.json");
+    assert_eq!(
+        operation[2].path,
+        "spec/core/nullability-operation-v5.schema.json"
+    );
+    assert_eq!(operation[3].path, "spec/core/kind-operation-v6.schema.json");
+    assert_eq!(
+        operation[4].path,
+        "spec/core/cardinality-operation-v4.schema.json"
+    );
+    assert_eq!(
+        operation[5].path,
+        "spec/core/facet-operation-v3.schema.json"
+    );
+}
+
+#[test]
+fn operation_resource_bindings_and_fragment_scope_are_closed() {
+    let mut swapped_id = canonical_model();
+    *get_mut(&mut resources_mut(&mut swapped_id)[0], "id").unwrap() =
+        Value::string_utf8("urn:umf:core:cardinality-operation:4.0.0");
+    assert_eq!(
+        compile_model(&swapped_id, &mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "METAMODEL_RESOURCE_PATH"
+    );
+
+    let mut arbitrary_path = canonical_model();
+    *get_mut(&mut resources_mut(&mut arbitrary_path)[4], "path").unwrap() =
+        Value::string_utf8("spec/core/other-operation-v2.schema.json");
+    assert_eq!(
+        compile_model(&arbitrary_path, &mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "METAMODEL_RESOURCE_PATH"
+    );
+
+    let mut arbitrary_external = canonical_model();
+    *get_mut(
+        &mut resources_mut(&mut arbitrary_external)[5],
+        "externalResourceIds",
+    )
+    .unwrap() = Value::Array(vec![
+        Value::string_utf8("urn:umf:core:0.10.0"),
+        Value::string_utf8("urn:unapproved:resource"),
+    ]);
+    assert_eq!(
+        compile_model(&arbitrary_external, &mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "METAMODEL_RESOURCE_EXTERNAL_IDS"
+    );
+
+    let mut undeclared_definition_fragment = canonical_model();
+    *get_mut(
+        &mut resources_mut(&mut undeclared_definition_fragment)[5],
+        "root",
+    )
+    .unwrap() = Value::Object(vec![
+        (Utf16::from("tag"), Value::string_utf8("link")),
+        (
+            Utf16::from("target"),
+            Value::string_utf8(
+                "urn:umf:core:kind-operation:6.0.0#/$defs/undeclared",
+            ),
+        ),
+    ]);
+    assert_eq!(
+        compile_model(&undeclared_definition_fragment, &mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "METAMODEL_DANGLING_TARGET"
+    );
+
+    let mut undeclared_core_definition_fragment = canonical_model();
+    *get_mut(
+        &mut resources_mut(&mut undeclared_core_definition_fragment)[5],
+        "root",
+    )
+    .unwrap() = Value::Object(vec![
+        (Utf16::from("tag"), Value::string_utf8("link")),
+        (
+            Utf16::from("target"),
+            Value::string_utf8("urn:umf:core:0.10.0#/$defs/undeclared"),
+        ),
+    ]);
+    assert_eq!(
+        compile_model(&undeclared_core_definition_fragment, &mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "METAMODEL_DANGLING_TARGET"
+    );
+
+    let mut escaped_fragment = canonical_model();
+    let first = &mut resources_mut(&mut escaped_fragment)[0];
+    *get_mut(first, "root").unwrap() = Value::Object(vec![
+        (Utf16::from("tag"), Value::string_utf8("object-fragment")),
+        (
+            Utf16::from("required"),
+            Value::Array(vec![Value::string_utf8("x")]),
+        ),
+    ]);
+    assert_eq!(
+        compile_model(&escaped_fragment, &mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "METAMODEL_RESOURCE_FRAGMENT_SCOPE"
+    );
+
+    let mut inert_constant = canonical_model();
+    *get_mut(&mut resources_mut(&mut inert_constant)[0], "root").unwrap() = Value::Object(vec![
+        (Utf16::from("tag"), Value::string_utf8("constant")),
+        (
+            Utf16::from("value"),
+            Value::Object(vec![
+                (Utf16::from("tag"), Value::string_utf8("object-fragment")),
+                (Utf16::from("type"), Value::string_utf8("literal-type")),
+                (
+                    Utf16::from("required"),
+                    Value::string_utf8("literal-required"),
+                ),
+            ]),
+        ),
+    ]);
+    let output = operation_outputs(&inert_constant)
+        .into_iter()
+        .find(|item| item.path == "spec/core/facet-operation-v3.schema.json")
+        .unwrap();
+    let generated = umf_core::serialization::read_json_value(
+        &output.contents.encode_utf16().collect::<Vec<_>>(),
+        umf_core::serialization::Format::Json,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    let Value::Object(constant_members) = get(&generated, "const").unwrap() else {
+        panic!("root constant should remain a JSON object");
+    };
+    assert_eq!(constant_members[0].0, Utf16::from("tag"));
+    assert_eq!(constant_members[1].0, Utf16::from("type"));
+    assert_eq!(constant_members[2].0, Utf16::from("required"));
+}
+
+#[test]
+fn ordinary_constant_data_is_not_scanned_as_resource_shape_metadata() {
+    let mut model = canonical_model();
+    let module = get_mut(&mut model, "modules")
+        .and_then(|value| match value {
+            Value::Array(items) => items.first_mut(),
+            _ => None,
+        })
+        .unwrap();
+    let element = get_mut(module, "elements")
+        .and_then(|value| match value {
+            Value::Array(items) => items
+                .iter_mut()
+                .find(|item| get(item, "id") == Some(&Value::string_utf8("id"))),
+            _ => None,
+        })
+        .unwrap();
+    let annotation = get_mut(get_mut(element, "extensions").unwrap(), "umf.metamodel").unwrap();
+    *get_mut(annotation, "shape").unwrap() = Value::Object(vec![
+        (Utf16::from("tag"), Value::string_utf8("constant")),
+        (
+            Utf16::from("value"),
+            Value::Object(vec![(
+                Utf16::from("tag"),
+                Value::string_utf8("object-fragment"),
+            )]),
+        ),
+    ]);
+    assert!(compile_model(&model, &mut Context::ordinary()).is_ok());
+}
+
 #[test]
 fn authored_field_shape_mutation_changes_the_rust_compiled_schema() {
     let mut changed = canonical_model();
@@ -111,10 +389,12 @@ fn authored_field_shape_mutation_changes_the_rust_compiled_schema() {
     let original = compiled_engine(&canonical_model());
     let mutated = compiled_engine(&changed);
     let document = valid_document();
-    assert!(original
-        .core_structure_diagnostics(&document, &mut Context::ordinary())
-        .unwrap()
-        .is_empty());
+    assert!(
+        original
+            .core_structure_diagnostics(&document, &mut Context::ordinary())
+            .unwrap()
+            .is_empty()
+    );
     let diagnostics = mutated
         .core_structure_diagnostics(&document, &mut Context::ordinary())
         .unwrap();
@@ -122,9 +402,11 @@ fn authored_field_shape_mutation_changes_the_rust_compiled_schema() {
         !diagnostics.is_empty(),
         "the authored min-length change must reach the generated schema"
     );
-    assert!(diagnostics
-        .iter()
-        .any(|diagnostic| diagnostic.path == Utf16::from("/id")));
+    assert!(
+        diagnostics
+            .iter()
+            .any(|diagnostic| diagnostic.path == Utf16::from("/id"))
+    );
 }
 
 #[test]
@@ -144,7 +426,9 @@ fn authored_constraint_program_mutation_changes_rust_engine_diagnostics() {
             &mut Context::ordinary(),
         )
         .unwrap();
-    assert!(diagnostics
-        .iter()
-        .any(|diagnostic| diagnostic.code == Utf16::from("AUTHORED_UNKNOWN_FIELD")));
+    assert!(
+        diagnostics
+            .iter()
+            .any(|diagnostic| diagnostic.code == Utf16::from("AUTHORED_UNKNOWN_FIELD"))
+    );
 }

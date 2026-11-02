@@ -32,7 +32,7 @@ below records separately authorized work and does not establish full delivery.
 
 Governing artifacts: PRD FR-18/19, FEAT-007 COMP-06–11, US-051-AC11–16,
 SD-007, architecture, CONTRACT-046/049/081, ADR-002 and TP-001. Catalog: installed
-HELIX 0.18.0. Existing CONTRACT-058 is a separate historical preservation checker.
+HELIX 0.18.0. Existing CONTRACT-083 is a separate historical preservation checker.
 
 The first proposed executable target is current-core, single-document direct
 PostgreSQL. Exact before/after bytes and existing deployment digests avoid a new

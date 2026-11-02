@@ -1,0 +1,43 @@
+{
+  "profile": "umf-r7-self-model-predecessor-outcomes/1",
+  "catalog": {
+    "records": 15,
+    "fields": 86,
+    "edges": 17
+  },
+  "unresolvedMember": {
+    "input": {
+      "1": "one",
+      "2": "two",
+      "z": "zee",
+      "module": "absent",
+      "element": "missing"
+    },
+    "error": "SELF_MODEL_UNRESOLVED member {\"1\":\"one\",\"2\":\"two\",\"z\":\"zee\",\"module\":\"absent\",\"element\":\"missing\"}"
+  },
+  "duplicateEdgeError": "SELF_MODEL_DUPLICATE_EDGE [\"[\\\"umf\\\",\\\"document\\\"]\",\"modules\",\"[\\\"umf\\\",\\\"module\\\"]\"]",
+  "graphShapeErrors": {
+    "modulesMissing": "TypeError: undefined is not an object (evaluating 'catalog.document.modules.flatMap')",
+    "modulesNull": "TypeError: null is not an object (evaluating 'catalog.document.modules.flatMap')",
+    "modulesNonArray": "TypeError: catalog.document.modules.flatMap is not a function. (In 'catalog.document.modules.flatMap((m) => m.elements.map((e) => ({ ...e, module: m.id })))', 'catalog.document.modules.flatMap' is undefined)",
+    "elementsMissing": "TypeError: undefined is not an object (evaluating 'm.elements.map')",
+    "elementsNull": "TypeError: null is not an object (evaluating 'm.elements.map')",
+    "elementsNonArray": "TypeError: m.elements.map is not a function. (In 'm.elements.map((e) => ({ ...e, module: m.id }))', 'm.elements.map' is undefined)",
+    "membersFalse": "TypeError: false is not iterable",
+    "membersNullEntry": "TypeError: null is not an object (evaluating 'member.module')",
+    "referencesObject": "TypeError: field.references?.filter is not a function. (In 'field.references?.filter((r) => r.role === \"record-type\")', 'field.references?.filter' is undefined)",
+    "referencesNullEntry": "TypeError: null is not an object (evaluating 'r.role')",
+    "objectOwnToString": "TypeError: No default value"
+  },
+  "graphControls": {
+    "recordLabelFalse": false,
+    "fieldLabelFalse": false,
+    "topLevelArrayShapeTargetAdded": false,
+    "nestedArrayShapeTargetAdded": false,
+    "numberEdgeLabel1e7": "1e-7",
+    "objectEdgeLabel": "[object Object]",
+    "arrayEdgeLabel": "a,b",
+    "nestedArrayObjectEdgeLabel": "1e-7,a,,[object Object]",
+    "preownedNameAboveFourMillion": {"utf16Units": 4000001, "outputPreserved": true}
+  }
+}

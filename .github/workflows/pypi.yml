@@ -8,7 +8,8 @@ jobs:
   dispatch:
     # Core releases emit the published event. Do not create a dispatcher run
     # after every unrelated CI completion (including this publisher's own runs).
-    if: github.event_name == 'release'
+    # Rust release assets are built, tested and published locally.
+    if: github.event_name == 'release' && !startsWith(github.event.release.tag_name, 'umf-rust-v')
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:

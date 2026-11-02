@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/parquet/package.json';
+import {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage} from './package';
 import {checkParquetFieldMetadata} from './field-metadata';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
-import {UmfError,type Document,type ExtensionPackage,type Diagnostic} from '../../model/types';
-export const PARQUET_EXTENSION='umf.parquet';
-export const PARQUET_MAX_BYTES=1_000_000;
-export const parquetPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,type Document,type Diagnostic} from '../../model/types';
+export {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage};
 export function parquetRegistry(){return new Registry().register(parquetPackage);}
 /** Captures even malformed source, without interpreting or normalizing any bytes. */
 export function captureParquet(bytes:Uint8Array,options:{id:string}):Document{

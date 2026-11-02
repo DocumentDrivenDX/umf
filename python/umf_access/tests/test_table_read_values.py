@@ -3,7 +3,9 @@
 import copy
 import math
 import struct
+import sys
 import unittest
+from decimal import InvalidOperation, getcontext
 
 from umf_access.unified import SessionError, SessionIdentity, SessionPolicy
 from umf_access.unified.operation_values import (
@@ -53,6 +55,36 @@ class TableReadValues(unittest.TestCase):
         for value in ('3ff000000000000','7ff0000000000000','fff0000000000000','7ff8000000000000','1.25'):
             with self.assertRaises(SessionError):value_from_native(value,output)
 
+    def test_rust_carrier_admission_keeps_host_timestamp_parse_and_lookup_order(self):
+        text='2026-01-01T24:00:00.000000Z'
+        if sys.version_info[:2] >= (3,14):
+            self.assertEqual(value_from_native(text,{'carrier':'timestamp','nullable':False}),{'timestamp':text})
+        else:
+            with self.assertRaises(SessionError):
+                value_from_native(text,{'carrier':'timestamp','nullable':False})
+
+        class LoggedOutput(dict):
+            def __init__(self,*args,**kwargs):
+                super().__init__(*args,**kwargs);self.reads=[]
+            def __getitem__(self,key):
+                self.reads.append(('item',key));return super().__getitem__(key)
+            def get(self,key,*args):
+                self.reads.append(('get',key));return super().get(key,*args)
+
+        output=LoggedOutput(carrier='float',nullable=False,nativeEncoding='ieee754-binary64-hex')
+        self.assertEqual(value_from_native('3ff0000000000000',output),{'floatToken':'1.0'})
+        self.assertEqual(output.reads,[('item','carrier'),('get','nativeEncoding')])
+
+        comparisons=[]
+        class DynamicCarrier:
+            def __eq__(self,other):
+                comparisons.append(other);return False
+        with self.assertRaises(SessionError):
+            value_from_native('1.25',{'carrier':DynamicCarrier(),'nullable':False})
+        self.assertEqual(comparisons,[
+            'boolean','string','date','timestamp','integer','decimal','float','float','uuid','bits128'
+        ])
+
     def test_native_values_cannot_lie_about_carriers_or_required_presence(self):
         for carrier,value in [('integer',1),('integer','01'),('decimal','NaN'),('decimal','Infinity'),
                               ('decimal',1.5),('boolean',1),('string',b'text'),('uuid','invalid'),
@@ -60,6 +92,85 @@ class TableReadValues(unittest.TestCase):
                               ('timestamp','2026-01-01T00:00:00.1234567Z'),('timestamp','2026-01-01T00:00:00.123456+01:00')]:
             with self.subTest(carrier=carrier,value=value), self.assertRaises(SessionError):
                 value_from_native(value,{'carrier':carrier,'nullable':False})
+
+    def test_rust_typed_token_classes_preserve_exact_text_and_refuse_noncanonical_forms(self):
+        admitted = [
+            ('integer','0',{'integerToken':'0'}),
+            ('integer','-0',{'integerToken':'-0'}),
+            ('integer','-123456789012345678901234567890',{'integerToken':'-123456789012345678901234567890'}),
+            ('decimal','-0.000e-123',{'decimalToken':'-0.000e-123'}),
+            ('decimal','1e999999999999999999',{'decimalToken':'1e999999999999999999'}),
+            ('decimal','1.0e999999999999999999',{'decimalToken':'1.0e999999999999999999'}),
+            ('decimal','0.01e1000000000000000000',{'decimalToken':'0.01e1000000000000000000'}),
+            ('decimal','1e-1999999999999999997',{'decimalToken':'1e-1999999999999999997'}),
+            ('uuid','00000000-0000-0000-0000-000000000001',{'uuid':'00000000-0000-0000-0000-000000000001'}),
+            ('bits128','0123456789abcdef'*2,{'bits128Hex':'0123456789abcdef'*2}),
+        ]
+        refused = [
+            ('integer','01'),('integer','+1'),('integer','1.0'),
+            ('decimal','01'),('decimal','1.'),('decimal','.1'),('decimal','NaN'),
+            ('decimal','1e1000000000000000000'),('decimal','1e-1999999999999999998'),
+            ('decimal','0.1e-1999999999999999997'),
+            ('decimal','99.99e999999999999999999'),
+            ('uuid','00000000-0000-0000-0000-00000000000A'),
+            ('uuid','00000000000000000000000000000001'),('bits128','FF'*16),
+            ('bits128','f'*31),
+        ]
+        for carrier,text,expected in admitted:
+            with self.subTest(carrier=carrier,text=text):
+                self.assertEqual(value_from_native(text,{'carrier':carrier,'nullable':False}),expected)
+        for carrier,text in refused:
+            with self.subTest(carrier=carrier,text=text),self.assertRaises(SessionError):
+                value_from_native(text,{'carrier':carrier,'nullable':False})
+
+    def test_value_from_native_keeps_null_and_unicode_failure_order(self):
+        class LoggedOutput(dict):
+            def __init__(self,*args,**kwargs):
+                super().__init__(*args,**kwargs);self.reads=[]
+            def __getitem__(self,key):
+                self.reads.append(key);return super().__getitem__(key)
+        nullable=LoggedOutput(nullable=True)
+        self.assertIsNone(value_from_native(None,nullable))
+        self.assertEqual(nullable.reads,['nullable'])
+        required=LoggedOutput(nullable=False)
+        with self.assertRaises(SessionError):value_from_native(None,required)
+        self.assertEqual(required.reads,['nullable'])
+        output=LoggedOutput(carrier='integer',nullable=False)
+        with self.assertRaises(UnicodeEncodeError):value_from_native('\ud800',output)
+        self.assertEqual(output.reads,['carrier'])
+
+    def test_decimal_constructor_flag_survives_rust_classification(self):
+        context=getcontext()
+        old_flags=context.flags.copy()
+        old_trap=context.traps[InvalidOperation]
+        output={'carrier':'decimal','nullable':False}
+        try:
+            context.traps[InvalidOperation]=old_trap
+            context.clear_flags()
+            with self.assertRaises(SessionError):
+                value_from_native('1e1000000000000000000',output)
+            self.assertTrue(context.flags[InvalidOperation])
+            self.assertEqual([signal for signal,flag in context.flags.items() if flag],
+                             [InvalidOperation])
+
+            context.clear_flags()
+            context.traps[InvalidOperation]=False
+            with self.assertRaises(SessionError):
+                value_from_native('1e1000000000000000000',output)
+            self.assertTrue(context.flags[InvalidOperation])
+            self.assertEqual([signal for signal,flag in context.flags.items() if flag],
+                             [InvalidOperation])
+
+            context.clear_flags()
+            with self.assertRaises(SessionError):
+                value_from_native('1e',output)
+            self.assertFalse(context.flags[InvalidOperation])
+            with self.assertRaises(SessionError):
+                value_from_native('1e100000000000000000000x',output)
+            self.assertFalse(context.flags[InvalidOperation])
+        finally:
+            context.traps[InvalidOperation]=old_trap
+            for signal,flag in old_flags.items():context.flags[signal]=flag
 
     def test_page_tokens_bind_host_identity_and_policy_without_accepting_raw_keys(self):
         policy=SessionPolicy({'alice':'alice','bob':'bob'},{'job':'batch'},'plugin',catalog_only=True)

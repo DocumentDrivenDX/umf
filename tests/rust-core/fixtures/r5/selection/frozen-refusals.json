@@ -1,0 +1,42 @@
+{
+  "invalidReference": {
+    "ok": false,
+    "error": {
+      "code": "CORE_SELECTION_SOURCE",
+      "message": "[{\"code\":\"UNKNOWN_EXTENSION\",\"path\":\"/vocabularies/future.meaning\",\"message\":\"Exact extension version unavailable; content retained\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNRESOLVED_REFERENCE\",\"path\":\"/modules/0/elements/0/references/0\",\"message\":\"Target element does not exist in supplied document\",\"severity\":\"error\"}]",
+      "path": ""
+    }
+  },
+  "invalidShape": {
+    "ok": false,
+    "error": {
+      "code": "CORE_SELECTION_SOURCE",
+      "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"}]",
+      "path": ""
+    }
+  },
+  "semanticErrorEvenEmpty": {
+    "ok": false,
+    "error": {
+      "code": "CORE_SELECTION_SOURCE",
+      "message": "[{\"code\":\"FROZEN_REJECT\",\"path\":\"/extensions/future.meaning\",\"message\":\"Frozen rejection\",\"severity\":\"error\"},{\"code\":\"FROZEN_REJECT\",\"path\":\"/extensions/future.meaning\",\"message\":\"Frozen rejection\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]",
+      "path": ""
+    }
+  },
+  "malformedQuery": {
+    "ok": false,
+    "error": {
+      "code": "CORE_SELECTION_QUERY",
+      "message": "Expected exact core filters and explicit reference traversal policy",
+      "path": ""
+    }
+  },
+  "large": {
+    "ok": false,
+    "error": {
+      "code": "LIMIT",
+      "message": "JSON structural limit exceeded",
+      "path": "/selection/0/element/future/48964"
+    }
+  }
+}

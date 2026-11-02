@@ -15,7 +15,8 @@ from typing import Any, Union, cast, get_args, get_origin, get_type_hints
 
 from pydantic import BaseModel
 
-from .dsl import GeneratedSource, Join, Param, Terminal
+from .capture_types import CapturedParameter
+from .dsl import Join, Param, Terminal
 from .dsl._context import CURRENT, CaptureContext
 
 # Explicit public re-export is required by static consumers.
@@ -33,16 +34,6 @@ from .dsl._nodes import ProjectionRef as ProjectionRef  # noqa: PLC0414 -- Expli
 from .dsl.render import render_logical as render_logical  # noqa: PLC0414 -- Explicit typed public re-export.
 from .dsl.search import SearchLeg
 from .types import MISSING, ActionRef, ActionSource, Vector
-
-
-@dataclass(frozen=True)
-class CapturedParameter:
-    name: str
-    carrier: object
-    optional: bool
-    key_components: tuple[str, ...] = ()
-    key_identity: tuple[tuple[str, str], ...] = ()
-    key_source: GeneratedSource | None = None
 
 
 @dataclass(frozen=True)
@@ -317,6 +308,7 @@ def _invoke(
     function: Callable[..., Any],
     parameters: tuple[CapturedParameter, ...],
     presence: frozenset[str],
+    validator: Callable[[Node, tuple[CapturedParameter, ...], frozenset[str]], None],
 ) -> tuple[Node, frozenset[str]]:
     context = CaptureContext(
         frozenset(p.name for p in parameters if p.optional), presence
@@ -347,13 +339,16 @@ def _invoke(
             raise CaptureError(
                 "CAPTURE_UNSUPPORTED", "declaration must return a DSL terminal"
             )
-        _validate_node(result.node, parameters)
+        validator(result.node, parameters, presence)
         return result.node, frozenset(context.used_optional)
     finally:
         CURRENT.reset(token)
 
 
-def capture(function: Callable[..., Any]) -> CapturedDeclaration:
+def _capture_with_validator(
+    function: Callable[..., Any],
+    validator: Callable[[Node, tuple[CapturedParameter, ...], frozenset[str]], None],
+) -> CapturedDeclaration:
     kind = getattr(function, "__umf_kind__", None)
     if kind not in ("query", "command"):
         raise CaptureError(
@@ -363,8 +358,8 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
     optional = frozenset(p.name for p in parameters if p.optional)
 
     def twice(presence: frozenset[str]) -> tuple[Node, frozenset[str]]:
-        first = _invoke(function, parameters, presence)
-        second = _invoke(function, parameters, presence)
+        first = _invoke(function, parameters, presence, validator)
+        second = _invoke(function, parameters, presence, validator)
         first_text = json.dumps(
             _canonical(first),
             ensure_ascii=False,
@@ -408,3 +403,57 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
             raise CaptureError("CAPTURE_UNSUPPORTED", "command requires generated action identity")
         action = reference.source
     return CapturedDeclaration(cast(str, function.__name__), kind, parameters, tuple(variants), action)
+
+
+def capture(function: Callable[..., Any]) -> CapturedDeclaration:
+    """Capture a declaration, using Rust for the exact empty terminal profile."""
+
+    def validate(
+        node: Node,
+        parameters: tuple[CapturedParameter, ...],
+        _presence: frozenset[str],
+    ) -> None:
+        # The predecessor first builds a parameter map by reading every
+        # parameter's `.name`. Keep that path in Python unless it is empty.
+        if type(parameters) is tuple and not parameters:
+            try:
+                from umf import _rust
+
+                from .rust_capture_observe import validate_exact_empty_terminal_profile
+            except ImportError:
+                _validate_node(node, parameters)
+                return
+
+            core = getattr(_rust, "_rust_core", None)
+            session_type = getattr(core, "CaptureResourceSession", None)
+            observe = getattr(
+                core,
+                "access_validate_capture_exact_empty_terminal_with_session",
+                None,
+            )
+            node_type = Node
+            record_ref_type = RecordRef
+            if (
+                callable(session_type)
+                and callable(observe)
+                and isinstance(node_type, type)
+                and isinstance(record_ref_type, type)
+            ):
+                # The admitted shape has bounded raw dictionaries (Node <= 2
+                # keys, RecordRef <= 8 keys, short field/op strings). Keep the
+                # session effectively unbounded like Context::ordinary(); a
+                # smaller cap would add a refusal absent from public capture.
+                session = session_type((1 << 64) - 1)
+                if validate_exact_empty_terminal_profile(
+                    node, session, node_type, record_ref_type
+                ):
+                    return
+
+        # Outside-profile admission is side-effect free with respect to graph
+        # accessors, so the predecessor can decide the original result/order.
+        _validate_node(node, parameters)
+
+    return _capture_with_validator(
+        function,
+        validate,
+    )

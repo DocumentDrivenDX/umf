@@ -212,6 +212,10 @@ def test_extracted_sdist_contains_every_canonical_resource_needed_by_wheel_hook(
     build_hook.add_action_runtime_resources(
         repository, repository / "python", sdist_includes, wheel=False
     )
+    helper_source = repository / "python/src/umf/_action_runtime_manifest.py"
+    assert sdist_includes["force_include"][str(helper_source)] == (
+        "src/umf/_action_runtime_manifest.py"
+    )
     staged_package_resources = tmp_path / "staged-package-resources"
     build_hook.add_sdist_action_runtime_package_copies(
         repository, sdist_includes, staged_package_resources
@@ -231,6 +235,7 @@ def test_extracted_sdist_contains_every_canonical_resource_needed_by_wheel_hook(
         destination = extracted / target
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, destination)
+    assert (extracted / "src/umf/_action_runtime_manifest.py").is_file()
 
     wheel_includes = {"force_include": {}}
     build_hook.add_action_runtime_resources(
@@ -262,6 +267,86 @@ def test_extracted_sdist_contains_every_canonical_resource_needed_by_wheel_hook(
         )
 
 
+def test_hatch_hook_checks_action_runtime_manifest_against_canonical_sources(
+    tmp_path,
+):
+    build_hook = _load_build_hook_module()
+    repository = _repository_root()
+    build_hook.check_action_runtime_resource_manifest(repository, repository / "python")
+
+    extracted = tmp_path / "extracted"
+    package = extracted / "src/umf"
+    package.mkdir(parents=True)
+    shutil.copyfile(
+        repository / "python/src/umf/action_runtime_resource_manifest.json",
+        package / "action_runtime_resource_manifest.json",
+    )
+    shutil.copyfile(repository / "python/src/umf/action_runtime.py", package / "action_runtime.py")
+    build_hook.check_action_runtime_resource_manifest(repository, extracted)
+    manifest = package / "action_runtime_resource_manifest.json"
+    original = json.loads(manifest.read_text(encoding="utf-8"))
+    for mutated in (
+        {"format": original["format"], "resources": {}},
+        {
+            "format": original["format"],
+            "resources": {
+                **original["resources"],
+                "coreSchema": {
+                    **original["resources"]["coreSchema"],
+                    "source": "spec/core/other.json",
+                },
+            },
+        },
+        {
+            **original,
+            "resources": {
+                **original["resources"],
+                "extra": {"file": "extra.json", "sha256": "0" * 64, "source": "spec/x.json"},
+            },
+        },
+    ):
+        manifest.write_text(json.dumps(mutated, indent=2) + "\n", encoding="utf-8")
+        with pytest.raises(ValueError, match="differs from canonical spec"):
+            build_hook.check_action_runtime_resource_manifest(repository, extracted)
+    manifest.write_text(json.dumps(original, indent=2) + "\n", encoding="utf-8")
+    runtime = package / "action_runtime.py"
+    runtime_source = runtime.read_text(encoding="utf-8")
+    expected_pin = hashlib.sha256(
+        (repository / "python/src/umf/action_runtime_resource_manifest.json").read_bytes()
+    ).hexdigest()
+    runtime.write_text(
+        runtime_source.replace(expected_pin, "0" * 64)
+        + f'\n# _MANIFEST_SHA256 = "{expected_pin}"\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="digest pin differs"):
+        build_hook.check_action_runtime_resource_manifest(repository, extracted)
+    runtime.write_text(
+        runtime_source + f'\n_MANIFEST_SHA256 = "{expected_pin}"\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="digest pin differs"):
+        build_hook.check_action_runtime_resource_manifest(repository, extracted)
+    runtime.write_text(runtime_source, encoding="utf-8")
+    symlink = extracted / "src/umf/action_runtime_resource_manifest.json"
+    symlink.unlink()
+    symlink.symlink_to(repository / "python/src/umf/action_runtime_resource_manifest.json")
+    with pytest.raises(FileNotFoundError, match="not a regular file"):
+        build_hook.check_action_runtime_resource_manifest(repository, extracted)
+
+    copied_repository = tmp_path / "canonical"
+    for _filename, source_name in build_hook.ACTION_RUNTIME_RESOURCES:
+        source = repository / source_name
+        target = copied_repository / source_name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
+    linked_source = copied_repository / build_hook.ACTION_RUNTIME_RESOURCES[0][1]
+    linked_source.unlink()
+    linked_source.symlink_to(repository / build_hook.ACTION_RUNTIME_RESOURCES[0][1])
+    with pytest.raises(FileNotFoundError, match="not a regular file"):
+        build_hook.check_action_runtime_resource_manifest(copied_repository, repository / "python")
+
+
 def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
     monkeypatch, tmp_path
 ):
@@ -273,6 +358,8 @@ def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
 
     def fake_cargo(command, *, cwd, env, check):
         assert command[0] == "fake-cargo"
+        assert command.count("-p") == 2
+        assert "umf-core-python" in command and "umf-cli" in command
         extension_root = target
         cpu_type = 0x0100000C
         if "--target" in command:
@@ -290,6 +377,7 @@ def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
             "<IiiIIIII", 0xFEEDFACF, cpu_type, 0, 2, 1, len(version_command), 0, 0
         )
         extension.write_bytes(header + version_command)
+        (extension.parent / "umf").write_bytes(header + version_command)
 
     monkeypatch.setattr(build_hook.subprocess, "run", fake_cargo)
     hook = build_hook.CustomBuildHook(
@@ -310,6 +398,9 @@ def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
     }
     assert runtime_targets == expected_targets
     assert len(runtime_targets) == len(build_hook.ACTION_RUNTIME_RESOURCES)
+    assert "umf/_rust_core.abi3.so" in targets.values()
+    assert "umf/_bin/umf" in targets.values()
+    assert "umf/_action_runtime_manifest.py" in targets.values()
     for filename, source_name in build_hook.ACTION_RUNTIME_RESOURCES:
         target_path = f"umf/action_runtime_resources/{filename}"
         source = Path(
@@ -370,6 +461,10 @@ def test_manifest_digest_matches_the_pinned_inventory():
     )
     payload = manifest_path.read_bytes()
     assert hashlib.sha256(payload).hexdigest() == action_runtime._MANIFEST_SHA256
+    assert action_runtime._RESOURCE_FILES == {
+        key: (filename, source)
+        for key, filename, source in action_runtime._RESOURCE_ENTRIES
+    }
     manifest = json.loads(payload)
     for name in (
         "coreSchema",

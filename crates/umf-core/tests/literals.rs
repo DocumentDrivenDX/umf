@@ -114,7 +114,7 @@ fn exact_coefficient_limit_rejects_before_materializing_the_expanded_digits() {
 #[test]
 fn exact_coefficient_matches_the_frozen_long_token_and_exponent_oracle() {
     const RECEIPT: &str = include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r2/sol-exact-coefficient-predecessor.json"
+        "../../../tests/rust-core/fixtures/r2/sol-exact-coefficient-predecessor.json"
     );
     let receipt: serde_json::Value = serde_json::from_str(RECEIPT).unwrap();
     assert_eq!(

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {type DescMessage,ScalarType} from '@bufbuild/protobuf';
+import {file_google_protobuf_descriptor} from '@bufbuild/protobuf/wkt';
 import {descriptorRoot} from '../src/adapters/protobuf/descriptor';
 const defs:Record<string,any>={};
 function scalar(type:ScalarType|undefined):any {
@@ -23,9 +24,24 @@ function visit(desc:DescMessage):any {
  }
  return ref;
 }
+// The FileDescriptorSet root reaches most, but not every, message defined by
+// descriptor.proto. Include the complete pinned runtime graph, including
+// standalone messages such as FeatureSetDefaults and GeneratedCodeInfo.
+function runtimeMessages(messages:readonly DescMessage[]):DescMessage[] {
+ return messages.flatMap(message=>[message,...runtimeMessages(message.nestedMessages)]);
+}
+const graph=runtimeMessages(file_google_protobuf_descriptor.messages);
+const graphNames=graph.map(message=>message.typeName).sort();
+if(graphNames.length!==34||new Set(graphNames).size!==graphNames.length)throw new Error(`Expected 34 unique pinned descriptor messages, got ${graphNames.length}`);
 const root=visit(descriptorRoot);
+for(const message of graph)visit(message);
+const schemaNames=Object.keys(defs).filter(name=>name.startsWith('google.protobuf.')).sort();
+if(JSON.stringify(schemaNames)!==JSON.stringify(graphNames))throw new Error('Generated descriptor schema definitions do not exactly match the pinned runtime message graph');
 defs.unknown={type:'object',required:['number','wireType','data'],properties:{number:{type:'integer',minimum:1,maximum:536870911},wireType:{enum:[0,1,2,3,5]},data:{type:'string',pattern:'^(?:[0-9a-f]{2})*$'}}};
 const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:protobuf:0.1.0',title:'UMF Protobuf descriptor representation',type:'object',required:['descriptorProfile','descriptorSet'],properties:{descriptorProfile:{const:'protobuf-es-2.15.0'},descriptorSet:root,sourceArchive:{type:'object',required:['role','compiler','files','roots'],properties:{role:{const:'original'},compiler:{type:'string',minLength:1},files:{type:'object',additionalProperties:{type:'string'}},roots:{type:'array',minItems:1,uniqueItems:true,items:{type:'string',minLength:1}}}}},$defs:defs};
-await Bun.write('spec/extensions/protobuf/schema.json',JSON.stringify(schema,null,2)+'\n');
-await Bun.write('spec/extensions/protobuf/package.json',JSON.stringify({id:'umf.protobuf',version:'0.1.0',coreVersion:CURRENT_CORE_VERSION,description:'Native Protobuf descriptors with explicit presence and retained unknown wire fields',schema,semantics:'CONTRACT-003. Descriptor fields retain native types and presence; unknown fields/options are preserved without interpretation. Browser checks are not a native compiler certificate. Source compilation is available through an explicit compiler; source emission recompiles and compares descriptor semantics before returning.',scopes:['element'],capabilities:{validation:'semantic',directions:['import','export'],native:{system:'Protocol Buffers .proto and FileDescriptorSet',version:'descriptor profile @bufbuild/protobuf 2.15.0; source compiler protocompile 0.14.1; printer protoprint 1.18.1; native oracle protoc 36.2',subset:'Complete pinned descriptor message graph; proto2/proto3/Editions descriptor representation. Optional WASM source compilation has authored proto2, proto3 and Edition 2023 evidence; newer Editions are not claimed. Source emission has native compiler evidence for 15 standard roots and authored proto2/proto3/Edition 2023 cases; four Edition 2024 standard roots are explicitly unsupported.'},evidence:['tests/protobuf/descriptor.test.ts','tests/protobuf/source.test.ts','tests/protobuf/emission.test.ts','tests/protobuf/behavior.test.ts','scripts/browser.ts']}},null,2)+'\n');
-console.log('Generated '+Object.keys(defs).length+' descriptor definitions');
+const packageJson={id:'umf.protobuf',version:'0.1.0',coreVersion:CURRENT_CORE_VERSION,description:'Native Protobuf descriptors with explicit presence and retained unknown wire fields',schema,semantics:'CONTRACT-003. Descriptor fields retain native types and presence; unknown fields/options are preserved without interpretation. Browser checks are not a native compiler certificate. Source compilation is available through an explicit compiler; source emission recompiles and compares descriptor semantics before returning.',scopes:['element'],capabilities:{validation:'semantic',directions:['import','export'],native:{system:'Protocol Buffers .proto and FileDescriptorSet',version:'descriptor profile @bufbuild/protobuf 2.15.0; source compiler protocompile 0.14.1; printer protoprint 1.18.1; native oracle protoc 36.2',subset:'Complete pinned descriptor message graph; proto2/proto3/Editions descriptor representation. Optional WASM source compilation has authored proto2, proto3 and Edition 2023 evidence; newer Editions are not claimed. Source emission has native compiler evidence for 15 standard roots and authored proto2/proto3/Edition 2023 cases; four Edition 2024 standard roots are explicitly unsupported.'},evidence:['tests/protobuf/descriptor.test.ts','tests/protobuf/schema.test.ts','tests/protobuf/source.test.ts','tests/protobuf/emission.test.ts','tests/protobuf/behavior.test.ts','scripts/browser.ts']}};
+const outputs:Array<[string,string]>=[['spec/extensions/protobuf/schema.json',JSON.stringify(schema,null,2)+'\n'],['spec/extensions/protobuf/package.json',JSON.stringify(packageJson,null,2)+'\n']];
+if(Bun.argv.includes('--check')){
+ for(const[path,expected]of outputs){const actual=await Bun.file(path).text();if(actual!==expected)throw new Error(`${path} is stale`);}
+}else for(const[path,content]of outputs)await Bun.write(path,content);
+console.log(`${Bun.argv.includes('--check')?'Checked':'Generated'} ${schemaNames.length} descriptor message definitions and ${Object.keys(defs).length-schemaNames.length} shared definition`);

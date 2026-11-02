@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {importIcebergSchema,inspectIceberg} from './index';
-import manifest from '../../../spec/extensions/iceberg-table/package.json';
+import {ICEBERG_TABLE_EXTENSION,icebergTablePackage} from './table-package';
+export {ICEBERG_TABLE_EXTENSION,icebergTablePackage} from './table-package';
 import grammar from '../../../spec/extensions/iceberg-table/datatype-schema.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const ICEBERG_TABLE_EXTENSION='umf.iceberg.table';
-export const icebergTablePackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic,} from '../../model/types';
 type Payload={profile:'iceberg-table-json';root:NativeJson};
 let check:ReturnType<ReturnType<typeof createValidator>['compile']>|undefined;
 function inspect(value:Json):Diagnostic[]{

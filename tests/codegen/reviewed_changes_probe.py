@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import importlib.resources
 import json
 import os
 import shutil
@@ -20,8 +21,19 @@ args = parser.parse_args()
 corpus = json.loads(args.corpus.read_text())
 checked = 0
 refused = 0
+native_cli = str(importlib.resources.files('umf').joinpath('_bin', 'umf'))
+real_popen = subprocess.Popen
+native_launches = []
+def only_native_cli(command, *args, **kwargs):
+    assert command[0] == native_cli and command[1] == 'codegen', command
+    assert kwargs.get('cwd') == str(Path(native_cli).parent), kwargs
+    assert command[2:] == ['--capabilities'] or command[2:] == [
+        'discover-changes', '--request', '-', '--input-format', 'json', '--output-format', 'json'
+    ], command
+    native_launches.append(command)
+    return real_popen(command, *args, **kwargs)
 
-with patch.object(subprocess, "Popen", side_effect=AssertionError("external process forbidden")), \
+with patch.object(subprocess, "Popen", side_effect=only_native_cli), \
      patch.object(shutil, "which", side_effect=AssertionError("executable lookup forbidden")), \
      patch.object(socket, "create_connection", side_effect=AssertionError("external network forbidden")), \
      patch.dict(os.environ, {"PATH": ""}):
@@ -52,6 +64,7 @@ with patch.object(subprocess, "Popen", side_effect=AssertionError("external proc
             raise AssertionError("malformed deployment bundle admitted")
         refused += 1
 
+assert native_launches
 print(json.dumps({"cases": len(corpus), "candidateParity": checked,
                   "forgedOrMalformedRefusals": refused,
-                  "externalJavascriptProcesses": "forbidden"}))
+                  "externalJavascriptProcesses": "forbidden", "nativeCliLaunches": len(native_launches)}))

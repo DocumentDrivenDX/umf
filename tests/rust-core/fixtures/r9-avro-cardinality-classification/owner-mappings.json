@@ -1,0 +1,10 @@
+{
+  "scope": "Opt-in Rust semantic owner, core 0.10.0 and Avro Cardinality 1.0.0; TypeScript reference remains explicit",
+  "acceptedRustOwners": [
+    {"publicExport": "classifyAvroCardinality", "reference": "src/core-ideals/cardinality-avro.ts", "rustOwner": "umf_core::avro_cardinality::classify_avro_cardinality", "bindingOperation": "classifyAvroCardinality"},
+    {"publicExport": "verifyAvroCardinalityClassification", "reference": "src/core-ideals/cardinality-avro.ts", "rustOwner": "umf_core::avro_cardinality::verify_avro_cardinality_classification", "bindingOperation": "verifyAvroCardinalityClassification"},
+    {"publicExport": "recoverAvroCardinalityBundle", "reference": "src/core-ideals/cardinality-avro.ts", "rustOwner": "umf_core::avro_cardinality::recover_avro_cardinality_bundle", "bindingOperation": "recoverAvroCardinalityBundle"}
+  ],
+  "evidence": ["typescript-predecessor.json", "typescript-extra.json", "receipt.json"],
+  "defaultRouteRetirement": false
+}
