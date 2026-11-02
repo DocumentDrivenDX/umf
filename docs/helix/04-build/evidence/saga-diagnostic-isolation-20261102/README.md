@@ -18,7 +18,9 @@ from the result to manufacture parity.
 The regression suite checks all 19 independent vectors before expensive SDK
 packaging, complete code/path/severity inventories, public schema/profile custody,
 wrong-scope rejection and source preservation. Existing independent mutation
-controls remain. The multi-operation authoring vector has a 60-second aggregate
+controls remain. Cross-host input custody now includes the changed resource
+constructor, so its exact bytes must agree across the qualified cohort.
+The multi-operation authoring vector has a 60-second aggregate
 harness budget; other vectors retain 30 seconds and product operation/cleanup
 budgets are unchanged. The total hosted job permits the existing SDK, repaired
 wheel and independent no-JavaScript source rebuild to finish within 90 minutes.

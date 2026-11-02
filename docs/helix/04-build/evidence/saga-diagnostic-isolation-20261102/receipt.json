@@ -16,8 +16,9 @@
     "final_fixed_native": "24pass,0fail,0skip,61assertions. All19independent vectors, full public schema/profile, wrong-scope/source custody, four pre-existing mutation controls.",
     "typecheck": "pass: both production and tools TypeScript configurations",
     "boundaries": "pass:1064modules,9controls,0findings",
-    "portable_host_receipt": "pending separate public facade/exchange/no-fetch/source-snapshot qualification",
-    "hosted": "pending exact-source native/WASM/CLI/Python wheel and independent sdist rebuild; no public release acceptance"
+    "portable_host_receipt": "pass:19/19 independent vectors, public facade, registry mutation refusal, exact JSON/YAML exchange, zero fetch/preconnect calls, source/artifact hashes unchanged",
+    "hosted": "pending exact-source native/WASM/CLI/Python wheel and independent sdist rebuild; no public release acceptance",
+    "custody_tests": "10pass/0fail/0skip/30assertions, including substituted source/artifact, missing hosts, installed-wheel and result-roster refusals"
   },
   "sources": {
     "crates/umf-codegen/src/resources.rs": {
@@ -35,6 +36,10 @@
     ".github/workflows/sagas.yml": {
       "sha256": "666ca002b5bdd5c04949c1a671d28854b21656b11daf39cb00efd5dad52ea50e",
       "size": 11729
+    },
+    "scripts/saga-portable/custody.ts": {
+      "sha256": "30aef4ed662dfda14925a0bf91ba2320a7355faebd07e52c78c3a79006183d3f",
+      "size": 10678
     }
   },
   "native_addon": {
@@ -65,7 +70,17 @@
     "boundaries": {
       "path": "boundaries.log",
       "sha256": "1c61b0b2e4987c08ed61387eef64b8aa5369dc8408e6848ea4558763cc54ef88"
+    },
+    "custody_tests": {
+      "path": "custody-tests.log",
+      "sha256": "2c3c35adb25ba545e312f14f41f08f01b3f0602373888d386904f929a0d192a7"
     }
   },
-  "budgets": "Only new multi-operation authoring vector has60s aggregate harness timeout; other vectors30s. Product operation/cleanup limits unchanged. Hosted whole job90min for existing complete artifact production/qualification."
+  "budgets": "Only new multi-operation authoring vector has60s aggregate harness timeout; other vectors30s. Product operation/cleanup limits unchanged. Hosted whole job90min for existing complete artifact production/qualification.",
+  "portable_host_receipt": {
+    "path": "portable-native.json",
+    "sha256": "10284a96ee6d3956610626b54dca1c9ffec0ded96022b85d2dd01dbbb4056faf",
+    "resource_constructor_hashed": true
+  },
+  "preliminary_portable_run": "Canceled before any qualification result to include resources.rs in cross-host custody; complete replacement run passed."
 }

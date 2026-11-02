@@ -12,7 +12,7 @@ export const SAGA_QUALIFICATION_INPUTS=[
  'tests/saga/portable-oracle.test.ts','tests/saga/custody.test.ts','tests/actions/assessment.test.ts','package.json','spec/release.json',
  'python/tests/test_python_artifact_version.py','python/tests/test_saga_lifecycle.py',
  'fixtures/saga/portable.json','src/extensions/actions/saga.ts','src/extensions/actions/saga-resources.ts','src/registry/registry.ts',
- 'crates/umf-codegen/src/actions/saga/mod.rs','crates/umf-codegen/src/actions/saga/tests.rs',
+ 'crates/umf-codegen/src/actions/saga/mod.rs','crates/umf-codegen/src/actions/saga/tests.rs','crates/umf-codegen/src/resources.rs',
  'bindings/core/node/index.js','bindings/core/node/src/wire.js','python/src/umf/saga.py','python/pyproject.toml','python/hatch_build.py','python/umf_codegen/pyproject.toml','python/umf_codegen/hatch_build.py',
  'spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json',
  'spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json',
