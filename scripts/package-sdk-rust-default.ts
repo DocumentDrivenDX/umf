@@ -139,13 +139,17 @@ try{
  ];
  const metamodelManifest=JSON.parse(await readFile(join(root,'spec/metamodel/generated/manifest.json'),'utf8'));
  // Capture the complete canonical metamodel source attestation as well as the
- // broader dynamic runtime roots checked again after private generators run.
+ // checked-in canonical output roster. Some generated assets (notably the
+ // Python access module) are outside the broader dynamic roots below, but the
+ // isolated metamodel check requires them to exist byte-for-byte.
  const metamodelSourceInputs=Object.keys(metamodelManifest.sources).map(path=>join(root,path));
  const metamodelBackendInputs=Object.keys(metamodelManifest.backend.inputs).map(path=>join(root,path));
+ const metamodelOutputInputs=Object.keys(metamodelManifest.outputs).map(path=>join(root,path));
  const dynamicSourceInputs=await collectDynamicSourceInputs(root);
  const sourceInputs=[...new Set([
   ...metamodelSourceInputs,
   ...metamodelBackendInputs,
+  ...metamodelOutputInputs,
   ...dynamicSourceInputs,
   ...cargoSourceFiles,
   ...jsSourceFiles,
