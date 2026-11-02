@@ -182,7 +182,7 @@
     ],
     "reason": "Four Parquet candidate tips are adopted into current main; the visual topic is fully extracted and released with frozen 1.0.0 semantics."
   },
-  "total_root_managed_ref_deletions": 360,
+  "total_root_managed_ref_deletions": 374,
   "further_cleanup": {
     "receipts": [
       "obsolete-worktree-cleanup.json",
@@ -203,7 +203,7 @@
     "remote": 5,
     "proof": "Seven superseded historical delivery refs and four completed release topic refs removed after semantic or merged-tree proof; no current artifact replaced."
   },
-  "updated_at_utc": "2026-11-02T23:30:13.999137+00:00",
+  "updated_at_utc": "2026-11-02T23:54:01.031142+00:00",
   "delegated_release_updates": [
     {
       "repository": "DocumentDrivenDX/truss",
@@ -231,8 +231,8 @@
       "limits": "No0.7managedtarget acceptance or mixed-family cohort inferred."
     }
   ],
-  "total_root_managed_local_ref_deletions": 185,
-  "total_root_managed_remote_ref_deletions": 175,
+  "total_root_managed_local_ref_deletions": 195,
+  "total_root_managed_remote_ref_deletions": 179,
   "later_verified_cleanup": {
     "refs_deleted": 6,
     "local": 6,
@@ -256,5 +256,35 @@
       "branch": "codex/arras-testkit-53",
       "scope": "issue53, focused browser checks pass; Sol review/integration pending"
     }
-  ]
+  ],
+  "current_topic_adoption_cleanup": {
+    "refs_deleted": 8,
+    "local": 5,
+    "remote": 3,
+    "receipts": [
+      {
+        "path": "microsite-squash-cleanup.json",
+        "sha256": "d024d808e685b6c0bd1dfd9f20d18d6f7ad410e838c4858513aa12f150abdd16"
+      },
+      {
+        "path": "avro-adoption-cleanup.json",
+        "sha256": "01cc83f19a6731cd685548053f5c4f10fac95281087ac008bef788a5faeeb3cc"
+      }
+    ],
+    "proof": "Three microsite exact patches adopted by main PR85\u201387; all Avro Cardinality/performance commits adopted, with separate additional Parquet work retained."
+  },
+  "praxis_embedder_cleanup": {
+    "refs_deleted": 4,
+    "local": 4,
+    "remote": 0,
+    "receipt": "praxis-embedder-adoption-cleanup.json",
+    "sha256": "ad005899bef4142190ab586d17eb6e58043ccdbe067b57946bc08a0f0a19c30a"
+  },
+  "release_alignment_cleanup": {
+    "refs_deleted": 2,
+    "local": 1,
+    "remote": 1,
+    "receipt": "release-alignment-adoption-cleanup.json",
+    "sha256": "badd89b8bf8796123d97733ee55e38da410ffccd9f17a979a020f62398fcd33f"
+  }
 }
