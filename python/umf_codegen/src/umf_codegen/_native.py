@@ -50,7 +50,7 @@ _CORE_RESOURCE_FILES = {
     "constraints": ("core.constraints.json", "spec/metamodel/generated/core-constraints.json"),
     "domainPolicy": ("core.domain-policy.json", "spec/metamodel/generated/domain-policy.json"),
 }
-_RESOURCE_NAMES = set(_RESOURCE_FILES.values()) | {
+_RESOURCE_NAMES = set(_RESOURCE_FILES.values()) | {"saga.package.json"} | {
     filename for filename, _ in _CORE_RESOURCE_FILES.values()
 }
 _CLI_OPERATIONS = {

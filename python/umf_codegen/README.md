@@ -13,13 +13,13 @@ python -m umf_codegen check --schema plugin.json --package plugin_client --outpu
 
 `check` is read-only and exits nonzero for drift or refusal. `generate` refuses
 hand-edited output and unsafe paths. At build and runtime, the package checks a
-pinned manifest covering exactly nine compiler resources. Five shared core
+pinned manifest covering exactly ten compiler resources. Five shared core
 resources are also byte-compared with the installed `umf-core` wheel; an
 incoherent package pair fails with `ENGINE_UNAVAILABLE` and has no fallback.
 
 Each public compiler call uses the `umf` CLI binary packaged inside the pinned
 `umf-core` wheel. The package resolves that exact resource and checks the CLI
-capability protocol, input and output wire protocols, and all nine resource
+capability protocol, input and output wire protocols, and all ten resource
 hashes before compiling. Missing binaries and mismatched identities fail with
 `ENGINE_UNAVAILABLE`; it never searches `PATH` or the current directory.
 

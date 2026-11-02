@@ -24,6 +24,7 @@ SOURCES = {
     "core.reference-schema.json": "spec/core/semantic-type-reference.schema.json",
     "core.schema.json": "spec/core/schema.json",
     "stable-binding.package.json": "spec/extensions/binding-stable/package.json",
+    "saga.package.json": "spec/extensions/saga/package.json",
     "tables.package.json": "spec/extensions/tables/package.json",
 }
 
