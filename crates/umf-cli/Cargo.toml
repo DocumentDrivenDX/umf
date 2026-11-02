@@ -13,8 +13,8 @@ path = "src/main.rs"
 umf-core = { path = "../umf-core", default-features = false, features = ["full-core"] }
 umf-metamodel = { path = "../umf-metamodel" }
 umf-core-wire = { path = "../umf-core-wire", default-features = false }
-sha2 = "=0.10.8"
-serde_json = "=1.0.140"
+sha2 = "=0.10.9"
+serde_json = "=1.0.145"
 
 [dependencies.umf-codegen]
 path = "../umf-codegen"
@@ -29,4 +29,4 @@ native-postgresql = ["embedded-adapters", "umf-core/native-postgresql", "umf-cor
 allocator-test = ["codegen"]
 
 [dev-dependencies]
-serde_json = "=1.0.140"
+serde_json = "=1.0.145"

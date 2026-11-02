@@ -15,6 +15,6 @@ compiler-bootstrap = ["umf-core/metamodel-compiler"]
 
 [dependencies]
 umf-core = { path = "../umf-core", default-features = false }
-sha2 = "=0.10.8"
+sha2 = "=0.10.9"
 regress = { version = "=0.12.0", features = ["utf16"] }
 url = "=2.5.7"
