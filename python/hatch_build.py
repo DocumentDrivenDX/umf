@@ -305,6 +305,7 @@ SDIST_SOURCE_TREES = (
     "bindings/core/python",
     "bindings/core/node",
     "bindings/core/wasm",
+    "bindings/pack-tools/wasm",
 )
 SDIST_EXCLUDED_DIRS = {
     ".git",

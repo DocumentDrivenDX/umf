@@ -66,6 +66,27 @@ def _core_public_release_verifier():
     return module
 
 
+def test_native_workspace_members_are_in_sdist_closure():
+    repository = Path(__file__).resolve().parents[2]
+    workspace = tomllib.loads((repository / "Cargo.toml").read_text())["workspace"]
+    hook = ast.parse((repository / "python/hatch_build.py").read_text())
+    closure = {
+        target.id: ast.literal_eval(node.value)
+        for node in hook.body
+        if isinstance(node, ast.Assign)
+        for target in node.targets
+        if isinstance(target, ast.Name)
+        and target.id in {"SDIST_SOURCE_FILES", "SDIST_SOURCE_TREES"}
+    }
+    for member in workspace["members"]:
+        manifest = f"{member}/Cargo.toml"
+        assert (repository / manifest).is_file()
+        assert manifest in closure["SDIST_SOURCE_FILES"] or any(
+            member == tree or member.startswith(tree + "/")
+            for tree in closure["SDIST_SOURCE_TREES"]
+        ), f"Cargo workspace member is absent from the source archive: {member}"
+
+
 def test_parquet_capture_compile_time_resource_is_in_sdist_closure():
     repository = Path(__file__).resolve().parents[2]
     source = repository / "crates/umf-core/src/parquet_capture_inspection.rs"
