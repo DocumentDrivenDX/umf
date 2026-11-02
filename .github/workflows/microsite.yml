@@ -44,7 +44,7 @@ jobs:
       - name: Check out immutable schema browser producer source
         uses: actions/checkout@v4
         with:
-          ref: c4ad0e8a83816e5ea4003dab09e781ab92c91dcb
+          ref: cc23e6574eb669ea89b56425e37aa9256d9b5f4a
           path: .tools/schema-browser-producer
       - name: Install immutable producer dependencies
         working-directory: .tools/schema-browser-producer

@@ -17,10 +17,13 @@ const ontology=async(hash='')=>{await page.goto(origin+'reference/core.html'+has
 const sameStrings=(actual:string[],expected:string[])=>JSON.stringify([...actual].sort())===JSON.stringify([...expected].sort());
 let expectedRecordIds:string[]=[],expectedEdges:ReturnType<typeof selfModelGraph>['edges']=[];
 async function assertFullGraph(label:string){
+ await waitGraph();
  const actualRecords=await page.locator('#ontology-map svg [aria-label^="Inspect record "]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-model-id')??''));
- const actualEdges=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>node.querySelector('title')?.textContent??''));
+ const actualEdges=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>node.querySelector('text.lini-link-label')?.textContent??node.querySelector('title')?.textContent??''));
  assert(sameStrings(actualRecords,expectedRecordIds),label+' record identities differ from authored source');
- assert(sameStrings(actualEdges,expectedEdges.map(edge=>edge.label)),label+' relationship labels differ from source projection');
+ assert(sameStrings(actualEdges,expectedEdges.map(edge=>edge.label)),label+' visible relationship labels differ from source projection');
+ const identities=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-model-id')??''));
+ assert(sameStrings(identities,expectedEdges.map(edge=>edge.id)),label+' relationship identities differ from authored source');
 }
 async function assertRelationshipRoutes(){
  await ontology();
@@ -38,7 +41,8 @@ function expectedNeighborhood(focus:string){
  return {records:expectedRecordIds.filter(id=>ids.has(id)),edges};
 }
 async function assertNeighborhood(focus:string,label:string){
- const expected=expectedNeighborhood(focus),actualRecords=await page.locator('#ontology-map svg [aria-label^="Inspect record "]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-model-id')??'')),actualEdges=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>node.querySelector('title')?.textContent??''));
+ await waitGraph();
+ const expected=expectedNeighborhood(focus),actualRecords=await page.locator('#ontology-map svg [aria-label^="Inspect record "]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-model-id')??'')),actualEdges=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>node.querySelector('text.lini-link-label')?.textContent??node.querySelector('title')?.textContent??''));
  assert(expected.records.length<expectedRecordIds.length&&expected.records.includes(focus),label+' source neighborhood is not a proper focus subset');
  assert(sameStrings(actualRecords,expected.records),label+' record neighborhood differs from authored source');
  assert(sameStrings(actualEdges,expected.edges.map(edge=>edge.label)),label+' relationship neighborhood differs from source projection');
