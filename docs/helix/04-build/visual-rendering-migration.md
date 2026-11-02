@@ -220,3 +220,14 @@ No vocabulary, constraint or executable validator logic changed. The refreshed
 manifest records current Cargo and consumer dependency inputs. Applying those
 generated outputs passes `check:metamodel` and the 3,665-file core-authority scan.
 The published schema-browser archive remains immutable and separately pinned.
+
+The authority-refreshed deployment run 41536651468 passed the metamodel gate,
+including the full suite on Linux, then refused an immutable-producer runtime
+asset mismatch. No asset is exempted from the comparison. The deployment now
+uses the release qualifier's Ubuntu 24.04 runner and `source/` checkout layout,
+including the same source-relative Rust build path. The immutable comparison
+runs before the two current-source builds, with bounded filename and digest
+diagnostics on failure. Every existing input, asset, complete-payload and public
+API comparison remains required. This matches the qualified build environment;
+it does not claim byte reproducibility across arbitrary operating systems or
+checkout layouts. The public archive is unchanged.

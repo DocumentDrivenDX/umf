@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -45,14 +45,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: cc23e6574eb669ea89b56425e37aa9256d9b5f4a
-          path: .tools/schema-browser-producer
+          path: source
       - name: Install immutable producer dependencies
-        working-directory: .tools/schema-browser-producer
+        working-directory: source
         run: bun install --frozen-lockfile
       - name: Install pinned WASM binding generator
         run: cargo install wasm-bindgen-cli --locked --version 0.2.100
       - name: Verify candidate reproducibility and immutable released producer
-        run: bun scripts/schema-browser-reproducibility.ts --producer-source .tools/schema-browser-producer
+        run: bun scripts/schema-browser-reproducibility.ts --producer-source source
       - name: Restore action build runtime
         uses: oven-sh/setup-bun@v2
         with:

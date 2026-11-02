@@ -15,10 +15,6 @@ async function build(source:string,output:string,sourceBoundWasm=true){
  if(await child.exited)throw Error('Producer build failed');
 }
 try{
- for(const name of ['first','second'])await build(process.cwd(),join(root,name));
- const a=await Bun.file(join(root,'first/release-manifest.json')).json(),b=await Bun.file(join(root,'second/release-manifest.json')).json();
- if(JSON.stringify(a)!==JSON.stringify(b))throw Error('Clean candidate payloads differ: '+Object.keys(a.sha256).filter(key=>a.sha256[key]!==b.sha256[key]).join(', '));
- console.log('Two clean current-source candidate builds have identical complete SHA-256 manifests; this does not relabel the installed release.');
  const installed=resolve('node_modules/@documentdrivendx/umf-schema-browser');
  {
   if(!await Bun.file(join(installed,'asset-manifest.json')).exists())throw Error('Required installed release asset manifest missing');
@@ -36,10 +32,21 @@ try{
   }
   const output=join(root,'producer');await build(source,output);
   const produced=await Bun.file(join(output,'asset-manifest.json')).json(),released=await Bun.file(join(installed,'asset-manifest.json')).json();
-  if(JSON.stringify(produced)!==JSON.stringify(released))throw Error('Released producer runtime assets differ from exact installed release');
+  if(JSON.stringify(produced)!==JSON.stringify(released)){
+   const names=[...new Set([...Object.keys(produced.assets??{}),...Object.keys(released.assets??{})])].sort();
+   const mismatches=names.filter(name=>produced.assets?.[name]!==released.assets?.[name]).map(name=>({name,expected:released.assets?.[name]??null,actual:produced.assets?.[name]??null}));
+   throw Error('Released producer runtime assets differ from exact installed release: '+JSON.stringify({total:mismatches.length,assets:mismatches.slice(0,12),inventoryOrderOnly:mismatches.length===0}));
+  }
   verifyCleanBuilds(await verifyPackage(output),await verifyPackage(installed));
   const producer=await Bun.file(join(output,'release-manifest.json')).json();
   for(const name of ['index.js',...Object.keys(producer.sha256).filter(name=>name.startsWith('types/'))])if(await hash(join(installed,name))!==producer.sha256[name])throw Error('Released producer exported API differs from exact installed release: '+name);
   console.log('Installed schema-browser 2.1.0 reproduced from its producer source, locked inputs and Bun runtime; current candidate remains separate.');
  }
+ // Keep the complete current-source check after immutable producer equality;
+ // mismatched release environments now fail before two extra native builds.
+ for(const name of ['first','second'])await build(process.cwd(),join(root,name));
+ const a=await Bun.file(join(root,'first/release-manifest.json')).json(),b=await Bun.file(join(root,'second/release-manifest.json')).json();
+ if(JSON.stringify(a)!==JSON.stringify(b))throw Error('Clean candidate payloads differ: '+Object.keys(a.sha256).filter(key=>a.sha256[key]!==b.sha256[key]).join(', '));
+ console.log('Two clean current-source candidate builds have identical complete SHA-256 manifests; this does not relabel the installed release.');
+
 }finally{await rm(root,{recursive:true,force:true});}
