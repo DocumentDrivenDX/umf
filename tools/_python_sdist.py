@@ -36,7 +36,6 @@ _EXPECTED_ROOT_FILES = {
     "spec/extensions/parquet/package.json",
     "spec/extensions/parquet-nullability/package.json",
     "spec/extensions/parquet-keys/package.json",
-    "spec/extensions/parquet-relationships/package.json",
     "spec/extensions/parquet/idl.json",
     "spec/extensions/dbt-manifest/package.json",
     "spec/extensions/dbt-artifact/package.json",
@@ -214,6 +213,50 @@ _EXPECTED_ROOT_FILES = {
     "spec/core/postgresql-composite-classification.schema.json",
     "spec/core/postgresql-ddl-kinds.schema.json",
     "spec/extensions/postgresql-catalog/capture.schema.json",
+    'spec/core/parquet-cardinality-classification.schema.json',
+    'spec/core/parquet-facet-classification.schema.json',
+    'spec/extensions/actions/bulk.schema.json',
+    'spec/extensions/actions/executor-profile.schema.json',
+    'spec/extensions/actions/manifest-inspection.schema.json',
+    'spec/extensions/actions/manifest.schema.json',
+    'spec/extensions/actions/plan-assessment.schema.json',
+    'spec/extensions/actions/plan-capabilities.schema.json',
+    'spec/extensions/actions/plan-inspection.schema.json',
+    'spec/extensions/actions/plan-model.schema.json',
+    'spec/extensions/actions/plan.schema.json',
+    'spec/extensions/actions/tx-results.schema.json',
+    'spec/extensions/binding-128/package.json',
+    'spec/extensions/ddd/package.json',
+    'spec/extensions/delta-definition/package.json',
+    'spec/extensions/iceberg-table/datatype-schema.json',
+    'spec/extensions/iceberg-table/package.json',
+    'spec/extensions/owl/package.json',
+    'spec/extensions/parquet-cardinality/package.json',
+    'spec/extensions/parquet-facets/package.json',
+    'spec/extensions/postgresql-catalog/cardinality-v1.schema.json',
+    'spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json',
+    'spec/extensions/postgresql-catalog/key-observations-v1.schema.json',
+    'spec/extensions/postgresql/native-ast.schema.json',
+    'spec/extensions/postgresql/package.json',
+    'spec/extensions/security/ontology.schema.json',
+    'spec/extensions/security/package.json',
+    'spec/extensions/security/schema.json',
+    'spec/extensions/shacl/package.json',
+    'spec/extensions/smithy/assembly-result.schema.json',
+    'spec/extensions/smithy/native-assembly.schema.json',
+    'spec/extensions/smithy/native-selection.schema.json',
+    'spec/extensions/smithy/native-structure.schema.json',
+    'spec/extensions/smithy/package.json',
+    'spec/extensions/smithy/selection-result.schema.json',
+    'spec/extensions/spark/datatype-schema.json',
+    'spec/extensions/spark/package.json',
+    'spec/extensions/typespec/compiler-report.schema.json',
+    'spec/extensions/typespec/json-schema-emission.schema.json',
+    'spec/extensions/typespec/libraries.json',
+    'spec/extensions/typespec/package.json',
+    'spec/extensions/typespec/semantic-graph.schema.json',
+    'spec/projections/sqlserver-physical-binding.schema.json',
+    'spec/projections/sqlserver-relationship-layout.schema.json',
 }
 _EXPECTED_ROOT_TREES = {
     "crates",
@@ -587,6 +630,50 @@ _EXPECTED_FORCE_INCLUDE = {
     "../spec/core/key-tablespec-projection.schema.json": "spec/core/key-tablespec-projection.schema.json",
     "../spec/core/facets-tablespec-projection.schema.json": "spec/core/facets-tablespec-projection.schema.json",
     "../spec/extensions/postgresql-catalog/capture.schema.json": "spec/extensions/postgresql-catalog/capture.schema.json",
+    '../docs/helix/02-design/examples/saga/allocation.json': 'docs/helix/02-design/examples/saga/allocation.json',
+    '../spec/extensions/actions/bulk.schema.json': 'spec/extensions/actions/bulk.schema.json',
+    '../spec/extensions/actions/executor-profile.schema.json': 'spec/extensions/actions/executor-profile.schema.json',
+    '../spec/extensions/actions/manifest-inspection.schema.json': 'spec/extensions/actions/manifest-inspection.schema.json',
+    '../spec/extensions/actions/manifest.schema.json': 'spec/extensions/actions/manifest.schema.json',
+    '../spec/extensions/actions/plan-assessment.schema.json': 'spec/extensions/actions/plan-assessment.schema.json',
+    '../spec/extensions/actions/plan-capabilities.schema.json': 'spec/extensions/actions/plan-capabilities.schema.json',
+    '../spec/extensions/actions/plan-inspection.schema.json': 'spec/extensions/actions/plan-inspection.schema.json',
+    '../spec/extensions/actions/plan-model.schema.json': 'spec/extensions/actions/plan-model.schema.json',
+    '../spec/extensions/actions/plan.schema.json': 'spec/extensions/actions/plan.schema.json',
+    '../spec/extensions/actions/tx-results.schema.json': 'spec/extensions/actions/tx-results.schema.json',
+    '../spec/extensions/arrow-flatbuffer/package.json': 'spec/extensions/arrow-flatbuffer/package.json',
+    '../spec/extensions/arrow/flatbuffer-inventory.json': 'spec/extensions/arrow/flatbuffer-inventory.json',
+    '../spec/extensions/binding-128/package.json': 'spec/extensions/binding-128/package.json',
+    '../spec/extensions/ddd/package.json': 'spec/extensions/ddd/package.json',
+    '../spec/extensions/delta-definition/package.json': 'spec/extensions/delta-definition/package.json',
+    '../spec/extensions/iceberg-table/datatype-schema.json': 'spec/extensions/iceberg-table/datatype-schema.json',
+    '../spec/extensions/iceberg-table/package.json': 'spec/extensions/iceberg-table/package.json',
+    '../spec/extensions/owl/package.json': 'spec/extensions/owl/package.json',
+    '../spec/extensions/postgresql-catalog/cardinality-v1.schema.json': 'spec/extensions/postgresql-catalog/cardinality-v1.schema.json',
+    '../spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json': 'spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json',
+    '../spec/extensions/postgresql-catalog/key-observations-v1.schema.json': 'spec/extensions/postgresql-catalog/key-observations-v1.schema.json',
+    '../spec/extensions/postgresql/native-ast.schema.json': 'spec/extensions/postgresql/native-ast.schema.json',
+    '../spec/extensions/postgresql/package.json': 'spec/extensions/postgresql/package.json',
+    '../spec/extensions/saga': 'spec/extensions/saga',
+    '../spec/extensions/security/ontology.schema.json': 'spec/extensions/security/ontology.schema.json',
+    '../spec/extensions/security/package.json': 'spec/extensions/security/package.json',
+    '../spec/extensions/security/schema.json': 'spec/extensions/security/schema.json',
+    '../spec/extensions/shacl/package.json': 'spec/extensions/shacl/package.json',
+    '../spec/extensions/smithy/assembly-result.schema.json': 'spec/extensions/smithy/assembly-result.schema.json',
+    '../spec/extensions/smithy/native-assembly.schema.json': 'spec/extensions/smithy/native-assembly.schema.json',
+    '../spec/extensions/smithy/native-selection.schema.json': 'spec/extensions/smithy/native-selection.schema.json',
+    '../spec/extensions/smithy/native-structure.schema.json': 'spec/extensions/smithy/native-structure.schema.json',
+    '../spec/extensions/smithy/package.json': 'spec/extensions/smithy/package.json',
+    '../spec/extensions/smithy/selection-result.schema.json': 'spec/extensions/smithy/selection-result.schema.json',
+    '../spec/extensions/spark/datatype-schema.json': 'spec/extensions/spark/datatype-schema.json',
+    '../spec/extensions/spark/package.json': 'spec/extensions/spark/package.json',
+    '../spec/extensions/tables/operation-0.2.schema.json': 'spec/extensions/tables/operation-0.2.schema.json',
+    '../spec/extensions/typespec/compiler-report.schema.json': 'spec/extensions/typespec/compiler-report.schema.json',
+    '../spec/extensions/typespec/json-schema-emission.schema.json': 'spec/extensions/typespec/json-schema-emission.schema.json',
+    '../spec/extensions/typespec/libraries.json': 'spec/extensions/typespec/libraries.json',
+    '../spec/extensions/typespec/package.json': 'spec/extensions/typespec/package.json',
+    '../spec/extensions/typespec/semantic-graph.schema.json': 'spec/extensions/typespec/semantic-graph.schema.json',
+    '../spec/release.json': 'spec/release.json',
 }
 
 
@@ -795,7 +882,7 @@ def _source_inventory(checkout: Path) -> dict[str, str]:
         or not isinstance(excluded_suffixes, set)
         or excluded_suffixes != _EXPECTED_EXCLUDED_SUFFIXES
         or not isinstance(action_resources, tuple)
-        or len(action_resources) != 9
+        or len(action_resources) != 10
     ):
         _fail("build-hook-closure-differs")
     if any(
@@ -810,9 +897,9 @@ def _source_inventory(checkout: Path) -> dict[str, str]:
         for filename, source in action_resources
     }
     if (
-        len(resources) != 9
-        or len({filename for filename, _source in resources.values()}) != 9
-        or len({source for _filename, source in resources.values()}) != 9
+        len(resources) != 10
+        or len({filename for filename, _source in resources.values()}) != 10
+        or len({source for _filename, source in resources.values()}) != 10
     ):
         _fail("action-resource-declaration-invalid")
     inventory_helper = python_root / "src/umf/_action_runtime_manifest.py"
@@ -826,8 +913,8 @@ def _source_inventory(checkout: Path) -> dict[str, str]:
             or not all(isinstance(part, str) for part in row)
             for row in helper_resources
         )
-        or len(helper_resources) != 9
-        or len({key for key, _filename, _source in helper_resources}) != 9
+        or len(helper_resources) != 10
+        or len({key for key, _filename, _source in helper_resources}) != 10
         or {key: (filename, source) for key, filename, source in helper_resources} != resources
     ):
         _fail("action-resource-helper-map-differs")

@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import posixpath
 import re
 import subprocess
 from pathlib import Path
@@ -43,7 +44,6 @@ ROOT_FILES = (
     "spec/extensions/parquet-keys/package.json",
     "spec/extensions/parquet-cardinality/package.json",
     "spec/extensions/parquet-facets/package.json",
-    "spec/extensions/parquet-relationships/package.json",
     "spec/extensions/parquet/idl.json",
     "spec/extensions/dbt-manifest/package.json",
     "spec/extensions/dbt-artifact/package.json",
@@ -78,8 +78,6 @@ ROOT_FILES = (
     "spec/extensions/delta-definition/package.json",
     "spec/extensions/protobuf/package.json",
     "spec/extensions/arrow-ipc/package.json",
-    "spec/extensions/arrow-flatbuffer/package.json",
-    "spec/extensions/arrow/flatbuffer-inventory.json",
     "spec/core/cardinality-operation-v6.schema.json",
     "spec/core/cardinality-operation-v4.schema.json",
     "spec/core/cardinality-avro-projection.schema.json",
@@ -310,7 +308,6 @@ FORCE_INCLUDE = {
     "../spec/extensions/actions/manifest-inspection.schema.json": "spec/extensions/actions/manifest-inspection.schema.json",
     "../spec/extensions/actions/tx-results.schema.json": "spec/extensions/actions/tx-results.schema.json",
     "../spec/extensions/actions/bulk.schema.json": "spec/extensions/actions/bulk.schema.json",
-    "../spec/extensions/saga/package.json": "spec/extensions/saga/package.json",
     "../spec/extensions/binding/package.json": "spec/extensions/binding/package.json",
     "../spec/extensions/binding-stable/package.json": "spec/extensions/binding-stable/package.json",
     "../spec/core/schema.json": "spec/core/schema.json",
@@ -481,6 +478,30 @@ FORCE_INCLUDE = {
     "../fixtures/actions-binding": "fixtures/actions-binding",
     "../spec/core/key-tablespec-projection.schema.json": "spec/core/key-tablespec-projection.schema.json",
     "../spec/core/facets-tablespec-projection.schema.json": "spec/core/facets-tablespec-projection.schema.json",
+    '../docs/helix/02-design/examples/saga/allocation.json': 'docs/helix/02-design/examples/saga/allocation.json',
+    '../spec/extensions/actions/plan-assessment.schema.json': 'spec/extensions/actions/plan-assessment.schema.json',
+    '../spec/extensions/actions/plan-capabilities.schema.json': 'spec/extensions/actions/plan-capabilities.schema.json',
+    '../spec/extensions/actions/plan-inspection.schema.json': 'spec/extensions/actions/plan-inspection.schema.json',
+    '../spec/extensions/actions/plan-model.schema.json': 'spec/extensions/actions/plan-model.schema.json',
+    '../spec/extensions/actions/plan.schema.json': 'spec/extensions/actions/plan.schema.json',
+    '../spec/extensions/delta-definition/package.json': 'spec/extensions/delta-definition/package.json',
+    '../spec/extensions/iceberg-table/datatype-schema.json': 'spec/extensions/iceberg-table/datatype-schema.json',
+    '../spec/extensions/iceberg-table/package.json': 'spec/extensions/iceberg-table/package.json',
+    '../spec/extensions/saga': 'spec/extensions/saga',
+    '../spec/extensions/smithy/assembly-result.schema.json': 'spec/extensions/smithy/assembly-result.schema.json',
+    '../spec/extensions/smithy/native-assembly.schema.json': 'spec/extensions/smithy/native-assembly.schema.json',
+    '../spec/extensions/smithy/native-selection.schema.json': 'spec/extensions/smithy/native-selection.schema.json',
+    '../spec/extensions/smithy/native-structure.schema.json': 'spec/extensions/smithy/native-structure.schema.json',
+    '../spec/extensions/smithy/package.json': 'spec/extensions/smithy/package.json',
+    '../spec/extensions/smithy/selection-result.schema.json': 'spec/extensions/smithy/selection-result.schema.json',
+    '../spec/extensions/spark/datatype-schema.json': 'spec/extensions/spark/datatype-schema.json',
+    '../spec/extensions/spark/package.json': 'spec/extensions/spark/package.json',
+    '../spec/extensions/typespec/compiler-report.schema.json': 'spec/extensions/typespec/compiler-report.schema.json',
+    '../spec/extensions/typespec/json-schema-emission.schema.json': 'spec/extensions/typespec/json-schema-emission.schema.json',
+    '../spec/extensions/typespec/libraries.json': 'spec/extensions/typespec/libraries.json',
+    '../spec/extensions/typespec/package.json': 'spec/extensions/typespec/package.json',
+    '../spec/extensions/typespec/semantic-graph.schema.json': 'spec/extensions/typespec/semantic-graph.schema.json',
+    '../spec/release.json': 'spec/release.json',
 }
 
 
@@ -542,6 +563,13 @@ def _make_checkout(root: Path) -> dict[str, bytes]:
     files["python/src/umf/_action_runtime_manifest.py"] = (
         f"RESOURCES = {helper_rows!r}\n".encode()
     )
+    for source, target in FORCE_INCLUDE.items():
+        source_path = posixpath.normpath((Path("python") / source).as_posix())
+        if Path(target).suffix:
+            files.setdefault(source_path, f"force:{source}\n".encode())
+        else:
+            marker = f"{source_path}/fixture.json"
+            files.setdefault(marker, f"force:{source}\n".encode())
     files["python/src/umf/py.typed"] = b""
     manifest: dict[str, Any] = {
         "format": "umf.action-runtime-resources/1",
@@ -609,6 +637,15 @@ def _target_map(checkout: Path, files: dict[str, bytes]) -> dict[str, bytes]:
         if prior is not None and prior != content:
             raise AssertionError(f"fixture mapping collision for {target}")
         expected[target] = content
+    for source, target in FORCE_INCLUDE.items():
+        source_path = posixpath.normpath((Path("python") / source).as_posix())
+        if Path(target).suffix:
+            expected[target] = files[source_path]
+        else:
+            prefix = source_path.rstrip("/") + "/"
+            for relative, content in files.items():
+                if relative.startswith(prefix):
+                    expected[posixpath.join(target, relative[len(prefix):])] = content
     expected["PKG-INFO"] = PKG_INFO
     for filename, source in RESOURCES:
         expected[source] = files[source]
