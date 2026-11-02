@@ -7,6 +7,8 @@ on:
       - '.github/workflows/lakeview-qualification.yml'
       - 'crates/umf-core/src/lakeview.rs'
       - 'crates/umf-core/src/avro*.rs'
+      - 'crates/umf-core/src/resource_cache.rs'
+      - 'crates/umf-core/tests/resource_cache.rs'
       - 'crates/umf-core/src/native_json.rs'
       - 'crates/umf-core/src/serialization.rs'
       - 'crates/umf-core-wire/src/lib.rs'
@@ -31,6 +33,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
