@@ -70,6 +70,7 @@ jobs:
       - name: Check workflow impact gates
         run: bun test tests/qualification/sagas-workflow.test.ts
       - name: Install the pinned WASM binding generator
+        if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
         run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
       - if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
         run: cargo fetch --locked

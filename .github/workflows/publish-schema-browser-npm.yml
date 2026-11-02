@@ -313,11 +313,42 @@ jobs:
           const require = createRequire(import.meta.url);
           const manifest = require(join(root, 'package.json'));
           if (manifest.name !== '@documentdrivendx/umf-schema-browser' || manifest.version !== process.env.VERSION) throw new Error('consumer installed unexpected package identity');
-          const api = await import(pathToFileURL(join(root, 'index.js')).href);
+          // Node fetch does not implement file: URLs. Supply only this exact,
+          // integrity-checked native resource; the browser bundle stays portable.
+          const {readFile} = await import('node:fs/promises');
+          const {createHash} = await import('node:crypto');
+          const wasmUrl = pathToFileURL(join(root, 'umf_core_wasm_bg.wasm'));
+          const wasmBytes = await readFile(wasmUrl);
+          const release = JSON.parse(await readFile(join(root, 'release-manifest.json'), 'utf8'));
+          if (createHash('sha256').update(wasmBytes).digest('hex') !== release.sha256['umf_core_wasm_bg.wasm']) throw new Error('consumer WASM differs from the release manifest');
+          const ordinaryFetch = globalThis.fetch;
+          globalThis.fetch = (input, options) => {
+            const url = input instanceof Request ? input.url : String(input);
+            return url === wasmUrl.href
+              ? Promise.resolve(new Response(wasmBytes, {headers:{'Content-Type':'application/wasm'}}))
+              : ordinaryFetch(input, options);
+          };
+          let api;
+          try { api = await import(pathToFileURL(join(root, 'index.js')).href); }
+          finally { globalThis.fetch = ordinaryFetch; }
+          const changes = api.compareDocuments({extensions:{vendor:{opaque:'before'}}},{extensions:{vendor:{opaque:'after'}}});
+          if (changes.length !== 1 || changes[0].path !== '/extensions/vendor/opaque' || changes[0].after !== 'after') throw new Error('consumer Rust comparison did not preserve the unknown extension');
           if (typeof api.mountSchemaBrowser !== 'function') throw new Error('consumer entrypoint is missing mountSchemaBrowser');
-          const receipt = {schema:'umf.schema-browser.npm-consumer/1', status:'passed', registry:'https://registry.npmjs.org', package:manifest.name, version:manifest.version, entrypoint:'index.js', import:'passed'};
+          const receipt = {schema:'umf.schema-browser.npm-consumer/1', status:'passed', registry:'https://registry.npmjs.org', package:manifest.name, version:manifest.version, entrypoint:'index.js', import:'passed', wasmHost:'explicit same-package file reader with SHA-256 verification', rustComparison:'passed'};
           await import('node:fs/promises').then(({writeFile}) => writeFile('npm-consumer-receipt.json', JSON.stringify(receipt, null, 2) + '\n'));
           JS
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - name: Install locked browser qualification tools
+        run: |
+          bun install --frozen-lockfile
+          bun x playwright install --with-deps chromium
+      - name: Qualify the actual public package in Chromium
+        run: |
+          PACKAGE_ROOT="$RUNNER_TEMP/schema-browser-consumer/node_modules/@documentdrivendx/umf-schema-browser"
+          bun scripts/schema-browser-package-browser.ts "$PACKAGE_ROOT"
+          bun scripts/schema-browser-embedding-browser.ts "$PACKAGE_ROOT"
       - uses: actions/upload-artifact@v4
         with:
           name: schema-browser-npm-consumer-${{ needs.verify-release.outputs.version }}

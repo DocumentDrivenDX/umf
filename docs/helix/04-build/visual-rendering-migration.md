@@ -161,3 +161,81 @@ waits for the actual initialized control. The deployment workflow builds the
 native binding required by current domain schema graph tests. Reference API
 extraction explicitly maps the newly declared `./runtime/wasm` entrypoint to its
 binding declarations, retaining unassessed runtime support status.
+
+## Public release and consumer pin
+
+Schema-browser 2.1.0 is published at
+https://github.com/DocumentDrivenDX/umf/releases/tag/schema-browser-v2.1.0 and on
+public npm. The immutable producer is
+`cc23e6574eb669ea89b56425e37aa9256d9b5f4a` (PR #90). Release workflow
+41528527633 passed two clean builds, exact offline installation, both TypeScript
+consumer modes and Chromium 153 strict-CSP loading. Its receipt records 2,174
+source inputs and 113 payload files, plus the two checksum inventories.
+
+The public GitHub and npm tarball SHA-256 is
+`9317270b9e3a10d53a1815d85c9166d264a4cb6c48d69363a3f13438cb23c2f4`.
+The producer lock SHA-256 is
+`9d51335710cdfc68519a245a697e9cb876155a7cd70e58f7a1b00e1af86a40db`;
+`provenance.json` is
+`f9d1252bf83753a021e6a6bfea30f9acf8d426ebc705e7f7a9f61d55ce0bf551`.
+Independent public downloads and the publisher's registry check verified exact
+archive equality. The consumer pin, immutable source checkout and reproduction
+checks now use these observed values. No published bytes are replaced.
+
+The OIDC publishing job succeeded. Its subsequent bare Node 24 import check
+failed because Node fetch does not implement file URLs. The host harness now
+reads only the exact packaged WASM file, checks its release-manifest digest,
+and supplies it through an explicit fetch adapter during import; it also checks
+Rust comparison of unknown extension content. This is an explicitly hosted Node
+check, not an unconditional Node/SSR support claim. The same installed public
+package additionally runs the full Chromium package and embedding checks.
+The local Node 26.12.1 hosted import and comparison passed. The broader Saga CI
+also needed actual wasm-bindgen output generated before TypeScript checked the
+browser entrypoint; its native declarations are built from the source, not
+replaced with placeholder types. Existing impact gates and all native checks
+remain in place.
+
+The current authored ontology preview passed twenty Chromium journeys, including
+all 24 Record and 27 relationship identities, visible native labels, exact edge
+navigation, nonoverlapping geometry at four widths, focus, zoom, panning,
+source downloads and tamper refusal. Assertions await asynchronous completion and
+inspect visible Lini labels rather than requiring the former SVG title shape.
+Generated preview dumps are retained outside the tracked release changes.
+Deployment and hosted verification remain the next milestones.
+
+## Deployment authority refresh
+
+The consumer verification rerun, workflow 41534057741, completed successfully:
+Node 24 imported the public package with the explicit verified local-WASM host,
+and both installed-package Chromium suites passed. The first deployment run
+41534053476 stopped at `check:metamodel` with a stale generated core schema.
+
+An isolated source-bound generation found that all 17 non-manifest outputs are
+byte-identical after replacing only compiler fingerprint
+`a1c8a60da7513ccfcfabc75b35c1bb702a59906f8e735a094bc82d1bb6333cba`
+with `53c2af76df1a5f45862e7ed4cb308cf1d7cc9b7edcf2897c96ebad5ef0d715c4`.
+The authored model digest remains
+`fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f`.
+No vocabulary, constraint or executable validator logic changed. The refreshed
+manifest records current Cargo and consumer dependency inputs. Applying those
+generated outputs passes `check:metamodel` and the 3,665-file core-authority scan.
+The published schema-browser archive remains immutable and separately pinned.
+
+The authority-refreshed deployment run 41536651468 passed the metamodel gate,
+including the full suite on Linux, then refused an immutable-producer runtime
+asset mismatch. No asset is exempted from the comparison. The deployment now
+uses the release qualifier's Ubuntu 24.04 runner and `source/` checkout layout,
+including the same source-relative Rust build path. The immutable comparison
+runs before the two current-source builds, with bounded filename and digest
+diagnostics on failure. Every existing input, asset, complete-payload and public
+API comparison remains required. This matches the qualified build environment;
+it does not claim byte reproducibility across arbitrary operating systems or
+checkout layouts. The public archive is unchanged.
+
+Run 41541656664 passed immutable release reproduction, both current-source clean
+builds, domain artifacts, companion packaging, reference generation and its
+repeatability/boundary checks. The later focused visual test failed before
+launching because its temporary-directory prefix was macOS-specific. It now
+uses `node:os.tmpdir()` and `node:path.join()`. With `TMPDIR=/tmp`, all seventeen
+Lini Chromium checks pass under Bun 1.4.2 and Chromium 153.0.8010.12. No drawing,
+package byte, validation rule or qualification assertion changed.
