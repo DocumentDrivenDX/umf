@@ -222,7 +222,7 @@ immutability or silently stop at GitHub if PyPI delivery remains unfinished.
 
 Initial distribution metadata was checked on 2026-11-02: PyPI 0.10.5, no public
 npm SDK/native package, and the nine prior GitHub assets described above. Source
-versions are SDK 0.10.2, Python 0.10.6 and Rust/native packages 0.1.0. The owner
+versions at that check were SDK 0.10.2, Python 0.10.6 and Rust/native packages 0.1.0. The owner
 resolved the version clarification explicitly as one 0.10.7 artifact cohort while
 retaining core 0.10.0. The later explicit upstream asset gate expands the release
 to `umf-codegen==0.10.7` with `umf-core==0.10.7`; `umf_access` 0.1.0.dev8 remains
@@ -231,15 +231,63 @@ outside the selected cohort.
 Implementation lanes are bounded and active. The reported stale asset is the
 checked-in `python/umf_codegen/src/umf_codegen/_resources` cohort: six canonical
 copies plus its manifest and _release.py resource pin fail
-`scripts/rust-migration/r4/sync_codegen_resources.py --check`. Freeze the canonical
-metamodel first, then run the canonical `--write` producer and its unchanged check.
-The public companion must contain these repaired assets, not merely the source
-repository. This R0 gate is separate from the SDK private-snapshot fixed point.
+`scripts/rust-migration/r4/sync_codegen_resources.py --check`. The installed pair
+then exposed a stale inventory: the native CLI correctly includes ten resources,
+including Saga, while Python's three inventories allowed only nine. Add the exact
+canonical Saga package to producer/build/runtime inventories and keep native
+capability equality strict. The corrected ten-resource manifest is
+`9da1c47959a2bc9403a94c908ce032f44a3742b974244b047c6be8760f9be101`;
+Saga bytes are independently equal to the canonical SHA-256
+`4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940`.
+Freeze the canonical metamodel first, then run the canonical `--write` producer
+and its unchanged check. The public companion must contain these repaired assets,
+not merely the source repository. This R0 gate is separate from the SDK private
+snapshot fixed point. The core action-runtime ten-resource manifest/pin also
+required canonical sync; the helper `scripts/sync-python-resources.py` composes
+both normal checks without weakening either build hook.
 Final Linux compatibility tag,
 exact native build/cache locations, available registry authentication, publication
 receipt and public installed-consumer results are not yet established. Record
 actual outcomes here and in a source-bound release evidence directory as work
 proceeds; registry absence or authentication failure is not inferred in advance.
+
+The macOS core native wheel and CLI built successfully. The corrected installed
+pair now runs the same 28 requests through core and codegen public APIs with exact
+parity. The isolated companion sdist rebuild reproduced 25 wheel-member contents
+byte-for-byte, including RECORD. The direct core wheel passes its source payload,
+native platform and resource checks; four focused installed tests also pass. Companion-only resource and
+inventory corrections do not change the already built core/native input closure.
+
+Local release-policy checks pass: 17 publisher/dispatcher unit tests and seven
+focused wheel-qualifier cases. The dispatcher no longer imports the removed
+hardcoded qualified-version constant: it selects a matching numeric tag/wheel
+cohort. `umf-v0.10.7` explicitly skips automatic dispatch in release and producer
+paths, so the existing main-only OIDC publisher is invoked manually with
+`locally_qualified=true`; immutable tag/source/checksum/metadata/collision checks
+remain. The exact 0.10.7 native-wheel profile permits 64 MiB archive/family and
+128 MiB expanded bytes while preserving historical bounds; positive and oversize
+controls pass. No hosted test job or registry upload has run for this candidate.
+
+A first SDK attempt was stopped after a measured 15-minute pre-Cargo snapshot
+bottleneck. The reviewed correction batches at most eight reads/copies, retains
+only digest strings outside each read batch, and preserves sorted hash ordering
+and all fixed-point/source checks. The SDK retry is active; no success or new native/portable artifact is inferred
+from inventory/copy progress.
+
+The Linux driver is prepared but not run. It checks the actual mounted source
+against the qualified Mac SDK liveInputs/tree digest before and after locked,
+offline native builds; its receipt matches the reviewed Linux assembler. The
+assembler anchors the parent archive's expected SHA-256, preserves portable
+bytes/toolchain and replaces only the source-matching Linux addon. The driver
+measures auditwheel's actual platform floor, repairs and rechecks the wheel, and
+records DOCS_RS honestly: pinned pg_query still compiles C and runs bindgen,
+while optional protoc regeneration of registry sources is suppressed.
+
+Sol reviewed PR #42 separately. Its Lakeview, cache-identity, timing and ontology
+changes belong to a successor; no missing pack-generator artifact or output
+failure was demonstrated. This release includes the applicable wheel-qualifier
+bounds and already contains the required pack-tools workspace sdist member.
+The owner's unified 0.10.7 artifact version remains authoritative.
 
 ## Risks and rollback
 
