@@ -209,14 +209,24 @@ PostgreSQL dialect compilation is separate evidence from native database executi
 Real Chromium generated every pack with the fresh WASM host. All 28 browser
 results matched the captured native results. File preview, individual download
 bytes, ZIP hashes/CRC, changed-option invalidation, cancellation, mobile layout
-and missing-runtime behavior passed. Desktop and mobile captures were visually
+and missing-runtime behavior passed. A final bounded retry check found that failed
+runtime imports retained their worker; the controller now discards it on an error
+envelope. Four host tests and an actual blocked-download/unblock/retry browser
+check passed with the unchanged qualified WASM binary. Desktop and mobile captures were visually
 reviewed. The independent existing inspector initially lacked its ignored released
 asset cohort; installing the exact pinned schema-browser 2.0 package restored
 the verified 2,415-entry reference and iframe with no page/CSP errors. The existing
 host CSP, renderer package and reference semantic runtime remain unchanged.
 Deployment assembles the same hash-verified published cohort before sealing.
-Final source checks, signed publication and deployed-asset verification remain
-to be recorded.
+Final TypeScript, Rust/access boundaries and 22-page signing inventory passed.
+[PR #85](https://github.com/DocumentDrivenDX/umf/pull/85) merged as
+`c9c324f5b3b790c62181bb3496e707a9c44ecb34`. The deployment-only
+[publication](https://github.com/DocumentDrivenDX/umf/actions/runs/41500261028)
+succeeded without hosted compilation or behavioral tests. The public workbench,
+worker/WASM/catalog closure and registered build signature were verified;
+Chromium followed the homepage link and generated all three outputs without page
+errors. [The acceptance and publication receipts](evidence/browser-pack-tools/README.md)
+close PT-1 through PT-4. The focused binary measures 1,034,632 bytes.
 
 ## Risks and rollbacks
 

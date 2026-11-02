@@ -47,6 +47,18 @@ test('worker cancellation rejects the old request and a late old-worker error ca
  client.dispose();
 });
 
+test('failed worker response retires its runtime so a retry starts a clean worker',async()=>{
+ const workers:MockWorker[]=[];
+ const client=new PackToolsWorkerClient('/assets/pack-tools/umf_core_wasm.js',()=>{const worker=new MockWorker();workers.push(worker);return worker as unknown as Worker;});
+ const first=Promise.resolve(client.generate(request)),failed=workers[0]!;
+ const settled=first.then(()=>undefined,(error:Error)=>error);
+ failed.send({protocol:'umf.pack-tools-worker/1',id:1,ok:false,error:{code:'PACK_TOOLS_WASM_IMPORT',message:'WASM asset import was interrupted.',path:'$wasm'}});
+ const failure=await settled;expect(failure).toMatchObject({code:'PACK_TOOLS_WASM_IMPORT',message:'WASM asset import was interrupted.',path:'$wasm'});expect(failed.terminated).toBe(true);
+ const retry=Promise.resolve(client.generate(request)),fresh=workers[1]!;
+ fresh.send({protocol:'umf.pack-tools-worker/1',id:2,ok:true,result});
+ expect(await retry).toBe(result);client.dispose();
+});
+
 test('ZIP archive keeps every generated file path and UTF-8 file body',()=>{
  const archive=packToolsZip({...result,files:[...result.files,{path:'demo_pack/models.py',text:'name = "café"\n',sha256:'c'.repeat(64),kind:'orm'}]});
  const view=new DataView(archive.buffer,archive.byteOffset,archive.byteLength),decoder=new TextDecoder();
