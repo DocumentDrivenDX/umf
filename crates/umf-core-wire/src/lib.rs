@@ -62,6 +62,8 @@ pub mod medical_projection_binding;
 pub mod native_contract_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_family_binding;
+#[cfg(feature = "codegen")]
+pub mod pack_tools_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod nullability_avro_projection_binding;
 #[cfg(feature = "embedded-adapters")]

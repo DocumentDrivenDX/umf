@@ -12,6 +12,7 @@ pub mod deployment;
 pub mod generation;
 pub mod inventory;
 pub mod migration;
+pub mod pack_tools;
 pub mod resources;
 pub mod row_scope;
 pub mod tables;

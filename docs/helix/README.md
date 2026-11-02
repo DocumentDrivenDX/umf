@@ -151,6 +151,11 @@ Python adoption and other version-specific authoring expansion remain separate.
 
 ## Generated reference and microsite expansion
 
+[Browser pack tools](04-build/evidence/browser-pack-tools/README.md) add Rust/WASM
+PostgreSQL DDL, SQLAlchemy models and Python CRUD generation with previews and
+file/ZIP downloads. [The plan](04-build/browser-pack-tools-plan.md) records the
+current compiler profile and local native/browser acceptance.
+
 The [current core self-model](../../spec/metamodel/umf.yaml) drives the unified
 Schemas ontology, object reference and model catalog navigation.
 [Self-description evidence](04-build/evidence/generated-reference/ontology/README.md)

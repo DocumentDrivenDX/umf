@@ -2970,6 +2970,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "umf-pack-tools-wasm"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "umf-core",
+ "umf-core-wire",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "umf-tagged-wire"
 version = "0.1.0"
 dependencies = [
