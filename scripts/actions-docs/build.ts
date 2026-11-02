@@ -4,6 +4,7 @@ import {mkdir,readFile,writeFile,readdir,rm} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {join,resolve,dirname} from 'node:path';
 import {runPortableExample} from './portable-example';
+import {namespaceSvg} from './svg';
 const source='docs/helix/04-build/guides/actions',output='docs/helix/05-deploy/microsite/dist/actions';
 const check=process.argv.includes('--check'),refresh=process.argv.includes('--refresh');
 const hash=(s:string|Uint8Array)=>createHash('sha256').update(s).digest('hex');
@@ -62,7 +63,23 @@ for(const file of files){
   if(line==='{{playground}}')throw Error('Unprocessed playground');
   if(line.startsWith('```')){flush();const code:string[]=[];const lang=line.slice(3);while(++i<lines.length&&!lines[i]!.startsWith('```'))code.push(lines[i]!);if(i===lines.length)throw Error('Unclosed code fence');parts.push(`<pre><code data-language="${escape(lang)}">${escape(code.join('\n'))}</code></pre>`);continue;}
   const heading=line.match(/^(#{1,3}) (.+)$/);if(heading){flush();const id=heading[2]!.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');if(anchors.has(id))throw Error('Duplicate anchor '+file);anchors.add(id);parts.push(`<h${heading[1]!.length} id="${id}">${inline(heading[2]!,file)}</h${heading[1]!.length}>`);continue;}
-  const img=line.match(/^!\[([^\]]+)\]\((diagrams\/[a-z-]+\.svg)\)$/);if(img){flush();const variations=[];for(const mobile of [false,true]){const imagePath=mobile?img[2]!.replace('.svg','-mobile.svg'):img[2]!;let svg=await readFile(join(source,imagePath),'utf8');if(/<script|<foreignObject|\son\w+=|href=|url\((?!#)/i.test(svg))throw Error('Unsafe SVG');const id=imagePath.split('/')[1]!.replace('.svg','');svg=svg.replace('<svg ',`<svg class="${mobile?'diagram-mobile':'diagram-desktop'}" `).replaceAll('id="title"',`id="${id}-title"`).replaceAll('id="desc"',`id="${id}-desc"`).replaceAll('title desc',`${id}-title ${id}-desc`).replaceAll('id="arrow"',`id="${id}-arrow"`).replaceAll('url(#arrow)',`url(#${id}-arrow)`);variations.push(svg);}parts.push('<figure aria-label="'+escape(img[1]!)+'">'+variations.join('')+'</figure>');continue;}
+  const img=line.match(/^!\[([^\]]+)\]\((diagrams\/[a-z-]+\.svg)\)$/);
+  if(img){
+   flush();const variations=[];
+   for(const mobile of [false,true]){
+    const imagePath=mobile?img[2]!.replace('.svg','-mobile.svg'):img[2]!;
+    let svg=await readFile(join(source,imagePath),'utf8');
+    if(/<script|<foreignObject|\son\w+=|href=|url\((?!#)/i.test(svg))throw Error('Unsafe SVG');
+    const id=imagePath.split('/')[1]!.replace('.svg','');
+    // Preserve Lini's native scope class when adding the responsive variant.
+    svg=svg.replace(/<svg([^>]*?)>/,(_root,attrs:string)=>'<svg'+(attrs.includes('class="')?attrs.replace('class="',`class="${mobile?'diagram-mobile':'diagram-desktop'} `):attrs+` class="${mobile?'diagram-mobile':'diagram-desktop'}"`)+'>')
+     .replaceAll('id="title"',`id="${id}-title"`).replaceAll('id="desc"',`id="${id}-desc"`).replaceAll('title desc',`${id}-title ${id}-desc`)
+     .replaceAll('id="arrow"',`id="${id}-arrow"`).replaceAll('url(#arrow)',`url(#${id}-arrow)`);
+    variations.push(namespaceSvg(svg,`umf-action-${id}-${parts.length}-`));
+   }
+   const base=img[2]!.split('/')[1]!.replace('.svg','');
+   parts.push('<figure aria-label="'+escape(img[1]!)+'">'+variations.join('')+'<figcaption>Concept-map presentation · original panel text retained. <a href="diagram-'+base+'.json" download>Visual source and rendering limits</a> · <a href="diagram-'+base+'-mobile.json" download>Mobile source</a></figcaption></figure>');continue;
+  }
   if(line.startsWith('- ')){if(paragraph.length){parts.push('<p>'+inline(paragraph.join(' '),file)+'</p>');paragraph=[];}if(!list){parts.push('<ul>');list=true;}parts.push('<li>'+inline(line.slice(2),file)+'</li>');continue;}
   if(line.startsWith('<'))throw Error('Unsupported raw HTML '+file);
   paragraph.push(line);
@@ -80,9 +97,9 @@ for(const [file,body]of rendered){
  const route=file.replace('.md','.html');const nav=files.map(f=>`<a href="${f.replace('.md','.html')}"${f===file?' aria-current="page"':''}>${escape(titles.get(f)!)}</a>`).join('\n');
  outputs[route]=`<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(titles.get(file)!)} · UMF</title><meta name="description" content="Learn UMF actions through real examples, readable diagrams and scoped evidence."><link rel="stylesheet" href="guide.css"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../index.html">UMF</a><a href="../docs.html">Developers</a><a href="../reference/index.html">Reference</a><a href="index.html">Actions</a><a href="../reference/core.html">Schemas</a><a href="../demo.html">Playground</a></header><div class="layout"><aside aria-label="Action guide"><nav>${nav}</nav></aside><main id="content">${body}</main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">${JSON.stringify(assetHashes)}</script>${file==='getting-started.md'?'<script type="module" src="example.js"></script>':''}</body></html>\n`;
 }
-for(const f of await readdir(join(source,'diagrams'))){const path=join(source,'diagrams',f);inputs[path]=hash(await readFile(path));}
+for(const f of await readdir(join(source,'diagrams'))){const path=join(source,'diagrams',f);inputs[path]=hash(await readFile(path));if(f.endsWith('.visual.json'))outputs['diagram-'+f.replace('.visual.json','.json')]=await readFile(path,'utf8');}
 for(const path of ['scripts/actions-docs/build.ts','scripts/actions-docs/browser-example.ts','scripts/actions-docs/portable-example.ts','scripts/actions-docs/render-diagrams.py','src/index.ts','fixtures/actions/approve.json','package.json','bun.lock','tsconfig.json','.github/workflows/microsite.yml'])inputs[path]=hash(await readFile(path));
-for(const pattern of ['patches/**/*','src/**/*.ts','spec/**/*.json','scripts/actions-docs/*','fixtures/actions/*.json','docs/helix/02-design/contracts/*.md','docs/helix/04-build/evidence/actions-certification.md','docs/helix/04-build/evidence/actions-certification.json','docs/helix/04-build/evidence/actions-documentation-execution.md','docs/helix/04-build/evidence/actions-documentation-source-impact.json'])for await(const path of new Bun.Glob(pattern).scan('.'))inputs[path]=hash(await readFile(path));
+for(const pattern of ['patches/**/*','src/**/*.ts','spec/**/*.json','scripts/actions-docs/*','scripts/visuals/**/*','scripts/visual-runtime-assets.ts','fixtures/actions/*.json','docs/helix/02-design/contracts/*.md','docs/helix/04-build/evidence/actions-certification.md','docs/helix/04-build/evidence/actions-certification.json','docs/helix/04-build/evidence/actions-documentation-execution.md','docs/helix/04-build/evidence/actions-documentation-source-impact.json'])for await(const path of new Bun.Glob(pattern).scan('.'))inputs[path]=hash(await readFile(path));
 const manifest=JSON.stringify({profile:'umf.actions.documentation-build/1',ownership:'Only microsite/dist/actions; diagrams are inline inside signed HTML',inputs:Object.fromEntries(Object.entries(inputs).sort(([a],[b])=>a<b?-1:a>b?1:0)),outputs:Object.fromEntries(Object.entries(outputs).map(([p,v])=>[p,hash(v)])),assetHashes},null,2)+'\n';outputs['manifest.json']=manifest;
 if(check){const actual=(await readdir(output)).sort();if(JSON.stringify(actual)!==JSON.stringify(Object.keys(outputs).sort()))throw Error('Generated output ownership differs');for(const[p,v]of Object.entries(outputs))if(await readFile(join(output,p),'utf8')!==v)throw Error('Stale generated output '+p);console.log('Deterministic guide output, snippets and asset manifest match');}
 else{await mkdir(output,{recursive:true});for(const f of await readdir(output))if(!Object.hasOwn(outputs,f))await rm(join(output,f),{recursive:false});for(const[p,v]of Object.entries(outputs))await writeFile(join(output,p),v);console.log('Built '+files.length+' action guide pages; SVG bytes inline, asset hashes bound in each page');}

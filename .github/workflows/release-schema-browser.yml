@@ -113,6 +113,15 @@ jobs:
       - name: Install pinned Chromium runtime
         working-directory: source
         run: node node_modules/playwright/cli.js install --with-deps chromium
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          targets: wasm32-unknown-unknown
+      - name: Fetch locked Rust dependencies and install pinned binding generator
+        run: |
+          cd source
+          cargo fetch --locked
+          cargo install wasm-bindgen-cli --locked --version 0.2.100
       - name: Run package, embedding, integrity and parity controls
         working-directory: source
         run: >-

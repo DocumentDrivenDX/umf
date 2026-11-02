@@ -1,1 +1,81 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 900" role="img" aria-labelledby="title desc"><title id="title">V4 · Create before linking</title><desc id="desc">1 · create: Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier. 2 · link-customer: Source is created:create. Target is the existing customer parameter, using the authored relationship orientation. 3 · link-product: Source is created:create. Target is the existing product parameter. Forward references would refuse. Permissions are separate: The frozen write frame must permit create and these relationships. Effects require the actual operations; permission alone does not.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="360" height="900" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">Create before linking</text><text x="20" y="24" font-size="13">V4 · RECIPE</text><rect x="75.0" y="110" width="210" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="87.0" y="137" font-size="18" font-weight="700">1 · create order</text><text x="87.0" y="168" font-size="17">Explicit Key.</text><text x="87.0" y="190" font-size="17">Effect ID: create.</text><rect x="20" y="390" width="150.0" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="417" font-size="18" font-weight="700">Customer</text><text x="32" y="448" font-size="17">existing</text><text x="32" y="470" font-size="17">input</text><rect x="190.0" y="390" width="150.0" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="202.0" y="417" font-size="18" font-weight="700">Product</text><text x="202.0" y="448" font-size="17">existing</text><text x="202.0" y="470" font-size="17">input</text><path d="M150.0 250 L90 390" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#arrow)"/><path d="M210.0 250 L270 390" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#arrow)"/><text x="20" y="320" font-size="16">2 · link</text><text x="275" y="320" font-size="16">3 · link</text><text x="25" y="555" font-size="17">Both sources bind</text><text x="25" y="577" font-size="17">created:create.</text><rect x="20" y="590" width="320" height="160" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5" stroke-dasharray="5 4"/><text x="32" y="617" font-size="18" font-weight="700">Frozen permission frame</text><text x="32" y="648" font-size="17">Permit create + these links.</text><text x="32" y="670" font-size="17">Required effects are distinct</text><text x="32" y="692" font-size="17">from permission. No forward</text><text x="32" y="714" font-size="17">reference or allocated Key.</text></g></svg>
+<svg role="img" aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg" viewBox="-238.7825 -465 460.275 900" width="460.275" height="900" class="lini lini-scope-bd9a2b03"><title id="title">V4 · Create before linking</title><desc id="desc">1 · create: Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier. 2 · link-customer: Source is created:create. Target is the existing customer parameter, using the authored relationship orientation. 3 · link-product: Source is created:create. Target is the existing product parameter. Forward references would refuse. Permissions are separate: The frozen write frame must permit create and these relationships. Effects require the actual operations; permission alone does not.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-bd9a2b03 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-link-font-weight: 400; --lini-stroke: light-dark(#444, #9aa0a6); --lini-teal-deep: light-dark(#008e85, #00cabe); --lini-text-color: var(--lini-fg); }
+      .lini-scope-bd9a2b03[data-theme="dark"], [data-theme="dark"] .lini-scope-bd9a2b03 { color-scheme: dark; }
+      .lini-scope-bd9a2b03[data-theme="light"], [data-theme="light"] .lini-scope-bd9a2b03 { color-scheme: light; }
+    }
+    .lini-scope-bd9a2b03, .lini-scope-bd9a2b03 text { font-family: var(--lini-font-family); }
+    .lini-scope-bd9a2b03 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-bd9a2b03 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-bd9a2b03 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-bd9a2b03 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-bd9a2b03 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+    .lini-scope-bd9a2b03 .lini-link { fill: none; stroke: var(--lini-stroke); stroke-width: 2; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-link-label { fill: currentColor; stroke: none; text-anchor: middle; font-size: 11px; font-weight: var(--lini-link-font-weight); }
+    .lini-scope-bd9a2b03 .lini-cut-bg { fill: white; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-cut { fill: black; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-marker { fill: var(--lini-stroke); stroke: none; }
+    .lini-scope-bd9a2b03 .lini-style-e1 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e1 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 .lini-marker { fill: var(--lini-teal-deep); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-201.4925" y="-415" width="402.985" height="830" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(0,-313.5)">
+        <rect x="-149.05" y="-64.5" width="298.1" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">1 · create</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-129.05" y="-31" width="258.1" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Create the order at an explicit Key.</tspan><tspan x="0" dy="18">Save the effect identity create; no</tspan><tspan x="0" dy="18">computed or allocated identifier.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(0,-110.5)">
+        <rect x="-164.4925" y="-64.5" width="328.985" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">2 · link-customer</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-144.4925" y="-31" width="288.985" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Source is created:create. Target is</tspan><tspan x="0" dy="18">the existing customer parameter, using</tspan><tspan x="0" dy="18">the authored relationship orientation.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(0,92.5)">
+        <rect x="-147.175" y="-64.5" width="294.35" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">3 · link-product</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-127.175" y="-31" width="254.35" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Source is created:create. Target is</tspan><tspan x="0" dy="18">the existing product parameter.</tspan><tspan x="0" dy="18">Forward references would refuse.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n4" transform="translate(0,304.5)">
+        <rect x="-157.5625" y="-73.5" width="315.125" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Permissions are separate</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-137.5625" y="-40" width="275.125" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">The frozen write frame must permit</tspan><tspan x="0" dy="18">create and these relationships.</tspan><tspan x="0" dy="18">Effects require the actual operations;</tspan><tspan x="0" dy="18">permission alone does not.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-126.6603,-438.4375)">
+        <rect x="-74.8322" y="-6.5625" width="149.6644" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V4 · Create before linking</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links">
+    <g class="lini-link lini-style-e1" data-from="visual.n1" data-to="visual.n2">
+      <mask id="lini-label-cut-5893e551" maskUnits="userSpaceOnUse" x="-2" y="-250" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="-250" width="4" height="76"/><rect class="lini-cut" x="-44.418" y="-229.95" width="88.836" height="14.3"/></mask>
+      <path d="M 0 -248 L 0 -179.5" mask="url(#lini-label-cut-5893e551)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,-175.5 -4.5,-184.5 4.5,-184.5"/>
+      <text class="lini-link-label" x="0" y="-222.8" dy="0.358em" style="font-family: Arial">2 · link-customer</text>
+    </g>
+    <g class="lini-link lini-style-e2" data-from="visual.n1" data-to="visual.n3">
+      <mask id="lini-label-cut-8efa78cd" maskUnits="userSpaceOnUse" x="-183.4925" y="-315.5" width="37.3175" height="410"><rect class="lini-cut-bg" x="-183.4925" y="-315.5" width="37.3175" height="410"/><rect class="lini-cut" x="-222.0825" y="-144.7125" width="81.18" height="14.3"/></mask>
+      <path d="M -150.05 -313.5 L -165.4925 -313.5 A 16 16 0 0 0 -181.4925 -297.5 L -181.4925 76.5 A 16 16 0 0 0 -165.4925 92.5 L -151.675 92.5" mask="url(#lini-label-cut-8efa78cd)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="-147.675,92.5 -156.675,97 -156.675,88"/>
+      <text class="lini-link-label" x="-181.4925" y="-137.5625" dy="0.358em" style="font-family: Arial">3 · link-product</text>
+    </g>
+  </g>
+</svg>

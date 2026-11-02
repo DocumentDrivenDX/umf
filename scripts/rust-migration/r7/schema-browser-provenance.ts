@@ -10,7 +10,19 @@ const packages = [
   'crates/umf-core-wire',
   'crates/umf-codegen',
   'crates/umf-core',
+  'crates/umf-tagged-wire',
+  'crates/umf-graphql',
+  'crates/umf-graphql/vendor/apollo-compiler',
   'crates/umf-core/vendor/saphyr-parser',
+  'crates/umf-core/vendor/oxttl',
+  'crates/umf-core/vendor/oxrdf',
+  'crates/umf-core/vendor/hashbrown-0.12.3',
+  'crates/umf-core/vendor/hashbrown-0.13.2',
+  'crates/umf-core/vendor/json-ld-core-0.21.4',
+  'crates/umf-core/vendor/json-ld-syntax-0.21.4',
+  'crates/umf-core/vendor/json-syntax-0.12.5',
+  'crates/umf-core/vendor/xsd-types-0.9.6',
+
 ];
 const sha256 = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const repoPath = (path: string) => path.split(sep).join('/');
@@ -22,13 +34,12 @@ async function filesUnder(directory: string): Promise<string[]> {
     if ((error as NodeJS.ErrnoException).code === 'ENOENT') return [];
     throw error;
   }
-  const files: string[] = [];
-  for (const entry of entries) {
+  const nested = await Promise.all(entries.map(async entry => {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...await filesUnder(path));
-    else if (entry.isFile()) files.push(path);
-  }
-  return files;
+    if (entry.isDirectory()) return filesUnder(path);
+    return entry.isFile() ? [path] : [];
+  }));
+  return nested.flat();
 }
 
 export async function collectWasmCargoInputHashes(root: string, read: Reader = readFile): Promise<Record<string, string>> {
@@ -49,8 +60,11 @@ export async function collectWasmCargoInputHashes(root: string, read: Reader = r
   // Rust include macros make compile inputs outside the crate source tree.
   // Resolve literal include_str!/include_bytes! operands relative to the Rust
   // source that contains them, including test-only references conservatively.
-  for (const source of rustSources) {
-    const contents = new TextDecoder().decode(await read(source));
+  for (let offset = 0; offset < rustSources.length; offset += 32) {
+   const sources = rustSources.slice(offset, offset + 32);
+   const contentsBySource = await Promise.all(sources.map(async source => new TextDecoder().decode(await read(source))));
+   for (const [index, source] of sources.entries()) {
+    const contents = contentsBySource[index]!;
     const include = /include_(?:str|bytes)!\s*\(\s*"((?:[^"\\]|\\.)*)"/g;
     for (const match of contents.matchAll(include)) {
       const operand = match[1];
@@ -62,8 +76,14 @@ export async function collectWasmCargoInputHashes(root: string, read: Reader = r
     }
   }
 
+  }
   const hashes: Record<string, string> = {};
-  for (const path of [...paths].sort()) hashes[repoPath(relative(repo, path))] = sha256(await read(path));
+  const ordered = [...paths].sort();
+  for (let offset = 0; offset < ordered.length; offset += 32) {
+    const batch = ordered.slice(offset, offset + 32);
+    const digests = await Promise.all(batch.map(async path => sha256(await read(path))));
+    for (const [index, path] of batch.entries()) hashes[repoPath(relative(repo, path))] = digests[index]!;
+  }
   return hashes;
 }
 

@@ -1,1 +1,105 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 870" role="img" aria-labelledby="title desc"><title id="title">V5 · When a response is lost</title><desc id="desc">Client → consumer: Send original token, revision, typed inputs and expected versions. Trusted context supplies actor identity. Consumer → native store: Commit business changes, verification and terminal outcome atomically. Then the acknowledgement is lost. Client knowledge · indeterminate: Unknown whether commit occurred. Timeout does not prove rollback. Keep the original request; do not mint a fresh token. Client → protected lookup: Current discovery and original-result authorization gate lookup. Return the retained original outcome; lookup never executes. Missing or expired: Missing after uncertainty is not permission to reexecute. No-key requests lack keyed recovery guarantees.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="360" height="870" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">When a response is</text><text x="20" y="89" font-size="26">lost</text><text x="20" y="24" font-size="13">V5 · SEQUENCE</text><text x="20" y="125" font-size="16" font-weight="700">Client</text><path d="M60 165 V440 M60 525 V650" stroke="#738972" stroke-dasharray="4 5"/><text x="255" y="125" font-size="16" font-weight="700">Consumer /</text><text x="255" y="146" font-size="16" font-weight="700">store</text><path d="M295 165 V440 M295 525 V650" stroke="#738972" stroke-dasharray="4 5"/><path d="M60 205 L295 205" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#arrow)"/><text x="25" y="185" font-size="17">1 · Original request + token</text><rect x="130" y="250" width="210" height="105" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="142" y="277" font-size="18" font-weight="700">2 · Commit</text><text x="142" y="308" font-size="17">Business + outcome</text><text x="142" y="330" font-size="17">retained.</text><path d="M295 405 H177.5" stroke="#203c35" stroke-width="2" stroke-dasharray="5 4"/><path d="M170.5 398 L184.5 412 M184.5 398 L170.5 412" stroke="#8b3d35" stroke-width="2"/><text x="25" y="385" font-size="17">3 · Response lost ×</text><text x="25" y="460" font-size="17">Client knowledge: indeterminate.</text><text x="25" y="482" font-size="17">A timeout does not prove</text><text x="25" y="504" font-size="17">rollback.</text><path d="M60 550 L295 550" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#arrow)"/><text x="25" y="530" font-size="17">4 · Original-token lookup</text><path d="M295 630 L60 630" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#arrow)"/><text x="25" y="610" font-size="17">5 · Authorized original result</text><rect x="20" y="700" width="320" height="130" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5" stroke-dasharray="5 4"/><text x="32" y="727" font-size="18" font-weight="700">Lookup never executes</text><text x="32" y="758" font-size="17">Current permission gates the</text><text x="32" y="780" font-size="17">original result. Missing after</text><text x="32" y="802" font-size="17">uncertainty is not</text><text x="32" y="824" font-size="17">authorization to retry fresh.</text></g></svg>
+<svg role="img" aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg" viewBox="-220 -595 440 1160" width="440" height="1160" class="lini lini-scope-63f7adc6"><title id="title">V5 · When a response is lost</title><desc id="desc">Client → consumer: Send original token, revision, typed inputs and expected versions. Trusted context supplies actor identity. Consumer → native store: Commit business changes, verification and terminal outcome atomically. Then the acknowledgement is lost. Client knowledge · indeterminate: Unknown whether commit occurred. Timeout does not prove rollback. Keep the original request; do not mint a fresh token. Client → protected lookup: Current discovery and original-result authorization gate lookup. Return the retained original outcome; lookup never executes. Missing or expired: Missing after uncertainty is not permission to reexecute. No-key requests lack keyed recovery guarantees.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-63f7adc6 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-link-font-weight: 400; --lini-stroke: light-dark(#444, #9aa0a6); --lini-teal-deep: light-dark(#008e85, #00cabe); --lini-text-color: var(--lini-fg); }
+      .lini-scope-63f7adc6[data-theme="dark"], [data-theme="dark"] .lini-scope-63f7adc6 { color-scheme: dark; }
+      .lini-scope-63f7adc6[data-theme="light"], [data-theme="light"] .lini-scope-63f7adc6 { color-scheme: light; }
+    }
+    .lini-scope-63f7adc6, .lini-scope-63f7adc6 text { font-family: var(--lini-font-family); }
+    .lini-scope-63f7adc6 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-63f7adc6 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-63f7adc6 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-63f7adc6 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-63f7adc6 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-63f7adc6 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+    .lini-scope-63f7adc6 .lini-link { fill: none; stroke: var(--lini-stroke); stroke-width: 2; stroke-dasharray: none; }
+    .lini-scope-63f7adc6 .lini-link-label { fill: currentColor; stroke: none; text-anchor: middle; font-size: 11px; font-weight: var(--lini-link-font-weight); }
+    .lini-scope-63f7adc6 .lini-cut-bg { fill: white; stroke: none; }
+    .lini-scope-63f7adc6 .lini-cut { fill: black; stroke: none; }
+    .lini-scope-63f7adc6 .lini-marker { fill: var(--lini-stroke); stroke: none; }
+    .lini-scope-63f7adc6 .lini-style-e1 { stroke: var(--lini-teal-deep); }
+    .lini-scope-63f7adc6 .lini-style-e1 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-63f7adc6 .lini-style-e2 { stroke: var(--lini-teal-deep); }
+    .lini-scope-63f7adc6 .lini-style-e2 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-63f7adc6 .lini-style-e3 { stroke: var(--lini-teal-deep); }
+    .lini-scope-63f7adc6 .lini-style-e3 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-63f7adc6 .lini-style-e4 { stroke: var(--lini-teal-deep); }
+    .lini-scope-63f7adc6 .lini-style-e4 .lini-marker { fill: var(--lini-teal-deep); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-200" y="-545" width="400" height="1090" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(0,-443.5)">
+        <rect x="-160.5625" y="-64.5" width="321.125" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">Client → consumer</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-140.5625" y="-31" width="281.125" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Send original token, revision, typed</tspan><tspan x="0" dy="18">inputs and expected versions. Trusted</tspan><tspan x="0" dy="18">context supplies actor identity.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(0,-240.5)">
+        <rect x="-163" y="-64.5" width="326" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">Consumer → native store</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-143" y="-31" width="286" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Commit business changes, verification</tspan><tspan x="0" dy="18">and terminal outcome atomically. Then</tspan><tspan x="0" dy="18">the acknowledgement is lost.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(0,-18)">
+        <rect x="-162.505" y="-84" width="325.01" height="168" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" style="font-family: Arial"><tspan x="0" y="-49.63">Response lost · Client</tspan><tspan x="0" dy="18">knowledge · indeterminate</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-142.505" y="-40" width="285.01" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Unknown whether commit occurred.</tspan><tspan x="0" dy="18">Timeout does not prove rollback. Keep</tspan><tspan x="0" dy="18">the original request; do not mint a</tspan><tspan x="0" dy="18">fresh token.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n4" transform="translate(0,213.5)">
+        <rect x="-157.7875" y="-73.5" width="315.575" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Client → protected lookup</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-137.7875" y="-40" width="275.575" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Current discovery and original-result</tspan><tspan x="0" dy="18">authorization gate lookup. Return the</tspan><tspan x="0" dy="18">retained original outcome; lookup</tspan><tspan x="0" dy="18">never executes.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n5" transform="translate(0,434.5)">
+        <rect x="-141.7075" y="-73.5" width="283.415" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Missing or expired</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-121.7075" y="-40" width="243.415" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Missing after uncertainty is not</tspan><tspan x="0" dy="18">permission to reexecute. No-key</tspan><tspan x="0" dy="18">requests lack keyed recovery</tspan><tspan x="0" dy="18">guarantees.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-118.0869,-568.4375)">
+        <rect x="-81.9131" y="-6.5625" width="163.8262" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V5 · When a response is lost</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links">
+    <g class="lini-link lini-style-e1" data-from="visual.n1" data-to="visual.n2">
+      <mask id="lini-label-cut-cfe88985" maskUnits="userSpaceOnUse" x="-2" y="-380" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="-380" width="4" height="76"/><rect class="lini-cut" x="-43.021" y="-359.95" width="86.042" height="14.3"/></mask>
+      <path d="M 0 -378 L 0 -309.5" mask="url(#lini-label-cut-cfe88985)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,-305.5 -4.5,-314.5 4.5,-314.5"/>
+      <text class="lini-link-label" x="0" y="-352.8" dy="0.358em" style="font-family: Arial">Original request</text>
+    </g>
+    <g class="lini-link lini-style-e2" data-from="visual.n2" data-to="visual.n3">
+      <mask id="lini-label-cut-3b5aa179" maskUnits="userSpaceOnUse" x="-2" y="-177" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="-177" width="4" height="76"/><rect class="lini-cut" x="-60.4725" y="-146.15" width="120.945" height="14.3"/></mask>
+      <path d="M 0 -175 L 0 -106.5" mask="url(#lini-label-cut-3b5aa179)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,-102.5 -4.5,-111.5 4.5,-111.5"/>
+      <text class="lini-link-label" x="0" y="-139" dy="0.358em" style="font-family: Arial">Acknowledgement lost</text>
+    </g>
+    <g class="lini-link lini-style-e3" data-from="visual.n3" data-to="visual.n4">
+      <mask id="lini-label-cut-e51dbbb5" maskUnits="userSpaceOnUse" x="-2" y="65" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="65" width="4" height="76"/><rect class="lini-cut" x="-79.794" y="106.65" width="159.588" height="14.3"/></mask>
+      <path d="M 0 67 L 0 135.5" mask="url(#lini-label-cut-e51dbbb5)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,139.5 -4.5,130.5 4.5,130.5"/>
+      <text class="lini-link-label" x="0" y="113.8" dy="0.358em" style="font-family: Arial">Recover with the original token</text>
+    </g>
+    <g class="lini-link lini-style-e4" data-from="visual.n4" data-to="visual.n5">
+      <mask id="lini-label-cut-7370f00d" maskUnits="userSpaceOnUse" x="-2" y="286" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="286" width="4" height="76"/><rect class="lini-cut" x="-52.943" y="306.05" width="105.886" height="14.3"/></mask>
+      <path d="M 0 288 L 0 356.5" mask="url(#lini-label-cut-7370f00d)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,360.5 -4.5,351.5 4.5,351.5"/>
+      <text class="lini-link-label" x="0" y="313.2" dy="0.358em" style="font-family: Arial">If missing or expired</text>
+    </g>
+  </g>
+</svg>

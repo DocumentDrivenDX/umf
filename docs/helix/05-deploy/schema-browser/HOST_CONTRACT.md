@@ -85,11 +85,29 @@ Exports include `renderPropertyTable`, `renderRecordMap`, `compareDocuments` and
 text content and callback navigation. Model nodes/edges have explicit IDs,
 labels, created/changed/removed status and annotations.
 
+Version 2.1 adds asynchronous Lini maps. Await `handle.ready` after
+`renderRecordMap()` and await `handle.update(model)` for a finished drawing.
+`destroy()` prevents late results from restoring removed content. A successful
+drawing emits the bubbling `umf:record-map-ready` event. `runtimeBaseUrl` is an
+optional direct-map option for a host-owned copy of the public Lini assets.
+Keep `visual-worker.js` and `lini/` adjacent to the bundled component entry;
+the standalone explorer's copies live under `assets/`. The reference host copies
+these exact verified package resources alongside its own bundle.
+
+The parent page keeps JavaScript eval and inline styles disabled. Maps use a
+same-origin module worker (`worker-src 'self'`). The trusted worker separately
+executes the public renderer's fixed-schema validator code generation and
+hash-verified JS/WASM; this is a distinct execution-policy boundary. A host that
+sets CSP response headers on worker files must permit that renderer's blob
+module and fixed-schema code generation there. Native SVG styles enter the page
+through scoped constructed stylesheets. Do not infer that the public core SDK
+itself supports direct import under a no-eval CSP.
+
 JSON inspection uses fixed build-time validators and no `eval`/`new Function`.
 A same-origin host can use this tested Content Security Policy (CSP) baseline:
 
 ```text
-default-src 'none'; base-uri 'none'; script-src 'self'; style-src 'self'; frame-src 'self' about:; connect-src 'self'
+default-src 'none'; base-uri 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; frame-src 'self' about:; connect-src 'self'; worker-src 'self'
 ```
 
 The same literal policy is replayed for srcdoc mounting and the standalone page
@@ -97,8 +115,7 @@ inside an ordinary same-origin iframe. It is a tested configuration, not a claim
 that every directive is the universal minimum across browsers. No inline
 executable scripts or remote fonts are required. Srcdoc inherits host CSP; host
 assets/cross-origin catalogs need explicit origins in the applicable script/style/
-frame/connect directives. Source inspection requires no image, font or worker
-permission. Add `img-src` only for a host feature that actually displays images.
+frame/connect directives. The Rust comparison runtime requires WebAssembly compilation permission. Lini maps require same-origin worker permission; no remote image or font permission is needed. Add `img-src` only for a host feature that actually displays images.
 Browser-managed Blob downloads do not require `connect-src blob:`; JavaScript
 fetching of a Blob URL for test read-back does. An iframe sandbox can independently
 restrict scripts, origin access and downloads. Optional native recovery can refuse grammars
