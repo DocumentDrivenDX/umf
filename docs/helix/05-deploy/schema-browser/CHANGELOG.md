@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0 — 2026-11-02
+
+Record maps and structural comparisons project into umf.visual 1.3 and render
+with its pinned Lini runtime in a dedicated worker. Source identities, focus,
+annotations, self/parallel relationships, and directed versus undirected
+declarations remain distinct. Unresolved endpoints remain inspectable. The
+component handle adds `ready`; `update()` returns a completion promise. Native
+geometry stays renderer-owned. 
+
 ## 2.0.1 — 2026-10-26
 
 Include the complete dual-license and NOTICE files in the package. Qualify the

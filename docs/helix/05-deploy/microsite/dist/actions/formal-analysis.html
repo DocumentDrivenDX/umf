@@ -13,9 +13,169 @@
 <h2 id="start-with-a-property">Start with a property</h2>
 <p>An <strong>invariant</strong> is a rule that must remain true in every accepted state. For reserving stock, nonnegative stock is necessary but insufficient: the request must also use a positive quantity and create the promised reservation for the correct entities.</p>
 <p>Without those requirements, a zero-quantity request or a missing reservation may satisfy a stock equation while failing the business intent. A <strong>counterexample</strong> is a concrete case showing that gap.</p>
-<figure aria-label="Reservation counterexample and corrected obligations"><svg class="diagram-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 900" role="img" aria-labelledby="counterexample-title counterexample-desc"><title id="counterexample-title">V8 · A complete reservation intent</title><desc id="counterexample-desc">Incomplete property: post.stock = pre.stock − quantity is insufficient by itself. This is a handler example, not the approve recipe. Counterexample · quantity zero: Stock can remain unchanged and the equation still holds. A promised reservation might also be absent. Corrected obligations: Require positive quantity, exact stock relation, nonnegative stock, reservation existence and the correct entity identities. Scope of the evidence: Model bounds and assumptions are explicit. Actual native refinement and implementation mutants are separate witnesses; none proves every deployment.</desc><defs><marker id="counterexample-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="720" height="900" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">A complete reservation intent</text><text x="20" y="24" font-size="13">V8 · COUNTEREXAMPLE</text><rect x="20" y="110" width="680" height="130" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="137" font-size="18" font-weight="700">Incomplete equation</text><text x="32" y="168" font-size="17">post.stock = pre.stock − quantity</text><path d="M360.0 240 L360.0 285" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#counterexample-arrow)"/><rect x="20" y="285" width="680" height="170" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="312" font-size="18" font-weight="700">Counterexample · passes equation</text><text x="32" y="343" font-size="17">pre.stock = 2; quantity = 0. post.stock = 2; reservation absent. 2 =</text><text x="32" y="365" font-size="17">2 − 0 is true.</text><text x="35" y="485" font-size="18" font-weight="700">Business promise failed: no positive request and no reservation.</text><path d="M20 550 H700" stroke="#738972" stroke-dasharray="4 4"/><text x="25" y="578" font-size="17">Correct the intent, not just the arithmetic</text><rect x="20" y="610" width="680" height="160" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="637" font-size="18" font-weight="700">Require all obligations</text><text x="32" y="668" font-size="17">quantity &gt; 0; correct reservation exists; exact stock relation;</text><text x="32" y="690" font-size="17">stock ≥ 0. The zero-quantity case now refuses.</text><text x="25" y="810" font-size="17">Bounded model example; native implementation evidence is separate.</text></g></svg>
-<svg class="diagram-mobile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 900" role="img" aria-labelledby="counterexample-mobile-title counterexample-mobile-desc"><title id="counterexample-mobile-title">V8 · A complete reservation intent</title><desc id="counterexample-mobile-desc">Incomplete property: post.stock = pre.stock − quantity is insufficient by itself. This is a handler example, not the approve recipe. Counterexample · quantity zero: Stock can remain unchanged and the equation still holds. A promised reservation might also be absent. Corrected obligations: Require positive quantity, exact stock relation, nonnegative stock, reservation existence and the correct entity identities. Scope of the evidence: Model bounds and assumptions are explicit. Actual native refinement and implementation mutants are separate witnesses; none proves every deployment.</desc><defs><marker id="counterexample-mobile-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="360" height="900" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">A complete</text><text x="20" y="89" font-size="26">reservation intent</text><text x="20" y="24" font-size="13">V8 · COUNTEREXAMPLE</text><rect x="20" y="110" width="320" height="130" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="137" font-size="18" font-weight="700">Incomplete equation</text><text x="32" y="168" font-size="17">post.stock = pre.stock −</text><text x="32" y="190" font-size="17">quantity</text><path d="M180.0 240 L180.0 285" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#counterexample-mobile-arrow)"/><rect x="20" y="285" width="320" height="170" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="312" font-size="18" font-weight="700">Counterexample · passes</text><text x="32" y="335" font-size="18" font-weight="700">equation</text><text x="32" y="366" font-size="17">pre.stock = 2; quantity = 0.</text><text x="32" y="388" font-size="17">post.stock = 2; reservation</text><text x="32" y="410" font-size="17">absent. 2 = 2 − 0 is true.</text><text x="35" y="485" font-size="18" font-weight="700">Business promise failed: no</text><text x="35" y="508" font-size="18" font-weight="700">positive request and no</text><text x="35" y="531" font-size="18" font-weight="700">reservation.</text><path d="M20 550 H340" stroke="#738972" stroke-dasharray="4 4"/><text x="25" y="578" font-size="17">Correct the intent, not just the</text><text x="25" y="600" font-size="17">arithmetic</text><rect x="20" y="610" width="320" height="160" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="637" font-size="18" font-weight="700">Require all obligations</text><text x="32" y="668" font-size="17">quantity &gt; 0; correct</text><text x="32" y="690" font-size="17">reservation exists; exact stock</text><text x="32" y="712" font-size="17">relation; stock ≥ 0. The zero-</text><text x="32" y="734" font-size="17">quantity case now refuses.</text><text x="25" y="810" font-size="17">Bounded model example; native</text><text x="25" y="832" font-size="17">implementation evidence is</text><text x="25" y="854" font-size="17">separate.</text></g></svg>
-</figure>
+<figure aria-label="Reservation counterexample and corrected obligations"><svg role="img" aria-labelledby="umf-action-counterexample-5-counterexample-title umf-action-counterexample-5-counterexample-desc" xmlns="http://www.w3.org/2000/svg" viewBox="-412.035 -281.5 824.07 533" width="824.07" height="533" class="diagram-desktop lini lini-scope-bd9a2b03"><title id="umf-action-counterexample-5-counterexample-title">V8 · A complete reservation intent</title><desc id="umf-action-counterexample-5-counterexample-desc">Incomplete property: post.stock = pre.stock − quantity is insufficient by itself. This is a handler example, not the approve recipe. Counterexample · quantity zero: Stock can remain unchanged and the equation still holds. A promised reservation might also be absent. Corrected obligations: Require positive quantity, exact stock relation, nonnegative stock, reservation existence and the correct entity identities. Scope of the evidence: Model bounds and assumptions are explicit. Actual native refinement and implementation mutants are separate witnesses; none proves every deployment.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-bd9a2b03 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-link-font-weight: 400; --lini-stroke: light-dark(#444, #9aa0a6); --lini-teal-deep: light-dark(#008e85, #00cabe); --lini-text-color: var(--lini-fg); }
+      .lini-scope-bd9a2b03[data-theme="dark"], [data-theme="dark"] .lini-scope-bd9a2b03 { color-scheme: dark; }
+      .lini-scope-bd9a2b03[data-theme="light"], [data-theme="light"] .lini-scope-bd9a2b03 { color-scheme: light; }
+    }
+    .lini-scope-bd9a2b03, .lini-scope-bd9a2b03 text { font-family: var(--lini-font-family); }
+    .lini-scope-bd9a2b03 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-bd9a2b03 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-bd9a2b03 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-bd9a2b03 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-bd9a2b03 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+    .lini-scope-bd9a2b03 .lini-link { fill: none; stroke: var(--lini-stroke); stroke-width: 2; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-link-label { fill: currentColor; stroke: none; text-anchor: middle; font-size: 11px; font-weight: var(--lini-link-font-weight); }
+    .lini-scope-bd9a2b03 .lini-cut-bg { fill: white; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-cut { fill: black; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-marker { fill: var(--lini-stroke); stroke: none; }
+    .lini-scope-bd9a2b03 .lini-style-e1 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e1 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 .lini-marker { fill: var(--lini-teal-deep); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-392.035" y="-231.5" width="784.07" height="463" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(-196.2875,-119.5)">
+        <rect x="-149.8525" y="-73.5" width="299.705" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Incomplete property</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-129.8525" y="-40" width="259.705" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">post.stock = pre.stock − quantity is</tspan><tspan x="0" dy="18">insufficient by itself. This is a</tspan><tspan x="0" dy="18">handler example, not the approve</tspan><tspan x="0" dy="18">recipe.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(195.7475,-119.5)">
+        <rect x="-156.8725" y="-75" width="313.745" height="150" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" style="font-family: Arial"><tspan x="0" y="-40.63">Counterexample · quantity</tspan><tspan x="0" dy="18">zero</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-136.8725" y="-31" width="273.745" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Stock can remain unchanged and the</tspan><tspan x="0" dy="18">equation still holds. A promised</tspan><tspan x="0" dy="18">reservation might also be absent.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(-196.2875,112)">
+        <rect x="-158.7475" y="-73.5" width="317.495" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Corrected obligations</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-138.7475" y="-40" width="277.495" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Require positive quantity, exact stock</tspan><tspan x="0" dy="18">relation, nonnegative stock,</tspan><tspan x="0" dy="18">reservation existence and the correct</tspan><tspan x="0" dy="18">entity identities.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n4" transform="translate(195.7475,112)">
+        <rect x="-159.2875" y="-82.5" width="318.575" height="165" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-55" dy="0.358em" style="font-family: Arial">Scope of the evidence</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-139.2875" y="-49" width="278.575" height="98" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-30.63">Model bounds and assumptions are</tspan><tspan x="0" dy="18">explicit. Actual native refinement and</tspan><tspan x="0" dy="18">implementation mutants are separate</tspan><tspan x="0" dy="18">witnesses; none proves every</tspan><tspan x="0" dy="18">deployment.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-291.8584,-254.9375)">
+        <rect x="-100.1766" y="-6.5625" width="200.3531" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V8 · A complete reservation intent</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links">
+    <g class="lini-link lini-style-e1" data-from="visual.n1" data-to="visual.n2">
+      <mask id="umf-action-counterexample-5-lini-label-cut-e47a65cc" maskUnits="userSpaceOnUse" x="-47.435" y="-129.5" width="87.31" height="4"><rect class="lini-cut-bg" x="-47.435" y="-129.5" width="87.31" height="4"/><rect class="lini-cut" x="-65.115" y="-134.65" width="105.677" height="14.3"/></mask>
+      <path d="M -45.435 -127.5 L 34.375 -127.5" mask="url(#umf-action-counterexample-5-lini-label-cut-e47a65cc)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="38.375,-127.5 29.375,-123 29.375,-132"/>
+      <text class="lini-link-label" x="-12.2765" y="-127.5" dy="0.358em" style="font-family: Arial">Passes the equation</text>
+    </g>
+    <g class="lini-link lini-style-e2" data-from="visual.n2" data-to="visual.n3">
+      <mask id="umf-action-counterexample-5-lini-label-cut-fa8a9d8c" maskUnits="userSpaceOnUse" x="-38.54" y="-113.5" width="78.415" height="227.5"><rect class="lini-cut-bg" x="-38.54" y="-113.5" width="78.415" height="227.5"/><rect class="lini-cut" x="-61.1555" y="-8.1075" width="121.231" height="14.3"/></mask>
+      <path d="M 37.875 -111.5 L 15.46 -111.5 A 16 16 0 0 0 -0.54 -95.5 L -0.54 96 A 16 16 0 0 1 -16.54 112 L -33.04 112" mask="url(#umf-action-counterexample-5-lini-label-cut-fa8a9d8c)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="-37.04,112 -28.04,107.5 -28.04,116.5"/>
+      <text class="lini-link-label" x="-0.54" y="-0.9575" dy="0.358em" style="font-family: Arial">Correct the obligations</text>
+    </g>
+  </g>
+</svg>
+<svg role="img" aria-labelledby="umf-action-counterexample-mobile-5-counterexample-mobile-title umf-action-counterexample-mobile-5-counterexample-mobile-desc" xmlns="http://www.w3.org/2000/svg" viewBox="-216.2875 -502.5 432.575 975" width="432.575" height="975" class="diagram-mobile lini lini-scope-bd9a2b03"><title id="umf-action-counterexample-mobile-5-counterexample-mobile-title">V8 · A complete reservation intent</title><desc id="umf-action-counterexample-mobile-5-counterexample-mobile-desc">Incomplete property: post.stock = pre.stock − quantity is insufficient by itself. This is a handler example, not the approve recipe. Counterexample · quantity zero: Stock can remain unchanged and the equation still holds. A promised reservation might also be absent. Corrected obligations: Require positive quantity, exact stock relation, nonnegative stock, reservation existence and the correct entity identities. Scope of the evidence: Model bounds and assumptions are explicit. Actual native refinement and implementation mutants are separate witnesses; none proves every deployment.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-bd9a2b03 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-link-font-weight: 400; --lini-stroke: light-dark(#444, #9aa0a6); --lini-teal-deep: light-dark(#008e85, #00cabe); --lini-text-color: var(--lini-fg); }
+      .lini-scope-bd9a2b03[data-theme="dark"], [data-theme="dark"] .lini-scope-bd9a2b03 { color-scheme: dark; }
+      .lini-scope-bd9a2b03[data-theme="light"], [data-theme="light"] .lini-scope-bd9a2b03 { color-scheme: light; }
+    }
+    .lini-scope-bd9a2b03, .lini-scope-bd9a2b03 text { font-family: var(--lini-font-family); }
+    .lini-scope-bd9a2b03 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-bd9a2b03 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-bd9a2b03 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-bd9a2b03 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-bd9a2b03 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+    .lini-scope-bd9a2b03 .lini-link { fill: none; stroke: var(--lini-stroke); stroke-width: 2; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-link-label { fill: currentColor; stroke: none; text-anchor: middle; font-size: 11px; font-weight: var(--lini-link-font-weight); }
+    .lini-scope-bd9a2b03 .lini-cut-bg { fill: white; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-cut { fill: black; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-marker { fill: var(--lini-stroke); stroke: none; }
+    .lini-scope-bd9a2b03 .lini-style-e1 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e1 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 .lini-marker { fill: var(--lini-teal-deep); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-196.2875" y="-452.5" width="392.575" height="905" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(0,-342)">
+        <rect x="-149.8525" y="-73.5" width="299.705" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Incomplete property</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-129.8525" y="-40" width="259.705" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">post.stock = pre.stock − quantity is</tspan><tspan x="0" dy="18">insufficient by itself. This is a</tspan><tspan x="0" dy="18">handler example, not the approve</tspan><tspan x="0" dy="18">recipe.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(0,-119.5)">
+        <rect x="-156.8725" y="-75" width="313.745" height="150" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" style="font-family: Arial"><tspan x="0" y="-40.63">Counterexample · quantity</tspan><tspan x="0" dy="18">zero</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-136.8725" y="-31" width="273.745" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Stock can remain unchanged and the</tspan><tspan x="0" dy="18">equation still holds. A promised</tspan><tspan x="0" dy="18">reservation might also be absent.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(0,103)">
+        <rect x="-158.7475" y="-73.5" width="317.495" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Corrected obligations</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-138.7475" y="-40" width="277.495" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Require positive quantity, exact stock</tspan><tspan x="0" dy="18">relation, nonnegative stock,</tspan><tspan x="0" dy="18">reservation existence and the correct</tspan><tspan x="0" dy="18">entity identities.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n4" transform="translate(0,333)">
+        <rect x="-159.2875" y="-82.5" width="318.575" height="165" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-55" dy="0.358em" style="font-family: Arial">Scope of the evidence</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-139.2875" y="-49" width="278.575" height="98" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-30.63">Model bounds and assumptions are</tspan><tspan x="0" dy="18">explicit. Actual native refinement and</tspan><tspan x="0" dy="18">implementation mutants are separate</tspan><tspan x="0" dy="18">witnesses; none proves every</tspan><tspan x="0" dy="18">deployment.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-96.1109,-475.9375)">
+        <rect x="-100.1766" y="-6.5625" width="200.3531" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V8 · A complete reservation intent</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links">
+    <g class="lini-link lini-style-e1" data-from="visual.n1" data-to="visual.n2">
+      <mask id="umf-action-counterexample-mobile-5-lini-label-cut-a606b659" maskUnits="userSpaceOnUse" x="-2" y="-269.5" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="-269.5" width="4" height="76"/><rect class="lini-cut" x="-52.8385" y="-249.45" width="105.677" height="14.3"/></mask>
+      <path d="M 0 -267.5 L 0 -199" mask="url(#umf-action-counterexample-mobile-5-lini-label-cut-a606b659)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,-195 -4.5,-204 4.5,-204"/>
+      <text class="lini-link-label" x="0" y="-242.3" dy="0.358em" style="font-family: Arial">Passes the equation</text>
+    </g>
+    <g class="lini-link lini-style-e2" data-from="visual.n2" data-to="visual.n3">
+      <mask id="umf-action-counterexample-mobile-5-lini-label-cut-d04d7daa" maskUnits="userSpaceOnUse" x="-2" y="-45.5" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="-45.5" width="4" height="76"/><rect class="lini-cut" x="-60.6155" y="-14.65" width="121.231" height="14.3"/></mask>
+      <path d="M 0 -43.5 L 0 25" mask="url(#umf-action-counterexample-mobile-5-lini-label-cut-d04d7daa)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,29 -4.5,20 4.5,20"/>
+      <text class="lini-link-label" x="0" y="-7.5" dy="0.358em" style="font-family: Arial">Correct the obligations</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Concept-map presentation · original panel text retained. <a href="diagram-counterexample.json" download>Visual source and rendering limits</a> · <a href="diagram-counterexample-mobile.json" download>Mobile source</a></figcaption></figure>
 <p>Figure V8. The original equation alone allows zero quantity and missing reservation. The corrected intent checks positive quantity, reservation existence and identity, and the exact stock relation. This is a design example requiring a qualified handler for computed writes, not the literal approve recipe.</p>
 <h2 id="explore-the-order-of-events">Explore the order of events</h2>
 <p>Two requests can both read “one unit remains.” An <strong>interleaving</strong> is the order their steps take. If checking and writing occur outside a shared transaction boundary, both can decide to reserve the final unit. The native reference consumer serializes its invariant and authorization boundary; disjoint write frames alone do not prove independence.</p>

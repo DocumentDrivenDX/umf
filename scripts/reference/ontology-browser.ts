@@ -12,7 +12,8 @@ const origin=live??`http://127.0.0.1:${server!.port}/umf/`,browser=await chromiu
 const page=await browser.newPage({viewport:{width:1280,height:960}}),errors:string[]=[],external:string[]=[],checks:string[]=[];
 page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(new URL(origin).origin)&&!r.url().startsWith('blob:')&&!r.url().startsWith('data:')&&!/^https:\/\/(fonts.googleapis.com|fonts.gstatic.com)\//.test(r.url()))external.push(r.url());});
 const assert=(ok:unknown,message:string)=>{if(!ok)throw Error(message);};
-const ontology=async(hash='')=>{await page.goto(origin+'reference/core.html'+hash);await page.locator('#load-status').filter({hasText:'assets verified'}).waitFor();await page.locator('#ontology-detail h3').waitFor();};
+const waitGraph=()=>page.waitForFunction(()=>{const map=document.querySelector<HTMLElement>('#ontology-map .umf-record-map-view');return map?.querySelector('svg')&&(!map.dataset.renderer||map.dataset.state==='ready');});
+const ontology=async(hash='')=>{await page.goto(origin+'reference/core.html'+hash);await page.locator('#load-status').filter({hasText:'assets verified'}).waitFor();await page.locator('#ontology-detail h3').waitFor();await waitGraph();};
 const sameStrings=(actual:string[],expected:string[])=>JSON.stringify([...actual].sort())===JSON.stringify([...expected].sort());
 let expectedRecordIds:string[]=[],expectedEdges:ReturnType<typeof selfModelGraph>['edges']=[];
 async function assertFullGraph(label:string){
@@ -102,14 +103,14 @@ try{
   assert(await page.locator('#ontology-map svg').evaluate((node:SVGSVGElement)=>{const b=node.getBBox(),v=node.viewBox.baseVal;return b.x>=v.x&&b.y>=v.y&&b.x+b.width<=v.x+v.width&&b.y+b.height<=v.y+v.height;}),'Graph geometry clipped '+width);
   await assertFullGraph('Default graph '+width);
   const geometry=await page.locator('#ontology-map svg').evaluate((svg:SVGSVGElement)=>{
-   const nodes=Array.from(svg.querySelectorAll<SVGAElement>('[data-model-id]')).map(node=>({id:node.dataset.modelId,box:node.querySelector('rect')!.getBoundingClientRect(),label:node.querySelector('text')!.getBoundingClientRect()}));
+   const nodes=Array.from(svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect record "]')).map(node=>({id:node.dataset.modelId,box:node.getBoundingClientRect(),label:node.querySelector('text')!.getBoundingClientRect()}));
    const overlaps=nodes.flatMap((a,i)=>nodes.slice(i+1).filter(b=>Math.min(a.box.right,b.box.right)-Math.max(a.box.left,b.box.left)>1&&Math.min(a.box.bottom,b.box.bottom)-Math.max(a.box.top,b.box.top)>1));
    const labels=nodes.filter(node=>node.label.left<node.box.left||node.label.right>node.box.right);
    const endpointErrors=Array.from(svg.querySelectorAll<SVGAElement>('[data-source]')).filter(edge=>{
-    const path=edge.querySelector('path')!,matrix=svg.getScreenCTM()!;
-    return [[edge.dataset.source,0],[edge.dataset.target,path.getTotalLength()]].some(([id,distance])=>{const point=path.getPointAtLength(Number(distance)).matrixTransform(matrix),box=nodes.find(node=>node.id===id)!.box;return Math.min(Math.abs(point.x-box.left),Math.abs(point.x-box.right),Math.abs(point.y-box.top),Math.abs(point.y-box.bottom))>2||point.x<box.left-2||point.x>box.right+2||point.y<box.top-2||point.y>box.bottom+2;});
+    const path=edge.querySelector('path')!,matrix=path.getScreenCTM()!;
+    return [[edge.dataset.source,0],[edge.dataset.target,path.getTotalLength()]].some(([id,distance])=>{const point=path.getPointAtLength(Number(distance)).matrixTransform(matrix),box=nodes.find(node=>node.id===id)!.box;const arrow=Number(distance)>0?edge.querySelector<SVGPolygonElement>('polygon.lini-marker-arrow'):null;const points=arrow?[...arrow.points].map(p=>p.matrixTransform(arrow.getScreenCTM()!)):[point];return !points.some(p=>Math.min(Math.abs(p.x-box.left),Math.abs(p.x-box.right),Math.abs(p.y-box.top),Math.abs(p.y-box.bottom))<=2&&p.x>=box.left-2&&p.x<=box.right+2&&p.y>=box.top-2&&p.y<=box.bottom+2);});
    });
-   const edgeCollisions=Array.from(svg.querySelectorAll<SVGAElement>('[data-source]')).filter(edge=>{const path=edge.querySelector('path')!,matrix=svg.getScreenCTM()!;for(let distance=0;distance<=path.getTotalLength();distance+=4){const point=path.getPointAtLength(distance).matrixTransform(matrix);if(nodes.some(node=>node.id!==edge.dataset.source&&node.id!==edge.dataset.target&&point.x>node.box.left+1&&point.x<node.box.right-1&&point.y>node.box.top+1&&point.y<node.box.bottom-1))return true;}return false;});
+   const edgeCollisions=Array.from(svg.querySelectorAll<SVGAElement>('[data-source]')).filter(edge=>{const path=edge.querySelector('path')!,matrix=path.getScreenCTM()!;for(let distance=0;distance<=path.getTotalLength();distance+=4){const point=path.getPointAtLength(distance).matrixTransform(matrix);if(nodes.some(node=>node.id!==edge.dataset.source&&node.id!==edge.dataset.target&&point.x>node.box.left+1&&point.x<node.box.right-1&&point.y>node.box.top+1&&point.y<node.box.bottom-1))return true;}return false;});
    return {overlaps:overlaps.length,labels:labels.length,endpointErrors:endpointErrors.length,edgeCollisions:edgeCollisions.length};
   });assert(geometry.overlaps===0&&geometry.labels===0&&geometry.endpointErrors===0&&geometry.edgeCollisions===0,'Balanced graph geometry invalid '+width+': '+JSON.stringify(geometry));
   if(width>=1001){assert(layout.detail.top<height/2,'Desktop details buried '+width);assert(layout.detail.left>layout.graph.left,'Desktop graph and details must be side by side');}

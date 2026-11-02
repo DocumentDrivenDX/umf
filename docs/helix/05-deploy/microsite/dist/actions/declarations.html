@@ -12,15 +12,275 @@
 <p>An action names typed parameters, possible failures, conditions, permitted reads and writes, authorization and a recipe or handler binding. Empty lists explicitly mean no declared entries; missing members are not defaults.</p>
 <h2 id="start-with-approval">Start with approval</h2>
 <p>The approve fixture has one required entity parameter. It selects a sales.order by Key pk, freezes that selection, and permits writing its status Field. Its recipe requires a SET to approved. Permission to write a Field does not grant permission to read it.</p>
-<figure aria-label="Approval change, no-op and replay"><svg class="diagram-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 760" role="img" aria-labelledby="approval-title approval-desc"><title id="approval-title">V3 · Approval, no-op and replay</title><desc id="approval-desc">First request token · business change: Before: pending. Required SET: approved. Commit retains the outcome and one business-change fact. Fresh request token · business no-op: Before: approved. SET verifies no-op. A new outcome persists; business version and event count do not advance. Original request token · replay: Return the exact retained first outcome under current authorization. Do not execute again or substitute the fresh no-op.</desc><defs><marker id="approval-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="720" height="760" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">Approval, no-op and replay</text><text x="20" y="24" font-size="13">V3 · STATES</text><rect x="20" y="110" width="680" height="166" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="137" font-size="18" font-weight="700">1 · First request token</text><text x="38" y="180" font-size="18" font-weight="700">pending</text><text x="570" y="180" font-size="18" font-weight="700">approved</text><path d="M255 202 L560 202" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#approval-arrow)"/><text x="38" y="245" font-size="17">Changed: outcome + fact; version V_A.</text><rect x="20" y="300" width="680" height="166" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="327" font-size="18" font-weight="700">2 · Fresh request token</text><text x="38" y="370" font-size="18" font-weight="700">approved</text><text x="570" y="370" font-size="18" font-weight="700">approved</text><path d="M255 392 L560 392" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#approval-arrow)"/><text x="38" y="435" font-size="17">No-op: new outcome; same V_A, no new fact.</text><rect x="20" y="490" width="680" height="166" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="517" font-size="18" font-weight="700">3 · Original-token replay</text><text x="38" y="560" font-size="18" font-weight="700">retained</text><text x="570" y="560" font-size="18" font-weight="700">original</text><text x="570" y="583" font-size="18" font-weight="700">result</text><path d="M255 582 L560 582" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#approval-arrow)"/><text x="38" y="625" font-size="17">No execution. Current authorization still required.</text><text x="20" y="692" font-size="16">V_A is an illustrative opaque version, not a sortable clock.</text></g></svg>
-<svg class="diagram-mobile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 900" role="img" aria-labelledby="approval-mobile-title approval-mobile-desc"><title id="approval-mobile-title">V3 · Approval, no-op and replay</title><desc id="approval-mobile-desc">First request token · business change: Before: pending. Required SET: approved. Commit retains the outcome and one business-change fact. Fresh request token · business no-op: Before: approved. SET verifies no-op. A new outcome persists; business version and event count do not advance. Original request token · replay: Return the exact retained first outcome under current authorization. Do not execute again or substitute the fresh no-op.</desc><defs><marker id="approval-mobile-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="360" height="900" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">Approval, no-op and</text><text x="20" y="89" font-size="26">replay</text><text x="20" y="24" font-size="13">V3 · STATES</text><rect x="20" y="110" width="320" height="206" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="137" font-size="18" font-weight="700">1 · First request token</text><text x="38" y="180" font-size="18" font-weight="700">pending</text><text x="210" y="180" font-size="18" font-weight="700">approved</text><path d="M155 202 L200 202" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#approval-mobile-arrow)"/><text x="38" y="245" font-size="17">Changed: outcome + fact;</text><text x="38" y="267" font-size="17">version V_A.</text><rect x="20" y="340" width="320" height="206" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="367" font-size="18" font-weight="700">2 · Fresh request token</text><text x="38" y="410" font-size="18" font-weight="700">approved</text><text x="210" y="410" font-size="18" font-weight="700">approved</text><path d="M155 432 L200 432" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#approval-mobile-arrow)"/><text x="38" y="475" font-size="17">No-op: new outcome; same V_A,</text><text x="38" y="497" font-size="17">no new fact.</text><rect x="20" y="570" width="320" height="206" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="597" font-size="18" font-weight="700">3 · Original-token replay</text><text x="38" y="640" font-size="18" font-weight="700">retained</text><text x="210" y="640" font-size="18" font-weight="700">original</text><text x="210" y="663" font-size="18" font-weight="700">result</text><path d="M155 662 L200 662" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#approval-mobile-arrow)"/><text x="38" y="705" font-size="17">No execution. Current</text><text x="38" y="727" font-size="17">authorization still required.</text><text x="20" y="812" font-size="16">V_A is an illustrative opaque</text><text x="20" y="833" font-size="16">version, not a sortable clock.</text></g></svg>
-</figure>
+<figure aria-label="Approval change, no-op and replay"><svg role="img" aria-labelledby="umf-action-approval-4-approval-title umf-action-approval-4-approval-desc" xmlns="http://www.w3.org/2000/svg" viewBox="-417.42 -292 834.84 554" width="834.84" height="554" class="diagram-desktop lini lini-scope-3e27a859"><title id="umf-action-approval-4-approval-title">V3 · Approval, no-op and replay</title><desc id="umf-action-approval-4-approval-desc">First request token · business change: Before: pending. Required SET: approved. Commit retains the outcome and one business-change fact. Fresh request token · business no-op: Before: approved. SET verifies no-op. A new outcome persists; business version and event count do not advance. Original request token · replay: Return the exact retained first outcome under current authorization. Do not execute again or substitute the fresh no-op.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-3e27a859 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-stroke: light-dark(#444, #9aa0a6); --lini-text-color: var(--lini-fg); }
+      .lini-scope-3e27a859[data-theme="dark"], [data-theme="dark"] .lini-scope-3e27a859 { color-scheme: dark; }
+      .lini-scope-3e27a859[data-theme="light"], [data-theme="light"] .lini-scope-3e27a859 { color-scheme: light; }
+    }
+    .lini-scope-3e27a859, .lini-scope-3e27a859 text { font-family: var(--lini-font-family); }
+    .lini-scope-3e27a859 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-3e27a859 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-3e27a859 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-3e27a859 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-3e27a859 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-3e27a859 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-397.42" y="-242" width="794.84" height="484" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(-194.6975,-121)">
+        <rect x="-165.7225" y="-75" width="331.445" height="150" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" style="font-family: Arial"><tspan x="0" y="-40.63">First request token ·</tspan><tspan x="0" dy="18">business change</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-145.7225" y="-31" width="291.445" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Before: pending. Required SET:</tspan><tspan x="0" dy="18">approved. Commit retains the outcome</tspan><tspan x="0" dy="18">and one business-change fact.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(202.7225,-121)">
+        <rect x="-157.6975" y="-84" width="315.395" height="168" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" style="font-family: Arial"><tspan x="0" y="-49.63">Fresh request token ·</tspan><tspan x="0" dy="18">business no-op</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-137.6975" y="-40" width="275.395" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Before: approved. SET verifies no-op.</tspan><tspan x="0" dy="18">A new outcome persists; business</tspan><tspan x="0" dy="18">version and event count do not</tspan><tspan x="0" dy="18">advance.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(-194.6975,121)">
+        <rect x="-161.4025" y="-84" width="322.805" height="168" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" style="font-family: Arial"><tspan x="0" y="-49.63">Original request token ·</tspan><tspan x="0" dy="18">replay</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-141.4025" y="-40" width="282.805" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Return the exact retained first</tspan><tspan x="0" dy="18">outcome under current authorization.</tspan><tspan x="0" dy="18">Do not execute again or substitute the</tspan><tspan x="0" dy="18">fresh no-op.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-304.6591,-265.4375)">
+        <rect x="-92.7609" y="-6.5625" width="185.5219" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V3 · Approval, no-op and replay</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links"/>
+</svg>
+<svg role="img" aria-labelledby="umf-action-approval-mobile-4-approval-mobile-title umf-action-approval-mobile-4-approval-mobile-desc" xmlns="http://www.w3.org/2000/svg" viewBox="-222.7225 -404 445.445 778" width="445.445" height="778" class="diagram-mobile lini lini-scope-3e27a859"><title id="umf-action-approval-mobile-4-approval-mobile-title">V3 · Approval, no-op and replay</title><desc id="umf-action-approval-mobile-4-approval-mobile-desc">First request token · business change: Before: pending. Required SET: approved. Commit retains the outcome and one business-change fact. Fresh request token · business no-op: Before: approved. SET verifies no-op. A new outcome persists; business version and event count do not advance. Original request token · replay: Return the exact retained first outcome under current authorization. Do not execute again or substitute the fresh no-op.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-3e27a859 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-stroke: light-dark(#444, #9aa0a6); --lini-text-color: var(--lini-fg); }
+      .lini-scope-3e27a859[data-theme="dark"], [data-theme="dark"] .lini-scope-3e27a859 { color-scheme: dark; }
+      .lini-scope-3e27a859[data-theme="light"], [data-theme="light"] .lini-scope-3e27a859 { color-scheme: light; }
+    }
+    .lini-scope-3e27a859, .lini-scope-3e27a859 text { font-family: var(--lini-font-family); }
+    .lini-scope-3e27a859 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-3e27a859 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-3e27a859 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-3e27a859 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-3e27a859 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-3e27a859 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-202.7225" y="-354" width="405.445" height="708" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(0,-242)">
+        <rect x="-165.7225" y="-75" width="331.445" height="150" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" style="font-family: Arial"><tspan x="0" y="-40.63">First request token ·</tspan><tspan x="0" dy="18">business change</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-145.7225" y="-31" width="291.445" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Before: pending. Required SET:</tspan><tspan x="0" dy="18">approved. Commit retains the outcome</tspan><tspan x="0" dy="18">and one business-change fact.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(0,-9)">
+        <rect x="-157.6975" y="-84" width="315.395" height="168" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" style="font-family: Arial"><tspan x="0" y="-49.63">Fresh request token ·</tspan><tspan x="0" dy="18">business no-op</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-137.6975" y="-40" width="275.395" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Before: approved. SET verifies no-op.</tspan><tspan x="0" dy="18">A new outcome persists; business</tspan><tspan x="0" dy="18">version and event count do not</tspan><tspan x="0" dy="18">advance.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(0,233)">
+        <rect x="-161.4025" y="-84" width="322.805" height="168" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" style="font-family: Arial"><tspan x="0" y="-49.63">Original request token ·</tspan><tspan x="0" dy="18">replay</tspan></text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,24)">
+          <rect x="-141.4025" y="-40" width="282.805" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Return the exact retained first</tspan><tspan x="0" dy="18">outcome under current authorization.</tspan><tspan x="0" dy="18">Do not execute again or substitute the</tspan><tspan x="0" dy="18">fresh no-op.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-109.9616,-377.4375)">
+        <rect x="-92.7609" y="-6.5625" width="185.5219" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V3 · Approval, no-op and replay</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links"/>
+</svg>
+<figcaption>Concept-map presentation · original panel text retained. <a href="diagram-approval.json" download>Visual source and rendering limits</a> · <a href="diagram-approval-mobile.json" download>Mobile source</a></figcaption></figure>
 <p>Figure V3. First approval changes pending to approved. A fresh keyed invocation on the approved order is a business no-op with a new terminal outcome but no new business-change version or event. An identical-token replay returns the original outcome; it is not a new execution.</p>
 <h2 id="recipes-have-ordered-required-effects">Recipes have ordered required effects</h2>
 <p>Graph-write/1 supports create, set, delete, link and unlink. An effect can refer to an entity created by an earlier effect. Forward and self-created references refuse. Keys are immutable, identity allocation is not supported and deletes do not imply cascades.</p>
-<figure aria-label="Create an order before linking its endpoints"><svg class="diagram-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 760" role="img" aria-labelledby="create-link-title create-link-desc"><title id="create-link-title">V4 · Create before linking</title><desc id="create-link-desc">1 · create: Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier. 2 · link-customer: Source is created:create. Target is the existing customer parameter, using the authored relationship orientation. 3 · link-product: Source is created:create. Target is the existing product parameter. Forward references would refuse. Permissions are separate: The frozen write frame must permit create and these relationships. Effects require the actual operations; permission alone does not.</desc><defs><marker id="create-link-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="720" height="760" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">Create before linking</text><text x="20" y="24" font-size="13">V4 · RECIPE</text><rect x="255.0" y="110" width="210" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="267.0" y="137" font-size="18" font-weight="700">1 · create order</text><text x="267.0" y="168" font-size="17">Explicit Key.</text><text x="267.0" y="190" font-size="17">Effect ID: create.</text><rect x="20" y="390" width="330.0" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="417" font-size="18" font-weight="700">Customer</text><text x="32" y="448" font-size="17">existing input</text><rect x="370.0" y="390" width="330.0" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="382.0" y="417" font-size="18" font-weight="700">Product</text><text x="382.0" y="448" font-size="17">existing input</text><path d="M330.0 250 L175 390" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#create-link-arrow)"/><text x="183" y="312.0" font-size="16">2 · link</text><path d="M390.0 250 L545 390" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#create-link-arrow)"/><text x="398.0" y="312.0" font-size="16">3 · link</text><text x="25" y="555" font-size="17">Both sources bind created:create.</text><rect x="20" y="590" width="680" height="160" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5" stroke-dasharray="5 4"/><text x="32" y="617" font-size="18" font-weight="700">Frozen permission frame</text><text x="32" y="648" font-size="17">Permit create + these links. Required effects are distinct from</text><text x="32" y="670" font-size="17">permission. No forward reference or allocated Key.</text></g></svg>
-<svg class="diagram-mobile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 900" role="img" aria-labelledby="create-link-mobile-title create-link-mobile-desc"><title id="create-link-mobile-title">V4 · Create before linking</title><desc id="create-link-mobile-desc">1 · create: Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier. 2 · link-customer: Source is created:create. Target is the existing customer parameter, using the authored relationship orientation. 3 · link-product: Source is created:create. Target is the existing product parameter. Forward references would refuse. Permissions are separate: The frozen write frame must permit create and these relationships. Effects require the actual operations; permission alone does not.</desc><defs><marker id="create-link-mobile-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="360" height="900" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">Create before linking</text><text x="20" y="24" font-size="13">V4 · RECIPE</text><rect x="75.0" y="110" width="210" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="87.0" y="137" font-size="18" font-weight="700">1 · create order</text><text x="87.0" y="168" font-size="17">Explicit Key.</text><text x="87.0" y="190" font-size="17">Effect ID: create.</text><rect x="20" y="390" width="150.0" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="417" font-size="18" font-weight="700">Customer</text><text x="32" y="448" font-size="17">existing</text><text x="32" y="470" font-size="17">input</text><rect x="190.0" y="390" width="150.0" height="140" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="202.0" y="417" font-size="18" font-weight="700">Product</text><text x="202.0" y="448" font-size="17">existing</text><text x="202.0" y="470" font-size="17">input</text><path d="M150.0 250 L90 390" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#create-link-mobile-arrow)"/><path d="M210.0 250 L270 390" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#create-link-mobile-arrow)"/><text x="20" y="320" font-size="16">2 · link</text><text x="275" y="320" font-size="16">3 · link</text><text x="25" y="555" font-size="17">Both sources bind</text><text x="25" y="577" font-size="17">created:create.</text><rect x="20" y="590" width="320" height="160" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5" stroke-dasharray="5 4"/><text x="32" y="617" font-size="18" font-weight="700">Frozen permission frame</text><text x="32" y="648" font-size="17">Permit create + these links.</text><text x="32" y="670" font-size="17">Required effects are distinct</text><text x="32" y="692" font-size="17">from permission. No forward</text><text x="32" y="714" font-size="17">reference or allocated Key.</text></g></svg>
-</figure>
+<figure aria-label="Create an order before linking its endpoints"><svg role="img" aria-labelledby="umf-action-create-link-8-create-link-title umf-action-create-link-8-create-link-desc" xmlns="http://www.w3.org/2000/svg" viewBox="-407.5425 -262 815.085 494" width="815.085" height="494" class="diagram-desktop lini lini-scope-bd9a2b03"><title id="umf-action-create-link-8-create-link-title">V4 · Create before linking</title><desc id="umf-action-create-link-8-create-link-desc">1 · create: Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier. 2 · link-customer: Source is created:create. Target is the existing customer parameter, using the authored relationship orientation. 3 · link-product: Source is created:create. Target is the existing product parameter. Forward references would refuse. Permissions are separate: The frozen write frame must permit create and these relationships. Effects require the actual operations; permission alone does not.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-bd9a2b03 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-link-font-weight: 400; --lini-stroke: light-dark(#444, #9aa0a6); --lini-teal-deep: light-dark(#008e85, #00cabe); --lini-text-color: var(--lini-fg); }
+      .lini-scope-bd9a2b03[data-theme="dark"], [data-theme="dark"] .lini-scope-bd9a2b03 { color-scheme: dark; }
+      .lini-scope-bd9a2b03[data-theme="light"], [data-theme="light"] .lini-scope-bd9a2b03 { color-scheme: light; }
+    }
+    .lini-scope-bd9a2b03, .lini-scope-bd9a2b03 text { font-family: var(--lini-font-family); }
+    .lini-scope-bd9a2b03 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-bd9a2b03 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-bd9a2b03 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-bd9a2b03 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-bd9a2b03 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+    .lini-scope-bd9a2b03 .lini-link { fill: none; stroke: var(--lini-stroke); stroke-width: 2; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-link-label { fill: currentColor; stroke: none; text-anchor: middle; font-size: 11px; font-weight: var(--lini-link-font-weight); }
+    .lini-scope-bd9a2b03 .lini-cut-bg { fill: white; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-cut { fill: black; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-marker { fill: var(--lini-stroke); stroke: none; }
+    .lini-scope-bd9a2b03 .lini-style-e1 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e1 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 .lini-marker { fill: var(--lini-teal-deep); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-387.5425" y="-212" width="775.085" height="424" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(-201.4925,-110.5)">
+        <rect x="-149.05" y="-64.5" width="298.1" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">1 · create</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-129.05" y="-31" width="258.1" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Create the order at an explicit Key.</tspan><tspan x="0" dy="18">Save the effect identity create; no</tspan><tspan x="0" dy="18">computed or allocated identifier.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(186.05,-110.5)">
+        <rect x="-164.4925" y="-64.5" width="328.985" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">2 · link-customer</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-144.4925" y="-31" width="288.985" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Source is created:create. Target is</tspan><tspan x="0" dy="18">the existing customer parameter, using</tspan><tspan x="0" dy="18">the authored relationship orientation.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(-201.4925,101.5)">
+        <rect x="-147.175" y="-64.5" width="294.35" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">3 · link-product</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-127.175" y="-31" width="254.35" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Source is created:create. Target is</tspan><tspan x="0" dy="18">the existing product parameter.</tspan><tspan x="0" dy="18">Forward references would refuse.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n4" transform="translate(186.05,101.5)">
+        <rect x="-157.5625" y="-73.5" width="315.125" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Permissions are separate</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-137.5625" y="-40" width="275.125" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">The frozen write frame must permit</tspan><tspan x="0" dy="18">create and these relationships.</tspan><tspan x="0" dy="18">Effects require the actual operations;</tspan><tspan x="0" dy="18">permission alone does not.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-312.7103,-235.4375)">
+        <rect x="-74.8322" y="-6.5625" width="149.6644" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V4 · Create before linking</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links">
+    <g class="lini-link lini-style-e1" data-from="visual.n1" data-to="visual.n2">
+      <mask id="umf-action-create-link-8-lini-label-cut-c4fccace" maskUnits="userSpaceOnUse" x="-53.4425" y="-112.5" width="76" height="4"><rect class="lini-cut-bg" x="-53.4425" y="-112.5" width="76" height="4"/><rect class="lini-cut" x="-70.6605" y="-117.65" width="88.836" height="14.3"/></mask>
+      <path d="M -51.4425 -110.5 L 17.0575 -110.5" mask="url(#umf-action-create-link-8-lini-label-cut-c4fccace)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="21.0575,-110.5 12.0575,-106 12.0575,-115"/>
+      <text class="lini-link-label" x="-26.2425" y="-110.5" dy="0.358em" style="font-family: Arial">2 · link-customer</text>
+    </g>
+    <g class="lini-link lini-style-e2" data-from="visual.n1" data-to="visual.n3">
+      <mask id="umf-action-create-link-8-lini-label-cut-4c62e1f3" maskUnits="userSpaceOnUse" x="-203.4925" y="-47" width="4" height="85"><rect class="lini-cut-bg" x="-203.4925" y="-47" width="4" height="85"/><rect class="lini-cut" x="-242.0825" y="-11.65" width="81.18" height="14.3"/></mask>
+      <path d="M -201.4925 -45 L -201.4925 32.5" mask="url(#umf-action-create-link-8-lini-label-cut-4c62e1f3)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="-201.4925,36.5 -205.9925,27.5 -196.9925,27.5"/>
+      <text class="lini-link-label" x="-201.4925" y="-4.5" dy="0.358em" style="font-family: Arial">3 · link-product</text>
+    </g>
+  </g>
+</svg>
+<svg role="img" aria-labelledby="umf-action-create-link-mobile-8-create-link-mobile-title umf-action-create-link-mobile-8-create-link-mobile-desc" xmlns="http://www.w3.org/2000/svg" viewBox="-238.7825 -465 460.275 900" width="460.275" height="900" class="diagram-mobile lini lini-scope-bd9a2b03"><title id="umf-action-create-link-mobile-8-create-link-mobile-title">V4 · Create before linking</title><desc id="umf-action-create-link-mobile-8-create-link-mobile-desc">1 · create: Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier. 2 · link-customer: Source is created:create. Target is the existing customer parameter, using the authored relationship orientation. 3 · link-product: Source is created:create. Target is the existing product parameter. Forward references would refuse. Permissions are separate: The frozen write frame must permit create and these relationships. Effects require the actual operations; permission alone does not.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-bd9a2b03 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-link-font-weight: 400; --lini-stroke: light-dark(#444, #9aa0a6); --lini-teal-deep: light-dark(#008e85, #00cabe); --lini-text-color: var(--lini-fg); }
+      .lini-scope-bd9a2b03[data-theme="dark"], [data-theme="dark"] .lini-scope-bd9a2b03 { color-scheme: dark; }
+      .lini-scope-bd9a2b03[data-theme="light"], [data-theme="light"] .lini-scope-bd9a2b03 { color-scheme: light; }
+    }
+    .lini-scope-bd9a2b03, .lini-scope-bd9a2b03 text { font-family: var(--lini-font-family); }
+    .lini-scope-bd9a2b03 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-bd9a2b03 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-bd9a2b03 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-bd9a2b03 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-bd9a2b03 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+    .lini-scope-bd9a2b03 .lini-link { fill: none; stroke: var(--lini-stroke); stroke-width: 2; stroke-dasharray: none; }
+    .lini-scope-bd9a2b03 .lini-link-label { fill: currentColor; stroke: none; text-anchor: middle; font-size: 11px; font-weight: var(--lini-link-font-weight); }
+    .lini-scope-bd9a2b03 .lini-cut-bg { fill: white; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-cut { fill: black; stroke: none; }
+    .lini-scope-bd9a2b03 .lini-marker { fill: var(--lini-stroke); stroke: none; }
+    .lini-scope-bd9a2b03 .lini-style-e1 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e1 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 { stroke: var(--lini-teal-deep); }
+    .lini-scope-bd9a2b03 .lini-style-e2 .lini-marker { fill: var(--lini-teal-deep); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-201.4925" y="-415" width="402.985" height="830" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(0,-313.5)">
+        <rect x="-149.05" y="-64.5" width="298.1" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">1 · create</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-129.05" y="-31" width="258.1" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Create the order at an explicit Key.</tspan><tspan x="0" dy="18">Save the effect identity create; no</tspan><tspan x="0" dy="18">computed or allocated identifier.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(0,-110.5)">
+        <rect x="-164.4925" y="-64.5" width="328.985" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">2 · link-customer</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-144.4925" y="-31" width="288.985" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Source is created:create. Target is</tspan><tspan x="0" dy="18">the existing customer parameter, using</tspan><tspan x="0" dy="18">the authored relationship orientation.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(0,92.5)">
+        <rect x="-147.175" y="-64.5" width="294.35" height="129" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-37" dy="0.358em" style="font-family: Arial">3 · link-product</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-127.175" y="-31" width="254.35" height="62" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-12.63">Source is created:create. Target is</tspan><tspan x="0" dy="18">the existing product parameter.</tspan><tspan x="0" dy="18">Forward references would refuse.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n4" transform="translate(0,304.5)">
+        <rect x="-157.5625" y="-73.5" width="315.125" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Permissions are separate</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-137.5625" y="-40" width="275.125" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">The frozen write frame must permit</tspan><tspan x="0" dy="18">create and these relationships.</tspan><tspan x="0" dy="18">Effects require the actual operations;</tspan><tspan x="0" dy="18">permission alone does not.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-126.6603,-438.4375)">
+        <rect x="-74.8322" y="-6.5625" width="149.6644" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V4 · Create before linking</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links">
+    <g class="lini-link lini-style-e1" data-from="visual.n1" data-to="visual.n2">
+      <mask id="umf-action-create-link-mobile-8-lini-label-cut-5893e551" maskUnits="userSpaceOnUse" x="-2" y="-250" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="-250" width="4" height="76"/><rect class="lini-cut" x="-44.418" y="-229.95" width="88.836" height="14.3"/></mask>
+      <path d="M 0 -248 L 0 -179.5" mask="url(#umf-action-create-link-mobile-8-lini-label-cut-5893e551)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,-175.5 -4.5,-184.5 4.5,-184.5"/>
+      <text class="lini-link-label" x="0" y="-222.8" dy="0.358em" style="font-family: Arial">2 · link-customer</text>
+    </g>
+    <g class="lini-link lini-style-e2" data-from="visual.n1" data-to="visual.n3">
+      <mask id="umf-action-create-link-mobile-8-lini-label-cut-8efa78cd" maskUnits="userSpaceOnUse" x="-183.4925" y="-315.5" width="37.3175" height="410"><rect class="lini-cut-bg" x="-183.4925" y="-315.5" width="37.3175" height="410"/><rect class="lini-cut" x="-222.0825" y="-144.7125" width="81.18" height="14.3"/></mask>
+      <path d="M -150.05 -313.5 L -165.4925 -313.5 A 16 16 0 0 0 -181.4925 -297.5 L -181.4925 76.5 A 16 16 0 0 0 -165.4925 92.5 L -151.675 92.5" mask="url(#umf-action-create-link-mobile-8-lini-label-cut-8efa78cd)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="-147.675,92.5 -156.675,97 -156.675,88"/>
+      <text class="lini-link-label" x="-181.4925" y="-137.5625" dy="0.358em" style="font-family: Arial">3 · link-product</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Concept-map presentation · original panel text retained. <a href="diagram-create-link.json" download>Visual source and rendering limits</a> · <a href="diagram-create-link-mobile.json" download>Mobile source</a></figcaption></figure>
 <p>Figure V4. The actual create-link fixture first creates the order at an explicit Key, then links that created order to customer and product. The diagram does not imply a database cascade or computed identifier. See fixtures/actions/create-link.json.</p>
 <h2 id="when-a-handler-is-needed">When a handler is needed</h2>
 <p>A <strong>frame</strong> lists selected identities and permitted access. A handler can branch or make no business change while satisfying its outputs, postconditions and frame. A frame alone cannot express a mandatory effect.</p>

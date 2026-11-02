@@ -1,0 +1,194 @@
+{
+  "profile": "umf.site.lini-presentation/1",
+  "rendererPackage": {
+    "name": "@documentdrivendx/umf-visual",
+    "version": "0.5.0",
+    "entrySha256": "3502f2ca6ac802f0c3db513b18455362536179178c388446a4e3d0ea736d2f2f"
+  },
+  "document": {
+    "umf": "0.10.0",
+    "id": "visual:actions-create-link",
+    "vocabularies": {
+      "umf.visual": {
+        "version": "1.3.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.visual": {
+        "id": "actions-create-link",
+        "kind": "flow",
+        "form": "network",
+        "title": "V4 · Create before linking",
+        "question": "Create before linking",
+        "source": {
+          "path": "docs/helix/04-build/guides/actions/diagrams/source.json",
+          "view": "create-link"
+        },
+        "layout": {
+          "kind": "grid",
+          "columns": 1,
+          "order": [
+            "panel-1",
+            "panel-2",
+            "panel-3",
+            "panel-4"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "panel-1",
+            "label": "1 · create",
+            "detail": "Create the order at an explicit Key.\nSave the effect identity create; no\ncomputed or allocated identifier."
+          },
+          {
+            "id": "panel-2",
+            "label": "2 · link-customer",
+            "detail": "Source is created:create. Target is\nthe existing customer parameter, using\nthe authored relationship orientation."
+          },
+          {
+            "id": "panel-3",
+            "label": "3 · link-product",
+            "detail": "Source is created:create. Target is\nthe existing product parameter.\nForward references would refuse."
+          },
+          {
+            "id": "panel-4",
+            "label": "Permissions are separate",
+            "detail": "The frozen write frame must permit\ncreate and these relationships.\nEffects require the actual operations;\npermission alone does not."
+          }
+        ],
+        "edges": [
+          {
+            "id": "connection-1",
+            "from": "panel-1",
+            "to": "panel-2",
+            "label": "2 · link-customer",
+            "directed": true
+          },
+          {
+            "id": "connection-2",
+            "from": "panel-1",
+            "to": "panel-3",
+            "label": "3 · link-product",
+            "directed": true
+          }
+        ],
+        "omissions": [
+          "This is a concept-map presentation of the original tutorial panels. Original storyboard-specific positions, swimlanes, sequence lifelines, state glyphs and timeline geometry are not reproduced. All authored panel text remains visible and in the source companion."
+        ]
+      }
+    }
+  },
+  "originalSource": {
+    "id": "create-link",
+    "figure": "V4",
+    "title": "Create before linking",
+    "kind": "recipe",
+    "panels": [
+      {
+        "title": "1 · create",
+        "text": "Create the order at an explicit Key. Save the effect identity create; no computed or allocated identifier."
+      },
+      {
+        "title": "2 · link-customer",
+        "text": "Source is created:create. Target is the existing customer parameter, using the authored relationship orientation."
+      },
+      {
+        "title": "3 · link-product",
+        "text": "Source is created:create. Target is the existing product parameter. Forward references would refuse."
+      },
+      {
+        "title": "Permissions are separate",
+        "text": "The frozen write frame must permit create and these relationships. Effects require the actual operations; permission alone does not."
+      }
+    ]
+  },
+  "nativeVersion": "1.1.0",
+  "elementMap": [
+    {
+      "logicalId": "actions-create-link",
+      "sourcePath": "/extensions/umf.visual/id",
+      "nativeId": "visual",
+      "kind": "visual"
+    },
+    {
+      "logicalId": "panel-1",
+      "sourcePath": "/extensions/umf.visual/nodes/0/id",
+      "nativeId": "n1",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-2",
+      "sourcePath": "/extensions/umf.visual/nodes/1/id",
+      "nativeId": "n2",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-3",
+      "sourcePath": "/extensions/umf.visual/nodes/2/id",
+      "nativeId": "n3",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-4",
+      "sourcePath": "/extensions/umf.visual/nodes/3/id",
+      "nativeId": "n4",
+      "kind": "node"
+    },
+    {
+      "logicalId": "connection-1",
+      "sourcePath": "/extensions/umf.visual/edges/0",
+      "nativeId": "e1",
+      "kind": "edge"
+    },
+    {
+      "logicalId": "connection-2",
+      "sourcePath": "/extensions/umf.visual/edges/1",
+      "nativeId": "e2",
+      "kind": "edge"
+    }
+  ],
+  "omissions": [
+    {
+      "sourcePath": "/extensions/umf.visual/question",
+      "reason": "The reader question remains in the UMF document; Lini displays the concise title in the native diagram frame."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/source",
+      "reason": "Source provenance remains in UMF and is not embedded in diagram geometry."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/omissions/0",
+      "reason": "Authored omission inventory remains in UMF and is not drawn."
+    }
+  ],
+  "approximations": [
+    {
+      "sourcePath": "/extensions/umf.visual/layout",
+      "requested": "Grid layout with one column",
+      "representation": "Lini 1.1 represents a one-column grid with native column flow; requested component order and single-column containment are preserved."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/0/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/1/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/2/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/3/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    }
+  ],
+  "nativeSource": "{\n  --lini-font-family: Arial;\n  .lini-block { font-family: Arial; }\n  .lini-caption { translate: 0 -30; font-scale: 14 16; }\n  .e1 { stroke: --teal-deep; }\n  .e2 { stroke: --teal-deep; }\n}\n|group#visual| \"V4 · Create before linking\" { layout: flow; direction: column; gap: 72; padding: 36; fill: none; stroke: none; stroke-width: 0; } [\n  |box#n1| \"1 · create\" { width: 240; } [\n    |cell#detail| \"Create the order at an explicit Key.\\nSave the effect identity create; no\\ncomputed or allocated identifier.\"\n  ]\n  |box#n2| \"2 · link-customer\" { width: 240; } [\n    |cell#detail| \"Source is created:create. Target is\\nthe existing customer parameter, using\\nthe authored relationship orientation.\"\n  ]\n  |box#n3| \"3 · link-product\" { width: 240; } [\n    |cell#detail| \"Source is created:create. Target is\\nthe existing product parameter.\\nForward references would refuse.\"\n  ]\n  |box#n4| \"Permissions are separate\" { width: 240; } [\n    |cell#detail| \"The frozen write frame must permit\\ncreate and these relationships.\\nEffects require the actual operations;\\npermission alone does not.\"\n  ]\n  n1 -> n2 \"2 · link-customer\" .e1 { along: 0.35; }\n  n1 -> n3 \"3 · link-product\" .e2 { along: 0.5; }\n]\n",
+  "svgSha256": "ee3e2c7992c43640155dca1acc4f4d41fa57e3dbbc32e1813f4957461c279a12"
+}

@@ -71,7 +71,9 @@
     "check:rust-boundaries": "python3 scripts/check-rust-boundaries.py",
     "test:rust-core": "cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql",
     "check:release-versions": "python3 scripts/check-release-versions.py",
-    "test:sdk-installed": "node scripts/test-native-sdk-install.mjs \"$UMF_SDK_PACKAGE\""
+    "test:sdk-installed": "node scripts/test-native-sdk-install.mjs \"$UMF_SDK_PACKAGE\"",
+    "build:visuals": "bun scripts/visuals/render-static.ts",
+    "test:visuals:browser": "bun scripts/visual-rendering-browser.ts"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",
@@ -105,7 +107,6 @@
     "yaml": "2.9.1"
   },
   "devDependencies": {
-    "@dagrejs/dagre": "3.1.1",
     "@documentdrivendx/umf-schema-browser": "2.0.0",
     "@launchql/protobufjs": "7.2.6",
     "@types/bun": "1.4.2",
@@ -114,7 +115,9 @@
     "playwright": "1.63.0",
     "rdfxml-streaming-parser": "3.3.0",
     "typescript": "7.0.2",
-    "typescript-api": "npm:typescript@5.9.3"
+    "typescript-api": "npm:typescript@5.9.3",
+    "@documentdrivendx/umf-visual": "https://github.com/DocumentDrivenDX/umf-visual/releases/download/v0.5.0/documentdrivendx-umf-visual-0.5.0.tgz",
+    "@dagrejs/dagre": "3.1.1"
   },
   "patchedDependencies": {
     "jsonld@9.0.0": "patches/jsonld@9.0.0.patch"
