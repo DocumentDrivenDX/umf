@@ -6,7 +6,7 @@ The current document and core semantic version is **0.10.0**. The Rust workspace
 
 ## Use UMF
 
-Download Rust/CLI 0.1.0, SDK 0.10.2 and Python 0.10.6 for macOS arm64 and Linux x86_64 from the [complete Rust release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-rust-v0.1.0).
+Download the unified UMF 0.10.7 Rust/CLI, SDK/Node and Python artifacts for macOS arm64 and Linux x86_64 from [the UMF release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.7). The core document format remains 0.10.0.
 
 - [Rust library and CLI](crates/README.md)
 - [Python distribution](python/README.md)

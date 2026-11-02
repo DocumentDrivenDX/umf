@@ -25,7 +25,10 @@ try{
  const common={target:'ES2022',strict:true,noEmit:true,skipLibCheck:false,preserveSymlinks:true};
  const cases=[
   {name:'node',compilerOptions:{...common,module:'NodeNext',moduleResolution:'NodeNext',types:['node']},source:`
-import {createPostgresqlSqlEngine,importPostgresqlSql,importIcebergTable} from '@umf/core';
+import {createPostgresqlSqlEngine,generatePackTools,importPostgresqlSql,importIcebergTable} from '@umf/core';
+import type {PackToolsRequest,PackToolsResult} from '@umf/core';
+const generate: (request:PackToolsRequest)=>PackToolsResult=generatePackTools;
+void generate;
 const engine=createPostgresqlSqlEngine();
 const sql:string=engine.exportSql(engine.importSql('SELECT 1','consumer'));
 const callbackImport:typeof importPostgresqlSql=importPostgresqlSql;
@@ -33,7 +36,10 @@ const tableImport:typeof importIcebergTable=importIcebergTable;
 void [sql,callbackImport,tableImport];
 `},
   {name:'browser',compilerOptions:{...common,module:'ESNext',moduleResolution:'Bundler',customConditions:['browser'],lib:['ES2022','DOM'],types:[]},source:`
-import {importIcebergTable,importAvroSchema} from '@umf/core';
+import {generatePackTools,importIcebergTable,importAvroSchema} from '@umf/core';
+import type {PackToolsRequest,PackToolsResult} from '@umf/core';
+const generate: (request:PackToolsRequest)=>PackToolsResult=generatePackTools;
+void generate;
 // @ts-expect-error The bundled native C backend belongs to the Node surface.
 import {createPostgresqlSqlEngine} from '@umf/core';
 const tableImport:typeof importIcebergTable=importIcebergTable;

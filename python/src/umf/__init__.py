@@ -54,14 +54,16 @@ from .rust_sec_projection import (
     project_sec_company_facts,
     project_sec_submissions,
 )
+from .pack_tools import generate_pack_tools
 
-__version__ = "0.10.6"
+__version__ = "0.10.7"
 __all__ = [
     "TypeSpecSession",
     "SmithySession",
     "ActionPlanSession",
     "adapter_info",
     "execute_adapter",
+    "generate_pack_tools",
     "SagaRuntime",
     "CoreItemTypeReference",
     "CoreSemanticTypeReference",

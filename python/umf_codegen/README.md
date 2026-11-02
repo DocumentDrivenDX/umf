@@ -2,7 +2,7 @@
 
 `umf-codegen` exposes the seven Python code generation, deployment, migration,
 verification, change discovery, and row-scope operations through the native
-Rust compiler in `umf-core==0.11.0`. The package requires that exact core
+Rust compiler in `umf-core==0.10.7`. The package requires that exact core
 release and checks its native ABI and codegen protocol before use. It has no
 JavaScript or V8 runtime dependency.
 
@@ -83,3 +83,11 @@ to the separately installed host runtime.
 
 First-party files use MIT OR Apache-2.0. The native core wheel retains its own
 license and third-party notices.
+
+## Pack tools
+
+Install the `umf-codegen==0.10.7` wheel from the matching UMF GitHub release
+alongside `umf-core==0.10.7`. Call `generate_pack_tools(request)` with a complete
+`umf.pack-tools/1` request to generate PostgreSQL schema DDL, SQLAlchemy models and
+caller-session Python CRUD. Original schema text and unsupported declarations
+remain in source companions and diagnostics; the package never executes JavaScript.

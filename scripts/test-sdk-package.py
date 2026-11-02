@@ -48,7 +48,7 @@ class PackageManifestTests(unittest.TestCase):
             'api': {'generator': 'synchronous', 'sagaRuntime': './runtime/wasm'},
             'sourceClosure': {
                 'liveInputs': live, 'capturedLiveSha256': sdk.tree_hash(self.root, live),
-                'fileCount': len(live), 'sha256': 'derived-source-tree',
+                'fileCount': len(live), 'sha256': sdk.tree_hash(self.root, live), 'inputs': dict(live),
                 'transform': {'status': 'fixed-point', 'generatedInputs': []},
                 'externalInputs': {external_name: sdk.sha256(external_path.read_bytes())},
             },
@@ -62,6 +62,14 @@ class PackageManifestTests(unittest.TestCase):
             (self.root / name).write_text('license fixture')
     def tearDown(self):
         self.temp.cleanup()
+    def test_private_generated_transform_is_rejected(self):
+        path = self.root / 'dist/rust-default-manifest.json'
+        manifest = json.loads(path.read_text())
+        manifest['sourceClosure']['transform'] = {'status': 'derived-private-snapshot-not-release-fixed-point', 'generatedInputs': [{'path':'spec/core/schema.json'}]}
+        path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(ValueError, 'fixed point'):
+            sdk.verify(self.root)
+
     def test_valid_source_cohort(self):
         manifest, assets = sdk.verify(self.root)
         self.assertEqual(manifest['format'], sdk.FORMAT)

@@ -55,6 +55,7 @@ _RESOURCE_NAMES = set(_RESOURCE_FILES.values()) | {
 }
 _CLI_OPERATIONS = {
     "generate": "generate",
+    "pack_tools": "pack-tools",
     "deployment": "deployment",
     "verify_deployment": "verify-deployment",
     "migration": "migration",

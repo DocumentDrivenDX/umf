@@ -7,6 +7,7 @@ from umf_codegen import (
     compile_table_deployment,
     compile_table_migration,
     discover_table_migration_changes,
+    generate_pack_tools,
     generate_python_client,
     normalize_row_scope,
     verify_table_deployment,
@@ -16,12 +17,19 @@ from umf_codegen import (
 
 class PublicOperations(unittest.TestCase):
     @patch("umf_codegen.execute", return_value={"changes": []})
-    def test_all_seven_operations_keep_request_shapes(self, execute):
+    def test_all_eight_operations_keep_request_shapes(self, execute):
         bundle = {"bundle": True}
         plan = {"plan": True}
         previous = {"previous": True}
         next_bundle = {"next": True}
         source = "{}"
+        pack_tools_request = {
+            "profile": "umf.pack-tools/1",
+            "pack": {"id": "mini", "version": "1.0.0", "text": "{}"},
+            "sources": [],
+            "options": {"schema": "public", "package": "mini"},
+            "targets": ["ddl", "orm", "crud"],
+        }
         config = {"module": "m", "schema": "s", "ownerRole": "o",
                   "personRole": "p", "batchRole": "b", "groupRoles": {}}
 
@@ -33,6 +41,7 @@ class PublicOperations(unittest.TestCase):
         verify_table_migration(plan, timeout_seconds=7)
         self.assertEqual(discover_table_migration_changes(previous, next_bundle, timeout_seconds=8), [])
         normalize_row_scope({"source": True}, context={"tableId": "t"}, timeout_seconds=9)
+        generate_pack_tools(pack_tools_request, timeout_seconds=10)
 
         self.assertEqual(execute.call_args_list, [
             call({"text": source, "package": "client", "format": "json"}, 3),
@@ -45,6 +54,7 @@ class PublicOperations(unittest.TestCase):
             call({"previous": previous, "next": next_bundle}, 8, operation="discover_changes"),
             call({"input": {"source": True}, "context": {"tableId": "t"}}, 9,
                  operation="row_scope"),
+            call(pack_tools_request, 10, operation="pack_tools"),
         ])
 
 

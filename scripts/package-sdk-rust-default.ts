@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-// Source-built Rust SDK package. It uses a private build tree and never reuses
-// checked-in or prior target artifacts.
+// Source-built Rust SDK package. Every Cargo build uses a fresh verified source
+// snapshot; an explicit external Cargo cache may reuse fingerprinted dependencies.
 import {createHash} from 'node:crypto';
 import {cp,mkdir,mkdtemp,readFile,readdir,rename,rm,symlink,writeFile} from 'node:fs/promises';
 import {basename,join,relative,resolve} from 'node:path';
@@ -20,7 +20,7 @@ const publishDist=resolve(process.env.UMF_RUST_DEFAULT_DIST??join(workspaceRoot,
 if(!buildOnly)throw new Error('This source builder writes package assets only; use scripts/package-sdk.ts for the SDK archive');
 const scratch=await mkdtemp(join(tmpdir(),'umf-rust-sdk-default-'));
 const dist=join(scratch,'package','dist');
-const cargoTarget=join(scratch,'cargo-target');
+const cargoTarget=process.env.UMF_SDK_CARGO_TARGET?resolve(process.env.UMF_SDK_CARGO_TARGET):join(scratch,'cargo-target');
 const wasmOut=join(scratch,'wasm-bindgen');
 const packageRoot=join(scratch,'package');
 
@@ -216,8 +216,8 @@ try{
 
  await run([process.execPath,'scripts/rust-migration/r8/v4-default-facade.mjs','--check']);
  const cargoEnv={CARGO_TARGET_DIR:cargoTarget};
- await run([process.execPath,'scripts/metamodel/build.ts'],{env:cargoEnv});
- await run([process.execPath,'scripts/actions-plan-identity.ts']);
+ await run([process.execPath,'scripts/metamodel/build.ts','--check'],{env:cargoEnv});
+ await run([process.execPath,'scripts/actions-plan-identity.ts','--check']);
  const capturedSourcePaths=sourceInputs.map(path=>relative(workspaceRoot,path).split('\\').join('/'));
  const capturedDynamicPaths=new Set(sourceInputs.filter(path=>isDynamicSourcePath(workspaceRoot,path)).map(path=>relative(workspaceRoot,path).split('\\').join('/')));
  const staticSourcePaths=capturedSourcePaths.filter(path=>!capturedDynamicPaths.has(path));
@@ -227,10 +227,10 @@ try{
   [...staticSourcePaths,...generatedDynamicPaths],
   'Source input path set after snapshot generators',
  );
- const generatedInputs=new Set(['spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','spec/core/facet-operation-v3.schema.json','spec/core/cardinality-operation-v4.schema.json','spec/core/kind-operation-v6.schema.json','spec/core/nullability-operation-v5.schema.json','spec/core/key-operation-v2.schema.json','spec/core/record-type-operation-v6.schema.json','spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json','spec/metamodel/generated/python-shapes.json','spec/metamodel/generated/manifest.json','src/generated/core-model.ts','src/generated/core-validators.ts','src/generated/core-validators-accounted.ts','src/extensions/actions/plan-identity.ts','python/umf_access/src/umf_access/generated_core.py']);
  const derivedHashes=await inputHashes(snapshotInputs,snapshotRoot);
- for(const [path,hash] of Object.entries(sourceInputHashes))if(!generatedInputs.has(path)&&derivedHashes[path]!==hash)throw new Error(`Source snapshot changed outside generated inputs: ${path}`);
- const sourceTransform={status:Object.entries(capturedLiveInputHashes).some(([path,hash])=>generatedInputs.has(path)&&derivedHashes[path]!==hash)?'derived-private-snapshot-not-release-fixed-point':'fixed-point',generatedInputs:[...generatedInputs].sort().map(path=>({path,before:capturedLiveInputHashes[path],after:derivedHashes[path]})).filter(item=>item.before!==item.after)};
+ const changed=Object.keys(capturedLiveInputHashes).filter(path=>derivedHashes[path]!==capturedLiveInputHashes[path]);
+ if(changed.length)throw new Error(`SDK source is not a generated-asset fixed point: ${changed.join(', ')}`);
+ const sourceTransform={status:'fixed-point',generatedInputs:[]};
  sourceInputHashes=derivedHashes;
  sourceHash=await treeDigest(snapshotInputs,snapshotRoot);
  await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/wasm/Cargo.toml','--target','wasm32-unknown-unknown'],{env:cargoEnv});
@@ -239,6 +239,12 @@ try{
  const bindgenError=await new Response(bindgen.stderr).text();
  if(await bindgen.exited!==0||bindgenVersion.trim()!=='wasm-bindgen 0.2.100')throw new Error(`Expected wasm-bindgen 0.2.100, got ${(bindgenVersion+bindgenError).trim()}`);
  await run(['wasm-bindgen','--target','web','--out-dir',wasmOut,'--out-name','umf_core_wasm',join(cargoTarget,'wasm32-unknown-unknown/release/umf_core_wasm.wasm')]);
+ // Ship the same-source small compiler module for local tools and the microsite.
+ const focusedOut=join(scratch,'pack-tools-bindgen'),focusedAssets=join(dist,'runtime/pack-tools');
+ await run(['cargo','build','--release','--locked','--manifest-path','bindings/pack-tools/wasm/Cargo.toml','--target','wasm32-unknown-unknown'],{env:cargoEnv});
+ await run(['wasm-bindgen','--target','web','--out-dir',focusedOut,'--out-name','umf_core_wasm',join(cargoTarget,'wasm32-unknown-unknown/release/umf_pack_tools_wasm.wasm')]);
+ await mkdir(focusedAssets,{recursive:true});
+ for(const name of ['umf_core_wasm.js','umf_core_wasm.d.ts','umf_core_wasm_bg.wasm'])await cp(join(focusedOut,name),join(focusedAssets,name));
  await mkdir(join(root,'bindings/core/wasm/pkg'),{recursive:true});
  await cp(join(wasmOut,'umf_core_wasm.js'),join(root,'bindings/core/wasm/pkg/umf_core_wasm.js'));
  await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(root,'bindings/core/wasm/pkg/umf_core_wasm.d.ts'));
@@ -326,8 +332,8 @@ try{
   resources:{count:10,identity:'fixed-repository-owned'},
   limits:{recordPositions:10000,actionPositions:1000,selectedIdentityUtf16Units:4000000},
   api:{entry:'.',sagaRuntime:'./runtime/wasm',moduleLoad:'top-level-await-initialization',generator:'synchronous'},
-  toolchain:{rustc,cargo:await capture(['cargo','--version']),bun:Bun.version,wasmBindgen:'0.2.100',cargoLockSha256:await digest(join(root,'Cargo.lock'))},
-  sourceClosure:{sha256:sourceHash,capturedLiveSha256:capturedLiveSourceHash,transform:sourceTransform,coverage:'Repository source closure includes Rust crates, core Node/WASM/Python binding source and Node/WASM binding tests, TypeScript source, schemas, fixture/corpus inputs, builder scripts, and metamodel compiler inputs. The exact external WASM package resource copied by build-postgresql.ts is separately SHA-256 pinned. The model metamodel and action identity generators run inside an isolated source snapshot; generated-input changes are recorded in transform.',fileCount:sourceInputs.length,liveInputs:capturedLiveInputHashes,inputs:sourceInputHashes,externalInputs:externalInputHashes},
+  toolchain:{cargoCacheMode:process.env.UMF_SDK_CARGO_TARGET?'external-cargo-managed':'private',rustc,cargo:await capture(['cargo','--version']),bun:Bun.version,wasmBindgen:'0.2.100',cargoLockSha256:await digest(join(root,'Cargo.lock'))},
+  sourceClosure:{sha256:sourceHash,capturedLiveSha256:capturedLiveSourceHash,transform:sourceTransform,coverage:'Repository source closure includes Rust crates, core Node/WASM/Python binding source and Node/WASM binding tests, TypeScript source, schemas, fixture/corpus inputs, builder scripts, and metamodel compiler inputs. The exact external WASM package resource copied by build-postgresql.ts is separately SHA-256 pinned. Metamodel and action identity checks run inside an isolated source snapshot; packaging rejects any difference from the checked-in generated assets.',fileCount:sourceInputs.length,liveInputs:capturedLiveInputHashes,inputs:sourceInputHashes,externalInputs:externalInputHashes},
   assets:Object.fromEntries(await Promise.all(compiled.map(async path=>[relative(packageRoot,path).split('\\').join('/'),await digest(path)]))),
  };
  await writeFile(join(dist,'rust-default-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
