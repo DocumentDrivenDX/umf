@@ -1,0 +1,2271 @@
+{
+ "datasets": [
+  {
+   "name": "ds_metric",
+   "displayName": "Campaign metrics (long, guarded)",
+   "queryLines": [
+    "SELECT campaign_id, campaign_name, week_end, year_adjusted, week_no_adjusted, ",
+    "       metric_name, metric_label, metric_class, ",
+    "       channel, source, target_audience, activity_type, ",
+    "       visibility, campaign_objective, conversion_funnel_stage, ",
+    "       metric_num, metric_denom ",
+    "FROM v_campaign_metric ",
+    "WHERE is_last_10_weeks"
+   ],
+   "columns": [
+    {
+     "displayName": "Metric Value",
+     "description": "Selected metric aggregated by its class: ratio metrics as SUM(metric_num)/SUM(metric_denom), Campaign Duration as AVG(metric_num), all others as SUM(metric_num).",
+     "expression": "CASE WHEN MAX(`metric_class`)='ratio' THEN SUM(`metric_num`)/NULLIF(SUM(`metric_denom`),0) WHEN MAX(`metric_class`)='average' THEN AVG(`metric_num`) ELSE SUM(`metric_num`) END"
+    }
+   ]
+  },
+  {
+   "name": "ds_campaign",
+   "displayName": "Campaign detail (one row per campaign)",
+   "queryLines": [
+    "SELECT campaign_id, campaign_name, channel, traffic_source, target_audience, ",
+    "       campaign_objective, conversion_funnel_stage, visibility, activity_type, ",
+    "       week_end, year_adjusted, week_no_adjusted, is_prior_week, ",
+    "       impressions, clicks, conversions, cost, revenue, profit, engagement_time, ",
+    "       duration_days, duration_bin, duration_bin_label ",
+    "FROM v_campaign_detail ",
+    "WHERE is_last_10_weeks ",
+    "ORDER BY revenue DESC"
+   ],
+   "columns": [
+    {
+     "displayName": "Total Impressions",
+     "description": "Sum of impressions",
+     "expression": "SUM(`impressions`)"
+    },
+    {
+     "displayName": "Prior Week Impressions",
+     "description": "Impressions in the prior completed week",
+     "expression": "SUM(CASE WHEN `is_prior_week` THEN `impressions` END)"
+    },
+    {
+     "displayName": "Total Clicks",
+     "description": "Sum of clicks",
+     "expression": "SUM(`clicks`)"
+    },
+    {
+     "displayName": "Prior Week Clicks",
+     "description": "Clicks in the prior completed week",
+     "expression": "SUM(CASE WHEN `is_prior_week` THEN `clicks` END)"
+    },
+    {
+     "displayName": "Total Conversions",
+     "description": "Sum of conversions",
+     "expression": "SUM(`conversions`)"
+    },
+    {
+     "displayName": "Prior Week Conversions",
+     "description": "Conversions in the prior completed week",
+     "expression": "SUM(CASE WHEN `is_prior_week` THEN `conversions` END)"
+    },
+    {
+     "displayName": "Total Revenue",
+     "description": "Sum of revenue. Additive - metric_denom is NULL for Revenue, never divide.",
+     "expression": "SUM(`revenue`)"
+    },
+    {
+     "displayName": "Prior Week Revenue",
+     "description": "Revenue in the prior completed week",
+     "expression": "SUM(CASE WHEN `is_prior_week` THEN `revenue` END)"
+    },
+    {
+     "displayName": "Return on Investment",
+     "description": "Ratio of sums: total profit divided by total cost",
+     "expression": "SUM(`profit`)/NULLIF(SUM(`cost`),0)"
+    },
+    {
+     "displayName": "Prior Week Return on Investment",
+     "description": "ROI in the prior completed week",
+     "expression": "SUM(CASE WHEN `is_prior_week` THEN `profit` END)/NULLIF(SUM(CASE WHEN `is_prior_week` THEN `cost` END),0)"
+    },
+    {
+     "displayName": "Campaigns Run",
+     "description": "Distinct campaign_id, padding rows already excluded by the view",
+     "expression": "COUNT(DISTINCT `campaign_id`)"
+    },
+    {
+     "displayName": "Avg Campaign Duration",
+     "description": "Average campaign duration in days - average, never a sum",
+     "expression": "AVG(`duration_days`)"
+    }
+   ]
+  },
+  {
+   "name": "ds_rank",
+   "displayName": "Channel rank by week",
+   "queryLines": [
+    "SELECT metric_name, metric_label, week_end, channel, ",
+    "       metric_value, channel_rank, metric_direction ",
+    "FROM v_channel_rank_weekly ",
+    "WHERE is_last_10_weeks"
+   ]
+  },
+  {
+   "name": "ds_weekday",
+   "displayName": "Weekday activity (daily grain)",
+   "queryLines": [
+    "SELECT selected_metric_name, selected_metric_label, plotted_metric_name, ",
+    "       is_fallback, fallback_subtitle, week_end, ",
+    "       weekday_num, weekday_name, metric_value, campaigns ",
+    "FROM v_weekday_activity ",
+    "WHERE is_last_10_weeks"
+   ]
+  }
+ ],
+ "pages": [
+  {
+   "name": "overview",
+   "displayName": "Overview",
+   "pageType": "PAGE_TYPE_CANVAS",
+   "layoutVersion": "GRID_V1",
+   "layout": [
+    {
+     "widget": {
+      "name": "ov-header",
+      "multilineTextboxSpec": {
+       "lines": [
+        "## Marketing Campaign Performance — Overview\n",
+        "\n",
+        "Scoped to the **last 10 completed weeks** ending 2027-07-31 (the latest week in the data). Counters are pinned to fixed metrics and compare against the prior completed week. The **Metric** filter drives the trend, the five dimension charts, the channel rank and the heatmap — it does not affect the counters, by design."
+       ]
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 3
+     }
+    },
+    {
+     "widget": {
+      "name": "w-101-impressions",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "measure(Total Impressions)",
+           "expression": "MEASURE(`Total Impressions`)"
+          },
+          {
+           "name": "measure(Prior Week Impressions)",
+           "expression": "MEASURE(`Prior Week Impressions`)"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "counter",
+       "encodings": {
+        "value": {
+         "fieldName": "measure(Total Impressions)",
+         "displayName": "Impressions",
+         "format": {
+          "type": "number",
+          "abbreviation": "compact",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        },
+        "target": {
+         "fieldName": "measure(Prior Week Impressions)",
+         "displayName": "vs prior week",
+         "format": {
+          "type": "number",
+          "abbreviation": "compact",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Impressions",
+        "showDescription": true,
+        "description": "Sum of metric_num where metric_name = 'Impressions'. Padding rows excluded."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 3,
+      "width": 2,
+      "height": 4
+     }
+    },
+    {
+     "widget": {
+      "name": "w-102-clicks",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "measure(Total Clicks)",
+           "expression": "MEASURE(`Total Clicks`)"
+          },
+          {
+           "name": "measure(Prior Week Clicks)",
+           "expression": "MEASURE(`Prior Week Clicks`)"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "counter",
+       "encodings": {
+        "value": {
+         "fieldName": "measure(Total Clicks)",
+         "displayName": "Clicks",
+         "format": {
+          "type": "number",
+          "abbreviation": "compact",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        },
+        "target": {
+         "fieldName": "measure(Prior Week Clicks)",
+         "displayName": "vs prior week",
+         "format": {
+          "type": "number",
+          "abbreviation": "compact",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Clicks",
+        "showDescription": true,
+        "description": "Sum of metric_num where metric_name = 'Clicks'."
+       }
+      }
+     },
+     "position": {
+      "x": 2,
+      "y": 3,
+      "width": 2,
+      "height": 4
+     }
+    },
+    {
+     "widget": {
+      "name": "w-103-conversions",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "measure(Total Conversions)",
+           "expression": "MEASURE(`Total Conversions`)"
+          },
+          {
+           "name": "measure(Prior Week Conversions)",
+           "expression": "MEASURE(`Prior Week Conversions`)"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "counter",
+       "encodings": {
+        "value": {
+         "fieldName": "measure(Total Conversions)",
+         "displayName": "Conversions",
+         "format": {
+          "type": "number",
+          "abbreviation": "compact",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        },
+        "target": {
+         "fieldName": "measure(Prior Week Conversions)",
+         "displayName": "vs prior week",
+         "format": {
+          "type": "number",
+          "abbreviation": "compact",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Conversions",
+        "showDescription": true,
+        "description": "Sum of metric_num where metric_name = 'Conversions'."
+       }
+      }
+     },
+     "position": {
+      "x": 4,
+      "y": 3,
+      "width": 2,
+      "height": 4
+     }
+    },
+    {
+     "widget": {
+      "name": "w-104-revenue",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "measure(Total Revenue)",
+           "expression": "MEASURE(`Total Revenue`)"
+          },
+          {
+           "name": "measure(Prior Week Revenue)",
+           "expression": "MEASURE(`Prior Week Revenue`)"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "counter",
+       "encodings": {
+        "value": {
+         "fieldName": "measure(Total Revenue)",
+         "displayName": "Revenue",
+         "format": {
+          "type": "number-currency",
+          "currencyCode": "USD",
+          "abbreviation": "compact",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        },
+        "target": {
+         "fieldName": "measure(Prior Week Revenue)",
+         "displayName": "vs prior week",
+         "format": {
+          "type": "number-currency",
+          "currencyCode": "USD",
+          "abbreviation": "compact",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Revenue",
+        "showDescription": true,
+        "description": "Sum of metric_num. Additive - Revenue's metric_denom is NULL on every row."
+       }
+      }
+     },
+     "position": {
+      "x": 6,
+      "y": 3,
+      "width": 3,
+      "height": 4
+     }
+    },
+    {
+     "widget": {
+      "name": "w-105-roi",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "measure(Return on Investment)",
+           "expression": "MEASURE(`Return on Investment`)"
+          },
+          {
+           "name": "measure(Prior Week Return on Investment)",
+           "expression": "MEASURE(`Prior Week Return on Investment`)"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "counter",
+       "encodings": {
+        "value": {
+         "fieldName": "measure(Return on Investment)",
+         "displayName": "ROI",
+         "format": {
+          "type": "number-percent",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        },
+        "target": {
+         "fieldName": "measure(Prior Week Return on Investment)",
+         "displayName": "vs prior week",
+         "format": {
+          "type": "number-percent",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "ROI",
+        "showDescription": true,
+        "description": "Total Profit / total Cost - ratio of sums, never an average of ratios."
+       }
+      }
+     },
+     "position": {
+      "x": 9,
+      "y": 3,
+      "width": 3,
+      "height": 4
+     }
+    },
+    {
+     "widget": {
+      "name": "w-110-weekly-trend",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "week_end",
+           "expression": "`week_end`"
+          },
+          {
+           "name": "measure(Metric Value)",
+           "expression": "MEASURE(`Metric Value`)"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "ASC",
+           "expression": "`week_end`"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "line",
+       "encodings": {
+        "x": {
+         "fieldName": "week_end",
+         "displayName": "Week ending",
+         "scale": {
+          "type": "temporal"
+         }
+        },
+        "y": {
+         "fieldName": "measure(Metric Value)",
+         "displayName": "Selected metric",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Weekly Trend — selected metric",
+        "showDescription": true,
+        "description": "One point per week_end over the 10 completed weeks. Aggregated by the selected metric's class. Gaps are not interpolated."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 7,
+      "width": 12,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "ov-band-label",
+      "multilineTextboxSpec": {
+       "lines": [
+        "### Performance by dimension — selected metric\n",
+        "\n",
+        "The same metric and window across five campaign attributes. Best performer first in each chart."
+       ]
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 12,
+      "width": 12,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "w-111-by-channel",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "measure(Metric Value)",
+           "expression": "MEASURE(`Metric Value`)"
+          },
+          {
+           "name": "channel",
+           "expression": "`channel`"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "DESC",
+           "expression": "MEASURE(`Metric Value`)"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "bar",
+       "encodings": {
+        "x": {
+         "fieldName": "measure(Metric Value)",
+         "displayName": "Selected metric",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "y": {
+         "fieldName": "channel",
+         "displayName": "Performance by Channel",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "x-reversed"
+          }
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Performance by Channel",
+        "showDescription": true,
+        "description": "5 channels. Exempt from nothing - the Channel filter narrows this chart."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 14,
+      "width": 4,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "w-112-by-traffic-source",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "measure(Metric Value)",
+           "expression": "MEASURE(`Metric Value`)"
+          },
+          {
+           "name": "source",
+           "expression": "`source`"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "DESC",
+           "expression": "MEASURE(`Metric Value`)"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "bar",
+       "encodings": {
+        "x": {
+         "fieldName": "measure(Metric Value)",
+         "displayName": "Selected metric",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "y": {
+         "fieldName": "source",
+         "displayName": "Performance by Traffic Source",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "x-reversed"
+          }
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Performance by Traffic Source",
+        "showDescription": true,
+        "description": "6 traffic sources. Column is named source."
+       }
+      }
+     },
+     "position": {
+      "x": 4,
+      "y": 14,
+      "width": 4,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "w-113-by-target-audience",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "measure(Metric Value)",
+           "expression": "MEASURE(`Metric Value`)"
+          },
+          {
+           "name": "target_audience",
+           "expression": "`target_audience`"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "DESC",
+           "expression": "MEASURE(`Metric Value`)"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "bar",
+       "encodings": {
+        "x": {
+         "fieldName": "measure(Metric Value)",
+         "displayName": "Selected metric",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "y": {
+         "fieldName": "target_audience",
+         "displayName": "Performance by Target Audience",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "x-reversed"
+          }
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Performance by Target Audience",
+        "showDescription": true,
+        "description": "4 audiences."
+       }
+      }
+     },
+     "position": {
+      "x": 8,
+      "y": 14,
+      "width": 4,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "w-114-by-activity-type",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "measure(Metric Value)",
+           "expression": "MEASURE(`Metric Value`)"
+          },
+          {
+           "name": "activity_type",
+           "expression": "`activity_type`"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "DESC",
+           "expression": "MEASURE(`Metric Value`)"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "bar",
+       "encodings": {
+        "x": {
+         "fieldName": "measure(Metric Value)",
+         "displayName": "Selected metric",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "y": {
+         "fieldName": "activity_type",
+         "displayName": "Performance by Activity Type",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "x-reversed"
+          }
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Performance by Activity Type",
+        "showDescription": true,
+        "description": "4 activity types."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 19,
+      "width": 6,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "w-115-by-visibility",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "measure(Metric Value)",
+           "expression": "MEASURE(`Metric Value`)"
+          },
+          {
+           "name": "visibility",
+           "expression": "`visibility`"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "DESC",
+           "expression": "MEASURE(`Metric Value`)"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "bar",
+       "encodings": {
+        "x": {
+         "fieldName": "measure(Metric Value)",
+         "displayName": "Selected metric",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "y": {
+         "fieldName": "visibility",
+         "displayName": "Performance by Visibility",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "x-reversed"
+          }
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Performance by Visibility",
+        "showDescription": true,
+        "description": "3 visibility tiers."
+       }
+      }
+     },
+     "position": {
+      "x": 6,
+      "y": 19,
+      "width": 6,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "w-116-channel-rank",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_rank",
+         "fields": [
+          {
+           "name": "week_end",
+           "expression": "`week_end`"
+          },
+          {
+           "name": "channel",
+           "expression": "`channel`"
+          },
+          {
+           "name": "min(channel_rank)",
+           "expression": "MIN(`channel_rank`)"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "ASC",
+           "expression": "`week_end`"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "line",
+       "encodings": {
+        "x": {
+         "fieldName": "week_end",
+         "displayName": "Week ending",
+         "scale": {
+          "type": "temporal"
+         }
+        },
+        "y": {
+         "fieldName": "min(channel_rank)",
+         "displayName": "Rank (1 = best)",
+         "scale": {
+          "type": "quantitative",
+          "domain": {
+           "min": 1,
+           "max": 5
+          }
+         }
+        },
+        "color": {
+         "fieldName": "channel",
+         "displayName": "Channel",
+         "scale": {
+          "type": "categorical"
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Channel Rank by Week",
+        "showDescription": true,
+        "description": "DENSE_RANK of the selected metric across the 5 channels each week. 1 = best. Exempt from the Channel filter. A channel with no campaigns in a week has no point - gaps are real, not zeros."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 24,
+      "width": 6,
+      "height": 6
+     }
+    },
+    {
+     "widget": {
+      "name": "w-117-weekday-heatmap",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_weekday",
+         "fields": [
+          {
+           "name": "week_end",
+           "expression": "`week_end`"
+          },
+          {
+           "name": "weekday_name",
+           "expression": "`weekday_name`"
+          },
+          {
+           "name": "sum(metric_value)",
+           "expression": "SUM(`metric_value`)"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "heatmap",
+       "encodings": {
+        "x": {
+         "fieldName": "week_end",
+         "displayName": "Week ending",
+         "scale": {
+          "type": "categorical"
+         }
+        },
+        "y": {
+         "fieldName": "weekday_name",
+         "displayName": "Weekday",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "custom-order",
+           "orderedValues": [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+           ]
+          }
+         }
+        },
+        "color": {
+         "fieldName": "sum(metric_value)",
+         "displayName": "Value",
+         "scale": {
+          "type": "quantitative",
+          "colorRamp": {
+           "mode": "custom-sequential",
+           "colors": {
+            "start": "#EAF0F6",
+            "end": "#2C5C8A"
+           }
+          }
+         }
+        },
+        "label": {
+         "show": false
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Activity Heatmap — Weekday × Week",
+        "showDescription": true,
+        "description": "From the daily table. For the four ratio metrics (Conversion Rate, ROI, CPA, Engagement Rate) this plots Conversions instead - they are stored at daily grain as per-campaign ratios and cannot be summed."
+       }
+      }
+     },
+     "position": {
+      "x": 6,
+      "y": 24,
+      "width": 6,
+      "height": 6
+     }
+    }
+   ]
+  },
+  {
+   "name": "campaign_details",
+   "displayName": "Campaign Details",
+   "pageType": "PAGE_TYPE_CANVAS",
+   "layoutVersion": "GRID_V1",
+   "layout": [
+    {
+     "widget": {
+      "name": "cd-header",
+      "multilineTextboxSpec": {
+       "lines": [
+        "## Campaign Details\n",
+        "\n",
+        "One row per campaign over the same 10-week window. Every widget here is **metric-independent** — they count campaigns or measure duration — so the Metric filter does not appear on this page."
+       ]
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 3
+     }
+    },
+    {
+     "widget": {
+      "name": "w-201-campaigns-run",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "measure(Campaigns Run)",
+           "expression": "MEASURE(`Campaigns Run`)"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "counter",
+       "encodings": {
+        "value": {
+         "fieldName": "measure(Campaigns Run)",
+         "displayName": "Campaigns Run",
+         "format": {
+          "type": "number",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 0
+          }
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Campaigns Run",
+        "showDescription": true,
+        "description": "COUNT(DISTINCT campaign_id). Padding rows (campaign_id = the literal string 'NULL') are excluded by the view - this is why the all-weeks figure is 1,000 and not 1,001."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 3,
+      "width": 6,
+      "height": 4
+     }
+    },
+    {
+     "widget": {
+      "name": "w-202-avg-duration",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "measure(Avg Campaign Duration)",
+           "expression": "MEASURE(`Avg Campaign Duration`)"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "counter",
+       "encodings": {
+        "value": {
+         "fieldName": "measure(Avg Campaign Duration)",
+         "displayName": "Avg Campaign Duration",
+         "format": {
+          "type": "number-plain",
+          "decimalPlaces": {
+           "type": "max",
+           "places": 1
+          }
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Avg Campaign Duration",
+        "showDescription": true,
+        "description": "AVG of campaign duration in days - an average, never a sum. The padding guard is what separates 49.51 days from 37.39 on the all-weeks figure."
+       }
+      }
+     },
+     "position": {
+      "x": 6,
+      "y": 3,
+      "width": 6,
+      "height": 4
+     }
+    },
+    {
+     "widget": {
+      "name": "w-203-duration-distribution",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "duration_bin_label",
+           "expression": "`duration_bin_label`"
+          },
+          {
+           "name": "countdistinct(campaign_id)",
+           "expression": "COUNT(DISTINCT `campaign_id`)"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "ASC",
+           "expression": "`duration_bin_label`"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "bar",
+       "encodings": {
+        "x": {
+         "fieldName": "duration_bin_label",
+         "displayName": "Campaign duration (days)",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "alphabetical"
+          }
+         }
+        },
+        "y": {
+         "fieldName": "countdistinct(campaign_id)",
+         "displayName": "Campaigns",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Campaign Duration Distribution",
+        "showDescription": true,
+        "description": "Distinct campaigns per 10-day duration bin. The bins sum to the Campaigns Run counter."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 7,
+      "width": 12,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "w-204-by-objective",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "countdistinct(campaign_id)",
+           "expression": "COUNT(DISTINCT `campaign_id`)"
+          },
+          {
+           "name": "campaign_objective",
+           "expression": "`campaign_objective`"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "DESC",
+           "expression": "COUNT(DISTINCT `campaign_id`)"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "bar",
+       "encodings": {
+        "x": {
+         "fieldName": "countdistinct(campaign_id)",
+         "displayName": "Campaigns",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "y": {
+         "fieldName": "campaign_objective",
+         "displayName": "Campaigns by Objective",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "x-reversed"
+          }
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Campaigns by Objective",
+        "showDescription": true,
+        "description": "Distinct campaigns per objective. Sums to the Campaigns Run counter."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 12,
+      "width": 6,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "w-205-by-funnel-stage",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "countdistinct(campaign_id)",
+           "expression": "COUNT(DISTINCT `campaign_id`)"
+          },
+          {
+           "name": "conversion_funnel_stage",
+           "expression": "`conversion_funnel_stage`"
+          }
+         ],
+         "disaggregated": false,
+         "orders": [
+          {
+           "direction": "DESC",
+           "expression": "COUNT(DISTINCT `campaign_id`)"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 3,
+       "widgetType": "bar",
+       "encodings": {
+        "x": {
+         "fieldName": "countdistinct(campaign_id)",
+         "displayName": "Campaigns",
+         "scale": {
+          "type": "quantitative"
+         }
+        },
+        "y": {
+         "fieldName": "conversion_funnel_stage",
+         "displayName": "Campaigns by Funnel Stage",
+         "scale": {
+          "type": "categorical",
+          "sort": {
+           "by": "x-reversed"
+          }
+         }
+        },
+        "color": {
+         "value": {
+          "themeColorType": "visualizationColors",
+          "position": 0
+         }
+        }
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Campaigns by Funnel Stage",
+        "showDescription": true,
+        "description": "Distinct campaigns per funnel stage. Sums to the Campaigns Run counter."
+       }
+      }
+     },
+     "position": {
+      "x": 6,
+      "y": 12,
+      "width": 6,
+      "height": 5
+     }
+    },
+    {
+     "widget": {
+      "name": "w-206-campaign-detail",
+      "queries": [
+       {
+        "name": "main_query",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "campaign_name",
+           "expression": "`campaign_name`"
+          },
+          {
+           "name": "channel",
+           "expression": "`channel`"
+          },
+          {
+           "name": "traffic_source",
+           "expression": "`traffic_source`"
+          },
+          {
+           "name": "target_audience",
+           "expression": "`target_audience`"
+          },
+          {
+           "name": "campaign_objective",
+           "expression": "`campaign_objective`"
+          },
+          {
+           "name": "conversion_funnel_stage",
+           "expression": "`conversion_funnel_stage`"
+          },
+          {
+           "name": "week_end",
+           "expression": "`week_end`"
+          },
+          {
+           "name": "impressions",
+           "expression": "`impressions`"
+          },
+          {
+           "name": "clicks",
+           "expression": "`clicks`"
+          },
+          {
+           "name": "conversions",
+           "expression": "`conversions`"
+          },
+          {
+           "name": "revenue",
+           "expression": "`revenue`"
+          },
+          {
+           "name": "cost",
+           "expression": "`cost`"
+          },
+          {
+           "name": "duration_days",
+           "expression": "`duration_days`"
+          }
+         ],
+         "disaggregated": true,
+         "orders": [
+          {
+           "direction": "DESC",
+           "expression": "`revenue`"
+          }
+         ]
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "table",
+       "encodings": {
+        "columns": [
+         {
+          "fieldName": "campaign_name",
+          "displayName": "Campaign"
+         },
+         {
+          "fieldName": "channel",
+          "displayName": "Channel"
+         },
+         {
+          "fieldName": "traffic_source",
+          "displayName": "Traffic Source"
+         },
+         {
+          "fieldName": "target_audience",
+          "displayName": "Audience"
+         },
+         {
+          "fieldName": "campaign_objective",
+          "displayName": "Objective"
+         },
+         {
+          "fieldName": "conversion_funnel_stage",
+          "displayName": "Stage"
+         },
+         {
+          "fieldName": "week_end",
+          "displayName": "Week End"
+         },
+         {
+          "fieldName": "impressions",
+          "displayName": "Impressions",
+          "format": {
+           "type": "number",
+           "decimalPlaces": {
+            "type": "max",
+            "places": 0
+           }
+          }
+         },
+         {
+          "fieldName": "clicks",
+          "displayName": "Clicks",
+          "format": {
+           "type": "number",
+           "decimalPlaces": {
+            "type": "max",
+            "places": 0
+           }
+          }
+         },
+         {
+          "fieldName": "conversions",
+          "displayName": "Conv.",
+          "format": {
+           "type": "number",
+           "decimalPlaces": {
+            "type": "max",
+            "places": 0
+           }
+          }
+         },
+         {
+          "fieldName": "revenue",
+          "displayName": "Revenue",
+          "format": {
+           "type": "number-currency",
+           "currencyCode": "USD",
+           "decimalPlaces": {
+            "type": "exact",
+            "places": 2
+           }
+          }
+         },
+         {
+          "fieldName": "cost",
+          "displayName": "Cost",
+          "format": {
+           "type": "number-currency",
+           "currencyCode": "USD",
+           "decimalPlaces": {
+            "type": "exact",
+            "places": 2
+           }
+          }
+         },
+         {
+          "fieldName": "duration_days",
+          "displayName": "Duration (d)",
+          "format": {
+           "type": "number",
+           "decimalPlaces": {
+            "type": "max",
+            "places": 0
+           }
+          }
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Campaign Detail",
+        "showDescription": true,
+        "description": "One row per campaign, ranked by revenue. Each metric column comes from its own metric_name predicate - never a bare SUM(metric_num)."
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 17,
+      "width": 12,
+      "height": 8
+     }
+    }
+   ]
+  },
+  {
+   "name": "filters",
+   "displayName": "Filters",
+   "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+   "layoutVersion": "GRID_V1",
+   "layout": [
+    {
+     "widget": {
+      "name": "filter-metric",
+      "queries": [
+       {
+        "name": "q_filter-metric_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "metric_name",
+           "expression": "`metric_name`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-metric_ds_rank",
+        "query": {
+         "datasetName": "ds_rank",
+         "fields": [
+          {
+           "name": "metric_name",
+           "expression": "`metric_name`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-metric_ds_weekday",
+        "query": {
+         "datasetName": "ds_weekday",
+         "fields": [
+          {
+           "name": "selected_metric_name",
+           "expression": "`selected_metric_name`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-single-select",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "metric_name",
+          "displayName": "Metric",
+          "queryName": "q_filter-metric_ds_metric"
+         },
+         {
+          "fieldName": "metric_name",
+          "displayName": "Metric",
+          "queryName": "q_filter-metric_ds_rank"
+         },
+         {
+          "fieldName": "selected_metric_name",
+          "displayName": "Metric",
+          "queryName": "q_filter-metric_ds_weekday"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Metric"
+       },
+       "selection": {
+        "defaultSelection": {
+         "values": {
+          "dataType": "STRING",
+          "values": [
+           {
+            "value": "Impressions"
+           }
+          ]
+         }
+        }
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 0,
+      "width": 4,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "filter-week-end",
+      "queries": [
+       {
+        "name": "q_filter-week-end_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "week_end",
+           "expression": "`week_end`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-week-end_ds_campaign",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "week_end",
+           "expression": "`week_end`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-week-end_ds_rank",
+        "query": {
+         "datasetName": "ds_rank",
+         "fields": [
+          {
+           "name": "week_end",
+           "expression": "`week_end`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-week-end_ds_weekday",
+        "query": {
+         "datasetName": "ds_weekday",
+         "fields": [
+          {
+           "name": "week_end",
+           "expression": "`week_end`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-date-range-picker",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "week_end",
+          "displayName": "Week End",
+          "queryName": "q_filter-week-end_ds_metric"
+         },
+         {
+          "fieldName": "week_end",
+          "displayName": "Week End",
+          "queryName": "q_filter-week-end_ds_campaign"
+         },
+         {
+          "fieldName": "week_end",
+          "displayName": "Week End",
+          "queryName": "q_filter-week-end_ds_rank"
+         },
+         {
+          "fieldName": "week_end",
+          "displayName": "Week End",
+          "queryName": "q_filter-week-end_ds_weekday"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Week End"
+       }
+      }
+     },
+     "position": {
+      "x": 4,
+      "y": 0,
+      "width": 4,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "filter-channel",
+      "queries": [
+       {
+        "name": "q_filter-channel_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "channel",
+           "expression": "`channel`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-channel_ds_campaign",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "channel",
+           "expression": "`channel`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-multi-select",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "channel",
+          "displayName": "Channel",
+          "queryName": "q_filter-channel_ds_metric"
+         },
+         {
+          "fieldName": "channel",
+          "displayName": "Channel",
+          "queryName": "q_filter-channel_ds_campaign"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Channel"
+       }
+      }
+     },
+     "position": {
+      "x": 8,
+      "y": 0,
+      "width": 4,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "filter-traffic-source",
+      "queries": [
+       {
+        "name": "q_filter-traffic-source_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "source",
+           "expression": "`source`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-traffic-source_ds_campaign",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "traffic_source",
+           "expression": "`traffic_source`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-multi-select",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "source",
+          "displayName": "Traffic Source",
+          "queryName": "q_filter-traffic-source_ds_metric"
+         },
+         {
+          "fieldName": "traffic_source",
+          "displayName": "Traffic Source",
+          "queryName": "q_filter-traffic-source_ds_campaign"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Traffic Source"
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 2,
+      "width": 4,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "filter-target-audience",
+      "queries": [
+       {
+        "name": "q_filter-target-audience_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "target_audience",
+           "expression": "`target_audience`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-target-audience_ds_campaign",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "target_audience",
+           "expression": "`target_audience`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-multi-select",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "target_audience",
+          "displayName": "Target Audience",
+          "queryName": "q_filter-target-audience_ds_metric"
+         },
+         {
+          "fieldName": "target_audience",
+          "displayName": "Target Audience",
+          "queryName": "q_filter-target-audience_ds_campaign"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Target Audience"
+       }
+      }
+     },
+     "position": {
+      "x": 4,
+      "y": 2,
+      "width": 4,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "filter-objective",
+      "queries": [
+       {
+        "name": "q_filter-objective_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "campaign_objective",
+           "expression": "`campaign_objective`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-objective_ds_campaign",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "campaign_objective",
+           "expression": "`campaign_objective`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-multi-select",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "campaign_objective",
+          "displayName": "Campaign Objective",
+          "queryName": "q_filter-objective_ds_metric"
+         },
+         {
+          "fieldName": "campaign_objective",
+          "displayName": "Campaign Objective",
+          "queryName": "q_filter-objective_ds_campaign"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Campaign Objective"
+       }
+      }
+     },
+     "position": {
+      "x": 8,
+      "y": 2,
+      "width": 4,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "filter-visibility",
+      "queries": [
+       {
+        "name": "q_filter-visibility_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "visibility",
+           "expression": "`visibility`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-visibility_ds_campaign",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "visibility",
+           "expression": "`visibility`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-multi-select",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "visibility",
+          "displayName": "Visibility",
+          "queryName": "q_filter-visibility_ds_metric"
+         },
+         {
+          "fieldName": "visibility",
+          "displayName": "Visibility",
+          "queryName": "q_filter-visibility_ds_campaign"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Visibility"
+       }
+      }
+     },
+     "position": {
+      "x": 0,
+      "y": 4,
+      "width": 4,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "filter-activity-type",
+      "queries": [
+       {
+        "name": "q_filter-activity-type_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "activity_type",
+           "expression": "`activity_type`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-activity-type_ds_campaign",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "activity_type",
+           "expression": "`activity_type`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-multi-select",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "activity_type",
+          "displayName": "Activity Type",
+          "queryName": "q_filter-activity-type_ds_metric"
+         },
+         {
+          "fieldName": "activity_type",
+          "displayName": "Activity Type",
+          "queryName": "q_filter-activity-type_ds_campaign"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Activity Type"
+       }
+      }
+     },
+     "position": {
+      "x": 4,
+      "y": 4,
+      "width": 4,
+      "height": 2
+     }
+    },
+    {
+     "widget": {
+      "name": "filter-funnel-stage",
+      "queries": [
+       {
+        "name": "q_filter-funnel-stage_ds_metric",
+        "query": {
+         "datasetName": "ds_metric",
+         "fields": [
+          {
+           "name": "conversion_funnel_stage",
+           "expression": "`conversion_funnel_stage`"
+          }
+         ],
+         "disaggregated": false
+        }
+       },
+       {
+        "name": "q_filter-funnel-stage_ds_campaign",
+        "query": {
+         "datasetName": "ds_campaign",
+         "fields": [
+          {
+           "name": "conversion_funnel_stage",
+           "expression": "`conversion_funnel_stage`"
+          }
+         ],
+         "disaggregated": false
+        }
+       }
+      ],
+      "spec": {
+       "version": 2,
+       "widgetType": "filter-multi-select",
+       "encodings": {
+        "fields": [
+         {
+          "fieldName": "conversion_funnel_stage",
+          "displayName": "Funnel Stage",
+          "queryName": "q_filter-funnel-stage_ds_metric"
+         },
+         {
+          "fieldName": "conversion_funnel_stage",
+          "displayName": "Funnel Stage",
+          "queryName": "q_filter-funnel-stage_ds_campaign"
+         }
+        ]
+       },
+       "frame": {
+        "showTitle": true,
+        "title": "Funnel Stage"
+       }
+      }
+     },
+     "position": {
+      "x": 8,
+      "y": 4,
+      "width": 4,
+      "height": 2
+     }
+    }
+   ]
+  }
+ ],
+ "uiSettings": {
+  "theme": {
+   "canvasBackgroundColor": {
+    "light": "#F4F5F7",
+    "dark": "#161B22"
+   },
+   "widgetBackgroundColor": {
+    "light": "#FFFFFF",
+    "dark": "#1E2530"
+   },
+   "widgetBorderColor": {
+    "light": "#E2E5EA",
+    "dark": "#1E2530"
+   },
+   "fontColor": {
+    "light": "#1B2430",
+    "dark": "#EDEFF2"
+   },
+   "selectionColor": {
+    "light": "#B8874B",
+    "dark": "#B8874B"
+   },
+   "visualizationColors": [
+    "#2C5C8A",
+    "#6B7A90",
+    "#8FAFC9",
+    "#B8874B",
+    "#4F6D5A"
+   ],
+   "widgetHeaderAlignment": "LEFT",
+   "fontFamily": "Arial",
+   "widgetCornerRadius": 4
+  },
+  "applyModeEnabled": false
+ }
+}

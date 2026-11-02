@@ -36,10 +36,12 @@ class DispatchTests(unittest.TestCase):
     def test_standalone_core_release_is_dispatched_without_sdk_version_inference(
         self,
     ) -> None:
-        self.release["tag_name"] = "python-v0.10.2"
-        self.assertEqual(
-            select_release("release", self.event, [])["tag"], "python-v0.10.2"
-        )
+        for version in ("0.10.2", "0.10.7"):
+            self.release["tag_name"] = f"python-v{version}"
+            self.release["assets"][0]["name"] = f"umf_core-{version}-py3-none-any.whl"
+            self.assertEqual(
+                select_release("release", self.event, [])["tag"], f"python-v{version}"
+            )
 
     def test_unqualified_core_version_is_not_dispatched(self) -> None:
         self.release["assets"][0]["name"] = "umf_core-0.11.0-py3-none-any.whl"

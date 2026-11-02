@@ -113,16 +113,26 @@ def verify_sdist(path: Path, version: str = VERSION) -> None:
     verify_python_range(metadata_text, "Source archive")
 
 
+def _wheel_bounds(version: str) -> tuple[int, int, int]:
+    # The completed Rust engine includes both a native module and native CLI.
+    # Keep historical compact producer/tool limits unchanged. The exact 0.10.7
+    # successor has a closed 64 MiB archive/family and 128 MiB expanded profile.
+    if version == "0.10.7":
+        return 64 * 1024 * 1024, 128 * 1024 * 1024, 64 * 1024 * 1024
+    return MAX_RELEASE_ASSET_BYTES, MAX_RELEASE_ASSET_BYTES, MAX_RELEASE_ASSET_BYTES
+
+
 def read_wheel(path: Path, version: str = VERSION) -> tuple[dict[str, bytes], str, str]:
     version = validate_version(version)
-    _bounded_regular(path)
+    archive_limit, expanded_limit, _ = _wheel_bounds(version)
+    _bounded_regular(path, archive_limit)
     with zipfile.ZipFile(path) as archive:
         entries = [entry for entry in archive.infolist() if not entry.is_dir()]
         names = [entry.filename for entry in entries]
         if len(names) != len(set(names)):
             raise ValueError("Wheel contains duplicate members")
-        if any(entry.file_size > MAX_RELEASE_ASSET_BYTES for entry in entries) or sum(entry.file_size for entry in entries) > MAX_RELEASE_ASSET_BYTES:
-            raise ValueError("Wheel expanded members exceed the fixed 16 MiB bound")
+        if any(entry.file_size > expanded_limit for entry in entries) or sum(entry.file_size for entry in entries) > expanded_limit:
+            raise ValueError(f"Wheel expanded members exceed the fixed {expanded_limit}-byte bound")
         for entry in entries:
             mode = (entry.external_attr >> 16) & 0o170000
             if mode == stat.S_IFLNK:
@@ -131,12 +141,12 @@ def read_wheel(path: Path, version: str = VERSION) -> tuple[dict[str, bytes], st
         for entry in entries:
             payload = bytearray()
             with archive.open(entry) as stream:
-                while len(payload) <= MAX_RELEASE_ASSET_BYTES:
-                    chunk = stream.read(min(65536, MAX_RELEASE_ASSET_BYTES + 1 - len(payload)))
+                while len(payload) <= expanded_limit:
+                    chunk = stream.read(min(65536, expanded_limit + 1 - len(payload)))
                     if not chunk:
                         break
                     payload.extend(chunk)
-            if len(payload) != entry.file_size or len(payload) > MAX_RELEASE_ASSET_BYTES:
+            if len(payload) != entry.file_size or len(payload) > expanded_limit:
                 raise ValueError(f"Wheel member has an invalid expanded size: {entry.filename}")
             files[entry.filename] = bytes(payload)
     dist_info = [name.split("/", 1)[0] for name in files if ".dist-info/" in name]
@@ -461,12 +471,14 @@ def main() -> int:
 
     if args.sdist.name != f"umf_core-{version}.tar.gz":
         raise ValueError("Common source distribution filename is unexpected")
-    source_size = _bounded_regular(args.source_wheel)
+    archive_limit, expanded_limit, family_limit = _wheel_bounds(version)
+    source_size = _bounded_regular(args.source_wheel, archive_limit)
     sdist_size = _bounded_regular(args.sdist)
     verify_sdist(args.sdist, version)
-    selected_size = _bounded_regular(selected)
+    selected_size = _bounded_regular(selected, archive_limit)
     output_wheel_bytes = selected.read_bytes()
     output_sdist_bytes = args.sdist.read_bytes()
+    result["artifactBounds"] = {"wheelArchiveBytes": archive_limit, "wheelExpandedBytes": expanded_limit, "selectedFamilyBytes": family_limit, "sourceArchiveBytes": MAX_RELEASE_ASSET_BYTES, "repairToolBytes": MAX_RELEASE_ASSET_BYTES}
     result["selectedWheel"]["path"] = selected.name
     result["sdist"] = {"filename": args.sdist.name, "sizeBytes": sdist_size, "sha256": digest(output_sdist_bytes)}
     result["cohort"] = args.platform
@@ -474,7 +486,7 @@ def main() -> int:
     result["selectedWheel"]["sizeBytes"] = selected_size
     receipt_bytes = (json.dumps(result, sort_keys=True, indent=2) + "\n").encode("utf-8")
     family_size = len(output_wheel_bytes) + len(output_sdist_bytes) + len(receipt_bytes)
-    if family_size > MAX_RELEASE_ASSET_BYTES:
+    if family_size > family_limit:
         raise ValueError("Selected wheel, common sdist, and receipt exceed the fixed artifact-family bound")
     args.output_wheel_directory.mkdir(parents=True, exist_ok=True)
     output_wheel = args.output_wheel_directory / selected.name

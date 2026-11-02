@@ -1,0 +1,120 @@
+{
+  "profile": "umf.lakeview.main-integration/1",
+  "main": "259bf1ed91466ff7e9782d7517c14f2112282026",
+  "prerequisite": "2610e47e9def4248ab74f525b44fc8849f85f7f9",
+  "sdk": "0.5.6",
+  "pythonDistribution": "0.10.1",
+  "coreDocument": "0.10.0",
+  "lakeview": "0.2.0",
+  "contracts": [
+    "CONTRACT-907",
+    "CONTRACT-083"
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "focusedBun": {
+      "passed": 211,
+      "assertions": 4362
+    },
+    "rust": {
+      "passed": 328,
+      "suites": 38
+    },
+    "metamodelAndLedger": {
+      "passed": 64,
+      "assertions": 1677,
+      "seconds": 341.84,
+      "cleanRoomAssertionSeconds": 76.99985,
+      "criteria": 841
+    },
+    "installedPython": {
+      "passed": 254,
+      "seconds": 64.86
+    },
+    "ruff": "pass",
+    "schemaPackages": 72,
+    "schemas": 382,
+    "genericKindParity": {
+      "cases": 15,
+      "hosts": 5,
+      "mismatches": 0
+    },
+    "untouchedOriginalBytes": {
+      "files": 3,
+      "paths": [
+        "direct",
+        "json",
+        "yaml"
+      ],
+      "hosts": [
+        "installed Node",
+        "installed Bun",
+        "native CLI with empty PATH",
+        "Chromium WASM"
+      ],
+      "mismatches": 0
+    },
+    "chromiumCore": {
+      "version": "153.0.8010.12",
+      "vectors": 138,
+      "callbackControls": 1,
+      "failures": 0
+    },
+    "coreAuthority": "pass",
+    "compilationBoundaries": "pass",
+    "rustBoundaries": {
+      "status": "pass",
+      "modules": 592,
+      "findings": 0
+    },
+    "codegenCustody": "pass",
+    "cliTransport": {
+      "passed": 9
+    },
+    "referenceAndGzip": {
+      "passed": 4,
+      "assertions": 36
+    },
+    "portableInventory": {
+      "modules": 580,
+      "activeScripts": 340,
+      "lockedJavaScriptPackages": 244,
+      "status": "regenerated"
+    }
+  },
+  "sources": {
+    "spec/metamodel/umf.yaml": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
+    "spec/metamodel/generated/manifest.json": "144d594f6448b959db6f97f4fb6c84c4ea9af77a1ea22b668eaa9ab2600535cc",
+    "python/src/umf/action_runtime.py": "cef33ee5fcfd3e5781514e5a4571babe2d84d8304eb606e5477cada0908c5607",
+    "python/src/umf/action_runtime_resource_manifest.json": "adff239a83bf55c5bed2d28ea42f5fe2078369a131ad0908d8ab24b26d9d3110",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "b79b81228428a6fd27e378bdecbd8ada484139737acff107fe71ca9e71d6b42e",
+    "crates/umf-core/src/lakeview.rs": "650e6cba44ba4932a2d9c8bbead22a312eb4fc2c25f3ec868f556950f9f41a6f",
+    "src/adapters/lakeview/index.ts": "ef67d0b28e6cda86ed0a1faee9a7c31e62ded2f620d2d9105f47fdb52c636577",
+    "docs/helix/04-build/evidence/lakeview/browser.json": "daff28c70250f1a31f7a63132082fd0704f2c1ed027353bfc2c98469ba75bc9f",
+    "docs/helix/04-build/evidence/lakeview/installed.json": "48b559e25ddd158558ff72a287ef8a4318c974a3b9f4784361d55e2d3b80fe62",
+    "docs/helix/04-build/evidence/extension-kinds/receipt.json": "2081c5130ec3ad8784051d46c06369fe2c4aba8db000fc5eb3941208beb62568",
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": "e34df886fe89754247cc8fd7ef475acbcdbe4194632e301f339189ca2ad32e2e",
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json": "3752340acea0a0386c11f874d244137a6cf54df8aa1a253fed4833e07a114ccf"
+  },
+  "logs": {
+    "typecheck": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "focused": "faa1bbee6b2452739788b9f108af734b95d5152c18f785dc6bbc4b9918a771e5",
+    "rust": "f5a85afb402ef1bcf96c331b5d967f63996c8294a87959d054e29d93dd6c799a",
+    "metamodel-tests": "fe36879ca5cc5b6d117282489c73b559247f60e03a3323807565cfb3031f875b",
+    "python": "85d188bfa56495538e69f0c7fc708818fe3e9ed670f0c4ec730641b9d58a6ee0",
+    "ruff": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "schemas": "fc8e3e925651a86f1bc70ae7f92a1f04bf0d0fef37d08295d862f3ba61b4cf64",
+    "authority": "84d26ec42a1859cdb11661b16b7b5806f666efc8dc2d42440df6ae68f2acc392",
+    "boundaries": "7ae67bbd75cbf529df5c23255cbeb755bb2e748614425e321ebf4ea08c5c21b9",
+    "rust-boundaries": "d53748c5a6546f3cb62575bd769fc0288fe5f1a56d4f6152f9ad7b38a9918bcf",
+    "codegen-check": "c4eeb6096d2a3d04845d2495fc59193de7939233cf70f94bb0aa6abb170c5f9e",
+    "transport": "26d922b056679acecbdbd51bd5744d632e3ab66345085d676960c6a5e21d4a12",
+    "reference-gzip": "17b2bcba4520be31eb40b5351ebbf4049da838cee12b82046535f3ff369f8ad9",
+    "native-roundtrip": "64ec8182d28fbd1fe4aac65335b889c317e25a9b0711f9a3dc8ac139329f63be",
+    "browser-roundtrip": "5ab7562f57f91defd7f7b14243d19a499b141b9082b68b9f707a5100990385e5",
+    "browser-core": "ead97b5d5f81bef287330dddd710af72c67372b11b5af71f5c54638b45a3a922",
+    "kinds-parity": "084e8a007b36480c0da9d00d501e75afaa0284fc4a60d37e718b7dd3f14f2e15",
+    "inventory": "43392bc7748d1b1ac70e62eb59060f79b4dc87d1d140a8bd329a6e4b2dc41be3"
+  },
+  "limits": "Local Darwin-arm64 and Chromium qualification of committed fixtures. Hosted CI and publication are not inferred; no live Databricks acceptance or edited-source rewrite claim."
+}

@@ -461,11 +461,11 @@ def test_manifest_digest_matches_the_pinned_inventory():
     )
     payload = manifest_path.read_bytes()
     assert hashlib.sha256(payload).hexdigest() == action_runtime._MANIFEST_SHA256
-    assert action_runtime._RESOURCE_FILES == {
-        key: (filename, source)
-        for key, filename, source in action_runtime._RESOURCE_ENTRIES
-    }
     manifest = json.loads(payload)
+    assert action_runtime._RESOURCE_FILES == {
+        key: (entry["file"], entry["source"])
+        for key, entry in manifest["resources"].items()
+    }
     for name in (
         "coreSchema",
         "referenceSchema",

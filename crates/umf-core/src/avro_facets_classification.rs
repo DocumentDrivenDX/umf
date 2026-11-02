@@ -165,7 +165,7 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
         request: CompiledSchema::compile(request, &schema_resources, ctx)?,
     });
     if ordinary {
-        let _ = CACHE.set(Arc::clone(&runtime));
+        return Ok(crate::resource_cache::publish_completed(&CACHE, runtime));
     }
     Ok(runtime)
 }

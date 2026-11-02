@@ -15,17 +15,17 @@ sys.path.insert(0, str(Path(__file__).parent))
 import publish_core_pypi_release as publisher
 
 
-def wheel(metadata: bytes) -> bytes:
+def wheel(metadata: bytes, version: str = "0.10.2") -> bytes:
     result = io.BytesIO()
     with zipfile.ZipFile(result, "w") as archive:
-        archive.writestr("umf_core-0.10.2.dist-info/METADATA", metadata)
+        archive.writestr(f"umf_core-{version}.dist-info/METADATA", metadata)
     return result.getvalue()
 
 
-def sdist(metadata: bytes) -> bytes:
+def sdist(metadata: bytes, version: str = "0.10.2") -> bytes:
     result = io.BytesIO()
     with tarfile.open(fileobj=result, mode="w:gz") as archive:
-        info = tarfile.TarInfo("umf_core-0.10.2/PKG-INFO")
+        info = tarfile.TarInfo(f"umf_core-{version}/PKG-INFO")
         info.size = len(metadata)
         archive.addfile(info, io.BytesIO(metadata))
     return result.getvalue()
@@ -37,13 +37,16 @@ class PublishPypiReleaseTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.assets = self.root / "assets"
         self.assets.mkdir()
-        self.output = self.root / "dist"
-        self.whl_name = "umf_core-0.10.2-py3-none-any.whl"
-        self.sdist_name = "umf_core-0.10.2.tar.gz"
-        metadata = b"Metadata-Version: 2.4\nName: umf-core\nVersion: 0.10.2\nRequires-Dist: jsonschema==4.26.0\n\n"
+        self.configure_release("0.10.2")
+
+    def configure_release(self, version: str) -> None:
+        self.output = self.root / f"dist-{version}"
+        self.whl_name = f"umf_core-{version}-py3-none-any.whl"
+        self.sdist_name = f"umf_core-{version}.tar.gz"
+        metadata = f"Metadata-Version: 2.4\nName: umf-core\nVersion: {version}\nRequires-Dist: jsonschema==4.26.0\n\n".encode()
         self.payloads = {
-            self.whl_name: wheel(metadata),
-            self.sdist_name: sdist(metadata),
+            self.whl_name: wheel(metadata, version),
+            self.sdist_name: sdist(metadata, version),
         }
         for name, payload in self.payloads.items():
             (self.assets / name).write_bytes(payload)
@@ -51,7 +54,7 @@ class PublishPypiReleaseTests(unittest.TestCase):
             f"{hashlib.sha256(data).hexdigest()}  {name}\n"
             for name, data in self.payloads.items()
         ).encode()
-        self.pins = json.dumps({"sdk": "0.5.4", "umf_core": "0.10.2"}).encode()
+        self.pins = json.dumps({"sdk": "0.5.4", "umf_core": version}).encode()
         (self.assets / "SHA256SUMS").write_bytes(self.sums)
         (self.assets / "release-pins.json").write_bytes(self.pins)
         self.release = {
@@ -175,49 +178,51 @@ class PublishPypiReleaseTests(unittest.TestCase):
             )
 
     def test_standalone_core_profile_binds_source_and_explicit_file_map(self) -> None:
-        tag = "python-v0.10.2"
-        pins = {
-            "tag": tag,
-            "commit": "a" * 40,
-            "distribution": "umf-core",
-            "version": "0.10.2",
-            "files": {
-                name: hashlib.sha256(data).hexdigest()
-                for name, data in self.payloads.items()
-            },
-        }
-        raw = json.dumps(pins).encode()
-        (self.assets / "release-pins.json").write_bytes(raw)
-        release = {
-            **self.release,
-            "tag_name": tag,
-            "assets": [
-                {**a, "digest": "sha256:" + hashlib.sha256(raw).hexdigest()}
+        for version in ("0.10.2", "0.10.7"):
+            self.configure_release(version)
+            tag = f"python-v{version}"
+            pins = {
+                "tag": tag,
+                "commit": "a" * 40,
+                "distribution": "umf-core",
+                "version": version,
+                "files": {
+                    name: hashlib.sha256(data).hexdigest()
+                    for name, data in self.payloads.items()
+                },
+            }
+            raw = json.dumps(pins).encode()
+            (self.assets / "release-pins.json").write_bytes(raw)
+            release = {
+                **self.release,
+                "tag_name": tag,
+                "assets": [
+                    {**a, "digest": "sha256:" + hashlib.sha256(raw).hexdigest()}
+                    if a["name"] == "release-pins.json"
+                    else a
+                    for a in self.release["assets"]
+                ],
+            }
+            ref = {**self.ref, "ref": "refs/tags/" + tag}
+            receipt = self.prepare(tag=tag, release=release, tag_ref=ref, wheel_count=None)
+            self.assertEqual(receipt["version"], version)
+            pins["files"][self.whl_name] = "f" * 64
+            changed = json.dumps(pins).encode()
+            (self.assets / "release-pins.json").write_bytes(changed)
+            release["assets"] = [
+                {**a, "digest": "sha256:" + hashlib.sha256(changed).hexdigest()}
                 if a["name"] == "release-pins.json"
                 else a
-                for a in self.release["assets"]
-            ],
-        }
-        ref = {**self.ref, "ref": "refs/tags/" + tag}
-        receipt = self.prepare(tag=tag, release=release, tag_ref=ref, wheel_count=None)
-        self.assertEqual(receipt["version"], "0.10.2")
-        pins["files"][self.whl_name] = "f" * 64
-        changed = json.dumps(pins).encode()
-        (self.assets / "release-pins.json").write_bytes(changed)
-        release["assets"] = [
-            {**a, "digest": "sha256:" + hashlib.sha256(changed).hexdigest()}
-            if a["name"] == "release-pins.json"
-            else a
-            for a in release["assets"]
-        ]
-        with self.assertRaisesRegex(publisher.ReleaseError, "selected file hashes"):
-            self.prepare(
-                tag=tag,
-                release=release,
-                tag_ref=ref,
-                output_dir=self.root / "refused",
-                wheel_count=None,
-            )
+                for a in release["assets"]
+            ]
+            with self.assertRaisesRegex(publisher.ReleaseError, "selected file hashes"):
+                self.prepare(
+                    tag=tag,
+                    release=release,
+                    tag_ref=ref,
+                    output_dir=self.root / f"refused-{version}",
+                    wheel_count=None,
+                )
 
     def test_manual_prepare_refuses_unqualified_011_core_version(self) -> None:
         tag = "python-v0.11.0"

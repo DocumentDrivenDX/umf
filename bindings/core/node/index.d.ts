@@ -233,6 +233,9 @@ export interface UmfCoreExtension {
 }
 export interface UmfCoreEngine {
   readonly engineVersion: string;
+  importLakeviewDashboard(source: string, options: {id:string;title?:string;namespace?:string}): unknown;
+  exportLakeviewDashboard(document: unknown): string;
+  lakeviewDiagnostics(document: unknown): {code:string;path:string;message:string;severity:'error'|'warning'}[];
   validateExtensionPayload(id: string, version: string, payload: unknown, registry?: UmfCoreRegistration[]): unknown;
   listKinds(registry?: UmfCoreRegistration[]): unknown;
   getKind(reference: unknown, registry?: UmfCoreRegistration[]): unknown;
@@ -731,7 +734,7 @@ export interface RetainedUmfCodegenEngine extends UmfCodegenEngine { dispose(): 
 export declare function createCodegenEngine(resources: UmfCodegenResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCodegenEngine;
 export declare function createRetainedCodegenEngine(resources: UmfCodegenResources, options?: {profile?: 'cooperative' | 'hard-isolated'; setupControls?: UmfCoreControls; controls?: UmfCoreControls}): RetainedUmfCodegenEngine;
 
-export interface UmfCorePackage { manifest: unknown; kinds?: boolean; semantics?: (payload: unknown, context: {document: unknown; path: string; scope: string}) => {code:string;path:string;message:string;severity:"error"|"warning"}[]; }
+export interface UmfCorePackage { manifest: unknown; kinds?: boolean; nativeValidator?: string; semantics?: (payload: unknown, context: {document: unknown; path: string; scope: string}) => {code:string;path:string;message:string;severity:"error"|"warning"}[]; }
 export type UmfCoreRegistration = UmfCoreExtension | UmfCorePackage;
 
 /** Private opt-in staged Rust import profile; source parity is limited to string inputs and remains unqualified. */

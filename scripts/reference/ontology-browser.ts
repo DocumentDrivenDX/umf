@@ -14,12 +14,25 @@ page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url()
 const assert=(ok:unknown,message:string)=>{if(!ok)throw Error(message);};
 const ontology=async(hash='')=>{await page.goto(origin+'reference/core.html'+hash);await page.locator('#load-status').filter({hasText:'assets verified'}).waitFor();await page.locator('#ontology-detail h3').waitFor();};
 const sameStrings=(actual:string[],expected:string[])=>JSON.stringify([...actual].sort())===JSON.stringify([...expected].sort());
+// Independent authored-source oracle: do not derive these expectations by
+// calling selfModelGraph, which is the projection under test.
+const authoredRecordIds=[
+ 'document','extensions','reference','element','module','itemType','facets','keyFieldReference','key','relationshipEndpoint','relationshipTarget','relationshipMultiplicity','relationship','semanticType','extensionPackage',
+ 'extensionKindDefinition','extensionKindCatalog','extensionKindReference','extensionKindDiagnostic','extensionKindValidation','extensionKindEntry','extensionKindCoverage','extensionKindListResult','extensionKindInspection',
+].map(id=>JSON.stringify(['umf',id]));
+const authoredEdges:[string,string,string][]=[
+ ['document','modules','module'],['document','extensions','extensions'],['element','extensions','extensions'],['element','references','reference'],['element','itemType','itemType'],['element','facets','facets'],['element','members','keyFieldReference'],['element','keys','key'],['module','elements','element'],['module','extensions','extensions'],['module','relationships','relationship'],['key','fields','keyFieldReference'],['relationship','source','relationshipEndpoint'],['relationship','target','relationshipTarget'],['relationship','sourceMultiplicity','relationshipMultiplicity'],['relationship','targetMultiplicity','relationshipMultiplicity'],['relationship','associationRecord','relationshipEndpoint'],
+ ['extensionKindValidation','diagnostics','extensionKindDiagnostic'],['extensionKindEntry','reference','extensionKindReference'],['extensionKindEntry','definition','extensionKindDefinition'],['extensionKindCoverage','diagnostics','extensionKindDiagnostic'],['extensionKindListResult','definitions','extensionKindReference'],['extensionKindListResult','definitions','extensionKindDefinition'],['extensionKindListResult','packages','extensionKindDiagnostic'],['extensionKindInspection','sourceValidation','extensionKindValidation'],['extensionKindInspection','entries','extensionKindEntry'],['extensionKindInspection','coverage','extensionKindCoverage'],
+];
+const authoredEdgeIds=authoredEdges.map(([from,label,to])=>JSON.stringify([JSON.stringify(['umf',from]),label,JSON.stringify(['umf',to])]));
+assert(new Set(authoredRecordIds).size===authoredRecordIds.length&&new Set(authoredEdgeIds).size===authoredEdgeIds.length,'Authored ontology oracle contains duplicate identities');
+assert(authoredEdges.every(([from,,to])=>authoredRecordIds.includes(JSON.stringify(['umf',from]))&&authoredRecordIds.includes(JSON.stringify(['umf',to]))),'Authored ontology oracle has an unresolved edge endpoint');
 let expectedRecordIds:string[]=[],expectedEdges:ReturnType<typeof selfModelGraph>['edges']=[];
 async function assertFullGraph(label:string){
  const actualRecords=await page.locator('#ontology-map svg [aria-label^="Inspect record "]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-model-id')??''));
- const actualEdges=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>node.querySelector('title')?.textContent??''));
+ const actualEdges=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>JSON.stringify([node.getAttribute('data-source'),node.querySelector('title')?.textContent??'',node.getAttribute('data-target')])));
  assert(sameStrings(actualRecords,expectedRecordIds),label+' record identities differ from authored source');
- assert(sameStrings(actualEdges,expectedEdges.map(edge=>edge.label)),label+' relationship labels differ from source projection');
+ assert(sameStrings(actualEdges,authoredEdgeIds),label+' relationship identities differ from authored source');
 }
 async function assertRelationshipRoutes(){
  await ontology();
@@ -49,6 +62,8 @@ try{
  assert(canonical(selfModelCatalog.document)===canonical(authoredDocument),'Generated metamodel document differs from authored source');
  expectedRecordIds=authoredDocument.modules.flatMap(module=>module.elements.filter(element=>element.kind==='record').map(element=>JSON.stringify([module.id,element.id])));
  const projected=selfModelGraph(selfModelCatalog);expectedEdges=projected.edges;
+ assert(sameStrings(expectedRecordIds,authoredRecordIds),'Authored Record IDs differ from the independent fixed-version oracle');
+ assert(sameStrings(expectedEdges.map(edge=>JSON.stringify([edge.source,edge.label,edge.target])),authoredEdgeIds),'Projection relationship identities differ from the independent authored-source oracle');
  assert(sameStrings(projected.records.map(record=>record.id),expectedRecordIds),'Self-model projection omitted or added authored Record identities');
  assert(expectedRecordIds.length===24,'Expected the complete authored 24-Record source model');
  assert(expectedRecordIds.filter(id=>JSON.parse(id)[1].startsWith('extensionKind')).length===9,'Expected all nine authored extension-kind Record identities');
@@ -74,7 +89,7 @@ try{
   await page.waitForFunction(()=>document.activeElement?.id==='ontology-detail');
   assert(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('node')===JSON.stringify(['umf','module']),'Autocomplete selected wrong identity');
   const nextFinder=page.getByRole('combobox',{name:'Find a definition'});
-  await nextFinder.fill('scalarType');await page.getByRole('option').first().click();
+  await nextFinder.fill('scalarType');await page.getByRole('listbox',{name:'Matching definitions'}).getByRole('option').first().click();
   await page.locator('#ontology-detail h3').filter({hasText:/^scalarType$/}).waitFor();
   await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();
   const currentFinder=page.getByRole('combobox',{name:'Find a definition'});
@@ -132,7 +147,7 @@ try{
  // @covers US-089-AC17 @covers US-089-AC18
  await ontology();assert(await page.locator('#ontology-detail h3').innerText()==='Document','Cold landing not Document ontology');assert(await page.locator('.workspace').isHidden(),'Competing browser remains visible');assert(await page.getByRole('navigation',{name:'Main navigation'}).getByRole('link',{name:'Schemas',exact:true}).getAttribute('href')==='core.html#view=ontology','Primary entry differs');
  assert(await page.locator('#ontology details[open]').count()===0,'Self-model starts expanded: '+await page.locator('#ontology details[open]').evaluateAll(nodes=>nodes.map(n=>n.outerHTML).join('\n')));await page.screenshot({path:join(evidence,'ontology-desktop.png'),fullPage:true});checks.push('Cold Schemas landing opens the full model with collapsed definition groups');
- const moduleRoute='#'+new URLSearchParams({view:'ontology',node:JSON.stringify(['umf','module'])});const moduleNode=page.getByRole('link',{name:'Inspect record Module · unchanged',exact:true});await moduleNode.focus();await moduleNode.press('Enter');await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();assert(new URL(page.url()).hash===moduleRoute,'Keyboard node missing route');await assertFullGraph('Selecting a node');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Document$/}).waitFor();checks.push('Graph node keyboard activation, exact refresh and Back retain context');
+ const moduleRoute='#'+new URLSearchParams({view:'ontology',node:JSON.stringify(['umf','module'])});const moduleNode=page.getByRole('link',{name:'Inspect record Module · unchanged',exact:true});await moduleNode.focus();await moduleNode.press('Enter');await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();assert(new URL(page.url()).hash===moduleRoute,'Keyboard node missing route');await assertFullGraph('Selecting a node');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Document$/}).waitFor();await assertFullGraph('Back navigation');checks.push('Graph node keyboard activation, exact refresh and Back retain context');
  await page.locator('.ontology-connections summary').click();await page.getByRole('button',{name:'1. modules',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^Connection: Document$/}).waitFor();assert(await page.locator('#ontology-detail').getByRole('link',{name:'Module',exact:true}).getAttribute('href')===moduleRoute,'Connection target link wrong');await page.getByRole('combobox',{name:'Focus record'}).selectOption(JSON.stringify(['umf','element']));await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();assert(!new URL(page.url()).hash.includes('edge='),'Old connection retained after selecting a different type');await page.getByRole('complementary',{name:'UMF language definitions'}).getByText(/^Records ·/).click();await page.getByRole('complementary',{name:'UMF language definitions'}).getByRole('link',{name:'Module',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();checks.push('Labeled graph connections expose their source and navigable target');
  await page.getByRole('button',{name:'Show full model',exact:true}).click();await assertFullGraph('Full graph');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();await assertFullGraph('Full graph after refresh');
  const elementFocus=JSON.stringify(['umf','element']);await page.getByRole('combobox',{name:'Focus record'}).selectOption(elementFocus);await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();await assertNeighborhood(elementFocus,'Explicit neighborhood');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();await assertNeighborhood(elementFocus,'Explicit neighborhood after refresh');

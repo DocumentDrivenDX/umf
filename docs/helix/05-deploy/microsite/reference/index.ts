@@ -86,11 +86,14 @@ async function start(){
   $('more').hidden=matches.length<=limit;return matches;
  };
  let navigation=0;
+ let navigationRoute:string|undefined;
  let selfModel:SelfModelCatalog|undefined;
  let catalogBrowser:SchemaBrowserHandle|undefined;
  let catalogRouteKey='';
  let syncingCatalogHistory=false;
- const changed=async()=>{const current=++navigation;
+ // A fragment navigation emits both popstate and hashchange. Render its URL
+ // once so the second event cannot destroy a newly focused definition finder.
+ const changed=async()=>{const route=location.href;if(route===navigationRoute)return;navigationRoute=route;const current=++navigation;
  if(view==='core'){
   const params=new URLSearchParams(location.hash.slice(1)),mode=params.get('view')??(!params.has('entry')?'ontology':'reference'),ontology=mode==='ontology',catalog=mode==='catalog';
   $('ontology').hidden=!ontology;$('model-catalog').hidden=!catalog;document.querySelector<HTMLElement>('.workspace')!.hidden=ontology||catalog;

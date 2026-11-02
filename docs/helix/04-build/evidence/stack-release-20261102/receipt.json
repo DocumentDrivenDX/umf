@@ -1,0 +1,196 @@
+{
+  "schema": "umf-stack-integration-audit/2",
+  "observed_at_utc": "2026-11-02T19:34:16.162070+00:00",
+  "scope": "Release and cleanup update. The full pre-cleanup repository/ref/worktree inventory is retained separately with its original observation time; it is not a current inventory. No mixed-version family conformance is inferred.",
+  "completed_this_session": [
+    {
+      "repository": "DocumentDrivenDX/tablespec",
+      "version": "0.0.16",
+      "merged_prs": [
+        28,
+        48,
+        51,
+        52
+      ],
+      "release_run": 41493771488,
+      "publisher_run": 41494468209,
+      "public_archive_equality": true,
+      "independent_public_install": "CPython 3.13.16 Darwin arm64; umf-core 0.10.3 selected by the public resolver; package/CLI imports and generated offline guidebook assets verified in Chromium 148.0.7778.96"
+    },
+    {
+      "repository": "DocumentDrivenDX/batten",
+      "tag": "storage-v0.1.0a1",
+      "merged_prs": [
+        2
+      ],
+      "qualification": "20 local cases / 17 behavior functions, strict types/lint/boundaries; Linux source CI passed; downloaded public archive/receipt checksums verified; wheel includes both licenses and NOTICE",
+      "channel": "GitHub prerelease; managed local POSIX storage subset; no PyPI or full host claim"
+    },
+    {
+      "repository": "DocumentDrivenDX/concourse",
+      "tag": "v0.1.1",
+      "merged_prs": [
+        4,
+        5,
+        6
+      ],
+      "release_run": 41500599381,
+      "license_decision": "Owner selected MIT OR Apache-2.0 on 2026-11-02",
+      "qualification": "Hosted infrastructure, 17 tests / 148 assertions, workerd/D1 and Chromium passed; 26 downloaded archive files and checksums verified, including full jose attribution in Worker and notices. Release-note tooling separately corrected.",
+      "channel": "GitHub local qualification preview; no live provider/production/Batten-host acceptance"
+    },
+    {
+      "repository": "DocumentDrivenDX/truss",
+      "version": "0.0.53",
+      "channel": "GitHub and PyPI",
+      "qualification": "Dedicated owner reports exact-tag Linux, native and independent public-byte install gates passed; fresh-install baseline. Historical upgrade/receipt routes retired by explicit owner decision."
+    },
+    {
+      "repository": "DocumentDrivenDX/arras",
+      "version": "0.6.5",
+      "channel": "UI npm",
+      "qualification": "Dedicated owner reports exact original archive published through OIDC, registry readback hash equality and independent public install; evidence merged in PR43. Separate 0.7.0 action successor remains under qualification."
+    }
+  ],
+  "release_receipts": {
+    "tablespec_manifest": {
+      "sha256": "7807ebfc888733575e08757888d06f9cc6b928e149c3b5f161f8ad7d55844784",
+      "receipt": {
+        "artifacts": [
+          {
+            "name": "umf_tablespec-0.0.16-py3-none-any.whl",
+            "sha256": "2889a68955be45e3930b703317b1d21205d8ffd85c4ef46f5ed220109b342803"
+          },
+          {
+            "name": "umf_tablespec-0.0.16.tar.gz",
+            "sha256": "54fbb09d332ae48a0a473d7a665c4eadc9e0c7394fe86351d5f00dcb1550295f"
+          }
+        ],
+        "package": "umf-tablespec",
+        "repository": "DocumentDrivenDX/tablespec",
+        "schema": "github-pypi-release/1",
+        "source_commit": "3f6e3fa7f130ed4317e546989563faedd0c405f9",
+        "tag": "v0.0.16",
+        "version": "0.0.16"
+      }
+    },
+    "batten_receipt": {
+      "sha256": "991912daffefb1b9896b6ba9903fb8d9608c39d1e9e6c47596afac603242154b",
+      "receipt": {
+        "release": "storage-v0.1.0a1",
+        "distribution": "novirhyza-batten-storage",
+        "version": "0.1.0a1",
+        "sourceCommit": "b8d47788a666a2d38db3b0e40ed8c18bc9c53b99",
+        "packageSourceCommit": "1147d6749eba",
+        "qualification": {
+          "local": "macOS arm64, Python 3.11.17; quality recipe passed, 20 cases in 17 behavior functions",
+          "linux": "https://github.com/DocumentDrivenDX/batten/actions/runs/41492161709",
+          "scope": "managed local POSIX storage only; no PyPI or complete application-runtime claim"
+        },
+        "assets": {
+          "novirhyza_batten_storage-0.1.0a1-py3-none-any.whl": "a69a9c41fcec4bdaee8c98b12cd7786d42f1e308154899e4d488c932da5cd820",
+          "novirhyza_batten_storage-0.1.0a1.tar.gz": "a7c954175b9412997f96f313c6618a07b5f00fc55f52dc9843f0975f119bd3e9"
+        }
+      }
+    },
+    "concourse_receipt": {
+      "sha256": "b7bd2c3539ea1ab2f421784ed4b24f6441c18ef0cd5a1c971809c46f45f449ed",
+      "receipt": {
+        "tag": "v0.1.1",
+        "sourceCommit": "216713c97f88da475f66ba725edad69b45a69e03",
+        "workflowRun": "41500599381",
+        "license": "MIT OR Apache-2.0",
+        "scope": "Local qualification preview; no live login, deployment, production data, Batten host or broad action-profile qualification",
+        "files": {
+          "LICENSE-APACHE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "LICENSE-MIT": "9e981e5ee579ddbfc01fe706b601cd3b76b0dccdfda98f72ce8684db46c55fa4",
+          "README.md": "cbeb9d86b2aeadeaafb7c19fef60350f357253358f05f698a1d6e20646692e37",
+          "THIRD-PARTY-NOTICES.txt": "13335fb0382fead16ebeb1cef94b889ea4c61252d3ae0cec015d62ee74ae8f20",
+          "deploy/cloudflare/profile.example.json": "e18b04696b54a2e8efb7049ac82c1d714119ae62fa88ebf17c6ea00c7b760467",
+          "dist/THIRD-PARTY-NOTICES.txt": "13335fb0382fead16ebeb1cef94b889ea4c61252d3ae0cec015d62ee74ae8f20",
+          "dist/concourse.css": "9d72aee11039631776aeff9d14e9b64344145c702354b800cc3ac6157753d9ff",
+          "dist/concourse.html": "dca9ee9986b23b79ff996b607301908a4ecd1b6f04f93be396fbb885333ec7f2",
+          "dist/concourse.js": "c89b25fba9a297d7db96910ebe195d7187ceb8f32f6cfa0fbaaa0987bc8ad4de",
+          "dist/manifest.json": "9d61cfe17aa2fb1032e7766631fb738edc9df75318f506c9fa5e44f05a2d1f1b",
+          "dist/worker.js": "7b20180a7cd9a67fb3eb57e75fb368f78f89b879c8af8dcfcd4aeba0b1853bf8",
+          "infra/cloudflare/README.md": "ba7872a5838220f56c9e791f56e4d0d0547deb544e81a2345319edb4f131e345",
+          "infra/cloudflare/main.tf": "49f6803c6449139438d8ef4f1f34427ce69e70d18bc711fa27f47d84a8fca265",
+          "infra/cloudflare/tests/foundation.tftest.hcl": "46a21e609db4c436df42d8f603558517dc322c0bfd977046bcce92bf8fe0465e",
+          "infra/cloudflare/variables.tf": "8df21afae858b3ac869efc54098d2f8371a49b63642cccb41db618609aa4dc9f",
+          "infra/cloudflare/versions.tf": "c04e2e72d3ba27187accd645f0f27e7a6791ee299b7f6b41702cd540a31d67ab",
+          "infra/collaboration-worker/README.md": "4db67a2ebb267d8fc5d03cd3a67d8d6410d6397798a42f646914e5f8e02914c9",
+          "infra/collaboration-worker/main.tf": "bddaae7d958ab698939124f6b7b4b36ba791897e506d808d65c1cc5dfc0d275a",
+          "infra/collaboration-worker/versions.tf": "c04e2e72d3ba27187accd645f0f27e7a6791ee299b7f6b41702cd540a31d67ab",
+          "infra/protected-publication/README.md": "11b6e7a2e4a1b20a0746a632bc2b33e7e904f3bfaf1f316acef70d97ed8dc38e",
+          "infra/protected-publication/main.tf": "c92df5e91f7e46744290bf69426f28415a24b1604c47750d8edf2c451908b05b",
+          "infra/protected-publication/outputs.tf": "574339c9fe034b460f01c22c3a4d9b219f971e42ba6d69a7fdac6f0b6d45b44d",
+          "infra/protected-publication/variables.tf": "a40da34e0a2139c86de0fd2d09cef821ff85bb84b827a4cf532a61fb14b59981",
+          "infra/protected-publication/versions.tf": "c04e2e72d3ba27187accd645f0f27e7a6791ee299b7f6b41702cd540a31d67ab",
+          "integrations/hugo/concourse.html": "dca9ee9986b23b79ff996b607301908a4ecd1b6f04f93be396fbb885333ec7f2",
+          "migrations/0001_comments.sql": "e4c01f875fcc8960d3bc863392f014af03e7d1ea8645d0813d58a796a272ea48"
+        }
+      }
+    }
+  },
+  "remaining_work": {
+    "umf": "Lakeview plus genuine handler timing/browser assertions integrated with current Rust main; final hosted/native/installed/browser gates and SDK 0.10.3 / Python 0.10.7 publication remain. Other historical unique tips require semantic disposition; active owner inputs stay protected.",
+    "truss": "0.0.53 published. Dedicated owner deleting proven obsolete E0/E1 refs and completing the genuine temporal gap.",
+    "arras": "UI 0.6.5 published. Action successor 0.7.0 is passing exact-wheel Mac checks; hosted artifact-path and dependency-pin corrections underway. Dedicated owner separately deleted 31 local and 34 remote proven obsolete refs.",
+    "ashlar": "Active owner still qualifies managed target; existing dev1 release is not stable acceptance.",
+    "weft": "Main tree equals v0.4.56. Two old source topics were adopted under different commits; historical proof/harness branches need their own remaining disposition. Active migration work remains owner-qualified.",
+    "umf-visual": "All audited committed tips accounted for by merged PRs; active dirty examples/geometry work remains with its owner.",
+    "tether": "All audited committed tips accounted for by merged PRs; active dirty API/web work remains with its owner.",
+    "batten": "Storage preview published. Another owner is actively implementing local approval/runtime packages in the primary checkout; these uncommitted changes are protected and not claimed released.",
+    "concourse": "0.1.1 preview published with complete third-party notices. Release-note link tooling merged. Production gates remain explicit.",
+    "tablespec": "Both previously open feature PRs integrated and released; no open PR remains after publisher hardening."
+  },
+  "inventory_before_cleanup": "inventory-before-cleanup.json",
+  "superseded_ref_cleanup": {
+    "receipt": "branch-cleanup-result.json",
+    "sha256": "05bb46fe93c0c22d3eeec301d3760464eba722c8d45add6ac5f972c5fd1793af",
+    "deleted": 333,
+    "local": 164,
+    "remote": 169,
+    "by_repository": {
+      "DocumentDrivenDX/umf": 74,
+      "DocumentDrivenDX/weft": 37,
+      "DocumentDrivenDX/ashlar": 16,
+      "DocumentDrivenDX/tablespec": 23,
+      "DocumentDrivenDX/umf-visual": 19,
+      "DocumentDrivenDX/concourse": 6,
+      "DocumentDrivenDX/batten": 3,
+      "DocumentDrivenDX/tether": 155
+    },
+    "proof": "Current-main ancestry or exact merged-PR head attribution; fresh exact-SHA and worktree checks before deletion. All registered worktree HEADs, checked-out names, open PRs and unresolved unique tips were excluded. Remote deletions used exact-SHA leases.",
+    "authorization": "Owner directed deletion of fully superseded work, and integration of feature/implementation gaps."
+  },
+  "worktree_cleanup": [
+    {
+      "repository": "DocumentDrivenDX/tablespec",
+      "path": "/private/tmp/erg-tablespec-authority",
+      "head": "236c32f1fee17cfc949c4eb0479765d4797af165",
+      "proof": "Clean tracked/untracked state, current-main ancestor; ignored roots only Ruff and Python bytecode caches. Removed after original PR48 integrated in PR51."
+    }
+  ],
+  "additional_semantic_cleanup": {
+    "deleted": 5,
+    "local": 4,
+    "remote": 1,
+    "receipts": [
+      "semantic-supersession-cleanup.json",
+      "visual-extraction-cleanup.json"
+    ],
+    "reason": "Four Parquet candidate tips are adopted into current main; the visual topic is fully extracted and released with frozen 1.0.0 semantics."
+  },
+  "total_root_managed_ref_deletions": 343,
+  "further_cleanup": {
+    "receipts": [
+      "obsolete-worktree-cleanup.json",
+      "praxis-adoption-cleanup.json"
+    ],
+    "refs_deleted": 5,
+    "worktrees_removed": 3,
+    "scope": "Two clean Tether review copies and the superseded Concourse source copy; their two local branch refs. Three Praxis heads map completely to current-main adoptions, with the reviewed workflow-addition and stronger explicit-evolution differences recorded."
+  },
+  "total_root_managed_worktrees_removed": 4
+}

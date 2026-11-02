@@ -129,7 +129,7 @@ fn runtime(engine: &Engine, ctx: &mut Context<'_>) -> Result<Arc<Runtime>, Engin
     let request = CompiledSchema::compile(request_schema, &resources, ctx)?;
     let ready = Arc::new(Runtime { result, request });
     if ctx.profile() == ResourceProfile::Cooperative && ctx.limits() == Limits::ordinary() {
-        let _ = CACHE.set(Arc::clone(&ready));
+        return Ok(crate::resource_cache::publish_completed(&CACHE, ready));
     }
     Ok(ready)
 }

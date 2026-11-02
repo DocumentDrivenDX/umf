@@ -106,7 +106,7 @@ fn runtime(engine: &Engine, ctx: &mut Context<'_>) -> Result<Arc<Runtime>, Engin
     if ctx.profile() == crate::context::ResourceProfile::Cooperative
         && ctx.limits() == crate::context::Limits::ordinary()
     {
-        let _ = CACHE.set(Arc::clone(&ready));
+        return Ok(crate::resource_cache::publish_completed(&CACHE, ready));
     }
     Ok(ready)
 }

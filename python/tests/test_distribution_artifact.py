@@ -66,6 +66,27 @@ def _core_public_release_verifier():
     return module
 
 
+def test_native_workspace_members_are_in_sdist_closure():
+    repository = Path(__file__).resolve().parents[2]
+    workspace = tomllib.loads((repository / "Cargo.toml").read_text())["workspace"]
+    hook = ast.parse((repository / "python/hatch_build.py").read_text())
+    closure = {
+        target.id: ast.literal_eval(node.value)
+        for node in hook.body
+        if isinstance(node, ast.Assign)
+        for target in node.targets
+        if isinstance(target, ast.Name)
+        and target.id in {"SDIST_SOURCE_FILES", "SDIST_SOURCE_TREES"}
+    }
+    for member in workspace["members"]:
+        manifest = f"{member}/Cargo.toml"
+        assert (repository / manifest).is_file()
+        assert manifest in closure["SDIST_SOURCE_FILES"] or any(
+            member == tree or member.startswith(tree + "/")
+            for tree in closure["SDIST_SOURCE_TREES"]
+        ), f"Cargo workspace member is absent from the source archive: {member}"
+
+
 def test_parquet_capture_compile_time_resource_is_in_sdist_closure():
     repository = Path(__file__).resolve().parents[2]
     source = repository / "crates/umf-core/src/parquet_capture_inspection.rs"
@@ -347,6 +368,40 @@ def test_release_wheel_qualifier_keeps_historical_default_and_accepts_explicit_v
     assert qualifier.select_macos(current, "0.10.4")["selectedWheel"]["filename"] == current.name
     with pytest.raises(ValueError, match="numeric MAJOR.MINOR.PATCH"):
         qualifier.select_macos(current, "0.10.4/../../other")
+
+
+@pytest.mark.parametrize("version", ["0.10.3", "0.10.7", "0.10.8"])
+def test_rust_successor_wheel_limits_preserve_historical_profiles(tmp_path, version):
+    qualifier = _release_wheel_qualifier()
+    path = _wheel(tmp_path / f"{version}.whl", {}, version=version,
+                  tag="cp311-abi3-macosx_11_0_arm64", native=b"R" * (17 * 1024 * 1024))
+    if version == "0.10.7":
+        files, tag, root = qualifier.read_wheel(path, version)
+        assert len(files[qualifier.NATIVE]) == 17 * 1024 * 1024
+        assert tag == "cp311-abi3-macosx_11_0_arm64"
+        assert root == "umf_core-0.10.7.dist-info"
+    else:
+        with pytest.raises(ValueError, match="expanded members"):
+            qualifier.read_wheel(path, version)
+
+
+@pytest.mark.parametrize("case", ["archive", "expanded-member"])
+def test_rust_successor_wheel_limits_refuse_oversized_inputs(tmp_path, case):
+    qualifier = _release_wheel_qualifier()
+    path = tmp_path / "oversized.whl"
+    if case == "archive":
+        with path.open("wb") as stream:
+            stream.truncate(64 * 1024 * 1024 + 1)
+        message = "File exceeds"
+    else:
+        _wheel(path, {}, version="0.10.7")
+        payload = bytearray(path.read_bytes())
+        central = payload.index(b"PK\x01\x02")
+        struct.pack_into("<I", payload, central + 24, 128 * 1024 * 1024 + 1)
+        path.write_bytes(payload)
+        message = "expanded members"
+    with pytest.raises(ValueError, match=message):
+        qualifier.read_wheel(path, "0.10.7")
 
 
 def test_release_wheel_qualifier_cli_selects_explicit_version_without_changing_default(tmp_path):
