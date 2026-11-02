@@ -25,7 +25,7 @@
     "handler_timing": "9 tests / 145 assertions pass; source-only observer controls. Existing product execution and cleanup budgets unchanged.",
     "ontology_browser": "20 checks pass in real Chromium with no page errors or unexpected external requests. Duplicate popstate/hashchange rendering corrected; dropdown click bound to its listbox. Verified mounted released renderer assets were required.",
     "hosted": "Old-head runs 41505343561 and 41505343180 failed test-harness default timeouts after Rust/native component stages passed. Final exact-source hosted acceptance pending.",
-    "publisher": "9 Python publisher validator tests pass, including exact-byte standalone profiles for historical 0.10.2 and the 0.10.7 successor; unqualified 0.11.0 and altered file maps refuse. Publication remains gated on final exact artifacts."
+    "publisher": "15 combined publisher and dispatcher tests pass. Both route the historical 0.10.2 and exact 0.10.7 successor; unqualified versions, source/digest movement and altered file maps refuse. The first hosted attempt exposed the stale single-version dispatcher import; it is corrected before publication."
   },
   "qualification_limits": [
     "Local feature binaries preceded the separate Avro cache correction; the core unit suite qualifies that correction. Hosted CI rebuilds and tests the exact combined source before merge.",

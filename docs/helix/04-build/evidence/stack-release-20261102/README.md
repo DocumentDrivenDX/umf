@@ -8,7 +8,12 @@ refs removed across eight repositories: 164 local and 169 remote. A further
 four Parquet candidate heads and the extracted visual topic were deleted after
 semantic reconciliation (338 refs total; 168 local and 170 remote). Their
 [adoption proof](semantic-supersession-cleanup.json) and
-[released extraction proof](visual-extraction-cleanup.json) are separate. Exact source
+[released extraction proof](visual-extraction-cleanup.json) are separate.
+
+[Further worktree cleanup](obsolete-worktree-cleanup.json) removes three clean
+obsolete copies and two associated branches. [Praxis reconciliation](praxis-adoption-cleanup.json)
+accounts for three more superseded branches. Total: 343 refs and four worktrees
+removed by this audit, separate from the delegated Truss/Arras cleanup. Exact source
 heads, current-main or merged-PR proof, and execution results are retained.
 Open PRs, registered worktree heads, active checkouts and unresolved unique work
 were protected. The superseded TableSpec PR48 worktree was also removed after

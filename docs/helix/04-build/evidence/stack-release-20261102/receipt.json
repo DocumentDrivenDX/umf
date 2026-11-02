@@ -182,5 +182,15 @@
     ],
     "reason": "Four Parquet candidate tips are adopted into current main; the visual topic is fully extracted and released with frozen 1.0.0 semantics."
   },
-  "total_root_managed_ref_deletions": 338
+  "total_root_managed_ref_deletions": 343,
+  "further_cleanup": {
+    "receipts": [
+      "obsolete-worktree-cleanup.json",
+      "praxis-adoption-cleanup.json"
+    ],
+    "refs_deleted": 5,
+    "worktrees_removed": 3,
+    "scope": "Two clean Tether review copies and the superseded Concourse source copy; their two local branch refs. Three Praxis heads map completely to current-main adoptions, with the reviewed workflow-addition and stronger explicit-evolution differences recorded."
+  },
+  "total_root_managed_worktrees_removed": 4
 }
