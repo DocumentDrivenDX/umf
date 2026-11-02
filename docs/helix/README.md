@@ -1,3 +1,10 @@
+[Stack release closeout — 2026-11-01](04-build/evidence/stack-release-20261101/receipt.json)
+records TableSpec 0.0.15 GitHub/PyPI delivery, public registry-to-GitHub digest
+checks and restored efficient Actions delivery. Truss's patch successor remains
+held by native migration admission, Ashlar stable acceptance remains open, and
+Arras UI 0.6.5 still needs its hosted npm publication provenance. Existing
+GitHub-only compiler/visual archives retain their recorded delivery scope.
+
 [Current saga library completion and release](04-build/evidence/saga-public-library-completion/README.md)
 records SDK 0.10.1 / Python 0.10.5, corrected original-control recovery,
 fresh qualification and verified public installed consumers.
