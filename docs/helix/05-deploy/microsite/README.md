@@ -38,6 +38,34 @@ The last command requires installed Playwright Chromium and the running preview.
 Override its origin with `UMF_REFERENCE_URL` and Chromium with `UMF_CHROMIUM_PATH`
 when needed.
 
+### Pack tools workbench
+
+Build the separate domain-pack tools page from the fresh Rust/WASM package that
+contains the `pack-tools` wire family:
+
+```sh
+bun docs/helix/05-deploy/microsite/build-pack-tools.ts \
+  --wasm-dir /path/to/fresh/wasm-bindgen-output
+```
+
+The build writes `dist/pack-tools.html`, its page and worker bundles, and the
+matching WASM JavaScript/binary under `dist/assets/pack-tools/`. It records
+source, WASM and output SHA-256 values in the WASM asset directory. This is a
+separate asset cohort from the released schema browser. The page uses the local
+pack catalog and produces previewable DDL, ORM and CRUD files with per-source
+coverage, diagnostics and a ZIP download. It does not fetch pack references or
+connect to a database.
+
+Run `bun scripts/pack-tools-browser.ts` against these freshly built assets. The
+28-pack catalog has 26 packs with TableSpec tables; the two loader-only examples
+produce source companions and explicit blocked reports. Generated ORM modules
+target SQLAlchemy 2.0. CRUD helpers use a caller-owned Session and transaction.
+
+The `Deploy locally qualified microsite` workflow signs and publishes the
+committed static tree using the registered build key. It performs no hosted
+compilation or behavioral testing. GitHub documents Pages deployments as free;
+local build/test receipts remain the readiness evidence.
+
 Catalog generation scans `domain-packs/`, `packs/`, `spec/domain-packs/`,
 `examples/domain-packs/` and retained `catalog-sources/`. Explicit source
 roots may be supplied as positional arguments, replacing default roots.

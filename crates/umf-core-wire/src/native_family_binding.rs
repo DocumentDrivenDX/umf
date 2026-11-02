@@ -7,6 +7,8 @@ use umf_core::{Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
+    #[cfg(feature = "codegen")]
+    "pack-tools",
     "field-record-parquet-projection",
     "core-ideal-reports",
     "medical-projection",
@@ -82,6 +84,8 @@ fn bad_family() -> String {
 /// Describe callable family operations without a host-owned profile table.
 pub fn metadata_wire(family: &str) -> String {
     let (profile, operations): (&str, &[&str]) = match family {
+        #[cfg(feature = "codegen")]
+        "pack-tools" => (crate::pack_tools_binding::PROFILE, &["generatePackTools"]),
         "cardinality-sqlserver-projection" => (
             crate::cardinality_sqlserver_projection_binding::PROFILE,
             &[
@@ -910,6 +914,8 @@ pub fn execute_wire_with_control(
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
     match family {
+        #[cfg(feature = "codegen")]
+        "pack-tools" => crate::pack_tools_binding::execute_wire_with_control(wire, control),
         "cardinality-sqlserver-projection" => {
             crate::cardinality_sqlserver_projection_binding::execute_wire_with_control(
                 wire, control,
