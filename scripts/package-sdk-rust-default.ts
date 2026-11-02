@@ -140,6 +140,9 @@ try{
   join(root,'scripts/actions-plan-identity.ts'),
   join(root,'scripts/check-metamodel-self.ts'),
   join(root,'scripts/build-postgresql.ts'),
+  // Candidate security policies import the draft 0.2 schema from HELIX docs.
+  // It differs from the published 0.1 production schema and is a real tsc/Bun input.
+  join(root,'docs/helix/02-design/spikes/security/policy-v0.2.schema.json'),
   join(root,'scripts/package-sdk.py'),
   join(root,'scripts/package-sdk.ts'),
   join(root,'scripts/build-saga-runtime.ts'),
