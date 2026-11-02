@@ -14,6 +14,12 @@ same renderer used by the UMF microsite. Version 2.1.0 ships compiled browser
 ESM, TypeScript declarations and static assets. No Bun, Node runtime, framework,
 public corpus or network connection to the UMF microsite is required.
 
+For local Node 24 smoke tests, the host must supply a loader for the packaged
+WASM file: Node's `fetch` does not read `file:` URLs. The publication harness
+reads that exact file, verifies its release-manifest SHA-256, and supplies it to
+the unchanged browser bundle. Browser consumers serve the assets over HTTP(S).
+This does not establish a general server rendering runtime.
+
 ## Install and embed
 
 Install the public npm package:
