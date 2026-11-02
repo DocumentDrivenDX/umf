@@ -113,10 +113,15 @@ try{
   join(root,'bindings/core/wasm/index.js'),
  ];
  const metamodelManifest=JSON.parse(await readFile(join(root,'spec/metamodel/generated/manifest.json'),'utf8'));
- // Include the metamodel compiler's declared functional inputs and backend.
+ // Capture the complete canonical metamodel source attestation as well as the
+ // broader dynamic runtime roots checked again after private generators run.
+ const metamodelSourceInputs=Object.keys(metamodelManifest.sources).map(path=>join(root,path));
  const metamodelBackendInputs=Object.keys(metamodelManifest.backend.inputs).map(path=>join(root,path));
+ const dynamicSourceInputs=await collectDynamicSourceInputs(root);
  const sourceInputs=[...new Set([
+  ...metamodelSourceInputs,
   ...metamodelBackendInputs,
+  ...dynamicSourceInputs,
   ...cargoSourceFiles,
   ...jsSourceFiles,
   ...await filesUnder(join(root,'tests/rust-core')),
@@ -131,6 +136,10 @@ try{
   join(root,'.cargo/config.toml'),
   join(root,'scripts/package-sdk-rust-default.ts'),
   join(root,'scripts/sdk-declarations.ts'),
+  join(root,'scripts/build.ts'),
+  join(root,'scripts/actions-plan-identity.ts'),
+  join(root,'scripts/check-metamodel-self.ts'),
+  join(root,'scripts/build-postgresql.ts'),
   join(root,'scripts/package-sdk.py'),
   join(root,'scripts/package-sdk.ts'),
   join(root,'scripts/build-saga-runtime.ts'),
