@@ -1,0 +1,37 @@
+{
+  "executed_at_utc": "2026-11-02T20:14:45.027789+00:00",
+  "results": [
+    {
+      "repository": "tablespec",
+      "ref": "refs/heads/codex/pypi-publication-propagation-20261102",
+      "head": "980221ac45e7d9bd6ca6b90042cee91db508a1b9",
+      "main": "42f699ac4c794fbd6baeb5e1f0ba28f9bc629f87",
+      "result": "deleted",
+      "proof": "Merged ancestry, identical source tree and clean checkout; primary returned to current main without changing file content."
+    },
+    {
+      "repository": "tablespec",
+      "ref": "refs/remotes/origin/codex/pypi-publication-propagation-20261102",
+      "head": "980221ac45e7d9bd6ca6b90042cee91db508a1b9",
+      "main": "42f699ac4c794fbd6baeb5e1f0ba28f9bc629f87",
+      "result": "deleted",
+      "proof": "Same merged source, exact-SHA remote lease."
+    },
+    {
+      "repository": "concourse",
+      "ref": "refs/heads/codex/release-note-links-20261102",
+      "head": "a67379bfa607d97287cb2799665fa0ded7c1d3cc",
+      "main": "90d6604ea14d2e220cf1467b6e129048e718be85",
+      "result": "deleted",
+      "proof": "Merged ancestry, identical source tree and clean checkout; primary returned to current main without changing file content."
+    },
+    {
+      "repository": "concourse",
+      "ref": "refs/remotes/origin/codex/release-note-links-20261102",
+      "head": "a67379bfa607d97287cb2799665fa0ded7c1d3cc",
+      "main": "90d6604ea14d2e220cf1467b6e129048e718be85",
+      "result": "deleted",
+      "proof": "Same merged source, exact-SHA remote lease."
+    }
+  ]
+}
