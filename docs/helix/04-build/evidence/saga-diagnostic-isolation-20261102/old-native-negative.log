@@ -1,0 +1,70 @@
+{"testProcess":"tests/saga/portable-oracle.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/saga/portable-oracle.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/saga/portable-oracle.test.ts:
+12 | const vector=(id:string)=>vectors.cases.find((item:any)=>item.id===id)!;
+13 | const result=(subject:SagaSubject,id:string)=>verifySagaVectors(subject,[vector(id)]);
+14 | 
+15 | test('native source matches every independent portable vector before SDK packaging',()=>{
+16 |  const report=verifySagaVectors(engine,vectors.cases);
+17 |  expect(report.results.filter(item=>!item.passed)).toEqual([]);
+                                                        ^
+error: expect(received).toEqual(expected)
+
+- []
++ [
++   {
++     "covers": [
++       6,
++     ],
++     "failure": "Error: diagnostics differ from the complete independent code/path/severity inventory: [{"code":"EXTENSION_STRUCTURE","path":"/modules/0/extensions/umf.actions.saga/sagas/0/steps/0","severity":"error"},{"code":"ACTION_STRUCTURE","path":"/modules/0/extensions/umf.actions/actions/0/writes/0/selector","severity":"error"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/0/authorization","severity":"warning"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/0/binding/handler","severity":"warning"},{"code":"ACTION_STRUCTURE","path":"/modules/0/extensions/umf.actions/actions/1/writes/0/selector","severity":"error"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/1/authorization","severity":"warning"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/1/binding/handler","severity":"warning"},{"code":"ACTION_STRUCTURE","path":"/modules/0/extensions/umf.actions/actions/2/writes/0/selector","severity":"error"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/2/authorization","severity":"warning"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/2/binding/handler","severity":"warning"},{"code":"ACTION_STRUCTURE","path":"/modules/0/extensions/umf.actions/actions/3/writes/0/selector","severity":"error"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/3/authorization","severity":"warning"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/3/binding/handler","severity":"warning"},{"code":"SAGA_STRUCTURE","path":"/modules/0/extensions/umf.actions.saga/sagas/0/steps/0","severity":"error"}]",
++     "id": "missing-compensation",
++     "passed": false,
++   },
++   {
++     "covers": [
++       12,
++     ],
++     "failure": "Error: diagnostics differ from the complete independent code/path/severity inventory: [{"code":"EXTENSION_STRUCTURE","path":"/modules/0/extensions/umf.actions.saga/sagas/0/steps","severity":"error"},{"code":"ACTION_STRUCTURE","path":"/modules/0/extensions/umf.actions/actions/0/writes/0/selector","severity":"error"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/0/authorization","severity":"warning"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/0/binding/handler","severity":"warning"},{"code":"ACTION_STRUCTURE","path":"/modules/0/extensions/umf.actions/actions/1/writes/0/selector","severity":"error"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/1/authorization","severity":"warning"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/1/binding/handler","severity":"warning"},{"code":"ACTION_STRUCTURE","path":"/modules/0/extensions/umf.actions/actions/2/writes/0/selector","severity":"error"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/2/authorization","severity":"warning"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/2/binding/handler","severity":"warning"},{"code":"ACTION_STRUCTURE","path":"/modules/0/extensions/umf.actions/actions/3/writes/0/selector","severity":"error"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/3/authorization","severity":"warning"},{"code":"ACTION_UNCHECKED","path":"/modules/0/extensions/umf.actions/actions/3/binding/handler","severity":"warning"},{"code":"SAGA_LIMIT","path":"/modules/0/extensions/umf.actions.saga/sagas/0/steps","severity":"error"}]",
++     "id": "over-32-steps",
++     "passed": false,
++   },
++ ]
+
+- Expected  - 1
++ Received  + 18
+
+      at <anonymous> (/Users/erik/.codex/worktrees/db96/umf/tests/saga/portable-oracle.test.ts:17:52)
+(fail) native source matches every independent portable vector before SDK packaging [143789.43ms]
+  ^ this test timed out after 60000ms.
+22 |  const core=createEngine(resources),registry=registerSagas(new Registry(core),engine);
+23 |  const malformed=vector('missing-compensation').source;
+24 |  const dedicated=engine.inspectSagas(malformed) as any;
+25 |  expect(dedicated.validation.valid).toBe(false);
+26 |  expect(dedicated.validation.diagnostics).toContainEqual(expect.objectContaining({code:'SAGA_STRUCTURE',path:'/modules/0/extensions/umf.actions.saga/sagas/0/steps/0'}));
+27 |  expect(dedicated.validation.diagnostics.some((item:any)=>item.code==='ACTION_STRUCTURE'||item.code==='EXTENSION_STRUCTURE')).toBe(false);
+                                                                                                                                   ^
+error: expect(received).toBe(expected)
+
+Expected: false
+Received: true
+
+      at <anonymous> (/Users/erik/.codex/worktrees/db96/umf/tests/saga/portable-oracle.test.ts:27:127)
+(fail) dedicated Saga shape diagnostics retain generic validation and attachment scope guards [5195.75ms]
+(pass) portable oracle rejects an edit implementation that validates but returns the unchanged source [13033.33ms]
+(pass) portable oracle requires exact diagnostic path and severity, not a matching prefix [10486.73ms]
+(pass) portable oracle catches an omitted inherited obligation independently of assessment claims [2681.97ms]
+(pass) portable oracle rejects a future recovery obligation falsely marked declaration-compatible [5772.00ms]
+
+ 4 pass
+ 2 fail
+ 18 expect() calls
+Ran 6 tests across 1 file. [187.97s]
+{"testProcess":"tests/saga/portable-oracle.test.ts","exitCode":1,"pass":4,"fail":2,"skip":0,"assertions":18,"completeSummary":true,"logSha256":"b0949d37f6c2cbdc9f42f43c67040d27f14f21e298f1f2f5f358ec58cbeba260"}
+Complete test file failed or terminated: tests/saga/portable-oracle.test.ts
+
+ 4 pass
+ 0 skip
+ 2 fail
+ 18 expect() calls
+Ran 6 tests across 1 files. [188.01s]

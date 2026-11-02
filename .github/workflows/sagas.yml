@@ -42,7 +42,8 @@ jobs:
     needs: impact
     if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
     runs-on: ubuntu-24.04
-    timeout-minutes: 55
+    # Includes the source-built SDK, repaired wheel and independent no-JS sdist rebuild.
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
