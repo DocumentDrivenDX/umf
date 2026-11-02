@@ -202,3 +202,21 @@ source downloads and tamper refusal. Assertions await asynchronous completion an
 inspect visible Lini labels rather than requiring the former SVG title shape.
 Generated preview dumps are retained outside the tracked release changes.
 Deployment and hosted verification remain the next milestones.
+
+## Deployment authority refresh
+
+The consumer verification rerun, workflow 41534057741, completed successfully:
+Node 24 imported the public package with the explicit verified local-WASM host,
+and both installed-package Chromium suites passed. The first deployment run
+41534053476 stopped at `check:metamodel` with a stale generated core schema.
+
+An isolated source-bound generation found that all 17 non-manifest outputs are
+byte-identical after replacing only compiler fingerprint
+`a1c8a60da7513ccfcfabc75b35c1bb702a59906f8e735a094bc82d1bb6333cba`
+with `53c2af76df1a5f45862e7ed4cb308cf1d7cc9b7edcf2897c96ebad5ef0d715c4`.
+The authored model digest remains
+`fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f`.
+No vocabulary, constraint or executable validator logic changed. The refreshed
+manifest records current Cargo and consumer dependency inputs. Applying those
+generated outputs passes `check:metamodel` and the 3,665-file core-authority scan.
+The published schema-browser archive remains immutable and separately pinned.
