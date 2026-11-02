@@ -65,7 +65,7 @@ jobs:
       - run: bun install --frozen-lockfile
       - name: Check workflow impact gates
         run: bun test tests/qualification/sagas-workflow.test.ts
-      - if: needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
+      - if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
         run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
       - if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
         run: cargo fetch --locked
@@ -81,6 +81,8 @@ jobs:
           cargo test --locked -p umf-codegen saga
           cargo build --locked --release -p umf-core-node -p umf-cli --features umf-core-node/native-postgresql,umf-cli/native-postgresql
           cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
+          cargo build --locked --release --target wasm32-unknown-unknown -p umf-core-wasm
+          wasm-bindgen target/wasm32-unknown-unknown/release/umf_core_wasm.wasm --target web --out-dir bindings/core/wasm/pkg --out-name umf_core_wasm
           bun run typecheck
           bun test tests/saga/registry-resources.test.mjs tests/metamodel/accounted-provenance.test.ts
       - name: Prepare native test resources once
