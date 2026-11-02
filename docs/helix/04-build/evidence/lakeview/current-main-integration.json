@@ -24,7 +24,7 @@
     "bun": "48 passed / 217 assertions through the existing isolated runner; all five files retained. Hosted five-second-default attempts are retained as failed attempts, not passing qualification.",
     "handler_timing": "9 tests / 145 assertions pass; source-only observer controls. Existing product execution and cleanup budgets unchanged.",
     "ontology_browser": "20 checks pass in real Chromium with no page errors or unexpected external requests. Duplicate popstate/hashchange rendering corrected; dropdown click bound to its listbox. Verified mounted released renderer assets were required.",
-    "hosted": "Old-head runs 41505343561 and 41505343180 failed test-harness default timeouts after Rust/native component stages passed. Final exact-source hosted acceptance pending.",
+    "hosted": "Lakeview exact-source run41529986753 passed atc0a00c929. Saga native/browser/CLI vectors passed, then stale installed-SDK layout assertion failed; current harness correction needs fresh full qualification.",
     "publisher": "15 combined publisher and dispatcher tests pass. Both route the historical 0.10.2 and exact 0.10.7 successor; unqualified versions, source/digest movement and altered file maps refuse. The first hosted attempt exposed the stale single-version dispatcher import; it is corrected before publication.",
     "macos_python_candidate": "Exact native wheel and installed RECORD verified on CPython 3.11\u20133.14; 72 native cases and two repaired harness controls pass on each interpreter. Final-source sdist rebuild and hosted Linux remain pending."
   },
@@ -253,5 +253,21 @@
       "log_local": "/private/tmp/umf-saga-41515038235-failure.log"
     },
     "release_ownership": "Private candidate only. Another active release owner owns unified 0.10.7; these artifacts must not be published under that version without coordinated source and qualification."
+  },
+  "hosted_c0a00c929": {
+    "source": "c0a00c929dd61a8105d06fa17cfffdabcc34ec1d",
+    "run": "https://github.com/DocumentDrivenDX/umf/actions/runs/41529986753",
+    "result": "success",
+    "scope": "Exact-source native core/Lakeview/cache/wire/binding assertions, fresh installed Node/Bun/CLI, rebuilt WASM and real Chromium; no Databricks/edited-source/Python named Lakeview acceptance.",
+    "receipts": {
+      "browser.json": {
+        "path": "hosted-c0a00c9/browser.json",
+        "sha256": "a3bfe768723965c3bbec8af6563625be6ace69d6c7dd08df7f66005192b9dc2b"
+      },
+      "installed.json": {
+        "path": "hosted-c0a00c9/installed.json",
+        "sha256": "ea616135ab7142329aafed324ca5c8fb096395c6bf93d24ad7c05975ae97d218"
+      }
+    }
   }
 }

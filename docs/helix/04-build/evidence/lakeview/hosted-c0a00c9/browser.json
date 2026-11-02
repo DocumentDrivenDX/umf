@@ -1,0 +1,116 @@
+{
+  "profile": "umf.lakeview.original-bytes/1",
+  "core": "0.10.0",
+  "extension": "0.2.0",
+  "chromium": "153.0.8010.12",
+  "bun": "1.4.3",
+  "results": [
+    {
+      "name": "marketing-campaign",
+      "bytes": 54077,
+      "original": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5",
+      "recoveries": [
+        {
+          "format": "direct",
+          "sha256": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5"
+        },
+        {
+          "format": "json",
+          "sha256": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5"
+        },
+        {
+          "format": "yaml",
+          "sha256": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5"
+        }
+      ]
+    },
+    {
+      "name": "lexical-quirks",
+      "bytes": 772,
+      "original": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5",
+      "recoveries": [
+        {
+          "format": "direct",
+          "sha256": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5"
+        },
+        {
+          "format": "json",
+          "sha256": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5"
+        },
+        {
+          "format": "yaml",
+          "sha256": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5"
+        }
+      ]
+    },
+    {
+      "name": "empty-sections",
+      "bytes": 79,
+      "original": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671",
+      "recoveries": [
+        {
+          "format": "direct",
+          "sha256": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
+        },
+        {
+          "format": "json",
+          "sha256": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
+        },
+        {
+          "format": "yaml",
+          "sha256": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
+        }
+      ]
+    }
+  ],
+  "generic": {
+    "kind": {
+      "extension": "umf.lakeview",
+      "version": "0.2.0",
+      "kind": "dashboard"
+    },
+    "entries": 163,
+    "coreFields": [
+      "Metric Value"
+    ]
+  },
+  "legacy": {
+    "hostileNames": 3,
+    "numericDefaults": 3,
+    "unknownEmptyContainers": 2,
+    "mixedUnknownDefaults": 3,
+    "unknownWidgetTypes": 7,
+    "unknownFormats": 7,
+    "unknownChannels": 4,
+    "supportedVisuals": 1
+  },
+  "errors": [],
+  "externalRequests": [],
+  "sources": {
+    "crates/umf-core/src/lakeview.rs": "4602e6e3fc4ab9127914502fc274ed11d58ae33235fbcc49b7d6eb86a31a124d",
+    "crates/umf-core/src/serialization.rs": "7e89d1df34dafb670ed3a37094e10715f71b512d956165880ac65905ede19bc0",
+    "crates/umf-core-wire/src/lib.rs": "ff090198286f24e90b654581e803caf6ceebfb4ca997007006fad8ba7ccc4a54",
+    "src/adapters/lakeview/index.ts": "ef67d0b28e6cda86ed0a1faee9a7c31e62ded2f620d2d9105f47fdb52c636577",
+    "src/adapters/lakeview/project.ts": "17f156f919a7f8903f4ff8da576acf499698d9aa768a942aae5350b4e1aa4389",
+    "src/registry/registry.ts": "23d637dea300720be3b667d04e2a77acc0ce9f3d047083fab9d8d9caa51e8087",
+    "src/registry/kind-runtime.ts": "95e98ea6067a95635496d7f22ca58a0173bf5d28a44a23884baf829b6d6eff62",
+    "spec/extensions/lakeview/package.json": "0043b4ca077e4f80d18c2729a3823a43c90914f6d91ba338f0f04a2fca6a6f16",
+    "spec/extensions/lakeview/schema.json": "99f8a98b1635887468a564d127d4cf2383806babf95ba08e9200521c044a4012",
+    "spec/metamodel/generated/manifest.json": "5f6a4ad92475fe95ad21f34e27bb5a8255b7cb2dd3c03dbaefa46c6de00606ce",
+    "bindings/core/wasm/index.js": "d6b232aac18acfb3cc2ff0b451a7c28df441bc12146993bd6bbf0bff73adae80",
+    "bindings/core/wasm/index.d.ts": "3d314c25ffd0fdfc1215b527c45a66e42dc6effc7c0587d883b63c2210d4d8c1",
+    "tests/lakeview/browser-entry.ts": "a17664bfeaf8660fe7c4e41b7e40b6c92b03ef00f77d39b18c42e4a4bcc195d1",
+    "tests/lakeview/legacy-fixture.ts": "5ecd5661cc7c026e7fbd757298cbc9e7c28b4fd557498048320ae7c9fa31a435",
+    "tests/lakeview/legacy-projection.test.ts": "d2f10f2e79a3777d239fcdc4a93fb1e50c62c041ebc865a2bc07acfd4b121e81",
+    "tests/lakeview/interchange.test.ts": "4a3939fe65ee4cd4a56787266cff8805e1340c33e8b9a7a93be46d6bba702d82",
+    "scripts/lakeview-browser.ts": "dbfab092f5d78a374a9973c536569c98a96e7bf5ed429f20ef1016c281013c3a",
+    "fixtures/lakeview/marketing-campaign.lvdash.json": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5",
+    "fixtures/lakeview/lexical-quirks.lvdash.json": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5",
+    "fixtures/lakeview/empty-sections.lvdash.json": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
+  },
+  "artifacts": {
+    "wasm": "4ed4758c82972a21775efe9342a6a0a3767c8e9930e87e8fb7953db2cfef07d7",
+    "bundle": "868931bd1040b2a9a1d7260625c937916ac024baa12f41481d9563cf4d2deadc"
+  },
+  "limits": "Three committed files; direct and UMF JSON/YAML untouched UTF-8 reconstruction, generic composition and thirty legacy compatibility controls only. No live Databricks acceptance or edited-source rewrite."
+}

@@ -3,7 +3,34 @@ import {expect,test} from 'bun:test';
 import {mkdtemp,mkdir,readFile,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {capturePortableProducerSnapshot,hashInputFiles,retainVerifiedFile,sha256File,SAGA_QUALIFICATION_INPUTS,validatePortableCaseRoster,verifyPortableCohort,verifyPortableProducerSnapshot,verifyPortableResult,type PortableHostReport} from '../../scripts/saga-portable/custody';
+import {capturePortableProducerSnapshot,hashInputFiles,retainVerifiedFile,sha256File,SAGA_QUALIFICATION_INPUTS,SDK_SAGA_MEMBERS,SDK_SAGA_NODE_ENTRY,SDK_SAGA_BROWSER_ENTRY,verifySdkMemberCustody,validatePortableCaseRoster,verifyPortableCohort,verifyPortableProducerSnapshot,verifyPortableResult,type PortableHostReport} from '../../scripts/saga-portable/custody';
+
+function sdkCustody(){
+ const metadata={name:'@umf/core',exports:{'.':{node:`./${SDK_SAGA_NODE_ENTRY}`,browser:`./${SDK_SAGA_BROWSER_ENTRY}`}}};
+ const members=Object.fromEntries(SDK_SAGA_MEMBERS.map(path=>[`package/${path}`,{size:10,sha256:'a'.repeat(64)}]));
+ const manifest={sha256:Object.fromEntries(SDK_SAGA_MEMBERS.filter(path=>path.startsWith('dist/')).map(path=>[path,'a'.repeat(64)]))};
+ return {metadata,members,manifest};
+}
+
+test('SDK custody binds the declared current Node/browser entries and native runtime',()=>{
+ const sdk=sdkCustody();expect(()=>verifySdkMemberCustody(sdk.metadata,sdk.manifest,sdk.members)).not.toThrow();
+ delete sdk.members['package/dist/umf_core_node.node'];
+ expect(()=>verifySdkMemberCustody(sdk.metadata,sdk.manifest,sdk.members)).toThrow('omits a consumed member');
+});
+
+test('SDK custody refuses retired or redirected public entry points',()=>{
+ for(const field of ['node','browser'] as const){
+  const sdk=sdkCustody();sdk.metadata.exports['.'][field]='./dist/umf.js';
+  expect(()=>verifySdkMemberCustody(sdk.metadata,sdk.manifest,sdk.members)).toThrow('exports do not identify');
+ }
+});
+
+test('SDK custody refuses unbound browser or native runtime bytes',()=>{
+ for(const path of [SDK_SAGA_BROWSER_ENTRY,'dist/umf_core_node.node']){
+  const sdk=sdkCustody();sdk.manifest.sha256[path]='b'.repeat(64);
+  expect(()=>verifySdkMemberCustody(sdk.metadata,sdk.manifest,sdk.members)).toThrow('does not bind consumed runtime member');
+ }
+});
 
 const cases=[{id:'ordered',covers:[1,2,3,4,5,6,7,8]},{id:'unknown',covers:[9,10,11,12,13,14,15,16]}];
 async function makeCohort(){

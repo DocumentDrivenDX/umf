@@ -3,7 +3,7 @@ import {mkdir,mkdtemp,readFile,rm} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
-import {capturePortableProducerSnapshot,sha256File,SDK_SAGA_MEMBERS,verifyPortableProducerSnapshot} from './saga-portable/custody';
+import {capturePortableProducerSnapshot,sha256File,SDK_SAGA_MEMBERS,SDK_SAGA_NODE_ENTRY,verifySdkMemberCustody,verifyPortableProducerSnapshot} from './saga-portable/custody';
 // Set UMF_SDK_INSTALL_RETAIN_DIR only when a later installed-entry probe needs
 // this exact consumer and its archive-to-installed-member custody receipt.
 const retainedDirectory=process.env.UMF_SDK_INSTALL_RETAIN_DIR?resolve(process.env.UMF_SDK_INSTALL_RETAIN_DIR):undefined;
@@ -48,6 +48,7 @@ try{
  })));
  const installedMemberPaths=Object.fromEntries(Object.keys(installedDigests).map(name=>[name,join(packageRoot,name.replace(/^package\//,''))]));
  const installedManifest=JSON.parse(installedManifestBytes.toString('utf8'));
+ verifySdkMemberCustody(installedMetadata,installedManifest,installedDigests);
  for(const [name,actual] of Object.entries(installedDigests) as [string,{size:number;sha256:string}][]){
   const expected=archiveMembers[name];
   if(!expected||actual.size!==expected.size||actual.sha256!==expected.sha256)throw Error('Installed SDK member differs from exact candidate archive: '+name);
@@ -143,7 +144,7 @@ console.log(JSON.stringify({installedSagaRuntime:true,sharedWasm:true,publicFaca
  if(retainedDirectory){
   const receipt={profile:'umf.sdk-installed-archive-custody/2',archivePath:archive,archiveSha256:sourceSnapshot.artifacts.sdkArchive,
    installCommand:[process.execPath,'install','--ignore-scripts',archive],installedPackageRoot:packageRoot,
-   exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256['dist/umf-node.js'],
+   exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256[SDK_SAGA_NODE_ENTRY],
    sdkManifestSha256:sha256(installedManifestBytes),installerSourceSha256,
    sagaCorpusSha256:sha256(await readFile(join(directory,'saga-vectors.json'))),
    sagaOracleSha256:sha256(await readFile(join(directory,'saga-oracle.js'))),
