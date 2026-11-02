@@ -57,6 +57,10 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: '1.4.2'
+      - name: Build native core required by domain schema graph checks
+        run: |
+          cargo build --locked --release -p umf-core-node --features umf-core-node/native-postgresql
+          cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
       - name: Verify medical family artifacts
         run: |
           bun scripts/build-medical-subpacks.ts --check

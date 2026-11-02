@@ -151,3 +151,13 @@ Chromium checks; and all ten action-guide pages at 1440 and 390 pixels, with zer
 external requests or page errors. These checks do not yet claim successful
 publication or deployment. The full source-bound package/browser qualification
 and public receipt will establish those later milestones.
+
+The integrated source-bound package assembled with Bun 1.4.2 and verified all
+113 packaged files without unresolved generated-source inventory entries.
+Strict-CSP Chromium embedding then passed 96 checks plus the installed no-build
+example. WASM initialization exposed early-click/file-upload races: controls now
+remain disabled until initialization is ready, and standalone file qualification
+waits for the actual initialized control. The deployment workflow builds the
+native binding required by current domain schema graph tests. Reference API
+extraction explicitly maps the newly declared `./runtime/wasm` entrypoint to its
+binding declarations, retaining unassessed runtime support status.
