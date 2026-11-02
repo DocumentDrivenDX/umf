@@ -30,135 +30,110 @@ ddx:
 
 ## Objective and decisions
 
-Implement UMF-owned executable semantics once in Rust. The Rust library and CLI,
-native Python, Node/Bun and browser WebAssembly interfaces call that implementation.
-Wrappers admit host values, transport explicit capabilities and present results;
-they do not contain a second UMF interpreter. ADR-006, the PRD, cross-cutting
-requirements, architecture, TP-001 and the affected contracts govern behavior.
+UMF-owned executable semantics have one Rust owner. The Rust library, native CLI,
+Python extension, Node/Bun addon and browser WebAssembly interfaces execute that
+implementation. Wrappers admit host values, transport explicit capabilities and
+present results. ADR-006, the PRD, cross-cutting requirements, architecture, TP-001
+and the affected contracts govern behavior.
 
-Core stays at 0.10.0. SDK 0.10.2, Python 0.10.6 and the Rust source/CLI
-ship together in one GitHub release, `umf-rust-v0.1.0`, subject to any newer
-release on main. Rust
-crates remain `publish = false`; distribute the source library and built CLI
-without claiming crates.io publication. Preserve exact native values, unknown
-content, functional receipts and integrity checks needed by current APIs. Historical
-qualification reports and retirement ledgers are not release gates.
+Core documents remain at 0.10.0. Rust/CLI 0.1.0, SDK 0.10.2 and Python 0.10.6 ship
+together under `umf-rust-v0.1.0`. Preserve native values, unknown content, receipts,
+resource controls and caller capabilities required by the current APIs.
 
-Use the existing `codex/rust-full-port` worktree. Luna agents implement and test
-independent capabilities in parallel. Sol plans, reviews and integrates their
-source cuts. One expensive native/browser build or test job runs at a time;
-source implementation continues while that slot is occupied. Preserve user `.tmp/`.
-Run CI locally and publish release assets directly; do not wait for GitHub Actions.
+## Implementation
+
+Rust owns core/model/registry operations; native formats and schema adapters;
+RDF, JSON-LD, SHACL and OWL; TypeSpec and Smithy compiler routes; authored targets
+and core-ideal classifiers; binding, DDD and physical SQL projections; Bit128,
+medical and dataset operations; Actions, plans, Saga and security; dashboard,
+catalog, lifecycle, inventory and migration operations; row scope, digests and
+reports; Arrow, Parquet, Delta, Protobuf and Relationship Extra archive import.
+
+Public Node and browser roots route callable operations and validation to Rust.
+Python calls the native extension and bundled Rust CLI without a JavaScript
+subprocess. The default SDK excludes retired reference/candidate executable
+exports and drivers. Required schemas, metamodel programs and runtime resources
+are packaged explicitly, with current versions and dependent pins aligned.
+
+Host resource registration, explicit compiler/worker factories and pointer
+formatting remain host responsibilities. Callback identity, order and configured
+controls are retained. Each Rust operation uses its passed Context; a Context
+object does not cross the JavaScript boundary.
 
 ## Implementation and test discipline
 
-Give each lane a concrete public operation, its existing contract and one ordinary
-normal/refusal workflow, including recovery where relevant. Compile actual affected
-Rust host libraries before an optimized native build. Batch source-ready independent
-capabilities into one build. A passing case leaves the repair queue unless its
-behavior or dependency changes. Repair actual failures, not hypothetical edge cases.
-Do not expand fixtures into conformance campaigns or run old passing matrices after
-each change. Source review and compilation do not substitute for executing the
-specific new public capability.
+Luna agents implement and test independent capabilities in parallel; Sol plans,
+reviews and integrates their source cuts. Give each capability a concrete public
+operation and an ordinary normal/refusal workflow, with recovery where relevant.
+Repair observed failures and rerun affected workflows. A passing capability stays
+closed unless its implementation or dependencies change. Batch native compilation
+and retain incremental build outputs. Preserve user `.tmp/`.
 
-## Current implementation
+All testing and CI work runs locally. Do not wait for GitHub Actions or dispatch
+publication builds. Publish the locally tested binaries directly.
 
-The following families have Rust owners and passing focused public workflows:
+## Completed verification
 
-- Core/model/registry operations; native formats and schema adapters; RDF,
-  JSON-LD, SHACL/OWL; TypeSpec and Smithy compiler capability routes.
-- All core-ideal classifiers for Avro, Parquet, SQL Server, TableSpec and
-  PostgreSQL, with verification and available native/source recovery.
-- Authored Field/Record, Cardinality/Nullability, Keys/Facets and Relationship
-  targets for those formats; Extra Relationship GraphQL/RDF/LinkML projections.
-- Binding target/index composition, DDD projections, physical SQL composers,
-  Bit128 carrier/model/file operations, medical operations and dataset examples.
-- Actions, prepared plans, manifests, selectors, rules and bulk outcomes; Saga
-  authoring/assessment; security policy, evaluation, authority and disclosure.
-- Dashboard, catalog, table lifecycle, table inventory/migration compilers,
-  row-scope and canonical digest operations.
-- Common classification/projection reports; Arrow IPC inspection/consistency
-  and embedded Parquet Arrow reading; Delta checkpoint reconciliation,
-  Protobuf descriptor editing and Relationship Extra archive import.
+Focused Rust capability baselines and the affected public integration workflows
+pass. Source checks pass for generated resources, TypeScript, compile and import
+boundaries, strict whole-source access policy with negative controls, Rust core
+authority, coupled release versions and SDK packaging.
 
-PostgreSQL authored Keys/Facets now also passes the pure native Rust projection,
-recovery and refusal workflow without JavaScript parser values. The latest public
-batch passes six cases across five independent capabilities: PostgreSQL Keys and
-Facets, Delta checkpoint reconciliation, Protobuf descriptor edit and Relationship
-Extra import. These cases are closed for implementation repair testing.
+An independent Cargo consumer builds from the source archive with locked offline
+dependencies and executes RDF and GraphQL exact round trips plus native PostgreSQL
+import/export/reparse. The macOS CLI parses an ordinary YAML document with an
+empty PATH and returns the expected tagged document.
 
-Native Arrow schema export, IPC rename and coordinated Parquet/Arrow rename now
-pass their ordinary public workflows, including explicit encoder use, retained
-source, recovery/refusal and unchanged-data checks. Arrow observation and all ten
-registry factories use native package/core validation and Rust payload owners;
-their focused cases pass. Public document validation always invokes Rust even
-with explicitly supplied legacy Registry storage. Both affected Action callback
-cases pass, including retention of caller and non-Action semantic owners.
+The macOS SDK archive SHA-256 is
+`785de2c4db18b030c9462c7f55f52d012db50a4d4b3c608a4dc3aa6f5fa0d39b`.
+Its fixed-point source closure is
+`f7261a691247692a1ac18b7a2072ae879e99d9216c7f5661dd422ef18984b68c`.
+The installed archive passes ordinary document validation/read/write/refusal,
+OpenAPI round trip and Avro projection/recovery workflows in Node 26.12.1,
+Bun 1.4.3 and Chromium 153. The browser runs without Node globals.
 
-## Implementation closure
+Python 0.10.6 current wheel and sdist exact-source integrity checks pass. The
+installed macOS ABI3 wheel passes its public consumer on CPython 3.14.8 with
+JavaScript absent from PATH, including PostgreSQL edit/export/reparse and refusal.
+The completed source-distribution native rebuild and installed rebuilt-wheel
+consumer also pass; the final archive retains the verified native build inputs.
+macOS native builds consistently target macOS 11.0 on arm64.
 
-Sol's final targeted source review confirms that the eleven identified public
-callables and shared validation fallback are closed in both Node and browser
-roots. The generated default barrel no longer reexports their legacy callables.
-The final seven new/repaired cases pass, along with the two affected Action cases;
-the last Arrow registry fix only corrected host forwarding and reused the compiled
-Rust payload route. Actual Rust host-library compilation, TypeScript and source
-resource closure pass. Passing capability cases are out of the repair queue.
+The Linux x86_64 ABI3 wheel passes exact installed-file verification and the
+ordinary public/native PostgreSQL consumer on CPython 3.11.17, 3.12.15 and 3.13.16,
+with JavaScript absent from PATH. Its SHA-256 is
+`9a4fc6e739fb9c0c80e22916490484fb41b6f00985afc53fb81dcca2d72029b9`.
+The Linux CLI passes the same empty-PATH YAML workflow as macOS.
 
-Host-only resource copying/registration, explicit Smithy compiler/worker factories
-and pointer formatting remain host boundaries. Generic Registry storage does not
-import ecosystem semantics. Caller callback identity/order and configured controls
-are preserved through the existing bridge. Each Rust operation uses its passed
-Context; one literal Context does not cross the JavaScript boundary.
+The Linux SDK archive SHA-256 is
+`0e210969dc6d585d73b0e70d35660421b40c141746389118f7181c54bfcff943`.
+Assembly retains the same fixed-point source closure and 2,063 unchanged common
+assets, with the Linux native addon and recorded build provenance. The installed
+archive passes the document, OpenAPI and Avro workflows on Node 26.12.1 and
+Bun 1.4.3 in the cached Linux x86_64 runtime.
 
-Rust library/CLI capability tests and the affected ordinary integration cases pass.
-The SHACL implementation now handles family target extraction, per-value nested
-logical constraints, nested sequence paths, deactivated shapes and regex flags.
-Current fixtures retain exact source metadata, bytes, unknown content and actual
-framing options; the final framing and affected SHACL wire checks pass. Generated
-resources, TypeScript, source/import boundaries, negative controls, release versions
-and SDK packaging checks also pass.
-
-Installed artifact checks and publication below remain. Publication closes the goal.
+Sol has reviewed the implementation, host routing, source/resource closure and
+release preparation and the completed Linux artifact results.
 
 ## Integration and release
 
-Release preparation and verification:
+Refresh main before integrating PR61. Preserve tested artifact inputs; account for
+actual incoming source changes without reopening unrelated passing capabilities.
+Publish one [umf-rust-v0.1.0 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-rust-v0.1.0)
+containing the Rust source library, macOS arm64 and Linux x86_64 CLI archives,
+matching SDK archives, two Python ABI3 wheels, the Python sdist and SHA256SUMS.
+Bind the Rust source archive and tag to the merged revision. Retain native build
+provenance and the SDK archive verifier's source and member integrity checks.
 
-1. Retire public reference/candidate executable exports and SDK bundles. Update
-   coupled SDK/Python versions and dependent pins while retaining current archive
-   integrity and functional receipt behavior. Refresh main and integrate incoming work.
-2. Run source boundaries, TypeScript, generated sources, resource closure and
-   ordinary release-version/packaging checks for the completed source.
-3. Run shipping Rust library/CLI tests and ordinary capability baselines, including
-   the native PostgreSQL bridge and an independent Rust consumer. Retain completed
-   results and retry actual failures or affected portions. Full predecessor parity
-   campaigns are excluded from release acceptance; an interrupted unfiltered run
-   is never reported as a full-suite pass.
-4. Build the source SDK once from a fresh private source snapshot. Reuse its actual
-   native and WASM artifacts for installed Node/Bun and real Chromium ordinary
-   public workflows. Build the Linux addon in the existing Linux wheel/CLI Cargo
-   graph and assemble a separate Linux SDK from identical common assets. Verify
-   the same fixed-point source inputs, retain both build provenances and use the
-   unchanged archive verifier. Test public package entry points and explicit caller
-   capabilities; do not reopen the historical Bun edge corpus.
-5. Build and install the native Python wheel and sdist; run ordinary public API
-   workflows with JavaScript absent from PATH. Check the supported CPython
-   versions using the approved cached local Linux images. Fresh macOS C and Rust
-   release builds use `MACOSX_DEPLOYMENT_TARGET=11.0` consistently.
-6. Obtain Sol's final review, refresh main, update PR61 with the actual resulting
-   implementation and local validation, merge, and publish the complete source,
-   SDK, Python and native CLI assets in the single Rust GitHub release directly.
-   Use the existing Rust-tag dispatcher exclusion to avoid Actions publication.
-   No PyPI or crates.io publication is claimed. Verify published revision,
-   assets and installed consumers. Do not publish a partial port or overwrite an
-   existing release.
+Use the Rust-tag dispatcher exclusions; do not run GitHub Actions. Verify the
+published revision, exact asset roster and downloaded checksums. The distributed
+Rust crates retain `publish = false`.
 
 ## Acceptance
 
 Every UMF-owned executable operation exposed by the current public interfaces has
-a Rust owner and passes its capability baseline. Supported library, CLI, Python,
-Node/Bun and browser entry points execute that owner, preserving current meaning,
-unknown content, caller callbacks and controls. Shipping Rust and final installed-host
-checks pass, review is resolved, main is integrated, and the released artifacts
-contain the completed port. The goal stays active until publication and verification.
+a Rust owner and passes its capability baseline. Library, CLI, Python, Node/Bun and
+browser entry points execute that owner while preserving current meaning, unknown
+content, caller callbacks and controls. Installed artifact checks pass, review is
+resolved, main is integrated, and the published artifacts contain the completed
+port. Publication and verification close the goal.
