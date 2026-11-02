@@ -684,7 +684,7 @@ export declare function createJsonSchemaEngine(options?: {profile?: 'cooperative
 export declare function createPreparedJsonSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): JsonSchemaEngine;
 
 export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage?: unknown}
-export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'inspectTableLifecycle' | 'inspectTableLifecyclePayload' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'compileTableInventoryMigration' | 'discoverTableInventoryMigrationChanges' | 'verifyTableInventoryMigration' | 'serializeTableInventoryMigration' | 'irreversiblePurgeDisclosure' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
+export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'inspectTableLifecycle' | 'inspectTableLifecyclePayload' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'compileTableInventoryMigration' | 'discoverTableInventoryMigrationChanges' | 'verifyTableInventoryMigration' | 'serializeTableInventoryMigration' | 'irreversiblePurgeDisclosure' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'inspectAccessViews' | 'generateAccessPackage' | 'diffAccessPackages';
 export type UmfCodegenOutcome = {ok: true; result: unknown} | {ok: false; error: {code: string; message: string; path?: string; pointer?: string}};
 export type UmfCodegenHostReadEventV3 = 'InitialPackage' | 'ParseText' | 'ParseFormat' | 'DigestText' | 'SelectRecords' | 'NativeFormat' | 'SelectActions' | 'OutputPackageSuffix' | 'OutputSourceText';
 export interface UmfCodegenEngine {
@@ -724,6 +724,7 @@ export interface UmfCodegenEngine {
   normalizeRowScope(input: unknown, context: unknown): unknown;
   prepareRowScope(input: unknown, context: unknown): unknown;
   completeRowScope(input: unknown, context: unknown, prepared: unknown, admitPolicyDiagnostics: unknown): unknown;
+  inspectAccessViews(document: unknown, selected: readonly {module: string; element: string}[], bindings?: readonly {sourceId: string; document: unknown}[], sourceId?: string): {records: unknown[]; diagnostics: unknown[]};
   generateAccessPackage(request: unknown, profile: unknown): unknown;
   diffAccessPackages(before: unknown, after: unknown): unknown;
 }

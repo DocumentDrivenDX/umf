@@ -1996,6 +1996,7 @@ export function createCodegenEngine(resources, options = {}) {
     normalizeRowScope(input, context) { return result('normalizeRowScope', {input, context}); },
     prepareRowScope(input, context) { return result('prepareRowScope', {input, context}); },
     completeRowScope(input, context, prepared, admitPolicyDiagnostics) { return result('completeRowScope', {request: {input, context}, prepared, admitPolicyDiagnostics}); },
+    inspectAccessViews(document, selected, bindings = [], sourceId = 'logical') { return result('inspectAccessViews', {document, selected, bindings, sourceId}); },
     generateAccessPackage(request, profile) { return result('generateAccessPackage', {request, profile}); },
     diffAccessPackages(before, after) { return result('diffAccessPackages', {before, after}); },
   });
@@ -2092,6 +2093,7 @@ export function createRetainedCodegenEngine(resources, options = {}) {
     normalizeRowScope(input, context) { return result('normalizeRowScope', {input, context}); },
     prepareRowScope(input, context) { return result('prepareRowScope', {input, context}); },
     completeRowScope(input, context, prepared, admitPolicyDiagnostics) { return result('completeRowScope', {request: {input, context}, prepared, admitPolicyDiagnostics}); },
+    inspectAccessViews(document, selected, bindings = [], sourceId = 'logical') { return result('inspectAccessViews', {document, selected, bindings, sourceId}); },
     generateAccessPackage(request, profile) { return result('generateAccessPackage', {request, profile}); },
     diffAccessPackages(before, after) { return result('diffAccessPackages', {before, after}); },
   });
