@@ -1,0 +1,164 @@
+{
+  "profile": "umf.site.lini-presentation/1",
+  "rendererPackage": {
+    "name": "@documentdrivendx/umf-visual",
+    "version": "0.5.0",
+    "entrySha256": "3502f2ca6ac802f0c3db513b18455362536179178c388446a4e3d0ea736d2f2f"
+  },
+  "document": {
+    "umf": "0.10.0",
+    "id": "visual:schema-interchange-fabric",
+    "vocabularies": {
+      "umf.visual": {
+        "version": "1.3.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.visual": {
+        "id": "schema-interchange-fabric",
+        "kind": "structure",
+        "form": "stack",
+        "title": "Schema interchange fabric",
+        "question": "How does metadata travel from models to tools?",
+        "nodes": [
+          {
+            "id": "native",
+            "label": "Native schema",
+            "layer": "producers"
+          },
+          {
+            "id": "authored",
+            "label": "Authored model",
+            "layer": "producers"
+          },
+          {
+            "id": "umf",
+            "label": "UMF",
+            "detail": "Common metadata + native details",
+            "layer": "metadata"
+          },
+          {
+            "id": "generators",
+            "label": "Generators",
+            "layer": "consumers"
+          },
+          {
+            "id": "forms",
+            "label": "Forms",
+            "layer": "consumers"
+          },
+          {
+            "id": "ai",
+            "label": "AI context",
+            "layer": "consumers"
+          }
+        ],
+        "structure": {
+          "layers": [
+            {
+              "id": "producers",
+              "label": "Source models"
+            },
+            {
+              "id": "metadata",
+              "label": "Portable metadata"
+            },
+            {
+              "id": "consumers",
+              "label": "Metadata consumers"
+            }
+          ]
+        },
+        "takeaway": "Tools read the metadata they need. Support varies by format and operation."
+      }
+    }
+  },
+  "nativeVersion": "1.1.0",
+  "elementMap": [
+    {
+      "logicalId": "schema-interchange-fabric",
+      "sourcePath": "/extensions/umf.visual/id",
+      "nativeId": "visual",
+      "kind": "visual"
+    },
+    {
+      "logicalId": "producers",
+      "sourcePath": "/extensions/umf.visual/structure/layers/0",
+      "nativeId": "l1",
+      "kind": "layer"
+    },
+    {
+      "logicalId": "metadata",
+      "sourcePath": "/extensions/umf.visual/structure/layers/1",
+      "nativeId": "l2",
+      "kind": "layer"
+    },
+    {
+      "logicalId": "consumers",
+      "sourcePath": "/extensions/umf.visual/structure/layers/2",
+      "nativeId": "l3",
+      "kind": "layer"
+    },
+    {
+      "logicalId": "native",
+      "sourcePath": "/extensions/umf.visual/nodes/0/id",
+      "nativeId": "n1",
+      "kind": "node"
+    },
+    {
+      "logicalId": "authored",
+      "sourcePath": "/extensions/umf.visual/nodes/1/id",
+      "nativeId": "n2",
+      "kind": "node"
+    },
+    {
+      "logicalId": "umf",
+      "sourcePath": "/extensions/umf.visual/nodes/2/id",
+      "nativeId": "n3",
+      "kind": "node"
+    },
+    {
+      "logicalId": "generators",
+      "sourcePath": "/extensions/umf.visual/nodes/3/id",
+      "nativeId": "n4",
+      "kind": "node"
+    },
+    {
+      "logicalId": "forms",
+      "sourcePath": "/extensions/umf.visual/nodes/4/id",
+      "nativeId": "n5",
+      "kind": "node"
+    },
+    {
+      "logicalId": "ai",
+      "sourcePath": "/extensions/umf.visual/nodes/5/id",
+      "nativeId": "n6",
+      "kind": "node"
+    }
+  ],
+  "omissions": [
+    {
+      "sourcePath": "/extensions/umf.visual/question",
+      "reason": "The reader question remains in the UMF document; Lini displays the concise title in the native diagram frame."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/takeaway",
+      "reason": "Takeaway remains in the definition source and is not drawn as diagram content."
+    }
+  ],
+  "approximations": [
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/2/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/structure/layers",
+      "requested": "Layer order",
+      "representation": "Lini native one-column layout follows authored layer order from top to bottom."
+    }
+  ],
+  "nativeSource": "{\n  --lini-font-family: Arial;\n  .lini-block { font-family: Arial; }\n  .lini-caption { translate: 0 -30; font-scale: 14 16; }\n}\n|group#visual| \"Schema interchange fabric\" { layout: grid; columns: repeat(1); gap: 44; padding: 36; fill: none; stroke: none; stroke-width: 0; } [\n  |group#l1| \"Source models\" { layout: grid; columns: repeat(1); gap: 24; padding: 22; fill: --gray-wash; stroke: --gray-deep; color: --gray-deep; stroke-width: 1; } [\n    |box#n1| \"Native schema\" { width: 240; }\n    |box#n2| \"Authored model\" { width: 240; }\n  ]\n  |group#l2| \"Portable metadata\" { layout: grid; columns: repeat(1); gap: 24; padding: 22; fill: --gray-wash; stroke: --gray-deep; color: --gray-deep; stroke-width: 1; } [\n    |box#n3| \"UMF\" { width: 240; } [\n      |cell#detail| \"Common metadata + native details\"\n    ]\n  ]\n  |group#l3| \"Metadata consumers\" { layout: grid; columns: repeat(1); gap: 24; padding: 22; fill: --gray-wash; stroke: --gray-deep; color: --gray-deep; stroke-width: 1; } [\n    |box#n4| \"Generators\" { width: 240; }\n    |box#n5| \"Forms\" { width: 240; }\n    |box#n6| \"AI context\" { width: 240; }\n  ]\n]\n",
+  "svgSha256": "d4429e0d209f201bff8a4f3c80a25248246ca82e255668ae17a61e106a2d0b60"
+}

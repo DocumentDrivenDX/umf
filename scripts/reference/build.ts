@@ -61,6 +61,14 @@ try{
  for(const path of [...await paths('spec/**/LICENSE*'),...await paths('spec/**/NOTICE*'),...await paths('LICENSE*')]){const s=await source(path,false);await Bun.write(join(stage,'licenses',s.sha256+'-'+path.split('/').at(-1)),await Bun.file(resolve(root,path)).bytes());}
  const ui=await Bun.build({entrypoints:[resolve(root,'docs/helix/05-deploy/microsite/reference/index.ts')],target:'browser',format:'esm',minify:true,metafile:true,plugins:[{name:'verified-renderer-package',setup(build){build.onResolve({filter:/^@documentdrivendx\/umf-schema-browser$/},()=>({path:resolve(root,renderer.path,'index.js')}));}}]});if(!ui.success)throw Error(ui.logs.join('\n'));const uiInputs=Object.keys((typeof ui.metafile==='string'?JSON.parse(ui.metafile):ui.metafile as any).inputs).map(path=>resolve(root,path));if(!uiInputs.includes(resolve(root,renderer.path,'index.js')))throw Error('REFERENCE_RENDERER canonical host did not compile the verified package entry');await Bun.write(join(stage,'assets/reference.js'),await ui.outputs[0]!.text());
  await Bun.write(join(stage,'THIRD_PARTY_NOTICES.md'),await thirdPartyNotices(root,[...runtimeInputs,...uiInputs,...(renderer.preview?[]:[renderer.path+'/index.js'])])+(renderer.preview?'\n'+await text(renderer.path+'/THIRD_PARTY_NOTICES.md'):''));
+ // Renderer-owned worker and native assets stay byte-identical to the verified
+ // package. Relative URLs continue to work after the public API is bundled.
+ for(const name of ['umf_core_wasm.js','umf_core_wasm_bg.wasm','visual-worker.js','lini/lini_wasm.js','lini/lini_wasm_bg.wasm','lini/runtime-manifest.json','lini/LICENSE','lini/licenses/manifest.json','lini/licenses/google-sans.txt','lini/licenses/google-sans-code.txt','lini/licenses/phosphor.txt']){
+  const path=renderer.path+'/'+name;
+  if(!await Bun.file(resolve(root,path)).exists()){if(renderer.preview)throw Error('REFERENCE_RENDERER missing visual runtime '+name);continue;}
+  await source(path,false);
+  await Bun.write(join(stage,'assets',name),await Bun.file(resolve(root,path)).bytes());
+ }
  await Bun.write(join(stage,'assets/reference.css'),await text(renderer.path+'/assets/components.css')+'\n'+await text('docs/helix/05-deploy/microsite/reference/style.css'));
  for(const path of uiInputs)await source(relative(root,path).replaceAll('\\','/'),false);
  await source(renderer.path+'/assets/components.css',false);

@@ -1,0 +1,241 @@
+{
+  "profile": "umf.site.lini-presentation/1",
+  "rendererPackage": {
+    "name": "@documentdrivendx/umf-visual",
+    "version": "0.5.0",
+    "entrySha256": "3502f2ca6ac802f0c3db513b18455362536179178c388446a4e3d0ea736d2f2f"
+  },
+  "document": {
+    "umf": "0.10.0",
+    "id": "visual:actions-retry",
+    "vocabularies": {
+      "umf.visual": {
+        "version": "1.3.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.visual": {
+        "id": "actions-retry",
+        "kind": "flow",
+        "form": "network",
+        "title": "V5 · When a response is lost",
+        "question": "When a response is lost",
+        "source": {
+          "path": "docs/helix/04-build/guides/actions/diagrams/source.json",
+          "view": "retry"
+        },
+        "layout": {
+          "kind": "grid",
+          "columns": 1,
+          "order": [
+            "panel-1",
+            "panel-2",
+            "panel-3",
+            "panel-4",
+            "panel-5"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "panel-1",
+            "label": "Client → consumer",
+            "detail": "Send original token, revision, typed\ninputs and expected versions. Trusted\ncontext supplies actor identity."
+          },
+          {
+            "id": "panel-2",
+            "label": "Consumer → native store",
+            "detail": "Commit business changes, verification\nand terminal outcome atomically. Then\nthe acknowledgement is lost."
+          },
+          {
+            "id": "panel-3",
+            "label": "Response lost · Client\nknowledge · indeterminate",
+            "detail": "Unknown whether commit occurred.\nTimeout does not prove rollback. Keep\nthe original request; do not mint a\nfresh token."
+          },
+          {
+            "id": "panel-4",
+            "label": "Client → protected lookup",
+            "detail": "Current discovery and original-result\nauthorization gate lookup. Return the\nretained original outcome; lookup\nnever executes."
+          },
+          {
+            "id": "panel-5",
+            "label": "Missing or expired",
+            "detail": "Missing after uncertainty is not\npermission to reexecute. No-key\nrequests lack keyed recovery\nguarantees."
+          }
+        ],
+        "edges": [
+          {
+            "id": "connection-1",
+            "from": "panel-1",
+            "to": "panel-2",
+            "label": "Original request",
+            "directed": true
+          },
+          {
+            "id": "connection-2",
+            "from": "panel-2",
+            "to": "panel-3",
+            "label": "Acknowledgement lost",
+            "directed": true
+          },
+          {
+            "id": "connection-3",
+            "from": "panel-3",
+            "to": "panel-4",
+            "label": "Recover with the original token",
+            "directed": true
+          },
+          {
+            "id": "connection-4",
+            "from": "panel-4",
+            "to": "panel-5",
+            "label": "If missing or expired",
+            "directed": true
+          }
+        ],
+        "omissions": [
+          "This is a concept-map presentation of the original tutorial panels. Original storyboard-specific positions, swimlanes, sequence lifelines, state glyphs and timeline geometry are not reproduced. All authored panel text remains visible and in the source companion."
+        ]
+      }
+    }
+  },
+  "originalSource": {
+    "id": "retry",
+    "figure": "V5",
+    "title": "When a response is lost",
+    "kind": "sequence",
+    "panels": [
+      {
+        "title": "Client → consumer",
+        "text": "Send original token, revision, typed inputs and expected versions. Trusted context supplies actor identity."
+      },
+      {
+        "title": "Consumer → native store",
+        "text": "Commit business changes, verification and terminal outcome atomically. Then the acknowledgement is lost."
+      },
+      {
+        "title": "Client knowledge · indeterminate",
+        "text": "Unknown whether commit occurred. Timeout does not prove rollback. Keep the original request; do not mint a fresh token."
+      },
+      {
+        "title": "Client → protected lookup",
+        "text": "Current discovery and original-result authorization gate lookup. Return the retained original outcome; lookup never executes."
+      },
+      {
+        "title": "Missing or expired",
+        "text": "Missing after uncertainty is not permission to reexecute. No-key requests lack keyed recovery guarantees."
+      }
+    ]
+  },
+  "nativeVersion": "1.1.0",
+  "elementMap": [
+    {
+      "logicalId": "actions-retry",
+      "sourcePath": "/extensions/umf.visual/id",
+      "nativeId": "visual",
+      "kind": "visual"
+    },
+    {
+      "logicalId": "panel-1",
+      "sourcePath": "/extensions/umf.visual/nodes/0/id",
+      "nativeId": "n1",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-2",
+      "sourcePath": "/extensions/umf.visual/nodes/1/id",
+      "nativeId": "n2",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-3",
+      "sourcePath": "/extensions/umf.visual/nodes/2/id",
+      "nativeId": "n3",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-4",
+      "sourcePath": "/extensions/umf.visual/nodes/3/id",
+      "nativeId": "n4",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-5",
+      "sourcePath": "/extensions/umf.visual/nodes/4/id",
+      "nativeId": "n5",
+      "kind": "node"
+    },
+    {
+      "logicalId": "connection-1",
+      "sourcePath": "/extensions/umf.visual/edges/0",
+      "nativeId": "e1",
+      "kind": "edge"
+    },
+    {
+      "logicalId": "connection-2",
+      "sourcePath": "/extensions/umf.visual/edges/1",
+      "nativeId": "e2",
+      "kind": "edge"
+    },
+    {
+      "logicalId": "connection-3",
+      "sourcePath": "/extensions/umf.visual/edges/2",
+      "nativeId": "e3",
+      "kind": "edge"
+    },
+    {
+      "logicalId": "connection-4",
+      "sourcePath": "/extensions/umf.visual/edges/3",
+      "nativeId": "e4",
+      "kind": "edge"
+    }
+  ],
+  "omissions": [
+    {
+      "sourcePath": "/extensions/umf.visual/question",
+      "reason": "The reader question remains in the UMF document; Lini displays the concise title in the native diagram frame."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/source",
+      "reason": "Source provenance remains in UMF and is not embedded in diagram geometry."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/omissions/0",
+      "reason": "Authored omission inventory remains in UMF and is not drawn."
+    }
+  ],
+  "approximations": [
+    {
+      "sourcePath": "/extensions/umf.visual/layout",
+      "requested": "Grid layout with one column",
+      "representation": "Lini 1.1 represents a one-column grid with native column flow; requested component order and single-column containment are preserved."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/0/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/1/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/2/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/3/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/4/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    }
+  ],
+  "nativeSource": "{\n  --lini-font-family: Arial;\n  .lini-block { font-family: Arial; }\n  .lini-caption { translate: 0 -30; font-scale: 14 16; }\n  .e1 { stroke: --teal-deep; }\n  .e2 { stroke: --teal-deep; }\n  .e3 { stroke: --teal-deep; }\n  .e4 { stroke: --teal-deep; }\n}\n|group#visual| \"V5 · When a response is lost\" { layout: flow; direction: column; gap: 72; padding: 36; fill: none; stroke: none; stroke-width: 0; } [\n  |box#n1| \"Client → consumer\" { width: 240; } [\n    |cell#detail| \"Send original token, revision, typed\\ninputs and expected versions. Trusted\\ncontext supplies actor identity.\"\n  ]\n  |box#n2| \"Consumer → native store\" { width: 240; } [\n    |cell#detail| \"Commit business changes, verification\\nand terminal outcome atomically. Then\\nthe acknowledgement is lost.\"\n  ]\n  |box#n3| \"Response lost · Client\\nknowledge · indeterminate\" { width: 240; } [\n    |cell#detail| \"Unknown whether commit occurred.\\nTimeout does not prove rollback. Keep\\nthe original request; do not mint a\\nfresh token.\"\n  ]\n  |box#n4| \"Client → protected lookup\" { width: 240; } [\n    |cell#detail| \"Current discovery and original-result\\nauthorization gate lookup. Return the\\nretained original outcome; lookup\\nnever executes.\"\n  ]\n  |box#n5| \"Missing or expired\" { width: 240; } [\n    |cell#detail| \"Missing after uncertainty is not\\npermission to reexecute. No-key\\nrequests lack keyed recovery\\nguarantees.\"\n  ]\n  n1 -> n2 \"Original request\" .e1 { along: 0.35; }\n  n2 -> n3 \"Acknowledgement lost\" .e2 { along: 0.5; }\n  n3 -> n4 \"Recover with the original token\" .e3 { along: 0.65; }\n  n4 -> n5 \"If missing or expired\" .e4 { along: 0.35; }\n]\n",
+  "svgSha256": "b87371a8127e7cc4fbf57b7d201257819c3885368596c5fdaf0e3bf474b8573b"
+}

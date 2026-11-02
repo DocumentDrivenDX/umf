@@ -1,0 +1,207 @@
+{
+  "profile": "umf.site.lini-presentation/1",
+  "rendererPackage": {
+    "name": "@documentdrivendx/umf-visual",
+    "version": "0.5.0",
+    "entrySha256": "3502f2ca6ac802f0c3db513b18455362536179178c388446a4e3d0ea736d2f2f"
+  },
+  "document": {
+    "umf": "0.10.0",
+    "id": "visual:actions-handler",
+    "vocabularies": {
+      "umf.visual": {
+        "version": "1.3.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.visual": {
+        "id": "actions-handler",
+        "kind": "flow",
+        "form": "network",
+        "title": "V7 · Bounded handler access",
+        "question": "Bounded handler access",
+        "source": {
+          "path": "docs/helix/04-build/guides/actions/diagrams/source.json",
+          "view": "handler"
+        },
+        "layout": {
+          "kind": "grid",
+          "columns": 1,
+          "order": [
+            "panel-1",
+            "panel-2",
+            "panel-3",
+            "panel-4"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "panel-1",
+            "label": "Isolated handler",
+            "detail": "No raw SQL connection, database\ncredentials, ambient network or broad\nhost mount. Only declared transaction\ncapabilities."
+          },
+          {
+            "id": "panel-2",
+            "label": "Controlled gateway",
+            "detail": "Freeze canonical identities. Check\nevery attempted read/write before\nstorage access. Returning state to its\nold value cannot hide an attempt."
+          },
+          {
+            "id": "panel-3",
+            "label": "Consumer-owned transaction",
+            "detail": "Authorization, native invariant\nchecks, replay ledger and outbox are\ncontrol responsibilities. Their reads\nare not handler permissions."
+          },
+          {
+            "id": "panel-4",
+            "label": "Commit or rollback",
+            "detail": "Verify outputs, constraints, frame and\npostconditions. Failure aborts the\nwhole attempted transaction; no\npartial business outcome."
+          }
+        ],
+        "edges": [
+          {
+            "id": "connection-1",
+            "from": "panel-1",
+            "to": "panel-2",
+            "label": "Bounded authenticated capability RPC",
+            "directed": true
+          },
+          {
+            "id": "connection-2",
+            "from": "panel-2",
+            "to": "panel-3",
+            "label": "Check attempts before storage",
+            "directed": true
+          },
+          {
+            "id": "connection-3",
+            "from": "panel-3",
+            "to": "panel-4",
+            "label": "Verify before commit",
+            "directed": true
+          }
+        ],
+        "omissions": [
+          "This is a concept-map presentation of the original tutorial panels. Original storyboard-specific positions, swimlanes, sequence lifelines, state glyphs and timeline geometry are not reproduced. All authored panel text remains visible and in the source companion."
+        ]
+      }
+    }
+  },
+  "originalSource": {
+    "id": "handler",
+    "figure": "V7",
+    "title": "Bounded handler access",
+    "kind": "boundary",
+    "panels": [
+      {
+        "title": "Isolated handler",
+        "text": "No raw SQL connection, database credentials, ambient network or broad host mount. Only declared transaction capabilities."
+      },
+      {
+        "title": "Controlled gateway",
+        "text": "Freeze canonical identities. Check every attempted read/write before storage access. Returning state to its old value cannot hide an attempt."
+      },
+      {
+        "title": "Consumer-owned transaction",
+        "text": "Authorization, native invariant checks, replay ledger and outbox are control responsibilities. Their reads are not handler permissions."
+      },
+      {
+        "title": "Commit or rollback",
+        "text": "Verify outputs, constraints, frame and postconditions. Failure aborts the whole attempted transaction; no partial business outcome."
+      }
+    ]
+  },
+  "nativeVersion": "1.1.0",
+  "elementMap": [
+    {
+      "logicalId": "actions-handler",
+      "sourcePath": "/extensions/umf.visual/id",
+      "nativeId": "visual",
+      "kind": "visual"
+    },
+    {
+      "logicalId": "panel-1",
+      "sourcePath": "/extensions/umf.visual/nodes/0/id",
+      "nativeId": "n1",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-2",
+      "sourcePath": "/extensions/umf.visual/nodes/1/id",
+      "nativeId": "n2",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-3",
+      "sourcePath": "/extensions/umf.visual/nodes/2/id",
+      "nativeId": "n3",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-4",
+      "sourcePath": "/extensions/umf.visual/nodes/3/id",
+      "nativeId": "n4",
+      "kind": "node"
+    },
+    {
+      "logicalId": "connection-1",
+      "sourcePath": "/extensions/umf.visual/edges/0",
+      "nativeId": "e1",
+      "kind": "edge"
+    },
+    {
+      "logicalId": "connection-2",
+      "sourcePath": "/extensions/umf.visual/edges/1",
+      "nativeId": "e2",
+      "kind": "edge"
+    },
+    {
+      "logicalId": "connection-3",
+      "sourcePath": "/extensions/umf.visual/edges/2",
+      "nativeId": "e3",
+      "kind": "edge"
+    }
+  ],
+  "omissions": [
+    {
+      "sourcePath": "/extensions/umf.visual/question",
+      "reason": "The reader question remains in the UMF document; Lini displays the concise title in the native diagram frame."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/source",
+      "reason": "Source provenance remains in UMF and is not embedded in diagram geometry."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/omissions/0",
+      "reason": "Authored omission inventory remains in UMF and is not drawn."
+    }
+  ],
+  "approximations": [
+    {
+      "sourcePath": "/extensions/umf.visual/layout",
+      "requested": "Grid layout with one column",
+      "representation": "Lini 1.1 represents a one-column grid with native column flow; requested component order and single-column containment are preserved."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/0/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/1/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/2/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/3/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    }
+  ],
+  "nativeSource": "{\n  --lini-font-family: Arial;\n  .lini-block { font-family: Arial; }\n  .lini-caption { translate: 0 -30; font-scale: 14 16; }\n  .e1 { stroke: --teal-deep; }\n  .e2 { stroke: --teal-deep; }\n  .e3 { stroke: --teal-deep; }\n}\n|group#visual| \"V7 · Bounded handler access\" { layout: flow; direction: column; gap: 72; padding: 36; fill: none; stroke: none; stroke-width: 0; } [\n  |box#n1| \"Isolated handler\" { width: 240; } [\n    |cell#detail| \"No raw SQL connection, database\\ncredentials, ambient network or broad\\nhost mount. Only declared transaction\\ncapabilities.\"\n  ]\n  |box#n2| \"Controlled gateway\" { width: 240; } [\n    |cell#detail| \"Freeze canonical identities. Check\\nevery attempted read/write before\\nstorage access. Returning state to its\\nold value cannot hide an attempt.\"\n  ]\n  |box#n3| \"Consumer-owned transaction\" { width: 240; } [\n    |cell#detail| \"Authorization, native invariant\\nchecks, replay ledger and outbox are\\ncontrol responsibilities. Their reads\\nare not handler permissions.\"\n  ]\n  |box#n4| \"Commit or rollback\" { width: 240; } [\n    |cell#detail| \"Verify outputs, constraints, frame and\\npostconditions. Failure aborts the\\nwhole attempted transaction; no\\npartial business outcome.\"\n  ]\n  n1 -> n2 \"Bounded authenticated capability RPC\" .e1 { along: 0.35; }\n  n2 -> n3 \"Check attempts before storage\" .e2 { along: 0.5; }\n  n3 -> n4 \"Verify before commit\" .e3 { along: 0.65; }\n]\n",
+  "svgSha256": "7bd8ad0858bcb6cc556a5138c5267e84b84b395be401f25082e8972ee7d6fae2"
+}

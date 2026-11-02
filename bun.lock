@@ -38,6 +38,7 @@
       "devDependencies": {
         "@dagrejs/dagre": "3.1.1",
         "@documentdrivendx/umf-schema-browser": "2.0.0",
+        "@documentdrivendx/umf-visual": "https://github.com/DocumentDrivenDX/umf-visual/releases/download/v0.5.0/documentdrivendx-umf-visual-0.5.0.tgz",
         "@launchql/protobufjs": "7.2.6",
         "@types/bun": "1.4.2",
         "@types/n3": "1.26.4",
@@ -78,6 +79,8 @@
     "@digitalbazaar/http-client": ["@digitalbazaar/http-client@4.4.0", "", { "dependencies": { "ky": "^1.14.3", "undici": "^6.28.0" } }, "sha512-ODhCGmElUPmR3IR+KZmBNkRAFyjJ01rxvk2E+/qQ2h2EGPJH5k6bz3N24ympGc5+i4YCGk/ipIpmkwc0+iSmRg=="],
 
     "@documentdrivendx/umf-schema-browser": ["@documentdrivendx/umf-schema-browser@2.0.0", "", {}, "sha512-MuCXD6aRu36nss+KXfVinexh/RDiQgoBk7hx6SAEf0AwQViUny5jp3jpeWLcyFTI2xizWbffR1iYMLxzFGMviQ=="],
+
+    "@documentdrivendx/umf-visual": ["@documentdrivendx/umf-visual@https://github.com/DocumentDrivenDX/umf-visual/releases/download/v0.5.0/documentdrivendx-umf-visual-0.5.0.tgz", { "dependencies": { "@umf/core": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.7/umf-sdk.tgz", "fflate": "0.8.2", "saxes": "6.0.0" } }, "sha512-+NqeBcdCDRqCF07KhgeqolG0HufPinbYD+M4NgXEc7e22C10Mnvqu+2OfrxM7acGlo4BCIHah9n53S3W95rxbg=="],
 
     "@inquirer/ansi": ["@inquirer/ansi@2.0.8", "", {}, "sha512-WpQM+Ti6Z40EFwwt+uL2p4UabT+W179zHp6HhLVOzfbwnVn05IPO/eXIZXGNqcT1jbQ15SujNLzQ39k4QPPxBQ=="],
 
@@ -253,6 +256,8 @@
 
     "@typespec/versioning": ["@typespec/versioning@0.86.0", "", { "peerDependencies": { "@typespec/compiler": "^1.16.0" } }, "sha512-/VUgQXSNcwbhNllTKptGAcoxYCh3+E/a9RUcmlBj7v04yIN4rkSFFmxHKRWKuKaz9LYQerXSPrVNM6Ja1msFlw=="],
 
+    "@umf/core": ["@umf/core@https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.7/umf-sdk.tgz", { "dependencies": { "@bufbuild/protobuf": "2.15.0", "@libpg-query/parser": "17.6.10", "@typespec/compiler": "1.16.0", "@typespec/emitter-framework": "0.21.0", "@typespec/events": "0.86.0", "@typespec/graphql": "0.3.0", "@typespec/http": "1.16.0", "@typespec/json-schema": "1.16.0", "@typespec/mutator-framework": "0.17.1", "@typespec/openapi": "1.16.0", "@typespec/openapi3": "1.16.0", "@typespec/protobuf": "0.86.0", "@typespec/rest": "0.86.0", "@typespec/sse": "0.86.0", "@typespec/streams": "0.86.0", "@typespec/versioning": "0.86.0", "ajv": "8.20.0", "ajv-draft-04": "1.0.0", "apache-arrow": "21.2.0", "avsc": "5.7.9", "buffer": "6.0.3", "flatbuffers": "25.9.23", "graphql": "17.0.2", "jsonld": "9.0.0", "n3": "2.7.12", "rdf-literal": "2.0.0", "rdf-validate-shacl": "0.6.5", "util": "0.12.5", "yaml": "2.9.1" } }, "sha512-MG+M2Qb3mueHV8jhLwLPZ3ZSM44j3/hMDcORFEt7XlXbG4vL3JSG7Oe7FmAyRDrgzHRdFeJdxsWpDgvQUsvE4w=="],
+
     "@vocabulary/sh": ["@vocabulary/sh@1.1.6", "", { "peerDependencies": { "@rdfjs/types": "^2.0.0" } }, "sha512-8IfAQoKh57THz8LA2+n1jaY/VC2XaqMNSsJgzBKSSrj20y5PSMAawb6dMsxoLxqDIPBDs1TFRl/9CijUnwbBUA=="],
 
     "@vue/reactivity": ["@vue/reactivity@3.5.43", "", { "dependencies": { "@vue/shared": "3.5.43" } }, "sha512-G/c9GyOZNI2jVaaS6OX1EF1SSFSv7H0ERqNTl4+DTFMlZmB5eVAB53aLQNam/7NL2NPtaDD7RdVrzf8uJzMuOA=="],
@@ -340,6 +345,8 @@
     "fast-uri": ["fast-uri@3.1.8", "", {}, "sha512-GZMtZUTNRpOVIECoXwLNZS5xUGE+mVNbTB8h/7Rwh2TFWcBQiPzTgyZi05BF9UMZKkLJv8XBRJTlU7zg8+ZfMg=="],
 
     "fast-wrap-ansi": ["fast-wrap-ansi@0.2.2", "", { "dependencies": { "fast-string-width": "^3.0.2" } }, "sha512-7F2Fl+TjRSenLqlU3UjSH0iyqopqoZIu7eZVpEirP2g1GtWa2G/ecEmBdgz31+Mxr+ELclgg6sokpSFIQiZ02Q=="],
+
+    "fflate": ["fflate@0.8.2", "", {}, "sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A=="],
 
     "flatbuffers": ["flatbuffers@25.9.23", "", {}, "sha512-MI1qs7Lo4Syw0EOzUl0xjs2lsoeqFku44KpngfIduHBYvzm8h2+7K8YMQh1JtVVVrUvhLpNwqVi4DERegUJhPQ=="],
 
@@ -468,6 +475,8 @@
     "safe-regex-test": ["safe-regex-test@1.1.0", "", { "dependencies": { "call-bound": "^1.0.2", "es-errors": "^1.3.0", "is-regex": "^1.2.1" } }, "sha512-x/+Cz4YrimQxQccJf5mKEbIa1NzeCRNI5Ecl/ekmlYaampdNLPalVyIcCZNNH3MvmqBugV5TMYZXv0ljslUlaw=="],
 
     "safer-buffer": ["safer-buffer@2.1.2", "", {}, "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg=="],
+
+    "saxes": ["saxes@6.0.0", "", { "dependencies": { "xmlchars": "^2.2.0" } }, "sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA=="],
 
     "semver": ["semver@7.8.5", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA=="],
 
