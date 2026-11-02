@@ -115,8 +115,8 @@ export function createSecurityProtectionSourceEngine(module) {
 
 /** Create the Rust-owned Security policy source and V2 representation engine. */
 export function createSecurityPolicySourceEngine(module) {
-  if (typeof module.executeSecurityPolicySourceWire !== 'function') throw new Error('RUST_BINDING_MISSING');
-  return createSecurityPolicySourceEngineWithWire(wire => module.executeSecurityPolicySourceWire(wire), NativeCoreErrorType);
+  if (typeof module?.execute_security_policy_source_wire !== 'function') throw new Error('RUST_BINDING_MISSING');
+  return createSecurityPolicySourceEngineWithWire(wire => module.execute_security_policy_source_wire(wire), NativeCoreErrorType);
 }
 
 /** Create the opt-in Rust engine for bounded protection-query property inspection. */
