@@ -66,4 +66,4 @@ def test_public_pack_tools_rejects_profile_mismatch_as_structured_error():
     request["profile"] = "umf.pack-tools/0"
     with pytest.raises(UmfCoreError) as failure:
         generate_pack_tools(request)
-    assert failure.value.code == "REQUEST"
+    assert failure.value.code == "PACK_TOOLS_PROFILE"

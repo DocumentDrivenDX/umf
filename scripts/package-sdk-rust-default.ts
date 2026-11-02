@@ -83,17 +83,42 @@ async function collectDynamicSourceInputs(baseRoot:string):Promise<string[]>{
   ...await filesUnder(join(baseRoot,'native/tablespec')),
  ])].sort();
 }
+const SNAPSHOT_IO_BATCH=8;
+function snapshotProgress(phase:string,completed:number,total:number){
+ process.stderr.write(`[sdk-snapshot] ${phase} ${completed}/${total}\n`);
+}
+async function mapSnapshotBatches<T,R>(items:readonly T[],phase:string,operation:(item:T,index:number)=>Promise<R>):Promise<R[]>{
+ const output=new Array<R>(items.length);
+ snapshotProgress(phase,0,items.length);
+ for(let start=0;start<items.length;start+=SNAPSHOT_IO_BATCH){
+  const batch=items.slice(start,start+SNAPSHOT_IO_BATCH);
+  const values=await Promise.all(batch.map((item,index)=>operation(item,start+index)));
+  for(let index=0;index<values.length;index++)output[start+index]=values[index]!;
+  const completed=start+batch.length;
+  if(completed===items.length||Math.floor(completed/1000)!==Math.floor(start/1000))snapshotProgress(phase,completed,items.length);
+ }
+ return output;
+}
 async function digest(path:string){return createHash('sha256').update(await readFile(path)).digest('hex');}
 async function treeDigest(paths:string[],baseRoot=workspaceRoot){
+ const ordered=[...paths].sort();
  const hash=createHash('sha256');
- for(const path of paths.sort()){
-  hash.update(relative(baseRoot,path).split('\\').join('/'));hash.update('\0');hash.update(await readFile(path));hash.update('\0');
+ for(let start=0;start<ordered.length;start+=SNAPSHOT_IO_BATCH){
+  const batch=ordered.slice(start,start+SNAPSHOT_IO_BATCH);
+  const contents=await Promise.all(batch.map(path=>readFile(path)));
+  for(let index=0;index<batch.length;index++){
+   hash.update(relative(baseRoot,batch[index]!).split('\\').join('/'));hash.update('\0');hash.update(contents[index]!);hash.update('\0');
+  }
+  const completed=start+batch.length;
+  if(completed===ordered.length||Math.floor(completed/1000)!==Math.floor(start/1000))snapshotProgress('treeDigest',completed,ordered.length);
  }
  return hash.digest('hex');
 }
 async function inputHashes(paths:string[],baseRoot:string){
+ const ordered=[...paths].sort();
+ const digests=await mapSnapshotBatches(ordered,'inputHashes',async path=>createHash('sha256').update(await readFile(path)).digest('hex'));
  const hashes:Record<string,string>={};
- for(const path of [...paths].sort())hashes[relative(baseRoot,path).split('\\').join('/')]=await digest(path);
+ for(let index=0;index<ordered.length;index++)hashes[relative(baseRoot,ordered[index]!).split('\\').join('/')]=digests[index]!;
  return hashes;
 }
 try{
@@ -192,14 +217,15 @@ try{
   sourceHash=await treeDigest(sourceInputs,workspaceRoot);
   await rm(snapshotRoot,{recursive:true,force:true});
   await mkdir(snapshotRoot,{recursive:true});
-  snapshotInputs=[];
-  for(const source of sourceInputs){
+  snapshotInputs=new Array<string>(sourceInputs.length);
+  await mapSnapshotBatches(sourceInputs,'snapshotCopy',async(source,index)=>{
    const name=relative(workspaceRoot,source);
    const target=join(snapshotRoot,name);
    await mkdir(join(target,'..'),{recursive:true});
    await copySourceSnapshotFile(source,target);
-   snapshotInputs.push(target);
-  }
+   snapshotInputs[index]=target;
+   return target;
+  });
   const liveAfterCopy=await inputHashes(sourceInputs,workspaceRoot);
   const copied=await inputHashes(snapshotInputs,snapshotRoot);
   captured=JSON.stringify(sourceInputHashes)===JSON.stringify(liveAfterCopy)&&JSON.stringify(sourceInputHashes)===JSON.stringify(copied);

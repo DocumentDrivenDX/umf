@@ -3,7 +3,7 @@
 // Node, Bun, or Chromium. Output is NDJSON suitable for compare_results.py.
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
-import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {mkdir,readFile,stat,writeFile} from 'node:fs/promises';
 import {createRequire} from 'node:module';
 import {dirname,resolve,sep} from 'node:path';
 import {pathToFileURL} from 'node:url';
