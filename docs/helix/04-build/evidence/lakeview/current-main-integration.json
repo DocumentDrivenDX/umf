@@ -227,5 +227,31 @@
     "browser": "Chromium 153.0.8010.12; three originals through direct/JSON/YAML paths, discovery/selection/edit refusal and compatibility controls; no page errors or external requests",
     "installed": "Fresh npm-packed private binding installed outside checkout; Node/Bun and independent native CLI with empty PATH reconstruct all three originals through direct/JSON/YAML with zero mismatches",
     "bun": "Combined run: 47 passed / 1 capability-control timeout at 5.232 seconds under concurrent builds. The identical control passes separately at 4.518 seconds with its original 5-second deadline. Exact combined Linux CI remains a mandatory gate."
+  },
+  "hosted_exact_source_20261102": {
+    "source": "4bfb6d4eb14d92ef594a8b635e69b7c961cd7296",
+    "lakeview": {
+      "run": "https://github.com/DocumentDrivenDX/umf/actions/runs/41515038248",
+      "result": "success",
+      "scope": "688 native core tests, four Lakeview tests, concurrent cache regression, 89 wire tests, 48 binding controls, fresh installed Node/Bun/CLI and real Chromium/WASM receipts",
+      "receipts_local": "/private/tmp/umf-lakeview-linux-final-4bfb/lakeview-current-runtime-receipts/",
+      "receipts": {
+        "browser.json": {
+          "path": "hosted-4bfb/browser.json",
+          "sha256": "b429285b88d53a2d3ebd2c7785989cd0073932df63274b3568b1dd428e4759c9"
+        },
+        "installed.json": {
+          "path": "hosted-4bfb/installed.json",
+          "sha256": "1b0496e490422b02bb0c772b7bc3c0c176bb28ec29d0a3fea8ca4eb3e95c49be"
+        }
+      }
+    },
+    "saga": {
+      "run": "https://github.com/DocumentDrivenDX/umf/actions/runs/41515038235",
+      "result": "failed",
+      "scope": "Native/portable Action tests and native Saga oracle suite passed; actual SDK built. Portable native corpus then passed 17/19; missing-compensation and over-32-steps emitted spurious Action diagnostics. Python wheel/sdist stages were not reached.",
+      "log_local": "/private/tmp/umf-saga-41515038235-failure.log"
+    },
+    "release_ownership": "Private candidate only. Another active release owner owns unified 0.10.7; these artifacts must not be published under that version without coordinated source and qualification."
   }
 }
