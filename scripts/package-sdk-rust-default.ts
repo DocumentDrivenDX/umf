@@ -3,7 +3,7 @@
 // snapshot; an explicit external Cargo cache may reuse fingerprinted dependencies.
 import {createHash} from 'node:crypto';
 import {cp,mkdir,mkdtemp,readFile,readdir,rename,rm,symlink,writeFile} from 'node:fs/promises';
-import {basename,join,relative,resolve} from 'node:path';
+import {join,relative,resolve} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {tmpdir} from 'node:os';
 import type {BunPlugin} from 'bun';
@@ -321,13 +321,19 @@ try{
  const host=process.platform==='darwin'?'darwin':process.platform;
  const arch=process.arch;
  if(!((host==='darwin'&&arch==='arm64')||(host==='linux'&&arch==='x64')))throw new Error(`Unsupported SDK native cohort: ${host}-${arch}`);
- await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/node/Cargo.toml','--features','native-postgresql'],{env:cargoEnv});
+ const nativeTarget=host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu';
+ const nativeCargoTarget=process.env.UMF_SDK_NATIVE_CARGO_TARGET?resolve(process.env.UMF_SDK_NATIVE_CARGO_TARGET):cargoTarget;
+ const nativeRustFlags=process.env.UMF_SDK_NATIVE_RUSTFLAGS;
+ const nativeCargoEnv={...cargoEnv,CARGO_TARGET_DIR:nativeCargoTarget,
+  ...(process.env.UMF_SDK_NATIVE_OPT_LEVEL?{CARGO_PROFILE_RELEASE_OPT_LEVEL:process.env.UMF_SDK_NATIVE_OPT_LEVEL}:{}),
+  ...(process.env.UMF_SDK_NATIVE_DEBUG?{CARGO_PROFILE_RELEASE_DEBUG:process.env.UMF_SDK_NATIVE_DEBUG}:{}),
+  ...(process.env.UMF_SDK_NATIVE_STRIP?{CARGO_PROFILE_RELEASE_STRIP:process.env.UMF_SDK_NATIVE_STRIP}:{}),
+  ...(nativeRustFlags?{RUSTFLAGS:nativeRustFlags}:{}),
+  ...(process.env.UMF_SDK_NATIVE_MACOSX_DEPLOYMENT_TARGET?{MACOSX_DEPLOYMENT_TARGET:process.env.UMF_SDK_NATIVE_MACOSX_DEPLOYMENT_TARGET}:{})};
+ await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/node/Cargo.toml','--features','native-postgresql','--target',nativeTarget],{env:nativeCargoEnv});
  const archId=arch==='x64'?'x86_64':arch==='arm64'?'aarch64':arch;
  const packageVersion=(JSON.parse(await readFile(join(root,'package.json'),'utf8')) as {version:string}).version;
- const targetDir=join(cargoTarget,'release');
- const nativeCandidates=await filesUnder(targetDir);
- const native=nativeCandidates.find(path=>basename(path)===(host==='darwin'?'libumf_core_node.dylib':'libumf_core_node.so'));
- if(!native)throw new Error('Cargo did not produce the Node N-API cdylib');
+ const native=join(nativeCargoTarget,nativeTarget,'release',host==='darwin'?'libumf_core_node.dylib':'libumf_core_node.so');
  await cp(native,join(dist,'umf_core_node.node'));
 
  // The browser root bundle inlines the generated wasm-bindgen glue; its
@@ -360,6 +366,7 @@ try{
   packageVersion,
   platform:{os:host,arch:archId,nodeArch:arch,nativeTarget:host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu',napi:'N-API 8',runtimeCohort:['Node','Bun']},
   resources:{count:10,identity:'fixed-repository-owned'},
+  nativeBuild:{target:nativeTarget,profile:'release',cargoCacheMode:process.env.UMF_SDK_NATIVE_CARGO_TARGET?'external-native-only':'shared-sdk-target',flags:{releaseOptLevel:nativeCargoEnv.CARGO_PROFILE_RELEASE_OPT_LEVEL??process.env.CARGO_PROFILE_RELEASE_OPT_LEVEL??null,releaseDebug:nativeCargoEnv.CARGO_PROFILE_RELEASE_DEBUG??process.env.CARGO_PROFILE_RELEASE_DEBUG??null,releaseStrip:nativeCargoEnv.CARGO_PROFILE_RELEASE_STRIP??process.env.CARGO_PROFILE_RELEASE_STRIP??null,rustflags:nativeCargoEnv.RUSTFLAGS??process.env.RUSTFLAGS??null,macosDeploymentTarget:nativeCargoEnv.MACOSX_DEPLOYMENT_TARGET??process.env.MACOSX_DEPLOYMENT_TARGET??null}},
   limits:{recordPositions:10000,actionPositions:1000,selectedIdentityUtf16Units:4000000},
   api:{entry:'.',sagaRuntime:'./runtime/wasm',moduleLoad:'top-level-await-initialization',generator:'synchronous'},
   toolchain:{cargoCacheMode:process.env.UMF_SDK_CARGO_TARGET?'external-cargo-managed':'private',rustc,cargo:await capture(['cargo','--version']),bun:Bun.version,wasmBindgen:'0.2.100',cargoLockSha256:await digest(join(root,'Cargo.lock'))},
