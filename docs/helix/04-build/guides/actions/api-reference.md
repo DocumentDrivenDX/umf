@@ -42,6 +42,8 @@ These operations inspect supplied artifacts and construct inert bytes. They do n
 
 [CONTRACT-902](../../../02-design/contracts/CONTRACT-902-portable-action-plan.md), [CONTRACT-903](../../../02-design/contracts/CONTRACT-903-frozen-action-manifest.md) and [CONTRACT-904](../../../02-design/contracts/CONTRACT-904-bulk-action-coordination.md) own these proposed versioned companion profiles. Exact types live in plan-types.ts, manifest-types.ts, manifest-construction.ts and bulk.ts alongside the public exports. Capability assessment and source inspection remain separate from an executor's current authority and durable outcomes.
 
+- createSagaResources() — returns detached local schema and vocabulary resources for the explicitly initialized shared saga engine. Resource data does not load native/WASM code or establish execution authority. See [the saga usage guide](../../../05-deploy/sagas.md).
+
 ## Public types
 
 <!-- generated:public-types:start -->

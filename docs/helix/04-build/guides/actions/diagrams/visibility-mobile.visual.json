@@ -1,0 +1,228 @@
+{
+  "profile": "umf.site.lini-presentation/1",
+  "rendererPackage": {
+    "name": "@documentdrivendx/umf-visual",
+    "version": "0.5.0",
+    "entrySha256": "3502f2ca6ac802f0c3db513b18455362536179178c388446a4e3d0ea736d2f2f"
+  },
+  "document": {
+    "umf": "0.10.0",
+    "id": "visual:actions-visibility",
+    "vocabularies": {
+      "umf.visual": {
+        "version": "1.3.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.visual": {
+        "id": "actions-visibility",
+        "kind": "flow",
+        "form": "network",
+        "title": "V6 · Commit is not query visibility",
+        "question": "Commit is not query visibility",
+        "source": {
+          "path": "docs/helix/04-build/guides/actions/diagrams/source.json",
+          "view": "visibility"
+        },
+        "layout": {
+          "kind": "grid",
+          "columns": 1,
+          "order": [
+            "panel-1",
+            "panel-2",
+            "panel-3",
+            "panel-4",
+            "panel-5"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "panel-1",
+            "label": "Write transaction · commit",
+            "detail": "Business change + terminal outcome +\noutbox fact commit together. Receipt\ncarries store, epoch and opaque\nversion."
+          },
+          {
+            "id": "panel-2",
+            "label": "Delivery · position 2\narrives first",
+            "detail": "Position 1 is missing. Complete\napplied prefix stays 0. A larger\nreceived position proves no\nvisibility."
+          },
+          {
+            "id": "panel-3",
+            "label": "Projection · position 1 then\n2",
+            "detail": "Apply exact facts in order. Update\nread content and contiguous prefix\natomically. Repeated delivery is\ndeduplicated."
+          },
+          {
+            "id": "panel-4",
+            "label": "Read at least the receipt",
+            "detail": "Check current reader authorization\nfirst: denied readers receive no\ncontent. A receipt grants no access.\nAuthorized freshness is visible only\nfor the matching store/epoch and\nqualified content through the complete\nprefix; otherwise pending or\nunsupported."
+          },
+          {
+            "id": "panel-5",
+            "label": "Restore boundary",
+            "detail": "Rotate visibility epoch and fence\nuncertain restored state. Epoch\nrotation does not erase old replay\nidentity or authorize retry."
+          }
+        ],
+        "edges": [
+          {
+            "id": "connection-1",
+            "from": "panel-1",
+            "to": "panel-2",
+            "label": "Delivery can arrive out of order",
+            "directed": true
+          },
+          {
+            "id": "connection-2",
+            "from": "panel-2",
+            "to": "panel-3",
+            "label": "Apply the complete prefix",
+            "directed": true
+          },
+          {
+            "id": "connection-3",
+            "from": "panel-3",
+            "to": "panel-4",
+            "label": "Check reader authorization and freshness",
+            "directed": true
+          }
+        ],
+        "omissions": [
+          "This is a concept-map presentation of the original tutorial panels. Original storyboard-specific positions, swimlanes, sequence lifelines, state glyphs and timeline geometry are not reproduced. All authored panel text remains visible and in the source companion."
+        ]
+      }
+    }
+  },
+  "originalSource": {
+    "id": "visibility",
+    "figure": "V6",
+    "title": "Commit is not query visibility",
+    "kind": "timeline",
+    "panels": [
+      {
+        "title": "Write transaction · commit",
+        "text": "Business change + terminal outcome + outbox fact commit together. Receipt carries store, epoch and opaque version."
+      },
+      {
+        "title": "Delivery · position 2 arrives first",
+        "text": "Position 1 is missing. Complete applied prefix stays 0. A larger received position proves no visibility."
+      },
+      {
+        "title": "Projection · position 1 then 2",
+        "text": "Apply exact facts in order. Update read content and contiguous prefix atomically. Repeated delivery is deduplicated."
+      },
+      {
+        "title": "Read at least the receipt",
+        "text": "Check current reader authorization first: denied readers receive no content. A receipt grants no access. Authorized freshness is visible only for the matching store/epoch and qualified content through the complete prefix; otherwise pending or unsupported."
+      },
+      {
+        "title": "Restore boundary",
+        "text": "Rotate visibility epoch and fence uncertain restored state. Epoch rotation does not erase old replay identity or authorize retry."
+      }
+    ]
+  },
+  "nativeVersion": "1.1.0",
+  "elementMap": [
+    {
+      "logicalId": "actions-visibility",
+      "sourcePath": "/extensions/umf.visual/id",
+      "nativeId": "visual",
+      "kind": "visual"
+    },
+    {
+      "logicalId": "panel-1",
+      "sourcePath": "/extensions/umf.visual/nodes/0/id",
+      "nativeId": "n1",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-2",
+      "sourcePath": "/extensions/umf.visual/nodes/1/id",
+      "nativeId": "n2",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-3",
+      "sourcePath": "/extensions/umf.visual/nodes/2/id",
+      "nativeId": "n3",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-4",
+      "sourcePath": "/extensions/umf.visual/nodes/3/id",
+      "nativeId": "n4",
+      "kind": "node"
+    },
+    {
+      "logicalId": "panel-5",
+      "sourcePath": "/extensions/umf.visual/nodes/4/id",
+      "nativeId": "n5",
+      "kind": "node"
+    },
+    {
+      "logicalId": "connection-1",
+      "sourcePath": "/extensions/umf.visual/edges/0",
+      "nativeId": "e1",
+      "kind": "edge"
+    },
+    {
+      "logicalId": "connection-2",
+      "sourcePath": "/extensions/umf.visual/edges/1",
+      "nativeId": "e2",
+      "kind": "edge"
+    },
+    {
+      "logicalId": "connection-3",
+      "sourcePath": "/extensions/umf.visual/edges/2",
+      "nativeId": "e3",
+      "kind": "edge"
+    }
+  ],
+  "omissions": [
+    {
+      "sourcePath": "/extensions/umf.visual/question",
+      "reason": "The reader question remains in the UMF document; Lini displays the concise title in the native diagram frame."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/source",
+      "reason": "Source provenance remains in UMF and is not embedded in diagram geometry."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/omissions/0",
+      "reason": "Authored omission inventory remains in UMF and is not drawn."
+    }
+  ],
+  "approximations": [
+    {
+      "sourcePath": "/extensions/umf.visual/layout",
+      "requested": "Grid layout with one column",
+      "representation": "Lini 1.1 represents a one-column grid with native column flow; requested component order and single-column containment are preserved."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/0/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/1/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/2/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/3/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    },
+    {
+      "sourcePath": "/extensions/umf.visual/nodes/4/detail",
+      "requested": "Node detail",
+      "representation": "Lini renders the authored detail as a persistent secondary native cell beneath the node title."
+    }
+  ],
+  "nativeSource": "{\n  --lini-font-family: Arial;\n  .lini-block { font-family: Arial; }\n  .lini-caption { translate: 0 -30; font-scale: 14 16; }\n  .e1 { stroke: --teal-deep; }\n  .e2 { stroke: --teal-deep; }\n  .e3 { stroke: --teal-deep; }\n}\n|group#visual| \"V6 · Commit is not query visibility\" { layout: flow; direction: column; gap: 72; padding: 36; fill: none; stroke: none; stroke-width: 0; } [\n  |box#n1| \"Write transaction · commit\" { width: 240; } [\n    |cell#detail| \"Business change + terminal outcome +\\noutbox fact commit together. Receipt\\ncarries store, epoch and opaque\\nversion.\"\n  ]\n  |box#n2| \"Delivery · position 2\\narrives first\" { width: 240; } [\n    |cell#detail| \"Position 1 is missing. Complete\\napplied prefix stays 0. A larger\\nreceived position proves no\\nvisibility.\"\n  ]\n  |box#n3| \"Projection · position 1 then\\n2\" { width: 240; } [\n    |cell#detail| \"Apply exact facts in order. Update\\nread content and contiguous prefix\\natomically. Repeated delivery is\\ndeduplicated.\"\n  ]\n  |box#n4| \"Read at least the receipt\" { width: 240; } [\n    |cell#detail| \"Check current reader authorization\\nfirst: denied readers receive no\\ncontent. A receipt grants no access.\\nAuthorized freshness is visible only\\nfor the matching store/epoch and\\nqualified content through the complete\\nprefix; otherwise pending or\\nunsupported.\"\n  ]\n  |box#n5| \"Restore boundary\" { width: 240; } [\n    |cell#detail| \"Rotate visibility epoch and fence\\nuncertain restored state. Epoch\\nrotation does not erase old replay\\nidentity or authorize retry.\"\n  ]\n  n1 -> n2 \"Delivery can arrive out of order\" .e1 { along: 0.35; }\n  n2 -> n3 \"Apply the complete prefix\" .e2 { along: 0.5; }\n  n3 -> n4 \"Check reader authorization and freshness\" .e3 { along: 0.65; }\n]\n",
+  "svgSha256": "f1e057e5680dbe26e4c0e3990a3c443c8659785b61c3cf5477a4a100079495e1"
+}

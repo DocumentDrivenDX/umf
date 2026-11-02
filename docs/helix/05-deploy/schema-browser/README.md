@@ -1,8 +1,16 @@
 # UMF schema browser
 
+Version **2.1.0** projects record maps and structural comparisons into
+umf.visual 1.3.0 and uses its public Lini renderer in a dedicated worker.
+See [the migration record](../../04-build/visual-rendering-migration.md)
+for scoped verification.
+Direct map consumers can await `handle.ready` and `handle.update(model)`; serve
+`visual-worker.js` and `lini/` beside their bundled entry. The exact package's
+`assets/` copy supplies these resources for the iframe explorer.
+
 A reusable, framework-neutral browser for UMF documents, TableSpec tables,
 domain packs, source artifact collections and ontology diagrams. This is the
-same renderer used by the UMF microsite. Version 2.0.1 ships compiled browser
+same renderer used by the UMF microsite. Version 2.1.0 ships compiled browser
 ESM, TypeScript declarations and static assets. No Bun, Node runtime, framework,
 public corpus or network connection to the UMF microsite is required.
 
@@ -11,7 +19,7 @@ public corpus or network connection to the UMF microsite is required.
 Install the public npm package:
 
 ```sh
-npm install @documentdrivendx/umf-schema-browser@2.0.1
+npm install @documentdrivendx/umf-schema-browser@2.1.0
 ```
 
 For local release review, install from the built package directory. A site
@@ -81,10 +89,10 @@ or configure CORS for module/catalog requests. Your Content Security Policy
 can use this tested strict policy for same-origin assets and catalogs (add only sources your host needs):
 
 ```text
-default-src 'none'; base-uri 'none'; script-src 'self'; style-src 'self'; frame-src 'self' about:; connect-src 'self'
+default-src 'none'; base-uri 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; frame-src 'self' about:; connect-src 'self'; worker-src 'self'
 ```
 
-No `unsafe-eval`, inline executable script, external font or worker is required. The srcdoc mount inherits the host policy; no base element is inserted. Fixed validators are compiled during the producer build. Arbitrary native semantic compilation is qualified rather than enabled by weakening CSP. Use the standalone page as an ordinary iframe source
+The parent page denies JavaScript `unsafe-eval` and inline executable scripts. It permits WebAssembly compilation for the Rust comparison runtime and same-origin workers for Lini maps. Serve `visual-worker.js` with its separate execution policy described in HOST_CONTRACT.md. The srcdoc mount inherits the host policy; no base element is inserted. Fixed validators are compiled during the producer build. Arbitrary native semantic compilation is qualified rather than enabled by weakening CSP. Use the standalone page as an ordinary iframe source
 when your policy forbids srcdoc. The package has no external font requirement.
 This policy is a tested baseline for both embedding forms, rather than a universal
 minimum. Optional image display, cross-origin hosting and iframe sandbox/download
@@ -135,7 +143,7 @@ npm pack /tmp/schema-browser-a
 The reusable package contains no sample dataset archives; users supply their
 catalog and original assets.
 
-The released 2.0.1 producer used Bun 1.4.2 and its own committed `build.ts`
+The released 2.1.0 producer used Bun 1.4.2 and its own committed `build.ts`
 entrypoint. Reproduce that release from its source commit; the current-source
 Rust build instructions above describe the later worktree.
 
@@ -178,7 +186,7 @@ backfill. See [GitHub's release settings](https://docs.github.com/en/code-securi
 
 The main-only `npm` environment and exact package trusted publisher are now
 configured, including **Allow npm publish**. The
-[qualified 2.0.1 Actions publication](../evidence/schema-browser-npm-2.0.1/README.md)
+[qualified 2.1.0 Actions publication](../evidence/schema-browser-npm-2.1.0/README.md)
 passed complete producer qualification, actual OIDC upload, exact public-byte
 verification and a fresh public-npm install/import. The successful upload at
 2026-10-26 22:35:51 UTC validated the pending publisher before its

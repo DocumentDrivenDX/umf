@@ -33,6 +33,7 @@ try{
  assert(((await page.locator('body').getAttribute('data-comparison-refusal'))??'').startsWith('NON_JSON:/x:Hidden fields and accessors cannot be serialized faithfully'),'default sync API preserves predecessor before-first refusal');
  assert(await one.locator('#inspector h2').innerText()==='Claims','table not loaded');
  assert(await one.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor)==='rgb(244, 241, 233)','offline base stylesheet lost');
+ await two.locator('.ontology-map svg').waitFor();
  assert((await two.locator('.map-summary').innerText()).includes('22 of 22 records · 28 of 28 relationships'),'ontology subset wrong');
  await one.getByRole('searchbox',{name:'Filter fields',exact:true}).fill('patient_reference');await one.getByRole('link',{name:'patient_reference',exact:true}).click();await one.getByRole('heading',{name:'patient_reference',exact:true}).waitFor();await one.getByRole('link',{name:'Table overview',exact:true}).click();
  assert(await one.getByRole('searchbox',{name:'Filter fields',exact:true}).inputValue()==='patient_reference','filter lost');
@@ -45,8 +46,8 @@ try{
  for(let i=0;i<await artifactGroups.count();i++){const group=artifactGroups.nth(i);if(!await group.evaluate((element:HTMLDetailsElement)=>element.open))await group.locator('summary').first().click();}
  await artifactButton.click();await one.getByRole('searchbox',{name:'Find an artifact',exact:true}).fill('submissions-0000320193');await one.getByText('submissions-0000320193',{exact:true}).waitFor();
  assert(await one.locator('.artifact-source:not([hidden])').count()===2,'artifact filter wrong');assert((await one.locator('#inspector').innerText()).includes('No published original download'),'reference qualification lost');
- assert(requests.every(url=>url.startsWith(origin)),'undeclared external request');
+ assert(requests.every(url=>new URL(url).origin===origin),'undeclared external request');
  await page.getByRole('button',{name:'Unmount',exact:true}).click();assert(await page.locator('iframe').count()===1,'teardown removed wrong instance');assert((await two.locator('.map-summary').innerText()).startsWith('Full model'),'remaining instance broken');
- await page.goto(origin+'/browser/assets/index.html');await page.locator('#file').setInputFiles({name:'source.json',mimeType:'application/json',buffer:Buffer.from(entries.find((e:{id:string})=>e.id===ids[0]).text)});await page.locator('#inspector h2').waitFor();assert(await page.locator('.details-table tr').count()===15,'standalone local fields lost');assert(await page.locator('#inspector pre').last().textContent()===entries.find((e:{id:string})=>e.id===ids[0]).text,'original local schema text changed');
+ await page.goto(origin+'/browser/assets/index.html');await page.waitForFunction(()=>{const file=document.querySelector<HTMLInputElement>('#file');return file&&!file.disabled&&typeof file.onchange==='function';});await page.locator('#file').setInputFiles({name:'source.json',mimeType:'application/json',buffer:Buffer.from(entries.find((e:{id:string})=>e.id===ids[0]).text)});await page.locator('#inspector h2').waitFor();assert(await page.locator('.details-table tr').count()===15,'standalone local fields lost');assert(await page.locator('#inspector pre').last().textContent()===entries.find((e:{id:string})=>e.id===ids[0]).text,'original local schema text changed');
  assert(errors.length===0,'browser errors: '+errors.join('; '));console.log(`Reusable installed package: ${checks} Chromium checks passed; independent frames, local-only requests and standalone source inspection.`);
 }finally{await browser.close();server.stop(true);}

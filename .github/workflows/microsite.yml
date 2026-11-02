@@ -57,6 +57,10 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: '1.4.2'
+      - name: Build native core required by domain schema graph checks
+        run: |
+          cargo build --locked --release -p umf-core-node --features umf-core-node/native-postgresql
+          cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
       - name: Verify medical family artifacts
         run: |
           bun scripts/build-medical-subpacks.ts --check
@@ -92,6 +96,12 @@ jobs:
           bun run test:reference
       - name: Install browser qualification runtime
         run: bun x playwright install --with-deps chromium
+      - name: Qualify Lini and the schema-browser source candidate
+        run: |
+          bun run test:visuals:browser
+          bun run build:schema-browser dist/schema-browser-candidate
+          bun scripts/schema-browser-package-browser.ts dist/schema-browser-candidate
+          bun scripts/schema-browser-embedding-browser.ts dist/schema-browser-candidate
       - name: Qualify generated validators in strict-CSP Chromium
         run: bun scripts/metamodel-browser.ts
       - name: Qualify reference completeness and desktop/mobile presentation
@@ -140,6 +150,8 @@ jobs:
         run: bun test tests/generated-page-seals.test.ts
       - name: Check complete site signing inventory
         run: bun scripts/generated-page-seals.ts --inventory
+      - name: Render the home illustration through umf.visual and Lini
+        run: bun run build:visuals
       - name: Seal all site pages with the build key
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:

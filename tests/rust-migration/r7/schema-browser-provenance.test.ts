@@ -11,6 +11,7 @@ test('schema-browser provenance includes transitive Cargo sources and literal in
   expect(hashes['crates/umf-codegen/src/lib.rs']).toBeString();
   expect(hashes['crates/umf-codegen/src/generation/python_runtime.py']).toBeString();
   expect(hashes['crates/umf-core/vendor/saphyr-parser/Cargo.toml']).toBeString();
+  for(const path of ['crates/umf-tagged-wire','crates/umf-graphql','crates/umf-graphql/vendor/apollo-compiler','crates/umf-core/vendor/oxttl','crates/umf-core/vendor/oxrdf','crates/umf-core/vendor/hashbrown-0.12.3','crates/umf-core/vendor/json-ld-core-0.21.4']) expect(hashes[path+'/Cargo.toml']).toBeString();
   expect(hashes['crates/umf-core/vendor/saphyr-parser/src/parser.rs']).toBeString();
   expect(hashes['spec/extensions/tables/operation.schema.json']).toBeString();
 }, {timeout: 60_000});

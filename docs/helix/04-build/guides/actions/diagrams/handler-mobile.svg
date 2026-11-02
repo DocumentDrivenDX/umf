@@ -1,1 +1,89 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 980" role="img" aria-labelledby="title desc"><title id="title">V7 · Bounded handler access</title><desc id="desc">Isolated handler: No raw SQL connection, database credentials, ambient network or broad host mount. Only declared transaction capabilities. Controlled gateway: Freeze canonical identities. Check every attempted read/write before storage access. Returning state to its old value cannot hide an attempt. Consumer-owned transaction: Authorization, native invariant checks, replay ledger and outbox are control responsibilities. Their reads are not handler permissions. Commit or rollback: Verify outputs, constraints, frame and postconditions. Failure aborts the whole attempted transaction; no partial business outcome.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#203c35"/></marker></defs><rect width="360" height="980" rx="16" fill="#e9edde"/><g fill="#203c35" font-family="Arial, sans-serif"><text x="20" y="58" font-size="26">Bounded handler</text><text x="20" y="89" font-size="26">access</text><text x="20" y="24" font-size="13">V7 · BOUNDARY</text><rect x="20" y="110" width="320" height="165" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="32" y="137" font-size="18" font-weight="700">ISOLATED HANDLER</text><text x="32" y="168" font-size="17">Only transaction capability</text><text x="32" y="190" font-size="17">messages. No raw SQL, database</text><text x="32" y="212" font-size="17">secrets or ambient network.</text><path d="M325 275 L325 340" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#arrow)"/><text x="25" y="310" font-size="17">Bounded authenticated RPC</text><rect x="15" y="340" width="330" height="450" rx="12" fill="#dce7d5" stroke="#53732e" stroke-width="2"/><text x="30" y="375" font-size="17" font-weight="700">TRUSTED CONSUMER HOST</text><rect x="35" y="405" width="290" height="125" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="47" y="432" font-size="18" font-weight="700">Capability gateway</text><text x="47" y="463" font-size="17">Freeze aliases. Refuse</text><text x="47" y="485" font-size="17">outside-frame attempts</text><text x="47" y="507" font-size="17">before access.</text><path d="M180.0 530 L180.0 565" fill="none" stroke="#203c35" stroke-width="2" marker-end="url(#arrow)"/><rect x="35" y="565" width="290" height="180" rx="10" fill="#fffdf7" stroke="#738972" stroke-width="1.5"/><text x="47" y="592" font-size="18" font-weight="700">Native transaction</text><text x="47" y="615" font-size="18" font-weight="700">boundary</text><text x="47" y="646" font-size="17">Invariants + current policy</text><text x="47" y="668" font-size="17">+ replay + outbox. Control</text><text x="47" y="690" font-size="17">reads are not handler</text><text x="47" y="712" font-size="17">grants.</text><text x="25" y="840" font-size="17">Verify before commit; failures</text><text x="25" y="862" font-size="17">roll back the attempted</text><text x="25" y="884" font-size="17">transaction.</text></g></svg>
+<svg role="img" aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg" viewBox="-218.9725 -492 437.945 954" width="437.945" height="954" class="lini lini-scope-86135603"><title id="title">V7 · Bounded handler access</title><desc id="desc">Isolated handler: No raw SQL connection, database credentials, ambient network or broad host mount. Only declared transaction capabilities. Controlled gateway: Freeze canonical identities. Check every attempted read/write before storage access. Returning state to its old value cannot hide an attempt. Consumer-owned transaction: Authorization, native invariant checks, replay ledger and outbox are control responsibilities. Their reads are not handler permissions. Commit or rollback: Verify outputs, constraints, frame and postconditions. Failure aborts the whole attempted transaction; no partial business outcome.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-86135603 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-link-font-weight: 400; --lini-stroke: light-dark(#444, #9aa0a6); --lini-teal-deep: light-dark(#008e85, #00cabe); --lini-text-color: var(--lini-fg); }
+      .lini-scope-86135603[data-theme="dark"], [data-theme="dark"] .lini-scope-86135603 { color-scheme: dark; }
+      .lini-scope-86135603[data-theme="light"], [data-theme="light"] .lini-scope-86135603 { color-scheme: light; }
+    }
+    .lini-scope-86135603, .lini-scope-86135603 text { font-family: var(--lini-font-family); }
+    .lini-scope-86135603 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-86135603 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-86135603 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-86135603 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-86135603 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-86135603 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+    .lini-scope-86135603 .lini-link { fill: none; stroke: var(--lini-stroke); stroke-width: 2; stroke-dasharray: none; }
+    .lini-scope-86135603 .lini-link-label { fill: currentColor; stroke: none; text-anchor: middle; font-size: 11px; font-weight: var(--lini-link-font-weight); }
+    .lini-scope-86135603 .lini-cut-bg { fill: white; stroke: none; }
+    .lini-scope-86135603 .lini-cut { fill: black; stroke: none; }
+    .lini-scope-86135603 .lini-marker { fill: var(--lini-stroke); stroke: none; }
+    .lini-scope-86135603 .lini-style-e1 { stroke: var(--lini-teal-deep); }
+    .lini-scope-86135603 .lini-style-e1 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-86135603 .lini-style-e2 { stroke: var(--lini-teal-deep); }
+    .lini-scope-86135603 .lini-style-e2 .lini-marker { fill: var(--lini-teal-deep); }
+    .lini-scope-86135603 .lini-style-e3 { stroke: var(--lini-teal-deep); }
+    .lini-scope-86135603 .lini-style-e3 .lini-marker { fill: var(--lini-teal-deep); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-198.9725" y="-442" width="397.945" height="884" rx="8" ry="8"/>
+      <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(0,-331.5)">
+        <rect x="-161.9725" y="-73.5" width="323.945" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Isolated handler</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-141.9725" y="-40" width="283.945" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">No raw SQL connection, database</tspan><tspan x="0" dy="18">credentials, ambient network or broad</tspan><tspan x="0" dy="18">host mount. Only declared transaction</tspan><tspan x="0" dy="18">capabilities.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(0,-110.5)">
+        <rect x="-157.375" y="-73.5" width="314.75" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Controlled gateway</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-137.375" y="-40" width="274.75" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Freeze canonical identities. Check</tspan><tspan x="0" dy="18">every attempted read/write before</tspan><tspan x="0" dy="18">storage access. Returning state to its</tspan><tspan x="0" dy="18">old value cannot hide an attempt.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(0,110.5)">
+        <rect x="-156.445" y="-73.5" width="312.89" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Consumer-owned transaction</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-136.445" y="-40" width="272.89" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Authorization, native invariant</tspan><tspan x="0" dy="18">checks, replay ledger and outbox are</tspan><tspan x="0" dy="18">control responsibilities. Their reads</tspan><tspan x="0" dy="18">are not handler permissions.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-box lini-block" data-id="n4" transform="translate(0,331.5)">
+        <rect x="-160.135" y="-73.5" width="320.27" height="147" rx="8" ry="8"/>
+        <text class="lini-text" x="0" y="-46" dy="0.358em" style="font-family: Arial">Commit or rollback</text>
+        <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+          <rect x="-140.135" y="-40" width="280.27" height="80" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" style="font-family: Arial"><tspan x="0" y="-21.63">Verify outputs, constraints, frame and</tspan><tspan x="0" dy="18">postconditions. Failure aborts the</tspan><tspan x="0" dy="18">whole attempted transaction; no</tspan><tspan x="0" dy="18">partial business outcome.</tspan></text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-114.2966,-465.4375)">
+        <rect x="-84.6759" y="-6.5625" width="169.3519" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">V7 · Bounded handler access</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links">
+    <g class="lini-link lini-style-e1" data-from="visual.n1" data-to="visual.n2">
+      <mask id="lini-label-cut-dfaabead" maskUnits="userSpaceOnUse" x="-2" y="-259" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="-259" width="4" height="76"/><rect class="lini-cut" x="-98.318" y="-238.95" width="196.636" height="14.3"/></mask>
+      <path d="M 0 -257 L 0 -188.5" mask="url(#lini-label-cut-dfaabead)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,-184.5 -4.5,-193.5 4.5,-193.5"/>
+      <text class="lini-link-label" x="0" y="-231.8" dy="0.358em" style="font-family: Arial">Bounded authenticated capability RPC</text>
+    </g>
+    <g class="lini-link lini-style-e2" data-from="visual.n2" data-to="visual.n3">
+      <mask id="lini-label-cut-2272fa03" maskUnits="userSpaceOnUse" x="-2" y="-38" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="-38" width="4" height="76"/><rect class="lini-cut" x="-81.7355" y="-7.15" width="163.471" height="14.3"/></mask>
+      <path d="M 0 -36 L 0 32.5" mask="url(#lini-label-cut-2272fa03)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,36.5 -4.5,27.5 4.5,27.5"/>
+      <text class="lini-link-label" x="0" y="0" dy="0.358em" style="font-family: Arial">Check attempts before storage</text>
+    </g>
+    <g class="lini-link lini-style-e3" data-from="visual.n3" data-to="visual.n4">
+      <mask id="lini-label-cut-f5ca8b1e" maskUnits="userSpaceOnUse" x="-2" y="183" width="4" height="76"><rect class="lini-cut-bg" x="-2" y="183" width="4" height="76"/><rect class="lini-cut" x="-56.144" y="224.65" width="112.288" height="14.3"/></mask>
+      <path d="M 0 185 L 0 253.5" mask="url(#lini-label-cut-f5ca8b1e)"/>
+      <polygon class="lini-marker lini-marker-arrow" points="0,257.5 -4.5,248.5 4.5,248.5"/>
+      <text class="lini-link-label" x="0" y="231.8" dy="0.358em" style="font-family: Arial">Verify before commit</text>
+    </g>
+  </g>
+</svg>

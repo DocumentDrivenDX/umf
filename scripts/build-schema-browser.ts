@@ -33,7 +33,7 @@ if (bindgenVersion !== 'wasm-bindgen 0.2.100') throw new Error(`Schema-browser b
 await rm(generated, {recursive: true, force: true});
 await mkdir(bindgenOutput, {recursive: true});
 const buildEnv = {CARGO_TARGET_DIR: cargoTarget, CARGO_INCREMENTAL: '0', CARGO_BUILD_JOBS: '2'};
-run(['rustup', 'run', toolchain, 'cargo', 'build', '--offline', '--manifest-path', join(root, 'Cargo.toml'), '--package', 'umf-core-wasm', '--release', '--target', 'wasm32-unknown-unknown'], {env: buildEnv});
+run(['rustup', 'run', toolchain, 'cargo', 'build', '--locked', '--offline', '--manifest-path', join(root, 'Cargo.toml'), '--package', 'umf-core-wasm', '--release', '--target', 'wasm32-unknown-unknown'], {env: buildEnv});
 const wasmInput = join(cargoTarget, 'wasm32-unknown-unknown/release/umf_core_wasm.wasm');
 if (!(await stat(wasmInput)).isFile()) throw new Error(`WASM compiler output is missing: ${wasmInput}`);
 run([wasmBindgen, wasmInput, '--target', 'web', '--out-dir', bindgenOutput, '--out-name', 'umf_core_wasm']);

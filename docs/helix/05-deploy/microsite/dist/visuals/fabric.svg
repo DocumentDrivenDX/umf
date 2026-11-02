@@ -1,0 +1,76 @@
+<svg role="img" aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg" viewBox="-229.1725 -422 458.345 814" width="458.345" height="814" class="lini lini-scope-bd6d3cf7"><title id="title">Schema interchange fabric</title><desc id="desc">Tools read the metadata they need. Support varies by format and operation.</desc>
+  <style>
+    @layer lini.defaults {
+      :root, .lini-scope-bd6d3cf7 { color-scheme: light dark; --lini-caption-color: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55)); --lini-caption-font-weight: 400; --lini-fg: light-dark(black, #e8e8ea); --lini-fill: light-dark(white, #26262b); --lini-font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --lini-font-weight: 500; --lini-gray-deep: light-dark(#747474, #acacac); --lini-gray-wash: light-dark(#eeeeee, #2a2a2a); --lini-group-fill: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.05)); --lini-group-stroke: light-dark(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.4)); --lini-stroke: light-dark(#444, #9aa0a6); --lini-text-color: var(--lini-fg); }
+      .lini-scope-bd6d3cf7[data-theme="dark"], [data-theme="dark"] .lini-scope-bd6d3cf7 { color-scheme: dark; }
+      .lini-scope-bd6d3cf7[data-theme="light"], [data-theme="light"] .lini-scope-bd6d3cf7 { color-scheme: light; }
+    }
+    .lini-scope-bd6d3cf7, .lini-scope-bd6d3cf7 text { font-family: var(--lini-font-family); }
+    .lini-scope-bd6d3cf7 { font-size: 15px; font-weight: var(--lini-font-weight); color: var(--lini-text-color); }
+    .lini-scope-bd6d3cf7 .lini-block { fill: none; stroke: none; stroke-width: 2; font-family: Arial; stroke-dasharray: none; }
+    .lini-scope-bd6d3cf7 .lini-text { fill: currentColor; stroke: none; text-anchor: middle; }
+    .lini-scope-bd6d3cf7 .lini-box { fill: var(--lini-fill); stroke: var(--lini-stroke); stroke-width: 2; }
+    .lini-scope-bd6d3cf7 .lini-group { fill: var(--lini-group-fill); stroke: var(--lini-group-stroke); stroke-width: 1; stroke-dasharray: 5,4; }
+    .lini-scope-bd6d3cf7 .lini-caption { color: var(--lini-caption-color); font-size: 13.125px; font-weight: var(--lini-caption-font-weight); }
+  </style>
+  <defs/>
+  <g class="lini-scene">
+    <g class="lini-node lini-group lini-block" data-id="visual" style="fill: none; stroke: none; stroke-width: 0; stroke-dasharray: 3,2.5" transform="translate(0,0)">
+      <rect x="-209.1725" y="-372" width="418.345" height="744" rx="8" ry="8"/>
+      <g class="lini-node lini-group lini-block" data-id="l1" style="fill: var(--lini-gray-wash); stroke: var(--lini-gray-deep); color: var(--lini-gray-deep)" transform="translate(0,-244.5)">
+        <rect x="-143" y="-91" width="286" height="182" rx="8" ry="8"/>
+        <g class="lini-node lini-box lini-block" data-id="n1" transform="translate(0,-40.5)">
+          <rect x="-120" y="-27.5" width="240" height="55" rx="8" ry="8"/>
+          <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Native schema</text>
+        </g>
+        <g class="lini-node lini-box lini-block" data-id="n2" transform="translate(0,40.5)">
+          <rect x="-120" y="-27.5" width="240" height="55" rx="8" ry="8"/>
+          <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Authored model</text>
+        </g>
+        <g class="lini-node lini-caption lini-block" transform="translate(-98.9066,-114.4375)">
+          <rect x="-44.0934" y="-6.5625" width="88.1869" height="13.125" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Source models</text>
+        </g>
+      </g>
+      <g class="lini-node lini-group lini-block" data-id="l2" style="fill: var(--lini-gray-wash); stroke: var(--lini-gray-deep); color: var(--lini-gray-deep)" transform="translate(0,-40.5)">
+        <rect x="-172.6725" y="-68" width="345.345" height="136" rx="8" ry="8"/>
+        <g class="lini-node lini-box lini-block" data-id="n3" transform="translate(0,0)">
+          <rect x="-149.6725" y="-45" width="299.345" height="90" rx="8" ry="8"/>
+          <text class="lini-text" x="0" y="-17.5" dy="0.358em" style="font-family: Arial">UMF</text>
+          <g class="lini-node lini-cell lini-block" data-id="detail" transform="translate(0,13.5)">
+            <rect x="-129.6725" y="-11.5" width="259.345" height="23" rx="0" ry="0"/>
+            <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Common metadata + native details</text>
+          </g>
+        </g>
+        <g class="lini-node lini-caption lini-block" transform="translate(-117.6131,-91.4375)">
+          <rect x="-55.0594" y="-6.5625" width="110.1188" height="13.125" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Portable metadata</text>
+        </g>
+      </g>
+      <g class="lini-node lini-group lini-block" data-id="l3" style="fill: var(--lini-gray-wash); stroke: var(--lini-gray-deep); color: var(--lini-gray-deep)" transform="translate(0,204)">
+        <rect x="-143" y="-131.5" width="286" height="263" rx="8" ry="8"/>
+        <g class="lini-node lini-box lini-block" data-id="n4" transform="translate(0,-81)">
+          <rect x="-120" y="-27.5" width="240" height="55" rx="8" ry="8"/>
+          <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Generators</text>
+        </g>
+        <g class="lini-node lini-box lini-block" data-id="n5" transform="translate(0,0)">
+          <rect x="-120" y="-27.5" width="240" height="55" rx="8" ry="8"/>
+          <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Forms</text>
+        </g>
+        <g class="lini-node lini-box lini-block" data-id="n6" transform="translate(0,81)">
+          <rect x="-120" y="-27.5" width="240" height="55" rx="8" ry="8"/>
+          <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">AI context</text>
+        </g>
+        <g class="lini-node lini-caption lini-block" transform="translate(-80.1575,-154.9375)">
+          <rect x="-62.8425" y="-6.5625" width="125.685" height="13.125" rx="0" ry="0"/>
+          <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Metadata consumers</text>
+        </g>
+      </g>
+      <g class="lini-node lini-caption lini-block" transform="translate(-129.7072,-395.4375)">
+        <rect x="-79.4653" y="-6.5625" width="158.9306" height="13.125" rx="0" ry="0"/>
+        <text class="lini-text" x="0" y="0" dy="0.358em" style="font-family: Arial">Schema interchange fabric</text>
+      </g>
+    </g>
+  </g>
+  <g class="lini-links"/>
+</svg>
