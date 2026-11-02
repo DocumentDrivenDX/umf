@@ -1,5 +1,28 @@
 # Public PyPI publication
 
+## Current publication route — 2026-11-01
+
+`umf-core==0.10.5` is published on PyPI. The independent SDK release is
+`umf-v0.10.1`; its version does not determine the core distribution version.
+The [public-release verification](../04-build/evidence/saga-public-library-completion/public-release-verification.json)
+records the exact artifacts and installed checks.
+
+Use `publish-pypi.yml` on `main` with an existing qualified release tag, its
+exact source commit and the SHA-256 of its public `SHA256SUMS`. It verifies
+the immutable source/assets, refuses registry collisions, uploads through OIDC
+only when absent, verifies public bytes and installs from the public index.
+The `pypi.yml` dispatcher handles published core-bearing releases. It no longer
+subscribes to every unrelated workflow completion. Both existing publisher
+dispatchers and the fast PR workflow were re-enabled under the owner's stack
+release instruction after Actions became available again.
+
+The trusted publisher must identify `publish-pypi.yml`, environment `pypi`;
+the historical `pypi.yml` upload identity below is not the current upload route.
+The separate schema-browser npm publisher and its dispatcher retain their own
+immutable-archive checks. Heavy native qualification remains explicitly selected.
+
+## Historical setup and 0.8.1 delivery
+
 ## Current required route — 2026-10-26
 
 Owner direction requires `pip install 'arras[truss,umf]'` to resolve wholly from
