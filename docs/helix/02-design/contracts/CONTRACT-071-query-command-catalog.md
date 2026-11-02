@@ -498,3 +498,49 @@ Grouped counts must remain bounded by an admitted limit/page; a global aggregate
 `Joined[O1,O2,R]` is the one-join form of a generated bounded owner-set query family (root plus one through three joined Records). Filters/selects admit only members of that exact set. Until an explicit alias-binding surface qualifies, self joins, repeated target Record types, multiple paths reaching the same type, or any ambiguous bare column owner refuse at capture/build; never infer billing versus shipping from a class name. Optional join provenance makes the right-hand projected value nullable even when the native Field is required; dedicated overload/projection corpora on all three checkers and left-missing native rows must prove that transformation before qualification. Column-to-column comparisons in0.1 accept only the same owning Record; comparisons across joined owners remain unsupported until a context-bound operand API qualifies.
 
 The current three-edge bound follows the owner-selected FR-53 READ-JOIN refinement in the PRD, which supersedes the earlier four-edge proposal for this slice. Repeated/self joins remain a separate pending alias-binding obligation; the bound correction does not qualify them.
+
+
+## Explicit Truss temporal engine catalog — freeze1
+
+Adopt integration contract `truss.temporal-interface-freeze/1`, F1–F6, authored
+at Truss `docs/helix/04-build/temporal-interface-freeze.md` (isolated review copy:
+`/private/tmp/umf-stack-release-truss/docs/helix/04-build/temporal-interface-freeze.md`).
+This is an additive selected interface, not public/native qualification. Existing
+catalog/default profiles and CONTRACT-075 are unchanged. No new inspection
+signature is defined here; consume the separately frozen inspectAccessViews API.
+
+In `python/umf_access/src/umf_access/engine_catalog.py`, add keyword-only
+`temporal_profile: str | None = None` to EngineRead.build and compile_original.
+None preserves existing behavior. Exact `umf.weft-binding-temporal/0.2` requires
+method `truss-runtime-temporal`, selecting engine read/page0.4. That method without
+this explicit profile, other method/profile combinations and unknown profiles
+refuse. Existing unrelated keyword arguments/defaults remain unchanged.
+Temporal navigation/order_key arguments refuse. Page requires page_size1..999
+and explicit selected_key equal to original RecordView.selectedKey, entirely
+required string components. Read has neither argument. No temporalKeys or
+numeric selected-Key paging is admitted.
+
+EngineRead.from_original retains its existing signature and exact input string;
+engine0.4 selects a closed umf.engine-catalog/0.4 wrapper with the same
+{version,programJson,parameters,outputs,stageOne,catalogDigest} members.
+programJson MUST preserve the complete original compiler response string;
+originals() returns it unchanged. Reparse/re-serialization MUST NOT replace it.
+Validate whole request/artifact/ordered parameters/SQL/outputs/source checks/caps/
+ABI and owner structuralDigest0.4. No dropping unknown owner members to compare.
+
+The exact compiler wire, temporal output descriptor, page/continuation metadata
+and four JSON-string checker responses are F4–F6 of the integration contract.
+Temporal output decoder is truss-temporal/0.2, explicitly carrying kind and
+umf.weft-binding-temporal/0.2, with full original source Identity, representation,
+modelPins and admitted missing/null signature. Use existing generated metadata
+and strict CONTRACT-075 codecs to distinguish date, aware fixed-offset instant
+and naive local. Python datetime annotation alone cannot distinguish the kinds.
+Temporal parameters use a separate {name:{kind,value}} inventory, never ordinary
+string inference. Existing generated MISSING/None distinctions remain exact.
+
+UMF remains inert: no SQL generation, native connection/capture or continuation
+invention. The supported Truss-owned target performs shape/current checking and
+native/final authority. Generic/unqualified targets refuse the new tuple before
+execution. Original grammar stays at most32 ASCII characters and1–6 fraction
+digits, including zero-only excess-digit refusal. Unknown selected refinements
+or mixed profiles refuse; old wrapper/carrier meaning cannot be relabeled.
