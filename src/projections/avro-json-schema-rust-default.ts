@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError, type Document} from "../model/types";
-import type {AvroDocumentBindings, AvroDocumentProjection} from "./avro-json-schema";
+import type {AvroDocumentBindings, AvroDocumentProjection} from "./avro-json-schema-types";
 
 type NativeErrorGuard = (error: unknown) => boolean;
 

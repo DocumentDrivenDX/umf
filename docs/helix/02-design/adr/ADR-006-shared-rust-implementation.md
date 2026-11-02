@@ -77,9 +77,11 @@ Cross-runtime tests remain necessary because host admission itself can lose mean
 ### Over a full rewrite before any cutover
 
 Porting the generator's dependency closure first creates an independently useful
-V8-free Python milestone. Existing TypeScript remains a temporary differential
-reference until each operation family passes its semantic and native gates.
-This does not reduce the final migration scope.
+V8-free Python milestone. Once a Rust operation family owns the public runtime,
+delete its superseded TypeScript semantic implementation and obsolete consumers. This prerelease cleanup
+has no compatibility, differential-reference or archive retention obligation. Keep
+purposeful host wrappers, examples, development tooling, static contracts and
+explicit compiler interop; none may retain a second semantic owner.
 
 ## Consequences
 

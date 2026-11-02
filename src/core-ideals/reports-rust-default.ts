@@ -7,10 +7,10 @@ import type {CoreKindDeclaration} from '../model/field-kind';
 import type {FieldPostgresqlRequest} from './field-postgresql-projection';
 import type {RecordPostgresqlRequest} from './record-postgresql-projection';
 import type {PostgresqlDdlKindRequest,PostgresqlDdlKinds} from './postgresql-ddl-kinds';
-import type {NativeFieldClassification,FieldClassificationInspection} from './classification-report';
-import type {AuthoredFieldProjection,FieldProjectionInspection} from './field-report';
-import type {AuthoredRecordProjection,RecordProjectionInspection} from './record-report';
-import type {NativeStructuredClassification,StructuredClassificationInspection} from './structured-report';
+import type {NativeFieldClassification,FieldClassificationInspection} from './report-types';
+import type {AuthoredFieldProjection,FieldProjectionInspection} from './report-types';
+import type {AuthoredRecordProjection,RecordProjectionInspection} from './report-types';
+import type {NativeStructuredClassification,StructuredClassificationInspection} from './report-types';
 
 type Guard=(error:unknown)=>boolean;
 type Dispatcher={['core-ideal-reports']:ReportOperations};

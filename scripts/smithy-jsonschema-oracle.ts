@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {parseNativeJson} from '../src/model/native-json';
 import {ensureSmithyRuntime} from './smithy-runtime';
-import {importSmithySources,projectSmithyToJsonSchema,createSmithyJavaScriptJsonSchemaBackend,smithyJsonSchemaProjectionSchema,smithyAssemblyResultSchema,coreSchema,readDocument,writeDocument,exportJsonSchema} from '../src';
+import {importSmithySources,projectSmithyToJsonSchema,createSmithyJavaScriptJsonSchemaBackend,smithyJsonSchemaProjectionSchema,smithyAssemblyResultSchema,coreSchema,readDocument,writeDocument,exportJsonSchema} from '../src/index-node-v4';
 import {createValidator} from '../src/validation/schema';
 const serviceContext=process.argv.includes('--service-context');
 const withRootDefinition=serviceContext||process.argv.includes('--root-definition');

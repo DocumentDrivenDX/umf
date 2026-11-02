@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../model/types';
 import type {TypeSpecJsonSchemaEmission} from '../adapters/typespec/report-types';
-import type {TypeSpecJsonSchemaPolicy} from './typespec-json-schema';
-import type {SmithyJsonSchemaBackend,SmithyJsonSchemaPolicy,SmithyJsonSchemaProjection} from './smithy-json-schema';
+import type {TypeSpecJsonSchemaPolicy} from './typespec-json-schema-types';
+import type {SmithyJsonSchemaBackend,SmithyJsonSchemaPolicy,SmithyJsonSchemaProjection} from './smithy-json-schema-types';
 import type {SmithyAssemblyResult} from '../adapters/smithy/assembly';
 import type {ProjectionIssue} from './json-schema-protobuf';
 

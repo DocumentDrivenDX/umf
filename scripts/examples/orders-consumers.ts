@@ -9,8 +9,7 @@ import {importOpenapiDocument,exportOpenapiDocument,getOpenapiNode} from '../../
 import {getDddDefinition,inspectDdd} from '../../src/extensions/ddd';
 import {renderTree} from '../../src/model/native-json';
 import {readJsonValue} from '../../src/model/serialization';
-import {projectTableSpecToAvro} from '../../src/projections/tablespec-avro';
-import {projectAvroToJsonSchema} from '../../src/projections/avro-json-schema';
+import type {projectAvroToJsonSchema,projectTableSpecToAvro} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 
 export function ordersModel(unknownVocabulary=false):Document {
@@ -29,16 +28,17 @@ export function ordersModel(unknownVocabulary=false):Document {
 }
 
 const xml=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]!));
-export function generateOrdersConsumers(input:Document){
+export type OrdersProjectionRuntime={projectTableSpecToAvro:typeof projectTableSpecToAvro;projectAvroToJsonSchema:typeof projectAvroToJsonSchema};
+export function generateOrdersConsumers(input:Document,projectors:OrdersProjectionRuntime){
  const source=copyJson(input) as Document;
  // Each adapter checks its own native contract; core validation alone cannot do that.
  exportTableSpec(source);exportOpenapiDocument(source);
  if(!inspectDdd(source).valid)throw Error('Invalid domain model');
  const selection=selectCoreElements(source,{references:'transitive',modules:['table','schema']});
- const avro=projectTableSpecToAvro(source,{id:'example:orders-avro',recordName:'OrderRequest',namespace:'example.sales',fields:{order_id:{name:'orderId',representation:'string',nullable:'source'},quantity:{name:'quantity',representation:'int32',nullable:'source'},active:{name:'isActive',representation:'boolean',nullable:'source'}},lossPolicy:'allow-reported-loss'});
+ const avro=projectors.projectTableSpecToAvro(source,{id:'example:orders-avro',recordName:'OrderRequest',namespace:'example.sales',fields:{order_id:{name:'orderId',representation:'string',nullable:'source'},quantity:{name:'quantity',representation:'int32',nullable:'source'},active:{name:'isActive',representation:'boolean',nullable:'source'}},lossPolicy:'allow-reported-loss'});
  if(avro.status!=='projected'||!avro.target)throw Error('Unsupported table shape');
  if(source.modules.find(m=>m.id==='table')!.elements.length!==avro.mappings.length)throw Error('Demo refuses unmapped columns');
- const document=projectAvroToJsonSchema(avro.target,{id:'example:orders-json',schemaId:'urn:example:orders-dto',long:'decimal-string',bytes:'hex-string',union:'untagged',lossPolicy:'allow-reported-loss'});
+ const document=projectors.projectAvroToJsonSchema(avro.target,{id:'example:orders-json',schemaId:'urn:example:orders-dto',long:'decimal-string',bytes:'hex-string',union:'untagged',lossPolicy:'allow-reported-loss'});
  if(document.status!=='projected'||!document.nativeSchema)throw Error('Unsupported DTO projection');
  const operationPath='/paths/~1orders/post';
  const operation=readJsonValue(renderTree(getOpenapiNode(source,operationPath)),'json') as Record<string,any>;
@@ -76,8 +76,8 @@ export function generateOrdersConsumers(input:Document){
 }
 
 /** Compile once per source. No coercion, missing defaults, discarded input keys, or network. */
-export function compileOrdersTransform(source:Document){
- const bundle=generateOrdersConsumers(source),ajv=createValidator(false),target=ajv.compile(bundle.validator.schema),service=ajv.compile(bundle.validator.serviceSchema);
+export function compileOrdersTransform(source:Document,projectors:OrdersProjectionRuntime){
+ const bundle=generateOrdersConsumers(source,projectors),ajv=createValidator(false),target=ajv.compile(bundle.validator.schema),service=ajv.compile(bundle.validator.serviceSchema);
  const fields=bundle.transform.fields.map(f=>({source:f.source,target:f.target}));
  return {bundle,run(input:unknown){
   const row=copyJson(input);
