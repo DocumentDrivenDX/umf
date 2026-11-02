@@ -263,6 +263,7 @@ _EXPECTED_ROOT_TREES = {
     "bindings/core/python",
     "bindings/core/node",
     "bindings/core/wasm",
+    "bindings/pack-tools/wasm",
 }
 _EXPECTED_EXCLUDED_DIRS = {
     ".git",
