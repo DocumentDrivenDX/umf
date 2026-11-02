@@ -76,7 +76,7 @@ jobs:
         run: |
           python3 scripts/build-saga-package.py --check
           python3 scripts/check-release-versions.py
-          uv run --isolated --no-project --with pytest==8.4.2 --with packaging==26.3 python -m pytest python/tests/test_distribution_artifact.py::test_native_workspace_members_are_in_sdist_closure -q
+          uv run --isolated --no-project --with pytest==8.4.2 --with packaging==26.3 python -m pytest python/tests/test_distribution_artifact.py::test_native_workspace_members_are_in_sdist_closure python/tests/test_distribution_artifact.py::test_rust_successor_wheel_limits_preserve_historical_profiles python/tests/test_distribution_artifact.py::test_rust_successor_wheel_limits_refuse_oversized_inputs -q
           bun run check:rust-boundaries
           python3 -m unittest discover -s tests/saga -p 'test_*.py' -v
       - name: Build shared engine and test resources

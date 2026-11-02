@@ -51,6 +51,10 @@ def test_native_append_retains_entry_member_order_and_unchanged_prefix():
     assert result["status"] == "transformed"
     assert_ordered_value(result["added"], entries)
     offset = result["unchangedPrefixBytes"]
+    # Native JSON numbers retain their IEEE-754 wire representation. The byte
+    # count must be exactly integral before it becomes a Python slice index.
+    assert type(offset) in (int, float) and offset >= 0 and offset == int(offset)
+    offset = int(offset)
     output = parquet.export(result["output"])
     assert output[:offset] == data[:offset]
     assert parquet.export(source) == data

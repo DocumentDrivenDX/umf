@@ -29,6 +29,11 @@ Duplicate fragment-navigation events no longer replace a newly focused definitio
 finder. Twenty real-browser ontology checks pass on rebuilt, verified assets.
 The trusted Python publisher allows the exact 0.10.7 successor while retaining
 its historical 0.10.2 route and refusing unqualified versions.
+The complete native engine and bundled CLI use an exact Python 0.10.7 wheel
+profile: at most 64 MiB compressed archive/selected family and 128 MiB expanded
+contents. Historical compact profiles, 16 MiB source archives and 16 MiB pinned
+repair-tool acquisition limits are unchanged. The Mac wheel is about 29 MiB
+compressed and 94 MiB expanded; no old asset is relabeled.
 Core documents remain 0.10.0. Existing public archives remain unchanged.
 
 ## Audience and Channels
