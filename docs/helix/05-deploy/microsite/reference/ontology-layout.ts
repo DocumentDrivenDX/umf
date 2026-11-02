@@ -1,5 +1,24 @@
 import {graphlib,layout} from '@dagrejs/dagre';
 
+/** Compatibility for the still-pinned published schema browser 2.0 only.
+ * The 2.1 candidate owns Lini geometry and never enters this path. Remove this
+ * shim with the public browser pin upgrade; don't patch the installed package. */
+export function legacyGraphLayout(svg:SVGSVGElement,model:{records:{id:string}[];edges:{id:string;source:string;target:string}[]},focus:string){
+ const edges=focus?model.edges.filter(edge=>edge.source===focus||edge.target===focus):model.edges;
+ const ids=new Set([focus,...edges.flatMap(edge=>[edge.source,edge.target])]);
+ const records=focus?model.records.filter(record=>ids.has(record.id)):model.records;
+ const nodes=[...svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect record "]')],links=[...svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect relationship "]')];
+ const original=nodes.map(node=>{const rect=node.querySelector('rect')!;return {x:Number(rect.getAttribute('x')),y:Number(rect.getAttribute('y'))};});
+ const sizes=records.map((record,index)=>{const node=nodes[index]!,rect=node.querySelector('rect')!,text=node.querySelector('text')!,width=Math.ceil(Math.max(140,text.getComputedTextLength()+24));rect.setAttribute('width',String(width));rect.setAttribute('height','64');node.querySelector('.map-count')!.setAttribute('y',String(original[index]!.y+48));node.dataset.modelId=record.id;return {id:record.id,width};});
+ const layouts=balancedLayouts(sizes,edges);
+ return (width:number,height:number)=>{
+  const chosen=layouts.reduce((best,next)=>Math.min(width/next.width,height/next.height)>Math.min(width/best.width,height/best.height)?next:best);
+  nodes.forEach((node,index)=>{const position=chosen.nodes.get(records[index]!.id)!;node.setAttribute('transform',`translate(${position.x-original[index]!.x} ${position.y-original[index]!.y})`);});
+  links.forEach((node,index)=>{const edge=edges[index]!,geometry=chosen.edges.get(edge.id)!;node.dataset.source=edge.source;node.dataset.target=edge.target;node.querySelector('path')!.setAttribute('d',geometry.path);const circle=node.querySelector('circle')!,text=node.querySelector('text')!;circle.setAttribute('cx',String(geometry.x));circle.setAttribute('cy',String(geometry.y));text.setAttribute('x',String(geometry.x));text.setAttribute('y',String(geometry.y+4));});
+  svg.setAttribute('viewBox',`0 0 ${chosen.width} ${chosen.height}`);return chosen;
+ };
+}
+
 interface LayoutRecord {id:string;width:number}
 interface LayoutEdge {id:string;source:string;target:string}
 export interface BalancedLayout {

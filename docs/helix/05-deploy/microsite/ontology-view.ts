@@ -1,5 +1,4 @@
 import {renderRecordMap} from '../schema-browser/components';
-import {relationshipGeometry} from './ontology-layout';
 import {displayLabel} from './presentation';
 import {pretty as prettyValue} from '../schema-browser/format-runtime';
 import {key,type Parsed,type Definition,type Entry} from './explorer-model';
@@ -61,11 +60,12 @@ export function renderOntology(root:HTMLElement,parsed:Parsed,entry:Entry,entrie
  const map=section(target?'Relationship neighborhood':'Relationship map');
  const initial=params.get('focus')??target?.key??(edge?.value.source?.[0]?endpointKey(edge.value.source[0]):undefined)??'';
  const binary=model.edges.filter(e=>e.value.source?.length===1&&e.value.target?.length===1);
- renderRecordMap(map,{records:model.records.map(r=>({id:r.key,label:pretty(r.title),properties:(r.value.members as any[]??[]).length})),edges:binary.map(e=>({id:e.key,source:endpointKey(e.value.source[0]),target:endpointKey(e.value.target[0]),label:String(e.value.name??e.value.id)+' · '+span(e.value.sourceMultiplicity)+' → '+span(e.value.targetMultiplicity),directed:e.value.directed===true}))},{focus:initial,annotations,onFocusChange:(focus)=>{const next=new URLSearchParams(location.hash.slice(1));next.set('focus',focus);history.replaceState(null,'',location.href.split('#')[0]+'#'+next);},onNavigate:(id,kind)=>{location.hash=href(kind==='relationship'?{relationship:id}:{definition:id});}});
+ const rendering=renderRecordMap(map,{records:model.records.map(r=>({id:r.key,label:pretty(r.title),properties:(r.value.members as any[]??[]).length})),edges:binary.map(e=>({id:e.key,source:endpointKey(e.value.source[0]),target:endpointKey(e.value.target[0]),label:String(e.value.name??e.value.id)+' · '+span(e.value.sourceMultiplicity)+' → '+span(e.value.targetMultiplicity),directed:e.value.directed===true}))},{focus:initial,annotations,onFocusChange:(focus)=>{const next=new URLSearchParams(location.hash.slice(1));next.set('focus',focus);history.replaceState(null,'',location.href.split('#')[0]+'#'+next);},onNavigate:(id,kind)=>{location.hash=href(kind==='relationship'?{relationship:id}:{definition:id});}});
  if(binary.length!==model.edges.length)map.append(el('p',`${model.edges.length-binary.length} relationships have multiple or unspecified endpoints; inspect their full declarations in Relationships. They are not drawn as binary arrows.`));
  const list=section('Relationships');for(const e of model.edges){const p=el('p');p.append(link(String(e.value.name??e.value.id),{relationship:e.key}));list.append(p);}if(!model.edges.length)list.append(el('p','None declared.'));
  const hierarchy=section('Records and properties');for(const r of model.records){const d=el('details');d.append(el('summary',pretty(r.title)),link('Open record',{definition:r.key}));for(const m of r.value.members as any[]??[]){const p=el('p');p.append(ref(m.field??m));d.append(p);}hierarchy.append(d);}
  const other=parsed.definitions.filter(d=>d.value.kind!=='record'&&d.value.kind!=='field');if(other.length){const b=section('Other definitions');for(const d of other)b.append(link(d.title,{definition:d.key}));}
  const unowned=model.fields.filter(d=>!model.records.some(r=>(r.value.members as any[]??[]).some(m=>endpointKey(m.field??m)===d.key)));if(unowned.length){const b=section('Properties without declared record membership');for(const d of unowned)b.append(link(d.title,{definition:d.key}));}
  raw(section('Retained source metadata'),'Original document',parsed.document);
+ return rendering.ready;
 }

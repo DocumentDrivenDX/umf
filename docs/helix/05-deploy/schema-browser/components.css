@@ -19,3 +19,8 @@
 .umf-record-map-view [data-status="changed"],.umf-document-diff [data-status="changed"]{color:var(--umf-changed,light-dark(#704600,#f2c46d))}
 .umf-record-map-view [data-status="removed"],.umf-document-diff [data-status="removed"]{color:var(--umf-removed,light-dark(#8e2424,#f4a0a8))}
 .umf-record-map-view select:focus-visible{outline:3px solid var(--umf-focus,#467ac2);outline-offset:3px}
+
+/* Lini owns geometry; the host contains scrolling and marks interaction. */
+.umf-record-map-view .lini-drawing{min-width:0;overflow:auto}.umf-record-map-view svg [role="link"]{cursor:pointer}.umf-record-map-view svg [role="link"]:focus-visible{outline:3px solid var(--umf-focus,#467ac2);outline-offset:3px}.umf-record-map-view svg [data-status="created"]{filter:drop-shadow(0 0 2px #185e35)}.umf-record-map-view svg [data-status="removed"]{opacity:.65}
+
+.umf-record-map-view .map-controls label{display:flex;align-items:center;gap:.5rem;min-width:0;max-width:100%}.umf-record-map-view .map-controls select{min-width:0;max-width:100%}

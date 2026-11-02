@@ -1,5 +1,5 @@
 import {renderRecordMap} from '@documentdrivendx/umf-schema-browser';
-import {balancedLayouts} from './ontology-layout';
+import {legacyGraphLayout} from './ontology-layout';
 import {definitionFinder} from './definition-finder';
 import {selfModelGraph,type SelfModelCatalog,type ReaderCatalog} from '../../reference/model';
 const el=(tag:string,text?:string,cls?:string)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
@@ -51,6 +51,7 @@ function shapeView(shape:any,all:any[],seen=new Set<string>()):HTMLElement{
  return box;
 }
 // The host owns viewport sizing; the released renderer owns nodes and relationships.
+const graphRenderers=new WeakMap<HTMLElement,{destroy:()=>void}>();
 const graphViews=new WeakMap<HTMLElement,{dispose:()=>void;zoom:number|null;left:number;top:number}>();
 function graphViewport(map:HTMLElement,root:HTMLElement,model:ReturnType<typeof selfModelGraph>,focus:string){
  const previous=graphViews.get(root);previous?.dispose();
@@ -59,23 +60,13 @@ function graphViewport(map:HTMLElement,root:HTMLElement,model:ReturnType<typeof 
  const relationships=map.querySelector('.map-relationships')!,legend=el('details',undefined,'ontology-connections');legend.append(el('summary','Connections · '+relationships.childElementCount),relationships);canvas.append(legend);
  const zoomControls=el('div',undefined,'graph-zoom'),status=el('output');status.setAttribute('aria-live','polite');
  const state={dispose:()=>{},zoom:previous?.zoom??null,left:previous?.left??0,top:previous?.top??0};
- // Reflow the released renderer's existing SVG elements; keep its navigation,
- // labels, markers and navigation intact; Dagre routes edges between nodes.
- const edges=focus?model.edges.filter(e=>e.source===focus||e.target===focus):model.edges;
- const ids=new Set([focus,...edges.flatMap(e=>[e.source,e.target])]);const records=focus?model.records.filter(r=>ids.has(r.id)):model.records;
- const recordNodes=Array.from(svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect record "]')),edgeNodes=Array.from(svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect relationship "]'));
- const original=recordNodes.map(n=>{const r=n.querySelector('rect')!;return {x:Number(r.getAttribute('x')),y:Number(r.getAttribute('y'))};});
- const sizes=records.map((record,i)=>{const node=recordNodes[i]!,rect=node.querySelector('rect')!,text=node.querySelector('text')!,width=Math.ceil(Math.max(140,text.getComputedTextLength()+24));rect.setAttribute('width',String(width));rect.setAttribute('height','64');node.querySelector('.map-count')!.setAttribute('y',String(original[i]!.y+48));node.dataset.modelId=record.id;return {id:record.id,width};});
- const layouts=balancedLayouts(sizes,edges);
- const note=document.createElementNS('http://www.w3.org/2000/svg','text');note.textContent='Standalone definitions';note.setAttribute('class','graph-standalone');note.setAttribute('text-anchor','middle');svg.append(note);
- let width=880,height=180,fit=1;
+ // Preserve the published 2.0 pin until the separately qualified 2.1 package
+ // is released. Lini geometry is always native and only scaled by this host.
+ const legacy=map.querySelector<HTMLElement>('.umf-record-map-view')?.dataset.renderer?undefined:legacyGraphLayout(svg,model,focus);
+ let fit=1;
  const resize=()=>{
-  const chosen=layouts.reduce((best,next)=>Math.min(viewport.clientWidth/next.width,viewport.clientHeight/next.height)>Math.min(viewport.clientWidth/best.width,viewport.clientHeight/best.height)?next:best);
-  width=chosen.width;height=chosen.height;
-  recordNodes.forEach((node,i)=>{const p=chosen.nodes.get(records[i]!.id)!;node.setAttribute('transform',`translate(${p.x-original[i]!.x} ${p.y-original[i]!.y})`);});
-  edgeNodes.forEach((node,i)=>{const geometry=chosen.edges.get(edges[i]!.id)!;node.dataset.source=edges[i]!.source;node.dataset.target=edges[i]!.target;node.querySelector('path')!.setAttribute('d',geometry.path);const circle=node.querySelector('circle')!,text=node.querySelector('text')!;circle.setAttribute('cx',String(geometry.x));circle.setAttribute('cy',String(geometry.y));text.setAttribute('x',String(geometry.x));text.setAttribute('y',String(geometry.y+4));});
-  note.style.display=chosen.standalone?'':'none';if(chosen.standalone){note.setAttribute('x',String(chosen.standalone.x));note.setAttribute('y',String(chosen.standalone.y));}
-  svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
+  const {width,height}=legacy?.(viewport.clientWidth,viewport.clientHeight)??svg.viewBox.baseVal;
+  if(!width||!height)throw Error('Ontology renderer returned an empty viewport');
   fit=Math.min(viewport.clientWidth/width,viewport.clientHeight/height);const scale=state.zoom??fit;svg.style.width=width*scale+'px';svg.style.height=height*scale+'px';status.textContent=Math.round(scale*100)+'%';
  };
  const button=(title:string,action:()=>void)=>{const b=el('button',title) as HTMLButtonElement;b.type='button';b.onclick=action;zoomControls.append(b);};
@@ -89,6 +80,7 @@ function graphViewport(map:HTMLElement,root:HTMLElement,model:ReturnType<typeof 
 export function showOntology(root:HTMLElement,catalog:SelfModelCatalog,reader:ReaderCatalog){
  const keyboardNavigation=root.dataset.keyboardNavigation==='true';delete root.dataset.keyboardNavigation;
  root.onkeydown=event=>{if(event.key==='Enter'||event.key===' ')root.dataset.keyboardNavigation='true';};root.onpointerdown=()=>{delete root.dataset.keyboardNavigation;};
+ graphViews.get(root)?.dispose();graphRenderers.get(root)?.destroy();
  root.replaceChildren();const params=new URLSearchParams(location.hash.slice(1));const elements:any[]=catalog.document.modules.flatMap((m:any)=>m.elements.map((e:any)=>({...e,module:m.id}))),records=elements.filter(e=>e.kind==='record'),fields=elements.filter(e=>e.kind==='field');
  const requested=params.get('node'),decoded=requested?(()=>{try{return JSON.parse(requested);}catch{return null;}})():['umf','document'];
  if(!Array.isArray(decoded)||decoded.length!==2)throw Error('SELF_MODEL_LINK invalid node');const selected=elements.find(e=>e.module===decoded[0]&&e.id===decoded[1]);if(!selected||!['record','field'].includes(selected.kind))throw Error('SELF_MODEL_LINK unknown type');
@@ -107,10 +99,16 @@ export function showOntology(root:HTMLElement,catalog:SelfModelCatalog,reader:Re
  const recordOptions=el('div',undefined,'definition-options'),fieldOptions=el('div',undefined,'definition-options');recordList.append(recordOptions);fieldList.append(fieldOptions);add(recordOptions,records);add(fieldOptions,fields);list.append(recordList,fieldList);
  const graphRoute=(id:string)=>{const next=new URLSearchParams(route('ontology',id).slice(1));if(focus)next.set('focus',focus);return '#'+next;};
  if(graph.records.length){
-  renderRecordMap(map,graph,{focus,onNavigate:(id,kind)=>{if(kind==='relationship'){const edge=graph.edges.find(e=>e.id===id);if(edge)location.hash=graphRoute(JSON.parse(edge.source)[1])+'&edge='+encodeURIComponent(id);}else location.hash=graphRoute(JSON.parse(id)[1]);},onFocusChange:(next)=>{const params=new URLSearchParams(location.hash.slice(1));params.set('view','ontology');params.delete('edge');if(next){params.set('focus',next);params.set('node',next);}else params.delete('focus');const hash='#'+params;if(location.hash===hash)showOntology(root,catalog,reader);else location.hash=hash;}});
-  const current=owner?graph.records.findIndex(r=>r.id===JSON.stringify([owner.module,owner.id])):-1;
-  if(current>=0)map.querySelector(`[aria-label="Inspect record ${graph.records[current]!.label} · unchanged"]`)?.setAttribute('aria-current','true');
-  graphViewport(map,root,graph,focus);
+  const decorate=()=>{
+   if(!map.isConnected)return;
+   const current=owner?graph.records.findIndex(r=>r.id===JSON.stringify([owner.module,owner.id])):-1;
+   if(current>=0)map.querySelector(`[aria-label="Inspect record ${graph.records[current]!.label} · unchanged"]`)?.setAttribute('aria-current','true');
+   graphViewport(map,root,graph,focus);
+  };
+  map.addEventListener('umf:record-map-ready',decorate,{once:true});
+  const renderer=renderRecordMap(map,graph,{focus,onNavigate:(id,kind)=>{if(kind==='relationship'){const edge=graph.edges.find(e=>e.id===id);if(edge)location.hash=graphRoute(JSON.parse(edge.source)[1])+'&edge='+encodeURIComponent(id);}else location.hash=graphRoute(JSON.parse(id)[1]);},onFocusChange:(next)=>{const params=new URLSearchParams(location.hash.slice(1));params.set('view','ontology');params.delete('edge');if(next){params.set('focus',next);params.set('node',next);}else params.delete('focus');const hash='#'+params;if(location.hash===hash)showOntology(root,catalog,reader);else location.hash=hash;}});
+  graphRenderers.set(root,renderer);
+  if(map.querySelector('svg'))decorate();
  }
 
  const detail=el('section');detail.id='ontology-detail';detail.tabIndex=-1;content.append(detail);detail.append(el('p',selected.kind==='record'?'Record definition':'Field definition','eyebrow'),el('h3',selected.name??selected.id),el('p',selected.description??''));

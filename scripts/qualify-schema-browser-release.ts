@@ -100,8 +100,8 @@ async function qualify(args:Record<string,string>):Promise<void>{
   'schema-browser package publish target differs from the reviewed public npm registry');
 
  const buildA=join(output,'build-a'),buildB=join(output,'build-b');
- await run([process.execPath,'docs/helix/05-deploy/schema-browser/build.ts',buildA],'build-a',root,logs);
- await run([process.execPath,'docs/helix/05-deploy/schema-browser/build.ts',buildB],'build-b',root,logs);
+ await run([process.execPath,'scripts/build-schema-browser.ts',buildA],'build-a',root,logs);
+ await run([process.execPath,'scripts/build-schema-browser.ts',buildB],'build-b',root,logs);
  const integrity=await import(pathToFileURL(join(root,'scripts/schema-browser-integrity.ts')).href);
  const authority=await import(pathToFileURL(join(root,'scripts/check-core-authority.ts')).href);
  const first=await integrity.verifyPackage(buildA),second=await integrity.verifyPackage(buildB);
@@ -165,7 +165,7 @@ async function qualify(args:Record<string,string>):Promise<void>{
   await page.locator('#select').click();
   await page.frameLocator('iframe').locator('#inspector h2').filter({hasText:'Customer'}).waitFor({timeout:30000});
   const csp=await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute('content');
-  assert(csp&&!csp.includes('unsafe-eval'),'installed example does not use the reviewed strict CSP');
+  assert(csp&&!csp.includes("'unsafe-eval'"),'installed example does not use the reviewed strict CSP');
   assert(external.length===0&&errors.length===0,'installed strict-CSP Chromium run made external requests or emitted errors');
   browserProof={browser:browser.version(),csp,externalRequests:external,errors,selectedRecord:'Customer'};
  }finally{await browser.close();server.stop(true);}
@@ -208,7 +208,7 @@ async function verifyAssets(args:Record<string,string>):Promise<void>{
  assert(Array.isArray(receipt.browser?.errors)&&receipt.browser.errors.length===0&&
   Array.isArray(receipt.browser?.externalRequests)&&receipt.browser.externalRequests.length===0&&
   receipt.browser.selectedRecord==='Customer'&&typeof receipt.browser.csp==='string'&&
-  !receipt.browser.csp.includes('unsafe-eval'),'producer receipt browser proof is incomplete');
+  !receipt.browser.csp.includes("'unsafe-eval'"),'producer receipt browser proof is incomplete');
  const archiveSha=await hashFile(join(directory,archiveName));
  assert(archiveSha===receipt.archiveSha256,'release archive differs from producer receipt');
  const sums=await Bun.file(join(directory,'SHA256SUMS')).bytes();

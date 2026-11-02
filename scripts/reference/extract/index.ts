@@ -42,7 +42,7 @@ export async function extensions(profiles:any,schemaEntries:Entry[],apiEntries:E
 }
 export async function exportsInventory():Promise<Entry[]>{
  const pkg=await read('package.json');const configs=ts.readConfigFile(resolve(root,'tsconfig.json'),ts.sys.readFile);const parsed=ts.parseJsonConfigFileContent(configs.config,ts.sys,root);
- const sourceMap:Record<string,string>={'.':'src/index.ts','./loader-contract':'src/domain-packs/loader-contract.ts'};
+ const sourceMap:Record<string,string>={'.':'src/index.ts','./loader-contract':'src/domain-packs/loader-contract.ts','./runtime/wasm':'bindings/core/wasm/index.d.ts'};
  // These source-only conditions are migration probes, not published SDK API.
  const internalEntrypoints=new Set(['./reference','./rust-codegen-candidate/v2','./rust-codegen-candidate/v3','./rust-codegen-candidate/v4']);
  const declared=Object.keys(pkg.exports);
