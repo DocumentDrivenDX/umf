@@ -219,9 +219,11 @@ the verified 2,415-entry reference and iframe with no page/CSP errors. The exist
 host CSP, renderer package and reference semantic runtime remain unchanged.
 Deployment assembles the same hash-verified published cohort before sealing.
 Final TypeScript, Rust/access boundaries and 22-page signing inventory passed.
-[PR #85](https://github.com/DocumentDrivenDX/umf/pull/85) merged as
-`c9c324f5b3b790c62181bb3496e707a9c44ecb34`. The deployment-only
-[publication](https://github.com/DocumentDrivenDX/umf/actions/runs/41500261028)
+[PR #85](https://github.com/DocumentDrivenDX/umf/pull/85) and
+[the retry fix #86](https://github.com/DocumentDrivenDX/umf/pull/86) are merged.
+The final deployed revision is `fbbbc51d51fbd1982ff0a464d76331a175c49b3d`.
+The deployment-only
+[publication](https://github.com/DocumentDrivenDX/umf/actions/runs/41501728883)
 succeeded without hosted compilation or behavioral tests. The public workbench,
 worker/WASM/catalog closure and registered build signature were verified;
 Chromium followed the homepage link and generated all three outputs without page
