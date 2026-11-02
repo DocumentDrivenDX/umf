@@ -349,13 +349,28 @@ impl CodegenResources {
         ]);
         let capabilities_compiled =
             CompiledSchema::compile(&capabilities_schema, &self.schema_resources, ctx)?;
+        // This registry is the private Action-inspection view. Saga payloads
+        // are checked by saga_compiled below, with SAGA_STRUCTURE/SAGA_LIMIT
+        // diagnostics. Validating them here as well poisons otherwise valid
+        // Action selector binding whenever a Saga declaration is malformed.
+        // Retain the exact namespace/version/scopes in this view; the original
+        // package and full schema remain the public profile and validator.
+        let mut inspection_package = umf_core::copy_json(&package, ctx)?;
+        let Value::Object(members) = &mut inspection_package else {
+            return Err(invalid_package());
+        };
+        let (_, payload_schema) = members
+            .iter_mut()
+            .find(|(name, _)| name == &Utf16::from("schema"))
+            .ok_or_else(invalid_package)?;
+        *payload_schema = Value::Bool(true);
         let mut registry = self.actions_registry.clone();
         register_package(
             &mut registry,
             &self.engine,
             &self.schema_resources,
-            &package,
-            &schema,
+            &inspection_package,
+            &Value::Bool(true),
             5,
             ctx,
         )?;
