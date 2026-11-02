@@ -1,0 +1,656 @@
+{
+  "schema": "umf-stack-release-closeout/1",
+  "client_date": "2026-11-01",
+  "observed_at_utc": "2026-11-02T03:22:53.082400+00:00",
+  "qualification_limit": "Registry metadata SHA-256 values are compared to GitHub server-reported asset digests. Previously published component claims retain their original release evidence; this audit does not requalify a mixed dependency cohort.",
+  "releases": [
+    {
+      "repository": "DocumentDrivenDX/umf",
+      "tag": "umf-v0.10.1",
+      "release_url": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.1",
+      "immutable": true,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "CI.log",
+          "digest": "sha256:621c881147e02ef951c2faacf467ab8329d329c50545d8464f65d2741161c458",
+          "size": 864364
+        },
+        {
+          "name": "linux-custody.json",
+          "digest": "sha256:d4da8da2a13c93abbe238f66df77362c537d4af0787256b2062575a481747c71",
+          "size": 11115
+        },
+        {
+          "name": "linux-qualification-evidence.zip",
+          "digest": "sha256:109c54dcceba56f01191d6f854b83ab435cf8afe0b88a82b13b568b9aaaff113",
+          "size": 97667686
+        },
+        {
+          "name": "macos-custody.json",
+          "digest": "sha256:61635295db4c920d6896996773685bcef99c9a43149e5edd4ea1f43f54488039",
+          "size": 11124
+        },
+        {
+          "name": "macos-qualification-evidence.zip",
+          "digest": "sha256:718065c24b7a44ee37b245ab11fbc60a432f2f02e664084470f52ec95a917704",
+          "size": 56885039
+        },
+        {
+          "name": "release-pins.json",
+          "digest": "sha256:0cea25b0280634a06fd6e150f5245fd16627507bdb31929abae56eccdab9aecc",
+          "size": 1366
+        },
+        {
+          "name": "RELEASE_NOTES.md",
+          "digest": "sha256:c28aea7a1f40c940979a96f14d69c95d0180d7668cee1791bc8aca3a3ca3b2ff",
+          "size": 2113
+        },
+        {
+          "name": "sdk-installed-custody.json",
+          "digest": "sha256:95be71e52509e979a54d4ebc756d2d8b61d90ec24c4788d0d78fc141526e8276",
+          "size": 10533
+        },
+        {
+          "name": "sdk-manifest.json",
+          "digest": "sha256:a9f9b527ed9cdec61f5c2ef937af5da414dca6527c39eaac80acb08a55c9be2e",
+          "size": 231262
+        },
+        {
+          "name": "SHA256SUMS",
+          "digest": "sha256:554895b9e09a730a12e3462912a5bdb31e6d5a07cab32805dcdaa82ecccb2972",
+          "size": 1026
+        },
+        {
+          "name": "umf-darwin-arm64",
+          "digest": "sha256:4cc6a82bdcb78c40498707aa9038666f342ed9685dd38bec2d72b7c07d089a01",
+          "size": 8225168
+        },
+        {
+          "name": "umf-linux-x64",
+          "digest": "sha256:f6747075a100e3d51ccb63b37393dbbdffd5612dc9c3385dac000705489cbb22",
+          "size": 10199096
+        },
+        {
+          "name": "umf-sdk.tgz",
+          "digest": "sha256:3d95fff822f4f44b3d1a8e56185c3697e94ee66f5315cda7389f5301f3d16d26",
+          "size": 32942467
+        }
+      ]
+    },
+    {
+      "repository": "DocumentDrivenDX/umf",
+      "tag": "python-v0.10.5",
+      "release_url": "https://github.com/DocumentDrivenDX/umf/releases/tag/python-v0.10.5",
+      "immutable": true,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "linux-custody.json",
+          "digest": "sha256:d4da8da2a13c93abbe238f66df77362c537d4af0787256b2062575a481747c71",
+          "size": 11115
+        },
+        {
+          "name": "linux-selection.json",
+          "digest": "sha256:05b07499f922a84ac4cfe3ce18b05a466534b3146cc590f871920bbb7038a4a8",
+          "size": 2462
+        },
+        {
+          "name": "macos-custody.json",
+          "digest": "sha256:61635295db4c920d6896996773685bcef99c9a43149e5edd4ea1f43f54488039",
+          "size": 11124
+        },
+        {
+          "name": "macos-selection.json",
+          "digest": "sha256:36f65ff6499c7e5dc2047eee8657417c045363e292aec9b0c98091c3acb8bbd5",
+          "size": 908
+        },
+        {
+          "name": "release-pins.json",
+          "digest": "sha256:57e8c90c2495d21e58057f2112696a385a670110df2987576ab96b0bf548af02",
+          "size": 670
+        },
+        {
+          "name": "RELEASE_NOTES.md",
+          "digest": "sha256:c86e777681b9b61933b3c92ab8d4fc4844955e38a353d5ca19710b224c03087c",
+          "size": 1568
+        },
+        {
+          "name": "SHA256SUMS",
+          "digest": "sha256:2f3672c921ffe3e9f01e7acbef3e182efb7b281ab1527a32bc43c487734cf8c0",
+          "size": 834
+        },
+        {
+          "name": "umf_core-0.10.5-cp311-abi3-macosx_11_0_arm64.whl",
+          "digest": "sha256:9213ff4b87649f551abcfdff40cdb6b0d75d619260988fa8ea4fe26cac7f6788",
+          "size": 3492921
+        },
+        {
+          "name": "umf_core-0.10.5-cp311-abi3-manylinux_2_34_x86_64.whl",
+          "digest": "sha256:cf33b833ff4eaa080f459cf3c93baa7e3b4e436dab5cd7853dd748e3c220dd16",
+          "size": 3699468
+        },
+        {
+          "name": "umf_core-0.10.5.tar.gz",
+          "digest": "sha256:f56bcced69e701d76e28958b36767fe9c7471ed78e3c6ab8106bac818100ed2c",
+          "size": 3312125
+        }
+      ],
+      "pypi": {
+        "distribution": "umf-core",
+        "version": "0.10.5",
+        "metadata_url": "https://pypi.org/pypi/umf-core/0.10.5/json",
+        "present": true,
+        "files": {
+          "umf_core-0.10.5-cp311-abi3-macosx_11_0_arm64.whl": "9213ff4b87649f551abcfdff40cdb6b0d75d619260988fa8ea4fe26cac7f6788",
+          "umf_core-0.10.5-cp311-abi3-manylinux_2_34_x86_64.whl": "cf33b833ff4eaa080f459cf3c93baa7e3b4e436dab5cd7853dd748e3c220dd16",
+          "umf_core-0.10.5.tar.gz": "f56bcced69e701d76e28958b36767fe9c7471ed78e3c6ab8106bac818100ed2c"
+        },
+        "github_digest_correspondence": {
+          "umf_core-0.10.5-cp311-abi3-macosx_11_0_arm64.whl": true,
+          "umf_core-0.10.5-cp311-abi3-manylinux_2_34_x86_64.whl": true,
+          "umf_core-0.10.5.tar.gz": true
+        }
+      }
+    },
+    {
+      "repository": "DocumentDrivenDX/umf",
+      "tag": "umf-v0.5.8",
+      "release_url": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.8",
+      "immutable": true,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "umf-sdk.tgz",
+          "digest": "sha256:2aaf24741aee1c135fade5b7631db90d710e6211977fb9ca7fcc080ea7fdf58d",
+          "size": 30834843
+        },
+        {
+          "name": "umf_access-0.1.0.dev8-py3-none-any.whl",
+          "digest": "sha256:1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+          "size": 580062
+        },
+        {
+          "name": "umf_codegen-0.1.0a5-py3-none-any.whl",
+          "digest": "sha256:36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+          "size": 261296
+        }
+      ],
+      "pypi": {
+        "distribution": "umf-access",
+        "version": "0.1.0.dev8",
+        "metadata_url": "https://pypi.org/pypi/umf-access/0.1.0.dev8/json",
+        "present": true,
+        "files": {
+          "umf_access-0.1.0.dev8-py3-none-any.whl": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23"
+        },
+        "github_digest_correspondence": {
+          "umf_access-0.1.0.dev8-py3-none-any.whl": true
+        }
+      }
+    },
+    {
+      "repository": "DocumentDrivenDX/umf",
+      "tag": "umf-v0.5.8",
+      "release_url": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.8",
+      "immutable": true,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "umf-sdk.tgz",
+          "digest": "sha256:2aaf24741aee1c135fade5b7631db90d710e6211977fb9ca7fcc080ea7fdf58d",
+          "size": 30834843
+        },
+        {
+          "name": "umf_access-0.1.0.dev8-py3-none-any.whl",
+          "digest": "sha256:1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+          "size": 580062
+        },
+        {
+          "name": "umf_codegen-0.1.0a5-py3-none-any.whl",
+          "digest": "sha256:36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+          "size": 261296
+        }
+      ],
+      "pypi": {
+        "distribution": "umf-codegen",
+        "version": "0.1.0a5",
+        "metadata_url": "https://pypi.org/pypi/umf-codegen/0.1.0a5/json",
+        "present": false
+      }
+    },
+    {
+      "repository": "DocumentDrivenDX/weft",
+      "tag": "v0.4.56",
+      "release_url": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.56",
+      "immutable": true,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "asset-inventory.json",
+          "digest": "sha256:a9d248684ab4714db6bb708bfc9685f15f5fa9fdddbd1fdfad99e7950a0f768d",
+          "size": 1464
+        },
+        {
+          "name": "qualification-0.4.56.json",
+          "digest": "sha256:674e06b8dd754b872a06fb06c3e7ea6fc890a2d00629e0a1917865991b92e84f",
+          "size": 199224
+        },
+        {
+          "name": "qualification-evidence-0.4.56.zip",
+          "digest": "sha256:21e3251a0c125ae35bd02f405df9c4304060c9c852fef4c3db9307b98bc6096e",
+          "size": 3059955
+        },
+        {
+          "name": "release-pins-0.4.56.json",
+          "digest": "sha256:61cdd7bb9163910e6d3807c40e3aec2ce38ebb0de2d4ea65322be1f5af5fc302",
+          "size": 1012
+        },
+        {
+          "name": "SHA256SUMS",
+          "digest": "sha256:9517c200f2059bf1280a8958fed05ec91fe21afbb7c059f208abc061516a8e0f",
+          "size": 841
+        },
+        {
+          "name": "umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+          "digest": "sha256:68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d",
+          "size": 11190603
+        },
+        {
+          "name": "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "digest": "sha256:2de2156e283c34e45154f5d9fbc83a3eb1dd43fad497d787509d66cc96cfbe5a",
+          "size": 13144681
+        },
+        {
+          "name": "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "digest": "sha256:32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+          "size": 14358901
+        },
+        {
+          "name": "v0.4.56.md",
+          "digest": "sha256:f76502c3754b27af4527dfd8446f7a895b89b740548ec1d7087a5fdcb4b7dcb8",
+          "size": 3171
+        }
+      ],
+      "pypi": {
+        "distribution": "umf-weft",
+        "version": "0.4.56",
+        "metadata_url": "https://pypi.org/pypi/umf-weft/0.4.56/json",
+        "present": true,
+        "files": {
+          "umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl": "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d",
+          "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "2de2156e283c34e45154f5d9fbc83a3eb1dd43fad497d787509d66cc96cfbe5a",
+          "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd"
+        },
+        "github_digest_correspondence": {
+          "umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl": true,
+          "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": true,
+          "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": true
+        }
+      }
+    },
+    {
+      "repository": "DocumentDrivenDX/tablespec",
+      "tag": "v0.0.15",
+      "release_url": "https://github.com/DocumentDrivenDX/tablespec/releases/tag/v0.0.15",
+      "immutable": true,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "release-manifest.json",
+          "digest": "sha256:b1f9ab30e4c091c61fb8a3b9c00c4e5e4feeb25a8a0c05a912a7357f75fce82a",
+          "size": 535
+        },
+        {
+          "name": "umf_tablespec-0.0.15-py3-none-any.whl",
+          "digest": "sha256:71300332e2be253b831a7d7e9ddb185cac09427fab37c042b48d57eccc793705",
+          "size": 900681
+        },
+        {
+          "name": "umf_tablespec-0.0.15.tar.gz",
+          "digest": "sha256:716dd0c89233e14f9d7659414c3a2981a6ecba6e5b29fa91cdd7e954c6f8c7ed",
+          "size": 41788131
+        }
+      ],
+      "pypi": {
+        "distribution": "umf-tablespec",
+        "version": "0.0.15",
+        "metadata_url": "https://pypi.org/pypi/umf-tablespec/0.0.15/json",
+        "present": true,
+        "files": {
+          "umf_tablespec-0.0.15-py3-none-any.whl": "71300332e2be253b831a7d7e9ddb185cac09427fab37c042b48d57eccc793705",
+          "umf_tablespec-0.0.15.tar.gz": "716dd0c89233e14f9d7659414c3a2981a6ecba6e5b29fa91cdd7e954c6f8c7ed"
+        },
+        "github_digest_correspondence": {
+          "umf_tablespec-0.0.15-py3-none-any.whl": true,
+          "umf_tablespec-0.0.15.tar.gz": true
+        }
+      }
+    },
+    {
+      "repository": "DocumentDrivenDX/truss",
+      "tag": "v0.0.52",
+      "release_url": "https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.52",
+      "immutable": true,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "SHA256SUMS",
+          "digest": "sha256:5bf3533b80e022bfe53f0ff9594c461f05fa137cd65cdc957f9792b5a8442534",
+          "size": 190
+        },
+        {
+          "name": "umf_truss-0.0.52-py3-none-any.whl",
+          "digest": "sha256:00d8b11abc83d9c84fa131ae6f3eef23ecad9d321d4b04a13641ed31c77e9747",
+          "size": 6844897
+        },
+        {
+          "name": "umf_truss-0.0.52.tar.gz",
+          "digest": "sha256:a20c817501c58cda6add1b0e14ea64f1a5d44c3d683666cc3ff9c8f35a2c4b8c",
+          "size": 7313742
+        }
+      ],
+      "pypi": {
+        "distribution": "umf-truss",
+        "version": "0.0.52",
+        "metadata_url": "https://pypi.org/pypi/umf-truss/0.0.52/json",
+        "present": false
+      }
+    },
+    {
+      "repository": "DocumentDrivenDX/arras",
+      "tag": "v0.6.5",
+      "release_url": "https://github.com/DocumentDrivenDX/arras/releases/tag/v0.6.5",
+      "immutable": true,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "arras-0.6.5-py3-none-any.whl",
+          "digest": "sha256:beed68b94567699313a44c5f8865ecfb6e1f34842d7c5ba5055ac866a664a98b",
+          "size": 5174102
+        },
+        {
+          "name": "arras-0.6.5.tar.gz",
+          "digest": "sha256:838105bd625bfd611c00fc80597a22b0419b3d40e1a92134fb3f83fa2e814e51",
+          "size": 12227950
+        },
+        {
+          "name": "documentdrivendx-arras-ui-0.6.5.tgz",
+          "digest": "sha256:26abe759e7bb918bf30c5144a34cff8deb7ecb4dd2ef531d41ec3ceab2155e0f",
+          "size": 2415122
+        },
+        {
+          "name": "installed-checks-public.json",
+          "digest": "sha256:0fb06c9dffa527ae50d3c8ad99dff54059d084fef52e3f7311b9e8e1dabb0b90",
+          "size": 26422
+        },
+        {
+          "name": "local-release-proof.json",
+          "digest": "sha256:a2789f61dccc3be75c63ed5adb1435d7a8365d8941d3496eb47448e1dfbea238",
+          "size": 95745
+        },
+        {
+          "name": "metadata-correspondence.json",
+          "digest": "sha256:e1c7f9cfdaa58613b21b82419117da373cfa8d9d6386aed8fb948927e2218c81",
+          "size": 60714
+        },
+        {
+          "name": "qualification-inputs-ebeb.tar.gz",
+          "digest": "sha256:6d9d0ce52b9338efcac2eb6bce1aff692e038a526d09942f42cc7306aee19ccc",
+          "size": 19787687
+        },
+        {
+          "name": "SHA256SUMS",
+          "digest": "sha256:dbe547fe5f05386759f6fed80fc85991b676e8ca6eeb67788b2b84dbba1919f8",
+          "size": 662
+        }
+      ],
+      "pypi": {
+        "distribution": "arras",
+        "version": "0.6.5",
+        "metadata_url": "https://pypi.org/pypi/arras/0.6.5/json",
+        "present": true,
+        "files": {
+          "arras-0.6.5-py3-none-any.whl": "beed68b94567699313a44c5f8865ecfb6e1f34842d7c5ba5055ac866a664a98b",
+          "arras-0.6.5.tar.gz": "838105bd625bfd611c00fc80597a22b0419b3d40e1a92134fb3f83fa2e814e51"
+        },
+        "github_digest_correspondence": {
+          "arras-0.6.5-py3-none-any.whl": true,
+          "arras-0.6.5.tar.gz": true
+        }
+      }
+    },
+    {
+      "repository": "DocumentDrivenDX/umf-visual",
+      "tag": "v0.4.0",
+      "release_url": "https://github.com/DocumentDrivenDX/umf-visual/releases/tag/v0.4.0",
+      "immutable": false,
+      "prerelease": false,
+      "github_assets": [
+        {
+          "name": "documentdrivendx-umf-visual-0.4.0.tgz",
+          "digest": "sha256:ae7195a4810d9b019ea61e18c31dff301b02bb5184684744bf2c9fbf4aeb071e",
+          "size": 385545
+        },
+        {
+          "name": "publication-receipt.json",
+          "digest": "sha256:d71141cbd4a0f80ed174e8551f2dc467ee6488a04b31769baa809d4caeafd484",
+          "size": 727731
+        },
+        {
+          "name": "SHA256SUMS",
+          "digest": "sha256:8d2b4fc48c4d0b645f9060761b0fcd5c2ebe168c7b493a7c730aa7f60b03467e",
+          "size": 392
+        },
+        {
+          "name": "umf-visual-catalog-0.4.0.tar.gz",
+          "digest": "sha256:1208de21fd4ab4a02b6c2941c05d7596b3d0c481051c555f49fc516cf3cf6ae2",
+          "size": 10681012
+        },
+        {
+          "name": "umf-visual-evidence-0.4.0.tar.gz",
+          "digest": "sha256:c62fbd62d72c87d2775a657dea1edfb196b433e7cc1b34b9b3dd99a3ce32cb5a",
+          "size": 6815358
+        }
+      ]
+    },
+    {
+      "repository": "DocumentDrivenDX/ashlar",
+      "tag": "v0.1.0.dev1",
+      "release_url": "https://github.com/DocumentDrivenDX/ashlar/releases/tag/v0.1.0.dev1",
+      "immutable": false,
+      "prerelease": true,
+      "github_assets": [
+        {
+          "name": "ashlar_graph_toolkit-0.1.0.dev1-py3-none-any.whl",
+          "digest": "sha256:e7f67a1a99ddb0e57da9bb7102898a136c8885dd81e4a9e03c3f5260d4526811",
+          "size": 2022660
+        },
+        {
+          "name": "dependency-and-payload-verification.json",
+          "digest": "sha256:143bf439235f8f17059285f398b789de8200d2c7f29a428b002233f88fcc27d1",
+          "size": 5103
+        },
+        {
+          "name": "qualification-receipt.json",
+          "digest": "sha256:d8b76c3058a52921502c11bfe973f8d14f06df36519d0026ebdc6aa88fbe02d9",
+          "size": 1797
+        },
+        {
+          "name": "RELEASE-NOTES.md",
+          "digest": "sha256:93477a0c1c9e914767aa67158ccfa1063da5d1432e1f96a13fbbe24f60737ca9",
+          "size": 1629
+        },
+        {
+          "name": "SHA256SUMS",
+          "digest": "sha256:86c5988c2120fac1573cf78215195ae58e49064b0dac810617c8c1b745dfb788",
+          "size": 675
+        },
+        {
+          "name": "stack-cohort.json",
+          "digest": "sha256:f494de985785f91d42d13f9ee19ceb4c823dd9cc20bedc8a507bea95870a8123",
+          "size": 3748
+        },
+        {
+          "name": "umf-installed-snapshot.json",
+          "digest": "sha256:72a49b19dd9e6f7646c334a71f5baa3d2567737f47be231f0c02ee9d9cf0bf38",
+          "size": 341
+        },
+        {
+          "name": "weft-packaging-verification.json",
+          "digest": "sha256:b042d38a714c1e72d77351ece86f1b1c613a8d4cf09089863d974ce7487e8276",
+          "size": 468
+        }
+      ]
+    },
+    {
+      "repository": "DocumentDrivenDX/batten",
+      "tag": "v0.1.0-alpha.1",
+      "release_url": "https://github.com/DocumentDrivenDX/batten/releases/tag/v0.1.0-alpha.1",
+      "immutable": false,
+      "prerelease": true,
+      "github_assets": [
+        {
+          "name": "batten-v0.1.0-alpha.1-site.zip",
+          "digest": "sha256:9a7f98995a6b78a12b85e06dda308680d2649a99b2ff96c9b15788315b57e188",
+          "size": 30926
+        },
+        {
+          "name": "SHA256SUMS",
+          "digest": "sha256:977964dad1ebd98ac84eb945dc11ee87838489af935c0bd36343449dcbd49170",
+          "size": 97
+        }
+      ]
+    }
+  ],
+  "npm": [
+    {
+      "name": "@documentdrivendx/umf-schema-browser",
+      "version": "2.0.1",
+      "present": true,
+      "metadata_url": "https://registry.npmjs.org/@documentdrivendx%2fumf-schema-browser/2.0.1",
+      "dist": {
+        "shasum": "ac775d30a1ea78846c5e490f53adbb7b6e7b0176",
+        "tarball": "https://registry.npmjs.org/@documentdrivendx/umf-schema-browser/-/umf-schema-browser-2.0.1.tgz",
+        "fileCount": 77,
+        "integrity": "sha512-dOj8xm/Co3jUnFtABttjfqLWc9sWxcTYjUnWRpCxTO7aGO8fUPtLSycrwtpTN0wmwmAegR5AX1RnZ9GJvqb9jw==",
+        "signatures": [
+          {
+            "sig": "MEUCIDzTJ1i8sNmMMFBU01nbXFCtZwhdXZUJtr2yrlDQXxFuAiEA5H0c3dwwWphs8BOoZU0rK/kb5n/GhiQeFshNgry34Xs=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEQCIEvrf4f/jWGVbvaWbPFQ/0oWg+0u7ffmyWL5q8Ce0P5SAiA5YHOBEAQxatNBzMlqNqCEt1SO4VSBC0nfPbz/GKUtcw==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@documentdrivendx%2fumf-schema-browser@2.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 19408589
+      }
+    },
+    {
+      "name": "@documentdrivendx/arras-ui",
+      "version": "0.6.5",
+      "present": false,
+      "metadata_url": "https://registry.npmjs.org/@documentdrivendx%2farras-ui/0.6.5",
+      "dist": null
+    },
+    {
+      "name": "@documentdrivendx/umf-visual",
+      "version": "0.4.0",
+      "present": false,
+      "metadata_url": "https://registry.npmjs.org/@documentdrivendx%2fumf-visual/0.4.0",
+      "dist": null
+    }
+  ],
+  "delivered_this_session": {
+    "tablespec": "https://github.com/DocumentDrivenDX/tablespec/releases/tag/v0.0.15",
+    "consumer_tests": {
+      "url": "https://github.com/DocumentDrivenDX/tablespec/actions/runs/41380155651",
+      "passed": 87,
+      "skipped_spark_only": 2,
+      "platform": "Ubuntu 24.04 / Python 3.12; installed wheel and public binary core"
+    },
+    "pypi_publication": "https://github.com/DocumentDrivenDX/tablespec/actions/runs/41382301029",
+    "final_site_delivery": "https://github.com/DocumentDrivenDX/tablespec/actions/runs/41382551926",
+    "wheel_source_payload": {
+      "files_matched": 195,
+      "sha256": "71300332e2be253b831a7d7e9ddb185cac09427fab37c042b48d57eccc793705",
+      "source_commit": "2c36eb229c2a766e8993238f9821d846edfc1be1"
+    }
+  },
+  "actions_changes": {
+    "umf": {
+      "merged_pr": "https://github.com/DocumentDrivenDX/umf/pull/82",
+      "restored": [
+        "Fast PR checks",
+        "Dispatch released UMF core publication",
+        "Dispatch schema browser npm publication"
+      ],
+      "removed": "Core dispatcher wildcard workflow_run subscription; release events remain active.",
+      "validation": "13 publisher/dispatcher tests; portable PR and hosted publisher controls passed; impact selection correctly skipped expensive saga qualification."
+    },
+    "tablespec": {
+      "merged_prs": [
+        "https://github.com/DocumentDrivenDX/tablespec/pull/47",
+        "https://github.com/DocumentDrivenDX/tablespec/pull/49",
+        "https://github.com/DocumentDrivenDX/tablespec/pull/50"
+      ],
+      "changes": [
+        "Focused installed Linux consumer gate without Spark/dbt; cancel superseded PR runs.",
+        "Pin release/browser runners to Ubuntu 24.04 supported by Playwright 1.60.",
+        "Share the non-cancelling Pages queue across site and release deployments.",
+        "Retain GitHub release SHA-256 digests in site-only package indexes."
+      ],
+      "failed_job_recovery": "Only deployment/verification jobs were retried; successful package builds were retained."
+    },
+    "truss": {
+      "merged_pr": "https://github.com/DocumentDrivenDX/truss/pull/45",
+      "validation": "1,736 imports and 23 allowed/forbidden controls; hosted PR and main boundary checks pass.",
+      "change": "Explicit secrets import allowance only for the native source-custody host; runtime archives unchanged."
+    }
+  },
+  "holds": [
+    {
+      "component": "Truss 0.0.53 candidate",
+      "status": "held_unpublished",
+      "pr": "https://github.com/DocumentDrivenDX/truss/pull/44",
+      "evidence": "https://github.com/DocumentDrivenDX/truss/actions/runs/41380256415",
+      "test_result": {
+        "tests": 153,
+        "failures": 30,
+        "errors": 96,
+        "skipped": 0
+      },
+      "reason": "Fresh November predecessor journal partition bounds do not match the frozen admitted source profiles. The current-runtime smoke passed separately; full migration acceptance did not. Original definitions and receipts were not relabelled.",
+      "required": "Reconcile and independently qualify initialization-preserving migration admission or authentic admitted historical source restoration, then complete the release gate.",
+      "immutable_0052": "The existing immutable 0.0.52 GitHub release lacks release-pins.json; its PyPI gate correctly refuses publication."
+    },
+    {
+      "component": "Ashlar stable release",
+      "status": "held_unpublished",
+      "source_inspected": "f986aaaf",
+      "reason": "Current source has 23 unreviewed private cross-module imports; source/pin/ACK, native managed acceptance and other functional release gates remain open.",
+      "required": "Complete the governed release closure; preserve the 0.1.0.dev1 preview scope.",
+      "release_closure": "https://github.com/DocumentDrivenDX/ashlar/blob/f986aaaf/docs/helix/04-build/release-closure-20261101.md"
+    },
+    {
+      "component": "Arras UI 0.6.5 npm",
+      "status": "github_archive_available_registry_missing",
+      "reason": "Python 0.6.5 is public on PyPI, but the matching UI archive is not on npm. Existing trusted publisher requires successful original hosted Release provenance; 0.6.5 was published locally and has no such run. Local npm authentication returns HTTP 401.",
+      "required": "Produce the required hosted release/verification provenance and use the existing trusted npm publisher; do not substitute the 0.6.4 producer run or recreate immutable 0.6.5 assets."
+    }
+  ],
+  "delivery_scope": {
+    "codegen": "0.1.0a5 remains a GitHub release archive; no PyPI publication is claimed.",
+    "visual": "0.4.0 remains a GitHub release tarball; no npm publication is claimed.",
+    "batten": "0.1.0-alpha.1 is a design/site preview, not an implemented SDK.",
+    "concourse": "No release exists; current source CI passing is not first-release acceptance.",
+    "unmerged_work": "Rust-port, new backend/adapter and unrelated draft feature branches were not promoted."
+  }
+}
