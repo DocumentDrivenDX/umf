@@ -64,6 +64,14 @@ the camel-case call above; Python exposes
 `inspect_access_views(document, selected, bindings=(), source_id="logical")`.
 Python bindings may be a list or tuple of the same binding objects.
 
+This public composition profile admits Unicode scalar-value strings for the
+top-level `sourceId` and each supplied binding's `sourceId`, matching the existing
+Rust inspector's UTF-8 source-identity carrier. Unpaired UTF-16 surrogates in
+these host-supplied identifiers MUST refuse with REQUEST; they MUST NOT be
+replaced, stripped or normalized. This restriction applies only to these
+source-identity arguments. Original UMF document content and its unknown
+extension strings retain the existing lossless carrier and semantic rules.
+
 Malformed operation structure uses the existing REQUEST error boundary;
 well-formed semantic failures retain the inspector's ordered diagnostics and
 existing partial-record behavior. Do not infer success from a nonempty record

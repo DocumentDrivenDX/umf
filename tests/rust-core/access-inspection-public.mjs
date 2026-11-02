@@ -6,19 +6,20 @@ import {createServer} from 'node:http';
 import {resolve,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
-import {replayAccessInspection,inspectAccessControls} from './access-inspection-replay.js';
+import {replayAccessInspection,inspectAccessControls,inspectSourceIdentityRefusals} from './access-inspection-replay.js';
 const root=resolve(fileURLToPath(new URL('../../',import.meta.url)));
 const paths={coreSchema:'spec/core/schema.json',referenceSchema:'spec/core/semantic-type-reference.schema.json',packageSchema:'spec/core/extension-package.schema.json',constraints:'spec/metamodel/generated/core-constraints.json',domainPolicy:'spec/metamodel/generated/domain-policy.json',tablesPackage:'spec/extensions/tables/package.json',actionsPackage:'spec/extensions/actions/package.json',bindingPackage:'spec/extensions/binding/package.json',stableBindingPackage:'spec/extensions/binding-stable/package.json'};
 const resources=Object.fromEntries(await Promise.all(Object.entries(paths).map(async([name,path])=>[name,JSON.parse(await readFile(resolve(root,path),'utf8'))])));
 const bytes=await readFile(resolve(root,'tests/rust-core/fixtures/access-inspection/cases.json'));
 const {cases}=JSON.parse(bytes);
+const sourceIdentitiesOnly=process.argv.includes('--source-identities');
 const hash=data=>createHash('sha256').update(data).digest('hex');
 if(process.argv[2]!=='browser') {
  const {createCodegenEngine,createRetainedCodegenEngine}=await import('../../bindings/core/node/index.js');
  const reports=[];
  for(const create of [createCodegenEngine,createRetainedCodegenEngine]) {
   const engine=create(resources);
-  try{reports.push({engine:create.name,...replayAccessInspection(engine,cases),...inspectAccessControls(create,resources,cases[0].request)});}finally{engine.dispose?.();}
+  try{reports.push({engine:create.name,...(sourceIdentitiesOnly?inspectSourceIdentityRefusals(engine,cases[0].request):{...replayAccessInspection(engine,cases),...inspectAccessControls(create,resources,cases[0].request)})});}finally{engine.dispose?.();}
  }
  console.log(JSON.stringify({runtime:process.versions,packetSha256:hash(bytes),reports}));
 } else {
@@ -41,17 +42,17 @@ if(process.argv[2]!=='browser') {
   page.on('pageerror',error=>errors.push(String(error)));
   page.on('request',request=>{if(!request.url().startsWith(origin+'/'))external.push(request.url());});
   await page.goto(origin+'/');
-  const reports=await page.evaluate(async({resources,cases})=>{
+  const reports=await page.evaluate(async({resources,cases,sourceIdentitiesOnly})=>{
    const wasm=await import('/wasm-pkg/umf_core_wasm.js');await wasm.default();
    const {createCodegenEngine,createRetainedCodegenEngine}=await import('/bindings/core/wasm/index.js');
-   const {replayAccessInspection,inspectAccessControls}=await import('/tests/rust-core/access-inspection-replay.js');
+   const {replayAccessInspection,inspectAccessControls,inspectSourceIdentityRefusals}=await import('/tests/rust-core/access-inspection-replay.js');
    const reports=[];
    for(const create of [createCodegenEngine,createRetainedCodegenEngine]) {
     const factory=(r,o)=>create(wasm,r,o),engine=factory(resources);
-    try{reports.push({engine:create.name,...replayAccessInspection(engine,cases),...inspectAccessControls(factory,resources,cases[0].request)});}finally{engine.dispose?.();}
+    try{reports.push({engine:create.name,...(sourceIdentitiesOnly?inspectSourceIdentityRefusals(engine,cases[0].request):{...replayAccessInspection(engine,cases),...inspectAccessControls(factory,resources,cases[0].request)})});}finally{engine.dispose?.();}
    }
    return {reports,nodeGlobals:{process:typeof process,Buffer:typeof Buffer,require:typeof require}};
-  },{resources,cases});
+  },{resources,cases,sourceIdentitiesOnly});
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
   assert.deepEqual(reports.nodeGlobals,{process:'undefined',Buffer:'undefined',require:'undefined'});
   console.log(JSON.stringify({runtime:'Chromium '+browser.version(),packetSha256:hash(bytes),wasmSha256:hash(await readFile(resolve(packageRoot,'umf_core_wasm_bg.wasm'))),externalRequests:external.length,...reports}));
