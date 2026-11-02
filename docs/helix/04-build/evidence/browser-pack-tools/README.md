@@ -1,5 +1,10 @@
 # Browser pack tools
 
+[The live workbench](https://documentdrivendx.github.io/umf/pack-tools.html) is
+published and verified. [Publication evidence](publication.json) records the
+merged revision, successful signed deployment, seven matching public asset
+hashes, valid build signature and actual public Chromium generation.
+
 The [execution plan](../../browser-pack-tools-plan.md) delivers a browser workbench
 for PostgreSQL DDL, SQLAlchemy 2.0 models and parameterized Python CRUD generation.
 Rust owns generation. The focused WASM host ships the same compiler in 1,034,632
@@ -22,7 +27,8 @@ before emitting foreign-key ALTERs.
 Chromium 153 verified real Rust/WASM generation for all 28 packs, byte/hash and
 diagnostic parity with native Rust, previews, file/ZIP contents, cancellation,
 option invalidation, mobile containment and visible missing-runtime refusal.
-The inspector remained available. [Desktop](desktop.png) and [mobile](mobile.png)
+The inspector remained available. Four host tests and a focused Chromium
+blocked-download/unblock/retry check also verify recovery using a fresh worker. [Desktop](desktop.png) and [mobile](mobile.png)
 captures record the rendered UI.
 
 Reproduction from the repository root:
@@ -35,7 +41,7 @@ python3 scripts/pack-tools/check_catalog.py
 bun scripts/pack-tools/requests.ts docs/helix/05-deploy/microsite/dist/schema-catalog.json > /tmp/pack-requests.ndjson
 cargo run --locked -p umf-codegen --example pack_tools < /tmp/pack-requests.ndjson > /tmp/pack-results.ndjson
 python3 scripts/pack-tools/validate_results.py /tmp/pack-requests.ndjson /tmp/pack-results.ndjson /tmp/pack-generated --require-sqlalchemy
-cargo build --locked --release -p umf-pack-tools-wasm --target wasm32-unknown-unknown
+CARGO_PROFILE_RELEASE_OPT_LEVEL=1 CARGO_PROFILE_RELEASE_DEBUG=0 CARGO_PROFILE_RELEASE_STRIP=debuginfo cargo build --locked --release -p umf-pack-tools-wasm --target wasm32-unknown-unknown
 wasm-bindgen --target web --out-name umf_core_wasm --out-dir /tmp/pack-wasm target/wasm32-unknown-unknown/release/umf_pack_tools_wasm.wasm
 bun docs/helix/05-deploy/microsite/build-pack-tools.ts --wasm-dir /tmp/pack-wasm
 UMF_PACK_TOOLS_WASM_DIR=/tmp/pack-wasm bun test ./bindings/pack-tools/wasm/tests/pack-tools-wasm.test.js
@@ -48,4 +54,7 @@ bun scripts/generated-page-seals.ts --inventory
 All compilation and behavioral checks run locally. Deployment assembles only the
 lockfile-verified released inspector artifact, verifies the locally built assets,
 signs 22 pages with the existing build signer, and publishes via Pages. The
-receipt tracks publication separately until the public asset closure is checked.
+[publication receipt](publication.json) closes the public asset and browser checks.
+
+Verify the deployed site with `bun scripts/pack-tools/verify_public.ts <site-url>
+<path-to-trusted-innsigle-cli.mjs>` and `bun scripts/pack-tools/public-smoke.ts`.

@@ -16,7 +16,7 @@
   },
   "compilerTests": 3,
   "wireTests": 4,
-  "browserHostTests": 3,
+  "browserHostTests": 4,
   "focusedWasmTests": 3,
   "generated": {
     "ddlTables": 256,
@@ -87,5 +87,16 @@
     "site": "docs/helix/05-deploy/microsite/dist"
   },
   "signingInventoryPages": 22,
-  "publication": "pending"
+  "publication": {
+    "status": "published-and-verified",
+    "receipt": "publication.json",
+    "url": "https://documentdrivendx.github.io/umf/pack-tools.html"
+  },
+  "browserRetry": {
+    "profile": "umf.pack-tools.browser-retry/1",
+    "browser": "153.0.8010.12",
+    "failedImportVisible": true,
+    "retryWithFreshWorker": true,
+    "pageErrors": []
+  }
 }

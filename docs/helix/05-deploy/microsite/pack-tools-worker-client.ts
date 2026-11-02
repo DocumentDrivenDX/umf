@@ -11,11 +11,12 @@ export class PackToolsWorkerClient {
  });
  private getWorker(){
   if(this.worker)return this.worker;const worker=this.createWorker();this.worker=worker;
-  worker.onmessage=(event:MessageEvent)=>{if(this.worker!==worker)return;const message=event.data;if(message?.protocol!=='umf.pack-tools-worker/1'||!Number.isSafeInteger(message.id))return;const pending=this.pending.get(message.id);if(!pending)return;clearTimeout(pending.timer);this.pending.delete(message.id);if(message.ok)pending.resolve(message.result);else pending.reject(Object.assign(Error(message.error?.message??'Pack tools failed.'),{code:message.error?.code??'PACK_TOOLS_RUNTIME',path:message.error?.path}));};
+  worker.onmessage=(event:MessageEvent)=>{if(this.worker!==worker)return;const message=event.data;if(message?.protocol!=='umf.pack-tools-worker/1'||!Number.isSafeInteger(message.id))return;const pending=this.pending.get(message.id);if(!pending)return;if(message.ok){clearTimeout(pending.timer);this.pending.delete(message.id);pending.resolve(message.result);}else this.reset(Object.assign(Error(message.error?.message??'Pack tools failed.'),{code:message.error?.code??'PACK_TOOLS_RUNTIME',path:message.error?.path}));};
   worker.onerror=event=>{if(this.worker===worker)this.cancel(event.message||'Pack-tools worker failed.');};
   worker.onmessageerror=()=>{if(this.worker===worker)this.cancel('Pack-tools worker returned an unreadable message.');};
   return worker;
  }
- cancel(message='Generation cancelled.'){const error=Object.assign(Error(message),{code:message.includes('30-second')?'PACK_TOOLS_TIMEOUT':'PACK_TOOLS_CANCELLED'});this.worker?.terminate();this.worker=undefined;for(const pending of this.pending.values()){clearTimeout(pending.timer);pending.reject(error);}this.pending.clear();}
+ private reset(error:Error){this.worker?.terminate();this.worker=undefined;for(const pending of this.pending.values()){clearTimeout(pending.timer);pending.reject(error);}this.pending.clear();}
+ cancel(message='Generation cancelled.'){this.reset(Object.assign(Error(message),{code:message.includes('30-second')?'PACK_TOOLS_TIMEOUT':'PACK_TOOLS_CANCELLED'}));}
  dispose(){this.cancel('Pack-tools worker closed.');}
 }
