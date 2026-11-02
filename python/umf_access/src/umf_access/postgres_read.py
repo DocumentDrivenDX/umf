@@ -601,6 +601,8 @@ def _program(
     _page_size: int | None = None,
 ) -> Generator[tuple[Any, ...], Any, ReadPage[R]]:
     artifact = entry.artifact()
+    if artifact.get("version") in ("weft.engine-read/0.4", "weft.engine-page/0.4"):
+        raise ReadBuildError("explicit temporal engine target required")
     selected_page_size = stream_page_size(artifact, _page_size)
     if type(timeout_ms) is not int or not 1 <= timeout_ms <= 2_147_483_647:
         raise ValueError("timeout_ms must be a positive PostgreSQL millisecond bound")

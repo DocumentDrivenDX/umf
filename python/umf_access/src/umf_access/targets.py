@@ -145,7 +145,7 @@ class _PostgresBase:
         self.identity()
         artifact = entry.artifact()
         if (
-            artifact["target"] != self.profile
+            artifact.get("target") != self.profile
             or binding_digest(artifact["binding"]) != self.configuration.binding_sha256
         ):
             raise NotCompiledForTarget(
