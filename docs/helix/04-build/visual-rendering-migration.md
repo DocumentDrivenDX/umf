@@ -231,3 +231,11 @@ diagnostics on failure. Every existing input, asset, complete-payload and public
 API comparison remains required. This matches the qualified build environment;
 it does not claim byte reproducibility across arbitrary operating systems or
 checkout layouts. The public archive is unchanged.
+
+Run 41541656664 passed immutable release reproduction, both current-source clean
+builds, domain artifacts, companion packaging, reference generation and its
+repeatability/boundary checks. The later focused visual test failed before
+launching because its temporary-directory prefix was macOS-specific. It now
+uses `node:os.tmpdir()` and `node:path.join()`. With `TMPDIR=/tmp`, all seventeen
+Lini Chromium checks pass under Bun 1.4.2 and Chromium 153.0.8010.12. No drawing,
+package byte, validation rule or qualification assertion changed.
