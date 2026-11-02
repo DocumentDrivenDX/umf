@@ -44,3 +44,23 @@ export function inspectAccessControls(create,resources,request) {
  check(failure?.code==='RESOURCE_LIMIT','public work budget refusal');limited.dispose?.();
  return {work,controls:4};
 }
+
+export function inspectSourceIdentityRefusals(engine, request) {
+ let assertions=0;
+ for(const location of ['sourceId','binding'])for(const surrogate of ['\ud800','\udfff']) {
+  const input=JSON.parse(JSON.stringify(request)),rawId='source/'+surrogate+'/exact';
+  input.document.unknownSourceContent={raw:'kept'+surrogate+'exact'};
+  if(location==='sourceId')input.sourceId=rawId;
+  else input.bindings=[{sourceId:rawId,document:input.document}];
+  const before=JSON.stringify(input),response=engine.call('inspectAccessViews',input);
+  check(response.ok===false&&response.error.code==='REQUEST'&&!('result' in response),location+' must refuse without coercion');assertions++;
+  let failure;try{engine.inspectAccessViews(input.document,input.selected,input.bindings,input.sourceId);}catch(error){failure=error;}
+  check(failure?.code==='REQUEST',location+' facade refusal');assertions++;
+  check(JSON.stringify(input)===before,location+' input custody');assertions++;
+  const scalar=JSON.parse(before);
+  if(location==='sourceId')scalar.sourceId=rawId.replace(surrogate,'\ufffd');
+  else scalar.bindings[0].sourceId=rawId.replace(surrogate,'\ufffd');
+  check(engine.call('inspectAccessViews',scalar).ok===true,location+' scalar replacement control');assertions++;
+ }
+ return {cases:4,assertions};
+}

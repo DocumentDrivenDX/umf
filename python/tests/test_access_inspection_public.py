@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 from umf._rust import UmfCoreError
-from umf.rust_codegen import CodegenEngine
+from umf.rust_codegen import CodegenEngine, UmfCodegenError
 
 ROOT = Path(__file__).resolve().parents[2]
 CASES = json.loads((ROOT / 'tests/rust-core/fixtures/access-inspection/cases.json').read_text())['cases']
@@ -48,6 +48,38 @@ def test_python_malformed_requests_refuse_without_partial_result(engine):
         assert response['ok'] is False
         assert response['error']['code'] == 'REQUEST'
         assert 'result' not in response
+
+
+
+@pytest.mark.parametrize('location', ('sourceId', 'binding'))
+@pytest.mark.parametrize('surrogate', ('\ud800', '\udfff'), ids=('high-surrogate', 'low-surrogate'))
+def test_source_identity_surrogates_refuse_without_coercion(engine, location, surrogate):
+    request = json.loads(json.dumps(CASES[0]['request']))
+    # Source content remains an exact carrier; only the source-ID arguments refuse.
+    request['document']['unknownSourceContent'] = {'raw': 'kept' + surrogate + 'exact'}
+    raw_id = 'source/' + surrogate + '/exact'
+    if location == 'sourceId':
+        request['sourceId'] = raw_id
+    else:
+        request['bindings'] = [{'sourceId': raw_id, 'document': request['document']}]
+    before = json.dumps(request)
+    response = engine.call('inspectAccessViews', request)
+    assert response['ok'] is False, 'source ID was accepted or coerced'
+    assert response['error']['code'] == 'REQUEST'
+    assert 'result' not in response
+    with pytest.raises(UmfCodegenError) as failure:
+        engine.inspect_access_views(request['document'], request['selected'],
+                                    request.get('bindings', ()), request.get('sourceId', 'logical'))
+    assert failure.value.code == 'REQUEST'
+    assert json.dumps(request) == before
+    # A replacement character is an admitted scalar value. This positive control
+    # makes replacement/stripping distinguishable from the required refusal.
+    scalar = json.loads(before)
+    if location == 'sourceId':
+        scalar['sourceId'] = raw_id.replace(surrogate, '\ufffd')
+    else:
+        scalar['bindings'][0]['sourceId'] = raw_id.replace(surrogate, '\ufffd')
+    assert engine.call('inspectAccessViews', scalar)['ok'] is True
 
 
 def test_python_inspection_controls_are_terminal():
