@@ -1076,9 +1076,7 @@ fn validation_resources(
     // admitting resources, and never cache an interrupted construction.
     let resources = Arc::new(build_validation_resources(ctx)?);
     if ordinary {
-        let _ = RESOURCES.set(Arc::clone(&resources));
-        // A racing initializer may have published first; return its shared instance.
-        return Ok(Arc::clone(RESOURCES.get().expect("resource cache initialized")));
+        return Ok(crate::resource_cache::publish_completed(&RESOURCES, resources));
     }
     Ok(resources)
 }

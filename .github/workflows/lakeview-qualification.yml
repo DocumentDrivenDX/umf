@@ -24,7 +24,7 @@ concurrency:
 jobs:
   native-installed-browser:
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 55
     env:
       CARGO_BUILD_JOBS: '2'
     steps:
@@ -42,16 +42,21 @@ jobs:
           toolchain: 1.90.0
           targets: wasm32-unknown-unknown
       - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
       - name: Clear historical host receipts before qualification
         run: rm -f docs/helix/04-build/evidence/lakeview/browser.json docs/helix/04-build/evidence/lakeview/installed.json
       - run: bun install --frozen-lockfile
-      - name: Build and test the exact native engine
+      - name: Build the exact native binding and CLI
         run: |
           cargo build --locked --release -p umf-core-node -p umf-cli
-          cargo test --locked --release -p umf-core --lib --test lakeview
-          cargo test --locked --release -p umf-core-wire --lib
           cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
-          bun test tests/lakeview tests/extension-kinds tests/registry/extension-rust-owned-registries.test.ts
+      - name: Core and Lakeview assertions
+        run: cargo test --locked --release -p umf-core --lib --test lakeview --test resource_cache
+      - name: Wire and frozen-vector regressions
+        run: cargo test --locked --release -p umf-core-wire --lib
+      - name: Binding and registry regressions
+        run: bun test tests/lakeview tests/extension-kinds tests/registry/extension-rust-owned-registries.test.ts
       - name: Qualify installed Node, Bun and independent CLI transport
         run: |
           mkdir "$RUNNER_TEMP/lakeview-pack" "$RUNNER_TEMP/lakeview-consumer"

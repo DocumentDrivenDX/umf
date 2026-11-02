@@ -1279,7 +1279,7 @@ fn shared_iceberg_schema_resources(
     // callback may reenter the binding while resource construction is active.
     let resources = Arc::new(IcebergSchemaResources::new(ctx)?);
     if ordinary {
-        let _ = RESOURCES.set(Arc::clone(&resources));
+        return Ok(umf_core::resource_cache::publish_completed(&RESOURCES, resources));
     }
     Ok(resources)
 }

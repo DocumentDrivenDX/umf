@@ -275,6 +275,7 @@ pub mod record_members_inspection;
 pub mod record_values;
 pub mod reference_links_inspection;
 pub mod registry;
+pub mod resource_cache;
 pub mod reviewed_parameters;
 pub mod rfc3339_exact_instant;
 pub mod scalar_type_inspection;

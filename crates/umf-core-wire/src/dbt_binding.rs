@@ -66,7 +66,7 @@ impl RuntimeCache {
         // callback can reenter without waiting on a held initialization lock.
         let runtime = Arc::new(DbtRuntime::new(ctx)?);
         if ordinary {
-            let _ = RUNTIME.set(Arc::clone(&runtime));
+            return Ok(umf_core::resource_cache::publish_completed(&RUNTIME, runtime));
         }
         Ok(runtime)
     }

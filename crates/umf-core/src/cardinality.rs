@@ -197,7 +197,7 @@ fn request_schema(ctx: &mut Context<'_>) -> Result<std::sync::Arc<CompiledSchema
     // schema for ordinary cooperative contexts.
     let schema = Arc::new(build_request_schema(ctx)?);
     if ordinary {
-        let _ = REQUEST_SCHEMA.set(Arc::clone(&schema));
+        return Ok(crate::resource_cache::publish_completed(&REQUEST_SCHEMA, schema));
     }
     Ok(schema)
 }

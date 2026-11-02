@@ -244,3 +244,20 @@ This integration retains current generated core/compiler resources instead of
 restoring obsolete snapshots. The legacy package/schema audit failures are
 recorded, not converted into passing support claims. Live Databricks acceptance
 and edited native rewrites remain unqualified.
+
+### Shared-cache and Actions follow-up
+
+The first Linux attempt passed all 688 core tests and exposed the same immutable
+resource-publication race in Parquet wire capture (88 wire cases passed, one
+failed). The correction now uses one completed-publication primitive at all 31
+affected sites. A deterministic eight-initializer regression fails the prior
+algorithm and passes the integrated helper. Local core tests again pass 688
+cases, plus four Lakeview cases and the concurrency case. Native operation and
+caller-control assertions are unchanged.
+
+The Saga gate separately exposed a missing WASM prerequisite before whole-source
+typechecking. Its successor generates the actual binding first. Both workflows
+retain dependency caches after failures and keep required gates intact. The new
+candidate reserves SDK 0.10.3 and Python 0.10.7; exact-source hosted and installed
+artifact checks still gate merge and publication. Earlier local binary receipts
+retain their earlier source scope.

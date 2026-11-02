@@ -139,7 +139,8 @@ invalid UTF-8. `LAKEVIEW_SOURCE` requires original text and
 `LAKEVIEW_CONTEXT_UNVERIFIED` remains a completeness warning even for an exact
 byte recovery. Resource/cancellation failures abort without partial success.
 Malformed archived source is `LAKEVIEW_SOURCE_INVALID` at `originalText` during
-semantic inspection; direct import/export retains the underlying source error.
+semantic inspection; direct import/export retains the underlying source error,
+including `JSON_SCHEMA_SYNTAX` from the current shared lossless JSON parser.
 
 ## Examples and Verification
 

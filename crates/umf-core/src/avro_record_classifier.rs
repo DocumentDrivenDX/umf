@@ -100,7 +100,7 @@ fn runtime(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Runtime>, EngineError
     // validation may invoke host callbacks, and failed builds are never cached.
     let resources = Arc::new(build_runtime(ctx)?);
     if ordinary {
-        let _ = RESOURCES.set(Arc::clone(&resources));
+        return Ok(crate::resource_cache::publish_completed(&RESOURCES, resources));
     }
     Ok(resources)
 }
