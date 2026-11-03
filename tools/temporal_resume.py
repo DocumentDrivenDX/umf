@@ -196,9 +196,23 @@ def overlay(source: Path, controller: Path, output: Path, restore: bool) -> None
     write(output / "source-and-controller.json", record)
 
 
-def probe(source: Path, output: Path) -> None:
-    if platform.system() != "Linux" or platform.machine() != "x86_64" or sys.version_info[:3] != (3, 11, 17) or not sys.flags.isolated:
-        raise ValueError("Expected isolated Linux x86_64 CPython3.11.17 consumer")
+CONSUMER_PYTHONS = ("3.11.17", "3.13.17")
+
+
+def validate_consumer(expected: str, version: tuple, system: str, machine: str,
+                      isolated: bool, implementation: str) -> None:
+    if (expected not in CONSUMER_PYTHONS or version != tuple(map(int, expected.split(".")))
+            or system != "Linux" or machine != "x86_64" or not isolated or implementation != "cpython"):
+        raise ValueError("Expected isolated Linux x86_64 CPython" + expected + " consumer")
+
+
+def probe(source: Path, output: Path, expected_python: str, install_report: Path, receipt: Path) -> None:
+    validate_consumer(expected_python, sys.version_info[:3], platform.system(), platform.machine(),
+                      bool(sys.flags.isolated), sys.implementation.name)
+    if (not install_report.resolve().is_relative_to(output.resolve())
+            or not receipt.resolve().is_relative_to(output.resolve())
+            or install_report.resolve() == receipt.resolve()):
+        raise ValueError("Consumer report/receipt paths must be distinct retained outputs")
     import umf
     import umf_codegen
     import umf_access
@@ -210,7 +224,7 @@ def probe(source: Path, output: Path) -> None:
     from packaging.tags import sys_tags
     from packaging.utils import parse_wheel_filename
     prefix = Path(sys.prefix).resolve()
-    report = json.loads((output / "install-report.json").read_text())
+    report = json.loads(install_report.read_text())
     selected = {}
     for row in report["install"]:
         name = row["metadata"]["name"].lower().replace("_", "-")
@@ -223,10 +237,13 @@ def probe(source: Path, output: Path) -> None:
             if digest(path) != row["download_info"]["archive_info"]["hashes"]["sha256"]:
                 raise ValueError("Installed wheel differs from actual candidate")
             selected[name] = {"path": str(path), "sha256": digest(path), "version": row["metadata"]["version"]}
-            if "3.11.17" not in SpecifierSet(row["metadata"]["requires_python"]):
-                raise ValueError("Wheel Requires-Python excludes actual3.11")
-            if not parse_wheel_filename(path.name)[3] & set(sys_tags()):
-                raise ValueError("Actual wheel tags exclude this Linux311 consumer")
+            if expected_python not in SpecifierSet(row["metadata"]["requires_python"]):
+                raise ValueError("Wheel Requires-Python excludes actual consumer " + expected_python)
+            tags = parse_wheel_filename(path.name)[3]
+            if not tags & set(sys_tags()):
+                raise ValueError("Actual wheel tags exclude this Linux " + expected_python + " consumer")
+            if name == "umf-core" and any(t.interpreter != "cp311" or t.abi != "abi3" for t in tags):
+                raise ValueError("Consumer did not receive the genuine cp311-abi3 Core wheel")
     if set(selected) != {"umf-core", "umf-codegen", "umf-access"}:
         raise ValueError("Candidate resolver distribution roster mismatch")
     if {k: v["version"] for k, v in selected.items()} != {"umf-core": "0.10.8", "umf-codegen": "0.10.8", "umf-access": "0.1.0.dev10"}:
@@ -269,11 +286,14 @@ def probe(source: Path, output: Path) -> None:
                 raise ValueError("Installed convenience parity: " + case["id"])
         if json.dumps(request) != before:
             raise ValueError("Inspection mutated request custody")
-    write(output / "installed-linux311.json", {"artifactSourceS": SOURCE, "runtime": sys.version,
+    provenance = json.loads((output / "source-and-controller.json").read_text())
+    write(receipt, {"artifactSourceS": SOURCE, "controllerQ": provenance["controllerQ"], "runtime": sys.version,
+        "expectedPython": expected_python, "actualPython": platform.python_version(),
+        "implementation": sys.implementation.name, "installReport": str(install_report),
         "selected": selected, "origins": origins, "installedFiles": installed_files,
         "pydantic": importlib.metadata.version("pydantic"),
         "inspectionCases": 17, "inspectionCalls": 51, "companionResourceAndNativeChecks": True,
-        "scope": "Actual Linux311 component install; no Truss/native enrollment or broader host claim"})
+        "scope": "Actual Linux " + expected_python + " component install; no Truss/native enrollment or broader host claim"})
 
 
 def capture(source: Path, controller: Path, output: Path) -> None:
@@ -289,13 +309,18 @@ def main() -> None:
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--controller", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--expected-python", choices=CONSUMER_PYTHONS)
+    parser.add_argument("--install-report", type=Path)
+    parser.add_argument("--receipt", type=Path)
     args = parser.parse_args()
     if args.operation == "prepare":
         prepare(args.source, args.controller, args.output)
     elif args.operation in {"overlay", "restore"}:
         overlay(args.source, args.controller, args.output, args.operation == "restore")
     elif args.operation == "probe":
-        probe(args.source, args.output)
+        if not args.expected_python or not args.install_report or not args.receipt:
+            parser.error("probe requires exact --expected-python, --install-report and --receipt")
+        probe(args.source, args.output, args.expected_python, args.install_report, args.receipt)
     else:
         capture(args.source, args.controller, args.output)
 

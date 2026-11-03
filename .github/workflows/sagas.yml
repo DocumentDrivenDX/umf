@@ -315,7 +315,7 @@ jobs:
           "$consumer/bin/python" -m pip install pytest==8.4.2 packaging==26.3 hatchling==1.27.0
           "$consumer/bin/python" -m pip install --report "$UMF_TEMPORAL_OUTPUT/install-report.json" "$UMF_TEMPORAL_OUTPUT/dist/"*.whl "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/resolver.log"
           "$consumer/bin/python" -m pip check | tee "$UMF_TEMPORAL_OUTPUT/pip-check.log"
-          "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+          "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT" --expected-python 3.11.17 --install-report "$UMF_TEMPORAL_OUTPUT/install-report.json" --receipt "$UMF_TEMPORAL_OUTPUT/installed-linux311.json"
           package_root="$("$consumer/bin/python" -I -c 'import pathlib,umf;print(pathlib.Path(umf.__file__).resolve().parent)')"
           python scripts/rust-migration/r4/check_binary_closure.py --package-root "$package_root" --cli-binary "$package_root/_bin/umf" "$package_root/_rust_core.abi3.so" "$package_root/_bin/umf" > "$UMF_TEMPORAL_OUTPUT/linux-binary-closure.json"
       - name: Apply Q for only the skipped Python host qualification
@@ -350,6 +350,35 @@ jobs:
           wheel="$(find "$UMF_TEMPORAL_OUTPUT/rebuilt" -name '*.whl' -type f)"
           UMF_SAGA_HOST_ID=python-rebuilt UMF_SAGA_RESULT_PATH="$UMF_TEMPORAL_OUTPUT/portable-python-rebuilt.json" UMF_SAGA_PYTHON="$consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel" UMF_SAGA_PYTHON_SOURCE_ARCHIVE="$UMF_TEMPORAL_OUTPUT/dist/umf_core-0.10.8.tar.gz" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/python-rebuilt-saga.log"
           "$consumer/bin/python" -I -B python/tests/test_saga_lifecycle.py
+      - name: Select the original Linux313 acceptance interpreter (consumer only)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - name: Serial Linux313 direct and source-rebuilt acceptance without native builds
+        working-directory: source
+        run: |
+          set -o pipefail
+          python -c 'import platform,sys; assert platform.system()=="Linux" and platform.machine()=="x86_64" and sys.version_info[:3]==(3,13,17)'
+          for kind in direct rebuilt; do
+            phase="$UMF_TEMPORAL_OUTPUT/py313-$kind"
+            consumer="$RUNNER_TEMP/temporal-python313-$kind"
+            mkdir -p "$phase"
+            if [ "$kind" = direct ]; then
+              wheel="$(find "$UMF_TEMPORAL_OUTPUT/dist" -name '*.whl' -type f)"
+              host=python
+            else
+              wheel="$(find "$UMF_TEMPORAL_OUTPUT/rebuilt" -name '*.whl' -type f)"
+              host=python-rebuilt
+            fi
+            python -m venv "$consumer"
+            "$consumer/bin/python" -m pip install --only-binary=:all: pytest==8.4.2 packaging==26.3 hatchling==1.27.0
+            "$consumer/bin/python" -m pip install --only-binary=:all: --report "$phase/install-report.json" "$wheel" "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$phase/resolver.log"
+            "$consumer/bin/python" -m pip check | tee "$phase/pip-check.log"
+            "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT" --expected-python 3.13.17 --install-report "$phase/install-report.json" --receipt "$phase/installed.json"
+            UMF_SAGA_HOST_ID="$host" UMF_SAGA_RESULT_PATH="$phase/portable-$host.json" UMF_SAGA_PYTHON="$consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel" UMF_SAGA_PYTHON_SOURCE_ARCHIVE="$UMF_TEMPORAL_OUTPUT/dist/umf_core-0.10.8.tar.gz" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$phase/saga19.log"
+            "$consumer/bin/python" -I -B python/tests/test_saga_lifecycle.py 2>&1 | tee "$phase/lifecycle.log"
+            "$consumer/bin/python" -I -B -m pytest python/tests/test_action_runtime_resources.py python/tests/test_python_artifact_version.py python/tests/test_distribution_artifact.py::test_installed_wheel_payload_and_record_match_the_exact_archive python/tests/test_distribution_artifact.py::test_installed_wheel_verification_rejects_changed_or_escaped_files 2>&1 | tee "$phase/resources-identity-payload.log"
+          done
       - name: Restore and capture exact source, Q and retained output inventory
         if: always() && steps.intake.outcome == 'success'
         run: |

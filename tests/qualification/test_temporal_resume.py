@@ -12,6 +12,28 @@ SPEC.loader.exec_module(resume)
 
 
 class ResumeCustody(unittest.TestCase):
+    def test_actual_selected_311_and_313_consumers_accepted(self):
+        for selected, version in [("3.11.17", (3, 11, 17)), ("3.13.17", (3, 13, 17))]:
+            resume.validate_consumer(selected, version, "Linux", "x86_64", True, "cpython")
+
+    def test_other_minor_or_patch_does_not_satisfy_selected_consumer(self):
+        for selected, actual in [("3.11.17", (3, 13, 17)), ("3.13.17", (3, 11, 17)),
+                                 ("3.13.17", (3, 13, 16)), ("3.11.17", (3, 11, 16))]:
+            with self.assertRaises(ValueError):
+                resume.validate_consumer(selected, actual, "Linux", "x86_64", True, "cpython")
+
+    def test_unselected_interpreter_refused_even_when_version_matches(self):
+        with self.assertRaises(ValueError):
+            resume.validate_consumer("3.12.15", (3, 12, 15), "Linux", "x86_64", True, "cpython")
+
+    def test_consumer_host_implementation_and_isolation_still_required(self):
+        for system, machine, isolated, implementation in [
+            ("Darwin", "x86_64", True, "cpython"), ("Linux", "arm64", True, "cpython"),
+            ("Linux", "x86_64", False, "cpython"), ("Linux", "x86_64", True, "pypy"),
+        ]:
+            with self.assertRaises(ValueError):
+                resume.validate_consumer("3.13.17", (3, 13, 17), system, machine, isolated, implementation)
+
     def test_controller_path_allowlist_is_closed(self):
         resume.validate_paths(set(resume.APPROVED))
         for path in ["Cargo.lock", "src/extensions/actions/saga-rust-default.ts", "python/pyproject.toml", "spec/core/schema.json"]:
