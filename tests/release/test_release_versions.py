@@ -42,7 +42,11 @@ class ReleaseVersions(unittest.TestCase):
         self.assertIn("crates/umf-core Rust artifact version", module.check(self.root))
     def test_codegen_dependency_drift(self):
         path = self.root / "python/umf_codegen/pyproject.toml"
-        path.write_text(path.read_text().replace("umf-core==0.10.7", "umf-core==0.10.4"))
+        version = json.loads((self.root / "spec/release.json").read_text())["version"]
+        original = path.read_text()
+        changed = original.replace(f"umf-core=={version}", "umf-core==0.10.4", 1)
+        self.assertNotEqual(changed, original, "dependency mutation must change the selected pin")
+        path.write_text(changed)
         self.assertIn("Codegen exact core dependency", module.check(self.root))
     def test_extension_drift(self):
         self.change("spec/extensions/actions/package.json", lambda d: d.update(coreVersion="0.8.0"))

@@ -68,9 +68,20 @@ class DispatchTests(unittest.TestCase):
         }
         self.assertIsNone(select_release("workflow_run", event, [self.release]))
 
+    def test_successor_sdk_and_standalone_exact_cohorts_are_selected(self) -> None:
+        for prefix in ("umf", "python"):
+            with self.subTest(prefix=prefix):
+                tag = f"{prefix}-v0.10.8"
+                self.release["tag_name"] = tag
+                self.release["assets"][0]["name"] = "umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl"
+                self.assertEqual(
+                    select_release("release", self.event, []),
+                    {"tag": tag, "sums_sha256": "a" * 64},
+                )
+
     def test_matching_unqualified_numeric_cohort_is_not_selected(self) -> None:
-        self.release["tag_name"] = "umf-v0.10.8"
-        self.release["assets"][0]["name"] = "umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl"
+        self.release["tag_name"] = "umf-v0.11.0"
+        self.release["assets"][0]["name"] = "umf_core-0.11.0-cp311-abi3-manylinux_2_34_x86_64.whl"
         self.assertIsNone(select_release("release", self.event, []))
 
     def test_noncore_releases_and_unpublished_events_do_not_dispatch(self) -> None:

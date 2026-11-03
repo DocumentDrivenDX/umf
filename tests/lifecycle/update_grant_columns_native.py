@@ -77,6 +77,49 @@ def column_privileges(connection: psycopg.Connection, role: str, relation: str) 
     }
 
 
+def expected_versions_from_cohort_report(path: Path, expected_sha256: str) -> tuple[dict[str, str], dict]:
+    """Bind version drift checks to a real, separately admitted normal-resolver report."""
+    raw = path.read_bytes()
+    if (len(expected_sha256) != 64
+            or any(char not in "0123456789abcdef" for char in expected_sha256)
+            or hashlib.sha256(raw).hexdigest() != expected_sha256):
+        raise ValueError("cohort install report SHA-256 differs from admitted input")
+    report = json.loads(raw)
+    if not isinstance(report, dict) or not isinstance(report.get("install"), list):
+        raise ValueError("cohort input must be an actual pip install report")
+    required = {"umf-core", "umf-codegen", "pydantic", "psycopg", "psycopg-binary"}
+    cohort_owners = {"umf-access": "0.1.0.dev10", "umf-weft": "0.4.57", "umf-truss": "0.0.56"}
+    selected = required | cohort_owners.keys()
+    versions, wheels = {}, {}
+    for item in report["install"]:
+        if not isinstance(item, dict) or not isinstance(item.get("metadata"), dict):
+            raise ValueError("invalid cohort report metadata")
+        metadata = item["metadata"]
+        name = metadata.get("name")
+        if not isinstance(name, str):
+            raise ValueError("missing cohort report distribution")
+        name = name.lower().replace("_", "-")
+        if name not in selected:
+            continue
+        version = metadata.get("version")
+        archive_hash = item.get("download_info", {}).get("archive_info", {}).get("hashes", {}).get("sha256")
+        if (name in versions or not isinstance(version, str) or not version
+                or not isinstance(archive_hash, str) or len(archive_hash) != 64
+                or any(char not in "0123456789abcdef" for char in archive_hash)):
+            raise ValueError("duplicate or unpinned cohort report distribution")
+        versions[name], wheels[name] = version, archive_hash
+    if set(versions) != selected:
+        raise ValueError("incomplete cohort report version map")
+    if any(versions[name] != value for name, value in cohort_owners.items()):
+        raise ValueError("cohort report differs from selected Access/Weft/Truss owners")
+    if (versions["umf-core"] != "0.10.8" or versions["umf-codegen"] != "0.10.8"
+            or versions["psycopg"] != "3.3.6" or versions["psycopg-binary"] != "3.3.6"):
+        raise ValueError("cohort report differs from the selected successor tuple")
+    # Pydantic's EXACT version comes from the genuine resolver report; its declared
+    # Access constraints and full installed closure must separately pass pip check.
+    return {name: versions[name] for name in required}, {"sha256": expected_sha256, "versions": versions, "wheelSha256": wheels}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--dsn", default="dbname=postgres")
@@ -88,7 +131,23 @@ def main() -> int:
     parser.add_argument("--pair-deps-manifest", type=Path, required=True)
     parser.add_argument("--dependency-pin", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--cohort-install-report", type=Path)
+    parser.add_argument("--cohort-install-report-sha256")
     args = parser.parse_args()
+    if bool(args.cohort_install_report) != bool(args.cohort_install_report_sha256):
+        parser.error("cohort report and its admitted SHA-256 must be supplied together")
+    expected_versions = {
+        "umf-core": "0.10.7", "umf-codegen": "0.10.7", "pydantic": "2.11.9",
+        "psycopg": "3.2.13", "psycopg-binary": "3.2.13",
+    }
+    cohort_expected_input = None
+    if args.cohort_install_report is not None:
+        expected_versions, cohort_expected_input = expected_versions_from_cohort_report(
+            args.cohort_install_report, args.cohort_install_report_sha256,
+        )
+        for distribution, archive in (("umf-core", args.core_wheel), ("umf-codegen", args.codegen_wheel)):
+            if hashlib.sha256(archive.read_bytes()).hexdigest() != cohort_expected_input["wheelSha256"][distribution]:
+                raise ValueError("supplied UMF wheel differs from admitted resolver report")
     if len(args.source_commit) != 40 or any(char not in "0123456789abcdef" for char in args.source_commit):
         raise ValueError("source commit must be a full lowercase Git SHA")
 
@@ -174,10 +233,6 @@ def main() -> int:
         name: importlib.metadata.version(name)
         for name in ("umf-core", "umf-codegen", "pydantic", "psycopg", "psycopg-binary")
     }
-    expected_versions = {
-        "umf-core": "0.10.7", "umf-codegen": "0.10.7", "pydantic": "2.11.9",
-        "psycopg": "3.2.13", "psycopg-binary": "3.2.13",
-    }
     if installed_versions != expected_versions:
         raise AssertionError(f"unexpected installed UMF pair: {installed_versions}")
     cli_resource = importlib.resources.files("umf").joinpath("_bin", "umf")
@@ -194,6 +249,7 @@ def main() -> int:
         "profile": "umf.g05-pg18-column-grant-baseline/1",
         "status": "passed",
         "sourceCommit": args.source_commit,
+        **({"expectedCohortInput": cohort_expected_input} if cohort_expected_input is not None else {}),
         "server": {"version": server_version, "versionNum": server_version_num, "major": server_version_num // 10000},
         "scope": "effective PostgreSQL UPDATE column ACLs for exact compile_table_deployment output; no broader RLS or managed-role claim",
         "installed": {"versions": installed_versions, "cliResource": "umf/_bin/umf", "cliSha256": cli_sha256},

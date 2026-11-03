@@ -125,6 +125,15 @@ class PublishPypiReleaseTests(unittest.TestCase):
             (self.output / self.whl_name).read_bytes(), self.payloads[self.whl_name]
         )
 
+    def test_successor_sdk_and_standalone_have_complete_matching_pins(self) -> None:
+        for sdk in (True, False):
+            with self.subTest(sdk=sdk):
+                self.configure_release("0.10.8", sdk=sdk)
+                receipt = self.prepare()
+                self.assertEqual(receipt["version"], "0.10.8")
+                self.assertEqual(receipt["tag"], self.tag)
+                self.assertEqual(set(receipt["files"]), set(self.payloads))
+
     def test_sdk_profile_accepts_two_native_wheels_from_the_exact_pinned_cohort(self) -> None:
         extra = f"umf_core-{self.version}-cp311-cp311-manylinux_2_17_aarch64.whl"
         payload = wheel(
