@@ -203,7 +203,7 @@
     "remote": 5,
     "proof": "Seven superseded historical delivery refs and four completed release topic refs removed after semantic or merged-tree proof; no current artifact replaced."
   },
-  "updated_at_utc": "2026-11-03T00:42:16.836076+00:00",
+  "updated_at_utc": "2026-11-03T01:11:58.851820+00:00",
   "delegated_release_updates": [
     {
       "repository": "DocumentDrivenDX/truss",
@@ -337,5 +337,14 @@
     ],
     "status": "Host/source controls passed; actual fresh installed archive acceptance pending.",
     "ci_staging": "Stage the source repair and retained evidence for review with skip-ci; full artifact execution will use the aligned final release cohort, not another knowingly private-version build."
+  },
+  "core_0107_macos_pair_recovery": {
+    "source": "9d92e38c39c35c598faeea8abbd2262760c8cb34",
+    "status": "passed",
+    "receipt": "core-0107-macos-pair/receipt.json",
+    "custody": "core-0107-macos-pair/custody.json",
+    "sha256": "f34d3f7e6c0c459b9042831bcb4421d958ca3798bb5969b8caef1fc530b21d81",
+    "checks": "Fresh installed imports/generation/CLI and exact core0107 pin; byte-identical offline codegen sdist rebuild.",
+    "limits": "No SDK facade/Linux/later-source/publication claim; failed original build batch is not relabeled."
   }
 }

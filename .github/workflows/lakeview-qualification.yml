@@ -57,7 +57,7 @@ jobs:
       - name: Core and Lakeview assertions
         run: cargo test --locked --release -p umf-core --lib --test lakeview --test resource_cache
       - name: Wire and frozen-vector regressions
-        run: cargo test --locked --release -p umf-core-wire --lib
+        run: cargo test --locked --release -p umf-core-wire --lib --test document_comparison
       - name: Binding and registry regressions
         run: bun scripts/run-tests.ts tests/lakeview tests/extension-kinds tests/registry/extension-rust-owned-registries.test.ts
       - name: Qualify installed Node, Bun and independent CLI transport

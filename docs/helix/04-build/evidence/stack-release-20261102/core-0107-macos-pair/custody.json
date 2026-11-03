@@ -1,0 +1,29 @@
+{
+  "observed_at_utc": "2026-11-03T00:58:30.811412+00:00",
+  "source_commit": "9d92e38c39c35c598faeea8abbd2262760c8cb34",
+  "source_repository": "/Users/erik/.codex/worktrees/rust-binding-spike/umf",
+  "tracked_worktree_clean_before_and_after": true,
+  "source_materialization": "Read-only original frozen checkout supplied the tracked workflow recipe missing from source-v2; no frozen source or candidate artifact edited.",
+  "recipe_sha256": "76a74b71f4e9de77ad634c3ff2a1faa4df289682d6eb90bb1b2799b0d1fdcd0e",
+  "pair_receipt": "/private/tmp/umf-root-0107-macos-pair-9d92e38.json",
+  "pair_receipt_sha256": "f34d3f7e6c0c459b9042831bcb4421d958ca3798bb5969b8caef1fc530b21d81",
+  "status": "passed",
+  "publishing": false,
+  "workflow_run": null,
+  "receipt_source_revision_field": "local-unpinned",
+  "scope": "Local macOS arm64 Python core/codegen0.10.7 pairing at9d92e38; no SDK facade, Linux, managed/database or later-source acceptance.",
+  "pair": {
+    "codegen": {
+      "version": "0.10.7",
+      "wheel": "umf_codegen-0.10.7-py3-none-any.whl"
+    },
+    "core": {
+      "version": "0.10.7",
+      "wheel": "umf_core-0.10.7-cp311-abi3-macosx_11_0_arm64.whl"
+    },
+    "installedCliHelp": "passed",
+    "installedImportAndGeneration": "passed",
+    "requires": "umf-core==0.10.7"
+  },
+  "offline_rebuild_matches": true
+}
