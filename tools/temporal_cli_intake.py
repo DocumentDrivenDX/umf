@@ -11,6 +11,8 @@ import os
 from pathlib import Path
 import platform as actual_host
 import re
+import stat
+import zipfile
 import urllib.error
 import urllib.request
 
@@ -217,12 +219,149 @@ def intake(root: Path, output: Path, platform: str, carrier_id: str) -> None:
         "scope": "Material/source provenance only; no native CLI execution or qualification claim"})
 
 
+COMPLETED_CLI_RUN = 41651139875
+COMPLETED_CLI_Q = "bcdf9fe5a613f4d6fc4e3774681234ee678b1244"
+COMPLETED_CLI_TREE = "1504c88ced89be57333969d4f42420cf87cd9c79"
+COMPLETED_CLI_JOB = 125969297266
+COMPLETED_CLI_ARTIFACT = 13237746692
+COMPLETED_CLI_ZIP_SHA = "2af2f98b140a4f6073d0f2820c752811282c6f504adee2a869663aee1d62083b"
+COMPLETED_CLI_ZIP_BYTES = 430014112
+COMPLETED_CLI_LOG_SHA = "56d3c7c16a402dbf67c25bb1c29721ab52a42c0c32e6f3fb9f3b604f8bbd56a0"
+COMPLETED_CLI_FILES = {"capture.json", "intake.json", "verification.json", "extracted/prepare.json",
+                       "prepared.sha256", "report.sha256", "cli19.json"}
+
+
+def validate_completed_linux_metadata(run: dict, artifact: dict, job: dict) -> None:
+    if (run.get("id") != COMPLETED_CLI_RUN or run.get("head_sha") != COMPLETED_CLI_Q
+            or run.get("run_attempt") != 1 or run.get("event") != "workflow_dispatch"
+            or run.get("workflow_id") != 401955635 or run.get("path") != ".github/workflows/sagas.yml"
+            or run.get("head_branch") != "codex/temporal-qualification-controller"
+            or run.get("status") != "completed" or run.get("conclusion") != "failure"
+            or artifact.get("id") != COMPLETED_CLI_ARTIFACT or artifact.get("expired") is not False
+            or artifact.get("size_in_bytes") != COMPLETED_CLI_ZIP_BYTES
+            or artifact.get("digest") != "sha256:" + COMPLETED_CLI_ZIP_SHA
+            or artifact.get("name") != f"packaged-cli-linux-{COMPLETED_CLI_Q}-{COMPLETED_CLI_RUN}"
+            or artifact.get("workflow_run", {}).get("id") != COMPLETED_CLI_RUN
+            or artifact.get("workflow_run", {}).get("head_sha") != COMPLETED_CLI_Q
+            or job.get("id") != COMPLETED_CLI_JOB or job.get("run_id") != COMPLETED_CLI_RUN
+            or job.get("name") != "packaged-cli-linux" or job.get("status") != "completed"
+            or job.get("conclusion") != "success"):
+        raise ValueError("Completed Linux CLI run/job/artifact identity differs")
+    needed = {"Authenticate exact retained wheel and unqualified draft material carrier",
+              "Prepare unchanged wheel-embedded executable copy",
+              "Only exact packaged CLI nineteen independent vectors",
+              "Retain material, report and verification bytes without replay or repair"}
+    steps = job.get("steps", [])
+    if (any(sum(s.get("name") == name and s.get("status") == "completed"
+                and s.get("conclusion") == "success" for s in steps) != 1 for name in needed)
+            or any(s.get("conclusion") in {"failure", "cancelled"} for s in steps)):
+        raise ValueError("Completed Linux CLI qualification/retention steps did not pass")
+
+
+def validate_completed_linux_log(raw: bytes) -> None:
+    if hashlib.sha256(raw).hexdigest() != COMPLETED_CLI_LOG_SHA:
+        raise ValueError("Completed Linux CLI original successful job log differs")
+
+
+def validate_completed_linux_receipts(root: Path, raw: dict[str, bytes]) -> dict:
+    if set(raw) != COMPLETED_CLI_FILES:
+        raise ValueError("Completed Linux CLI receipt roster differs")
+    decode = lambda name: json.loads(raw[name])
+    state, result, verified = (decode(n) for n in ("extracted/prepare.json", "cli19.json", "verification.json"))
+    observed, capture = decode("intake.json"), decode("capture.json")
+    h = helper(root)
+    pin, materials = h.PINS["linux-x86_64"], h.snapshot(root)
+    prepared_sha, report_sha = (hashlib.sha256(raw[n]).hexdigest()
+                                for n in ("extracted/prepare.json", "cli19.json"))
+    if (raw["prepared.sha256"].decode().strip() != prepared_sha
+            or raw["report.sha256"].decode().strip() != report_sha
+            or verified.get("preparedSha256") != prepared_sha or verified.get("reportSha256") != report_sha
+            or state.get("profile") != "umf.packaged-cli-prepare/1" or state.get("sourceS") != SOURCE
+            or state.get("target") != "linux-x86_64" or state.get("materials") != materials
+            or state.get("wheelSha256") != pin["wheel"] or state.get("cliSha256") != pin["cli"]
+            or verified.get("profile") != "umf.packaged-cli-verification/1"
+            or verified.get("sourceS") != SOURCE or verified.get("target") != "linux-x86_64"
+            or verified.get("status") != "passed" or verified.get("cases") != 19 or verified.get("passed") != 19
+            or verified.get("wheelSha256") != pin["wheel"] or verified.get("cliSha256") != pin["cli"]
+            or verified.get("beforeMaterials") != materials or verified.get("afterMaterials") != materials
+            or observed.get("artifactSourceS") != SOURCE or observed.get("sourceTree") != SOURCE_TREE
+            or observed.get("controllerQ") != COMPLETED_CLI_Q or observed.get("platform") != "linux-x86_64"
+            or observed.get("helperSHA256") != HELPER_SHA or observed.get("wheel") != state.get("wheel")
+            or observed.get("wheelSHA256") != pin["wheel"] or observed.get("cliSHA256") != pin["cli"]
+            or capture.get("artifactSourceS") != SOURCE or capture.get("controllerQ") != COMPLETED_CLI_Q
+            or capture.get("controllerTree") != COMPLETED_CLI_TREE or capture.get("controllerStatus") != ""):
+        raise ValueError("Completed Linux CLI preparation/verification/source/material pins differ")
+    expected = [{"id": v["id"], "covers": v["covers"], "passed": True}
+                for v in json.loads((root / "fixtures/saga/portable.json").read_text())["cases"]]
+    inputs = {n: materials[n] for n in h.input_paths(root)}
+    if (len(expected) != 19 or result.get("profile") != "umf.saga.portable-host-receipt/2"
+            or result.get("host") != "cli" or result.get("hostId") != "cli"
+            or result.get("runtime") != pin["runtime"] or type(result.get("cases")) is not int
+            or type(result.get("passed")) is not int or result["cases"] != result["passed"] or result["passed"] != 19
+            or json.dumps(result.get("results"), sort_keys=True) != json.dumps(expected, sort_keys=True)
+            or result.get("qualificationInputs") != inputs
+            or result.get("corpusSha256") != inputs["fixtures/saga/portable.json"]
+            or result.get("artifacts") != {"cliBinary": {"path": state.get("copy"), "sha256": pin["cli"]}}):
+        raise ValueError("Completed Linux CLI full ordered oracle/actual target differs")
+    rows = capture.get("files", [])
+    roster = {r["path"]: r for r in rows}
+    if len(rows) != len(roster):
+        raise ValueError("Duplicate completed Linux captured member")
+    for name in COMPLETED_CLI_FILES - {"capture.json"}:
+        row = roster.get(name, {})
+        if row.get("bytes") != len(raw[name]) or row.get("sha256") != hashlib.sha256(raw[name]).hexdigest():
+            raise ValueError("Completed Linux receipt differs from original capture")
+    return verified
+
+
+def reuse_linux(root: Path, output: Path) -> None:
+    q, _ = check_root(root)
+    if (actual_host.system(), actual_host.machine()) != ("Darwin", "arm64"):
+        raise ValueError("Missing-only CLI continuation requires actual Darwin arm64")
+    output.mkdir(parents=True, exist_ok=False)
+    token = os.environ["GH_TOKEN"]
+    run = prior.api(f"actions/runs/{COMPLETED_CLI_RUN}", token)
+    artifact = prior.api(f"actions/artifacts/{COMPLETED_CLI_ARTIFACT}", token)
+    job = prior.api(f"actions/jobs/{COMPLETED_CLI_JOB}", token)
+    validate_completed_linux_metadata(run, artifact, job)
+    log = output / "original-completed-linux-job.log"
+    prior.download(log, token, endpoint=f"actions/jobs/{COMPLETED_CLI_JOB}/logs")
+    validate_completed_linux_log(log.read_bytes())
+    archive = output / "original-completed-linux.zip"
+    prior.download(archive, token, COMPLETED_CLI_ARTIFACT)
+    if archive.stat().st_size != COMPLETED_CLI_ZIP_BYTES or prior.digest(archive) != COMPLETED_CLI_ZIP_SHA:
+        raise ValueError("Completed Linux CLI ZIP bytes differ")
+    with zipfile.ZipFile(archive) as z:
+        names = set()
+        for info in z.infolist():
+            name = info.filename
+            if (name in names or name.startswith("/") or "\\" in name or ".." in Path(name).parts
+                    or stat.S_ISLNK(info.external_attr >> 16)):
+                raise ValueError("Unsafe completed Linux CLI artifact member")
+            names.add(name)
+        raw = {name: z.read(name) for name in COMPLETED_CLI_FILES if name in names}
+    verified = validate_completed_linux_receipts(root, raw)
+    for name, data in raw.items():
+        path = output / "receipts" / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+    for name, data in (("original-run.json", run), ("original-job.json", job), ("original-artifact.json", artifact)):
+        prior.write(output / name, data)
+    prior.write(output / "reuse.json", {"sourceS": SOURCE, "originalQ": COMPLETED_CLI_Q,
+        "originalRun": COMPLETED_CLI_RUN, "originalJob": COMPLETED_CLI_JOB,
+        "originalArtifact": COMPLETED_CLI_ARTIFACT, "originalZipSHA256": COMPLETED_CLI_ZIP_SHA,
+        "originalSuccessfulJobLogSHA256": COMPLETED_CLI_LOG_SHA,
+        "currentQ": q, "verified": verified,
+        "scope": "Authenticated completed Linux CLI19 proof; NO native execution or new host claim"})
+
+
 def capture(root: Path, output: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     prior.write(output / "capture.json", {
         "artifactSourceS": SOURCE, "controllerQ": prior.git(root, "rev-parse", "HEAD"),
         "controllerTree": prior.git(root, "rev-parse", "HEAD^{tree}"),
         "controllerStatus": prior.git(root, "status", "--porcelain=v1"),
+        "controllerRuntime": {"python": actual_host.python_version(), "system": actual_host.system(), "machine": actual_host.machine()},
         "scope": "Read-only retained output inventory; no cleanup/repair or new acceptance claim",
         "files": [{"path": str(p.relative_to(output)), "bytes": p.stat().st_size, "sha256": prior.digest(p)}
                   for p in sorted(output.rglob("*")) if p.is_file() and p != output / "capture.json"]})
@@ -230,13 +369,15 @@ def capture(root: Path, output: Path) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("operation", choices=["intake", "capture"])
+    p.add_argument("operation", choices=["intake", "capture", "reuse-linux"])
     p.add_argument("--root", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--platform", choices=["linux-x86_64", "macos-arm64"])
     p.add_argument("--carrier-release-id")
     args = p.parse_args()
-    if args.operation == "capture":
+    if args.operation == "reuse-linux":
+        reuse_linux(args.root, args.output)
+    elif args.operation == "capture":
         capture(args.root, args.output)
     else:
         if not args.platform or not args.carrier_release_id:

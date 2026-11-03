@@ -8,7 +8,7 @@ on:
         description: Full campaign or bounded retained-S temporal resume
         type: choice
         default: full
-        options: [full, resume, linux, consumers, packaged-cli]
+        options: [full, resume, linux, consumers, packaged-cli, packaged-cli-macos]
       packaged_cli_carrier_id:
         description: Exact approved unpublished retained Mac wheel material carrier release ID
         type: string
@@ -522,7 +522,7 @@ jobs:
           if-no-files-found: warn
 
   packaged-cli-macos:
-    if: github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && inputs.temporal_phase == 'packaged-cli' && github.ref == 'refs/heads/codex/temporal-qualification-controller'
+    if: always() && github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/codex/temporal-qualification-controller' && ((inputs.temporal_phase == 'packaged-cli' && needs.packaged-cli-linux.result == 'success') || inputs.temporal_phase == 'packaged-cli-macos')
     needs: packaged-cli-linux
     runs-on: macos-15
     timeout-minutes: 45
@@ -577,7 +577,10 @@ jobs:
           node-version: '26.12.0'
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11.17'
+          python-version: '3.13.17'
+          architecture: arm64
+      - name: Require exact supported controller interpreter and native host
+        run: python -I -B -c 'import platform,sys; assert sys.version_info[:3] == (3,13,17); assert (platform.system(),platform.machine()) == ("Darwin","arm64")'
       - name: Fetch source identity and install only locked test dependencies
         run: |
           git -C controller fetch --no-tags --depth=1 --filter=blob:none origin e3f38ef6f05ae636d2837f9d69f8d6805222664b
@@ -589,6 +592,11 @@ jobs:
           MATERIAL_CARRIER_ID: ${{ inputs.packaged_cli_carrier_id }}
         run: |
           python -I -B controller/tools/temporal_cli_intake.py intake --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-macos" --platform macos-arm64 --carrier-release-id "$MATERIAL_CARRIER_ID"
+      - name: Authenticate completed Linux CLI19 without replay
+        if: inputs.temporal_phase == 'packaged-cli-macos'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -I -B controller/tools/temporal_cli_intake.py reuse-linux --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-macos/completed-linux"
       - name: Prepare unchanged wheel-embedded executable copy
         working-directory: controller
         run: |

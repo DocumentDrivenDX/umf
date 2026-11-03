@@ -124,6 +124,124 @@ class CliIntakeControls(unittest.TestCase):
                         with self.assertRaises(ValueError): intake.download_asset(Path(temp) / "asset", {"id": 1, "size": 3}, "test-token")
                         download.assert_not_called()
 
+    def completed_linux_metadata(self):
+        run = {"id": 41651139875, "head_sha": "bcdf9fe5a613f4d6fc4e3774681234ee678b1244",
+               "run_attempt": 1, "event": "workflow_dispatch", "workflow_id": 401955635,
+               "path": ".github/workflows/sagas.yml", "status": "completed", "conclusion": "failure",
+               "head_branch": "codex/temporal-qualification-controller"}
+        artifact = {"id": 13237746692, "expired": False, "size_in_bytes": 430014112,
+            "digest": "sha256:2af2f98b140a4f6073d0f2820c752811282c6f504adee2a869663aee1d62083b",
+            "name": "packaged-cli-linux-bcdf9fe5a613f4d6fc4e3774681234ee678b1244-41651139875",
+            "workflow_run": {"id": run["id"], "head_sha": run["head_sha"]}}
+        job = {"id": 125969297266, "run_id": run["id"], "name": "packaged-cli-linux",
+               "status": "completed", "conclusion": "success", "steps": [
+                   {"name": name, "status": "completed", "conclusion": "success"} for name in [
+                       "Authenticate exact retained wheel and unqualified draft material carrier",
+                       "Prepare unchanged wheel-embedded executable copy",
+                       "Only exact packaged CLI nineteen independent vectors",
+                       "Retain material, report and verification bytes without replay or repair"]]}
+        return run, artifact, job
+
+    def test_completed_linux_metadata_requires_exact_successful_job_not_run_success(self):
+        original = self.completed_linux_metadata()
+        intake.validate_completed_linux_metadata(*original)
+        for index, field, value in [(0, "head_sha", "f" * 40), (0, "run_attempt", 2),
+                                   (0, "event", "pull_request"), (0, "conclusion", "success"),
+                                   (1, "id", 1), (1, "expired", True), (1, "digest", "sha256:" + "f" * 64),
+                                   (1, "size_in_bytes", 1), (2, "conclusion", "failure"), (2, "id", 1)]:
+            rows = copy.deepcopy(original)
+            rows[index][field] = value
+            with self.assertRaises(ValueError): intake.validate_completed_linux_metadata(*rows)
+        rows = copy.deepcopy(original)
+        rows[2]["steps"].pop()
+        with self.assertRaises(ValueError): intake.validate_completed_linux_metadata(*rows)
+
+    def completed_linux_receipts(self, mutate=None):
+        h = intake.helper(ROOT)
+        materials = h.snapshot(ROOT)
+        pin = h.PINS["linux-x86_64"]
+        prepare = {"profile": "umf.packaged-cli-prepare/1", "sourceS": intake.SOURCE,
+                   "target": "linux-x86_64", "root": "/original/controller", "wheel": "/original/wheel.whl",
+                   "copy": "/original/extracted/umf", "wheelSha256": pin["wheel"],
+                   "cliSha256": pin["cli"], "materials": materials}
+        vectors = json.loads((ROOT / "fixtures/saga/portable.json").read_text())["cases"]
+        report = {"profile": "umf.saga.portable-host-receipt/2", "host": "cli", "hostId": "cli",
+                  "runtime": {"platform": "linux", "arch": "x64"}, "cases": 19, "passed": 19,
+                  "results": [{"id": v["id"], "covers": v["covers"], "passed": True} for v in vectors],
+                  "qualificationInputs": {n: materials[n] for n in h.input_paths(ROOT)},
+                  "corpusSha256": materials["fixtures/saga/portable.json"],
+                  "artifacts": {"cliBinary": {"path": prepare["copy"], "sha256": pin["cli"]}}}
+        verification = {"profile": "umf.packaged-cli-verification/1", "sourceS": intake.SOURCE,
+            "target": "linux-x86_64", "status": "passed", "cases": 19, "passed": 19,
+            "wheelSha256": pin["wheel"], "cliSha256": pin["cli"],
+            "beforeMaterials": materials, "afterMaterials": materials}
+        observed = {"artifactSourceS": intake.SOURCE, "sourceTree": intake.SOURCE_TREE,
+            "controllerQ": "bcdf9fe5a613f4d6fc4e3774681234ee678b1244", "platform": "linux-x86_64",
+            "wheel": prepare["wheel"], "wheelSHA256": pin["wheel"], "cliSHA256": pin["cli"],
+            "helperSHA256": intake.HELPER_SHA}
+        if mutate: mutate(prepare, report, verification, observed)
+        raw = {"extracted/prepare.json": json.dumps(prepare).encode(), "cli19.json": json.dumps(report).encode()}
+        for name, key, field in [("prepared.sha256", "extracted/prepare.json", "preparedSha256"),
+                                  ("report.sha256", "cli19.json", "reportSha256")]:
+            value = hashlib.sha256(raw[key]).hexdigest()
+            raw[name] = (value + "\n").encode()
+            verification[field] = value
+        raw["verification.json"] = json.dumps(verification).encode()
+        raw["intake.json"] = json.dumps(observed).encode()
+        capture = {"artifactSourceS": intake.SOURCE, "controllerQ": observed["controllerQ"],
+            "controllerTree": "1504c88ced89be57333969d4f42420cf87cd9c79", "controllerStatus": "",
+            "files": [{"path": n, "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()} for n, b in raw.items()]}
+        raw["capture.json"] = json.dumps(capture).encode()
+        return raw
+
+    def test_completed_linux_receipts_preserve_full_ordered_oracle_and_byte_identity(self):
+        self.assertEqual(intake.validate_completed_linux_receipts(ROOT, self.completed_linux_receipts())["passed"], 19)
+        for mutate in [lambda p,r,v,i: r.update(passed=18),
+                       lambda p,r,v,i: r["results"].reverse(),
+                       lambda p,r,v,i: r["results"][0].update(passed=False),
+                       lambda p,r,v,i: r.update(runtime={"platform": "darwin", "arch": "arm64"}),
+                       lambda p,r,v,i: r["artifacts"]["cliBinary"].update(path="/another/umf"),
+                       lambda p,r,v,i: v.update(afterMaterials={}),
+                       lambda p,r,v,i: i.update(controllerQ="f" * 40),
+                       lambda p,r,v,i: p.update(cliSha256="f" * 64)]:
+            with self.assertRaises(ValueError):
+                intake.validate_completed_linux_receipts(ROOT, self.completed_linux_receipts(mutate))
+
+    def test_completed_linux_log_is_immutable_and_not_a_runtime_equivalence_claim(self):
+        original = b"Synthetic original successful job log; no native execution"
+        with patch.object(intake, "COMPLETED_CLI_LOG_SHA", hashlib.sha256(original).hexdigest()):
+            intake.validate_completed_linux_log(original)
+            with self.assertRaises(ValueError): intake.validate_completed_linux_log(original + b"changed")
+        with self.assertRaises(ValueError): intake.validate_completed_linux_log(original)
+
+    def test_completed_linux_receipts_require_retained_roster_and_external_pins(self):
+        for name in ["capture.json", "prepared.sha256", "report.sha256", "intake.json", "verification.json"]:
+            rows = self.completed_linux_receipts()
+            rows.pop(name)
+            with self.assertRaises(ValueError): intake.validate_completed_linux_receipts(ROOT, rows)
+        rows = self.completed_linux_receipts()
+        rows["report.sha256"] = b"f" * 64
+        with self.assertRaises(ValueError): intake.validate_completed_linux_receipts(ROOT, rows)
+
+    def test_missing_only_mac_phase_requires_completed_linux_intake_and_exact_controller(self):
+        workflow = (ROOT / ".github/workflows/sagas.yml").read_text()
+        linux, mac = workflow.split("  packaged-cli-linux:\n", 1)[1].split("  packaged-cli-macos:\n", 1)
+        self.assertIn("packaged-cli-macos]", workflow)
+        self.assertNotIn("inputs.temporal_phase == 'packaged-cli-macos'", linux)
+        self.assertIn("if: always() &&", mac)
+        self.assertIn("needs.packaged-cli-linux.result == 'success'", mac)
+        self.assertIn("inputs.temporal_phase == 'packaged-cli-macos'", mac)
+        self.assertIn("python-version: '3.13.17'", mac)
+        self.assertIn("architecture: arm64", mac)
+        self.assertIn("sys.version_info[:3] == (3,13,17)", mac)
+        self.assertIn("Authenticate completed Linux CLI19 without replay", mac)
+        self.assertIn("temporal_cli_intake.py reuse-linux", mac)
+        self.assertLess(mac.index("temporal_cli_intake.py reuse-linux"),
+                        mac.index("qualify_packaged_cli.py prepare"))
+        self.assertIn("bun install --frozen-lockfile --ignore-scripts", mac)
+        self.assertIn("/patches/jsonld@9.0.0.patch", mac)
+        self.assertIn("/bunfig.toml", mac)
+
     def test_manual_serial_two_host_wiring_has_no_build_or_token_in_cli_step(self):
         workflow = (ROOT / ".github/workflows/sagas.yml").read_text()
         linux, mac = workflow.split("  packaged-cli-linux:\n", 1)[1].split("  packaged-cli-macos:\n", 1)
