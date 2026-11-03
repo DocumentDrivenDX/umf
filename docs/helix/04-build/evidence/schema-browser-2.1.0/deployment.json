@@ -1,0 +1,71 @@
+{
+  "profile": "umf.schema-browser.deployment/1",
+  "verifiedAt": "2026-11-03",
+  "deployedSource": "9af49f5a6ef8f6393656f89009cae776e51714fd",
+  "deploymentRun": "https://github.com/DocumentDrivenDX/umf/actions/runs/41552174741",
+  "release": "https://github.com/DocumentDrivenDX/umf/releases/tag/schema-browser-v2.1.0",
+  "package": "@documentdrivendx/umf-schema-browser@2.1.0",
+  "publicPackageVerificationRun": "https://github.com/DocumentDrivenDX/umf/actions/runs/41534057741",
+  "publishedTarballSha256": "9317270b9e3a10d53a1815d85c9166d264a4cb6c48d69363a3f13438cb23c2f4",
+  "hosted": {
+    "profile": "umf.schema-browser.hosted-verification/1",
+    "packageVersion": "2.1.0",
+    "rendererPackage": {
+      "name": "@documentdrivendx/umf-visual",
+      "version": "0.5.0",
+      "entrySha256": "3502f2ca6ac802f0c3db513b18455362536179178c388446a4e3d0ea736d2f2f"
+    },
+    "nativeVersion": "1.1.0",
+    "packageAssetsExact": true,
+    "homeSvgSha256": "d4429e0d209f201bff8a4f3c80a25248246ca82e255668ae17a61e106a2d0b60",
+    "pages": [
+      {
+        "url": "https://documentdrivendx.github.io/umf/index.html",
+        "sha256": "7c1a7dfd50a7f398a9e0fadaa362e2283c29ea0537c83392a57b43c6cbf26ab9",
+        "signerRole": "build",
+        "signature": "VALID"
+      },
+      {
+        "url": "https://documentdrivendx.github.io/umf/reference/core.html",
+        "sha256": "9cc0f9c12b3f1abba91de9de0e22a3d1159d727b039329dd91607037e3cdd701",
+        "signerRole": "build",
+        "signature": "VALID"
+      },
+      {
+        "url": "https://documentdrivendx.github.io/umf/actions/index.html",
+        "sha256": "efa8bb180133aa89a6b27758d55340d9caef5ea6d2ea13b03f19f21e7e6d6baa",
+        "signerRole": "build",
+        "signature": "VALID"
+      }
+    ]
+  },
+  "browser": {
+    "target": "https://documentdrivendx.github.io/umf/",
+    "browserVersion": "153.0.8010.12",
+    "checks": [
+      "Definition autocomplete at 1280px: immediate ranked results, keyboard/pointer navigation, focus, Back, dismissal and empty states",
+      "Definition autocomplete at 390px: immediate ranked results, keyboard/pointer navigation, focus, Back, dismissal and empty states",
+      "Balanced nodes do not overlap; labels fit their cards and routed edges avoid other cards and meet their authored source and target at all four sizes",
+      "All 24 authored records and 27 projected relationships fit at 1440/1280/798/390px; zoom and local panning work; desktop details remain adjacent",
+      "Cold Schemas landing opens the full model with collapsed definition groups",
+      "Graph node keyboard activation, exact refresh and Back retain context",
+      "Labeled graph connections expose their source and navigable target",
+      "Selection keeps the full model; exact explicit neighborhood and full-model routes survive refresh",
+      "Explicit focus survives field and owner links; isolated-node zoom remains monotonic above 300%",
+      "Field reference shows known scalar values and open-string behavior once",
+      "Record and Field rules retain role-specific, fully qualified nested facet paths",
+      "External semantic-term definition opens its own schema rather than Document",
+      "Downloaded YAML and JSON have identical valid UMF meaning",
+      "Unknown graph route fails visibly with working object-reference recovery",
+      "Model catalog starts with groups closed and finds the authored self-model example",
+      "All three Schema views navigate through the same visible controls",
+      "390/798/1280px screenshots and containment; graph/table scrolling stays local",
+      "Actual self-model validates in browser workbench and survives YAML/JSON conversion",
+      "Tampered self-model asset is refused with usable object-reference recovery",
+      "Every projected relationship identity navigates to its exact authored edge"
+    ],
+    "passed": 20,
+    "pageErrors": [],
+    "unexpectedExternalRequests": []
+  }
+}
