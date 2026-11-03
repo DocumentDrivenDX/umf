@@ -302,6 +302,42 @@ class TemporalEngineCatalogTests(unittest.TestCase):
             with self.subTest(fault=fault), self.assertRaises(ReadBuildError):
                 EngineRead.from_original(canonical_json(seal(changed)), parameters=Parameters, result=Projected)
 
+    def test_resigned_required_descriptor_refuses_existing_missing_presence(self):
+        for page in (False, True):
+            program = fixture(page)
+            wall = program["artifact"]["logicalPlan"]["fields"][3]
+            self.assertTrue(wall["missing"])
+            self.assertEqual(wall["descriptor"]["availability"], "absent-allowed")
+            wall["descriptor"]["availability"] = "required"
+            original = canonical_json(seal(program))
+            with self.subTest(page=page), self.assertRaises(ReadBuildError):
+                EngineRead.from_original(original, parameters=Parameters, result=Event)
+
+    def test_resolved_availability_presence_correspondence(self):
+        from umf_access.engine_catalog import _temporal_plan_custody
+        # These are already-resolved custody signatures. Admission of the
+        # authored source remains with the owner. CONTRACT-070 permits several
+        # absent-allowed row views, including generated F/F; required is F/F.
+        for availability in ("required", "absent-allowed"):
+            for missing in (False, True):
+                for nullable in (False, True):
+                    program = fixture()
+                    artifact = program["artifact"]
+                    wall = artifact["logicalPlan"]["fields"][3]
+                    wall["descriptor"]["availability"] = availability
+                    wall.update(missing=missing, nullable=nullable)
+                    program["outputs"][3].update(missing=missing, nullable=nullable)
+                    requirements = json.loads(artifact["parameters"][1]["value"])
+                    requirements["fields"][2]["presence"] = {"missing": missing, "null": nullable}
+                    binding = json.loads(program["request"]["target"]["bindingJson"])
+                    args = (program, RECORD, requirements, [1, 2, 3, 4], binding["records"])
+                    with self.subTest(availability=availability, missing=missing, nullable=nullable):
+                        if availability == "required" and (missing or nullable):
+                            with self.assertRaises(ReadBuildError):
+                                _temporal_plan_custody(*args)
+                        else:
+                            _temporal_plan_custody(*args)
+
     def test_page_hidden_outputs_and_full_string_key_tuple(self):
         program = fixture(True)
         program["outputs"].append(copy.deepcopy(program["outputs"][0]))

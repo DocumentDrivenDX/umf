@@ -368,6 +368,10 @@ def _temporal_plan_custody(program: dict[str, Any], record: dict[str, str], requ
             or type(field.get("descriptor")) is not dict or field["descriptor"].get("identity") != field.get("identity")
             or field["descriptor"].get("availability") not in ("required", "absent-allowed")):
             raise ReadBuildError("complete resolved temporal source Field required")
+        # CONTRACT-070 requires F/F row presence for a required Field. An
+        # absent-allowed Field retains its separately admitted owner row view.
+        if field["descriptor"]["availability"] == "required" and (field["missing"] or field["nullable"]):
+            raise ReadBuildError("resolved temporal Field presence conflicts with required availability")
         identity = _temporal_identity(field.get("identity"))
         key = canonical_json(identity)
         if key in fields:
