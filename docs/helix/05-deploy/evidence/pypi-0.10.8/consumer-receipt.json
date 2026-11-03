@@ -1,0 +1,89 @@
+{
+  "schema": "pypi-consumer-receipt.v1",
+  "status": "passed",
+  "index": "https://pypi.org/simple",
+  "umf_core_version": "0.10.8",
+  "source_sha": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+  "nativeResourceInspection": {
+    "profile": "umf.fresh-public-core-correspondence/1",
+    "status": "passed",
+    "sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+    "actualPython": "3.11.17",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "selectedPublicCore": {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/c3/19/de4331630c572a3523c28959929dc1e70983d7278c8431843f6229bb0849/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "archive_info": {
+          "hash": "sha256=2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+          "hashes": {
+            "sha256": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.5",
+        "name": "umf-core",
+        "version": "0.10.8",
+        "summary": "Official Python document models and extension machinery for UMF",
+        "description": "# Official UMF Python support\n\n`umf-core` provides the `umf` import namespace. The current package version is `0.10.7`, and the document/core version is `0.10.0`. The authored metamodel generates packaged JSON Schemas and portable constraint data; Pydantic provides access models. Rust owns shared validation, registry semantics and the native adapter operations exposed through Python. Consumer extension definitions and execution policies remain in consumer repositories.\n\nBuild the native Rust extension from source with Rust 1.90.0 and the locked Cargo dependencies:\n\n```sh\nrustup toolchain install 1.90.0\npip install ./python\npython -m pytest python/tests\n```\n\nAn installed native wheel does not require Cargo, Node, Bun or V8. Native import failures are explicit. Pydantic remains the Python access-model dependency. For packaging details and source-distribution checks, see `python/pyproject.toml` and the [native-host guide](../bindings/core/README.md).\n\nThe action admission API exposes `create_action_engine`, `prepare_single_set_action`, `admit_generated_action_invocation`, and `admit_generated_record_values`; see [CONTRACT-906](../docs/helix/02-design/contracts/CONTRACT-906-single-set-admission.md).\n\n```python\nfrom umf import read_document, validate_document, write_document\n\ndocument = read_document('''\numf: \"0.10.0\"\nid: orders\nvocabularies: {}\nmodules: []\n''', format=\"yaml\")\nresult = validate_document(document)\nassert result.valid and result.complete\n# Unknown or unregistered extension meaning can make completeness false.\ntext = write_document(document, format=\"yaml\")\nassert read_document(text, format=\"yaml\").to_dict() == document.to_dict()\n```\n\nUnknown vocabulary versions, labels and qualifiers remain serializable and make interpretation incomplete. Consumers must refuse execution when their binding cannot interpret required semantics. Exact numeric token carriers, UUID/128-bit carriers, explicit null and omission retain their distinct meanings.\n\nExtensions register explicitly through `Registry` and `Extension` with exact versions, permitted scopes, a JSON Schema and an optional semantic callback. Callbacks receive copies; schema references must be local. Documents do not authorize loading code or fetching schemas. `schema_validator()` is available for consumer-owned schemas and honors their declared dialect.\n\nShared adapter operations are available through `adapter_info()` and `execute_adapter()`:\n\n```python\nfrom umf import adapter_info, execute_adapter\n\noperations = adapter_info(\"openapi\")[\"operations\"]\nsource_json = '{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"Example\",\"version\":\"1\"},\"paths\":{}}'\ndocument = execute_adapter(\n    \"openapi\", \"import\", source=source_json, id=\"api\", format=\"json\"\n)\nrestored = execute_adapter(\"openapi\", \"export\", document=document, format=\"json\")\n```\n\nPass the adapter family and operation positionally. Calls accept `max_work`, `meter`, `is_cancelled`, `now` and `deadline_ms` controls. Typed convenience modules remain available.\n\nThe native PostgreSQL engine is available through the bundled parser:\n\n```python\nfrom umf import create_postgresql_sql_engine\n\nengine = create_postgresql_sql_engine()\nsql_document = engine.import_sql(\"SELECT 1 AS value\", \"query\")\nrestored_sql = engine.export_sql(sql_document)\n```\n\nThe Rust compiler is available as `from umf.rust_codegen import CodegenEngine`. The source distribution includes the generated resources and supports building a wheel without the repository. Release checks install the wheel in an isolated environment, compare packaged resource bytes and run ordinary public native workflows.\n\n## Pack code generation\n\n`from umf import generate_pack_tools` exposes the shared Rust pack compiler. Pass\na complete `umf.pack-tools/1` request containing the manifest text, all declared\nschema sources, schema/package options and `ddl`, `orm`, `crud` targets. The result\ncontains generated files, exact source companions, diagnostics and per-source\ncoverage. Unkeyed tables receive DDL without invented ORM identities.\n\nThe paired `umf-codegen==0.10.7` archive in the same GitHub release exposes\n`umf_codegen.generate_pack_tools(request)`, using the native CLI bundled with\n`umf-core==0.10.7`. Both distributions are verified together.\n",
+        "description_content_type": "text/markdown",
+        "requires_dist": [
+          "pydantic<3,>=2.11"
+        ],
+        "requires_python": "<3.15,>=3.11",
+        "project_url": [
+          "Repository, https://github.com/DocumentDrivenDX/umf"
+        ]
+      }
+    },
+    "wheelSHA256": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+    "nativeSHA256": "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da",
+    "origins": {
+      "umf": {
+        "path": "/home/runner/work/_temp/pypi-consumer/lib/python3.11/site-packages/umf/__init__.py",
+        "sha256": "69e0bf18bc3ee1531184821af20aa0110863faba9a6ffb913bf7a0448e191b21"
+      },
+      "umf._rust_core": {
+        "path": "/home/runner/work/_temp/pypi-consumer/lib/python3.11/site-packages/umf/_rust_core.abi3.so",
+        "sha256": "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da"
+      }
+    },
+    "inspectionCases": 17,
+    "inspectionCalls": 51,
+    "requestCustodyPreserved": true,
+    "semanticCore": "0.10.0",
+    "canonicalResources": true,
+    "resourceManifestSHA256": "5eecd2e367ac58a38df0f4f32a8a7d9bef8020b8340dc4704583f7806d83d571",
+    "engineVersion": "umf-core-r2",
+    "codegenProtocol": "umf-codegen-r3-seven-ops-nine-resources/1",
+    "qualificationInputs": {
+      "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
+      "tests/rust-core/fixtures/access-inspection/cases.json": "2e939f0d0f68f71a6b78c38e4fcd151e7b363513311f1aed170f9576333cbdc3"
+    },
+    "strictBefore": {
+      "all_files_inside_platlib": true,
+      "cli_sha256": "5c685f7bc53a29fafbcf8cf965c91ccfe748bb51096b099172c3816f16f0e2a9",
+      "distribution_version": "0.10.8",
+      "installed_file_count": 80,
+      "native_sha256": "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da",
+      "package_file_count": 72,
+      "status": "passed",
+      "wheel_sha256": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd"
+    },
+    "strictAfter": {
+      "all_files_inside_platlib": true,
+      "cli_sha256": "5c685f7bc53a29fafbcf8cf965c91ccfe748bb51096b099172c3816f16f0e2a9",
+      "distribution_version": "0.10.8",
+      "installed_file_count": 80,
+      "native_sha256": "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da",
+      "package_file_count": 72,
+      "status": "passed",
+      "wheel_sha256": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd"
+    },
+    "pydantic": "2.14.2",
+    "scope": "Actual fresh-public Linux311 Core proof only; no Access/Codegen PyPI/Weft/Truss or Mac313-native claim"
+  }
+}
