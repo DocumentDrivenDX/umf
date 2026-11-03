@@ -24,6 +24,19 @@ ARTIFACT = 13213549400
 ZIP_SHA = "4da83dd0d2e07444454d70e819595330be7bf57fe81d5671b1cdd81a2de03941"
 SDK_SHA = "cd153fd817a6551d46c29a7b0979b8de488151802a56e5d520d8a602431afe0c"
 SDK_SOURCE_SHA = "d794cde1d38c1065e3c757946851ee298dc868d5123557090c53c154316afaa9"
+LINUX_RUN = 41608568860
+LINUX_ARTIFACT = 13218662858
+LINUX_Q = "6f0ca8a0a6777016bdeb0e7a49807ccee2ab1a02"
+LINUX_ZIP_SHA = "b5ae6367a46b705795e9f00f6a0e140cf15185d557afe108b99a450ef12db03b"
+LINUX_FILES = {
+    "raw/umf_core-0.10.8-cp311-abi3-linux_x86_64.whl": "d8da5e64fbc3f9d112daf5e5d6032d96f17bca6e8349a8b52064597fec827bb5",
+    "repaired/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+    "raw/umf_core-0.10.8.tar.gz": "4f2a21532fa58f17a85162752789cbbdee7a3657bb5dccf5a350338e4eb2b048",
+    "pure/umf_codegen-0.10.8-py3-none-any.whl": "0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5",
+    "pure/umf_access-0.1.0.dev10-py3-none-any.whl": "493c5f92cc9795403e08a421b6b3ba4a6e5799b94a4980f1613f38ecf2f1c2d7",
+    "installed-sdk-custody.json": "74608803cd91230825b2a5c9132b80a61db48af51cfed11d86c0edf4373a24b9",
+    "installed-sdk-browser.json": "f17d3d92e210869825a763bfe00d8f447a7eb972e510bca3461fd3eb65c3dade",
+}
 APPROVED = {
     "scripts/saga-portable/verify.ts": "09bf569611574c28e6728dead6ad10137271bf26366f99faec6803ccf5fca9e5",
     "tests/saga/custody.test.ts": "d6e63a9ddfae1811819ff0987c624b2f0a17ee7e3f4b2c5279c80b4e5970dff4",
@@ -32,6 +45,7 @@ OVERLAY = (*APPROVED, "scripts/test-sdk-install.ts")
 WIRING = {
     ".github/workflows/sagas.yml", "tools/temporal_resume.py",
     "scripts/saga-portable/installed-browser.ts", "tests/qualification/test_temporal_resume.py",
+    "tools/qualify_python_release_wheel.py", "python/tests/test_distribution_artifact.py",
 }
 
 
@@ -102,12 +116,12 @@ def api(path: str, token: str) -> dict:
         return json.load(response)
 
 
-def download(archive: Path, token: str) -> None:
+def download(archive: Path, token: str, artifact_id: int = ARTIFACT) -> None:
     class NoRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, *args, **kwargs):
             return None
     request = urllib.request.Request(
-        f"https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/{ARTIFACT}/zip",
+        f"https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/{artifact_id}/zip",
         headers={"Authorization": "Bearer " + token})
     try:
         urllib.request.build_opener(NoRedirect).open(request, timeout=60)
@@ -124,7 +138,7 @@ def download(archive: Path, token: str) -> None:
         shutil.copyfileobj(response, output)
 
 
-def prepare(source: Path, controller: Path, output: Path) -> None:
+def check_roots(source: Path, controller: Path) -> str:
     if git(source, "rev-parse", "HEAD") != SOURCE or git(source, "status", "--porcelain=v1"):
         raise ValueError("Artifact source is not clean immutable S")
     q = git(controller, "rev-parse", "HEAD")
@@ -134,6 +148,11 @@ def prepare(source: Path, controller: Path, output: Path) -> None:
     for path, expected in APPROVED.items():
         if digest(controller / path) != expected:
             raise ValueError("Approved oracle/control hash differs")
+    return q
+
+
+def prepare(source: Path, controller: Path, output: Path) -> None:
+    q = check_roots(source, controller)
     output.mkdir(parents=True, exist_ok=True)
     token = os.environ["GH_TOKEN"]
     run = api(f"actions/runs/{RUN}", token)
@@ -163,6 +182,80 @@ def prepare(source: Path, controller: Path, output: Path) -> None:
         "overlayHashes": {name: digest(controller / name) for name in OVERLAY},
         "overlayActive": False,
         "originalReceiptsPreserved": True, "fullCampaignReplayed": False,
+    })
+
+
+def verify_retained_linux(root: Path) -> dict:
+    inventory = json.loads((root / "files.json").read_text())
+    provenance = json.loads((root / "source-and-controller.json").read_text())
+    if (inventory["artifactSourceS"] != SOURCE or inventory["sourceHead"] != SOURCE
+            or inventory["sourceStatus"] or inventory["controllerQ"] != LINUX_Q
+            or provenance["artifactSourceS"] != SOURCE or provenance["controllerQ"] != LINUX_Q
+            or provenance["overlayActive"]):
+        raise ValueError("Prior producer source/controller/restoration identity mismatch")
+    rows = inventory["files"]
+    names = [row["path"] for row in rows]
+    actual = {str(p.relative_to(root)) for p in root.rglob("*") if p.is_file()}
+    if len(names) != len(set(names)) or actual != set(names) | {"files.json"}:
+        raise ValueError("Prior retained inventory roster differs")
+    for row in rows:
+        path = root / row["path"]
+        if (not path.resolve().is_relative_to(root.resolve()) or not path.is_file()
+                or path.stat().st_size != row["bytes"] or digest(path) != row["sha256"]):
+            raise ValueError("Prior retained inventory member differs")
+    for name, expected in LINUX_FILES.items():
+        if digest(root / name) != expected:
+            raise ValueError("Pinned Linux producer/proof bytes differ: " + name)
+    sdk = json.loads((root / "installed-sdk-custody.json").read_text())
+    browser = json.loads((root / "installed-sdk-browser.json").read_text())
+    if (sdk["archiveSha256"] != SDK_SHA or browser["archiveSha256"] != SDK_SHA
+            or browser["artifactSourceS"] != SOURCE or browser["controllerQ"] != LINUX_Q
+            or sdk["sagaResult"]["cases"] != 19 or sdk["sagaResult"]["passed"] != 19
+            or browser["result"]["cases"] != 19 or browser["result"]["passed"] != 19
+            or browser["hostCalls"] != 0):
+        raise ValueError("Prior SDK/browser passing proof differs")
+    return provenance
+
+
+def prepare_linux(source: Path, controller: Path, output: Path) -> None:
+    q = check_roots(source, controller)
+    output.mkdir(parents=True, exist_ok=True)
+    token = os.environ["GH_TOKEN"]
+    run = api(f"actions/runs/{LINUX_RUN}", token)
+    artifact = api(f"actions/artifacts/{LINUX_ARTIFACT}", token)
+    if (run["head_sha"] != LINUX_Q or run["run_attempt"] != 1 or run["conclusion"] != "failure"
+            or run["event"] != "workflow_dispatch" or run["workflow_id"] != 401955635
+            or artifact["workflow_run"]["id"] != LINUX_RUN or artifact["expired"]
+            or artifact["name"] != f"temporal-resume-{LINUX_Q}-{LINUX_RUN}"
+            or artifact["digest"] != "sha256:" + LINUX_ZIP_SHA):
+        raise ValueError("Prior Linux producer artifact/run mismatch")
+    archive = output / "prior-linux-artifact.zip"
+    download(archive, token, LINUX_ARTIFACT)
+    retained = output / "prior-linux"
+    extract_zip(archive, retained, LINUX_ZIP_SHA)
+    prior = verify_retained_linux(retained)
+    current_overlay = {name: digest(controller / name) for name in OVERLAY}
+    if current_overlay != prior["overlayHashes"]:
+        raise ValueError("Previously qualified SDK oracle/installer changed; cannot reuse passes")
+    candidates = list(retained.rglob("umf-sdk.tgz"))
+    if len(candidates) != 1:
+        raise ValueError("Prior SDK archive roster mismatch")
+    manifest = sdk_manifest(candidates[0])
+    verify_sources(source, manifest["sourceClosure"]["inputs"], set(OVERLAY) | WIRING)
+    destination = source / ".cache/sdk-distribution"
+    destination.mkdir(parents=True, exist_ok=True)
+    for name in ["umf-sdk.tgz", "manifest.json", "receipt.json"]:
+        shutil.copyfile(candidates[0].parent / name, destination / name)
+    shutil.copytree(retained / "pure", output / "pure")
+    write(output / "source-and-controller.json", {
+        "artifactSourceS": SOURCE, "controllerQ": q, "overlayHashes": current_overlay,
+        "overlayActive": False, "priorProducerQ": LINUX_Q, "priorRun": LINUX_RUN,
+        "priorArtifact": LINUX_ARTIFACT, "priorZIP_SHA256": LINUX_ZIP_SHA,
+        "priorProvenance": prior, "priorSDK19AndBrowser19PreservedOriginalIdentities": True,
+        "directProducerRebuilt": False, "SDKOrBrowserReplayed": False,
+        "newVerifierSHA256": digest(controller / "tools/qualify_python_release_wheel.py"),
+        "newVerifierTestsSHA256": digest(controller / "python/tests/test_distribution_artifact.py"),
+        "unchangedRetainedPins": LINUX_FILES,
     })
 
 
@@ -305,7 +398,7 @@ def capture(source: Path, controller: Path, output: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("operation", choices=["prepare", "overlay", "restore", "probe", "capture"])
+    parser.add_argument("operation", choices=["prepare", "prepare-linux", "overlay", "restore", "probe", "capture"])
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--controller", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -315,6 +408,8 @@ def main() -> None:
     args = parser.parse_args()
     if args.operation == "prepare":
         prepare(args.source, args.controller, args.output)
+    elif args.operation == "prepare-linux":
+        prepare_linux(args.source, args.controller, args.output)
     elif args.operation in {"overlay", "restore"}:
         overlay(args.source, args.controller, args.output, args.operation == "restore")
     elif args.operation == "probe":

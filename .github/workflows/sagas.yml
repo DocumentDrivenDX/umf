@@ -8,7 +8,7 @@ on:
         description: Full campaign or bounded retained-S temporal resume
         type: choice
         default: full
-        options: [full, resume]
+        options: [full, resume, linux]
 permissions:
   contents: read
 concurrency:
@@ -197,7 +197,7 @@ jobs:
             ${{ runner.temp }}/saga-python-dist/
 
   temporal-resume:
-    if: github.event_name == 'workflow_dispatch' && inputs.temporal_phase == 'resume'
+    if: github.event_name == 'workflow_dispatch' && (inputs.temporal_phase == 'resume' || inputs.temporal_phase == 'linux')
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     permissions:
@@ -256,10 +256,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          python controller/tools/temporal_resume.py prepare --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+          operation=prepare
+          if [ "${{ inputs.temporal_phase }}" = linux ]; then operation=prepare-linux; fi
+          python controller/tools/temporal_resume.py "$operation" --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
       - name: Apply only recorded qualification overlay
+        if: inputs.temporal_phase == 'resume'
         run: python controller/tools/temporal_resume.py overlay --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
       - name: Affected installed SDK custody and all19 public Saga cases
+        if: inputs.temporal_phase == 'resume'
         working-directory: source
         env:
           UMF_SDK_INSTALL_PHASE: saga
@@ -269,14 +273,17 @@ jobs:
           bun scripts/test-sdk-install.ts 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/installed-sdk.log"
           cp "$UMF_SDK_INSTALL_RETAIN_DIR/g03-sdk-install-custody.json" "$UMF_TEMPORAL_OUTPUT/installed-sdk-custody.json"
       - name: Actual installed public browser facade all19
+        if: inputs.temporal_phase == 'resume'
         working-directory: source
         run: |
           set -o pipefail
           bunx playwright install --with-deps chromium
           bun "$GITHUB_WORKSPACE/controller/scripts/saga-portable/installed-browser.ts" 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/installed-sdk-browser.log"
       - name: Restore exact clean S before artifact production
+        if: inputs.temporal_phase == 'resume'
         run: python controller/tools/temporal_resume.py restore --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
       - name: Genuine missing Linux311 Core wheel and source archive
+        if: inputs.temporal_phase == 'resume'
         working-directory: source
         run: |
           set -o pipefail
@@ -285,27 +292,35 @@ jobs:
           cargo --version > "$UMF_TEMPORAL_OUTPUT/cargo-version.txt"
           uv build --python 3.11.17 --wheel --sdist --out-dir "$UMF_TEMPORAL_OUTPUT/raw" python 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/linux-build.log"
       - name: Canonical pure companions with exact retained byte correspondence
+        if: inputs.temporal_phase == 'resume'
         working-directory: source
         run: |
           uv build --python 3.11.17 --wheel --out-dir "$UMF_TEMPORAL_OUTPUT/pure" python/umf_codegen
           uv build --python 3.11.17 --wheel --out-dir "$UMF_TEMPORAL_OUTPUT/pure" python/umf_access
           echo "0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5  $UMF_TEMPORAL_OUTPUT/pure/umf_codegen-0.10.8-py3-none-any.whl" | sha256sum --check
           echo "493c5f92cc9795403e08a421b6b3ba4a6e5799b94a4980f1613f38ecf2f1c2d7  $UMF_TEMPORAL_OUTPUT/pure/umf_access-0.1.0.dev10-py3-none-any.whl" | sha256sum --check
-      - name: Unchanged locked auditwheel repair and qualification
+      - name: Strict selection of retained or freshly repaired actual Linux bytes
         working-directory: source
         run: |
           set -o pipefail
           out="$UMF_TEMPORAL_OUTPUT"
-          python tools/core_python_qualification_runner.py fetch-wheels --lock qualification-inputs/core-0.10.3-wheel-input-lock.json --profile repair --cell linux-x86_64-py311 --output "$out/repair-tools"
-          python -m pip install --no-index --no-deps --only-binary=:all: "$out/repair-tools/"*.whl
-          auditwheel --version > "$out/auditwheel-version.txt"
-          patchelf --version > "$out/patchelf-version.txt"
-          raw="$(find "$out/raw" -name '*.whl' -type f)"
-          auditwheel show --json "$raw" > "$out/auditwheel-before.json"
-          auditwheel repair --plat auto --only-plat --wheel-dir "$out/repaired" "$raw"
-          selected="$(find "$out/repaired" -name '*.whl' -type f)"
-          auditwheel show --json "$selected" > "$out/auditwheel-after.json"
-          python tools/qualify_python_release_wheel.py --version 0.10.8 --platform linux --source-wheel "$raw" --selected-wheel "$selected" --before-report "$out/auditwheel-before.json" --after-report "$out/auditwheel-after.json" --tool-artifacts "$out/repair-tools" --tool-lock qualification-inputs/core-0.10.3-wheel-input-lock.json --auditwheel-version "$out/auditwheel-version.txt" --patchelf-version "$out/patchelf-version.txt" --sdist "$out/raw/umf_core-0.10.8.tar.gz" --output-wheel-directory "$out/dist" --receipt "$out/dist/selection.json" 2>&1 | tee "$out/repair-qualification.log"
+          prior="$out"
+          if [ "${{ inputs.temporal_phase }}" = linux ]; then
+            prior="$out/prior-linux"
+          else
+            python tools/core_python_qualification_runner.py fetch-wheels --lock qualification-inputs/core-0.10.3-wheel-input-lock.json --profile repair --cell linux-x86_64-py311 --output "$out/repair-tools"
+            python -m pip install --no-index --no-deps --only-binary=:all: "$out/repair-tools/"*.whl
+            auditwheel --version > "$out/auditwheel-version.txt"
+            patchelf --version > "$out/patchelf-version.txt"
+            raw="$(find "$out/raw" -name '*.whl' -type f)"
+            auditwheel show --json "$raw" > "$out/auditwheel-before.json"
+            auditwheel repair --plat auto --only-plat --wheel-dir "$out/repaired" "$raw"
+            selected="$(find "$out/repaired" -name '*.whl' -type f)"
+            auditwheel show --json "$selected" > "$out/auditwheel-after.json"
+          fi
+          raw="$(find "$prior/raw" -name '*.whl' -type f)"
+          selected="$(find "$prior/repaired" -name '*.whl' -type f)"
+          python "$GITHUB_WORKSPACE/controller/tools/qualify_python_release_wheel.py" --version 0.10.8 --platform linux --source-wheel "$raw" --selected-wheel "$selected" --before-report "$prior/auditwheel-before.json" --after-report "$prior/auditwheel-after.json" --tool-artifacts "$prior/repair-tools" --tool-lock qualification-inputs/core-0.10.3-wheel-input-lock.json --auditwheel-version "$prior/auditwheel-version.txt" --patchelf-version "$prior/patchelf-version.txt" --sdist "$prior/raw/umf_core-0.10.8.tar.gz" --output-wheel-directory "$out/dist" --receipt "$out/dist/selection.json" 2>&1 | tee "$out/repair-qualification.log"
       - name: Normal Linux311 candidate resolution and installed resource inspection
         working-directory: source
         run: |

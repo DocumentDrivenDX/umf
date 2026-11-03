@@ -4,6 +4,8 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+import json
 import zipfile
 
 SPEC = importlib.util.spec_from_file_location("resume", Path(__file__).resolve().parents[2] / "tools/temporal_resume.py")
@@ -12,6 +14,59 @@ SPEC.loader.exec_module(resume)
 
 
 class ResumeCustody(unittest.TestCase):
+    def retained_fixture(self, root, mutate=None):
+        payloads = {
+            "source-and-controller.json": {"artifactSourceS": resume.SOURCE, "controllerQ": resume.LINUX_Q, "overlayActive": False},
+            "installed-sdk-custody.json": {"archiveSha256": resume.SDK_SHA, "sagaResult": {"cases": 19, "passed": 19}},
+            "installed-sdk-browser.json": {"archiveSha256": resume.SDK_SHA, "artifactSourceS": resume.SOURCE, "controllerQ": resume.LINUX_Q, "result": {"cases": 19, "passed": 19}, "hostCalls": 0},
+        }
+        if mutate:
+            mutate(payloads)
+        for name, value in payloads.items():
+            (root / name).write_text(json.dumps(value))
+        rows = [{"path": name, "bytes": (root / name).stat().st_size, "sha256": resume.digest(root / name)} for name in payloads]
+        (root / "files.json").write_text(json.dumps({"artifactSourceS": resume.SOURCE, "sourceHead": resume.SOURCE, "sourceStatus": "", "controllerQ": resume.LINUX_Q, "files": rows}))
+        return {row["path"]: row["sha256"] for row in rows}
+
+    def test_missing_stage_intake_retains_original_proof_identities(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            pins = self.retained_fixture(root)
+            with patch.dict(resume.LINUX_FILES, pins, clear=True):
+                result = resume.verify_retained_linux(root)
+            self.assertEqual(result["controllerQ"], resume.LINUX_Q)
+            self.assertEqual(result["artifactSourceS"], resume.SOURCE)
+
+    def test_missing_stage_intake_refuses_changed_or_extra_bytes(self):
+        for damage in ["changed", "extra", "dirty-source"]:
+            with tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                pins = self.retained_fixture(root)
+                if damage == "changed":
+                    (root / "installed-sdk-custody.json").write_text("changed")
+                elif damage == "extra":
+                    (root / "extra").write_bytes(b"unexpected")
+                else:
+                    inventory = json.loads((root / "files.json").read_text())
+                    inventory["sourceStatus"] = " M Cargo.lock"
+                    (root / "files.json").write_text(json.dumps(inventory))
+                with patch.dict(resume.LINUX_FILES, pins, clear=True), self.assertRaises(ValueError):
+                    resume.verify_retained_linux(root)
+
+    def test_missing_stage_intake_refuses_wrong_source_q_passcount_or_archive(self):
+        for mutate in [
+            lambda p: p["source-and-controller.json"].update(artifactSourceS="f" * 40),
+            lambda p: p["installed-sdk-browser.json"].update(controllerQ="f" * 40),
+            lambda p: p["installed-sdk-custody.json"]["sagaResult"].update(passed=18),
+            lambda p: p["installed-sdk-browser.json"].update(archiveSha256="f" * 64),
+            lambda p: p["installed-sdk-browser.json"].update(hostCalls=1),
+        ]:
+            with tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                pins = self.retained_fixture(root, mutate)
+                with patch.dict(resume.LINUX_FILES, pins, clear=True), self.assertRaises(ValueError):
+                    resume.verify_retained_linux(root)
+
     def test_actual_selected_311_and_313_consumers_accepted(self):
         for selected, version in [("3.11.17", (3, 11, 17)), ("3.13.17", (3, 13, 17))]:
             resume.validate_consumer(selected, version, "Linux", "x86_64", True, "cpython")
