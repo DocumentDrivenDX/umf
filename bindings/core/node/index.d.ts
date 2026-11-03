@@ -818,6 +818,7 @@ export declare function createGraphqlEngine(options?: {profile?: 'cooperative' |
 export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
+ readonly ['pack-tools']: Readonly<Record<'generatePackTools', NativeFamilyOperation>>;
  readonly ['delta-log']: Readonly<Record<'capture'|'export'|'inspect'|'inspectActions'|'reconcileCommits'|'reconcileCheckpoint'|'reconcileCheckpointSidecars', NativeFamilyOperation>>;
  readonly ['core-ideal-reports']: Readonly<Record<'inspectFieldClassification'|'verifyFieldClassificationInspection'|'inspectFieldProjection'|'verifyFieldProjectionInspection'|'inspectRecordProjection'|'verifyRecordProjectionInspection'|'inspectStructuredClassification'|'verifyStructuredClassificationInspection', NativeFamilyOperation>>;
   readonly ['field-record-parquet-projection']: Readonly<Record<'projectFieldToParquet'|'recoverFieldFromParquet'|'projectRecordToParquet'|'recoverRecordFromParquet', NativeFamilyOperation>>;

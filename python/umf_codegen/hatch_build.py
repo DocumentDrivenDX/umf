@@ -13,6 +13,7 @@ RESOURCE_NAMES = {
     'core.schema.json', 'core.reference-schema.json', 'core.package-schema.json',
     'core.constraints.json', 'core.domain-policy.json', 'tables.package.json',
     'actions.package.json', 'binding.package.json', 'stable-binding.package.json',
+    'saga.package.json',
 }
 
 

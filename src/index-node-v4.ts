@@ -140,6 +140,7 @@ import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReferen
 import type {generateDomainPackLoaderSchema as DomainPackLoaderSchemaReference} from './domain-packs/loader';
 import type {generateLoaderInventorySchema as LoaderInventorySchemaReference} from './domain-packs/loader-inventory';
 import type {AccessTemporal,AccessTemporalKind} from '../bindings/core/node/index.js';
+import {createPackToolsRustDefault} from './domain-packs/pack-tools-rust';
 import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
 
 // Module import resolves only after the native engine is ready. The function
@@ -177,6 +178,8 @@ const rdf=createRdfRustDefault(createRdfEngine(),isNativeUmfCoreError,()=>new Re
 const {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit}=rdf;
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle,projectGraphqlInputToJsonSchema}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher();
+const packTools=createPackToolsRustDefault({generatePackTools:request=>nativeFamilyDispatcher['pack-tools'].generatePackTools({request})},isNativeUmfCoreError);
+const {generatePackTools}=packTools;
 const medical=createMedicalRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,lookupMedicalTerminology}=medical;
 const spark=createSparkRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
@@ -442,6 +445,8 @@ const {dbtManifestRegistry,dbtArtifactRegistry,dbtSemanticManifestRegistry}=dbtR
 const {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit,importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit,inspectDbtManifestGraph,selectDbtManifestDependencies}=dbt;
 export {editExtension,prepareCoreInspection};
 export * from './index-v4-default';
+export {generatePackTools};
+export type {PackToolsRequest,PackToolsResult,PackToolsSource,PackToolsTarget,PackToolsFile,PackToolsFileKind,PackToolsDiagnostic,PackToolsCoverage} from './domain-packs/pack-tools-types';
 export {arrowRegistry,arrowIpcRegistry,arrowFlatbufferRegistry};
 export {projectKeysToSqlServer,verifyKeysSqlServerProjection,recoverKeysSqlServerIdeal};
 export const projectDddToPostgresql=dddPostgresqlRust.projectDddToPostgresql;

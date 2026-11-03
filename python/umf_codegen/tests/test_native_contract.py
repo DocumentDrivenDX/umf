@@ -24,11 +24,12 @@ RESOURCE_NAMES = {
     "core.schema.json", "core.reference-schema.json", "core.package-schema.json",
     "core.constraints.json", "core.domain-policy.json", "tables.package.json",
     "actions.package.json", "binding.package.json", "stable-binding.package.json",
+    "saga.package.json",
 }
 
 
 class NativeCodegenContract(unittest.TestCase):
-    def test_pinned_manifest_covers_exact_nine_resources(self):
+    def test_pinned_manifest_covers_exact_ten_resources(self):
         raw = (RESOURCE_DIR / "manifest.json").read_bytes()
         self.assertEqual(hashlib.sha256(raw).hexdigest(), RESOURCE_MANIFEST_SHA256)
         manifest = json.loads(raw)

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-// Source-built Rust SDK package. It uses a private build tree and never reuses
-// checked-in or prior target artifacts.
+// Source-built Rust SDK package. Every Cargo build uses a fresh verified source
+// snapshot; an explicit external Cargo cache may reuse fingerprinted dependencies.
 import {createHash} from 'node:crypto';
 import {cp,mkdir,mkdtemp,readFile,readdir,rename,rm,symlink,writeFile} from 'node:fs/promises';
-import {basename,join,relative,resolve} from 'node:path';
+import {join,relative,resolve} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {tmpdir} from 'node:os';
 import type {BunPlugin} from 'bun';
@@ -20,7 +20,7 @@ const publishDist=resolve(process.env.UMF_RUST_DEFAULT_DIST??join(workspaceRoot,
 if(!buildOnly)throw new Error('This source builder writes package assets only; use scripts/package-sdk.ts for the SDK archive');
 const scratch=await mkdtemp(join(tmpdir(),'umf-rust-sdk-default-'));
 const dist=join(scratch,'package','dist');
-const cargoTarget=join(scratch,'cargo-target');
+const cargoTarget=process.env.UMF_SDK_CARGO_TARGET?resolve(process.env.UMF_SDK_CARGO_TARGET):join(scratch,'cargo-target');
 const wasmOut=join(scratch,'wasm-bindgen');
 const packageRoot=join(scratch,'package');
 
@@ -83,17 +83,42 @@ async function collectDynamicSourceInputs(baseRoot:string):Promise<string[]>{
   ...await filesUnder(join(baseRoot,'native/tablespec')),
  ])].sort();
 }
+const SNAPSHOT_IO_BATCH=8;
+function snapshotProgress(phase:string,completed:number,total:number){
+ process.stderr.write(`[sdk-snapshot] ${phase} ${completed}/${total}\n`);
+}
+async function mapSnapshotBatches<T,R>(items:readonly T[],phase:string,operation:(item:T,index:number)=>Promise<R>):Promise<R[]>{
+ const output=new Array<R>(items.length);
+ snapshotProgress(phase,0,items.length);
+ for(let start=0;start<items.length;start+=SNAPSHOT_IO_BATCH){
+  const batch=items.slice(start,start+SNAPSHOT_IO_BATCH);
+  const values=await Promise.all(batch.map((item,index)=>operation(item,start+index)));
+  for(let index=0;index<values.length;index++)output[start+index]=values[index]!;
+  const completed=start+batch.length;
+  if(completed===items.length||Math.floor(completed/1000)!==Math.floor(start/1000))snapshotProgress(phase,completed,items.length);
+ }
+ return output;
+}
 async function digest(path:string){return createHash('sha256').update(await readFile(path)).digest('hex');}
 async function treeDigest(paths:string[],baseRoot=workspaceRoot){
+ const ordered=[...paths].sort();
  const hash=createHash('sha256');
- for(const path of paths.sort()){
-  hash.update(relative(baseRoot,path).split('\\').join('/'));hash.update('\0');hash.update(await readFile(path));hash.update('\0');
+ for(let start=0;start<ordered.length;start+=SNAPSHOT_IO_BATCH){
+  const batch=ordered.slice(start,start+SNAPSHOT_IO_BATCH);
+  const contents=await Promise.all(batch.map(path=>readFile(path)));
+  for(let index=0;index<batch.length;index++){
+   hash.update(relative(baseRoot,batch[index]!).split('\\').join('/'));hash.update('\0');hash.update(contents[index]!);hash.update('\0');
+  }
+  const completed=start+batch.length;
+  if(completed===ordered.length||Math.floor(completed/1000)!==Math.floor(start/1000))snapshotProgress('treeDigest',completed,ordered.length);
  }
  return hash.digest('hex');
 }
 async function inputHashes(paths:string[],baseRoot:string){
+ const ordered=[...paths].sort();
+ const digests=await mapSnapshotBatches(ordered,'inputHashes',async path=>createHash('sha256').update(await readFile(path)).digest('hex'));
  const hashes:Record<string,string>={};
- for(const path of [...paths].sort())hashes[relative(baseRoot,path).split('\\').join('/')]=await digest(path);
+ for(let index=0;index<ordered.length;index++)hashes[relative(baseRoot,ordered[index]!).split('\\').join('/')]=digests[index]!;
  return hashes;
 }
 try{
@@ -114,13 +139,17 @@ try{
  ];
  const metamodelManifest=JSON.parse(await readFile(join(root,'spec/metamodel/generated/manifest.json'),'utf8'));
  // Capture the complete canonical metamodel source attestation as well as the
- // broader dynamic runtime roots checked again after private generators run.
+ // checked-in canonical output roster. Some generated assets (notably the
+ // Python access module) are outside the broader dynamic roots below, but the
+ // isolated metamodel check requires them to exist byte-for-byte.
  const metamodelSourceInputs=Object.keys(metamodelManifest.sources).map(path=>join(root,path));
  const metamodelBackendInputs=Object.keys(metamodelManifest.backend.inputs).map(path=>join(root,path));
+ const metamodelOutputInputs=Object.keys(metamodelManifest.outputs).map(path=>join(root,path));
  const dynamicSourceInputs=await collectDynamicSourceInputs(root);
  const sourceInputs=[...new Set([
   ...metamodelSourceInputs,
   ...metamodelBackendInputs,
+  ...metamodelOutputInputs,
   ...dynamicSourceInputs,
   ...cargoSourceFiles,
   ...jsSourceFiles,
@@ -192,14 +221,15 @@ try{
   sourceHash=await treeDigest(sourceInputs,workspaceRoot);
   await rm(snapshotRoot,{recursive:true,force:true});
   await mkdir(snapshotRoot,{recursive:true});
-  snapshotInputs=[];
-  for(const source of sourceInputs){
+  snapshotInputs=new Array<string>(sourceInputs.length);
+  await mapSnapshotBatches(sourceInputs,'snapshotCopy',async(source,index)=>{
    const name=relative(workspaceRoot,source);
    const target=join(snapshotRoot,name);
    await mkdir(join(target,'..'),{recursive:true});
    await copySourceSnapshotFile(source,target);
-   snapshotInputs.push(target);
-  }
+   snapshotInputs[index]=target;
+   return target;
+  });
   const liveAfterCopy=await inputHashes(sourceInputs,workspaceRoot);
   const copied=await inputHashes(snapshotInputs,snapshotRoot);
   captured=JSON.stringify(sourceInputHashes)===JSON.stringify(liveAfterCopy)&&JSON.stringify(sourceInputHashes)===JSON.stringify(copied);
@@ -216,8 +246,8 @@ try{
 
  await run([process.execPath,'scripts/rust-migration/r8/v4-default-facade.mjs','--check']);
  const cargoEnv={CARGO_TARGET_DIR:cargoTarget};
- await run([process.execPath,'scripts/metamodel/build.ts'],{env:cargoEnv});
- await run([process.execPath,'scripts/actions-plan-identity.ts']);
+ await run([process.execPath,'scripts/metamodel/build.ts','--check'],{env:cargoEnv});
+ await run([process.execPath,'scripts/actions-plan-identity.ts','--check']);
  const capturedSourcePaths=sourceInputs.map(path=>relative(workspaceRoot,path).split('\\').join('/'));
  const capturedDynamicPaths=new Set(sourceInputs.filter(path=>isDynamicSourcePath(workspaceRoot,path)).map(path=>relative(workspaceRoot,path).split('\\').join('/')));
  const staticSourcePaths=capturedSourcePaths.filter(path=>!capturedDynamicPaths.has(path));
@@ -227,10 +257,10 @@ try{
   [...staticSourcePaths,...generatedDynamicPaths],
   'Source input path set after snapshot generators',
  );
- const generatedInputs=new Set(['spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','spec/core/facet-operation-v3.schema.json','spec/core/cardinality-operation-v4.schema.json','spec/core/kind-operation-v6.schema.json','spec/core/nullability-operation-v5.schema.json','spec/core/key-operation-v2.schema.json','spec/core/record-type-operation-v6.schema.json','spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json','spec/metamodel/generated/python-shapes.json','spec/metamodel/generated/manifest.json','src/generated/core-model.ts','src/generated/core-validators.ts','src/generated/core-validators-accounted.ts','src/extensions/actions/plan-identity.ts','python/umf_access/src/umf_access/generated_core.py']);
  const derivedHashes=await inputHashes(snapshotInputs,snapshotRoot);
- for(const [path,hash] of Object.entries(sourceInputHashes))if(!generatedInputs.has(path)&&derivedHashes[path]!==hash)throw new Error(`Source snapshot changed outside generated inputs: ${path}`);
- const sourceTransform={status:Object.entries(capturedLiveInputHashes).some(([path,hash])=>generatedInputs.has(path)&&derivedHashes[path]!==hash)?'derived-private-snapshot-not-release-fixed-point':'fixed-point',generatedInputs:[...generatedInputs].sort().map(path=>({path,before:capturedLiveInputHashes[path],after:derivedHashes[path]})).filter(item=>item.before!==item.after)};
+ const changed=Object.keys(capturedLiveInputHashes).filter(path=>derivedHashes[path]!==capturedLiveInputHashes[path]);
+ if(changed.length)throw new Error(`SDK source is not a generated-asset fixed point: ${changed.join(', ')}`);
+ const sourceTransform={status:'fixed-point',generatedInputs:[]};
  sourceInputHashes=derivedHashes;
  sourceHash=await treeDigest(snapshotInputs,snapshotRoot);
  await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/wasm/Cargo.toml','--target','wasm32-unknown-unknown'],{env:cargoEnv});
@@ -239,6 +269,12 @@ try{
  const bindgenError=await new Response(bindgen.stderr).text();
  if(await bindgen.exited!==0||bindgenVersion.trim()!=='wasm-bindgen 0.2.100')throw new Error(`Expected wasm-bindgen 0.2.100, got ${(bindgenVersion+bindgenError).trim()}`);
  await run(['wasm-bindgen','--target','web','--out-dir',wasmOut,'--out-name','umf_core_wasm',join(cargoTarget,'wasm32-unknown-unknown/release/umf_core_wasm.wasm')]);
+ // Ship the same-source small compiler module for local tools and the microsite.
+ const focusedOut=join(scratch,'pack-tools-bindgen'),focusedAssets=join(dist,'runtime/pack-tools');
+ await run(['cargo','build','--release','--locked','--manifest-path','bindings/pack-tools/wasm/Cargo.toml','--target','wasm32-unknown-unknown'],{env:cargoEnv});
+ await run(['wasm-bindgen','--target','web','--out-dir',focusedOut,'--out-name','umf_core_wasm',join(cargoTarget,'wasm32-unknown-unknown/release/umf_pack_tools_wasm.wasm')]);
+ await mkdir(focusedAssets,{recursive:true});
+ for(const name of ['umf_core_wasm.js','umf_core_wasm.d.ts','umf_core_wasm_bg.wasm'])await cp(join(focusedOut,name),join(focusedAssets,name));
  await mkdir(join(root,'bindings/core/wasm/pkg'),{recursive:true});
  await cp(join(wasmOut,'umf_core_wasm.js'),join(root,'bindings/core/wasm/pkg/umf_core_wasm.js'));
  await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(root,'bindings/core/wasm/pkg/umf_core_wasm.d.ts'));
@@ -285,13 +321,19 @@ try{
  const host=process.platform==='darwin'?'darwin':process.platform;
  const arch=process.arch;
  if(!((host==='darwin'&&arch==='arm64')||(host==='linux'&&arch==='x64')))throw new Error(`Unsupported SDK native cohort: ${host}-${arch}`);
- await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/node/Cargo.toml','--features','native-postgresql'],{env:cargoEnv});
+ const nativeTarget=host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu';
+ const nativeCargoTarget=process.env.UMF_SDK_NATIVE_CARGO_TARGET?resolve(process.env.UMF_SDK_NATIVE_CARGO_TARGET):cargoTarget;
+ const nativeRustFlags=process.env.UMF_SDK_NATIVE_RUSTFLAGS;
+ const nativeCargoEnv={...cargoEnv,CARGO_TARGET_DIR:nativeCargoTarget,
+  ...(process.env.UMF_SDK_NATIVE_OPT_LEVEL?{CARGO_PROFILE_RELEASE_OPT_LEVEL:process.env.UMF_SDK_NATIVE_OPT_LEVEL}:{}),
+  ...(process.env.UMF_SDK_NATIVE_DEBUG?{CARGO_PROFILE_RELEASE_DEBUG:process.env.UMF_SDK_NATIVE_DEBUG}:{}),
+  ...(process.env.UMF_SDK_NATIVE_STRIP?{CARGO_PROFILE_RELEASE_STRIP:process.env.UMF_SDK_NATIVE_STRIP}:{}),
+  ...(nativeRustFlags?{RUSTFLAGS:nativeRustFlags}:{}),
+  ...(process.env.UMF_SDK_NATIVE_MACOSX_DEPLOYMENT_TARGET?{MACOSX_DEPLOYMENT_TARGET:process.env.UMF_SDK_NATIVE_MACOSX_DEPLOYMENT_TARGET}:{})};
+ await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/node/Cargo.toml','--features','native-postgresql','--target',nativeTarget],{env:nativeCargoEnv});
  const archId=arch==='x64'?'x86_64':arch==='arm64'?'aarch64':arch;
  const packageVersion=(JSON.parse(await readFile(join(root,'package.json'),'utf8')) as {version:string}).version;
- const targetDir=join(cargoTarget,'release');
- const nativeCandidates=await filesUnder(targetDir);
- const native=nativeCandidates.find(path=>basename(path)===(host==='darwin'?'libumf_core_node.dylib':'libumf_core_node.so'));
- if(!native)throw new Error('Cargo did not produce the Node N-API cdylib');
+ const native=join(nativeCargoTarget,nativeTarget,'release',host==='darwin'?'libumf_core_node.dylib':'libumf_core_node.so');
  await cp(native,join(dist,'umf_core_node.node'));
 
  // The browser root bundle inlines the generated wasm-bindgen glue; its
@@ -324,10 +366,11 @@ try{
   packageVersion,
   platform:{os:host,arch:archId,nodeArch:arch,nativeTarget:host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu',napi:'N-API 8',runtimeCohort:['Node','Bun']},
   resources:{count:10,identity:'fixed-repository-owned'},
+  nativeBuild:{target:nativeTarget,profile:'release',cargoCacheMode:process.env.UMF_SDK_NATIVE_CARGO_TARGET?'external-native-only':'shared-sdk-target',flags:{releaseOptLevel:nativeCargoEnv.CARGO_PROFILE_RELEASE_OPT_LEVEL??process.env.CARGO_PROFILE_RELEASE_OPT_LEVEL??null,releaseDebug:nativeCargoEnv.CARGO_PROFILE_RELEASE_DEBUG??process.env.CARGO_PROFILE_RELEASE_DEBUG??null,releaseStrip:nativeCargoEnv.CARGO_PROFILE_RELEASE_STRIP??process.env.CARGO_PROFILE_RELEASE_STRIP??null,rustflags:nativeCargoEnv.RUSTFLAGS??process.env.RUSTFLAGS??null,macosDeploymentTarget:nativeCargoEnv.MACOSX_DEPLOYMENT_TARGET??process.env.MACOSX_DEPLOYMENT_TARGET??null}},
   limits:{recordPositions:10000,actionPositions:1000,selectedIdentityUtf16Units:4000000},
   api:{entry:'.',sagaRuntime:'./runtime/wasm',moduleLoad:'top-level-await-initialization',generator:'synchronous'},
-  toolchain:{rustc,cargo:await capture(['cargo','--version']),bun:Bun.version,wasmBindgen:'0.2.100',cargoLockSha256:await digest(join(root,'Cargo.lock'))},
-  sourceClosure:{sha256:sourceHash,capturedLiveSha256:capturedLiveSourceHash,transform:sourceTransform,coverage:'Repository source closure includes Rust crates, core Node/WASM/Python binding source and Node/WASM binding tests, TypeScript source, schemas, fixture/corpus inputs, builder scripts, and metamodel compiler inputs. The exact external WASM package resource copied by build-postgresql.ts is separately SHA-256 pinned. The model metamodel and action identity generators run inside an isolated source snapshot; generated-input changes are recorded in transform.',fileCount:sourceInputs.length,liveInputs:capturedLiveInputHashes,inputs:sourceInputHashes,externalInputs:externalInputHashes},
+  toolchain:{cargoCacheMode:process.env.UMF_SDK_CARGO_TARGET?'external-cargo-managed':'private',rustc,cargo:await capture(['cargo','--version']),bun:Bun.version,wasmBindgen:'0.2.100',cargoLockSha256:await digest(join(root,'Cargo.lock'))},
+  sourceClosure:{sha256:sourceHash,capturedLiveSha256:capturedLiveSourceHash,transform:sourceTransform,coverage:'Repository source closure includes Rust crates, core Node/WASM/Python binding source and Node/WASM binding tests, TypeScript source, schemas, fixture/corpus inputs, builder scripts, and metamodel compiler inputs. The exact external WASM package resource copied by build-postgresql.ts is separately SHA-256 pinned. Metamodel and action identity checks run inside an isolated source snapshot; packaging rejects any difference from the checked-in generated assets.',fileCount:sourceInputs.length,liveInputs:capturedLiveInputHashes,inputs:sourceInputHashes,externalInputs:externalInputHashes},
   assets:Object.fromEntries(await Promise.all(compiled.map(async path=>[relative(packageRoot,path).split('\\').join('/'),await digest(path)]))),
  };
  await writeFile(join(dist,'rust-default-manifest.json'),JSON.stringify(manifest,null,2)+'\n');

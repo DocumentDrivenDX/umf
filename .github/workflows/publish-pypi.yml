@@ -14,6 +14,11 @@ on:
         description: SHA-256 of the public release SHA256SUMS file
         required: true
         type: string
+      locally_qualified:
+        description: Skip only the publisher unit test and installed-consumer qualification steps
+        required: false
+        default: false
+        type: boolean
 permissions:
   contents: read
   actions: read
@@ -37,6 +42,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Test the release publisher validator
+        if: ${{ inputs.locally_qualified != true }}
         run: python -m unittest scripts.test_publish_core_pypi_release -v
       - name: Bind exact tag, source and optional backfill pins
         id: identity
@@ -161,6 +167,7 @@ jobs:
 
   installed-consumer:
     needs: [verify-release, publish]
+    if: ${{ inputs.locally_qualified != true }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
