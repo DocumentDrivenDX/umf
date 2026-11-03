@@ -32,12 +32,16 @@ def _verify_tar(archive,roster):
    insist(item.name==PREFIX.rstrip('/') or item.name.startswith(PREFIX),'Wrong source archive prefix')
    name=item.name[len(PREFIX):].rstrip('/') if item.name!=PREFIX.rstrip('/') else ''
    insist(not name.startswith('/') and all(p not in ('.','..') for p in name.split('/')) if name else item.isdir(),'Unsafe archive path')
-   if item.isdir():insist(name in dirs,'Untracked archive directory');continue
+   # Exact git archive tar.umask=0002 policy: directories/executables 0775,
+   # regular files 0664, symlinks 0777. Equality also rejects special bits.
+   if item.isdir():
+    insist(item.type==tarfile.DIRTYPE and item.mode==0o775,'Source directory type/permissions changed')
+    insist(name in dirs,'Untracked archive directory');continue
    insist(name in roster and name not in seen,'Extra/duplicate source member: '+name);seen.add(name);mode,oid=roster[name]
    if mode=='120000':
-    insist(item.issym(),'Source symlink type changed');raw=item.linkname.encode('utf8','surrogateescape');digest=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+    insist(item.type==tarfile.SYMTYPE and item.mode==0o777,'Source symlink type/permissions changed');raw=item.linkname.encode('utf8','surrogateescape');digest=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
    else:
-    insist(item.isfile() and bool(item.mode&0o111)==(mode=='100755'),'Source regular/executable type changed')
+    insist(item.type==tarfile.REGTYPE and item.mode==({'100644':0o664,'100755':0o775}[mode]),'Source regular/executable type/permissions changed')
     h=hashlib.sha1(b'blob '+str(item.size).encode()+b'\0');stream=tar.extractfile(item)
     while chunk:=stream.read(1024*1024):h.update(chunk)
     digest=h.hexdigest()

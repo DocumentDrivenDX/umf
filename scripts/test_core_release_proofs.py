@@ -16,7 +16,7 @@ from pathlib import Path
 archive_spec=importlib.util.spec_from_file_location('archive',Path(__file__).with_name('verify_core_release_source_archive.py'));archive_module=importlib.util.module_from_spec(archive_spec);archive_spec.loader.exec_module(archive_module)
 class ArchiveControls(unittest.TestCase):
  def sample(self,root,mutate=None):
-  data=b'original bytes\r\n';mode='100755';name='script';oid=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest();roster={name:(mode,oid)};entries=[(name,data,0o755)]
+  data=b'original bytes\r\n';mode='100755';name='script';oid=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest();roster={name:(mode,oid)};entries=[(name,data,0o775)]
   if mutate:mutate(roster,entries)
   file=root/'source.tar.gz'
   with tarfile.open(file,'w:gz',format=tarfile.PAX_FORMAT,pax_headers={'comment':archive_module.SOURCE})as t:
@@ -63,5 +63,63 @@ class PublisherWiringControls(unittest.TestCase):
   self.assertIn('umf-core-public-correspondence-0.10.8-${{ github.run_id }}',consumer)
   self.assertIn('if: ${{ inputs.locally_qualified != true }}',consumer)
   self.assertNotIn('umf-codegen',consumer)
+
+class ArchiveModeControls(unittest.TestCase):
+ # Producer: git archive with tar.umask=0002. Entry types and every permission
+ # bit are exact; chmod-style executable/nonexecutable equivalence is unsafe.
+ def sample(self,root,mutate=None):
+  def oid(data):return hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+  roster={'plain':('100644',oid(b'plain')), 'script':('100755',oid(b'exec')),
+          'dir/leaf':('100644',oid(b'leaf')), 'link':('120000',oid(b'script'))}
+  entries=[]
+  for name,kind,mode,data,target in [('',tarfile.DIRTYPE,0o775,b'', ''),
+      ('dir',tarfile.DIRTYPE,0o775,b'', ''),
+      ('plain',tarfile.REGTYPE,0o664,b'plain',''),
+      ('script',tarfile.REGTYPE,0o775,b'exec',''),
+      ('dir/leaf',tarfile.REGTYPE,0o664,b'leaf',''),
+      ('link',tarfile.SYMTYPE,0o777,b'','script')]:
+   info=tarfile.TarInfo(archive_module.PREFIX+name)
+   info.type=kind;info.mode=mode;info.linkname=target;info.size=len(data)
+   entries.append([info,data])
+  if mutate:mutate(entries)
+  file=root/'source.tar.gz'
+  with tarfile.open(file,'w:gz',format=tarfile.PAX_FORMAT,
+                    pax_headers={'comment':archive_module.SOURCE}) as tar:
+   for info,data in entries:tar.addfile(info,io.BytesIO(data))
+  return file,roster
+ def test_exact_producer_modes_and_types_pass(self):
+  with tempfile.TemporaryDirectory() as d:
+   f,r=self.sample(Path(d));proof=archive_module.verify_tar(f,r)
+   self.assertEqual(proof['trackedMembersVerified'],4)
+   self.assertTrue(proof['allModesSymlinksAndBlobBytesMatch'])
+ def test_old_any_exec_false_acceptance_refuses(self):
+  # 0711 retains executable bits but loses required read/write bits. Old code
+  # accepted it while issuing allModesSymlinksAndBlobBytesMatch=True.
+  with tempfile.TemporaryDirectory() as d:
+   f,r=self.sample(Path(d),lambda e:setattr(e[3][0],'mode',0o711))
+   with self.assertRaises(ValueError):archive_module.verify_tar(f,r)
+ def test_each_permission_or_special_bit_drift_refuses(self):
+  for index in range(6):
+   for bit in range(12):
+    with self.subTest(member=index,bit=bit),tempfile.TemporaryDirectory() as d:
+     def mutate(entries):entries[index][0].mode ^= 1 << bit
+     f,r=self.sample(Path(d),mutate)
+     with self.assertRaises(ValueError):archive_module.verify_tar(f,r)
+ def test_wrong_entry_types_refuse(self):
+  for index in range(6):
+   for kind in [tarfile.REGTYPE,tarfile.DIRTYPE,tarfile.SYMTYPE,
+                tarfile.LNKTYPE,tarfile.FIFOTYPE,tarfile.CHRTYPE,tarfile.BLKTYPE,
+                tarfile.CONTTYPE,tarfile.AREGTYPE]:
+    with self.subTest(member=index,kind=kind),tempfile.TemporaryDirectory() as d:
+     def mutate(entries):
+      info=entries[index][0]
+      if info.type==kind:return
+      info.type=kind
+     f,r=self.sample(Path(d),mutate)
+     expected=[tarfile.DIRTYPE,tarfile.DIRTYPE,tarfile.REGTYPE,
+               tarfile.REGTYPE,tarfile.REGTYPE,tarfile.SYMTYPE][index]
+     if kind==expected:archive_module.verify_tar(f,r)
+     else:
+      with self.assertRaises(ValueError):archive_module.verify_tar(f,r)
 
 if __name__=='__main__':unittest.main()
