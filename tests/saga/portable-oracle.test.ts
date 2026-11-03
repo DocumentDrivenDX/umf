@@ -1,13 +1,44 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import vectors from '../../fixtures/saga/portable.json';
-import {createCodegenEngine} from '../../bindings/core/node/index.js';
+import {createCodegenEngine,createEngine} from '../../bindings/core/node/index.js';
+import {Registry} from '../../src/registry/registry';
+import {registerSagas,sagaPackage} from '../../src/extensions/actions/saga';
+import {validateDocument} from '../../src/validation/document';
 import {createSagaResources} from '../../src/extensions/actions/saga-resources';
 import {verifySagaVectors,type SagaSubject} from '../../scripts/saga-portable/verify';
 
-const engine=createCodegenEngine(createSagaResources());
+const resources=createSagaResources(),engine=createCodegenEngine(resources);
 const vector=(id:string)=>vectors.cases.find((item:any)=>item.id===id)!;
 const result=(subject:SagaSubject,id:string)=>verifySagaVectors(subject,[vector(id)]);
+
+for(const item of vectors.cases)test(`native source matches independent portable vector ${item.id} before SDK packaging`,()=>{
+ const report=verifySagaVectors(engine,[item]);
+ expect(report.results.filter(item=>!item.passed)).toEqual([]);
+ expect(report.passed).toBe(1);
+// The authoring vector performs multiple independent inspect/declare/edit calls.
+// This is its aggregate harness budget; individual product budgets are unchanged.
+},item.id==='recipe-declaration'?60_000:30_000);
+
+test('dedicated Saga shape diagnostics retain generic validation and attachment scope guards',()=>{
+ const core=createEngine(resources),registry=registerSagas(new Registry(core),engine);
+ const malformed=vector('missing-compensation').source;
+ const dedicated=engine.inspectSagas(malformed) as any;
+ expect(dedicated.validation.valid).toBe(false);
+ expect(dedicated.validation.diagnostics).toContainEqual(expect.objectContaining({code:'SAGA_STRUCTURE',path:'/modules/0/extensions/umf.actions.saga/sagas/0/steps/0'}));
+ expect(dedicated.validation.diagnostics.some((item:any)=>item.code==='ACTION_STRUCTURE'||item.code==='EXTENSION_STRUCTURE')).toBe(false);
+ expect(engine.sagaRegistryProfile().sagaPackage).toEqual(sagaPackage);
+ const generic=validateDocument(malformed,registry);
+ expect(generic.valid).toBe(false);
+ expect(generic.diagnostics).toContainEqual(expect.objectContaining({code:'EXTENSION_STRUCTURE',path:'/modules/0/extensions/umf.actions.saga/sagas/0/steps/0'}));
+ const wrongScope:any=structuredClone(vector('ordered-baseline').source);
+ wrongScope.extensions={...(wrongScope.extensions??{}),'umf.actions.saga':wrongScope.modules[0].extensions['umf.actions.saga']};
+ delete wrongScope.modules[0].extensions['umf.actions.saga'];
+ const scoped=engine.inspectSagas(wrongScope) as any;
+ expect(scoped.validation.valid).toBe(false);
+ expect(scoped.validation.diagnostics).toContainEqual(expect.objectContaining({code:'EXTENSION_SCOPE',path:'/extensions/umf.actions.saga'}));
+ expect(scoped.source).toEqual(wrongScope);
+},30_000);
 
 test('portable oracle rejects an edit implementation that validates but returns the unchanged source',()=>{
  const noOp:SagaSubject={

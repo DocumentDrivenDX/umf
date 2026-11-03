@@ -398,7 +398,7 @@ class SparkDeltaTarget:
         timeout: timedelta | None = None,
     ) -> list[R]:
         artifact = entry.artifact()
-        if artifact["target"] != "spark-delta4":
+        if artifact.get("target") != "spark-delta4":
             raise NotCompiledForTarget("original Spark program required")
         _runtime_obligations(artifact)
         milliseconds = _milliseconds(timeout, self.configuration.default_timeout)
@@ -498,7 +498,7 @@ class SparkDeltaTarget:
         page_size: int | None = None,
     ) -> ReadPage[R]:
         artifact = entry.artifact()
-        if artifact["target"] != "spark-delta4" or not artifact.get("cursorOutputs"):
+        if artifact.get("target") != "spark-delta4" or not artifact.get("cursorOutputs"):
             raise NotCompiledForTarget("original Spark keyset program required")
         if snapshot_stream and not artifact["obligations"].get("snapshot"):
             child = artifact.get("snapshotProgram")

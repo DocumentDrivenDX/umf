@@ -83,7 +83,17 @@ export function verifySagaVectors(engine:SagaSubject,vectors:SagaVector[]) {
   }
   insist(JSON.stringify(vector.source)===before,'operation mutated source');
   if(inspection.source&&typeof inspection.source==='object'){
-   inspection.source.id='detached-result-mutation';
+   // Reports may be immutable. Prove independent custody before testing writes;
+   // a frozen alias must not qualify merely because assignment is refused.
+   const callerObjects=new WeakSet<object>();
+   const visit=(value:unknown,inspect:(object:object)=>void):void=>{
+    if(value===null||typeof value!=='object')return;
+    inspect(value);for(const child of Object.values(value))visit(child,inspect);
+   };
+   visit(vector.source,value=>callerObjects.add(value));
+   visit(inspection.source,value=>insist(!callerObjects.has(value),'returned source aliases caller input'));
+   const mutated=Reflect.set(inspection.source,'id','detached-result-mutation');
+   insist(mutated?inspection.source.id==='detached-result-mutation':Object.isFrozen(inspection.source),'returned source refused mutation without an immutable report');
    insist(JSON.stringify(vector.source)===before,'returned source aliases caller input');
    insist(equal(engine.inspectSagas(vector.source).source,vector.source),'returned result mutation poisoned later inspection');
   }

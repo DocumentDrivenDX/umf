@@ -163,6 +163,7 @@ pub mod json_schema_protobuf_projection;
 #[cfg(feature = "embedded-adapters")]
 pub mod jsonld_source;
 pub mod kinds;
+pub mod lakeview;
 pub mod literal;
 pub mod literal_policy;
 pub mod native_contract_adapters;
@@ -274,6 +275,7 @@ pub mod record_members_inspection;
 pub mod record_values;
 pub mod reference_links_inspection;
 pub mod registry;
+pub mod resource_cache;
 pub mod reviewed_parameters;
 pub mod rfc3339_exact_instant;
 pub mod scalar_type_inspection;

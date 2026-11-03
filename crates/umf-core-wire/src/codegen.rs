@@ -387,6 +387,48 @@ fn invoke(
                 )?,
             )]))
         }
+        "inspectAccessViews" => {
+            let Value::Object(fields) = request else {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected access inspection request",
+                ));
+            };
+            ctx.charge_work(fields.len(), Utf16::default())?;
+            for (key, _) in fields {
+                ctx.charge_work(key.len(), Utf16::default())?;
+            }
+            let allowed = ["document", "selected", "bindings", "sourceId"];
+            if fields
+                .iter()
+                .any(|(key, _)| !allowed.iter().any(|name| key == &Utf16::from(*name)))
+                || allowed.iter().any(|name| {
+                    fields
+                        .iter()
+                        .filter(|(key, _)| key == &Utf16::from(*name))
+                        .count()
+                        > 1
+                })
+                || field(request, "document").is_none()
+                || field(request, "selected").is_none()
+            {
+                return Err(EngineError::new(
+                    "REQUEST",
+                    Utf16::default(),
+                    "Expected closed access inspection request",
+                ));
+            }
+            let bindings = Value::Array(Vec::new());
+            let source_id = Value::string_utf8("logical");
+            engine.inspect_access_views(
+                field(request, "document").unwrap(),
+                field(request, "selected").unwrap(),
+                field(request, "bindings").unwrap_or(&bindings),
+                field(request, "sourceId").unwrap_or(&source_id),
+                ctx,
+            )
+        }
         "generateAccessPackage" => engine.generate_access_package(
             field(request, "request").ok_or_else(missing_argument)?,
             field(request, "profile").ok_or_else(missing_argument)?,

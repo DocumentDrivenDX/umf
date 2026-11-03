@@ -97,7 +97,7 @@ fn result_schemas(ctx: &mut Context<'_>) -> Result<std::sync::Arc<ResultSchemas>
     // callbacks can reenter. A failed or cancelled build is never cached.
     let resources = Arc::new(build_result_schemas(ctx)?);
     if ordinary {
-        let _ = RESOURCES.set(Arc::clone(&resources));
+        return Ok(crate::resource_cache::publish_completed(&RESOURCES, resources));
     }
     Ok(resources)
 }
@@ -160,7 +160,7 @@ fn validation_runtime(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Validation
     }
     let resources = Arc::new(build_validation_runtime(ctx)?);
     if ordinary {
-        let _ = RESOURCES.set(Arc::clone(&resources));
+        return Ok(crate::resource_cache::publish_completed(&RESOURCES, resources));
     }
     Ok(resources)
 }

@@ -63,7 +63,7 @@ impl Resources {
         // Cache only successful immutable embedded resource construction.
         let resources = Arc::new(Self::new(ctx)?);
         if ordinary {
-            let _ = RESOURCES.set(Arc::clone(&resources));
+            return Ok(umf_core::resource_cache::publish_completed(&RESOURCES, resources));
         }
         Ok(resources)
     }

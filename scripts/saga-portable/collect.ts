@@ -3,7 +3,7 @@
 import {createHash} from 'node:crypto';
 import {mkdir,mkdtemp,readdir,readFile,rename,rm,rmdir} from 'node:fs/promises';
 import {basename,dirname,join,resolve} from 'node:path';
-import {hashInputFiles,retainVerifiedFile,sha256File,SAGA_QUALIFICATION_INPUTS,SDK_SAGA_MEMBERS,validatePortableCaseRoster,verifyPortableCohort,verifyPortableResult,type PortableCase,type PortableHostReport} from './custody';
+import {hashInputFiles,retainVerifiedFile,sha256File,SAGA_QUALIFICATION_INPUTS,SDK_SAGA_MEMBERS,SDK_SAGA_NODE_ENTRY,verifySdkMemberCustody,validatePortableCaseRoster,verifyPortableCohort,verifyPortableResult,type PortableCase,type PortableHostReport} from './custody';
 
 const root=resolve('.'),corpusPath='fixtures/saga/portable.json',corpus=await Bun.file(corpusPath).json();
 validatePortableCaseRoster(corpus.cases);
@@ -44,8 +44,9 @@ const installedResultBytes=await readFile(join(consumer,'saga-result.json'));
 if(JSON.stringify(JSON.parse(installedResultBytes.toString('utf8')))!==JSON.stringify(installed.sagaResult))throw Error('SDK consumer saga result differs from the result retained in its install receipt');
 const manifestBytes=await readFile(sdkManifestPath),manifest=JSON.parse(manifestBytes.toString('utf8'));
 if(installed.sdkManifestSha256!==createHash('sha256').update(manifestBytes).digest('hex'))throw Error('SDK installed receipt manifest digest mismatch');
-if(manifest.sha256?.['dist/umf.js']!==installed.publicEntryManifestSha256)throw Error('SDK manifest does not bind the tested public entry');
+if(manifest.sha256?.[SDK_SAGA_NODE_ENTRY]!==installed.publicEntryManifestSha256)throw Error('SDK manifest does not bind the tested public entry');
 const packageRoot=resolve(installed.installedPackageRoot);
+verifySdkMemberCustody(JSON.parse(await readFile(join(packageRoot,'package.json'),'utf8')),manifest,installed.installedMembers);
 for(const member of SDK_SAGA_MEMBERS){
  const key=`package/${member}`,archiveExpected=installed.exactArchiveMembers?.[key],installedExpected=installed.installedMembers?.[key];
  if(!archiveExpected||!installedExpected||archiveExpected.sha256!==installedExpected.sha256||archiveExpected.size!==installedExpected.size)throw Error(`SDK archive/install member receipt mismatch: ${key}`);

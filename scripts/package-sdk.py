@@ -9,6 +9,9 @@ FORMAT = 'umf.rust-sdk-package/1'
 REQUIRED = [
     'dist/umf-node.js',
     'dist/umf-browser.js', 'dist/umf_core_node.node',
+    'dist/runtime/pack-tools/umf_core_wasm.js',
+    'dist/runtime/pack-tools/umf_core_wasm.d.ts',
+    'dist/runtime/pack-tools/umf_core_wasm_bg.wasm',
     'dist/umf_core_wasm_bg.wasm', 'dist/rust-default-manifest.json',
     'dist/src/index-node-v4.d.ts', 'dist/src/index-browser-v4.d.ts',
     'dist/spec/extensions/actions/package.json',
@@ -101,6 +104,11 @@ def verify_source_closure(root, manifest):
             raise ValueError(f'SDK_BUILD external build input changed: {name}')
     if tree_hash(root, live_inputs) != closure.get('capturedLiveSha256'):
         raise ValueError('SDK_BUILD live source tree digest mismatch')
+    transform = closure.get('transform') or {}
+    if transform.get('status') != 'fixed-point' or transform.get('generatedInputs') != []:
+        raise ValueError('SDK_BUILD generated assets are not a checked-in fixed point')
+    if closure.get('capturedLiveSha256') != closure.get('sha256') or closure.get('inputs') != closure.get('liveInputs'):
+        raise ValueError('SDK_BUILD compiled source differs from the captured source')
 
 def verify(root):
     root = Path(root)

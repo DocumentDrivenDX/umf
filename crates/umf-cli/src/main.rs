@@ -453,6 +453,7 @@ struct CodegenArgs {
 #[cfg(feature = "codegen")]
 fn parse_codegen_args(args: &[String]) -> Result<CodegenArgs, String> {
     let valid_ops = [
+        "pack-tools",
         "generate",
         "deployment",
         "verify-deployment",
@@ -516,6 +517,11 @@ fn codegen_operation(
     request: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, umf_core::EngineError> {
+    // Pack Tools is a self-contained source compiler and intentionally does not
+    // depend on the larger client-generator resource catalog.
+    if operation == "pack-tools" {
+        return umf_codegen::pack_tools::generate_pack_tools(request, ctx);
+    }
     let mut resource_ctx = Context::catalog();
     let tables = embedded_json(
         include_str!("../../../spec/extensions/tables/package.json"),
@@ -3798,6 +3804,10 @@ mod tests {
             "json"
         );
         assert_eq!(
+            parse(&["pack-tools", "--request", "-"]).unwrap().operation,
+            "pack-tools"
+        );
+        assert_eq!(
             parse(&[
                 "deployment",
                 "--request",
@@ -3819,6 +3829,68 @@ mod tests {
             vec!["generate", "-"],
         ] {
             assert!(parse(&args).is_err(), "accepted {args:?}");
+        }
+    }
+
+    #[test]
+    #[cfg(feature = "codegen")]
+    fn codegen_cli_pack_tools_dispatches_keyed_and_unkeyed_sources_without_client_resources() {
+        use super::codegen_operation;
+        use umf_core::serialization::read_json_value;
+
+        let make_request = |primary_key: Option<&str>| {
+            let pack = serde_json::json!({
+                "id": "cli-smoke",
+                "version": "1.0.0",
+                "schemas": [{
+                    "id": "items",
+                    "reference": "items.json",
+                    "format": "tablespec"
+                }]
+            })
+            .to_string();
+            let mut table = serde_json::json!({
+                "version": "1.0",
+                "table_name": "items",
+                "columns": [
+                    {"name": "id", "data_type": "INTEGER", "nullable": false},
+                    {"name": "label", "data_type": "VARCHAR", "nullable": false}
+                ]
+            });
+            if let Some(column) = primary_key {
+                table["primary_key"] = serde_json::json!([column]);
+            }
+            serde_json::json!({
+                "profile": "umf.pack-tools/1",
+                "pack": {"id": "cli-smoke", "version": "1.0.0", "text": pack},
+                "sources": [{
+                    "id": "items",
+                    "path": "items.json",
+                    "format": "json",
+                    "schemaFormat": "tablespec",
+                    "text": table.to_string()
+                }],
+                "options": {"schema": "public", "package": "cli_smoke"},
+                "targets": ["ddl", "orm", "crud"]
+            })
+            .to_string()
+        };
+
+        for (primary_key, expected_status) in [(Some("id"), "generated"), (None, "partial")] {
+            let mut parse_ctx = Context::ordinary();
+            let source = make_request(primary_key);
+            let request = read_json_value(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                Format::Json,
+                &mut parse_ctx,
+            )
+            .unwrap();
+            let mut ctx = Context::ordinary();
+            let result = codegen_operation("pack-tools", &request, &mut ctx).unwrap();
+            assert_eq!(
+                super::field(&result, "status"),
+                Some(&Value::string_utf8(expected_status))
+            );
         }
     }
 

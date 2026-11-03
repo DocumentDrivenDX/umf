@@ -1,0 +1,26 @@
+{"testProcess":"tests/saga/custody.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/saga/custody.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/saga/custody.test.ts:
+(pass) custody accepts one exact host cohort with tested source inputs, case roster and real artifact bytes [1357.56ms]
+(pass) custody refuses missing or substituted host receipts and extra artifact entries [5523.98ms]
+(pass) custody refuses stale shared inputs and substituted tested binaries even when receipts keep the original corpus [5532.51ms]
+(pass) custody refuses host labels or runtime identities that do not identify the tested execution environment [7432.81ms]
+(pass) custody requires the rebuilt Python wheel and source archive that the cohort claims to qualify [3660.31ms]
+(pass) custody binds Python reports to the installed wheel and stable native payload [5067.21ms]
+(pass) corpus case IDs and contract coverage are unique, complete and bounded [0.24ms]
+(pass) host result controls with unchanged counts reject duplicate, missing and extra case records [0.07ms]
+(pass) retention copies only the exact validated bytes into a flat safe filename [581.25ms]
+(pass) producer receipt refuses qualification-input or tested-artifact changes during verification [8167.78ms]
+
+ 10 pass
+ 0 fail
+ 30 expect() calls
+Ran 10 tests across 1 file. [37.41s]
+{"testProcess":"tests/saga/custody.test.ts","exitCode":0,"pass":10,"fail":0,"skip":0,"assertions":30,"completeSummary":true,"logSha256":"885a29c753cbfc6618379d4c800f6ce2aae9a0fad21506239f18e0b337f1b5dc"}
+
+ 10 pass
+ 0 skip
+ 0 fail
+ 30 expect() calls
+Ran 10 tests across 1 files. [37.44s]

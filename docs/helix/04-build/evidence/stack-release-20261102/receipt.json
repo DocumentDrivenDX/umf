@@ -1,0 +1,355 @@
+{
+  "schema": "umf-stack-integration-audit/2",
+  "observed_at_utc": "2026-11-02T19:34:16.162070+00:00",
+  "scope": "Release and cleanup update. The full pre-cleanup repository/ref/worktree inventory is retained separately with its original observation time; it is not a current inventory. No mixed-version family conformance is inferred.",
+  "completed_this_session": [
+    {
+      "repository": "DocumentDrivenDX/tablespec",
+      "version": "0.0.16",
+      "merged_prs": [
+        28,
+        48,
+        51,
+        52
+      ],
+      "release_run": 41493771488,
+      "publisher_run": 41494468209,
+      "public_archive_equality": true,
+      "independent_public_install": "CPython 3.13.16 Darwin arm64; umf-core 0.10.3 selected by the public resolver; package/CLI imports and generated offline guidebook assets verified in Chromium 148.0.7778.96"
+    },
+    {
+      "repository": "DocumentDrivenDX/batten",
+      "tag": "storage-v0.1.0a1",
+      "merged_prs": [
+        2
+      ],
+      "qualification": "20 local cases / 17 behavior functions, strict types/lint/boundaries; Linux source CI passed; downloaded public archive/receipt checksums verified; wheel includes both licenses and NOTICE",
+      "channel": "GitHub prerelease; managed local POSIX storage subset; no PyPI or full host claim"
+    },
+    {
+      "repository": "DocumentDrivenDX/concourse",
+      "tag": "v0.1.1",
+      "merged_prs": [
+        4,
+        5,
+        6
+      ],
+      "release_run": 41500599381,
+      "license_decision": "Owner selected MIT OR Apache-2.0 on 2026-11-02",
+      "qualification": "Hosted infrastructure, 17 tests / 148 assertions, workerd/D1 and Chromium passed; 26 downloaded archive files and checksums verified, including full jose attribution in Worker and notices. Release-note tooling separately corrected.",
+      "channel": "GitHub local qualification preview; no live provider/production/Batten-host acceptance"
+    },
+    {
+      "repository": "DocumentDrivenDX/truss",
+      "version": "0.0.53",
+      "channel": "GitHub and PyPI",
+      "qualification": "Dedicated owner reports exact-tag Linux, native and independent public-byte install gates passed; fresh-install baseline. Historical upgrade/receipt routes retired by explicit owner decision."
+    },
+    {
+      "repository": "DocumentDrivenDX/arras",
+      "version": "0.6.5",
+      "channel": "UI npm",
+      "qualification": "Dedicated owner reports exact original archive published through OIDC, registry readback hash equality and independent public install; evidence merged in PR43. Separate 0.7.0 action successor remains under qualification."
+    }
+  ],
+  "release_receipts": {
+    "tablespec_manifest": {
+      "sha256": "7807ebfc888733575e08757888d06f9cc6b928e149c3b5f161f8ad7d55844784",
+      "receipt": {
+        "artifacts": [
+          {
+            "name": "umf_tablespec-0.0.16-py3-none-any.whl",
+            "sha256": "2889a68955be45e3930b703317b1d21205d8ffd85c4ef46f5ed220109b342803"
+          },
+          {
+            "name": "umf_tablespec-0.0.16.tar.gz",
+            "sha256": "54fbb09d332ae48a0a473d7a665c4eadc9e0c7394fe86351d5f00dcb1550295f"
+          }
+        ],
+        "package": "umf-tablespec",
+        "repository": "DocumentDrivenDX/tablespec",
+        "schema": "github-pypi-release/1",
+        "source_commit": "3f6e3fa7f130ed4317e546989563faedd0c405f9",
+        "tag": "v0.0.16",
+        "version": "0.0.16"
+      }
+    },
+    "batten_receipt": {
+      "sha256": "991912daffefb1b9896b6ba9903fb8d9608c39d1e9e6c47596afac603242154b",
+      "receipt": {
+        "release": "storage-v0.1.0a1",
+        "distribution": "novirhyza-batten-storage",
+        "version": "0.1.0a1",
+        "sourceCommit": "b8d47788a666a2d38db3b0e40ed8c18bc9c53b99",
+        "packageSourceCommit": "1147d6749eba",
+        "qualification": {
+          "local": "macOS arm64, Python 3.11.17; quality recipe passed, 20 cases in 17 behavior functions",
+          "linux": "https://github.com/DocumentDrivenDX/batten/actions/runs/41492161709",
+          "scope": "managed local POSIX storage only; no PyPI or complete application-runtime claim"
+        },
+        "assets": {
+          "novirhyza_batten_storage-0.1.0a1-py3-none-any.whl": "a69a9c41fcec4bdaee8c98b12cd7786d42f1e308154899e4d488c932da5cd820",
+          "novirhyza_batten_storage-0.1.0a1.tar.gz": "a7c954175b9412997f96f313c6618a07b5f00fc55f52dc9843f0975f119bd3e9"
+        }
+      }
+    },
+    "concourse_receipt": {
+      "sha256": "b7bd2c3539ea1ab2f421784ed4b24f6441c18ef0cd5a1c971809c46f45f449ed",
+      "receipt": {
+        "tag": "v0.1.1",
+        "sourceCommit": "216713c97f88da475f66ba725edad69b45a69e03",
+        "workflowRun": "41500599381",
+        "license": "MIT OR Apache-2.0",
+        "scope": "Local qualification preview; no live login, deployment, production data, Batten host or broad action-profile qualification",
+        "files": {
+          "LICENSE-APACHE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "LICENSE-MIT": "9e981e5ee579ddbfc01fe706b601cd3b76b0dccdfda98f72ce8684db46c55fa4",
+          "README.md": "cbeb9d86b2aeadeaafb7c19fef60350f357253358f05f698a1d6e20646692e37",
+          "THIRD-PARTY-NOTICES.txt": "13335fb0382fead16ebeb1cef94b889ea4c61252d3ae0cec015d62ee74ae8f20",
+          "deploy/cloudflare/profile.example.json": "e18b04696b54a2e8efb7049ac82c1d714119ae62fa88ebf17c6ea00c7b760467",
+          "dist/THIRD-PARTY-NOTICES.txt": "13335fb0382fead16ebeb1cef94b889ea4c61252d3ae0cec015d62ee74ae8f20",
+          "dist/concourse.css": "9d72aee11039631776aeff9d14e9b64344145c702354b800cc3ac6157753d9ff",
+          "dist/concourse.html": "dca9ee9986b23b79ff996b607301908a4ecd1b6f04f93be396fbb885333ec7f2",
+          "dist/concourse.js": "c89b25fba9a297d7db96910ebe195d7187ceb8f32f6cfa0fbaaa0987bc8ad4de",
+          "dist/manifest.json": "9d61cfe17aa2fb1032e7766631fb738edc9df75318f506c9fa5e44f05a2d1f1b",
+          "dist/worker.js": "7b20180a7cd9a67fb3eb57e75fb368f78f89b879c8af8dcfcd4aeba0b1853bf8",
+          "infra/cloudflare/README.md": "ba7872a5838220f56c9e791f56e4d0d0547deb544e81a2345319edb4f131e345",
+          "infra/cloudflare/main.tf": "49f6803c6449139438d8ef4f1f34427ce69e70d18bc711fa27f47d84a8fca265",
+          "infra/cloudflare/tests/foundation.tftest.hcl": "46a21e609db4c436df42d8f603558517dc322c0bfd977046bcce92bf8fe0465e",
+          "infra/cloudflare/variables.tf": "8df21afae858b3ac869efc54098d2f8371a49b63642cccb41db618609aa4dc9f",
+          "infra/cloudflare/versions.tf": "c04e2e72d3ba27187accd645f0f27e7a6791ee299b7f6b41702cd540a31d67ab",
+          "infra/collaboration-worker/README.md": "4db67a2ebb267d8fc5d03cd3a67d8d6410d6397798a42f646914e5f8e02914c9",
+          "infra/collaboration-worker/main.tf": "bddaae7d958ab698939124f6b7b4b36ba791897e506d808d65c1cc5dfc0d275a",
+          "infra/collaboration-worker/versions.tf": "c04e2e72d3ba27187accd645f0f27e7a6791ee299b7f6b41702cd540a31d67ab",
+          "infra/protected-publication/README.md": "11b6e7a2e4a1b20a0746a632bc2b33e7e904f3bfaf1f316acef70d97ed8dc38e",
+          "infra/protected-publication/main.tf": "c92df5e91f7e46744290bf69426f28415a24b1604c47750d8edf2c451908b05b",
+          "infra/protected-publication/outputs.tf": "574339c9fe034b460f01c22c3a4d9b219f971e42ba6d69a7fdac6f0b6d45b44d",
+          "infra/protected-publication/variables.tf": "a40da34e0a2139c86de0fd2d09cef821ff85bb84b827a4cf532a61fb14b59981",
+          "infra/protected-publication/versions.tf": "c04e2e72d3ba27187accd645f0f27e7a6791ee299b7f6b41702cd540a31d67ab",
+          "integrations/hugo/concourse.html": "dca9ee9986b23b79ff996b607301908a4ecd1b6f04f93be396fbb885333ec7f2",
+          "migrations/0001_comments.sql": "e4c01f875fcc8960d3bc863392f014af03e7d1ea8645d0813d58a796a272ea48"
+        }
+      }
+    }
+  },
+  "remaining_work": {
+    "umf": "Lakeview41547141607 passed atf808b0105, including installed Node/Bun/CLI and Chromium/WASM. Access installed identity41547142110 passed at0b9523e7. Access Saga41547142130 passed139 installed consumers then exposed four public Saga registry arity errors; redundant RootSaga41547141474 cancelled after native protocol success. Contract908 host-facade fix e798259a1/2c35caead passes38 host assertions, unchanged public consumer typing, both TS configs and1064-module/9-control boundary scan. Fresh final artifact qualification remains pending on coordinated release source. Core0107 owner received fix before publication; PR95 temporal inspection remains separate active work.",
+    "truss": "0.0.54 delivered with carrier-only qualification and cleanup complete. Newly authorized fresh-only temporal successor is active under Sol planning/review and Luna implementation; requires actual owner-controlled Core/Weft interfaces and new native identity, not54-proof relabel.",
+    "arras": "0.7.0 delivered with independent public consumers and historical cleanup. New embedding fixes merged PR54; appearance accepted in main. A6 b3b300d candidate has portable/browser checks but selected Linux PostgreSQL roundtrip is pending; owner instruction holds merge/release until reviewed native gate. Isolated Root handoffs retained; no new release claim.",
+    "ashlar": "Active owner still qualifies managed target; existing dev1 release is not stable acceptance.",
+    "weft": "0.4.56 delivered. Active G11 observer/handoff and G05 retirement/restoration source work remains under Sol6.1 review/Luna implementation; coordinator resumed after capacity error. Seven-commit metering lineage and old D5 operator remain protected pending equivalence/native proof; no historical campaign rerun or newer-source proof inferred.",
+    "umf-visual": "All audited committed tips accounted for by merged PRs; active dirty examples/geometry work remains with its owner.",
+    "tether": "All audited committed tips accounted for by merged PRs; active dirty API/web work remains with its owner.",
+    "batten": "Storage and runtime-v0.1.0a1 GitHub previews delivered; PR3 merged6fc9347, all20 runtime public assets and seven wheel license payloads independently verified. Active new shared PostgreSQL/Intake integration remains with owner; cleanup rerun pending. No PyPI or extra native/production acceptance.",
+    "concourse": "0.1.1 preview published with complete third-party notices. Release-note link tooling merged. Production gates remain explicit.",
+    "tablespec": "Both previously open feature PRs integrated and released; no open PR remains after publisher hardening."
+  },
+  "inventory_before_cleanup": "inventory-before-cleanup.json",
+  "superseded_ref_cleanup": {
+    "receipt": "branch-cleanup-result.json",
+    "sha256": "05bb46fe93c0c22d3eeec301d3760464eba722c8d45add6ac5f972c5fd1793af",
+    "deleted": 333,
+    "local": 164,
+    "remote": 169,
+    "by_repository": {
+      "DocumentDrivenDX/umf": 74,
+      "DocumentDrivenDX/weft": 37,
+      "DocumentDrivenDX/ashlar": 16,
+      "DocumentDrivenDX/tablespec": 23,
+      "DocumentDrivenDX/umf-visual": 19,
+      "DocumentDrivenDX/concourse": 6,
+      "DocumentDrivenDX/batten": 3,
+      "DocumentDrivenDX/tether": 155
+    },
+    "proof": "Current-main ancestry or exact merged-PR head attribution; fresh exact-SHA and worktree checks before deletion. All registered worktree HEADs, checked-out names, open PRs and unresolved unique tips were excluded. Remote deletions used exact-SHA leases.",
+    "authorization": "Owner directed deletion of fully superseded work, and integration of feature/implementation gaps."
+  },
+  "worktree_cleanup": [
+    {
+      "repository": "DocumentDrivenDX/tablespec",
+      "path": "/private/tmp/erg-tablespec-authority",
+      "head": "236c32f1fee17cfc949c4eb0479765d4797af165",
+      "proof": "Clean tracked/untracked state, current-main ancestor; ignored roots only Ruff and Python bytecode caches. Removed after original PR48 integrated in PR51."
+    }
+  ],
+  "additional_semantic_cleanup": {
+    "deleted": 5,
+    "local": 4,
+    "remote": 1,
+    "receipts": [
+      "semantic-supersession-cleanup.json",
+      "visual-extraction-cleanup.json"
+    ],
+    "reason": "Four Parquet candidate tips are adopted into current main; the visual topic is fully extracted and released with frozen 1.0.0 semantics."
+  },
+  "total_root_managed_ref_deletions": 374,
+  "further_cleanup": {
+    "receipts": [
+      "obsolete-worktree-cleanup.json",
+      "praxis-adoption-cleanup.json"
+    ],
+    "refs_deleted": 5,
+    "worktrees_removed": 3,
+    "scope": "Two clean Tether review copies and the superseded Concourse source copy; their two local branch refs. Three Praxis heads map completely to current-main adoptions, with the reviewed workflow-addition and stronger explicit-evolution differences recorded."
+  },
+  "total_root_managed_worktrees_removed": 4,
+  "subsequent_cleanup": {
+    "receipts": [
+      "obsolete-proof-cleanup.json",
+      "completed-primary-branch-cleanup.json"
+    ],
+    "refs_deleted": 11,
+    "local": 6,
+    "remote": 5,
+    "proof": "Seven superseded historical delivery refs and four completed release topic refs removed after semantic or merged-tree proof; no current artifact replaced."
+  },
+  "updated_at_utc": "2026-11-03T01:11:58.851820+00:00",
+  "delegated_release_updates": [
+    {
+      "repository": "DocumentDrivenDX/truss",
+      "version": "0.0.54",
+      "github": "https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.54",
+      "owner_chat": "01a19d3a-99c8-7f93-88df-f949b470452a",
+      "reported_qualification": "Exact-tag Linux, public-byte and fresh consumers passed;31focused controls and450installed payloads verified. Publication proof merged. Standalone LocalTimestampValue carrier only; native temporal execution remains unqualified and existing refusals stay intact.",
+      "channels": [
+        "GitHub",
+        "PyPI"
+      ]
+    },
+    {
+      "repository": "DocumentDrivenDX/arras",
+      "version": "0.7.0",
+      "channels": [
+        "GitHub",
+        "PyPI",
+        "npm"
+      ],
+      "owner_chat": "01a19d3a-a6a4-74a1-861b-3d752b3caec4",
+      "publisher_run": 41523777966,
+      "reported_qualification": "Public npm/GitHub/qualified tar bytes equal;323fresh installed files and33exports verified. Independent public PyPI3.11Darwinarm64 exact artifacts/dependency archives, pipcheck/doctor/officialUMFadmission passed. Closeout merged7d7a55f; primary clean, onlymain refs remain; isolated clone cleanup finishing.",
+      "proof_local": "/private/tmp/arras070-independent-20261102/",
+      "limits": "No0.7managedtarget acceptance or mixed-family cohort inferred."
+    }
+  ],
+  "total_root_managed_local_ref_deletions": 195,
+  "total_root_managed_remote_ref_deletions": 179,
+  "later_verified_cleanup": {
+    "refs_deleted": 6,
+    "local": 6,
+    "remote": 0,
+    "receipts": [
+      "consolidation-alias-cleanup.json",
+      "cli-transport-adoption-cleanup.json",
+      "g02-index-adoption-cleanup.json"
+    ],
+    "stale_initialization_registrations_removed": 1,
+    "registration_receipt": "stale-initialization-cleanup.json"
+  },
+  "active_worker_worktrees": [
+    {
+      "path": "/Users/erik/.codex/worktrees/arras-alias-52/arras",
+      "branch": "codex/arras-alias-52",
+      "scope": "issue52, Luna implementation complete; Sol review/integration pending"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/arras-testkit-53/arras",
+      "branch": "codex/arras-testkit-53",
+      "scope": "issue53, focused browser checks pass; Sol review/integration pending"
+    }
+  ],
+  "current_topic_adoption_cleanup": {
+    "refs_deleted": 8,
+    "local": 5,
+    "remote": 3,
+    "receipts": [
+      {
+        "path": "microsite-squash-cleanup.json",
+        "sha256": "d024d808e685b6c0bd1dfd9f20d18d6f7ad410e838c4858513aa12f150abdd16"
+      },
+      {
+        "path": "avro-adoption-cleanup.json",
+        "sha256": "01cc83f19a6731cd685548053f5c4f10fac95281087ac008bef788a5faeeb3cc"
+      }
+    ],
+    "proof": "Three microsite exact patches adopted by main PR85\u201387; all Avro Cardinality/performance commits adopted, with separate additional Parquet work retained."
+  },
+  "praxis_embedder_cleanup": {
+    "refs_deleted": 4,
+    "local": 4,
+    "remote": 0,
+    "receipt": "praxis-embedder-adoption-cleanup.json",
+    "sha256": "ad005899bef4142190ab586d17eb6e58043ccdbe067b57946bc08a0f0a19c30a"
+  },
+  "release_alignment_cleanup": {
+    "refs_deleted": 2,
+    "local": 1,
+    "remote": 1,
+    "receipt": "release-alignment-adoption-cleanup.json",
+    "sha256": "badd89b8bf8796123d97733ee55e38da410ffccd9f17a979a020f62398fcd33f"
+  },
+  "batten_runtime_delivery": {
+    "tag": "runtime-v0.1.0a1",
+    "merged_pr": 3,
+    "source": "6fc9347074c747a29a3722e57b07c9db555c61a3",
+    "public_assets": 20,
+    "all_download_digests_and_checksums_match": true,
+    "all_seven_batten_wheels_include_dual_licenses_and_notice": true,
+    "receipt": "batten-runtime-public-verification.json",
+    "receipt_sha256": "a3ca9d401dc9b26ecd77e14e5f252e87dff729ab8578bc7cd726735cc2983340",
+    "scope": "GitHub local runtime prerelease; no PyPI or additional native/production acceptance."
+  },
+  "current_open_pr_snapshot": {
+    "observed_at_utc": "2026-11-03T01:14:13Z",
+    "repositories_checked": [
+      "umf",
+      "arras",
+      "truss",
+      "ashlar",
+      "tether",
+      "batten",
+      "concourse",
+      "tablespec",
+      "umf-visual",
+      "weft"
+    ],
+    "open_prs": {
+      "umf": [
+        42,
+        88,
+        89,
+        95,
+        97
+      ],
+      "arras": [
+        56
+      ]
+    },
+    "scope": "Live open PR snapshot only; active owner work is not inferred complete from empty lists."
+  },
+  "managed_worker_archive_pending": {
+    "paths": [
+      "/Users/erik/.codex/worktrees/arras-alias-52/arras",
+      "/Users/erik/.codex/worktrees/arras-testkit-53/arras"
+    ],
+    "reason": "Managed archive API could not verify this chat primary checkout; original UMF checkout could not attach because it is not managed. No raw-removal workaround attempted. Source patches retained; accepted fixes reached Arras main.",
+    "worktrees_removed": 0
+  },
+  "new_public_saga_contract_fix": {
+    "receipt": "../saga-public-registry-20261102/receipt.json",
+    "source_commits": [
+      "e798259a1",
+      "2c35caead"
+    ],
+    "status": "Host/source controls passed; actual fresh installed archive acceptance pending.",
+    "ci_staging": "Stage the source repair and retained evidence for review with skip-ci; full artifact execution will use the aligned final release cohort, not another knowingly private-version build."
+  },
+  "core_0107_macos_pair_recovery": {
+    "source": "9d92e38c39c35c598faeea8abbd2262760c8cb34",
+    "status": "passed",
+    "receipt": "core-0107-macos-pair/receipt.json",
+    "custody": "core-0107-macos-pair/custody.json",
+    "sha256": "f34d3f7e6c0c459b9042831bcb4421d958ca3798bb5969b8caef1fc530b21d81",
+    "checks": "Fresh installed imports/generation/CLI and exact core0107 pin; byte-identical offline codegen sdist rebuild.",
+    "limits": "No SDK facade/Linux/later-source/publication claim; failed original build batch is not relabeled."
+  }
+}

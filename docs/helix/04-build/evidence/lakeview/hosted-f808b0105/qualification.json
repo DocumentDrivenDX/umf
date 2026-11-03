@@ -1,0 +1,65 @@
+{
+  "source": "f808b0105e20be1b4eee3df41b6e30c201826b88",
+  "run": 41547141607,
+  "conclusion": "success",
+  "workflow": "Lakeview current runtime qualification",
+  "artifact_metadata": [
+    {
+      "id": 13190942280,
+      "node_id": "MDg6QXJ0aWZhY3QxMzE5MDk0MjI4MA==",
+      "name": "lakeview-current-runtime-receipts",
+      "size_in_bytes": 3273,
+      "url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/13190942280",
+      "archive_download_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/13190942280/zip",
+      "expired": false,
+      "digest": "sha256:772b8c927b5f668aeecae417e57634cf1a774de4c22342bc41b0b3d1d8280dc1",
+      "created_at": "2026-11-03T00:11:22Z",
+      "updated_at": "2026-11-03T00:11:22Z",
+      "expires_at": "2026-12-03T00:11:21Z",
+      "workflow_run": {
+        "id": 41547141607,
+        "repository_id": 1382276802,
+        "head_repository_id": 1382276802,
+        "head_branch": "feat/dashboard-profile",
+        "head_sha": "f808b0105e20be1b4eee3df41b6e30c201826b88"
+      }
+    }
+  ],
+  "receipts": [
+    {
+      "name": "installed.json",
+      "sha256": "0341280e8ce3bf12e01ef3977070cd8a734b5031c75b968a2e215588f6f252bc",
+      "profile": "umf.lakeview.installed-original-bytes/1",
+      "keys": [
+        "profile",
+        "hosts",
+        "results",
+        "mismatches",
+        "sources",
+        "artifacts",
+        "limits"
+      ]
+    },
+    {
+      "name": "browser.json",
+      "sha256": "a2b9847230d73bdfe44bc022be30f68676a933bf5006da24f7d27698eb7ceb1f",
+      "profile": "umf.lakeview.original-bytes/1",
+      "keys": [
+        "profile",
+        "core",
+        "extension",
+        "chromium",
+        "bun",
+        "results",
+        "generic",
+        "legacy",
+        "errors",
+        "externalRequests",
+        "sources",
+        "artifacts",
+        "limits"
+      ]
+    }
+  ],
+  "scope": "Native core/cache/wire regressions; installed Node/Bun/native CLI and rebuilt Chromium WASM original-byte Lakeview subset. No native edits/live Databricks or broad family qualification."
+}

@@ -6,7 +6,7 @@ from typing import Literal, TypedDict, cast
 
 from ._native import GenerationError, execute
 
-__version__ = "0.2.0"
+__version__ = "0.10.8"
 
 
 class RecordSelection(TypedDict):
@@ -159,6 +159,18 @@ def generate_python_client(text: str, *, package: str, format: Literal["json", "
     return cast(PythonClientResult, execute(request, timeout_seconds))
 
 
+def generate_pack_tools(request: dict[str, object], *, timeout_seconds: float = 30) -> dict[str, object]:
+    """Compile the complete ``umf.pack-tools/1`` request through pinned Rust.
+
+    The result's generated, partial, and blocked statuses are ordinary compiler
+    outcomes. This wrapper preserves the request and result profiles and adds
+    no source parsing or generation behavior in Python.
+    """
+    if type(request) is not dict:
+        raise TypeError("request must be a dict")
+    return execute(request, timeout_seconds, operation="pack_tools")
+
+
 __all__ = [
     "ActionSelection",
     "BlockedTableDeployment",
@@ -179,6 +191,7 @@ __all__ = [
     "compile_table_migration",
     "discover_table_migration_changes",
     "generate_python_client",
+    "generate_pack_tools",
     "normalize_row_scope",
     "verify_table_deployment",
     "verify_table_migration",

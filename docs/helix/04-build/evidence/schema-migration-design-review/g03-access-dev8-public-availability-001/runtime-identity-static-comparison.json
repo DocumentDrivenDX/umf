@@ -1,0 +1,34 @@
+{
+  "profile": "umf.access-dev8-static-wheel-identity-comparison/1",
+  "status": "STATIC_METADATA_AND_AST_EVIDENCE_ONLY",
+  "artifact": {
+    "path": "/private/tmp/truss-0052-local-qualification-20261030/cache-correction-002/public-downloads/umf_access-0.1.0.dev8-py3-none-any.whl",
+    "sizeBytes": 580062,
+    "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23"
+  },
+  "distribution": {
+    "name": "umf_access",
+    "version": "0.1.0.dev8",
+    "metadataMember": "umf_access-0.1.0.dev8.dist-info/METADATA",
+    "metadataSha256": "63cfe64d02a7ef3a13313ec3d20b171516bd12994870ce70ad45ae66d0884f33"
+  },
+  "runtime": {
+    "typesMember": "umf_access/types.py",
+    "typesSha256": "0d4277a0d3329df6ac67929343fa0421c6a803fa2156c9f6e245aee970556064",
+    "abi": "umf-access-runtime/0.1",
+    "runtimeIdentity": [
+      "umf_access",
+      "0.1.0.dev0",
+      "umf-access-runtime/0.1"
+    ],
+    "sourceExpression": "Tuple(elts=[Constant(value='umf_access'), Constant(value='0.1.0.dev0'), Constant(value='umf-access-runtime/0.1')], ctx=Load())"
+  },
+  "finding": "Distribution version and runtime identity version differ. AST literal read only; no package import or behavior execution. Local wheel bytes match the independently accepted dated public-body digest; no new HTTP or current-public-availability claim.",
+  "pendingSuccessor": {
+    "productionCommit": "b9299935b3ff482c7ecb2f29952241bbdf9543fb",
+    "qualificationSourceCommit": "fdb27b875046d227e0cbb353ed90ab69f54ebdf3",
+    "version": "0.1.0.dev9",
+    "builtOrInstalledQualified": false,
+    "mergedOrPublished": false
+  }
+}

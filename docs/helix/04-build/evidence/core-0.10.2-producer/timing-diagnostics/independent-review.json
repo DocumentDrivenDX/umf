@@ -1,0 +1,82 @@
+{
+  "profile": "umf.independent-timing-source-review/0.1",
+  "status": "accepted-bounded-source-diagnostics-only",
+  "reviewer": "Sol independent source reviewer",
+  "createdAtUtc": "2026-10-24T12:37:36.562796+00:00",
+  "inputManifestSha256": "b2185a30e9f782cc8d2a56614dac242e98091430d05c572913bc20c663fabdb5",
+  "patchSha256": "4b19af91b235f3107820bea9157e6d34e858bf5dd7c09f5289d7eecb92cce690",
+  "baseCommit": "37290c7c6261c13106ce42378fe26626220e34ae",
+  "frozenPayloadMembers": 60,
+  "exactReplayedChangedFiles": 7,
+  "unchangedDependencyGitBlobs": 38,
+  "runtimeChangedFiles": [
+    {
+      "path": "scripts/actions-reference/sandbox.ts",
+      "preimageSha256": "00a6e6d96c5d0ad20adeae52073497e47c571291131139ebff7e34893897db64",
+      "afterSha256": "04925dcba1751d97814f51fd4a5df02021b7f562707499ded0094d16ab63bfc6",
+      "bytes": 16417
+    },
+    {
+      "path": "scripts/actions-reference/handler-execution.ts",
+      "preimageSha256": "a1cbedc97d612497c97f4bcf8b095a22d6047e82d04d0ec96abe40d8108b9a05",
+      "afterSha256": "c8ff9d88bdeedbebdb7e71cce3ca9c4e146e34350a9844a6ae8de336ef8838c6",
+      "bytes": 3035
+    },
+    {
+      "path": "scripts/actions-reference/executor.ts",
+      "preimageSha256": "1f31514be254fd85bd698313af67b8e6dc81852cb93770b56dae69fdda15508c",
+      "afterSha256": "7e6f17381b511b7869b9abfecf386acdf0e7694d5b76624cdb6e03f420f7ebff",
+      "bytes": 16287
+    },
+    {
+      "path": "scripts/actions-reference/timing.ts",
+      "preimageSha256": null,
+      "afterSha256": "a5f4ace7a84cdcb61138d16c9f6a2f745393a110839f473bbc327dd7742530c2",
+      "bytes": 1220
+    }
+  ],
+  "findings": [],
+  "unchangedBoundaries": {
+    "executionMs": 5000,
+    "cleanupMs": 2000,
+    "executionStartsAfterOwnerAcquisition": true,
+    "errorResultAndCleanupParity": "15 exact before/after mocked cases pass",
+    "resourcePolicyRelaxed": false
+  },
+  "actualValidation": {
+    "suppliedMockedTests": {
+      "tests": 9,
+      "assertions": 145,
+      "exitCode": 0,
+      "stdoutSha256": "6043908c8d26d62698476b88f737f39d5d3e91008d4155a81730902f5a37479c",
+      "stderrSha256": "f11b1c7624ad744fc1adeb913bac6c98066457a2c2e3143b70cd829fdf7d2dab"
+    },
+    "independentBeforeAfter": {
+      "tests": 15,
+      "assertions": 468,
+      "exitCode": 0,
+      "stdoutSha256": "6043908c8d26d62698476b88f737f39d5d3e91008d4155a81730902f5a37479c",
+      "stderrSha256": "10ab20eddd94ca296e4110ab40c5b5d62e43dd7adb12b009aea2c371967f3c01"
+    },
+    "targetedTypeScript": {
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "runtime": "Exact Bun1.4.2 binary and TypeScript7.0.2 checked",
+    "guard": "Real Bun.spawn/spawnSync throw before tests; only hard fake process/launch-owner objects used"
+  },
+  "sourceClosure": "Exact frozen60payload files plus committed src/JSON import sources; shared node_modules borrowed without traversal",
+  "repositoryEdits": "none",
+  "sourceOnly": true,
+  "actualNativeQualification": false,
+  "browserQualification": false,
+  "resourceGo": false,
+  "limitations": [
+    "No actual Docker/native/database/handler/ownership/cleanup execution",
+    "No browser/build/full integration/inventory/resource campaign",
+    "Intermittent hosted LIMIT cause not identified or claimed fixed",
+    "Optional observer synchronous best-effort exceptions only; no arbitrary blocking/background observer guarantee",
+    "No shared dependency tree restoration/readiness qualification"
+  ]
+}

@@ -1,0 +1,11 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/saga/public-facade-registry.test.ts:
+(pass) Saga defaults retain the Rust backend when no registry is supplied [0.16ms]
+(pass) all public Saga operations reject an unbound explicit registry before default dispatch [0.12ms]
+(pass) explicit Saga registry selects its bound engine and refuses later profile changes [0.97ms]
+
+ 3 pass
+ 0 fail
+ 38 expect() calls
+Ran 3 tests across 1 file. [5.66s]

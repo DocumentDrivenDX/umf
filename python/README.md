@@ -1,6 +1,6 @@
 # Official UMF Python support
 
-`umf-core` provides the `umf` import namespace. The current package version is `0.10.6`, and the document/core version is `0.10.0`. The authored metamodel generates packaged JSON Schemas and portable constraint data; Pydantic provides access models. Rust owns shared validation, registry semantics and the native adapter operations exposed through Python. Consumer extension definitions and execution policies remain in consumer repositories.
+`umf-core` provides the `umf` import namespace. The current package version is `0.10.7`, and the document/core version is `0.10.0`. The authored metamodel generates packaged JSON Schemas and portable constraint data; Pydantic provides access models. Rust owns shared validation, registry semantics and the native adapter operations exposed through Python. Consumer extension definitions and execution policies remain in consumer repositories.
 
 Build the native Rust extension from source with Rust 1.90.0 and the locked Cargo dependencies:
 
@@ -60,3 +60,15 @@ restored_sql = engine.export_sql(sql_document)
 ```
 
 The Rust compiler is available as `from umf.rust_codegen import CodegenEngine`. The source distribution includes the generated resources and supports building a wheel without the repository. Release checks install the wheel in an isolated environment, compare packaged resource bytes and run ordinary public native workflows.
+
+## Pack code generation
+
+`from umf import generate_pack_tools` exposes the shared Rust pack compiler. Pass
+a complete `umf.pack-tools/1` request containing the manifest text, all declared
+schema sources, schema/package options and `ddl`, `orm`, `crud` targets. The result
+contains generated files, exact source companions, diagnostics and per-source
+coverage. Unkeyed tables receive DDL without invented ORM identities.
+
+The paired `umf-codegen==0.10.7` archive in the same GitHub release exposes
+`umf_codegen.generate_pack_tools(request)`, using the native CLI bundled with
+`umf-core==0.10.7`. Both distributions are verified together.

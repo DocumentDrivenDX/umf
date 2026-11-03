@@ -79,7 +79,7 @@ def check(root: Path) -> int:
                "read_plan_bind_facade": {"runtime", "dsl", "foundation"},
                "rrf_facade": {"dsl", "targets"}}
     allowed["runtime"].update({"pin_host_facade", "read_plan_bind_facade"})
-    helpers = {"canonical": "foundation", "types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
+    helpers = {"canonical": "foundation", "types": "foundation", "_version": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
                "related_keys": "runtime", "rust_related_keys": "runtime", "rust_catalog_custody": "runtime", "rust_catalog_render": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "capture_types": "dsl", "rust_capture_observe": "dsl", "rust_catalog_render_v2": "runtime", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
     helpers["catalog_errors"] = "runtime"
     # Keep the administrative host, approval and optional parser adapters

@@ -1,0 +1,23 @@
+{
+  "executed_at_utc": "2026-11-02T19:41:12.480343+00:00",
+  "deleted_remote_ref": "refs/heads/feat/umf-visual",
+  "head": "351c4802caf34eb7f4174e7b730f86f4befcf909",
+  "closed_pr": 62,
+  "canonical_release": "https://github.com/DocumentDrivenDX/umf-visual/releases/tag/v0.4.0",
+  "schema_manifest_proof": [
+    {
+      "old_path": "spec/extensions/visual/package.json",
+      "released_path": "spec/extensions/visual/1.0.0/package.json",
+      "blob": "9d6db38628004040994b0bc23660d022335db2e1"
+    },
+    {
+      "old_path": "spec/extensions/visual/schema.json",
+      "released_path": "spec/extensions/visual/1.0.0/schema.json",
+      "blob": "43b69492c6e61f747bcccbe60262d6a4eb142221"
+    }
+  ],
+  "legacy_implementation": "Released legacy-1-0.ts is byte-identical after import routing to the extracted public core package and frozen schema.",
+  "identical_fixture_count": 62,
+  "governance_review": "All four visual framing/design documents are retained in the extracted project and evolved with explicit 1.0 frozen / 1.1 opt-in version boundaries. Root generated audit ledgers and root index export are superseded by the dedicated package; root artifact IDs now belong to Lakeview and must not be duplicated.",
+  "result": "deleted"
+}

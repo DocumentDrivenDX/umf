@@ -1,3 +1,12 @@
+[Family integration audit — 2026-11-02](04-build/evidence/stack-release-20261102/README.md)
+records the new TableSpec, Batten storage and Concourse deliveries, merged-PR
+attribution and retained unresolved owner work. Truss and Arras continue in
+their dedicated release chats.
+
+[Lakeview integration evidence](04-build/evidence/lakeview/README.md) records
+the original qualified subset. Current-main reconciliation requires fresh
+native, installed and browser checks before release.
+
 [Stack release closeout — 2026-11-01](04-build/evidence/stack-release-20261101/receipt.json)
 records TableSpec 0.0.15 GitHub/PyPI delivery, public registry-to-GitHub digest
 checks and restored efficient Actions delivery. Truss's patch successor remains

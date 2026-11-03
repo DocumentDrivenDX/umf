@@ -3,9 +3,11 @@ import {mkdir,mkdtemp,readFile,rm} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
-import {capturePortableProducerSnapshot,sha256File,SDK_SAGA_MEMBERS,verifyPortableProducerSnapshot} from './saga-portable/custody';
+import {capturePortableProducerSnapshot,sha256File,SDK_SAGA_MEMBERS,SDK_SAGA_NODE_ENTRY,verifySdkMemberCustody,verifyPortableProducerSnapshot} from './saga-portable/custody';
 // Set UMF_SDK_INSTALL_RETAIN_DIR only when a later installed-entry probe needs
 // this exact consumer and its archive-to-installed-member custody receipt.
+const installPhase=process.env.UMF_SDK_INSTALL_PHASE??'full';
+if(installPhase!=='full'&&installPhase!=='saga')throw Error('Unsupported SDK install phase');
 const retainedDirectory=process.env.UMF_SDK_INSTALL_RETAIN_DIR?resolve(process.env.UMF_SDK_INSTALL_RETAIN_DIR):undefined;
 const archive=resolve('.cache/sdk-distribution/umf-sdk.tgz');
 const sourceSnapshot=await capturePortableProducerSnapshot('.',{sdkArchive:archive});
@@ -48,6 +50,7 @@ try{
  })));
  const installedMemberPaths=Object.fromEntries(Object.keys(installedDigests).map(name=>[name,join(packageRoot,name.replace(/^package\//,''))]));
  const installedManifest=JSON.parse(installedManifestBytes.toString('utf8'));
+ verifySdkMemberCustody(installedMetadata,installedManifest,installedDigests);
  for(const [name,actual] of Object.entries(installedDigests) as [string,{size:number;sha256:string}][]){
   const expected=archiveMembers[name];
   if(!expected||actual.size!==expected.size||actual.sha256!==expected.sha256)throw Error('Installed SDK member differs from exact candidate archive: '+name);
@@ -58,7 +61,7 @@ try{
  await Bun.write(join(directory,'current-conformance.json'),await Bun.file('fixtures/metamodel/current-conformance.json').text());
  await Bun.write(join(directory,'approve.json'),await Bun.file('fixtures/actions/approve.json').text());
  await Bun.write(join(directory,'commerce.json'),await Bun.file('tests/unified/commerce.json').text());
- await Bun.write(join(directory,'probe.ts'),`import {createUmfRegistry,inspectActions,readDocument,Registry,validateDocument,CURRENT_CORE_VERSION,generatePythonClient} from '@umf/core';
+ await Bun.write(join(directory,'probe.ts'),`import {createUmfRegistry,inspectActions,readDocument,Registry,validateDocument,CURRENT_CORE_VERSION,generatePythonClient,generatePackTools} from '@umf/core';
 import {createValidator} from '@umf/core/loader-contract';
 const registry=createUmfRegistry();
 if(!registry.get('umf.actions','0.1.0')?.semantics||typeof createValidator!=='function')throw Error('Missing installed SDK entrypoint');
@@ -68,9 +71,18 @@ const corpus=await Bun.file('current-conformance.json').json();if(corpus.current
 for(const item of corpus.cases){const r=new Registry();if(item.registry)r.register({id:item.registry.id,version:item.registry.version,coreVersion:CURRENT_CORE_VERSION,description:'Frozen callback probe',schema:true,semantics:'Trusted callback probe',scopes:[item.registry.scope],capabilities:{validation:'semantic',directions:[],evidence:[]}},(payload,context)=>[{code:'BASELINE_CALLBACK',path:context.path,message:context.document.id+':'+context.scope+':'+payload.kind,severity:'warning'}]);if(!Bun.deepEquals(validateDocument(item.document,r),{valid:item.valid,complete:item.complete,diagnostics:item.diagnostics}))throw Error('Installed conformance '+item.id);}
 const client=generatePythonClient({text:await Bun.file('commerce.json').text(),package:'shop'});
 if(client.description.umf!==CURRENT_CORE_VERSION||client.files.length!==7||!client.files.some(f=>f.path==='shop/models.py'&&f.text.includes('class Actions:')))throw Error('Installed unified generator missing');
-console.log(JSON.stringify({unifiedGenerator:true,conformanceCases:corpus.cases.length,singleInstall:true,bundledActions:true,loaderEntrypoint:true,opaqueMeaningRemainsUnchecked:true}));
+const packText=JSON.stringify({id:'sdk-inventory',version:'1.0.0',schemas:[{id:'items',format:'tablespec',reference:'schemas/items.json'}]});
+const sourceText=JSON.stringify({version:'1.0',table_name:'items',columns:[{name:'item_id',data_type:'INTEGER',nullable:false},{name:'label',data_type:'VARCHAR',nullable:false}],primary_key:['item_id']});
+const request={profile:'umf.pack-tools/1',pack:{id:'sdk-inventory',version:'1.0.0',text:packText},sources:[{id:'items',path:'schemas/items.json',format:'json',schemaFormat:'tablespec',text:sourceText}],options:{schema:'inventory',package:'inventory_sdk'},targets:['ddl','orm','crud']};
+const keyed=generatePackTools(request);
+if(keyed.profile!=='umf.pack-tools-result/1'||keyed.status!=='generated'||keyed.pack.id!=='sdk-inventory'||!keyed.files.some(f=>f.path==='schema.sql'&&f.kind==='ddl')||!keyed.files.some(f=>f.path==='inventory_sdk/models.py'&&f.kind==='orm')||!keyed.files.some(f=>f.path==='inventory_sdk/crud.py'&&f.kind==='crud')||!keyed.files.some(f=>f.path==='source-companion.json'&&f.kind==='source')||keyed.coverage[0]?.operations.join(',')!=='ddl,orm,crud:create,crud:read,crud:list,crud:update,crud:delete')throw Error('Installed pack-tools public SDK mapping or keyed outputs differ');
+const unkeyed=generatePackTools({...request,sources:[{...request.sources[0],text:JSON.stringify({version:'1.0',table_name:'items',columns:[{name:'label',data_type:'VARCHAR',nullable:false}]})}]});
+if(unkeyed.status!=='partial'||!unkeyed.files.some(f=>f.path==='schema.sql')||unkeyed.files.some(f=>f.kind==='orm'||f.kind==='crud')||!unkeyed.diagnostics.some(d=>d.code==='PACK_TOOLS_CRUD_KEY_REQUIRED'))throw Error('Installed pack-tools did not preserve the explicit unkeyed refusal');
+let mappedError;try{generatePackTools({...request,options:{schema:'inventory',package:'invalid-package!'}});}catch(error){mappedError=error;}
+if(mappedError?.name!=='UmfPackToolsError'||mappedError?.code!=='PACK_TOOLS_OPTIONS'||mappedError?.path!=='/options/package')throw Error('Installed pack-tools native error mapping differs: '+JSON.stringify(mappedError));
+console.log(JSON.stringify({unifiedGenerator:true,packTools:{keyed:true,unkeyed:true,errorMapping:true,sourceCompanion:true},conformanceCases:corpus.cases.length,singleInstall:true,bundledActions:true,loaderEntrypoint:true,opaqueMeaningRemainsUnchecked:true}));
 `);
- await run([process.execPath,'probe.ts']);
+ if(installPhase==='full')await run([process.execPath,'probe.ts']);
  await Bun.write(join(directory,'public-saga-types.ts'),`import {Registry,registerSagas,inspectSagas,declareSaga,editSaga,assessSaga,createSagaResources,readDocument,writeDocument} from '@umf/core';
 import type {Document,SagaDefinition,SagaCapabilities,SagaIdentity} from '@umf/core';
 import {initializeCodegenWasm,initializeWasm} from '@umf/core/runtime/wasm';
@@ -141,15 +153,15 @@ console.log(JSON.stringify({installedSagaRuntime:true,sharedWasm:true,publicFaca
  for(const [name,path] of Object.entries(installedMemberPaths))if(await sha256File(path)!==installedDigests[name as keyof typeof installedDigests]!.sha256)throw Error('Installed SDK member changed during conformance: '+name);
 
  if(retainedDirectory){
-  const receipt={profile:'umf.sdk-installed-archive-custody/2',archivePath:archive,archiveSha256:sourceSnapshot.artifacts.sdkArchive,
+  const receipt={profile:installPhase==='full'?'umf.sdk-installed-archive-custody/2':'umf.sdk-installed-saga-custody/1',archivePath:archive,archiveSha256:sourceSnapshot.artifacts.sdkArchive,
    installCommand:[process.execPath,'install','--ignore-scripts',archive],installedPackageRoot:packageRoot,
-   exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256['dist/umf-node.js'],
+   exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256[SDK_SAGA_NODE_ENTRY],
    sdkManifestSha256:sha256(installedManifestBytes),installerSourceSha256,
    sagaCorpusSha256:sha256(await readFile(join(directory,'saga-vectors.json'))),
    sagaOracleSha256:sha256(await readFile(join(directory,'saga-oracle.js'))),
    sagaQualificationInputs:sourceSnapshot.qualificationInputs,
    sagaResult:JSON.parse(await readFile(join(directory,'saga-result.json'),'utf8')),
-   runtime:{bun:Bun.version,platform:process.platform,arch:process.arch},distributionFiles:distribution.files,existing139ConsumerChecks:'passed'};
+   runtime:{bun:Bun.version,platform:process.platform,arch:process.arch},distributionFiles:distribution.files,existing139ConsumerChecks:installPhase==='full'?'passed':'not-run-in-saga-phase'};
   await Bun.write(join(directory,'g03-sdk-install-custody.json'),JSON.stringify(receipt,null,2)+'\n');
  }
 }finally{if(!retainedDirectory)await rm(directory,{recursive:true,force:true});}

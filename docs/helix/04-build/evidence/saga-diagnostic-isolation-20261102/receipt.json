@@ -1,0 +1,86 @@
+{
+  "schema": "umf.saga.diagnostic-isolation/1",
+  "recorded_at_utc": "2026-11-02T21:29:32.229744+00:00",
+  "baseline": "4bfb6d4eb14d92ef594a8b635e69b7c961cd7296",
+  "host": {
+    "bun": "1.4.3",
+    "rust": "1.90.0",
+    "target": "aarch64-apple-darwin",
+    "features": [
+      "native-postgresql"
+    ]
+  },
+  "checks": {
+    "old_native": "Original diagnostic assertion failed for missing-compensation and over-32-steps; dedicated isolation assertion also failed. Original aggregate corpus test additionally exceeded its60s harness budget. Four pre-existing mutation controls passed. This is negative evidence, not qualification.",
+    "first_fixed_native": "23pass/1fail; authoring vector completed its assertions but exceeded the30s aggregate harness deadline. Retained as failed attempt.",
+    "final_fixed_native": "24pass,0fail,0skip,61assertions. All19independent vectors, full public schema/profile, wrong-scope/source custody, four pre-existing mutation controls.",
+    "typecheck": "pass: both production and tools TypeScript configurations",
+    "boundaries": "pass:1064modules,9controls,0findings",
+    "portable_host_receipt": "pass:19/19 independent vectors, public facade, registry mutation refusal, exact JSON/YAML exchange, zero fetch/preconnect calls, source/artifact hashes unchanged",
+    "hosted": "pending exact-source native/WASM/CLI/Python wheel and independent sdist rebuild; no public release acceptance",
+    "custody_tests": "10pass/0fail/0skip/30assertions, including substituted source/artifact, missing hosts, installed-wheel and result-roster refusals"
+  },
+  "sources": {
+    "crates/umf-codegen/src/resources.rs": {
+      "sha256": "9dbd4bf1f91e91f318089c8b1bedab7241b0f93ec1456dea6c805aa54979ad3a",
+      "size": 33867
+    },
+    "tests/saga/portable-oracle.test.ts": {
+      "sha256": "e988359840181f7d36b6e1abbe6eea9131fa8ebc3607e7a609a06f94b16bec22",
+      "size": 6013
+    },
+    "fixtures/saga/portable.json": {
+      "sha256": "6f67fdfe6fba205436490f8b64f55f58e9bdae315d19148d10de799c05a3f1a7",
+      "size": 435386
+    },
+    ".github/workflows/sagas.yml": {
+      "sha256": "666ca002b5bdd5c04949c1a671d28854b21656b11daf39cb00efd5dad52ea50e",
+      "size": 11729
+    },
+    "scripts/saga-portable/custody.ts": {
+      "sha256": "30aef4ed662dfda14925a0bf91ba2320a7355faebd07e52c78c3a79006183d3f",
+      "size": 10678
+    }
+  },
+  "native_addon": {
+    "sha256": "bbffc45396d5ecd75b116bb2952168301fbff1fe79bc436cd8007b538882b77a",
+    "size": 49948520
+  },
+  "build_log": {
+    "sha256": "4464cb8cdb0aeac937ef06821cc6ee7d18ead5501cfc0205e2b75648e6386d24",
+    "size": 92419
+  },
+  "logs": {
+    "old-native-negative": {
+      "path": "old-native-negative.log",
+      "sha256": "90cc08aa7a93b913d63767e56d9af484d0cffb6d9165a7a3003939e0ae19e662"
+    },
+    "native-attempt1": {
+      "path": "native-attempt1.log",
+      "sha256": "1f7c49a0f6f65818c90fd3467b6c831303eb86ff491a51468d7e5601420bddaf"
+    },
+    "native-final": {
+      "path": "native-final.log",
+      "sha256": "e3119d80418290831299eb36123270f875bfb8953069aa618945bfd2490d93d3"
+    },
+    "typecheck": {
+      "path": "typecheck.log",
+      "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+    },
+    "boundaries": {
+      "path": "boundaries.log",
+      "sha256": "1c61b0b2e4987c08ed61387eef64b8aa5369dc8408e6848ea4558763cc54ef88"
+    },
+    "custody_tests": {
+      "path": "custody-tests.log",
+      "sha256": "2c3c35adb25ba545e312f14f41f08f01b3f0602373888d386904f929a0d192a7"
+    }
+  },
+  "budgets": "Only new multi-operation authoring vector has60s aggregate harness timeout; other vectors30s. Product operation/cleanup limits unchanged. Hosted whole job90min for existing complete artifact production/qualification.",
+  "portable_host_receipt": {
+    "path": "portable-native.json",
+    "sha256": "10284a96ee6d3956610626b54dca1c9ffec0ded96022b85d2dd01dbbb4056faf",
+    "resource_constructor_hashed": true
+  },
+  "preliminary_portable_run": "Canceled before any qualification result to include resources.rs in cross-host custody; complete replacement run passed."
+}

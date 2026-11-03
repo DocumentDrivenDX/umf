@@ -6,6 +6,7 @@
 
 use crate::{
     canonical::{canonical_json_admitted, canonical_sha256_admitted, sha256_source_text},
+    grant_columns::mutable_table_grant_columns,
     resources::{CodegenEngine, ReadDocumentOutcome},
     value::{array_items, member, object_members, string_member},
 };
@@ -2025,27 +2026,20 @@ fn emit_table_policies(
                     let record =
                         resolve_ref(document, member(table, "record").unwrap_or(&Value::Null))
                             .unwrap_or(&Value::Null);
-                    let columns = array_items(member(table, "columns").unwrap_or(&Value::Null))
-                        .unwrap_or(&[])
-                        .iter()
-                        .filter(|c| {
-                            member(c, "immutable") != Some(&Value::Bool(true))
-                                && member(c, "generated").is_none()
-                                && !array_items(member(record, "keys").unwrap_or(&Value::Null))
-                                    .unwrap_or(&[])
-                                    .iter()
-                                    .any(|key| {
-                                        array_items(member(key, "fields").unwrap_or(&Value::Null))
-                                            .unwrap_or(&[])
-                                            .iter()
-                                            .any(|field| {
-                                                member(c, "field")
-                                                    .is_some_and(|r| refs_equal(r, field))
-                                            })
-                                    })
-                        })
-                        .filter_map(|c| u8ext(c, "name"))
-                        .map(|n| quote_ident(&n))
+                    let record_ref = member(table, "record").unwrap_or(&Value::Null);
+                    let record_module = string_member(record_ref, "module")
+                        .and_then(|value| value.to_utf8().ok())
+                        .ok_or_else(|| Refusal::unsupported(&p, "Invalid table Record binding"))?;
+                    let columns = mutable_table_grant_columns(table, &record_module, record, &p.to_utf8().unwrap_or_default(), ctx)
+                        .map_err(|error| {
+                            if error.is_control_failure() {
+                                Refusal::Terminal(error)
+                            } else {
+                                Refusal::unsupported(&p, "Invalid mutable UPDATE grant columns")
+                            }
+                        })?
+                        .into_iter()
+                        .map(|name| quote_ident(&name))
                         .collect::<Vec<_>>()
                         .join(", ");
                     if columns.is_empty() {
