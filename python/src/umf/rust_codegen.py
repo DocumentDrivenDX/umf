@@ -70,6 +70,9 @@ class CodegenEngine:
             except ValueError as error:
                 if control.failure is not None:
                     raise control.failure
+                if isinstance(error, UmfCoreError):
+                    raise
+                work(len(str(error)))
                 _raise_native(error)
             # No handle is published until every construction-phase control passes.
             work(0)
@@ -115,6 +118,10 @@ class CodegenEngine:
         except ValueError as error:
             if retained and native_control.failure is not None:
                 raise native_control.failure
+            if retained:
+                if isinstance(error, UmfCoreError):
+                    raise
+                work(len(str(error)))
             _raise_native(error)
         work(len(response))
         wire = _checked_envelope(response)

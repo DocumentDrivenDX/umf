@@ -120,6 +120,14 @@ work credits. Hard-isolated unavailability MUST NOT fall back to this mode.
 
 A bounded support claim MUST identify the actual owner source/native bytes, mode
 and allowance, and demonstrate cold construction as well as each invocation.
+The same invocation allowance MUST include outer response-envelope sizing,
+allocation and serialization, including error envelopes, before publication.
+Distinct Python-side copies MUST retain their separate charges. The outer
+boundary MUST remain distinguishable from the shared inspector/inner-result
+phase in diagnostics. A first terminal control denial MUST retain its original
+code, message, path and denied charge; it MUST NOT trigger a second error
+serialization or another control invocation during unwinding.
+
 Warm reuse or a proof with omitted `max_work` MUST NOT qualify a bounded profile.
 Failure to fit the selected allowance MUST remain `RESOURCE_LIMIT`; it MUST NOT
 increase a limit, split one operation or relabel an older binary's capabilities.

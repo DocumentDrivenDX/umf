@@ -654,6 +654,9 @@ pub fn copy_wire(wire_json: &str) -> Result<String, EngineError> {
     encode(&value, &mut transport)
 }
 
+pub mod controlled_envelope;
+pub use controlled_envelope::result_envelope_with_context;
+
 /// Serialize a closed host-independent result envelope. Error path/message are
 /// UTF-16 code units so lone surrogates survive every binding boundary.
 pub fn result_envelope(result: Result<String, EngineError>) -> String {

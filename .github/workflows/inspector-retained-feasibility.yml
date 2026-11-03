@@ -82,6 +82,13 @@ jobs:
           cargo --version > "$RUNNER_TEMP/inspector-feasibility/cargo.txt"
           python -m pip install 'build==1.3.0' 'hatchling==1.27.0' 2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/build-tools.log"
           python -m build --no-isolation --wheel --outdir "$RUNNER_TEMP/inspector-feasibility/wheels" python 2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/build.log"
+      - name: Independent native outer-envelope boundary controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo test --locked --release -p umf-core-wire --lib --features native-postgresql \
+            controlled_envelope::tests -- --test-threads=1 --nocapture \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/native-envelope-controls.log"
       - name: Fresh normal candidate install and existing affected control checks
         shell: bash
         run: |
@@ -95,8 +102,14 @@ jobs:
           "$candidate_python" -m pip --isolated check | tee "$RUNNER_TEMP/inspector-feasibility/pip-check.log"
           "$candidate_python" -m pip --isolated freeze > "$RUNNER_TEMP/inspector-feasibility/freeze.txt"
           "$candidate_python" -I -B -m pytest -q python/tests/test_rust_codegen.py \
-            -k 'constructor_copy or host_callback_cannot or native_control_error or carrier_copy or cached_resources_are_charged' \
             2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/affected-existing-controls.log"
+      - name: Independent private native adapter and outer-envelope controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/inspector-feasibility/consumer/bin/python" -I -B -m pytest -q \
+            python/tests/test_retained_codegen_native.py::PrivateNativeControlTests \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/private-native-contract-controls.log"
       - name: Measure cold retained construction and unchanged public 17-case calls at 1M
         shell: bash
         run: |
@@ -108,12 +121,12 @@ jobs:
             --resource-pins-sha256 "$EXPECTED_RESOURCE_PINS" \
             --output "$RUNNER_TEMP/inspector-feasibility/measurement.json" \
             2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/measurement.log"
-      - name: Native retained-mode contract controls after measured cold fit
+      - name: Strict public retained-mode controls after measured cold fit
         shell: bash
         run: |
           set -euo pipefail
           "$RUNNER_TEMP/inspector-feasibility/consumer/bin/python" -I -B -m pytest -q \
-            python/tests/test_retained_codegen_native.py \
+            python/tests/test_retained_codegen_native.py::PublicRetainedFeasibilityTests \
             2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/native-contract-controls.log"
       - name: Retain actual partial results and complete wheel bytes
         if: always()

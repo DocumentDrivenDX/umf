@@ -46,6 +46,7 @@ def load_facade():
             assert 'resources' not in request, 'retained call reserialized resources'
             api.calls.append(request)
             charge(control, 23, 'native-call')
+            charge(control, 31, 'native-result-envelope')
             api.phase = 'result-copy'
             return json.dumps({'profile': 'umf.core-wire/1', 'status': 'ok',
                                'wire': json.dumps(rust._wire(api.output))})
@@ -168,7 +169,7 @@ class RetainedFacadeControls(unittest.TestCase):
         self.assert_code('RESOURCE_LIMIT', lambda: bounded.call('inspectAccessViews', {'bindings': ()}))
 
     def test_native_entry_and_result_copy_cancellation_deadline_meter_failures(self):
-        for phase in ('native-call', 'result-copy'):
+        for phase in ('native-call', 'native-result-envelope', 'result-copy'):
             for mode, code in (('cancel', 'CANCELLED'), ('deadline', 'DEADLINE'), ('meter', 'METER_FAILURE')):
                 with self.subTest(phase=phase, mode=mode):
                     self.api.phase = 'host'
