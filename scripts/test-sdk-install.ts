@@ -6,6 +6,8 @@ import {join,resolve} from 'node:path';
 import {capturePortableProducerSnapshot,sha256File,SDK_SAGA_MEMBERS,SDK_SAGA_NODE_ENTRY,verifySdkMemberCustody,verifyPortableProducerSnapshot} from './saga-portable/custody';
 // Set UMF_SDK_INSTALL_RETAIN_DIR only when a later installed-entry probe needs
 // this exact consumer and its archive-to-installed-member custody receipt.
+const installPhase=process.env.UMF_SDK_INSTALL_PHASE??'full';
+if(installPhase!=='full'&&installPhase!=='saga')throw Error('Unsupported SDK install phase');
 const retainedDirectory=process.env.UMF_SDK_INSTALL_RETAIN_DIR?resolve(process.env.UMF_SDK_INSTALL_RETAIN_DIR):undefined;
 const archive=resolve('.cache/sdk-distribution/umf-sdk.tgz');
 const sourceSnapshot=await capturePortableProducerSnapshot('.',{sdkArchive:archive});
@@ -80,7 +82,7 @@ let mappedError;try{generatePackTools({...request,options:{schema:'inventory',pa
 if(mappedError?.name!=='UmfPackToolsError'||mappedError?.code!=='PACK_TOOLS_OPTIONS'||mappedError?.path!=='/options/package')throw Error('Installed pack-tools native error mapping differs: '+JSON.stringify(mappedError));
 console.log(JSON.stringify({unifiedGenerator:true,packTools:{keyed:true,unkeyed:true,errorMapping:true,sourceCompanion:true},conformanceCases:corpus.cases.length,singleInstall:true,bundledActions:true,loaderEntrypoint:true,opaqueMeaningRemainsUnchecked:true}));
 `);
- await run([process.execPath,'probe.ts']);
+ if(installPhase==='full')await run([process.execPath,'probe.ts']);
  await Bun.write(join(directory,'public-saga-types.ts'),`import {Registry,registerSagas,inspectSagas,declareSaga,editSaga,assessSaga,createSagaResources,readDocument,writeDocument} from '@umf/core';
 import type {Document,SagaDefinition,SagaCapabilities,SagaIdentity} from '@umf/core';
 import {initializeCodegenWasm,initializeWasm} from '@umf/core/runtime/wasm';
@@ -151,7 +153,7 @@ console.log(JSON.stringify({installedSagaRuntime:true,sharedWasm:true,publicFaca
  for(const [name,path] of Object.entries(installedMemberPaths))if(await sha256File(path)!==installedDigests[name as keyof typeof installedDigests]!.sha256)throw Error('Installed SDK member changed during conformance: '+name);
 
  if(retainedDirectory){
-  const receipt={profile:'umf.sdk-installed-archive-custody/2',archivePath:archive,archiveSha256:sourceSnapshot.artifacts.sdkArchive,
+  const receipt={profile:installPhase==='full'?'umf.sdk-installed-archive-custody/2':'umf.sdk-installed-saga-custody/1',archivePath:archive,archiveSha256:sourceSnapshot.artifacts.sdkArchive,
    installCommand:[process.execPath,'install','--ignore-scripts',archive],installedPackageRoot:packageRoot,
    exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256[SDK_SAGA_NODE_ENTRY],
    sdkManifestSha256:sha256(installedManifestBytes),installerSourceSha256,
@@ -159,7 +161,7 @@ console.log(JSON.stringify({installedSagaRuntime:true,sharedWasm:true,publicFaca
    sagaOracleSha256:sha256(await readFile(join(directory,'saga-oracle.js'))),
    sagaQualificationInputs:sourceSnapshot.qualificationInputs,
    sagaResult:JSON.parse(await readFile(join(directory,'saga-result.json'),'utf8')),
-   runtime:{bun:Bun.version,platform:process.platform,arch:process.arch},distributionFiles:distribution.files,existing139ConsumerChecks:'passed'};
+   runtime:{bun:Bun.version,platform:process.platform,arch:process.arch},distributionFiles:distribution.files,existing139ConsumerChecks:installPhase==='full'?'passed':'not-run-in-saga-phase'};
   await Bun.write(join(directory,'g03-sdk-install-custody.json'),JSON.stringify(receipt,null,2)+'\n');
  }
 }finally{if(!retainedDirectory)await rm(directory,{recursive:true,force:true});}
