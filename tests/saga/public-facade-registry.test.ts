@@ -7,7 +7,7 @@ import {registerSagas,sagaPackage,type SagaRuntime,type SagaDefinition,type Saga
 import {createSagaRustDefault,type SagaRustEngine} from '../../src/extensions/actions/saga-rust-default';
 
 // Host dispatch controls only; actual Saga semantics remain in the native/WASM gates.
-const source={umf:'0.10.0',id:'urn:test:facade',modules:[]} as Document;
+const source:Document={umf:'0.10.0',id:'urn:test:facade',vocabularies:{},modules:[]};
 const definition={} as SagaDefinition;
 const identity={module:'module',saga:'saga'};
 const capabilities={} as SagaCapabilities;
@@ -33,7 +33,7 @@ function hostRegistry(){
 }
 test('Saga defaults retain the Rust backend when no registry is supplied',()=>{
  const calls:string[]=[],facade=createSagaRustDefault(backend('default',calls),()=>false);
- for(const operation of operations(facade)){const result=operation();expect(result).toEqual({backend:'default'});expect(Object.isFrozen(result)).toBe(true);}
+ for(const operation of operations(facade)){const result:unknown=operation();expect(result).toEqual({backend:'default'});expect(Object.isFrozen(result)).toBe(true);}
  expect(calls).toEqual(['inspect','declare','edit','assess']);
 });
 test('all public Saga operations reject an unbound explicit registry before default dispatch',()=>{
@@ -45,7 +45,7 @@ test('explicit Saga registry selects its bound engine and refuses later profile 
  for(const mutation of ['add','replace'] as const){
   const defaultCalls:string[]=[],boundCalls:string[]=[],facade=createSagaRustDefault(backend('default',defaultCalls),()=>false);
   const {registry,entries}=hostRegistry();registerSagas(registry,backend('bound',boundCalls));
-  for(const operation of operations(facade,registry))expect(operation()).toEqual({backend:'bound'});
+  for(const operation of operations(facade,registry)){const result:unknown=operation();expect(result).toEqual({backend:'bound'});}
   expect(defaultCalls).toEqual([]);expect(boundCalls).toEqual(['inspect','declare','edit','assess']);
   if(mutation==='add')entries.push({...entries[0]!,manifest:{...entries[0]!.manifest,id:'test.extra'}});
   else entries[0]={...entries[0]!};
