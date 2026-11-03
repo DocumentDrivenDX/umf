@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {mkdtemp} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {chromium} from 'playwright';
 import {copyVisualRuntime,visualPackageIdentity} from './visual-runtime-assets';
-const directory=await mkdtemp('/private/tmp/umf-visual-consumer-');
+const directory=await mkdtemp(join(tmpdir(),'umf-visual-consumer-'));
 for(const [source,destination]of [['tests/domain-packs/visual-browser-entry.ts','app.js'],['docs/helix/05-deploy/schema-browser/visual-worker.ts','visual-worker.js']]){
  const result=await Bun.build({entrypoints:[source!],target:'browser',format:'esm'});if(!result.success)throw Error(result.logs.join('\n'));await Bun.write(join(directory,destination!),result.outputs[0]!);
 }
