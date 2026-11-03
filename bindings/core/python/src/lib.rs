@@ -19,6 +19,7 @@ use umf_core::{
 
 mod python_value;
 mod related_keys;
+mod retained_codegen;
 
 create_exception!(_rust_core, SecProjectionError, PyException);
 const TARGET_PIN_PROFILE: &str = "umf-access-target-pin/0.1.0";
@@ -2976,28 +2977,7 @@ fn execute_codegen_wire(
     let mut control_hook = |amount| {
         let result = (|| {
             if let Some(callback) = &control {
-                let outcome = callback
-                    .bind(py)
-                    .call1((amount,))
-                    .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
-                if !outcome.is_none() {
-                    let (code, message, path): (String, Bound<'_, PyAny>, Bound<'_, PyAny>) =
-                        outcome.extract().map_err(|error| {
-                            py_exception_engine_error(py, "METER_FAILURE", error)
-                        })?;
-                    let mut ctx = Context::ordinary();
-                    let origin = python_value::pytext_from_python(&message, &mut ctx)?;
-                    let mut error = EngineError::new(
-                        code,
-                        extract_utf16(py, &path).map_err(|error| {
-                            py_exception_engine_error(py, "METER_FAILURE", error)
-                        })?,
-                        pytext_utf16(&origin),
-                    );
-                    error.python_message_origin = Some(origin);
-                    return Err(error);
-                }
-                return Ok(());
+                return retained_codegen::invoke_control(py, callback.bind(py), amount, None);
             }
             state.meter(amount)?;
             if state.cancelled()? {
@@ -6522,6 +6502,8 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(execute_access_rrf_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_semantic_value_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_codegen_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(retained_codegen::create_codegen_resources, module)?)?;
+    module.add_class::<retained_codegen::RetainedCodegenResources>()?;
     module.add_function(wrap_pyfunction!(copy_json_wire, module)?)?;
     module.add_function(wrap_pyfunction!(
         access_catalog_custody_profile_version,

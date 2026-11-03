@@ -428,6 +428,56 @@ impl CodegenResourcesHandle {
         })
     }
 
+    /// Construct from owner-admitted values without a tagged JSON resource
+    /// re-encoding. The caller keeps conversion and compilation in one Context.
+    pub fn from_resources_with_context(
+        mut raw: Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        const NAMES: &[&str] = &[
+            "coreSchema",
+            "referenceSchema",
+            "packageSchema",
+            "constraints",
+            "domainPolicy",
+            "tablesPackage",
+            "actionsPackage",
+            "bindingPackage",
+            "stableBindingPackage",
+            "sagaPackage",
+        ];
+        let Value::Object(fields) = &raw else {
+            return Err(fail(
+                "REQUEST",
+                "Explicit codegen resources must be an object",
+            ));
+        };
+        for (key, _) in fields {
+            let mut known = false;
+            for name in NAMES {
+                ctx.charge_work(1, Utf16::default())?;
+                // Fixed ASCII names compare in place; no uncharged temporary
+                // UTF-16 name copies are constructed during admission.
+                if key.len() == name.len() {
+                    ctx.charge_work(key.len(), Utf16::default())?;
+                    if key.units().iter().copied().eq(name.encode_utf16()) {
+                        known = true;
+                        break;
+                    }
+                }
+            }
+            if !known {
+                return Err(fail("REQUEST", "Unknown explicit codegen resource"));
+            }
+        }
+        let resources = codegen::build_resources(&mut raw, ctx)?;
+        if !matches!(&raw, Value::Object(fields) if fields.is_empty()) {
+            return Err(fail("REQUEST", "Duplicate explicit codegen resource"));
+        }
+        ctx.charge_work(0, Utf16::default())?;
+        Ok(Self { resources })
+    }
+
     pub fn execute_with_control(
         &self,
         wire_json: &str,
@@ -435,16 +485,26 @@ impl CodegenResourcesHandle {
     ) -> String {
         let result = (|| {
             let mut ctx = Context::ordinary().with_host_control(control);
-            let mut request = decode(wire_json, &mut ctx)?;
-            let operation = text_field(&request, "op")
-                .and_then(|op| op.strip_prefix("codegen/").map(str::to_owned))
-                .ok_or_else(|| fail("REQUEST", "Codegen operation is required"))?;
-            if operation == "createResources" || operation == "generatePythonClientHostV3" {
-                return Err(fail("REQUEST", "Operation is not available on this handle"));
-            }
-            codegen::execute_with_resources(&operation, &mut request, &self.resources, &mut ctx)
+            let request = decode(wire_json, &mut ctx)?;
+            self.execute_request_with_context(request, &mut ctx)
         })();
         result_envelope(result)
+    }
+
+    /// Execute an owner-decoded request with its existing cumulative Context.
+    /// Transport adapters own only conversion; the shared dispatcher owns semantics.
+    pub fn execute_request_with_context(
+        &self,
+        mut request: Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<String, EngineError> {
+        let operation = text_field(&request, "op")
+            .and_then(|op| op.strip_prefix("codegen/").map(str::to_owned))
+            .ok_or_else(|| fail("REQUEST", "Codegen operation is required"))?;
+        if operation == "createResources" || operation == "generatePythonClientHostV3" {
+            return Err(fail("REQUEST", "Operation is not available on this handle"));
+        }
+        codegen::execute_with_resources(&operation, &mut request, &self.resources, ctx)
     }
 
     pub fn execute_host_read_v3_with_control(

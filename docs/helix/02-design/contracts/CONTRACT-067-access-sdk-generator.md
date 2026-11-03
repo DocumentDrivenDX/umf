@@ -86,6 +86,51 @@ against the existing TypeScript inspector, including duplicate/foreign refs,
 refinements, presence, Key and temporal diagnostics and budget/cancel refusals.
 The public exposure does not select a backend, generate SQL or authorize I/O.
 
+### Explicit retained Python resources
+
+The Python constructor MAY select `resource_mode="retained-native/1"` explicitly.
+Omission or `None` MUST preserve the existing resource transport and accounting.
+Other mode values, including non-string values, MUST refuse. The inspection
+signature, dispatcher payload, result structure, ordering and semantic rules above
+MUST remain unchanged. Resource profiles and their availability remain unchanged.
+
+The selected mode MUST admit and copy the complete explicitly supplied resources
+before publishing an engine-owned immutable native handle. It MUST reuse the
+shared resource compiler and inspector. A caller-supplied handle, unknown resource
+name or incomplete resource set MUST NOT substitute for resource admission.
+Artifact data MUST NOT install code or capabilities. The handle MUST retain no
+host callbacks or mutable Python resource references. Later caller mutation MUST
+NOT change the engine's resources or previously returned results.
+
+Construction MUST use one cumulative work allowance across host admission/copies,
+native conversion, resource compilation and final handle publication. Each complete
+invocation MUST use a separate cumulative allowance across request conversion,
+serialization, native decoding/inspection/result encoding and host result copies.
+When `max_work=1_000_000` is selected, neither lifetime may exceed that ceiling.
+Counters MUST NOT reset between phases or resources, and no result or handle may
+escape before all applicable charges and controls pass.
+
+Resources MAY avoid repeated encoding or compilation only when that work is
+actually absent. Work still performed MUST remain charged. Existing numeric,
+unknown-content, raw transport, per-resource depth/value, semantic tree and output
+limits MUST remain in force. Cancellation, deadline and callback failures MUST
+remain terminal during native entry, result conversion and failure unwinding.
+Private diagnostic phase labels MUST NOT change public meter arguments or grant
+work credits. Hard-isolated unavailability MUST NOT fall back to this mode.
+
+A bounded support claim MUST identify the actual owner source/native bytes, mode
+and allowance, and demonstrate cold construction as well as each invocation.
+Warm reuse or a proof with omitted `max_work` MUST NOT qualify a bounded profile.
+Failure to fit the selected allowance MUST remain `RESOURCE_LIMIT`; it MUST NOT
+increase a limit, split one operation or relabel an older binary's capabilities.
+
+```python
+engine = CodegenEngine(resources, resource_mode="retained-native/1",
+                       max_work=1_000_000)
+result = engine.inspect_access_views(document, selected, bindings=(),
+                                     source_id="logical")
+```
+
 `generateAccessPackage(request, profile)` is synchronous, pure and deterministic.
 Inputs are copied; caller-owned data MUST NOT be mutated. All records below are
 closed except preserved UMF source content. Unknown contract fields refuse.
