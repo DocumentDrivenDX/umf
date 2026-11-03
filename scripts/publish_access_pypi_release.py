@@ -414,7 +414,8 @@ def capability_exchange(environ, transport=None):
         check(type(claims) is dict, "jwt_claims_type_invalid", "GitHub OIDC claims must be an object")
         for key, expected in {
             "repository": REPOSITORY, "ref": "refs/heads/main", "workflow_ref": exact["GITHUB_WORKFLOW_REF"],
-            "sub": "repo:" + REPOSITORY + ":environment:pypi", "aud": "pypi"}.items():
+            "repository_id": "1382276802", "repository_owner_id": "273466046",
+            "sub": "repo:DocumentDrivenDX@273466046/umf@1382276802:environment:pypi", "aud": "pypi"}.items():
             check(claims.get(key) == expected, "oidc_claim_mismatch", "OIDC claim does not match required workflow/environment",
                   field=key, actualType=type(claims.get(key)).__name__)
         # PyPI verifies the token signature and trust configuration. Local claim

@@ -222,12 +222,65 @@ class AccessPublisherTests(unittest.TestCase):
             'ACTIONS_ID_TOKEN_REQUEST_URL': 'https://test.actions.githubusercontent.com/idtoken?api-version=2.0',
             'ACTIONS_ID_TOKEN_REQUEST_TOKEN': 'synthetic-request-secret'}
 
-    def synthetic_jwt(self, **changes):
+    def synthetic_jwt(self, *, omit=(), **changes):
         claims = {'repository': p.REPOSITORY, 'ref': 'refs/heads/main',
             'workflow_ref': self.capability_context()['GITHUB_WORKFLOW_REF'],
-            'sub': 'repo:' + p.REPOSITORY + ':environment:pypi', 'aud': 'pypi', **changes}
+            'sub': 'repo:DocumentDrivenDX@273466046/umf@1382276802:environment:pypi',
+            'repository_id': '1382276802', 'repository_owner_id': '273466046', 'aud': 'pypi', **changes}
+        for key in omit:
+            claims.pop(key)
         payload = base64.urlsafe_b64encode(json.dumps(claims).encode()).decode().rstrip('=')
         return 'synthetic-header.' + payload + '.synthetic-signature'
+
+    def test_exact_frozen_immutable_identity_reaches_exchange_only(self):
+        jwt = self.synthetic_jwt()
+        transport = unittest.mock.Mock(side_effect=[p.CapabilityResponse(200, {'value': jwt}),
+                                                    p.CapabilityResponse(200, {'token': 'pypi-synthetic-secret'})])
+        result = p.capability_exchange(self.capability_context(), transport)
+        self.assertEqual(result['status'], 'EXCHANGE_SUCCESS', result)
+        self.assertEqual(result['accessProjectAuthorization'], 'UNVERIFIED')
+        self.assertEqual(transport.call_count, 2)
+        self.assertEqual(transport.call_args_list[1].args[0].full_url, 'https://pypi.org/_/oidc/mint-token')
+        self.assertNotIn(jwt, json.dumps(result))
+
+    def test_immutable_identity_mutations_refuse_before_pypi(self):
+        sub = 'repo:DocumentDrivenDX@273466046/umf@1382276802:environment:pypi'
+        cases = [
+            ('wrong-repository-id', {'repository_id': '1382276803'}),
+            ('wrong-owner-id', {'repository_owner_id': '273466047'}),
+            ('numeric-repository-id', {'repository_id': 1382276802}),
+            ('numeric-owner-id', {'repository_owner_id': 273466046}),
+            ('null-repository-id', {'repository_id': None}),
+            ('legacy-subject', {'sub': 'repo:DocumentDrivenDX/umf:environment:pypi'}),
+            ('subject-prefix', {'sub': 'extra:' + sub}),
+            ('subject-suffix', {'sub': sub + ':extra'}),
+            ('owner-name-substitution', {'sub': sub.replace('DocumentDrivenDX@', 'OtherOwner@')}),
+            ('repository-name-substitution', {'sub': sub.replace('/umf@', '/other@')}),
+            ('subject-owner-id', {'sub': sub.replace('@273466046/', '@273466047/')}),
+            ('subject-repository-id', {'sub': sub.replace('@1382276802:', '@1382276803:')}),
+            ('repository-claim-substitution', {'repository': 'DocumentDrivenDX/other'}),
+            ('owner-claim-substitution', {'repository': 'OtherOwner/umf'}),
+            ('subject-environment', {'sub': sub.replace(':environment:pypi', ':environment:other')}),
+            ('workflow-path', {'workflow_ref': p.REPOSITORY + '/.github/workflows/other.yml@refs/heads/main'}),
+            ('workflow-branch', {'workflow_ref': self.capability_context()['GITHUB_WORKFLOW_REF'].replace('heads/main', 'heads/other')}),
+            ('branch', {'ref': 'refs/heads/other'}),
+            ('audience', {'aud': 'testpypi'}),
+        ]
+        cases += [('missing-' + key, {'omit': (key,)}) for key in (
+            'repository_id', 'repository_owner_id', 'sub', 'repository', 'ref', 'workflow_ref', 'aud')]
+        for name, changes in cases:
+            jwt = self.synthetic_jwt(**changes)
+            transport = unittest.mock.Mock(return_value=p.CapabilityResponse(200, {'value': jwt}))
+            result = p.capability_exchange(self.capability_context(), transport)
+            with self.subTest(name=name):
+                self.assertEqual(result['status'], 'EXCHANGE_FAILED')
+                self.assertEqual(result['operation'], 'github.claims.validate')
+                self.assertEqual(result['reasonCode'], 'oidc_claim_mismatch')
+                self.assertEqual(result['httpStatus'], 200)
+                self.assertEqual(transport.call_count, 1, 'Mismatch must prevent PyPI contact')
+                self.assertEqual(result['accessProjectAuthorization'], 'UNVERIFIED')
+                self.assertNotIn(jwt, json.dumps(result))
+                self.assertIn(result['diagnostics']['actualType'], ('str', 'int', 'NoneType'))
 
     def test_exchange_success_is_not_project_authorization_or_qualification(self):
         jwt, credential = self.synthetic_jwt(), 'pypi-synthetic-minted-secret'
