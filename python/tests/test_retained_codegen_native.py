@@ -334,6 +334,8 @@ class PrivateNativeControlTests(unittest.TestCase):
         # result, and no decoding/re-encoding helper may hide the native transport.
         with self.assertRaises(UmfCoreError) as caught:
             result = handle.execute_wire(wire, control)
+        control.observed_failure = dict(code=caught.exception.code, message=str(caught.exception),
+                                        path=caught.exception.path)
         self.assertIs(result, unpublished)
         self.assertEqual(caught.exception.code, code)
         self.assertEqual(str(caught.exception), control.message)
@@ -347,38 +349,96 @@ class PrivateNativeControlTests(unittest.TestCase):
         self.assertEqual(control.total, control.denial['cumulative'])
         return caught.exception
 
-    def test_private_native_envelope_exact_quota_and_one_below_refuse_before_publication(self):
-        handle, wire = self._envelope_setup()
-        events = []
+    def _trace_observer(self, state):
         def observe(amount, phase):
-            events.append((amount, phase))
+            state['total'] += amount
+            state['calls'].append(dict(amount=amount, phase=phase,
+                                       cumulative=state['total'], index=len(state['calls'])))
             return None
-        expected = {'ok': True, 'result': _cases()[0]['expected']}
-        self.assertEqual(_native_result(handle.execute_wire(wire, observe)), expected)
-        self.assertTrue(any(n > 0 and p == DECODE for n,p in events))
-        self.assertTrue(any(n > 0 and p == INSPECT_ENCODE for n,p in events))
-        self.assertTrue(any(n > 0 and p == ENVELOPE for n,p in events))
-        self.assertEqual(next(p for n,p in reversed(events) if n > 0), ENVELOPE)
-        total = sum(n for n,p in events)
-        self.assertGreater(total, 1)
-        exact = _EnvelopeControl(allowance=total, code='RESOURCE_LIMIT')
-        self.assertEqual(_native_result(handle.execute_wire(wire, exact)), expected)
-        self.assertIsNone(exact.denial)
-        self.assertEqual(exact.total, total)
-        self.assertEqual([(e['amount'], e['phase']) for e in exact.calls], events)
-        below = _EnvelopeControl(allowance=total - 1, code='RESOURCE_LIMIT')
-        self._envelope_denial(handle, wire, below, 'RESOURCE_LIMIT')
-        # Reproduce the exact first denied charge from the independent successful
-        # trace; counters span decode+inspection+INNERencoding+OUTERenvelope.
-        cumulative = 0
-        for index, (amount, phase) in enumerate(events):
-            cumulative += amount
-            if cumulative > total - 1:
-                self.assertEqual(below.denial, dict(amount=amount, phase=phase,
-                                                    cumulative=cumulative, index=index))
-                break
-        else:
-            self.fail('One-below quota did not reach a denied charge')
+        return observe
+
+    def _retain_envelope_traces(self, scope, lanes):
+        # Emit in finally, including on assertion/native failure. The hosted
+        # controller retains stdout; no new output path or controller API needed.
+        retained = {}
+        for name, control in lanes.items():
+            state = control if type(control) is dict else vars(control)
+            phase_work = {}
+            for event in state['calls']:
+                phase_work[event['phase']] = phase_work.get(event['phase'], 0) + event['amount']
+            retained[name] = dict(calls=state['calls'], total=state['total'],
+                                  phaseWork=phase_work, firstDenial=state.get('denial'),
+                                  afterDenial=state.get('after_denial', []),
+                                  firstDenialOutcome=(dict(code=state.get('code'),
+                                      message=state.get('message'), path=state.get('path'))
+                                      if state.get('denial') is not None else None),
+                                  observedFailure=state.get('observed_failure'))
+        print('retained-native-envelope-traces ' + json.dumps(
+            dict(scope=scope, lanes=retained), ensure_ascii=True), flush=True)
+
+    def test_private_native_envelope_exact_quota_and_one_below_refuse_before_publication(self):
+        reference = dict(calls=[], total=0, denial=None)
+        lanes = {'reference': reference}
+        try:
+            # Three independently compiled handles, identical pinned resources;
+            # EVERY measured invocation is that handle's FIRST execution.
+            reference_handle, wire = self._envelope_setup()
+            exact_handle, exact_wire = self._envelope_setup()
+            below_handle, below_wire = self._envelope_setup()
+            self.assertIsNot(reference_handle, exact_handle)
+            self.assertIsNot(reference_handle, below_handle)
+            self.assertIsNot(exact_handle, below_handle)
+            self.assertEqual(wire, exact_wire)
+            self.assertEqual(wire, below_wire)
+            expected = {'ok': True, 'result': _cases()[0]['expected']}
+            self.assertEqual(_native_result(reference_handle.execute_wire(
+                wire, self._trace_observer(reference))), expected)
+            events = reference['calls']
+            self.assertTrue(any(e['amount'] > 0 and e['phase'] == DECODE for e in events))
+            self.assertTrue(any(e['amount'] > 0 and e['phase'] == INSPECT_ENCODE for e in events))
+            self.assertTrue(any(e['amount'] > 0 and e['phase'] == ENVELOPE for e in events))
+            self.assertEqual(next(e['phase'] for e in reversed(events) if e['amount'] > 0), ENVELOPE)
+            total = reference['total']
+            self.assertEqual(total, sum(e['amount'] for e in events))
+            self.assertGreater(total, 1)
+            exact = _EnvelopeControl(allowance=total, code='RESOURCE_LIMIT')
+            lanes['exact'] = exact  # register before execution, even if it fails
+            self.assertEqual(_native_result(exact_handle.execute_wire(exact_wire, exact)), expected)
+            self.assertIsNone(exact.denial)
+            self.assertEqual(exact.total, total)
+            self.assertEqual(exact.calls, events)  # equivalent COLD traces, not cold/warm equality
+            below = _EnvelopeControl(allowance=total - 1, code='RESOURCE_LIMIT')
+            lanes['one-below'] = below
+            self._envelope_denial(below_handle, below_wire, below, 'RESOURCE_LIMIT')
+            # The first exceeding cumulative charge must match the reference
+            # cold trace exactly, including ALL prior phases, without reset.
+            for event in events:
+                if event['cumulative'] > total - 1:
+                    self.assertEqual(below.denial, event)
+                    self.assertEqual(below.calls, events[:event['index'] + 1])
+                    break
+            else:
+                self.fail('One-below quota did not reach a denied charge')
+        finally:
+            self._retain_envelope_traces('private-equivalent-cold-first-invocations', lanes)
+
+    def test_private_same_handle_warm_replay_is_diagnostic_not_cold_feasibility(self):
+        first = dict(calls=[], total=0, denial=None)
+        warm = dict(calls=[], total=0, denial=None)
+        lanes = {'first-invocation': first, 'same-handle-warm': warm}
+        try:
+            handle, wire = self._envelope_setup()
+            expected = {'ok': True, 'result': _cases()[0]['expected']}
+            self.assertEqual(_native_result(handle.execute_wire(wire, self._trace_observer(first))), expected)
+            self.assertEqual(_native_result(handle.execute_wire(wire, self._trace_observer(warm))), expected)
+            # Deliberately no equality, ordering or fixed-saving requirement for
+            # cold vs warm costs. This diagnostic qualifies no public1M case.
+            for state in (first, warm):
+                self.assertEqual(state['total'], sum(e['amount'] for e in state['calls']))
+                self.assertTrue(any(e['amount'] > 0 and e['phase'] == ENVELOPE
+                                    for e in state['calls']))
+        finally:
+            self._retain_envelope_traces('private-warm-replay-diagnostic-only', lanes)
 
     def test_private_native_envelope_cancel_deadline_and_meter_refuse_before_publication(self):
         for code in ('CANCELLED', 'DEADLINE', 'METER_FAILURE'):
