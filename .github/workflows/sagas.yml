@@ -425,6 +425,7 @@ jobs:
           name: temporal-resume-${{ github.sha }}-${{ github.run_id }}
           include-hidden-files: true
           path: ${{ runner.temp }}/temporal-resume/
+          if-no-files-found: warn
 
   packaged-cli-linux:
     if: github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && inputs.temporal_phase == 'packaged-cli' && github.ref == 'refs/heads/codex/temporal-qualification-controller'
@@ -609,6 +610,4 @@ jobs:
           name: packaged-cli-macos-${{ github.sha }}-${{ github.run_id }}
           include-hidden-files: true
           path: ${{ runner.temp }}/packaged-cli-macos/
-          if-no-files-found: warn
-
           if-no-files-found: warn
