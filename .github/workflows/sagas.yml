@@ -8,9 +8,14 @@ on:
         description: Full campaign or bounded retained-S temporal resume
         type: choice
         default: full
-        options: [full, resume, linux, consumers, packaged-cli, packaged-cli-macos]
+        options: [full, resume, linux, consumers, packaged-cli, packaged-cli-macos, source-archive]
       packaged_cli_carrier_id:
         description: Exact approved unpublished retained Mac wheel material carrier release ID
+        type: string
+        required: false
+        default: ''
+      source_archive_carrier_id:
+        description: Exact approved unpublished complete source-S archive transport release ID
         type: string
         required: false
         default: ''
@@ -623,3 +628,65 @@ jobs:
           include-hidden-files: true
           path: ${{ runner.temp }}/packaged-cli-macos/
           if-no-files-found: warn
+
+  pretag-source-archive:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && inputs.temporal_phase == 'source-archive' && github.ref == 'refs/heads/codex/temporal-qualification-controller'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Require one fresh explicitly selected source-only check
+        run: test '${{ github.run_attempt }}' = 1
+      - uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: controller
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/sagas.yml
+            /scripts/verify_core_release_source_archive.py
+            /tools/temporal_source_archive_intake.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+          architecture: x64
+      - name: Fetch only the authoritative immutable source Git metadata
+        run: git -C controller fetch --no-tags --depth=1 --filter=blob:none origin e3f38ef6f05ae636d2837f9d69f8d6805222664b
+      - name: Authenticate exact unqualified retained archive transport
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATERIAL_CARRIER_ID: ${{ inputs.source_archive_carrier_id }}
+        run: |
+          python -I -B controller/tools/temporal_source_archive_intake.py intake \
+            --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/pretag-source-archive" \
+            --carrier-id "$MATERIAL_CARRIER_ID"
+      - name: Verify all retained source members and exact producer permissions before any product tag
+        run: |
+          set -euo pipefail
+          python -I -B controller/scripts/verify_core_release_source_archive.py \
+            --repo "$GITHUB_WORKSPACE/controller" \
+            --archive "$RUNNER_TEMP/pretag-source-archive/umf-v0.10.8-source.tar.gz" \
+            --receipt "$RUNNER_TEMP/pretag-source-archive/source-archive.json" \
+            2>&1 | tee "$RUNNER_TEMP/pretag-source-archive/check.log"
+          python -I -B -c 'import pathlib,sys; print(pathlib.Path(sys.argv[1]).read_text())' "$RUNNER_TEMP/pretag-source-archive/source-archive.json"
+      - name: Retain partial proof identity without changing or extracting source materials
+        if: always() && steps.checkout.outcome == 'success'
+        run: |
+          python -I -B controller/tools/temporal_source_archive_intake.py capture \
+            --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/pretag-source-archive"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pretag-source-archive-${{ github.sha }}-${{ github.run_id }}
+          include-hidden-files: true
+          path: |
+            ${{ runner.temp }}/pretag-source-archive/
+            !${{ runner.temp }}/pretag-source-archive/umf-v0.10.8-source.tar.gz
+          if-no-files-found: warn
+          retention-days: 90
