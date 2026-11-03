@@ -1,0 +1,108 @@
+{
+  "observed_at": "2026-11-02T23:44:33.499665+00:00",
+  "deleted": [
+    "local/codex/rust-avro-cardinality-candidate",
+    "local/codex/rust-avro-perf-candidate"
+  ],
+  "refs_deleted": 2,
+  "review": "Every unique commit adopted in main. First Avro port has four different file blobs only because main adds separate Parquet operations, a gated Snappy test hook, and additional Parquet module declarations. No Avro behavior is missing. Later Cardinality repairs and performance changes match every changed file exactly at their main adoption.",
+  "adoptions": [
+    {
+      "branch": "codex/rust-avro-cardinality-candidate",
+      "commits": [
+        {
+          "source": "204f79e6af7136a3c7dc4f6703ec9bb04e735553",
+          "subject": "Fix inherited Avro index names and preserve bounded predecessor results [skip ci]",
+          "paths": 14,
+          "adoptions": [
+            {
+              "adoption": "00b4cd27b8e12bb490250b7a04d3322fca037627",
+              "different_paths": []
+            }
+          ]
+        },
+        {
+          "source": "0f9bf699821ec481fb86c9c4165b27eecbf43214",
+          "subject": "Preserve reviewed Avro Cardinality repairs and pending compatibility finding [skip ci]",
+          "paths": 12,
+          "adoptions": [
+            {
+              "adoption": "f9e29a69c06af51ff13a94f6ae7dff79ac000866",
+              "different_paths": []
+            }
+          ]
+        },
+        {
+          "source": "3f284435748c78d9c373c4eda7f8ce06ee340bde",
+          "subject": "Port Avro Cardinality classification to opt-in Rust core [skip ci]",
+          "paths": 28,
+          "adoptions": [
+            {
+              "adoption": "fb8af8df960df7976a30d793b5d35dc5feef1c18",
+              "different_paths": [
+                "bindings/core/node/index.d.ts",
+                "bindings/core/wasm/src/lib.rs",
+                "crates/umf-cli/src/main.rs",
+                "crates/umf-core/src/full_modules.rs"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "branch": "codex/rust-avro-perf-candidate",
+      "commits": [
+        {
+          "source": "2e1d731798e0997f1ec50ff5fbb93e3fca93db82",
+          "subject": "Reuse admitted Avro resources and replay frozen outcomes in one process [skip ci]",
+          "paths": 3,
+          "adoptions": [
+            {
+              "adoption": "7e2ab9c6b77f0c86d45dbd9304aa61c1a878cef7",
+              "different_paths": []
+            }
+          ]
+        },
+        {
+          "source": "204f79e6af7136a3c7dc4f6703ec9bb04e735553",
+          "subject": "Fix inherited Avro index names and preserve bounded predecessor results [skip ci]",
+          "paths": 14,
+          "adoptions": [
+            {
+              "adoption": "00b4cd27b8e12bb490250b7a04d3322fca037627",
+              "different_paths": []
+            }
+          ]
+        },
+        {
+          "source": "0f9bf699821ec481fb86c9c4165b27eecbf43214",
+          "subject": "Preserve reviewed Avro Cardinality repairs and pending compatibility finding [skip ci]",
+          "paths": 12,
+          "adoptions": [
+            {
+              "adoption": "f9e29a69c06af51ff13a94f6ae7dff79ac000866",
+              "different_paths": []
+            }
+          ]
+        },
+        {
+          "source": "3f284435748c78d9c373c4eda7f8ce06ee340bde",
+          "subject": "Port Avro Cardinality classification to opt-in Rust core [skip ci]",
+          "paths": 28,
+          "adoptions": [
+            {
+              "adoption": "fb8af8df960df7976a30d793b5d35dc5feef1c18",
+              "different_paths": [
+                "bindings/core/node/index.d.ts",
+                "bindings/core/wasm/src/lib.rs",
+                "crates/umf-cli/src/main.rs",
+                "crates/umf-core/src/full_modules.rs"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

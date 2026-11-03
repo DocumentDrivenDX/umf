@@ -1,0 +1,182 @@
+{
+  "observed_at": "2026-11-03T00:01:32.756017+00:00",
+  "release": "https://github.com/DocumentDrivenDX/batten/releases/tag/runtime-v0.1.0a1",
+  "asset_count": 20,
+  "all_github_digests_and_checksum_lines_match": true,
+  "assets": [
+    {
+      "name": "approval-cohort.json",
+      "sha256": "1abf414cf816160f101bc8d0e10fbd6ec6438c1072d3381a9a847a010ec40d3f",
+      "size": 2494
+    },
+    {
+      "name": "approval-constraints.txt",
+      "sha256": "91adea91a12ac21e3a818e962ab58a09018cea2e6c6830e5704870188b43dcd5",
+      "size": 928
+    },
+    {
+      "name": "batten-microsite-runtime-v0.1.0a1.zip",
+      "sha256": "998f0ce6bff27a9dcd49bbe176dc375585c25de7ce0e1b3b84e8336c003924d7",
+      "size": 117826
+    },
+    {
+      "name": "batten-runtime-v0.1.0a1-source.tar.gz",
+      "sha256": "0daa7ad312cbbea2a125ba7ff5157fbf909175cfe3d573913940808dfbcb6f0e",
+      "size": 455612
+    },
+    {
+      "name": "INSTALL.md",
+      "sha256": "b39419b899fb940325c5c1f15b8c694ba37ff4241b7cadd355dc3b4107d6b176",
+      "size": 1514
+    },
+    {
+      "name": "local-execution.json",
+      "sha256": "3e19205be3a6a6d35cee0f583a1ecdc1fe84610d8fbb38b4ca3d4cbd8a22d192",
+      "size": 4938
+    },
+    {
+      "name": "microsite-public-verification.json",
+      "sha256": "48fee01e6b885fa8775e8bbecc9d6f5d6ad8588b281a6d45682839fc3dc9d680",
+      "size": 4168
+    },
+    {
+      "name": "novirhyza_batten_approval_desk-0.1.0a1-py3-none-any.whl",
+      "sha256": "acc016451df355d51710c52147c7b60aae763d9fb65779b02ae5b85dfde45443",
+      "size": 21746
+    },
+    {
+      "name": "novirhyza_batten_asgi-0.1.0a1-py3-none-any.whl",
+      "sha256": "a008450f6e47d9eb85ec7910ad62541776823db2a30689cc67ff78e655cf3538",
+      "size": 12693
+    },
+    {
+      "name": "novirhyza_batten_contracts-0.1.0a1-py3-none-any.whl",
+      "sha256": "2089456bf773009be54674a3b2ce1701e85b611aad1bbb0d5724f089e033bc62",
+      "size": 7492
+    },
+    {
+      "name": "novirhyza_batten_local-0.1.0a1-py3-none-any.whl",
+      "sha256": "ff6aba163acb6627c70858652416239306ee515568b5d3a242ad7e2f0c4d8d18",
+      "size": 11701
+    },
+    {
+      "name": "novirhyza_batten_runtime-0.1.0a1-py3-none-any.whl",
+      "sha256": "40edf328ccb44bf0d090e2351360373e5321e400556da4d3434b1dcc717e490c",
+      "size": 8440
+    },
+    {
+      "name": "novirhyza_batten_tables-0.1.0a1-py3-none-any.whl",
+      "sha256": "73840a1c061593dbadaa4e6a1094913de3b07169885beca1f3c6ffd51ae3a6d3",
+      "size": 7021
+    },
+    {
+      "name": "novirhyza_batten_umf_postgres-0.1.0a1-py3-none-any.whl",
+      "sha256": "bb1792a56059a0ca46a3ec22edc8b08aa435ecb26feb3afce8425c5cb240a1c6",
+      "size": 11789
+    },
+    {
+      "name": "release-manifest.json",
+      "sha256": "6969d37c6bc6918e6f8d76679e3f9cfac0919494af12fd7620bcabaec2341543",
+      "size": 532
+    },
+    {
+      "name": "runtime-release-notes.md",
+      "sha256": "46ffb117f98678897b57e23a4dd3aed68be761f736582943c98b95d3ffa1e0bb",
+      "size": 6036
+    },
+    {
+      "name": "SHA256SUMS",
+      "sha256": "321783eb3ff28e5844269b9830d8b38a9cce593391316de8340e2da170659947",
+      "size": 1931
+    },
+    {
+      "name": "umf_access-0.1.0.dev8-py3-none-any.whl",
+      "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+      "size": 580062
+    },
+    {
+      "name": "umf_codegen-0.1.0a5-py3-none-any.whl",
+      "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+      "size": 261296
+    },
+    {
+      "name": "uv.lock",
+      "sha256": "16a141edd1073ab4dd46e432c9e012b03fe3efb41ccc6927b380d7dc1d960970",
+      "size": 69176
+    }
+  ],
+  "batten_wheel_license_members": [
+    {
+      "wheel": "novirhyza_batten_approval_desk-0.1.0a1-py3-none-any.whl",
+      "license_members": [
+        "novirhyza_batten_approval_desk-0.1.0a1.dist-info/licenses/LICENSE-APACHE",
+        "novirhyza_batten_approval_desk-0.1.0a1.dist-info/licenses/LICENSE-MIT",
+        "novirhyza_batten_approval_desk-0.1.0a1.dist-info/licenses/NOTICE"
+      ]
+    },
+    {
+      "wheel": "novirhyza_batten_asgi-0.1.0a1-py3-none-any.whl",
+      "license_members": [
+        "novirhyza_batten_asgi-0.1.0a1.dist-info/licenses/LICENSE-APACHE",
+        "novirhyza_batten_asgi-0.1.0a1.dist-info/licenses/LICENSE-MIT",
+        "novirhyza_batten_asgi-0.1.0a1.dist-info/licenses/NOTICE"
+      ]
+    },
+    {
+      "wheel": "novirhyza_batten_contracts-0.1.0a1-py3-none-any.whl",
+      "license_members": [
+        "novirhyza_batten_contracts-0.1.0a1.dist-info/licenses/LICENSE-APACHE",
+        "novirhyza_batten_contracts-0.1.0a1.dist-info/licenses/LICENSE-MIT",
+        "novirhyza_batten_contracts-0.1.0a1.dist-info/licenses/NOTICE"
+      ]
+    },
+    {
+      "wheel": "novirhyza_batten_local-0.1.0a1-py3-none-any.whl",
+      "license_members": [
+        "novirhyza_batten_local-0.1.0a1.dist-info/licenses/LICENSE-APACHE",
+        "novirhyza_batten_local-0.1.0a1.dist-info/licenses/LICENSE-MIT",
+        "novirhyza_batten_local-0.1.0a1.dist-info/licenses/NOTICE"
+      ]
+    },
+    {
+      "wheel": "novirhyza_batten_runtime-0.1.0a1-py3-none-any.whl",
+      "license_members": [
+        "novirhyza_batten_runtime-0.1.0a1.dist-info/licenses/LICENSE-APACHE",
+        "novirhyza_batten_runtime-0.1.0a1.dist-info/licenses/LICENSE-MIT",
+        "novirhyza_batten_runtime-0.1.0a1.dist-info/licenses/NOTICE"
+      ]
+    },
+    {
+      "wheel": "novirhyza_batten_tables-0.1.0a1-py3-none-any.whl",
+      "license_members": [
+        "novirhyza_batten_tables-0.1.0a1.dist-info/licenses/LICENSE-APACHE",
+        "novirhyza_batten_tables-0.1.0a1.dist-info/licenses/LICENSE-MIT",
+        "novirhyza_batten_tables-0.1.0a1.dist-info/licenses/NOTICE"
+      ]
+    },
+    {
+      "wheel": "novirhyza_batten_umf_postgres-0.1.0a1-py3-none-any.whl",
+      "license_members": [
+        "novirhyza_batten_umf_postgres-0.1.0a1.dist-info/licenses/LICENSE-APACHE",
+        "novirhyza_batten_umf_postgres-0.1.0a1.dist-info/licenses/LICENSE-MIT",
+        "novirhyza_batten_umf_postgres-0.1.0a1.dist-info/licenses/NOTICE"
+      ]
+    }
+  ],
+  "manifest": {
+    "batten_wheels": 7,
+    "github_pages_verification_run": 41541764488,
+    "github_sdk_quality_run": 41541764505,
+    "local_fast_checks": "18 passed; 2 integration cases excluded",
+    "local_native_browser_checks": "2 passed on Python 3.11.17 / macOS arm64",
+    "original_umf_dependency_wheels": 2,
+    "pull_request": 3,
+    "pypi_published": false,
+    "runtime_version": "0.1.0a1",
+    "site_archive_html_pages": 19,
+    "source_commit": "6fc9347074c747a29a3722e57b07c9db555c61a3",
+    "tag": "runtime-v0.1.0a1",
+    "umf_release": "umf-v0.5.8"
+  },
+  "scope": "Downloaded public-byte and package-content verification only; no new host, native or production acceptance."
+}

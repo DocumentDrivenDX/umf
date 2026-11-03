@@ -1,0 +1,86 @@
+{
+  "scope": "Read-only current primary dirty-source adoption census; reachable bytes are not by themselves semantic qualification. No primary mutation.",
+  "head": "b12a489844f29947ee52115b90f4ccc5c8bc5032",
+  "main": "4e747cefafe6d90da91e2b48f8983be724a3c791",
+  "dirty_files": 16,
+  "blob_adopted": 8,
+  "not_reachable": [
+    {
+      "path": "bindings/core/node/src/graphql.js",
+      "blob": "c383f1ad09bc62cece0c2d36f06f88dfe7ced0b8"
+    },
+    {
+      "path": "crates/umf-core-wire/tests/document_comparison.rs",
+      "blob": "e669a4b2bb3afed2085f81f69cbf35e877a1ecf3"
+    },
+    {
+      "path": "docs/helix/04-build/implementation-plan.md",
+      "blob": "684371210cd08297d343e5fef1126318da11a652"
+    },
+    {
+      "path": "docs/helix/04-build/rust-migration-plan.md",
+      "blob": "ad855047fe8bf2e894724dbca14ac26de7c14592"
+    },
+    {
+      "path": "docs/helix/README.md",
+      "blob": "6967cfd111330dcc19bdbf1fee690d50eef26cac"
+    },
+    {
+      "path": "scripts/rust-migration/r8/json-schema-additional-properties-node.mjs",
+      "blob": "4d1d75a15331e608b4b74e97f69a78d6d9fa2295"
+    },
+    {
+      "path": "src/core-ideals/avro-cardinality-rust-default.ts",
+      "blob": "cf6ae5490f573ced9f1121c6795c22db96ca7827"
+    },
+    {
+      "path": "src/projections/arrow-spark-rust-default.ts",
+      "blob": "73940eff5a37e3f981868175140e00a9c1006ebb"
+    }
+  ],
+  "adopted": [
+    {
+      "path": "docs/helix/01-frame/concerns.md",
+      "blob": "5d8b99f0a69f2d38cb6abd28fedaeb3ca9b83a2d"
+    },
+    {
+      "path": "docs/helix/01-frame/prd.md",
+      "blob": "06726d9d5868869bd0eeb4a980b63bfe287d0c22"
+    },
+    {
+      "path": "docs/helix/02-design/adr/ADR-002-bun-development-runtime.md",
+      "blob": "4f92c8b69172c27e30e73fff12e53ca0fa276d1f"
+    },
+    {
+      "path": "docs/helix/02-design/adr/ADR-004-typed-data-access-sdk.md",
+      "blob": "fc56ea1e18e67b0707946fcda52c63e9ec4f63af"
+    },
+    {
+      "path": "docs/helix/02-design/adr/ADR-006-shared-rust-implementation.md",
+      "blob": "3c1643e881b84d8c6bdf6183ed18a9a6817eddfe"
+    },
+    {
+      "path": "docs/helix/02-design/architecture.md",
+      "blob": "078282534c6cc1b5c34b9f06f17cdb0a89b4ee95"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-080-authoritative-metamodel.md",
+      "blob": "073a45eec820aaef722a56197347962e6a8cb4aa"
+    },
+    {
+      "path": "docs/helix/03-test/test-plan.md",
+      "blob": "9d72181d75a75bdffbaa1015e90a830a0f31da8c"
+    }
+  ],
+  "semantic_review": {
+    "bindings/core/node/src/graphql.js": "Superseded by current main: original operations retained; current wrapper adds host-work accounting, robust callback exception preservation, payload inspection and input projection.",
+    "src/core-ideals/avro-cardinality-rust-default.ts": "Superseded by current main: existing facade methods retained and more native families added; original control codes retained with LIMIT/CAPACITY additions.",
+    "src/projections/arrow-spark-rust-default.ts": "Superseded by current main: same two projection operations and control/error propagation, formatted with current internal interface name.",
+    "scripts/rust-migration/r8/json-schema-additional-properties-node.mjs": "Historical local probe with absolute private paths; current r5_json_schema_inspect tests exercise true/false/schema-valued recursive properties against an independent native oracle. No portable acceptance inferred from the old probe.",
+    "crates/umf-core-wire/tests/document_comparison.rs": "Genuine additional controls recovered in the current integration checkout; verification and merge pending. Snapshot/primary remain protected.",
+    "docs/helix/04-build/implementation-plan.md": "Early Rust planning pointer has a current governing successor.",
+    "docs/helix/04-build/rust-migration-plan.md": "Initial R0\u2013R8 unexecuted planning baseline has a current governing successor and execution evidence.",
+    "docs/helix/README.md": "Early unqualified migration pointer has a current governing successor."
+  },
+  "disposition": "No primary mutation. Eight exact dirty-source blobs reached main; three old facade files are superseded, one private-path probe is historical, three plans evolved, and one recovered test remains pending. The six unique base commits require separate disposition before primary HEAD cleanup."
+}

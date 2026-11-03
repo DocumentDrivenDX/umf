@@ -1,0 +1,2 @@
+$ python3 scripts/check-rust-boundaries.py
+{"status": "pass", "checkedSourceModules": 1064, "productionCoreStatus": "pass", "negativeControls": {"allowedPureRustDependency": "pass", "forbiddenHostDependency": "pass", "formerV8BridgeImportRejected": "pass", "unscopedV8ImportRejected": "pass", "privateCrossPackageImportRejected": "pass", "allowedRelativeImportAccepted": "pass", "temporaryManifestAllowedDependency": "pass", "temporaryManifestForbiddenDependency": "pass", "bindingSourceEngineImportRejected": "pass"}, "findingCount": 0}

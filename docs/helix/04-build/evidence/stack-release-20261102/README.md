@@ -12,8 +12,8 @@ semantic reconciliation (338 refs total; 168 local and 170 remote). Their
 
 [Further worktree cleanup](obsolete-worktree-cleanup.json) removes three clean
 obsolete copies and two associated branches. [Praxis reconciliation](praxis-adoption-cleanup.json)
-accounts for three more superseded branches. Total: 360 refs (185 local,
-175 remote) and four worktrees removed by this audit, separate from the delegated Truss/Arras cleanup. Exact source
+accounts for three more superseded branches. Total: 374 refs (195 local,
+179 remote) and four worktrees removed by this audit, separate from the delegated Truss/Arras cleanup. Exact source
 heads, current-main or merged-PR proof, and execution results are retained.
 [Historical delivery cleanup](obsolete-proof-cleanup.json) accounts for seven
 more superseded refs; [completed release cleanup](completed-primary-branch-cleanup.json)
@@ -44,3 +44,32 @@ is not current release acceptance; this audit does not claim the family is done.
 The newly authorized Arras embedding/vocabulary and Truss temporal programs are
 active, separately owned work. Their worker checkouts are protected until review,
 integration and release; completed component releases do not qualify those changes.
+
+[Microsite squash cleanup](microsite-squash-cleanup.json) removes six further refs
+for three exact patches adopted by main through PR85–87. Each source/adoption
+identity and stable patch ID is retained; remote deletion used exact-head leases.
+
+[Avro candidate reconciliation](avro-adoption-cleanup.json) removes two local
+candidate branches. All unique Cardinality and performance changes reached main;
+the four differing first-port blobs contain additional Parquet work on main.
+
+[Remaining Praxis embedder adoption](praxis-embedder-adoption-cleanup.json) removes
+four local G01/host/packaging branches after mapping every unique commit to main.
+The few differing blobs add current guide/parser interfaces or reflect retired
+Access candidate version metadata; no implementation is missing.
+
+[Historical release-alignment cleanup](release-alignment-adoption-cleanup.json)
+removes two refs after all 18 source blobs matched their merged PR71 adoption.
+
+Batten `runtime-v0.1.0a1` is also delivered: PR3 merged, all 20 public assets
+independently downloaded and checked against GitHub digests and SHA256SUMS.
+All seven Batten wheels carry both licenses and NOTICE.
+[Public verification](batten-runtime-public-verification.json) preserves the
+GitHub-only local-runtime scope and original UMF dependency cohort.
+
+[Read-only primary source reconciliation](primary-dirty-source-review.json)
+accounts for 16 dirty files in the old primary checkout. Eight exact blobs reached
+main; three facades are superseded and the old local probe/planning baseline has
+current successors. Additional wire controls are recovered but unqualified. The
+primary checkout and six unique base commits remain protected pending integration
+and separate base-commit reconciliation; nothing was reset or discarded.

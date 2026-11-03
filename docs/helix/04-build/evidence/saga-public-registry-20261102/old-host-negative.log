@@ -1,0 +1,46 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/saga/public-facade-registry.test.ts:
+(pass) Saga defaults retain the Rust backend when no registry is supplied [0.15ms]
+36 |  for(const operation of operations(facade)){const result=operation();expect(result).toEqual({backend:'default'});expect(Object.isFrozen(result)).toBe(true);}
+37 |  expect(calls).toEqual(['inspect','declare','edit','assess']);
+38 | });
+39 | test('all public Saga operations reject an unbound explicit registry before default dispatch',()=>{
+40 |  const calls:string[]=[],facade=createSagaRustDefault(backend('default',calls),()=>false);
+41 |  for(const operation of operations(facade,new Registry()))expect(operation).toThrow(expect.objectContaining({code:'SAGA_RUNTIME_REQUIRED'}));
+                                                                                 ^
+error: expect(received).toThrow(expected)
+
+Expected constructor: ExpectObjectContaining
+
+Received function did not throw
+Received value: {
+  backend: "default",
+}
+
+      at <anonymous> (/Users/erik/.codex/worktrees/db96/umf/tests/saga/public-facade-registry.test.ts:41:77)
+(fail) all public Saga operations reject an unbound explicit registry before default dispatch [0.20ms]
+43 | });
+44 | test('explicit Saga registry selects its bound engine and refuses later profile changes',()=>{
+45 |  for(const mutation of ['add','replace'] as const){
+46 |   const defaultCalls:string[]=[],boundCalls:string[]=[],facade=createSagaRustDefault(backend('default',defaultCalls),()=>false);
+47 |   const {registry,entries}=hostRegistry();registerSagas(registry,backend('bound',boundCalls));
+48 |   for(const operation of operations(facade,registry))expect(operation()).toEqual({backend:'bound'});
+                                                                              ^
+error: expect(received).toEqual(expected)
+
+  {
+-   "backend": "bound",
++   "backend": "default",
+  }
+
+- Expected  - 1
++ Received  + 1
+
+      at <anonymous> (/Users/erik/.codex/worktrees/db96/umf/tests/saga/public-facade-registry.test.ts:48:74)
+(fail) explicit Saga registry selects its bound engine and refuses later profile changes [0.78ms]
+
+ 1 pass
+ 2 fail
+ 11 expect() calls
+Ran 3 tests across 1 file. [4.87s]
