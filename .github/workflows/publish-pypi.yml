@@ -73,6 +73,20 @@ jobs:
             gh api "repos/$GITHUB_REPOSITORY/git/tags/$OBJECT_SHA" > incoming/tag-object.json
           fi
           gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir incoming/assets
+      - name: Verify complete 0.10.8 source archive against exact production Git objects
+        if: inputs.tag == 'umf-v0.10.8' || inputs.tag == 'python-v0.10.8'
+        env:
+          TARGET_TAG: ${{ steps.identity.outputs.tag }}
+          SOURCE_SHA: ${{ steps.identity.outputs.source_sha }}
+          LOCALLY_QUALIFIED: ${{ inputs.locally_qualified }}
+        run: |
+          set -euo pipefail
+          test "$TARGET_TAG" = umf-v0.10.8
+          test "$SOURCE_SHA" = e3f38ef6f05ae636d2837f9d69f8d6805222664b
+          test "$LOCALLY_QUALIFIED" != true
+          git fetch --no-tags --depth=1 --filter=blob:none origin "$SOURCE_SHA"
+          python -I -B scripts/verify_core_release_source_archive.py --repo . \
+            --archive incoming/assets/umf-v0.10.8-source.tar.gz --receipt incoming/source-archive.json
       - name: Verify tag source, checksum manifest, pins and package metadata
         id: source
         env:
@@ -90,6 +104,7 @@ jobs:
             --assets-dir incoming/assets --output-dir dist --receipt dist/source-receipt.json)
           if [[ -f incoming/tag-object.json ]]; then ARGS+=(--tag-object-json incoming/tag-object.json); fi
           python scripts/publish_core_pypi_release.py "${ARGS[@]}"
+          if [ "$TAG" = umf-v0.10.8 ]; then cp incoming/source-archive.json dist/source-archive.json; fi
           printf 'version=%s\n' "$(jq -r .version dist/source-receipt.json)" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
@@ -173,7 +188,24 @@ jobs:
     steps:
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ inputs.tag == 'umf-v0.10.8' && '3.11.17' || '3.11' }}
+      - uses: actions/checkout@v6
+        if: inputs.tag == 'umf-v0.10.8'
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/probe_public_core_release.py
+            /tools/verify_python_artifacts.py
+            /tools/temporal_resume.py
+            /python/_native_platform.py
+            /tests/rust-core/fixtures/access-inspection/cases.json
+      - uses: actions/download-artifact@v4
+        if: inputs.tag == 'umf-v0.10.8'
+        with:
+          name: umf-core-pypi-release-${{ needs.verify-release.outputs.version }}
+          path: ${{ runner.temp }}/public-source-artifacts
       - name: Install released UMF core from public PyPI in a clean environment
         env:
           VERSION: ${{ needs.verify-release.outputs.version }}
@@ -181,11 +213,15 @@ jobs:
         run: |
           set -euo pipefail
           python -m venv "$RUNNER_TEMP/pypi-consumer"
-          "$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated install --disable-pip-version-check --no-cache-dir --only-binary=umf-core \
+          INSTALL_ARGS=()
+          if [ "$VERSION" = 0.10.8 ]; then
+            INSTALL_ARGS+=(--no-compile --report "$RUNNER_TEMP/public-core-install-report.json")
+          fi
+          "$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated install --disable-pip-version-check --no-cache-dir --only-binary=umf-core "${INSTALL_ARGS[@]}" \
             --index-url https://pypi.org/simple "umf-core==$VERSION"
           "$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated check
           cd "$RUNNER_TEMP"
-          "$RUNNER_TEMP/pypi-consumer/bin/python" -I - <<'PYTHON'
+          "$RUNNER_TEMP/pypi-consumer/bin/python" -I -B - <<'PYTHON'
           import importlib.metadata, json, os, pathlib, sysconfig
           import umf
           dist = importlib.metadata.distribution("umf-core")
@@ -196,6 +232,62 @@ jobs:
                     "index": "https://pypi.org/simple", "umf_core_version": dist.version}
           pathlib.Path("consumer-receipt.json").write_text(json.dumps(record, indent=2) + "\n")
           PYTHON
+      - name: Verify additional fresh-public native resources and inspection correspondence
+        if: inputs.tag == 'umf-v0.10.8'
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/pypi-consumer/bin/python" -I -B scripts/probe_public_core_release.py \
+            --root "$GITHUB_WORKSPACE" \
+            --wheel "$RUNNER_TEMP/public-source-artifacts/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl" \
+            --install-report "$RUNNER_TEMP/public-core-install-report.json" \
+            --receipt "$RUNNER_TEMP/public-native-correspondence.json" \
+            2>&1 | tee "$RUNNER_TEMP/public-native-correspondence.log"
+          python -I -B - <<'PY'
+          import importlib.util, json, os
+          from pathlib import Path
+          spec = importlib.util.spec_from_file_location("public_proof", "scripts/probe_public_core_release.py")
+          proof = importlib.util.module_from_spec(spec); spec.loader.exec_module(proof)
+          root = Path(os.environ["RUNNER_TEMP"])
+          consumer = root / "consumer-receipt.json"
+          native = json.loads((root / "public-native-correspondence.json").read_text())
+          value = proof.attach_consumer_envelope(json.loads(consumer.read_text()), native)
+          consumer.write_text(json.dumps(value, indent=2) + "\n")
+          PY
+      - name: Retain actual public consumer identity and read-only installed RECORD evidence
+        if: always() && inputs.tag == 'umf-v0.10.8'
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          CONTROL_SHA: ${{ github.workflow_sha }}
+        run: |
+          set -euo pipefail
+          if [ -x "$RUNNER_TEMP/pypi-consumer/bin/python" ]; then
+            "$RUNNER_TEMP/pypi-consumer/bin/python" -I -B tools/temporal_resume.py inventory \
+              --source "$GITHUB_WORKSPACE" --controller "$GITHUB_WORKSPACE" \
+              --output "$RUNNER_TEMP/public-installed-inventory.json"
+          fi
+          python -I -B - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          paths = [Path("scripts/probe_public_core_release.py"), Path("tools/verify_python_artifacts.py"), Path("tools/temporal_resume.py")]
+          value = {"sourceS": os.environ["SOURCE_SHA"], "controller": os.environ["CONTROL_SHA"],
+                   "run": os.environ["GITHUB_RUN_ID"], "attempt": os.environ["GITHUB_RUN_ATTEMPT"],
+                   "workflowRef": os.environ["GITHUB_WORKFLOW_REF"],
+                   "controlFiles": {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths if p.is_file()},
+                   "scope": "Post-publication Actions proof; never an immutable GitHub release asset"}
+          Path(os.environ["RUNNER_TEMP"], "public-control-identity.json").write_text(json.dumps(value, indent=2) + "\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.tag == 'umf-v0.10.8'
+        with:
+          name: umf-core-public-correspondence-0.10.8-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/public-core-install-report.json
+            ${{ runner.temp }}/public-native-correspondence.json
+            ${{ runner.temp }}/public-native-correspondence.log
+            ${{ runner.temp }}/public-installed-inventory.json
+            ${{ runner.temp }}/public-control-identity.json
+          if-no-files-found: warn
+          retention-days: 365
       - uses: actions/upload-artifact@v4
         with:
           name: umf-core-pypi-consumer-${{ needs.verify-release.outputs.version }}

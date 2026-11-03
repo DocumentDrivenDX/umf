@@ -3,6 +3,22 @@ name: Saga qualification
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      temporal_phase:
+        description: Full campaign or bounded retained-S temporal resume
+        type: choice
+        default: full
+        options: [full, resume, linux, consumers, packaged-cli, packaged-cli-macos, source-archive]
+      packaged_cli_carrier_id:
+        description: Exact approved unpublished retained Mac wheel material carrier release ID
+        type: string
+        required: false
+        default: ''
+      source_archive_carrier_id:
+        description: Exact approved unpublished complete source-S archive transport release ID
+        type: string
+        required: false
+        default: ''
 permissions:
   contents: read
 concurrency:
@@ -10,6 +26,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   impact:
+    if: github.event_name != 'workflow_dispatch' || inputs.temporal_phase == 'full'
     runs-on: ubuntu-24.04
     outputs:
       actions: ${{ steps.select.outputs.actions }}
@@ -188,3 +205,488 @@ jobs:
             .cache/saga/
             .cache/sdk-distribution/
             ${{ runner.temp }}/saga-python-dist/
+
+  temporal-resume:
+    if: github.event_name == 'workflow_dispatch' && (inputs.temporal_phase == 'resume' || inputs.temporal_phase == 'linux' || inputs.temporal_phase == 'consumers')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      actions: read
+    env:
+      UMF_ARTIFACT_SOURCE: e3f38ef6f05ae636d2837f9d69f8d6805222664b
+      UMF_CONTROLLER_COMMIT: ${{ github.workflow_sha }}
+      CARGO_BUILD_JOBS: '1'
+      RUST_TEST_THREADS: '1'
+      RAYON_NUM_THREADS: '1'
+      TOKIO_WORKER_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: controller
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: e3f38ef6f05ae636d2837f9d69f8d6805222664b
+          path: source
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.12.0'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - uses: astral-sh/setup-uv@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: source
+          cache-on-failure: true
+      - name: Set private paths and exact interpreter
+        run: |
+          echo "UMF_TEMPORAL_OUTPUT=$RUNNER_TEMP/temporal-resume" >> "$GITHUB_ENV"
+          echo "UMF_SDK_INSTALL_RETAIN_DIR=$RUNNER_TEMP/temporal-sdk-consumer" >> "$GITHUB_ENV"
+          echo "PYO3_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
+          echo "CARGO_TARGET_DIR=$RUNNER_TEMP/temporal-cargo" >> "$GITHUB_ENV"
+      - name: Install checked-in test dependencies
+        working-directory: source
+        run: |
+          bun install --frozen-lockfile
+          ln -s "$GITHUB_WORKSPACE/source/node_modules" "$GITHUB_WORKSPACE/controller/node_modules"
+      - name: Bind retained artifact source S separately from controller Q
+        id: intake
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          operation=prepare
+          if [ "${{ inputs.temporal_phase }}" = linux ]; then operation=prepare-linux; fi
+          if [ "${{ inputs.temporal_phase }}" = consumers ]; then operation=prepare-consumers; fi
+          python controller/tools/temporal_resume.py "$operation" --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+      - name: Apply only recorded qualification overlay
+        if: inputs.temporal_phase == 'resume'
+        run: python controller/tools/temporal_resume.py overlay --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+      - name: Affected installed SDK custody and all19 public Saga cases
+        if: inputs.temporal_phase == 'resume'
+        working-directory: source
+        env:
+          UMF_SDK_INSTALL_PHASE: saga
+        run: |
+          set -o pipefail
+          bun test tests/saga/custody.test.ts 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/custody-controls.log"
+          bun scripts/test-sdk-install.ts 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/installed-sdk.log"
+          cp "$UMF_SDK_INSTALL_RETAIN_DIR/g03-sdk-install-custody.json" "$UMF_TEMPORAL_OUTPUT/installed-sdk-custody.json"
+      - name: Actual installed public browser facade all19
+        if: inputs.temporal_phase == 'resume'
+        working-directory: source
+        run: |
+          set -o pipefail
+          bunx playwright install --with-deps chromium
+          bun "$GITHUB_WORKSPACE/controller/scripts/saga-portable/installed-browser.ts" 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/installed-sdk-browser.log"
+      - name: Restore exact clean S before artifact production
+        if: inputs.temporal_phase == 'resume'
+        run: python controller/tools/temporal_resume.py restore --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+      - name: Genuine missing Linux311 Core wheel and source archive
+        if: inputs.temporal_phase == 'resume'
+        working-directory: source
+        run: |
+          set -o pipefail
+          python -c 'import platform,sys; assert platform.system()=="Linux" and platform.machine()=="x86_64" and sys.version_info[:3]==(3,11,17)'
+          rustc -Vv > "$UMF_TEMPORAL_OUTPUT/rustc-version.txt"
+          cargo --version > "$UMF_TEMPORAL_OUTPUT/cargo-version.txt"
+          uv build --python 3.11.17 --wheel --sdist --out-dir "$UMF_TEMPORAL_OUTPUT/raw" python 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/linux-build.log"
+      - name: Canonical pure companions with exact retained byte correspondence
+        if: inputs.temporal_phase == 'resume'
+        working-directory: source
+        run: |
+          uv build --python 3.11.17 --wheel --out-dir "$UMF_TEMPORAL_OUTPUT/pure" python/umf_codegen
+          uv build --python 3.11.17 --wheel --out-dir "$UMF_TEMPORAL_OUTPUT/pure" python/umf_access
+          echo "0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5  $UMF_TEMPORAL_OUTPUT/pure/umf_codegen-0.10.8-py3-none-any.whl" | sha256sum --check
+          echo "493c5f92cc9795403e08a421b6b3ba4a6e5799b94a4980f1613f38ecf2f1c2d7  $UMF_TEMPORAL_OUTPUT/pure/umf_access-0.1.0.dev10-py3-none-any.whl" | sha256sum --check
+      - name: Strict selection of retained or freshly repaired actual Linux bytes
+        if: inputs.temporal_phase != 'consumers'
+        working-directory: source
+        run: |
+          set -o pipefail
+          out="$UMF_TEMPORAL_OUTPUT"
+          prior="$out"
+          if [ "${{ inputs.temporal_phase }}" = linux ]; then
+            prior="$out/prior-linux"
+          else
+            python tools/core_python_qualification_runner.py fetch-wheels --lock qualification-inputs/core-0.10.3-wheel-input-lock.json --profile repair --cell linux-x86_64-py311 --output "$out/repair-tools"
+            python -m pip install --no-index --no-deps --only-binary=:all: "$out/repair-tools/"*.whl
+            auditwheel --version > "$out/auditwheel-version.txt"
+            patchelf --version > "$out/patchelf-version.txt"
+            raw="$(find "$out/raw" -name '*.whl' -type f)"
+            auditwheel show --json "$raw" > "$out/auditwheel-before.json"
+            auditwheel repair --plat auto --only-plat --wheel-dir "$out/repaired" "$raw"
+            selected="$(find "$out/repaired" -name '*.whl' -type f)"
+            auditwheel show --json "$selected" > "$out/auditwheel-after.json"
+          fi
+          raw="$(find "$prior/raw" -name '*.whl' -type f)"
+          selected="$(find "$prior/repaired" -name '*.whl' -type f)"
+          python "$GITHUB_WORKSPACE/controller/tools/qualify_python_release_wheel.py" --version 0.10.8 --platform linux --source-wheel "$raw" --selected-wheel "$selected" --before-report "$prior/auditwheel-before.json" --after-report "$prior/auditwheel-after.json" --tool-artifacts "$prior/repair-tools" --tool-lock qualification-inputs/core-0.10.3-wheel-input-lock.json --auditwheel-version "$prior/auditwheel-version.txt" --patchelf-version "$prior/patchelf-version.txt" --sdist "$prior/raw/umf_core-0.10.8.tar.gz" --output-wheel-directory "$out/dist" --receipt "$out/dist/selection.json" 2>&1 | tee "$out/repair-qualification.log"
+      - name: Normal Linux311 candidate resolution and installed resource inspection
+        if: inputs.temporal_phase != 'consumers'
+        working-directory: source
+        run: |
+          set -o pipefail
+          consumer="$RUNNER_TEMP/temporal-python-consumer"
+          python -m venv "$consumer"
+          "$consumer/bin/python" -m pip install pytest==8.4.2 packaging==26.3 hatchling==1.27.0
+          "$consumer/bin/python" -m pip install --no-compile --report "$UMF_TEMPORAL_OUTPUT/install-report.json" "$UMF_TEMPORAL_OUTPUT/dist/"*.whl "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/resolver.log"
+          "$consumer/bin/python" -m pip check | tee "$UMF_TEMPORAL_OUTPUT/pip-check.log"
+          "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT" --expected-python 3.11.17 --install-report "$UMF_TEMPORAL_OUTPUT/install-report.json" --receipt "$UMF_TEMPORAL_OUTPUT/installed-linux311.json"
+          package_root="$("$consumer/bin/python" -I -B -c 'import pathlib,umf;print(pathlib.Path(umf.__file__).resolve().parent)')"
+          python scripts/rust-migration/r4/check_binary_closure.py --package-root "$package_root" --cli-binary "$package_root/_bin/umf" "$package_root/_rust_core.abi3.so" "$package_root/_bin/umf" > "$UMF_TEMPORAL_OUTPUT/linux-binary-closure.json"
+      - name: Apply Q for only the skipped Python host qualification
+        if: inputs.temporal_phase != 'consumers'
+        run: python controller/tools/temporal_resume.py overlay --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+      - name: Qualify actual selected Python wheel using original guards
+        if: inputs.temporal_phase != 'consumers'
+        working-directory: source
+        run: |
+          set -o pipefail
+          consumer="$RUNNER_TEMP/temporal-python-consumer/bin/python"
+          wheel="$(find "$UMF_TEMPORAL_OUTPUT/dist" -name '*.whl' -type f)"
+          UMF_SAGA_PYTHON="$consumer" UMF_SAGA_PYTHON_WHEEL="$wheel" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/python-saga.log"
+          "$consumer" -I -B python/tests/test_saga_lifecycle.py
+          "$consumer" -I -B -m pytest python/tests/test_action_runtime_resources.py "$GITHUB_WORKSPACE/controller/python/tests/test_python_artifact_version.py" python/tests/test_distribution_artifact.py::test_installed_wheel_payload_and_record_match_the_exact_archive python/tests/test_distribution_artifact.py::test_installed_wheel_verification_rejects_changed_or_escaped_files
+          cp .cache/saga/portable-python.json "$UMF_TEMPORAL_OUTPUT/portable-python.json"
+      - name: Only the failed fixture and new refusal control using controller-owned tests
+        if: inputs.temporal_phase == 'consumers'
+        run: |
+          set -o pipefail
+          python -I -B "$GITHUB_WORKSPACE/controller/python/tests/test_python_artifact_version.py" ExpectedVersionTests.test_installed_verifier_allows_exact_uv_cache_metadata_but_rejects_other_extras ExpectedVersionTests.test_installed_verifier_still_refuses_a_wheel_without_its_cli 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/controller-owned-fixture-controls.log"
+      - name: Restore S and rebuild genuine sdist without JavaScript tools
+        working-directory: source
+        run: |
+          set -o pipefail
+          python "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" restore --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+          mkdir -p "$RUNNER_TEMP/temporal-no-js"
+          for name in node bun npm npx; do printf '#!/bin/sh\nexit 97\n' > "$RUNNER_TEMP/temporal-no-js/$name"; chmod +x "$RUNNER_TEMP/temporal-no-js/$name"; done
+          PATH="$RUNNER_TEMP/temporal-no-js:$PATH" uv build --python 3.11.17 --wheel --out-dir "$UMF_TEMPORAL_OUTPUT/rebuilt" "$UMF_TEMPORAL_OUTPUT/dist/umf_core-0.10.8.tar.gz" 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/no-js-rebuild.log"
+      - name: Install and qualify the source-rebuilt wheel
+        working-directory: source
+        run: |
+          set -o pipefail
+          python "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" overlay --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+          consumer="$RUNNER_TEMP/temporal-rebuilt-consumer"
+          python -m venv "$consumer"
+          "$consumer/bin/python" -m pip install --no-compile --report "$UMF_TEMPORAL_OUTPUT/rebuilt-install-report.json" "$UMF_TEMPORAL_OUTPUT/rebuilt/"*.whl
+          "$consumer/bin/python" -m pip check
+          wheel="$(find "$UMF_TEMPORAL_OUTPUT/rebuilt" -name '*.whl' -type f)"
+          UMF_SAGA_HOST_ID=python-rebuilt UMF_SAGA_RESULT_PATH="$UMF_TEMPORAL_OUTPUT/portable-python-rebuilt.json" UMF_SAGA_PYTHON="$consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel" UMF_SAGA_PYTHON_SOURCE_ARCHIVE="$UMF_TEMPORAL_OUTPUT/dist/umf_core-0.10.8.tar.gz" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/python-rebuilt-saga.log"
+          "$consumer/bin/python" -I -B python/tests/test_saga_lifecycle.py
+      - name: Select the original Linux313 acceptance interpreter (consumer only)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - name: Serial Linux313 direct and source-rebuilt acceptance without native builds
+        working-directory: source
+        run: |
+          set -o pipefail
+          python -c 'import platform,sys; assert platform.system()=="Linux" and platform.machine()=="x86_64" and sys.version_info[:3]==(3,13,17)'
+          for kind in direct rebuilt; do
+            phase="$UMF_TEMPORAL_OUTPUT/py313-$kind"
+            consumer="$RUNNER_TEMP/temporal-python313-$kind"
+            mkdir -p "$phase"
+            if [ "$kind" = direct ]; then
+              wheel="$(find "$UMF_TEMPORAL_OUTPUT/dist" -name '*.whl' -type f)"
+              host=python
+            else
+              wheel="$(find "$UMF_TEMPORAL_OUTPUT/rebuilt" -name '*.whl' -type f)"
+              host=python-rebuilt
+            fi
+            python -m venv "$consumer"
+            "$consumer/bin/python" -m pip install --only-binary=:all: pytest==8.4.2 packaging==26.3 hatchling==1.27.0
+            "$consumer/bin/python" -m pip install --only-binary=:all: --no-compile --report "$phase/install-report.json" "$wheel" "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$phase/resolver.log"
+            "$consumer/bin/python" -m pip check | tee "$phase/pip-check.log"
+            "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT" --expected-python 3.13.17 --install-report "$phase/install-report.json" --receipt "$phase/installed.json"
+            UMF_SAGA_HOST_ID="$host" UMF_SAGA_RESULT_PATH="$phase/portable-$host.json" UMF_SAGA_PYTHON="$consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel" UMF_SAGA_PYTHON_SOURCE_ARCHIVE="$UMF_TEMPORAL_OUTPUT/dist/umf_core-0.10.8.tar.gz" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$phase/saga19.log"
+            "$consumer/bin/python" -I -B python/tests/test_saga_lifecycle.py 2>&1 | tee "$phase/lifecycle.log"
+            "$consumer/bin/python" -I -B -m pytest python/tests/test_action_runtime_resources.py "$GITHUB_WORKSPACE/controller/python/tests/test_python_artifact_version.py" python/tests/test_distribution_artifact.py::test_installed_wheel_payload_and_record_match_the_exact_archive python/tests/test_distribution_artifact.py::test_installed_wheel_verification_rejects_changed_or_escaped_files 2>&1 | tee "$phase/resources-identity-payload.log"
+          done
+      - name: Restore and capture exact source, Q and retained output inventory
+        if: always() && steps.intake.outcome == 'success'
+        run: |
+          set +e
+          python controller/tools/temporal_resume.py restore --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+          restore_status=$?
+          python controller/tools/temporal_resume.py capture --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
+          capture_status=$?
+          test "$restore_status" = 0 && test "$capture_status" = 0
+      - name: Retain all actual phase outputs and original proof identities
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: temporal-resume-${{ github.sha }}-${{ github.run_id }}
+          include-hidden-files: true
+          path: ${{ runner.temp }}/temporal-resume/
+          if-no-files-found: warn
+
+  packaged-cli-linux:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && inputs.temporal_phase == 'packaged-cli' && github.ref == 'refs/heads/codex/temporal-qualification-controller'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+    env:
+      UMF_CONTROLLER_COMMIT: ${{ github.workflow_sha }}
+      CARGO_BUILD_JOBS: '1'
+      RUST_TEST_THREADS: '1'
+      RAYON_NUM_THREADS: '1'
+      TOKIO_WORKER_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Require one fresh explicitly selected qualification
+        run: test '${{ github.run_attempt }}' = 1
+      - uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: controller
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.cargo/
+            /.github/workflows/sagas.yml
+            /bindings/
+            /crates/
+            /native/
+            /python/
+            /scripts/
+            /spec/
+            /src/
+            /tests/
+            /fixtures/
+            /tools/
+            /docs/helix/02-design/spikes/security/policy-v0.2.schema.json
+            /Cargo.lock
+            /Cargo.toml
+            /package.json
+            /patches/jsonld@9.0.0.patch
+            /bun.lock
+            /bunfig.toml
+            /tsconfig.json
+            /.npmrc
+            /rust-toolchain.toml
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.12.0'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Fetch source identity and install only locked test dependencies
+        run: |
+          git -C controller fetch --no-tags --depth=1 --filter=blob:none origin e3f38ef6f05ae636d2837f9d69f8d6805222664b
+          cd controller
+          bun install --frozen-lockfile --ignore-scripts
+      - name: Authenticate exact retained wheel and unqualified draft material carrier
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATERIAL_CARRIER_ID: ${{ inputs.packaged_cli_carrier_id }}
+        run: |
+          python -I -B controller/tools/temporal_cli_intake.py intake --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-linux" --platform linux-x86_64 --carrier-release-id "$MATERIAL_CARRIER_ID"
+      - name: Prepare unchanged wheel-embedded executable copy
+        working-directory: controller
+        run: |
+          out="$RUNNER_TEMP/packaged-cli-linux"
+          wheel="$(python -I -B -c 'import json,sys;print(json.load(open(sys.argv[1]))["wheel"])' "$out/intake.json")"
+          python -I -B tools/qualify_packaged_cli.py prepare --wheel "$wheel" --platform linux-x86_64 --output "$out/extracted" --root "$GITHUB_WORKSPACE/controller" > "$out/prepare-stdout.json"
+          python -I -B -c 'import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$out/extracted/prepare.json" > "$out/prepared.sha256"
+      - name: Only exact packaged CLI nineteen independent vectors
+        working-directory: controller
+        run: |
+          set -o pipefail
+          out="$RUNNER_TEMP/packaged-cli-linux"
+          UMF_SAGA_CLI="$out/extracted/umf" UMF_SAGA_RESULT_PATH="$out/cli19.json" bun scripts/saga-portable/other-hosts.ts cli 2>&1 | tee "$out/cli19.log"
+          python -I -B -c 'import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$out/cli19.json" > "$out/report.sha256"
+          python -I -B tools/qualify_packaged_cli.py verify --prepared "$out/extracted/prepare.json" --prepared-sha256 "$(cat "$out/prepared.sha256")" --report "$out/cli19.json" --report-sha256 "$(cat "$out/report.sha256")" > "$out/verification.json"
+      - name: Retain exact partial outputs and unchanged controller status before cleanup
+        if: always() && steps.checkout.outcome == 'success'
+        run: python -I -B controller/tools/temporal_cli_intake.py capture --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-linux"
+      - name: Retain material, report and verification bytes without replay or repair
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-cli-linux-${{ github.sha }}-${{ github.run_id }}
+          include-hidden-files: true
+          path: ${{ runner.temp }}/packaged-cli-linux/
+          if-no-files-found: warn
+
+  packaged-cli-macos:
+    if: always() && github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/codex/temporal-qualification-controller' && ((inputs.temporal_phase == 'packaged-cli' && needs.packaged-cli-linux.result == 'success') || inputs.temporal_phase == 'packaged-cli-macos')
+    needs: packaged-cli-linux
+    runs-on: macos-15
+    timeout-minutes: 45
+    permissions:
+      contents: write # Draft material visibility; token is supplied only to GET-only intake.
+      actions: read
+    env:
+      UMF_CONTROLLER_COMMIT: ${{ github.workflow_sha }}
+      CARGO_BUILD_JOBS: '1'
+      RUST_TEST_THREADS: '1'
+      RAYON_NUM_THREADS: '1'
+      TOKIO_WORKER_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Require one fresh explicitly selected qualification
+        run: test '${{ github.run_attempt }}' = 1
+      - uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: controller
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.cargo/
+            /.github/workflows/sagas.yml
+            /bindings/
+            /crates/
+            /native/
+            /python/
+            /scripts/
+            /spec/
+            /src/
+            /tests/
+            /fixtures/
+            /tools/
+            /docs/helix/02-design/spikes/security/policy-v0.2.schema.json
+            /Cargo.lock
+            /Cargo.toml
+            /package.json
+            /patches/jsonld@9.0.0.patch
+            /bun.lock
+            /bunfig.toml
+            /tsconfig.json
+            /.npmrc
+            /rust-toolchain.toml
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.12.0'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+          architecture: arm64
+      - name: Require exact supported controller interpreter and native host
+        run: python -I -B -c 'import platform,sys; assert sys.version_info[:3] == (3,13,17); assert (platform.system(),platform.machine()) == ("Darwin","arm64")'
+      - name: Fetch source identity and install only locked test dependencies
+        run: |
+          git -C controller fetch --no-tags --depth=1 --filter=blob:none origin e3f38ef6f05ae636d2837f9d69f8d6805222664b
+          cd controller
+          bun install --frozen-lockfile --ignore-scripts
+      - name: Authenticate exact retained wheel and unqualified draft material carrier
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATERIAL_CARRIER_ID: ${{ inputs.packaged_cli_carrier_id }}
+        run: |
+          python -I -B controller/tools/temporal_cli_intake.py intake --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-macos" --platform macos-arm64 --carrier-release-id "$MATERIAL_CARRIER_ID"
+      - name: Authenticate completed Linux CLI19 without replay
+        if: inputs.temporal_phase == 'packaged-cli-macos'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -I -B controller/tools/temporal_cli_intake.py reuse-linux --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-macos/completed-linux"
+      - name: Prepare unchanged wheel-embedded executable copy
+        working-directory: controller
+        run: |
+          out="$RUNNER_TEMP/packaged-cli-macos"
+          wheel="$(python -I -B -c 'import json,sys;print(json.load(open(sys.argv[1]))["wheel"])' "$out/intake.json")"
+          python -I -B tools/qualify_packaged_cli.py prepare --wheel "$wheel" --platform macos-arm64 --output "$out/extracted" --root "$GITHUB_WORKSPACE/controller" > "$out/prepare-stdout.json"
+          python -I -B -c 'import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$out/extracted/prepare.json" > "$out/prepared.sha256"
+      - name: Only exact packaged CLI nineteen independent vectors
+        working-directory: controller
+        run: |
+          set -o pipefail
+          out="$RUNNER_TEMP/packaged-cli-macos"
+          UMF_SAGA_CLI="$out/extracted/umf" UMF_SAGA_RESULT_PATH="$out/cli19.json" bun scripts/saga-portable/other-hosts.ts cli 2>&1 | tee "$out/cli19.log"
+          python -I -B -c 'import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$out/cli19.json" > "$out/report.sha256"
+          python -I -B tools/qualify_packaged_cli.py verify --prepared "$out/extracted/prepare.json" --prepared-sha256 "$(cat "$out/prepared.sha256")" --report "$out/cli19.json" --report-sha256 "$(cat "$out/report.sha256")" > "$out/verification.json"
+      - name: Retain exact partial outputs and unchanged controller status before cleanup
+        if: always() && steps.checkout.outcome == 'success'
+        run: python -I -B controller/tools/temporal_cli_intake.py capture --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-macos"
+      - name: Retain material, report and verification bytes without replay or repair
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-cli-macos-${{ github.sha }}-${{ github.run_id }}
+          include-hidden-files: true
+          path: ${{ runner.temp }}/packaged-cli-macos/
+          if-no-files-found: warn
+
+  pretag-source-archive:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && inputs.temporal_phase == 'source-archive' && github.ref == 'refs/heads/codex/temporal-qualification-controller'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Require one fresh explicitly selected source-only check
+        run: test '${{ github.run_attempt }}' = 1
+      - uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: controller
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/sagas.yml
+            /scripts/verify_core_release_source_archive.py
+            /tools/temporal_source_archive_intake.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+          architecture: x64
+      - name: Fetch only the authoritative immutable source Git metadata
+        run: git -C controller fetch --no-tags --depth=1 --filter=blob:none origin e3f38ef6f05ae636d2837f9d69f8d6805222664b
+      - name: Authenticate exact unqualified retained archive transport
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATERIAL_CARRIER_ID: ${{ inputs.source_archive_carrier_id }}
+        run: |
+          python -I -B controller/tools/temporal_source_archive_intake.py intake \
+            --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/pretag-source-archive" \
+            --carrier-id "$MATERIAL_CARRIER_ID"
+      - name: Verify all retained source members and exact producer permissions before any product tag
+        run: |
+          set -euo pipefail
+          python -I -B controller/scripts/verify_core_release_source_archive.py \
+            --repo "$GITHUB_WORKSPACE/controller" \
+            --archive "$RUNNER_TEMP/pretag-source-archive/umf-v0.10.8-source.tar.gz" \
+            --receipt "$RUNNER_TEMP/pretag-source-archive/source-archive.json" \
+            2>&1 | tee "$RUNNER_TEMP/pretag-source-archive/check.log"
+          python -I -B -c 'import pathlib,sys; print(pathlib.Path(sys.argv[1]).read_text())' "$RUNNER_TEMP/pretag-source-archive/source-archive.json"
+      - name: Retain partial proof identity without changing or extracting source materials
+        if: always() && steps.checkout.outcome == 'success'
+        run: |
+          python -I -B controller/tools/temporal_source_archive_intake.py capture \
+            --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/pretag-source-archive"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pretag-source-archive-${{ github.sha }}-${{ github.run_id }}
+          include-hidden-files: true
+          path: |
+            ${{ runner.temp }}/pretag-source-archive/
+            !${{ runner.temp }}/pretag-source-archive/umf-v0.10.8-source.tar.gz
+          if-no-files-found: warn
+          retention-days: 90
