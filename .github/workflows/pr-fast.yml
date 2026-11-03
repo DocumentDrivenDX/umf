@@ -40,6 +40,21 @@ jobs:
             /python/
             /scripts/
             /patches/
+            /Cargo.toml
+            /crates/umf-core/Cargo.toml
+            /crates/umf-core-wire/Cargo.toml
+            /crates/umf-tagged-wire/Cargo.toml
+            /crates/umf-metamodel-cli/Cargo.toml
+            /crates/umf-codegen/Cargo.toml
+            /bindings/core/python/Cargo.toml
+            /bindings/core/node/Cargo.toml
+            /bindings/core/wasm/Cargo.toml
+            /bindings/pack-tools/wasm/Cargo.toml
+            /crates/umf-metamodel/Cargo.toml
+            /crates/umf-cli/Cargo.toml
+            /crates/umf-graphql/Cargo.toml
+            /bindings/core/node/package.json
+            /bindings/core/wasm/package.json
             /package.json
             /bun.lock
             /tsconfig*.json
