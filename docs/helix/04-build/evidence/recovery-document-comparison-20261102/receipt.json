@@ -21,6 +21,11 @@
       "log": "/private/tmp/umf-recovered-wire-test-direct.log",
       "sha256": "2c0b93c2f6332614c68573541490ad5822a661e2816565a6f6807af398d58f55",
       "result": "Retained precompiled dependencies were not usable by the direct compiler; no test executed."
+    },
+    {
+      "log": "/private/tmp/umf-recovered-wire-filtered-cargo.log",
+      "sha256": "426846543cad37692cc7144cade51af3667e617c1af5dc89672c29c31b8a84cc",
+      "result": "Filtered PATH disables protoc-triggered registry regeneration; bounded180-second dependency compilation timed out before tests. Final cohort CI remains required."
     }
   ],
   "pristine_pg_query_protobuf_sha256": "3daa242196591de5cbf994c54a345e114e7d9b62d7cab231c2ca5033ecdfc025"
