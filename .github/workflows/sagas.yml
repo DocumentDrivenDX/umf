@@ -8,7 +8,12 @@ on:
         description: Full campaign or bounded retained-S temporal resume
         type: choice
         default: full
-        options: [full, resume, linux, consumers]
+        options: [full, resume, linux, consumers, packaged-cli]
+      packaged_cli_carrier_id:
+        description: Exact approved unpublished retained Mac wheel material carrier release ID
+        type: string
+        required: false
+        default: ''
 permissions:
   contents: read
 concurrency:
@@ -420,4 +425,190 @@ jobs:
           name: temporal-resume-${{ github.sha }}-${{ github.run_id }}
           include-hidden-files: true
           path: ${{ runner.temp }}/temporal-resume/
+
+  packaged-cli-linux:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && inputs.temporal_phase == 'packaged-cli' && github.ref == 'refs/heads/codex/temporal-qualification-controller'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+    env:
+      UMF_CONTROLLER_COMMIT: ${{ github.workflow_sha }}
+      CARGO_BUILD_JOBS: '1'
+      RUST_TEST_THREADS: '1'
+      RAYON_NUM_THREADS: '1'
+      TOKIO_WORKER_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Require one fresh explicitly selected qualification
+        run: test '${{ github.run_attempt }}' = 1
+      - uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: controller
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.cargo/
+            /.github/workflows/sagas.yml
+            /bindings/
+            /crates/
+            /native/
+            /python/
+            /scripts/
+            /spec/
+            /src/
+            /tests/
+            /fixtures/
+            /tools/
+            /docs/helix/02-design/spikes/security/policy-v0.2.schema.json
+            /Cargo.lock
+            /Cargo.toml
+            /package.json
+            /bun.lock
+            /tsconfig.json
+            /.npmrc
+            /rust-toolchain.toml
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.12.0'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Fetch source identity and install only locked test dependencies
+        run: |
+          git -C controller fetch --no-tags --depth=1 --filter=blob:none origin e3f38ef6f05ae636d2837f9d69f8d6805222664b
+          cd controller
+          bun install --frozen-lockfile --ignore-scripts
+      - name: Authenticate exact retained wheel and unqualified draft material carrier
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATERIAL_CARRIER_ID: ${{ inputs.packaged_cli_carrier_id }}
+        run: |
+          python -I -B controller/tools/temporal_cli_intake.py intake --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-linux" --platform linux-x86_64 --carrier-release-id "$MATERIAL_CARRIER_ID"
+      - name: Prepare unchanged wheel-embedded executable copy
+        working-directory: controller
+        run: |
+          out="$RUNNER_TEMP/packaged-cli-linux"
+          wheel="$(python -I -B -c 'import json,sys;print(json.load(open(sys.argv[1]))["wheel"])' "$out/intake.json")"
+          python -I -B tools/qualify_packaged_cli.py prepare --wheel "$wheel" --platform linux-x86_64 --output "$out/extracted" --root "$GITHUB_WORKSPACE/controller" > "$out/prepare-stdout.json"
+          python -I -B -c 'import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$out/extracted/prepare.json" > "$out/prepared.sha256"
+      - name: Only exact packaged CLI nineteen independent vectors
+        working-directory: controller
+        run: |
+          set -o pipefail
+          out="$RUNNER_TEMP/packaged-cli-linux"
+          UMF_SAGA_CLI="$out/extracted/umf" UMF_SAGA_RESULT_PATH="$out/cli19.json" bun scripts/saga-portable/other-hosts.ts cli 2>&1 | tee "$out/cli19.log"
+          python -I -B -c 'import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$out/cli19.json" > "$out/report.sha256"
+          python -I -B tools/qualify_packaged_cli.py verify --prepared "$out/extracted/prepare.json" --prepared-sha256 "$(cat "$out/prepared.sha256")" --report "$out/cli19.json" --report-sha256 "$(cat "$out/report.sha256")" > "$out/verification.json"
+      - name: Retain exact partial outputs and unchanged controller status before cleanup
+        if: always() && steps.checkout.outcome == 'success'
+        run: python -I -B controller/tools/temporal_cli_intake.py capture --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-linux"
+      - name: Retain material, report and verification bytes without replay or repair
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-cli-linux-${{ github.sha }}-${{ github.run_id }}
+          include-hidden-files: true
+          path: ${{ runner.temp }}/packaged-cli-linux/
+          if-no-files-found: warn
+
+  packaged-cli-macos:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && inputs.temporal_phase == 'packaged-cli' && github.ref == 'refs/heads/codex/temporal-qualification-controller'
+    needs: packaged-cli-linux
+    runs-on: macos-15
+    timeout-minutes: 45
+    permissions:
+      contents: write # Draft material visibility; token is supplied only to GET-only intake.
+      actions: read
+    env:
+      UMF_CONTROLLER_COMMIT: ${{ github.workflow_sha }}
+      CARGO_BUILD_JOBS: '1'
+      RUST_TEST_THREADS: '1'
+      RAYON_NUM_THREADS: '1'
+      TOKIO_WORKER_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Require one fresh explicitly selected qualification
+        run: test '${{ github.run_attempt }}' = 1
+      - uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: controller
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.cargo/
+            /.github/workflows/sagas.yml
+            /bindings/
+            /crates/
+            /native/
+            /python/
+            /scripts/
+            /spec/
+            /src/
+            /tests/
+            /fixtures/
+            /tools/
+            /docs/helix/02-design/spikes/security/policy-v0.2.schema.json
+            /Cargo.lock
+            /Cargo.toml
+            /package.json
+            /bun.lock
+            /tsconfig.json
+            /.npmrc
+            /rust-toolchain.toml
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.12.0'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Fetch source identity and install only locked test dependencies
+        run: |
+          git -C controller fetch --no-tags --depth=1 --filter=blob:none origin e3f38ef6f05ae636d2837f9d69f8d6805222664b
+          cd controller
+          bun install --frozen-lockfile --ignore-scripts
+      - name: Authenticate exact retained wheel and unqualified draft material carrier
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATERIAL_CARRIER_ID: ${{ inputs.packaged_cli_carrier_id }}
+        run: |
+          python -I -B controller/tools/temporal_cli_intake.py intake --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-macos" --platform macos-arm64 --carrier-release-id "$MATERIAL_CARRIER_ID"
+      - name: Prepare unchanged wheel-embedded executable copy
+        working-directory: controller
+        run: |
+          out="$RUNNER_TEMP/packaged-cli-macos"
+          wheel="$(python -I -B -c 'import json,sys;print(json.load(open(sys.argv[1]))["wheel"])' "$out/intake.json")"
+          python -I -B tools/qualify_packaged_cli.py prepare --wheel "$wheel" --platform macos-arm64 --output "$out/extracted" --root "$GITHUB_WORKSPACE/controller" > "$out/prepare-stdout.json"
+          python -I -B -c 'import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$out/extracted/prepare.json" > "$out/prepared.sha256"
+      - name: Only exact packaged CLI nineteen independent vectors
+        working-directory: controller
+        run: |
+          set -o pipefail
+          out="$RUNNER_TEMP/packaged-cli-macos"
+          UMF_SAGA_CLI="$out/extracted/umf" UMF_SAGA_RESULT_PATH="$out/cli19.json" bun scripts/saga-portable/other-hosts.ts cli 2>&1 | tee "$out/cli19.log"
+          python -I -B -c 'import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$out/cli19.json" > "$out/report.sha256"
+          python -I -B tools/qualify_packaged_cli.py verify --prepared "$out/extracted/prepare.json" --prepared-sha256 "$(cat "$out/prepared.sha256")" --report "$out/cli19.json" --report-sha256 "$(cat "$out/report.sha256")" > "$out/verification.json"
+      - name: Retain exact partial outputs and unchanged controller status before cleanup
+        if: always() && steps.checkout.outcome == 'success'
+        run: python -I -B controller/tools/temporal_cli_intake.py capture --root "$GITHUB_WORKSPACE/controller" --output "$RUNNER_TEMP/packaged-cli-macos"
+      - name: Retain material, report and verification bytes without replay or repair
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-cli-macos-${{ github.sha }}-${{ github.run_id }}
+          include-hidden-files: true
+          path: ${{ runner.temp }}/packaged-cli-macos/
+          if-no-files-found: warn
+
           if-no-files-found: warn
