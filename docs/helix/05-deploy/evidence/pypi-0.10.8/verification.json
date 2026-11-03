@@ -1,0 +1,633 @@
+{
+  "schema": "umf.public-core-release-evidence/1",
+  "status": "passed",
+  "scope": "Core0.10.8 public delivery and actual fresh-public Linux311 native/resource/inspection; original platform qualifications retain separate identities.",
+  "releaseDate": "2026-11-03",
+  "evidenceRecordedAt": "2026-11-03T17:13:31.902840+00:00",
+  "identities": {
+    "artifactSourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+    "artifactSourceTree": "a21368a92df488882ef9771e4a1d92205267ddd3",
+    "finalQualificationControllerQ": "08c9f7c86efba716f1b65dbd5938661ddd6ac19c",
+    "finalQualificationControllerTree": "7c9fd50bb51b4c3675a26061900873298f45c0ef",
+    "publisherMainR": "1c37dfcb588c7167cfcb5a4b3d730ffa61375b08",
+    "publisherMainTree": "705d9946a1feb099f44dd1bb567dc61322e476fe",
+    "semanticCore": "0.10.0",
+    "historicalAssemblySourceManifest": {
+      "asset": "source-manifest.json",
+      "sha256": "1fcf34252b4f600e336f597fe3e23a0293ac5a5331c999f8869e52bf9bafa26e",
+      "qualificationControllerQ": "3c341214357d714320540a76e2efd34400fca36d",
+      "meaning": "Historical assembly record, not final qualification or publisher controller; bytes unchanged."
+    }
+  },
+  "github": {
+    "repository": "DocumentDrivenDX/umf",
+    "releaseID": 432952996,
+    "url": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.8",
+    "tag": "umf-v0.10.8",
+    "tagCommit": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+    "publishedAt": "2026-11-03T16:41:23Z",
+    "draft": false,
+    "prerelease": false,
+    "SHA256SUMS": "f571a9c23ba2be1cdda15e36751c2bdbb1ffcb4d5fa58fe2ddc96daaa9e07fb6",
+    "releasePinsSHA256": "768c1a86894e253584d613ce1d048708b226ad630251c5d2881712e2f230873d",
+    "qualificationSHA256": "79b6536e4392e35a1180da9d8aaa315825b938ca67395f3678f3d876179533f2",
+    "anonymousVerification": {
+      "recordedAt": "2026-11-03T17:03:26.027001+00:00",
+      "status": "passed",
+      "assetCount": 21,
+      "authorizationHeaderSent": false,
+      "credentialsUsed": false
+    },
+    "assets": [
+      {
+        "name": "SHA256SUMS",
+        "id": 706303059,
+        "bytes": 1858,
+        "sha256": "f571a9c23ba2be1cdda15e36751c2bdbb1ffcb4d5fa58fe2ddc96daaa9e07fb6",
+        "serverDigest": "sha256:f571a9c23ba2be1cdda15e36751c2bdbb1ffcb4d5fa58fe2ddc96daaa9e07fb6",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/SHA256SUMS",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "canonical-producer-receipt.json",
+        "id": 706303054,
+        "bytes": 8509,
+        "sha256": "7a9633a94d719c0792bfc5b25b1ba958e42f793f551d154daed1f6bf904138bb",
+        "serverDigest": "sha256:7a9633a94d719c0792bfc5b25b1ba958e42f793f551d154daed1f6bf904138bb",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/canonical-producer-receipt.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "codegen-qualification.json",
+        "id": 706303056,
+        "bytes": 1610,
+        "sha256": "ba8bf28dd0da520553b2eca1f4b9b5caeba5af294173b244030adcb115536986",
+        "serverDigest": "sha256:ba8bf28dd0da520553b2eca1f4b9b5caeba5af294173b244030adcb115536986",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/codegen-qualification.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "companion-archives.json",
+        "id": 706303055,
+        "bytes": 2486,
+        "sha256": "93af7b4c7ca3687e5a903fc98eb6cf6f7ccfd9e5e15ecfa37bf7a0429de5d287",
+        "serverDigest": "sha256:93af7b4c7ca3687e5a903fc98eb6cf6f7ccfd9e5e15ecfa37bf7a0429de5d287",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/companion-archives.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "companion-build-attestation.json",
+        "id": 706303052,
+        "bytes": 12760,
+        "sha256": "a1130bf29fa4884832c403051e3badfab5f14657464cc1eae6cc891bacb976b0",
+        "serverDigest": "sha256:a1130bf29fa4884832c403051e3badfab5f14657464cc1eae6cc891bacb976b0",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/companion-build-attestation.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "companion-installed.json",
+        "id": 706303089,
+        "bytes": 4008,
+        "sha256": "1255c8a6393f52b12c4b6c24d560b239c31fd7b76e933e4d1b966e6333956db7",
+        "serverDigest": "sha256:1255c8a6393f52b12c4b6c24d560b239c31fd7b76e933e4d1b966e6333956db7",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/companion-installed.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "compiler-attestation.json",
+        "id": 706303088,
+        "bytes": 149002,
+        "sha256": "a7d154c1612ce648929d87b46de2e341167d06e715ccc0f05255841c8b923996",
+        "serverDigest": "sha256:a7d154c1612ce648929d87b46de2e341167d06e715ccc0f05255841c8b923996",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/compiler-attestation.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "generated-output-hashes.json",
+        "id": 706303092,
+        "bytes": 6050,
+        "sha256": "738666cc2b478b2ef64c20fc3bdb7956f68771fa197d29ae8d00c2ed6bda3e12",
+        "serverDigest": "sha256:738666cc2b478b2ef64c20fc3bdb7956f68771fa197d29ae8d00c2ed6bda3e12",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/generated-output-hashes.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "qualification.json",
+        "id": 706303095,
+        "bytes": 41727,
+        "sha256": "79b6536e4392e35a1180da9d8aaa315825b938ca67395f3678f3d876179533f2",
+        "serverDigest": "sha256:79b6536e4392e35a1180da9d8aaa315825b938ca67395f3678f3d876179533f2",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/qualification.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "release-pins.json",
+        "id": 706303094,
+        "bytes": 1255,
+        "sha256": "768c1a86894e253584d613ce1d048708b226ad630251c5d2881712e2f230873d",
+        "serverDigest": "sha256:768c1a86894e253584d613ce1d048708b226ad630251c5d2881712e2f230873d",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/release-pins.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "sdk-manifest.json",
+        "id": 706303119,
+        "bytes": 1537563,
+        "sha256": "871525889e168e3a2e90ccf4b52ae1da41bebf3dad8c3a9d8ac1bde8aedac31d",
+        "serverDigest": "sha256:871525889e168e3a2e90ccf4b52ae1da41bebf3dad8c3a9d8ac1bde8aedac31d",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/sdk-manifest.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "source-manifest.json",
+        "id": 706303126,
+        "bytes": 2162,
+        "sha256": "1fcf34252b4f600e336f597fe3e23a0293ac5a5331c999f8869e52bf9bafa26e",
+        "serverDigest": "sha256:1fcf34252b4f600e336f597fe3e23a0293ac5a5331c999f8869e52bf9bafa26e",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/source-manifest.json",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf-cli-linux-x86_64",
+        "id": 706303130,
+        "bytes": 56691728,
+        "sha256": "5c685f7bc53a29fafbcf8cf965c91ccfe748bb51096b099172c3816f16f0e2a9",
+        "serverDigest": "sha256:5c685f7bc53a29fafbcf8cf965c91ccfe748bb51096b099172c3816f16f0e2a9",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf-cli-linux-x86_64",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf-cli-macos-arm64",
+        "id": 706303136,
+        "bytes": 48831080,
+        "sha256": "baf21fe9806dd08a468b7a1986c5b188be9bfb19238776ca54043e315d5569cc",
+        "serverDigest": "sha256:baf21fe9806dd08a468b7a1986c5b188be9bfb19238776ca54043e315d5569cc",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf-cli-macos-arm64",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf-sdk.tgz",
+        "id": 706303143,
+        "bytes": 66292925,
+        "sha256": "cd153fd817a6551d46c29a7b0979b8de488151802a56e5d520d8a602431afe0c",
+        "serverDigest": "sha256:cd153fd817a6551d46c29a7b0979b8de488151802a56e5d520d8a602431afe0c",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf-sdk.tgz",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf-v0.10.8-source.tar.gz",
+        "id": 706303169,
+        "bytes": 1677409904,
+        "sha256": "e42c9efba0f652e65021e9d2cf67b32a82d1452b3f8fa1c8c918d16eb14f60ac",
+        "serverDigest": "sha256:e42c9efba0f652e65021e9d2cf67b32a82d1452b3f8fa1c8c918d16eb14f60ac",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf-v0.10.8-source.tar.gz",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf_codegen-0.10.8-py3-none-any.whl",
+        "id": 706303178,
+        "bytes": 66201,
+        "sha256": "0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5",
+        "serverDigest": "sha256:0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf_codegen-0.10.8-py3-none-any.whl",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf_codegen-0.10.8.tar.gz",
+        "id": 706303222,
+        "bytes": 53112,
+        "sha256": "f094d73900004debf70516ab5f7e18fb84c564ba5861e305ae29fe021464c52d",
+        "serverDigest": "sha256:f094d73900004debf70516ab5f7e18fb84c564ba5861e305ae29fe021464c52d",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf_codegen-0.10.8.tar.gz",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf_core-0.10.8-cp311-abi3-macosx_11_0_arm64.whl",
+        "id": 706303265,
+        "bytes": 30278759,
+        "sha256": "0eb762d4f95c6f29ae97c02d8859bbe65a3f9124579e5d48e42fefbf7458f603",
+        "serverDigest": "sha256:0eb762d4f95c6f29ae97c02d8859bbe65a3f9124579e5d48e42fefbf7458f603",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf_core-0.10.8-cp311-abi3-macosx_11_0_arm64.whl",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "id": 706304973,
+        "bytes": 33941115,
+        "sha256": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+        "serverDigest": "sha256:2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "anonymousByteHashMatched": true
+      },
+      {
+        "name": "umf_core-0.10.8.tar.gz",
+        "id": 706305579,
+        "bytes": 7624530,
+        "sha256": "4f2a21532fa58f17a85162752789cbbdee7a3657bb5dccf5a350338e4eb2b048",
+        "serverDigest": "sha256:4f2a21532fa58f17a85162752789cbbdee7a3657bb5dccf5a350338e4eb2b048",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.8/umf_core-0.10.8.tar.gz",
+        "anonymousByteHashMatched": true
+      }
+    ]
+  },
+  "pypi": {
+    "distribution": "umf-core",
+    "version": "0.10.8",
+    "url": "https://pypi.org/project/umf-core/0.10.8/",
+    "jsonURL": "https://pypi.org/pypi/umf-core/0.10.8/json",
+    "anonymousBytesVerifiedAt": "2026-11-03T17:07:42.062071+00:00",
+    "exactFileCount": 3,
+    "requiresPython": "<3.15,>=3.11",
+    "files": [
+      {
+        "filename": "umf_core-0.10.8-cp311-abi3-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/24/a3/144c58b3ef3447071c07937d241b452e17b0d9c1e3d91624f472a60dab4a/umf_core-0.10.8-cp311-abi3-macosx_11_0_arm64.whl",
+        "bytes": 30278759,
+        "sha256": "0eb762d4f95c6f29ae97c02d8859bbe65a3f9124579e5d48e42fefbf7458f603",
+        "authorizationHeaderSent": false
+      },
+      {
+        "filename": "umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/c3/19/de4331630c572a3523c28959929dc1e70983d7278c8431843f6229bb0849/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "bytes": 33941115,
+        "sha256": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+        "authorizationHeaderSent": false
+      },
+      {
+        "filename": "umf_core-0.10.8.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/37/41/5c610cedd9a7562a5dee8e5c7e784bed1b173615e2d9cefcf0493f27d574/umf_core-0.10.8.tar.gz",
+        "bytes": 7624530,
+        "sha256": "4f2a21532fa58f17a85162752789cbbdee7a3657bb5dccf5a350338e4eb2b048",
+        "authorizationHeaderSent": false
+      }
+    ]
+  },
+  "actions": {
+    "releaseDispatcher": {
+      "runID": 41676753751,
+      "event": "release",
+      "actor": "easel",
+      "headSHA": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+      "headRef": "umf-v0.10.8",
+      "attempt": 1,
+      "workflowSHA256": "e9d7e0546373624176b9b46050f5c7ceb2936b9cbcf4d98e00ee5c4433b0d9d9",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/41676753751",
+      "workflow": ".github/workflows/pypi.yml",
+      "status": "completed",
+      "conclusion": "success",
+      "createdAt": "2026-11-03T16:41:25Z",
+      "completedAt": "2026-11-03T16:44:58Z",
+      "logZIP_SHA256": "c3806089145d8993f28cbbaae4b708f34ef637208e6854d9aa16428172d62ad9"
+    },
+    "publisher": {
+      "runID": 41677339110,
+      "event": "workflow_dispatch",
+      "actor": "github-actions[bot]",
+      "triggeringActor": "github-actions[bot]",
+      "controllerSHA": "1c37dfcb588c7167cfcb5a4b3d730ffa61375b08",
+      "ref": "refs/heads/main",
+      "attempt": 1,
+      "workflowSHA256": "61991333bfaf07b30ea3585bbe8f9f9d3fe629b8aa23ab1f27330b9dc1a765ba",
+      "locallyQualifiedInput": "omitted by original dispatcher; workflow default false",
+      "locallyQualifiedEffective": false,
+      "manualDuplicateDispatchCreated": false,
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/41677339110",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "status": "completed",
+      "conclusion": "success",
+      "createdAt": "2026-11-03T16:44:55Z",
+      "completedAt": "2026-11-03T16:58:03Z",
+      "logZIP_SHA256": "9a7f084792007efdb56107e3f1171590b65ca93302e5698299cd67414444574a",
+      "locallyQualifiedObservedLog": {
+        "archiveMember": "verify-release/7_Verify complete 0.10.8 source archive against exact production Git objects.txt",
+        "line": 19,
+        "text": "2026-11-03T16:49:02.2245579Z   LOCALLY_QUALIFIED: false"
+      },
+      "jobs": [
+        {
+          "id": 126061406641,
+          "name": "verify-release",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-03T16:44:59Z",
+          "completed_at": "2026-11-03T16:49:21Z"
+        },
+        {
+          "id": 126064021517,
+          "name": "publish",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-03T16:49:25Z",
+          "completed_at": "2026-11-03T16:54:47Z"
+        },
+        {
+          "id": 126067217675,
+          "name": "installed-consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-03T16:54:50Z",
+          "completed_at": "2026-11-03T16:57:59Z"
+        }
+      ]
+    },
+    "artifacts": [
+      {
+        "id": 13252646370,
+        "name": "umf-core-public-correspondence-0.10.8-41677339110",
+        "zipBytes": 51231,
+        "zipSHA256": "48012cca5f0aa5bdfa3c0fe75d3de388b9c859cd6b3fb380a66be706354b0b2f",
+        "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/41677339110/artifacts/13252646370",
+        "members": [
+          {
+            "name": "public-core-install-report.json",
+            "bytes": 176984,
+            "sha256": "bef1ade97fe1749feeeb79643b73d81381a2ad1e796da226799568e6955d69b7"
+          },
+          {
+            "name": "public-native-correspondence.json",
+            "bytes": 7871,
+            "sha256": "3d5fbed7c692bdfdf64ada50f2142dac7a3ea1ecce8cc157b8112656fd510fd3"
+          },
+          {
+            "name": "public-native-correspondence.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "public-installed-inventory.json",
+            "bytes": 24595,
+            "sha256": "579c0f62d69647f24d73d098d4f83e5ab8acf369989a9e48841118f3132d6516"
+          },
+          {
+            "name": "public-control-identity.json",
+            "bytes": 684,
+            "sha256": "350f38023b57592db569f08b2c86c924a40f07fee78d30b113f73c523770a4c3"
+          }
+        ]
+      },
+      {
+        "id": 13252581348,
+        "name": "umf-core-pypi-consumer-0.10.8",
+        "zipBytes": 3568,
+        "zipSHA256": "9468b24a33b9b75293a38765a61c695378b9c4605a05f21569ecaf4ed0bb7288",
+        "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/41677339110/artifacts/13252581348",
+        "members": [
+          {
+            "name": "consumer-receipt.json",
+            "bytes": 8259,
+            "sha256": "cb17ed026fef842f9d31a7840ab023816d3af09dc9206285d03d8aa1b8b519d5"
+          }
+        ]
+      },
+      {
+        "id": 13251098122,
+        "name": "umf-core-pypi-publication-0.10.8",
+        "zipBytes": 1166,
+        "zipSHA256": "0e6c594187f6430c54e538d24ab37103fe4e67eb24053d4b9a7d23e0b3b26777",
+        "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/41677339110/artifacts/13251098122",
+        "members": [
+          {
+            "name": "publication-receipt.json",
+            "bytes": 700,
+            "sha256": "c5db86df20e8d9a3416620a31195f7a6629aeb57c50ce883cce6f09db300a39c"
+          },
+          {
+            "name": "source-receipt.json",
+            "bytes": 787,
+            "sha256": "f521533b912a21693e9335979629180da892dfb407b6ff3c1b43b68521e844dc"
+          }
+        ]
+      },
+      {
+        "id": 13250204849,
+        "name": "umf-core-pypi-release-0.10.8",
+        "zipBytes": 70171673,
+        "zipSHA256": "bece13ca718470e36dee4e89d9a2d61a5f6cafaa46829b6ec6dae006e4ffd099",
+        "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/41677339110/artifacts/13250204849",
+        "members": [
+          {
+            "name": "source-archive.json",
+            "bytes": 428,
+            "sha256": "b5c89fc3d0f91997a76b7feb0b3d4626584e44476e559150680ac292f42d8dba"
+          },
+          {
+            "name": "umf_core-0.10.8-cp311-abi3-macosx_11_0_arm64.whl",
+            "bytes": 30278759,
+            "sha256": "0eb762d4f95c6f29ae97c02d8859bbe65a3f9124579e5d48e42fefbf7458f603"
+          },
+          {
+            "name": "source-receipt.json",
+            "bytes": 787,
+            "sha256": "f521533b912a21693e9335979629180da892dfb407b6ff3c1b43b68521e844dc"
+          },
+          {
+            "name": "umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl",
+            "bytes": 33941115,
+            "sha256": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd"
+          },
+          {
+            "name": "umf_core-0.10.8.tar.gz",
+            "bytes": 7624530,
+            "sha256": "4f2a21532fa58f17a85162752789cbbdee7a3657bb5dccf5a350338e4eb2b048"
+          }
+        ]
+      }
+    ]
+  },
+  "rawReceiptFiles": {
+    "source-receipt.json": {
+      "bytes": 787,
+      "sha256": "f521533b912a21693e9335979629180da892dfb407b6ff3c1b43b68521e844dc",
+      "originalArtifactMember": "source-receipt.json"
+    },
+    "publication-receipt.json": {
+      "bytes": 700,
+      "sha256": "c5db86df20e8d9a3416620a31195f7a6629aeb57c50ce883cce6f09db300a39c",
+      "originalArtifactMember": "publication-receipt.json"
+    },
+    "consumer-receipt.json": {
+      "bytes": 8259,
+      "sha256": "cb17ed026fef842f9d31a7840ab023816d3af09dc9206285d03d8aa1b8b519d5",
+      "originalArtifactMember": "consumer-receipt.json"
+    },
+    "source-archive.json": {
+      "bytes": 428,
+      "sha256": "b5c89fc3d0f91997a76b7feb0b3d4626584e44476e559150680ac292f42d8dba",
+      "originalArtifactMember": "source-archive.json"
+    }
+  },
+  "publicSourceArchive": {
+    "sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+    "sourceTree": "a21368a92df488882ef9771e4a1d92205267ddd3",
+    "trackedMembersVerified": 70549,
+    "allModesSymlinksAndBlobBytesMatch": true,
+    "extracted": false,
+    "archiveSHA256": "e42c9efba0f652e65021e9d2cf67b32a82d1452b3f8fa1c8c918d16eb14f60ac",
+    "archiveBytes": 1677409904,
+    "gitRosterSHA256": "6c46d53fd58f10ee7107f93f045521f40320fb9094a8b62214d54dbbb1a30481"
+  },
+  "publicConsumer": {
+    "schema": "pypi-consumer-receipt.v1",
+    "nestedProfile": "umf.fresh-public-core-correspondence/1",
+    "receipt": "consumer-receipt.json",
+    "mandatoryCodegenPointerCount": 18,
+    "mandatoryExactTypeChecks": [
+      {
+        "pointer": "/schema",
+        "expected": "pypi-consumer-receipt.v1",
+        "actual": "pypi-consumer-receipt.v1",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/status",
+        "expected": "passed",
+        "actual": "passed",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/index",
+        "expected": "https://pypi.org/simple",
+        "actual": "https://pypi.org/simple",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/umf_core_version",
+        "expected": "0.10.8",
+        "actual": "0.10.8",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/source_sha",
+        "expected": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+        "actual": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/profile",
+        "expected": "umf.fresh-public-core-correspondence/1",
+        "actual": "umf.fresh-public-core-correspondence/1",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/status",
+        "expected": "passed",
+        "actual": "passed",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/sourceS",
+        "expected": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+        "actual": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/wheelSHA256",
+        "expected": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+        "actual": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/nativeSHA256",
+        "expected": "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da",
+        "actual": "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/resourceManifestSHA256",
+        "expected": "5eecd2e367ac58a38df0f4f32a8a7d9bef8020b8340dc4704583f7806d83d571",
+        "actual": "5eecd2e367ac58a38df0f4f32a8a7d9bef8020b8340dc4704583f7806d83d571",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/inspectionCases",
+        "expected": 17,
+        "actual": 17,
+        "exactType": "int",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/inspectionCalls",
+        "expected": 51,
+        "actual": 51,
+        "exactType": "int",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/requestCustodyPreserved",
+        "expected": true,
+        "actual": true,
+        "exactType": "bool",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/canonicalResources",
+        "expected": true,
+        "actual": true,
+        "exactType": "bool",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/engineVersion",
+        "expected": "umf-core-r2",
+        "actual": "umf-core-r2",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/codegenProtocol",
+        "expected": "umf-codegen-r3-seven-ops-nine-resources/1",
+        "actual": "umf-codegen-r3-seven-ops-nine-resources/1",
+        "exactType": "str",
+        "passed": true
+      },
+      {
+        "pointer": "/nativeResourceInspection/semanticCore",
+        "expected": "0.10.0",
+        "actual": "0.10.0",
+        "exactType": "str",
+        "passed": true
+      }
+    ],
+    "actualControlIdentity": {
+      "sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+      "controller": "1c37dfcb588c7167cfcb5a4b3d730ffa61375b08",
+      "run": "41677339110",
+      "attempt": "1",
+      "workflowRef": "DocumentDrivenDX/umf/.github/workflows/publish-pypi.yml@refs/heads/main",
+      "controlFiles": {
+        "scripts/probe_public_core_release.py": "731e74a3fb4155baa18197a63e62141678d0270d443f1e56ce6ec3ad6910f96f",
+        "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
+        "tools/temporal_resume.py": "3c8fa9d841160d9f7419c252939469c8ad034ea174ea07ee6620ce5aca2e2206"
+      },
+      "scope": "Post-publication Actions proof; never an immutable GitHub release asset"
+    }
+  },
+  "boundaries": {
+    "hugeArtifactsCommitted": false,
+    "rawReceiptsRewritten": false,
+    "releaseAssetsRewritten": false,
+    "productionSourceChanged": false,
+    "newBuildsForDocumentation": 0,
+    "originalPassedProofsReplayed": false,
+    "qualifiedPublicConsumer": "Linux x86_64 CPython3.11.17, normal public-index dependency resolution and pip check, Pydantic2.14.2, isolated no-bytecode probe, strict before/after member/native/resource verification, 17inspection cases/51calls.",
+    "retainedPlatformScopes": "Original direct/rebuilt Linux3.11/3.13, Mac3.11.17 component and wheel-embedded CLI19 Linux+Mac, SDK/browser receipts remain scoped to their original producer/controller/runtime identities in public qualification.json.",
+    "notEstablished": [
+      "Access PyPI publication",
+      "Codegen PyPI publication",
+      "Weft or Truss temporal/native composition",
+      "Fresh-public macOS consumer or Mac3.13-native qualification"
+    ],
+    "archiveDocumentationLimitation": "Production archive/package README0.10.7 references remain unchanged historical documentation; actual0.10.8 distribution metadata and current release guide govern matching dependencies."
+  }
+}

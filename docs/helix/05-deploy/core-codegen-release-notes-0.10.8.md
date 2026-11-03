@@ -17,11 +17,15 @@ ddx:
 
 ## Release Scope
 
-This is the staged Core/Codegen 0.10.8 release guide. Publication and fresh-public
-consumer verification remain pending. The exact production source is
+Core 0.10.8 is published on PyPI, with exact public-byte and fresh-public Linux
+native/resource/inspection verification. The [public proof](evidence/pypi-0.10.8/README.md)
+records the original Actions receipts and scopes. Codegen PyPI publication is a
+separate step.
+
+The exact production source is
 [`e3f38ef6f05ae636d2837f9d69f8d6805222664b`](https://github.com/DocumentDrivenDX/umf/commit/e3f38ef6f05ae636d2837f9d69f8d6805222664b).
-The planned coupled GitHub release is `umf-v0.10.8`; its source archive and
-package bytes retain that source even when documentation and qualification
+The published coupled GitHub release is `umf-v0.10.8`. Its source archive and
+package bytes retain that source when documentation and qualification
 controllers subsequently merge into main.
 
 `umf-core==0.10.8` and `umf-codegen==0.10.8` are distribution versions. Semantic
@@ -33,10 +37,10 @@ compatibility with the 0.10.7 distribution.
 
 | Consumer | Material | Delivery and current phase |
 | --- | --- | --- |
-| Python Core users | Native Core wheels and source distribution | Staged; Core-only PyPI publication and fresh-public proof pending |
-| Python Codegen users | Pure Python companion wheel and source distribution | Staged for the same GitHub release; separate Codegen PyPI publication follows qualified public Core |
-| JavaScript SDK users | Retained coupled SDK archive | Staged GitHub delivery; installed Linux SDK and browser proofs retain their original scopes |
-| Source consumers | Complete production-source archive | Staged at the exact source above; controller changes are separately identified |
+| Python Core users | Native Core wheels and source distribution | Published on PyPI; fresh-public Linux 3.11 native/resource/inspection proof passed |
+| Python Codegen users | Pure Python companion wheel and source distribution | Public in the coupled GitHub release; Codegen PyPI publication retains its separate gate |
+| JavaScript SDK users | Retained coupled SDK archive | Public GitHub delivery; installed Linux SDK and browser proofs retain their original scopes |
+| Source consumers | Complete production-source archive | Public at the exact source above; full archive correspondence passed; controllers are separately identified |
 
 GitHub asset delivery, Core PyPI publication and Codegen PyPI publication are
 separate steps. A GitHub release containing the companion wheel does not mean
@@ -128,9 +132,9 @@ Use the matching commands in this current guide. The archived README and source
 artifacts remain unchanged; no replacement production source or rebuild follows
 from this correction.
 
-Publication receipts and the additional fresh-public native/resource/inspection
-proof are produced **after** the immutable GitHub assets are published. They are
-retained as separate authenticated Actions artifacts, with their actual run,
+The [publication receipts and fresh-public native/resource/inspection proof](evidence/pypi-0.10.8/README.md)
+were produced **after** the immutable GitHub assets were published. They remain
+separate authenticated Actions artifacts, with their actual run,
 controller, member and file hashes. They are not later added to or substituted
 into the frozen release assets, source manifest or checksum roster.
 

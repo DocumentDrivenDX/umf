@@ -1,11 +1,14 @@
 # Public PyPI publication
 
-## Current publication route — 2026-11-01
+## Current publication route — 2026-11-03
 
-`umf-core==0.10.5` is published on PyPI. The independent SDK release is
-`umf-v0.10.1`; its version does not determine the core distribution version.
-The [public-release verification](../04-build/evidence/saga-public-library-completion/public-release-verification.json)
-records the exact artifacts and installed checks.
+`umf-core==0.10.8` is published on PyPI under the coupled `umf-v0.10.8`
+GitHub release. The [public proof](evidence/pypi-0.10.8/README.md) records exact
+archive bytes, automatic release dispatch, full source correspondence and fresh
+Linux native/resource/inspection checks. Distribution versions remain separate
+from semantic Core `0.10.0`. Codegen PyPI publication has its own route and proof.
+The earlier [0.10.5 verification](../04-build/evidence/saga-public-library-completion/public-release-verification.json)
+retains its historical artifacts and scope.
 
 Use `publish-pypi.yml` on `main` with an existing qualified release tag, its
 exact source commit and the SHA-256 of its public `SHA256SUMS`. It verifies
