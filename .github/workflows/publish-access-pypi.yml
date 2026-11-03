@@ -5,19 +5,23 @@ on:
       tag:
         description: Exact existing Access component tag
         type: string
-        required: true
+        required: false
       source_sha:
         description: Exact qualified production S
         type: string
-        required: true
+        required: false
       expected_sums_sha256:
         description: Reviewed public SHA256SUMS digest
         type: string
-        required: true
+        required: false
       expected_admission_sha256:
         description: Reviewed main admission digest
         type: string
-        required: true
+        required: false
+      capability_only:
+        description: Exchange and discard OIDC credentials only; no package access or upload
+        type: boolean
+        default: false
       publish:
         description: Explicitly enable admitted PyPI upload and public consumer validation
         type: boolean
@@ -33,8 +37,46 @@ env:
   SUMS_SHA: ${{ inputs.expected_sums_sha256 }}
   ADMISSION_SHA: ${{ inputs.expected_admission_sha256 }}
 jobs:
-  verify:
+  dispatch-mode:
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Refuse simultaneous capability and publication modes
+        env:
+          CAPABILITY_ONLY: ${{ inputs.capability_only }}
+          PUBLISH: ${{ inputs.publish }}
+        run: |
+          if [[ "$CAPABILITY_ONLY" == true && "$PUBLISH" == true ]]; then
+            echo 'Capability-only and publication modes are mutually exclusive.'
+            exit 1
+          fi
+  capability-only:
+    needs: dispatch-mode
+    if: inputs.capability_only == true && inputs.publish != true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exchange only; discard credentials; log only sanitized observation
+        env:
+          ACCESS_CAPABILITY_ENVIRONMENT: pypi
+          ACCESS_CAPABILITY_ONLY: ${{ inputs.capability_only }}
+          ACCESS_PUBLISH: ${{ inputs.publish }}
+        run: python scripts/publish_access_pypi_release.py capability-only
+  verify:
+    needs: dispatch-mode
+    if: inputs.capability_only != true
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -85,7 +127,7 @@ jobs:
           retention-days: 90
   publish:
     needs: verify
-    if: inputs.publish == true && github.ref == 'refs/heads/main'
+    if: inputs.publish == true && inputs.capability_only != true && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     environment: pypi

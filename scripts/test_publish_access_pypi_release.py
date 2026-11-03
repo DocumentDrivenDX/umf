@@ -1,5 +1,6 @@
 """Pure routing controls. Synthetic admissions are never qualification evidence."""
 import copy
+import base64
 import io
 import json
 import subprocess
@@ -63,6 +64,20 @@ class AccessPublisherTests(unittest.TestCase):
 
     def test_closed_admission_positive_control(self):
         self.assertEqual(self.admit(self.fixture())['source_sha'], p.SOURCE)
+
+    def test_null_publisher_proof_is_explicitly_unverified_not_a_gate(self):
+        value = self.fixture()
+        value['publisher']['proof'] = None
+        self.assertIsNone(self.admit(value)['publisher']['proof'])
+
+    def test_null_proof_keeps_linux_cohort_and_core_gates(self):
+        for kind in ('access-linux-installed', 'full-cohort', 'publication'):
+            value = self.fixture()
+            value['publisher']['proof'] = None
+            reference = value['core']['publication'] if kind == 'publication' else value['gates'][kind]
+            self.resign(reference, status='pending')
+            with self.subTest(kind=kind), self.assertRaisesRegex(p.AccessReleaseError, 'assertion differs'):
+                self.admit(value)
 
     def test_component_only_cannot_omit_linux_or_cohort(self):
         for name in ('access-linux-installed', 'full-cohort'):
@@ -197,10 +212,139 @@ class AccessPublisherTests(unittest.TestCase):
             with self.assertRaisesRegex(p.AccessReleaseError, 'not public'):
                 p.check_core(value, self.assets)
 
+    def capability_context(self):
+        return {'GITHUB_ACTIONS': 'true', 'GITHUB_EVENT_NAME': 'workflow_dispatch',
+            'GITHUB_REPOSITORY': p.REPOSITORY, 'GITHUB_REF': 'refs/heads/main',
+            'GITHUB_WORKFLOW_REF': p.REPOSITORY + '/.github/workflows/' + p.WORKFLOW + '@refs/heads/main',
+            'ACCESS_CAPABILITY_ENVIRONMENT': 'pypi', 'ACCESS_CAPABILITY_ONLY': 'true', 'ACCESS_PUBLISH': 'false',
+            'ACTIONS_ID_TOKEN_REQUEST_URL': 'https://test.actions.githubusercontent.com/idtoken?api-version=2.0',
+            'ACTIONS_ID_TOKEN_REQUEST_TOKEN': 'synthetic-request-secret'}
+
+    def synthetic_jwt(self, **changes):
+        claims = {'repository': p.REPOSITORY, 'ref': 'refs/heads/main',
+            'workflow_ref': self.capability_context()['GITHUB_WORKFLOW_REF'],
+            'sub': 'repo:' + p.REPOSITORY + ':environment:pypi', 'aud': 'pypi', **changes}
+        payload = base64.urlsafe_b64encode(json.dumps(claims).encode()).decode().rstrip('=')
+        return 'synthetic-header.' + payload + '.synthetic-signature'
+
+    def test_exchange_success_is_not_project_authorization_or_qualification(self):
+        jwt, credential = self.synthetic_jwt(), 'pypi-synthetic-minted-secret'
+        transport = unittest.mock.Mock(side_effect=[{'value': jwt}, {'token': credential}])
+        result = p.capability_exchange(self.capability_context(), transport)
+        self.assertEqual(result['status'], 'EXCHANGE_SUCCESS')
+        self.assertEqual(result['accessProjectAuthorization'], 'UNVERIFIED')
+        self.assertNotIn('qualification', result)
+        rendered = json.dumps(result)
+        for secret in (jwt, credential, 'synthetic-request-secret'):
+            self.assertNotIn(secret, rendered)
+        requests = [c.args[0] for c in transport.call_args_list]
+        self.assertEqual(len(requests), 2)
+        self.assertTrue(requests[0].full_url.endswith('&audience=pypi'))
+        self.assertEqual(requests[1].full_url, 'https://pypi.org/_/oidc/mint-token')
+        self.assertEqual(requests[1].method, 'POST')
+        self.assertEqual(json.loads(requests[1].data), {'token': jwt})
+
+    def test_capability_default_off_or_wrong_context_never_requests_token(self):
+        for key, bad in (('ACCESS_CAPABILITY_ONLY', 'false'), ('ACCESS_PUBLISH', 'true'),
+                ('GITHUB_REF', 'refs/heads/other'), ('GITHUB_REPOSITORY', 'other/repo'),
+                ('GITHUB_WORKFLOW_REF', 'other.yml'), ('ACCESS_CAPABILITY_ENVIRONMENT', 'other'),
+                ('GITHUB_EVENT_NAME', 'pull_request'), ('GITHUB_ACTIONS', 'false')):
+            transport = unittest.mock.Mock()
+            result = p.capability_exchange({**self.capability_context(), key: bad}, transport)
+            with self.subTest(key=key):
+                self.assertEqual(result['status'], 'EXCHANGE_FAILED')
+                transport.assert_not_called()
+
+    def test_capability_refuses_credential_redirect_destinations(self):
+        for url in ('http://test.actions.githubusercontent.com/token', 'https://evil.example/token',
+                'https://test.actions.githubusercontent.com.evil.example/token',
+                'https://user@test.actions.githubusercontent.com/token',
+                'https://test.actions.githubusercontent.com/token?audience=other'):
+            transport = unittest.mock.Mock()
+            result = p.capability_exchange({**self.capability_context(), 'ACTIONS_ID_TOKEN_REQUEST_URL': url}, transport)
+            with self.subTest(url=url):
+                self.assertEqual(result['status'], 'EXCHANGE_FAILED')
+                transport.assert_not_called()
+
+    def test_claim_mismatch_refuses_before_pypi_exchange(self):
+        for key, wrong in (('sub', 'repo:other/repo:environment:pypi'), ('workflow_ref', 'other.yml'),
+                           ('ref', 'refs/heads/other'), ('aud', 'other')):
+            transport = unittest.mock.Mock(return_value={'value': self.synthetic_jwt(**{key: wrong})})
+            result = p.capability_exchange(self.capability_context(), transport)
+            with self.subTest(key=key):
+                self.assertEqual(result['status'], 'EXCHANGE_FAILED')
+                self.assertEqual(transport.call_count, 1)
+
+    def test_failed_exchange_retains_sanitized_service_reason_without_tokens(self):
+        jwt = self.synthetic_jwt()
+        details = {'errors': [{'code': 'invalid-publisher', 'description':
+            'No matching publisher; token=' + jwt + ' synthetic-request-secret pypi-other-secret'}]}
+        transport = unittest.mock.Mock(side_effect=[{'value': jwt}, p.CapabilityServiceFailure(403, details)])
+        result = p.capability_exchange(self.capability_context(), transport)
+        self.assertEqual((result['status'], result['stage'], result['httpStatus']),
+                         ('EXCHANGE_FAILED', 'pypi-exchange', 403))
+        rendered = json.dumps(result)
+        self.assertIn('invalid-publisher', rendered)
+        self.assertIn('No matching publisher', rendered)
+        for secret in (jwt, 'synthetic-request-secret', 'pypi-other-secret'):
+            self.assertNotIn(secret, rendered)
+
+    def test_transport_exceptions_and_invalid_responses_do_not_leak(self):
+        for responses in ([RuntimeError('synthetic-request-secret')],
+                          [{'value': self.synthetic_jwt()}, {'token': None}]):
+            result = p.capability_exchange(self.capability_context(), unittest.mock.Mock(side_effect=responses))
+            self.assertEqual(result['status'], 'EXCHANGE_FAILED')
+            self.assertNotIn('synthetic-request-secret', json.dumps(result))
+
+    def test_exchange_observation_cannot_be_relabelled_as_scoped_proof(self):
+        value = self.fixture()
+        observation = p.capability_exchange(self.capability_context(), unittest.mock.Mock(
+            side_effect=[{'value': self.synthetic_jwt()}, {'token': 'pypi-synthetic-secret'}]))
+        value['publisher']['proof'] = self.reference('exchange.json', observation, {'/status': 'EXCHANGE_SUCCESS'})
+        with self.assertRaises(p.AccessReleaseError):
+            self.admit(value)
+
+    def test_capability_cli_has_no_package_file_or_release_operations(self):
+        transport = unittest.mock.Mock(side_effect=[{'value': self.synthetic_jwt()}, {'token': 'pypi-synthetic-secret'}])
+        with patch.object(sys, 'argv', ['controller', 'capability-only']), \
+                patch.dict(p.os.environ, self.capability_context(), clear=True), \
+                patch.object(p, '_capability_request', transport), \
+                patch.object(p, 'verify_packet') as verify, patch.object(p, 'stage_github') as upload, \
+                patch.object(p.subprocess, 'check_output') as git, patch.object(Path, 'write_text') as write, \
+                redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(p.main(), 0)
+        for operation in (verify, upload, git, write):
+            operation.assert_not_called()
+        self.assertEqual(json.loads(output.getvalue())['status'], 'EXCHANGE_SUCCESS')
+        self.assertNotIn('pypi-synthetic-secret', output.getvalue())
+
+    def test_capability_cli_rejects_package_or_upload_arguments(self):
+        for extra in (['--upload'], ['--assets-dir', str(self.assets)], ['--output-dir', str(self.assets)], ['--wait']):
+            with patch.object(sys, 'argv', ['controller', 'capability-only', *extra]), \
+                    patch.object(p, 'capability_exchange') as exchange:
+                with self.assertRaises(p.AccessReleaseError):
+                    p.main()
+                exchange.assert_not_called()
+
+    def test_package_cli_still_requires_immutable_inputs(self):
+        with patch.object(sys, 'argv', ['controller', 'verify']), patch.object(p, 'capability_exchange') as exchange:
+            with self.assertRaises(p.AccessReleaseError):
+                p.main()
+            exchange.assert_not_called()
+
     def test_checksum_roster_must_retain_all_actual_proofs(self):
+        self.check_packet_roster(unverified=False)
+
+    def test_null_proof_packet_needs_no_capability_asset_and_reports_unverified(self):
+        self.check_packet_roster(unverified=True)
+
+    def check_packet_roster(self, *, unverified):
         files = {name: p.digest(b'synthetic archive') for name in p.FILES}
         with patch.object(p, 'FILES', files), patch.object(p, 'archive_metadata'):
             value = self.fixture()
+            if unverified:
+                (self.assets / value['publisher']['proof']['file']).unlink()
+                value['publisher']['proof'] = None
             for name in files:
                 (self.assets / name).write_bytes(b'synthetic archive')
             q = value['qualification']
@@ -216,7 +360,9 @@ class AccessPublisherTests(unittest.TestCase):
                 (self.assets / 'SHA256SUMS').write_bytes(data)
                 return p.verify_packet(assets=self.assets, admission_raw=raw,
                     admission_sha256=p.digest(raw), sums_sha256=p.digest(data), tag=p.TAG, source_sha=p.SOURCE)
-            self.assertEqual(verify(roster)['files'], files)
+            receipt = verify(roster)
+            self.assertEqual(receipt['files'], files)
+            self.assertEqual(receipt['publisherProof'], 'UNVERIFIED' if unverified else 'provided_scoped_proof')
             missing = dict(roster)
             del missing[value['gates']['access-linux-installed']['file']]
             with self.assertRaisesRegex(p.AccessReleaseError, 'roster differs'):

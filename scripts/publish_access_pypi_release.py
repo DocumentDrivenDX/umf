@@ -8,6 +8,7 @@ Pure verification is separate from explicit GitHub staging and PyPI OIDC jobs.
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -17,6 +18,9 @@ import stat
 import subprocess
 import tarfile
 import zipfile
+import urllib.error
+import urllib.parse
+import urllib.request
 from email.parser import BytesParser
 from pathlib import Path
 
@@ -145,10 +149,13 @@ def admission(raw, expected_sha256, assets):
     require(type(publisher) is dict and set(publisher) == {"repository", "distribution", "workflow", "environment", "proof"}
             and publisher["repository"] == REPOSITORY and publisher["distribution"] == DISTRIBUTION
             and publisher["workflow"] == WORKFLOW and publisher["environment"] == "pypi", "publisher identity differs")
-    capability = proof(assets, publisher["proof"], source=False)
-    require(capability.get("repository") == REPOSITORY and capability.get("distribution") == DISTRIBUTION
-            and capability.get("workflow") == WORKFLOW and capability.get("environment") == "pypi"
-            and capability.get("status") == "passed", "dedicated PyPI publisher capability not verified")
+    # Null is explicitly UNVERIFIED, not failed, absent authority or a prior
+    # human approval requirement. Actual qualified upload may establish scope.
+    if publisher["proof"] is not None:
+        capability = proof(assets, publisher["proof"], source=False)
+        require(capability.get("repository") == REPOSITORY and capability.get("distribution") == DISTRIBUTION
+                and capability.get("workflow") == WORKFLOW and capability.get("environment") == "pypi"
+                and capability.get("status") == "passed", "provided scoped publisher proof differs")
     require(type(value["core"]) is dict and set(value["core"]) == {"publication", "consumer"}, "Core public proof roster required")
     published = proof(assets, value["core"]["publication"])
     require(published.get("schema") == "pypi-publication-receipt.v1" and published.get("status") == "passed"
@@ -227,8 +234,9 @@ def verify_packet(*, assets, admission_raw, admission_sha256, sums_sha256, tag, 
     admitted = admission(admission_raw, admission_sha256, assets)
     sums_raw = read_asset(assets, "SHA256SUMS", sums_sha256)
     sums = core.parse_sums(sums_raw)
-    references = [admitted["qualification"], *admitted["gates"].values(),
-                  admitted["publisher"]["proof"], *admitted["core"].values()]
+    references = [admitted["qualification"], *admitted["gates"].values(), *admitted["core"].values()]
+    if admitted["publisher"]["proof"] is not None:
+        references.append(admitted["publisher"]["proof"])
     expected_sums = {**FILES}
     for reference in references:
         name, sha = reference["file"], reference["sha256"]
@@ -255,7 +263,108 @@ def verify_packet(*, assets, admission_raw, admission_sha256, sums_sha256, tag, 
         read_asset(assets, name, expected)
     return {"schema": "umf.access-publication-source/1", "source_sha": SOURCE, "source_tree": TREE,
             "tag": TAG, "distribution": DISTRIBUTION, "version": VERSION, "files": FILES,
-            "admission_sha256": admission_sha256, "sums_sha256": sums_sha256, "core": admitted["core"]}
+            "admission_sha256": admission_sha256, "sums_sha256": sums_sha256, "core": admitted["core"],
+            "publisherProof": "UNVERIFIED" if admitted["publisher"]["proof"] is None else "provided_scoped_proof"}
+
+
+class CapabilityServiceFailure(Exception):
+    def __init__(self, status, details):
+        super().__init__("capability service rejected request")
+        self.status, self.details = status, details
+
+
+def _capability_request(request):
+    class NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, *args, **kwargs):
+            return None
+    opener = urllib.request.build_opener(NoRedirect())
+    try:
+        with opener.open(request, timeout=30) as response:
+            raw = response.read(65537)
+            require(len(raw) <= 65536, "bounded capability response required")
+            return decode(raw)
+    except urllib.error.HTTPError as error:
+        # Never propagate raw HTTP bodies, headers, URLs or exception strings.
+        raw = error.read(65537)
+        try:
+            details = decode(raw) if len(raw) <= 65536 else None
+        except (AccessReleaseError, ValueError):
+            details = None
+        raise CapabilityServiceFailure(error.code, details) from None
+
+
+def sanitized_service_reasons(value, secrets):
+    rows = value.get("errors", []) if type(value) is dict else []
+    result = []
+    for row in rows[:8] if type(rows) is list else []:
+        if type(row) is not dict:
+            continue
+        fields = []
+        for key in ("code", "description"):
+            text = row.get(key)
+            if type(text) is not str:
+                continue
+            for secret in secrets:
+                if secret:
+                    text = text.replace(secret, "[REDACTED]")
+            text = re.sub(r"(?i)(?:pypi-|gh[opsur]_)[A-Za-z0-9_.-]+|[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+", "[REDACTED]", text)
+            text = re.sub(r"(?i)(bearer\s+|(?:token|password|authorization)\s*[=:]\s*)\S+", r"\1[REDACTED]", text)
+            fields.append(key + ": " + " ".join(text.split())[:400])
+        if fields:
+            result.append("; ".join(fields))
+    return result or ["service supplied no safely reportable structured reason"]
+
+
+def capability_exchange(environ, transport=None):
+    """Mint and discard in memory. No upload, files, outputs, or qualification.
+
+    Exchange success can match multiple projects; it is not Access scope proof.
+    Official protocol: docs.pypi.org/trusted-publishers/using-a-publisher/
+    """
+    result = {"schema": "umf.access-publisher-exchange/1", "repository": REPOSITORY,
+              "workflow": WORKFLOW, "environment": "pypi", "accessProjectAuthorization": "UNVERIFIED"}
+    stage, secrets = "context", []
+    transport = transport or _capability_request
+    try:
+        exact = {"GITHUB_ACTIONS": "true", "GITHUB_EVENT_NAME": "workflow_dispatch",
+                 "GITHUB_REPOSITORY": REPOSITORY, "GITHUB_REF": "refs/heads/main",
+                 "GITHUB_WORKFLOW_REF": REPOSITORY + "/.github/workflows/" + WORKFLOW + "@refs/heads/main",
+                 "ACCESS_CAPABILITY_ENVIRONMENT": "pypi", "ACCESS_CAPABILITY_ONLY": "true", "ACCESS_PUBLISH": "false"}
+        require(all(environ.get(k) == v for k, v in exact.items()), "exact capability-only workflow context required")
+        url, bearer = environ.get("ACTIONS_ID_TOKEN_REQUEST_URL", ""), environ.get("ACTIONS_ID_TOKEN_REQUEST_TOKEN", "")
+        secrets.append(bearer)
+        parsed = urllib.parse.urlsplit(url)
+        require(parsed.scheme == "https" and parsed.hostname and parsed.hostname.endswith(".actions.githubusercontent.com")
+                and not parsed.username and not parsed.password and parsed.port in (None, 443) and not parsed.fragment
+                and bearer and not any(k == "audience" for k, _ in urllib.parse.parse_qsl(parsed.query)),
+                "valid GitHub OIDC endpoint required")
+        url = urllib.parse.urlunsplit(parsed._replace(query=parsed.query + ("&" if parsed.query else "") + "audience=pypi"))
+        stage = "github-oidc"
+        response = transport(urllib.request.Request(url, headers={"Authorization": "bearer " + bearer}))
+        token = response.get("value") if type(response) is dict else None
+        require(type(token) is str and 0 < len(token) <= 32768, "GitHub token response missing")
+        secrets.append(token)
+        parts = token.split(".")
+        require(len(parts) == 3, "GitHub token shape differs")
+        claims = decode(base64.urlsafe_b64decode(parts[1] + "=" * (-len(parts[1]) % 4)))
+        require(type(claims) is dict and all(claims.get(k) == v for k, v in {
+            "repository": REPOSITORY, "ref": "refs/heads/main", "workflow_ref": exact["GITHUB_WORKFLOW_REF"],
+            "sub": "repo:" + REPOSITORY + ":environment:pypi", "aud": "pypi"}.items()), "OIDC workflow/environment claims differ")
+        # PyPI verifies the token signature and trust configuration. Local claim
+        # checks above only prevent an accidental different workflow context.
+        stage = "pypi-exchange"
+        response = transport(urllib.request.Request("https://pypi.org/_/oidc/mint-token",
+            data=json.dumps({"token": token}).encode(), headers={"Content-Type": "application/json"}, method="POST"))
+        require(type(response) is dict and type(response.get("token")) is str
+                and response["token"].startswith("pypi-") and len(response["token"]) > 5, "PyPI mint response missing")
+        result["status"] = "EXCHANGE_SUCCESS"
+        # Deliberately never return, print, persist or use the minted credential.
+    except CapabilityServiceFailure as error:
+        result.update(status="EXCHANGE_FAILED", stage=stage, httpStatus=error.status,
+                      serviceReasons=sanitized_service_reasons(error.details, secrets))
+    except Exception:
+        result.update(status="EXCHANGE_FAILED", stage=stage, serviceReasons=["context, transport or response validation failed; no raw exception retained"])
+    return result
 
 
 def verify_release(release, tag_ref, tag_object, sums):
@@ -335,12 +444,12 @@ def stage_github(assets, sums, sums_sha256):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("verify", "prepare", "stage-github", "check-pypi"))
-    parser.add_argument("--assets-dir", type=Path, required=True)
-    parser.add_argument("--expected-admission-sha256", required=True)
-    parser.add_argument("--expected-sums-sha256", required=True)
-    parser.add_argument("--tag", required=True)
-    parser.add_argument("--source-sha", required=True)
+    parser.add_argument("command", choices=("verify", "prepare", "stage-github", "check-pypi", "capability-only"))
+    parser.add_argument("--assets-dir", type=Path)
+    parser.add_argument("--expected-admission-sha256")
+    parser.add_argument("--expected-sums-sha256")
+    parser.add_argument("--tag")
+    parser.add_argument("--source-sha")
     parser.add_argument("--release-json", type=Path)
     parser.add_argument("--tag-ref-json", type=Path)
     parser.add_argument("--tag-object-json", type=Path)
@@ -348,6 +457,14 @@ def main():
     parser.add_argument("--upload", action="store_true", default=False)
     parser.add_argument("--wait", action="store_true", default=False)
     args = parser.parse_args()
+    if args.command == "capability-only":
+        require(all(v is None or v is False for k, v in vars(args).items() if k != "command"),
+                "capability-only cannot accept package, upload or output arguments")
+        observation = capability_exchange(os.environ)
+        print(json.dumps(observation, indent=2))
+        return 0 if observation["status"] == "EXCHANGE_SUCCESS" else 1
+    require(all((args.assets_dir, args.expected_admission_sha256, args.expected_sums_sha256, args.tag, args.source_sha)),
+            "package route requires all immutable admission/source pins")
     require(not args.upload or args.command == "stage-github", "upload is only supported for explicit GitHub staging")
     root = Path(__file__).resolve().parents[1]
     # Require tracked controller bytes, not a producer/caller supplied admission.
