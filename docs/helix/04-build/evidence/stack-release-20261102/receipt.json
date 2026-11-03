@@ -133,14 +133,14 @@
     }
   },
   "remaining_work": {
-    "umf": "PR42 exact c0a00c929 Lakeview native/installed/browser gate passed. Native/browser/CLI Saga vectors passed19/19, but installed SDK harness requested retired dist/umf.js. Current Node/browser export and native-member custody fix passes13tests/36assertions, typecheck and actual archive verification; fresh full hosted gate required. Publication remains held for unified0107 source/version ownership inPR88.",
+    "umf": "PR42 source f808b0105 is mergeable after current main integration. Fast/publisher checks pass; Lakeview41547141607 and Saga41547141474 running. Access PR89 source0b9523e7 installed identity41547142110 passes; Saga41547142130 running. PR88 unified0107 frozen9d92e38c3 is owner-built; publication/source sequencing remains separate. PR95 temporal inspection is draft. Recovered October wire controls remain unqualified and protected.",
     "truss": "0.0.54 delivered with carrier-only qualification and cleanup complete. Newly authorized fresh-only temporal successor is active under Sol planning/review and Luna implementation; requires actual owner-controlled Core/Weft interfaces and new native identity, not54-proof relabel.",
-    "arras": "0.7.0 delivered on GitHub/PyPI/npm, independent consumers and cleanup complete. Managed unchanged-input correspondence mergedPR48 atde4a88a2; no blanket campaign. Newly authorized embedding issues49-53 and vocabulary policy36 are active in isolated Luna worktrees under Sol review and a single integrator; not claimed released.",
+    "arras": "0.7.0 delivered with independent public consumers and historical cleanup. New embedding fixes merged PR54; appearance accepted in main. A6 b3b300d candidate has portable/browser checks but selected Linux PostgreSQL roundtrip is pending; owner instruction holds merge/release until reviewed native gate. Isolated Root handoffs retained; no new release claim.",
     "ashlar": "Active owner still qualifies managed target; existing dev1 release is not stable acceptance.",
     "weft": "Main tree equals v0.4.56. Two old source topics were adopted under different commits; historical proof/harness branches need their own remaining disposition. Active migration work remains owner-qualified.",
     "umf-visual": "All audited committed tips accounted for by merged PRs; active dirty examples/geometry work remains with its owner.",
     "tether": "All audited committed tips accounted for by merged PRs; active dirty API/web work remains with its owner.",
-    "batten": "Storage preview published. Another owner is actively implementing local approval/runtime packages in the primary checkout; these uncommitted changes are protected and not claimed released.",
+    "batten": "Storage and runtime-v0.1.0a1 GitHub previews delivered; PR3 merged6fc9347, all20 runtime public assets and seven wheel license payloads independently verified. Active new shared PostgreSQL/Intake integration remains with owner; cleanup rerun pending. No PyPI or extra native/production acceptance.",
     "concourse": "0.1.1 preview published with complete third-party notices. Release-note link tooling merged. Production gates remain explicit.",
     "tablespec": "Both previously open feature PRs integrated and released; no open PR remains after publisher hardening."
   },
@@ -203,7 +203,7 @@
     "remote": 5,
     "proof": "Seven superseded historical delivery refs and four completed release topic refs removed after semantic or merged-tree proof; no current artifact replaced."
   },
-  "updated_at_utc": "2026-11-02T23:54:01.031142+00:00",
+  "updated_at_utc": "2026-11-03T00:02:07.201757+00:00",
   "delegated_release_updates": [
     {
       "repository": "DocumentDrivenDX/truss",
@@ -286,5 +286,47 @@
     "remote": 1,
     "receipt": "release-alignment-adoption-cleanup.json",
     "sha256": "badd89b8bf8796123d97733ee55e38da410ffccd9f17a979a020f62398fcd33f"
+  },
+  "batten_runtime_delivery": {
+    "tag": "runtime-v0.1.0a1",
+    "merged_pr": 3,
+    "source": "6fc9347074c747a29a3722e57b07c9db555c61a3",
+    "public_assets": 20,
+    "all_download_digests_and_checksums_match": true,
+    "all_seven_batten_wheels_include_dual_licenses_and_notice": true,
+    "receipt": "batten-runtime-public-verification.json",
+    "receipt_sha256": "a3ca9d401dc9b26ecd77e14e5f252e87dff729ab8578bc7cd726735cc2983340",
+    "scope": "GitHub local runtime prerelease; no PyPI or additional native/production acceptance."
+  },
+  "current_open_pr_snapshot": {
+    "observed_at_utc": "2026-11-03T00:02:07.201757+00:00",
+    "repositories_checked": [
+      "umf",
+      "arras",
+      "truss",
+      "ashlar",
+      "tether",
+      "batten",
+      "concourse",
+      "tablespec",
+      "umf-visual"
+    ],
+    "open_prs": {
+      "umf": [
+        42,
+        88,
+        89,
+        95
+      ]
+    },
+    "scope": "Live open PR snapshot only. Empty PR lists do not imply active uncommitted owner work is complete."
+  },
+  "managed_worker_archive_pending": {
+    "paths": [
+      "/Users/erik/.codex/worktrees/arras-alias-52/arras",
+      "/Users/erik/.codex/worktrees/arras-testkit-53/arras"
+    ],
+    "reason": "Managed archive API could not verify this chat primary checkout; original UMF checkout could not attach because it is not managed. No raw-removal workaround attempted. Source patches retained; accepted fixes reached Arras main.",
+    "worktrees_removed": 0
   }
 }

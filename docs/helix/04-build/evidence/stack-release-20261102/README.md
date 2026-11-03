@@ -60,3 +60,9 @@ Access candidate version metadata; no implementation is missing.
 
 [Historical release-alignment cleanup](release-alignment-adoption-cleanup.json)
 removes two refs after all 18 source blobs matched their merged PR71 adoption.
+
+Batten `runtime-v0.1.0a1` is also delivered: PR3 merged, all 20 public assets
+independently downloaded and checked against GitHub digests and SHA256SUMS.
+All seven Batten wheels carry both licenses and NOTICE.
+[Public verification](batten-runtime-public-verification.json) preserves the
+GitHub-only local-runtime scope and original UMF dependency cohort.
