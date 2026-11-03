@@ -22,6 +22,42 @@ SPEC.loader.exec_module(resume)
 
 
 class ResumeCustody(unittest.TestCase):
+    def test_installed_inventory_preserves_record_and_unrecorded_file_evidence(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            platlib = root / "site-packages"
+            package = platlib / "umf"
+            package.mkdir(parents=True)
+            # Importing this source would fail; the observer must only read it.
+            (package / "__init__.py").write_bytes(b"raise RuntimeError('must not import')\n")
+            bytecode = package / "__pycache__/unexpected.pyc"
+            bytecode.parent.mkdir()
+            bytecode.write_bytes(b"unrecorded fixture")
+            record = platlib / "umf_core-0.0.0.dist-info/RECORD"
+            record.parent.mkdir()
+            payload = b'umf/__init__.py,sha256=fixture,35\n"umf_core-0.0.0.dist-info/RECORD",,\r\n'
+            record.write_bytes(payload)
+            outside = root / "outside"
+            outside.write_bytes(b"must not hash or read through link")
+            (package / "outside-link").symlink_to(outside)
+            before = {str(p): (p.read_bytes(), p.stat().st_mtime_ns, p.stat().st_ino)
+                      for p in [record, bytecode, outside]}
+            value = resume.installed_inventory(platlib, root)
+            files = {row["path"]: row for row in value["files"]}
+            self.assertEqual(files["umf/__pycache__/unexpected.pyc"]["sha256"], resume.digest(bytecode))
+            self.assertEqual(files["umf/outside-link"], {"path": "umf/outside-link", "kind": "symlink", "target": str(outside)})
+            self.assertEqual(base64.b64decode(value["records"][0]["bytesBase64"]), payload)
+            self.assertEqual(before, {str(p): (p.read_bytes(), p.stat().st_mtime_ns, p.stat().st_ino)
+                                     for p in [record, bytecode, outside]})
+            with self.assertRaisesRegex(ValueError, "escapes"):
+                resume.installed_inventory(platlib, record.parent)
+
+    def test_isolated_package_locator_disables_bytecode_explicitly(self):
+        workflow = (Path(__file__).resolve().parents[2] / ".github/workflows/sagas.yml").read_text()
+        locator = next(line for line in workflow.splitlines() if "package_root=" in line
+                       and "temporal" not in line)
+        self.assertIn('"$consumer/bin/python" -I -B -c', locator)
+
     def test_real_pip_bytecode_refusal_and_no_compile_preserve_verifier_guards(self):
         spec = importlib.util.spec_from_file_location("artifact_verifier",
             Path(__file__).resolve().parents[2] / "tools/verify_python_artifacts.py")
@@ -66,6 +102,25 @@ class ResumeCustody(unittest.TestCase):
                 else:
                     self.assertFalse(any(name.endswith(".pyc") for name in extras[mode]))
                     self.assertEqual(verifier._validate_installed_wheel(wheel, target, "0.0.0")["status"], "passed")
+            for mode, flags in [("isolated", []), ("isolated-no-bytecode", ["-B"])]:
+                target = root / mode
+                shutil.copytree(root / "no-compile", target)
+                command = [sys.executable, "-I", *flags, "-c",
+                    "import sys;sys.path.insert(0,sys.argv[1]);import umf;print(sys.dont_write_bytecode)", str(target)]
+                child = subprocess.run(command, env=env, capture_output=True, text=True)
+                self.assertEqual(child.returncode, 0, child.stderr)
+                bytecode = sorted(p.relative_to(target).as_posix() for p in target.rglob("*.pyc"))
+                if mode == "isolated":
+                    self.assertEqual(child.stdout.strip(), "False")
+                    self.assertTrue(bytecode)
+                    with self.assertRaisesRegex(ValueError, "omitted from RECORD"):
+                        verifier._validate_installed_wheel(wheel, target, "0.0.0")
+                else:
+                    self.assertEqual(child.stdout.strip(), "True")
+                    self.assertEqual(bytecode, [])
+                    self.assertEqual(verifier._validate_installed_wheel(wheel, target, "0.0.0")["status"], "passed")
+                print(json.dumps({"isolatedFixture": mode, "bytecode": bytecode,
+                                  "PYTHONDONTWRITEBYTECODE": env["PYTHONDONTWRITEBYTECODE"]}))
             for damage, message in [("recorded-pyc", "unexpected installer file"),
                                     ("extra", "unexpected installer file"),
                                     ("payload", "exact wheel payload")]:

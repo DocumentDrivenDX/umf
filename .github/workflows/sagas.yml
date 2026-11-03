@@ -331,7 +331,7 @@ jobs:
           "$consumer/bin/python" -m pip install --no-compile --report "$UMF_TEMPORAL_OUTPUT/install-report.json" "$UMF_TEMPORAL_OUTPUT/dist/"*.whl "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/resolver.log"
           "$consumer/bin/python" -m pip check | tee "$UMF_TEMPORAL_OUTPUT/pip-check.log"
           "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT" --expected-python 3.11.17 --install-report "$UMF_TEMPORAL_OUTPUT/install-report.json" --receipt "$UMF_TEMPORAL_OUTPUT/installed-linux311.json"
-          package_root="$("$consumer/bin/python" -I -c 'import pathlib,umf;print(pathlib.Path(umf.__file__).resolve().parent)')"
+          package_root="$("$consumer/bin/python" -I -B -c 'import pathlib,umf;print(pathlib.Path(umf.__file__).resolve().parent)')"
           python scripts/rust-migration/r4/check_binary_closure.py --package-root "$package_root" --cli-binary "$package_root/_bin/umf" "$package_root/_rust_core.abi3.so" "$package_root/_bin/umf" > "$UMF_TEMPORAL_OUTPUT/linux-binary-closure.json"
       - name: Apply Q for only the skipped Python host qualification
         run: python controller/tools/temporal_resume.py overlay --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"

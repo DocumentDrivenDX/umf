@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import importlib.metadata
 import json
@@ -13,6 +14,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import sysconfig
 import tarfile
 import urllib.error
 import urllib.request
@@ -389,7 +391,45 @@ def probe(source: Path, output: Path, expected_python: str, install_report: Path
         "scope": "Actual Linux " + expected_python + " component install; no Truss/native enrollment or broader host claim"})
 
 
+def installed_inventory(platlib: Path, prefix: Path) -> dict:
+    """Read-only evidence, including unrecorded files; never import UMF or repair it."""
+    platlib = platlib.resolve(strict=True)
+    if not platlib.is_relative_to(prefix.resolve(strict=True)):
+        raise ValueError("Installed inventory platlib escapes its interpreter prefix")
+    roots = [platlib / name for name in ("umf", "umf_codegen", "umf_access")]
+    for name in ("umf_core", "umf_codegen", "umf_access"):
+        roots.extend(sorted(platlib.glob(name + "-*.dist-info")))
+    files, records = [], []
+    for root in roots:
+        if not root.exists() and not root.is_symlink():
+            continue
+        paths = [root] if root.is_symlink() or not root.is_dir() else sorted(root.rglob("*"))
+        for path in paths:
+            mode = path.lstat().st_mode
+            name = path.relative_to(platlib).as_posix()
+            if stat.S_ISLNK(mode):
+                files.append({"path": name, "kind": "symlink", "target": os.readlink(path)})
+            elif stat.S_ISREG(mode):
+                files.append({"path": name, "kind": "file", "bytes": path.stat().st_size, "sha256": digest(path)})
+                if path.name == "RECORD" and root.name.endswith(".dist-info"):
+                    records.append({"path": name, "bytesBase64": base64.b64encode(path.read_bytes()).decode("ascii")})
+            elif not stat.S_ISDIR(mode):
+                files.append({"path": name, "kind": "other", "mode": mode})
+    return {"profile": "umf.installed-files-observation/1", "platlib": str(platlib),
+            "prefix": str(prefix), "files": files, "records": records,
+            "scope": "Observed files and lossless installed RECORD bytes; not a qualification acceptance"}
+
+
 def capture(source: Path, controller: Path, output: Path) -> None:
+    runner_temp = os.environ.get("RUNNER_TEMP")
+    if runner_temp:
+        for name in ("temporal-python-consumer", "temporal-rebuilt-consumer",
+                     "temporal-python313-direct", "temporal-python313-rebuilt"):
+            python = Path(runner_temp) / name / "bin/python"
+            if python.is_file():
+                subprocess.run([str(python), "-I", "-B", str(controller / "tools/temporal_resume.py"),
+                    "inventory", "--source", str(source), "--controller", str(controller),
+                    "--output", str(output / "installed-inventories" / (name + ".json"))], check=True)
     write(output / "files.json", {"artifactSourceS": SOURCE, "controllerQ": git(controller, "rev-parse", "HEAD"),
         "sourceHead": git(source, "rev-parse", "HEAD"), "sourceStatus": git(source, "status", "--porcelain=v1"),
         "files": [{"path": str(p.relative_to(output)), "bytes": p.stat().st_size, "sha256": digest(p)}
@@ -398,7 +438,7 @@ def capture(source: Path, controller: Path, output: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("operation", choices=["prepare", "prepare-linux", "overlay", "restore", "probe", "capture"])
+    parser.add_argument("operation", choices=["prepare", "prepare-linux", "overlay", "restore", "probe", "capture", "inventory"])
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--controller", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -416,6 +456,12 @@ def main() -> None:
         if not args.expected_python or not args.install_report or not args.receipt:
             parser.error("probe requires exact --expected-python, --install-report and --receipt")
         probe(args.source, args.output, args.expected_python, args.install_report, args.receipt)
+    elif args.operation == "inventory":
+        if not sys.flags.isolated or not sys.dont_write_bytecode:
+            raise ValueError("Installed inventory requires explicit -I -B")
+        value = installed_inventory(Path(sysconfig.get_paths()["platlib"]), Path(sys.prefix))
+        value.update(actualPython=platform.python_version(), isolated=True, dontWriteBytecode=True)
+        write(args.output, value)
     else:
         capture(args.source, args.controller, args.output)
 
