@@ -105,10 +105,13 @@ This path proves GitHub companion delivery, not Codegen PyPI publication.
 ### After both exact PyPI distributions are public and verified
 
 ```sh
-python -m pip install --index-url https://pypi.org/simple \
-  'umf-core==0.10.8' 'umf-codegen==0.10.8'
+python -m pip install --index-url https://pypi.org/simple 'umf-codegen==0.10.8'
 python -m pip check
+umf-codegen --help
 ```
+
+The normal resolver selects `umf-core==0.10.8` through Codegen's exact package
+dependency. No dependency suppression or private fallback wheelhouse is used.
 
 For rollback, use an independently qualified prior matching tuple in a separate
 environment. Do not mix a prior Core wheel with the 0.10.8 companion or relabel

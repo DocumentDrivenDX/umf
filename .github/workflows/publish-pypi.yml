@@ -242,6 +242,17 @@ jobs:
             --install-report "$RUNNER_TEMP/public-core-install-report.json" \
             --receipt "$RUNNER_TEMP/public-native-correspondence.json" \
             2>&1 | tee "$RUNNER_TEMP/public-native-correspondence.log"
+          python -I -B - <<'PY'
+          import importlib.util, json, os
+          from pathlib import Path
+          spec = importlib.util.spec_from_file_location("public_proof", "scripts/probe_public_core_release.py")
+          proof = importlib.util.module_from_spec(spec); spec.loader.exec_module(proof)
+          root = Path(os.environ["RUNNER_TEMP"])
+          consumer = root / "consumer-receipt.json"
+          native = json.loads((root / "public-native-correspondence.json").read_text())
+          value = proof.attach_consumer_envelope(json.loads(consumer.read_text()), native)
+          consumer.write_text(json.dumps(value, indent=2) + "\n")
+          PY
       - name: Retain actual public consumer identity and read-only installed RECORD evidence
         if: always() && inputs.tag == 'umf-v0.10.8'
         env:

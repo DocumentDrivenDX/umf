@@ -52,7 +52,21 @@ def probe(root,wheel,report_path,receipt):
         insist(json.dumps(req)==original,'Request custody changed')
     after=strict();insist(before==after,'Public installed bytes/resources changed during probe')
     pydantic=importlib.metadata.version('pydantic');insist(pydantic=='2.14.2','Resolved public dependency cohort differs from actual admitted witness')
-    receipt.write_text(json.dumps({'profile':'umf.fresh-public-core-correspondence/1','sourceS':SOURCE,'actualPython':platform.python_version(),'platform':platform.platform(),'selectedPublicCore':selected,'wheelSHA256':WHEEL,'nativeSHA256':NATIVE,'origins':origins,'inspectionCases':17,'inspectionCalls':51,'requestCustodyPreserved':True,'semanticCore':'0.10.0','canonicalResources':True,'strictBefore':before,'strictAfter':after,'pydantic':pydantic,'scope':'Actual fresh-public Linux311 Core proof only; no Access/Codegen PyPI/Weft/Truss or Mac313-native claim'},indent=2)+'\n')
+    receipt.write_text(json.dumps({'profile':'umf.fresh-public-core-correspondence/1','status':'passed','sourceS':SOURCE,'actualPython':platform.python_version(),'platform':platform.platform(),'selectedPublicCore':selected,'wheelSHA256':WHEEL,'nativeSHA256':NATIVE,'origins':origins,'inspectionCases':17,'inspectionCalls':51,'requestCustodyPreserved':True,'semanticCore':'0.10.0','canonicalResources':True,'resourceManifestSHA256':sha(package/'action_runtime_resource_manifest.json'),'engineVersion':_rust_core.engine_version(),'codegenProtocol':_rust_core.codegen_protocol_version(),'qualificationInputs':PINS,'strictBefore':before,'strictAfter':after,'pydantic':pydantic,'scope':'Actual fresh-public Linux311 Core proof only; no Access/Codegen PyPI/Weft/Truss or Mac313-native claim'},indent=2)+'\n')
+def attach_consumer_envelope(consumer, native):
+    insist(consumer.get('schema')=='pypi-consumer-receipt.v1' and consumer.get('status')=='passed'
+           and consumer.get('index')=='https://pypi.org/simple' and consumer.get('umf_core_version')=='0.10.8',
+           'Original public consumer envelope differs')
+    insist(native.get('profile')=='umf.fresh-public-core-correspondence/1' and native.get('status')=='passed'
+           and native.get('sourceS')==SOURCE and native.get('wheelSHA256')==WHEEL
+           and native.get('nativeSHA256')==NATIVE and native.get('inspectionCases')==17
+           and native.get('inspectionCalls')==51 and native.get('canonicalResources') is True,
+           'Actual completed native/resource/inspection proof required')
+    insist('nativeResourceInspection' not in consumer and consumer.get('source_sha',SOURCE)==SOURCE,
+           'Do not replace an existing consumer proof or change its source')
+    # Called only before this run first uploads its newly produced original receipt.
+    return {**consumer, 'source_sha':SOURCE, 'nativeResourceInspection':native}
+
 if __name__=='__main__':
     import argparse
     p=argparse.ArgumentParser(description=__doc__)

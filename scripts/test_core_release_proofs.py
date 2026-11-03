@@ -31,6 +31,18 @@ class ArchiveControls(unittest.TestCase):
    with tempfile.TemporaryDirectory()as d:
     f,r=self.sample(Path(d),mutate)
     with self.assertRaises(ValueError):archive_module.verify_tar(f,r)
+class EnvelopeControls(unittest.TestCase):
+ def values(self):
+  return ({'schema':'pypi-consumer-receipt.v1','status':'passed','index':'https://pypi.org/simple','umf_core_version':'0.10.8'},
+          {'profile':'umf.fresh-public-core-correspondence/1','status':'passed','sourceS':m.SOURCE,
+           'wheelSHA256':m.WHEEL,'nativeSHA256':m.NATIVE,'inspectionCases':17,'inspectionCalls':51,'canonicalResources':True})
+ def test_original_envelope_member_schema_preserved_with_explicit_deep_profile(self):
+  c,n=self.values();r=m.attach_consumer_envelope(c,n);self.assertEqual(r['schema'],c['schema']);self.assertEqual(r['nativeResourceInspection'],n);self.assertNotIn('nativeResourceInspection',c)
+ def test_shallow_wrong_or_incomplete_proof_cannot_claim_native_qualification(self):
+  for mutate in [lambda c,n:n.clear(),lambda c,n:n.update(status='failed'),lambda c,n:n.update(sourceS='f'*40),lambda c,n:n.update(nativeSHA256='f'*64),lambda c,n:n.update(inspectionCalls=17),lambda c,n:n.update(canonicalResources=False),lambda c,n:c.update(nativeResourceInspection=n),lambda c,n:c.update(source_sha='f'*40)]:
+   c,n=self.values();mutate(c,n)
+   with self.assertRaises(ValueError):m.attach_consumer_envelope(c,n)
+
 class PublisherWiringControls(unittest.TestCase):
  def test_closed_0108_source_and_postpublication_public_proof_wiring(self):
   source=(Path(__file__).resolve().parents[1]/'.github/workflows/publish-pypi.yml').read_text()
@@ -46,6 +58,7 @@ class PublisherWiringControls(unittest.TestCase):
   self.assertIn('--index-url https://pypi.org/simple "umf-core==$VERSION"',consumer)
   self.assertIn('probe_public_core_release.py',consumer)
   self.assertIn('temporal_resume.py inventory',consumer)
+  self.assertIn('attach_consumer_envelope',consumer)
   self.assertIn('if: always() && inputs.tag ==',consumer)
   self.assertIn('umf-core-public-correspondence-0.10.8-${{ github.run_id }}',consumer)
   self.assertIn('if: ${{ inputs.locally_qualified != true }}',consumer)
