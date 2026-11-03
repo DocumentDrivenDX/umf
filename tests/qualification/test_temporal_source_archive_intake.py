@@ -11,7 +11,7 @@ class Controls(unittest.TestCase):
   return release,{'ref':'refs/tags/'+m.TAG,'object':{'type':'commit','sha':m.SOURCE}}
  def test_closed_draft_source_assets_and_tag(self):
   r,t=self.values();self.assertEqual(set(m.validate_release(r,t,101)),set(m.FILES))
-  for mutate in [lambda r,t:r.update(draft=False),lambda r,t:r.update(published_at='now'),lambda r,t:r.update(target_commitish='f'*40),lambda r,t:r.update(tag_name='umf-v0.10.8'),lambda r,t:t['object'].update(sha='f'*40),lambda r,t:r['assets'].append(r['assets'][0]),lambda r,t:r['assets'][0].update(size=1),lambda r,t:r['assets'][0].update(digest='sha256:'+'f'*64),lambda r,t:r['assets'][1].update(id=201)]:
+  for mutate in [lambda r,t:r.update(id=101.0),lambda r,t:r.update(draft=False),lambda r,t:r.update(published_at='now'),lambda r,t:r.update(target_commitish='f'*40),lambda r,t:r.update(tag_name='umf-v0.10.8'),lambda r,t:t['object'].update(sha='f'*40),lambda r,t:r['assets'].append(r['assets'][0]),lambda r,t:r['assets'][0].update(size=float(m.FILES[m.ARCHIVE][0])),lambda r,t:r['assets'][0].update(size=1),lambda r,t:r['assets'][0].update(digest='sha256:'+'f'*64),lambda r,t:r['assets'][1].update(id=201)]:
    r,t=self.values();mutate(r,t)
    with self.assertRaises(ValueError):m.validate_release(r,t,101)
   r,t=self.values()

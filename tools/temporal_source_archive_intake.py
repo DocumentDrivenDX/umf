@@ -23,7 +23,7 @@ def api(path,token):
  req=urllib.request.Request('https://api.github.com/repos/'+REPO+'/'+path,headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json'})
  with urllib.request.urlopen(req,timeout=60)as r:return json.load(r)
 def validate_release(r,tag,carrier_id):
- insist(type(carrier_id)is int and carrier_id>0 and r.get('id')==carrier_id,'Carrier ID differs')
+ insist(type(carrier_id)is int and carrier_id>0 and type(r.get('id'))is int and r.get('id')==carrier_id,'Carrier ID differs')
  insist(r.get('draft')is True and r.get('prerelease')is True and r.get('published_at')is None
         and r.get('tag_name')==r.get('name')==TAG and r.get('target_commitish')==SOURCE and r.get('body')==BODY,'Not exact unpublished source-only carrier')
  insist(tag.get('ref')=='refs/tags/'+TAG and tag.get('object',{}).get('type')=='commit' and tag['object'].get('sha')==SOURCE,'Material tag moved')
@@ -32,7 +32,7 @@ def validate_release(r,tag,carrier_id):
  ids=[]
  for n,(size,sha)in FILES.items():
   a=assets[n];insist(type(a.get('id'))is int and a['id']>0 and a.get('state')=='uploaded'
-                    and a.get('size')==size and a.get('digest')=='sha256:'+sha,'Source carrier asset ID/size/digest differs');ids.append(a['id'])
+                    and type(a.get('size'))is int and a.get('size')==size and a.get('digest')=='sha256:'+sha,'Source carrier asset ID/size/digest differs');ids.append(a['id'])
  insist(len(set(ids))==2,'Duplicate source carrier asset IDs')
  return assets
 
