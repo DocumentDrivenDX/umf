@@ -1,0 +1,177 @@
+name: Publish admitted UMF Access archives to PyPI
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact existing Access component tag
+        type: string
+        required: true
+      source_sha:
+        description: Exact qualified production S
+        type: string
+        required: true
+      expected_sums_sha256:
+        description: Reviewed public SHA256SUMS digest
+        type: string
+        required: true
+      expected_admission_sha256:
+        description: Reviewed main admission digest
+        type: string
+        required: true
+      publish:
+        description: Explicitly enable admitted PyPI upload and public consumer validation
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: access-pypi-dev10
+  cancel-in-progress: false
+env:
+  TAG: ${{ inputs.tag }}
+  SOURCE_SHA: ${{ inputs.source_sha }}
+  SUMS_SHA: ${{ inputs.expected_sums_sha256 }}
+  ADMISSION_SHA: ${{ inputs.expected_admission_sha256 }}
+jobs:
+  verify:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check fixed dispatch identity before remote lookup
+        run: |
+          python - <<'PY'
+          import os, re, sys
+          sys.path.insert(0, 'scripts')
+          import publish_access_pypi_release as p
+          assert os.environ['TAG'] == p.TAG
+          assert os.environ['SOURCE_SHA'] == p.SOURCE
+          assert all(re.fullmatch('[0-9a-f]{64}', os.environ[n]) for n in ('SUMS_SHA', 'ADMISSION_SHA'))
+          PY
+      - name: Test pure publisher controls
+        run: python -m unittest scripts.test_publish_access_pypi_release -v
+      - name: Read public release and exact tag objects
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir incoming
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > incoming/release.json
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > incoming/tag-ref.json
+          if [[ "$(jq -r .object.type incoming/tag-ref.json)" == tag ]]; then
+            gh api "repos/$GITHUB_REPOSITORY/git/tags/$(jq -r .object.sha incoming/tag-ref.json)" > incoming/tag-object.json
+          fi
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir incoming/assets
+      - name: Verify admitted evidence, public Core, original Access bytes and release identity
+        run: |
+          set -euo pipefail
+          ARGS=(prepare --assets-dir incoming/assets --tag "$TAG" --source-sha "$SOURCE_SHA"
+            --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA"
+            --release-json incoming/release.json --tag-ref-json incoming/tag-ref.json --output-dir dist)
+          if [[ -f incoming/tag-object.json ]]; then ARGS+=(--tag-object-json incoming/tag-object.json); fi
+          python scripts/publish_access_pypi_release.py "${ARGS[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: admitted-access-dev10
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 90
+  publish:
+    needs: verify
+    if: inputs.publish == true && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: admitted-access-dev10
+          path: dist
+      - name: Revalidate admission and bytes; refuse partial or conflicting PyPI state
+        id: preflight
+        run: |
+          python scripts/publish_access_pypi_release.py check-pypi --assets-dir dist \
+            --tag "$TAG" --source-sha "$SOURCE_SHA" --expected-sums-sha256 "$SUMS_SHA" \
+            --expected-admission-sha256 "$ADMISSION_SHA"
+      - name: Select only the two unchanged qualified archives
+        if: steps.preflight.outputs.status == 'absent'
+        run: |
+          mkdir .verified-pypi-packages
+          cp dist/umf_access-0.1.0.dev10-py3-none-any.whl dist/umf_access-0.1.0.dev10.tar.gz .verified-pypi-packages/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        id: upload
+        if: steps.preflight.outputs.status == 'absent'
+        with:
+          packages-dir: .verified-pypi-packages/
+      - name: Verify public registry inventory and downloaded bytes
+        run: |
+          python scripts/publish_access_pypi_release.py check-pypi --assets-dir dist \
+            --tag "$TAG" --source-sha "$SOURCE_SHA" --expected-sums-sha256 "$SUMS_SHA" \
+            --expected-admission-sha256 "$ADMISSION_SHA" --wait > dist/public-bytes-receipt.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: access-dev10-public-bytes
+          path: dist/*receipt.json
+          retention-days: 365
+  public-consumer:
+    needs: publish
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fresh normal public-index consumer, module origins, runtime identity and inert CLI/catalog
+        working-directory: ${{ runner.temp }}
+        env:
+          PIP_CONFIG_FILE: /dev/null
+        run: |
+          set -euo pipefail
+          python -m venv access-public-consumer
+          access-public-consumer/bin/python -m pip --isolated install --disable-pip-version-check --no-cache-dir \
+            --only-binary=umf-core,umf-access --index-url https://pypi.org/simple 'umf-access==0.1.0.dev10'
+          access-public-consumer/bin/python -m pip --isolated check
+          access-public-consumer/bin/python -I - <<'PY'
+          import importlib.metadata as m, json, pathlib, sysconfig
+          import umf, umf_access
+          from umf_access.types import RUNTIME_IDENTITY
+          from umf_access.catalog import Argument, ReadPlan
+          assert RUNTIME_IDENTITY == ('umf_access', '0.1.0.dev10', 'umf-access-runtime/0.1')
+          assert Argument('n', int).validate(17) == 17
+          assert ReadPlan('inert', 'rows', (), ()).variants == ()
+          for name, version, module in [('umf-access', '0.1.0.dev10', umf_access), ('umf-core', '0.10.8', umf)]:
+              dist = m.distribution(name)
+              assert dist.version == version and dist.read_text('direct_url.json') is None
+              assert pathlib.Path(module.__file__).is_relative_to(sysconfig.get_path('purelib'))
+          pathlib.Path('consumer-receipt.json').write_text(json.dumps({
+              'schema': 'umf.access-public-consumer/1', 'status': 'passed',
+              'index': 'https://pypi.org/simple', 'access': '0.1.0.dev10', 'core': '0.10.8',
+              'runtimeIdentity': RUNTIME_IDENTITY, 'scope': 'public resolver/origin/identity/inert smoke; not full temporal requalification'
+          }, indent=2) + '\n')
+          PY
+          access-public-consumer/bin/umf-access --help > access-cli-help.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: access-dev10-public-consumer
+          path: |
+            ${{ runner.temp }}/consumer-receipt.json
+            ${{ runner.temp }}/access-cli-help.txt
+          if-no-files-found: error
+          retention-days: 365
