@@ -115,9 +115,9 @@ def verify_sdist(path: Path, version: str = VERSION) -> None:
 
 def _wheel_bounds(version: str) -> tuple[int, int, int]:
     # The completed Rust engine includes both a native module and native CLI.
-    # Keep historical compact producer/tool limits unchanged. The exact 0.10.7
-    # successor has a closed 64 MiB archive/family and 128 MiB expanded profile.
-    if version == "0.10.7":
+    # Keep historical compact producer/tool limits unchanged. These exact native
+    # cohorts use the existing 64 MiB archive/family and 128 MiB expanded profile.
+    if version in {"0.10.7", "0.10.8"}:
         return 64 * 1024 * 1024, 128 * 1024 * 1024, 64 * 1024 * 1024
     return MAX_RELEASE_ASSET_BYTES, MAX_RELEASE_ASSET_BYTES, MAX_RELEASE_ASSET_BYTES
 
