@@ -239,3 +239,11 @@ launching because its temporary-directory prefix was macOS-specific. It now
 uses `node:os.tmpdir()` and `node:path.join()`. With `TMPDIR=/tmp`, all seventeen
 Lini Chromium checks pass under Bun 1.4.2 and Chromium 153.0.8010.12. No drawing,
 package byte, validation rule or qualification assertion changed.
+
+Run 41546187070 also passed the complete reference, public-package and embedding
+browser suites. The collection suite completed its collection, alias, geometry
+and history assertions, then classified Lini's same-origin blob module as an
+external retrieval. Its final request check now compares parsed URL origins,
+including blob origins, instead of HTTP string prefixes. Remote HTTP and remote
+blob origins still fail; all requests and per-collection no-fetch checks remain
+recorded. Five focused origin controls cover local HTTP/blob and foreign origins.
