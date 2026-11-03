@@ -14,6 +14,8 @@ import json
 import os
 import re
 import shutil
+import socket
+import ssl
 import stat
 import subprocess
 import tarfile
@@ -273,6 +275,23 @@ class CapabilityServiceFailure(Exception):
         self.status, self.details = status, details
 
 
+class CapabilityResponse:
+    def __init__(self, status, value):
+        self.status, self.value = status, value
+
+
+class CapabilityTransportFailure(Exception):
+    def __init__(self, reason, status):
+        super().__init__("capability response transport failed")
+        self.reason, self.status = reason, status
+
+
+class CapabilityDiagnostic(Exception):
+    def __init__(self, code, reason, status=None, **details):
+        super().__init__("sanitized capability diagnostic")
+        self.code, self.reason, self.status, self.details = code, reason, status, details
+
+
 def _capability_request(request):
     class NoRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, *args, **kwargs):
@@ -280,21 +299,32 @@ def _capability_request(request):
     opener = urllib.request.build_opener(NoRedirect())
     try:
         with opener.open(request, timeout=30) as response:
-            raw = response.read(65537)
-            require(len(raw) <= 65536, "bounded capability response required")
-            return decode(raw)
+            try:
+                raw = response.read(65537)
+            except OSError as error:
+                raise CapabilityTransportFailure(error, response.status) from None
+            if len(raw) > 65536:
+                raise CapabilityDiagnostic("service_response_too_large", "Service response exceeded 65536 bytes", response.status)
+            try:
+                value = decode(raw)
+            except AccessReleaseError:
+                raise CapabilityDiagnostic("service_json_invalid", "Service response was not valid unique-key JSON", response.status) from None
+            return CapabilityResponse(response.status, value)
     except urllib.error.HTTPError as error:
         # Never propagate raw HTTP bodies, headers, URLs or exception strings.
-        raw = error.read(65537)
         try:
+            raw = error.read(65537)
             details = decode(raw) if len(raw) <= 65536 else None
-        except (AccessReleaseError, ValueError):
+        except Exception:
             details = None
         raise CapabilityServiceFailure(error.code, details) from None
 
 
 def sanitized_service_reasons(value, secrets):
     rows = value.get("errors", []) if type(value) is dict else []
+    # GitHub's errors use a top-level message; PyPI uses errors[].description.
+    if type(value) is dict and type(value.get("message")) is str:
+        rows = [*(rows if type(rows) is list else []), {"description": value["message"]}]
     result = []
     for row in rows[:8] if type(rows) is list else []:
         if type(row) is not dict:
@@ -309,6 +339,7 @@ def sanitized_service_reasons(value, secrets):
                     text = text.replace(secret, "[REDACTED]")
             text = re.sub(r"(?i)(?:pypi-|gh[opsur]_)[A-Za-z0-9_.-]+|[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+", "[REDACTED]", text)
             text = re.sub(r"(?i)(bearer\s+|(?:token|password|authorization)\s*[=:]\s*)\S+", r"\1[REDACTED]", text)
+            text = re.sub(r"https?://\S+", "[URL REDACTED]", text)
             fields.append(key + ": " + " ".join(text.split())[:400])
         if fields:
             result.append("; ".join(fields))
@@ -316,54 +347,112 @@ def sanitized_service_reasons(value, secrets):
 
 
 def capability_exchange(environ, transport=None):
-    """Mint and discard in memory. No upload, files, outputs, or qualification.
+    """Mint and discard in memory; return only a sanitized observation.
 
     Exchange success can match multiple projects; it is not Access scope proof.
     Official protocol: docs.pypi.org/trusted-publishers/using-a-publisher/
     """
     result = {"schema": "umf.access-publisher-exchange/1", "repository": REPOSITORY,
               "workflow": WORKFLOW, "environment": "pypi", "accessProjectAuthorization": "UNVERIFIED"}
-    stage, secrets = "context", []
+    for name, key, pattern in (("workflowSHA", "GITHUB_WORKFLOW_SHA", r"[0-9a-f]{40}"),
+                               ("runID", "GITHUB_RUN_ID", r"[0-9]{1,20}"),
+                               ("runAttempt", "GITHUB_RUN_ATTEMPT", r"[0-9]{1,5}")):
+        value = environ.get(key)
+        result[name] = value if type(value) is str and re.fullmatch(pattern, value) else None
+    stage, operation, http_status, secrets = "context", "context.validate", None, []
     transport = transport or _capability_request
+
+    def check(condition, code, reason, **details):
+        if not condition:
+            raise CapabilityDiagnostic(code, reason, http_status, **details)
+
+    def request_value(request):
+        nonlocal http_status
+        http_status = None
+        response = transport(request)
+        if type(response) is CapabilityResponse:
+            http_status = response.status
+            return response.value
+        return response  # Pure controls can supply a decoded response directly.
+
     try:
         exact = {"GITHUB_ACTIONS": "true", "GITHUB_EVENT_NAME": "workflow_dispatch",
                  "GITHUB_REPOSITORY": REPOSITORY, "GITHUB_REF": "refs/heads/main",
                  "GITHUB_WORKFLOW_REF": REPOSITORY + "/.github/workflows/" + WORKFLOW + "@refs/heads/main",
                  "ACCESS_CAPABILITY_ENVIRONMENT": "pypi", "ACCESS_CAPABILITY_ONLY": "true", "ACCESS_PUBLISH": "false"}
-        require(all(environ.get(k) == v for k, v in exact.items()), "exact capability-only workflow context required")
+        for key, expected in exact.items():
+            check(environ.get(key) == expected, "workflow_context_mismatch", "Required workflow context differs", field=key)
+        operation = "context.endpoint.validate"
         url, bearer = environ.get("ACTIONS_ID_TOKEN_REQUEST_URL", ""), environ.get("ACTIONS_ID_TOKEN_REQUEST_TOKEN", "")
         secrets.append(bearer)
         parsed = urllib.parse.urlsplit(url)
-        require(parsed.scheme == "https" and parsed.hostname and parsed.hostname.endswith(".actions.githubusercontent.com")
+        check(parsed.scheme == "https" and parsed.hostname and parsed.hostname.endswith(".actions.githubusercontent.com")
                 and not parsed.username and not parsed.password and parsed.port in (None, 443) and not parsed.fragment
                 and bearer and not any(k == "audience" for k, _ in urllib.parse.parse_qsl(parsed.query)),
-                "valid GitHub OIDC endpoint required")
+                "oidc_request_context_invalid", "GitHub OIDC endpoint or request credential context is invalid")
         url = urllib.parse.urlunsplit(parsed._replace(query=parsed.query + ("&" if parsed.query else "") + "audience=pypi"))
         stage = "github-oidc"
-        response = transport(urllib.request.Request(url, headers={"Authorization": "bearer " + bearer}))
+        operation = "github.request"
+        response = request_value(urllib.request.Request(url, headers={"Authorization": "bearer " + bearer}))
+        operation = "github.response.validate"
         token = response.get("value") if type(response) is dict else None
-        require(type(token) is str and 0 < len(token) <= 32768, "GitHub token response missing")
+        check(type(token) is str and 0 < len(token) <= 32768,
+              "github_token_response_invalid", "GitHub response lacks a bounded token string")
         secrets.append(token)
+        operation = "github.jwt.decode"
         parts = token.split(".")
-        require(len(parts) == 3, "GitHub token shape differs")
-        claims = decode(base64.urlsafe_b64decode(parts[1] + "=" * (-len(parts[1]) % 4)))
-        require(type(claims) is dict and all(claims.get(k) == v for k, v in {
+        check(len(parts) == 3, "jwt_shape_invalid", "GitHub OIDC token does not have three segments")
+        try:
+            payload = base64.b64decode(parts[1] + "=" * (-len(parts[1]) % 4), altchars=b"-_", validate=True)
+        except ValueError:
+            raise CapabilityDiagnostic("jwt_payload_encoding_invalid", "GitHub OIDC payload is not valid base64url", http_status) from None
+        try:
+            claims = decode(payload)
+        except AccessReleaseError:
+            raise CapabilityDiagnostic("jwt_payload_json_invalid", "GitHub OIDC payload is not valid unique-key JSON", http_status) from None
+        operation = "github.claims.validate"
+        check(type(claims) is dict, "jwt_claims_type_invalid", "GitHub OIDC claims must be an object")
+        for key, expected in {
             "repository": REPOSITORY, "ref": "refs/heads/main", "workflow_ref": exact["GITHUB_WORKFLOW_REF"],
-            "sub": "repo:" + REPOSITORY + ":environment:pypi", "aud": "pypi"}.items()), "OIDC workflow/environment claims differ")
+            "sub": "repo:" + REPOSITORY + ":environment:pypi", "aud": "pypi"}.items():
+            check(claims.get(key) == expected, "oidc_claim_mismatch", "OIDC claim does not match required workflow/environment",
+                  field=key, actualType=type(claims.get(key)).__name__)
         # PyPI verifies the token signature and trust configuration. Local claim
         # checks above only prevent an accidental different workflow context.
         stage = "pypi-exchange"
-        response = transport(urllib.request.Request("https://pypi.org/_/oidc/mint-token",
+        operation = "pypi.request"
+        response = request_value(urllib.request.Request("https://pypi.org/_/oidc/mint-token",
             data=json.dumps({"token": token}).encode(), headers={"Content-Type": "application/json"}, method="POST"))
-        require(type(response) is dict and type(response.get("token")) is str
-                and response["token"].startswith("pypi-") and len(response["token"]) > 5, "PyPI mint response missing")
+        operation = "pypi.response.validate"
+        check(type(response) is dict and type(response.get("token")) is str
+                and response["token"].startswith("pypi-") and len(response["token"]) > 5,
+                "pypi_token_response_invalid", "PyPI response lacks an issued credential")
         result["status"] = "EXCHANGE_SUCCESS"
         # Deliberately never return, print, persist or use the minted credential.
     except CapabilityServiceFailure as error:
-        result.update(status="EXCHANGE_FAILED", stage=stage, httpStatus=error.status,
+        result.update(status="EXCHANGE_FAILED", stage=stage, operation=operation, httpStatus=error.status,
+                      reasonCode="http_service_rejected",
                       serviceReasons=sanitized_service_reasons(error.details, secrets))
-    except Exception:
-        result.update(status="EXCHANGE_FAILED", stage=stage, serviceReasons=["context, transport or response validation failed; no raw exception retained"])
+    except CapabilityDiagnostic as error:
+        result.update(status="EXCHANGE_FAILED", stage=stage, operation=operation, httpStatus=error.status,
+                      reasonCode=error.code, serviceReasons=[error.reason], diagnostics=error.details)
+    except (CapabilityTransportFailure, urllib.error.URLError, OSError) as error:
+        reason = error.reason if isinstance(error, (CapabilityTransportFailure, urllib.error.URLError)) else error
+        if isinstance(error, CapabilityTransportFailure):
+            http_status = error.status
+        code = ("tls_certificate_verification_failed" if isinstance(reason, ssl.SSLCertVerificationError) else
+                "tls_transport_failed" if isinstance(reason, ssl.SSLError) else
+                "dns_resolution_failed" if isinstance(reason, socket.gaierror) else
+                "request_timeout" if isinstance(reason, TimeoutError) else
+                "connection_refused" if isinstance(reason, ConnectionRefusedError) else
+                "connection_reset" if isinstance(reason, ConnectionResetError) else "url_transport_failed")
+        result.update(status="EXCHANGE_FAILED", stage=stage, operation=operation, httpStatus=http_status,
+                      reasonCode=code, exceptionType=type(error).__name__, reasonType=type(reason).__name__,
+                      serviceReasons=sanitized_service_reasons({"message": str(reason)}, secrets))
+    except Exception as error:
+        result.update(status="EXCHANGE_FAILED", stage=stage, operation=operation, httpStatus=http_status,
+                      reasonCode="unexpected_exception", exceptionType=type(error).__name__,
+                      serviceReasons=["Unexpected exception; inspect operation and exception type, raw text withheld"])
     return result
 
 
@@ -454,15 +543,20 @@ def main():
     parser.add_argument("--tag-ref-json", type=Path)
     parser.add_argument("--tag-object-json", type=Path)
     parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--observation", type=Path, help="Capability-only sanitized observation file")
     parser.add_argument("--upload", action="store_true", default=False)
     parser.add_argument("--wait", action="store_true", default=False)
     args = parser.parse_args()
     if args.command == "capability-only":
-        require(all(v is None or v is False for k, v in vars(args).items() if k != "command"),
+        require(all(v is None or v is False for k, v in vars(args).items() if k not in ("command", "observation")),
                 "capability-only cannot accept package, upload or output arguments")
         observation = capability_exchange(os.environ)
-        print(json.dumps(observation, indent=2))
+        rendered = json.dumps(observation, indent=2) + "\n"
+        if args.observation is not None:
+            args.observation.write_text(rendered, encoding="utf-8")
+        print(rendered, end="")
         return 0 if observation["status"] == "EXCHANGE_SUCCESS" else 1
+    require(args.observation is None, "observation output is restricted to capability-only")
     require(all((args.assets_dir, args.expected_admission_sha256, args.expected_sums_sha256, args.tag, args.source_sha)),
             "package route requires all immutable admission/source pins")
     require(not args.upload or args.command == "stage-github", "upload is only supported for explicit GitHub staging")
