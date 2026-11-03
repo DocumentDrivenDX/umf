@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
+import {verifySagaVectors,type SagaSubject,type SagaVector} from '../../scripts/saga-portable/verify';
+import {createSagaRustDefault} from '../../src/extensions/actions/saga-rust-default';
+
 import {mkdtemp,mkdir,readFile,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
@@ -151,4 +154,58 @@ test('producer receipt refuses qualification-input or tested-artifact changes du
   await writeFile(artifactPath,'replacement native artifact');
   await expect(verifyPortableProducerSnapshot(root,{native:artifactPath},snapshot)).rejects.toThrow('host artifact bytes changed');
  }finally{await rm(root,{recursive:true,force:true});}
+});
+
+// Pure presentation/oracle controls: no native engine, WASM or product build.
+function detachedSourceVector():SagaVector {
+ return {id:'source-custody-only',covers:[1],source:{id:'original',modules:[{id:'module'}]},expected:{valid:true,complete:true}};
+}
+function custodySubject(source:(input:any)=>any):SagaSubject {
+ const unused=()=>{throw Error('Unexpected authoring or assessment in custody-only control');};
+ return {inspectSagas:input=>({source:source(input),validation:{valid:true,complete:true,diagnostics:[]},entries:[]}),declareSaga:unused,editSaga:unused,assessSaga:unused};
+}
+function custodyResult(subject:SagaSubject,vector=detachedSourceVector()) {return verifySagaVectors(subject,[vector]);}
+
+test('portable source custody accepts mutable detached reports',()=>{
+ expect(custodyResult(custodySubject(source=>structuredClone(source))).passed).toBe(1);
+});
+test('portable source custody accepts the immutable public Saga presentation without freezing its caller',()=>{
+ const vector=detachedSourceVector(),subject=createSagaRustDefault(custodySubject(source=>structuredClone(source)),()=>false);
+ const before=JSON.stringify(vector.source),inspection=subject.inspectSagas(vector.source as any);
+ expect(Object.isFrozen(inspection.source)).toBe(true);
+ expect(Object.isFrozen(vector.source)).toBe(false);
+ expect(inspection.source).not.toBe(vector.source);
+ expect(custodyResult(subject,vector).passed).toBe(1);
+ expect(JSON.stringify(vector.source)).toBe(before);
+ expect(Object.isFrozen(vector.source)).toBe(false);
+});
+test('portable source custody rejects a mutable returned caller alias',()=>{
+ const result=custodyResult(custodySubject(source=>source));
+ expect(result.passed).toBe(0);expect(result.results[0]?.failure).toContain('returned source aliases caller input');
+});
+test('portable source custody rejects a frozen returned caller alias',()=>{
+ const vector=detachedSourceVector();Object.freeze(vector.source);
+ const result=custodyResult(custodySubject(source=>source),vector);
+ expect(result.passed).toBe(0);expect(result.results[0]?.failure).toContain('returned source aliases caller input');
+});
+test('portable source custody rejects a mutable shallow copy borrowing a caller child',()=>{
+ const result=custodyResult(custodySubject(source=>({...source})));
+ expect(result.passed).toBe(0);expect(result.results[0]?.failure).toContain('returned source aliases caller input');
+});
+test('portable source custody rejects a frozen shallow copy borrowing a caller child',()=>{
+ const result=custodyResult(custodySubject(source=>Object.freeze({...source})));
+ expect(result.passed).toBe(0);expect(result.results[0]?.failure).toContain('returned source aliases caller input');
+});
+test('portable source custody still refuses mutation poisoning a cached mutable report',()=>{
+ let cached:any;
+ const result=custodyResult(custodySubject(source=>cached??=structuredClone(source)));
+ expect(result.passed).toBe(0);expect(result.results[0]?.failure).toContain('returned result mutation poisoned later inspection');
+});
+test('portable source custody does not hide an exception raised by a result setter',()=>{
+ const result=custodyResult(custodySubject(source=>{
+  const report=structuredClone(source);
+  Object.defineProperty(report,'id',{get:()=>source.id,set:()=>{throw Error('setter-product-failure');},enumerable:true,configurable:true});
+  return report;
+ }));
+ expect(result.passed).toBe(0);expect(result.results[0]?.failure).toContain('setter-product-failure');
 });
