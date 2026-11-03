@@ -4,6 +4,8 @@ import base64
 import io
 import json
 import subprocess
+import socket
+import ssl
 import sys
 import tempfile
 import unittest
@@ -295,6 +297,83 @@ class AccessPublisherTests(unittest.TestCase):
             result = p.capability_exchange(self.capability_context(), unittest.mock.Mock(side_effect=responses))
             self.assertEqual(result['status'], 'EXCHANGE_FAILED')
             self.assertNotIn('synthetic-request-secret', json.dumps(result))
+
+    def test_dns_transport_failure_has_specific_nonsecret_diagnostic(self):
+        transport = unittest.mock.Mock(side_effect=p.urllib.error.URLError(
+            socket.gaierror(socket.EAI_NONAME, 'synthetic-request-secret')))
+        result = p.capability_exchange(self.capability_context(), transport)
+        self.assertEqual(result['reasonCode'], 'dns_resolution_failed')
+        self.assertEqual(result['operation'], 'github.request')
+        self.assertIsNone(result['httpStatus'])
+        self.assertNotIn('synthetic-request-secret', json.dumps(result))
+
+    def test_tls_and_timeout_failures_are_distinct_without_exception_text(self):
+        for error, code in ((ssl.SSLCertVerificationError(1, 'synthetic-request-secret'), 'tls_certificate_verification_failed'),
+                            (TimeoutError('synthetic-request-secret'), 'request_timeout')):
+            result = p.capability_exchange(self.capability_context(), unittest.mock.Mock(
+                side_effect=p.urllib.error.URLError(error)))
+            with self.subTest(code=code):
+                self.assertEqual(result['reasonCode'], code)
+                self.assertNotIn('synthetic-request-secret', json.dumps(result))
+
+    def test_claim_validation_identifies_field_and_response_http_status(self):
+        transport = unittest.mock.Mock(return_value=p.CapabilityResponse(200, {'value': self.synthetic_jwt(aud='other')}))
+        result = p.capability_exchange(self.capability_context(), transport)
+        self.assertEqual(result['reasonCode'], 'oidc_claim_mismatch')
+        self.assertEqual(result['operation'], 'github.claims.validate')
+        self.assertEqual(result['diagnostics']['field'], 'aud')
+        self.assertEqual(result['httpStatus'], 200)
+        self.assertEqual(transport.call_count, 1)
+
+    def test_invalid_service_json_retains_status_without_raw_response(self):
+        opener = unittest.mock.MagicMock()
+        response = opener.open.return_value.__enter__.return_value
+        response.status = 200
+        response.read.return_value = b'raw-response-must-not-appear synthetic-request-secret'
+        with patch.object(p.urllib.request, 'build_opener', return_value=opener):
+            result = p.capability_exchange(self.capability_context())
+        self.assertEqual(result['reasonCode'], 'service_json_invalid')
+        self.assertEqual(result['httpStatus'], 200)
+        self.assertNotIn('raw-response-must-not-appear', json.dumps(result))
+
+    def test_http_body_read_timeout_retains_received_status(self):
+        opener = unittest.mock.MagicMock()
+        response = opener.open.return_value.__enter__.return_value
+        response.status = 200
+        response.read.side_effect = TimeoutError('synthetic-request-secret')
+        with patch.object(p.urllib.request, 'build_opener', return_value=opener):
+            result = p.capability_exchange(self.capability_context())
+        self.assertEqual(result['reasonCode'], 'request_timeout')
+        self.assertEqual(result['httpStatus'], 200)
+        self.assertNotIn('synthetic-request-secret', json.dumps(result))
+
+    def test_github_http_error_preserves_sanitized_message_and_status(self):
+        body = json.dumps({'message': 'OIDC denied synthetic-request-secret token=pypi-other-secret'}).encode()
+        opener = unittest.mock.Mock()
+        opener.open.side_effect = p.urllib.error.HTTPError('https://test.actions.githubusercontent.com/idtoken', 403,
+            'synthetic-request-secret', {}, io.BytesIO(body))
+        with patch.object(p.urllib.request, 'build_opener', return_value=opener):
+            result = p.capability_exchange(self.capability_context())
+        self.assertEqual(result['reasonCode'], 'http_service_rejected')
+        self.assertEqual(result['httpStatus'], 403)
+        self.assertIn('OIDC denied', json.dumps(result))
+        for secret in ('synthetic-request-secret', 'pypi-other-secret'):
+            self.assertNotIn(secret, json.dumps(result))
+
+    def test_failed_observation_file_contains_only_sanitized_diagnostic(self):
+        path = self.assets / 'safe-observation.json'
+        transport = unittest.mock.Mock(side_effect=p.urllib.error.URLError(TimeoutError('synthetic-request-secret')))
+        with patch.object(sys, 'argv', ['controller', 'capability-only', '--observation', str(path)]), \
+                patch.dict(p.os.environ, {**self.capability_context(),
+                    'GITHUB_WORKFLOW_SHA': 'a' * 40, 'GITHUB_RUN_ID': '123', 'GITHUB_RUN_ATTEMPT': '1'}, clear=True), \
+                patch.object(p, '_capability_request', transport), redirect_stdout(io.StringIO()):
+            self.assertEqual(p.main(), 1)
+        result = json.loads(path.read_text())
+        self.assertEqual(result['reasonCode'], 'request_timeout')
+        self.assertEqual(result['status'], 'EXCHANGE_FAILED')
+        self.assertEqual(result['accessProjectAuthorization'], 'UNVERIFIED')
+        self.assertEqual((result['workflowSHA'], result['runID'], result['runAttempt']), ('a' * 40, '123', '1'))
+        self.assertNotIn('synthetic-request-secret', path.read_text())
 
     def test_exchange_observation_cannot_be_relabelled_as_scoped_proof(self):
         value = self.fixture()
