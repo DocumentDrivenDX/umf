@@ -328,7 +328,7 @@ jobs:
           consumer="$RUNNER_TEMP/temporal-python-consumer"
           python -m venv "$consumer"
           "$consumer/bin/python" -m pip install pytest==8.4.2 packaging==26.3 hatchling==1.27.0
-          "$consumer/bin/python" -m pip install --report "$UMF_TEMPORAL_OUTPUT/install-report.json" "$UMF_TEMPORAL_OUTPUT/dist/"*.whl "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/resolver.log"
+          "$consumer/bin/python" -m pip install --no-compile --report "$UMF_TEMPORAL_OUTPUT/install-report.json" "$UMF_TEMPORAL_OUTPUT/dist/"*.whl "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/resolver.log"
           "$consumer/bin/python" -m pip check | tee "$UMF_TEMPORAL_OUTPUT/pip-check.log"
           "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT" --expected-python 3.11.17 --install-report "$UMF_TEMPORAL_OUTPUT/install-report.json" --receipt "$UMF_TEMPORAL_OUTPUT/installed-linux311.json"
           package_root="$("$consumer/bin/python" -I -c 'import pathlib,umf;print(pathlib.Path(umf.__file__).resolve().parent)')"
@@ -360,7 +360,7 @@ jobs:
           python "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" overlay --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
           consumer="$RUNNER_TEMP/temporal-rebuilt-consumer"
           python -m venv "$consumer"
-          "$consumer/bin/python" -m pip install --report "$UMF_TEMPORAL_OUTPUT/rebuilt-install-report.json" "$UMF_TEMPORAL_OUTPUT/rebuilt/"*.whl
+          "$consumer/bin/python" -m pip install --no-compile --report "$UMF_TEMPORAL_OUTPUT/rebuilt-install-report.json" "$UMF_TEMPORAL_OUTPUT/rebuilt/"*.whl
           "$consumer/bin/python" -m pip check
           wheel="$(find "$UMF_TEMPORAL_OUTPUT/rebuilt" -name '*.whl' -type f)"
           UMF_SAGA_HOST_ID=python-rebuilt UMF_SAGA_RESULT_PATH="$UMF_TEMPORAL_OUTPUT/portable-python-rebuilt.json" UMF_SAGA_PYTHON="$consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel" UMF_SAGA_PYTHON_SOURCE_ARCHIVE="$UMF_TEMPORAL_OUTPUT/dist/umf_core-0.10.8.tar.gz" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/python-rebuilt-saga.log"
@@ -387,7 +387,7 @@ jobs:
             fi
             python -m venv "$consumer"
             "$consumer/bin/python" -m pip install --only-binary=:all: pytest==8.4.2 packaging==26.3 hatchling==1.27.0
-            "$consumer/bin/python" -m pip install --only-binary=:all: --report "$phase/install-report.json" "$wheel" "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$phase/resolver.log"
+            "$consumer/bin/python" -m pip install --only-binary=:all: --no-compile --report "$phase/install-report.json" "$wheel" "$UMF_TEMPORAL_OUTPUT/pure/"*.whl 2>&1 | tee "$phase/resolver.log"
             "$consumer/bin/python" -m pip check | tee "$phase/pip-check.log"
             "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT" --expected-python 3.13.17 --install-report "$phase/install-report.json" --receipt "$phase/installed.json"
             UMF_SAGA_HOST_ID="$host" UMF_SAGA_RESULT_PATH="$phase/portable-$host.json" UMF_SAGA_PYTHON="$consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel" UMF_SAGA_PYTHON_SOURCE_ARCHIVE="$UMF_TEMPORAL_OUTPUT/dist/umf_core-0.10.8.tar.gz" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$phase/saga19.log"

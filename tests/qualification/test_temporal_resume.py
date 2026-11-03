@@ -7,6 +7,14 @@ import unittest
 from unittest.mock import patch
 import json
 import zipfile
+import base64
+import csv
+import ensurepip
+import io
+import os
+import shutil
+import subprocess
+import sys
 
 SPEC = importlib.util.spec_from_file_location("resume", Path(__file__).resolve().parents[2] / "tools/temporal_resume.py")
 resume = importlib.util.module_from_spec(SPEC)
@@ -14,6 +22,80 @@ SPEC.loader.exec_module(resume)
 
 
 class ResumeCustody(unittest.TestCase):
+    def test_real_pip_bytecode_refusal_and_no_compile_preserve_verifier_guards(self):
+        spec = importlib.util.spec_from_file_location("artifact_verifier",
+            Path(__file__).resolve().parents[2] / "tools/verify_python_artifacts.py")
+        verifier = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(verifier)
+        dist = "umf_core-0.0.0.dist-info"
+        files = {"umf/__init__.py": b"fixture = True\n",
+                 verifier.NATIVE_MEMBER: b"fixture only, never loaded",
+                 verifier.CLI_MEMBER: b"fixture only, never executed",
+                 dist + "/METADATA": b"Metadata-Version: 2.3\nName: umf-core\nVersion: 0.0.0\n",
+                 dist + "/WHEEL": b"Wheel-Version: 1.0\nRoot-Is-Purelib: false\nTag: py3-none-any\n"}
+        record = dist + "/RECORD"
+
+        def record_bytes(payloads):
+            output = io.StringIO()
+            rows = [(name, "sha256=" + base64.urlsafe_b64encode(hashlib.sha256(data).digest()).decode().rstrip("="), str(len(data)))
+                    for name, data in sorted(payloads.items()) if name != record]
+            csv.writer(output, lineterminator="\n").writerows(rows + [(record, "", "")])
+            return output.getvalue().encode()
+
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            wheel = root / "umf_core-0.0.0-py3-none-any.whl"
+            with zipfile.ZipFile(wheel, "w") as archive:
+                for name, payload in {**files, record: record_bytes(files)}.items():
+                    archive.writestr(name, payload)
+            bundled = next((Path(ensurepip.__file__).parent / "_bundled").glob("pip-*.whl"))
+            env = {**os.environ, "PYTHONPATH": str(bundled), "PYTHONDONTWRITEBYTECODE": "1",
+                   "PIP_CONFIG_FILE": os.devnull, "PIP_DISABLE_PIP_VERSION_CHECK": "1"}
+            extras = {}
+            for mode, flags in [("default", []), ("no-compile", ["--no-compile"])]:
+                target = root / mode
+                child = subprocess.run([sys.executable, "-m", "pip", "install", "--no-index",
+                    "--target", str(target), *flags, str(wheel)], env=env, capture_output=True, text=True)
+                self.assertEqual(child.returncode, 0, child.stdout + child.stderr)
+                installed = verifier._record_entries((target / record).read_bytes())
+                extras[mode] = sorted(set(installed) - set(files) - {record})
+                if mode == "default":
+                    self.assertTrue(any(name.endswith(".pyc") for name in extras[mode]))
+                    with self.assertRaisesRegex(ValueError, "unexpected installer file"):
+                        verifier._validate_installed_wheel(wheel, target, "0.0.0")
+                else:
+                    self.assertFalse(any(name.endswith(".pyc") for name in extras[mode]))
+                    self.assertEqual(verifier._validate_installed_wheel(wheel, target, "0.0.0")["status"], "passed")
+            for damage, message in [("recorded-pyc", "unexpected installer file"),
+                                    ("extra", "unexpected installer file"),
+                                    ("payload", "exact wheel payload")]:
+                target = root / damage
+                shutil.copytree(root / "no-compile", target)
+                path = target / ({"recorded-pyc": "umf/__pycache__/injected.pyc",
+                                  "extra": dist + "/EXTRA", "payload": "umf/__init__.py"}[damage])
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"changed")
+                (target / record).write_bytes(record_bytes({p.relative_to(target).as_posix(): p.read_bytes()
+                    for p in target.rglob("*") if p.is_file()}))
+                with self.assertRaisesRegex(ValueError, message):
+                    verifier._validate_installed_wheel(wheel, target, "0.0.0")
+            print(json.dumps({"pipFixture": bundled.name, "installerExtras": extras,
+                              "scope": "tiny inert fixture; no native load or candidate installation"}))
+
+    def test_all_candidate_installs_preserve_exact_archive_without_bytecode(self):
+        workflow = (Path(__file__).resolve().parents[2] / ".github/workflows/sagas.yml").read_text()
+        continuation = workflow.split("  temporal-resume:\n", 1)[1]
+        installs = [line for line in continuation.splitlines()
+                    if "-m pip install" in line and "--report" in line]
+        self.assertEqual(len(installs), 3)  # direct311, rebuilt311, serial313
+        for command in installs:
+            self.assertIn("--no-compile", command)
+            self.assertNotIn("--no-deps", command)
+            self.assertNotIn("--ignore-installed", command)
+        self.assertIn("PYTHONDONTWRITEBYTECODE: '1'", continuation)
+        self.assertIn("--verify-installed-wheel", (Path(__file__).resolve().parents[2]
+                      / "scripts/saga-portable/other-hosts.ts").read_text())
+
     def retained_fixture(self, root, mutate=None):
         payloads = {
             "source-and-controller.json": {"artifactSourceS": resume.SOURCE, "controllerQ": resume.LINUX_Q, "overlayActive": False},
