@@ -66,3 +66,10 @@ independently downloaded and checked against GitHub digests and SHA256SUMS.
 All seven Batten wheels carry both licenses and NOTICE.
 [Public verification](batten-runtime-public-verification.json) preserves the
 GitHub-only local-runtime scope and original UMF dependency cohort.
+
+[Read-only primary source reconciliation](primary-dirty-source-review.json)
+accounts for 16 dirty files in the old primary checkout. Eight exact blobs reached
+main; three facades are superseded and the old local probe/planning baseline has
+current successors. Additional wire controls are recovered but unqualified. The
+primary checkout and six unique base commits remain protected pending integration
+and separate base-commit reconciliation; nothing was reset or discarded.
