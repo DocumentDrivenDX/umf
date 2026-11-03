@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 import copy
 import json
+import tomllib
 from pathlib import Path
 
 import pytest
@@ -81,9 +82,32 @@ def test_only_generated_current_core_schema_is_active():
         core_schema("0.8.0")
 
 
+def _source_distribution_version():
+    with (ROOT / "pyproject.toml").open("rb") as project_file:
+        return tomllib.load(project_file)["project"]["version"]
+
+
 def test_distribution_version_is_distinct_from_semantic_core_version():
-    assert umf.__version__ == "0.11.0"
-    assert current_core_version() == "0.10.0"
+    assert umf.__version__ == _source_distribution_version(), (
+        "Runtime distribution version differs from source project metadata"
+    )
+    assert current_core_version() == "0.10.0", (
+        "Semantic core version differs from 0.10.0"
+    )
+
+
+def test_distribution_version_assertion_rejects_wrong_runtime_version(monkeypatch):
+    monkeypatch.setattr(umf, "__version__", _source_distribution_version() + ".mismatch")
+    monkeypatch.setitem(globals(), "current_core_version", lambda: "0.10.0")
+    with pytest.raises(AssertionError, match="Runtime distribution version differs"):
+        test_distribution_version_is_distinct_from_semantic_core_version()
+
+
+def test_semantic_core_version_assertion_rejects_wrong_version(monkeypatch):
+    monkeypatch.setattr(umf, "__version__", _source_distribution_version())
+    monkeypatch.setitem(globals(), "current_core_version", lambda: "wrong-semantic-version")
+    with pytest.raises(AssertionError, match="Semantic core version differs"):
+        test_distribution_version_is_distinct_from_semantic_core_version()
 
 
 def test_literal_refinement_selection_and_order_come_from_generated_policy():

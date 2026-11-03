@@ -1,13 +1,16 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Packaging harness controls; these do not establish runtime behavior."""
 
+import json
 import sys
 import tempfile
+import tomllib
 import unittest
 import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "packaging"))
+from build_wheel import resolve_source_version
 from replay_installed import (
     check_generated_inventory,
     check_public_runtime_abi,
@@ -21,12 +24,24 @@ from snapshot_runtime import generated_snapshot_identity, reserve_generated_snap
 
 PIN = {
     "distribution": "umf_access",
-    "version": "0.1.0.dev0",
+    "version": "0.1.0.dev9",
     "abi": "umf-access-runtime/0.1",
 }
 
 
 class WheelContractTests(unittest.TestCase):
+    def test_source_version_has_one_literal_hatch_authority(self):
+        package = Path(__file__).resolve().parents[1]
+        document = tomllib.loads((package / "pyproject.toml").read_text())
+        profile = json.loads((package / "compatibility-profile.json").read_text())
+        self.assertEqual(
+            resolve_source_version(package, document),
+            profile["runtimeAbi"]["version"],
+        )
+        malformed = {**document, "project": {**document["project"], "version": "0.0"}}
+        with self.assertRaisesRegex(ValueError, "fixed Hatch source version path"):
+            resolve_source_version(package, malformed)
+
     def test_generated_identity_includes_all_three_pins(self):
         original = ("a" * 64, "b" * 64, "c" * 64)
         base, _ = generated_snapshot_identity(*original)
@@ -85,22 +100,22 @@ class WheelContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             wheel = Path(folder) / "runtime.whl"
 
-            def write(metadata="Name: umf_access\nVersion: 0.1.0.dev0\n", marker=True):
+            def write(metadata="Name: umf_access\nVersion: 0.1.0.dev9\n", marker=True):
                 with zipfile.ZipFile(wheel, "w") as z:
                     z.writestr(
                         "umf_access/__init__.py",
                         'RUNTIME_ABI="umf-access-runtime/0.1"\n',
                     )
-                    z.writestr("umf_access-0.1.0.dev0.dist-info/METADATA", metadata)
+                    z.writestr("umf_access-0.1.0.dev9.dist-info/METADATA", metadata)
                     if marker:
                         z.writestr("umf_access/py.typed", "")
 
             write()
             self.assertIn("umf_access/__init__.py", inspect_wheel(wheel, PIN))
             for metadata, marker in [
-                ("Name: wrong\nVersion: 0.1.0.dev0\n", True),
+                ("Name: wrong\nVersion: 0.1.0.dev9\n", True),
                 ("Name: umf_access\nVersion: 1.0\n", True),
-                ("Name: umf_access\nVersion: 0.1.0.dev0\n", False),
+                ("Name: umf_access\nVersion: 0.1.0.dev9\n", False),
             ]:
                 write(metadata, marker)
                 with self.assertRaises(ValueError):

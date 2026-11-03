@@ -23,6 +23,74 @@ thread_local! {
 }
 
 impl CodegenEngine<'_> {
+    /// Inspect authored access views using the package generator's semantic kernel.
+    /// This returns copied partial records and ordered diagnostics, never native admission.
+    pub fn inspect_access_views(
+        &self,
+        document: &Value,
+        selected: &Value,
+        bindings: &Value,
+        source_id: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let invalid = |path: &str| {
+            EngineError::new(
+                "REQUEST",
+                Utf16::from(path),
+                "Malformed access inspection argument",
+            )
+        };
+        let selected = crate::value::admit_json(selected, ctx)?;
+        let selected = array_items(&selected).ok_or_else(|| invalid("/selected"))?;
+        for reference in selected {
+            ctx.charge_work(1, Utf16::from("/selected"))?;
+            if !has_keys(reference, &["module", "element"], &[])
+                || ["module", "element"]
+                    .iter()
+                    .any(|key| string_member(reference, key).is_none_or(Utf16::is_empty))
+            {
+                return Err(invalid("/selected"));
+            }
+        }
+        let bindings = crate::value::admit_json(bindings, ctx)?;
+        let Value::Array(bindings) = bindings else {
+            return Err(invalid("/bindings"));
+        };
+        ctx.charge_work(bindings.len(), Utf16::from("/bindings"))?;
+        let mut supplied = Vec::with_capacity(bindings.len());
+        for binding in bindings {
+            if !has_keys(&binding, &["sourceId", "document"], &[]) {
+                return Err(invalid("/bindings"));
+            }
+            let id = get_str(&binding, "sourceId").ok_or_else(|| invalid("/bindings"))?;
+            let Value::Object(fields) = binding else {
+                unreachable!()
+            };
+            let document = fields
+                .into_iter()
+                .find(|(key, _)| key == &Utf16::from("document"))
+                .unwrap()
+                .1;
+            supplied.push((id, document));
+        }
+        let source_id = crate::value::admit_json(source_id, ctx)?;
+        let Value::String(source_id) = source_id else {
+            return Err(invalid("/sourceId"));
+        };
+        let source_id = source_id.to_utf8().map_err(|_| invalid("/sourceId"))?;
+        let document = crate::value::admit_json(document, ctx)?;
+        let result = inspection::inspect_access_views(
+            self, &document, selected, &supplied, &source_id, ctx,
+        )?;
+        crate::value::admit_json(
+            &obj([
+                ("records", Value::Array(result.records)),
+                ("diagnostics", Value::Array(result.diagnostics)),
+            ]),
+            ctx,
+        )
+    }
+
     /// Build one typed Python access package from explicit request/profile values.
     pub fn generate_access_package(
         &self,

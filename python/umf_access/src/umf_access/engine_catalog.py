@@ -10,12 +10,14 @@ from __future__ import annotations
 import hashlib
 from collections.abc import Mapping
 from dataclasses import dataclass
+from datetime import date, datetime
 from types import UnionType
 from typing import Annotated, Any, TypeVar, Union, get_args, get_origin
 
-from pydantic import BaseModel
+from pydantic import BaseModel, BeforeValidator
 
 from .generated_core import CURRENT_CORE_VERSION
+from .dsl import GeneratedSource
 from .native_program import ProgramBuildError, canonical_json, program_json
 from .related_keys import transport_spec
 from .reviewed import (
@@ -27,9 +29,439 @@ from .reviewed import (
     _generation,
 )
 from .types import MISSING
+from .values import FieldValidator
 
 P = TypeVar("P", bound=BaseModel)
 R = TypeVar("R", bound=BaseModel)
+
+_TEMPORAL_PROFILE = "umf.weft-binding-temporal/0.2"
+_TEMPORAL_METHOD = "truss-runtime-temporal"
+_TEMPORAL_VERSIONS = ("weft.engine-read/0.4", "weft.engine-page/0.4")
+
+
+def _temporal_selection(method: str, profile: str | None) -> bool:
+    if profile is None and method != _TEMPORAL_METHOD:
+        return False
+    if type(profile) is not str or profile != _TEMPORAL_PROFILE or method != _TEMPORAL_METHOD:
+        raise ReadBuildError("explicit matching temporal engine profile required")
+    return True
+
+
+def _temporal_fields(model: type[BaseModel], *, parameter: bool = False) -> list[dict[str, Any]]:
+    """Use generated validator metadata, never datetime annotation inference."""
+    if model.model_config.get("extra") != "forbid" or model.model_config.get("strict") is not True:
+        raise ReadBuildError("strict temporal engine model required")
+
+    def unpack(annotation: object) -> tuple[list[object], list[object]]:
+        origin = get_origin(annotation)
+        if origin is Annotated:
+            types, metadata = unpack(get_args(annotation)[0])
+            return types, metadata + list(get_args(annotation)[1:])
+        if origin in (Union, UnionType):
+            types, metadata = [], []
+            for item in get_args(annotation):
+                nested_types, nested_metadata = unpack(item)
+                types.extend(nested_types)
+                metadata.extend(nested_metadata)
+            return types, metadata
+        return [annotation], []
+
+    result = []
+    for name, field in model.model_fields.items():
+        if field.alias is not None:
+            raise ReadBuildError("temporal engine aliases are unsupported")
+        variants, metadata = unpack(field.annotation)
+        all_metadata = [*field.metadata, *metadata]
+        validators = [item.func for item in all_metadata
+                      if isinstance(item, BeforeValidator) and isinstance(item.func, FieldValidator)]
+        temporal = [v for v in validators if v.kind in ("date", "instant", "local")]
+        if temporal:
+            if len(all_metadata) != 1 or len(validators) != 1 or temporal[0] != FieldValidator(kind=temporal[0].kind):
+                raise ReadBuildError("unrefined generated temporal kind metadata required")
+            kind = temporal[0].kind
+            present = [v for v in variants if v is not MISSING and v is not type(None)]
+            if present != [date if kind == "date" else datetime]:
+                raise ReadBuildError("generated temporal carrier differs from kind")
+            signature = {"carrier": kind, "nullable": type(None) in variants,
+                         "missing": any(v is MISSING for v in variants)}
+        else:
+            signature = _engine_scalar_signature(field.annotation)
+        if parameter:
+            if signature["nullable"] or signature["missing"]:
+                raise ReadBuildError("required non-null temporal engine parameter required")
+            signature = {k: v for k, v in signature.items() if k != "missing"}
+        result.append({"name": name, **signature})
+    return result
+
+
+def _temporal_identity(value: object) -> dict[str, str]:
+    if (type(value) is not dict or set(value) != {"documentId", "revision", "module", "element"}
+        or any(type(v) is not str or not v for v in value.values())):
+        raise ReadBuildError("complete temporal source identity required")
+    return value
+
+
+def _temporal_request(request: object) -> dict[str, Any]:
+    """Check the selected wire tuple; compiler owns token parsing and lowering."""
+    if (type(request) is not dict or set(request) != {"interfaceVersion", "dialect", "modules", "sql",
+        "parameters", "exactParameters", "options", "target", "temporalProfile", "temporalParameters"}
+        or request["interfaceVersion"] != "weft-compile/0.2.10"
+        or request["dialect"] != "weft-sql/0.2.0" or type(request["options"]) is not dict
+        or set(request["options"]) != {"allowCandidate"} or request["options"]["allowCandidate"] is not True
+        or request["temporalProfile"] != _TEMPORAL_PROFILE or request["exactParameters"] != {}
+        or type(request["sql"]) is not str or not request["sql"]
+        or type(request["parameters"]) is not dict or type(request["temporalParameters"]) is not dict):
+        raise ReadBuildError("closed original temporal compile request required")
+    target = request["target"]
+    if (type(target) is not dict or set(target) != {"backendId", "backendVersion", "targetProfile", "bindingJson", "bindingSha256"}
+        or target["backendId"] != "truss.postgresql.runtime" or target["backendVersion"] != "0.4.47"
+        or target["targetProfile"] != "truss-runtime-pg18.6/0.7-temporal-candidate"
+        or type(target["bindingJson"]) is not str
+        or hashlib.sha256(target["bindingJson"].encode()).hexdigest() != target["bindingSha256"]):
+        raise ReadBuildError("exact original temporal target/binding required")
+    for inventory, member, kinds in ((request["parameters"], "family", ("string", "integer", "decimal", "boolean")),
+                                     (request["temporalParameters"], "kind", ("date", "instant", "local"))):
+        for name, value in inventory.items():
+            if (type(name) is not str or not name or type(value) is not dict or set(value) != {member, "value"}
+                or value[member] not in kinds or type(value["value"]) is not str):
+                raise ReadBuildError("closed separate temporal parameter inventories required")
+    if (set(request["parameters"]) & set(request["temporalParameters"])
+        or len(request["parameters"]) + len(request["temporalParameters"]) > 1024):
+        raise ReadBuildError("distinct bounded temporal parameter inventories required")
+    names = list(request["parameters"]) + list(request["temporalParameters"])
+    if len({name.lower() for name in names}) != len(names):
+        raise ReadBuildError("distinct normalized temporal parameter names required")
+    if len(canonical_json(request).encode()) > 4_194_304:
+        raise ReadBuildError("bounded original temporal request required")
+    return request
+
+
+def _temporal_program(program: dict[str, Any]) -> tuple[list[dict[str, Any]], list[int]]:
+    """Validate full original custody; independent recompilation stays Weft-owned.
+
+    This checks no SQL semantics and grants no target authority. The host must
+    shape-check and current-check the whole original with the selected compiler.
+    """
+    page = program.get("version") == "weft.engine-page/0.4"
+    pending = [program]
+    while pending:
+        value = pending.pop()
+        if type(value) is dict:
+            if "temporalKeys" in value:
+                raise ReadBuildError("temporal Keys are unsupported")
+            pending.extend(value.values())
+        elif type(value) is list:
+            pending.extend(value)
+    if (set(program) != {"version", "status", "compiler", "request", "artifact", "outputs", "structuralDigest"}
+        | ({"pageSize", "selectedKey", "after", "page"} if page else set())
+        or program.get("version") not in _TEMPORAL_VERSIONS or program.get("status") != "compiled"
+        or program.get("compiler") != _TEMPORAL_METHOD):
+        raise ReadBuildError("closed original temporal engine0.4 program required")
+    structural = {k: v for k, v in program.items() if k != "structuralDigest"}
+    if program["structuralDigest"] != {"owner": "weft-runtime-engine-page" if page else "weft-runtime-engine-read",
+        "version": "0.4", "sha256": hashlib.sha256(canonical_json(structural).encode()).hexdigest()}:
+        raise ReadBuildError("original temporal engine compiler digest differs")
+    request = _temporal_request(program["request"])
+    artifact = program["artifact"]
+    if (type(artifact) is not dict or artifact.get("status") != "compiled"
+        or artifact.get("interfaceVersion") != request["interfaceVersion"] or artifact.get("dialect") != request["dialect"]
+        or artifact.get("backend") != {"backendId": "truss.postgresql.runtime", "backendVersion": "0.4.47",
+            "targetProfile": "truss-runtime-pg18.6/0.7-temporal-candidate", "interfaceVersion": "weft-backend/0.2.10"}
+        or artifact.get("bindingSha256") != request["target"]["bindingSha256"]
+        or type(artifact.get("sql")) is not str or not artifact["sql"]):
+        raise ReadBuildError("original temporal compiler artifact tuple differs")
+    binding = program_json(request["target"]["bindingJson"])
+    abi = binding.get("queryAbi") if type(binding) is dict else None
+    if (type(binding) is not dict or set(binding) != {"interfaceVersion", "queryAbi", "schema", "installationId",
+        "releaseId", "releaseSha256", "catalogRevision", "maximumScanRows", "maximumResultRows", "maximumBytes",
+        "documents", "records", "relationships"} or binding.get("interfaceVersion") != "truss-runtime-binding/0.5"
+        or binding["schema"] != "truss" or type(binding["installationId"]) is not str or not binding["installationId"]
+        or type(binding["catalogRevision"]) is not int or binding["catalogRevision"] < 1
+        or type(binding["maximumResultRows"]) is not int or not 1 <= binding["maximumResultRows"] <= 1000
+        or type(binding["relationships"]) is not list
+        or type(binding["releaseSha256"]) is not str or len(binding["releaseSha256"]) != 64
+        or any(c not in "0123456789abcdef" for c in binding["releaseSha256"])
+        or binding.get("releaseId") != "truss-catalog-runtime/0.76-temporal-candidate"
+        or type(abi) is not dict or set(abi) != {"identity", "version", "sha256"}
+        or abi["identity"] != "truss-postgresql-logical-query" or abi["version"] != "1.3"
+        or type(abi["sha256"]) is not str or len(abi["sha256"]) != 64
+        or any(c not in "0123456789abcdef" for c in abi["sha256"])):
+        raise ReadBuildError("explicit original temporal ABI1.3 binding required")
+    if artifact.get("targetContext") != {k: binding.get(k) for k in
+        ("queryAbi", "releaseId", "releaseSha256", "installationId", "catalogRevision")}:
+        raise ReadBuildError("original temporal target context differs from binding")
+    pins, modules = artifact.get("modelPins"), request.get("modules")
+    if type(pins) is not list or not pins or type(modules) is not list or not modules:
+        raise ReadBuildError("original temporal model/module inventory required")
+    if pins != [m.get("pin") for m in modules if type(m) is dict]:
+        raise ReadBuildError("original temporal module pins differ")
+    for module in modules:
+        if (type(module) is not dict or set(module) != {"pin", "documentJson", "selectedModuleIds"}
+            or type(module["pin"]) is not dict or set(module["pin"]) != {"documentId", "revision", "sha256", "umfVersion"}
+            or type(module["documentJson"]) is not str or type(module["selectedModuleIds"]) is not list
+            or not module["selectedModuleIds"] or any(type(m) is not str or not m for m in module["selectedModuleIds"])
+            or any(type(v) is not str or not v for v in module["pin"].values())
+            or module["pin"]["umfVersion"] != CURRENT_CORE_VERSION
+            or hashlib.sha256(module["documentJson"].encode()).hexdigest() != module["pin"]["sha256"]):
+            raise ReadBuildError("complete exact original temporal module required")
+        pin = module["pin"]
+        document = program_json(module["documentJson"])
+        if (type(document) is not dict or document.get("id") != pin["documentId"] or document.get("umf") != pin["umfVersion"]
+            or type(binding.get("documents")) is not list
+            or sum(p == {k: pin[k] for k in ("documentId", "revision", "sha256")} for p in binding["documents"]) != 1):
+            raise ReadBuildError("original temporal document/binding pin differs")
+    checks, parameters = artifact.get("sourceDomainChecks"), artifact.get("parameters")
+    if (type(checks) is not dict or set(checks) != {"version", "mode", "queryAbi", "maxScanRows", "maxBytes", "sources"}
+        or checks["version"] != "weft.truss-temporal-domain-checks/0.2" or checks["mode"] != "native-validated-source"
+        or checks["queryAbi"] != abi or type(checks["sources"]) is not list or len(checks["sources"]) != 1
+        or type(parameters) is not list or len(parameters) < 2
+        or any(type(p) is not dict or type(p.get("position")) is not int or p["position"] != i + 1
+               for i, p in enumerate(parameters))):
+        raise ReadBuildError("complete original temporal source checks required")
+    for cap, native in (("maxScanRows", "maximumScanRows"), ("maxBytes", "maximumBytes")):
+        if (type(checks[cap]) is not int or checks[cap] <= 0 or type(binding.get(native)) is not int
+            or checks[cap] != binding[native]):
+            raise ReadBuildError("original temporal source caps differ from binding")
+    source = checks["sources"][0]
+    selected = _selected_key(program.get("selectedKey")) if page else None
+    function = ("truss.person_query_temporal_page_objects(jsonb,int,text,jsonb)" if page
+                else "truss.person_query_temporal_objects(jsonb,int,jsonb)")
+    if (type(source) is not dict or set(source) != {"record", "bindingParameter", "requirementsParameter", "sourceFunction", "selectedKey"}
+        or source["sourceFunction"] != function or source["selectedKey"] != selected):
+        raise ReadBuildError("original guarded temporal source profile differs")
+    record = _temporal_identity(source["record"])
+    native_records = binding.get("records")
+    if (type(native_records) is not list or any(type(r) is not dict for r in native_records)
+        or sum(r.get("identity") == record for r in native_records) != 1):
+        raise ReadBuildError("original temporal Record binding differs")
+    slots = [source["bindingParameter"], source["requirementsParameter"]]
+    if any(type(i) is not int or not 1 <= i <= len(parameters) for i in slots) or slots[0] == slots[1]:
+        raise ReadBuildError("distinct original temporal source parameter positions required")
+    binding_slot, requirements_slot = [parameters[i - 1] for i in slots]
+    if binding_slot.get("value") != request["target"]["bindingJson"] or type(requirements_slot.get("value")) is not str:
+        raise ReadBuildError("exact original temporal source parameter bytes required")
+    for parameter in (binding_slot, requirements_slot):
+        if parameter.get("logicalType") != {"family": "string", "facets": {}, "nullable": False} or type(parameter.get("origin")) is not dict:
+            raise ReadBuildError("original temporal source parameter type/origin required")
+    if (binding_slot["origin"] != {"kind": "runtime-binding"}
+        or requirements_slot["origin"] != {"kind": "temporal-source-requirements", "record": record}):
+        raise ReadBuildError("original temporal source parameter origins differ")
+    seen_parameters = set()
+    declared_parameters = {**request["parameters"], **request["temporalParameters"]}
+    for parameter in parameters:
+        origin = parameter.get("origin")
+        if type(parameter.get("value")) is not str or type(origin) is not dict:
+            raise ReadBuildError("complete original temporal native parameter required")
+        if origin.get("kind") == "parameter":
+            name = origin.get("name")
+            if type(name) is not str or name not in declared_parameters or parameter["value"] != declared_parameters[name]["value"]:
+                raise ReadBuildError("original temporal native parameter value/name differs")
+            temporal = name in request["temporalParameters"]
+            kind = declared_parameters[name]["kind" if temporal else "family"]
+            logical = parameter.get("logicalType")
+            if (temporal and (origin != {"kind": "parameter", "name": name, "temporalKind": kind}
+                or logical != {"kind": "accessTemporal", "temporalKind": kind, "profile": _TEMPORAL_PROFILE})
+                or not temporal and (type(logical) is not dict or logical.get("family") != kind)):
+                raise ReadBuildError("original temporal native parameter kind/type differs")
+            seen_parameters.add(name)
+        elif origin.get("kind") == "page-continuation":
+            raise ReadBuildError("original first temporal page cannot carry continuation slots")
+    if seen_parameters != set(declared_parameters):
+        raise ReadBuildError("complete original temporal native parameter inventory required")
+    requirements = program_json(requirements_slot["value"])
+    if (type(requirements) is not dict or set(requirements) != {"version", "record", "fields"}
+        or requirements["version"] != "truss.temporal-source-guard/0.2" or requirements["record"] != record
+        or type(requirements["fields"]) is not list):
+        raise ReadBuildError("complete original temporal requirements required")
+    fields = {}
+    for field in requirements["fields"]:
+        if (type(field) is not dict or set(field) != {"field", "kind", "presence"}
+            or field["kind"] not in ("date", "instant", "local")
+            or type(field["presence"]) is not dict or set(field["presence"]) != {"missing", "null"}
+            or any(type(v) is not bool for v in field["presence"].values())):
+            raise ReadBuildError("closed temporal Field requirement required")
+        identity = _temporal_identity(field["field"])
+        if any(identity[k] != record[k] for k in ("documentId", "revision")):
+            raise ReadBuildError("temporal source Field belongs to another source")
+        key = canonical_json(identity)
+        if key in fields:
+            raise ReadBuildError("duplicate original temporal Field requirement")
+        _truss_field_source(identity, pins, program)
+        fields[key] = field
+    outputs, columns = program["outputs"], artifact.get("columns")
+    if (type(outputs) is not list or not outputs or type(columns) is not list or len(outputs) != len(columns)
+        or any(type(o) is not dict or type(o.get("name")) is not str for o in outputs)
+        or len({o["name"] for o in outputs}) != len(outputs)):
+        raise ReadBuildError("whole original temporal output inventory required")
+    for i, (output, column) in enumerate(zip(outputs, columns, strict=True)):
+        temporal = output.get("carrier") in ("date", "instant", "local")
+        if (set(output) != {"name", "carrier", "nullable", "missing", "source", "representation", "modelPins"}
+            | ({"decoder"} if temporal else set())
+            or output["carrier"] not in ("string", "integer", "decimal", "boolean", "date", "instant", "local")
+            or any(type(output[k]) is not bool for k in ("nullable", "missing")) or output["modelPins"] != pins
+            or type(column) is not dict or type(column.get("position")) is not int or column["position"] != i + 1
+            or column.get("outputName") != output["name"] or column.get("sourceIdentities") != [output["source"]]
+            or column.get("representation") != output["representation"]):
+            raise ReadBuildError("complete original temporal output/column signature differs")
+        identity = _temporal_identity(output["source"])
+        _truss_field_source(identity, pins, program)
+        if any(identity[k] != record[k] for k in ("documentId", "revision")):
+            raise ReadBuildError("temporal output belongs to another source")
+        if temporal:
+            field = fields.get(canonical_json(identity))
+            if (output["decoder"] != {"profile": "truss-temporal/0.2", "kind": output["carrier"], "temporalProfile": _TEMPORAL_PROFILE}
+                or field is None or field["kind"] != output["carrier"]
+                or field["presence"] != {"missing": output["missing"], "null": output["nullable"]}
+                or output["representation"] != {"kind": "value", "descriptor": identity, "nativeNull": True}):
+                raise ReadBuildError("original temporal decoder/kind/presence/source differs")
+    visible = list(range(1, len(outputs) + 1))
+    if page:
+        if (program["after"] is not None or type(program["pageSize"]) is not int or not 1 <= program["pageSize"] <= 999):
+            raise ReadBuildError("original first temporal page required")
+        metadata = program["page"]
+        if (type(metadata) is not dict or set(metadata) != {"version", "selectedKey", "visibleOutputPositions", "keyOutputPositions", "sort"}
+            or metadata["version"] != "weft.engine-temporal-page/0.2" or metadata["selectedKey"] != selected):
+            raise ReadBuildError("closed original temporal page metadata required")
+        for name in ("visibleOutputPositions", "keyOutputPositions"):
+            positions = metadata[name]
+            if (type(positions) is not list or not positions
+                or any(type(i) is not int or not 1 <= i <= len(outputs) for i in positions)
+                or len(set(positions)) != len(positions)):
+                raise ReadBuildError("complete original temporal page output positions required")
+        visible = metadata["visibleOutputPositions"]
+        if type(metadata["sort"]) is not list or not metadata["sort"]:
+            raise ReadBuildError("complete original temporal ordering required")
+        for slot in metadata["sort"]:
+            if (type(slot) is not dict or set(slot) != {"field", "direction", "nulls", "kind", "outputPosition"}
+                or slot["direction"] not in ("asc", "desc") or slot["nulls"] not in ("first", "last")
+                or slot["kind"] not in ("string", "date", "instant", "local")
+                or type(slot["outputPosition"]) is not int or not 1 <= slot["outputPosition"] <= len(outputs)):
+                raise ReadBuildError("closed original temporal sort slot required")
+            output = outputs[slot["outputPosition"] - 1]
+            if slot["field"] != output["source"] or slot["kind"] != output["carrier"]:
+                raise ReadBuildError("original temporal sort source/kind differs")
+        for position in metadata["keyOutputPositions"]:
+            output = outputs[position - 1]
+            if output["carrier"] != "string" or output["nullable"] or output["missing"]:
+                raise ReadBuildError("required string temporal page Key components required")
+        used = set(visible + metadata["keyOutputPositions"] + [s["outputPosition"] for s in metadata["sort"]])
+        if used != set(range(1, len(outputs) + 1)):
+            raise ReadBuildError("unaccounted original temporal hidden output")
+    _temporal_plan_custody(program, record, requirements, visible, native_records)
+    return outputs, visible
+
+
+def _temporal_plan_custody(program: dict[str, Any], record: dict[str, str], requirements: dict[str, Any],
+                           visible: list[int], native_records: list[dict[str, Any]]) -> None:
+    """Compare complete resolved owner metadata, without resolving UMF or SQL."""
+    artifact = program["artifact"]
+    plan = artifact.get("logicalPlan")
+    if (type(plan) is not dict or plan.get("record") != record or plan.get("modelPins") != artifact["modelPins"]
+        or type(plan.get("fields")) is not list or not plan["fields"] or type(plan.get("outputs")) is not list
+        or len(plan["outputs"]) != len(visible)):
+        raise ReadBuildError("complete original resolved temporal plan required")
+    fields = {}
+    expected_requirements = []
+    for field in plan["fields"]:
+        if (type(field) is not dict or field.get("kind") not in ("string", "boolean", "integer", "decimal", "date", "instant", "local")
+            or any(type(field.get(k)) is not bool for k in ("missing", "nullable"))
+            or type(field.get("descriptor")) is not dict or field["descriptor"].get("identity") != field.get("identity")
+            or field["descriptor"].get("availability") not in ("required", "absent-allowed")):
+            raise ReadBuildError("complete resolved temporal source Field required")
+        # CONTRACT-070 requires F/F row presence for a required Field. An
+        # absent-allowed Field retains its separately admitted owner row view.
+        if field["descriptor"]["availability"] == "required" and (field["missing"] or field["nullable"]):
+            raise ReadBuildError("resolved temporal Field presence conflicts with required availability")
+        identity = _temporal_identity(field.get("identity"))
+        key = canonical_json(identity)
+        if key in fields:
+            raise ReadBuildError("unique resolved temporal source Fields required")
+        fields[key] = field
+        if field["kind"] in ("date", "instant", "local"):
+            if (field.get("logicalType") is not None or field["descriptor"].get("kind") != "exactScalar"
+                or field["descriptor"].get("scalarType") != ("date" if field["kind"] == "date" else "timestamp")):
+                raise ReadBuildError("resolved temporal source kind differs")
+            expected_requirements.append({"field": identity, "kind": field["kind"],
+                                          "presence": {"missing": field["missing"], "null": field["nullable"]}})
+        elif (type(field.get("logicalType")) is not dict or field["logicalType"].get("family") != field["kind"]
+              or field["descriptor"].get("kind") != "scalar" or field["descriptor"].get("type") != field["logicalType"]):
+            raise ReadBuildError("resolved scalar sibling type differs")
+    if requirements["fields"] != expected_requirements:
+        raise ReadBuildError("complete temporal source guard coverage/order differs")
+    native = next(r for r in native_records if r.get("identity") == record)
+    if (type(native.get("fields")) is not list or len(native["fields"]) != len(fields)
+        or any(type(f) is not dict or type(f.get("propertyId")) is not str or not f["propertyId"]
+               or canonical_json(f.get("identity")) not in fields for f in native["fields"])
+        or len({canonical_json(f["identity"]) for f in native["fields"]}) != len(fields)):
+        raise ReadBuildError("complete original temporal native Field inventory differs")
+    for output, column in zip(program["outputs"], artifact["columns"], strict=True):
+        field = fields.get(canonical_json(output["source"]))
+        if (field is None or field["kind"] != output["carrier"] or field["missing"] != output["missing"]
+            or field["nullable"] != output["nullable"] or type(column.get("nullable")) is not bool):
+            raise ReadBuildError("original temporal output narrows resolved source domain")
+        representation = output["representation"]
+        if field["kind"] in ("date", "instant", "local") or field["missing"] or field["nullable"]:
+            if representation != {"kind": "value", "descriptor": field["identity"], "nativeNull": True}:
+                raise ReadBuildError("original temporal property-cell representation differs")
+        elif (type(representation) is not dict or representation.get("kind") != "scalar"
+              or representation.get("logicalType") != field["logicalType"]):
+            raise ReadBuildError("original scalar sibling representation differs")
+    for projection, position in zip(plan["outputs"], visible, strict=True):
+        if (type(projection) is not dict or type(projection.get("field")) is not int
+            or not 0 <= projection["field"] < len(plan["fields"])):
+            raise ReadBuildError("original temporal projection Field ordinal required")
+        output = program["outputs"][position - 1]
+        if projection.get("name") != output["name"] or plan["fields"][projection["field"]]["identity"] != output["source"]:
+            raise ReadBuildError("original temporal projection/source differs")
+    if program["version"] == "weft.engine-page/0.4":
+        metadata = program["page"]
+        if (plan.get("selectedKey") != program["selectedKey"] or type(plan.get("keyFields")) is not list
+            or program["selectedKey"]["module"] != record["module"] or program["selectedKey"]["record"] != record["element"]
+            or len(plan["keyFields"]) != len(metadata["keyOutputPositions"])
+            or any(type(i) is not int or not 0 <= i < len(plan["fields"]) for i in plan["keyFields"])
+            or len(set(plan["keyFields"])) != len(plan["keyFields"])
+            or type(plan.get("sort")) is not list or len(plan["sort"]) != len(metadata["sort"])):
+            raise ReadBuildError("original temporal page resolved Key/order differs")
+        key_sources = [plan["fields"][i]["identity"] for i in plan["keyFields"]]
+        if key_sources != [program["outputs"][i - 1]["source"] for i in metadata["keyOutputPositions"]]:
+            raise ReadBuildError("original complete temporal string Key tuple differs")
+        property_ids = [next(f["propertyId"] for f in native["fields"] if f["identity"] == identity) for identity in key_sources]
+        if (type(native.get("keys")) is not list or sum(type(k) is dict
+            and k.get("keyId") == program["selectedKey"]["key"] and k.get("propertyIds") == property_ids
+            for k in native["keys"]) != 1):
+            raise ReadBuildError("original temporal selected Key native mapping differs")
+        for original, slot in zip(plan["sort"], metadata["sort"], strict=True):
+            if (type(original) is not dict or type(original.get("field")) is not int
+                or not 0 <= original["field"] < len(plan["fields"])
+                or plan["fields"][original["field"]]["identity"] != slot["field"]
+                or original.get("direction") != slot["direction"] or original.get("nulls") != slot["nulls"]):
+                raise ReadBuildError("original complete temporal ordering tuple differs")
+
+
+def _temporal_typed_custody(program: dict[str, Any], parameters: type[BaseModel], result: type[BaseModel]) -> None:
+    outputs, visible = _temporal_program(program)
+    expected = _temporal_fields(result)
+    if len(expected) != len(visible):
+        raise ReadBuildError("complete temporal typed output required")
+    for wanted, position in zip(expected, visible, strict=True):
+        output = outputs[position - 1]
+        if any(output[k] != wanted[k] for k in ("name", "carrier", "nullable", "missing")):
+            raise ReadBuildError("temporal output differs from generated kind/presence")
+        if wanted["carrier"] in ("date", "instant", "local"):
+            source = getattr(result, "UMF_SOURCE", None)
+            identities = getattr(result, "UMF_FIELDS", ())
+            identity = output["source"]
+            matched = [p for p in output["modelPins"] if p["documentId"] == identity["documentId"] and p["revision"] == identity["revision"]]
+            if (not isinstance(source, GeneratedSource) or len(matched) != 1 or source.document_id != identity["documentId"]
+                or source.document_sha256 != matched[0]["sha256"] or source.core_version != matched[0]["umfVersion"]
+                or (identity["module"], identity["element"], wanted["name"]) not in identities):
+                raise ReadBuildError("generated temporal output source differs")
+    declared = {p["name"]: p for p in _temporal_fields(parameters, parameter=True)}
+    request = program["request"]
+    native = {name: p["family"] for name, p in request["parameters"].items()}
+    native.update({name: p["kind"] for name, p in request["temporalParameters"].items()})
+    if set(declared) != set(native) or any(p["carrier"] != native[name] for name, p in declared.items()):
+        raise ReadBuildError("separate original temporal parameter signatures differ")
 
 
 def _engine_scalar_signature(annotation: object, *, allow_binary: bool = False) -> dict[str, object]:
@@ -372,8 +804,9 @@ class EngineRead(CatalogRead[P, R]):
         selected_key: Mapping[str, str] | None = None,
         source_selected_key: Mapping[str, str] | None = None,
         order_key: Mapping[str, str] | None = None,
+        temporal_profile: str | None = None,
     ) -> EngineRead[P, R]:
-        original = cls.compile_original(compiler, request, method=method, page_size=page_size, related_source=related_source, relationship=relationship, selected_key=selected_key, source_selected_key=source_selected_key, order_key=order_key)
+        original = cls.compile_original(compiler, request, method=method, page_size=page_size, related_source=related_source, relationship=relationship, selected_key=selected_key, source_selected_key=source_selected_key, order_key=order_key, temporal_profile=temporal_profile)
         return cls.from_original(original, parameters=parameters, result=result)
 
     @classmethod
@@ -389,8 +822,39 @@ class EngineRead(CatalogRead[P, R]):
         selected_key: Mapping[str, str] | None = None,
         source_selected_key: Mapping[str, str] | None = None,
         order_key: Mapping[str, str] | None = None,
+        temporal_profile: str | None = None,
     ) -> str:
         """Obtain one untouched owner program before choosing typed transport."""
+        if _temporal_selection(method, temporal_profile):
+            if any(value is not None for value in (related_source, relationship, source_selected_key, order_key)):
+                raise ReadBuildError("temporal navigation and order Key extensions are unsupported")
+            if page_size is None and selected_key is not None:
+                raise ReadBuildError("temporal selected Key is page-only")
+            if page_size is not None and (type(page_size) is not int or not 1 <= page_size <= 999):
+                raise ReadBuildError("temporal page size must be in 1..999")
+            key = _selected_key(selected_key) if page_size is not None else None
+            snapshot = program_json(canonical_json(dict(request)))
+            _temporal_request(snapshot)
+            packet = {"version": "weft.engine-page/0.4" if page_size is not None else "weft.engine-read/0.4",
+                      "compiler": method, "request": snapshot,
+                      **({"selectedKey": key, "pageSize": page_size} if page_size is not None else {})}
+            compile_method = getattr(compiler, "compile_engine_page_json" if page_size is not None else "compile_engine_read_json", None)
+            if not callable(compile_method):
+                raise ReadBuildError("WEFT_BLOCKED: original temporal engine catalog compiler required")
+            original = compile_method(canonical_json(packet))
+            if type(original) is not str or len(original.encode()) > 4_194_304:
+                raise ReadBuildError("bounded original temporal engine program required")
+            program = program_json(original)
+            if type(program) is not dict:
+                raise ReadBuildError("original temporal engine program object required")
+            if program.get("status") != "compiled":
+                raise ProgramBuildError(original)
+            if (program.get("version") != packet["version"] or program.get("compiler") != method
+                or canonical_json(program.get("request")) != canonical_json(snapshot)
+                or page_size is not None and (program.get("pageSize") != page_size or program.get("selectedKey") != key)):
+                raise ReadBuildError("original temporal compiler request/page differs")
+            _temporal_program(program)
+            return original
         if (related_source is None) != (relationship is None):
             raise ReadBuildError("both original navigation source and relationship are required")
         successor = method in ("ashlar-spark4-sdk", "ashlar-spark4-sdk-pages", "truss-runtime-binary")
@@ -453,12 +917,13 @@ class EngineRead(CatalogRead[P, R]):
         if type(parsed) is not dict:
             raise ReadBuildError("original engine program object required")
         successor = parsed.get("version") in ("weft.engine-read/0.2", "weft.engine-page/0.2")
+        temporal = parsed.get("version") in _TEMPORAL_VERSIONS
         binary = parsed.get("compiler") == "truss-runtime-binary"
         wrapper = {
-            "version": "umf.engine-catalog/0.2" if successor else "umf.engine-catalog/0.1",
+            "version": "umf.engine-catalog/0.4" if temporal else "umf.engine-catalog/0.2" if successor else "umf.engine-catalog/0.1",
             "programJson": original,
-            "parameters": _fields(parameters),
-            "outputs": _engine_fields(result, allow_binary=binary) if successor else _fields(result, parameter=False, allow_related=True),
+            "parameters": _temporal_fields(parameters, parameter=True) if temporal else _fields(parameters),
+            "outputs": _temporal_fields(result) if temporal else _engine_fields(result, allow_binary=binary) if successor else _fields(result, parameter=False, allow_related=True),
             "stageOne": _generation(parameters, result),
         }
         wrapper["catalogDigest"] = hashlib.sha256(
@@ -486,7 +951,7 @@ class EngineRead(CatalogRead[P, R]):
                 "stageOne",
                 "catalogDigest",
             }
-            or wrapper["version"] not in ("umf.engine-catalog/0.1", "umf.engine-catalog/0.2")
+            or wrapper["version"] not in ("umf.engine-catalog/0.1", "umf.engine-catalog/0.2", "umf.engine-catalog/0.4")
         ):
             raise ReadBuildError("closed engine catalog required")
         digest = wrapper.pop("catalogDigest")
@@ -500,6 +965,12 @@ class EngineRead(CatalogRead[P, R]):
         program = program_json(original)
         if type(program) is not dict:
             raise ReadBuildError("original engine program object required")
+        if wrapper["version"] == "umf.engine-catalog/0.4":
+            if (wrapper["parameters"] != _temporal_fields(self.parameters, parameter=True)
+                or wrapper["outputs"] != _temporal_fields(self.result)):
+                raise ReadBuildError("temporal engine model signature differs")
+            _temporal_typed_custody(program, self.parameters, self.result)
+            return program
         if wrapper["parameters"] != _fields(self.parameters) or wrapper[
             "outputs"
         ] != (_engine_fields(self.result, allow_binary=program.get("compiler") == "truss-runtime-binary") if wrapper["version"] == "umf.engine-catalog/0.2" else _fields(self.result, parameter=False, allow_related=True)):

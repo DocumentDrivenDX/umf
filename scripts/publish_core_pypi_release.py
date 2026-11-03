@@ -20,7 +20,7 @@ from typing import Any
 SHA = re.compile(r"[0-9a-f]{64}\Z")
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
-QUALIFIED_CORE_VERSIONS = frozenset({"0.10.2", "0.10.7"})
+QUALIFIED_CORE_VERSIONS = frozenset({"0.10.2", "0.10.7", "0.10.8"})
 
 
 class ReleaseError(ValueError):
@@ -186,7 +186,8 @@ def prepare_release(
         resolve_tag_commit(tag_ref, tag_object, tag) == source_sha,
         "tag does not resolve to the pinned source",
     )
-    sdk_version = tag[5:] if tag.startswith("umf-v") else None
+    is_sdk_tag = tag.startswith("umf-v")
+    tag_version = tag[5:] if is_sdk_tag else tag.removeprefix("python-v")
     raw_assets = release.get("assets")
     _require(isinstance(raw_assets, list), "release asset inventory is missing")
     assets: dict[str, dict[str, Any]] = {}
@@ -234,22 +235,24 @@ def prepare_release(
         and require_sdist,
         "publisher is restricted to the official umf-core wheel and source archive",
     )
-    if sdk_version is not None:
+    _require(
+        isinstance(pins, dict)
+        and pins.get("tag") == tag
+        and pins.get("commit") == source_sha
+        and pins.get("distribution") == distribution,
+        "release pins differ from tag, source or distribution",
+    )
+    if is_sdk_tag:
         _require(
-            isinstance(pins, dict) and pins.get("sdk") == sdk_version,
-            "release pins do not identify this SDK tag",
+            pins.get("sdk") == tag_version
+            and pins.get("umf_core") == tag_version,
+            "SDK tag, SDK pin and umf-core pin must identify the same artifact cohort",
         )
-        version = pins.get("umf_core")
-    else:
-        version = tag.removeprefix("python-v")
-        _require(
-            isinstance(pins, dict)
-            and pins.get("tag") == tag
-            and pins.get("commit") == source_sha
-            and pins.get("distribution") == distribution
-            and pins.get("version") == version,
-            "standalone core release pins differ from tag, source or distribution",
-        )
+    version = pins.get("version")
+    _require(
+        version == tag_version,
+        "release pin version differs from tag",
+    )
     _require(
         isinstance(version, str)
         and re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version) is not None,
@@ -265,7 +268,6 @@ def prepare_release(
     )
     _require(
         1 <= len(archives) <= 32
-        and (sdk_version is None or len(archives) == 1)
         and (wheel_count is None or len(archives) == wheel_count),
         "SHA256SUMS wheel inventory differs from the expected cohort",
     )
@@ -290,11 +292,10 @@ def prepare_release(
         set(selected) == published_archives,
         "release archive inventory differs from checksum cohort",
     )
-    if sdk_version is None:
-        _require(
-            pins.get("files") == {name: sums[name] for name in selected},
-            "standalone core selected file hashes differ from release pins",
-        )
+    _require(
+        pins.get("files") == {name: sums[name] for name in selected},
+        "selected file hashes differ from release pins",
+    )
     _require(not output_dir.exists(), "verified distribution output path must be new")
     output_dir.mkdir(parents=True)
     files: dict[str, str] = {}

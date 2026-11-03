@@ -272,6 +272,7 @@ ROOT_TREES = (
     "bindings/core/python",
     "bindings/core/node",
     "bindings/core/wasm",
+    "bindings/pack-tools/wasm",
 )
 RESOURCES = (
     ("actionsPackage.json", "spec/extensions/actions/package.json"),
@@ -689,6 +690,44 @@ def test_exact_source_and_archive_inventory_returns_canonical_manifest(
         result["files"], sort_keys=True, separators=(",", ":")
     ).encode()
     assert result["sha256"] == hashlib.sha256(canonical).hexdigest()
+
+
+def test_current_sdist_build_hook_includes_pack_tools_wasm_tree() -> None:
+    repository = Path(__file__).resolve().parents[2]
+    hook_values = sdist._literal_assignments(
+        repository / "python/hatch_build.py", {"SDIST_SOURCE_TREES"}
+    )
+    assert set(hook_values["SDIST_SOURCE_TREES"]) == sdist._EXPECTED_ROOT_TREES
+    assert "bindings/pack-tools/wasm" in hook_values["SDIST_SOURCE_TREES"]
+    assert (repository / "bindings/pack-tools/wasm/Cargo.toml").is_file()
+
+
+def test_sdist_build_hook_rejects_unreviewed_tree_before_walking(
+    tmp_path: Path,
+) -> None:
+    repository = Path(__file__).resolve().parents[2]
+    names = {
+        "SDIST_SOURCE_FILES",
+        "SDIST_SOURCE_TREES",
+        "SDIST_EXCLUDED_DIRS",
+        "SDIST_EXCLUDED_SUFFIXES",
+        "ACTION_RUNTIME_RESOURCES",
+    }
+    values = sdist._literal_assignments(repository / "python/hatch_build.py", names)
+    values["SDIST_SOURCE_TREES"] = (
+        *values["SDIST_SOURCE_TREES"],
+        "unreviewed/wasm",
+    )
+    python_root = tmp_path / "python"
+    python_root.mkdir()
+    hook = python_root / "hatch_build.py"
+    hook.write_text(
+        "\n".join(f"{name} = {values[name]!r}" for name in sorted(names)) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(sdist.SdistInputError, match="build-hook-closure-differs"):
+        sdist._source_inventory(tmp_path)
 
 
 def test_nested_python_distribution_outputs_are_excluded(tmp_path: Path) -> None:

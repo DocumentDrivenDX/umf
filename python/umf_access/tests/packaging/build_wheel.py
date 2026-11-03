@@ -2,11 +2,13 @@
 """Build a local prerelease wheel with pinned tooling; never publishes."""
 
 import argparse
+import ast
 import hashlib
 import importlib.metadata
 import json
 import os
 import platform
+import stat
 import subprocess
 import sys
 import tempfile
@@ -18,29 +20,147 @@ from packaging.specifiers import SpecifierSet
 from replay_installed import inspect_wheel
 
 
-def main() -> int:
+def resolve_source_version(package: Path, document: dict) -> str:
+    """Resolve the one reviewed Hatch source-version form without imports."""
+    project = document.get("project")
+    tool = document.get("tool")
+    hatch = tool.get("hatch") if isinstance(tool, dict) else None
+    version_config = hatch.get("version") if isinstance(hatch, dict) else None
+    if (
+        not isinstance(project, dict)
+        or "version" in project
+        or project.get("dynamic") != ["version"]
+        or version_config != {"path": "src/umf_access/_version.py"}
+    ):
+        raise ValueError("package must use the fixed Hatch source version path")
+    version_path = package / "src/umf_access/_version.py"
+    version_tree = ast.parse(version_path.read_text(encoding="utf-8"), filename=str(version_path))
+    assignments = [
+        node for node in version_tree.body
+        if isinstance(node, ast.Assign) and len(node.targets) == 1
+        and isinstance(node.targets[0], ast.Name) and node.targets[0].id == "__version__"
+    ]
+    executable = [node for node in version_tree.body if not (
+        isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant)
+        and isinstance(node.value.value, str)
+    )]
+    if len(assignments) != 1 or executable != assignments:
+        raise ValueError("source version module is not one inert literal assignment")
+    value = assignments[0].value
+    if not isinstance(value, ast.Constant) or not isinstance(value.value, str) or not value.value:
+        raise ValueError("source version must be a nonempty string literal")
+
+    types_path = package / "src/umf_access/types.py"
+    types_tree = ast.parse(types_path.read_text(encoding="utf-8"), filename=str(types_path))
+    version_imports = [
+        node for node in types_tree.body
+        if isinstance(node, ast.ImportFrom) and node.level == 1 and node.module == "_version"
+        and [(item.name, item.asname) for item in node.names] == [("__version__", None)]
+    ]
+
+    def assigned(name: str):
+        matches = []
+        for node in types_tree.body:
+            if isinstance(node, ast.Assign) and any(
+                isinstance(target, ast.Name) and target.id == name for target in node.targets
+            ):
+                matches.append(node.value)
+        return matches[0] if len(matches) == 1 else None
+
+    abi_value = assigned("RUNTIME_ABI")
+    identity = assigned("RUNTIME_IDENTITY")
+    if (
+        len(version_imports) != 1
+        or not isinstance(abi_value, ast.Constant)
+        or abi_value.value != "umf-access-runtime/0.1"
+        or not isinstance(identity, ast.Tuple)
+        or len(identity.elts) != 3
+        or not isinstance(identity.elts[0], ast.Constant)
+        or identity.elts[0].value != "umf_access"
+        or not isinstance(identity.elts[1], ast.Name)
+        or identity.elts[1].id != "__version__"
+        or not isinstance(identity.elts[2], ast.Name)
+        or identity.elts[2].id != "RUNTIME_ABI"
+    ):
+        raise ValueError("runtime identity is not derived from the source version and ABI")
+    return value.value
+
+
+def read_selected_profile(path: Path) -> tuple[dict, dict]:
+    """Read one explicit regular profile and retain stable file custody."""
+    if path.is_symlink():
+        raise ValueError("selected compatibility profile must not be a symlink")
+    selected = path.resolve(strict=True)
+    before = selected.lstat()
+    if not stat.S_ISREG(before.st_mode):
+        raise ValueError("selected compatibility profile must be a regular file")
+    data = selected.read_bytes()
+    after = selected.lstat()
+    before_identity = (before.st_dev, before.st_ino, before.st_size,
+                       before.st_mtime_ns, before.st_ctime_ns)
+    after_identity = (after.st_dev, after.st_ino, after.st_size,
+                      after.st_mtime_ns, after.st_ctime_ns)
+    if (not stat.S_ISREG(after.st_mode) or before_identity != after_identity
+            or len(data) != after.st_size):
+        raise ValueError("selected compatibility profile changed while reading")
+    value = json.loads(data)
+    if not isinstance(value, dict):
+        raise ValueError("selected compatibility profile must be an object")
+    return value, {
+        "path": str(selected),
+        "sizeBytes": len(data),
+        "sha256": hashlib.sha256(data).hexdigest(),
+        "identity": list(after_identity),
+    }
+
+
+def validate_selected_profile(package: Path, profile: dict) -> None:
+    """Permit only the two checked-in compatibility profiles by exact content."""
+    allowed = []
+    for name in ("compatibility-profile.json", "compatibility-profile-linux311.json"):
+        value = json.loads((package / name).read_text(encoding="utf-8"))
+        allowed.append(value)
+    if profile not in allowed:
+        raise ValueError("selected compatibility profile is not an admitted fixed profile")
+    pin = profile.get("runtimeAbi")
+    if (type(pin) is not dict or pin.get("distribution") != "umf_access"
+            or pin.get("version") != resolve_source_version(
+                package, tomllib.loads((package / "pyproject.toml").read_text(encoding="utf-8"))
+            )
+            or pin.get("abi") != "umf-access-runtime/0.1"):
+        raise ValueError("selected profile runtime pin differs from package source")
+
+
+def main(*, command_runner=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--profile", type=Path)
     args = parser.parse_args()
     package = Path(__file__).resolve().parents[2]
-    profile = json.loads((package / "compatibility-profile.json").read_text())
     report = {
         "kind": "local-prerelease-wheel-build",
         "status": "UNTESTED",
         "runtimeAcceptance": "UNTESTED; building bytes does not qualify imports or generated models",
     }
     try:
+        selected_profile_path = args.profile or (package / "compatibility-profile.json")
+        profile, profile_pre = read_selected_profile(selected_profile_path)
+        validate_selected_profile(package, profile)
+        report["selectedProfileInput"] = {**profile_pre, "identityPost": None}
         if platform.python_version() != profile["python"]:
             raise ValueError("build Python pin mismatch")
         for name, version in profile["buildDependencies"].items():
             if importlib.metadata.version(name) != version:
                 raise ValueError("build dependency pin mismatch: " + name)
-        project = tomllib.loads((package / "pyproject.toml").read_text())["project"]
+        project_document = tomllib.loads((package / "pyproject.toml").read_text())
+        project = project_document["project"]
+        source_version = resolve_source_version(package, project_document)
         pin = profile["runtimeAbi"]
         if (
             project["name"] != pin["distribution"]
-            or project["version"] != pin["version"]
+            or source_version != pin["version"]
+            or pin["abi"] != "umf-access-runtime/0.1"
         ):
             raise ValueError("package metadata differs from runtime profile")
         requirements = [Requirement(item) for item in project["dependencies"]]
@@ -88,7 +208,8 @@ def main() -> int:
         ]
         # Cwd outside checkout avoids accidental top-level module resolution.
         with tempfile.TemporaryDirectory(prefix="umf-access-wheel-build-") as temporary:
-            result = subprocess.run(
+            runner = subprocess.run if command_runner is None else command_runner
+            result = runner(
                 command,
                 cwd=temporary,
                 env=env,
@@ -106,6 +227,11 @@ def main() -> int:
         )
         if result.returncode:
             raise ValueError("wheel build failed")
+        profile_after, profile_post = read_selected_profile(selected_profile_path)
+        if profile_post != profile_pre or profile_after != profile:
+            raise ValueError("selected compatibility profile changed during wheel build")
+        report["selectedProfileInput"]["identityPost"] = profile_post["identity"]
+        report["selectedProfileInput"]["postSha256"] = profile_post["sha256"]
         wheel = args.out_dir / f"umf_access-{pin['version']}-py3-none-any.whl"
         members = inspect_wheel(wheel, pin)
         if any(

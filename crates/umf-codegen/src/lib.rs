@@ -10,6 +10,7 @@ pub mod actions;
 pub mod canonical;
 pub mod deployment;
 pub mod generation;
+pub(crate) mod grant_columns;
 pub mod inventory;
 pub mod migration;
 pub mod pack_tools;

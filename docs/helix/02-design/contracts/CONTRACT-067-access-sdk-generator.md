@@ -41,6 +41,51 @@ No SQL is produced at this stage and no target platform is selected.
 
 ## Normative Surface
 
+### Public access-view inspection
+
+`inspectAccessViews(document, selected, bindings = [], sourceId = "logical")`
+exposes the existing access admission inspector. `selected` is an ordered array
+of exact `{module, element}` references. Each supplied binding is exactly
+`{sourceId: string, document: Document}`. The result is exactly
+`{records: ResolvedRecord[], diagnostics: AccessDiagnostic[]}`, preserving the
+existing inspector's record structures, diagnostic order, source IDs, pointers,
+selected Keys, presence and explicit temporal selections. This operation MUST
+call the same implementation used by package generation; it MUST NOT create an
+independent semantic resolver or treat a parse as native acceptance.
+
+The closed codegen operation payload is
+`{operation:"inspectAccessViews", document, selected, bindings, sourceId}`.
+`bindings` and `sourceId` may be omitted and select the defaults above;
+`document` and `selected` are required. The existing outer transport envelope
+and resource controls remain unchanged. `CodegenEngine.call("inspectAccessViews",
+request)` receives the payload fields without a second operation discriminator;
+the shared dispatcher selects that operation once. Portable facades expose
+the camel-case call above; Python exposes
+`inspect_access_views(document, selected, bindings=(), source_id="logical")`.
+Python bindings may be a list or tuple of the same binding objects.
+
+This public composition profile admits Unicode scalar-value strings for the
+top-level `sourceId` and each supplied binding's `sourceId`, matching the existing
+Rust inspector's UTF-8 source-identity carrier. Unpaired UTF-16 surrogates in
+these host-supplied identifiers MUST refuse with REQUEST; they MUST NOT be
+replaced, stripped or normalized. This restriction applies only to these
+source-identity arguments. Original UMF document content and its unknown
+extension strings retain the existing lossless carrier and semantic rules.
+
+Malformed operation structure uses the existing REQUEST error boundary;
+well-formed semantic failures retain the inspector's ordered diagnostics and
+existing partial-record behavior. Do not infer success from a nonempty record
+list. Unknown request fields refuse, while original UMF document content retains
+its existing validation, unknown-content and fidelity rules. No normalization
+or mutation of caller documents/references/bindings is allowed. Callers retain
+their original source bytes independently; this result does not recreate them.
+
+All public paths reuse the engine's explicit resources, precharging, work/output
+limits and cancellation. Actual Python and Node/WASM exports must pass parity
+against the existing TypeScript inspector, including duplicate/foreign refs,
+refinements, presence, Key and temporal diagnostics and budget/cancel refusals.
+The public exposure does not select a backend, generate SQL or authorize I/O.
+
 `generateAccessPackage(request, profile)` is synchronous, pure and deterministic.
 Inputs are copied; caller-owned data MUST NOT be mutated. All records below are
 closed except preserved UMF source content. Unknown contract fields refuse.

@@ -70,6 +70,11 @@ class CodegenEngine:
             raise TypeError("Codegen operation must be a string")
         profile, max_work, meter, is_cancelled, now, deadline_ms = self._controls
         work = _host_work(max_work, meter, is_cancelled, now, deadline_ms)
+        # The public inspection binding carrier also admits tuples. Charge the
+        # immutable sequence copy within this same invocation before allocating.
+        if operation == "inspectAccessViews" and type(request) is dict and type(request.get("bindings")) is tuple:
+            work(len(request) + len(request["bindings"]))
+            request = {**request, "bindings": list(request["bindings"])}
         envelope = _wire({"op": "codegen/" + operation}, max_depth=256, max_values=sys.maxsize, work=work)
         envelope["members"].extend([
             {"key": [ord(c) for c in "resources"], "value": self._resources},
@@ -141,6 +146,12 @@ class CodegenEngine:
 
     def normalize_row_scope(self, input: Any, context: Any) -> Any:
         return self._result("normalizeRowScope", {"input": input, "context": context})
+
+    def inspect_access_views(self, document: Any, selected: Any, bindings: Any = (),
+                             source_id: str = "logical") -> Any:
+        """Return copied authored access records and their ordered diagnostics."""
+        return self._result("inspectAccessViews", {
+            "document": document, "selected": selected, "bindings": bindings, "sourceId": source_id})
 
     def generate_access_package(self, request: Any, profile: Any) -> Any:
         return self._result("generateAccessPackage", {"request": request, "profile": profile})

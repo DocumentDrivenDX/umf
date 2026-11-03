@@ -14,20 +14,26 @@ from publish_core_pypi_release import QUALIFIED_CORE_VERSIONS, ReleaseError
 TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
 
 
+# This exact owner-qualified release uses the manual upload-only driver with
+# locally_qualified=true; automatic dispatch would also start hosted tests.
+MANUAL_ONLY_TAGS = frozenset({"umf-v0.10.7"})
+
+
 def core_release(release: dict[str, Any]) -> bool:
-    return (
-        release.get("draft") is False
-        and release.get("prerelease") is False
-        and isinstance(release.get("tag_name"), str)
-        and TAG.fullmatch(release["tag_name"]) is not None
-        and any(
-            isinstance(a, dict)
-            and isinstance(a.get("name"), str)
-            and any(a["name"].startswith(f"umf_core-{version}-")
-                    for version in QUALIFIED_CORE_VERSIONS)
-            and a["name"].endswith(".whl")
-            for a in release.get("assets", [])
-        )
+    tag = release.get("tag_name")
+    matched = TAG.fullmatch(tag) if isinstance(tag, str) else None
+    if (release.get("draft") is not False or release.get("prerelease") is not False
+            or matched is None or tag in MANUAL_ONLY_TAGS):
+        return False
+    version = ".".join(matched.groups())
+    if version not in QUALIFIED_CORE_VERSIONS:
+        return False
+    return any(
+        isinstance(asset, dict)
+        and isinstance(asset.get("name"), str)
+        and asset["name"].startswith(f"umf_core-{version}-")
+        and asset["name"].endswith(".whl")
+        for asset in release.get("assets", [])
     )
 
 

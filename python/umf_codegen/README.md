@@ -1,8 +1,8 @@
 # UMF Python client generator
 
-`umf-codegen` exposes the seven Python code generation, deployment, migration,
+`umf-codegen` exposes Python client and pack generation, deployment, migration,
 verification, change discovery, and row-scope operations through the native
-Rust compiler in `umf-core==0.11.0`. The package requires that exact core
+Rust compiler in `umf-core==0.10.7`. The package requires that exact core
 release and checks its native ABI and codegen protocol before use. It has no
 JavaScript or V8 runtime dependency.
 
@@ -13,13 +13,13 @@ python -m umf_codegen check --schema plugin.json --package plugin_client --outpu
 
 `check` is read-only and exits nonzero for drift or refusal. `generate` refuses
 hand-edited output and unsafe paths. At build and runtime, the package checks a
-pinned manifest covering exactly nine compiler resources. Five shared core
+pinned manifest covering exactly ten compiler resources. Five shared core
 resources are also byte-compared with the installed `umf-core` wheel; an
 incoherent package pair fails with `ENGINE_UNAVAILABLE` and has no fallback.
 
 Each public compiler call uses the `umf` CLI binary packaged inside the pinned
 `umf-core` wheel. The package resolves that exact resource and checks the CLI
-capability protocol, input and output wire protocols, and all nine resource
+capability protocol, input and output wire protocols, and all ten resource
 hashes before compiling. Missing binaries and mismatched identities fail with
 `ENGINE_UNAVAILABLE`; it never searches `PATH` or the current directory.
 
@@ -83,3 +83,11 @@ to the separately installed host runtime.
 
 First-party files use MIT OR Apache-2.0. The native core wheel retains its own
 license and third-party notices.
+
+## Pack tools
+
+Install the `umf-codegen==0.10.7` wheel from the matching UMF GitHub release
+alongside `umf-core==0.10.7`. Call `generate_pack_tools(request)` with a complete
+`umf.pack-tools/1` request to generate PostgreSQL schema DDL, SQLAlchemy models and
+caller-session Python CRUD. Original schema text and unsupported declarations
+remain in source companions and diagnostics; the package never executes JavaScript.
