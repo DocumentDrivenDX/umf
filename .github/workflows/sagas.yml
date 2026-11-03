@@ -8,7 +8,7 @@ on:
         description: Full campaign or bounded retained-S temporal resume
         type: choice
         default: full
-        options: [full, resume, linux]
+        options: [full, resume, linux, consumers]
 permissions:
   contents: read
 concurrency:
@@ -197,7 +197,7 @@ jobs:
             ${{ runner.temp }}/saga-python-dist/
 
   temporal-resume:
-    if: github.event_name == 'workflow_dispatch' && (inputs.temporal_phase == 'resume' || inputs.temporal_phase == 'linux')
+    if: github.event_name == 'workflow_dispatch' && (inputs.temporal_phase == 'resume' || inputs.temporal_phase == 'linux' || inputs.temporal_phase == 'consumers')
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     permissions:
@@ -258,6 +258,7 @@ jobs:
         run: |
           operation=prepare
           if [ "${{ inputs.temporal_phase }}" = linux ]; then operation=prepare-linux; fi
+          if [ "${{ inputs.temporal_phase }}" = consumers ]; then operation=prepare-consumers; fi
           python controller/tools/temporal_resume.py "$operation" --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
       - name: Apply only recorded qualification overlay
         if: inputs.temporal_phase == 'resume'
@@ -300,6 +301,7 @@ jobs:
           echo "0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5  $UMF_TEMPORAL_OUTPUT/pure/umf_codegen-0.10.8-py3-none-any.whl" | sha256sum --check
           echo "493c5f92cc9795403e08a421b6b3ba4a6e5799b94a4980f1613f38ecf2f1c2d7  $UMF_TEMPORAL_OUTPUT/pure/umf_access-0.1.0.dev10-py3-none-any.whl" | sha256sum --check
       - name: Strict selection of retained or freshly repaired actual Linux bytes
+        if: inputs.temporal_phase != 'consumers'
         working-directory: source
         run: |
           set -o pipefail
@@ -322,6 +324,7 @@ jobs:
           selected="$(find "$prior/repaired" -name '*.whl' -type f)"
           python "$GITHUB_WORKSPACE/controller/tools/qualify_python_release_wheel.py" --version 0.10.8 --platform linux --source-wheel "$raw" --selected-wheel "$selected" --before-report "$prior/auditwheel-before.json" --after-report "$prior/auditwheel-after.json" --tool-artifacts "$prior/repair-tools" --tool-lock qualification-inputs/core-0.10.3-wheel-input-lock.json --auditwheel-version "$prior/auditwheel-version.txt" --patchelf-version "$prior/patchelf-version.txt" --sdist "$prior/raw/umf_core-0.10.8.tar.gz" --output-wheel-directory "$out/dist" --receipt "$out/dist/selection.json" 2>&1 | tee "$out/repair-qualification.log"
       - name: Normal Linux311 candidate resolution and installed resource inspection
+        if: inputs.temporal_phase != 'consumers'
         working-directory: source
         run: |
           set -o pipefail
@@ -334,8 +337,10 @@ jobs:
           package_root="$("$consumer/bin/python" -I -B -c 'import pathlib,umf;print(pathlib.Path(umf.__file__).resolve().parent)')"
           python scripts/rust-migration/r4/check_binary_closure.py --package-root "$package_root" --cli-binary "$package_root/_bin/umf" "$package_root/_rust_core.abi3.so" "$package_root/_bin/umf" > "$UMF_TEMPORAL_OUTPUT/linux-binary-closure.json"
       - name: Apply Q for only the skipped Python host qualification
+        if: inputs.temporal_phase != 'consumers'
         run: python controller/tools/temporal_resume.py overlay --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT"
       - name: Qualify actual selected Python wheel using original guards
+        if: inputs.temporal_phase != 'consumers'
         working-directory: source
         run: |
           set -o pipefail
@@ -343,8 +348,13 @@ jobs:
           wheel="$(find "$UMF_TEMPORAL_OUTPUT/dist" -name '*.whl' -type f)"
           UMF_SAGA_PYTHON="$consumer" UMF_SAGA_PYTHON_WHEEL="$wheel" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/python-saga.log"
           "$consumer" -I -B python/tests/test_saga_lifecycle.py
-          "$consumer" -I -B -m pytest python/tests/test_action_runtime_resources.py python/tests/test_python_artifact_version.py python/tests/test_distribution_artifact.py::test_installed_wheel_payload_and_record_match_the_exact_archive python/tests/test_distribution_artifact.py::test_installed_wheel_verification_rejects_changed_or_escaped_files
+          "$consumer" -I -B -m pytest python/tests/test_action_runtime_resources.py "$GITHUB_WORKSPACE/controller/python/tests/test_python_artifact_version.py" python/tests/test_distribution_artifact.py::test_installed_wheel_payload_and_record_match_the_exact_archive python/tests/test_distribution_artifact.py::test_installed_wheel_verification_rejects_changed_or_escaped_files
           cp .cache/saga/portable-python.json "$UMF_TEMPORAL_OUTPUT/portable-python.json"
+      - name: Only the failed fixture and new refusal control using controller-owned tests
+        if: inputs.temporal_phase == 'consumers'
+        run: |
+          set -o pipefail
+          python -I -B "$GITHUB_WORKSPACE/controller/python/tests/test_python_artifact_version.py" ExpectedVersionTests.test_installed_verifier_allows_exact_uv_cache_metadata_but_rejects_other_extras ExpectedVersionTests.test_installed_verifier_still_refuses_a_wheel_without_its_cli 2>&1 | tee "$UMF_TEMPORAL_OUTPUT/controller-owned-fixture-controls.log"
       - name: Restore S and rebuild genuine sdist without JavaScript tools
         working-directory: source
         run: |
@@ -392,7 +402,7 @@ jobs:
             "$consumer/bin/python" -I -B "$GITHUB_WORKSPACE/controller/tools/temporal_resume.py" probe --source "$GITHUB_WORKSPACE/source" --controller "$GITHUB_WORKSPACE/controller" --output "$UMF_TEMPORAL_OUTPUT" --expected-python 3.13.17 --install-report "$phase/install-report.json" --receipt "$phase/installed.json"
             UMF_SAGA_HOST_ID="$host" UMF_SAGA_RESULT_PATH="$phase/portable-$host.json" UMF_SAGA_PYTHON="$consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel" UMF_SAGA_PYTHON_SOURCE_ARCHIVE="$UMF_TEMPORAL_OUTPUT/dist/umf_core-0.10.8.tar.gz" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$phase/saga19.log"
             "$consumer/bin/python" -I -B python/tests/test_saga_lifecycle.py 2>&1 | tee "$phase/lifecycle.log"
-            "$consumer/bin/python" -I -B -m pytest python/tests/test_action_runtime_resources.py python/tests/test_python_artifact_version.py python/tests/test_distribution_artifact.py::test_installed_wheel_payload_and_record_match_the_exact_archive python/tests/test_distribution_artifact.py::test_installed_wheel_verification_rejects_changed_or_escaped_files 2>&1 | tee "$phase/resources-identity-payload.log"
+            "$consumer/bin/python" -I -B -m pytest python/tests/test_action_runtime_resources.py "$GITHUB_WORKSPACE/controller/python/tests/test_python_artifact_version.py" python/tests/test_distribution_artifact.py::test_installed_wheel_payload_and_record_match_the_exact_archive python/tests/test_distribution_artifact.py::test_installed_wheel_verification_rejects_changed_or_escaped_files 2>&1 | tee "$phase/resources-identity-payload.log"
           done
       - name: Restore and capture exact source, Q and retained output inventory
         if: always() && steps.intake.outcome == 'success'

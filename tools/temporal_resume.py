@@ -30,6 +30,22 @@ LINUX_RUN = 41608568860
 LINUX_ARTIFACT = 13218662858
 LINUX_Q = "6f0ca8a0a6777016bdeb0e7a49807ccee2ab1a02"
 LINUX_ZIP_SHA = "b5ae6367a46b705795e9f00f6a0e140cf15185d557afe108b99a450ef12db03b"
+DIRECT_RUN = 41622923509
+DIRECT_ARTIFACT = 13224613401
+DIRECT_Q = "a2a8fc9bb0ab0d12af0ad4b98f3ea653aeaf3a3a"
+DIRECT_ZIP_SHA = "3dee5b013e12d6e424d70998c2a733fa9a5b694f0d0cc691c8589b9399e46a4b"
+DIRECT_JOB = 125872935653
+DIRECT_JOB_LOG_SHA = "c742715b89b8135259903d7daa93e720dd8ee6bf3b40407fc2905fdecb91b54b"
+CONTROLLER_TEST = "python/tests/test_python_artifact_version.py"
+DIRECT_FILES = {
+    "python-saga.log": "8aceba16b33ba57bb2d507f86a86c2f7a78a32214ec742da2e83228d1b442236",
+    "installed-linux311.json": "56bd013ad1d2f9c5514e41ca987a5eb67ab442ef89b588cbe3e355d0008cf795",
+    "installed-inventories/temporal-python-consumer.json": "927de727723424af2847688de09ac3537e3ee6d5c1fedf4eb88da3be178fbbe1",
+    "linux-binary-closure.json": "be30d1c1e576a9c0a887f02c3604222722c0c0aaa9aa7ecf4e1b9f118d77af1d",
+    "dist/selection.json": "b2daa344ad425239212d57a5b79fd1faf89e3d1e21c56c8b18ff3d780aef0421",
+    "dist/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+    "dist/umf_core-0.10.8.tar.gz": "4f2a21532fa58f17a85162752789cbbdee7a3657bb5dccf5a350338e4eb2b048",
+}
 LINUX_FILES = {
     "raw/umf_core-0.10.8-cp311-abi3-linux_x86_64.whl": "d8da5e64fbc3f9d112daf5e5d6032d96f17bca6e8349a8b52064597fec827bb5",
     "repaired/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
@@ -48,6 +64,7 @@ WIRING = {
     ".github/workflows/sagas.yml", "tools/temporal_resume.py",
     "scripts/saga-portable/installed-browser.ts", "tests/qualification/test_temporal_resume.py",
     "tools/qualify_python_release_wheel.py", "python/tests/test_distribution_artifact.py",
+    CONTROLLER_TEST,
 }
 
 
@@ -118,12 +135,12 @@ def api(path: str, token: str) -> dict:
         return json.load(response)
 
 
-def download(archive: Path, token: str, artifact_id: int = ARTIFACT) -> None:
+def download(archive: Path, token: str, artifact_id: int = ARTIFACT, *, endpoint: str | None = None) -> None:
     class NoRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, *args, **kwargs):
             return None
     request = urllib.request.Request(
-        f"https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/{artifact_id}/zip",
+        "https://api.github.com/repos/DocumentDrivenDX/umf/" + (endpoint or f"actions/artifacts/{artifact_id}/zip"),
         headers={"Authorization": "Bearer " + token})
     try:
         urllib.request.build_opener(NoRedirect).open(request, timeout=60)
@@ -258,6 +275,123 @@ def prepare_linux(source: Path, controller: Path, output: Path) -> None:
         "newVerifierSHA256": digest(controller / "tools/qualify_python_release_wheel.py"),
         "newVerifierTestsSHA256": digest(controller / "python/tests/test_distribution_artifact.py"),
         "unchangedRetainedPins": LINUX_FILES,
+    })
+
+
+def validate_direct_receipts(saga: dict, installed: dict, observed: dict) -> None:
+    binding = saga["installedBinding"]
+    wheel_sha = DIRECT_FILES["dist/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl"]
+    native_sha = "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da"
+    if (saga["profile"] != "umf.saga.portable-host-receipt/2" or saga["cases"] != 19 or saga["passed"] != 19
+            or len(saga["results"]) != 19 or not all(row["passed"] is True for row in saga["results"])
+            or saga["runtime"] != {"python": "3.11.17", "platform": "Linux", "arch": "x86_64"}
+            or binding != {"status": "passed", "wheelSha256": wheel_sha,
+                "beforeNativeSha256": native_sha, "afterNativeSha256": native_sha,
+                "beforeInstalledFileCount": 81, "afterInstalledFileCount": 81,
+                "beforePackageFileCount": 72, "afterPackageFileCount": 72}
+            or saga["artifacts"]["pythonWheel"]["sha256"] != wheel_sha
+            or installed["artifactSourceS"] != SOURCE or installed["controllerQ"] != DIRECT_Q
+            or installed["actualPython"] != "3.11.17" or installed["pydantic"] != "2.14.2"
+            or installed["inspectionCases"] != 17 or installed["inspectionCalls"] != 51
+            or installed["companionResourceAndNativeChecks"] is not True
+            or observed["actualPython"] != "3.11.17" or observed["isolated"] is not True
+            or observed["dontWriteBytecode"] is not True):
+        raise ValueError("Completed Linux311 runtime/source/Saga/strict binding proof differs")
+    files = {row["path"]: row for row in observed["files"]}
+    packages = {name: row["sha256"] for name, row in files.items()
+                if row["kind"] == "file" and name.startswith(("umf/", "umf_codegen/", "umf_access/"))}
+    if (len(files) != len(observed["files"]) or any(row["kind"] != "file" for row in files.values())
+            or packages != {name: row["sha256"] for name, row in installed["installedFiles"].items()}):
+        raise ValueError("Completed Linux311 observed package inventory differs")
+    records = observed["records"]
+    if len(records) != 3 or {row["path"] for row in records} != {
+            "umf_core-0.10.8.dist-info/RECORD", "umf_codegen-0.10.8.dist-info/RECORD",
+            "umf_access-0.1.0.dev10.dist-info/RECORD"}:
+        raise ValueError("Completed Linux311 actual RECORD roster differs")
+    for row in records:
+        if hashlib.sha256(base64.b64decode(row["bytesBase64"], validate=True)).hexdigest() != files[row["path"]]["sha256"]:
+            raise ValueError("Completed Linux311 actual RECORD bytes differ")
+
+
+def verify_completed_linux(root: Path, job_log: Path) -> dict:
+    inventory = json.loads((root / "files.json").read_text())
+    prior = json.loads((root / "source-and-controller.json").read_text())
+    if (inventory["artifactSourceS"] != SOURCE or inventory["sourceHead"] != SOURCE
+            or inventory["sourceStatus"] or inventory["controllerQ"] != DIRECT_Q
+            or prior["artifactSourceS"] != SOURCE or prior["controllerQ"] != DIRECT_Q or prior["overlayActive"]):
+        raise ValueError("Completed Linux311 source/controller/restoration differs")
+    rows = inventory["files"]
+    names = [row["path"] for row in rows]
+    actual = {str(p.relative_to(root)) for p in root.rglob("*") if p.is_file()}
+    # The original capture omitted all files.json basenames; the nested producer
+    # inventory is independently authenticated below under its original identity.
+    if len(names) != len(set(names)) or actual != set(names) | {"files.json", "prior-linux/files.json"}:
+        raise ValueError("Completed Linux311 retained inventory roster differs")
+    for row in rows:
+        path = root / row["path"]
+        if (not path.resolve().is_relative_to(root.resolve()) or path.stat().st_size != row["bytes"]
+                or digest(path) != row["sha256"]):
+            raise ValueError("Completed Linux311 retained member differs")
+    verify_retained_linux(root / "prior-linux")
+    for name, expected in DIRECT_FILES.items():
+        if digest(root / name) != expected:
+            raise ValueError("Pinned completed Linux311 bytes differ: " + name)
+    if digest(job_log) != DIRECT_JOB_LOG_SHA:
+        raise ValueError("Original Linux311 lifecycle/pytest job log differs")
+    log = job_log.read_text()
+    if "Ran 2 tests in 24.999s" not in log or "1 failed, 45 passed in 0.83s" not in log:
+        raise ValueError("Original Linux311 lifecycle/pytest outcomes differ")
+    validate_direct_receipts(json.loads((root / "python-saga.log").read_text()),
+        json.loads((root / "installed-linux311.json").read_text()),
+        json.loads((root / "installed-inventories/temporal-python-consumer.json").read_text()))
+    return prior
+
+
+def prepare_consumers(source: Path, controller: Path, output: Path) -> None:
+    q = check_roots(source, controller)
+    output.mkdir(parents=True, exist_ok=True)
+    token = os.environ["GH_TOKEN"]
+    run = api(f"actions/runs/{DIRECT_RUN}", token)
+    artifact = api(f"actions/artifacts/{DIRECT_ARTIFACT}", token)
+    job = api(f"actions/jobs/{DIRECT_JOB}", token)
+    if (run["head_sha"] != DIRECT_Q or run["run_attempt"] != 1 or run["conclusion"] != "failure"
+            or run["event"] != "workflow_dispatch" or run["workflow_id"] != 401955635
+            or artifact["workflow_run"]["id"] != DIRECT_RUN or artifact["expired"]
+            or artifact["name"] != f"temporal-resume-{DIRECT_Q}-{DIRECT_RUN}"
+            or artifact["digest"] != "sha256:" + DIRECT_ZIP_SHA or job["run_id"] != DIRECT_RUN
+            or job["name"] != "temporal-resume" or job["status"] != "completed" or job["conclusion"] != "failure"):
+        raise ValueError("Completed Linux311 original artifact/run/job identity differs")
+    archive = output / "completed-linux311-artifact.zip"
+    download(archive, token, DIRECT_ARTIFACT)
+    retained = output / "completed-linux311"
+    extract_zip(archive, retained, DIRECT_ZIP_SHA)
+    log = output / "original-linux311-job.log"
+    download(log, token, endpoint=f"actions/jobs/{DIRECT_JOB}/logs")
+    prior = verify_completed_linux(retained, log)
+    current_overlay = {name: digest(controller / name) for name in OVERLAY}
+    if current_overlay != prior["overlayHashes"]:
+        raise ValueError("Previously qualified oracle/installer changed; cannot reuse direct311")
+    candidates = list((retained / "prior-linux").rglob("umf-sdk.tgz"))
+    if len(candidates) != 1:
+        raise ValueError("Completed Linux311 original SDK roster differs")
+    manifest = sdk_manifest(candidates[0])
+    verify_sources(source, manifest["sourceClosure"]["inputs"], set(OVERLAY) | WIRING)
+    destination = source / ".cache/sdk-distribution"
+    destination.mkdir(parents=True, exist_ok=True)
+    for name in ["umf-sdk.tgz", "manifest.json", "receipt.json"]:
+        shutil.copyfile(candidates[0].parent / name, destination / name)
+    for name in ["pure", "dist"]:
+        shutil.copytree(retained / name, output / name)
+    write(output / "source-and-controller.json", {
+        "artifactSourceS": SOURCE, "controllerQ": q, "overlayHashes": current_overlay,
+        "overlayActive": False, "retainedDirectQ": DIRECT_Q, "retainedDirectRun": DIRECT_RUN,
+        "retainedDirectArtifact": DIRECT_ARTIFACT, "retainedDirectZIP_SHA256": DIRECT_ZIP_SHA,
+        "retainedLifecycleAnd45PytestLog_SHA256": DIRECT_JOB_LOG_SHA, "priorProvenance": prior,
+        "reusedDirect311Saga19Lifecycle2And45PytestOriginalIdentities": True,
+        "direct311OrSDKOrBrowserOrProducerReplayed": False,
+        "controllerOwnedTests": {CONTROLLER_TEST: digest(controller / CONTROLLER_TEST)},
+        "controllerOwnedTestBytesAreNotSourceArchiveBytes": True,
+        "productionVerifierSHA256": digest(controller / "tools/verify_python_artifacts.py"),
     })
 
 
@@ -438,7 +572,7 @@ def capture(source: Path, controller: Path, output: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("operation", choices=["prepare", "prepare-linux", "overlay", "restore", "probe", "capture", "inventory"])
+    parser.add_argument("operation", choices=["prepare", "prepare-linux", "prepare-consumers", "overlay", "restore", "probe", "capture", "inventory"])
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--controller", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -450,6 +584,8 @@ def main() -> None:
         prepare(args.source, args.controller, args.output)
     elif args.operation == "prepare-linux":
         prepare_linux(args.source, args.controller, args.output)
+    elif args.operation == "prepare-consumers":
+        prepare_consumers(args.source, args.controller, args.output)
     elif args.operation in {"overlay", "restore"}:
         overlay(args.source, args.controller, args.output, args.operation == "restore")
     elif args.operation == "probe":

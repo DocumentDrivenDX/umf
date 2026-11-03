@@ -69,7 +69,7 @@ class ExpectedVersionTests(unittest.TestCase):
                 verifier.main()
             installed.assert_not_called()
 
-    def _make_installed_wheel(self, root, extra_installer_file):
+    def _make_installed_wheel(self, root, extra_installer_file, *, include_cli=True):
         version='0.10.3';wheel=root/'umf_core-0.10.3-py3-none-any.whl'
         dist='umf_core-0.10.3.dist-info'
         members={
@@ -78,6 +78,8 @@ class ExpectedVersionTests(unittest.TestCase):
             f'{dist}/METADATA':b'Name: umf-core\nVersion: 0.10.3\n\n',
             f'{dist}/WHEEL':b'Wheel-Version: 1.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-any\n',
         }
+        if include_cli:
+            members[verifier.CLI_MEMBER]=b'CLI fixture payload, never executed'
         def record_bytes(files):
             rows=[]
             for name,payload in sorted(files.items()):
@@ -111,6 +113,12 @@ class ExpectedVersionTests(unittest.TestCase):
             other=root/'other';other.mkdir()
             wheel,platlib=self._make_installed_wheel(other,'unexpected.json')
             with self.assertRaisesRegex(ValueError,'unexpected installer file'):
+                verifier._validate_installed_wheel(wheel,platlib,'0.10.3')
+
+    def test_installed_verifier_still_refuses_a_wheel_without_its_cli(self):
+        with tempfile.TemporaryDirectory() as directory:
+            wheel,platlib=self._make_installed_wheel(Path(directory),'uv_cache.json',include_cli=False)
+            with self.assertRaisesRegex(ValueError,'package inventory'):
                 verifier._validate_installed_wheel(wheel,platlib,'0.10.3')
 
 if __name__=='__main__':unittest.main()

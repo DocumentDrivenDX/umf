@@ -15,6 +15,7 @@ import os
 import shutil
 import subprocess
 import sys
+import copy
 
 SPEC = importlib.util.spec_from_file_location("resume", Path(__file__).resolve().parents[2] / "tools/temporal_resume.py")
 resume = importlib.util.module_from_spec(SPEC)
@@ -22,6 +23,111 @@ SPEC.loader.exec_module(resume)
 
 
 class ResumeCustody(unittest.TestCase):
+    def test_consumers_phase_skips_passed_gates_and_routes_controller_owned_tests(self):
+        workflow = (Path(__file__).resolve().parents[2] / ".github/workflows/sagas.yml").read_text()
+        continuation = workflow.split("  temporal-resume:\n", 1)[1]
+        self.assertIn("operation=prepare-consumers", continuation)
+        for name in ["Strict selection of retained or freshly repaired actual Linux bytes",
+                     "Normal Linux311 candidate resolution and installed resource inspection",
+                     "Apply Q for only the skipped Python host qualification",
+                     "Qualify actual selected Python wheel using original guards"]:
+            step = continuation.split("      - name: " + name + "\n", 1)[1].split("      - ", 1)[0]
+            self.assertIn("if: inputs.temporal_phase != 'consumers'", step)
+        self.assertIn("controller/python/tests/test_python_artifact_version.py", continuation)
+        self.assertNotIn(" python/tests/test_python_artifact_version.py", continuation)
+        self.assertIn(resume.CONTROLLER_TEST, resume.WIRING)
+        self.assertNotIn(resume.CONTROLLER_TEST, resume.OVERLAY)
+        self.assertIn("timeout-minutes: 90", continuation)
+        self.assertNotIn("matrix:", continuation)
+
+    def direct_proof_fixture(self):
+        native = "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da"
+        wheel = resume.DIRECT_FILES["dist/umf_core-0.10.8-cp311-abi3-manylinux_2_34_x86_64.whl"]
+        saga = {"profile": "umf.saga.portable-host-receipt/2", "cases": 19, "passed": 19,
+            "results": [{"passed": True} for _ in range(19)],
+            "runtime": {"python": "3.11.17", "platform": "Linux", "arch": "x86_64"},
+            "artifacts": {"pythonWheel": {"sha256": wheel}},
+            "installedBinding": {"status": "passed", "wheelSha256": wheel,
+                "beforeNativeSha256": native, "afterNativeSha256": native,
+                "beforeInstalledFileCount": 81, "afterInstalledFileCount": 81,
+                "beforePackageFileCount": 72, "afterPackageFileCount": 72}}
+        installed = {"artifactSourceS": resume.SOURCE, "controllerQ": resume.DIRECT_Q,
+            "actualPython": "3.11.17", "pydantic": "2.14.2", "inspectionCases": 17,
+            "inspectionCalls": 51, "companionResourceAndNativeChecks": True,
+            "installedFiles": {"umf/_rust_core.abi3.so": {"sha256": native}}}
+        observed = {"actualPython": "3.11.17", "isolated": True, "dontWriteBytecode": True,
+            "files": [{"path": "umf/_rust_core.abi3.so", "kind": "file", "sha256": native}], "records": []}
+        for name in ["umf_core-0.10.8", "umf_codegen-0.10.8", "umf_access-0.1.0.dev10"]:
+            path = name + ".dist-info/RECORD"
+            observed["records"].append({"path": path, "bytesBase64": base64.b64encode(b"fixture\n").decode()})
+            observed["files"].append({"path": path, "kind": "file", "sha256": hashlib.sha256(b"fixture\n").hexdigest()})
+        return saga, installed, observed
+
+    def test_completed_direct_receipts_keep_runtime_source_and_installed_guards(self):
+        originals = self.direct_proof_fixture()
+        resume.validate_direct_receipts(*originals)
+        for mutate in [
+            lambda s, i, o: s.update(passed=18),
+            lambda s, i, o: s["results"][0].update(passed=False),
+            lambda s, i, o: s["installedBinding"].update(afterNativeSha256="f" * 64),
+            lambda s, i, o: s["installedBinding"].update(afterPackageFileCount=73),
+            lambda s, i, o: i.update(artifactSourceS="f" * 40),
+            lambda s, i, o: i.update(controllerQ="f" * 40),
+            lambda s, i, o: i.update(actualPython="3.13.17"),
+            lambda s, i, o: i.update(inspectionCalls=50),
+            lambda s, i, o: o["files"][0].update(sha256="f" * 64),
+            lambda s, i, o: o["files"][0].update(kind="symlink"),
+            lambda s, i, o: o["records"][0].update(bytesBase64=base64.b64encode(b"changed").decode()),
+        ]:
+            proof = copy.deepcopy(originals)
+            mutate(*proof)
+            with self.assertRaises(ValueError):
+                resume.validate_direct_receipts(*proof)
+
+    def test_completed_direct_intake_refuses_changed_extra_and_wrong_job_log(self):
+        for damage in [None, "changed", "extra", "job-log", "dirty-source", "wrong-Q"]:
+            with tempfile.TemporaryDirectory() as temp:
+                parent = Path(temp)
+                root = parent / "retained"
+                root.mkdir()
+                nested = root / "prior-linux"
+                nested.mkdir()
+                old_pins = self.retained_fixture(nested)
+                saga, installed, observed = self.direct_proof_fixture()
+                payloads = {"source-and-controller.json": {"artifactSourceS": resume.SOURCE, "controllerQ": resume.DIRECT_Q, "overlayActive": False},
+                    "python-saga.log": saga, "installed-linux311.json": installed,
+                    "installed-inventories/temporal-python-consumer.json": observed}
+                for name, payload in payloads.items():
+                    p = root / name
+                    p.parent.mkdir(parents=True, exist_ok=True)
+                    p.write_text(json.dumps(payload))
+                pins = {name: resume.digest(root / name) for name in payloads}
+                rows = [{"path": str(p.relative_to(root)), "bytes": p.stat().st_size, "sha256": resume.digest(p)}
+                        for p in root.rglob("*") if p.is_file() and p.name != "files.json"]
+                (root / "files.json").write_text(json.dumps({"artifactSourceS": resume.SOURCE,
+                    "sourceHead": resume.SOURCE, "sourceStatus": "", "controllerQ": resume.DIRECT_Q, "files": rows}))
+                if damage in ["dirty-source", "wrong-Q"]:
+                    inventory = json.loads((root / "files.json").read_text())
+                    inventory["sourceStatus" if damage == "dirty-source" else "controllerQ"] = "changed"
+                    (root / "files.json").write_text(json.dumps(inventory))
+                log = parent / "job.log"
+                log.write_text("Ran 2 tests in 24.999s\n1 failed, 45 passed in 0.83s\n")
+                log_sha = resume.digest(log)
+                if damage == "changed": (root / "python-saga.log").write_text("changed")
+                if damage == "extra": (root / "extra").write_text("unexpected")
+                if damage == "job-log": log.write_text("different run")
+                # File custody and receipt semantics have independent controls.
+                with patch.dict(resume.LINUX_FILES, old_pins, clear=True), \
+                        patch.dict(resume.DIRECT_FILES, pins, clear=True), \
+                        patch.object(resume, "DIRECT_JOB_LOG_SHA", log_sha), \
+                        patch.object(resume, "validate_direct_receipts") as validate:
+                    if damage:
+                        with self.assertRaises(ValueError): resume.verify_completed_linux(root, log)
+                    else:
+                        result = resume.verify_completed_linux(root, log)
+                        self.assertEqual(result["controllerQ"], resume.DIRECT_Q)
+                        validate.assert_called_once()
+
     def test_installed_inventory_preserves_record_and_unrecorded_file_evidence(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
