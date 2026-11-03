@@ -64,7 +64,7 @@ jobs:
         run: |
           mkdir "$RUNNER_TEMP/lakeview-pack" "$RUNNER_TEMP/lakeview-consumer"
           npm pack ./bindings/core/node --pack-destination "$RUNNER_TEMP/lakeview-pack"
-          npm install --ignore-scripts --no-audit --no-fund --prefix "$RUNNER_TEMP/lakeview-consumer" "$RUNNER_TEMP/lakeview-pack/umf-core-rust-native-0.1.0.tgz"
+          npm install --ignore-scripts --no-audit --no-fund --prefix "$RUNNER_TEMP/lakeview-consumer" "$RUNNER_TEMP/lakeview-pack/"*.tgz
           UMF_KIND_NODE_PACKAGE="$RUNNER_TEMP/lakeview-consumer/node_modules/@umf/core-rust-native" UMF_KIND_CLI="$GITHUB_WORKSPACE/target/release/umf" bun scripts/lakeview-native-conformance.ts
       - name: Build the same Rust source for Chromium
         run: |
