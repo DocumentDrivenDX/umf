@@ -11,6 +11,7 @@ use umf_core::serialization::{read_json_value, Format};
 use umf_core::{Context, EngineError, Utf16, Value};
 
 use crate::canonical::{canonical_json_admitted, canonical_sha256_admitted};
+use crate::grant_columns::mutable_table_grant_columns;
 use crate::resources::CodegenEngine;
 use crate::value::{admit_json, array_items, member, object_members, string_member};
 
@@ -1635,6 +1636,7 @@ fn rebuild_initial_reviews(
 }
 
 fn renderer_operations(
+    document: &Value,
     bundle: &Value,
     table: &Value,
     table_path: &str,
@@ -1714,23 +1716,35 @@ fn renderer_operations(
                 ]),
             ));
             if !eq_text(get(rule, "kind"), "deny") {
-                let columns = if audience == "person"
-                    && command == "update"
-                    && eq_text(get(rule, "kind"), "owner")
-                {
-                    let owner = val(rule, "field", &path)?;
-                    let matched = items(val(table, "columns", table_path)?, table_path)?
-                        .iter()
-                        .filter(|c| get(c, "field").is_some_and(|f| ref_equal(f, owner)))
-                        .collect::<Vec<_>>();
-                    if matched.len() != 1 {
+                let columns = if command == "update" {
+                    let record_module = member_text(&record, "module", table_path)?;
+                    let (record_definition, _) = find_element(document, &record)?;
+                    let names = mutable_table_grant_columns(
+                        table,
+                        &record_module,
+                        record_definition,
+                        &path,
+                        ctx,
+                    )
+                    .map_err(|error| {
+                        if error.is_control_failure() {
+                            error
+                        } else {
+                            err(
+                                "TABLE_INVENTORY_UNSUPPORTED",
+                                &path,
+                                "Invalid mutable UPDATE grant columns",
+                            )
+                        }
+                    })?;
+                    if names.is_empty() {
                         return Err(err(
                             "TABLE_INVENTORY_UNSUPPORTED",
                             &path,
-                            "Owner update column is ambiguous",
+                            "UPDATE has no mutable ordinary columns",
                         ));
                     }
-                    a(vec![val(matched[0], "name", &path)?.clone()])
+                    a(names.iter().map(|name| s(name)).collect())
                 } else {
                     Value::Null
                 };
@@ -2066,22 +2080,34 @@ fn project_one_initial(
                 ctx,
             )?;
             if kind != "deny" {
-                let update_columns = if command == "update" && kind == "owner" {
-                    let field = val(rule, "field", &path)?;
-                    let mut names = Vec::new();
-                    for column in columns {
-                        if get(column, "field").is_some_and(|r| ref_equal(r, field)) {
-                            names.push(val(column, "name", &path)?.clone());
+                let update_columns = if command == "update" {
+                    let record_module = member_text(&record_ref, "module", &table_path)?;
+                    let names = mutable_table_grant_columns(
+                        &table,
+                        &record_module,
+                        record,
+                        &path,
+                        ctx,
+                    )
+                    .map_err(|error| {
+                        if error.is_control_failure() {
+                            error
+                        } else {
+                            err(
+                                "TABLE_INVENTORY_UNSUPPORTED",
+                                &path,
+                                "Invalid mutable UPDATE grant columns",
+                            )
                         }
-                    }
-                    if names.len() != 1 {
+                    })?;
+                    if names.is_empty() {
                         return Err(err(
                             "TABLE_INVENTORY_UNSUPPORTED",
                             &path,
-                            "Owner update column is ambiguous",
+                            "UPDATE has no mutable ordinary columns",
                         ));
                     }
-                    a(names)
+                    a(names.iter().map(|name| s(name)).collect())
                 } else {
                     Value::Null
                 };
@@ -2318,7 +2344,7 @@ fn project_one_initial(
         ("meaningDigest", s(&hash(&meaning, ctx)?)),
     ]);
     let renderer_operations =
-        renderer_operations(bundle, &table, &table_path, extension_path, ctx)?;
+        renderer_operations(document, bundle, &table, &table_path, extension_path, ctx)?;
     Ok(Projection {
         catalog,
         dependencies,
