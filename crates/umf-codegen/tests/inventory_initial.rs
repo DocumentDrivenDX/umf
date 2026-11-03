@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use std::{fs, path::Path};
 
+use umf_codegen::canonical::canonical_sha256;
 use umf_codegen::value::member;
 use umf_codegen::{CodegenEngine, CodegenResources};
 use umf_core::serialization::{read_json_value, Format};
@@ -56,6 +57,193 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
             .map(|(key, value)| (key.into(), value))
             .collect(),
     )
+}
+
+fn replace_source_once(source: String, needle: &str, replacement: &str) -> String {
+    assert_eq!(source.matches(needle).count(), 1, "source fixture token drift: {needle}");
+    source.replacen(needle, replacement, 1)
+}
+
+fn initial_grant_source(request: &Value) -> String {
+    let next = member(request, "next").unwrap();
+    let source = member(next, "source").unwrap();
+    let Value::String(source_text) = member(source, "utf8").unwrap() else {
+        panic!("source UTF-8 text")
+    };
+    let mut text = source_text.to_utf8().unwrap();
+    let field_definitions = concat!(
+        "{\"id\":\"note\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},",
+        "{\"id\":\"stamp\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},",
+        "{\"id\":\"computed\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}} ,"
+    );
+    text = replace_source_once(
+        text,
+        "{\"id\":\"Note\",\"kind\":\"record\"",
+        &format!("{field_definitions}{{\"id\":\"Note\",\"kind\":\"record\""),
+    );
+    text = replace_source_once(
+        text,
+        "\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"}],\"keys\":[",
+        "\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"note\"},{\"module\":\"demo\",\"element\":\"stamp\"},{\"module\":\"demo\",\"element\":\"computed\"}],\"keys\":[",
+    );
+    let columns = format!(
+        "\"columns\":[{{\"field\":{{\"module\":\"demo\",\"element\":\"id\"}},\"name\":\"id\",\"nativeType\":{{\"kind\":\"text\"}}}},{{\"field\":{{\"module\":\"demo\",\"element\":\"owner\"}},\"name\":\"owner\",\"nativeType\":{{\"kind\":\"text\"}}}},{{\"field\":{{\"module\":\"demo\",\"element\":\"note\"}},\"name\":\"note\",\"nativeType\":{{\"kind\":\"text\"}}}},{{\"field\":{{\"module\":\"demo\",\"element\":\"stamp\"}},\"name\":\"stamp\",\"immutable\":true,\"nativeType\":{{\"kind\":\"text\"}}}},{{\"field\":{{\"module\":\"demo\",\"element\":\"computed\"}},\"name\":\"computed\",\"nativeType\":{{\"kind\":\"int4\"}},\"generated\":{{\"kind\":\"identity\",\"generation\":\"always\"}}}}]"
+    );
+    text = replace_source_once(
+        text,
+        "\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}}]",
+        &columns,
+    );
+    text = replace_source_once(
+        text,
+        "\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\"",
+        "\"insert\":{\"kind\":\"deny\"},\"update\"",
+    );
+    replace_source_once(
+        text,
+        "\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"}",
+        "\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"allow\"}",
+    )
+}
+
+fn compile_grant_bundle(engine: &CodegenEngine<'_>, template: &Value, source_text: &str) -> Value {
+    let configuration = member(member(template, "next").unwrap(), "configuration")
+        .unwrap()
+        .clone();
+    let input = object(vec![
+        ("text", Value::string_utf8(source_text)),
+        ("format", Value::string_utf8("json")),
+        ("configuration", configuration),
+    ]);
+    let result = engine
+        .compile_table_deployment(&input, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        member(&result, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{result:?}"
+    );
+    member(&result, "bundle").unwrap().clone()
+}
+
+fn inventory_request_for_bundle(
+    engine: &CodegenEngine<'_>,
+    template: &Value,
+    bundle: Value,
+) -> Value {
+    let mut request = template.clone();
+    *member_mut(&mut request, "next") = bundle.clone();
+    let options = member(&request, "options").unwrap();
+    let selector = object(vec![
+        (
+            "version",
+            Value::string_utf8("umf.table-inventory-discovery/0.1"),
+        ),
+        ("tableIntents", member(options, "tableIntents").unwrap().clone()),
+        ("conversions", Value::Array(vec![])),
+        ("retiredSeedSets", Value::Array(vec![])),
+        ("retirements", Value::Array(vec![])),
+        ("restorations", Value::Array(vec![])),
+        ("archiveSources", Value::Array(vec![])),
+    ]);
+    let discovered = engine
+        .discover_table_inventory_initial(
+            &Value::Null,
+            &bundle,
+            &selector,
+            member(&request, "history").unwrap(),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+    let Value::Array(candidates) = discovered else {
+        panic!("initial candidates")
+    };
+    let markers = candidates
+        .iter()
+        .map(|candidate| {
+            object(
+                ["id", "kind", "path", "oldDigest", "newDigest"]
+                    .into_iter()
+                    .map(|key| (key, member(candidate, key).unwrap().clone()))
+                    .collect(),
+            )
+        })
+        .collect();
+    *member_mut(member_mut(&mut request, "options"), "reviewedChanges") =
+        Value::Array(markers);
+    request
+}
+
+fn connected_grant_case(
+    engine: &CodegenEngine<'_>,
+    template: &Value,
+) -> (Value, Value, Value) {
+    let source = initial_grant_source(template);
+    let bundle = compile_grant_bundle(engine, template, &source);
+    let request = inventory_request_for_bundle(engine, template, bundle.clone());
+    let result = engine
+        .compile_table_inventory_initial(&request, &mut Context::ordinary())
+        .unwrap();
+    (bundle, request, result)
+}
+
+fn initial_grant_rows(plan: &Value) -> &Value {
+    let Value::Array(review) = member(plan, "review").expect("review") else {
+        panic!("review array")
+    };
+    let meaning = member(member(&review[0], "newValue").expect("new review value"), "meaning")
+        .expect("source meaning");
+    let catalog = member(meaning, "catalog").expect("source catalog");
+    member(catalog, "grants").expect("grant rows")
+}
+
+fn grant_meaning<'a>(rows: &'a Value, role: &str, privilege: &str) -> Option<&'a Value> {
+    let Value::Array(rows) = rows else {
+        return None;
+    };
+    rows.iter().find_map(|row| {
+        let meaning = member(row, "meaning")?;
+        (member(meaning, "role") == Some(&Value::string_utf8(role))
+            && member(meaning, "privilege") == Some(&Value::string_utf8(privilege)))
+        .then_some(meaning)
+    })
+}
+
+fn grant_column_names(meaning: &Value) -> Vec<String> {
+    let Value::Array(columns) = member(meaning, "columns").expect("grant columns") else {
+        panic!("UPDATE grant has a column vector")
+    };
+    columns
+        .iter()
+        .map(|column| match column {
+            Value::String(text) => text.to_utf8().unwrap(),
+            _ => panic!("column name is text"),
+        })
+        .collect()
+}
+
+fn digest_hex(bytes: &[u8]) -> String {
+    const HEX: &[u8; 16] = b"0123456789abcdef";
+    let mut output = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        output.push(HEX[(byte >> 4) as usize] as char);
+        output.push(HEX[(byte & 15) as usize] as char);
+    }
+    output
+}
+
+fn rehash_plan_digest(plan: &mut Value) {
+    {
+        let Value::Object(fields) = plan else {
+            panic!("plan object")
+        };
+        fields.retain(|(key, _)| key != &Utf16::from("digest"));
+    }
+    let digest = canonical_sha256(plan, &mut Context::ordinary()).unwrap();
+    let Value::Object(fields) = plan else {
+        unreachable!()
+    };
+    fields.push((Utf16::from("digest"), Value::string_utf8(digest_hex(&digest))));
 }
 
 fn g02_review_mismatch(engine: &CodegenEngine<'_>, request: &Value) -> String {
@@ -227,6 +415,154 @@ fn initial_inventory_refuses_forged_review_marker_before_plan_emission() {
         Some(&Value::string_utf8("blocked"))
     );
     assert!(member(&result, "plan").is_none());
+}
+
+#[test]
+fn initial_inventory_uses_renderer_exact_update_columns_and_rejects_rehashed_wrong_grant() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let template = load_text(include_str!("fixtures/inventory-initial-request.json"));
+    let (bundle, request, result) = connected_grant_case(&engine, &template);
+    assert_eq!(
+        member(&result, "status"),
+        Some(&Value::string_utf8("compiled")),
+        "{result:?}"
+    );
+    let plan = member(&result, "plan").expect("compiled plan");
+    let grants = initial_grant_rows(plan);
+    let expected = Value::Array(vec![
+        Value::string_utf8("owner"),
+        Value::string_utf8("note"),
+    ]);
+    let person_update = grant_meaning(grants, "note_person", "update").expect("person update");
+    let batch_update = grant_meaning(grants, "note_batch", "update").expect("batch allow update");
+    assert_eq!(member(person_update, "columns"), Some(&expected));
+    assert_eq!(member(batch_update, "columns"), Some(&expected));
+    assert!(grant_meaning(grants, "note_batch", "insert").is_none());
+    assert_eq!(
+        member(grant_meaning(grants, "note_person", "select").unwrap(), "columns"),
+        Some(&Value::Null)
+    );
+    assert_eq!(
+        grant_column_names(person_update),
+        vec![String::from("owner"), String::from("note")]
+    );
+    assert_eq!(
+        grant_column_names(batch_update),
+        vec![String::from("owner"), String::from("note")]
+    );
+
+    let Value::Array(steps) = member(plan, "steps").expect("plan steps") else {
+        panic!("steps array")
+    };
+    for (audience, meaning) in [("person", person_update), ("batch", batch_update)] {
+        let source_path = format!("/modules/0/extensions/umf.tables/tables/0/policy/{audience}/update");
+        let step = steps
+            .iter()
+            .find(|step| {
+                member(step, "sourcePath") == Some(&Value::string_utf8(&source_path))
+                    && member(step, "sql").is_some_and(|sql| match sql {
+                        Value::String(text) => text
+                            .to_utf8()
+                            .is_ok_and(|text| text.starts_with("GRANT UPDATE (")),
+                        _ => false,
+                    })
+            })
+            .expect("renderer census update step");
+        let subject = member(step, "inventorySubject").expect("census subject");
+        let digest = digest_hex(&canonical_sha256(meaning, &mut Context::ordinary()).unwrap());
+        assert_eq!(
+            member(subject, "meaningDigest"),
+            Some(&Value::string_utf8(&digest))
+        );
+    }
+
+    let Value::Array(bundle_steps) = member(&bundle, "steps").expect("deployment steps") else {
+        panic!("deployment steps")
+    };
+    for role in ["note_person", "note_batch"] {
+        let role_sql = bundle_steps
+            .iter()
+            .filter_map(|step| member(step, "sql"))
+            .find_map(|sql| match sql {
+                Value::String(text) => {
+                    let text = text.to_utf8().unwrap();
+                    (text == format!(
+                        "GRANT UPDATE (\"owner\", \"note\") ON TABLE \"note_inventory\".\"notes\" TO \"{role}\""
+                    ))
+                    .then_some(text)
+                }
+                _ => None,
+            })
+            .expect("ordered deployment grant SQL");
+        assert!(role_sql.ends_with(&format!("TO \"{role}\"")));
+    }
+
+    let Value::Array(prefixes) = member(plan, "prefixes").expect("prefixes") else {
+        panic!("prefix array")
+    };
+    let final_catalog = member(prefixes.last().unwrap(), "catalog").unwrap();
+    assert_eq!(member(final_catalog, "grants"), Some(grants));
+    let history = member(&request, "history").unwrap();
+    let verified = engine
+        .verify_table_inventory_initial(plan, history, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(&verified, plan);
+    let serialized = engine
+        .serialize_table_inventory_initial(plan, history, &mut Context::ordinary())
+        .unwrap();
+    let Value::String(serialized) = serialized else {
+        panic!("canonical serialized plan")
+    };
+    let decoded = read_json_value(serialized.units(), Format::Json, &mut Context::catalog()).unwrap();
+    let decoded_verified = engine
+        .verify_table_inventory_initial(&decoded, history, &mut Context::ordinary())
+        .unwrap();
+    let roundtrip = engine
+        .serialize_table_inventory_initial(&decoded_verified, history, &mut Context::ordinary())
+        .unwrap();
+    let Value::String(roundtrip) = roundtrip else {
+        panic!("canonical serialized roundtrip")
+    };
+    assert_eq!(roundtrip, serialized);
+}
+
+#[test]
+fn initial_inventory_refuses_a_rehashed_wrong_grant_vector() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let template = load_text(include_str!("fixtures/inventory-initial-request.json"));
+    let (_, request, result) = connected_grant_case(&engine, &template);
+    let plan = member(&result, "plan").expect("compiled plan");
+    let history = member(&request, "history").unwrap();
+    let mut forged = plan.clone();
+    let Value::Array(review) = member_mut(&mut forged, "review") else {
+        panic!("review array")
+    };
+    let meaning = member_mut(member_mut(&mut review[0], "newValue"), "meaning");
+    let catalog = member_mut(meaning, "catalog");
+    let Value::Array(grant_rows) = member_mut(catalog, "grants") else {
+        panic!("grant rows")
+    };
+    let target = grant_rows
+        .iter_mut()
+        .find(|row| {
+            let meaning = member(row, "meaning").unwrap();
+            member(meaning, "role") == Some(&Value::string_utf8("note_person"))
+                && member(meaning, "privilege") == Some(&Value::string_utf8("update"))
+        })
+        .expect("person UPDATE row");
+    *member_mut(member_mut(target, "meaning"), "columns") =
+        Value::Array(vec![Value::string_utf8("owner")]);
+    let Value::Array(subject) = member_mut(member_mut(target, "identity"), "subject") else {
+        panic!("grant identity subject")
+    };
+    subject[2] = Value::Array(vec![Value::string_utf8("owner")]);
+    rehash_plan_digest(&mut forged);
+    let wrong_grant = engine
+        .verify_table_inventory_initial(&forged, history, &mut Context::ordinary())
+        .unwrap_err();
+    assert_eq!(wrong_grant.code, "TABLE_INVENTORY_PLAN");
 }
 
 #[test]
@@ -696,6 +1032,24 @@ fn retained_g02_mixed_create_compiles_serializes_and_verifies() {
                 .position(|value| *value == &Value::string_utf8("apply-backfill"))
     );
     let history = member(&request, "history").unwrap();
+    let Value::Array(retained_plans) = member(history, "plans").unwrap() else {
+        panic!("retained plans")
+    };
+    let Value::Array(retained_executions) = member(history, "executions").unwrap() else {
+        panic!("retained executions")
+    };
+    assert_eq!(
+        member(&retained_plans[0], "digest"),
+        Some(&Value::string_utf8(
+            "4636e81328924af70626508983161b06738be63fcd7e446340619a04ea48f198"
+        ))
+    );
+    assert_eq!(
+        member(&retained_executions[0], "planDigest"),
+        Some(&Value::string_utf8(
+            "4636e81328924af70626508983161b06738be63fcd7e446340619a04ea48f198"
+        ))
+    );
     let selector = object(vec![
         (
             "version",
@@ -834,6 +1188,27 @@ fn retained_g02_accepts_confirmed_prior_seed_and_refuses_a_replayed_selection() 
     let request = load_text(include_str!(
         "fixtures/inventory-linked-seed-history-request.json"
     ));
+    let Value::Array(retained_plans) = member(member(&request, "history").unwrap(), "plans").unwrap()
+    else {
+        panic!("retained plans")
+    };
+    let Value::Array(retained_executions) =
+        member(member(&request, "history").unwrap(), "executions").unwrap()
+    else {
+        panic!("retained executions")
+    };
+    assert_eq!(
+        member(&retained_plans[0], "digest"),
+        Some(&Value::string_utf8(
+            "81bbc35555000561843c74e6ea146d081715baa306cc07f0f521475697eadc85"
+        ))
+    );
+    assert_eq!(
+        member(&retained_executions[0], "planDigest"),
+        Some(&Value::string_utf8(
+            "81bbc35555000561843c74e6ea146d081715baa306cc07f0f521475697eadc85"
+        ))
+    );
     let result = engine
         .compile_table_inventory_migration(&request, &mut Context::ordinary())
         .unwrap();

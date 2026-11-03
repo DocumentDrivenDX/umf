@@ -5,6 +5,7 @@
 //! filesystem, network, process, clock, or JavaScript runtime.
 #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 include!("full_modules.rs");
+pub mod resource_cache;
 pub mod read_json_value_host;
 #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 pub mod semantic_type_accessors_host_json;

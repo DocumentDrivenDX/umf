@@ -10,6 +10,8 @@ ddx:
     - {id: ADR-006, kind: informed_by}
     - {id: CONTRACT-052, kind: informed_by}
     - {id: CONTRACT-080, kind: references}
+    - {id: CONTRACT-081, kind: informed_by}
+    - {id: CONTRACT-908, kind: informed_by}
     - {id: umf.plan.browser-pack-tools, kind: informed_by}
     - {id: TP-001, kind: informed_by}
 ---
@@ -87,14 +89,11 @@ operation families.
 
 ## Distribution and resources
 
-The verified prior release `umf-rust-v0.1.0` contains source, two CLI archives,
-two platform SDK archives, two ABI3 wheels, one sdist and SHA256SUMS. Public PyPI
-currently serves `umf-core==0.10.5`; native 0.10.6 was a GitHub-only cohort.
-Public npm returns 404 for both `@umf/core` and `@umf/core-rust-native`; the source
-packages deliberately retain `private: true`. This release continues the existing
-Node/Bun distribution through immutable platform SDK archives, installable from
-the GitHub asset URL. It makes no npm registry-publication claim and introduces
-no new scope/package ownership requirement.
+Rust source/CLI, the Node/Bun/browser SDK and the Python generator companion
+use immutable platform/source archives on GitHub. The SDK packages retain their
+intentional `private: true` metadata. Core Python uses the existing PyPI
+publisher; its exact qualified wheel/sdist bytes also ship on GitHub. The
+companion pins `umf-core==0.10.7` and ships its repaired ten-resource inventory.
 
 Publish one source-bound UMF release, using `umf-v0.10.7`, with this expected roster:
 
@@ -218,47 +217,47 @@ immutability or silently stop at GitHub if PyPI delivery remains unfinished.
    run its normal immutable resource/manifest/native-protocol checks.
    Keep upload success separate from verified distribution and consumer success.
 
-## Continuation evidence and unknowns
+## Current implementation and acceptance
 
-The selected cohort is UMF 0.10.7: two SDK archives, two CLI archives, two core
-wheels, core sdist, repaired codegen wheel/sdist, full source archive, release pins
-and SHA256SUMS. Core data remains 0.10.0. SDK/Node and codegen delivery use the
-existing GitHub archives; core PyPI publication remains required. No new npm or
-codegen PyPI publisher is assumed.
+All selected artifacts use 0.10.7; the document format remains 0.10.0. Public
+pack generation is implemented in SDK Node/Bun/browser, Python core/companion and
+CLI. The canonical generator resource producer, exact ten-file inventory and
+SDK fixed-point admission remain strict.
 
-The canonical Python resource repair is checked in. The last checked source has
-ten codegen resources, including Saga, with strict producer/build/runtime
-inventory equality and native capability equality. Both Python resource cohorts
-pass their normal canonical check through `scripts/sync-python-resources.py`.
-SDK packaging requires canonical generated assets to be a checked-in fixed point:
-no private transformations, equal captured/compiled maps and unchanged source
-hashes. These controls remain active for the final source and published archives.
+Three concrete library defects discovered during current installed/source review
+are repaired before the final freeze:
 
-Frozen source 434f390 produced the macOS core wheel/sdist/CLI; installed core and
-codegen public APIs passed the captured 28-pack comparison and four focused host
-tests. The companion sdist reproduced its wheel-member bytes. These are selected
-artifact results, not acceptance of a later changed archive. Batch 14879 failed
-in Rust's metamodel debug incremental cache before SDK generation checks
-completed; its independent source rebuild was canceled. Neither final SDK nor
-independent-sdist success is claimed.
+- Saga facades honor an explicit Registry through the existing bound Rust host
+  runtime and refuse unbound or changed registries (CONTRACT-908). Omitting the
+  argument preserves default Rust dispatch.
+- Inventory/catalog and renderer UPDATE grants share deployment's source-exact
+  mutable-column resolver (CONTRACT-081). Declaration order is retained; every
+  Key, immutable and generated column is excluded; empty UPDATE vectors refuse.
+- Thirty-one immutable-resource cache publication sites return the completed Arc
+  actually installed in OnceLock. Caller-context construction, eligibility,
+  admission and error/control branches are preserved.
 
-Current main through a5e24d170 is integrated for the final input cut. Both
-canonical refreshes pass with CARGO_INCREMENTAL=0, preserving locked compilation,
-source fingerprints, binary hashing and every generated-output check. The Rust
-installation guide selects the unified release tag. The SDK custody roster binds
-the current Node/browser entries and native addon; its 13 focused checks and both
-source/tools typechecks pass. The package/Bun-lock change updates packaged
-metamodel attestations, so the final Python archives require their normal strict
-source verification and independent source rebuild. Linux artifacts, final SDKs,
-fresh-sdist proof, publication and public-consumer results remain open.
+The Saga dispatch controls pass (3 tests,38 assertions), both TypeScript checks
+pass and Rust source/host boundaries pass. All14 focused Rust cache/control, grant-vector and selected replay checks pass.
+The connected cases verify the complete canonical payload after JSON exchange;
+fixture input and identity-column shapes match the current admitted API/schema. The ordinary repository PostgreSQL18
+regression checks actual emitted SQL, effective person/batch column ACLs and a
+revoked-column drift observation through installed packages in a disposable
+cluster. It does not claim a product database inspector or broader policy proof.
 
-The reviewed stager binds every declared SDK source input to both genuine
-qualification commit Q and final merged release commit M. It retains actual
-build/consumer receipt identities, requires the same source-tree hash and does
-not relabel receipts. The public source asset is a complete Git archive of M;
-private selected build staging is not substituted for it. Its twelve-file roster
-contains ten payloads, release-pins.json and SHA256SUMS; the latter hashes the
-other eleven assets and is itself separately pinned for publication.
+Canonical regeneration and the final source freeze follow these passing code checks.
+Every affected Rust-bearing artifact, source archive and changed Python resource
+companion is rebuilt from that source. Earlier candidate receipts retain their
+actual identities and are not used to accept changed artifacts. All final
+platform/package/publication gates remain below. The private source factory
+includes the exact coordinated pair recipe and declared package patch files, so
+unchanged verification runs in isolation without editing source during tests.
+
+The stager binds every declared SDK source input to both genuine qualification
+commit Q and merged release commit M. It preserves actual build receipts and
+requires matching source-tree hashes. The public source asset is the complete
+Git archive of M. Ten payloads plus release pins and SHA256SUMS form twelve
+assets; the checksum file hashes the other eleven and is separately pinned.
 
 ## Remaining artifact gates
 

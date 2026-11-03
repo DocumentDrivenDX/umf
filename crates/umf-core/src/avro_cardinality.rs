@@ -191,7 +191,7 @@ fn runtime(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Runtime>, EngineError
     // lock. A host callback may reenter; failed/cancelled builds are not cached.
     let resources = Arc::new(build_runtime(ctx)?);
     if ordinary {
-        let _ = RESOURCES.set(Arc::clone(&resources));
+        return Ok(crate::resource_cache::publish_completed(&RESOURCES, resources));
     }
     Ok(resources)
 }

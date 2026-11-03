@@ -186,7 +186,7 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
         request,
     });
     if ordinary {
-        let _ = CACHE.set(Arc::clone(&ready));
+        return Ok(crate::resource_cache::publish_completed(&CACHE, ready));
     }
     Ok(ready)
 }

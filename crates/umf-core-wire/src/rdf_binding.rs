@@ -76,7 +76,7 @@ impl RuntimeCache {
         // initialization while a cache lock is held.
         let runtime = Arc::new(RdfRuntime::new(ctx)?);
         if ordinary {
-            let _ = RUNTIME.set(Arc::clone(&runtime));
+            return Ok(umf_core::resource_cache::publish_completed(&RUNTIME, runtime));
         }
         Ok(runtime)
     }
