@@ -247,3 +247,28 @@ external retrieval. Its final request check now compares parsed URL origins,
 including blob origins, instead of HTTP string prefixes. Remote HTTP and remote
 blob origins still fail; all requests and per-collection no-fetch checks remain
 recorded. Five focused origin controls cover local HTTP/blob and foreign origins.
+
+## Published and deployed
+
+Schema-browser [2.1.0](https://github.com/DocumentDrivenDX/umf/releases/tag/schema-browser-v2.1.0)
+is published on GitHub and npm. The microsite consumes the exact 2.1.0 pin.
+Deployment [41552174741](https://github.com/DocumentDrivenDX/umf/actions/runs/41552174741)
+passed every qualification, signing and Pages step, deploying source
+`9af49f5a6ef8f6393656f89009cae776e51714fd` on 2026-11-03 UTC.
+This evidence-only closeout does not change that deployed source.
+
+The [live schema browser](https://documentdrivendx.github.io/umf/reference/core.html)
+passed all twenty hosted Chromium 153.0.8010.12 journeys: all 24 authored records
+and 27 relationships retain exact identities and native geometry at
+1440/1280/798/390px, with navigation, keyboard operation, source conversion,
+download custody and tamper refusal. No page errors or unexpected external
+requests occurred. The live package's complete asset map equals the published
+2.1.0 manifest. The home illustration verifies against its source-bound SVG
+digest and umf.visual 0.5.0 / Lini 1.1.0 identity. Public Ed25519 verification
+of the deployed home, schema and action landing pages returned VALID for the
+build signer using the pinned Innsigle verifier. No human signing key was used.
+
+The [deployment receipt](evidence/schema-browser-2.1.0/deployment.json) records
+the immutable source, workflow and release URLs, package digest, live asset and
+page digests, signer results and all hosted browser assertions. Publication,
+pin update, deployment and hosted verification are complete.
