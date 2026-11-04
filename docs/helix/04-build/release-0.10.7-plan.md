@@ -128,12 +128,13 @@ separate wasm-bindgen output directory. Ship its JS, declarations and WASM under
 in the SDK manifest. No full-runtime file is overwritten and no new public export
 is required for this resource cohort.
 
-Refresh the microsite from that exact fresh focused module and current source
-provenance. Artifact-version/Cargo changes otherwise leave its recorded compiler
-inputs stale and cause the normal future deployment verifier to refuse. Verify
-the rebuilt asset hashes and one focused local/public browser flow; do not repeat
-the already closed compiler campaign solely for this cohort refresh. Measure the
-new focused binary rather than assuming its previous byte count.
+Refresh the microsite using current-main UI and the authenticated released
+0.10.8 SDK focused module. Its sixteen recorded compiler inputs match current
+main exactly. Verify the GitHub asset digest, SDK member hashes and unchanged
+site provenance checks before one local/public preview and download flow. The
+0.10.7 SDK retains its own exact focused module; the site records the actual
+0.10.8 runtime. Preserve newer main and the existing latest-release selection.
+Do not repeat the closed compiler campaign for this static refresh.
 
 PyPI must receive the same qualified wheels/sdist, and public registry metadata
 and downloaded bytes must agree with the release checksum cohort. A raw
@@ -147,8 +148,8 @@ dependencies. Prefer the warm-cache successor plus `auditwheel show` and genuine
 policy. This preflight does not establish a tag for an unbuilt successor or imply
 compatibility with older glibc; no new base image/rebuild is required in advance.
 
-The `umf-codegen` project currently returns 404 from public PyPI. The existing
-coordinated Python workflow is a validation matrix, not a publisher identity.
+The coordinated Python workflow is a validation matrix, not a companion
+publisher identity.
 Release the repaired companion on GitHub and verify the installed pair using its
 immutable wheel URL and the released core. Publish it to PyPI only if actual
 normal project/publisher capability is available; do not broaden the core-only
@@ -195,7 +196,8 @@ immutability or silently stop at GitHub if PyPI delivery remains unfinished.
    Build the embedded focused pack-tools WASM resource from that same snapshot
    after the full WASM runtime, with separate bindgen outputs, and require/hash
    its complete resource trio. Refresh the site's focused runtime/provenance from
-   those exact files and verify one actual local/public browser flow.
+   authenticated released files matching current-main compiler inputs and verify
+   one actual local/public browser flow.
    Inspect Python wheel metadata, native ABI/dependencies and sdist source closure;
    Twine-check the exact candidates and genuinely qualify Linux registry tags.
    Build the repaired pure-Python codegen companion wheel/sdist from the same
@@ -253,30 +255,50 @@ platform/package/publication gates remain below. The private source factory
 includes the exact coordinated pair recipe and declared package patch files, so
 unchanged verification runs in isolation without editing source during tests.
 
-The stager binds every declared SDK source input to both genuine qualification
-commit Q and merged release commit M. It preserves actual build receipts and
-requires matching source-tree hashes. The public source asset is the complete
-Git archive of M. Ten payloads plus release pins and SHA256SUMS form twelve
+The release source and qualification commit are both
+`722b1e5484ca5e1558bb364ebdac22c995e140f9` (Q), already merged through PR #88
+and an ancestor of main. The merge commit contains additional compiler changes
+and must not label Q-built binaries. The stager binds every declared SDK source
+input to Q and preserves actual build receipts and matching source-tree hashes.
+The public source asset is the complete Git archive of Q. Ten payloads plus release pins and SHA256SUMS form twelve
 assets; the checksum file hashes the other eleven and is separately pinned.
 
-## Remaining artifact gates
+## Current qualification
 
-1. Finish canonical regeneration/checks and freeze the final source. Compare exact
-   declared Python/native source/resource maps with the qualified candidate;
-   rebuild every changed archive. Preserve strict source-payload equality.
-2. Build the final SDKs and Python/CLI artifacts with locked inputs and warm
-   dependency caches. Require zero-exit canonical SDK packaging, direct-wheel
-   verification and the unchanged independent fresh-target core-sdist verifier.
-3. Qualify the Linux wheel with the exact pinned auditwheel repair tool cohort.
-   Verify final installed Python/CLI/Node/Bun and packaged browser surfaces against
-   the captured pack baseline; complete the repaired installed Python pair.
-   Retain existing semantic evidence only for unchanged source/runtime bytes.
-4. Review the final twelve assets and Q-to-M source equivalence; freeze checksums
+PR [#88](https://github.com/DocumentDrivenDX/umf/pull/88) is merged. Canonical
+fixed-point generation, focused Rust/binding checks, both TypeScript
+configurations and package boundary checks pass. The final macOS SDK,
+core/codegen wheels and source archives pass source-payload verification,
+independent fresh-target core rebuild, coordinated pair installation and actual
+PostgreSQL 18 UPDATE-grant checks.
+
+Installed Python APIs and SDK Node/Bun/browser surfaces agree on all 28 catalog
+requests. Four focused Python cases, packaged declarations and one real installed
+Saga lifecycle/registry smoke pass. The general SDK follows CONTRACT-001's Ajv
+JIT policy; strict CSP remains a separate, unchanged microsite requirement.
+The Linux Python wheel is built and qualified as `manylinux_2_34_x86_64`; its
+Node addon, installed consumers and final publication/public verification remain
+pending. The local site assets pass strict provenance, locked-renderer and page
+inventory checks. Its completed preview/download evidence and reviewed homepage
+font classification are recorded in [site-local.json](evidence/release-0.10.7/site-local.json).
+Passing checks remain closed unless affected inputs change.
+
+## Artifact delivery gates
+
+1. **Complete:** canonical regeneration/checks and Q source freeze. Strict
+   source-payload and generated fixed-point checks pass.
+2. **Complete for macOS and Linux Python:** locked builds, direct-wheel checks,
+   independent fresh-target macOS core-sdist rebuild and genuine Linux
+   manylinux qualification. **Pending:** Linux Node addon and SDK assembly.
+3. **Complete for macOS:** installed Python/CLI/Node/Bun/browser pack baseline,
+   repaired pair, declarations and focused Saga registry smoke. **Pending:**
+   Linux installed Python/CLI/Node/Bun checks on the final assembled package.
+4. Review the final twelve assets and exact Q source binding; freeze checksums
    and release pins. Pin only the three selected core Python archives in
-   `release-pins.files`. Refresh/sign the microsite from the final focused SDK
-   resource trio and verify its normal flow.
+   `release-pins.files`. Refresh/sign the microsite from the released 0.10.8
+   resource trio matching current main, and verify its normal flow.
 5. Publish immutable GitHub assets and core PyPI 0.10.7. The existing upload-only
-   route uses `locally_qualified=true`, exact merged source SHA and exact public
+   route uses `locally_qualified=true`, exact Q source SHA and exact public
    SHA256SUMS digest; all identity/metadata/OIDC/collision checks stay enabled.
 6. Fetch and verify every public asset and PyPI file. Run the full-source pinned
    checks below and isolated public installed consumers; record actual hashes,
