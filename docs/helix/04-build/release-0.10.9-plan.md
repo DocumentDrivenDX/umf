@@ -123,3 +123,28 @@ helper, test and workflow bytes match the reviewed/tested patch. The production
 admission is filled from actual qualified artifacts and raw local receipts only.
 [Current source and controller receipts](evidence/release-0.10.9/) retain these
 completed checks separately from platform qualification and public publication.
+
+## Completed Mac and browser qualification
+
+The source-built Mac SDK is `53923b0606ee399737e32fb1836383c97e851f34d1c4fa19773563639455942a`;
+its captured/live source closure is `da56e912e38fbc01b1f14155cd97d584962aaa09ebf95969e86d84bb2a357ede`
+with a fixed-point transform and zero changed inputs. Native Node payload and
+refusal assertions completed before an unrelated private Node WASM file-loader
+probe failed; the raw exit 1 and exact passing-prefix witness remain explicit.
+Bun and declaration checks passed separately. No SDK build or passing Node
+payload check was repeated.
+
+The Mac Core wheel was built once from the verified current sdist. Source,
+platform, RECORD, CLI/version/resource checks passed. The pure Codegen wheel
+reproduced byte-for-byte from its sdist. A private paired API probe had a function
+alias typo after these completed checks; only that pending probe and unrun
+metadata checks resumed. Both Python APIs now match the captured keyed output
+and unkeyed refusal; all ten resource hashes pass. Raw producer exit 1 and the
+actual uncoordinated approximately two-second resumption are recorded without
+claiming a coordinated run, rebuild or installation.
+
+Chromium 153 passed one exact installed-SDK request with zero external requests
+or page errors. The refreshed workbench binds all sixteen compiler inputs and
+its WASM bytes to that SDK. The local legal-appellate flow passed DDL/ORM/CRUD
+previews, individual-download byte equality and seven-member ZIP hash/CRC checks.
+[Portable receipts](evidence/release-0.10.9/) preserve the distinct scopes.

@@ -1,6 +1,6 @@
 {
   "profile": "umf.pack-tools-browser-build/1",
-  "baseRevision": "1c17333cdd85cb1a1210b20ea321106d012178c0",
+  "baseRevision": "540bea9c9a230557eeadb69e65e7a5797bc38cd5",
   "workingTreeDirty": true,
   "bun": "1.4.3",
   "wasmPackage": "external:pack-tools",
@@ -58,7 +58,7 @@
     "docs/helix/05-deploy/schema-browser/catalog.schema.json": "f55b13311de0b285a67e774a2726f110aa63005dc66b60bc056f70406b6bbe43",
     "docs/helix/05-deploy/schema-browser/catalog.ts": "43cf4cf68e58613a6e7113d39c51e502f07aa0f4064b3a9ef8f0ad203346c31a",
     "node_modules/ajv/dist/runtime/ucs2length.js": "1df012dd3d23fced07255a7204798004509687cb1f431ae0ab976db436bbd890",
-    "package.json": "22c6a97f59a8cfff11dd6cf63aba6dd28186ea43c3aa4ea0c3603b03cd476579",
+    "package.json": "e4fb5be842505b63da4aa1a8fb6109ee5d81f2a97549370486d8eab89290d32f",
     "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3"
   },
   "compilerInputScope": [
@@ -80,17 +80,17 @@
     "src/domain-packs/pack-tools-rust.ts"
   ],
   "compilerInputs": {
-    "Cargo.lock": "29a94a49f7471b7802b0ea866331abff1c55337401cd1cd5bcf29b2956fa084e",
+    "Cargo.lock": "e43596d23d1e75e5621f56527202acf728c05893378caed98840049380eff590",
     "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
     "bindings/core/node/src/native-family.js": "671378f403f6d72271bba13c412431f77d770b927df39b31a3464bcf1a4fe7f9",
-    "bindings/core/wasm/Cargo.toml": "5002e3b5880f5d5e128551f9e092da9877b5d734d073b5c91017fcd7a13fc6f8",
+    "bindings/core/wasm/Cargo.toml": "4f321975587e769bc2d4d2e88c0ffc66df05095eb7949fb4d8db930a855e9177",
     "bindings/core/wasm/src/native-family.js": "671378f403f6d72271bba13c412431f77d770b927df39b31a3464bcf1a4fe7f9",
-    "bindings/pack-tools/wasm/Cargo.toml": "a4274043bc058bfbf11f7c2d24d6209f52307e364f2deb3a6f21f1443b9de19e",
+    "bindings/pack-tools/wasm/Cargo.toml": "7345dfd7a60b36ce46f94a00f7df6374e4c92409b4c1e2896b382f4e11ea9ae0",
     "bindings/pack-tools/wasm/src/lib.rs": "25dcacea134a6e2719f4cfbd6ee457fcd5998e4e3cd87216d5408c43a75268d2",
-    "crates/umf-codegen/Cargo.toml": "e23c3bd6f01821d5d125ee81cf0ef6c2bfb73bbf153e0a8e4a09c5ed34a8947a",
+    "crates/umf-codegen/Cargo.toml": "7838b10a92de2a6b4c10cba2e39f074393d1bf27bd063e6eae033c01909dd1d2",
     "crates/umf-codegen/src/lib.rs": "44470f0a1de5f27ac21662e665dd8c05fc684302c11a56eef6437866cfb42e4a",
     "crates/umf-codegen/src/pack_tools.rs": "6990d1184d107a2871295eecbfcd6afa726578964bfe96e49a09d8ae8c6b2518",
-    "crates/umf-core-wire/Cargo.toml": "8d10a50af99421e31c938edc74f1056d140eef694d29c6b127e45176e56e203c",
+    "crates/umf-core-wire/Cargo.toml": "23cc3cbf12b782ce6d215cd2a52415288d7d55fe87e1a61fb1df5158d85595ab",
     "crates/umf-core-wire/src/lib.rs": "ff090198286f24e90b654581e803caf6ceebfb4ca997007006fad8ba7ccc4a54",
     "crates/umf-core-wire/src/native_family_binding.rs": "3b2ad62988faf9e22f01bc0e251f25a6800c0d84da81eac6a6551393ff62d108",
     "crates/umf-core-wire/src/pack_tools_binding.rs": "3c9b1761a5c3b4682fb1d2aea9404a276db9d61b4abea0786a935accbd6aee0a",
@@ -100,14 +100,14 @@
   "compilerInputsMissing": [],
   "wasm": {
     "umf_core_wasm.js": "7c69df4336e74ba83fc291b7abecdcbe83a44a2cccd99398d8308ddcae49c2c4",
-    "umf_core_wasm_bg.wasm": "e5810f23ae9bdf320bab874cd939f10445342fbc38fffa96e149fdf099071b0f"
+    "umf_core_wasm_bg.wasm": "db83171d5e6cce45f28dad3670cf8423aee4090b57f65ce5c6c1f54cabd8e9f3"
   },
   "outputs": {
     "assets/pack-tools.js": "27297850e41f05446a520315e46a88b070e070752f1846927bdd7ae133ac9a47",
     "assets/pack-tools-worker.js": "b1863d8a8f626bf39437903458a963c1daa0ad44bc191e01b0d62b16d0963b86",
     "assets/pack-tools.css": "7a2dd4dc4729be23d962a6e39a7452e713ab0c698e28251560716eb3a8fab321",
     "assets/pack-tools/umf_core_wasm.js": "7c69df4336e74ba83fc291b7abecdcbe83a44a2cccd99398d8308ddcae49c2c4",
-    "assets/pack-tools/umf_core_wasm_bg.wasm": "e5810f23ae9bdf320bab874cd939f10445342fbc38fffa96e149fdf099071b0f"
+    "assets/pack-tools/umf_core_wasm_bg.wasm": "db83171d5e6cce45f28dad3670cf8423aee4090b57f65ce5c6c1f54cabd8e9f3"
   },
   "unsignedPageHtmlSha256": "3edf679b02dbcf28e3e6c950cf39ed016fca9f585e022932927acc0bc29ba5ed"
 }
