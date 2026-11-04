@@ -3752,8 +3752,8 @@ impl CompiledSchema {
         mode: EvaluationMode,
         initial_error_count: usize,
         annotation_scan_complete: &mut bool,
-        unevaluated_properties: &mut Option<(&'a Value, Utf16)>,
-        unevaluated_items: &mut Option<(&'a Value, Utf16)>,
+        unevaluated_properties: &mut Option<(&'a Value, Utf16, Option<OwnerCursor>)>,
+        unevaluated_items: &mut Option<(&'a Value, Utf16, Option<OwnerCursor>)>,
     ) -> Result<(), EngineError> {
         if evaluated.annotation_scan {
             if self.uses_python_2020_annotation_profile() {

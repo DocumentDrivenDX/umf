@@ -315,7 +315,7 @@
   },
   "currentClosureHashes": {
     "crates/umf-core/src/value.rs": "5f2604d62c79a11b9f9dc4fdc05605ecd5bb478fe3f98159b5292bb178faa80a",
-    "crates/umf-core/src/schema.rs": "1974302edb16b18ef857564c4477c10a9688f6aa1a995b3d56c1dfeb3f8f5372",
+    "crates/umf-core/src/schema.rs": "f1ba3dfb2a6be07caa2d3a9ff884eec554943b6a507f175679d31e94c44e17af",
     "crates/umf-core/src/schema_owned_plans.rs": "8b002490066fb399cbff2ae86af9627c7b626e5934314179b845391c072a3506",
     "tools/run_inspector_cost_gate.py": "47d560709b1497b5dc624dd793e2c9a1053249099eadbfae8d6f264c6a00801a",
     "tools/run_inspector_attribution_lanes.py": "c23e15c94cc5ac8a6416623d99f0bd7e589a8884da0ab33785774d61d30ebd17",
@@ -323,7 +323,7 @@
     "crates/umf-core/src/schema_owner_locations.rs": "63417f2553258bb40220d83521c871900bec47f29a8d89bdf4be53bd16cb5633",
     "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
     "crates/umf-core/src/schema_owner_location_tests.rs": "060990953a6fa55640454093724d8072ea004e69043757daba583687ab20cd7f",
-    "tests/qualification/test_inspector_owner_cursors.py": "f5b7599e9d4dba6d422aab0bb6ad30ef2374be8a161558f7ff7da82d230a36c7"
+    "tests/qualification/test_inspector_owner_cursors.py": "f9c22607c704f072fef68b6aec20a797d93ea1d604ae3fb7eb2d0ce67edccc08"
   },
   "admissionPrechargeCorrection": {
     "reviewedBase": "73357488c642429ecf8c99737604f22288b13faf",
@@ -466,5 +466,21 @@
     "pureControls": "Original2343 positive229 intake is RED; corrected mocked producer\u2192identity\u2192cost\u2192final aggregation GREEN; stale/wrong217/duplicate census and compiled/executed substitution REFUSE",
     "workflowDelta": "Add existing pure cost-gate test file to source guard step; native commands, ordering, selection, inputs, platforms, one worker and60min bound unchanged",
     "nativeExecution": "NOT PERFORMED; source/mock controls are not native qualification or1M feasibility"
+  },
+  "annotationStagingSignatureCorrection": {
+    "reviewedBase": "e874673b90cafbb3c433febf689cb97886483e22",
+    "actualFailureRun": 41850063372,
+    "actualFailurePacketSHA256": "6ac39e50d55ae7c83e06f38b382aea529d63f863487f81c801b98913eaac604a",
+    "relayedSolActualAndPatchReviewSHA256": "e20e29567cd4032f92480812fcd48c43f99359b1b5687b8b2bd7340f732d8d35",
+    "compilerDiagnostics": [
+      "schema.rs:1108:70 E0308",
+      "schema.rs:3819:52 E0308",
+      "schema.rs:3830:47 E0308",
+      "schema.rs:6582:70 E0308"
+    ],
+    "correction": "Only eval_keyword_annotations unevaluated_properties/items parameter tuple signatures3755/3756 add existing Option<OwnerCursor>, preserving explicit value lifetime. Both real callers/stores and final consumers already use triples. No executable statement or copying/charging/cursor ownership/limit/selector change.",
+    "pureSourceGuard": "Actual helper signature/callers/stores/final consumers; original pair declaration RED, corrected source and independent pair/caller/store-loss refusal controls GREEN. This is not Rust typechecking.",
+    "selectedNativeCensus": "229Rust/47Python/51strictColdPublic/Saga19 unchanged; protected8 and both independent9 unchanged",
+    "qualification": "Native compilation and1M fit remain unestablished; original failed producer and all unexecuted gates preserved"
   }
 }

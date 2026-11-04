@@ -37,6 +37,53 @@ def validate_returns(source,name,arity):
     rows=ok_tuple_arities(source,name)
     if not rows or any(n!=arity for n in rows):raise ValueError((name,arity,rows))
 
+def parenthesized_fields(text,start):
+    """Split a masked Rust argument/tuple list, retaining nested type structure."""
+    fields=[];begin=start;depth=0;end=start
+    while True:
+        c=text[end]
+        if c==')' and depth==0:
+            if text[begin:end].strip():fields.append(text[begin:end].strip())
+            return fields
+        if c in '(<[{':depth+=1
+        elif c in ')>]}':depth-=1
+        elif c==',' and depth==0:
+            fields.append(text[begin:end].strip());begin=end+1
+        end+=1
+
+
+def validate_annotation_staging(source):
+    """Check the actual producer/helper/consumer protocol behind the four E0308s."""
+    text=code_only(source)
+    declaration=re.search(r'\bfn\s+eval_keyword_annotations\b',text)
+    if declaration is None:raise ValueError('missing annotation staging helper')
+    params=parenthesized_fields(text,text.index('(',declaration.end())+1)
+    for name in ('unevaluated_properties','unevaluated_items'):
+        selected=[p.split(':',1)[1] for p in params if p.split(':',1)[0].strip()==name]
+        if len(selected)!=1:raise ValueError('missing/duplicate staging parameter '+name)
+        compact=re.sub(r'\s+','',selected[0])
+        match=re.fullmatch(r"&mutOption<\((.*)\)>",compact)
+        fields=parenthesized_fields(match.group(1)+')',0) if match else []
+        if fields!=["&'aValue",'Utf16','Option<OwnerCursor>']:
+            raise ValueError('annotation staging signature loses value lifetime/path/cursor: '+name)
+    calls=list(re.finditer(r'\.eval_keyword_annotations\s*\(',text))
+    if len(calls)!=2:raise ValueError('annotation caller census differs')
+    for call in calls:
+        args=parenthesized_fields(text,call.end())
+        if [re.sub(r'\s+','',a) for a in args[-2:]]!=['&mutunevaluated_properties','&mutunevaluated_items']:
+            raise ValueError('annotation caller does not pass both matching staging slots')
+    stores=body(source,'eval_keyword_annotations')
+    finish=body(source,'finish_eval_inner')
+    for name in ('unevaluated_properties','unevaluated_items'):
+        rows=list(re.finditer(r'\*'+name+r'\s*=\s*Some\s*\(\s*\(',stores))
+        if len(rows)!=1:raise ValueError('annotation store census differs')
+        fields=parenthesized_fields(stores,rows[0].end())
+        if len(fields)!=3 or not re.search(r'\bclone_owner_cursor\s*\(\s*evaluated\.selected_cursor\.as_ref\s*\(',fields[2]):
+            raise ValueError('annotation store loses selected cursor')
+        if not re.search(r'if\s+let\s+Some\s*\(\(rule,\s*kp,\s*cursor\)\)\s*=\s*'+name,finish):
+            raise ValueError('annotation terminal consumer loses staged cursor')
+
+
 class OwnerCursorSourceControls(unittest.TestCase):
     def test_all_located_and_legacy_reference_return_shapes_remain_distinct(self):
         schema=(ROOT/'crates/umf-core/src/schema.rs').read_text()
@@ -74,6 +121,24 @@ class OwnerCursorSourceControls(unittest.TestCase):
                     self.assertEqual(count,arity,(file.name,name,text[:start].count('\n')+1))
                     counts[name]+=1
         self.assertTrue(all(counts.values()),counts)
+    def test_annotation_helper_matches_actual_staging_callers_stores_and_consumers(self):
+        source=(ROOT/'crates/umf-core/src/schema.rs').read_text()
+        validate_annotation_staging(source)
+        # The genuine failed declaration, each independently stale parameter,
+        # and caller/store custody losses must all refuse without Cargo/native.
+        for name in ('unevaluated_properties','unevaluated_items'):
+            needle=name+": &mut Option<(&'a Value, Utf16, Option<OwnerCursor>)>"
+            broken=source.replace(needle,name+": &mut Option<(&'a Value, Utf16)>",1)
+            self.assertNotEqual(broken,source)
+            with self.assertRaises(ValueError):validate_annotation_staging(broken)
+        call=re.search(r'\.eval_keyword_annotations\s*\(',code_only(source)).start()
+        broken=source[:call]+source[call:].replace('&mut unevaluated_items,','&mut unevaluated_properties,',1)
+        self.assertNotEqual(broken,source)
+        with self.assertRaises(ValueError):validate_annotation_staging(broken)
+        needle='Some((rule, kp.clone(), clone_owner_cursor(evaluated.selected_cursor.as_ref(),ctx)?))'
+        broken=source.replace(needle,'Some((rule, kp.clone()))',1)
+        self.assertNotEqual(broken,source)
+        with self.assertRaises(ValueError):validate_annotation_staging(broken)
     def test_no_reverse_locator_search_or_callback_after_reference_publication(self):
         plans=(ROOT/'crates/umf-core/src/schema_owned_plans.rs').read_text()
         self.assertNotIn('NodeLocator::locate',plans)
