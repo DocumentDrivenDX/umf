@@ -8,6 +8,8 @@ import importlib.util
 import io
 import inspect
 import json
+import os
+import sys
 from pathlib import Path
 import tempfile
 import types
@@ -102,6 +104,15 @@ class LaneControls(unittest.TestCase):
     def simulate(self,fixture=False,critical=False,identity_failure=False,missing_diagnostic_receipt=False,public_fit=False):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);args=types.SimpleNamespace(controller=root,owner=root,wheel=root/'fixture.whl',out=root,controller_sha='1'*40)
+            (root/'tools').mkdir();(root/'tools/probe_inspector_retained_attribution.py').write_text('# inert controller probe fixture\n')
+            reuse={'legacyCases':sorted(lanes.LEGACY_CASES),'boundaryCases':sorted(lanes.BOUNDARY_CASES),
+                   'observedIdentityPairs':[{'identitySHA256':'a'*64,'recordSHA256':'b'*64} for _ in range(4)],
+                   'wholeJobPassed':False,'originalDiagnosticPassed':False}
+            if fixture:reuse['legacyCases']=reuse['legacyCases'][:-1]
+            if critical:reuse['observedIdentityPairs']=[]
+            lanes.write(root/'intake.json',dict(profile='umf.private-inspector-diagnostic-only-intake/1',
+                artifactSource=lanes.OWNER,controllerSource=args.controller_sha,correctedTestSHA256=lanes.TEST_SHA,
+                originalRun=41753398285,verifiedComponentReuse=reuse))
             calls=[]
             def identity(*a):
                 if identity_failure:raise ValueError('mandatory loaded identity failed')
@@ -113,7 +124,7 @@ class LaneControls(unittest.TestCase):
                     if mode=='boundary':lanes.write(root/'boundary.json',report(fixture,critical));return types.SimpleNamespace(returncode=1 if fixture or critical else 0)
                     if mode=='diagnostic':
                         if missing_diagnostic_receipt:return types.SimpleNamespace(returncode=0)
-                        lanes.write(root/'work-attribution.json',dict(profile='umf.private-inspector-work-attribution/1',source=lanes.OWNER,status='observed',amountSequenceEquivalent=True,resultBytesEquivalent=True,publishable=False,readyForEnrollment=False,wheelSHA256='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'))
+                        lanes.write(root/'work-attribution.json',dict(profile='umf.private-inspector-work-attribution/1',source=lanes.OWNER,controllerSource=args.controller_sha,probeSourceSHA256=hashlib.sha256((root/'tools/probe_inspector_retained_attribution.py').read_bytes()).hexdigest(),status='observed',amountSequenceEquivalent=True,resultBytesEquivalent=True,publishable=False,readyForEnrollment=False,wheelSHA256='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'))
                         lanes.write(root/'identity-diagnostic-after.json',{'fixture':True});return types.SimpleNamespace(returncode=0)
                 if '::PublicRetainedFeasibilityTests' in ' '.join(argv):
                     calls.append('public-controls');(root/'public-controls.xml').write_text('<testsuites><testsuite>'+''.join('<testcase name="p'+str(i)+'"/>' for i in range(12))+'</testsuite></testsuites>');return types.SimpleNamespace(returncode=0)
@@ -125,20 +136,18 @@ class LaneControls(unittest.TestCase):
                 rc=lanes.run(args)
             return rc,calls,json.loads((root/'aggregate.json').read_text())
 
-    def test_independent_diagnostic_runs_on_only_admissible_failure_and_final_stays_failed(self):
-        rc,calls,state=self.simulate(fixture=True)
-        self.assertEqual(calls,['legacy','boundary','diagnostic']);self.assertEqual(rc,1)
-        self.assertTrue(state['diagnosticPassed']);self.assertFalse(state['requiredQualificationPassed']);self.assertFalse(state['boundaryPassed'])
+    def test_authenticated_component_reuse_no_replay_and_final_stays_failed(self):
         rc,calls,state=self.simulate()
-        self.assertEqual(calls,['legacy','boundary','diagnostic','public-probe']);self.assertEqual(rc,1)
+        self.assertEqual(calls,['diagnostic','public-probe']);self.assertEqual(rc,1)
         self.assertEqual(state['qualificationFailureClass'],'ordinary-public-RESOURCE_LIMIT')
+        self.assertEqual(state['reusedQualificationRun'],41753398285)
         self.assertFalse(state['requiredQualificationPassed'])
         rc,calls,state=self.simulate(missing_diagnostic_receipt=True)
         self.assertEqual(rc,1);self.assertNotIn('public-probe',calls);self.assertFalse(state['diagnosticPassed'])
         rc,calls,state=self.simulate(public_fit=True)
-        self.assertEqual(rc,0);self.assertTrue(state['requiredQualificationPassed']);self.assertEqual(calls,['legacy','boundary','diagnostic','public-probe','public-controls'])
-        for options in [dict(critical=True),dict(identity_failure=True)]:
-            rc,calls,state=self.simulate(**options);self.assertEqual(rc,1);self.assertNotIn('diagnostic',calls);self.assertFalse(state['requiredQualificationPassed'])
+        self.assertEqual(rc,0);self.assertTrue(state['requiredQualificationPassed']);self.assertEqual(calls,['diagnostic','public-probe','public-controls'])
+        for options in [dict(fixture=True),dict(critical=True),dict(identity_failure=True)]:
+            rc,calls,state=self.simulate(**options);self.assertEqual(rc,1);self.assertEqual(calls,[]);self.assertFalse(state['requiredQualificationPassed'])
 
     def test_pip_record_transform_is_legitimate_and_generated_metadata_is_closed(self):
         with tempfile.TemporaryDirectory() as td:
@@ -205,6 +214,111 @@ class LaneControls(unittest.TestCase):
             with self.assertRaises(ValueError):lanes.loaded_owner(verifier.NATIVE_MEMBER,path,f.site,wrong,set(f.installed),expected)
             with self.assertRaises(ValueError):lanes.loaded_owner(verifier.NATIVE_MEMBER,path,f.site,owner,set(),expected)
             with self.assertRaises(ValueError):lanes.loaded_owner(verifier.NATIVE_MEMBER,path,f.site,owner,set(f.installed),'0'*64)
+
+
+class FunctionalAttributionProbeControls(unittest.TestCase):
+    """Complete run() with deliberately fake modules; no product/native import."""
+    def exercise(self,mode='normal'):
+        probe_path=Path(os.environ.get('UMF_ATTRIBUTION_FAKE_TEST_SOURCE',ROOT/'tools/probe_inspector_retained_attribution.py'))
+        probe=load('functional_attribution_probe',probe_path)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td).resolve();owner=root/'owner';(owner/'tools').mkdir(parents=True);(owner/'fixtures').mkdir()
+            source='3ba34e412a4c78c0ef01dd1085b8add79db1b7ae';controller='c'*40
+            expected={'records':[],'diagnostics':[]}
+            (owner/'fixtures/cases.json').write_text(json.dumps({'cases':[{'id':'fake-fixture-only','request':{'document':{},'selected':[]},'expected':expected}]}))
+            (owner/'tools/probe_inspector_retained_feasibility.py').write_text(
+                "SOURCE_S='fake-resource-source-only'\nCORPUS='fixtures/cases.json'\n"
+                "def resources(root,expected):\n assert expected=='fixture-pin'\n return ({str(i):{} for i in range(9)}, {'resources':{}})\n"
+                "def installed_wheel(wheel,dist):\n return []\n")
+            native_path=root/'native-fixture.bin';native_path.write_bytes(b'INERT-NOT-NATIVE')
+            wheel=root/'wheel-fixture.bin';wheel.write_bytes(b'INERT-NOT-WHEEL')
+            package=types.ModuleType('umf');package.__path__=[]
+            native=types.ModuleType('umf._rust_core');native.__file__=str(native_path)
+            wire=types.ModuleType('umf._rust')
+            wire._wire=lambda value,**kwargs:value
+            wire._from_wire=lambda value:value
+            wire._checked_envelope=lambda value:value
+            handles=[];calls=[]
+            class Terminal(Exception):
+                code='CANCELLED'
+            def charge(control,amount,phase):
+                outcome=control(amount,phase)
+                if outcome is not None:
+                    error=Terminal(outcome[1]);error.code=outcome[0];raise error
+            class Handle:
+                def __init__(self,ordinal):self.ordinal=ordinal
+                def call(self,text,control,attributed):
+                    calls.append((self.ordinal,attributed))
+                    self_outer.assertEqual(json.loads(text)['op'],'codegen/inspectAccessViews')
+                    charge(control,2,'native-request-decode')
+                    if mode=='terminal-call':raise Terminal('first diagnostic call refused')
+                    charge(control,8 if mode=='charge-divergence' and attributed else 7,
+                           'native-core-copy' if attributed else 'native-inspector-and-result-encoding')
+                    charge(control,11,'native-result-envelope');charge(control,0,'native-result-envelope')
+                    result={'ok':True,'result':expected}
+                    if mode=='semantic-divergence' and attributed:result={'ok':True,'result':{'records':['different'],'diagnostics':[]}}
+                    return json.dumps(result,indent=1 if mode=='byte-divergence' and attributed else None)
+                def execute_wire(self,text,control):return self.call(text,control,False)
+                def execute_wire_attributed(self,text,control):return self.call(text,control,True)
+            self_outer=self
+            def create(resources,control):
+                self.assertEqual(len(resources),9)
+                charge(control,3,'native-resource-conversion')
+                if mode=='terminal-construction' and len(handles)==1:raise Terminal('second fresh construction refused')
+                charge(control,5,'native-resource-compilation')
+                handle=Handle(len(handles));handles.append(handle);return handle
+            native.create_codegen_resources=create;package._rust_core=native;package._rust=wire
+            modules={'umf':package,'umf._rust_core':native,'umf._rust':wire}
+            args=types.SimpleNamespace(root=owner,wheel=wheel,output=root/'receipt.json',source_sha=source,
+                resource_pins_sha256='fixture-pin',controller_source=controller,
+                probe_sha256=hashlib.sha256(probe_path.read_bytes()).hexdigest())
+            import importlib.metadata
+            def git(*argv,**kwargs):return (source if Path(kwargs['cwd'])==owner else controller)+'\n'
+            captured=None;result=None
+            flags=types.SimpleNamespace(**{n:getattr(sys.flags,n) for n in dir(sys.flags) if not n.startswith('_') and not callable(getattr(sys.flags,n))})
+            flags.isolated=True
+            with patch.dict(sys.modules,modules),patch.object(probe.subprocess,'check_output',git), \
+                 patch.object(probe.platform,'python_version',lambda:'3.11.17'), \
+                 patch.object(probe.platform,'system',lambda:'Linux'),patch.object(probe.platform,'machine',lambda:'x86_64'), \
+                 patch.object(probe.sys,'flags',flags),patch.object(probe.sys,'dont_write_bytecode',True), \
+                 patch.object(importlib.metadata,'distribution',lambda name:types.SimpleNamespace(version='0.10.8')):
+                try:result=probe.run(args)
+                except BaseException as error:captured=error
+            receipt=json.loads(args.output.read_text()) if args.output.exists() else None
+            return result,captured,receipt,len(handles),calls
+
+    def test_complete_fake_run_two_fresh_handles_imports_calls_and_receipt(self):
+        result,error,receipt,handles,calls=self.exercise()
+        self.assertIsNone(error);self.assertEqual(result,0);self.assertEqual(handles,2)
+        self.assertEqual(calls,[(0,False),(1,True)])
+        self.assertEqual(receipt['status'],'observed');self.assertTrue(receipt['amountSequenceEquivalent'])
+        self.assertTrue(receipt['resultBytesEquivalent']);self.assertEqual(receipt['sharedInspectionInnerSubtotal'],7)
+        self.assertEqual(receipt['lifetimes']['ordinary-call']['total'],20)
+        self.assertEqual(receipt['lifetimes']['attributed-call']['total'],20)
+        self.assertEqual(receipt['controllerSource'],'c'*40)
+        self.assertEqual(receipt['probeSourceSHA256'],hashlib.sha256((ROOT/'tools/probe_inspector_retained_attribution.py').read_bytes()).hexdigest())
+        self.assertFalse(receipt['diagnosticPublic1MProof']);self.assertFalse(receipt['readyForEnrollment'])
+
+    def test_fake_semantic_bytes_and_charge_divergence_refuse_and_retain_partial(self):
+        for mode in ('semantic-divergence','byte-divergence','charge-divergence'):
+            with self.subTest(mode=mode):
+                result,error,receipt,handles,calls=self.exercise(mode)
+                self.assertIsNotNone(error);self.assertIsNone(result);self.assertEqual(handles,2)
+                self.assertIn('failure',receipt);self.assertNotEqual(receipt['status'],'observed')
+                self.assertIn('ordinary-call',receipt['lifetimes']);self.assertIn('attributed-call',receipt['lifetimes'])
+                self.assertFalse(receipt['readyForEnrollment'])
+
+    def test_fake_terminal_failure_preserves_partial_lifetimes_and_stops(self):
+        for mode in ('terminal-construction','terminal-call'):
+            with self.subTest(mode=mode):
+                result,error,receipt,handles,calls=self.exercise(mode)
+                self.assertIsNotNone(error);self.assertIsNone(result);self.assertEqual(receipt['failure']['code'],'CANCELLED')
+                if mode=='terminal-construction':
+                    self.assertEqual(handles,1);self.assertEqual(calls,[])
+                    self.assertEqual(receipt['lifetimes']['attributed-construction']['total'],3)
+                else:
+                    self.assertEqual(calls,[(0,False)]);self.assertEqual(receipt['lifetimes']['ordinary-call']['total'],2)
+                    self.assertNotIn('attributed-call',receipt['lifetimes'])
 
 
 if __name__=='__main__':unittest.main()

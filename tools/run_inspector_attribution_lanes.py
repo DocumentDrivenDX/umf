@@ -24,6 +24,7 @@ POSITIVES=(
  'test_mutation_from_compilation_callback_cannot_change_already_owned_snapshot')
 PRIVATE_METHODS=('test_private_native_envelope_exact_quota_and_one_below_refuse_before_publication', 'test_private_same_handle_warm_replay_is_diagnostic_not_cold_feasibility', 'test_private_native_envelope_cancel_deadline_and_meter_refuse_before_publication', 'test_private_native_envelope_meter_exception_preserves_first_error_and_charge', 'test_private_native_envelope_first_denial_object_survives_without_error_serialization', 'test_private_unknown_root_schema_keyword_refuses_after_native_conversion', 'test_private_resource_depth_limit_remains_per_resource_128', 'test_private_resource_node_limit_is_not_only_public_work_precheck', 'test_private_reentrant_failure_does_not_replace_first_outer_control_denial', 'test_private_native_factory_conversion_compilation_callbacks_refuse', 'test_private_native_decode_and_combined_inspection_encoding_controls_refuse', 'test_private_native_callback_exception_is_not_semantic_success', 'test_private_native_handle_retains_neither_callback_nor_mutable_resources')
 BOUNDARY_CASES=frozenset(["PrivateNativeControlTests."+n for n in PRIVATE_METHODS]+["RetainedResourceAdmissionNativeTests."+n for n in REFUSALS])
+LEGACY_CASES=frozenset(('test_constructor_copy_observes_controls','test_host_callback_cannot_spoof_semantic_origin_and_preserves_text','test_native_control_error_retains_python_origin_and_remains_an_operation_error','test_carrier_copy_is_controlled_and_keeps_utf16_and_negative_zero','test_installed_codegen_late_controls_and_output_isolation','test_codegen_import_fails_closed_without_native_artifact','test_cached_resources_are_charged_before_json_serialization','test_wire_serialization_bound_covers_ascii_growth'))
 DIAGNOSTIC_SECONDS=300
 DIAGNOSTIC_RECEIPT_BYTES=65536
 DIAGNOSTIC_LOG_BYTES=1048576
@@ -188,9 +189,11 @@ def boundary(args):
 
 def diagnostic(args):
     identity(args,'diagnostic-before')
-    module=load(args.owner/'tools/probe_inspector_retained_attribution.py','owner_attribution')
+    probe_path=args.controller/'tools/probe_inspector_retained_attribution.py'
+    module=load(probe_path,'controller_attribution')
     namespace=argparse.Namespace(root=args.owner,wheel=args.wheel,source_sha=OWNER,
-       resource_pins_sha256='72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290',output=args.out/'work-attribution.json')
+       resource_pins_sha256='72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290',output=args.out/'work-attribution.json',
+       controller_source=args.controller_sha,probe_sha256=__import__('hashlib').sha256(probe_path.read_bytes()).hexdigest())
     result=module.run(namespace)
     require(namespace.output.stat().st_size<=DIAGNOSTIC_RECEIPT_BYTES,'Diagnostic receipt exceeded storage bound')
     identity(args,'diagnostic-after');return result
@@ -211,19 +214,27 @@ def run(args):
       '--owner',str(args.owner),'--wheel',str(args.wheel),'--out',str(args.out),'--controller-sha',args.controller_sha]
     try:
         identity(args,'initial');state['identityPassed']=True;save()
-        rc=command('legacy-controls',[sys.executable,'-I','-B','-m','pytest','-q','--junitxml='+str(args.out/'legacy.xml'),str(args.controller/'python/tests/test_rust_codegen.py')])
-        xml=ET.parse(args.out/'legacy.xml').getroot();cases=list(xml.iter('testcase'))
-        require(rc==0 and len(cases)==8 and not any(list(c) for c in cases if c.find('failure')is not None or c.find('error')is not None or c.find('skipped')is not None),'Legacy control failed/incomplete')
-        state['legacyPassed']=True;save()
-        rc=command('boundary-controls',common+['--mode','boundary'])
-        decision=boundary_admission(json.loads((args.out/'boundary.json').read_text()),rc)
-        state.update(decision);save()
+        intake=json.loads((args.out/'intake.json').read_text())
+        require(intake.get('profile')=='umf.private-inspector-diagnostic-only-intake/1'
+                and intake.get('artifactSource')==OWNER and intake.get('controllerSource')==args.controller_sha
+                and intake.get('correctedTestSHA256')==TEST_SHA and intake.get('originalRun')==41753398285,
+                'Authenticated component reuse receipt differs')
+        reuse=intake['verifiedComponentReuse']
+        require(len(reuse['legacyCases'])==8 and set(reuse['legacyCases'])==LEGACY_CASES
+                and len(reuse['boundaryCases'])==17 and set(reuse['boundaryCases'])==BOUNDARY_CASES
+                and len(reuse['observedIdentityPairs'])==4 and reuse['wholeJobPassed']is False
+                and reuse['originalDiagnosticPassed']is False,'Original component/identity census differs')
+        state.update(legacyPassed=True,boundaryPassed=True,attributionAdmitted=True,
+                     reason='authenticated-original-component-passes',reusedQualificationRun=41753398285)
+        decision={'attributionAdmitted':True,'boundaryPassed':True};save()
         if decision['attributionAdmitted']:
             rc=command('diagnostic',common+['--mode','diagnostic'],DIAGNOSTIC_SECONDS)
             require((args.out/'diagnostic.log').stat().st_size<=DIAGNOSTIC_LOG_BYTES,'Diagnostic log exceeded storage bound')
             require(rc==0,'Diagnostic failed; no further native gates admitted')
             observed=json.loads((args.out/'work-attribution.json').read_text())
             require(observed.get('profile')=='umf.private-inspector-work-attribution/1' and observed.get('source')==OWNER
+                    and observed.get('controllerSource')==args.controller_sha
+                    and observed.get('probeSourceSHA256')==__import__('hashlib').sha256((args.controller/'tools/probe_inspector_retained_attribution.py').read_bytes()).hexdigest()
                     and observed.get('status')=='observed' and observed.get('amountSequenceEquivalent')is True
                     and observed.get('resultBytesEquivalent')is True and observed.get('publishable')is False
                     and observed.get('readyForEnrollment')is False

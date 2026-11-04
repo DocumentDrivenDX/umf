@@ -4,6 +4,7 @@ import argparse
 from collections import Counter
 import hashlib
 import importlib.util
+import importlib.metadata
 import json
 from pathlib import Path
 import platform
@@ -51,12 +52,16 @@ def run(args):
         raise ValueError('Exact isolated controller/source required')
     if platform.python_version()!='3.11.17' or platform.system()!='Linux' or platform.machine()!='x86_64':
         raise ValueError('Only selected Linux311 diagnostic admitted')
+    probe_path=Path(__file__).resolve()
+    controller=subprocess.check_output(['git','rev-parse','HEAD'],cwd=probe_path.parents[1],text=True).strip()
+    probe_hash=hashlib.sha256(probe_path.read_bytes()).hexdigest()
+    if controller != args.controller_source or probe_hash != args.probe_sha256:
+        raise ValueError('Qualification probe controller source/hash differs')
     spec=importlib.util.spec_from_file_location('owner_probe',root/'tools/probe_inspector_retained_feasibility.py')
     probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
     resources,pins=probe.resources(root,args.resource_pins_sha256)
     import umf._rust_core as native
     import umf._rust as wire
-    import importlib.metadata
     dist=importlib.metadata.distribution('umf-core')
     members=probe.installed_wheel(args.wheel,dist)
     row=json.loads((root/probe.CORPUS).read_bytes())['cases'][0]
@@ -65,7 +70,8 @@ def run(args):
     record={'profile':'umf.private-inspector-work-attribution/1','privateDiagnosticOnly':True,
         'publishable':False,'readyForEnrollment':False,'publicMaximumWork':1000000,
         'diagnosticPublic1MProof':False,'diagnosticMaxWork':None,'eventCapPerLifetime':EVENT_CAP,
-        'source':source,'canonicalResourceSourceS':probe.SOURCE_S,'resourcePins':pins,
+        'source':source,'controllerSource':controller,'probeSourceSHA256':probe_hash,
+        'canonicalResourceSourceS':probe.SOURCE_S,'resourcePins':pins,
         'case':row['id'],'requestSHA256':hashlib.sha256(request.encode()).hexdigest(),
         'wheelSHA256':hashlib.sha256(args.wheel.read_bytes()).hexdigest(),'wheelMembers':members,
         'loadedNative':{'path':native.__file__,'sha256':hashlib.sha256(Path(native.__file__).read_bytes()).hexdigest()},
@@ -105,5 +111,5 @@ def run(args):
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
     for name in ('root','wheel','output'):parser.add_argument('--'+name,type=Path,required=True)
-    for name in ('source-sha','resource-pins-sha256'):parser.add_argument('--'+name,required=True)
+    for name in ('source-sha','resource-pins-sha256','controller-source','probe-sha256'):parser.add_argument('--'+name,required=True)
     raise SystemExit(run(parser.parse_args()))
