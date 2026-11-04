@@ -2,6 +2,15 @@
 
 Document release readiness, deployment checks, monitoring, and operations.
 
+[Core and Codegen0.10.8](core-codegen-release-notes-0.10.8.md) are public on PyPI
+with their separate [Core](evidence/pypi-0.10.8/README.md) and
+[Codegen](evidence/pypi-codegen-0.10.8/README.md) public-byte/fresh-consumer proofs.
+Codegen preserves its original failed attempt and inherited verifier identities.
+Access's publisher binding is configured, but full-cohort qualification/admission
+and Access publication remain held. The
+[earlier publisher-refusal packet](evidence/pypi-publisher-refusals-20261103/README.md)
+retains its original historical state.
+
 The [UMF SDK 0.5.8 candidate notes](sdk-release-notes-0.5.8.md) record the
 source-only preparation state for the proposed G03 successor. This is not a
 published release; final qualification, review, merge, tag selection and public

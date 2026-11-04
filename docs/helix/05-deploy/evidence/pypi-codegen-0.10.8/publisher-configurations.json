@@ -1,0 +1,48 @@
+{
+  "schema": "umf.publisher-configured-row-evidence/1",
+  "scope": "Actual observed binding rows after direct human action-time confirmation and user reauthentication; no credentials retained",
+  "access": {
+    "recordedAtUTC": "2026-11-04T04:16:16.319513+00:00",
+    "state": "CONFIGURED; actual success notification and exact associated-project row observed",
+    "project": "umf-access",
+    "scope": "Existing solely-owned project",
+    "url": "https://pypi.org/manage/project/umf-access/settings/publishing/",
+    "observedSuccess": "Success Added publish-access-pypi.yml in https://github.com/DocumentDrivenDX/umf to umf-access",
+    "row": {
+      "provider": "GitHub",
+      "repository": "DocumentDrivenDX/umf",
+      "workflow": "publish-access-pypi.yml",
+      "environment": "pypi",
+      "publisherID": "a48c65b2-3ea3-45ad-99db-d78dffbc16e9"
+    },
+    "freshBeforeSubmit": "Authenticated owner roster SOLE OWNER; password gate cleared; no publishers configured. Exact values verified in fresh same-project form.",
+    "AddClicks": 1,
+    "humanActionTimeConfirmation": "Submit both exact bindings",
+    "credentialEntry": false,
+    "OIDCProbeDispatchOrUpload": false
+  },
+  "codegenRegistration": {
+    "recordedAtUTC": "2026-11-04T04:17:51.623695+00:00",
+    "state": "PENDING PUBLISHER REGISTERED; actual exact row and success banner observed",
+    "scope": "Account-level pending publisher; no project creation/upload claim",
+    "project": "umf-codegen",
+    "url": "https://pypi.org/manage/account/publishing/",
+    "observedSuccess": "Registered a new pending publisher to create the project 'umf-codegen'.",
+    "row": {
+      "pendingProject": "umf-codegen",
+      "provider": "GitHub",
+      "repository": "DocumentDrivenDX/umf",
+      "workflow": "publish-codegen-pypi.yml",
+      "environment": "pypi",
+      "publisherID": "e2ec9e65-144d-44e3-92bf-f438136f9a12"
+    },
+    "freshBeforeSubmit": "Password gate cleared; account active/pending lists had no Codegen entry; project ROOT HTTP404; all exact five values verified in fresh account form.",
+    "AddClicks": 1,
+    "humanActionTimeConfirmation": "Submit both exact bindings",
+    "credentialEntry": false,
+    "OIDCProbeDispatchOrUpload": false,
+    "pendingDoesNotReserveProjectName": true,
+    "visibleReviewTabID": "255863005"
+  },
+  "currentQualificationBoundary": "Access binding configured; actual full-cohort qualification/main admission/publication still held. Codegen registered as pending before this successful first publication; no subsequent current-pending-state claim."
+}
