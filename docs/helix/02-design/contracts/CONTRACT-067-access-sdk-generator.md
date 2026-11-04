@@ -409,10 +409,14 @@ return, refusal, reentrancy and unwind. Metadata boundaries do not notify, charg
 reset counters, change semantic policy or authorize admission. Constructor-site
 metadata is disabled for the existing attributed-call observer.
 
-The closed roster in tools/inspector_constructor_observation.py contains124
+The closed roster in tools/inspector_constructor_observation.py contains125
 site/root slots, never more than128. Roots are fixed owner call-site roles, not
 authored IDs or caller proof. Work without an identified compile root is
-unassigned; it must not be presented as a measured schema identity. Conversion
+unassigned; it must not be presented as a measured schema identity. Known but
+unclassified compilation/constraint-semantic work uses the explicit
+unassigned/other slot. The outer compilation scope is other; admission-copy
+labels only identified admission/copy work. Unknown labels/roles still refuse.
+Conversion
 and compilation labels describe charged sites; allocations without a separate
 charge are not newly measured merely by assigning a label.
 

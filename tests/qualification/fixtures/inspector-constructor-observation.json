@@ -530,9 +530,13 @@
     {
       "root": "literal-policy",
       "site": "admission-copy"
+    },
+    {
+      "root": "unassigned",
+      "site": "other"
     }
   ],
-  "slotCount": 124,
+  "slotCount": 125,
   "rootMeaning": "Fixed call-site roles, not caller IDs/proof. operation groups0.1/0.2; binding groups0.1/0.2. Individual version contributions UNKNOWN. unassigned is honest unknown root.",
   "eventCapEach": 1000000,
   "combinedDiagnosticSeconds": 300,
@@ -550,7 +554,7 @@
   "pythonGuardFile": "python/tests/test_constructor_observation_native.py",
   "pythonGuardCases": 4,
   "pureFile": "tests/qualification/constructor_observation_pure_test.py",
-  "pureCases": 10,
+  "pureCases": 12,
   "priorComponents": "Original adbd Rust162/legacy8/boundary23/Saga19 retained only at original identities. Not future candidate qualification.",
   "workflowID": 406353585,
   "workflowPath": ".github/workflows/inspector-retained-attribution.yml",
@@ -568,9 +572,9 @@
     "crates/umf-core/src/python_value.rs": "ac9aadb0980520e8343b29a57ef2e44583ef5f84f59c52f68e44ce1dbe57dfd7",
     "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
     "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
-    "crates/umf-core/src/schema.rs": "e156eb0324f9ef4722954983584e42e242b6a164fe877aadcec790a09497b254",
+    "crates/umf-core/src/schema.rs": "34baea3ef1eec0248d87fd3a1a7e1aa7bcee2e908bef3c77a6a54a78146e0c4c",
     "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
-    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "0ddbba5fd1370f57f1b721fedf1b0339c65786747af1e6f91f4b941158b6467d",
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "77c388d53870e9263c308a51645ff5eca1a06b1f6f693f1a5f0fdb1b5353cac9",
     "python/hatch_build.py": "ff2b41abceb3f02518cf802fe191629d70ea762546baacce56372e6b198a008f",
     "python/pyproject.toml": "59ef8b5f1242e295cd87d3afec7fec5f6e40a960dac6403c27c913e4fd6e7e93",
     "python/tests/test_constructor_observation_native.py": "604de8e89247513e98c06437da17b0a931fad5cbabf86645d0045b0fc1e9d365",
@@ -584,10 +588,10 @@
     "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
     "spec/metamodel/generated/core-constraints.json": "180497da09a76cbbef5332d234258936668e06f7152f119d4be7aeebfa6b39cc",
     "spec/metamodel/generated/domain-policy.json": "4d742505e483d23f7ef60cc904b45aa44db73473c71a98e01a919f289c414a9c",
-    "tests/qualification/constructor_observation_pure_test.py": "2c81b5ef78bd3c438d3516f87802bdb36340081e4b622abb9543a189bed21bbc",
+    "tests/qualification/constructor_observation_pure_test.py": "e677919eba2ad1d544f75dab3d844a48a05df081505ee59542a6f8326459390c",
     "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
     "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
-    "tools/inspector_constructor_observation.py": "22bc9cbcbaed64aaff54fc72de761b7940a075c2a6e6a724a7ed703cc80dfb2e",
+    "tools/inspector_constructor_observation.py": "ffb974b17ea7c82bf4d7458d1d2383f78337af9f92cdfb347233c610168f74fa",
     "tools/probe_inspector_constructor_prefix.py": "bb308ddbe9eeb9c21c4d1f25264d6ab07fd414e0764e7d2cd653dec2019c768f",
     "tools/probe_inspector_retained_feasibility.py": "e33e1d352c9861970a7aeb192dc1803e11e6455b086a1cc6c9391ce283c9d49d",
     "tools/qualify_inspector_construction_batch.py": "8dbc01811ada67f88072d01b442e4ba13a3b42e4800dae7b6ebf3222728827be",

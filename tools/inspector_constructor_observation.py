@@ -10,12 +10,12 @@ CONVERSION_SITES = ('factory','visit','frontier','text-decode','text-normalize',
                     'key-collision','path','owned-validation','array-index')
 SLOTS = tuple((root,site) for root in ROOTS for site in COMPILE_SITES) + tuple(
     ('conversion',site) for site in CONVERSION_SITES) + (
-    ('constraints','admission-copy'),('literal-policy','admission-copy'))
-assert len(SLOTS) == len(set(SLOTS)) == 124 <= 128
+    ('constraints','admission-copy'),('literal-policy','admission-copy'),('unassigned','other'))
+assert len(SLOTS) == len(set(SLOTS)) == 125 <= 128
 INDEX = {pair:i for i,pair in enumerate(SLOTS)}
 LEGACY_PHASES = frozenset(('native-resource-conversion','native-resource-compilation',
     'native-core-copy','native-schema-compilation','native-schema-validation','native-result-envelope'))
-CTOR_PHASES = frozenset('ctor.'+site for site in COMPILE_SITES+CONVERSION_SITES)
+CTOR_PHASES = frozenset('ctor.'+site for site in COMPILE_SITES+CONVERSION_SITES+('other',))
 TARGET = {'total':34055317,'eventCount':1000001,
           'amountSequenceSHA256':'725818593ddfbebfd435a776098f4326ee8d48fe588960bea6ead4f171e3db87',
           'deniedAmount':1,'deniedIndex':1000000,
@@ -28,21 +28,31 @@ TARGET = {'total':34055317,'eventCount':1000001,
 def slot_for(phase,root):
     if type(phase)is not str or type(root)is not str or phase not in LEGACY_PHASES|CTOR_PHASES:
         raise ValueError('Unknown constructor observation label')
+    if root not in ROOTS+('conversion','constraints','literal-policy'):
+        raise ValueError('Unknown constructor site/root role')
+    # Known but unclassified work must never imply copying or admission.
+    if phase in ('ctor.other','native-resource-compilation','native-schema-compilation','native-result-envelope'):
+        return INDEX[('unassigned','other')]
     if root == 'conversion':
         site = phase[5:] if phase.startswith('ctor.') else (
             'owned-validation' if phase=='native-core-copy' else 'factory')
-    elif root in ('constraints','literal-policy'):
+    elif phase == 'native-core-copy':
         site='admission-copy'
+    elif phase == 'native-schema-validation':
+        if not root.startswith('registration-'):
+            return INDEX[('unassigned','other')]
+        site='registry-manifest'
+    elif phase.startswith('ctor.'):
+        site=phase[5:]
     else:
-        site=phase[5:] if phase.startswith('ctor.') else (
-            'registry-manifest' if phase=='native-schema-validation' else 'admission-copy')
+        return INDEX[('unassigned','other')]
     pair=(root,site)
     if pair not in INDEX:raise ValueError('Unknown constructor site/root slot')
     return INDEX[pair]
 
 
 class PrefixTrace:
-    """124 fixed slots; no event history. Counts include the first denied event."""
+    """125 fixed slots; no event history. Counts include the first denied event."""
     def __init__(self,attributed,cap=EVENT_CAP):
         if type(cap)is not int or not 0<=cap<=EVENT_CAP:raise ValueError('Invalid event cap')
         self.attributed=attributed;self.cap=cap;self.total=0;self.count=0
@@ -57,7 +67,7 @@ class PrefixTrace:
         else:
             if root is not None or phase not in ('native-resource-conversion','native-resource-compilation'):
                 raise ValueError('Ordinary factory callback protocol changed')
-            slot=INDEX[('conversion','factory') if phase=='native-resource-conversion' else ('unassigned','admission-copy')]
+            slot=INDEX[('conversion','factory') if phase=='native-resource-conversion' else ('unassigned','other')]
         self.count+=1;self.total+=amount
         self.work[slot]+=amount;self.events[slot]+=1
         self.digest.update(amount.to_bytes(8,'little'))
@@ -89,7 +99,7 @@ def compare_prefix(report,target=TARGET):
     if sum(r['work'] for r in slots)!=report['total'] or sum(r['events'] for r in slots)!=report['eventCount']:
         raise ValueError('Site counters do not reconcile')
     if target.get('ordinaryPhases') and report.get('attributed') is False:
-        c=slots[INDEX[('conversion','factory')]];k=slots[INDEX[('unassigned','admission-copy')]]
+        c=slots[INDEX[('conversion','factory')]];k=slots[INDEX[('unassigned','other')]]
         actual={'conversionWork':c['work'],'conversionEvents':c['events'],
                 'compilationWork':k['work'],'compilationEvents':k['events']}
         if actual!=target['ordinaryPhases']:raise ValueError('Original coarse phase prefix differs')

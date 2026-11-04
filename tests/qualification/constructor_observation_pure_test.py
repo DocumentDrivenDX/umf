@@ -14,9 +14,36 @@ class PureConstructorObservationTests(unittest.TestCase):
         target={**{k:r[k] for k in ('total','eventCount','amountSequenceSHA256','terminal')},'deniedAmount':7,'deniedIndex':2}
         return t,r,target
     def test_fixed_slots_and_unknowns_refuse(self):
-        self.assertEqual(len(P.SLOTS),124)
-        for phase,root in [('ctor.madeup','core'),('ctor.preflight-root','foreign'),('ctor.preflight-root','conversion')]:
+        self.assertEqual(len(P.SLOTS),125)
+        for phase,root in [('ctor.madeup','core'),('ctor.preflight-root','foreign'),('ctor.preflight-root','conversion'),('ctor.other','foreign'),('native-resource-compilation','foreign')]:
             with self.assertRaises(ValueError):P.slot_for(phase,root)
+    def test_constraint_semantics_and_generic_compile_cannot_be_copy(self):
+        other=P.INDEX[('unassigned','other')]
+        for root in P.ROOTS+('constraints','literal-policy'):
+            for phase in ('native-resource-compilation','native-schema-compilation','ctor.other'):
+                with self.subTest(root=root,phase=phase):
+                    self.assertEqual(P.slot_for(phase,root),other)
+        trace=P.PrefixTrace(True)
+        trace(17,'native-resource-compilation','constraints')
+        trace(19,'native-schema-compilation','core')
+        trace(23,'ctor.other','literal-policy')
+        self.assertEqual(trace.work[other],59)
+        self.assertEqual(sum(trace.work[i] for i,pair in enumerate(P.SLOTS) if pair[1]=='admission-copy'),0)
+    def test_only_identified_copy_work_uses_admission_copy(self):
+        schema=(ROOT/'crates/umf-core/src/schema.rs').read_text()
+        for signature,label in [('    fn compile_inner(','ctor.other'),('fn copy_schema_json(','ctor.admission-copy')]:
+            start=schema.index(signature)
+            site=schema.index('ctx.with_constructor_site(',start)
+            self.assertTrue(schema[site:].startswith('ctx.with_constructor_site("'+label+'", |ctx| {'))
+        for root in P.ROOTS+('constraints','literal-policy'):
+            for phase in ('native-core-copy','ctor.admission-copy'):
+                self.assertEqual(P.SLOTS[P.slot_for(phase,root)],(root,'admission-copy'))
+        for root in ('core','constraints','literal-policy'):
+            self.assertEqual(P.SLOTS[P.slot_for('native-schema-validation',root)],('unassigned','other'))
+        ordinary=P.PrefixTrace(False);ordinary(31,'native-resource-compilation')
+        self.assertEqual(ordinary.work[P.INDEX[('unassigned','other')]],31)
+        self.assertEqual(ordinary.work[P.INDEX[('unassigned','admission-copy')]],0)
+
     def test_first_denial_and_no_event_history(self):
         t,r,target=self.sample();self.assertTrue(P.compare_prefix(r,target))
         self.assertFalse(hasattr(t,'history'));self.assertEqual(sum(t.events),3)

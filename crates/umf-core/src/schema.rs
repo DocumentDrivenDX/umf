@@ -1597,7 +1597,7 @@ impl CompiledSchema {
         root_keyword_policy: KeywordPolicy,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        ctx.with_constructor_site("ctor.admission-copy", |ctx| {
+        ctx.with_constructor_site("ctor.other", |ctx| {
         if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
             return Err(unavailable());
         }
