@@ -3,11 +3,11 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Existing coupled umf-v0.10.8 tag at production S
+        description: "Exact admitted release tag: umf-v0.10.8 or umf-v0.10.9"
         type: string
         required: true
       source_sha:
-        description: Exact production S
+        description: Exact source commit locked by the selected tag admission
         type: string
         required: true
       expected_sums_sha256:
@@ -19,23 +19,28 @@ on:
         type: string
         required: true
       publish:
-        description: Enable only qualified unchanged Codegen upload and public consumer
+        description: Enable only the selected, locally qualified Codegen PyPI upload
+        type: boolean
+        default: false
+      locally_qualified:
+        description: Confirm the tracked local qualification admission for the 0.10.9 route
         type: boolean
         default: false
 permissions:
   contents: read
   actions: read
 concurrency:
-  group: codegen-pypi-0108
+  group: ${{ inputs.tag == 'umf-v0.10.8' && 'codegen-pypi-0108' || inputs.tag == 'umf-v0.10.9' && 'codegen-pypi-0109' || 'codegen-pypi-unsupported' }}
   cancel-in-progress: false
 env:
   TAG: ${{ inputs.tag }}
   SOURCE_SHA: ${{ inputs.source_sha }}
   SUMS_SHA: ${{ inputs.expected_sums_sha256 }}
   ADMISSION_SHA: ${{ inputs.expected_admission_sha256 }}
+  LOCALLY_QUALIFIED: ${{ inputs.locally_qualified }}
 jobs:
   verify:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && inputs.tag == 'umf-v0.10.8'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
@@ -105,7 +110,7 @@ jobs:
           retention-days: 90
   publish:
     needs: verify
-    if: inputs.publish == true && github.ref == 'refs/heads/main'
+    if: inputs.publish == true && github.ref == 'refs/heads/main' && inputs.tag == 'umf-v0.10.8'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     environment: pypi
@@ -152,6 +157,7 @@ jobs:
           retention-days: 365
   public-consumer:
     needs: [verify, publish]
+    if: inputs.tag == 'umf-v0.10.8'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -228,5 +234,99 @@ jobs:
           path: |
             ${{ runner.temp }}/codegen-consumer-receipt.json
             ${{ runner.temp }}/codegen-cli-help.txt
+          if-no-files-found: error
+          retention-days: 365
+  verify-0109:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && inputs.tag != 'umf-v0.10.8'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate the tracked 0.10.9 admission and exact download roster
+        run: |
+          test "$LOCALLY_QUALIFIED" = true
+          python scripts/publish_codegen_pypi_0109.py roster --assets-dir incoming/assets --tag "$TAG" --source-sha "$SOURCE_SHA" --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA" > download-roster.txt
+      - name: Download immutable release metadata and admitted files
+        run: |
+          set -euo pipefail
+          mkdir -p incoming/assets
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > incoming/release.json
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > incoming/tag-ref.json
+          if [[ "$(jq -r .object.type incoming/tag-ref.json)" == tag ]]; then
+            gh api "repos/$GITHUB_REPOSITORY/git/tags/$(jq -r .object.sha incoming/tag-ref.json)" > incoming/tag-object.json
+          fi
+          gh api "repos/$GITHUB_REPOSITORY/git/commits/$SOURCE_SHA" > incoming/commit.json
+          while IFS= read -r name; do
+            gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern="$name" --dir incoming/assets
+          done < download-roster.txt
+      - name: Verify release, source tree, Core PyPI bytes, local qualification and Codegen archives
+        run: |
+          set -euo pipefail
+          ARGS=(verify --assets-dir incoming/assets --tag "$TAG" --source-sha "$SOURCE_SHA"
+            --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA"
+            --release-json incoming/release.json --tag-ref-json incoming/tag-ref.json --commit-json incoming/commit.json
+            --output-dir dist)
+          if [[ -f incoming/tag-object.json ]]; then ARGS+=(--tag-object-json incoming/tag-object.json); fi
+          python scripts/publish_codegen_pypi_0109.py "${ARGS[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: admitted-codegen-0109
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 90
+  publish-0109:
+    needs: verify-0109
+    if: inputs.publish == true && inputs.locally_qualified == true && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && inputs.tag == 'umf-v0.10.9'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: pypi
+    env:
+      GH_TOKEN: ${{ github.token }}
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: admitted-codegen-0109
+          path: dist
+      - name: Revalidate admitted Codegen bytes and public Core; refuse PyPI collisions
+        id: preflight
+        run: |
+          python scripts/publish_codegen_pypi_0109.py check-pypi --assets-dir dist --tag "$TAG" --source-sha "$SOURCE_SHA" \
+            --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA"
+      - name: Select exactly the two admitted Codegen archives
+        if: steps.preflight.outputs.status == 'absent'
+        run: |
+          mkdir .verified-codegen-packages
+          cp dist/umf_codegen-0.10.9-py3-none-any.whl dist/umf_codegen-0.10.9.tar.gz .verified-codegen-packages/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        if: steps.preflight.outputs.status == 'absent'
+        with:
+          packages-dir: .verified-codegen-packages/
+      - name: Download and verify exact public Codegen inventory and bytes
+        run: |
+          python scripts/publish_codegen_pypi_0109.py check-pypi --assets-dir dist --tag "$TAG" --source-sha "$SOURCE_SHA" \
+            --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA" --wait > dist/public-bytes-receipt.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegen-0109-public-bytes
+          path: dist/public-bytes-receipt.json
           if-no-files-found: error
           retention-days: 365

@@ -108,3 +108,18 @@ passed. Generated enforcement differs only in compiler provenance, preserving th
 existing semantic baseline. Remote main advanced with Codegen 0.10.8 public PyPI
 proof, so the successor now includes both Python distributions on PyPI. The
 0.10.8 admission remains unchanged; 0.10.9 receives its own exact local admission.
+
+The exact production source is `9b36814d5b9eda1867d7893575e1acd718cfe4bb`
+(tree `3ddb0ff850c92500818d6a0031c856bae0bd0554`), integrated through PRs
+113 and 114. The native wheel qualifier now admits only this new version to the
+existing completed-engine size profile; older bounds remain unchanged.
+The frozen build tree contains 8,185 tracked inputs. The complete source archive
+passed streaming comparison of all 70,594 Git members, including modes, symlinks
+and bytes. Its uploaded draft asset digest matches the local archive.
+
+Sol approved the separate 0.10.9 Codegen upload controller and its existing
+trusted publisher workflow identity. Sixteen local policy tests passed; integrated
+helper, test and workflow bytes match the reviewed/tested patch. The production
+admission is filled from actual qualified artifacts and raw local receipts only.
+[Current source and controller receipts](evidence/release-0.10.9/) retain these
+completed checks separately from platform qualification and public publication.
