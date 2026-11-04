@@ -148,3 +148,17 @@ or page errors. The refreshed workbench binds all sixteen compiler inputs and
 its WASM bytes to that SDK. The local legal-appellate flow passed DDL/ORM/CRUD
 previews, individual-download byte equality and seven-member ZIP hash/CRC checks.
 [Portable receipts](evidence/release-0.10.9/) preserve the distinct scopes.
+
+## Public microsite completion
+
+PR116 integrated the qualified WASM and portable Mac proof. Deployment-only run
+`41785909303` signed and deployed commit `836d8e5329c7cf39b2f182f26b8449a37984c8f1`.
+The existing public verifier authenticated all seven site assets and the registered
+build signature. The public legal-appellate flow completed generation, all three
+previews and matching individual/ZIP downloads. Its final network classification
+reported the known homepage stylesheet after the phase label changed. The raw
+exit 1 is retained; a separate navigation-only CDP trace confirms the initiating
+homepage document and stylesheet. Every external request was blocked, with zero
+compiler requests or page errors. Public/local download bytes match. The
+[combined proof](evidence/release-0.10.9/site-public-completion.json) keeps these
+sources separate and leaves global release completion false pending Linux.

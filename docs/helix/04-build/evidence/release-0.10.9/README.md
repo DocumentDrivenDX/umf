@@ -25,5 +25,7 @@ Git tree: `3ddb0ff850c92500818d6a0031c856bae0bd0554`.
   exact-version Codegen upload controller. The integrated source matches those
   tested and reviewed bytes.
 
-`SHA256SUMS` covers these portable records. Linux qualification, public package
-publication and public site verification are recorded when complete.
+`SHA256SUMS` covers these portable records. `site-public-completion.json` combines the actual public functional prefix,
+byte-identical downloads, valid public signature and separate navigation-only
+font attribution. The original helper exit 1 is retained. Linux qualification
+and complete package publication remain pending.
