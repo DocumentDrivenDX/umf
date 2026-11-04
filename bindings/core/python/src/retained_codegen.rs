@@ -192,6 +192,17 @@ impl RetainedCodegenResources {
         wire_json: &str,
         control: &Bound<'_, PyAny>,
     ) -> PyResult<PyObject> {
+        self.execute_impl(py, wire_json, control, false)
+    }
+
+    /// PRIVATE bounded attribution; never selected by public payload data.
+    fn execute_wire_attributed(&self, py: Python<'_>, wire_json: &str, control: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+        self.execute_impl(py, wire_json, control, true)
+    }
+}
+
+impl RetainedCodegenResources {
+    fn execute_impl(&self, py: Python<'_>, wire_json: &str, control: &Bound<'_, PyAny>, attributed: bool) -> PyResult<PyObject> {
         if !control.is_callable() {
             return Err(PyTypeError::new_err("Owner control must be callable"));
         }
@@ -200,6 +211,7 @@ impl RetainedCodegenResources {
         let mut hook = |amount| failure.check(py, control, amount, phase.get());
         let result = {
             let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            if attributed { ctx = ctx.with_work_phase_observer(&phase); }
             let inner = ctx
                 .with_tagged_transport_limit(|ctx| umf_core_wire::decode(wire_json, ctx))
                 .and_then(|request| {
@@ -244,9 +256,35 @@ pub(super) fn create_codegen_resources(
         let mut ctx = Context::ordinary().with_host_control(&mut hook);
         let built = ctx
             .with_catalog_value_limit(|ctx| {
-                ctx.charge_work(resources.len(), Utf16::default())?;
-                let mut fields = Vec::with_capacity(resources.len());
-                for (key, value) in resources.iter() {
+                let length = resources.len();
+                ctx.charge_work(length.saturating_mul(2), Utf16::default())?;
+                if resources.len() != length {
+                    return Err(EngineError::new("REQUEST", Utf16::default(), "Resource container changed during admission"));
+                }
+                // The facade admits at most the nine named resources plus Saga.
+                // Refuse an oversized direct factory request before allocating.
+                if resources.len() > 10 {
+                    return Err(EngineError::new("REQUEST", Utf16::default(), "Unknown explicit codegen resource"));
+                }
+                let entries: Vec<_> = resources.iter().collect();
+                // Preserve the facade's canonical resource admission order,
+                // using the existing shared bridge's single name roster.
+                ctx.charge_work(length.saturating_mul(65), Utf16::default())?;
+                let mut ordered = Vec::with_capacity(length);
+                for (key, value) in entries {
+                    if !key.is_exact_instance_of::<PyString>() {
+                        return Err(EngineError::new("UNSUPPORTED_KEY", Utf16::default(), "Resource names must be exact strings"));
+                    }
+                    let text = key.downcast::<PyString>().expect("exact string");
+                    let key_length = text.len().map_err(|_| EngineError::new("REQUEST", Utf16::default(), "Could not read resource name"))?;
+                    ctx.charge_work(key_length.saturating_mul(CodegenResourcesHandle::RESOURCE_NAMES.len()), Utf16::default())?;
+                    let ordinal = text.to_str().ok().and_then(|text| CodegenResourcesHandle::RESOURCE_NAMES.iter().position(|name| text == *name))
+                        .ok_or_else(|| EngineError::new("REQUEST", Utf16::default(), "Unknown explicit codegen resource"))?;
+                    ordered.push((ordinal, key, value));
+                }
+                ordered.sort_by_key(|(ordinal, _, _)| *ordinal);
+                let mut fields = Vec::with_capacity(length);
+                for (_, key, value) in ordered {
                     if !key.is_exact_instance_of::<PyString>() {
                         return Err(EngineError::new(
                             "UNSUPPORTED_KEY",
@@ -256,7 +294,7 @@ pub(super) fn create_codegen_resources(
                     }
                     let key = python_value::pytext_from_python(&key, ctx)?.to_utf16(ctx)?;
                     let mut count = 0;
-                    let value = python_value::from_python(py, &value, ctx, 0, &mut count)?
+                    let value = python_value::from_codegen_resource(py, &value, ctx, &mut count)?
                         .project_schema_to_core(ctx)?;
                     fields.push((key, value));
                 }

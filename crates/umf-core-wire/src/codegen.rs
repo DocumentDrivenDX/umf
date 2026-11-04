@@ -577,11 +577,11 @@ pub(super) fn execute_with_resources(
     let payload = field(request, "request").ok_or_else(|| {
         EngineError::new("REQUEST", Utf16::default(), "Codegen request is required")
     })?;
-    let result = match invoke(&CodegenEngine::new(resources), operation, payload, ctx) {
+    let result = match ctx.with_work_phase("native-request-model-admission", |ctx| invoke(&CodegenEngine::new(resources), operation, payload, ctx)) {
         Ok(result) => object(vec![("ok", Value::Bool(true)), ("result", result)]),
         Err(error) => semantic_error(error, operation, ctx)?,
     };
-    ctx.with_tagged_transport_limit(|ctx| encode(&result, ctx))
+    ctx.with_work_phase("native-inner-result-encoding", |ctx| ctx.with_tagged_transport_limit(|ctx| encode(&result, ctx)))
 }
 
 pub(super) fn execute_host_read_v3(

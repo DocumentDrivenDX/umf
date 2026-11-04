@@ -312,6 +312,123 @@ class PublicRetainedFeasibilityTests(unittest.TestCase):
         self.assertEqual(failure.exception.code, 'RESOURCE_LIMIT')
 
 
+class RetainedResourceAdmissionNativeTests(unittest.TestCase):
+    """Changed constructor boundary; not extra canonical51 feasibility vectors.
+
+    Unknown JSON-Schema annotations are deliberate caller-resource variations,
+    not relabelled canonical S resources. Every public success still selects1M.
+    """
+    def _annotated(self, value):
+        resources = _resources()
+        resources['coreSchema']['x-independent-retained-boundary'] = value
+        return resources
+
+    def _construct(self, resources, **callbacks):
+        return codegen.CodegenEngine(resources, resource_mode=MODE, max_work=LIMIT, **callbacks)
+
+    def test_exact_builtin_admission_never_coerces_subclasses_or_foreign_values(self):
+        invoked = []
+        class IntLike(int):
+            def bit_length(self): invoked.append('int.bit_length'); return super().bit_length()
+            def __float__(self): invoked.append('int.float'); return super().__float__()
+        class FloatLike(float):
+            def __float__(self): invoked.append('float.float'); return super().__float__()
+        class TextLike(str):
+            def encode(self, *args, **kwargs): invoked.append('text.encode'); return super().encode(*args, **kwargs)
+        class ListLike(list):
+            def __iter__(self): invoked.append('list.iter'); return super().__iter__()
+        class DictLike(dict):
+            def items(self): invoked.append('dict.items'); return super().items()
+        values = [IntLike(1), FloatLike(1.25), TextLike('text'), ListLike([1]),
+                  DictLike(a=1), (1,), b'bytes', bytearray(b'bytes'), object()]
+        for value in values:
+            with self.subTest(kind=type(value).__name__):
+                with self.assertRaises(UmfCoreError) as failure:
+                    self._construct(self._annotated(value))
+                self.assertEqual(failure.exception.code, 'UNSUPPORTED_VALUE')
+                self.assertEqual(invoked, [], 'Resource admission invoked caller coercion')
+        for value in [DictLike(_resources()), None, []]:
+            with self.assertRaises(TypeError): self._construct(value)
+
+    def test_safe_numeric_utf16_and_unknown_annotation_admission_is_nonmutating(self):
+        annotation = {'null': None, 'booleans': [True, False],
+                      'safeIntegers': [0, -1, 9_007_199_254_740_991, -9_007_199_254_740_991],
+                      # Preserve the immutable native Value::number admission:
+                      # finite fractions and safe integral floats, excluding -0.0.
+                      'finiteFloats': [0.0, 1.25, -1.25, float(9_007_199_254_740_991)],
+                      'utf16': ['astral \U0001f600', 'paired \ud83d\ude00', 'lone \ud800', '\udfff'],
+                      'future.vendor': {'opaque': ['\ud800', {'kept': True}]}}
+        resources = self._annotated(annotation)
+        before = json.dumps(resources, ensure_ascii=True, sort_keys=True)
+        engine = self._construct(resources)
+        self.assertEqual(json.dumps(resources, ensure_ascii=True, sort_keys=True), before)
+        self.assertEqual(resources['coreSchema']['x-independent-retained-boundary'], annotation)
+        row = _cases()[0]
+        self.assertEqual(engine.call('inspectAccessViews', row['request']), {'ok': True, 'result': row['expected']})
+        # Input admission/immutability and semantic parity are observable here;
+        # opaque handle internals are not exposed or claimed as a bitwise getter.
+
+    def test_unsafe_integer_and_nonfinite_resource_values_preserve_number_refusal(self):
+        for value in [2 ** 53, -(2 ** 53), 2 ** 53 + 1, -(2 ** 53 + 1),
+                      2 ** 100, -(2 ** 100), float('nan'), float('inf'), -float('inf')]:
+            with self.subTest(value=repr(value)):
+                with self.assertRaises(UmfCoreError) as failure:
+                    self._construct(self._annotated(value))
+                # NUMBER, not a favorable rounding, schema acceptance or quota refusal.
+                self.assertEqual(failure.exception.code, 'NUMBER')
+
+    def test_negative_zero_and_unsafe_integral_float_resources_refuse_number(self):
+        for value in [-0.0, float(2 ** 53), 1e300]:
+            with self.subTest(value=repr(value)):
+                with self.assertRaises(UmfCoreError) as failure:
+                    self._construct(self._annotated(value))
+                self.assertEqual(failure.exception.code, 'NUMBER')
+
+    def test_utf16_key_collision_and_nonexact_keys_refuse_without_key_coercion(self):
+        # Distinct Python code-point spellings project to the SAME core UTF16 key.
+        collision = {'\U0001f600': 'astral', '\ud83d\ude00': 'explicit pair'}
+        self.assertEqual(len(collision), 2)
+        with self.assertRaises(UmfCoreError) as failure:
+            self._construct(self._annotated(collision))
+        self.assertEqual(failure.exception.code, 'DUPLICATE_KEY')
+        invoked = []
+        class TextKey(str):
+            def encode(self, *args, **kwargs): invoked.append('encode'); return super().encode(*args, **kwargs)
+        for key in [1, TextKey('source-key')]:
+            with self.subTest(key_type=type(key).__name__):
+                with self.assertRaises(UmfCoreError) as failure:
+                    self._construct(self._annotated({key: 'kept'}))
+                self.assertEqual(failure.exception.code, 'UNSUPPORTED_KEY')
+                self.assertEqual(invoked, [])
+
+    def test_retained_constructor_removes_host_wire_roundtrip_not_only_its_charges(self):
+        resources = _resources()
+        # Real native factory remains in use. Only the removed host operation is
+        # poisoned: invoking it rather than eliminating its work fails this test.
+        with patch.object(codegen, '_wire', side_effect=AssertionError('retained host wire still executed')), \
+             patch.object(codegen, '_from_wire', side_effect=AssertionError('retained host snapshot copy still executed')):
+            engine = self._construct(resources)
+        row = _cases()[0]
+        self.assertEqual(engine.call('inspectAccessViews', row['request']), {'ok': True, 'result': row['expected']})
+
+    def test_mutation_from_compilation_callback_cannot_change_already_owned_snapshot(self):
+        resources = _resources()
+        state = {'trace': [], 'native_seen': False, 'in_native': False, 'mutated': False}
+        def meter(amount):
+            if state['in_native'] and state.get('phase') == COMPILATION and not state['mutated']:
+                state['mutated'] = True
+                resources['coreSchema'].clear()
+                resources['tablesPackage'].clear()
+                resources.clear()
+        with _observe_native(state):
+            engine = self._construct(resources, meter=meter)
+        self.assertTrue(state['mutated'], 'Compilation callback boundary was not exercised')
+        self.assertEqual(resources, {})
+        self.assertTrue(any(n > 0 and p == CONVERSION for n,p in state['trace']))
+        row = _cases()[0]
+        self.assertEqual(engine.call('inspectAccessViews', row['request']), {'ok': True, 'result': row['expected']})
+
+
 class PrivateNativeControlTests(unittest.TestCase):
     """Native diagnostics ONLY: excluded from public cold1M feasibility counts."""
     def _failure(self, action, code, path=None):
@@ -466,6 +583,69 @@ class PrivateNativeControlTests(unittest.TestCase):
                 first_charge = dict(control.denial)
                 self.assertEqual(control.calls[-1], first_charge)
                 self.assertEqual(control.after_denial, [])
+
+    def test_private_resource_depth_limit_remains_per_resource_128(self):
+        for nesting, accepted in ((127, True), (128, False)):
+            with self.subTest(private_resource_lists=nesting):
+                value = None
+                for _ in range(nesting): value = [value]
+                resources = _resources()
+                # Resource root depth0 -> annotation depth1 -> final null at
+                # depth128/129. Do not accidentally add the outer resource map.
+                resources['coreSchema']['x-independent-depth'] = value
+                phase_work = {}
+                def control(amount, phase):
+                    phase_work[phase] = phase_work.get(phase, 0) + amount
+                    return None
+                if accepted:
+                    handle = _rust_core.create_codegen_resources(resources, control)
+                    row = _cases()[0]
+                    self.assertEqual(_native_result(handle.execute_wire(
+                        _request_wire(row['request']), lambda amount, phase: None)),
+                        {'ok': True, 'result': row['expected']})
+                else:
+                    self._failure(lambda: _rust_core.create_codegen_resources(resources, control), 'LIMIT')
+                self.assertGreater(phase_work.get(CONVERSION, 0), 0)
+
+    def test_private_resource_node_limit_is_not_only_public_work_precheck(self):
+        resources = _resources()
+        # Compact host fixture, >1M VALUE OCCURRENCES in the projected tree.
+        # Shared list references are not cycles and cannot discount logical nodes.
+        chunk = [None] * 1000
+        resources['coreSchema']['x-independent-nodes'] = [chunk] * 1001
+        phase_work = {}
+        def control(amount, phase):
+            phase_work[phase] = phase_work.get(phase, 0) + amount
+            return None
+        # Unlimited PRIVATE callback isolates the existing catalog node bound:
+        # a public1M RESOURCE_LIMIT would not prove the structural guard exists.
+        self._failure(lambda: _rust_core.create_codegen_resources(resources, control), 'LIMIT')
+        self.assertGreater(phase_work.get(CONVERSION, 0), 0)
+
+    def test_private_reentrant_failure_does_not_replace_first_outer_control_denial(self):
+        outer_seen = []
+        inner_seen = []
+        entered = [False]
+        denied_at = []
+        def inner(amount, phase):
+            inner_seen.append((amount, phase))
+            return ('CANCELLED', 'nested conversion denied', '/private/inner')
+        def outer(amount, phase):
+            outer_seen.append((amount, phase))
+            if phase == CONVERSION and amount > 0 and not entered[0]:
+                entered[0] = True
+                self._failure(lambda: _rust_core.create_codegen_resources(_resources(), inner),
+                              'CANCELLED', '/private/inner')
+                denied_at.append(len(outer_seen))
+                return ('DEADLINE', 'first OUTER denial retained', '/private/outer')
+            if denied_at:
+                return ('SECOND_DENIAL_MUST_NOT_ESCAPE', 'later outer denial', '/wrong')
+            return None
+        self._failure(lambda: _rust_core.create_codegen_resources(_resources(), outer),
+                      'DEADLINE', '/private/outer')
+        self.assertTrue(entered[0], 'No actual native reentrant boundary was reached')
+        self.assertTrue(any(n > 0 and p == CONVERSION for n,p in inner_seen))
+        self.assertEqual(len(outer_seen), denied_at[0], 'Outer control ran after its first denial')
 
     def test_private_native_factory_conversion_compilation_callbacks_refuse(self):
         for selected in (CONVERSION, COMPILATION):

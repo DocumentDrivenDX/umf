@@ -52,7 +52,13 @@ def load_facade():
                                'wire': json.dumps(rust._wire(api.output))})
 
     def create(resources, control):
-        api.created.append(copy.deepcopy(resources))
+        # Explicit fake-native admission only; no native feasibility evidence.
+        # The facade must pass raw resources, while native conversion owns copies.
+        admitted = {name: rust._from_wire(rust._wire(value, max_depth=128, max_values=1_000_000,
+                    work=lambda amount: charge(control, amount, 'native-resource-conversion')))
+                    for name, value in resources.items()}
+        api.created.append(copy.deepcopy(admitted))
+        api.raw_resource_identity = resources
         charge(control, 11, 'native-resource-conversion')
         charge(control, 17, 'native-resource-compilation')
         api.phase = 'publication'
@@ -102,6 +108,16 @@ class RetainedFacadeControls(unittest.TestCase):
         self.assertTrue(all('resources' not in r for r in self.api.calls))
         self.assertEqual(engine.inspect_access_views({}, []), {'records': [], 'diagnostics': []})
 
+    def test_retained_facade_removes_both_host_snapshot_operations(self):
+        def forbidden(*args, **kwargs): raise AssertionError('Host snapshot still performed')
+        original_wire, original_from = self.compiler._wire, self.compiler._from_wire
+        try:
+            self.compiler._wire = self.compiler._from_wire = forbidden
+            self.engine()
+        finally:
+            self.compiler._wire, self.compiler._from_wire = original_wire, original_from
+        self.assertIs(self.api.raw_resource_identity, self.resources)
+
     def test_constructor_refuses_unknown_missing_foreign_and_unsupported_resources(self):
         for resource in ({**self.resources, 'unknown': {}}, {k:v for k,v in self.resources.items() if k != 'coreSchema'}, object()):
             with self.assertRaises(TypeError):
@@ -110,7 +126,7 @@ class RetainedFacadeControls(unittest.TestCase):
         self.assert_code('UNSUPPORTED_VALUE', lambda: self.engine())
         self.assertEqual(self.api.created, [])
 
-    def test_depth_and_unsupported_key_admission_still_precede_native(self):
+    def test_depth_and_unsupported_key_admission_precede_handle_publication(self):
         item = None
         for _ in range(130): item = [item]
         self.resources['coreSchema'] = item

@@ -118,6 +118,32 @@ remain terminal during native entry, result conversion and failure unwinding.
 Private diagnostic phase labels MUST NOT change public meter arguments or grant
 work credits. Hard-isolated unavailability MUST NOT fall back to this mode.
 
+Retained construction MAY eliminate the Python tagged-value round trip only
+when that intermediate snapshot is not constructed. One native-owned admission
+MUST preserve the facade's exact built-ins, safe integer interval
+`[-(2^53-1), 2^53-1]`, inherited core-number admission for floats (including
+negative-zero, nonfinite and unsafe integral-float refusals), bits of admitted
+binary64 values, UTF-16 projection and projected-key collision refusal, complete unknown annotation content, and per-resource depth128
+and value-count1,000,000. The broader Python Schema consumer integer or source
+origin profile MUST NOT silently replace this facade profile. Remaining native
+conversion, text normalization, owned container-reference snapshots, projection,
+resource checks, compilation and publication MUST remain charged. Legacy mode
+MUST retain its existing admission/transport. A container whose size changes
+across a conversion admission callback MAY refuse as `REQUEST`; no partially
+converted value or handle may escape. Completed conversion MUST retain no caller
+container references when compilation callbacks run.
+
+Private owner attribution MAY use fixed nested Context labels around existing
+work. It MUST preserve every charge amount and callback order, cumulative Context,
+first denied charge and semantic result. Labels MUST restore on return, refusal
+and unwind. No document may enable attribution. The ordinary retained method's
+phase protocol MUST remain unchanged; an explicit private diagnostic entry may
+expose subphase labels without changing admission or execution. Bounded observer
+storage, phase sums and rolling charge-sequence hashes MUST reconcile copies,
+validation/compilation, shared inspection and inner/outer encoding. Private
+component observations without the public1M allowance MUST remain diagnostic;
+they MUST NOT be reported as public cold construction or call qualification.
+
 A bounded support claim MUST identify the actual owner source/native bytes, mode
 and allowance, and demonstrate cold construction as well as each invocation.
 The same invocation allowance MUST include outer response-envelope sizing,

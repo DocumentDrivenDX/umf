@@ -234,6 +234,7 @@ fn validate_number(value: f64, path: Utf16) -> Result<(), EngineError> {
 /// Validate and copy one JSON tree without collapsing ordered members or UTF-16
 /// strings. Value-count limits apply to this tree; caller meters remain cumulative.
 pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    ctx.with_work_phase("native-core-copy", |ctx| {
     fn visit(
         value: &Value,
         ctx: &mut Context<'_>,
@@ -317,6 +318,8 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
 
     let mut tree_values = 0;
     visit(value, ctx, &Utf16::default(), 0, &mut tree_values)
+
+    })
 }
 
 /// Copy an already-admitted completed public result with TypeScript's

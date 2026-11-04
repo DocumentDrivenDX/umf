@@ -17,15 +17,34 @@ pub fn from_python(
     depth: usize,
     count: &mut usize,
 ) -> Result<PythonConsumerValue, EngineError> {
+    from_python_policy(py, value, ctx, depth, count, false, &Utf16::default())
+}
+
+/// Retained codegen admission uses the strict existing facade numeric/text
+/// profile, not the broader Python Schema consumer profile. No Python snapshot.
+pub fn from_codegen_resource(
+    py: Python<'_>, value: &Bound<'_, PyAny>, ctx: &mut Context<'_>,
+    count: &mut usize,
+) -> Result<PythonConsumerValue, EngineError> {
+    from_python_policy(py, value, ctx, 0, count, true, &Utf16::default())
+}
+
+fn from_python_policy(
+    py: Python<'_>, value: &Bound<'_, PyAny>, ctx: &mut Context<'_>,
+    depth: usize, count: &mut usize, codegen: bool, path: &Utf16,
+) -> Result<PythonConsumerValue, EngineError> {
     if depth > ctx.limits().max_depth {
         return Err(EngineError::new(
             "LIMIT",
-            Utf16::default(),
+            if codegen { path.clone() } else { Utf16::default() },
             "Python consumer value nesting exceeds the admission limit",
         ));
     }
-    *count = count.saturating_add(1);
-    ctx.check_tree_value_count(*count, Utf16::default())?;
+    // Retained traversal reserves immediate child occurrences before owning
+    // their references. This bounds pending frontiers as well as visited nodes.
+    // Consumer mode retains its existing nodewise admission unchanged.
+    if !codegen || depth == 0 { *count = count.saturating_add(1); }
+    ctx.check_tree_value_count(*count, if codegen { path.clone() } else { Utf16::default() })?;
     ctx.charge_work(1, Utf16::default())?;
 
     if value.is_none() {
@@ -38,6 +57,13 @@ pub fn from_python(
             .map_err(|_| invalid("Could not read Python bool"));
     }
     if value.is_exact_instance_of::<PyInt>() {
+        if codegen {
+            // _wire admits only +/- (2^53 - 1), even for float-exact larger ints.
+            // Exact PyInt extraction never dispatches caller conversion hooks.
+            let integer = value.extract::<i64>().ok().filter(|n| n.unsigned_abs() <= 9_007_199_254_740_991)
+                .ok_or_else(|| EngineError::new("NUMBER", path.clone(), "Integer is outside the safe binary64 envelope"))?;
+            return Ok(PythonConsumerValue::Float((integer as f64).to_bits()));
+        }
         let bits: usize = value
             .call_method0("bit_length")
             .and_then(|result| result.extract())
@@ -68,15 +94,32 @@ pub fn from_python(
             .map_err(|_| invalid("Could not read Python float bits"));
     }
     if value.is_exact_instance_of::<PyString>() {
-        return text_from_python(value, ctx);
+        return resource_text(value, ctx, codegen).map(PythonConsumerValue::String);
     }
     if value.is_exact_instance_of::<PyList>() {
         let list = value
             .downcast::<PyList>()
             .map_err(|_| invalid("Could not access Python list"))?;
         let mut items = Vec::new();
-        for item in list.iter() {
-            items.push(from_python(py, &item, ctx, depth + 1, count)?);
+        if codegen {
+            // Own exact-container element references before callbacks may reenter
+            // and mutate that container. No Python container snapshot is built.
+            let length = list.len();
+            *count = count.saturating_add(length);
+            ctx.check_tree_value_count(*count, path.clone())?;
+            ctx.charge_work(length, Utf16::default())?;
+            if list.len() != length { return Err(EngineError::new("REQUEST", path.clone(), "Resource container changed during admission")); }
+            let children: Vec<_> = list.iter().collect();
+            for (index, item) in children.into_iter().enumerate() {
+                ctx.charge_work(20, path.clone())?;
+                let key = PyText::from_utf8(&index.to_string());
+                let child_path = resource_child_path(path, &key, ctx)?;
+                items.push(from_python_policy(py, &item, ctx, depth + 1, count, true, &child_path)?);
+            }
+        } else {
+            for item in list.iter() {
+                items.push(from_python(py, &item, ctx, depth + 1, count)?);
+            }
         }
         return Ok(PythonConsumerValue::Array(items));
     }
@@ -85,6 +128,28 @@ pub fn from_python(
             .downcast::<PyDict>()
             .map_err(|_| invalid("Could not access Python dict"))?;
         let mut members = Vec::new();
+        if codegen {
+            let length = dict.len();
+            *count = count.saturating_add(length);
+            ctx.check_tree_value_count(*count, path.clone())?;
+            ctx.charge_work(length.saturating_mul(2), Utf16::default())?;
+            if dict.len() != length { return Err(EngineError::new("REQUEST", path.clone(), "Resource container changed during admission")); }
+            let children: Vec<_> = dict.iter().collect();
+            let mut seen = std::collections::BTreeSet::new();
+            for (key, child) in children {
+                if !key.is_exact_instance_of::<PyString>() {
+                    return Err(EngineError::new("UNSUPPORTED_KEY", path.clone(), "JSON object keys must be strings"));
+                }
+                let key = resource_text(&key, ctx, true)?;
+                ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+                if !seen.insert(key.clone()) {
+                    return Err(EngineError::new("DUPLICATE_KEY", Utf16::default(), "Duplicate object key"));
+                }
+                let child_path = resource_child_path(path, &key, ctx)?;
+                let child = from_python_policy(py, &child, ctx, depth + 1, count, true, &child_path)?;
+                members.push((key, child));
+            }
+        } else {
         for (key, child) in dict.iter() {
             if !key.is_exact_instance_of::<PyString>() {
                 return Err(EngineError::new(
@@ -100,13 +165,49 @@ pub fn from_python(
             let child = from_python(py, &child, ctx, depth + 1, count)?;
             members.push((key, child));
         }
+        }
         return Ok(PythonConsumerValue::Object(members));
     }
     Err(EngineError::new(
         "UNSUPPORTED_VALUE",
-        Utf16::default(),
+        if codegen { path.clone() } else { Utf16::default() },
         "Python consumer values must be exact built-in JSON values",
     ))
+}
+
+fn resource_child_path(path: &Utf16, key: &PyText, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+    let key = key.to_utf16(ctx)?;
+    ctx.charge_work(path.len().saturating_add(key.len().saturating_mul(2)).saturating_add(1), path.clone())?;
+    let mut units = Vec::with_capacity(path.len().saturating_add(key.len().saturating_mul(2)).saturating_add(1));
+    units.extend_from_slice(path.units()); units.push(47);
+    for unit in key.units() {
+        match unit { 126 => units.extend_from_slice(&[126, 48]), 47 => units.extend_from_slice(&[126, 49]), other => units.push(*other) }
+    }
+    Ok(Utf16::new(units))
+}
+
+fn resource_text(value: &Bound<'_, PyAny>, ctx: &mut Context<'_>, normalize: bool) -> Result<PyText, EngineError> {
+    let text = pytext_from_python(value, ctx)?;
+    if !normalize { return Ok(text); }
+    // Match the old UTF-16 wire -> Python snapshot: paired surrogates become
+    // one scalar, lone surrogates stay exact. This also preserves required-array
+    // behavior of the existing schema projection, without its origin collision
+    // spelling being triggered by two spellings of the same facade string.
+    ctx.charge_work(text.len(), Utf16::default())?;
+    let points = text.codepoints();
+    let paired = points.windows(2).any(|p| (0xd800..=0xdbff).contains(&p[0]) && (0xdc00..=0xdfff).contains(&p[1]));
+    if !paired { return Ok(text); }
+    ctx.charge_work(points.len(), Utf16::default())?;
+    let mut normalized = Vec::with_capacity(points.len());
+    let mut index = 0;
+    while index < points.len() {
+        let first = points[index];
+        if (0xd800..=0xdbff).contains(&first) && index + 1 < points.len() && (0xdc00..=0xdfff).contains(&points[index + 1]) {
+            normalized.push(0x10000 + ((first - 0xd800) << 10) + points[index + 1] - 0xdc00);
+            index += 2;
+        } else { normalized.push(first); index += 1; }
+    }
+    PyText::from_codepoints(normalized)
 }
 
 fn text_from_python(

@@ -59,14 +59,11 @@ class CodegenEngine:
         for name in names:
             if name not in resources:
                 raise TypeError(f"Missing explicit codegen resource {name}")
-        snapshot = {name: _from_wire(_wire(resources[name], max_depth=128, max_values=1_000_000, work=work), work) for name in names}
-        if "sagaPackage" in resources:
-            snapshot["sagaPackage"] = _from_wire(_wire(resources["sagaPackage"], max_depth=128, max_values=1_000_000, work=work), work)
-        controls = (profile, max_work, meter, is_cancelled, now, deadline_ms)
         if resource_mode == "retained-native/1":
+            controls = (profile, max_work, meter, is_cancelled, now, deadline_ms)
             control = _native_control(work)
             try:
-                retained = _rust_core.create_codegen_resources(snapshot, control)
+                retained = _rust_core.create_codegen_resources(resources, control)
             except ValueError as error:
                 if control.failure is not None:
                     raise control.failure
@@ -80,6 +77,10 @@ class CodegenEngine:
             self._resource_mode = resource_mode
             self._controls = controls
             return
+        snapshot = {name: _from_wire(_wire(resources[name], max_depth=128, max_values=1_000_000, work=work), work) for name in names}
+        if "sagaPackage" in resources:
+            snapshot["sagaPackage"] = _from_wire(_wire(resources["sagaPackage"], max_depth=128, max_values=1_000_000, work=work), work)
+        controls = (profile, max_work, meter, is_cancelled, now, deadline_ms)
         self._resource_mode = None
         self._resources = _wire(snapshot, max_depth=256, max_values=sys.maxsize, work=work)
         self._resource_serialization_work = _serialization_bound(self._resources, work)

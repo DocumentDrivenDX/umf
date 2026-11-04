@@ -1136,9 +1136,12 @@ impl CompiledSchema {
         resources: &SchemaResources,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
+    ctx.with_work_phase("native-schema-compilation", |ctx| {
         let dialect = select_dialect(schema)?;
         Self::compile_with_dialect(schema, resources, dialect, true, ctx)
-    }
+
+    })
+}
     /// Consumer entry: honor a declared Draft 7 or Draft 2020-12 dialect and
     /// default an omitted declaration to the current Draft 2020-12 surface.
     pub fn compile_consumer(
@@ -1147,6 +1150,7 @@ impl CompiledSchema {
         strict: bool,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
+    ctx.with_work_phase("native-schema-compilation", |ctx| {
         let declared = get(schema, "$schema").and_then(as_utf8);
         let dialect = match select_dialect(schema) {
             Ok(dialect) => dialect,
@@ -1172,7 +1176,9 @@ impl CompiledSchema {
             policy,
             ctx,
         )
-    }
+
+    })
+}
     /// Validate only the pinned dialect metaschema, without compiling or
     /// resolving schema references. This lets callers report malformed schema
     /// shape even when a separate reference in the same schema is unresolved.
@@ -1593,8 +1599,11 @@ impl CompiledSchema {
         value: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Vec<StructuralError>, EngineError> {
+    ctx.with_work_phase("native-schema-validation", |ctx| {
         self.validate_with_codegen_errors(value, false, ctx)
-    }
+
+    })
+}
     /// Return the compiler's all-errors ECMAScript presentation, including
     /// failed oneOf branches and the indices of its first two passing branches.
     /// This uses the same evaluator and live Context as ordinary validation;

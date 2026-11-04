@@ -55,6 +55,8 @@ pub struct Context<'a> {
     fallible_cancellation: Option<&'a mut FallibleCancellationCheck<'a>>,
     fallible_clock: Option<&'a mut FallibleClock<'a>>,
     deadline_ms: Option<u64>,
+    // Explicit optional owner-only observation; no ambient/thread-local state.
+    work_phase_observer: Option<&'a std::cell::Cell<&'static str>>,
 }
 
 /// Work accumulated by transport decoders for one host operation.
@@ -175,7 +177,27 @@ impl<'a> Context<'a> {
             fallible_cancellation: None,
             fallible_clock: None,
             deadline_ms: None,
+            work_phase_observer: None,
         })
+    }
+
+    /// Attach fixed-size phase metadata for a private owner diagnostic. This
+    /// changes no work amount, callback order, capability or Context lifetime.
+    pub fn with_work_phase_observer(mut self, phase: &'a std::cell::Cell<&'static str>) -> Self {
+        self.work_phase_observer = Some(phase);
+        self
+    }
+
+    /// Nested observational label, restored on return, refusal and unwinding.
+    /// No notification/callback/charge occurs at a label boundary.
+    pub fn with_work_phase<T>(&mut self, label: &'static str, operation: impl FnOnce(&mut Self) -> T) -> T {
+        struct Restore<'a> { cell: Option<&'a std::cell::Cell<&'static str>>, prior: &'static str }
+        impl Drop for Restore<'_> {
+            fn drop(&mut self) { if let Some(cell) = self.cell { cell.set(self.prior); } }
+        }
+        let prior = self.work_phase_observer.map(|cell| cell.replace(label)).unwrap_or("");
+        let _restore = Restore { cell: self.work_phase_observer, prior };
+        operation(self)
     }
 
     pub fn with_meter(mut self, meter: &'a mut WorkMeter<'a>) -> Self {
@@ -813,5 +835,65 @@ mod tests {
             ctx.charge_work_u64(1, Utf16::default()).unwrap_err().code,
             "LIMIT"
         );
+    }
+}
+
+
+#[cfg(test)]
+mod work_phase_observer_tests {
+    use super::*;
+    use std::cell::{Cell, RefCell};
+
+    #[test]
+    fn scopes_preserve_charges_callback_order_and_prior_work() {
+        let phase = Cell::new("outer");
+        let rows = RefCell::new(Vec::new());
+        let mut control = |n| { rows.borrow_mut().push((n, phase.get())); Ok(()) };
+        let mut ctx = Context::ordinary().with_host_control(&mut control).with_work_phase_observer(&phase);
+        ctx.charge_work(5, Utf16::default()).unwrap();
+        ctx.with_work_phase("admission", |ctx| {
+            ctx.charge_work(7, Utf16::default()).unwrap();
+            ctx.with_work_phase("copy", |ctx| ctx.charge_work(11, Utf16::default())).unwrap();
+            assert_eq!(phase.get(), "admission");
+            ctx.charge_work(0, Utf16::default()).unwrap();
+        });
+        assert_eq!(ctx.charged_work(), 23);
+        assert_eq!(phase.get(), "outer");
+        assert_eq!(*rows.borrow(), vec![(5,"outer"),(7,"admission"),(11,"copy"),(0,"admission")]);
+    }
+
+    #[test]
+    fn first_denial_stays_charged_and_stops_before_later_work() {
+        let phase = Cell::new("outer");
+        let rows = RefCell::new(Vec::new());
+        let mut control = |n| {
+            rows.borrow_mut().push((n, phase.get()));
+            if n == 7 { Err(EngineError::new("RESOURCE_LIMIT", Utf16::default(), "first denial")) } else { Ok(()) }
+        };
+        let mut ctx = Context::ordinary().with_host_control(&mut control).with_work_phase_observer(&phase);
+        let result = ctx.with_work_phase("admission", |ctx| {
+            ctx.charge_work(3, Utf16::default())?;
+            ctx.with_work_phase("copy", |ctx| ctx.charge_work(7, Utf16::default()))?;
+            ctx.charge_work(11, Utf16::default())
+        });
+        assert_eq!(result.unwrap_err().code, "RESOURCE_LIMIT");
+        assert_eq!(ctx.charged_work(), 10);
+        assert_eq!(phase.get(), "outer");
+        assert_eq!(*rows.borrow(), vec![(3,"admission"),(7,"copy")]);
+    }
+
+    #[test]
+    fn metadata_restores_on_unwind_without_resetting_work() {
+        let phase = Cell::new("outer");
+        let mut ctx = Context::ordinary().with_work_phase_observer(&phase);
+        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            ctx.with_work_phase("copy", |ctx| {
+                ctx.charge_work(13, Utf16::default()).unwrap();
+                panic!("observation scope unwind");
+            });
+        }));
+        assert!(result.is_err());
+        assert_eq!(phase.get(), "outer");
+        assert_eq!(ctx.charged_work(), 13);
     }
 }

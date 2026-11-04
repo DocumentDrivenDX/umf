@@ -408,6 +408,19 @@ pub struct CodegenResourcesHandle {
 
 #[cfg(feature = "codegen")]
 impl CodegenResourcesHandle {
+    pub const RESOURCE_NAMES: &'static [&'static str] = &[
+            "coreSchema",
+            "referenceSchema",
+            "packageSchema",
+            "constraints",
+            "domainPolicy",
+            "tablesPackage",
+            "actionsPackage",
+            "bindingPackage",
+            "stableBindingPackage",
+            "sagaPackage",
+    ];
+
     pub fn new_with_control(
         wire_json: &str,
         control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
@@ -434,18 +447,6 @@ impl CodegenResourcesHandle {
         mut raw: Value,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        const NAMES: &[&str] = &[
-            "coreSchema",
-            "referenceSchema",
-            "packageSchema",
-            "constraints",
-            "domainPolicy",
-            "tablesPackage",
-            "actionsPackage",
-            "bindingPackage",
-            "stableBindingPackage",
-            "sagaPackage",
-        ];
         let Value::Object(fields) = &raw else {
             return Err(fail(
                 "REQUEST",
@@ -454,7 +455,7 @@ impl CodegenResourcesHandle {
         };
         for (key, _) in fields {
             let mut known = false;
-            for name in NAMES {
+            for name in Self::RESOURCE_NAMES {
                 ctx.charge_work(1, Utf16::default())?;
                 // Fixed ASCII names compare in place; no uncharged temporary
                 // UTF-16 name copies are constructed during admission.

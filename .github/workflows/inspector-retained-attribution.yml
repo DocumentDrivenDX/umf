@@ -1,0 +1,201 @@
+name: Private retained constructor and work attribution
+on:
+  workflow_dispatch:
+    inputs:
+      admitted:
+        description: Sol-reviewed exact private source and payload admitted for one component run
+        type: boolean
+        default: false
+      source_sha:
+        description: Exact reviewed candidate and controller commit (not canonical artifact SourceS)
+        type: string
+        required: true
+      resource_pins_sha256:
+        description: Exact reviewed nine-resource diagnostic payload digest
+        type: string
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: private-inspector-retained-feasibility
+  cancel-in-progress: false
+jobs:
+  feasibility:
+    if: github.event_name == 'workflow_dispatch' && inputs.admitted == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      CARGO_BUILD_JOBS: '1'
+      NUM_JOBS: '1'
+      CMAKE_BUILD_PARALLEL_LEVEL: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      EXPECTED_SOURCE: ${{ inputs.source_sha }}
+      EXPECTED_RESOURCE_PINS: ${{ inputs.resource_pins_sha256 }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+          architecture: x64
+      - name: Bind exact source and resource payload before compiling
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf
+          test "$GITHUB_REF_TYPE" = branch
+          test "$EXPECTED_SOURCE" != e3f38ef6f05ae636d2837f9d69f8d6805222664b
+          [[ "$EXPECTED_SOURCE" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$EXPECTED_RESOURCE_PINS" =~ ^[0-9a-f]{64}$ ]]
+          test "$EXPECTED_SOURCE" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
+          test -f python/tests/test_retained_codegen_native.py
+          echo '5311f8c09b58bcf32dc705bf19402a02f0c165e9326ecd66d9ff0eb5d7acc46d  python/tests/test_retained_codegen_native.py' | sha256sum --check --strict
+          mkdir -p "$RUNNER_TEMP/inspector-feasibility"
+          printf 'CARGO_TARGET_DIR=%s/inspector-feasibility-target\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'PYO3_PYTHON=%s\n' "$(command -v python)" >> "$GITHUB_ENV"
+          python -I -B - <<'PY'
+          import hashlib, importlib.util, json, os, platform
+          from pathlib import Path
+          root = Path.cwd()
+          spec = importlib.util.spec_from_file_location('diagnostic', root/'tools/probe_inspector_retained_feasibility.py')
+          module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+          _, pins = module.resources(root, os.environ['EXPECTED_RESOURCE_PINS'])
+          assert platform.python_version() == '3.11.17' and platform.system() == 'Linux' and platform.machine() == 'x86_64'
+          record = {'privateFeasibilityOnly': True, 'publishable': False, 'source': os.environ['EXPECTED_SOURCE'],
+                    'canonicalResourceSourceS': module.SOURCE_S, 'resourcePins': pins,
+                    'cargoLockSHA256': hashlib.sha256((root/'Cargo.lock').read_bytes()).hexdigest(),
+                    'recipe': 'unchanged python/hatch_build.py wheel hook; locked umf-core-python+umf-cli/native-postgresql',
+                    'limits': {'construction':1000000,'perCall':1000000}, 'localSharedAdmissionUsed':False}
+          Path(os.environ['RUNNER_TEMP'],'inspector-feasibility','source-and-payload.json').write_text(json.dumps(record,indent=2)+'\n')
+          PY
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - name: Build only the private owner wheel with the existing locked hook
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustc -Vv > "$RUNNER_TEMP/inspector-feasibility/rustc.txt"
+          cargo --version > "$RUNNER_TEMP/inspector-feasibility/cargo.txt"
+          python -m pip install 'build==1.3.0' 'hatchling==1.27.0' 2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/build-tools.log"
+          python -m build --no-isolation --wheel --outdir "$RUNNER_TEMP/inspector-feasibility/wheels" python 2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/build.log"
+      - name: Independent native outer-envelope boundary controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo test --locked --release -p umf-core-wire --lib --features native-postgresql \
+            controlled_envelope::tests -- --test-threads=1 --nocapture \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/native-envelope-controls.log"
+          cargo test --locked --release -p umf-core --lib --features native-postgresql \
+            work_phase_observer_tests -- --test-threads=1 --nocapture \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/native-attribution-context-controls.log"
+      - name: Fresh normal candidate install and existing affected control checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv "$RUNNER_TEMP/inspector-feasibility/consumer"
+          candidate_python="$RUNNER_TEMP/inspector-feasibility/consumer/bin/python"
+          "$candidate_python" -m pip --isolated install --index-url https://pypi.org/simple --no-cache-dir --no-compile \
+            --report "$RUNNER_TEMP/inspector-feasibility/install-report.json" \
+            "$RUNNER_TEMP/inspector-feasibility/wheels/"*.whl 'pytest==8.4.2' 'pydantic==2.14.2' \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/install.log"
+          "$candidate_python" -m pip --isolated check | tee "$RUNNER_TEMP/inspector-feasibility/pip-check.log"
+          "$candidate_python" -m pip --isolated freeze > "$RUNNER_TEMP/inspector-feasibility/freeze.txt"
+          "$candidate_python" -I -B -m pytest -q python/tests/test_rust_codegen.py \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/affected-existing-controls.log"
+      - name: Independent private native adapter and outer-envelope controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/inspector-feasibility/consumer/bin/python" -I -B -m pytest -q -s \
+            python/tests/test_retained_codegen_native.py::PrivateNativeControlTests \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/private-native-contract-controls.log"
+      - name: New exact resource admission refusal controls before positive support gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/inspector-feasibility/consumer/bin/python" -I -B -m pytest -q -s \
+            python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_exact_builtin_admission_never_coerces_subclasses_or_foreign_values \
+            python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_unsafe_integer_and_nonfinite_resource_values_preserve_number_refusal \
+            python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_negative_zero_and_unsafe_integral_float_resources_refuse_number \
+            python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_utf16_key_collision_and_nonexact_keys_refuse_without_key_coercion \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/resource-admission-refusals.log"
+      - name: Bounded private source attribution not public1M qualification
+        shell: bash
+        run: |
+          set -euo pipefail
+          wheel=("$RUNNER_TEMP/inspector-feasibility/wheels/"*.whl)
+          test "${#wheel[@]}" = 1
+          "$RUNNER_TEMP/inspector-feasibility/consumer/bin/python" -I -B tools/probe_inspector_retained_attribution.py \
+            --root "$GITHUB_WORKSPACE" --wheel "${wheel[0]}" --source-sha "$EXPECTED_SOURCE" \
+            --resource-pins-sha256 "$EXPECTED_RESOURCE_PINS" \
+            --output "$RUNNER_TEMP/inspector-feasibility/work-attribution.json" \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/work-attribution.log"
+      - name: Measure cold retained construction and unchanged public 17-case calls at 1M
+        shell: bash
+        run: |
+          set -euo pipefail
+          wheel=("$RUNNER_TEMP/inspector-feasibility/wheels/"*.whl)
+          test "${#wheel[@]}" = 1
+          "$RUNNER_TEMP/inspector-feasibility/consumer/bin/python" -I -B tools/probe_inspector_retained_feasibility.py \
+            --root "$GITHUB_WORKSPACE" --wheel "${wheel[0]}" --source-sha "$EXPECTED_SOURCE" \
+            --resource-pins-sha256 "$EXPECTED_RESOURCE_PINS" \
+            --output "$RUNNER_TEMP/inspector-feasibility/measurement.json" \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/measurement.log"
+      - name: Strict public retained-mode controls after measured cold fit
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/inspector-feasibility/consumer/bin/python" -I -B -m pytest -q \
+            python/tests/test_retained_codegen_native.py::PublicRetainedFeasibilityTests \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/native-contract-controls.log"
+      - name: New resource positive custody controls only after public1M fit
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/inspector-feasibility/consumer/bin/python" -I -B -m pytest -q -s \
+            python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_safe_numeric_utf16_and_unknown_annotation_admission_is_nonmutating \
+            python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_retained_constructor_removes_host_wire_roundtrip_not_only_its_charges \
+            python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_mutation_from_compilation_callback_cannot_change_already_owned_snapshot \
+            2>&1 | tee "$RUNNER_TEMP/inspector-feasibility/resource-admission-positives.log"
+      - name: Retain actual partial results and complete wheel bytes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-inspector-attribution-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/inspector-feasibility/source-and-payload.json
+            ${{ runner.temp }}/inspector-feasibility/*.json
+            ${{ runner.temp }}/inspector-feasibility/*.log
+            ${{ runner.temp }}/inspector-feasibility/*.txt
+            ${{ runner.temp }}/inspector-feasibility/wheels/*
+          if-no-files-found: error
+          retention-days: 90
+      - name: Dispose only this hosted component target and consumer
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$RUNNER_TEMP/inspector-feasibility-target" "$RUNNER_TEMP/inspector-feasibility/consumer"
+          test ! -e "$RUNNER_TEMP/inspector-feasibility-target"
+          test ! -e "$RUNNER_TEMP/inspector-feasibility/consumer"
+          python -I -B - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path(os.environ['RUNNER_TEMP'],'inspector-feasibility','cleanup.json').write_text(json.dumps({
+              'source':os.environ['EXPECTED_SOURCE'],'run':os.environ['GITHUB_RUN_ID'],
+              'attempt':os.environ['GITHUB_RUN_ATTEMPT'],'ownedTargetAbsent':True,'ownedConsumerAbsent':True,
+              'localSharedAdmissionUsed':False,'ledgerChanged':False,'signalsSent':False},indent=2)+'\n')
+          PY
+      - name: Retain owned hosted cleanup observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-inspector-attribution-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/inspector-feasibility/cleanup.json
+          if-no-files-found: warn
+          retention-days: 90
