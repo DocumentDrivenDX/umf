@@ -32,11 +32,31 @@ def refused():
     return dict(profile='umf.private-inspector-retained-feasibility/1',status='resource-limited',actualCandidateSource=L.OWNER,maximumWork=1000000,wheel={'sha256':L.WHEEL_SHA},publishable=False,readyForEnrollment=False,refusal={'code':'RESOURCE_LIMIT','phase':'native-resource-compilation'},operations=[dict(operation='retained-cold-construction-1M',maximumWork=1000000,attemptedWork=1000005,returnedWork=999994,failures=[dict(amount=11,attemptedAtRefusal=1000005,code='RESOURCE_LIMIT',phase='native-resource-compilation')])])
 
 class CostGatePureControls(unittest.TestCase):
-    def simulate(self,root,mode='pass',identity_failure=None):
+    def setUp(self):
+        names=('OWNER','WHEEL_SHA','TEST_SHA','SCOPE_METHODS','SAGA_METHODS','COMBINED_METHODS','BOUNDARY_CASES')
+        original={name:getattr(L,name) for name in names}
+        self.addCleanup(lambda:[setattr(L,name,value) for name,value in original.items()])
+    def simulate(self,root,mode='pass',identity_failure=None,checked=False):
         (root/'tests/qualification/fixtures').mkdir(parents=True)
         (root/'tests/qualification/fixtures/inspector-construction-batch.json').write_text('{}')
         args=types.SimpleNamespace(out=root,controller=root,owner=root,wheel=root/'NOT_NATIVE.whl',controller_sha=L.OWNER,producer_pins=root/'producer.json',cost_gate=root/'cost-gate.json')
-        args.producer_pins.write_text(json.dumps({'nativeMember':{'sha256':'NOT_NATIVE'}}));events=[];driver=FakeDriver(events,identity_failure)
+        args.producer_pins.write_text(json.dumps({'nativeMember':{'sha256':'NOT_NATIVE'}}))
+        if checked:
+            args.controller=ROOT;args.owner=ROOT;args.controller_sha=('e' if L.OWNER=='f'*40 else 'f')*40;args.mode='run'
+            args.wheel.write_bytes(b'PURE FAKE WHEEL: no native payload')
+            for name in ('cargo-metadata.json','producer-cargo-features.txt'):(root/name).write_text('PURE FAKE GRAPH')
+            census=ROOT/'tests/qualification/fixtures/inspector-construction-batch.json'
+            selected=json.loads(census.read_text())
+            pins=dict(profile='umf.private-construction-batch-producer/1',source=args.controller_sha,
+                testSHA256=selected['testSHA256'],resourcePinsSHA256=selected['resourcePinsSHA256'],
+                cargoLockSHA256=C.sha(ROOT/'Cargo.lock'),censusSHA256=C.sha(census),
+                wheel={'sha256':C.sha(args.wheel)},cargoMetadataSHA256=C.sha(root/'cargo-metadata.json'),
+                featureGraphSHA256=C.sha(root/'producer-cargo-features.txt'),
+                nativeMember={'sha256':'NOT_NATIVE'},publishable=False,readyForEnrollment=False)
+            args.producer_pins.write_text(json.dumps(pins))
+            with patch.object(L.subprocess,'check_output',side_effect=lambda argv,**kw:'' if 'status' in argv else args.controller_sha):
+                L.configure_producer(args)
+        events=[];driver=FakeDriver(events,identity_failure);driver.OWNER=L.OWNER;driver.WHEEL_SHA=L.WHEEL_SHA
         def execute(argv,**kw):
             if '--output' in argv:
                 events.append('public51');data=refused() if mode=='budget' else measured()
@@ -95,10 +115,21 @@ class CostGatePureControls(unittest.TestCase):
             report=measured();mutate(report)
             with self.assertRaises(ValueError):C.complete_measurement(report,L.OWNER,L.WHEEL_SHA)
     def full_lanes(self,root,boundary_failure=False,missing_completion=False):
-        _,_,_,args,driver=self.simulate(root)
-        compiled=root/'compiled-census.json';compiled.write_text('{"PURE_FIXTURE_NOT_NATIVE":true}')
+        _,_,_,args,driver=self.simulate(root,checked=True)
+        selected=json.loads((ROOT/'tests/qualification/fixtures/inspector-construction-batch.json').read_text())
+        targets={}
+        results=[]
+        for group in selected['rust']:
+            key=(group['package'],group['target'])
+            target=targets.setdefault(key,dict(package=key[0],target=key[1],caseNames=[]))
+            for case in group['cases']:
+                target['caseNames'].append(case['name'])
+                results.append(dict(package=key[0],target=key[1],name=case['name'],passed=True,exit=0))
+        compiled=root/'compiled-census.json'
+        compiled.write_text(json.dumps(dict(source=args.controller_sha,status='authenticated-before-test-execution',
+            selectedCases=229,censusSHA256=C.sha(ROOT/'tests/qualification/fixtures/inspector-construction-batch.json'),targets=list(targets.values()))))
         census=args.controller/'tests/qualification/fixtures/inspector-construction-batch.json'
-        rust={'status':'passed','source':L.OWNER,'cases':217,'passed':217,'censusSHA256':C.sha(census),'compiledCensusSHA256':C.sha(compiled),'results':[{'passed':True} for _ in range(217)]}
+        rust={'status':'passed','source':L.OWNER,'cases':229,'passed':229,'censusSHA256':C.sha(census),'compiledCensusSHA256':C.sha(compiled),'results':results}
         (root/'rust-census-result.json').write_text(json.dumps(rust))
         if missing_completion:compiled.unlink()
         calls=[]
@@ -124,6 +155,41 @@ class CostGatePureControls(unittest.TestCase):
             with self.subTest(kind=kind),tempfile.TemporaryDirectory() as t:
                 rc,calls,state=self.full_lanes(Path(t),boundary_failure=kind=='boundary',missing_completion=kind=='missing')
                 self.assertEqual(rc,1);self.assertFalse(state['requiredQualificationPassed']);self.assertTrue(state['publicProbePassed']);self.assertNotIn('diagnostic',calls);self.assertNotIn('public-probe',calls)
+    def test_checked_229_producer_reaches_identity_cost_and_final_aggregation(self):
+        with tempfile.TemporaryDirectory() as t:
+            rc,calls,state=self.full_lanes(Path(t))
+            self.assertEqual(rc,0);self.assertTrue(state['identityPassed']);self.assertTrue(state['costGateAuthenticated'])
+            self.assertTrue(state['requiredQualificationPassed']);self.assertEqual(calls,['legacy','boundary','diagnostic'])
+    def test_wrong_and_stale_producer_census_refuse(self):
+        for mutation in ('stale-hash','foreign-source','old-217','duplicate-229'):
+            with self.subTest(mutation=mutation),tempfile.TemporaryDirectory() as t:
+                root=Path(t);_,_,_,args,_=self.simulate(root,checked=True)
+                pins=json.loads(args.producer_pins.read_text())
+                if mutation=='stale-hash':pins['censusSHA256']='0'*64
+                elif mutation=='foreign-source':pins['source']='0'*40
+                else:
+                    selected=json.loads((ROOT/'tests/qualification/fixtures/inspector-construction-batch.json').read_text())
+                    if mutation=='old-217':selected['rustCaseCount']=217
+                    else:selected['rust'][0]['cases'][0]=selected['rust'][0]['cases'][1]
+                    # Pure intercepted census bytes; all other source bytes and hashes remain checked.
+                    original=Path.read_bytes;data=json.dumps(selected).encode()
+                    import hashlib
+                    pins['censusSHA256']=hashlib.sha256(data).hexdigest()
+                    with patch.object(Path,'read_bytes',lambda path:data if path.name=='inspector-construction-batch.json' else original(path)),patch.object(Path,'read_text',lambda path,*a,**kw:data.decode() if path.name=='inspector-construction-batch.json' else original(path).decode()):
+                        with self.assertRaises(ValueError):L.checked_producer_census(args,pins)
+                    continue
+                with self.assertRaises(ValueError):L.checked_producer_census(args,pins)
+    def test_named_compiled_and_executed_case_substitution_refuses(self):
+        for mutation in ('executed','compiled'):
+            with self.subTest(mutation=mutation),tempfile.TemporaryDirectory() as t:
+                root=Path(t);self.full_lanes(root)
+                args=types.SimpleNamespace(out=root,controller_sha=L.OWNER)
+                selected=json.loads((ROOT/'tests/qualification/fixtures/inspector-construction-batch.json').read_text())
+                rust=json.loads((root/'rust-census-result.json').read_text())
+                if mutation=='executed':rust['results'][0]['name']='foreign::same_count'
+                else:
+                    path=root/'compiled-census.json';compiled=json.loads(path.read_text());compiled['targets'][0]['caseNames'][0]='foreign::same_count';path.write_text(json.dumps(compiled))
+                with self.assertRaises(ValueError):L.authenticate_producer_results(args,selected,rust)
     def test_workflow_orders_cost_before_compile_and_failure_always_retains_cleanup(self):
         source=(ROOT/'.github/workflows/inspector-retained-attribution.yml').read_text()
         terms=['One genuine changed-source wheel producer','Retain genuine wheel and source BEFORE','Fresh normal resolver install','Strict cold constructor and complete public51 COST','Compile selected affected Rust targets','Authenticate compiled census before','Existing installed-wheel public Saga19','Fresh legacy8 boundary27']

@@ -64,6 +64,7 @@ jobs:
           python -I -B tests/qualification/test_inspector_owned_plan_controller.py 2>&1 | tee "$out/owned-plan-pure.log"
           python -I -B tests/qualification/test_inspector_combined_budget.py 2>&1 | tee "$out/combined-pure.log"
           python -I -B tests/qualification/test_inspector_attribution_lanes.py 2>&1 | tee "$out/lanes-pure.log"
+          python -I -B tests/qualification/test_inspector_cost_gate.py 2>&1 | tee "$out/cost-census-pure.log"
           python -I -B tests/qualification/test_inspector_attribution_controls.py 2>&1 | tee "$out/control-pure.log"
       - uses: dtolnay/rust-toolchain@stable
         with:

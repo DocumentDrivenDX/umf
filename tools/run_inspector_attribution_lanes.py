@@ -249,7 +249,8 @@ def run(args):
             cost_module.intake(args,sys.modules[__name__]);state.update(costFirst=True,costGateAuthenticated=True,publicProbePassed=True,publicControlsPassed=True);save()
         if getattr(args,'producer_pins',None):
             rust=json.loads((args.out/'rust-census-result.json').read_text())
-            expected_rust=217 if getattr(args,'cost_gate',None) else 191
+            census=checked_producer_census(args,json.loads(args.producer_pins.read_text())) if getattr(args,'cost_gate',None) else None
+            expected_rust=census['rustCaseCount'] if census is not None else 191
             require(rust.get('status')=='passed' and rust.get('source')==OWNER
                     and rust.get('cases')==expected_rust and rust.get('passed')==expected_rust,
                     'New native complete Rust qualification missing/different')
@@ -258,7 +259,8 @@ def run(args):
                 census_path=args.controller/'tests/qualification/fixtures/inspector-construction-batch.json'
                 require(rust.get('censusSHA256')==hashlib.sha256(census_path.read_bytes()).hexdigest()
                     and rust.get('compiledCensusSHA256')==hashlib.sha256((args.out/'compiled-census.json').read_bytes()).hexdigest()
-                    and len(rust.get('results',[]))==expected_rust and all(row.get('passed')is True for row in rust['results']), 'Actual compiled/executed census correspondence missing')
+                    and len(rust.get('results',[]))==expected_rust and all(row.get('passed')is True and row.get('exit')==0 for row in rust['results']), 'Actual compiled/executed census correspondence missing')
+                authenticate_producer_results(args,census,rust)
                 state['rustPassed']=True
                 state['sagaPassed']=cost_module.saga(args,json.loads(args.producer_pins.read_text()));save()
             rc=command('legacy',[sys.executable,'-I','-B','-m','pytest','-q','-s',
@@ -344,6 +346,54 @@ def run(args):
     return 0 if state['requiredQualificationPassed'] else 1
 
 
+def checked_producer_census(args,pins):
+    """Read the reviewed source census, bound to this producer and checkout payload."""
+    import hashlib
+    root=args.controller.resolve()
+    path=root/'tests/qualification/fixtures/inspector-construction-batch.json'
+    require(not path.is_symlink() and path.resolve().is_relative_to(root), 'Source census custody differs')
+    require(pins.get('source')==args.controller_sha
+        and hashlib.sha256(path.read_bytes()).hexdigest()==pins.get('censusSHA256'),
+        'Producer/source census binding differs')
+    census=json.loads(path.read_text())
+    require(census.get('profile')=='umf.private-construction-batch-census/1'
+        and type(census.get('rustCaseCount'))is int and census['rustCaseCount']==229
+        and type(census.get('pythonMethodCount'))is int and census['pythonMethodCount']==47
+        and census.get('testSHA256')==pins.get('testSHA256')
+        and census.get('resourcePinsSHA256')==pins.get('resourcePinsSHA256'),
+        'Exact current complete source census required')
+    for name,digest in census['fileHashes'].items():
+        member=root/name
+        require(not member.is_symlink() and member.resolve().is_relative_to(root)
+            and hashlib.sha256(member.read_bytes()).hexdigest()==digest, 'Source census payload differs: '+name)
+    keys=[]
+    for group in census['rust']:
+        require(group['caseCount']==len(group['cases']), 'Source census group count differs')
+        keys.extend((group['package'],group['target'],case['name']) for case in group['cases'])
+    require(len(keys)==229 and len(set(keys))==229, 'Source census identities missing or duplicated')
+    return census
+
+
+def authenticate_producer_results(args,census,rust):
+    """Require named compiled and executed cases, never an unsigned output count."""
+    compiled=json.loads((args.out/'compiled-census.json').read_text())
+    require(compiled.get('source')==args.controller_sha
+        and compiled.get('status')=='authenticated-before-test-execution'
+        and compiled.get('selectedCases')==census['rustCaseCount']
+        and compiled.get('censusSHA256')==rust.get('censusSHA256'), 'Compiled source census differs')
+    expected={(g['package'],g['target'],c['name']) for g in census['rust'] for c in g['cases']}
+    actual=[(r.get('package'),r.get('target'),r.get('name')) for r in rust['results']]
+    require(len(actual)==len(expected) and set(actual)==expected, 'Executed source case identities differ')
+    targets=compiled.get('targets',[])
+    target_keys=[(t.get('package'),t.get('target')) for t in targets]
+    require(len(target_keys)==len(set(target_keys)) and set(target_keys)=={k[:2] for k in expected},
+        'Compiled target identities differ')
+    for target in targets:
+        names=target.get('caseNames',[])
+        require(all(names.count(name)==1 for package,kind,name in expected
+            if (package,kind)==(target['package'],target['target'])), 'Compiled selected case missing or duplicated')
+
+
 def configure_producer(args):
     import hashlib
     global OWNER,WHEEL_SHA,TEST_SHA,SCOPE_METHODS,SAGA_METHODS,COMBINED_METHODS,BOUNDARY_CASES
@@ -364,6 +414,7 @@ def configure_producer(args):
         and hashlib.sha256(args.wheel.read_bytes()).hexdigest()==pins['wheel']['sha256'], 'Producer wheel/record origin differs')
     require(hashlib.sha256((args.out/'cargo-metadata.json').read_bytes()).hexdigest()==pins.get('cargoMetadataSHA256')
         and hashlib.sha256((args.out/'producer-cargo-features.txt').read_bytes()).hexdigest()==pins.get('featureGraphSHA256'),'Actual locked graph/features missing or changed')
+    census=checked_producer_census(args,pins)
     OWNER=pins['source'];WHEEL_SHA=pins['wheel']['sha256'];TEST_SHA=pins['testSHA256']
     SCOPE_METHODS=(
       'test_cold_handles_with_same_ids_but_different_catalogue_content_stay_independent',
@@ -371,8 +422,6 @@ def configure_producer(args):
       'test_required_arrays_preserve_duplicate_and_utf16_collision_refusal',
       'test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success')
     SAGA_METHODS=('test_genuine_optional_saga_constructs_and_actual_retained_reports_match_original_oracle','test_malformed_optional_saga_refuses_eagerly_without_returning_native_handle')
-    census=json.loads((root/'tests/qualification/fixtures/inspector-construction-batch.json').read_text())
-    require(census['rustCaseCount']==217,'Exact current complete source census required')
     if args.mode=='run':require(args.cost_gate is not None,'Changed-source full qualification requires original cost gate')
     combined=census['combinedPythonMethods']
     require(type(combined)is list and len(combined)==4 and len(set(combined))==4,'Combined boundary census differs')
