@@ -16,7 +16,7 @@ TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-
 
 # This exact owner-qualified release uses the manual upload-only driver with
 # locally_qualified=true; automatic dispatch would also start hosted tests.
-MANUAL_ONLY_TAGS = frozenset({"umf-v0.10.7"})
+MANUAL_ONLY_TAGS = frozenset({"umf-v0.10.7", "umf-v0.10.9"})
 
 
 def core_release(release: dict[str, Any]) -> bool:

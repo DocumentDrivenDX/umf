@@ -56,7 +56,7 @@ from .rust_sec_projection import (
 )
 from .pack_tools import generate_pack_tools
 
-__version__ = "0.10.8"
+__version__ = "0.10.9"
 __all__ = [
     "TypeSpecSession",
     "SmithySession",

@@ -79,6 +79,11 @@ class DispatchTests(unittest.TestCase):
                     {"tag": tag, "sums_sha256": "a" * 64},
                 )
 
+    def test_manual_only_0109_core_release_is_not_automatically_dispatched(self) -> None:
+        self.release["tag_name"] = "umf-v0.10.9"
+        self.release["assets"][0]["name"] = "umf_core-0.10.9-cp311-abi3-manylinux_2_34_x86_64.whl"
+        self.assertIsNone(select_release("release", self.event, []))
+
     def test_matching_unqualified_numeric_cohort_is_not_selected(self) -> None:
         self.release["tag_name"] = "umf-v0.11.0"
         self.release["assets"][0]["name"] = "umf_core-0.11.0-cp311-abi3-manylinux_2_34_x86_64.whl"

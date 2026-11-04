@@ -20,7 +20,7 @@ from typing import Any
 SHA = re.compile(r"[0-9a-f]{64}\Z")
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
-QUALIFIED_CORE_VERSIONS = frozenset({"0.10.2", "0.10.7", "0.10.8"})
+QUALIFIED_CORE_VERSIONS = frozenset({"0.10.2", "0.10.7", "0.10.8", "0.10.9"})
 
 
 class ReleaseError(ValueError):
