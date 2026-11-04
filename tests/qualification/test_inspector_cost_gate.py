@@ -98,7 +98,7 @@ class CostGatePureControls(unittest.TestCase):
         _,_,_,args,driver=self.simulate(root)
         compiled=root/'compiled-census.json';compiled.write_text('{"PURE_FIXTURE_NOT_NATIVE":true}')
         census=args.controller/'tests/qualification/fixtures/inspector-construction-batch.json'
-        rust={'status':'passed','source':L.OWNER,'cases':214,'passed':214,'censusSHA256':C.sha(census),'compiledCensusSHA256':C.sha(compiled),'results':[{'passed':True} for _ in range(214)]}
+        rust={'status':'passed','source':L.OWNER,'cases':217,'passed':217,'censusSHA256':C.sha(census),'compiledCensusSHA256':C.sha(compiled),'results':[{'passed':True} for _ in range(217)]}
         (root/'rust-census-result.json').write_text(json.dumps(rust))
         if missing_completion:compiled.unlink()
         calls=[]

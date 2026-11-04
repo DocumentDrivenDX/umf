@@ -421,12 +421,14 @@ impl<'a> Context<'a> {
     }
 
     pub fn check_tree_value_count(&self, count: usize, path: Utf16) -> Result<(), EngineError> {
-        if count > self.limits.max_values {
-            return Err(EngineError::new(
-                "LIMIT",
-                path,
-                "JSON structural value limit exceeded",
-            ));
+        self.check_tree_value_count_path(count, WorkPath::Owned(path))
+    }
+    pub(crate) fn check_tree_value_count_with_path(&self,count:usize,path:&mut Utf16)->Result<(),EngineError> {
+        self.check_tree_value_count_path(count,WorkPath::Scratch(path))
+    }
+    fn check_tree_value_count_path(&self,count:usize,mut path:WorkPath<'_>)->Result<(),EngineError> {
+        if count>self.limits.max_values {
+            return Err(EngineError::new("LIMIT",path.take(),"JSON structural value limit exceeded"));
         }
         Ok(())
     }
@@ -459,6 +461,13 @@ impl<'a> Context<'a> {
     /// Fixed error code/message construction remains the existing behavior.
     pub fn charge_work_with_path(&mut self, amount: usize, path: &mut Utf16) -> Result<(), EngineError> {
         self.charge_work_path(amount as u64, WorkPath::Scratch(path))
+    }
+
+    // Crate-owned admission needs the same movable diagnostic custody for
+    // wide key/comparison bounds. This delegates the exact existing state
+    // machine, including zero/wide chunks and first host-error provenance.
+    pub(crate) fn charge_work_u64_with_path(&mut self, amount:u64, path:&mut Utf16)->Result<(),EngineError> {
+        self.charge_work_path(amount,WorkPath::Scratch(path))
     }
 
     fn charge_work_path(&mut self, amount: u64, mut path: WorkPath<'_>) -> Result<(), EngineError> {

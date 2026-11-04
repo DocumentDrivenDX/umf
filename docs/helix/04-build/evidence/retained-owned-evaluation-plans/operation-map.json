@@ -7,7 +7,7 @@
   "rows": [
     {
       "file": "crates/umf-core/src/schema.rs",
-      "sha256": "0675c0f8cfb1d3ab090bffa2d7a5753fab1ca213f6f81e3e070277b021ef6d64",
+      "sha256": "158435a95f04cc890a59c2755b67c1241dbb8b82bb30fc5e42cc3b9f90df59c3",
       "pattern": "enum SchemaRoot",
       "lines": [
         108
@@ -170,11 +170,14 @@
   "ER0": "NOT SELECTED; original converter c80505ab... remains byte-exact",
   "independentTestSHA256": "13408f97a6f33e7b6f60897d8137c769cd5bbac531806fa77c3e42d732f1bea7",
   "sourceSelection": {
-    "rust": 214,
+    "rust": 217,
     "pythonMethods": 47,
     "coldPublicCombinations": 51,
     "installedSaga": 19,
-    "nativeExecuted": false
+    "nativeExecuted": false,
+    "newOwnerRust": 17,
+    "independentRust": 9,
+    "priorRust": 191
   },
   "knownBaselineHeadroom": {
     "scope": "Original0c48 observations ONLY; not a prediction/credit for this candidate",
@@ -277,10 +280,26 @@
   },
   "currentClosureHashes": {
     "crates/umf-core/src/value.rs": "5f2604d62c79a11b9f9dc4fdc05605ecd5bb478fe3f98159b5292bb178faa80a",
-    "crates/umf-core/src/schema.rs": "0675c0f8cfb1d3ab090bffa2d7a5753fab1ca213f6f81e3e070277b021ef6d64",
+    "crates/umf-core/src/schema.rs": "158435a95f04cc890a59c2755b67c1241dbb8b82bb30fc5e42cc3b9f90df59c3",
     "crates/umf-core/src/schema_owned_plans.rs": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
     "tools/run_inspector_cost_gate.py": "47d560709b1497b5dc624dd793e2c9a1053249099eadbfae8d6f264c6a00801a",
-    "tools/run_inspector_attribution_lanes.py": "3c715095600091d57375e1e3bde57a7a5fd1c4c28ab0cd2a379b32835f27a1ff",
-    ".github/workflows/inspector-retained-attribution.yml": "72bf564846cc28b7dc6f94900ee442d80cac6e54758022c1f319f788b4b3c1d3"
+    "tools/run_inspector_attribution_lanes.py": "74e4c6f268c62bb219827cc079e2a2e7ded4f10a0b377ac7d9fb0cc56d77d096",
+    ".github/workflows/inspector-retained-attribution.yml": "ac43f5051d44adbeb18a62119f7448c7a249b8e9d62d407120b60e3104c7bfd0"
+  },
+  "admissionPrechargeCorrection": {
+    "reviewedBase": "73357488c642429ecf8c99737604f22288b13faf",
+    "consolidatedReviewSHA256": "45f90e8f6086bbe090f759b932f66d3fc5293086133b1226215b1db285097da3",
+    "keyAdmission": "comparison bound unchanged; explicit full key.len() copy/storage plus existing fixed storage unit, independent of comparison fee, before materialize/search/insert",
+    "wideCharge": "crate-private u64 movable-path wrapper delegates unchanged Context work/chunk/meter/host/cancel/deadline state machine",
+    "nodeCountAdmission": "movable pre-admitted UTF16 custody in copying AND borrowing routes; no visitor path.clone; node work then count increment/overflow then same Context count predicate then depth; error paths move existing buffers",
+    "genericCompatibility": "same generic charge amounts/callback sequence and full diagnostic contents/first-error precedence; no new public signature/eligibility/limit",
+    "newNativeControls": [
+      "first_duplicate_key_storage_is_admitted_before_materializer_or_child",
+      "owned_node_control_denial_moves_original_path_without_a_clone_or_later_callback",
+      "owned_count_denial_after_admitted_node_moves_path_and_preserves_first_error_order"
+    ],
+    "sourceGuards": "tiny exact733 source fixture closes hosted shallow-checkout dependency; original source rejected/new source accepted; no native execution",
+    "unmeasured": "All new costs and actual1M fit remain UNKNOWN; no price discount",
+    "costFirstOrderUnchanged": true
   }
 }

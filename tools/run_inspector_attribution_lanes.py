@@ -249,7 +249,7 @@ def run(args):
             cost_module.intake(args,sys.modules[__name__]);state.update(costFirst=True,costGateAuthenticated=True,publicProbePassed=True,publicControlsPassed=True);save()
         if getattr(args,'producer_pins',None):
             rust=json.loads((args.out/'rust-census-result.json').read_text())
-            expected_rust=214 if getattr(args,'cost_gate',None) else 191
+            expected_rust=217 if getattr(args,'cost_gate',None) else 191
             require(rust.get('status')=='passed' and rust.get('source')==OWNER
                     and rust.get('cases')==expected_rust and rust.get('passed')==expected_rust,
                     'New native complete Rust qualification missing/different')
@@ -372,7 +372,7 @@ def configure_producer(args):
       'test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success')
     SAGA_METHODS=('test_genuine_optional_saga_constructs_and_actual_retained_reports_match_original_oracle','test_malformed_optional_saga_refuses_eagerly_without_returning_native_handle')
     census=json.loads((root/'tests/qualification/fixtures/inspector-construction-batch.json').read_text())
-    require(census['rustCaseCount']==214,'Exact current complete source census required')
+    require(census['rustCaseCount']==217,'Exact current complete source census required')
     if args.mode=='run':require(args.cost_gate is not None,'Changed-source full qualification requires original cost gate')
     combined=census['combinedPythonMethods']
     require(type(combined)is list and len(combined)==4 and len(set(combined))==4,'Combined boundary census differs')

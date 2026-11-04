@@ -7775,51 +7775,77 @@ fn schema_error(path: &Utf16, msg: &str) -> EngineError {
 fn copy_schema_json(value:&Value,ctx:&mut Context<'_>,allow_duplicate_keys:bool)->Result<Value,EngineError> {
     Ok(schema_json_with_mode(value,ctx,allow_duplicate_keys,true)?.expect("copying admission publishes a value"))
 }
+// Private shared admission seams: tests reach actual effects; no caller-visible
+// proof/debug API. Copy mode preserves its original path/callback sequence.
+fn schema_admission_error(code:&str,path:&mut Utf16,message:&str)->EngineError {
+    EngineError::new(code,std::mem::take(path),message)
+}
+fn schema_admission_node(path:&mut Utf16,depth:usize,count:&mut usize,ctx:&mut Context<'_>)->Result<(),EngineError> {
+    ctx.charge_work_with_path(1,path)?;
+    *count=count.checked_add(1).ok_or_else(||schema_admission_error("LIMIT",path,"Schema value count overflow"))?;
+    ctx.check_tree_value_count_with_path(*count,path)?;
+    if depth>ctx.limits().max_depth {return Err(schema_admission_error("LIMIT",path,"Schema nesting depth exceeded"));}
+    Ok(())
+}
+fn schema_admission_key_with_copy(
+    key:&Utf16,keys:&mut BTreeSet<Vec<u16>>,path:&mut Utf16,ctx:&mut Context<'_>,
+    materialize:impl FnOnce(&Utf16)->Vec<u16>,
+)->Result<bool,EngineError> {
+    let units=key.len() as u64;
+    let comparisons=units.saturating_add(1).saturating_mul(tree_compare_bound(keys.len()));
+    // Key storage/copy is independent of comparison work, including an empty
+    // duplicate set. Admit BOTH before materialization/search/insertion.
+    let work=comparisons.saturating_add(units).saturating_add(1);
+    ctx.charge_work_u64_with_path(work,path)?;
+    Ok(keys.insert(materialize(key)))
+}
 fn schema_json_with_mode(value:&Value,ctx:&mut Context<'_>,allow_duplicate_keys:bool,copy:bool)->Result<Option<Value>,EngineError> {
     ctx.with_constructor_site(if copy {"ctor.admission-copy"} else {"ctor.plan-work"},|ctx| {
-        fn visit(value:&Value,path:&Utf16,depth:usize,count:&mut usize,ctx:&mut Context<'_>,allow_duplicate_keys:bool,copy:bool)->Result<Option<Value>,EngineError> {
-            ctx.charge_work(1,path.clone())?;
-            *count=count.checked_add(1).ok_or_else(||EngineError::new("LIMIT",path.clone(),"Schema value count overflow"))?;
-            ctx.check_tree_value_count(*count,path.clone())?;
-            if depth>ctx.limits().max_depth {return Err(EngineError::new("LIMIT",path.clone(),"Schema nesting depth exceeded"));}
+        fn visit(value:&Value,path:&mut Utf16,depth:usize,count:&mut usize,ctx:&mut Context<'_>,allow_duplicate_keys:bool,copy:bool)->Result<Option<Value>,EngineError> {
+            schema_admission_node(path,depth,count,ctx)?;
             match value {
                 Value::Null=>Ok(copy.then_some(Value::Null)),
                 Value::Bool(v)=>Ok(copy.then_some(Value::Bool(*v))),
-                Value::Number(v) if allow_duplicate_keys=>{let admitted=Value::number(*v,path.clone())?;Ok(if copy {Some(admitted)} else {None})},
+                Value::Number(v) if allow_duplicate_keys=>{
+                    let admitted=Value::number(*v,std::mem::take(path))?;Ok(if copy {Some(admitted)} else {None})
+                },
                 Value::Number(v) if v.is_finite()=>Ok(copy.then_some(Value::Number(*v))),
-                Value::Number(_)=>Err(EngineError::new("NUMBER",path.clone(),"JSON Schema numbers must be finite binary64 values")),
+                Value::Number(_)=>Err(schema_admission_error("NUMBER",path,"JSON Schema numbers must be finite binary64 values")),
                 Value::String(v)=>{
-                    if copy {ctx.charge_work(v.len(),path.clone())?;Ok(Some(Value::String(v.clone())))} else {Ok(None)}
+                    if copy {ctx.charge_work_with_path(v.len(),path)?;Ok(Some(Value::String(v.clone())))} else {Ok(None)}
                 },
                 Value::Array(items)=>{
-                    if copy {ctx.charge_work(items.len(),path.clone())?;}
+                    if copy {ctx.charge_work_with_path(items.len(),path)?;}
                     let mut copied=if copy {Some(Vec::with_capacity(items.len()))} else {None};
                     for (i,item) in items.iter().enumerate() {
                         if !copy {ctx.charge_work(path.len().saturating_add(81),Utf16::default())?;}
-                        let next=visit(item,&append_schema_pointer(path,&Utf16::from(i.to_string())),depth+1,count,ctx,allow_duplicate_keys,copy)?;
+                        let next=visit(item,&mut append_schema_pointer(path,&Utf16::from(i.to_string())),depth+1,count,ctx,allow_duplicate_keys,copy)?;
                         if let Some(copied)=&mut copied {copied.push(next.expect("copy mode"));}
                     }
                     Ok(copied.map(Value::Array))
                 },
                 Value::Object(members)=>{
-                    if copy {ctx.charge_work(members.len(),path.clone())?;}
+                    if copy {ctx.charge_work_with_path(members.len(),path)?;}
                     let mut copied=if copy {Some(Vec::with_capacity(members.len()))} else {None};
                     let mut keys=BTreeSet::new();
                     for (key,value) in members {
-                        if copy {ctx.charge_work(key.len(),path.clone())?;}
-                        else {ctx.charge_work_u64((key.len() as u64+1).saturating_mul(tree_compare_bound(keys.len())).saturating_add(1),path.clone())?;}
-                        if !allow_duplicate_keys && !keys.insert(key.units().to_vec()) {return Err(EngineError::new("DUPLICATE_KEY",path.clone(),"Duplicate object key"));}
+                        if copy {
+                            ctx.charge_work_with_path(key.len(),path)?;
+                            if !allow_duplicate_keys && !keys.insert(key.units().to_vec()) {return Err(schema_admission_error("DUPLICATE_KEY",path,"Duplicate object key"));}
+                        } else if !allow_duplicate_keys && !schema_admission_key_with_copy(key,&mut keys,path,ctx,|key|key.units().to_vec())? {
+                            return Err(schema_admission_error("DUPLICATE_KEY",path,"Duplicate object key"));
+                        }
                         // Preserve the legacy copy's key-before-child effect.
                         let copied_key=if copy {Some(key.clone())} else {None};
                         if !copy {ctx.charge_work(path.len().saturating_add(key.len().saturating_mul(3)).saturating_add(1),Utf16::default())?;}
-                        let next=visit(value,&append_schema_pointer(path,key),depth+1,count,ctx,allow_duplicate_keys,copy)?;
+                        let next=visit(value,&mut append_schema_pointer(path,key),depth+1,count,ctx,allow_duplicate_keys,copy)?;
                         if let Some(copied)=&mut copied {copied.push((copied_key.expect("copy key"),next.expect("copy mode")));}
                     }
                     Ok(copied.map(Value::Object))
                 },
             }
         }
-        visit(value,&Utf16::from("#"),0,&mut 0,ctx,allow_duplicate_keys,copy)
+        visit(value,&mut Utf16::from("#"),0,&mut 0,ctx,allow_duplicate_keys,copy)
     })
 }
 

@@ -375,3 +375,125 @@ fn dynamic_root_and_catalogue_roles_keep_original_separate_backing() {
         oracle.validate(&data, &mut Context::catalog()).unwrap()
     );
 }
+
+#[test]
+fn first_duplicate_key_storage_is_admitted_before_materializer_or_child() {
+    use std::cell::Cell;
+    let key = Utf16::from("k".repeat(4096));
+    let expected = (key.len() as u64 + 1) * tree_compare_bound(0) + key.len() as u64 + 1;
+    let mut keys = BTreeSet::new();
+    let mut path = Utf16::from("#/default/owned-path");
+    let pointer = path.units().as_ptr();
+    let materialized = Cell::new(false);
+    let mut calls = Vec::new();
+    let mut meter = |amount: usize| {
+        calls.push(amount);
+        Err(EngineError::new(
+            "KEY_STOP",
+            Utf16::from("/host"),
+            "first key",
+        ))
+    };
+    let mut ctx = Context::catalog().with_meter(&mut meter);
+    let error = schema_admission_key_with_copy(&key, &mut keys, &mut path, &mut ctx, |key| {
+        materialized.set(true);
+        key.units().to_vec()
+    })
+    .unwrap_err();
+    drop(ctx);
+    assert_eq!(calls, vec![expected as usize]);
+    assert!(!materialized.get());
+    assert!(keys.is_empty());
+    assert_eq!(error.code, "KEY_STOP");
+    assert_eq!(error.path, Utf16::from("/host"));
+    assert_eq!(path.units().as_ptr(), pointer); // Host refusal never consumes/replaces its caller's path.
+
+    // Reach this same first-key site through the real visitor. The root node
+    // is admitted first; the second charge must include independent key storage.
+    let value = Value::Object(vec![(key, Value::Null)]);
+    let mut calls = Vec::new();
+    let mut meter = |amount: usize| {
+        calls.push(amount);
+        if calls.len() == 2 {
+            Err(EngineError::new(
+                "KEY_STOP",
+                Utf16::from("/host"),
+                "first key",
+            ))
+        } else {
+            Ok(())
+        }
+    };
+    let mut ctx = Context::catalog().with_meter(&mut meter);
+    let error = schema_json_with_mode(&value, &mut ctx, false, false).unwrap_err();
+    drop(ctx);
+    assert_eq!(calls, vec![1, expected as usize]);
+    assert_eq!(error.code, "KEY_STOP");
+}
+
+#[test]
+fn owned_node_control_denial_moves_original_path_without_a_clone_or_later_callback() {
+    let mut path = Utf16::new("#/default/long-owned-node".encode_utf16().collect());
+    assert!(path.len() > 1);
+    assert_eq!(path.clone_work(), path.len()); // Genuine Owned, not Shared.
+    let pointer = path.units().as_ptr();
+    let mut count = 0;
+    let mut calls = Vec::new();
+    let mut cancelled = 0;
+    let mut meter = |amount: usize| {
+        calls.push(amount);
+        Ok(())
+    };
+    let mut cancellation = || {
+        cancelled += 1;
+        true
+    };
+    let mut ctx = Context::catalog()
+        .with_meter(&mut meter)
+        .with_cancellation(&mut cancellation);
+    let error = schema_admission_node(&mut path, 0, &mut count, &mut ctx).unwrap_err();
+    drop(ctx);
+    assert_eq!(calls, vec![1]);
+    assert_eq!(cancelled, 1);
+    assert_eq!(count, 0);
+    assert_eq!(error.code, "CANCELLED");
+    assert_eq!(error.message, Utf16::from("Operation cancelled"));
+    assert_eq!(error.path.units().as_ptr(), pointer);
+    assert!(path.is_empty());
+    assert_eq!(error.path, Utf16::from("#/default/long-owned-node"));
+}
+
+#[test]
+fn owned_count_denial_after_admitted_node_moves_path_and_preserves_first_error_order() {
+    for (initial, message) in [
+        (1, "JSON structural value limit exceeded"),
+        (usize::MAX, "Schema value count overflow"),
+    ] {
+        let mut limits = crate::context::Limits::catalog();
+        limits.max_values = 1;
+        let mut path = Utf16::new("#/default/owned-count-path".encode_utf16().collect());
+        assert_eq!(path.clone_work(), path.len());
+        assert!(path.len() > 1);
+        let pointer = path.units().as_ptr();
+        let mut count = initial;
+        let mut calls = Vec::new();
+        let mut meter = |amount: usize| {
+            calls.push(amount);
+            Ok(())
+        };
+        let mut ctx = Context::with_limits(crate::context::ResourceProfile::Cooperative, limits)
+            .unwrap()
+            .with_meter(&mut meter);
+        // Node control succeeds. Count refusal must precede this simultaneous
+        // depth failure, with no later callback or path materialization.
+        let error = schema_admission_node(&mut path, limits.max_depth + 1, &mut count, &mut ctx)
+            .unwrap_err();
+        drop(ctx);
+        assert_eq!(calls, vec![1]);
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(error.message, Utf16::from(message));
+        assert_eq!(error.path.units().as_ptr(), pointer);
+        assert!(path.is_empty());
+        assert_eq!(error.path, Utf16::from("#/default/owned-count-path"));
+    }
+}

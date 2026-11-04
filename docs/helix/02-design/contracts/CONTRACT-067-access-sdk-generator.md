@@ -596,7 +596,7 @@ expensive semantic-target compilation. Only the existing narrowly classified
 public RESOURCE_LIMIT may enter the separately bounded diagnostic; assertion,
 crash or identity failures MUST NOT grant that observation. Diagnostic success
 cannot grant fit or compilation. A cost pass MUST remain explicitly unqualified.
-After it, all214 selected Rust cases,47 Python methods including the51 cold
+After it, all217 selected Rust cases,47 Python methods including the51 cold
 combinations, installed Saga19, identities and final required aggregation remain
 mandatory. A later stage consumes authenticated original same-job cost receipts,
 not a public-case replay. Missing/failed semantic results MUST preserve overall
@@ -626,3 +626,29 @@ pre-admitted `into_shared` move instead. No selected terminal-control path calls
 `into_units`; Context moves existing path storage and native refusal bypasses
 input-dependent envelope work. Callers composing shared error paths into other
 Rust APIs do not acquire qualification or free detach/append work from this claim.
+
+### Admission precharge correction to the owned-plan proposal
+
+Borrowed schema admission MUST charge the full UTF-16 duplicate-set key copy and
+storage independently of tree-comparison work, including the first key in an
+empty set. Admission MUST precede key materialization, lookup and insertion; a
+refused charge MUST enter neither the key materializer nor a child admission.
+The existing comparison bound remains unchanged; it MUST NOT serve as implicit
+permission for copying the key.
+
+Node work, value-count/overflow and depth refusal MUST use an already admitted
+movable diagnostic path. Neither owned nor shared storage may hide an eager
+input-dependent path clone before control admission. Generic copying and owned
+borrowed admission keep their original callback amounts, first-error precedence,
+messages and host provenance while transferring local error-path custody rather
+than reconstructing it. Count checking uses the same Context predicate for owned
+and movable paths. Private wide movable charging uses the existing work state
+machine and chunk/zero/control ordering without changing the public API.
+
+The selected source census now includes three reachable owner controls for first
+key materialization refusal, a genuinely owned node path at cancellation, and an
+owned count/overflow path after a successful node charge. All217 selected Rust
+cases,47 Python methods,51 cold combinations and Saga19 remain native-unexecuted
+in this source proposal. No source-only control establishes a1M fit. The
+cost-first controller, dependency closure, canonical resources and other limits
+remain unchanged.
