@@ -1,0 +1,118 @@
+{
+  "profile": "umf.codegen-publication-completion/1",
+  "status": "passed",
+  "recordedAtUTC": "2026-11-04T04:26:37.342758+00:00",
+  "runID": 41682817644,
+  "successfulAttempt": 2,
+  "workflowControllerSHA": "2682524580e3bdd390d359f01f73677c08445826",
+  "workflowSHA256": "ee28dc243578a73300060007f2d25df2287e7f886925505fc29895c5fe514994",
+  "sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+  "admissionSHA256": "5130419af7ecf7cc542f73899b2d24c160aef435b15bda2a5272ac58611b4355",
+  "mixedAttemptCustody": {
+    "originalVerificationJob": 126080648481,
+    "originalVerificationAttempt": 1,
+    "inheritedMetadataRow": 126386245335,
+    "originalArtifact": 13253506881,
+    "originalArtifactZIPsha256": "8d9a30326e1bc14a05d9debf51165908906b6fa873e82c2c7ee754857cd2e7d5",
+    "actualPublishLogNamesOriginalArtifactID": true,
+    "newVerifierExecution": false,
+    "originalFailureRetained": "attempt1 publish job126082919149 invalid-publisher; original source receipts unmodified"
+  },
+  "newOutputs": [
+    {
+      "job": 126386243718,
+      "attempt": 2,
+      "jobName": "publish",
+      "startedAt": "2026-11-04T04:22:43Z",
+      "completedAt": "2026-11-04T04:25:01Z",
+      "artifactID": 13295278872,
+      "artifactName": "codegen-0108-public-bytes",
+      "createdAt": "2026-11-04T04:24:58Z",
+      "ZIPdigest": "57fb0270624027722a95c7073b52853e3ea208bebf8ed4f09d85df80a6eec5c6",
+      "memberSHA256": {
+        "core-consumer-receipt.json": "cb17ed026fef842f9d31a7840ab023816d3af09dc9206285d03d8aa1b8b519d5",
+        "core-publication-receipt.json": "c5db86df20e8d9a3416620a31195f7a6629aeb57c50ce883cce6f09db300a39c",
+        "public-bytes-receipt.json": "135135004138b66d3d7f0e5ec9bca53e09bd7ff25bb86b8009198239b54a1b13",
+        "source-receipt.json": "b88acf9269e9ca915919bfe2e804e9dc573abe9b778113b20e556bdee24b2061"
+      }
+    },
+    {
+      "job": 126387010138,
+      "attempt": 2,
+      "jobName": "public-consumer",
+      "startedAt": "2026-11-04T04:25:03Z",
+      "completedAt": "2026-11-04T04:25:21Z",
+      "artifactID": 13295761989,
+      "artifactName": "codegen-0108-public-consumer",
+      "createdAt": "2026-11-04T04:25:19Z",
+      "ZIPdigest": "d168902a099501a6c552d9e69667123f6c531803168ac296a81570ab7995ae12",
+      "memberSHA256": {
+        "codegen-consumer-receipt.json": "2483eecafba549ca83a479ff3a5bfaf7455db34420f50d43a17d097268d57637",
+        "codegen-cli-help.txt": "8e516b50716b9cb62693629937b1e6bd6dff34b61a8c28176f625165a61dbb90"
+      }
+    }
+  ],
+  "publicExactArchives": [
+    {
+      "filename": "umf_codegen-0.10.8-py3-none-any.whl",
+      "sha256": "0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5",
+      "bytes": 66201,
+      "url": "https://files.pythonhosted.org/packages/67/80/42c92c17e5365f6a9c74489eed9fed52b3a31513d1cf90940a0bf05ef947/umf_codegen-0.10.8-py3-none-any.whl",
+      "uploadTime": "2026-11-04T04:23:49.377923Z"
+    },
+    {
+      "filename": "umf_codegen-0.10.8.tar.gz",
+      "sha256": "f094d73900004debf70516ab5f7e18fb84c564ba5861e305ae29fe021464c52d",
+      "bytes": 53112,
+      "url": "https://files.pythonhosted.org/packages/0d/fa/ee03bffb19ab1d3e5b7e97117603bced108f0cc5b5abcc99c6faf4e411f6/umf_codegen-0.10.8.tar.gz",
+      "uploadTime": "2026-11-04T04:23:50.637953Z"
+    }
+  ],
+  "freshNormalResolverConsumer": {
+    "schema": "umf.codegen-public-consumer/1",
+    "status": "passed",
+    "index": "https://pypi.org/simple",
+    "codegen": "0.10.8",
+    "core": "0.10.8",
+    "resourceManifest": "5ebd51f10967ba1a92ed82784cef017ece06633ab158155c26247732f641837e",
+    "normalPublicResolverArchiveHashes": {
+      "umf-codegen": "0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5",
+      "umf-core": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd"
+    },
+    "generatedFileCount": 7,
+    "scope": "Ubuntu CPython3.11 public normal resolver/native-resource/generation consumer only"
+  },
+  "normalOIDCAction": "Passed normal pypa publisher step after original preflight; actual new public bytes independently verified. No separate capability probe.",
+  "resolvedActionSHAs": [
+    [
+      "actions/checkout@v6",
+      "d23441a48e516b6c34aea4fa41551a30e30af803"
+    ],
+    [
+      "actions/setup-python@v5",
+      "a26af69be951a213d495a4c3e4e4022e16d87065"
+    ],
+    [
+      "actions/download-artifact@v4",
+      "d3f86a106a0bac45b974a628896c90dbdf5c8093"
+    ],
+    [
+      "pypa/gh-action-pypi-publish@release/v1",
+      "7245906fb61fa33a13554f9d5fb856fe61758086"
+    ],
+    [
+      "actions/upload-artifact@v4",
+      "ea165f8d65b6e75b540449e92b4886f43607fa02"
+    ],
+    [
+      "actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405",
+      "a309ff8b426b58ec0e2a45f0f869d46889d02405"
+    ]
+  ],
+  "rerunActions": 1,
+  "workflowDispatches": 0,
+  "localNativeBuildInstallRuns": 0,
+  "cleanupScope": "Hosted consumer uses job-local RUNNER_TEMP venv; jobs completed. Local retained public archives/ZIPs/proofs deliberately retained. No local server/native database/process startup.",
+  "scope": "Public Codegen0.10.8 exact two-byte archives and Ubuntu CPython3.11 fresh normal public resolver/native-resource/generation/CLI consumer. No Access/full Truss temporal release completion.",
+  "AccessPublication": "Not attempted; full-cohort/admission still held."
+}

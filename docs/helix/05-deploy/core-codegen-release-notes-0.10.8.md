@@ -19,8 +19,10 @@ ddx:
 
 Core 0.10.8 is published on PyPI, with exact public-byte and fresh-public Linux
 native/resource/inspection verification. The [public proof](evidence/pypi-0.10.8/README.md)
-records the original Actions receipts and scopes. Codegen PyPI publication is a
-separate step.
+records the original Actions receipts and scopes. Codegen 0.10.8 is also published
+on PyPI; its [public proof](evidence/pypi-codegen-0.10.8/README.md) records the
+unchanged S archives, mixed-attempt custody and fresh Ubuntu CPython3.11 normal
+resolver/native-resource/generation/CLI consumer.
 
 The exact production source is
 [`e3f38ef6f05ae636d2837f9d69f8d6805222664b`](https://github.com/DocumentDrivenDX/umf/commit/e3f38ef6f05ae636d2837f9d69f8d6805222664b).
@@ -38,13 +40,15 @@ compatibility with the 0.10.7 distribution.
 | Consumer | Material | Delivery and current phase |
 | --- | --- | --- |
 | Python Core users | Native Core wheels and source distribution | Published on PyPI; fresh-public Linux 3.11 native/resource/inspection proof passed |
-| Python Codegen users | Pure Python companion wheel and source distribution | Public in the coupled GitHub release; Codegen PyPI publication retains its separate gate |
+| Python Codegen users | Pure Python companion wheel and source distribution | Published on GitHub and PyPI; fresh-public Ubuntu Python3.11 consumer passed |
 | JavaScript SDK users | Retained coupled SDK archive | Public GitHub delivery; installed Linux SDK and browser proofs retain their original scopes |
 | Source consumers | Complete production-source archive | Public at the exact source above; full archive correspondence passed; controllers are separately identified |
 
-GitHub asset delivery, Core PyPI publication and Codegen PyPI publication are
-separate steps. A GitHub release containing the companion wheel does not mean
-that `pip install umf-codegen==0.10.8` can already resolve it from PyPI.
+GitHub asset delivery, Core PyPI publication and Codegen PyPI publication retain
+separate receipts. Both exact Python distributions are now public and byte-verified;
+`pip install umf-codegen==0.10.8` resolves its exact Core0.10.8 dependency normally.
+Access's publisher binding is configured, while its full-cohort/admission and
+publication gates remain held; no Access or Truss temporal completion is implied.
 
 ## Highlights
 
@@ -61,9 +65,9 @@ qualification; those consumers retain their separately governed gates.
 
 ## Required Actions Summary
 
-Install matching Core and Codegen distribution versions. Use the phase-specific
-commands below only after the indicated public availability checks pass. Keep
-normal dependency resolution enabled and run `pip check`.
+Install matching Core and Codegen distribution versions. Use the matching
+public-index commands below. Keep normal dependency resolution enabled and run
+`pip check`.
 
 ## Changes and Fixes
 
@@ -89,7 +93,7 @@ python -m pip install --index-url https://pypi.org/simple 'umf-core==0.10.8'
 python -m pip check
 ```
 
-### After the coupled GitHub companion assets are public, while Codegen PyPI is pending
+### Alternative: install the unchanged coupled GitHub companion wheel
 
 Download the exact wheel and `SHA256SUMS` from `umf-v0.10.8`, verify the wheel's
 SHA-256 against that manifest, then install with normal dependency resolution:
@@ -104,9 +108,10 @@ python -m pip check
 
 The retained companion wheel SHA-256 is
 `0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5`.
-This path proves GitHub companion delivery, not Codegen PyPI publication.
+This alternative retains the original GitHub wheel bytes; Codegen PyPI delivery
+is independently established by the linked public proof.
 
-### After both exact PyPI distributions are public and verified
+### Install the verified public Core/Codegen pair
 
 ```sh
 python -m pip install --index-url https://pypi.org/simple 'umf-codegen==0.10.8'
