@@ -1,0 +1,133 @@
+name: Private inspector retained-wheel attribution continuation
+on:
+  workflow_dispatch:
+    inputs:
+      admitted:
+        description: Reviewed retained-wheel continuation admitted; no native rebuild
+        type: boolean
+        default: false
+      controller_sha:
+        description: Exact reviewed continuation controller/test source
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: private-inspector-retained-feasibility
+  cancel-in-progress: false
+jobs:
+  continuation:
+    if: github.event_name == 'workflow_dispatch' && inputs.admitted == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      EXPECTED_CONTROLLER: ${{ inputs.controller_sha }}
+      ORIGINAL_OWNER: 3ba34e412a4c78c0ef01dd1085b8add79db1b7ae
+      CORRECTED_TEST_SHA256: eb6bc7b8e8533d4a60d4432a09bb68bef8f67f89e23f0ff15928f5223f7b1719
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+          architecture: x64
+      - name: Authenticate original run and retained materials before install
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf
+          test "$GITHUB_REF_TYPE" = branch
+          test "$EXPECTED_CONTROLLER" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_CONTROLLER"
+          python -I -B -c 'import platform; assert platform.python_version()=="3.11.17" and platform.system()=="Linux" and platform.machine()=="x86_64"'
+          out="$RUNNER_TEMP/retained-continuation"
+          mkdir -p "$out/materials"
+          printf 'CONTINUATION_OUT=%s\n' "$out" >> "$GITHUB_ENV"
+          printf 'OWNER_CHECKOUT=%s/retained-owner-source\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          git worktree add --detach "$RUNNER_TEMP/retained-owner-source" "$ORIGINAL_OWNER"
+          gh api repos/DocumentDrivenDX/umf/actions/runs/41745720387 > "$out/materials/run.json"
+          gh api repos/DocumentDrivenDX/umf/actions/runs/41745720387/jobs > "$out/materials/jobs.json"
+          gh api repos/DocumentDrivenDX/umf/actions/runs/41745720387/artifacts > "$out/materials/artifacts.json"
+          gh api repos/DocumentDrivenDX/umf/actions/artifacts/13284961794/zip > "$out/materials/partial.zip"
+          gh api repos/DocumentDrivenDX/umf/actions/artifacts/13285096524/zip > "$out/materials/cleanup.zip"
+          gh api repos/DocumentDrivenDX/umf/actions/runs/41745720387/logs > "$out/materials/original-logs.zip"
+          python -I -B tools/intake_inspector_attribution_continuation.py \
+            --controller "$GITHUB_WORKSPACE" --owner "$RUNNER_TEMP/retained-owner-source" \
+            --evidence "$out/materials" --controller-sha "$EXPECTED_CONTROLLER" \
+            --output "$out/intake.json"
+      - name: Fresh normal resolver install of authenticated unchanged wheel
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv "$CONTINUATION_OUT/consumer"
+          candidate_python="$CONTINUATION_OUT/consumer/bin/python"
+          "$candidate_python" -m pip --isolated install --index-url https://pypi.org/simple --no-cache-dir --no-compile \
+            --report "$CONTINUATION_OUT/install-report.json" --constraint "$CONTINUATION_OUT/dependency-constraints.txt" \
+            "$CONTINUATION_OUT/materials/partial/wheels/umf_core-0.10.8-cp311-abi3-linux_x86_64.whl" \
+            'pytest==8.4.2' 'pydantic==2.14.2' 2>&1 | tee "$CONTINUATION_OUT/install.log"
+          "$candidate_python" -m pip --isolated check | tee "$CONTINUATION_OUT/pip-check.log"
+          "$candidate_python" -m pip --isolated freeze > "$CONTINUATION_OUT/freeze.txt"
+      - name: Identity-gated independent qualification and bounded attribution lanes
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$CONTINUATION_OUT/consumer/bin/python" -I -B tools/run_inspector_attribution_lanes.py \
+            --controller "$GITHUB_WORKSPACE" --owner "$OWNER_CHECKOUT" \
+            --wheel "$CONTINUATION_OUT/materials/partial/wheels/umf_core-0.10.8-cp311-abi3-linux_x86_64.whl" \
+            --out "$CONTINUATION_OUT" --controller-sha "$EXPECTED_CONTROLLER" \
+            2>&1 | tee "$CONTINUATION_OUT/lanes-driver.log"
+      - name: Retain actual partial results original identities and wheel bytes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-inspector-attribution-resume-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/retained-continuation/*.json
+            ${{ runner.temp }}/retained-continuation/*.log
+            ${{ runner.temp }}/retained-continuation/*.txt
+            ${{ runner.temp }}/retained-continuation/*.xml
+            ${{ runner.temp }}/retained-continuation/materials/*.json
+            ${{ runner.temp }}/retained-continuation/materials/original-logs.zip
+            ${{ runner.temp }}/retained-continuation/materials/partial/*.json
+            ${{ runner.temp }}/retained-continuation/materials/partial/*.log
+            ${{ runner.temp }}/retained-continuation/materials/partial/wheels/*
+            ${{ runner.temp }}/retained-continuation/materials/cleanup/*.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Dispose only owned continuation consumer and source worktree
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$RUNNER_TEMP/retained-continuation/consumer"
+          if test -e "$RUNNER_TEMP/retained-owner-source"; then
+            git worktree remove --force "$RUNNER_TEMP/retained-owner-source"
+          fi
+          test ! -e "$RUNNER_TEMP/retained-continuation/consumer"
+          test ! -e "$RUNNER_TEMP/retained-owner-source"
+          mkdir -p "$RUNNER_TEMP/retained-continuation"
+          python -I -B - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path(os.environ['RUNNER_TEMP'],'retained-continuation','cleanup.json').write_text(json.dumps({
+              'controllerSource':os.environ['EXPECTED_CONTROLLER'], 'artifactSource':os.environ['ORIGINAL_OWNER'],
+              'run':os.environ['GITHUB_RUN_ID'], 'attempt':os.environ['GITHUB_RUN_ATTEMPT'],
+              'ownedConsumerAbsent':True, 'ownedSourceWorktreeAbsent':True,
+              'localHeavyWork':False, 'ledgerChanged':False, 'signalsSent':False},indent=2)+'\n')
+          PY
+      - name: Retain cleanup observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-inspector-attribution-resume-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/retained-continuation/cleanup.json
+          if-no-files-found: error
+          retention-days: 90

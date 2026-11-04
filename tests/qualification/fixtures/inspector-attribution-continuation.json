@@ -1,0 +1,107 @@
+{
+  "profile": "umf.private-inspector-attribution-continuation-materials/1",
+  "source": "3ba34e412a4c78c0ef01dd1085b8add79db1b7ae",
+  "run": 41745720387,
+  "job": 126298081176,
+  "workflowID": 406353585,
+  "originalLogsSHA256": "d465513db3b4a962224fb6deea8df9d6907d2750db5b897674d5f54e230bdee9",
+  "wheel": {
+    "path": "wheels/umf_core-0.10.8-cp311-abi3-linux_x86_64.whl",
+    "bytes": 34095883,
+    "sha256": "8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c"
+  },
+  "artifacts": {
+    "cleanup": {
+      "id": 13285096524,
+      "name": "private-inspector-attribution-cleanup-41745720387-1",
+      "bytes": 302,
+      "sha256": "2185ca059486b489196ec5cc0261f5e6af788dbaa0afe0d463b1ae6b448fc9a4",
+      "members": {
+        "cleanup.json": {
+          "size": 248,
+          "sha256": "d49b11b887f5f354a8aec02bf1ec18488d8e3ca37547d5cbf125e0d37b6612ef"
+        }
+      }
+    },
+    "partial": {
+      "id": 13284961794,
+      "name": "private-inspector-attribution-41745720387-1",
+      "bytes": 37691969,
+      "sha256": "3e8958dfe0e0103acc8086077be8843fc3b52268b5b394bbc74c9b7256ac6537",
+      "members": {
+        "affected-existing-controls.log": {
+          "size": 109,
+          "sha256": "179dabb91af2cb5f4cc21f7f363c46eb41081c002ab25631c3dae5b2b0432488"
+        },
+        "build-tools.log": {
+          "size": 1529,
+          "sha256": "be1d853ae9eaeadd139ad3cded5e0e3eb67b12ce5821e2ecc321c874e52bbc1b"
+        },
+        "build.log": {
+          "size": 260731,
+          "sha256": "512be3d1184addea558efd1e2db87509cac73b4448d4f1f2429441b9602cf366"
+        },
+        "cargo.txt": {
+          "size": 36,
+          "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1"
+        },
+        "freeze.txt": {
+          "size": 378,
+          "sha256": "ada50b53f64be72b01b7f754620bf6d68ff998a01d47e769ab358a10bc449efd"
+        },
+        "install-report.json": {
+          "size": 202824,
+          "sha256": "667965f890b666487f0ded168e42ef4f456c243db7bb59439144fd356132683f"
+        },
+        "install.log": {
+          "size": 3515,
+          "sha256": "75777b6649bc2e63141a84c4c508ca3108acad4bb9c4a1c51c68c9dc2832c6da"
+        },
+        "native-attribution-context-controls.log": {
+          "size": 145729,
+          "sha256": "c58eaa469c02d07a89005b3ee47e5d0b2087d44de6976739363699be1a8cf087"
+        },
+        "native-envelope-controls.log": {
+          "size": 195859,
+          "sha256": "e6703b7e4dc61053184abc13f2639c74fca2871e549b5f17b463ca7cde715329"
+        },
+        "pip-check.log": {
+          "size": 30,
+          "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+        },
+        "private-native-contract-controls.log": {
+          "size": 62676279,
+          "sha256": "e36ef2994d7ff77686a422f666a35b84d8d943f79e9b214c0c39efd4ed856d5f"
+        },
+        "rustc.txt": {
+          "size": 196,
+          "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3"
+        },
+        "source-and-payload.json": {
+          "size": 2553,
+          "sha256": "d24064552dc52a36d510806e052007afd964688aa7aaab021df46bf6a95101f9"
+        },
+        "wheels/umf_core-0.10.8-cp311-abi3-linux_x86_64.whl": {
+          "size": 34095883,
+          "sha256": "8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "annotated-types": "0.8.0",
+    "iniconfig": "2.3.1",
+    "packaging": "26.3",
+    "pluggy": "1.7.0",
+    "pydantic": "2.14.2",
+    "pydantic_core": "2.50.2",
+    "Pygments": "2.21.0",
+    "pytest": "8.4.2",
+    "typing-inspection": "0.4.4",
+    "typing_extensions": "4.16.0"
+  },
+  "nativeMember": {
+    "path": "umf/_rust_core.abi3.so",
+    "sha256": "91276bcd040c96f182b39642e03fc46f8989dcda2fdf4503b1e8b518b78788f1"
+  }
+}

@@ -315,12 +315,14 @@ class PublicRetainedFeasibilityTests(unittest.TestCase):
 class RetainedResourceAdmissionNativeTests(unittest.TestCase):
     """Changed constructor boundary; not extra canonical51 feasibility vectors.
 
-    Unknown JSON-Schema annotations are deliberate caller-resource variations,
-    not relabelled canonical S resources. Every public success still selects1M.
+    The supported standard default keyword carries arbitrary nested JSON data;
+    keys inside its value are DATA, not unknown schema-keyword support. These
+    caller-resource variations are not canonical S. Public successes select1M.
     """
     def _annotated(self, value):
         resources = _resources()
-        resources['coreSchema']['x-independent-retained-boundary'] = value
+        self.assertNotIn('default', resources['coreSchema'])
+        resources['coreSchema']['default'] = value
         return resources
 
     def _construct(self, resources, **callbacks):
@@ -362,7 +364,7 @@ class RetainedResourceAdmissionNativeTests(unittest.TestCase):
         before = json.dumps(resources, ensure_ascii=True, sort_keys=True)
         engine = self._construct(resources)
         self.assertEqual(json.dumps(resources, ensure_ascii=True, sort_keys=True), before)
-        self.assertEqual(resources['coreSchema']['x-independent-retained-boundary'], annotation)
+        self.assertEqual(resources['coreSchema']['default'], annotation)
         row = _cases()[0]
         self.assertEqual(engine.call('inspectAccessViews', row['request']), {'ok': True, 'result': row['expected']})
         # Input admission/immutability and semantic parity are observable here;
@@ -584,15 +586,32 @@ class PrivateNativeControlTests(unittest.TestCase):
                 self.assertEqual(control.calls[-1], first_charge)
                 self.assertEqual(control.after_denial, [])
 
+    def test_private_unknown_root_schema_keyword_refuses_after_native_conversion(self):
+        resources = _resources()
+        keyword = 'x-independent-unknown-root-keyword'
+        self.assertNotIn(keyword, resources['coreSchema'])
+        resources['coreSchema'][keyword] = {'arbitrary': 'data'}
+        phase_work = {}
+        def control(amount, phase):
+            phase_work[phase] = phase_work.get(phase, 0) + amount
+            return None
+        # A schema ROOT keyword is not data inside default. Preserve the strict
+        # compiler refusal after actual conversion, not a public work precheck.
+        self._failure(lambda: _rust_core.create_codegen_resources(resources, control),
+                      'SCHEMA_UNKNOWN_KEYWORD')
+        self.assertGreater(phase_work.get(CONVERSION, 0), 0)
+        self.assertGreater(phase_work.get(COMPILATION, 0), 0)
+
     def test_private_resource_depth_limit_remains_per_resource_128(self):
         for nesting, accepted in ((127, True), (128, False)):
             with self.subTest(private_resource_lists=nesting):
                 value = None
                 for _ in range(nesting): value = [value]
                 resources = _resources()
-                # Resource root depth0 -> annotation depth1 -> final null at
+                # Resource root depth0 -> default DATA depth1 -> final null at
                 # depth128/129. Do not accidentally add the outer resource map.
-                resources['coreSchema']['x-independent-depth'] = value
+                self.assertNotIn('default', resources['coreSchema'])
+                resources['coreSchema']['default'] = value
                 phase_work = {}
                 def control(amount, phase):
                     phase_work[phase] = phase_work.get(phase, 0) + amount
@@ -612,7 +631,8 @@ class PrivateNativeControlTests(unittest.TestCase):
         # Compact host fixture, >1M VALUE OCCURRENCES in the projected tree.
         # Shared list references are not cycles and cannot discount logical nodes.
         chunk = [None] * 1000
-        resources['coreSchema']['x-independent-nodes'] = [chunk] * 1001
+        self.assertNotIn('default', resources['coreSchema'])
+        resources['coreSchema']['default'] = [chunk] * 1001
         phase_work = {}
         def control(amount, phase):
             phase_work[phase] = phase_work.get(phase, 0) + amount
