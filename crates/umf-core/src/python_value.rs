@@ -61,6 +61,7 @@ impl PyText {
     /// not preserve the distinction between an astral scalar and an explicit
     /// surrogate pair; callers must retain this `PyText` as the source value.
     pub fn to_utf16(&self, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+        ctx.with_constructor_site("ctor.utf16", |ctx| {
         ctx.charge_work(self.utf16_unit_len(), Utf16::default())?;
         let mut units = Vec::with_capacity(self.utf16_unit_len());
         for point in &self.0 {
@@ -73,6 +74,8 @@ impl PyText {
             }
         }
         Ok(Utf16::new(units))
+
+        })
     }
 }
 

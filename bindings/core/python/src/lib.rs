@@ -6503,6 +6503,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(execute_semantic_value_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_codegen_wire, module)?)?;
     module.add_function(wrap_pyfunction!(retained_codegen::create_codegen_resources, module)?)?;
+    module.add_function(wrap_pyfunction!(retained_codegen::create_codegen_resources_attributed, module)?)?;
     module.add_class::<retained_codegen::RetainedCodegenResources>()?;
     module.add_function(wrap_pyfunction!(copy_json_wire, module)?)?;
     module.add_function(wrap_pyfunction!(

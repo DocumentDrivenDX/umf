@@ -831,10 +831,10 @@ impl Engine {
                 schemas.entries.push((id.clone(), copy_json(v, ctx)?))
             }
         }
-        let core = CompiledSchema::compile(&resources.core_schema, &schemas, ctx)?;
-        let reference = CompiledSchema::compile(&resources.reference_schema, &schemas, ctx)?;
-        let package = CompiledSchema::compile(&resources.package_schema, &schemas, ctx)?;
-        let program = prepare_program(&resources.constraints, ctx)?;
+        let core = ctx.with_constructor_root("core", |ctx| CompiledSchema::compile(&resources.core_schema, &schemas, ctx))?;
+        let reference = ctx.with_constructor_root("reference", |ctx| CompiledSchema::compile(&resources.reference_schema, &schemas, ctx))?;
+        let package = ctx.with_constructor_root("package", |ctx| CompiledSchema::compile(&resources.package_schema, &schemas, ctx))?;
+        let program = ctx.with_constructor_root("constraints", |ctx| prepare_program(&resources.constraints, ctx))?;
         let literal_value = get(&resources.domain_policy, "literal").ok_or_else(|| {
             EngineError::new(
                 "CONSTRAINT_POLICY",
@@ -842,7 +842,7 @@ impl Engine {
                 "Missing literal policy",
             )
         })?;
-        let literal = prepare_policy(literal_value, ctx)?;
+        let literal = ctx.with_constructor_root("literal-policy", |ctx| prepare_policy(literal_value, ctx))?;
         Ok(Self {
             resources,
             core,

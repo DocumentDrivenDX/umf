@@ -36,8 +36,10 @@ pub fn from_codegen_resource_owned(
     py: Python<'_>, value: &Bound<'_, PyAny>, ctx: &mut Context<'_>,
     count: &mut usize,
 ) -> Result<umf_core::Value, EngineError> {
+        ctx.with_constructor_site("ctor.visit", |ctx| {
     fn visit(py: Python<'_>, value: &Bound<'_, PyAny>, ctx: &mut Context<'_>,
         depth: usize, count: &mut usize, path: &Utf16) -> Result<umf_core::Value, EngineError> {
+        ctx.with_constructor_site("ctor.visit", |ctx| {
         use umf_core::Value;
         if depth > ctx.limits().max_depth {
             return Err(EngineError::new("LIMIT", path.clone(), "Python consumer value nesting exceeds the admission limit"));
@@ -67,12 +69,12 @@ pub fn from_codegen_resource_owned(
             let list = value.downcast::<PyList>().map_err(|_| invalid("Could not access Python list"))?;
             let length = list.len(); *count = count.saturating_add(length);
             ctx.check_tree_value_count(*count, path.clone())?;
-            ctx.charge_work(length, Utf16::default())?;
+            ctx.with_constructor_site("ctor.frontier", |ctx| ctx.charge_work(length, Utf16::default()))?;
             if list.len() != length { return Err(EngineError::new("REQUEST", path.clone(), "Resource container changed during admission")); }
             let children: Vec<_> = list.iter().collect();
             let mut output = Vec::with_capacity(length);
             for (index, item) in children.into_iter().enumerate() {
-                ctx.charge_work(20, path.clone())?;
+                ctx.with_constructor_site("ctor.array-index", |ctx| ctx.charge_work(20, path.clone()))?;
                 let child = resource_child_path(path, &PyText::from_utf8(&index.to_string()), ctx)?;
                 output.push(visit(py, &item, ctx, depth + 1, count, &child)?);
             }
@@ -82,7 +84,7 @@ pub fn from_codegen_resource_owned(
             let dict = value.downcast::<PyDict>().map_err(|_| invalid("Could not access Python dict"))?;
             let length = dict.len(); *count = count.saturating_add(length);
             ctx.check_tree_value_count(*count, path.clone())?;
-            ctx.charge_work(length.saturating_mul(2), Utf16::default())?;
+            ctx.with_constructor_site("ctor.frontier", |ctx| ctx.charge_work(length.saturating_mul(2), Utf16::default()))?;
             if dict.len() != length { return Err(EngineError::new("REQUEST", path.clone(), "Resource container changed during admission")); }
             let children: Vec<_> = dict.iter().collect();
             let mut seen = std::collections::BTreeSet::new(); let mut output = Vec::with_capacity(length);
@@ -91,7 +93,7 @@ pub fn from_codegen_resource_owned(
                     return Err(EngineError::new("UNSUPPORTED_KEY", path.clone(), "JSON object keys must be strings"));
                 }
                 let text = resource_text(&key, ctx, true)?;
-                ctx.charge_work(text.len().saturating_add(1), Utf16::default())?;
+                ctx.with_constructor_site("ctor.key-collision", |ctx| ctx.charge_work(text.len().saturating_add(1), Utf16::default()))?;
                 if !seen.insert(text.clone()) { return Err(EngineError::new("DUPLICATE_KEY", Utf16::default(), "Duplicate object key")); }
                 let child_path = resource_child_path(path, &text, ctx)?;
                 let key = text.to_utf16(ctx)?;
@@ -100,10 +102,14 @@ pub fn from_codegen_resource_owned(
             return Ok(Value::Object(output));
         }
         Err(EngineError::new("UNSUPPORTED_VALUE", path.clone(), "Python consumer values must be exact built-in JSON values"))
+
+        })
     }
     let owned = visit(py, value, ctx, 0, count, &Utf16::default())?;
     umf_core::value::admit_owned_json_at(owned, Utf16::from("#"), ctx)
-}
+
+        })
+    }
 
 fn from_python_policy(
     py: Python<'_>, value: &Bound<'_, PyAny>, ctx: &mut Context<'_>,
@@ -252,6 +258,7 @@ fn from_python_policy(
 }
 
 fn resource_child_path(path: &Utf16, key: &PyText, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+        ctx.with_constructor_site("ctor.path", |ctx| {
     let key = key.to_utf16(ctx)?;
     ctx.charge_work(path.len().saturating_add(key.len().saturating_mul(2)).saturating_add(1), path.clone())?;
     let mut units = Vec::with_capacity(path.len().saturating_add(key.len().saturating_mul(2)).saturating_add(1));
@@ -260,9 +267,12 @@ fn resource_child_path(path: &Utf16, key: &PyText, ctx: &mut Context<'_>) -> Res
         match unit { 126 => units.extend_from_slice(&[126, 48]), 47 => units.extend_from_slice(&[126, 49]), other => units.push(*other) }
     }
     Ok(Utf16::new(units))
-}
+
+        })
+    }
 
 fn resource_text(value: &Bound<'_, PyAny>, ctx: &mut Context<'_>, normalize: bool) -> Result<PyText, EngineError> {
+        ctx.with_constructor_site("ctor.text-normalize", |ctx| {
     let text = pytext_from_python(value, ctx)?;
     if !normalize { return Ok(text); }
     // Match the old UTF-16 wire -> Python snapshot: paired surrogates become
@@ -284,7 +294,9 @@ fn resource_text(value: &Bound<'_, PyAny>, ctx: &mut Context<'_>, normalize: boo
         } else { normalized.push(first); index += 1; }
     }
     PyText::from_codepoints(normalized)
-}
+
+        })
+    }
 
 fn text_from_python(
     value: &Bound<'_, PyAny>,
@@ -297,6 +309,7 @@ pub fn pytext_from_python(
     value: &Bound<'_, PyAny>,
     ctx: &mut Context<'_>,
 ) -> Result<PyText, EngineError> {
+        ctx.with_constructor_site("ctor.text-decode", |ctx| {
     let codepoint_count = value
         .len()
         .map_err(|_| invalid("Could not read Python string length"))?;
@@ -321,7 +334,9 @@ pub fn pytext_from_python(
     // 4M UTF-16 source/output ceiling on copied values.
     ctx.charge_work(codepoints.len(), Utf16::default())?;
     PyText::from_codepoints(codepoints)
-}
+
+        })
+    }
 
 pub fn to_python(
     py: Python<'_>,

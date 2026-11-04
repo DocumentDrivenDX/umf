@@ -58,6 +58,7 @@ pub struct Context<'a> {
     // Explicit optional owner-only observation; no ambient/thread-local state.
     pub(crate) schema_construction: Option<std::rc::Rc<std::cell::RefCell<crate::schema::ConstructionState>>>,
     work_phase_observer: Option<&'a std::cell::Cell<&'static str>>,
+    constructor_root_observer: Option<&'a std::cell::Cell<&'static str>>,
 }
 
 /// Work accumulated by transport decoders for one host operation.
@@ -180,6 +181,7 @@ impl<'a> Context<'a> {
             deadline_ms: None,
             schema_construction: None,
             work_phase_observer: None,
+            constructor_root_observer: None,
         })
     }
 
@@ -205,6 +207,33 @@ impl<'a> Context<'a> {
     pub fn with_work_phase_observer(mut self, phase: &'a std::cell::Cell<&'static str>) -> Self {
         self.work_phase_observer = Some(phase);
         self
+    }
+
+    /// Private fixed-root metadata uses the same scoped Cell/restore protocol as
+    /// work phases. It is never admission authority or a notification boundary.
+    #[doc(hidden)]
+    pub fn with_constructor_root_observer(mut self, root: &'a std::cell::Cell<&'static str>) -> Self {
+        self.constructor_root_observer = Some(root);
+        self
+    }
+
+    #[doc(hidden)]
+    pub fn with_constructor_root<T>(&mut self, root: &'static str, operation: impl FnOnce(&mut Self) -> T) -> T {
+        struct Restore<'a> { cell: Option<&'a std::cell::Cell<&'static str>>, prior: &'static str }
+        impl Drop for Restore<'_> {
+            fn drop(&mut self) { if let Some(cell) = self.cell { cell.set(self.prior); } }
+        }
+        let prior = self.constructor_root_observer.map(|cell| cell.replace(root)).unwrap_or("");
+        let _restore = Restore { cell: self.constructor_root_observer, prior };
+        operation(self)
+    }
+
+    /// Constructor sites are invisible to legacy/call-attributed observers.
+    /// No callback or charge is generated when entering or restoring a site.
+    #[doc(hidden)]
+    pub fn with_constructor_site<T>(&mut self, label: &'static str, operation: impl FnOnce(&mut Self) -> T) -> T {
+        if self.constructor_root_observer.is_some() { self.with_work_phase(label, operation) }
+        else { operation(self) }
     }
 
     /// Nested observational label, restored on return, refusal and unwinding.
@@ -920,3 +949,50 @@ mod work_phase_observer_tests {
 #[cfg(test)]
 #[path = "context_construction_tests.rs"]
 mod construction_independent_tests;
+
+#[cfg(test)]
+mod constructor_observation_tests {
+    use super::*;
+    use std::{cell::Cell, panic::{catch_unwind, AssertUnwindSafe}};
+
+    #[test]
+    fn constructor_metadata_restores_error_unwind_and_nested_context() {
+        let root = Cell::new("unassigned");
+        let phase = Cell::new("coarse");
+        let mut amounts = Vec::new();
+        let mut meter = |amount| { amounts.push(amount); Err(EngineError::new("CANCELLED", Utf16::default(), "first")) };
+        let mut ctx = Context::ordinary().with_host_control(&mut meter)
+            .with_work_phase_observer(&phase).with_constructor_root_observer(&root);
+        let result: Result<(), EngineError> = ctx.with_constructor_root("core", |ctx| {
+            ctx.with_constructor_site("ctor.preflight-root", |ctx| {
+                assert_eq!(root.get(), "core"); assert_eq!(phase.get(), "ctor.preflight-root");
+                let nested_root = Cell::new("unassigned");
+                let mut nested = Context::ordinary().with_constructor_root_observer(&nested_root);
+                nested.with_constructor_root("reference", |_| assert_eq!(root.get(), "core"));
+                assert_eq!(nested_root.get(), "unassigned");
+                ctx.charge_work(7, Utf16::default())
+            })
+        });
+        assert_eq!(result.unwrap_err().code, "CANCELLED");
+        assert_eq!(root.get(), "unassigned"); assert_eq!(phase.get(), "coarse");
+        let panic = catch_unwind(AssertUnwindSafe(|| ctx.with_constructor_root("package", |ctx| {
+            ctx.with_constructor_site("ctor.reference", |_| panic!("observation unwind"))
+        })));
+        assert!(panic.is_err()); assert_eq!(root.get(), "unassigned"); assert_eq!(phase.get(), "coarse");
+        ctx.with_constructor_root("actions", |_| assert_eq!(root.get(), "actions"));
+        assert_eq!(root.get(), "unassigned");
+        assert_eq!(ctx.charged_work(), 7);
+        drop(ctx); assert_eq!(amounts, vec![7]);
+    }
+
+    #[test]
+    fn constructor_sites_are_invisible_without_constructor_observer() {
+        let phase = Cell::new("existing-attributed-call");
+        let mut ctx = Context::ordinary().with_work_phase_observer(&phase);
+        ctx.with_constructor_site("ctor.preflight-root", |ctx| {
+            assert_eq!(phase.get(), "existing-attributed-call");
+            ctx.with_constructor_root("core", |_| assert_eq!(phase.get(), "existing-attributed-call"));
+        });
+        assert_eq!(ctx.charged_work(), 0);
+    }
+}

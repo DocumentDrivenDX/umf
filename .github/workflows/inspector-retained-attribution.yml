@@ -1,9 +1,9 @@
-name: Private retained constructor and work attribution
+name: Private constructor site observation only
 on:
   workflow_dispatch:
     inputs:
       admitted:
-        description: Sol-reviewed exact changed source and complete batch admitted once
+        description: Sol-reviewed exact observation-only source admitted once
         type: boolean
         default: false
       source_sha:
@@ -16,6 +16,7 @@ on:
         required: true
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: private-inspector-retained-feasibility
   cancel-in-progress: false
@@ -40,7 +41,7 @@ jobs:
         with:
           python-version: '3.11.17'
           architecture: x64
-      - name: Bind source resources and approved source case census before building
+      - name: Bind exact source resources payloads and original prefix before building
         shell: bash
         run: |
           set -euo pipefail
@@ -52,7 +53,11 @@ jobs:
           printf 'BATCH_OUT=%s\n' "$out" >> "$GITHUB_ENV"
           printf 'CARGO_TARGET_DIR=%s/inspector-feasibility-target\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
           printf 'PYO3_PYTHON=%s\n' "$(command -v python)" >> "$GITHUB_ENV"
-          python -I -B tools/qualify_inspector_construction_batch.py --root "$GITHUB_WORKSPACE" --out "$out" --source "$EXPECTED_SOURCE" bind
+          python -I -B tools/qualify_inspector_constructor_observation.py --root "$GITHUB_WORKSPACE" --out "$out" --source "$EXPECTED_SOURCE" bind
+          python -I -B tests/qualification/constructor_observation_pure_test.py 2>&1 | tee "$out/pure-controls.log"
+          python -I -B tools/qualify_inspector_constructor_observation.py --root "$GITHUB_WORKSPACE" --out "$out" --source "$EXPECTED_SOURCE" intake
+        env:
+          GH_TOKEN: ${{ github.token }}
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.90.0
@@ -64,20 +69,17 @@ jobs:
           cargo --version > "$BATCH_OUT/cargo.txt"
           python -m pip --isolated install --index-url https://pypi.org/simple 'build==1.3.0' 'hatchling==1.27.0' 2>&1 | tee "$BATCH_OUT/build-tools.log"
           python -m build --no-isolation --wheel --outdir "$BATCH_OUT/wheels" python 2>&1 | tee "$BATCH_OUT/build.log"
-          python -I -B tools/qualify_inspector_construction_batch.py --root "$GITHUB_WORKSPACE" --out "$BATCH_OUT" --source "$EXPECTED_SOURCE" producer
+          python -I -B tools/qualify_inspector_constructor_observation.py --root "$GITHUB_WORKSPACE" --out "$BATCH_OUT" --source "$EXPECTED_SOURCE" producer
           wheel=("$BATCH_OUT/wheels/"*.whl)
           test "${#wheel[@]}" = 1
           printf 'BATCH_WHEEL=%s\n' "${wheel[0]}" >> "$GITHUB_ENV"
-      - name: Compile selected affected Rust targets once without executing tests
+      - name: Compile only core library focused observation guards without executing
         shell: bash
         run: |
           set -euo pipefail
-          mkdir "$BATCH_OUT/cargo-tests"
           cargo metadata --locked --format-version 1 > "$BATCH_OUT/cargo-metadata.json"
           cargo tree --locked -p umf-core-python -p umf-cli --features umf-core-python/native-postgresql,umf-cli/native-postgresql -e features > "$BATCH_OUT/producer-cargo-features.txt"
-          cargo test --locked --release -p umf-core --features native-postgresql --lib --test consumer_schema --test schema_python_recursive_resource_scope --test resource_cache --test sol_generation_schema_order_review --no-run --message-format=json > "$BATCH_OUT/cargo-tests/core.jsonl" 2> "$BATCH_OUT/cargo-tests/core.log"
-          cargo test --locked --release -p umf-core-wire --features native-postgresql --lib --test codegen_context --test access_inspection_public --no-run --message-format=json > "$BATCH_OUT/cargo-tests/wire.jsonl" 2> "$BATCH_OUT/cargo-tests/wire.log"
-          cargo test --locked --release -p umf-codegen --features umf-core/native-postgresql --lib --test access_binding_schema_override --test single_set --no-run --message-format=json > "$BATCH_OUT/cargo-tests/codegen.jsonl" 2> "$BATCH_OUT/cargo-tests/codegen.log"
+          cargo test --locked --release -p umf-core --features native-postgresql --lib --no-run --message-format=json > "$BATCH_OUT/core-tests.jsonl" 2> "$BATCH_OUT/core-tests.log"
       - name: Fresh normal resolver install pipcheck and actual loaded ownership
         shell: bash
         run: |
@@ -87,39 +89,29 @@ jobs:
           "$candidate_python" -m pip --isolated install --index-url https://pypi.org/simple --no-cache-dir --no-compile --constraint "$BATCH_OUT/dependency-constraints.txt" --report "$BATCH_OUT/install-report.json" "$BATCH_WHEEL" 'pytest==8.4.2' 'pydantic==2.14.2' 2>&1 | tee "$BATCH_OUT/install.log"
           "$candidate_python" -m pip --isolated check | tee "$BATCH_OUT/pip-check.log"
           "$candidate_python" -m pip --isolated freeze > "$BATCH_OUT/freeze.txt"
-          "$candidate_python" -I -B tools/run_inspector_attribution_lanes.py --controller "$GITHUB_WORKSPACE" --owner "$GITHUB_WORKSPACE" --wheel "$BATCH_WHEEL" --out "$BATCH_OUT" --controller-sha "$EXPECTED_SOURCE" --producer-pins "$BATCH_OUT/producer.json" --mode identity
-      - name: Authenticate compiled census before executing exactly the Rust162 selection
+      - name: Fresh ownership and compiled-list authentication before focused observation guards
         shell: bash
         run: |
           set -euo pipefail
-          python -I -B tools/qualify_inspector_construction_batch.py --root "$GITHUB_WORKSPACE" --out "$BATCH_OUT" --source "$EXPECTED_SOURCE" rust
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.4.3
-      - name: Existing installed-wheel public Saga19 only without SDK browser or CLI producers
+          "$BATCH_OUT/consumer/bin/python" -I -B tools/qualify_inspector_constructor_observation.py --root "$GITHUB_WORKSPACE" --out "$BATCH_OUT" --source "$EXPECTED_SOURCE" --wheel "$BATCH_WHEEL" guards
+      - name: Only two independent cold constructor prefixes one combined300s bound
         shell: bash
         run: |
           set -euo pipefail
-          bun install --frozen-lockfile --ignore-scripts
-          UMF_SAGA_PYTHON="$BATCH_OUT/consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$BATCH_WHEEL" UMF_SAGA_HOST_ID=python UMF_SAGA_RESULT_PATH="$BATCH_OUT/public-saga19.json" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$BATCH_OUT/public-saga19.log"
-      - name: Fresh legacy8 boundary23 strict cold before independent diagnostic and required aggregation
-        shell: bash
-        run: |
-          set -euo pipefail
-          "$BATCH_OUT/consumer/bin/python" -I -B tools/run_inspector_attribution_lanes.py --controller "$GITHUB_WORKSPACE" --owner "$GITHUB_WORKSPACE" --wheel "$BATCH_WHEEL" --out "$BATCH_OUT" --controller-sha "$EXPECTED_SOURCE" --producer-pins "$BATCH_OUT/producer.json" 2>&1 | tee "$BATCH_OUT/lanes-driver.log"
+          "$BATCH_OUT/consumer/bin/python" -I -B tools/qualify_inspector_constructor_observation.py --root "$GITHUB_WORKSPACE" --out "$BATCH_OUT" --source "$EXPECTED_SOURCE" --wheel "$BATCH_WHEEL" observe
       - name: Retain all actual partial proofs original identities and genuine wheel bytes
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: private-inspector-construction-batch-${{ github.run_id }}-${{ github.run_attempt }}
+          name: private-inspector-constructor-observation-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/inspector-feasibility/*.json
             ${{ runner.temp }}/inspector-feasibility/*.tar
             ${{ runner.temp }}/inspector-feasibility/*.xml
             ${{ runner.temp }}/inspector-feasibility/*.log
             ${{ runner.temp }}/inspector-feasibility/*.txt
-            ${{ runner.temp }}/inspector-feasibility/cargo-tests/*
-            ${{ runner.temp }}/inspector-feasibility/rust-cases/*
+            ${{ runner.temp }}/inspector-feasibility/*.jsonl
+            ${{ runner.temp }}/inspector-feasibility/*.zip
             ${{ runner.temp }}/inspector-feasibility/wheels/*
           if-no-files-found: error
           retention-days: 90
@@ -141,7 +133,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: private-inspector-construction-batch-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
+          name: private-inspector-constructor-observation-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/inspector-feasibility/cleanup.json
           if-no-files-found: error
           retention-days: 90

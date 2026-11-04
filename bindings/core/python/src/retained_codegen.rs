@@ -87,10 +87,19 @@ impl RetainedControl {
         amount: usize,
         phase: &str,
     ) -> Result<(), EngineError> {
+        self.check_with_root(py, callback, amount, phase, None)
+    }
+    fn check_with_root(
+        &self, py: Python<'_>, callback: &Bound<'_, PyAny>, amount: usize,
+        phase: &str, root: Option<&str>,
+    ) -> Result<(), EngineError> {
         if self.first.borrow().is_some() {
             return Err(Self::denied());
         }
-        let outcome = callback.call1((amount, phase));
+        let outcome = match root {
+            Some(root) => callback.call1((amount, phase, root)),
+            None => callback.call1((amount, phase)),
+        };
         let failure = match outcome {
             Ok(value) if value.is_none() => return Ok(()),
             Ok(value) => {
@@ -240,6 +249,20 @@ pub(super) fn create_codegen_resources(
     resources: &Bound<'_, PyAny>,
     control: &Bound<'_, PyAny>,
 ) -> PyResult<RetainedCodegenResources> {
+    create_codegen_resources_impl(py, resources, control, false)
+}
+
+/// PRIVATE constructor observation. Same factory, admission and charge sequence.
+#[pyfunction]
+pub(super) fn create_codegen_resources_attributed(
+    py: Python<'_>, resources: &Bound<'_, PyAny>, control: &Bound<'_, PyAny>,
+) -> PyResult<RetainedCodegenResources> {
+    create_codegen_resources_impl(py, resources, control, true)
+}
+
+fn create_codegen_resources_impl(
+    py: Python<'_>, resources: &Bound<'_, PyAny>, control: &Bound<'_, PyAny>, attributed: bool,
+) -> PyResult<RetainedCodegenResources> {
     if !resources.is_exact_instance_of::<PyDict>() {
         return Err(PyTypeError::new_err(
             "Engine resources must be a plain dict",
@@ -251,9 +274,15 @@ pub(super) fn create_codegen_resources(
     let resources = resources.downcast::<PyDict>()?;
     let failure = RetainedControl::new();
     let phase = Cell::new("native-resource-conversion");
-    let mut hook = |amount| failure.check(py, control, amount, phase.get());
+    let root = Cell::new("conversion");
+    let mut hook = |amount| if attributed {
+        failure.check_with_root(py, control, amount, phase.get(), Some(root.get()))
+    } else { failure.check(py, control, amount, phase.get()) };
     let result = {
         let mut ctx = Context::ordinary().with_host_control(&mut hook);
+        if attributed {
+            ctx = ctx.with_work_phase_observer(&phase).with_constructor_root_observer(&root);
+        }
         let built = ctx
             .with_catalog_value_limit(|ctx| {
                 let length = resources.len();
@@ -301,6 +330,7 @@ pub(super) fn create_codegen_resources(
             })
             .and_then(|raw| {
                 phase.set("native-resource-compilation");
+                root.set("unassigned");
                 let handle = CodegenResourcesHandle::from_resources_with_context(raw, &mut ctx)?;
                 ctx.charge_work(1, Utf16::default())?;
                 ctx.charge_work(0, Utf16::default())?;

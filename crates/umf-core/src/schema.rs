@@ -151,6 +151,7 @@ pub(crate) struct ConstructionState {
 // Ordered, bit-preserving structural identity. Semantic object equality or a
 // matching root ID alone is insufficient for admission/provenance reuse.
 fn construction_equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+        ctx.with_constructor_site("ctor.proof-lookup", |ctx| {
     ctx.charge_work(1, Utf16::default())?;
     Ok(match (a, b) {
         (Value::Null, Value::Null) => true,
@@ -174,9 +175,12 @@ fn construction_equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<boo
         }
         _ => false,
     })
-}
+
+        })
+    }
 
 fn construction_catalogue(resources: &SchemaResources, ctx: &mut Context<'_>) -> Result<Option<Arc<SchemaResources>>, EngineError> {
+        ctx.with_constructor_site("ctor.proof-lookup", |ctx| {
     let Some(state) = ctx.schema_construction.clone() else { return Ok(None); };
     let count = state.borrow().catalogues.len();
     ctx.charge_work(count, Utf16::default())?;
@@ -191,7 +195,9 @@ fn construction_catalogue(resources: &SchemaResources, ctx: &mut Context<'_>) ->
         if equal { ctx.charge_work(1, Utf16::default())?; return Ok(Some(candidate)); }
     }
     Ok(None)
-}
+
+        })
+    }
 
 impl CompiledSchema {
     // Only ordinary strict compilation is eligible. Every other origin,
@@ -1591,6 +1597,7 @@ impl CompiledSchema {
         root_keyword_policy: KeywordPolicy,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
+        ctx.with_constructor_site("ctor.admission-copy", |ctx| {
         if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
             return Err(unavailable());
         }
@@ -1643,7 +1650,7 @@ impl CompiledSchema {
         if eligible {
             if let Some(state) = ctx.schema_construction.clone() {
                 let count = state.borrow().completed.len();
-                ctx.charge_work(count, Utf16::default())?;
+                ctx.with_constructor_site("ctor.proof-lookup", |ctx| ctx.charge_work(count, Utf16::default()))?;
                 let completed = state.borrow().completed.clone();
                 for (limits, prior) in completed {
                     // Arc identity is used ONLY after the current full ordered
@@ -1676,7 +1683,7 @@ impl CompiledSchema {
         if apply_local_reference_gate {
             validate_local_reference_gate(&compiled.schema, &Utf16::default(), ctx)?;
         }
-        compiled.preflight(
+        ctx.with_constructor_site("ctor.preflight-root", |ctx| compiled.preflight(
             &compiled.schema,
             &schema_origin_path(&compiled.schema),
             &schema_id(&compiled.schema)
@@ -1686,12 +1693,12 @@ impl CompiledSchema {
             compiled.root_keyword_policy,
             ctx,
             &mut BTreeSet::new(),
-        )?;
+        ))?;
         for (id, resource) in &compiled.resources.entries {
             let mut root_path = id.units().to_vec();
             root_path.push(0x23);
             let retrieval = id.to_utf8().unwrap_or_default();
-            compiled.preflight(
+            ctx.with_constructor_site("ctor.preflight-catalogue", |ctx| compiled.preflight(
                 resource,
                 &Utf16::new(root_path),
                 &retrieval,
@@ -1699,7 +1706,7 @@ impl CompiledSchema {
                 compiled.root_keyword_policy,
                 ctx,
                 &mut BTreeSet::new(),
-            )?;
+            ))?;
         }
         if get(&compiled.schema, "$schema").is_none()
             || declared_dialect(&compiled.schema).is_some()
@@ -1721,6 +1728,8 @@ impl CompiledSchema {
             }
         }
         Ok(compiled)
+
+        })
     }
     pub fn validate(
         &self,
@@ -2281,6 +2290,7 @@ impl CompiledSchema {
         }
         let _ = &mut *seen;
         Ok(())
+
     }
     fn resolve_eval_ref<'a>(
         &'a self,
@@ -2593,6 +2603,7 @@ impl CompiledSchema {
         scope_override: Option<&str>,
         ctx: &mut Context<'_>,
     ) -> Result<(&'a Value, Utf16), EngineError> {
+        ctx.with_constructor_site("ctor.reference", |ctx| {
         ctx.charge_work_u64(
             path.len() as u64 + btree_index_lookup_work(self.python_reference_targets.len()) + 1,
             Utf16::default(),
@@ -2883,6 +2894,8 @@ impl CompiledSchema {
             }
         }
         Ok((current, sp))
+
+        })
     }
     fn draft3_type_matches<T: InstanceView>(
         &self,
@@ -6763,10 +6776,13 @@ fn read_retained_metaschema_with<'a, T>(
     materialize: impl FnOnce(&str) -> Vec<u16>,
     parse: impl FnOnce(&[u16], &mut Context<'a>) -> Result<T, EngineError>,
 ) -> Result<T, EngineError> {
+        ctx.with_constructor_site("ctor.meta-materialize", |ctx| {
     ctx.charge_work(source.len(), Utf16::default())?;
     let units = materialize(source);
     parse(&units, ctx)
-}
+
+        })
+    }
 
 fn validate_schema_against_metaschema(
     schema: &Value,
@@ -6774,6 +6790,7 @@ fn validate_schema_against_metaschema(
     regex_profile: RegexProfile,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
+        ctx.with_constructor_site("ctor.meta-evaluation", |ctx| {
     let state = if matches!(regex_profile, RegexProfile::Ecma262Unicode) { ctx.schema_construction.clone() } else { None };
     if let Some(state) = &state {
         let count = state.borrow().meta_validators.len();
@@ -6901,7 +6918,9 @@ fn validate_schema_against_metaschema(
         state.borrow_mut().meta_validators.push((ctx.limits(), dialect, Arc::new(meta)));
     }
     Ok(())
-}
+
+        })
+    }
 
 fn declared_dialect(schema: &Value) -> Option<SchemaDialect> {
     let id = as_utf8(get(schema, "$schema")?)?;
@@ -7442,6 +7461,7 @@ fn copy_schema_json(
     ctx: &mut Context<'_>,
     allow_duplicate_keys: bool,
 ) -> Result<Value, EngineError> {
+        ctx.with_constructor_site("ctor.admission-copy", |ctx| {
     fn visit(
         value: &Value,
         path: &Utf16,
@@ -7529,7 +7549,9 @@ fn copy_schema_json(
         ctx,
         allow_duplicate_keys,
     )
-}
+
+        })
+    }
 fn schema_id_metered(
     schema: &Value,
     ctx: &mut Context<'_>,

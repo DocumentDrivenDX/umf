@@ -102,7 +102,7 @@ impl CodegenResources {
             ctx,
         )?;
         let operation_compiled =
-            CompiledSchema::compile(&operation_schema, &schema_resources, ctx)?;
+            ctx.with_constructor_root("operation", |ctx| CompiledSchema::compile(&operation_schema, &schema_resources, ctx))?;
         let row_expression_source_text =
             include_str!("../../../spec/extensions/tables/operation-0.2.schema.json");
         ctx.charge_work(
@@ -115,15 +115,15 @@ impl CodegenResources {
             ctx,
         )?;
         let row_expression_operation_compiled =
-            CompiledSchema::compile(&row_expression_operation_schema, &schema_resources, ctx)?;
+            ctx.with_constructor_root("operation", |ctx| CompiledSchema::compile(&row_expression_operation_schema, &schema_resources, ctx))?;
         let binding_schema = member(&binding_package, "schema").ok_or_else(invalid_package)?;
         let stable_binding_schema =
             member(&stable_binding_package, "schema").ok_or_else(invalid_package)?;
-        let binding_compiled = CompiledSchema::compile(binding_schema, &schema_resources, ctx)?;
+        let binding_compiled = ctx.with_constructor_root("binding", |ctx| CompiledSchema::compile(binding_schema, &schema_resources, ctx))?;
         let stable_binding_compiled =
-            CompiledSchema::compile(stable_binding_schema, &schema_resources, ctx)?;
-        let tables_compiled = CompiledSchema::compile(&tables_schema, &schema_resources, ctx)?;
-        let actions_compiled = CompiledSchema::compile(&actions_schema, &schema_resources, ctx)?;
+            ctx.with_constructor_root("binding", |ctx| CompiledSchema::compile(stable_binding_schema, &schema_resources, ctx))?;
+        let tables_compiled = ctx.with_constructor_root("tables", |ctx| CompiledSchema::compile(&tables_schema, &schema_resources, ctx))?;
+        let actions_compiled = ctx.with_constructor_root("actions", |ctx| CompiledSchema::compile(&actions_schema, &schema_resources, ctx))?;
         let literal_definition = member(&actions_schema, "$defs")
             .and_then(|defs| member(defs, "literal"))
             .ok_or_else(invalid_package)?;
@@ -140,7 +140,7 @@ impl CodegenResources {
             ),
         ]);
         let actions_literal_compiled =
-            CompiledSchema::compile(&literal_schema, &schema_resources, ctx)?;
+            ctx.with_constructor_root("actions-literal", |ctx| CompiledSchema::compile(&literal_schema, &schema_resources, ctx))?;
         let action_definitions = umf_core::copy_json(
             member(&actions_schema, "$defs").ok_or_else(invalid_package)?,
             ctx,
@@ -154,25 +154,25 @@ impl CodegenResources {
             ),
         ]);
         let actions_action_compiled =
-            CompiledSchema::compile(&action_schema, &schema_resources, ctx)?;
-        let tables_registry = package_registry(
+            ctx.with_constructor_root("actions-action", |ctx| CompiledSchema::compile(&action_schema, &schema_resources, ctx))?;
+        let tables_registry = ctx.with_constructor_root("registration-tables", |ctx| package_registry(
             &engine,
             &schema_resources,
             &tables_package,
             &tables_schema,
             1,
             ctx,
-        )?;
-        let actions_registry = package_registry(
+        ))?;
+        let actions_registry = ctx.with_constructor_root("registration-actions", |ctx| package_registry(
             &engine,
             &schema_resources,
             &actions_package,
             &actions_schema,
             2,
             ctx,
-        )?;
+        ))?;
         let mut binding_registry = Registry::new();
-        register_package(
+        ctx.with_constructor_root("registration-binding", |ctx| register_package(
             &mut binding_registry,
             &engine,
             &schema_resources,
@@ -180,8 +180,8 @@ impl CodegenResources {
             binding_schema,
             3,
             ctx,
-        )?;
-        register_package(
+        ))?;
+        ctx.with_constructor_root("registration-stable", |ctx| register_package(
             &mut binding_registry,
             &engine,
             &schema_resources,
@@ -189,7 +189,7 @@ impl CodegenResources {
             stable_binding_schema,
             4,
             ctx,
-        )?;
+        ))?;
         Ok(Self {
             engine,
             binding_registry,

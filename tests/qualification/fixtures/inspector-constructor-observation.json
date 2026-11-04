@@ -1,0 +1,598 @@
+{
+  "profile": "umf.private-constructor-site-observation-source/1",
+  "baselineSource": "adbd76a85b78c077a23d39d9800b313e70cd6dd7",
+  "baselineTree": "5ea60fcfabd862b6a9c930b1ef4cb65beb6035de",
+  "resourcePinsSHA256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
+  "original": {
+    "run": 41769192186,
+    "attempt": 1,
+    "job": 126374630735,
+    "source": "adbd76a85b78c077a23d39d9800b313e70cd6dd7",
+    "artifact": 13296590740,
+    "zipBytes": 38590352,
+    "zipSHA256": "c5960f6d3829b4a04e0c612bc151f14cee44f208020e92b3ce0222948a410c65",
+    "receiptMember": "work-attribution.json",
+    "receiptSHA256": "0a597b2d812d753155d7d57c16ee9749c25cbb1b95965f4dd6b800b39c8b4eca",
+    "fullResultSHA256": "c7ec5a477d765a9d414d0b6d894f9d4c417c88bc1fba4c423d37399179203e78"
+  },
+  "target": {
+    "total": 34055317,
+    "eventCount": 1000001,
+    "amountSequenceSHA256": "725818593ddfbebfd435a776098f4326ee8d48fe588960bea6ead4f171e3db87",
+    "deniedAmount": 1,
+    "deniedIndex": 1000000,
+    "ordinaryPhases": {
+      "conversionWork": 1208128,
+      "conversionEvents": 125749,
+      "compilationWork": 32847189,
+      "compilationEvents": 874252
+    },
+    "terminal": {
+      "type": "UmfCoreError",
+      "code": "RESOURCE_LIMIT",
+      "message": "Private attribution event/counter cap exceeded",
+      "path": "/private/attribution"
+    }
+  },
+  "slots": [
+    {
+      "root": "unassigned",
+      "site": "admission-copy"
+    },
+    {
+      "root": "unassigned",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "unassigned",
+      "site": "preflight-root"
+    },
+    {
+      "root": "unassigned",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "unassigned",
+      "site": "reference"
+    },
+    {
+      "root": "unassigned",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "unassigned",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "unassigned",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "core",
+      "site": "admission-copy"
+    },
+    {
+      "root": "core",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "core",
+      "site": "preflight-root"
+    },
+    {
+      "root": "core",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "core",
+      "site": "reference"
+    },
+    {
+      "root": "core",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "core",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "core",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "reference",
+      "site": "admission-copy"
+    },
+    {
+      "root": "reference",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "reference",
+      "site": "preflight-root"
+    },
+    {
+      "root": "reference",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "reference",
+      "site": "reference"
+    },
+    {
+      "root": "reference",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "reference",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "reference",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "package",
+      "site": "admission-copy"
+    },
+    {
+      "root": "package",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "package",
+      "site": "preflight-root"
+    },
+    {
+      "root": "package",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "package",
+      "site": "reference"
+    },
+    {
+      "root": "package",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "package",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "package",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "operation",
+      "site": "admission-copy"
+    },
+    {
+      "root": "operation",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "operation",
+      "site": "preflight-root"
+    },
+    {
+      "root": "operation",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "operation",
+      "site": "reference"
+    },
+    {
+      "root": "operation",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "operation",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "operation",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "binding",
+      "site": "admission-copy"
+    },
+    {
+      "root": "binding",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "binding",
+      "site": "preflight-root"
+    },
+    {
+      "root": "binding",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "binding",
+      "site": "reference"
+    },
+    {
+      "root": "binding",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "binding",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "binding",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "tables",
+      "site": "admission-copy"
+    },
+    {
+      "root": "tables",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "tables",
+      "site": "preflight-root"
+    },
+    {
+      "root": "tables",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "tables",
+      "site": "reference"
+    },
+    {
+      "root": "tables",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "tables",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "tables",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "actions",
+      "site": "admission-copy"
+    },
+    {
+      "root": "actions",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "actions",
+      "site": "preflight-root"
+    },
+    {
+      "root": "actions",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "actions",
+      "site": "reference"
+    },
+    {
+      "root": "actions",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "actions",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "actions",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "actions-literal",
+      "site": "admission-copy"
+    },
+    {
+      "root": "actions-literal",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "actions-literal",
+      "site": "preflight-root"
+    },
+    {
+      "root": "actions-literal",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "actions-literal",
+      "site": "reference"
+    },
+    {
+      "root": "actions-literal",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "actions-literal",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "actions-literal",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "actions-action",
+      "site": "admission-copy"
+    },
+    {
+      "root": "actions-action",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "actions-action",
+      "site": "preflight-root"
+    },
+    {
+      "root": "actions-action",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "actions-action",
+      "site": "reference"
+    },
+    {
+      "root": "actions-action",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "actions-action",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "actions-action",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "registration-tables",
+      "site": "admission-copy"
+    },
+    {
+      "root": "registration-tables",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "registration-tables",
+      "site": "preflight-root"
+    },
+    {
+      "root": "registration-tables",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "registration-tables",
+      "site": "reference"
+    },
+    {
+      "root": "registration-tables",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "registration-tables",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "registration-tables",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "registration-actions",
+      "site": "admission-copy"
+    },
+    {
+      "root": "registration-actions",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "registration-actions",
+      "site": "preflight-root"
+    },
+    {
+      "root": "registration-actions",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "registration-actions",
+      "site": "reference"
+    },
+    {
+      "root": "registration-actions",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "registration-actions",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "registration-actions",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "registration-binding",
+      "site": "admission-copy"
+    },
+    {
+      "root": "registration-binding",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "registration-binding",
+      "site": "preflight-root"
+    },
+    {
+      "root": "registration-binding",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "registration-binding",
+      "site": "reference"
+    },
+    {
+      "root": "registration-binding",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "registration-binding",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "registration-binding",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "registration-stable",
+      "site": "admission-copy"
+    },
+    {
+      "root": "registration-stable",
+      "site": "proof-lookup"
+    },
+    {
+      "root": "registration-stable",
+      "site": "preflight-root"
+    },
+    {
+      "root": "registration-stable",
+      "site": "preflight-catalogue"
+    },
+    {
+      "root": "registration-stable",
+      "site": "reference"
+    },
+    {
+      "root": "registration-stable",
+      "site": "meta-materialize"
+    },
+    {
+      "root": "registration-stable",
+      "site": "meta-evaluation"
+    },
+    {
+      "root": "registration-stable",
+      "site": "registry-manifest"
+    },
+    {
+      "root": "conversion",
+      "site": "factory"
+    },
+    {
+      "root": "conversion",
+      "site": "visit"
+    },
+    {
+      "root": "conversion",
+      "site": "frontier"
+    },
+    {
+      "root": "conversion",
+      "site": "text-decode"
+    },
+    {
+      "root": "conversion",
+      "site": "text-normalize"
+    },
+    {
+      "root": "conversion",
+      "site": "utf16"
+    },
+    {
+      "root": "conversion",
+      "site": "key-collision"
+    },
+    {
+      "root": "conversion",
+      "site": "path"
+    },
+    {
+      "root": "conversion",
+      "site": "owned-validation"
+    },
+    {
+      "root": "conversion",
+      "site": "array-index"
+    },
+    {
+      "root": "constraints",
+      "site": "admission-copy"
+    },
+    {
+      "root": "literal-policy",
+      "site": "admission-copy"
+    }
+  ],
+  "slotCount": 124,
+  "rootMeaning": "Fixed call-site roles, not caller IDs/proof. operation groups0.1/0.2; binding groups0.1/0.2. Individual version contributions UNKNOWN. unassigned is honest unknown root.",
+  "eventCapEach": 1000000,
+  "combinedDiagnosticSeconds": 300,
+  "maximumIndependentColdPrefixes": 2,
+  "publicMaximumWorkUnchanged": 1000000,
+  "publishable": false,
+  "readyForEnrollment": false,
+  "rustCases": [
+    "context::constructor_observation_tests::constructor_metadata_restores_error_unwind_and_nested_context",
+    "context::constructor_observation_tests::constructor_sites_are_invisible_without_constructor_observer",
+    "context::work_phase_observer_tests::scopes_preserve_charges_callback_order_and_prior_work",
+    "context::work_phase_observer_tests::first_denial_stays_charged_and_stops_before_later_work",
+    "context::work_phase_observer_tests::metadata_restores_on_unwind_without_resetting_work"
+  ],
+  "pythonGuardFile": "python/tests/test_constructor_observation_native.py",
+  "pythonGuardCases": 4,
+  "pureFile": "tests/qualification/constructor_observation_pure_test.py",
+  "pureCases": 10,
+  "priorComponents": "Original adbd Rust162/legacy8/boundary23/Saga19 retained only at original identities. Not future candidate qualification.",
+  "workflowID": 406353585,
+  "workflowPath": ".github/workflows/inspector-retained-attribution.yml",
+  "payloads": {
+    ".github/workflows/inspector-retained-attribution.yml": "bd7a25f60840951e756eeb4481e62cb7f1d935bf91f7b020223a5457d46e838b",
+    "Cargo.lock": "29a94a49f7471b7802b0ea866331abff1c55337401cd1cd5bcf29b2956fa084e",
+    "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
+    "bindings/core/python/src/lib.rs": "54160999b20189e21ef5777d4efcae63110525e7263ca0ea13c4418561449acb",
+    "bindings/core/python/src/python_value.rs": "96e3b9b8eb79b435a03604112fd7fc8d3b4de3582da1a0a7fdda946e6b118541",
+    "bindings/core/python/src/retained_codegen.rs": "5979d849ba1c1d5a3d753f7cdf298b221534a0201bec82feb943fd761abe79da",
+    "crates/umf-codegen/src/resources.rs": "6397db346538071257efcce9e5c577a64f4007d4e4b4aec097037ee583760d0f",
+    "crates/umf-core/src/context.rs": "c87770bc54909588a37d68071739c029a5aa7130de41b045652bbd0887d0d3bc",
+    "crates/umf-core/src/context_construction_tests.rs": "a7081434d41db02a5b785ab172374e124e8ffa4539e367d0ab46da4200dc82fc",
+    "crates/umf-core/src/engine.rs": "57dd66087d922c22ae3d529bbdb9db829261db1d98eed97f91913463df7e3019",
+    "crates/umf-core/src/python_value.rs": "ac9aadb0980520e8343b29a57ef2e44583ef5f84f59c52f68e44ce1dbe57dfd7",
+    "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
+    "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
+    "crates/umf-core/src/schema.rs": "e156eb0324f9ef4722954983584e42e242b6a164fe877aadcec790a09497b254",
+    "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "0ddbba5fd1370f57f1b721fedf1b0339c65786747af1e6f91f4b941158b6467d",
+    "python/hatch_build.py": "ff2b41abceb3f02518cf802fe191629d70ea762546baacce56372e6b198a008f",
+    "python/pyproject.toml": "59ef8b5f1242e295cd87d3afec7fec5f6e40a960dac6403c27c913e4fd6e7e93",
+    "python/tests/test_constructor_observation_native.py": "604de8e89247513e98c06437da17b0a931fad5cbabf86645d0045b0fc1e9d365",
+    "python/tests/test_retained_codegen_native.py": "2f6a35343298ccfa356acf21d559c80c93fc9a8e78de395f9d3fbe92d75e528e",
+    "spec/core/extension-package.schema.json": "fca24a871abf83e89837bf881bc5251b1a71ab98411fa5055af12e1bdd00fda5",
+    "spec/core/schema.json": "f5f7f090e6a4618803c3e0fdbb0be20ad62ae092c99f0d7e0f15a6733d67aabf",
+    "spec/core/semantic-type-reference.schema.json": "4a9908810531cced6208289f89dfcbc2e9406c303834a2749591cbe823ca3f65",
+    "spec/extensions/actions/package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
+    "spec/extensions/binding-stable/package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+    "spec/extensions/binding/package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+    "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
+    "spec/metamodel/generated/core-constraints.json": "180497da09a76cbbef5332d234258936668e06f7152f119d4be7aeebfa6b39cc",
+    "spec/metamodel/generated/domain-policy.json": "4d742505e483d23f7ef60cc904b45aa44db73473c71a98e01a919f289c414a9c",
+    "tests/qualification/constructor_observation_pure_test.py": "2c81b5ef78bd3c438d3516f87802bdb36340081e4b622abb9543a189bed21bbc",
+    "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
+    "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
+    "tools/inspector_constructor_observation.py": "22bc9cbcbaed64aaff54fc72de761b7940a075c2a6e6a724a7ed703cc80dfb2e",
+    "tools/probe_inspector_constructor_prefix.py": "bb308ddbe9eeb9c21c4d1f25264d6ab07fd414e0764e7d2cd653dec2019c768f",
+    "tools/probe_inspector_retained_feasibility.py": "e33e1d352c9861970a7aeb192dc1803e11e6455b086a1cc6c9391ce283c9d49d",
+    "tools/qualify_inspector_construction_batch.py": "8dbc01811ada67f88072d01b442e4ba13a3b42e4800dae7b6ebf3222728827be",
+    "tools/qualify_inspector_constructor_observation.py": "e8874d1dd074ea2c7089c5f526426e22a7dd91114b65126caed12c37e65d3385",
+    "tools/run_inspector_attribution_lanes.py": "5d8515631d5cd5f8ac874802d10e51282ef17271f4f26807ebb8fc529338e704",
+    "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355"
+  }
+}

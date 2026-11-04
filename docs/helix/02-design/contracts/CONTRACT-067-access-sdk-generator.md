@@ -397,3 +397,36 @@ with an `unselected` disposition.
 - [ ] Bun and Chromium produce identical bytes, including digests.
 - [ ] Hostile names, collisions, hand edits and drift checks refuse as specified.
 - [ ] B-TP-001 imports and type-checks generated output against the exact `umf_access` runtime named by `runtimeAbi`; a runtime with a different protocol ABI fails.
+
+## Private constructor site observation — source proposal, no support claim
+
+The private native create_codegen_resources_attributed(resources, control)
+diagnostic delegates to the ordinary factory implementation and Context.
+Its callback is (amount, site_phase, root_role); the ordinary factory keeps
+(amount, coarse_phase). Fixed constructor metadata uses the existing scoped
+phase observer and a similarly scoped static root observer. Both restore on
+return, refusal, reentrancy and unwind. Metadata boundaries do not notify, charge,
+reset counters, change semantic policy or authorize admission. Constructor-site
+metadata is disabled for the existing attributed-call observer.
+
+The closed roster in tools/inspector_constructor_observation.py contains124
+site/root slots, never more than128. Roots are fixed owner call-site roles, not
+authored IDs or caller proof. Work without an identified compile root is
+unassigned; it must not be presented as a measured schema identity. Conversion
+and compilation labels describe charged sites; allocations without a separate
+charge are not newly measured merely by assigning a label.
+
+The proposed diagnostic is limited to two independent cold canonical constructor
+prefixes, ordinary then attributed. Each begins at its own initial state with the
+same1000000-event cap, and both share one300-second deadline. Neither resumes a
+refused constructor. Each must reproduce the authenticated adbd prefix's amount
+digest, count, total, last/first denied charge and terminal failure; all site
+counters must reconcile. Differences refuse the observation. A matched capped
+refusal is partial diagnostic evidence only, never public1M fit, complete
+construction attribution, enrollment or release qualification.
+
+Original adbd components and completed private constructor counters retain their
+original source/native identities. A newly built observation candidate is
+separate and unpublishable. No limits, versions, canonical resources, compiler
+eligibility, public API semantics or support claims change under this proposal.
+Source/controller and actual dispatch binding review precede any execution.
