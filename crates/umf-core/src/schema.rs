@@ -6752,6 +6752,22 @@ impl std::ops::Deref for MetaBacking {
     fn deref(&self) -> &Value { match self { Self::Owned(v) => v, Self::Shared(v) => v } }
 }
 
+
+// Retained construction admits conversion before materializing its input.
+// UTF-8 byte length is an O(1) upper bound on UTF-16 output units, including
+// non-ASCII input. No sizing scan/allocation runs before this control. Reader
+// text/token/tree charges remain separate and use the same cumulative Context.
+fn read_retained_metaschema_with<'a, T>(
+    source: &str,
+    ctx: &mut Context<'a>,
+    materialize: impl FnOnce(&str) -> Vec<u16>,
+    parse: impl FnOnce(&[u16], &mut Context<'a>) -> Result<T, EngineError>,
+) -> Result<T, EngineError> {
+    ctx.charge_work(source.len(), Utf16::default())?;
+    let units = materialize(source);
+    parse(&units, ctx)
+}
+
 fn validate_schema_against_metaschema(
     schema: &Value,
     dialect: SchemaDialect,
@@ -6779,8 +6795,15 @@ fn validate_schema_against_metaschema(
         MetaBacking::Shared(data)
     } else {
         let source = include_str!("schema_metas.json");
-        let data = crate::serialization::read_json_value(
-            &source.encode_utf16().collect::<Vec<_>>(), crate::serialization::Format::Json, ctx)?;
+        let data = if state.is_some() {
+            read_retained_metaschema_with(source, ctx,
+                |source| source.encode_utf16().collect::<Vec<_>>(),
+                |units, ctx| crate::serialization::read_json_value(units, crate::serialization::Format::Json, ctx))?
+        } else {
+            // Generic/legacy behavior is deliberately unchanged.
+            crate::serialization::read_json_value(
+                &source.encode_utf16().collect::<Vec<_>>(), crate::serialization::Format::Json, ctx)?
+        };
         if let Some(state) = &state {
             ctx.charge_work(1, Utf16::default())?;
             let data = Arc::new(data);
@@ -11258,6 +11281,70 @@ mod construction_owner_tests {
             Ok::<(), EngineError>(())
         }).unwrap();
         assert!(ctx.schema_construction.is_none());
+    }
+
+    #[test]
+    fn metaschema_conversion_precharge_precedes_materializer_and_parser() {
+        use std::cell::{Cell, RefCell};
+        fn exercise(fixed: bool, deny: bool, source: &str)
+            -> (Result<Value, EngineError>, Vec<usize>, bool, bool, u64) {
+            let charges = RefCell::new(Vec::new());
+            let materialized = Cell::new(false); let parsed = Cell::new(false);
+            let mut control = |amount| {
+                let mut events = charges.borrow_mut(); events.push(amount);
+                if events.len() == 1 {
+                    assert_eq!(amount, 1, "construction scope entry must be admitted first");
+                    return Ok(());
+                }
+                if deny {
+                    assert_eq!(events.len(), 2, "no callback may follow the targeted denial");
+                    assert_eq!(amount, source.len(), "deny the ASCII fixture conversion/parser boundary, not scope entry");
+                    return Err(EngineError::new("RESOURCE_LIMIT", Utf16::from("/metaschema-first"), "targeted conversion denial"));
+                }
+                Ok(())
+            };
+            let mut ctx = Context::catalog().with_host_control(&mut control);
+            let result = ctx.with_codegen_construction(|ctx| {
+                assert!(ctx.in_codegen_construction());
+                let materialize = |text: &str| {
+                    materialized.set(true); text.encode_utf16().collect::<Vec<_>>()
+                };
+                let parse = |units: &[u16], ctx: &mut Context<'_>| {
+                    parsed.set(true);
+                    crate::serialization::read_json_value(units, crate::serialization::Format::Json, ctx)
+                };
+                if fixed { read_retained_metaschema_with(source, ctx, materialize, parse) }
+                else {
+                    // Exact old ordering at frozen3322: materialize the Vec,
+                    // enter the real shared reader, then encounter its charge.
+                    let units = materialize(source); parse(&units, ctx)
+                }
+            });
+            assert!(ctx.schema_construction.is_none());
+            let total = ctx.charged_work(); drop(ctx);
+            let observed = charges.borrow().clone();
+            (result, observed, materialized.get(), parsed.get(), total)
+        }
+        let ascii = "{\"type\":\"object\"}";
+        for fixed in [false, true] {
+            let (result, charges, materialized, parsed, total) = exercise(fixed, true, ascii);
+            let error = result.unwrap_err();
+            assert_eq!(charges, vec![1, ascii.len()]);
+            assert_eq!(total, 1 + ascii.len() as u64);
+            assert_eq!(error.code, "RESOURCE_LIMIT");
+            assert_eq!(error.path, Utf16::from("/metaschema-first"));
+            assert_eq!(materialized, !fixed, "old allocation order must be discriminated");
+            assert_eq!(parsed, !fixed, "fixed denial must occur before even entering the parser");
+        }
+        for source in ["{}", "\"é😀\""] {
+            let old = exercise(false, false, source); let fixed = exercise(true, false, source);
+            assert_eq!(old.0.unwrap(), fixed.0.unwrap());
+            assert!(old.2 && old.3 && fixed.2 && fixed.3);
+            assert_eq!(old.1[0], 1); assert_eq!(fixed.1[0], 1);
+            assert_eq!(fixed.1[1], source.len());
+            assert_eq!(&fixed.1[2..], &old.1[1..], "all real parser charges must remain independently present");
+            assert_eq!(fixed.4, old.4 + source.len() as u64);
+        }
     }
 
     #[test]

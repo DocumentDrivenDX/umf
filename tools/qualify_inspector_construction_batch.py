@@ -43,8 +43,8 @@ def bind(args):
     require(sys.flags.isolated and sys.dont_write_bytecode and platform.python_version()=='3.11.17' and platform.system()=='Linux' and platform.machine()=='x86_64','Exact isolated Linux311 producer required')
     require(source not in ('e3f38ef6f05ae636d2837f9d69f8d6805222664b','3ba34e412a4c78c0ef01dd1085b8add79db1b7ae'),'Old source is not changed-source batch')
     census=json.loads((root/CENSUS).read_text())
-    require(census['profile']=='umf.private-construction-batch-census/1' and census['rustCaseCount']==161
-        and census['pythonMethodCount']==41 and census['testSHA256']==TEST_SHA,'Closed approved case census differs')
+    require(census['profile']=='umf.private-construction-batch-census/1' and census['rustCaseCount']==162
+        and census['pythonMethodCount']==43 and census['testSHA256']==TEST_SHA,'Closed approved case census differs')
     for name,digest in census['fileHashes'].items():
         path=root/name
         require(not path.is_symlink() and path.resolve().is_relative_to(root) and sha(path)==digest,'Source input differs: '+name)
@@ -114,7 +114,7 @@ def authenticate_lists(census,executables,listings):
             actual={n for n in available if any(n.startswith(prefix) for prefix in prefixes)}
             require(actual=={c['name'] for c in row['cases']},'Compiled selected module has unapproved cases')
         else:require(set(available)=={c['name'] for c in row['cases']},'Compiled integration census differs')
-    require(len(selected)==161 and len(set(selected))==161,'Compiled selected census161 differs')
+    require(len(selected)==162 and len(set(selected))==162,'Compiled selected census162 differs')
     require(set(executables)==set(listings),'Compiled listing target set differs')
     return selected
 
@@ -146,8 +146,8 @@ def rust(args):
             'sha256':sha(executable),'listingSHA256':hashlib.sha256(result.stdout.encode()).hexdigest(),'caseNames':names})
     selected=authenticate_lists(census,executables,listings)
     write(args.out/'compiled-census.json',{'source':args.source,'status':'authenticated-before-test-execution',
-        'selectedCases':161,'censusSHA256':sha(args.root/CENSUS),'targets':readbacks})
-    record={'source':args.source,'status':'running','cases':161,'passed':0,'results':[],'censusSHA256':sha(args.root/CENSUS),'compiledCensusSHA256':sha(args.out/'compiled-census.json')}
+        'selectedCases':162,'censusSHA256':sha(args.root/CENSUS),'targets':readbacks})
+    record={'source':args.source,'status':'running','cases':162,'passed':0,'results':[],'censusSHA256':sha(args.root/CENSUS),'compiledCensusSHA256':sha(args.out/'compiled-census.json')}
     write(args.out/'rust-census-result.json',record)
     for index,(key,name) in enumerate(selected):
         log=directory/(str(index)+'-case.log')

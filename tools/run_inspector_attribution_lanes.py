@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 OWNER='3ba34e412a4c78c0ef01dd1085b8add79db1b7ae'
 WHEEL_SHA='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'
 SCOPE_METHODS=()
+SAGA_METHODS=()
 TEST_SHA='eb6bc7b8e8533d4a60d4432a09bb68bef8f67f89e23f0ff15928f5223f7b1719'
 DEPTH='PrivateNativeControlTests.test_private_resource_depth_limit_remains_per_resource_128'
 REFUSALS=(
@@ -202,6 +203,9 @@ def boundary(args):
     for name in sorted(PRIVATE_METHODS):suite.addTest(tests.PrivateNativeControlTests(name))
     for name in REFUSALS:suite.addTest(tests.RetainedResourceAdmissionNativeTests(name))
     for name in SCOPE_METHODS:suite.addTest(tests.PrivateConstructionIsolationNativeTests(name))
+    if SAGA_METHODS:
+        saga=load(args.controller/'python/tests/test_retained_codegen_saga.py','reviewed_retained_saga_tests')
+        for name in SAGA_METHODS:suite.addTest(saga.PrivateRetainedSagaNativeTests(name))
     result=unittest.TextTestRunner(resultclass=Result,verbosity=2).run(suite)
     identity(args,'boundary-after')
     report['identityAfterPassed']=True;report['complete']=True;write(target,report)
@@ -242,8 +246,8 @@ def run(args):
         if getattr(args,'producer_pins',None):
             rust=json.loads((args.out/'rust-census-result.json').read_text())
             require(rust.get('status')=='passed' and rust.get('source')==OWNER
-                    and rust.get('cases')==161 and rust.get('passed')==161,
-                    'New native Rust161 qualification missing/different')
+                    and rust.get('cases')==162 and rust.get('passed')==162,
+                    'New native Rust162 qualification missing/different')
             rc=command('legacy',[sys.executable,'-I','-B','-m','pytest','-q','-s',
                 '--junitxml='+str(args.out/'legacy.xml'),str(args.controller/'python/tests/test_rust_codegen.py')])
             cases=list(ET.parse(args.out/'legacy.xml').getroot().iter('testcase'))
@@ -252,7 +256,7 @@ def run(args):
             state['legacyPassed']=True;save()
             rc=command('boundary',common+['--mode','boundary'])
             decision=boundary_admission(json.loads((args.out/'boundary.json').read_text()),rc)
-            require(decision['boundaryPassed'],'Fresh boundary21 failed; no native continuation')
+            require(decision['boundaryPassed'],'Fresh boundary23 failed; no native continuation')
             state.update(decision);save()
         else:
             intake=json.loads((args.out/'intake.json').read_text())
@@ -325,7 +329,7 @@ def run(args):
 
 def configure_producer(args):
     import hashlib
-    global OWNER,WHEEL_SHA,TEST_SHA,SCOPE_METHODS,BOUNDARY_CASES
+    global OWNER,WHEEL_SHA,TEST_SHA,SCOPE_METHODS,SAGA_METHODS,BOUNDARY_CASES
     pins=json.loads(args.producer_pins.read_text())
     root=args.controller.resolve();owner=args.owner.resolve()
     git=lambda where,*items:subprocess.check_output(['git','-C',str(where),*items],text=True).strip()
@@ -347,7 +351,8 @@ def configure_producer(args):
       'test_completed_other_handle_cannot_admit_conflicting_or_invalid_resource',
       'test_required_arrays_preserve_duplicate_and_utf16_collision_refusal',
       'test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success')
-    BOUNDARY_CASES=BOUNDARY_CASES|frozenset('PrivateConstructionIsolationNativeTests.'+name for name in SCOPE_METHODS)
+    SAGA_METHODS=('test_genuine_optional_saga_constructs_and_actual_retained_reports_match_original_oracle','test_malformed_optional_saga_refuses_eagerly_without_returning_native_handle')
+    BOUNDARY_CASES=BOUNDARY_CASES|frozenset('PrivateConstructionIsolationNativeTests.'+name for name in SCOPE_METHODS)|frozenset('PrivateRetainedSagaNativeTests.'+name for name in SAGA_METHODS)
 
 
 if __name__=='__main__':

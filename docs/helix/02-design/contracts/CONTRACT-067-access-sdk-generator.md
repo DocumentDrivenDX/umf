@@ -145,11 +145,17 @@ admission/compilation. All remaining comparisons, allocations, validation and
 publication MUST be charged before their work; failed construction MUST expose
 neither a handle nor reusable successful state. Scoped state MUST restore on
 return, error and unwind without resetting counters or terminal controls.
+Cold retained metaschema UTF-8-to-UTF-16 materialization MUST be precharged before
+conversion/allocation. Its conversion charge MUST remain separate from the shared
+reader's parsing charges in that same cumulative construction lifetime; a denied
+conversion charge MUST enter neither materialization nor parsing.
 
 This internal reuse MUST NOT omit package/registry validation or substitute old
 ID/version/scopes/token/source data for a new registration. Generic Python Schema
 source-origin behavior, legacy construction, all required resource families and
 explicit optional Saga validation remain governed by their existing contracts.
+A supplied optional Saga package MUST be validated eagerly in that construction;
+a malformed optional package MUST NOT yield a native resource handle.
 A private completed-publication mechanism MUST retain its existing eligibility
 and returned-winner guarantees; it MUST NOT grant global warm-up authority.
 

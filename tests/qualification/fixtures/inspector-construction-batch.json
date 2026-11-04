@@ -1,7 +1,7 @@
 {
   "profile": "umf.private-construction-batch-census/1",
-  "rustCaseCount": 161,
-  "pythonMethodCount": 41,
+  "rustCaseCount": 162,
+  "pythonMethodCount": 43,
   "testSHA256": "2f6a35343298ccfa356acf21d559c80c93fc9a8e78de395f9d3fbe92d75e528e",
   "resourcePinsSHA256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
   "rust": [
@@ -157,10 +157,10 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/schema.rs",
-      "sourceSHA256": "c8fb19cccfba842bcaf9c51eabf9b3eb71335399c50933eee88aa76c277f628d",
+      "sourceSHA256": "c26c6fdd6d5971843ff8bec6b39e9302d4f7df029ef39517de4a5ba98bc46199",
       "target": "lib",
       "features": "native-postgresql",
-      "caseCount": 43,
+      "caseCount": 44,
       "cases": [
         {
           "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
@@ -376,6 +376,9 @@
           "name": "schema::construction_owner_tests::terminal_construction_denial_stops_before_reusable_proof",
           "line": 11256,
           "module": "construction_owner_tests"
+        },
+        {
+          "name": "schema::construction_owner_tests::metaschema_conversion_precharge_precedes_materializer_and_parser"
         }
       ],
       "reason": "All directly affected existing schema private modules: numeric/source profile, vocabularies, refs/dynamic scope, URI work and cache callbacks; includes3new owner controls once.",
@@ -1123,6 +1126,15 @@
         "python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_mutation_from_compilation_callback_cannot_change_already_owned_snapshot"
       ],
       "whyFresh": "Only after actual strict public cold fit; no warm/private success substitution."
+    },
+    {
+      "group": "retainedOptionalSaga2",
+      "caseCount": 2,
+      "cases": [
+        "python/tests/test_retained_codegen_saga.py::PrivateRetainedSagaNativeTests::test_genuine_optional_saga_constructs_and_actual_retained_reports_match_original_oracle",
+        "python/tests/test_retained_codegen_saga.py::PrivateRetainedSagaNativeTests::test_malformed_optional_saga_refuses_eagerly_without_returning_native_handle"
+      ],
+      "whyFresh": "Genuine optional Saga package in actual retained factory; original oracle on actual retained operations; malformed schema eager refusal before handle return. Private component allowance only, no public1M claim."
     }
   ],
   "cold51": {
@@ -1189,7 +1201,7 @@
     "reason": "Separate public malformed Saga registry path must remain covered, not inferred from dedicated Rust6 or old public19 binary."
   },
   "fileHashes": {
-    ".github/workflows/inspector-retained-attribution.yml": "9e32a10e4f88461ade1d5e930e5e1c6920426ee6dfe4ff66335d9e3caff05a8f",
+    ".github/workflows/inspector-retained-attribution.yml": "fa4dcf3c0c4b154ecdeb70218c2d653d10810edcc74a12ce490c2afcbd118c53",
     "Cargo.lock": "29a94a49f7471b7802b0ea866331abff1c55337401cd1cd5bcf29b2956fa084e",
     "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
     "bindings/core/python/src/python_value.rs": "acb123bb7c8506f134dce59f9df18820a5e70b396ff0227c19b338ddd8d34287",
@@ -1214,7 +1226,7 @@
     "crates/umf-core/src/registry.rs": "fba44d945810795400542ae711c5e865613ba0f30762f6e3972fc9515e08267e",
     "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
     "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-    "crates/umf-core/src/schema.rs": "c8fb19cccfba842bcaf9c51eabf9b3eb71335399c50933eee88aa76c277f628d",
+    "crates/umf-core/src/schema.rs": "c26c6fdd6d5971843ff8bec6b39e9302d4f7df029ef39517de4a5ba98bc46199",
     "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
     "crates/umf-core/src/schema_metas.json": "cecc3fdf8f3977662e71b53c20d6f954c62bec1cc2e96db20cbc9f895cf47195",
     "crates/umf-core/src/value.rs": "5f37637a4c1c8ad1afd5202e8dd5c88768968e530a51a72b69fda1090fb17d70",
@@ -1222,7 +1234,7 @@
     "crates/umf-core/tests/resource_cache.rs": "86db330e51951c6759117d181712adbc7fd3cac3a98c00d84af41fb68e06d1f7",
     "crates/umf-core/tests/schema_python_recursive_resource_scope.rs": "2a344459e7db33ab9a872d65f6833f081805453ca6d1ea88ae6ccc90a7758fd4",
     "crates/umf-core/tests/sol_generation_schema_order_review.rs": "861f46a4c4c5c9ee161e4616e8142a9cc3c81ecbcfed3a880537e96dd3fc8db8",
-    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "9a05ec6c4c45fe595732770725487e9025ed1310f5b463ec305e8ddf425c56f8",
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "b564166f9f52350c5733fecd7cb139ee83391c78d51b77bf2d6fb0a7d31b9a0e",
     "fixtures/saga/portable.json": "6f67fdfe6fba205436490f8b64f55f58e9bdae315d19148d10de799c05a3f1a7",
     "python/hatch_build.py": "ff2b41abceb3f02518cf802fe191629d70ea762546baacce56372e6b198a008f",
     "python/pyproject.toml": "59ef8b5f1242e295cd87d3afec7fec5f6e40a960dac6403c27c913e4fd6e7e93",
@@ -1245,13 +1257,15 @@
     "spec/metamodel/generated/domain-policy.json": "4d742505e483d23f7ef60cc904b45aa44db73473c71a98e01a919f289c414a9c",
     "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
     "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
-    "tests/qualification/test_inspector_attribution_lanes.py": "fe2036990219c7a3039abe65002459eaa2e3e2b35474e3d615f6edbaa80b8f61",
-    "tests/qualification/test_inspector_construction_batch.py": "3729d0cbb8fe33e8d5c4797acabfa82b6d69a95837fa4a362ab468c6ea193616",
+    "tests/qualification/test_inspector_attribution_lanes.py": "0c009d284de75d1c39abf9516f8a52e490d542c8585e9ee537dc545e79df2f89",
+    "tests/qualification/test_inspector_construction_batch.py": "61c0f4b67dd2d3ca3c1d64d5b311f00c94e78c548ab482425241a400cc9f1638",
     "tests/rust-core/fixtures/access-inspection/cases.json": "2e939f0d0f68f71a6b78c38e4fcd151e7b363513311f1aed170f9576333cbdc3",
     "tools/probe_inspector_retained_attribution.py": "2e872326ad62c7fb5f5f4fdecec2322db5159a190fb7fd4495ec6b9919a67625",
-    "tools/qualify_inspector_construction_batch.py": "fe2b966d2fcd56365bca5e36aa0b99ea819af72595fbdacbcbfad6f7e698fba6",
-    "tools/run_inspector_attribution_lanes.py": "b84d99048186f8525900b3db31d46f00803b104f0bbf0643c12bcf59708899e6",
-    "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355"
+    "tools/qualify_inspector_construction_batch.py": "8dbc01811ada67f88072d01b442e4ba13a3b42e4800dae7b6ebf3222728827be",
+    "tools/run_inspector_attribution_lanes.py": "5d8515631d5cd5f8ac874802d10e51282ef17271f4f26807ebb8fc529338e704",
+    "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
+    "python/tests/test_retained_codegen_saga.py": "080185a705dce27a83d19ba478eeb475e3b0bca79205dd808cdfbf65c0b0926d",
+    "spec/extensions/saga/package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940"
   },
   "compiledCensusTiming": "Approve source-derived names before build; authenticate compiled --list AFTER compilation BEFORE test execution; no prebuild compiled-census claim",
   "reusedOldNativePasses": false

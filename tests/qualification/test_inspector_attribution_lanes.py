@@ -124,7 +124,7 @@ class LaneControls(unittest.TestCase):
                 originalRun=41753398285,verifiedComponentReuse=reuse))
             if producer:
                 args.producer_pins=root/'producer.json'
-                lanes.write(root/'rust-census-result.json',dict(status='passed',source=lanes.OWNER,cases=160 if missing_rust else 161,passed=161))
+                lanes.write(root/'rust-census-result.json',dict(status='passed',source=lanes.OWNER,cases=161 if missing_rust else 162,passed=162))
             calls=[]
             def identity(*a):
                 if identity_failure:raise ValueError('mandatory loaded identity failed')
@@ -167,6 +167,7 @@ class LaneControls(unittest.TestCase):
             'test_completed_other_handle_cannot_admit_conflicting_or_invalid_resource',
             'test_required_arrays_preserve_duplicate_and_utf16_collision_refusal',
             'test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success'))
+        extra |= frozenset('PrivateRetainedSagaNativeTests.'+n for n in ('test_genuine_optional_saga_constructs_and_actual_retained_reports_match_original_oracle','test_malformed_optional_saga_refuses_eagerly_without_returning_native_handle'))
         with patch.object(lanes,'BOUNDARY_CASES',lanes.BOUNDARY_CASES|extra):
             rc,calls,state=self.simulate(producer=True)
             self.assertEqual(calls,['legacy','boundary','public-probe','diagnostic'])

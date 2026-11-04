@@ -88,7 +88,7 @@ jobs:
           "$candidate_python" -m pip --isolated check | tee "$BATCH_OUT/pip-check.log"
           "$candidate_python" -m pip --isolated freeze > "$BATCH_OUT/freeze.txt"
           "$candidate_python" -I -B tools/run_inspector_attribution_lanes.py --controller "$GITHUB_WORKSPACE" --owner "$GITHUB_WORKSPACE" --wheel "$BATCH_WHEEL" --out "$BATCH_OUT" --controller-sha "$EXPECTED_SOURCE" --producer-pins "$BATCH_OUT/producer.json" --mode identity
-      - name: Authenticate compiled census before executing exactly the Rust161 selection
+      - name: Authenticate compiled census before executing exactly the Rust162 selection
         shell: bash
         run: |
           set -euo pipefail
@@ -102,7 +102,7 @@ jobs:
           set -euo pipefail
           bun install --frozen-lockfile --ignore-scripts
           UMF_SAGA_PYTHON="$BATCH_OUT/consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$BATCH_WHEEL" UMF_SAGA_HOST_ID=python UMF_SAGA_RESULT_PATH="$BATCH_OUT/public-saga19.json" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$BATCH_OUT/public-saga19.log"
-      - name: Fresh legacy8 boundary21 strict cold before independent diagnostic and required aggregation
+      - name: Fresh legacy8 boundary23 strict cold before independent diagnostic and required aggregation
         shell: bash
         run: |
           set -euo pipefail
