@@ -975,7 +975,7 @@ impl Engine {
                 );
             }
         };
-        let structural = self.core_structure_diagnostics(&document, ctx)?;
+        let structural = self.core_structure_admitted_snapshot(&document, ctx)?;
         if !structural.is_empty() {
             return Ok(
                 crate::selection_diagnostics::SelectionDiagnosticMaterialization::from_static_validation(
@@ -1176,7 +1176,7 @@ impl Engine {
         ctx: &mut Context<'_>,
         observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
     ) -> Result<Validation, EngineError> {
-        let diagnostics = self.core_structure_diagnostics(&document, ctx)?;
+        let diagnostics = self.core_structure_admitted_snapshot(&document, ctx)?;
         if !diagnostics.is_empty() {
             return Ok(Validation {
                 valid: false,
@@ -1221,6 +1221,15 @@ impl Engine {
         ctx: &mut Context<'_>,
     ) -> Result<Vec<Diagnostic>, EngineError> {
         let structural = self.core.validate(value, ctx)?;
+        self.present_core_structure(structural,ctx)
+    }
+    // Both callers own the fully checked snapshot; no capability or observer
+    // receives mutable access between admission and this borrowed evaluation.
+    fn core_structure_admitted_snapshot(&self,value:&Value,ctx:&mut Context<'_>) -> Result<Vec<Diagnostic>,EngineError> {
+        let structural=self.core.validate_owned_core_snapshot(value,ctx)?;
+        self.present_core_structure(structural,ctx)
+    }
+    fn present_core_structure(&self,structural:Vec<crate::schema::StructuralError>,ctx:&mut Context<'_>) -> Result<Vec<Diagnostic>,EngineError> {
         if structural.is_empty() {
             return Ok(Vec::new());
         }

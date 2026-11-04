@@ -94,12 +94,78 @@ impl Default for KeywordPolicy {
 #[path = "schema_construction_index.rs"]
 mod construction_index;
 use construction_index::ColdResourceIndex;
+#[path = "schema_owned_plans.rs"]
+pub(crate) mod owned_plans;
+use owned_plans::OwnerPlans;
+#[path = "schema_annotation_delta.rs"]
+mod annotation_delta;
+use annotation_delta::PropertyDelta;
+
+// An owned root may select an already admitted immutable catalogue member.
+// The catalogue Arc and structural ordinal survive moves; no raw address is
+// retained as admission authority. Legacy/Python snapshots remain owned Values.
+#[derive(Clone, Debug)]
+enum SchemaRoot {
+    Owned(Value),
+    Catalogue(Arc<SchemaResources>, usize),
+    Shared(Arc<Value>),
+}
+impl std::ops::Deref for SchemaRoot {
+    type Target = Value;
+    fn deref(&self) -> &Value {
+        match self {
+            Self::Owned(value) => value,
+            Self::Catalogue(owner, ordinal) => &owner.entries[*ordinal].1,
+            Self::Shared(value) => value,
+        }
+    }
+}
+impl SchemaRoot {
+    fn same_anchor_free_role(schema:&Value,retrieval:&Utf16,ctx:&mut Context<'_>)->Result<bool,EngineError> {
+        let authored=match construction_index::get_ascii_metered(schema,"$id",ctx,&Utf16::default())? {
+            some@Some(_)=>some,None=>construction_index::get_ascii_metered(schema,"id",ctx,&Utf16::default())?,
+        };
+        let Some(Value::String(authored))=authored else {return Ok(false);};
+        ctx.charge_work(authored.len().saturating_mul(2).saturating_add(retrieval.len()).saturating_add(1),Utf16::default())?;
+        if authored!=retrieval || !authored.units().contains(&58) || authored.units().iter().any(|u|*u>127 || *u==35) {return Ok(false);}
+        fn visit(value:&Value,depth:usize,count:&mut usize,ctx:&mut Context<'_>)->Result<bool,EngineError> {
+            ctx.charge_work(1,Utf16::default())?;*count=count.saturating_add(1);
+            if depth>ctx.limits().max_depth || *count>ctx.limits().max_values {return Ok(false);}
+            match value {
+                Value::Object(members)=>for (key,child) in members {
+                    ctx.charge_work(key.len().min(17).saturating_mul(2).saturating_add(1),Utf16::default())?;
+                    // Physical identity is still used by the qualified dynamic
+                    // scope. Keep separate root/catalogue backing whenever a
+                    // raw anchor could make those roles observable. This is
+                    // conservative fallback, not validation of opaque content.
+                    if construction_index::ascii_key_for_owner(key,"$dynamicAnchor") || construction_index::ascii_key_for_owner(key,"$recursiveAnchor") {return Ok(false);}
+                    if depth!=0 && matches!(child,Value::String(_)) && (construction_index::ascii_key_for_owner(key,"$id") || construction_index::ascii_key_for_owner(key,"id")) {return Ok(false);}
+                    if !visit(child,depth+1,count,ctx)? {return Ok(false);}
+                },
+                Value::Array(items)=>for child in items {if !visit(child,depth+1,count,ctx)? {return Ok(false);}},
+                _=>{},
+            }
+            Ok(true)
+        }
+        visit(schema,0,&mut 0,ctx)
+    }
+    fn publish(value: Value, shared: bool, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        if shared {
+            ctx.charge_work(1, Utf16::default())?;
+            Ok(Self::Shared(Arc::new(value)))
+        } else { Ok(Self::Owned(value)) }
+    }
+}
 
 #[derive(Debug)]
 pub struct CompiledSchema {
-    schema: Value,
+    schema: SchemaRoot,
     resources: SchemaBacking,
     cold_resource_index: Option<Arc<ColdResourceIndex>>,
+    owner_plans: Option<Arc<OwnerPlans>>,
+    // Private owned-lineage capability: minted only after real admission;
+    // completed construction copies share it only after full eligibility/equality.
+    owner_lineage: Option<Arc<()>>,
     dialect: SchemaDialect,
     strict: bool,
     root_keyword_policy: KeywordPolicy,
@@ -125,6 +191,8 @@ impl Clone for CompiledSchema {
         Self {
             schema: self.schema.clone(),
             cold_resource_index: None,
+            owner_plans: None,
+            owner_lineage: None,
             resources: self.resources.clone(),
             dialect: self.dialect,
             strict: self.strict,
@@ -209,9 +277,9 @@ impl CompiledSchema {
     // Only ordinary strict compilation is eligible. Every other origin,
     // keyword, regex, reference or duplicate/numeric policy retains its full
     // original operation; no partial policy key can accidentally match it.
-    fn construction_copy(&self, schema: Value, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+    fn construction_copy(&self, schema: SchemaRoot, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         ctx.charge_work(1, Utf16::default())?;
-        Ok(Self { schema, cold_resource_index: self.cold_resource_index.clone(), resources: self.resources.clone(), dialect: self.dialect,
+        Ok(Self { schema, cold_resource_index: self.cold_resource_index.clone(), owner_plans: self.owner_plans.clone(), owner_lineage:self.owner_lineage.clone(), resources: self.resources.clone(), dialect: self.dialect,
             strict: self.strict, root_keyword_policy: self.root_keyword_policy,
             regex_profile: self.regex_profile, resolve_references_at_compile: self.resolve_references_at_compile,
             python_text_origins: Default::default(), python_member_keys: Default::default(),
@@ -436,6 +504,7 @@ use evaluation_scope::{DynamicScope, EvaluationScope};
 #[derive(Clone, Debug, Default)]
 struct Evaluated {
     properties: BTreeSet<Vec<u32>>,
+    property_delta: Option<PropertyDelta>,
     items: BTreeSet<usize>,
     dynamic_scope: DynamicScope,
     resolved_resource: Option<usize>,
@@ -468,7 +537,9 @@ impl Evaluated {
                 ctx.charge_work_u64(name.len() as u64 + scope.len() as u64 + 2, Utf16::default())?;
             }
         }
+        let property_delta = match &self.property_delta { Some(delta)=>Some(delta.child(ctx)?),None=>None };
         Ok(Self {
+            property_delta,
             dynamic_scope: self.dynamic_scope.clone(),
             resolved_resource: self.resolved_resource,
             python_recursive_history: self.python_recursive_history.clone(),
@@ -486,6 +557,10 @@ impl Evaluated {
         path: &Utf16,
     ) -> Result<(), EngineError> {
         ctx.charge_work(path.len(), Utf16::default())?;
+        if let Some(delta)=other.property_delta {
+            if let Some(own)=&mut self.property_delta { own.merge(delta,ctx)?; }
+            else { return Err(schema_error(path,"Annotation delta lost its immutable invocation owner")); }
+        }
         for name in other.properties {
             ctx.charge_work(path.len(), Utf16::default())?;
             ctx.charge_work_u64(
@@ -531,6 +606,9 @@ impl Evaluated {
         ctx: &mut Context<'_>,
         path: &Utf16,
     ) -> Result<bool, EngineError> {
+        if let (Some(delta),InstanceText::Utf16(text))=(&self.property_delta,text) {
+            return delta.contains(text,ctx);
+        }
         ctx.charge_work(path.len(), Utf16::default())?;
         ctx.charge_work_u64(
             (text.codepoint_len() as u64 + 1) * tree_compare_bound(self.properties.len()),
@@ -546,6 +624,9 @@ impl Evaluated {
         ctx: &mut Context<'_>,
         path: &Utf16,
     ) -> Result<(), EngineError> {
+        if let (Some(delta),InstanceText::Utf16(text))=(&mut self.property_delta,text) {
+            return delta.insert(text,ctx);
+        }
         ctx.charge_work(path.len(), Utf16::default())?;
         ctx.charge_work_u64(
             (text.codepoint_len() as u64 + 1) * tree_compare_bound(self.properties.len()),
@@ -721,7 +802,7 @@ impl CompiledSchema {
                 rule,
                 value,
                 &self.instance_pointer(ip, name, ctx)?,
-                &self.schema_pointer(schema_path, &Utf16::from("additionalProperties"), ctx)?,
+                &*self.schema_pointer(schema_path, &Utf16::from("additionalProperties"), ctx)?,
                 depth + 1,
                 ctx,
                 &mut errors,
@@ -1339,7 +1420,7 @@ impl CompiledSchema {
         )
     }
     pub fn schema_value(&self) -> &Value {
-        &self.schema
+        &*self.schema
     }
     pub fn snapshot_with_context(&self, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         for (path, text) in &self.python_text_origins {
@@ -1379,16 +1460,18 @@ impl CompiledSchema {
                 .saturating_add(self.resources.entries.len()),
             Utf16::default(),
         )?;
-        let schema = copy_json(&self.schema, ctx)?;
+        let schema = copy_json(&*self.schema, ctx)?;
         let mut entries = Vec::with_capacity(self.resources.entries.len());
         for (id, value) in &self.resources.entries {
             ctx.charge_work(id.len(), Utf16::default())?;
             entries.push((id.clone(), copy_json(value, ctx)?));
         }
         Ok(Self {
-            schema,
+            schema: SchemaRoot::Owned(schema),
             resources: SchemaBacking::Owned(SchemaResources { entries }),
             cold_resource_index: None,
+            owner_plans: None,
+            owner_lineage: None,
             dialect: self.dialect,
             strict: self.strict,
             root_keyword_policy: self.root_keyword_policy,
@@ -1510,6 +1593,17 @@ impl CompiledSchema {
             canonical_equal(expected, actual, ctx)
         }
     }
+    fn eval_schema_step(&self,path:&Utf16,step:&str,ctx:&mut Context<'_>) -> Result<Utf16,EngineError> {
+        if self.owner_plans.is_none() { return Ok(append_schema_path(path,step)); }
+        ctx.charge_work(step.len().saturating_add(1),Utf16::default())?;
+        let segment=Utf16::from(step);
+        if let Some(arena)=ctx.evaluation_paths.clone() {
+            let result={let mut paths=arena.borrow_mut(); paths.append_raw(path,&segment,ctx)};
+            return result;
+        }
+        ctx.charge_work(path.len().saturating_add(segment.len()).saturating_add(1),Utf16::default())?;
+        Ok(append_schema_path(path,step))
+    }
     fn schema_pointer(
         &self,
         path: &Utf16,
@@ -1526,6 +1620,12 @@ impl CompiledSchema {
                 Utf16::default(),
             )?;
             return Ok(append_marked_python_path(path, source));
+        }
+        if self.owner_plans.is_some() {
+            if let Some(arena) = ctx.evaluation_paths.clone() {
+                let result={let mut paths=arena.borrow_mut(); paths.append(path,segment,true,ctx)};
+                return result;
+            }
         }
         ctx.charge_work_u64(
             (path.len() as u64)
@@ -1544,6 +1644,12 @@ impl CompiledSchema {
     ) -> Result<Utf16, EngineError> {
         match segment {
             InstanceText::Utf16(text) => {
+                if self.owner_plans.is_some() {
+                    if let Some(arena) = ctx.evaluation_paths.clone() {
+                        let result={let mut paths=arena.borrow_mut(); paths.append(path,text,false,ctx)};
+                        return result;
+                    }
+                }
                 ctx.charge_work_u64(
                     (path.len() as u64)
                         .saturating_add((text.len() as u64).saturating_mul(3))
@@ -1618,18 +1724,24 @@ impl CompiledSchema {
         if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
             return Err(unavailable());
         }
-        let schema = if allow_duplicate_schema_keys {
-            copy_schema_json(schema, ctx, true)?
-        } else if finite_binary64_admission {
-            copy_schema_json(schema, ctx, false)?
-        } else {
-            copy_json(schema, ctx)?
-        };
         let eligible = ctx.schema_construction.is_some() && strict
             && matches!(regex_profile, RegexProfile::Ecma262Unicode)
             && resolve_references_at_compile && !apply_local_reference_gate
             && !allow_duplicate_schema_keys && finite_binary64_admission
             && root_keyword_policy == KeywordPolicy::DRAFT2020;
+        let mut share_candidate=false;
+        if eligible {
+            for (retrieval,candidate) in &resources.entries {
+                if SchemaRoot::same_anchor_free_role(schema,retrieval,ctx)? && construction_equal(schema,candidate,ctx)? {share_candidate=true;break;}
+            }
+        }
+        let root_copy=if share_candidate {
+            schema_json_with_mode(schema,ctx,false,false)?;None
+        } else {
+            Some(if allow_duplicate_schema_keys {copy_schema_json(schema,ctx,true)?}
+                else if finite_binary64_admission {copy_schema_json(schema,ctx,false)?}
+                else {copy_json(schema,ctx)?})
+        };
         let shared = if eligible { construction_catalogue(resources, ctx)? } else { None };
         let new_catalogue = shared.is_none();
         let shared_resources = if let Some(shared) = shared { SchemaBacking::Shared(shared) } else {
@@ -1664,6 +1776,27 @@ impl CompiledSchema {
         SchemaBacking::Shared(admitted)
         } else { SchemaBacking::Owned(SchemaResources { entries: owned }) }
         };
+        let mut root = None;
+        if share_candidate {
+            if let SchemaBacking::Shared(catalogue) = &shared_resources {
+                for (ordinal, (retrieval, candidate)) in catalogue.entries.iter().enumerate() {
+                    if SchemaRoot::same_anchor_free_role(schema,retrieval,ctx)? && construction_equal(schema, candidate, ctx)? {
+                        ctx.charge_work(1, Utf16::default())?;
+                        root = Some(SchemaRoot::Catalogue(Arc::clone(catalogue), ordinal));
+                        break;
+                    }
+                }
+            }
+        }
+        let schema = if let Some(root) = root { root } else {
+            let value=if let Some(root)=root_copy {root} else {
+                // A catalogue deduplication/role mismatch may conservatively
+                // prevent sharing. Root admission already ran first; copying
+                // here repeats checks rather than borrowing an unproved tree.
+                copy_schema_json(schema,ctx,false)?
+            };
+            SchemaRoot::publish(value, eligible, ctx)?
+        };
         if eligible {
             if let Some(state) = ctx.schema_construction.clone() {
                 let count = state.borrow().completed.len();
@@ -1674,7 +1807,7 @@ impl CompiledSchema {
                     // catalogue comparison established the same admitted object.
                     if limits == ctx.limits() && prior.dialect == dialect
                         && matches!(&shared_resources, SchemaBacking::Shared(catalogue) if prior.resources.shares(catalogue))
-                        && construction_equal(&prior.schema, &schema, ctx)? {
+                        && construction_equal(&*prior.schema, &schema, ctx)? {
                         return prior.construction_copy(schema, ctx);
                     }
                 }
@@ -1684,6 +1817,8 @@ impl CompiledSchema {
             schema,
             resources: shared_resources,
             cold_resource_index: None,
+            owner_plans: None,
+            owner_lineage: None,
             dialect,
             strict,
             root_keyword_policy,
@@ -1698,18 +1833,24 @@ impl CompiledSchema {
             python_resource_roots: std::collections::BTreeMap::new(),
             dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
         };
-        if eligible { compiled.cold_resource_index = ColdResourceIndex::build(&compiled, ctx)?; }
+        if eligible {
+            compiled.cold_resource_index = ColdResourceIndex::build(&compiled, ctx)?;
+            ctx.charge_work(1, Utf16::default())?;
+            compiled.owner_plans = Some(Arc::new(OwnerPlans::default()));
+            ctx.charge_work(1,Utf16::default())?;
+            compiled.owner_lineage = Some(Arc::new(()));
+        }
         if apply_local_reference_gate {
-            validate_local_reference_gate(&compiled.schema, &Utf16::default(), ctx)?;
+            validate_local_reference_gate(&*compiled.schema, &Utf16::default(), ctx)?;
         }
         let (root_origin,root_scope)=if eligible {
-            construction_index::origin(&compiled.schema,dialect,ctx)?
+            construction_index::origin(&*compiled.schema,dialect,ctx)?
         } else {
-            (schema_origin_path(&compiled.schema),schema_id(&compiled.schema)
+            (schema_origin_path(&*compiled.schema),schema_id(&*compiled.schema)
                 .map(|id|resolve_schema_uri(dialect,"",&id).unwrap_or(id)).unwrap_or_default())
         };
         ctx.with_constructor_site("ctor.preflight-root", |ctx| compiled.preflight(
-            &compiled.schema,
+            &*compiled.schema,
             &root_origin,
             &root_scope,
             0,
@@ -1728,7 +1869,7 @@ impl CompiledSchema {
             if eligible {
                 ctx.charge_work(root_origin.len().min(root_path.len()).saturating_add(1), Utf16::default())?;
                 if root_origin.units()==root_path.as_slice()
-                    && construction_equal(&compiled.schema,resource,ctx)? { continue; }
+                    && construction_equal(&*compiled.schema,resource,ctx)? { continue; }
             }
             ctx.with_constructor_site("ctor.preflight-catalogue", |ctx| compiled.preflight(
                 resource,
@@ -1740,10 +1881,10 @@ impl CompiledSchema {
                 &mut BTreeSet::new(),
             ))?;
         }
-        if get(&compiled.schema, "$schema").is_none()
-            || declared_dialect(&compiled.schema).is_some()
+        if get(&*compiled.schema, "$schema").is_none()
+            || declared_dialect(&*compiled.schema).is_some()
         {
-            validate_schema_against_metaschema(&compiled.schema, dialect, regex_profile, ctx)?;
+            validate_schema_against_metaschema(&*compiled.schema, dialect, regex_profile, ctx)?;
         }
         if eligible {
             if let Some(state) = ctx.schema_construction.clone() {
@@ -1753,8 +1894,10 @@ impl CompiledSchema {
                         state.borrow_mut().catalogues.push((ctx.limits(), Arc::clone(catalogue)));
                     }
                 }
-                let schema_copy = copy_schema_json(&compiled.schema, ctx, false)?;
-                let completed = compiled.construction_copy(schema_copy, ctx)?;
+                // This exact admitted root and catalogue already own immutable
+                // backing. Retaining a completed proof needs no second tree.
+                ctx.charge_work(1, Utf16::default())?;
+                let completed = compiled.construction_copy(compiled.schema.clone(), ctx)?;
                 ctx.charge_work(1, Utf16::default())?;
                 state.borrow_mut().completed.push((ctx.limits(), Arc::new(completed)));
             }
@@ -1808,6 +1951,13 @@ impl CompiledSchema {
         };
         self.evaluate_admitted_codegen_value(&value, codegen_errors, ctx)
     }
+    /// Crate-owned Engine snapshot: constructed only by copy_json or the
+    /// checked Python core snapshot in the SAME Context/lifetime. No wire flag
+    /// or caller hash can select this path. Generic compilers keep admission.
+    pub(crate) fn validate_owned_core_snapshot(&self,value:&Value,ctx:&mut Context<'_>) -> Result<Vec<StructuralError>,EngineError> {
+        if self.owner_plans.is_none() { return self.validate(value,ctx); }
+        ctx.with_work_phase("native-schema-validation",|ctx|self.evaluate_admitted_codegen_value(value,false,ctx))
+    }
     /// Internal JSON.parse projection of an already admitted NativeJsonTree.
     /// Native JSON tokens may overflow binary64; AJV with strict=false sees
     /// those as infinities. Public schema/carrier admission stays finite-only.
@@ -1831,16 +1981,23 @@ impl CompiledSchema {
         codegen_errors: bool,
         ctx: &mut Context<'_>,
     ) -> Result<Vec<StructuralError>, EngineError> {
+        if self.owner_plans.is_some() {
+            return ctx.with_evaluation_paths(|ctx| self.evaluate_admitted_codegen_value_inner(value,codegen_errors,ctx));
+        }
+        self.evaluate_admitted_codegen_value_inner(value,codegen_errors,ctx)
+    }
+    fn evaluate_admitted_codegen_value_inner(&self, value:&Value, codegen_errors:bool, ctx:&mut Context<'_>) -> Result<Vec<StructuralError>,EngineError> {
         ctx.charge_work(1, Utf16::default())?;
         let mut errors = Vec::new();
         let mut evaluated = Evaluated::default();
         if self.cold_resource_index.is_some() {
             evaluated.dynamic_scope=DynamicScope::shared(ctx)?;
         }
+        if self.owner_plans.is_some() { evaluated.property_delta=Some(PropertyDelta::new(ctx)?); }
         evaluated.codegen_errors = codegen_errors;
         evaluated.keyword_policy = self.root_keyword_policy;
         self.eval(
-            &self.schema,
+            &*self.schema,
             value,
             &Utf16::default(),
             &Utf16::from("#"),
@@ -1872,6 +2029,12 @@ impl CompiledSchema {
         mode: EvaluationMode,
         ctx: &mut Context<'_>,
     ) -> Result<EvaluationOutcome, EngineError> {
+        if self.owner_plans.is_some() {
+            return ctx.with_evaluation_paths(|ctx| self.evaluate_instance_with_mode_inner(value,mode,ctx));
+        }
+        self.evaluate_instance_with_mode_inner(value,mode,ctx)
+    }
+    fn evaluate_instance_with_mode_inner<T:InstanceView>(&self,value:&T,mode:EvaluationMode,ctx:&mut Context<'_>) -> Result<EvaluationOutcome,EngineError> {
         let mut errors = Vec::new();
         let mut evaluated = Evaluated::default();
         if self.cold_resource_index.is_some() {
@@ -1880,7 +2043,7 @@ impl CompiledSchema {
         evaluated.mode = mode;
         evaluated.keyword_policy = self.root_keyword_policy;
         let result = self.eval(
-            &self.schema,
+            &*self.schema,
             value,
             &Utf16::default(),
             &Utf16::from("#"),
@@ -1932,8 +2095,8 @@ impl CompiledSchema {
         if origin.is_empty() {
             return Ok(inherited);
         }
-        if schema_id_metered(&self.schema, ctx, schema_path)?.as_deref() == Some(origin.as_str()) {
-            return self.explicit_keyword_policy(&self.schema, inherited, ctx);
+        if schema_id_metered(&*self.schema, ctx, schema_path)?.as_deref() == Some(origin.as_str()) {
+            return self.explicit_keyword_policy(&*self.schema, inherited, ctx);
         }
         for (id, resource) in &self.resources.entries {
             ctx.charge_work(id.len(), schema_path.clone())?;
@@ -1948,7 +2111,7 @@ impl CompiledSchema {
             }
         }
         if let Some(resource) =
-            find_embedded_resource(&self.schema, &origin, self.dialect, ctx, schema_path)?
+            find_embedded_resource(&*self.schema, &origin, self.dialect, ctx, schema_path)?
         {
             return self.explicit_keyword_policy(resource, inherited, ctx);
         }
@@ -2345,6 +2508,10 @@ impl CompiledSchema {
         path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<(&'a Value, Utf16, bool), EngineError> {
+        if let Some(plans)=&self.owner_plans { return plans.resolve_eval(self,reference,path,ctx); }
+        self.resolve_eval_ref_unplanned(reference,path,ctx)
+    }
+    fn resolve_eval_ref_unplanned<'a>(&'a self,reference:&Value,path:&Utf16,ctx:&mut Context<'_>) -> Result<(&'a Value,Utf16,bool),EngineError> {
         let (target, target_path) = self.resolve_ref(reference, path, ctx).map_err(|error| {
             if matches!(self.regex_profile, RegexProfile::Python(_))
                 && error.code == "SCHEMA_REF_UNRESOLVED"
@@ -2375,8 +2542,8 @@ impl CompiledSchema {
                     id_applied=std::ptr::eq(root,target);
                     return Ok((target,target_path,id_applied));
                 }
-                let mut root = (schema_id(&self.schema).as_deref() == Some(origin.as_str()))
-                    .then_some(&self.schema);
+                let mut root = (schema_id(&*self.schema).as_deref() == Some(origin.as_str()))
+                    .then_some(&*self.schema);
                 if root.is_none() {
                     for (uri, value) in &self.resources.entries {
                         ctx.charge_work(uri.len().saturating_add(1), Utf16::default())?;
@@ -2387,7 +2554,7 @@ impl CompiledSchema {
                     }
                 }
                 if root.is_none() {
-                    root = find_embedded_resource(&self.schema, &origin, self.dialect, ctx, path)?;
+                    root = find_embedded_resource(&*self.schema, &origin, self.dialect, ctx, path)?;
                 }
                 if root.is_none() {
                     for (_, value) in &self.resources.entries {
@@ -2538,7 +2705,7 @@ impl CompiledSchema {
         let mut current = if let Some(index) = resource {
             self.resources.entries.get(index).map(|(_, v)| v)
         } else {
-            Some(&self.schema)
+            Some(&*self.schema)
         }
         .ok_or_else(|| schema_error(&Utf16::default(), "Python source resource is unavailable"))?;
         let mut path = self.python_resource_display_path(current, ctx)?;
@@ -2598,7 +2765,7 @@ impl CompiledSchema {
             }
             Ok(None)
         }
-        if let Some(node) = find(&self.schema, address, ctx)? {
+        if let Some(node) = find(&*self.schema, address, ctx)? {
             return Ok(node);
         }
         for (_, root) in &self.resources.entries {
@@ -2657,6 +2824,15 @@ impl CompiledSchema {
         scope_override: Option<&str>,
         ctx: &mut Context<'_>,
     ) -> Result<(&'a Value, Utf16), EngineError> {
+        if let Some(plans) = &self.owner_plans {
+            return plans.resolve(self,reference,path,scope_override,ctx);
+        }
+        self.resolve_ref_unplanned(reference,path,scope_override,ctx)
+    }
+    fn resolve_ref_unplanned<'a>(
+        &'a self, reference: &Value, path: &Utf16,
+        scope_override: Option<&str>, ctx: &mut Context<'_>,
+    ) -> Result<(&'a Value, Utf16), EngineError> {
         ctx.with_constructor_site("ctor.reference", |ctx| {
         ctx.charge_work_u64(
             path.len() as u64 + btree_index_lookup_work(self.python_reference_targets.len()) + 1,
@@ -2693,7 +2869,7 @@ impl CompiledSchema {
             let mut current = if let Some(index) = target.resource {
                 self.resources.entries.get(index).map(|(_, value)| value)
             } else {
-                Some(&self.schema)
+                Some(&*self.schema)
             }
             .ok_or_else(|| schema_error(path, "Python source reference resource is unavailable"))?;
             let mut target_path = self.python_resource_display_path(current, ctx)?;
@@ -2771,12 +2947,12 @@ impl CompiledSchema {
                     .ok()
                     .and_then(|p| p.split_once('#').map(|(id, _)| id.to_owned()))
                     .filter(|origin| !origin.is_empty())
-                    .or_else(|| schema_id(&self.schema))
+                    .or_else(|| schema_id(&*self.schema))
             })
             .unwrap_or_default();
         let effective_base = if base.is_empty() {
             if current_origin.is_empty() {
-                schema_id(&self.schema).unwrap_or_default()
+                schema_id(&*self.schema).unwrap_or_default()
             } else {
                 current_origin
             }
@@ -2792,14 +2968,14 @@ impl CompiledSchema {
             })?
         };
         let indexed_root=if let Some(index)=&self.cold_resource_index {
-            if effective_base.is_empty() {Some(&self.schema)}
+            if effective_base.is_empty() {Some(&*self.schema)}
             else {index.lookup_text(&effective_base,ctx)?.map(|root|index.root(self,root))}
         } else {None};
         let root = if let Some(root)=indexed_root {root}
         else if effective_base.is_empty() {
-            &self.schema
-        } else if schema_id(&self.schema).as_deref() == Some(effective_base.as_str()) {
-            &self.schema
+            &*self.schema
+        } else if schema_id(&*self.schema).as_deref() == Some(effective_base.as_str()) {
+            &*self.schema
         } else {
             let mut selected = None;
             for (id, value) in &self.resources.entries {
@@ -2811,7 +2987,7 @@ impl CompiledSchema {
             }
             if selected.is_none() {
                 selected =
-                    find_embedded_resource(&self.schema, &effective_base, self.dialect, ctx, path)?;
+                    find_embedded_resource(&*self.schema, &effective_base, self.dialect, ctx, path)?;
             }
             if selected.is_none() {
                 for (id, value) in &self.resources.entries {
@@ -3011,6 +3187,15 @@ impl CompiledSchema {
         self.eval_resolved(schema, data, ip, sp, depth, ctx, out, evaluated, false)
     }
 
+    fn effective_frame_unplanned(&self,schema:&Value,sp:&Utf16,id_already_applied:bool,ctx:&mut Context<'_>) -> Result<Utf16,EngineError> {
+        if self.cold_resource_index.is_some() && self.indexed_path_unchanged(schema,sp,id_already_applied,ctx)? {
+            ctx.charge_work(sp.clone_work(),Utf16::default())?;
+            Ok(sp.clone())
+        } else if id_already_applied {
+            ctx.charge_work(sp.clone_work(),Utf16::default())?;
+            Ok(sp.clone())
+        } else { self.effective_schema_path(schema,sp,ctx) }
+    }
     fn eval_resolved<T: InstanceView>(
         &self,
         schema: &Value,
@@ -3026,14 +3211,10 @@ impl CompiledSchema {
         let mut guard = EvaluationScope::enter(evaluated,ctx)?;
         let evaluated = &mut *guard.state;
         let previous_policy = evaluated.keyword_policy;
-        let scoped_path = if self.cold_resource_index.is_some()
-            && self.indexed_path_unchanged(schema,sp,id_already_applied,ctx)? {
-            std::borrow::Cow::Borrowed(sp)
-        } else if id_already_applied {
-            ctx.charge_work(sp.len(), Utf16::default())?;
-            std::borrow::Cow::Owned(sp.clone())
+        let scoped_path = if let Some(plans)=&self.owner_plans {
+            std::borrow::Cow::Owned(plans.frame(self,schema,sp,id_already_applied,ctx)?)
         } else {
-            std::borrow::Cow::Owned(self.effective_schema_path(schema,sp,ctx)?)
+            std::borrow::Cow::Owned(self.effective_frame_unplanned(schema,sp,id_already_applied,ctx)?)
         };
         if let Some(index)=&self.cold_resource_index {
             let root=if let Some(prior)=evaluated.resolved_resource {
@@ -3292,10 +3473,10 @@ impl CompiledSchema {
         )?;
         let text = path.to_utf8().unwrap_or_default();
         let base = text.split('#').next().unwrap_or("");
-        let resource = if base.is_empty() || schema_id(&self.schema).as_deref() == Some(base) {
-            Some(&self.schema)
+        let resource = if base.is_empty() || schema_id(&*self.schema).as_deref() == Some(base) {
+            Some(&*self.schema)
         } else {
-            let mut found = find_embedded_resource(&self.schema, base, self.dialect, ctx, path)?;
+            let mut found = find_embedded_resource(&*self.schema, base, self.dialect, ctx, path)?;
             if found.is_none() {
                 for (uri, supplied) in &self.resources.entries {
                     ctx.charge_work(uri.len().saturating_add(1), path.clone())?;
@@ -3320,7 +3501,7 @@ impl CompiledSchema {
 
     fn indexed_path_unchanged(&self,schema:&Value,path:&Utf16,id_applied:bool,ctx:&mut Context<'_>) -> Result<bool,EngineError> {
         ctx.charge_work(1,Utf16::default())?;
-        if id_applied || std::ptr::eq(schema,&self.schema) {return Ok(true);}
+        if id_applied || std::ptr::eq(schema,&*self.schema) {return Ok(true);}
         let id=match construction_index::get_ascii_metered(schema,"$id",ctx,path)? {
             some @ Some(_)=>some,
             None=>construction_index::get_ascii_metered(schema,"id",ctx,path)?,
@@ -3345,7 +3526,7 @@ impl CompiledSchema {
                 path.len() as u64 + btree_index_lookup_work(self.python_resource_roots.len()) + 1,
                 Utf16::default(),
             )?;
-            if std::ptr::eq(schema, &self.schema) {
+            if std::ptr::eq(schema, &*self.schema) {
                 return Ok(path.clone());
             }
             if let Some(resource) = self
@@ -3367,7 +3548,7 @@ impl CompiledSchema {
             path.len() as u64 * 3 + id_len as u64 * 4 + 4,
             Utf16::default(),
         )?;
-        if std::ptr::eq(schema, &self.schema) {
+        if std::ptr::eq(schema, &*self.schema) {
             return Ok(path.clone());
         }
         let Some(id) = schema_id(schema) else {
@@ -3378,7 +3559,7 @@ impl CompiledSchema {
             .ok()
             .and_then(|text| text.split_once('#').map(|(base, _)| base.to_owned()))
             .filter(|base| !base.is_empty())
-            .or_else(|| schema_id(&self.schema))
+            .or_else(|| schema_id(&*self.schema))
             .unwrap_or_default();
         ctx.charge_work_u64(parent.len() as u64 + id.len() as u64 + 1, Utf16::default())?;
         let effective = resolve_schema_uri(self.dialect, &parent, &id).unwrap_or(id);
@@ -4205,7 +4386,7 @@ impl CompiledSchema {
                                 sub,
                                 v,
                                 &child_path,
-                                &self.schema_pointer(&kp, name, ctx)?,
+                                &*self.schema_pointer(&kp, name, ctx)?,
                                 depth + 1,
                                 ctx,
                                 out,
@@ -4250,7 +4431,7 @@ impl CompiledSchema {
                                 Utf16::default(),
                             )?;
                             let required_schema_path =
-                                append_schema_path(&property_schema_path, "required");
+                                self.eval_schema_step(&property_schema_path, "required",ctx)?;
                             precharge_string_diagnostic(
                                 ctx,
                                 &required_instance_path,
@@ -4344,7 +4525,7 @@ impl CompiledSchema {
                                     sub,
                                     v,
                                     &self.instance_pointer(ip, k, ctx)?,
-                                    &self.schema_pointer(&kp, name, ctx)?,
+                                    &*self.schema_pointer(&kp, name, ctx)?,
                                     depth + 1,
                                     ctx,
                                     out,
@@ -4481,7 +4662,7 @@ impl CompiledSchema {
             (sp.len() as u64).saturating_add("properties".len() as u64 + 1),
             Utf16::default(),
         )?;
-        let declared_path = append_schema_path(sp, "properties");
+        let declared_path = self.eval_schema_step(sp, "properties",ctx)?;
         if let Some(properties) = member(members, "properties") {
             for property_index in 0..properties.object_len().unwrap_or(0) {
                 let Some((property_name, _)) = properties.object_entry(property_index) else {
@@ -4514,7 +4695,7 @@ impl CompiledSchema {
                 )?;
                 ctx.charge_work(1, key_path.clone())?;
                 let pattern_path = self.schema_pointer(
-                    &append_schema_path(sp, "patternProperties"),
+                    &self.eval_schema_step(sp, "patternProperties",ctx)?,
                     pattern,
                     ctx,
                 )?;
@@ -4851,7 +5032,7 @@ impl CompiledSchema {
                         evaluated.insert_item(i, ctx, ip)?;
                         let mut child_annotations = evaluated.child(ctx, ip)?;
                         let child_path = append_instance_path(ip, &Utf16::from(i.to_string()));
-                        let child_schema_path = append_schema_path(&kp, &i.to_string());
+                        let child_schema_path = self.eval_schema_step(&kp, &i.to_string(),ctx)?;
                         let error_start = out.len();
                         self.eval(
                             s,
@@ -4982,7 +5163,7 @@ impl CompiledSchema {
                 evaluated.insert_item(i, ctx, ip)?;
                 let mut child_annotations = evaluated.child(ctx, ip)?;
                 let child_path = append_instance_path(ip, &Utf16::from(i.to_string()));
-                let child_schema_path = append_schema_path(&kp, &i.to_string());
+                let child_schema_path = self.eval_schema_step(&kp, &i.to_string(),ctx)?;
                 let error_start = out.len();
                 if let Err(error) = self.eval(
                     s,
@@ -5397,7 +5578,7 @@ impl CompiledSchema {
                     schema,
                     data,
                     ip,
-                    &append_schema_path(kp, &index.to_string()),
+                    &self.eval_schema_step(kp, &index.to_string(),ctx)?,
                     depth + 1,
                     ctx,
                     &mut branch_errors,
@@ -5453,7 +5634,7 @@ impl CompiledSchema {
                             predicate.annotation_scan = false;
                             predicate.collect_annotations = false;
                             let mut errors = Vec::new();
-                            let child_schema_path = append_schema_path(&kp, &index.to_string());
+                            let child_schema_path = self.eval_schema_step(&kp, &index.to_string(),ctx)?;
                             self.eval(
                                 subschema,
                                 data,
@@ -5513,7 +5694,7 @@ impl CompiledSchema {
                             ("else", member(members, "else"))
                         };
                         if let Some(branch) = branch {
-                            let branch_path = append_schema_path(sp, name);
+                            let branch_path = self.eval_schema_step(sp, name,ctx)?;
                             self.collect_schema_annotations(
                                 &branch_path,
                                 branch,
@@ -5538,7 +5719,7 @@ impl CompiledSchema {
                             schema,
                             data,
                             ip,
-                            &append_schema_path(&kp, &index.to_string()),
+                            &self.eval_schema_step(&kp, &index.to_string(),ctx)?,
                             depth + 1,
                             ctx,
                             out,
@@ -5583,7 +5764,7 @@ impl CompiledSchema {
                             s,
                             data,
                             ip,
-                            &append_schema_path(&kp, &i.to_string()),
+                            &self.eval_schema_step(&kp, &i.to_string(),ctx)?,
                             depth + 1,
                             ctx,
                             &mut e,
@@ -5715,7 +5896,7 @@ impl CompiledSchema {
                         sub,
                         data,
                         ip,
-                        &append_schema_path(sp, name),
+                        &self.eval_schema_step(sp, name,ctx)?,
                         depth + 1,
                         ctx,
                         &mut branch_errors,
@@ -6180,7 +6361,7 @@ impl CompiledSchema {
                 .saturating_add(sp.len() as u64);
         }
         ctx.charge_work_u64(work, Utf16::default())?;
-        let false_schema_path = append_schema_path(sp, false_schema_segment);
+        let false_schema_path = self.eval_schema_step(sp, false_schema_segment,ctx)?;
         push_ctx_precharged(
             out,
             ip,
@@ -6242,6 +6423,10 @@ impl CompiledSchema {
         let Value::Object(members) = schema else {
             return Ok(());
         };
+        let node_plan=match &self.owner_plans {
+            Some(plans)=>plans.node(self,schema,sp,evaluated.codegen_errors,ctx)?,
+            None=>None,
+        };
         let mut annotation_scan_complete = false;
         // Ajv reports keyword errors in source/schema insertion order.
         let has_ref = matches!(
@@ -6250,16 +6435,16 @@ impl CompiledSchema {
                 | SchemaDialect::Draft4
                 | SchemaDialect::Draft6
                 | SchemaDialect::Draft7
-        ) && members
+        ) && node_plan.as_ref().map_or_else(|| members
             .iter()
-            .any(|(k, _)| k.to_utf8().ok().as_deref() == Some("$ref"));
+            .any(|(k, _)| k.to_utf8().ok().as_deref() == Some("$ref")),|plan|plan.has_ref);
         let mut unevaluated_properties: Option<(&Value, Utf16)> = None;
         let mut unevaluated_items: Option<(&Value, Utf16)> = None;
         // Opt-in compiler presentation follows the pinned ECMAScript
         // validator's keyword groups, rather than schema insertion order.
         // The normal/Python path allocates no ordering vector and retains its
         // original traversal, callbacks and diagnostic order.
-        let compiler_order = if evaluated.codegen_errors {
+        let compiler_order = if node_plan.is_some() { None } else if evaluated.codegen_errors {
             ctx.charge_work(members.len().saturating_mul(128), Utf16::default())?;
             let mut order = Vec::with_capacity(members.len());
             for (index, (key, _)) in members.iter().enumerate() {
@@ -6272,12 +6457,19 @@ impl CompiledSchema {
             None
         };
         'keywords: for slot in 0..members.len() {
-            let index = compiler_order.as_ref().map_or(slot, |order| order[slot].1);
+            let order=node_plan.as_ref().and_then(|p|p.compiler_order.as_ref()).or(compiler_order.as_ref());
+            let index = order.map_or(slot, |order| order[slot].1);
             let (key, rule) = &members[index];
-            let Ok(keyword) = key.to_utf8() else { continue };
+            let keyword=if let Some(plan)=&node_plan {
+                let Some(keyword)=plan.keywords[index].as_deref() else { continue };
+                std::borrow::Cow::Borrowed(keyword)
+            } else {
+                let Ok(keyword)=key.to_utf8() else { continue };
+                std::borrow::Cow::Owned(keyword)
+            };
             if evaluated.annotation_scan
                 && !matches!(
-                    keyword.as_str(),
+                    keyword.as_ref(),
                     "$ref"
                         | "$dynamicRef"
                         | "$recursiveRef"
@@ -6304,7 +6496,7 @@ impl CompiledSchema {
             // A keyword known to a newer dialect is an inert extension in
             // older consumer dialects. In particular, do not execute a
             // Draft 2020/2019 arm merely because it shares the same spelling.
-            if !active_keywords(self.dialect).contains(&keyword.as_str())
+            if !active_keywords(self.dialect).contains(&keyword.as_ref())
                 || !evaluated.keyword_policy.keyword_is_active(&keyword)
             {
                 continue;
@@ -6312,7 +6504,7 @@ impl CompiledSchema {
             if has_ref
                 && keyword != "$ref"
                 && !matches!(
-                    keyword.as_str(),
+                    keyword.as_ref(),
                     "$schema"
                         | "$id"
                         | "$comment"
@@ -6326,7 +6518,7 @@ impl CompiledSchema {
                 continue;
             }
             let kp = self.schema_pointer(sp, key, ctx)?;
-            let result = match keyword.as_str() {
+            let result = match keyword.as_ref() {
                 "unevaluatedProperties" | "unevaluatedItems" => self.eval_keyword_annotations(
                     schema,
                     members,
@@ -6911,7 +7103,7 @@ fn validate_schema_against_metaschema(
         let validators = state.borrow().meta_validators.clone();
         for (limits, prior_dialect, validator) in validators {
             if limits == ctx.limits() && prior_dialect == dialect {
-                let errors = validator.validate_instance(schema, ctx)?;
+                let errors = validator.evaluate_admitted_codegen_value(schema, false, ctx)?;
                 if let Some(error) = errors.first() {
                     return Err(EngineError::new("SCHEMA_INVALID", error.instance_path.clone(), error.message.clone()));
                 }
@@ -7002,9 +7194,11 @@ fn validate_schema_against_metaschema(
         }
     };
     let mut meta = CompiledSchema {
-        schema: meta_schema,
+        schema: SchemaRoot::publish(meta_schema, state.is_some(), ctx)?,
         resources: SchemaBacking::Owned(SchemaResources { entries: resources }),
         cold_resource_index: None,
+        owner_plans: None,
+        owner_lineage: None,
         dialect,
         strict: false,
         root_keyword_policy: KeywordPolicy::DRAFT2020,
@@ -7019,8 +7213,15 @@ fn validate_schema_against_metaschema(
         python_resource_roots: std::collections::BTreeMap::new(),
         dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
     };
-    if state.is_some() { meta.cold_resource_index = ColdResourceIndex::build(&meta, ctx)?; }
-    let errors = meta.validate_instance(schema, ctx)?;
+    if state.is_some() {
+        meta.cold_resource_index = ColdResourceIndex::build(&meta, ctx)?;
+        ctx.charge_work(1, Utf16::default())?;
+        meta.owner_plans = Some(Arc::new(OwnerPlans::default()));
+        ctx.charge_work(1,Utf16::default())?;
+        meta.owner_lineage = Some(Arc::new(()));
+    }
+    let errors = if state.is_some() {meta.evaluate_admitted_codegen_value(schema,false,ctx)?}
+        else {meta.validate_instance(schema,ctx)?};
     if let Some(error) = errors.first() {
         return Err(EngineError::new(
             "SCHEMA_INVALID",
@@ -7571,102 +7772,57 @@ fn schema_error(path: &Utf16, msg: &str) -> EngineError {
 /// Copy a schema carrier while preserving distinct Python dictionary keys
 /// that happen to project to the same UTF-16 sequence. Source-origin member
 /// metadata disambiguates them in the shared Python-profile evaluator.
-fn copy_schema_json(
-    value: &Value,
-    ctx: &mut Context<'_>,
-    allow_duplicate_keys: bool,
-) -> Result<Value, EngineError> {
-        ctx.with_constructor_site("ctor.admission-copy", |ctx| {
-    fn visit(
-        value: &Value,
-        path: &Utf16,
-        depth: usize,
-        count: &mut usize,
-        ctx: &mut Context<'_>,
-        allow_duplicate_keys: bool,
-    ) -> Result<Value, EngineError> {
-        ctx.charge_work(1, path.clone())?;
-        *count = count.checked_add(1).ok_or_else(|| {
-            EngineError::new("LIMIT", path.clone(), "Schema value count overflow")
-        })?;
-        ctx.check_tree_value_count(*count, path.clone())?;
-        if depth > ctx.limits().max_depth {
-            return Err(EngineError::new(
-                "LIMIT",
-                path.clone(),
-                "Schema nesting depth exceeded",
-            ));
-        }
-        match value {
-            Value::Null => Ok(Value::Null),
-            Value::Bool(value) => Ok(Value::Bool(*value)),
-            Value::Number(value) if allow_duplicate_keys => Value::number(*value, path.clone()),
-            Value::Number(value) if value.is_finite() => Ok(Value::Number(*value)),
-            Value::Number(_) => Err(EngineError::new(
-                "NUMBER",
-                path.clone(),
-                "JSON Schema numbers must be finite binary64 values",
-            )),
-            Value::String(value) => {
-                ctx.charge_work(value.len(), path.clone())?;
-                Ok(Value::String(value.clone()))
-            }
-            Value::Array(items) => {
-                ctx.charge_work(items.len(), path.clone())?;
-                let mut copied = Vec::with_capacity(items.len());
-                for (index, item) in items.iter().enumerate() {
-                    copied.push(visit(
-                        item,
-                        &append_schema_pointer(path, &Utf16::from(index.to_string())),
-                        depth + 1,
-                        count,
-                        ctx,
-                        allow_duplicate_keys,
-                    )?);
-                }
-                Ok(Value::Array(copied))
-            }
-            Value::Object(members) => {
-                ctx.charge_work(members.len(), path.clone())?;
-                let mut copied = Vec::with_capacity(members.len());
-                let mut keys = BTreeSet::new();
-                for (key, value) in members {
-                    ctx.charge_work(key.len(), path.clone())?;
-                    if !allow_duplicate_keys && !keys.insert(key.units().to_vec()) {
-                        return Err(EngineError::new(
-                            "DUPLICATE_KEY",
-                            path.clone(),
-                            "Duplicate object key",
-                        ));
+fn copy_schema_json(value:&Value,ctx:&mut Context<'_>,allow_duplicate_keys:bool)->Result<Value,EngineError> {
+    Ok(schema_json_with_mode(value,ctx,allow_duplicate_keys,true)?.expect("copying admission publishes a value"))
+}
+fn schema_json_with_mode(value:&Value,ctx:&mut Context<'_>,allow_duplicate_keys:bool,copy:bool)->Result<Option<Value>,EngineError> {
+    ctx.with_constructor_site(if copy {"ctor.admission-copy"} else {"ctor.plan-work"},|ctx| {
+        fn visit(value:&Value,path:&Utf16,depth:usize,count:&mut usize,ctx:&mut Context<'_>,allow_duplicate_keys:bool,copy:bool)->Result<Option<Value>,EngineError> {
+            ctx.charge_work(1,path.clone())?;
+            *count=count.checked_add(1).ok_or_else(||EngineError::new("LIMIT",path.clone(),"Schema value count overflow"))?;
+            ctx.check_tree_value_count(*count,path.clone())?;
+            if depth>ctx.limits().max_depth {return Err(EngineError::new("LIMIT",path.clone(),"Schema nesting depth exceeded"));}
+            match value {
+                Value::Null=>Ok(copy.then_some(Value::Null)),
+                Value::Bool(v)=>Ok(copy.then_some(Value::Bool(*v))),
+                Value::Number(v) if allow_duplicate_keys=>{let admitted=Value::number(*v,path.clone())?;Ok(if copy {Some(admitted)} else {None})},
+                Value::Number(v) if v.is_finite()=>Ok(copy.then_some(Value::Number(*v))),
+                Value::Number(_)=>Err(EngineError::new("NUMBER",path.clone(),"JSON Schema numbers must be finite binary64 values")),
+                Value::String(v)=>{
+                    if copy {ctx.charge_work(v.len(),path.clone())?;Ok(Some(Value::String(v.clone())))} else {Ok(None)}
+                },
+                Value::Array(items)=>{
+                    if copy {ctx.charge_work(items.len(),path.clone())?;}
+                    let mut copied=if copy {Some(Vec::with_capacity(items.len()))} else {None};
+                    for (i,item) in items.iter().enumerate() {
+                        if !copy {ctx.charge_work(path.len().saturating_add(81),Utf16::default())?;}
+                        let next=visit(item,&append_schema_pointer(path,&Utf16::from(i.to_string())),depth+1,count,ctx,allow_duplicate_keys,copy)?;
+                        if let Some(copied)=&mut copied {copied.push(next.expect("copy mode"));}
                     }
-                    copied.push((
-                        key.clone(),
-                        visit(
-                            value,
-                            &append_schema_pointer(path, key),
-                            depth + 1,
-                            count,
-                            ctx,
-                            allow_duplicate_keys,
-                        )?,
-                    ));
-                }
-                Ok(Value::Object(copied))
+                    Ok(copied.map(Value::Array))
+                },
+                Value::Object(members)=>{
+                    if copy {ctx.charge_work(members.len(),path.clone())?;}
+                    let mut copied=if copy {Some(Vec::with_capacity(members.len()))} else {None};
+                    let mut keys=BTreeSet::new();
+                    for (key,value) in members {
+                        if copy {ctx.charge_work(key.len(),path.clone())?;}
+                        else {ctx.charge_work_u64((key.len() as u64+1).saturating_mul(tree_compare_bound(keys.len())).saturating_add(1),path.clone())?;}
+                        if !allow_duplicate_keys && !keys.insert(key.units().to_vec()) {return Err(EngineError::new("DUPLICATE_KEY",path.clone(),"Duplicate object key"));}
+                        // Preserve the legacy copy's key-before-child effect.
+                        let copied_key=if copy {Some(key.clone())} else {None};
+                        if !copy {ctx.charge_work(path.len().saturating_add(key.len().saturating_mul(3)).saturating_add(1),Utf16::default())?;}
+                        let next=visit(value,&append_schema_pointer(path,key),depth+1,count,ctx,allow_duplicate_keys,copy)?;
+                        if let Some(copied)=&mut copied {copied.push((copied_key.expect("copy key"),next.expect("copy mode")));}
+                    }
+                    Ok(copied.map(Value::Object))
+                },
             }
         }
-    }
-    let mut count = 0;
-    visit(
-        value,
-        &Utf16::from("#"),
-        0,
-        &mut count,
-        ctx,
-        allow_duplicate_keys,
-    )
+        visit(value,&Utf16::from("#"),0,&mut 0,ctx,allow_duplicate_keys,copy)
+    })
+}
 
-        })
-    }
 fn schema_id_metered(
     schema: &Value,
     ctx: &mut Context<'_>,
@@ -11334,7 +11490,7 @@ mod draft2020_dynamic_annotation_regressions {
 
         // Run the nested validation from the cached anchor materialization
         // callback, after cache lookup and with the exact discovered path cost.
-        let resource_address = &compiled.schema as *const Value as usize;
+        let resource_address = &*compiled.schema as *const Value as usize;
         let expected_anchor_charge = {
             let cache = compiled
                 .dynamic_anchor_cache

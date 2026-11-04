@@ -32,6 +32,11 @@ jobs:
       EXPECTED_SOURCE: ${{ inputs.source_sha }}
       EXPECTED_RESOURCE_PINS: ${{ inputs.resource_pins_sha256 }}
     steps:
+      - name: Record one job clock before setup without native work
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'INSPECTOR_JOB_MONOTONIC_START=%s\n' "$(python3 -I -B -c 'import time; print(time.monotonic())')" >> "$GITHUB_ENV"
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.sha }}
@@ -54,13 +59,19 @@ jobs:
           printf 'PYO3_PYTHON=%s\n' "$(command -v python)" >> "$GITHUB_ENV"
           python -I -B tools/qualify_inspector_construction_batch.py --root "$GITHUB_WORKSPACE" --out "$out" --source "$EXPECTED_SOURCE" bind
           python -I -B tests/qualification/test_inspector_construction_batch.py 2>&1 | tee "$out/census-pure.log"
+          python -I -B tests/qualification/test_inspector_owned_plan_controller.py 2>&1 | tee "$out/owned-plan-pure.log"
           python -I -B tests/qualification/test_inspector_combined_budget.py 2>&1 | tee "$out/combined-pure.log"
           python -I -B tests/qualification/test_inspector_attribution_lanes.py 2>&1 | tee "$out/lanes-pure.log"
           python -I -B tests/qualification/test_inspector_attribution_controls.py 2>&1 | tee "$out/control-pure.log"
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.90.0
+      - name: Bind producer to remaining original job work deadline
+        id: budget-producer
+        shell: bash
+        run: python -I -B tools/inspector_stage_budget.py --stage producer
       - name: One genuine changed-source wheel producer with unchanged locked hook
+        timeout-minutes: ${{ fromJSON(steps.budget-producer.outputs.minutes) }}
         shell: bash
         run: |
           set -euo pipefail
@@ -68,24 +79,34 @@ jobs:
           cargo --version > "$BATCH_OUT/cargo.txt"
           python -m pip --isolated install --index-url https://pypi.org/simple 'build==1.3.0' 'hatchling==1.27.0' 2>&1 | tee "$BATCH_OUT/build-tools.log"
           python -m build --no-isolation --wheel --outdir "$BATCH_OUT/wheels" python 2>&1 | tee "$BATCH_OUT/build.log"
+          cargo metadata --locked --format-version 1 > "$BATCH_OUT/cargo-metadata.json"
+          cargo tree --locked -p umf-core-python -p umf-cli --features umf-core-python/native-postgresql,umf-cli/native-postgresql -e features > "$BATCH_OUT/producer-cargo-features.txt"
           python -I -B tools/qualify_inspector_construction_batch.py --root "$GITHUB_WORKSPACE" --out "$BATCH_OUT" --source "$EXPECTED_SOURCE" producer
           wheel=("$BATCH_OUT/wheels/"*.whl)
           test "${#wheel[@]}" = 1
           printf 'BATCH_WHEEL=%s\n' "${wheel[0]}" >> "$GITHUB_ENV"
-      - name: Compile selected affected Rust targets once without executing tests
+      - name: Retain genuine wheel and source BEFORE target compilation
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-inspector-early-producer-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/inspector-feasibility/wheels/*
+            ${{ runner.temp }}/inspector-feasibility/producer.json
+            ${{ runner.temp }}/inspector-feasibility/source-inputs.tar
+            ${{ runner.temp }}/inspector-feasibility/source-and-payload.json
+            ${{ runner.temp }}/inspector-feasibility/build.log
+            ${{ runner.temp }}/inspector-feasibility/rustc.txt
+            ${{ runner.temp }}/inspector-feasibility/cargo.txt
+            ${{ runner.temp }}/inspector-feasibility/cargo-metadata.json
+            ${{ runner.temp }}/inspector-feasibility/producer-cargo-features.txt
+          if-no-files-found: error
+          retention-days: 90
+      - name: Bind install to remaining original job work deadline
+        id: budget-install
         shell: bash
-        run: |
-          set -euo pipefail
-          mkdir "$BATCH_OUT/cargo-tests"
-          cargo metadata --locked --format-version 1 > "$BATCH_OUT/cargo-metadata.json"
-          cargo tree --locked -p umf-core-python -p umf-cli --features umf-core-python/native-postgresql,umf-cli/native-postgresql -e features > "$BATCH_OUT/producer-cargo-features.txt"
-          cargo test --locked --release -p umf-core --features native-postgresql --lib --test consumer_schema --test schema_python_recursive_resource_scope --test resource_cache --test sol_generation_schema_order_review --no-run --message-format=json > "$BATCH_OUT/cargo-tests/core.jsonl" 2> "$BATCH_OUT/cargo-tests/core.log"
-          cargo test --locked --release -p umf-core-wire --features native-postgresql --lib --test codegen_context --test access_inspection_public --no-run --message-format=json > "$BATCH_OUT/cargo-tests/wire.jsonl" 2> "$BATCH_OUT/cargo-tests/wire.log"
-          cargo test --locked --release -p umf-codegen --features umf-core/native-postgresql --lib --test access_binding_schema_override --test single_set --no-run --message-format=json > "$BATCH_OUT/cargo-tests/codegen.jsonl" 2> "$BATCH_OUT/cargo-tests/codegen.log"
-          # PyO3 extension-module deliberately omits libpython linkage. Only
-          # the binding TEST executable needs the selected interpreter library.
-          python -I -B tools/qualify_inspector_combined_budget.py --root "$GITHUB_WORKSPACE" --out "$BATCH_OUT" binding-compile
+        run: python -I -B tools/inspector_stage_budget.py --stage install
       - name: Fresh normal resolver install pipcheck and actual loaded ownership
+        timeout-minutes: ${{ fromJSON(steps.budget-install.outputs.minutes) }}
         shell: bash
         run: |
           set -euo pipefail
@@ -95,7 +116,41 @@ jobs:
           "$candidate_python" -m pip --isolated check | tee "$BATCH_OUT/pip-check.log"
           "$candidate_python" -m pip --isolated freeze > "$BATCH_OUT/freeze.txt"
           "$candidate_python" -I -B tools/run_inspector_attribution_lanes.py --controller "$GITHUB_WORKSPACE" --owner "$GITHUB_WORKSPACE" --wheel "$BATCH_WHEEL" --out "$BATCH_OUT" --controller-sha "$EXPECTED_SOURCE" --producer-pins "$BATCH_OUT/producer.json" --mode identity
-      - name: Authenticate compiled census before executing exactly the Rust191 selection
+      - name: Bind cost to remaining original job work deadline
+        id: budget-cost
+        shell: bash
+        run: python -I -B tools/inspector_stage_budget.py --stage cost
+      - name: Strict cold constructor and complete public51 COST gate before any test-target compilation
+        id: cost-gate
+        timeout-minutes: ${{ fromJSON(steps.budget-cost.outputs.minutes) }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$BATCH_OUT/consumer/bin/python" -I -B tools/run_inspector_attribution_lanes.py --controller "$GITHUB_WORKSPACE" --owner "$GITHUB_WORKSPACE" --wheel "$BATCH_WHEEL" --out "$BATCH_OUT" --controller-sha "$EXPECTED_SOURCE" --producer-pins "$BATCH_OUT/producer.json" --mode cost 2>&1 | tee "$BATCH_OUT/cost-driver.log"
+          printf 'passed=true\n' >> "$GITHUB_OUTPUT"
+      - name: Bind compile to remaining original job work deadline
+        id: budget-compile
+        shell: bash
+        run: python -I -B tools/inspector_stage_budget.py --stage compile
+      - name: Compile selected affected Rust targets once without executing tests
+        if: success() && steps.cost-gate.outputs.passed == 'true'
+        timeout-minutes: ${{ fromJSON(steps.budget-compile.outputs.minutes) }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir "$BATCH_OUT/cargo-tests"
+          cargo test --locked --release -p umf-core --features native-postgresql --lib --test consumer_schema --test schema_python_recursive_resource_scope --test resource_cache --test sol_generation_schema_order_review --no-run --message-format=json > "$BATCH_OUT/cargo-tests/core.jsonl" 2> "$BATCH_OUT/cargo-tests/core.log"
+          cargo test --locked --release -p umf-core-wire --features native-postgresql --lib --test codegen_context --test access_inspection_public --no-run --message-format=json > "$BATCH_OUT/cargo-tests/wire.jsonl" 2> "$BATCH_OUT/cargo-tests/wire.log"
+          cargo test --locked --release -p umf-codegen --features umf-core/native-postgresql --lib --test access_binding_schema_override --test single_set --no-run --message-format=json > "$BATCH_OUT/cargo-tests/codegen.jsonl" 2> "$BATCH_OUT/cargo-tests/codegen.log"
+          # PyO3 extension-module deliberately omits libpython linkage. Only
+          # the binding TEST executable needs the selected interpreter library.
+          python -I -B tools/qualify_inspector_combined_budget.py --root "$GITHUB_WORKSPACE" --out "$BATCH_OUT" binding-compile
+      - name: Bind rust to remaining original job work deadline
+        id: budget-rust
+        shell: bash
+        run: python -I -B tools/inspector_stage_budget.py --stage rust
+      - name: Authenticate compiled census before executing exactly the Rust214 selection
+        timeout-minutes: ${{ fromJSON(steps.budget-rust.outputs.minutes) }}
         shell: bash
         run: |
           set -euo pipefail
@@ -103,17 +158,27 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
+      - name: Bind saga to remaining original job work deadline
+        id: budget-saga
+        shell: bash
+        run: python -I -B tools/inspector_stage_budget.py --stage saga
       - name: Existing installed-wheel public Saga19 only without SDK browser or CLI producers
+        timeout-minutes: ${{ fromJSON(steps.budget-saga.outputs.minutes) }}
         shell: bash
         run: |
           set -euo pipefail
           bun install --frozen-lockfile --ignore-scripts
           UMF_SAGA_PYTHON="$BATCH_OUT/consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$BATCH_WHEEL" UMF_SAGA_HOST_ID=python UMF_SAGA_RESULT_PATH="$BATCH_OUT/public-saga19.json" bun scripts/saga-portable/other-hosts.ts python 2>&1 | tee "$BATCH_OUT/public-saga19.log"
+      - name: Bind lanes to remaining original job work deadline
+        id: budget-lanes
+        shell: bash
+        run: python -I -B tools/inspector_stage_budget.py --stage lanes
       - name: Fresh legacy8 boundary27 strict cold before independent diagnostic and required aggregation
+        timeout-minutes: ${{ fromJSON(steps.budget-lanes.outputs.minutes) }}
         shell: bash
         run: |
           set -euo pipefail
-          "$BATCH_OUT/consumer/bin/python" -I -B tools/run_inspector_attribution_lanes.py --controller "$GITHUB_WORKSPACE" --owner "$GITHUB_WORKSPACE" --wheel "$BATCH_WHEEL" --out "$BATCH_OUT" --controller-sha "$EXPECTED_SOURCE" --producer-pins "$BATCH_OUT/producer.json" 2>&1 | tee "$BATCH_OUT/lanes-driver.log"
+          "$BATCH_OUT/consumer/bin/python" -I -B tools/run_inspector_attribution_lanes.py --controller "$GITHUB_WORKSPACE" --owner "$GITHUB_WORKSPACE" --wheel "$BATCH_WHEEL" --out "$BATCH_OUT" --controller-sha "$EXPECTED_SOURCE" --producer-pins "$BATCH_OUT/producer.json" --cost-gate "$BATCH_OUT/cost-gate.json" 2>&1 | tee "$BATCH_OUT/lanes-driver.log"
       - name: Retain all actual partial proofs original identities and genuine wheel bytes
         if: always()
         uses: actions/upload-artifact@v4

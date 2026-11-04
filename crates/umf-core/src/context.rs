@@ -53,6 +53,7 @@ impl WorkPath<'_> {
 /// Per-invocation limits and explicit host capabilities. The context owns all
 /// counters; no global or ambient runtime state is consulted.
 pub struct Context<'a> {
+    pub(crate) evaluation_paths: Option<std::rc::Rc<std::cell::RefCell<crate::schema::owned_plans::EvaluationPaths>>>,
     limits: Limits,
     profile: ResourceProfile,
     charged_work: u64,
@@ -157,7 +158,21 @@ impl Drop for AggregateTextScope<'_, '_> {
     }
 }
 
+struct EvaluationPathScope<'ctx,'cap> {
+    context: &'ctx mut Context<'cap>,
+    prior: Option<std::rc::Rc<std::cell::RefCell<crate::schema::owned_plans::EvaluationPaths>>>,
+}
+impl Drop for EvaluationPathScope<'_, '_> {
+    fn drop(&mut self) { self.context.evaluation_paths = self.prior.take(); }
+}
 impl<'a> Context<'a> {
+    pub(crate) fn with_evaluation_paths<T>(&mut self, operation:impl FnOnce(&mut Self)->Result<T,EngineError>) -> Result<T,EngineError> {
+        self.charge_work(1,Utf16::default())?;
+        let prior = self.evaluation_paths.replace(std::rc::Rc::new(std::cell::RefCell::new(Default::default())));
+        let scope = EvaluationPathScope { context:self, prior };
+        operation(&mut *scope.context)
+    }
+
     pub fn ordinary() -> Self {
         Self::with_limits(ResourceProfile::Cooperative, Limits::ordinary())
             .expect("the cooperative profile is available")
@@ -189,6 +204,7 @@ impl<'a> Context<'a> {
             fallible_clock: None,
             deadline_ms: None,
             schema_construction: None,
+            evaluation_paths: None,
             work_phase_observer: None,
             constructor_root_observer: None,
         })

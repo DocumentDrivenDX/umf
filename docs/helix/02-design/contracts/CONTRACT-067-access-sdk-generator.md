@@ -505,3 +505,124 @@ lookup or the original qualified resolver, not assume a previous frame's owner.
 The full twenty pinned metaschemas, including the Draft3/4 trailing-`#` aliases,
 MUST remain present and must exercise actual indexed evaluation in qualification.
 No resource IDs or source bytes are relabeled to establish this eligibility.
+
+## Owned evaluation plans — private source proposal
+
+The selected recovery plan's ER1–ER3 owner work is source preparation, governed
+by plan SHA-256 `3ea92388d753cf3a36f7caeb573fb7ec9ef2474755ab040d2e53f2156e8ecb16`.
+The current combined scope and cost-first ordering are governed by
+`651fa2adc05318526949ed27ccd5b1507f7ef3bec5309a5b85f694ee9f185239`.
+ER0 is NOT selected for this batch; the current converter and its controls remain
+byte-identical. Neither
+selection establishes a measured cold-construction or complete-call allowance.
+The constructor, inspection surface, resources and cumulative1M limits above
+remain unchanged. Published assets and their original source identities remain
+immutable.
+
+An exact immutable admitted catalogue MAY back both a compiled root and its
+completed compilation proof. Selecting that backing MUST follow full ordered,
+bit-preserving root equality and the existing complete compiler/profile/limits
+eligibility. Ownership by itself MUST NOT replace numeric, duplicate-key,
+unknown-keyword, metaschema, policy or registration validation. Copies still
+required to assemble another catalogue or expose a public snapshot MUST remain
+in the charge inventory; they MUST NOT be described as eliminated.
+
+A private owner plan MAY retain the original resolver's successful static result
+as a root ordinal plus structural child indices and its exact diagnostic path.
+The key MUST distinguish the complete reference text, source path and explicit
+scope override, and reuse MUST check effective limits and the immutable owner
+lineage. Move-stable ordinals MUST name nodes in that owner; addresses, IDs,
+caller hashes and diagnostic spelling alone MUST NOT establish target identity.
+First resolution, target location, member/keyword metadata, frame normalization,
+all map comparisons, capacity, allocation and publication MUST remain charged
+before effect. A missing or unsupported target MUST retain the original resolver's
+ordered refusal; an unsuccessful plan MUST NOT be published as success. Distinct
+retrieval/authored/resolved identities and selector precedence MUST remain exact.
+
+Static fallback metadata MAY be reused for dynamic or recursive references, but
+the active target MUST still be selected from the current evaluation scope.
+Inherited policy and branch ancestry MUST remain live. Changed catalogues,
+profiles, source origins or limits MUST NOT acquire another owner's proof.
+Generic Python source-origin evaluation retains its qualified path.
+
+An Engine-owned document snapshot produced by its existing checked admission
+MAY enter the same interpreter without another identical instance copy. Only the
+private owned-snapshot call sites may select this path; public values, arbitrary
+`InstanceView` implementations and request fields MUST NOT grant it. Core
+numeric/profile and structural checks remain necessary before this borrowed
+entry. Public raw-value validation retains its ordinary admission.
+
+Evaluator path storage MAY share exact immutable UTF-16 buffers and reuse an
+invocation-local escaped-path arena. Equality, ordering and hashing MUST remain
+code-unit based for owned and shared storage, including lone surrogates. Raw
+schema segments and escaped schema/instance pointer segments MUST remain distinct.
+Lookup keys, prefix relocation, escaping, storage and publication MUST be admitted
+before their effects; cache exhaustion MUST use the exact original path builder,
+not reject otherwise admitted data or increase an allowance. State MUST restore
+on return, failure, nested invocation and unwind. Refusal uses already admitted
+path storage; no lazy input-dependent path reconstruction, callback or envelope
+work may follow terminal denial. The existing fixed terminal-header exception
+remains unchanged.
+
+Branch annotations MAY use invocation-owned exact-name symbols and empty
+branch-local deltas for genuinely owned `Value` evaluation. Every symbol MUST be
+established by full authored UTF-16 content, not an object ordinal or hash alone.
+Separate symbol universes MUST re-admit exact text before merging. Generic or
+mutable views retain their qualified annotation path. Child branches already
+start empty; this proposal MUST NOT claim to remove a parent annotation clone.
+Only the existing interpreter's explicit successful merge sites may commit a
+delta. Failed alternatives, `not`, `if`, contains/unevaluated behavior, recursive
+and dynamic scope, error order and authored diagnostic names MUST remain exact.
+All symbol projection/storage, membership, insertion, commit and rollback work
+still performed MUST remain admitted within the same operation.
+
+This candidate adds one closed `unassigned/plan-work` observation slot after the
+historical125 slots and `index-build`:127 total, at most128. It attributes both
+owner-plan lookup and first construction; it MUST NOT imply copying or an
+unmeasured saving. Unknown labels/roles still refuse. Diagnostic event/deadline
+caps and required failure aggregation remain unchanged. A producer proposal MUST
+retain the actual wheel/source before expensive selected-target compilation and
+bound expensive stages against one job clock with retention/cleanup reserve.
+No source parsing, pure control or partial diagnostic substitutes for genuine
+changed-source native controls and all51 cold public combinations at1M.
+
+
+The selected cost-first controller MUST run genuine production, early producer
+retention, normal resolver/pip checks, complete installed RECORD/loaded ownership,
+then unchanged strict cold1M construction and the full public51 cost coverage
+BEFORE compiling test targets. A cost failure MUST retain exact partial receipt,
+identity, first-denial and unexecuted-case evidence, then upload/clean up without
+expensive semantic-target compilation. Only the existing narrowly classified
+public RESOURCE_LIMIT may enter the separately bounded diagnostic; assertion,
+crash or identity failures MUST NOT grant that observation. Diagnostic success
+cannot grant fit or compilation. A cost pass MUST remain explicitly unqualified.
+After it, all214 selected Rust cases,47 Python methods including the51 cold
+combinations, installed Saga19, identities and final required aggregation remain
+mandatory. A later stage consumes authenticated original same-job cost receipts,
+not a public-case replay. Missing/failed semantic results MUST preserve overall
+failure. A missing-only continuation requires separate original-material/source
+review; no automatic retry or implicit target-cache reuse is authorized.
+
+Root/catalogue backing sharing MUST preserve diagnostic and dynamic resource
+roles as well as content. The present conservative sharing gate excludes raw
+anchors/nested identifiers and requires an exact unfragmented authored/retrieval
+role. Unsupported sharing keeps separate backing and full original validation;
+it MUST NOT broaden the existing resource-index eligibility. Root admission MUST
+still precede catalogue admission. Borrowing and copying use one schema admission
+visitor with identical numeric, duplicate, depth/node and diagnostic rules;
+removing the output tree does not authorize removing its required validation.
+
+`Utf16` retains its public method signatures and exact code-unit equality/order/
+hash. Its private storage changes from a vector to owned-or-shared storage; Rust
+layout/size and implementation cost may change. This proposal supplies no binary
+ABI compatibility or old-native-byte reuse claim. Owned constructors, generic
+Python source admission and the protected retained converter still create owned
+storage. Ordinary copy/clone/detach charging behavior on those routes remains
+unchanged. Only selected owner-generated evaluator paths use shared storage.
+A shared clone retains existing storage; explicit `into_units` may detach an
+aliased buffer and allocate, so it is NOT a universally allocation-free API and
+has no new implicit Context allowance. Selected plan publication uses the
+pre-admitted `into_shared` move instead. No selected terminal-control path calls
+`into_units`; Context moves existing path storage and native refusal bypasses
+input-dependent envelope work. Callers composing shared error paths into other
+Rust APIs do not acquire qualification or free detach/append work from this claim.

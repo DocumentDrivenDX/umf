@@ -40,6 +40,7 @@ pub(super) struct ColdResourceIndex {
 fn ascii_key(key: &Utf16, name: &str) -> bool {
     key.len() == name.len() && key.units().iter().copied().eq(name.bytes().map(u16::from))
 }
+pub(super) fn ascii_key_for_owner(key:&Utf16,name:&str)->bool { ascii_key(key,name) }
 pub(super) fn get_ascii<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     let Value::Object(members) = value else {
         return None;
@@ -61,7 +62,7 @@ pub(super) fn get_ascii_metered<'a>(
     if members.is_empty() {
         return Ok(None);
     }
-    ctx.charge_work(path.len(), Utf16::default())?;
+    ctx.charge_work(path.clone_work(), Utf16::default())?;
     let mut scratch = path.clone();
     for (key, value) in members {
         ctx.charge_work_with_path(key.len().min(name.len()).saturating_add(1), &mut scratch)?;
@@ -318,7 +319,7 @@ impl ColdResourceIndex {
 
             for ordinal in 0..count {
                 let (location, value, retrieval) = if ordinal == 0 {
-                    (RootLocation::Root, &owner.schema, None)
+                    (RootLocation::Root, &*owner.schema, None)
                 } else {
                     let (uri, value) = &owner.resources.entries[ordinal - 1];
                     (RootLocation::Catalogue(ordinal - 1), value, Some(uri))

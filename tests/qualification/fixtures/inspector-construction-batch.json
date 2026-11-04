@@ -1,6 +1,6 @@
 {
   "profile": "umf.private-construction-batch-census/1",
-  "rustCaseCount": 191,
+  "rustCaseCount": 214,
   "pythonMethodCount": 47,
   "testSHA256": "2f6a35343298ccfa356acf21d559c80c93fc9a8e78de395f9d3fbe92d75e528e",
   "resourcePinsSHA256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
@@ -8,104 +8,104 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/context.rs",
-      "sourceSHA256": "a5073febb98d9e3db0731ed3b7bdae150adf85a3ce6e27ad3f4f43fab98a06f7",
+      "sourceSHA256": "fd9ea99c1a44048da20c89f4e54372b4c498e47c36ed112d9770306b38b56520",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 19,
       "cases": [
         {
           "name": "context::tests::aggregate_text_scope_caps_and_restores_without_resetting_controls_or_counters",
-          "line": 529,
+          "line": 545,
           "module": "tests"
         },
         {
           "name": "context::tests::trusted_schema_depth_scope_preserves_counters_and_restores_on_error_and_unwind",
-          "line": 564,
+          "line": 580,
           "module": "tests"
         },
         {
           "name": "context::tests::tagged_transport_allowance_keeps_one_meter_and_restores_ordinary_limits",
-          "line": 584,
+          "line": 600,
           "module": "tests"
         },
         {
           "name": "context::tests::temporary_catalog_and_ordinary_phases_keep_the_same_wide_counter",
-          "line": 621,
-          "module": "tests"
-        },
-        {
-          "name": "context::tests::catalog_value_allowance_restores_limits_after_error_and_unwind",
           "line": 637,
           "module": "tests"
         },
         {
+          "name": "context::tests::catalog_value_allowance_restores_limits_after_error_and_unwind",
+          "line": 653,
+          "module": "tests"
+        },
+        {
           "name": "context::tests::tagged_transport_scope_preserves_cancellation_and_deadline_hooks",
-          "line": 656,
+          "line": 672,
           "module": "tests"
         },
         {
           "name": "context::tests::tagged_transport_scope_restores_all_limits_after_error_and_unwind",
-          "line": 678,
+          "line": 694,
           "module": "tests"
         },
         {
           "name": "context::tests::cooperative_failure_origin_survives_semantic_error_lookalikes",
-          "line": 696,
+          "line": 712,
           "module": "tests"
         },
         {
           "name": "context::tests::transport_usage_can_continue_across_response_contexts",
-          "line": 715,
+          "line": 731,
           "module": "tests"
         },
         {
           "name": "context::tests::transport_responses_share_one_work_budget_but_new_calls_reset_it",
-          "line": 741,
+          "line": 757,
           "module": "tests"
         },
         {
           "name": "context::tests::native_cancellation_and_deadline_have_control_origin",
-          "line": 798,
+          "line": 814,
           "module": "tests"
         },
         {
           "name": "context::tests::work_accumulator_crosses_u32_without_a_platform_limit",
-          "line": 823,
+          "line": 839,
           "module": "tests"
         },
         {
           "name": "context::tests::work_meter_still_observes_each_charge_above_u32_total",
-          "line": 832,
-          "module": "tests"
-        },
-        {
-          "name": "context::tests::wide_work_notifications_have_portable_chunks",
           "line": 848,
           "module": "tests"
         },
         {
-          "name": "context::tests::wide_work_stops_on_a_meter_refusal_before_later_chunks",
-          "line": 863,
+          "name": "context::tests::wide_work_notifications_have_portable_chunks",
+          "line": 864,
           "module": "tests"
         },
         {
-          "name": "context::tests::unobserved_wide_charge_needs_no_callback_loop_and_overflow_refuses",
+          "name": "context::tests::wide_work_stops_on_a_meter_refusal_before_later_chunks",
           "line": 879,
           "module": "tests"
         },
         {
+          "name": "context::tests::unobserved_wide_charge_needs_no_callback_loop_and_overflow_refuses",
+          "line": 895,
+          "module": "tests"
+        },
+        {
           "name": "context::work_phase_observer_tests::scopes_preserve_charges_callback_order_and_prior_work",
-          "line": 897,
+          "line": 913,
           "module": "work_phase_observer_tests"
         },
         {
           "name": "context::work_phase_observer_tests::first_denial_stays_charged_and_stops_before_later_work",
-          "line": 915,
+          "line": 931,
           "module": "work_phase_observer_tests"
         },
         {
           "name": "context::work_phase_observer_tests::metadata_restores_on_unwind_without_resetting_work",
-          "line": 935,
+          "line": 951,
           "module": "work_phase_observer_tests"
         }
       ],
@@ -115,39 +115,39 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/value.rs",
-      "sourceSHA256": "5f37637a4c1c8ad1afd5202e8dd5c88768968e530a51a72b69fda1090fb17d70",
+      "sourceSHA256": "5f2604d62c79a11b9f9dc4fdc05605ecd5bb478fe3f98159b5292bb178faa80a",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 6,
       "cases": [
         {
           "name": "value::completed_result_copy_tests::follows_typescript_nodewise_limit_path_and_charges_copy_work",
-          "line": 51,
+          "line": 101,
           "module": "completed_result_copy_tests"
         },
         {
           "name": "value::completed_result_copy_tests::meter_failure_stops_copy_and_text_is_not_clamped_by_text_limit",
-          "line": 78,
+          "line": 128,
           "module": "completed_result_copy_tests"
         },
         {
           "name": "value::completed_result_copy_tests::rejects_duplicate_keys_and_invalid_numbers_preserving_raw_utf16_paths",
-          "line": 127,
+          "line": 177,
           "module": "completed_result_copy_tests"
         },
         {
           "name": "value::borrowed_validation_tests::borrowed_validation_matches_copy_errors_and_metering",
-          "line": 553,
+          "line": 603,
           "module": "borrowed_validation_tests"
         },
         {
           "name": "value::owned_admission_owner_tests::owned_admission_retains_allocation_and_identical_ordinary_admission_charges",
-          "line": 588,
+          "line": 638,
           "module": "owned_admission_owner_tests"
         },
         {
           "name": "value::owned_admission_owner_tests::owned_admission_keeps_duplicate_and_first_denial_refusals",
-          "line": 603,
+          "line": 653,
           "module": "owned_admission_owner_tests"
         }
       ],
@@ -157,229 +157,229 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/schema.rs",
-      "sourceSHA256": "c0c3fe3dc36454519fa7fbba87faa43fa24054a4ad8f51b3cde81acd1bb8ee53",
+      "sourceSHA256": "0675c0f8cfb1d3ab090bffa2d7a5753fab1ca213f6f81e3e070277b021ef6d64",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 44,
       "cases": [
         {
           "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
-          "line": 10203,
+          "line": 10359,
           "module": "finite_binary64_schema_admission_tests"
         },
         {
           "name": "schema::finite_binary64_schema_admission_tests::schema_instance_rejects_nonfinite_and_preserves_multiple_of_overflow_result",
-          "line": 10239,
+          "line": 10395,
           "module": "finite_binary64_schema_admission_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::absent_validation_vocabulary_keeps_applicators_and_ignores_inactive_malformed_keywords",
-          "line": 10346,
+          "line": 10502,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::referenced_standard_resource_reactivates_validation_vocabulary",
-          "line": 10364,
+          "line": 10520,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::referenced_custom_resource_disables_validation_for_its_nested_schemas",
-          "line": 10386,
+          "line": 10542,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::fragment_reference_uses_standard_enclosing_resource_policy",
-          "line": 10404,
+          "line": 10560,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::fragment_reference_uses_custom_enclosing_resource_policy",
-          "line": 10422,
+          "line": 10578,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::omitted_applicator_and_unevaluated_vocabularies_leave_keywords_inert",
-          "line": 10440,
+          "line": 10596,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::custom_dialect_requires_explicit_well_formed_supported_vocabulary_declaration",
-          "line": 10458,
-          "module": "custom_vocabulary_policy_tests"
-        },
-        {
-          "name": "schema::custom_vocabulary_policy_tests::nested_custom_dialect_declarations_must_resolve_and_be_supported",
-          "line": 10504,
-          "module": "custom_vocabulary_policy_tests"
-        },
-        {
-          "name": "schema::custom_vocabulary_policy_tests::optional_vocabulary_uri_conversion_is_charged_on_each_validation",
-          "line": 10537,
-          "module": "custom_vocabulary_policy_tests"
-        },
-        {
-          "name": "schema::custom_vocabulary_policy_tests::unrelated_resource_lookup_conversion_is_charged_on_each_validation",
-          "line": 10569,
-          "module": "custom_vocabulary_policy_tests"
-        },
-        {
-          "name": "schema::custom_vocabulary_policy_tests::custom_metaschema_member_search_is_charged_on_each_validation",
           "line": 10614,
           "module": "custom_vocabulary_policy_tests"
         },
         {
+          "name": "schema::custom_vocabulary_policy_tests::nested_custom_dialect_declarations_must_resolve_and_be_supported",
+          "line": 10660,
+          "module": "custom_vocabulary_policy_tests"
+        },
+        {
+          "name": "schema::custom_vocabulary_policy_tests::optional_vocabulary_uri_conversion_is_charged_on_each_validation",
+          "line": 10693,
+          "module": "custom_vocabulary_policy_tests"
+        },
+        {
+          "name": "schema::custom_vocabulary_policy_tests::unrelated_resource_lookup_conversion_is_charged_on_each_validation",
+          "line": 10725,
+          "module": "custom_vocabulary_policy_tests"
+        },
+        {
+          "name": "schema::custom_vocabulary_policy_tests::custom_metaschema_member_search_is_charged_on_each_validation",
+          "line": 10770,
+          "module": "custom_vocabulary_policy_tests"
+        },
+        {
           "name": "schema::custom_vocabulary_policy_tests::root_dialect_member_search_is_charged_on_each_validation",
-          "line": 10649,
+          "line": 10805,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::python_resource_work_tests::native_uri_operation_families_match_frozen_cpython_profiles",
-          "line": 10684,
+          "line": 10840,
           "module": "python_resource_work_tests"
         },
         {
           "name": "schema::python_resource_work_tests::native_uri_common_prefix_work_is_admitted_before_comparison",
-          "line": 10712,
+          "line": 10868,
           "module": "python_resource_work_tests"
         },
         {
           "name": "schema::python_resource_work_tests::native_uri_join_admits_all_input_work_before_owned_buffers",
-          "line": 10739,
+          "line": 10895,
           "module": "python_resource_work_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::nested_ids_set_reference_scope_and_annotations_do_not",
-          "line": 10793,
+          "line": 10949,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::retrieved_relative_root_id_is_resolved_once_and_keeps_its_directory",
-          "line": 10808,
+          "line": 10964,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::legacy_absolute_root_and_nested_ids_are_not_joined_as_relative_paths",
-          "line": 10823,
+          "line": 10979,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::reference_resolution_handles_directory_bases_and_urn_local_pointers",
-          "line": 10852,
+          "line": 11008,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::then_else_are_schema_positions_and_cycles_are_bounded",
-          "line": 10869,
+          "line": 11025,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::conflicting_resource_uris_remain_explicit_errors",
-          "line": 10889,
+          "line": 11045,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::static_and_dynamic_refs_resolve_anchors_in_schema_positions",
-          "line": 10902,
+          "line": 11058,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::then_and_else_resources_are_available_to_sibling_refs",
-          "line": 10919,
+          "line": 11075,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::anchor_resolution_skips_nested_resources_with_the_same_anchor",
-          "line": 10937,
+          "line": 11093,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::referenced_relative_id_resource_is_not_rebased_a_second_time",
-          "line": 10951,
+          "line": 11107,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::parent_uri_suffix_is_not_mistaken_for_a_resolved_child_id",
-          "line": 10983,
+          "line": 11139,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::repeated_relative_ids_are_applied_for_direct_nested_evaluation",
-          "line": 11006,
+          "line": 11162,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::anchored_resource_root_does_not_reapply_its_identifier",
-          "line": 11026,
+          "line": 11182,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::anchored_root_in_external_document_keeps_resource_identity",
-          "line": 11040,
+          "line": 11196,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::pointer_target_identifier_scopes_following_references_once",
-          "line": 11059,
+          "line": 11215,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::pointer_entered_dynamic_resource_resets_pointer_scope_at_resource_root",
-          "line": 11083,
+          "line": 11239,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::draft2020_dynamic_scope_uses_active_resource_anchors",
-          "line": 11149,
+          "line": 11305,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::draft2020_unevaluated_keywords_receive_dynamic_reference_annotations",
-          "line": 11163,
+          "line": 11319,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::python_draft2020_keeps_its_per_node_dynamic_anchor_scope",
-          "line": 11181,
+          "line": 11337,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::resource_scope_discovers_dynamic_anchor_under_prefix_items",
-          "line": 11204,
+          "line": 11360,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::dynamic_resource_root_keeps_normalized_relative_id_provenance",
-          "line": 11225,
+          "line": 11381,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::repeated_anchor_free_resource_evaluation_uses_cached_discovery",
-          "line": 11243,
+          "line": 11399,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::dynamic_anchor_cache_does_not_hold_lock_during_host_callbacks",
-          "line": 11318,
+          "line": 11474,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::construction_owner_tests::completed_compile_and_metaschema_sharing_are_local_to_actual_success",
-          "line": 11387,
+          "line": 11543,
           "module": "construction_owner_tests"
         },
         {
           "name": "schema::construction_owner_tests::invalid_schema_publishes_no_catalogue_or_completed_proof",
-          "line": 11411,
+          "line": 11567,
           "module": "construction_owner_tests"
         },
         {
           "name": "schema::construction_owner_tests::terminal_construction_denial_stops_before_reusable_proof",
-          "line": 11488,
+          "line": 11644,
           "module": "construction_owner_tests"
         },
         {
           "name": "schema::construction_owner_tests::metaschema_conversion_precharge_precedes_materializer_and_parser",
-          "line": 11424
+          "line": 11580
         }
       ],
       "reason": "All directly affected existing schema private modules: numeric/source profile, vocabularies, refs/dynamic scope, URI work and cache callbacks; includes3new owner controls once.",
@@ -388,14 +388,14 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/engine.rs",
-      "sourceSHA256": "57dd66087d922c22ae3d529bbdb9db829261db1d98eed97f91913463df7e3019",
+      "sourceSHA256": "869dc72cf0cecc689a365b3202bd55e2182585035b1d1168801d1e74dc2611a9",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 1,
       "cases": [
         {
           "name": "engine::registration_provider_tests::admitted_validation_keeps_structural_refusal_before_provider_access",
-          "line": 1508,
+          "line": 1517,
           "module": "registration_provider_tests"
         }
       ],
@@ -1062,19 +1062,19 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/context.rs",
-      "sourceSHA256": "a5073febb98d9e3db0731ed3b7bdae150adf85a3ce6e27ad3f4f43fab98a06f7",
+      "sourceSHA256": "fd9ea99c1a44048da20c89f4e54372b4c498e47c36ed112d9770306b38b56520",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 2,
       "cases": [
         {
           "name": "context::constructor_observation_tests::constructor_metadata_restores_error_unwind_and_nested_context",
-          "line": 960,
+          "line": 976,
           "module": "constructor_observation_tests"
         },
         {
           "name": "context::constructor_observation_tests::constructor_sites_are_invisible_without_constructor_observer",
-          "line": 990,
+          "line": 1006,
           "module": "constructor_observation_tests"
         }
       ]
@@ -1167,49 +1167,49 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/schema_construction_index.rs",
-      "sourceSHA256": "4469b6808803540caf00f4d4795af48413c891a691f695dd270b8eda968f1a9f",
+      "sourceSHA256": "3bb0269b0d361cd3fbe8927f8a3a7ea7abd666df6055d331b329a7b72bb2d6d5",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 8,
       "cases": [
         {
           "name": "schema::construction_index::owner_tests::actual_index_precharge_denial_precedes_materialization_and_publication",
-          "line": 563,
+          "line": 564,
           "module": "owner_tests"
         },
         {
           "name": "schema::construction_index::semantic_tests::indexed_first_admission_preserves_ordered_errors_and_dynamic_annotations",
-          "line": 614,
+          "line": 615,
           "module": "semantic_tests"
         },
         {
           "name": "schema::construction_index::semantic_tests::relative_and_opaque_nested_ids_select_full_interpreter_without_content_loss",
-          "line": 648,
+          "line": 649,
           "module": "semantic_tests"
         },
         {
           "name": "schema::construction_index::semantic_tests::active_scope_restores_shared_ancestry_policy_and_resource_on_denial_and_unwind",
-          "line": 677,
+          "line": 678,
           "module": "semantic_tests"
         },
         {
           "name": "schema::construction_index::alias_correction_tests::complete_pinned_twenty_catalogue_publishes_index_and_first_evaluation_uses_it",
-          "line": 732,
+          "line": 733,
           "module": "alias_correction_tests"
         },
         {
           "name": "schema::construction_index::alias_correction_tests::lookup_specific_alias_precedence_matches_qualified_interpreter_and_never_uses_ambiguous_frame",
-          "line": 836,
+          "line": 837,
           "module": "alias_correction_tests"
         },
         {
           "name": "schema::construction_index::alias_correction_tests::exact_fragment_ids_are_distinct_and_named_pointer_or_missing_refs_preserve_outcomes",
-          "line": 884,
+          "line": 885,
           "module": "alias_correction_tests"
         },
         {
           "name": "schema::construction_index::alias_correction_tests::aliased_owner_moves_resolve_live_locators_and_clone_retains_qualified_fallback",
-          "line": 952,
+          "line": 953,
           "module": "alias_correction_tests"
         }
       ]
@@ -1254,6 +1254,141 @@
         }
       ],
       "manifest": "bindings/core/python/Cargo.toml"
+    },
+    {
+      "package": "umf-core",
+      "source": "crates/umf-core/src/schema_owned_plan_tests.rs",
+      "sourceSHA256": "1e5a81e4db598945c72ee27fbf4eddff3902cb27d4eea5b6b4ecda915502631a",
+      "target": "lib",
+      "features": "native-postgresql",
+      "caseCount": 14,
+      "cases": [
+        {
+          "name": "schema::owned_plans::tests::planned_pointer_and_unplanned_resolver_have_identical_targets_paths_and_id_flags",
+          "line": 21,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::owner_move_keeps_locator_valid_and_changed_owner_cannot_reuse_it",
+          "line": 42,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::missing_target_refuses_without_publishing_a_successful_plan",
+          "line": 67,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::changed_effective_limits_do_not_accept_a_completed_reference_plan",
+          "line": 80,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::resolver_first_denial_cannot_publish_reference_or_node_metadata",
+          "line": 108,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::escaped_path_arena_matches_legacy_spelling_and_reuses_backing",
+          "line": 137,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::growth_denial_leaves_arena_unmodified_and_has_no_later_callback",
+          "line": 160,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::nested_path_scope_restores_outer_arena_on_error_and_unwind",
+          "line": 181,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::exact_name_symbols_commit_only_selected_branch_and_keep_separate_owners",
+          "line": 209,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::planned_and_unplanned_annotations_and_ordered_errors_match",
+          "line": 230,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::shared_text_keeps_exact_equality_order_hash_and_lone_surrogates",
+          "line": 275,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::a_foreign_owner_cannot_reuse_reference_ordinals_from_another_plan_store",
+          "line": 295,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::reentrant_cache_growth_uses_original_resolver_without_an_underadmitted_search",
+          "line": 317,
+          "module": "tests"
+        },
+        {
+          "name": "schema::owned_plans::tests::dynamic_root_and_catalogue_roles_keep_original_separate_backing",
+          "line": 359,
+          "module": "tests"
+        }
+      ]
+    },
+    {
+      "package": "umf-core",
+      "source": "crates/umf-core/src/schema_owned_plan_independent_tests.rs",
+      "sourceSHA256": "13408f97a6f33e7b6f60897d8137c769cd5bbac531806fa77c3e42d732f1bea7",
+      "target": "lib",
+      "features": "native-postgresql",
+      "caseCount": 9,
+      "cases": [
+        {
+          "name": "schema::owned_plans::independent_tests::pinned_twenty_first_admission_and_real_warm_reference_plans_match_original",
+          "line": 92,
+          "module": "independent_tests"
+        },
+        {
+          "name": "schema::owned_plans::independent_tests::aliases_percent_fragments_nested_ids_and_moves_keep_owner_relative_targets",
+          "line": 217,
+          "module": "independent_tests"
+        },
+        {
+          "name": "schema::owned_plans::independent_tests::limits_catalogue_policy_and_python_origins_do_not_borrow_stale_proofs",
+          "line": 351,
+          "module": "independent_tests"
+        },
+        {
+          "name": "schema::owned_plans::independent_tests::zero_nonstring_and_missing_reference_targets_keep_original_refusals",
+          "line": 434,
+          "module": "independent_tests"
+        },
+        {
+          "name": "schema::owned_plans::independent_tests::first_denial_preserves_error_origin_and_cannot_publish_an_unfinished_plan",
+          "line": 462,
+          "module": "independent_tests"
+        },
+        {
+          "name": "schema::owned_plans::independent_tests::path_arena_preserves_unicode_escaping_collision_keys_and_nested_restoration",
+          "line": 545,
+          "module": "independent_tests"
+        },
+        {
+          "name": "schema::owned_plans::independent_tests::dynamic_scope_uses_current_branch_and_nested_invocations_not_cached_active_target",
+          "line": 651,
+          "module": "independent_tests"
+        },
+        {
+          "name": "schema::owned_plans::independent_tests::interpreter_annotation_commit_rollback_and_ordered_errors_match_original",
+          "line": 761,
+          "module": "independent_tests"
+        },
+        {
+          "name": "schema::owned_plans::independent_tests::property_deltas_commit_only_selected_branches_and_re_admit_other_root_names",
+          "line": 839,
+          "module": "independent_tests"
+        }
+      ]
     }
   ],
   "python": [
@@ -1425,10 +1560,12 @@
     "reason": "Separate public malformed Saga registry path must remain covered, not inferred from dedicated Rust6 or old public19 binary."
   },
   "fileHashes": {
-    ".github/workflows/inspector-retained-attribution.yml": "5dae440122ae54eec7d6b6a765b696242335aea36973f9caa5526eae14fc896f",
+    ".github/workflows/inspector-retained-attribution.yml": "72bf564846cc28b7dc6f94900ee442d80cac6e54758022c1f319f788b4b3c1d3",
     "Cargo.lock": "29a94a49f7471b7802b0ea866331abff1c55337401cd1cd5bcf29b2956fa084e",
     "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
+    "bindings/core/python/src/lib.rs": "f9f13ec21ff2501de5fd3c41af524fb954c083a76d5be6240704be7ea87a9aa7",
     "bindings/core/python/src/python_value.rs": "c80505abafb9435bcc993cdb102408eb769f95fd7b9fd882a89819549954931a",
+    "bindings/core/python/src/python_value_path_tests.rs": "9fc48c0904b0e365c1fa062c2a0b9b7fcc1b3eb0255eafdb7c08dda08b9d46da",
     "bindings/core/python/src/retained_codegen.rs": "5979d849ba1c1d5a3d753f7cdf298b221534a0201bec82feb943fd761abe79da",
     "crates/umf-codegen/src/access/inspection.rs": "fcb78d0f9f7db04eadd9e2d2d1f7df513bc656cf0b1500b7dfcf6bcd6f3ce3d0",
     "crates/umf-codegen/src/access/mod.rs": "4e34e229fed211628b4b9441108865cb4e0a4720969f8207c7fa075488997836",
@@ -1442,27 +1579,39 @@
     "crates/umf-core-wire/src/lib.rs": "90aee471ae0ea6a5688357a646b875a7228cb4477f431bf180397908f8803b96",
     "crates/umf-core-wire/tests/access_inspection_public.rs": "168400ad197a8c1ce94a85113c919a449ac3d3ef38345b4005bb46f93c0be23c",
     "crates/umf-core-wire/tests/codegen_context.rs": "5afd8223d9eb160963a7feac50980ef455fe3dab2c827a1d96d52726901a34fc",
-    "crates/umf-core/src/context.rs": "a5073febb98d9e3db0731ed3b7bdae150adf85a3ce6e27ad3f4f43fab98a06f7",
+    "crates/umf-core/src/context.rs": "fd9ea99c1a44048da20c89f4e54372b4c498e47c36ed112d9770306b38b56520",
     "crates/umf-core/src/context_construction_tests.rs": "a7081434d41db02a5b785ab172374e124e8ffa4539e367d0ab46da4200dc82fc",
-    "crates/umf-core/src/engine.rs": "57dd66087d922c22ae3d529bbdb9db829261db1d98eed97f91913463df7e3019",
+    "crates/umf-core/src/context_path_tests.rs": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
+    "crates/umf-core/src/engine.rs": "869dc72cf0cecc689a365b3202bd55e2182585035b1d1168801d1e74dc2611a9",
     "crates/umf-core/src/full_modules.rs": "f011690138a0933897c2e681b35a844199c4b57c6711357ef3b45599594434a0",
     "crates/umf-core/src/lib.rs": "ff74184e0d01e1367742fac195218fd03db3dcf01449c947b183f1ae9a5e927f",
     "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
     "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
     "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-    "crates/umf-core/src/schema.rs": "c0c3fe3dc36454519fa7fbba87faa43fa24054a4ad8f51b3cde81acd1bb8ee53",
+    "crates/umf-core/src/schema.rs": "0675c0f8cfb1d3ab090bffa2d7a5753fab1ca213f6f81e3e070277b021ef6d64",
+    "crates/umf-core/src/schema_annotation_delta.rs": "e6c07f15750cbbd06b1158943bdeb8743be7a09f986d552ebf6c0df21623458d",
+    "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
+    "crates/umf-core/src/schema_construction_index.rs": "3bb0269b0d361cd3fbe8927f8a3a7ea7abd666df6055d331b329a7b72bb2d6d5",
     "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
+    "crates/umf-core/src/schema_evaluation_scope.rs": "e9aa392db244adb2312101e25f37ef5f2d8bdee6825a0b497bda2ddd9413297c",
     "crates/umf-core/src/schema_metas.json": "cecc3fdf8f3977662e71b53c20d6f954c62bec1cc2e96db20cbc9f895cf47195",
-    "crates/umf-core/src/value.rs": "5f37637a4c1c8ad1afd5202e8dd5c88768968e530a51a72b69fda1090fb17d70",
+    "crates/umf-core/src/schema_owned_plan_independent_tests.rs": "13408f97a6f33e7b6f60897d8137c769cd5bbac531806fa77c3e42d732f1bea7",
+    "crates/umf-core/src/schema_owned_plan_tests.rs": "1e5a81e4db598945c72ee27fbf4eddff3902cb27d4eea5b6b4ecda915502631a",
+    "crates/umf-core/src/schema_owned_plans.rs": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+    "crates/umf-core/src/value.rs": "5f2604d62c79a11b9f9dc4fdc05605ecd5bb478fe3f98159b5292bb178faa80a",
     "crates/umf-core/tests/consumer_schema.rs": "2abfb36696a66d603366c38870826fdbb94b0f5d368d08833ae7ae2a8b030c0a",
     "crates/umf-core/tests/resource_cache.rs": "86db330e51951c6759117d181712adbc7fd3cac3a98c00d84af41fb68e06d1f7",
     "crates/umf-core/tests/schema_python_recursive_resource_scope.rs": "2a344459e7db33ab9a872d65f6833f081805453ca6d1ea88ae6ccc90a7758fd4",
     "crates/umf-core/tests/sol_generation_schema_order_review.rs": "861f46a4c4c5c9ee161e4616e8142a9cc3c81ecbcfed3a880537e96dd3fc8db8",
-    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "6ee5df641e88b07071a908be9178cc451d2d0a1826463cbb11ed6368ce674b44",
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "a15c9c9d1cbf5a6931162c1a3810bd342571ed71a9506aed641b435fd194b2a7",
+    "docs/helix/04-build/evidence/inspector-combined-budget-source.md": "e1b6f424b200132cf76b56834339bb00e161d80f36e8bae09f7b3eb0ef47e08a",
+    "docs/helix/04-build/evidence/retained-owned-evaluation-plans/operation-map.json": "12b957647d8abbbfc451f5b7535ef68c44f41a2145d2db89c59c808eddf66109",
     "fixtures/saga/portable.json": "6f67fdfe6fba205436490f8b64f55f58e9bdae315d19148d10de799c05a3f1a7",
     "python/hatch_build.py": "ff2b41abceb3f02518cf802fe191629d70ea762546baacce56372e6b198a008f",
     "python/pyproject.toml": "59ef8b5f1242e295cd87d3afec7fec5f6e40a960dac6403c27c913e4fd6e7e93",
+    "python/tests/test_combined_budget_boundaries.py": "12d6ba6c58ce4bec127a46c1604b19df59619167b816203d3ac83772c2361a5b",
     "python/tests/test_retained_codegen_native.py": "2f6a35343298ccfa356acf21d559c80c93fc9a8e78de395f9d3fbe92d75e528e",
+    "python/tests/test_retained_codegen_saga.py": "080185a705dce27a83d19ba478eeb475e3b0bca79205dd808cdfbf65c0b0926d",
     "python/tests/test_rust_codegen.py": "8301b2d2f98436dfac34611a2facaa09878007b1a4831565d3e642983c955063",
     "scripts/saga-portable/custody.ts": "4d96a776934bebafbdfaad4a01870ee3ee84c4608e62b320f30631026b5b18da",
     "scripts/saga-portable/other-hosts.ts": "b96a7919ad992ee11702d63f947a1e4f1155883cc6461efbf14a65abf0ba3536",
@@ -1474,6 +1623,7 @@
     "spec/extensions/actions/package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
     "spec/extensions/binding-stable/package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
     "spec/extensions/binding/package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+    "spec/extensions/saga/package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
     "spec/extensions/tables/operation-0.2.schema.json": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e",
     "spec/extensions/tables/operation.schema.json": "af217abc87d2f4a5205d82c2146040ef986d29252c78a4ec76d59787828578cc",
     "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
@@ -1482,24 +1632,18 @@
     "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
     "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
     "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
-    "tests/qualification/test_inspector_construction_batch.py": "66022c4254bf2fac5667047012e389868d10b4a43a08225cc6f6bfb1ffc9b2ae",
+    "tests/qualification/test_inspector_combined_budget.py": "25d12cb8a1ba8ecd3a4a78ab6c26ab4f8522e27a63a522ffb09bc708d5502f02",
+    "tests/qualification/test_inspector_construction_batch.py": "04b1e515e5591960a398af4fea87c28298f05924e44b5761ef27b4eab8679d3d",
+    "tests/qualification/test_inspector_cost_gate.py": "105169a7c043bef6529627f1376a6e05b022d3461393bc5c4776b4440d178c83",
+    "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
     "tests/rust-core/fixtures/access-inspection/cases.json": "2e939f0d0f68f71a6b78c38e4fcd151e7b363513311f1aed170f9576333cbdc3",
+    "tools/inspector_stage_budget.py": "c5dcd3ec90196c60468315e93b88ea590d555793c5c94b7df1adb082d2cd66b3",
     "tools/probe_inspector_retained_attribution.py": "2e872326ad62c7fb5f5f4fdecec2322db5159a190fb7fd4495ec6b9919a67625",
-    "tools/qualify_inspector_construction_batch.py": "d66c9fbf5bda592250afadb4d08d948ad103b17fabdb602c88af23fa4cd9c3c5",
-    "tools/run_inspector_attribution_lanes.py": "5211d5057b7cd03c763de883c792654b9f15a5cc35147094c94f23ea8ee70b05",
-    "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
-    "python/tests/test_retained_codegen_saga.py": "080185a705dce27a83d19ba478eeb475e3b0bca79205dd808cdfbf65c0b0926d",
-    "spec/extensions/saga/package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
-    "bindings/core/python/src/lib.rs": "f9f13ec21ff2501de5fd3c41af524fb954c083a76d5be6240704be7ea87a9aa7",
-    "bindings/core/python/src/python_value_path_tests.rs": "9fc48c0904b0e365c1fa062c2a0b9b7fcc1b3eb0255eafdb7c08dda08b9d46da",
-    "crates/umf-core/src/context_path_tests.rs": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
-    "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
-    "crates/umf-core/src/schema_construction_index.rs": "4469b6808803540caf00f4d4795af48413c891a691f695dd270b8eda968f1a9f",
-    "crates/umf-core/src/schema_evaluation_scope.rs": "e9aa392db244adb2312101e25f37ef5f2d8bdee6825a0b497bda2ddd9413297c",
-    "docs/helix/04-build/evidence/inspector-combined-budget-source.md": "e1b6f424b200132cf76b56834339bb00e161d80f36e8bae09f7b3eb0ef47e08a",
-    "python/tests/test_combined_budget_boundaries.py": "12d6ba6c58ce4bec127a46c1604b19df59619167b816203d3ac83772c2361a5b",
-    "tests/qualification/test_inspector_combined_budget.py": "fd4ceca7e8ff1bc2b1bf20170ee402c71db5b16eaa6d16eb1feed8b511d246fb",
-    "tools/qualify_inspector_combined_budget.py": "1222cbe54c07bb2bd35f3ae3e9075e9ec49192190158d6bbdd26bbd0c4ffb05b"
+    "tools/qualify_inspector_combined_budget.py": "484c9af74ad596ba1999a7e1f6dedb50ad3582928d076ae221645cbd54c327ba",
+    "tools/qualify_inspector_construction_batch.py": "3826c3bbeed2d9a397def593a5e6eff5730cda749f8e9739ec2880a72bdf510c",
+    "tools/run_inspector_attribution_lanes.py": "3c715095600091d57375e1e3bde57a7a5fd1c4c28ab0cd2a379b32835f27a1ff",
+    "tools/run_inspector_cost_gate.py": "47d560709b1497b5dc624dd793e2c9a1053249099eadbfae8d6f264c6a00801a",
+    "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355"
   },
   "compiledCensusTiming": "Approve source-derived names before build; authenticate compiled --list AFTER compilation BEFORE test execution; no prebuild compiled-census claim",
   "reusedOldNativePasses": false,
@@ -1514,6 +1658,16 @@
     "genericPythonSource": "restored exact pre-batch body; precharge before compile_inner catalogue allocation",
     "identities": "retrieval/authored/resolved distinct; exact original reference/policy/dynamic orders; common frame only on selector agreement",
     "additionalRustControls": 4,
+    "nativeExecuted": false
+  },
+  "newSelectionScope": {
+    "ownerRust": 14,
+    "independentRust": 9,
+    "unchangedPreviouslySelectedRust": 191,
+    "unchangedPythonMethods": 47,
+    "coldPublicCombinations": 51,
+    "installedSagaCases": 19,
+    "ER0": "excluded; source-preparation hold; protected c805 converter unchanged",
     "nativeExecuted": false
   }
 }

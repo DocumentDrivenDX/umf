@@ -27,12 +27,12 @@ def require(ok,message):
 
 def protocol(root):
     old=load(root/'tools/inspector_constructor_observation.py','original_closed_slots')
-    slots=old.SLOTS+(('unassigned','index-build'),)
-    require(len(slots)==len(set(slots))==126<=128,'Closed combined roster differs')
+    slots=old.SLOTS+(('unassigned','index-build'),('unassigned','plan-work'))
+    require(len(slots)==len(set(slots))==127<=128,'Closed combined roster differs')
     def slot(phase,role):
-        if phase=='ctor.index-build':
+        if phase in ('ctor.index-build','ctor.plan-work'):
             require(type(role)is str and role in old.ROOTS+('constraints','literal-policy'),'Unknown index root role')
-            return 125
+            return 125 if phase=='ctor.index-build' else 126
         return old.slot_for(phase,role)
     return slots,slot
 

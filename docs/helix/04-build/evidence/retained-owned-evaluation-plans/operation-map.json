@@ -1,0 +1,286 @@
+{
+  "profile": "umf.private-owned-evaluation-operation-map/1",
+  "baseSource": "0c48d7d411552fd185f6ef8315c7c231eb712a76",
+  "submittedER123PlanSHA256": "3ea92388d753cf3a36f7caeb573fb7ec9ef2474755ab040d2e53f2156e8ecb16",
+  "submittedER0PlanSHA256": "ba27f22cf13f670c2bae0ddaa5aa33f9a88b334278a9d0a275207e9f1e9f9f40",
+  "observedPlanSHA256": "651fa2adc05318526949ed27ccd5b1507f7ef3bec5309a5b85f694ee9f185239",
+  "rows": [
+    {
+      "file": "crates/umf-core/src/schema.rs",
+      "sha256": "0675c0f8cfb1d3ab090bffa2d7a5753fab1ca213f6f81e3e070277b021ef6d64",
+      "pattern": "enum SchemaRoot",
+      "lines": [
+        108
+      ],
+      "eliminatedOperation": "duplicate compiled-root / completed-proof trees after complete exact catalogue equality",
+      "remainingWork": "first admission and ordered proof comparison; catalogue assembly snapshots remain",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/schema_owned_plans.rs",
+      "sha256": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+      "pattern": "fn resolve_eval_inner",
+      "lines": [
+        379
+      ],
+      "eliminatedOperation": "repeated successful static URI/fragment/anchor resolution and id-applied reconstruction",
+      "remainingWork": "original first resolver; structural locator discovery/get; key comparisons; live dynamic selection; plan publication",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/schema_owned_plans.rs",
+      "sha256": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+      "pattern": "fn node_inner",
+      "lines": [
+        302
+      ],
+      "eliminatedOperation": "repeated keyword projection and compiler rank sorting",
+      "remainingWork": "first member decode/sort; full locator discovery/verification; all interpreter keyword validation",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/schema_owned_plans.rs",
+      "sha256": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+      "pattern": "fn frame_inner",
+      "lines": [
+        253
+      ],
+      "eliminatedOperation": "repeated identical effective schema path construction",
+      "remainingWork": "first exact normalization; node/limits verification; inherited policy and live scope",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/schema_owned_plans.rs",
+      "sha256": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+      "pattern": "fn append_kind",
+      "lines": [
+        521
+      ],
+      "eliminatedOperation": "repeated escaping and buffer allocation for invocation-local repeated paths",
+      "remainingWork": "first scratch reserve incl relocation; prefix/suffix write; map compare/storage; bounded cache fallback",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/schema_annotation_delta.rs",
+      "sha256": "e6c07f15750cbbd06b1158943bdeb8743be7a09f986d552ebf6c0df21623458d",
+      "pattern": "impl PropertyDelta",
+      "lines": [
+        18
+      ],
+      "eliminatedOperation": "repeated owned-name codepoint projection and text-key merge comparison",
+      "remainingWork": "first exact name storage/search; integer slot membership/insert; branch commit; item integer sets unchanged",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/engine.rs",
+      "sha256": "869dc72cf0cecc689a365b3202bd55e2182585035b1d1168801d1e74dc2611a9",
+      "pattern": "fn core_structure_admitted_snapshot",
+      "lines": [
+        1228
+      ],
+      "eliminatedOperation": "second admission copy of already owned checked Engine document",
+      "remainingWork": "first copy_json or checked core snapshot; all structural/semantic validation and diagnostic presentation",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "python/src/umf/rust_codegen.py",
+      "sha256": "f179349c396338afc4a498bf9e37a3a35993da76234f4464e2336cc9ed913aaa",
+      "pattern": "def call",
+      "lines": [
+        90
+      ],
+      "eliminatedOperation": "UNCHANGED host request/result work",
+      "remainingWork": "tuple bindings snapshot; _wire copy; serialization-bound traversal; json.dumps; native control lifetime; envelope/json.loads/_from_wire copy/final control",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "bindings/core/python/src/retained_codegen.rs",
+      "sha256": "5979d849ba1c1d5a3d753f7cdf298b221534a0201bec82feb943fd761abe79da",
+      "pattern": "fn execute_impl",
+      "lines": [
+        214
+      ],
+      "eliminatedOperation": "UNCHANGED native transport / envelope",
+      "remainingWork": "tagged decode; shared inspector and inner serialization; terminal latch; outer envelope; PyString copy/finalcontrol",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core-wire/src/controlled_envelope.rs",
+      "sha256": "88b50c424842e1a56f8f3f7d7f9c23a47b341fa4d6eb76a29b411b3f5c728cad",
+      "pattern": "fn encode",
+      "lines": [
+        89
+      ],
+      "eliminatedOperation": "UNCHANGED sizing/serialization",
+      "remainingWork": "metered sizing traversal/chunk controls; output allocation; full second serialization; final publication control",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/engine.rs",
+      "sha256": "869dc72cf0cecc689a365b3202bd55e2182585035b1d1168801d1e74dc2611a9",
+      "pattern": "schemas.entries.push",
+      "lines": [
+        831
+      ],
+      "eliminatedOperation": "UNCHANGED catalogue assembly snapshot",
+      "remainingWork": "core/reference/package catalogue physical copies",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-codegen/src/resources.rs",
+      "sha256": "6397db346538071257efcce9e5c577a64f4007d4e4b4aec097037ee583760d0f",
+      "pattern": "tables_schema_copy",
+      "lines": [
+        87,
+        90
+      ],
+      "eliminatedOperation": "UNCHANGED new catalogue / derived root assembly",
+      "remainingWork": "table schema catalogue copy; action $defs/literal copies; fresh Saga catalogue and registration checks",
+      "futureCost": "UNKNOWN"
+    }
+  ],
+  "coldInventory": [
+    "facade/native conversion: ER0 separate owner; integration pending",
+    "complete nine-resource admission and custody",
+    "catalogue assembly snapshots still present",
+    "metaschema UTF8/UTF16 materialization and parsing separately charged",
+    "new first plan construction: locator search, keyword projection/sort, original static resolver, map/vector allocations",
+    "full schema/catalogue preflight and dialect metaschema evaluation",
+    "constraints/literal-policy validation",
+    "all fresh registry manifest/ID/version/scopes/capabilities/token validation",
+    "completed proof and final handle publication"
+  ],
+  "wholeInvocationInventory": [
+    "Python request copy/serialization and sizing bound",
+    "native tagged decode",
+    "first owned document admission",
+    "shared structural/semantic inspection, plans and annotations",
+    "inner result encoding",
+    "outer sizing/output allocation/serialization/PyString",
+    "Python envelope decode and output copy/final control"
+  ],
+  "originalEvidenceRoot": "/private/tmp/umf-inspector-retained-review/scope-push-callsite-fix/actual-run-41797849518",
+  "oldCompleteUncappedCtor": 133925860,
+  "oldPrivateInvocation": 1150969,
+  "newMeasurements": null,
+  "nativeExecuted": false,
+  "conversionPending": false,
+  "independentTestsPending": false,
+  "submittedCurrentPlanSHA256": "651fa2adc05318526949ed27ccd5b1507f7ef3bec5309a5b85f694ee9f185239",
+  "ER0": "NOT SELECTED; original converter c80505ab... remains byte-exact",
+  "independentTestSHA256": "13408f97a6f33e7b6f60897d8137c769cd5bbac531806fa77c3e42d732f1bea7",
+  "sourceSelection": {
+    "rust": 214,
+    "pythonMethods": 47,
+    "coldPublicCombinations": 51,
+    "installedSaga": 19,
+    "nativeExecuted": false
+  },
+  "knownBaselineHeadroom": {
+    "scope": "Original0c48 observations ONLY; not a prediction/credit for this candidate",
+    "nativeConversion": 776589,
+    "oneMillionMinusOldNativeConversion": 223411,
+    "originalStrictConstructorHostBoundary": 1,
+    "allNewConstructionAndInvocationCosts": "UNKNOWN"
+  },
+  "rootSharingAdmission": {
+    "sameVisitor": "schema_json_with_mode; copy wrapper and owned borrow mode share all numeric/duplicate/depth/node/ordered diagnostic rules",
+    "order": "root admission before catalogue admission; eligible borrowed roots retain first-error ordering",
+    "roleEligibility": "exact unfragmented ASCII authored/retrieval URI role, no raw anchors/nested identifiers, full ordered root equality and existing full compiler eligibility",
+    "noAliasOrDynamicRoleTransfer": true,
+    "remainingWork": [
+      "first admission walk and duplicate-key storage/comparisons",
+      "conservative role/anchor scan",
+      "new first structural locator search may traverse whole owned trees",
+      "catalogue assembly copies",
+      "all first original resolver and required validation work"
+    ],
+    "quantifiedSavings": null
+  },
+  "utf16Representation": {
+    "source": "crates/umf-core/src/value.rs",
+    "publicSignatures": "Utf16 remains opaque; new/from/from_utf8/units/into_units/to_utf8/len/is_empty and Clone/Eq/Ord/Hash/Debug signatures preserved",
+    "layout": "Private Vec storage becomes Owned(Vec<u16>) or Shared(Arc<Vec<u16>>). Size/alignment/ABI/performance may change. No binary reuse or cross-source ABI qualification claimed.",
+    "semantics": "Equality/order/hash use exact code units in both storage modes, including lone surrogates; no normalization. No public mutable shared backing is exposed.",
+    "ownedRoutes": "All public text constructors and the unchanged c805 converter create Owned storage. Ordinary/generic Python compiler paths retain original admission and copied-value charge rules; generic compile_python_source body hash remains5ddde1045927ec137b0ece625036c893cb4e6739c407a611bc9b8fbdf5e2c74d.",
+    "operations": [
+      {
+        "operation": "Owned clone",
+        "effect": "Vec clone (unit allocation/copy)",
+        "admission": "Existing copy/admission callers retain full len charge; path clone_work returns len."
+      },
+      {
+        "operation": "Shared clone",
+        "effect": "Arc retain; no code-unit copy/storage allocation",
+        "admission": "Selected explicit clone-only path sites use clone_work=1; all string scans/URI comparisons still charge length."
+      },
+      {
+        "operation": "shared/into_shared",
+        "effect": "shared(Vec) allocates Arc header over moved buffer; into_shared moves Owned units or reuses Shared Arc without unit copy",
+        "admission": "Owner plan path publication precharges wrapper/metadata before effect. Existing path construction/normalization already paid separately."
+      },
+      {
+        "operation": "into_units",
+        "effect": "Owned moves Vec; uniquely owned Shared unwraps Vec; aliased Shared detaches via Vec clone",
+        "admission": "Existing public method has NO Context parameter; it is NOT universally allocation-free and grants no implicit metering authority. New selected plan code uses into_shared instead. No selected terminal path calls into_units."
+      },
+      {
+        "operation": "arena growth",
+        "effect": "reserve_exact may relocate existing scratch prefix",
+        "admission": "scratch.len+required_capacity before reserve; then full bounded append/escape work before clear/write; no append after denied charge."
+      },
+      {
+        "operation": "arena publication",
+        "effect": "scratch clone into shared buffer; cache keys/map entry",
+        "admission": "full final path units+wrapper before clone; key/comparison/node work before map insert; max_values/max_text_units bounded cache or original builder fallback."
+      },
+      {
+        "operation": "owned Value input admission",
+        "effect": "first document copy stays; later identical Engine snapshot schema copy omitted only on private owned snapshot call sites",
+        "admission": "Numeric/profile/duplicate/depth/node checks already ran in same Context; no caller flag/hash selects it. Generic/raw values still copy/admit."
+      }
+    ],
+    "terminalClosure": {
+      "Context": "same owned/borrowed charging state machine and fixed code/message header exception; Scratch mem::take transfers existing UTF16 storage on Context refusal; host errors keep exact origin/fields",
+      "selectedNative": "RetainedControl sticky failure returns original error and bypasses result envelope sizing/encoding; controlled envelope borrows path.units() and never detaches",
+      "RAII": "scope restoration/drop uses no callback/path reconstruction; symbol rollback/release work prepaid on insertion",
+      "notClaimed": "No universal no-allocation error construction or universal composed-Rust-consumer detach qualification."
+    }
+  },
+  "cacheReentry": {
+    "rule": "After a control, compare live map len against admitted comparison bound under callback-free lock. Growth declines optional lookup/publication; use original resolver/frame/interpreter without retries or lost entries. No callback under map lock.",
+    "guardSource": "read_plan/publish_plan in schema_owned_plans.rs",
+    "nativeControl": "reentrant_cache_growth_uses_original_resolver_without_an_underadmitted_search",
+    "executed": false
+  },
+  "controllerOrder": [
+    "source/resource/toolchain/locked graph + full selected census bind",
+    "one genuine wheel producer",
+    "early wheel/source/producer+graph upload",
+    "normal resolver/pipcheck/freeze; complete RECORD and four observed loaded module ownership",
+    "strict unchanged genuine cold1M probe/public51 plus required fresh public controls",
+    "cost failure: retain phases/identities/unexecuted census, optional narrowly admitted bounded diagnostic, STOP semantic-target compilation, always upload+owned cleanup",
+    "cost pass only: compile/list-authenticate and execute all214 Rust; installed Saga19; legacy8/boundary27; consume original early cost receipts without replay",
+    "final independent aggregation requires every original cost+semantic+identity gate; missing continuation needs separate reviewed retained-material intake"
+  ],
+  "controllerBounds": {
+    "jobMinutes": 60,
+    "worker": 1,
+    "workDeadlineSeconds": 3000,
+    "stageDeadline": "min(selected stage bound, floor remaining original monotonic lifetime); no reset",
+    "diagnosticSeconds": 300,
+    "independentDiagnosticPrefixes": 2,
+    "eventCapEach": 1000000,
+    "slots": 127,
+    "maximumSlots": 128,
+    "noLocalGuardOrLedgerChange": true
+  },
+  "currentClosureHashes": {
+    "crates/umf-core/src/value.rs": "5f2604d62c79a11b9f9dc4fdc05605ecd5bb478fe3f98159b5292bb178faa80a",
+    "crates/umf-core/src/schema.rs": "0675c0f8cfb1d3ab090bffa2d7a5753fab1ca213f6f81e3e070277b021ef6d64",
+    "crates/umf-core/src/schema_owned_plans.rs": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+    "tools/run_inspector_cost_gate.py": "47d560709b1497b5dc624dd793e2c9a1053249099eadbfae8d6f264c6a00801a",
+    "tools/run_inspector_attribution_lanes.py": "3c715095600091d57375e1e3bde57a7a5fd1c4c28ab0cd2a379b32835f27a1ff",
+    ".github/workflows/inspector-retained-attribution.yml": "72bf564846cc28b7dc6f94900ee442d80cac6e54758022c1f319f788b4b3c1d3"
+  }
+}

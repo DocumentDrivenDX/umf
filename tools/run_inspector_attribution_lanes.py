@@ -103,7 +103,7 @@ def resource_limit_measurement(report,source=None):
 
 
 def final_success(state):
-    return all(state.get(k)is True for k in ('identityPassed','legacyPassed','boundaryPassed','diagnosticPassed','publicProbePassed','publicControlsPassed','finalIdentityPassed'))
+    return all(state.get(k)is True for k in ('identityPassed','legacyPassed','boundaryPassed','diagnosticPassed','publicProbePassed','publicControlsPassed','finalIdentityPassed')) and (not state.get('costFirst') or all(state.get(k)is True for k in ('costGateAuthenticated','rustPassed','sagaPassed')))
 
 
 def pip_generated_metadata(platlib, wheel, expected_sha):
@@ -244,11 +244,23 @@ def run(args):
     if getattr(args,'producer_pins',None):common += ['--producer-pins',str(args.producer_pins)]
     try:
         identity(args,'initial');state['identityPassed']=True;save()
+        if getattr(args,'cost_gate',None):
+            cost_module=load(args.controller/'tools/run_inspector_cost_gate.py','cost_gate_intake')
+            cost_module.intake(args,sys.modules[__name__]);state.update(costFirst=True,costGateAuthenticated=True,publicProbePassed=True,publicControlsPassed=True);save()
         if getattr(args,'producer_pins',None):
             rust=json.loads((args.out/'rust-census-result.json').read_text())
+            expected_rust=214 if getattr(args,'cost_gate',None) else 191
             require(rust.get('status')=='passed' and rust.get('source')==OWNER
-                    and rust.get('cases')==191 and rust.get('passed')==191,
-                    'New native Rust191 qualification missing/different')
+                    and rust.get('cases')==expected_rust and rust.get('passed')==expected_rust,
+                    'New native complete Rust qualification missing/different')
+            if getattr(args,'cost_gate',None):
+                import hashlib
+                census_path=args.controller/'tests/qualification/fixtures/inspector-construction-batch.json'
+                require(rust.get('censusSHA256')==hashlib.sha256(census_path.read_bytes()).hexdigest()
+                    and rust.get('compiledCensusSHA256')==hashlib.sha256((args.out/'compiled-census.json').read_bytes()).hexdigest()
+                    and len(rust.get('results',[]))==expected_rust and all(row.get('passed')is True for row in rust['results']), 'Actual compiled/executed census correspondence missing')
+                state['rustPassed']=True
+                state['sagaPassed']=cost_module.saga(args,json.loads(args.producer_pins.read_text()));save()
             rc=command('legacy',[sys.executable,'-I','-B','-m','pytest','-q','-s',
                 '--junitxml='+str(args.out/'legacy.xml'),str(args.controller/'python/tests/test_rust_codegen.py')])
             cases=list(ET.parse(args.out/'legacy.xml').getroot().iter('testcase'))
@@ -274,32 +286,37 @@ def run(args):
                          reason='authenticated-original-component-passes',reusedQualificationRun=41753398285)
             decision={'attributionAdmitted':True,'boundaryPassed':True};save()
         require(decision['boundaryPassed'],'Boundary failure blocks public measurement')
-        identity(args,'public-before')
-        try:
-            rc=command('public-probe',[sys.executable,'-I','-B',str(args.owner/'tools/probe_inspector_retained_feasibility.py'),
-              '--root',str(args.owner),'--wheel',str(args.wheel),'--source-sha',OWNER,
-              '--resource-pins-sha256','72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290',
-              '--output',str(args.out/'measurement.json')])
-            if rc:
-                measurement=json.loads((args.out/'measurement.json').read_text())
-                require(rc in (1,2) and resource_limit_measurement(measurement),'Non-budget public probe failure')
-                state['qualificationFailureClass']='ordinary-public-RESOURCE_LIMIT'
-            else:
-                measured=json.loads((args.out/'measurement.json').read_text())
-                require(measured.get('status')=='measured-fit' and measured.get('actualCandidateSource')==OWNER
-                        and measured.get('inspectionCases')==17 and measured.get('inspectionCalls')==51
-                        and type(measured.get('maximumWork'))is int and measured['maximumWork']==1000000
-                        and measured.get('wheel',{}).get('sha256')==WHEEL_SHA, 'Public probe completion receipt missing/different')
-                state['publicProbePassed']=True
-                argv=[sys.executable,'-I','-B','-m','pytest','-q','-s','--junitxml='+str(args.out/'public-controls.xml'),str(args.controller/'python/tests/test_retained_codegen_native.py')+'::PublicRetainedFeasibilityTests']
-                argv += [str(args.controller/'python/tests/test_retained_codegen_native.py')+'::RetainedResourceAdmissionNativeTests::'+n for n in POSITIVES]
-                controls_rc=command('public-controls',argv)
-                cases=list(ET.parse(args.out/'public-controls.xml').getroot().iter('testcase'))
-                state['publicControlsPassed']=controls_rc==0 and len(cases)==12 and not any(c.find(k)is not None for c in cases for k in ('failure','error','skipped'))
-                require(state['publicControlsPassed'],'Public control assertion failure blocks diagnostic')
-            save()
-        finally:
-            identity(args,'public-after')
+        if getattr(args,'cost_gate',None):
+            # Authenticate unchanged original early receipts, never replay costs
+            # or relabel them as semantic qualification.
+            cost_module.intake(args,sys.modules[__name__])
+        else:
+            identity(args,'public-before')
+            try:
+                rc=command('public-probe',[sys.executable,'-I','-B',str(args.owner/'tools/probe_inspector_retained_feasibility.py'),
+                  '--root',str(args.owner),'--wheel',str(args.wheel),'--source-sha',OWNER,
+                  '--resource-pins-sha256','72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290',
+                  '--output',str(args.out/'measurement.json')])
+                if rc:
+                    measurement=json.loads((args.out/'measurement.json').read_text())
+                    require(rc in (1,2) and resource_limit_measurement(measurement),'Non-budget public probe failure')
+                    state['qualificationFailureClass']='ordinary-public-RESOURCE_LIMIT'
+                else:
+                    measured=json.loads((args.out/'measurement.json').read_text())
+                    require(measured.get('status')=='measured-fit' and measured.get('actualCandidateSource')==OWNER
+                            and measured.get('inspectionCases')==17 and measured.get('inspectionCalls')==51
+                            and type(measured.get('maximumWork'))is int and measured['maximumWork']==1000000
+                            and measured.get('wheel',{}).get('sha256')==WHEEL_SHA, 'Public probe completion receipt missing/different')
+                    state['publicProbePassed']=True
+                    argv=[sys.executable,'-I','-B','-m','pytest','-q','-s','--junitxml='+str(args.out/'public-controls.xml'),str(args.controller/'python/tests/test_retained_codegen_native.py')+'::PublicRetainedFeasibilityTests']
+                    argv += [str(args.controller/'python/tests/test_retained_codegen_native.py')+'::RetainedResourceAdmissionNativeTests::'+n for n in POSITIVES]
+                    controls_rc=command('public-controls',argv)
+                    cases=list(ET.parse(args.out/'public-controls.xml').getroot().iter('testcase'))
+                    state['publicControlsPassed']=controls_rc==0 and len(cases)==12 and not any(c.find(k)is not None for c in cases for k in ('failure','error','skipped'))
+                    require(state['publicControlsPassed'],'Public control assertion failure blocks diagnostic')
+                save()
+            finally:
+                identity(args,'public-after')
         if decision['attributionAdmitted']:
             rc=command('diagnostic',common+['--mode','diagnostic'],DIAGNOSTIC_SECONDS)
             require((args.out/'diagnostic.log').stat().st_size<=DIAGNOSTIC_LOG_BYTES,'Diagnostic log exceeded storage bound')
@@ -345,6 +362,8 @@ def configure_producer(args):
         and pins.get('publishable')is False and pins.get('readyForEnrollment')is False,'Producer source/resource/test closure differs')
     require(args.producer_pins.resolve().is_relative_to(args.out.resolve())
         and hashlib.sha256(args.wheel.read_bytes()).hexdigest()==pins['wheel']['sha256'], 'Producer wheel/record origin differs')
+    require(hashlib.sha256((args.out/'cargo-metadata.json').read_bytes()).hexdigest()==pins.get('cargoMetadataSHA256')
+        and hashlib.sha256((args.out/'producer-cargo-features.txt').read_bytes()).hexdigest()==pins.get('featureGraphSHA256'),'Actual locked graph/features missing or changed')
     OWNER=pins['source'];WHEEL_SHA=pins['wheel']['sha256'];TEST_SHA=pins['testSHA256']
     SCOPE_METHODS=(
       'test_cold_handles_with_same_ids_but_different_catalogue_content_stay_independent',
@@ -353,6 +372,8 @@ def configure_producer(args):
       'test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success')
     SAGA_METHODS=('test_genuine_optional_saga_constructs_and_actual_retained_reports_match_original_oracle','test_malformed_optional_saga_refuses_eagerly_without_returning_native_handle')
     census=json.loads((root/'tests/qualification/fixtures/inspector-construction-batch.json').read_text())
+    require(census['rustCaseCount']==214,'Exact current complete source census required')
+    if args.mode=='run':require(args.cost_gate is not None,'Changed-source full qualification requires original cost gate')
     combined=census['combinedPythonMethods']
     require(type(combined)is list and len(combined)==4 and len(set(combined))==4,'Combined boundary census differs')
     require(hashlib.sha256((root/'python/tests/test_combined_budget_boundaries.py').read_bytes()).hexdigest()==census['fileHashes']['python/tests/test_combined_budget_boundaries.py'],'Independent sidecar differs')
@@ -363,8 +384,13 @@ def configure_producer(args):
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
     for name in ('controller','owner','wheel','out'):parser.add_argument('--'+name,type=Path,required=True)
-    parser.add_argument('--controller-sha',required=True);parser.add_argument('--mode',choices=('run','boundary','diagnostic','identity'),default='run');parser.add_argument('--producer-pins',type=Path)
+    parser.add_argument('--controller-sha',required=True);parser.add_argument('--mode',choices=('run','boundary','diagnostic','identity','cost'),default='run');parser.add_argument('--producer-pins',type=Path)
+    parser.add_argument('--cost-gate',type=Path)
     args=parser.parse_args()
     if args.producer_pins:configure_producer(args)
     if args.mode=='identity':identity(args,'producer-before-rust');raise SystemExit(0)
+    if args.mode=='cost':
+        require(args.producer_pins is not None,'Genuine producer required before cost gate')
+        cost_module=load(args.controller/'tools/run_inspector_cost_gate.py','cost_gate_execution')
+        raise SystemExit(cost_module.cost(args,sys.modules[__name__]))
     raise SystemExit({'run':run,'boundary':boundary,'diagnostic':diagnostic}[args.mode](args))

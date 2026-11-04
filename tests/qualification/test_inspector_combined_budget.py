@@ -59,10 +59,11 @@ class CombinedBudgetPureControls(unittest.TestCase):
         self.assertEqual(error.exception.retained['lifetimes'],{});self.assertFalse(error.exception.retained['amountSequenceEquivalent'])
     def test_unknown_roles_labels_and_conversion_index_are_refused(self):
         slots,slot=C.protocol(ROOT)
-        self.assertEqual(len(slots),126)
-        for phase,role in [('ctor.index-build','conversion'),('ctor.index-build','foreign'),('ctor.madeup','core'),('ctor.other','foreign')]:
+        self.assertEqual(len(slots),127)
+        for phase,role in [('ctor.index-build','conversion'),('ctor.index-build','foreign'),('ctor.plan-work','conversion'),('ctor.plan-work','foreign'),('ctor.madeup','core'),('ctor.other','foreign')]:
             with self.subTest(phase=phase,role=role),self.assertRaises(ValueError):slot(phase,role)
         self.assertEqual(slots[slot('ctor.index-build','core')],('unassigned','index-build'))
+        self.assertEqual(slots[slot('ctor.plan-work','core')],('unassigned','plan-work'))
         self.assertEqual(slots[slot('native-resource-compilation','core')],('unassigned','other'))
     def test_trace_never_callbacks_after_denial_or_accepts_bool_amounts(self):
         slots,slot=C.protocol(ROOT);trace=C.Trace(True,slots,slot,cap=0)

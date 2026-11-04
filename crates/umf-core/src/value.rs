@@ -5,37 +5,87 @@ use crate::{context::Context, error::EngineError};
 
 /// A string represented as UTF-16 code units so isolated surrogate values are
 /// retained at the Rust boundary.
-#[derive(Clone, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct Utf16(Vec<u16>);
-
+#[derive(Clone, Debug)]
+enum TextStorage {
+    Owned(Vec<u16>),
+    // Only owner-generated immutable evaluator paths select shared storage.
+    // Equality/order/hash remain over exact code units, not storage identity.
+    Shared(std::sync::Arc<Vec<u16>>),
+}
+#[derive(Clone)]
+pub struct Utf16(TextStorage);
+impl Default for Utf16 {
+    fn default() -> Self {
+        Self::new(Vec::new())
+    }
+}
+impl PartialEq for Utf16 {
+    fn eq(&self, other: &Self) -> bool {
+        self.units() == other.units()
+    }
+}
+impl Eq for Utf16 {}
+impl PartialOrd for Utf16 {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+impl Ord for Utf16 {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.units().cmp(other.units())
+    }
+}
+impl std::hash::Hash for Utf16 {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        std::hash::Hash::hash(self.units(), state)
+    }
+}
 impl Utf16 {
     pub fn new(units: Vec<u16>) -> Self {
-        Self(units)
+        Self(TextStorage::Owned(units))
     }
-
+    pub(crate) fn shared(units: Vec<u16>) -> Self {
+        Self(TextStorage::Shared(std::sync::Arc::new(units)))
+    }
+    // Callers pre-admit the wrapper publication. Existing shared path buffers
+    // stay shared; consuming an owned buffer never copies its admitted units.
+    pub(crate) fn into_shared(self) -> Self {
+        match self.0 {
+            TextStorage::Owned(units) => Self::shared(units),
+            TextStorage::Shared(units) => Self(TextStorage::Shared(units)),
+        }
+    }
+    pub(crate) fn clone_work(&self) -> usize {
+        match &self.0 {
+            TextStorage::Owned(_) => self.len(),
+            TextStorage::Shared(_) => 1,
+        }
+    }
     pub fn units(&self) -> &[u16] {
-        &self.0
+        match &self.0 {
+            TextStorage::Owned(v) => v,
+            TextStorage::Shared(v) => v,
+        }
     }
-
     pub fn into_units(self) -> Vec<u16> {
-        self.0
+        match self.0 {
+            TextStorage::Owned(v) => v,
+            TextStorage::Shared(v) => {
+                std::sync::Arc::try_unwrap(v).unwrap_or_else(|v| (*v).clone())
+            }
+        }
     }
-
-    /// Convert only well-formed UTF-16. Isolated units are never replaced.
     pub fn to_utf8(&self) -> Result<String, std::string::FromUtf16Error> {
-        String::from_utf16(&self.0)
+        String::from_utf16(self.units())
     }
-
     pub fn from_utf8(value: &str) -> Self {
-        Self(value.encode_utf16().collect())
+        Self::new(value.encode_utf16().collect())
     }
-
     pub fn len(&self) -> usize {
-        self.0.len()
+        self.units().len()
     }
-
     pub fn is_empty(&self) -> bool {
-        self.0.is_empty()
+        self.units().is_empty()
     }
 }
 
@@ -151,7 +201,7 @@ impl std::fmt::Debug for Utf16 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self.to_utf8() {
             Ok(value) => f.debug_tuple("Utf16").field(&value).finish(),
-            Err(_) => f.debug_tuple("Utf16").field(&self.0).finish(),
+            Err(_) => f.debug_tuple("Utf16").field(&self.units()).finish(),
         }
     }
 }
