@@ -128,14 +128,14 @@ def identity(args,suffix):
        '--receipt',str(out/('installed-record-'+suffix+'.json'))],check=True)
     probe=load(owner/'tools/probe_inspector_retained_feasibility.py','owner_probe_'+suffix)
     _,resources=probe.resources(owner,'72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290')
-    import umf,umf._rust_core as native,umf.rust_codegen as compiler
+    import umf,umf._rust as rust,umf._rust_core as native,umf.rust_codegen as compiler
     dist=importlib.metadata.distribution('umf-core');require(dist.version=='0.10.8','Inherited private distribution differs')
     require(umf.__version__=='0.10.8' and native.engine_version()=='umf-core-r2' and native.codegen_protocol_version()=='umf-codegen-r3-seven-ops-nine-resources/1','Loaded owner version/protocol differs')
     for name,version in pins['dependencies'].items():require(importlib.metadata.version(name)==version,'Dependency differs: '+name)
     members=probe.installed_wheel(args.wheel,dist)
     base=Path(sysconfig.get_path('platlib')).resolve();package=base/'umf';owned={str(f) for f in dist.files}
     files={'umf/__init__.py':Path(umf.__file__),'umf/rust_codegen.py':Path(compiler.__file__),
-       'umf/_rust.py':package/'_rust.py','umf/_rust_core.abi3.so':Path(native.__file__)}
+       'umf/_rust.py':Path(rust.__file__),'umf/_rust_core.abi3.so':Path(native.__file__)}
     rows={}
     expected={m['name']:m['sha256'] for m in members}
     for name,path in files.items():

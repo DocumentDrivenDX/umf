@@ -1,10 +1,12 @@
 """Pure fixtures/mocked processes only; never import UMF or load native bytes."""
+import ast
 import base64
 import copy
 import csv
 import hashlib
 import importlib.util
 import io
+import inspect
 import json
 from pathlib import Path
 import tempfile
@@ -163,6 +165,28 @@ class LaneControls(unittest.TestCase):
                 with zipfile.ZipFile(f.wheel,'w') as z:
                     for name,raw in files.items():z.writestr(name,raw)
                 with self.assertRaises(ValueError):verifier._validate_installed_wheel(f.wheel,f.site,'0.10.8')
+
+    def test_rust_shim_observed_foreign_path_refuses_with_valid_expected_local_file(self):
+        # Evaluate the actual production file-selection expression, then its
+        # ownership guard. No UMF import or native load; both files are inert.
+        function=ast.parse(inspect.getsource(lanes.identity)).body[0]
+        selection=next(n for n in function.body if isinstance(n,ast.Assign)
+                       and any(isinstance(t,ast.Name) and t.id=='files' for t in n.targets))
+        with tempfile.TemporaryDirectory() as td:
+            base=Path(td)/'site';package=base/'umf';package.mkdir(parents=True)
+            expected=package/'_rust.py';expected.write_bytes(b'# valid inert shim fixture\n')
+            foreign=Path(td)/'foreign'/'_rust.py';foreign.parent.mkdir();foreign.write_bytes(expected.read_bytes())
+            name='umf/_rust.py';digest=hashlib.sha256(expected.read_bytes()).hexdigest()
+            dist=types.SimpleNamespace(locate_file=lambda member:base/member)
+            self.assertEqual(lanes.loaded_owner(name,expected,base,dist,{name},digest)['sha256'],digest)
+            scope={'Path':Path,'package':package,
+                   'umf':types.SimpleNamespace(__file__=str(package/'__init__.py')),
+                   'compiler':types.SimpleNamespace(__file__=str(package/'rust_codegen.py')),
+                   'rust':types.SimpleNamespace(__file__=str(foreign)),
+                   'native':types.SimpleNamespace(__file__=str(package/'_rust_core.abi3.so'))}
+            exec(compile(ast.Module(body=[selection],type_ignores=[]),'actual identity module selection','exec'),scope)
+            with self.assertRaises(ValueError):
+                lanes.loaded_owner(name,scope['files'][name],base,dist,{name},digest)
 
     def test_payload_record_missing_extra_and_wrong_owner_refusals(self):
         for mutation in ['tampered-native','missing-native','forged-record','unexpected-executable','unapproved-pyc']:
