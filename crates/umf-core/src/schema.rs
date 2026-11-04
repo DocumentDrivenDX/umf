@@ -91,10 +91,15 @@ impl Default for KeywordPolicy {
         Self::DRAFT2020
     }
 }
+#[path = "schema_construction_index.rs"]
+mod construction_index;
+use construction_index::ColdResourceIndex;
+
 #[derive(Debug)]
 pub struct CompiledSchema {
     schema: Value,
     resources: SchemaBacking,
+    cold_resource_index: Option<Arc<ColdResourceIndex>>,
     dialect: SchemaDialect,
     strict: bool,
     root_keyword_policy: KeywordPolicy,
@@ -119,6 +124,7 @@ impl Clone for CompiledSchema {
     fn clone(&self) -> Self {
         Self {
             schema: self.schema.clone(),
+            cold_resource_index: None,
             resources: self.resources.clone(),
             dialect: self.dialect,
             strict: self.strict,
@@ -205,7 +211,7 @@ impl CompiledSchema {
     // original operation; no partial policy key can accidentally match it.
     fn construction_copy(&self, schema: Value, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         ctx.charge_work(1, Utf16::default())?;
-        Ok(Self { schema, resources: self.resources.clone(), dialect: self.dialect,
+        Ok(Self { schema, cold_resource_index: self.cold_resource_index.clone(), resources: self.resources.clone(), dialect: self.dialect,
             strict: self.strict, root_keyword_policy: self.root_keyword_policy,
             regex_profile: self.regex_profile, resolve_references_at_compile: self.resolve_references_at_compile,
             python_text_origins: Default::default(), python_member_keys: Default::default(),
@@ -423,11 +429,16 @@ fn compiler_keyword_rank(key: &Utf16) -> usize {
         .unwrap_or(usize::MAX)
 }
 
+#[path = "schema_evaluation_scope.rs"]
+mod evaluation_scope;
+use evaluation_scope::{DynamicScope, EvaluationScope};
+
 #[derive(Clone, Debug, Default)]
 struct Evaluated {
     properties: BTreeSet<Vec<u32>>,
     items: BTreeSet<usize>,
-    dynamic_scope: Vec<(Vec<u16>, Utf16, usize)>,
+    dynamic_scope: DynamicScope,
+    resolved_resource: Option<usize>,
     /// Python Draft 2019-09 resolver history. Each evaluator branch owns its
     /// snapshot; a reference lookup updates only the descended resolver.
     python_recursive_history: Vec<PythonResourceLocator>,
@@ -449,12 +460,17 @@ impl Evaluated {
                 Utf16::default(),
             )?;
         }
-        for (name, scope, _) in &self.dynamic_scope {
+        if self.dynamic_scope.is_shared() {
             ctx.charge_work(1, Utf16::default())?;
-            ctx.charge_work_u64(name.len() as u64 + scope.len() as u64 + 2, Utf16::default())?;
+        } else {
+            for (name, scope, _) in &self.dynamic_scope {
+                ctx.charge_work(1, Utf16::default())?;
+                ctx.charge_work_u64(name.len() as u64 + scope.len() as u64 + 2, Utf16::default())?;
+            }
         }
         Ok(Self {
             dynamic_scope: self.dynamic_scope.clone(),
+            resolved_resource: self.resolved_resource,
             python_recursive_history: self.python_recursive_history.clone(),
             mode: self.mode,
             collect_annotations: self.collect_annotations,
@@ -1201,6 +1217,7 @@ impl CompiledSchema {
             &mut BTreeSet::new(),
         )?;
         for (id, resource) in &compiled.resources.entries {
+            if eligible { ctx.charge_work(id.len().saturating_mul(3).saturating_add(1),Utf16::default())?; }
             let mut root_path = id.units().to_vec();
             root_path.push(0x23);
             let retrieval = id.to_utf8().unwrap_or_default();
@@ -1372,6 +1389,7 @@ impl CompiledSchema {
         Ok(Self {
             schema,
             resources: SchemaBacking::Owned(SchemaResources { entries }),
+            cold_resource_index: None,
             dialect: self.dialect,
             strict: self.strict,
             root_keyword_policy: self.root_keyword_policy,
@@ -1663,9 +1681,10 @@ impl CompiledSchema {
                 }
             }
         }
-        let compiled = Self {
+        let mut compiled = Self {
             schema,
             resources: shared_resources,
+            cold_resource_index: None,
             dialect,
             strict,
             root_keyword_policy,
@@ -1680,15 +1699,20 @@ impl CompiledSchema {
             python_resource_roots: std::collections::BTreeMap::new(),
             dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
         };
+        if eligible { compiled.cold_resource_index = ColdResourceIndex::build(&compiled, ctx)?; }
         if apply_local_reference_gate {
             validate_local_reference_gate(&compiled.schema, &Utf16::default(), ctx)?;
         }
+        let (root_origin,root_scope)=if eligible {
+            construction_index::origin(&compiled.schema,dialect,ctx)?
+        } else {
+            (schema_origin_path(&compiled.schema),schema_id(&compiled.schema)
+                .map(|id|resolve_schema_uri(dialect,"",&id).unwrap_or(id)).unwrap_or_default())
+        };
         ctx.with_constructor_site("ctor.preflight-root", |ctx| compiled.preflight(
             &compiled.schema,
-            &schema_origin_path(&compiled.schema),
-            &schema_id(&compiled.schema)
-                .map(|id| resolve_schema_uri(dialect, "", &id).unwrap_or(id))
-                .unwrap_or_default(),
+            &root_origin,
+            &root_scope,
             0,
             compiled.root_keyword_policy,
             ctx,
@@ -1698,6 +1722,14 @@ impl CompiledSchema {
             let mut root_path = id.units().to_vec();
             root_path.push(0x23);
             let retrieval = id.to_utf8().unwrap_or_default();
+            // This is the SAME completed root preflight, only when origin,
+            // root-dependent resolver/catalogue, policy, limits and full
+            // ordered schema contents agree. Never a catalogue-only proof.
+            if eligible {
+                ctx.charge_work(root_origin.len().min(root_path.len()).saturating_add(1), Utf16::default())?;
+                if root_origin.units()==root_path.as_slice()
+                    && construction_equal(&compiled.schema,resource,ctx)? { continue; }
+            }
             ctx.with_constructor_site("ctor.preflight-catalogue", |ctx| compiled.preflight(
                 resource,
                 &Utf16::new(root_path),
@@ -1802,6 +1834,9 @@ impl CompiledSchema {
         ctx.charge_work(1, Utf16::default())?;
         let mut errors = Vec::new();
         let mut evaluated = Evaluated::default();
+        if self.cold_resource_index.is_some() {
+            evaluated.dynamic_scope=DynamicScope::shared(ctx)?;
+        }
         evaluated.codegen_errors = codegen_errors;
         evaluated.keyword_policy = self.root_keyword_policy;
         self.eval(
@@ -1839,6 +1874,9 @@ impl CompiledSchema {
     ) -> Result<EvaluationOutcome, EngineError> {
         let mut errors = Vec::new();
         let mut evaluated = Evaluated::default();
+        if self.cold_resource_index.is_some() {
+            evaluated.dynamic_scope = DynamicScope::shared(ctx)?;
+        }
         evaluated.mode = mode;
         evaluated.keyword_policy = self.root_keyword_policy;
         let result = self.eval(
@@ -1873,6 +1911,15 @@ impl CompiledSchema {
         inherited: KeywordPolicy,
         ctx: &mut Context<'_>,
     ) -> Result<KeywordPolicy, EngineError> {
+        if let Some(index) = &self.cold_resource_index {
+            if construction_index::get_ascii_metered(schema, "$schema", ctx, schema_path)?.is_some() {
+                return self.explicit_keyword_policy(schema, inherited, ctx);
+            }
+            if schema_path.units().first()==Some(&35) {return Ok(inherited);}
+            if let Some(root) = index.for_path(schema_path,ctx)? {
+                return index.policy(self,root,inherited,ctx);
+            }
+        }
         if get_metered(schema, "$schema", ctx, schema_path)?.is_some() {
             return self.explicit_keyword_policy(schema, inherited, ctx);
         }
@@ -2321,6 +2368,13 @@ impl CompiledSchema {
                 .ok()
                 .and_then(|text| text.split_once('#').map(|(base, _)| base.to_owned()))
             {
+                let indexed_root=if let Some(index)=&self.cold_resource_index {
+                    index.lookup_text(&origin,ctx)?.map(|root|index.root(self,root))
+                } else {None};
+                if let Some(root)=indexed_root {
+                    id_applied=std::ptr::eq(root,target);
+                    return Ok((target,target_path,id_applied));
+                }
                 let mut root = (schema_id(&self.schema).as_deref() == Some(origin.as_str()))
                     .then_some(&self.schema);
                 if root.is_none() {
@@ -2737,7 +2791,12 @@ impl CompiledSchema {
                 )
             })?
         };
-        let root = if effective_base.is_empty() {
+        let indexed_root=if let Some(index)=&self.cold_resource_index {
+            if effective_base.is_empty() {Some(&self.schema)}
+            else {index.lookup_text(&effective_base,ctx)?.map(|root|index.root(self,root))}
+        } else {None};
+        let root = if let Some(root)=indexed_root {root}
+        else if effective_base.is_empty() {
             &self.schema
         } else if schema_id(&self.schema).as_deref() == Some(effective_base.as_str()) {
             &self.schema
@@ -2964,16 +3023,32 @@ impl CompiledSchema {
         evaluated: &mut Evaluated,
         id_already_applied: bool,
     ) -> Result<(), EngineError> {
+        let mut guard = EvaluationScope::enter(evaluated,ctx)?;
+        let evaluated = &mut *guard.state;
         let previous_policy = evaluated.keyword_policy;
-        let scoped_path = if id_already_applied {
+        let scoped_path = if self.cold_resource_index.is_some()
+            && self.indexed_path_unchanged(schema,sp,id_already_applied,ctx)? {
+            std::borrow::Cow::Borrowed(sp)
+        } else if id_already_applied {
             ctx.charge_work(sp.len(), Utf16::default())?;
-            sp.clone()
+            std::borrow::Cow::Owned(sp.clone())
         } else {
-            self.effective_schema_path(schema, sp, ctx)?
+            std::borrow::Cow::Owned(self.effective_schema_path(schema,sp,ctx)?)
         };
-        evaluated.keyword_policy =
-            self.keyword_policy_for(schema, &scoped_path, previous_policy, ctx)?;
-        let scope_len = evaluated.dynamic_scope.len();
+        if let Some(index)=&self.cold_resource_index {
+            let root=if let Some(prior)=evaluated.resolved_resource {
+                if index.matches_frame(prior,&scoped_path,ctx)? {Some(prior)}
+                else {index.for_path(&scoped_path,ctx)?}
+            } else {index.for_path(&scoped_path,ctx)?};
+            evaluated.resolved_resource=root;
+            evaluated.keyword_policy=if construction_index::get_ascii_metered(schema,"$schema",ctx,&scoped_path)?.is_some() {
+                self.explicit_keyword_policy(schema,previous_policy,ctx)?
+            } else if scoped_path.units().first()==Some(&35) {previous_policy}
+            else if let Some(root)=root {index.policy(self,root,previous_policy,ctx)?}
+            else {self.keyword_policy_for(schema,&scoped_path,previous_policy,ctx)?};
+        } else {
+            evaluated.keyword_policy=self.keyword_policy_for(schema,&scoped_path,previous_policy,ctx)?;
+        }
         // Draft 2020-12 dynamic scope is a chain of entered schema resources,
         // not a stack of only the dynamically anchored nodes visited by normal
         // applicator evaluation. A resource's anchors may live in `$defs` and
@@ -2982,10 +3057,13 @@ impl CompiledSchema {
         if self.dialect == SchemaDialect::Draft2020_12
             && !matches!(self.regex_profile, RegexProfile::Python(_))
         {
-            if let Some((resource, resource_path)) =
-                self.dynamic_resource_for_path(&scoped_path, ctx)?
-            {
-                self.push_resource_dynamic_anchors(resource, &resource_path, evaluated, ctx)?;
+            let handled=if let (Some(index),Some(root))=(&self.cold_resource_index,evaluated.resolved_resource) {
+                index.enter_anchors(self,root,&scoped_path,evaluated,ctx)?
+            } else {false};
+            if !handled {
+                if let Some((resource,resource_path))=self.dynamic_resource_for_path(&scoped_path,ctx)? {
+                    self.push_resource_dynamic_anchors(resource,&resource_path,evaluated,ctx)?;
+                }
             }
         } else if let Some(Value::String(anchor)) = get(schema, "$dynamicAnchor") {
             // Python's qualified Draft 2020-12 profile retains the historical
@@ -2997,18 +3075,18 @@ impl CompiledSchema {
             )?;
             evaluated.dynamic_scope.push((
                 anchor.units().to_vec(),
-                scoped_path.clone(),
+                scoped_path.as_ref().clone(),
                 schema as *const Value as usize,
-            ));
+            ), ctx)?
         } else if self.dialect == SchemaDialect::Draft2019_09
             && matches!(get(schema, "$recursiveAnchor"), Some(Value::Bool(true)))
         {
             ctx.charge_work_u64(scoped_path.len() as u64 + 1, Utf16::default())?;
             evaluated.dynamic_scope.push((
                 Vec::new(),
-                scoped_path.clone(),
+                scoped_path.as_ref().clone(),
                 schema as *const Value as usize,
-            ));
+            ), ctx)?
         }
         let result = if evaluated.annotation_scan
             && (self.uses_python_2019_annotation_profile()
@@ -3018,8 +3096,6 @@ impl CompiledSchema {
         } else {
             self.eval_inner(schema, data, ip, &scoped_path, depth, ctx, out, evaluated)
         };
-        evaluated.dynamic_scope.truncate(scope_len);
-        evaluated.keyword_policy = previous_policy;
         result
     }
 
@@ -3030,6 +3106,19 @@ impl CompiledSchema {
         evaluated: &mut Evaluated,
         ctx: &mut Context<'_>,
     ) -> Result<(), EngineError> {
+        if let (Some(index),Some(root))=(&self.cold_resource_index,evaluated.resolved_resource) {
+            if index.root_only_anchors(root) && std::ptr::eq(index.root(self,root),resource) {
+                let Some(Value::String(anchor))=construction_index::get_ascii_metered(resource,"$dynamicAnchor",ctx,resource_path)? else {return Ok(());};
+                let address=resource as *const Value as usize;
+                for (_,_,prior) in &evaluated.dynamic_scope {
+                    ctx.charge_work(1,Utf16::default())?;
+                    if *prior==address {return Ok(());}
+                }
+                ctx.charge_work(anchor.len().saturating_add(resource_path.len()).saturating_add(2),Utf16::default())?;
+                evaluated.dynamic_scope.push((anchor.units().to_vec(),resource_path.clone(),address),ctx)?;
+                return Ok(());
+            }
+        }
         let resource_address = resource as *const Value as usize;
         let cached = self
             .dynamic_anchor_cache
@@ -3150,7 +3239,7 @@ impl CompiledSchema {
                     anchor.units().to_vec(),
                     anchor_path,
                     node as *const Value as usize,
-                ));
+                ), ctx)?
             }
             for child in schema_child_values(node, owner.dialect, ctx, resource_path)? {
                 visit(
@@ -3189,6 +3278,14 @@ impl CompiledSchema {
         path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Option<(&'a Value, Utf16)>, EngineError> {
+        if let Some(index) = &self.cold_resource_index {
+            if let Some(root) = index.for_path(path,ctx)? {
+                ctx.charge_work(path.len().saturating_add(1),Utf16::default())?;
+                let end=path.units().iter().position(|u|*u==35).unwrap_or(path.len());
+                let mut units=path.units()[..end].to_vec();units.push(35);
+                return Ok(Some((index.root(self,root),Utf16::new(units))));
+            }
+        }
         ctx.charge_work_u64(
             (path.len() as u64).saturating_mul(2).saturating_add(1),
             path.clone(),
@@ -3219,6 +3316,22 @@ impl CompiledSchema {
             root.push(b'#' as u16);
             (resource, Utf16::new(root))
         }))
+    }
+
+    fn indexed_path_unchanged(&self,schema:&Value,path:&Utf16,id_applied:bool,ctx:&mut Context<'_>) -> Result<bool,EngineError> {
+        ctx.charge_work(1,Utf16::default())?;
+        if id_applied || std::ptr::eq(schema,&self.schema) {return Ok(true);}
+        let id=match construction_index::get_ascii_metered(schema,"$id",ctx,path)? {
+            some @ Some(_)=>some,
+            None=>construction_index::get_ascii_metered(schema,"id",ctx,path)?,
+        };
+        let Some(Value::String(id))=id else {return Ok(id.is_none());};
+        let Some(index)=&self.cold_resource_index else {return Ok(false);};
+        let Some(root)=index.lookup(id.units(),ctx)? else {return Ok(false);};
+        ctx.charge_work(id.len().saturating_add(2),Utf16::default())?;
+        Ok(std::ptr::eq(index.root(self,root),schema)
+            && path.len()==id.len().saturating_add(1)
+            && path.units().starts_with(id.units()) && path.units().last()==Some(&35))
     }
 
     fn effective_schema_path(
@@ -6888,9 +7001,10 @@ fn validate_schema_against_metaschema(
             ));
         }
     };
-    let meta = CompiledSchema {
+    let mut meta = CompiledSchema {
         schema: meta_schema,
         resources: SchemaBacking::Owned(SchemaResources { entries: resources }),
+        cold_resource_index: None,
         dialect,
         strict: false,
         root_keyword_policy: KeywordPolicy::DRAFT2020,
@@ -6905,6 +7019,7 @@ fn validate_schema_against_metaschema(
         python_resource_roots: std::collections::BTreeMap::new(),
         dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
     };
+    if state.is_some() { meta.cold_resource_index = ColdResourceIndex::build(&meta, ctx)?; }
     let errors = meta.validate_instance(schema, ctx)?;
     if let Some(error) = errors.first() {
         return Err(EngineError::new(
@@ -11384,3 +11499,7 @@ mod construction_owner_tests {
 #[cfg(test)]
 #[path = "schema_construction_tests.rs"]
 mod construction_independent_tests;
+
+#[cfg(test)]
+#[path = "schema_budget_reduction_tests.rs"]
+mod schema_budget_reduction_tests;

@@ -14,6 +14,7 @@ OWNER='3ba34e412a4c78c0ef01dd1085b8add79db1b7ae'
 WHEEL_SHA='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'
 SCOPE_METHODS=()
 SAGA_METHODS=()
+COMBINED_METHODS=()
 TEST_SHA='eb6bc7b8e8533d4a60d4432a09bb68bef8f67f89e23f0ff15928f5223f7b1719'
 DEPTH='PrivateNativeControlTests.test_private_resource_depth_limit_remains_per_resource_128'
 REFUSALS=(
@@ -206,6 +207,12 @@ def boundary(args):
     if SAGA_METHODS:
         saga=load(args.controller/'python/tests/test_retained_codegen_saga.py','reviewed_retained_saga_tests')
         for name in SAGA_METHODS:suite.addTest(saga.PrivateRetainedSagaNativeTests(name))
+    if COMBINED_METHODS:
+        # The exact approved sidecar imports these helpers by this name.
+        require('test_retained_codegen_native' not in sys.modules,'Foreign test helper already loaded')
+        sys.modules['test_retained_codegen_native']=tests
+        combined=load(args.controller/'python/tests/test_combined_budget_boundaries.py','reviewed_combined_tests')
+        for name in COMBINED_METHODS:suite.addTest(combined.CombinedBudgetConversionBoundaryTests(name))
     result=unittest.TextTestRunner(resultclass=Result,verbosity=2).run(suite)
     identity(args,'boundary-after')
     report['identityAfterPassed']=True;report['complete']=True;write(target,report)
@@ -214,15 +221,9 @@ def boundary(args):
 
 def diagnostic(args):
     identity(args,'diagnostic-before')
-    probe_path=args.controller/'tools/probe_inspector_retained_attribution.py'
-    module=load(probe_path,'controller_attribution')
-    namespace=argparse.Namespace(root=args.owner,wheel=args.wheel,source_sha=OWNER,
-       resource_pins_sha256='72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290',output=args.out/'work-attribution.json',
-       controller_source=args.controller_sha,probe_sha256=__import__('hashlib').sha256(probe_path.read_bytes()).hexdigest())
     try:
-        result=module.run(namespace)
-        require(namespace.output.stat().st_size<=DIAGNOSTIC_RECEIPT_BYTES,'Diagnostic receipt exceeded storage bound')
-        return result
+        module=load(args.controller/'tools/qualify_inspector_combined_budget.py','combined_diagnostic')
+        return module.diagnostic(args)
     finally:
         identity(args,'diagnostic-after')
 
@@ -246,8 +247,8 @@ def run(args):
         if getattr(args,'producer_pins',None):
             rust=json.loads((args.out/'rust-census-result.json').read_text())
             require(rust.get('status')=='passed' and rust.get('source')==OWNER
-                    and rust.get('cases')==162 and rust.get('passed')==162,
-                    'New native Rust162 qualification missing/different')
+                    and rust.get('cases')==187 and rust.get('passed')==187,
+                    'New native Rust187 qualification missing/different')
             rc=command('legacy',[sys.executable,'-I','-B','-m','pytest','-q','-s',
                 '--junitxml='+str(args.out/'legacy.xml'),str(args.controller/'python/tests/test_rust_codegen.py')])
             cases=list(ET.parse(args.out/'legacy.xml').getroot().iter('testcase'))
@@ -256,7 +257,7 @@ def run(args):
             state['legacyPassed']=True;save()
             rc=command('boundary',common+['--mode','boundary'])
             decision=boundary_admission(json.loads((args.out/'boundary.json').read_text()),rc)
-            require(decision['boundaryPassed'],'Fresh boundary23 failed; no native continuation')
+            require(decision['boundaryPassed'],'Fresh boundary27 failed; no native continuation')
             state.update(decision);save()
         else:
             intake=json.loads((args.out/'intake.json').read_text())
@@ -303,14 +304,13 @@ def run(args):
             rc=command('diagnostic',common+['--mode','diagnostic'],DIAGNOSTIC_SECONDS)
             require((args.out/'diagnostic.log').stat().st_size<=DIAGNOSTIC_LOG_BYTES,'Diagnostic log exceeded storage bound')
             require(rc==0,'Diagnostic failed; no further native gates admitted')
-            observed=json.loads((args.out/'work-attribution.json').read_text())
-            require(observed.get('profile')=='umf.private-inspector-work-attribution/1' and observed.get('source')==OWNER
-                    and observed.get('controllerSource')==args.controller_sha
-                    and observed.get('probeSourceSHA256')==__import__('hashlib').sha256((args.controller/'tools/probe_inspector_retained_attribution.py').read_bytes()).hexdigest()
-                    and observed.get('status')=='observed' and observed.get('amountSequenceEquivalent')is True
-                    and observed.get('resultBytesEquivalent')is True and observed.get('publishable')is False
-                    and observed.get('readyForEnrollment')is False
-                    and observed.get('wheelSHA256')==WHEEL_SHA, 'Diagnostic completion receipt absent/different')
+            observed=json.loads((args.out/'combined-constructor-attribution.json').read_text())
+            require(observed.get('profile')=='umf.private-combined-constructor-attribution/1'
+                    and observed.get('source')==OWNER and observed.get('controllerSource')==args.controller_sha
+                    and observed.get('amountSequenceEquivalent')is True
+                    and observed.get('status') in ('observed-complete-pair','observed-matching-partial-refusals')
+                    and observed.get('publishable')is False and observed.get('readyForEnrollment')is False
+                    and observed.get('wheelSHA256')==WHEEL_SHA,'New bounded diagnostic receipt differs')
             require((args.out/'identity-diagnostic-after.json').is_file(),'Diagnostic after-identity missing')
             state['diagnosticPassed']=True;save()
         else:raise ValueError('Critical boundary failure blocks attribution and public gates')
@@ -329,7 +329,7 @@ def run(args):
 
 def configure_producer(args):
     import hashlib
-    global OWNER,WHEEL_SHA,TEST_SHA,SCOPE_METHODS,SAGA_METHODS,BOUNDARY_CASES
+    global OWNER,WHEEL_SHA,TEST_SHA,SCOPE_METHODS,SAGA_METHODS,COMBINED_METHODS,BOUNDARY_CASES
     pins=json.loads(args.producer_pins.read_text())
     root=args.controller.resolve();owner=args.owner.resolve()
     git=lambda where,*items:subprocess.check_output(['git','-C',str(where),*items],text=True).strip()
@@ -352,7 +352,12 @@ def configure_producer(args):
       'test_required_arrays_preserve_duplicate_and_utf16_collision_refusal',
       'test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success')
     SAGA_METHODS=('test_genuine_optional_saga_constructs_and_actual_retained_reports_match_original_oracle','test_malformed_optional_saga_refuses_eagerly_without_returning_native_handle')
-    BOUNDARY_CASES=BOUNDARY_CASES|frozenset('PrivateConstructionIsolationNativeTests.'+name for name in SCOPE_METHODS)|frozenset('PrivateRetainedSagaNativeTests.'+name for name in SAGA_METHODS)
+    census=json.loads((root/'tests/qualification/fixtures/inspector-construction-batch.json').read_text())
+    combined=census['combinedPythonMethods']
+    require(type(combined)is list and len(combined)==4 and len(set(combined))==4,'Combined boundary census differs')
+    require(hashlib.sha256((root/'python/tests/test_combined_budget_boundaries.py').read_bytes()).hexdigest()==census['fileHashes']['python/tests/test_combined_budget_boundaries.py'],'Independent sidecar differs')
+    COMBINED_METHODS=tuple(combined)
+    BOUNDARY_CASES=BOUNDARY_CASES|frozenset('PrivateConstructionIsolationNativeTests.'+name for name in SCOPE_METHODS)|frozenset('PrivateRetainedSagaNativeTests.'+name for name in SAGA_METHODS)|frozenset('CombinedBudgetConversionBoundaryTests.'+name for name in COMBINED_METHODS)
 
 
 if __name__=='__main__':

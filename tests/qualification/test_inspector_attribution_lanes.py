@@ -124,7 +124,7 @@ class LaneControls(unittest.TestCase):
                 originalRun=41753398285,verifiedComponentReuse=reuse))
             if producer:
                 args.producer_pins=root/'producer.json'
-                lanes.write(root/'rust-census-result.json',dict(status='passed',source=lanes.OWNER,cases=161 if missing_rust else 162,passed=162))
+                lanes.write(root/'rust-census-result.json',dict(status='passed',source=lanes.OWNER,cases=186 if missing_rust else 187,passed=187))
             calls=[]
             def identity(*a):
                 if identity_failure:raise ValueError('mandatory loaded identity failed')
@@ -136,7 +136,7 @@ class LaneControls(unittest.TestCase):
                     if mode=='boundary':lanes.write(root/'boundary.json',report(fixture,critical));return types.SimpleNamespace(returncode=1 if fixture or critical else 0)
                     if mode=='diagnostic':
                         if missing_diagnostic_receipt:return types.SimpleNamespace(returncode=0)
-                        lanes.write(root/'work-attribution.json',dict(profile='umf.private-inspector-work-attribution/1',source=lanes.OWNER,controllerSource=args.controller_sha,probeSourceSHA256=hashlib.sha256((root/'tools/probe_inspector_retained_attribution.py').read_bytes()).hexdigest(),status='observed',amountSequenceEquivalent=True,resultBytesEquivalent=True,publishable=False,readyForEnrollment=False,wheelSHA256='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'))
+                        lanes.write(root/'combined-constructor-attribution.json',dict(profile='umf.private-combined-constructor-attribution/1',source=lanes.OWNER,controllerSource=args.controller_sha,status='observed-complete-pair',amountSequenceEquivalent=True,publishable=False,readyForEnrollment=False,wheelSHA256='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'))
                         lanes.write(root/'identity-diagnostic-after.json',{'fixture':True});return types.SimpleNamespace(returncode=0)
                 if '::PublicRetainedFeasibilityTests' in ' '.join(argv):
                     calls.append('public-controls');(root/'public-controls.xml').write_text('<testsuites><testsuite>'+''.join('<testcase name="p'+str(i)+'"/>' for i in range(12))+'</testsuite></testsuites>');return types.SimpleNamespace(returncode=0)

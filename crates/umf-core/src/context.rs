@@ -41,6 +41,15 @@ pub type Clock<'a> = dyn FnMut() -> Option<u64> + 'a;
 pub type FallibleCancellationCheck<'a> = dyn FnMut() -> Result<bool, EngineError> + 'a;
 pub type FallibleClock<'a> = dyn FnMut() -> Result<Option<u64>, EngineError> + 'a;
 
+// A scratch path is already admitted storage. It moves only on Context-owned
+// refusal; host errors retain their own origin/path without consuming scratch.
+enum WorkPath<'p> { Owned(Utf16), Scratch(&'p mut Utf16) }
+impl WorkPath<'_> {
+    fn take(&mut self) -> Utf16 {
+        match self { Self::Owned(path)=>std::mem::take(path), Self::Scratch(path)=>std::mem::take(*path) }
+    }
+}
+
 /// Per-invocation limits and explicit host capabilities. The context owns all
 /// counters; no global or ambient runtime state is consulted.
 pub struct Context<'a> {
@@ -426,8 +435,19 @@ impl<'a> Context<'a> {
     /// native and wasm32. Host notifications use the same bounded chunks on
     /// both targets, preserving the existing usize callback interface.
     pub fn charge_work_u64(&mut self, amount: u64, path: Utf16) -> Result<(), EngineError> {
+        self.charge_work_path(amount, WorkPath::Owned(path))
+    }
+
+    /// Same work/control state machine. Success borrows the admitted buffer;
+    /// Context-generated refusal moves it, host refusal never substitutes it.
+    /// Fixed error code/message construction remains the existing behavior.
+    pub fn charge_work_with_path(&mut self, amount: usize, path: &mut Utf16) -> Result<(), EngineError> {
+        self.charge_work_path(amount as u64, WorkPath::Scratch(path))
+    }
+
+    fn charge_work_path(&mut self, amount: u64, mut path: WorkPath<'_>) -> Result<(), EngineError> {
         let Some(total) = self.charged_work.checked_add(amount) else {
-            return Err(EngineError::new("LIMIT", path, "Work counter overflow"));
+            return Err(EngineError::new("LIMIT", path.take(), "Work counter overflow"));
         };
         self.charged_work = total;
         if self.meter.is_none()
@@ -447,76 +467,57 @@ impl<'a> Context<'a> {
             if let Some(control) = self.host_control.as_deref_mut() {
                 control(chunk).map_err(EngineError::from_host)?;
             }
-            self.check_cancelled(path.clone())?;
-            self.check_deadline(path.clone())?;
+            self.check_cancelled_path(&mut path)?;
+            self.check_deadline_path(&mut path)?;
             remaining -= chunk as u64;
-            if remaining == 0 {
-                return Ok(());
+            if remaining == 0 { return Ok(()); }
+        }
+    }
+
+    fn check_cancelled_path(&mut self, path: &mut WorkPath<'_>) -> Result<(), EngineError> {
+        if let Some(check) = self.fallible_cancellation.as_deref_mut() {
+            if check().map_err(EngineError::from_host)? {
+                return Err(EngineError::new("CANCELLED", path.take(), "Operation cancelled").with_control_failure());
             }
         }
+        if self.cancellation.as_deref_mut().is_some_and(|check| check()) {
+            return Err(EngineError::new("CANCELLED", path.take(), "Operation cancelled").with_control_failure());
+        }
+        Ok(())
+    }
+
+    fn check_deadline_path(&mut self, path: &mut WorkPath<'_>) -> Result<(), EngineError> {
+        let Some(deadline) = self.deadline_ms else { return Ok(()); };
+        if let Some(clock) = self.fallible_clock.as_deref_mut() {
+            let Some(now) = clock().map_err(EngineError::from_host)? else {
+                return Err(EngineError::new("CLOCK_CAPABILITY_REQUIRED", path.take(),
+                    "Host clock capability did not return a time").with_control_failure());
+            };
+            if now > deadline {
+                return Err(EngineError::new("DEADLINE", path.take(), "Deadline elapsed").with_control_failure());
+            }
+        } else {
+            let Some(clock) = self.clock.as_deref_mut() else {
+                return Err(EngineError::new("CLOCK_CAPABILITY_REQUIRED", path.take(),
+                    "Host clock capability is required for deadline requests").with_control_failure());
+            };
+            let Some(now) = clock() else {
+                return Err(EngineError::new("CLOCK_CAPABILITY_REQUIRED", path.take(),
+                    "Host clock capability did not return a time").with_control_failure());
+            };
+            if now > deadline {
+                return Err(EngineError::new("DEADLINE", path.take(), "Deadline elapsed").with_control_failure());
+            }
+        }
+        Ok(())
     }
 
     pub fn check_cancelled(&mut self, path: Utf16) -> Result<(), EngineError> {
-        if let Some(check) = self.fallible_cancellation.as_deref_mut() {
-            if check().map_err(EngineError::from_host)? {
-                return Err(EngineError::new("CANCELLED", path, "Operation cancelled")
-                    .with_control_failure());
-            }
-        }
-        if self
-            .cancellation
-            .as_deref_mut()
-            .is_some_and(|check| check())
-        {
-            return Err(
-                EngineError::new("CANCELLED", path, "Operation cancelled").with_control_failure()
-            );
-        }
-        Ok(())
+        self.check_cancelled_path(&mut WorkPath::Owned(path))
     }
 
     pub fn check_deadline(&mut self, path: Utf16) -> Result<(), EngineError> {
-        let Some(deadline) = self.deadline_ms else {
-            return Ok(());
-        };
-        if let Some(clock) = self.fallible_clock.as_deref_mut() {
-            let Some(now) = clock().map_err(EngineError::from_host)? else {
-                return Err(EngineError::new(
-                    "CLOCK_CAPABILITY_REQUIRED",
-                    path,
-                    "Host clock capability did not return a time",
-                )
-                .with_control_failure());
-            };
-            if now > deadline {
-                return Err(
-                    EngineError::new("DEADLINE", path, "Deadline elapsed").with_control_failure()
-                );
-            }
-            return Ok(());
-        }
-        let Some(clock) = self.clock.as_deref_mut() else {
-            return Err(EngineError::new(
-                "CLOCK_CAPABILITY_REQUIRED",
-                path,
-                "Host clock capability is required for deadline requests",
-            )
-            .with_control_failure());
-        };
-        let Some(now) = clock() else {
-            return Err(EngineError::new(
-                "CLOCK_CAPABILITY_REQUIRED",
-                path,
-                "Host clock capability did not return a time",
-            )
-            .with_control_failure());
-        };
-        if now > deadline {
-            return Err(
-                EngineError::new("DEADLINE", path, "Deadline elapsed").with_control_failure()
-            );
-        }
-        Ok(())
+        self.check_deadline_path(&mut WorkPath::Owned(path))
     }
 }
 
@@ -996,3 +997,7 @@ mod constructor_observation_tests {
         assert_eq!(ctx.charged_work(), 0);
     }
 }
+
+#[cfg(test)]
+#[path = "context_path_tests.rs"]
+mod context_path_tests;

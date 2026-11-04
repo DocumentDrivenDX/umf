@@ -434,3 +434,60 @@ original source/native identities. A newly built observation candidate is
 separate and unpublishable. No limits, versions, canonical resources, compiler
 eligibility, public API semantics or support claims change under this proposal.
 Source/controller and actual dispatch binding review precede any execution.
+
+## Combined cold-owner reduction — private source proposal
+
+This proposal preserves the retained constructor and inspection surfaces above.
+It makes no measured fit, native support, enrollment or publication claim.
+The authoritative recovery plan selects CR1–CR4 at SHA-256
+`d7756a1d49b67cf3b3b8200ba760d9877c2ee8e801e18fcc1ce50ec4acf8e999`.
+
+A construction-owned index MAY replace repeated resource discovery only after
+its complete cold admission in the existing Context. Root identity MUST be
+owner-relative, not an address surviving a move. Ordered catalogues, retrieval
+aliases, nested identifiers, policy, effective limits and original resolution
+precedence MUST remain distinguishable. An unsupported index shape MUST select
+the original compiler/interpreter; it MUST NOT reject previously admitted data,
+interpret unknown content as a schema, or omit ordinary preflight/metaschema work.
+Completed index/schema sharing MUST satisfy the existing exact construction
+eligibility and ordered input equality. Registry registration authority remains
+fresh for every package, ID, version, scope, capability and token.
+
+The shared interpreter MAY borrow an unchanged admitted schema path and share
+immutable dynamic ancestry. Branch changes MUST be separately admitted and
+scoped restoration MUST occur on success, refusal and unwind. Annotation sets
+remain branch-local and their existing ordered merge/validation charges remain.
+AllErrors order, dynamic-reference scope and full semantic validation MUST remain
+identical to the unindexed path. No pinned resource hash is validation authority.
+
+`Context::charge_work_with_path(amount, &mut path)` uses the owned-path charging
+state machine unchanged, including cumulative debit, overflow, zero/wide chunks,
+meter → host control → cancellation → deadline. On success the buffer MUST remain
+unchanged without cloning. A Context-generated refusal MUST take its existing
+owned storage; a host error MUST preserve its own fields and provenance without
+consuming the scratch path. Existing fixed terminal code/message construction
+remains allowed. No later callback, unadmitted input-dependent path materialization
+or result-envelope work follows terminal denial. Buffer growth MUST admit both
+new storage and possible prefix relocation before reserve; suffix escape and
+append MUST be admitted before mutation. The exact missing-clock diagnostic is
+`Host clock capability is required for deadline requests` for both APIs.
+
+The historical125-slot observation and its authenticated old prefix remain
+unchanged evidence. The combined controller extends that closed roster with
+one fixed `unassigned/index-build` slot (126 total, at most128). Unknown labels
+and roles still refuse; unclassified semantic compilation remains `other`, never
+`admission-copy`. This new controller MUST compare the changed source's ordinary
+and attributed constructors against each other, not demand the removed work's
+old amount digest. It permits at most two independent cold lifetimes, each with
+the unchanged1000000-event diagnostic cap and a combined300-second deadline.
+Completed diagnostic constructors still do not establish public1M support.
+
+Before supplementary attribution, the reviewed affected controls and fresh
+installed ownership MUST pass, and strict public construction/call measurement
+MUST run independently. An authentic public RESOURCE_LIMIT refusal MAY permit
+bounded attribution while required qualification remains failed. Arbitrary
+assertion, crash, identity failure or first-denial regression MUST NOT be
+reclassified as a budget refusal. Full fresh native selection, compiled-list
+correspondence, all51 cold calls, terminal/resource refusal and cleanup are still
+execution gates. The source-only charge and reachability map is recorded in
+[the combined batch packet](../../04-build/evidence/inspector-combined-budget-source.md).

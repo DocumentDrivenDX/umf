@@ -17,7 +17,15 @@ use umf_core::{
     PythonCompiledSchema, PythonConsumerValue, PythonSchemaPathSegment, PythonSchemaResources,
 };
 
-mod python_value;
+// Keep the source-reviewed converter byte-identical. The inline directory
+// wrapper permits its disjoint cfg(test) child to test private path helpers.
+#[path = "."]
+mod python_value {
+    include!("python_value.rs");
+    #[cfg(test)]
+    #[path = "python_value_path_tests.rs"]
+    mod path_controls;
+}
 mod related_keys;
 mod retained_codegen;
 

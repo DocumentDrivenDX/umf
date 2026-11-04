@@ -33,83 +33,187 @@ pub fn from_codegen_resource(
 /// Strict retained-facade admission directly into its final owned core tree.
 /// Generic Python Schema consumers keep their separate source-origin profile.
 pub fn from_codegen_resource_owned(
-    py: Python<'_>, value: &Bound<'_, PyAny>, ctx: &mut Context<'_>,
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    ctx: &mut Context<'_>,
     count: &mut usize,
 ) -> Result<umf_core::Value, EngineError> {
-        ctx.with_constructor_site("ctor.visit", |ctx| {
-    fn visit(py: Python<'_>, value: &Bound<'_, PyAny>, ctx: &mut Context<'_>,
-        depth: usize, count: &mut usize, path: &Utf16) -> Result<umf_core::Value, EngineError> {
-        ctx.with_constructor_site("ctor.visit", |ctx| {
-        use umf_core::Value;
-        if depth > ctx.limits().max_depth {
-            return Err(EngineError::new("LIMIT", path.clone(), "Python consumer value nesting exceeds the admission limit"));
-        }
-        if depth == 0 { *count = count.saturating_add(1); }
-        ctx.check_tree_value_count(*count, path.clone())?;
-        ctx.charge_work(1, Utf16::default())?;
-        if value.is_none() { return Ok(Value::Null); }
-        if value.is_exact_instance_of::<PyBool>() {
-            return value.extract::<bool>().map(Value::Bool).map_err(|_| invalid("Could not read Python bool"));
-        }
-        if value.is_exact_instance_of::<PyInt>() {
-            let integer = value.extract::<i64>().ok().filter(|n| n.unsigned_abs() <= 9_007_199_254_740_991)
-                .ok_or_else(|| EngineError::new("NUMBER", path.clone(), "Integer is outside the safe binary64 envelope"))?;
-            return Ok(Value::Number(integer as f64));
-        }
-        if value.is_exact_instance_of::<PyFloat>() {
-            let number = value.extract::<f64>().map_err(|_| invalid("Could not read Python float bits"))?;
-            // Numeric/core projection follows complete strict facade admission,
-            // preserving the predecessor's admission-before-projection ordering.
-            return Ok(Value::Number(number));
-        }
-        if value.is_exact_instance_of::<PyString>() {
-            return Ok(Value::String(resource_text(value, ctx, true)?.to_utf16(ctx)?));
-        }
-        if value.is_exact_instance_of::<PyList>() {
-            let list = value.downcast::<PyList>().map_err(|_| invalid("Could not access Python list"))?;
-            let length = list.len(); *count = count.saturating_add(length);
-            ctx.check_tree_value_count(*count, path.clone())?;
-            ctx.with_constructor_site("ctor.frontier", |ctx| ctx.charge_work(length, Utf16::default()))?;
-            if list.len() != length { return Err(EngineError::new("REQUEST", path.clone(), "Resource container changed during admission")); }
-            let children: Vec<_> = list.iter().collect();
-            let mut output = Vec::with_capacity(length);
-            for (index, item) in children.into_iter().enumerate() {
-                ctx.with_constructor_site("ctor.array-index", |ctx| ctx.charge_work(20, path.clone()))?;
-                let child = resource_child_path(path, &PyText::from_utf8(&index.to_string()), ctx)?;
-                output.push(visit(py, &item, ctx, depth + 1, count, &child)?);
-            }
-            return Ok(Value::Array(output));
-        }
-        if value.is_exact_instance_of::<PyDict>() {
-            let dict = value.downcast::<PyDict>().map_err(|_| invalid("Could not access Python dict"))?;
-            let length = dict.len(); *count = count.saturating_add(length);
-            ctx.check_tree_value_count(*count, path.clone())?;
-            ctx.with_constructor_site("ctor.frontier", |ctx| ctx.charge_work(length.saturating_mul(2), Utf16::default()))?;
-            if dict.len() != length { return Err(EngineError::new("REQUEST", path.clone(), "Resource container changed during admission")); }
-            let children: Vec<_> = dict.iter().collect();
-            let mut seen = std::collections::BTreeSet::new(); let mut output = Vec::with_capacity(length);
-            for (key, child) in children {
-                if !key.is_exact_instance_of::<PyString>() {
-                    return Err(EngineError::new("UNSUPPORTED_KEY", path.clone(), "JSON object keys must be strings"));
+    ctx.with_constructor_site("ctor.visit", |ctx| {
+        fn visit(
+            py: Python<'_>,
+            value: &Bound<'_, PyAny>,
+            ctx: &mut Context<'_>,
+            depth: usize,
+            count: &mut usize,
+            path: &mut Utf16,
+        ) -> Result<umf_core::Value, EngineError> {
+            ctx.with_constructor_site("ctor.visit", |ctx| {
+                use umf_core::Value;
+                if depth > ctx.limits().max_depth {
+                    return Err(EngineError::new(
+                        "LIMIT",
+                        std::mem::take(path),
+                        "Python consumer value nesting exceeds the admission limit",
+                    ));
                 }
-                let text = resource_text(&key, ctx, true)?;
-                ctx.with_constructor_site("ctor.key-collision", |ctx| ctx.charge_work(text.len().saturating_add(1), Utf16::default()))?;
-                if !seen.insert(text.clone()) { return Err(EngineError::new("DUPLICATE_KEY", Utf16::default(), "Duplicate object key")); }
-                let child_path = resource_child_path(path, &text, ctx)?;
-                let key = text.to_utf16(ctx)?;
-                output.push((key, visit(py, &child, ctx, depth + 1, count, &child_path)?));
-            }
-            return Ok(Value::Object(output));
+                if depth == 0 {
+                    *count = count.saturating_add(1);
+                }
+                // The count guard performs no callbacks. Borrow-free success avoids
+                // owning a diagnostic path; failure takes the already admitted buffer.
+                ctx.check_tree_value_count(*count, Utf16::default())
+                    .map_err(|mut error| {
+                        error.path = std::mem::take(path);
+                        error
+                    })?;
+                ctx.charge_work(1, Utf16::default())?;
+                if value.is_none() {
+                    return Ok(Value::Null);
+                }
+                if value.is_exact_instance_of::<PyBool>() {
+                    return value
+                        .extract::<bool>()
+                        .map(Value::Bool)
+                        .map_err(|_| invalid("Could not read Python bool"));
+                }
+                if value.is_exact_instance_of::<PyInt>() {
+                    let integer = value
+                        .extract::<i64>()
+                        .ok()
+                        .filter(|n| n.unsigned_abs() <= 9_007_199_254_740_991)
+                        .ok_or_else(|| {
+                            EngineError::new(
+                                "NUMBER",
+                                std::mem::take(path),
+                                "Integer is outside the safe binary64 envelope",
+                            )
+                        })?;
+                    return Ok(Value::Number(integer as f64));
+                }
+                if value.is_exact_instance_of::<PyFloat>() {
+                    let number = value
+                        .extract::<f64>()
+                        .map_err(|_| invalid("Could not read Python float bits"))?;
+                    // Numeric/core projection follows complete strict facade admission,
+                    // preserving the predecessor's admission-before-projection ordering.
+                    return Ok(Value::Number(number));
+                }
+                if value.is_exact_instance_of::<PyString>() {
+                    return Ok(Value::String(
+                        resource_text(value, ctx, true)?.to_utf16(ctx)?,
+                    ));
+                }
+                if value.is_exact_instance_of::<PyList>() {
+                    let list = value
+                        .downcast::<PyList>()
+                        .map_err(|_| invalid("Could not access Python list"))?;
+                    let length = list.len();
+                    *count = count.saturating_add(length);
+                    // The count guard performs no callbacks. Borrow-free success avoids
+                    // owning a diagnostic path; failure takes the already admitted buffer.
+                    ctx.check_tree_value_count(*count, Utf16::default())
+                        .map_err(|mut error| {
+                            error.path = std::mem::take(path);
+                            error
+                        })?;
+                    ctx.with_constructor_site("ctor.frontier", |ctx| {
+                        ctx.charge_work(length, Utf16::default())
+                    })?;
+                    if list.len() != length {
+                        return Err(EngineError::new(
+                            "REQUEST",
+                            std::mem::take(path),
+                            "Resource container changed during admission",
+                        ));
+                    }
+                    let children: Vec<_> = list.iter().collect();
+                    let mut output = Vec::with_capacity(length);
+                    for (index, item) in children.into_iter().enumerate() {
+                        ctx.with_constructor_site("ctor.array-index", |ctx| {
+                            ctx.charge_work_with_path(20, path)
+                        })?;
+                        // Preserve index-format admission before making the temporary key.
+                        let key = PyText::from_utf8(&index.to_string()).to_utf16(ctx)?;
+                        let parent_len = resource_path_push(path, &key, ctx)?;
+                        let child = visit(py, &item, ctx, depth + 1, count, path)?;
+                        resource_path_truncate(path, parent_len);
+                        output.push(child);
+                    }
+                    return Ok(Value::Array(output));
+                }
+                if value.is_exact_instance_of::<PyDict>() {
+                    let dict = value
+                        .downcast::<PyDict>()
+                        .map_err(|_| invalid("Could not access Python dict"))?;
+                    let length = dict.len();
+                    *count = count.saturating_add(length);
+                    // The count guard performs no callbacks. Borrow-free success avoids
+                    // owning a diagnostic path; failure takes the already admitted buffer.
+                    ctx.check_tree_value_count(*count, Utf16::default())
+                        .map_err(|mut error| {
+                            error.path = std::mem::take(path);
+                            error
+                        })?;
+                    ctx.with_constructor_site("ctor.frontier", |ctx| {
+                        ctx.charge_work(length.saturating_mul(2), Utf16::default())
+                    })?;
+                    if dict.len() != length {
+                        return Err(EngineError::new(
+                            "REQUEST",
+                            std::mem::take(path),
+                            "Resource container changed during admission",
+                        ));
+                    }
+                    let children: Vec<_> = dict.iter().collect();
+                    let mut seen = std::collections::BTreeMap::new();
+                    let mut output = Vec::with_capacity(length);
+                    for (key, child) in children {
+                        if !key.is_exact_instance_of::<PyString>() {
+                            return Err(EngineError::new(
+                                "UNSUPPORTED_KEY",
+                                std::mem::take(path),
+                                "JSON object keys must be strings",
+                            ));
+                        }
+                        let text = resource_text(&key, ctx, true)?;
+                        ctx.with_constructor_site("ctor.key-collision", |ctx| {
+                            ctx.charge_work(text.len().saturating_add(1), Utf16::default())
+                        })?;
+                        // The entry owns the normalized Python spelling: no codepoint
+                        // vector clone for collision custody. Occupied still refuses
+                        // BEFORE projecting/admitting the child path or child value.
+                        let entry = match seen.entry(text) {
+                            std::collections::btree_map::Entry::Occupied(_) => {
+                                return Err(EngineError::new(
+                                    "DUPLICATE_KEY",
+                                    Utf16::default(),
+                                    "Duplicate object key",
+                                ));
+                            }
+                            std::collections::btree_map::Entry::Vacant(entry) => entry,
+                        };
+                        let key = ctx
+                            .with_constructor_site("ctor.path", |ctx| entry.key().to_utf16(ctx))?;
+                        entry.insert(());
+                        let parent_len = resource_path_push(path, &key, ctx)?;
+                        let child = visit(py, &child, ctx, depth + 1, count, path)?;
+                        resource_path_truncate(path, parent_len);
+                        output.push((key, child));
+                    }
+                    return Ok(Value::Object(output));
+                }
+                Err(EngineError::new(
+                    "UNSUPPORTED_VALUE",
+                    std::mem::take(path),
+                    "Python consumer values must be exact built-in JSON values",
+                ))
+            })
         }
-        Err(EngineError::new("UNSUPPORTED_VALUE", path.clone(), "Python consumer values must be exact built-in JSON values"))
-
-        })
-    }
-    let owned = visit(py, value, ctx, 0, count, &Utf16::default())?;
-    umf_core::value::admit_owned_json_at(owned, Utf16::from("#"), ctx)
-
-        })
-    }
+        let mut path = Utf16::default();
+        let owned = visit(py, value, ctx, 0, count, &mut path)?;
+        umf_core::value::admit_owned_json_at(owned, Utf16::from("#"), ctx)
+    })
+}
 
 fn from_python_policy(
     py: Python<'_>, value: &Bound<'_, PyAny>, ctx: &mut Context<'_>,
@@ -255,6 +359,59 @@ fn from_python_policy(
         if codegen { path.clone() } else { Utf16::default() },
         "Python consumer values must be exact built-in JSON values",
     ))
+}
+
+/// Append to one conversion-owned escaped path. Existing capacity is reused;
+/// growing capacity must also admit allocation and prefix relocation BEFORE
+/// reserve. Callback failures take/preserve their own already-owned path through
+/// Context's frozen borrowed-path control API; this function does not rebuild it.
+fn resource_path_push(
+    path: &mut Utf16,
+    key: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<usize, EngineError> {
+    ctx.with_constructor_site("ctor.path", |ctx| {
+        let parent_len = path.len();
+        // Admit the escape-count scan before performing it.
+        ctx.charge_work_with_path(key.len(), path)?;
+        let escaped = key.units().iter().fold(1usize, |size, unit| {
+            size.saturating_add(if matches!(*unit, 47 | 126) { 2 } else { 1 })
+        });
+        let needed = parent_len.saturating_add(escaped);
+        // Inspect capacity without cloning and WITHOUT invoking any callback
+        // while ownership is temporarily outside the scratch path.
+        let units = std::mem::take(path).into_units();
+        let grows = units.capacity() < needed;
+        *path = Utf16::new(units);
+        if grows {
+            // Capacity allocation and possible prefix relocation are distinct
+            // from the escaped suffix copy below. No hidden free prefix copy.
+            ctx.charge_work_with_path(needed.saturating_add(parent_len), path)?;
+        }
+        ctx.charge_work_with_path(escaped, path)?;
+        // All admissions completed. No callback between take and restoration.
+        let mut units = std::mem::take(path).into_units();
+        if grows {
+            units.reserve_exact(escaped);
+        }
+        units.push(47);
+        for unit in key.units() {
+            match unit {
+                126 => units.extend_from_slice(&[126, 48]),
+                47 => units.extend_from_slice(&[126, 49]),
+                other => units.push(*other),
+            }
+        }
+        *path = Utf16::new(units);
+        Ok(parent_len)
+    })
+}
+
+/// Successful unwind only; error propagation must not rebuild a consumed path.
+fn resource_path_truncate(path: &mut Utf16, parent_len: usize) {
+    let mut units = std::mem::take(path).into_units();
+    units.truncate(parent_len);
+    *path = Utf16::new(units);
 }
 
 fn resource_child_path(path: &Utf16, key: &PyText, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {

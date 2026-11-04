@@ -1,111 +1,111 @@
 {
   "profile": "umf.private-construction-batch-census/1",
-  "rustCaseCount": 162,
-  "pythonMethodCount": 43,
+  "rustCaseCount": 187,
+  "pythonMethodCount": 47,
   "testSHA256": "2f6a35343298ccfa356acf21d559c80c93fc9a8e78de395f9d3fbe92d75e528e",
   "resourcePinsSHA256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
   "rust": [
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/context.rs",
-      "sourceSHA256": "e4e5dcc4bc1f3e765b9c55b0e76aea3a1ae9611e274eb8ab7942943fa743a745",
+      "sourceSHA256": "a5073febb98d9e3db0731ed3b7bdae150adf85a3ce6e27ad3f4f43fab98a06f7",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 19,
       "cases": [
         {
           "name": "context::tests::aggregate_text_scope_caps_and_restores_without_resetting_controls_or_counters",
-          "line": 498,
+          "line": 529,
           "module": "tests"
         },
         {
           "name": "context::tests::trusted_schema_depth_scope_preserves_counters_and_restores_on_error_and_unwind",
-          "line": 533,
+          "line": 564,
           "module": "tests"
         },
         {
           "name": "context::tests::tagged_transport_allowance_keeps_one_meter_and_restores_ordinary_limits",
-          "line": 553,
+          "line": 584,
           "module": "tests"
         },
         {
           "name": "context::tests::temporary_catalog_and_ordinary_phases_keep_the_same_wide_counter",
-          "line": 590,
+          "line": 621,
           "module": "tests"
         },
         {
           "name": "context::tests::catalog_value_allowance_restores_limits_after_error_and_unwind",
-          "line": 606,
+          "line": 637,
           "module": "tests"
         },
         {
           "name": "context::tests::tagged_transport_scope_preserves_cancellation_and_deadline_hooks",
-          "line": 625,
+          "line": 656,
           "module": "tests"
         },
         {
           "name": "context::tests::tagged_transport_scope_restores_all_limits_after_error_and_unwind",
-          "line": 647,
+          "line": 678,
           "module": "tests"
         },
         {
           "name": "context::tests::cooperative_failure_origin_survives_semantic_error_lookalikes",
-          "line": 665,
+          "line": 696,
           "module": "tests"
         },
         {
           "name": "context::tests::transport_usage_can_continue_across_response_contexts",
-          "line": 684,
+          "line": 715,
           "module": "tests"
         },
         {
           "name": "context::tests::transport_responses_share_one_work_budget_but_new_calls_reset_it",
-          "line": 710,
+          "line": 741,
           "module": "tests"
         },
         {
           "name": "context::tests::native_cancellation_and_deadline_have_control_origin",
-          "line": 767,
+          "line": 798,
           "module": "tests"
         },
         {
           "name": "context::tests::work_accumulator_crosses_u32_without_a_platform_limit",
-          "line": 792,
+          "line": 823,
           "module": "tests"
         },
         {
           "name": "context::tests::work_meter_still_observes_each_charge_above_u32_total",
-          "line": 801,
-          "module": "tests"
-        },
-        {
-          "name": "context::tests::wide_work_notifications_have_portable_chunks",
-          "line": 817,
-          "module": "tests"
-        },
-        {
-          "name": "context::tests::wide_work_stops_on_a_meter_refusal_before_later_chunks",
           "line": 832,
           "module": "tests"
         },
         {
-          "name": "context::tests::unobserved_wide_charge_needs_no_callback_loop_and_overflow_refuses",
+          "name": "context::tests::wide_work_notifications_have_portable_chunks",
           "line": 848,
           "module": "tests"
         },
         {
+          "name": "context::tests::wide_work_stops_on_a_meter_refusal_before_later_chunks",
+          "line": 863,
+          "module": "tests"
+        },
+        {
+          "name": "context::tests::unobserved_wide_charge_needs_no_callback_loop_and_overflow_refuses",
+          "line": 879,
+          "module": "tests"
+        },
+        {
           "name": "context::work_phase_observer_tests::scopes_preserve_charges_callback_order_and_prior_work",
-          "line": 866,
+          "line": 897,
           "module": "work_phase_observer_tests"
         },
         {
           "name": "context::work_phase_observer_tests::first_denial_stays_charged_and_stops_before_later_work",
-          "line": 884,
+          "line": 915,
           "module": "work_phase_observer_tests"
         },
         {
           "name": "context::work_phase_observer_tests::metadata_restores_on_unwind_without_resetting_work",
-          "line": 904,
+          "line": 935,
           "module": "work_phase_observer_tests"
         }
       ],
@@ -122,32 +122,32 @@
       "cases": [
         {
           "name": "value::completed_result_copy_tests::follows_typescript_nodewise_limit_path_and_charges_copy_work",
-          "line": 50,
+          "line": 51,
           "module": "completed_result_copy_tests"
         },
         {
           "name": "value::completed_result_copy_tests::meter_failure_stops_copy_and_text_is_not_clamped_by_text_limit",
-          "line": 77,
+          "line": 78,
           "module": "completed_result_copy_tests"
         },
         {
           "name": "value::completed_result_copy_tests::rejects_duplicate_keys_and_invalid_numbers_preserving_raw_utf16_paths",
-          "line": 126,
+          "line": 127,
           "module": "completed_result_copy_tests"
         },
         {
           "name": "value::borrowed_validation_tests::borrowed_validation_matches_copy_errors_and_metering",
-          "line": 552,
+          "line": 553,
           "module": "borrowed_validation_tests"
         },
         {
           "name": "value::owned_admission_owner_tests::owned_admission_retains_allocation_and_identical_ordinary_admission_charges",
-          "line": 587,
+          "line": 588,
           "module": "owned_admission_owner_tests"
         },
         {
           "name": "value::owned_admission_owner_tests::owned_admission_keeps_duplicate_and_first_denial_refusals",
-          "line": 602,
+          "line": 603,
           "module": "owned_admission_owner_tests"
         }
       ],
@@ -157,228 +157,229 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/schema.rs",
-      "sourceSHA256": "c26c6fdd6d5971843ff8bec6b39e9302d4f7df029ef39517de4a5ba98bc46199",
+      "sourceSHA256": "99bd38dd0ac27a17276ebaabccf9cc3a10a848530ca6d29212e819b5ed5fc98c",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 44,
       "cases": [
         {
           "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
-          "line": 10035,
+          "line": 10203,
           "module": "finite_binary64_schema_admission_tests"
         },
         {
           "name": "schema::finite_binary64_schema_admission_tests::schema_instance_rejects_nonfinite_and_preserves_multiple_of_overflow_result",
-          "line": 10071,
+          "line": 10239,
           "module": "finite_binary64_schema_admission_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::absent_validation_vocabulary_keeps_applicators_and_ignores_inactive_malformed_keywords",
-          "line": 10178,
+          "line": 10346,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::referenced_standard_resource_reactivates_validation_vocabulary",
-          "line": 10196,
+          "line": 10364,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::referenced_custom_resource_disables_validation_for_its_nested_schemas",
-          "line": 10218,
+          "line": 10386,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::fragment_reference_uses_standard_enclosing_resource_policy",
-          "line": 10236,
+          "line": 10404,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::fragment_reference_uses_custom_enclosing_resource_policy",
-          "line": 10254,
+          "line": 10422,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::omitted_applicator_and_unevaluated_vocabularies_leave_keywords_inert",
-          "line": 10272,
+          "line": 10440,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::custom_dialect_requires_explicit_well_formed_supported_vocabulary_declaration",
-          "line": 10290,
+          "line": 10458,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::nested_custom_dialect_declarations_must_resolve_and_be_supported",
-          "line": 10336,
+          "line": 10504,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::optional_vocabulary_uri_conversion_is_charged_on_each_validation",
-          "line": 10369,
+          "line": 10537,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::unrelated_resource_lookup_conversion_is_charged_on_each_validation",
-          "line": 10401,
+          "line": 10569,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::custom_metaschema_member_search_is_charged_on_each_validation",
-          "line": 10446,
+          "line": 10614,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::custom_vocabulary_policy_tests::root_dialect_member_search_is_charged_on_each_validation",
-          "line": 10481,
+          "line": 10649,
           "module": "custom_vocabulary_policy_tests"
         },
         {
           "name": "schema::python_resource_work_tests::native_uri_operation_families_match_frozen_cpython_profiles",
-          "line": 10516,
+          "line": 10684,
           "module": "python_resource_work_tests"
         },
         {
           "name": "schema::python_resource_work_tests::native_uri_common_prefix_work_is_admitted_before_comparison",
-          "line": 10544,
+          "line": 10712,
           "module": "python_resource_work_tests"
         },
         {
           "name": "schema::python_resource_work_tests::native_uri_join_admits_all_input_work_before_owned_buffers",
-          "line": 10571,
+          "line": 10739,
           "module": "python_resource_work_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::nested_ids_set_reference_scope_and_annotations_do_not",
-          "line": 10625,
+          "line": 10793,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::retrieved_relative_root_id_is_resolved_once_and_keeps_its_directory",
-          "line": 10640,
+          "line": 10808,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::legacy_absolute_root_and_nested_ids_are_not_joined_as_relative_paths",
-          "line": 10655,
+          "line": 10823,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::reference_resolution_handles_directory_bases_and_urn_local_pointers",
-          "line": 10684,
+          "line": 10852,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::then_else_are_schema_positions_and_cycles_are_bounded",
-          "line": 10701,
+          "line": 10869,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::conflicting_resource_uris_remain_explicit_errors",
-          "line": 10721,
+          "line": 10889,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::static_and_dynamic_refs_resolve_anchors_in_schema_positions",
-          "line": 10734,
+          "line": 10902,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::then_and_else_resources_are_available_to_sibling_refs",
-          "line": 10751,
+          "line": 10919,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::anchor_resolution_skips_nested_resources_with_the_same_anchor",
-          "line": 10769,
+          "line": 10937,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::referenced_relative_id_resource_is_not_rebased_a_second_time",
-          "line": 10783,
+          "line": 10951,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::parent_uri_suffix_is_not_mistaken_for_a_resolved_child_id",
-          "line": 10815,
+          "line": 10983,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::repeated_relative_ids_are_applied_for_direct_nested_evaluation",
-          "line": 10838,
+          "line": 11006,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::anchored_resource_root_does_not_reapply_its_identifier",
-          "line": 10858,
+          "line": 11026,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::anchored_root_in_external_document_keeps_resource_identity",
-          "line": 10872,
+          "line": 11040,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::pointer_target_identifier_scopes_following_references_once",
-          "line": 10891,
+          "line": 11059,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::static_reference_resolution_tests::pointer_entered_dynamic_resource_resets_pointer_scope_at_resource_root",
-          "line": 10915,
+          "line": 11083,
           "module": "static_reference_resolution_tests"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::draft2020_dynamic_scope_uses_active_resource_anchors",
-          "line": 10981,
+          "line": 11149,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::draft2020_unevaluated_keywords_receive_dynamic_reference_annotations",
-          "line": 10995,
+          "line": 11163,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::python_draft2020_keeps_its_per_node_dynamic_anchor_scope",
-          "line": 11013,
+          "line": 11181,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::resource_scope_discovers_dynamic_anchor_under_prefix_items",
-          "line": 11036,
+          "line": 11204,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::dynamic_resource_root_keeps_normalized_relative_id_provenance",
-          "line": 11057,
+          "line": 11225,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::repeated_anchor_free_resource_evaluation_uses_cached_discovery",
-          "line": 11075,
+          "line": 11243,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::draft2020_dynamic_annotation_regressions::dynamic_anchor_cache_does_not_hold_lock_during_host_callbacks",
-          "line": 11150,
+          "line": 11318,
           "module": "draft2020_dynamic_annotation_regressions"
         },
         {
           "name": "schema::construction_owner_tests::completed_compile_and_metaschema_sharing_are_local_to_actual_success",
-          "line": 11219,
+          "line": 11387,
           "module": "construction_owner_tests"
         },
         {
           "name": "schema::construction_owner_tests::invalid_schema_publishes_no_catalogue_or_completed_proof",
-          "line": 11243,
+          "line": 11411,
           "module": "construction_owner_tests"
         },
         {
           "name": "schema::construction_owner_tests::terminal_construction_denial_stops_before_reusable_proof",
-          "line": 11256,
+          "line": 11488,
           "module": "construction_owner_tests"
         },
         {
-          "name": "schema::construction_owner_tests::metaschema_conversion_precharge_precedes_materializer_and_parser"
+          "name": "schema::construction_owner_tests::metaschema_conversion_precharge_precedes_materializer_and_parser",
+          "line": 11424
         }
       ],
       "reason": "All directly affected existing schema private modules: numeric/source profile, vocabularies, refs/dynamic scope, URI work and cache callbacks; includes3new owner controls once.",
@@ -387,14 +388,14 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/engine.rs",
-      "sourceSHA256": "70173407b547d334d428627064c7703c8140e5f46cf2e8da4b7c934c97ec1a7d",
+      "sourceSHA256": "57dd66087d922c22ae3d529bbdb9db829261db1d98eed97f91913463df7e3019",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 1,
       "cases": [
         {
           "name": "engine::registration_provider_tests::admitted_validation_keeps_structural_refusal_before_provider_access",
-          "line": 1507,
+          "line": 1508,
           "module": "registration_provider_tests"
         }
       ],
@@ -411,32 +412,32 @@
       "cases": [
         {
           "name": "controlled_envelope::tests::success_keeps_the_existing_closed_grammar",
-          "line": 236,
+          "line": 237,
           "module": "tests"
         },
         {
           "name": "controlled_envelope::tests::errors_keep_utf16_fields_without_normalization",
-          "line": 241,
+          "line": 242,
           "module": "tests"
         },
         {
           "name": "controlled_envelope::tests::exact_total_passes_and_one_below_refuses",
-          "line": 251,
+          "line": 252,
           "module": "tests"
         },
         {
           "name": "controlled_envelope::tests::sizing_allocation_writing_and_final_poll_are_terminal",
-          "line": 263,
+          "line": 264,
           "module": "tests"
         },
         {
           "name": "controlled_envelope::tests::prior_invocation_work_is_not_reset_at_envelope_entry",
-          "line": 290,
+          "line": 291,
           "module": "tests"
         },
         {
           "name": "controlled_envelope::tests::large_semantic_error_cannot_bypass_envelope_admission",
-          "line": 298,
+          "line": 299,
           "module": "tests"
         }
       ],
@@ -446,34 +447,34 @@
     {
       "package": "umf-codegen",
       "source": "crates/umf-codegen/src/resources.rs",
-      "sourceSHA256": "2c9c02f9b30f20bf83fa4698158c70964269d8f5d46cf0e49256df008aea9eef",
+      "sourceSHA256": "6397db346538071257efcce9e5c577a64f4007d4e4b4aec097037ee583760d0f",
       "target": "lib",
       "features": "umf-core/native-postgresql",
       "caseCount": 5,
       "cases": [
         {
           "name": "resources::resource_controls::explicit_binding_packages_share_registry_and_compile_the_supplied_schema",
-          "line": 772,
+          "line": 773,
           "module": "resource_controls"
         },
         {
           "name": "resources::resource_controls::compiler_pattern_projection_preserves_raw_utf16_and_core_formatter_scope",
-          "line": 815,
+          "line": 816,
           "module": "resource_controls"
         },
         {
           "name": "resources::resource_controls::source_document_text_retains_ordinary_and_stricter_caller_bounds",
-          "line": 833,
+          "line": 834,
           "module": "resource_controls"
         },
         {
           "name": "resources::resource_controls::action_literal_validation_uses_the_explicit_schema_definition",
-          "line": 878,
+          "line": 879,
           "module": "resource_controls"
         },
         {
           "name": "resources::resource_controls::diagnostic_serialization_precharges_cloned_text_and_preserves_control_origin",
-          "line": 902,
+          "line": 903,
           "module": "resource_controls"
         }
       ],
@@ -490,37 +491,37 @@
       "cases": [
         {
           "name": "actions::action_closure_tests::unified_action_admission_uses_the_explicit_action_definition",
-          "line": 4576,
+          "line": 4577,
           "module": "action_closure_tests"
         },
         {
           "name": "actions::action_closure_tests::unified_action_helpers_retain_late_control_origin_and_depth_scope",
-          "line": 4655,
+          "line": 4656,
           "module": "action_closure_tests"
         },
         {
           "name": "actions::action_closure_tests::unified_action_admission_matches_standalone_predecessor_schema_errors",
-          "line": 4705,
+          "line": 4706,
           "module": "action_closure_tests"
         },
         {
           "name": "actions::action_closure_tests::action_literals_follow_explicit_schema_and_policy_resources",
-          "line": 4739,
+          "line": 4740,
           "module": "action_closure_tests"
         },
         {
           "name": "actions::action_closure_tests::action_model_graph_uses_iterative_preorder_with_post_child_facets",
-          "line": 4775,
+          "line": 4776,
           "module": "action_closure_tests"
         },
         {
           "name": "actions::action_closure_tests::action_late_control_failures_keep_host_provenance",
-          "line": 4855,
+          "line": 4856,
           "module": "action_closure_tests"
         },
         {
           "name": "actions::action_closure_tests::action_ordered_analysis_matches_fifty_eight_admitted_predecessor_vectors",
-          "line": 4917,
+          "line": 4918,
           "module": "action_closure_tests"
         }
       ],
@@ -537,32 +538,32 @@
       "cases": [
         {
           "name": "actions::saga::tests::allocation_fixture_inspects_order_and_keeps_execution_unverified",
-          "line": 93,
+          "line": 94,
           "module": null
         },
         {
           "name": "actions::saga::tests::declaration_refuses_an_incompletely_interpreted_source",
-          "line": 143,
+          "line": 144,
           "module": null
         },
         {
           "name": "actions::saga::tests::forward_order_type_presence_and_exact_finality_obligations_are_reported",
-          "line": 179,
+          "line": 180,
           "module": null
         },
         {
           "name": "actions::saga::tests::unfamiliar_recovery_is_retained_incomplete_and_blocks_edits",
-          "line": 220,
+          "line": 221,
           "module": null
         },
         {
           "name": "actions::saga::tests::pivot_warning_is_located_and_wrong_source_claims_refuse",
-          "line": 273,
+          "line": 274,
           "module": null
         },
         {
           "name": "actions::saga::tests::capability_source_uses_json_object_equality_and_preserves_array_order",
-          "line": 314,
+          "line": 315,
           "module": null
         }
       ],
@@ -579,52 +580,52 @@
       "cases": [
         {
           "name": "access::private_conformance_tests::successful_stage_one_vectors_match_private_ir_and_emission",
-          "line": 4343,
+          "line": 4344,
           "module": "private_conformance_tests"
         },
         {
           "name": "access::private_conformance_tests::frozen_sol_profile_request_dependency_and_handler_reviews_match",
-          "line": 4482,
+          "line": 4483,
           "module": "private_conformance_tests"
         },
         {
           "name": "access::rendering_control_tests::action_chronology_interleaves_without_copying_metadata_and_preserves_control",
-          "line": 4649,
+          "line": 4650,
           "module": "rendering_control_tests"
         },
         {
           "name": "access::rendering_control_tests::diff_graph_shape_is_iterative_and_preserves_late_control",
-          "line": 4708,
+          "line": 4709,
           "module": "rendering_control_tests"
         },
         {
           "name": "access::rendering_control_tests::pointer_order_uses_ecmascript_numeric_equivalence",
-          "line": 4733,
+          "line": 4734,
           "module": "rendering_control_tests"
         },
         {
           "name": "access::rendering_control_tests::stable_pointer_sort_propagates_failure_during_comparisons",
-          "line": 4747,
+          "line": 4748,
           "module": "rendering_control_tests"
         },
         {
           "name": "access::rendering_control_tests::disposition_path_containment_preserves_late_control_origin",
-          "line": 4771,
+          "line": 4772,
           "module": "rendering_control_tests"
         },
         {
           "name": "access::rendering_control_tests::diff_public_name_lookup_preserves_late_control_origin",
-          "line": 4803,
+          "line": 4804,
           "module": "rendering_control_tests"
         },
         {
           "name": "access::rendering_control_tests::disposition_census_reserves_each_repeated_source_identity_copy",
-          "line": 4839,
+          "line": 4840,
           "module": "rendering_control_tests"
         },
         {
           "name": "access::rendering_control_tests::stable_signatures_poll_inside_strings_and_collections",
-          "line": 4905,
+          "line": 4906,
           "module": "rendering_control_tests"
         }
       ],
@@ -641,47 +642,47 @@
       "cases": [
         {
           "name": "access::inspection::inspection_tests::native_presence_key_order_and_reference_scans_keep_live_host_controls",
-          "line": 3246,
+          "line": 3247,
           "module": "inspection_tests"
         },
         {
           "name": "access::inspection::inspection_tests::nested_field_lookup_propagates_late_host_control_origins",
-          "line": 3380,
+          "line": 3381,
           "module": "inspection_tests"
         },
         {
           "name": "access::inspection::inspection_tests::repeated_property_copies_propagate_late_host_control_origins",
-          "line": 3427,
+          "line": 3428,
           "module": "inspection_tests"
         },
         {
           "name": "access::inspection::inspection_tests::binding_callback_observes_late_host_errors_before_diagnostic_copies",
-          "line": 3440,
+          "line": 3441,
           "module": "inspection_tests"
         },
         {
           "name": "access::inspection::inspection_tests::inspection_presence_policy_covers_bound_generated_nested_and_optional_fields",
-          "line": 3492,
+          "line": 3493,
           "module": "inspection_tests"
         },
         {
           "name": "access::inspection::inspection_tests::inspection_facet_projection_preserves_types_and_contract_order",
-          "line": 3601,
+          "line": 3602,
           "module": "inspection_tests"
         },
         {
           "name": "access::inspection::inspection_tests::binding_semantics_preserves_unknown_utf16_keys_and_duplicate_assignments",
-          "line": 3652,
+          "line": 3653,
           "module": "inspection_tests"
         },
         {
           "name": "access::inspection::inspection_tests::nested_reference_graph_is_iterative_and_observes_late_host_failure",
-          "line": 3715,
+          "line": 3716,
           "module": "inspection_tests"
         },
         {
           "name": "access::inspection::inspection_tests::nested_invalid_reference_does_not_invent_reached_field",
-          "line": 3755,
+          "line": 3756,
           "module": "inspection_tests"
         }
       ],
@@ -698,42 +699,42 @@
       "cases": [
         {
           "name": "tables::inspection_guard_tests::nested_commands_are_unknown_but_root_commands_are_operation_owned",
-          "line": 5223,
+          "line": 5224,
           "module": "inspection_guard_tests"
         },
         {
           "name": "tables::inspection_guard_tests::structural_schema_descent_is_metered_without_expression_depth_limit",
-          "line": 5254,
+          "line": 5255,
           "module": "inspection_guard_tests"
         },
         {
           "name": "tables::inspection_guard_tests::unknown_tree_walk_propagates_meter_refusal_before_completing",
-          "line": 5285,
+          "line": 5286,
           "module": "inspection_guard_tests"
         },
         {
           "name": "tables::inspection_guard_tests::semantic_diagnostic_buffers_cap_each_pass_and_keep_order_when_merged",
-          "line": 5316,
+          "line": 5317,
           "module": "inspection_guard_tests"
         },
         {
           "name": "tables::inspection_guard_tests::unknown_diagnostics_stop_at_module_cap_plus_one_marker",
-          "line": 5340,
+          "line": 5341,
           "module": "inspection_guard_tests"
         },
         {
           "name": "tables::inspection_guard_tests::expression_node_budget_is_shared_across_sibling_nodes",
-          "line": 5367,
+          "line": 5368,
           "module": "inspection_guard_tests"
         },
         {
           "name": "tables::inspection_guard_tests::standalone_query_outputs_need_local_field_meaning_not_table_binding",
-          "line": 5407,
+          "line": 5408,
           "module": "inspection_guard_tests"
         },
         {
           "name": "tables::inspection_guard_tests::query_text_utf8_measurement_matches_text_encoder_replacement",
-          "line": 5512,
+          "line": 5513,
           "module": "inspection_guard_tests"
         }
       ],
@@ -750,22 +751,22 @@
       "cases": [
         {
           "name": "evaluated_properties_cross_refs_and_only_successful_combinator_branches",
-          "line": 27,
+          "line": 28,
           "module": null
         },
         {
           "name": "unevaluated_items_honors_prefix_and_contains_annotations",
-          "line": 45,
+          "line": 46,
           "module": null
         },
         {
           "name": "dynamic_recursion_rebinds_to_strict_outer_resource",
-          "line": 62,
+          "line": 63,
           "module": null
         },
         {
           "name": "draft7_ref_siblings_are_ignored_and_2020_siblings_apply",
-          "line": 81,
+          "line": 82,
           "module": null
         }
       ],
@@ -782,27 +783,27 @@
       "cases": [
         {
           "name": "recursive_resource_scope_matches_frozen_python_profiles",
-          "line": 223,
+          "line": 224,
           "module": null
         },
         {
           "name": "reached_reference_inside_opaque_member_keeps_raw_python_key_identity",
-          "line": 259,
+          "line": 260,
           "module": null
         },
         {
           "name": "resource_identity_companion_matches_exact_native_profiles",
-          "line": 323,
+          "line": 324,
           "module": null
         },
         {
           "name": "resource_anchor_companion_uses_source_identity",
-          "line": 349,
+          "line": 350,
           "module": null
         },
         {
           "name": "native_resource_container_dialects_match_frozen_profiles",
-          "line": 367,
+          "line": 368,
           "module": null
         }
       ],
@@ -819,12 +820,12 @@
       "cases": [
         {
           "name": "racing_completed_initializers_return_one_published_instance",
-          "line": 5,
+          "line": 6,
           "module": null
         },
         {
           "name": "old_algorithm_control_returns_an_unpublished_loser",
-          "line": 38,
+          "line": 39,
           "module": null
         }
       ],
@@ -841,7 +842,7 @@
       "cases": [
         {
           "name": "compiler_diagnostic_order_matches_numeric_schema_and_instance_own_keys",
-          "line": 29,
+          "line": 30,
           "module": null
         }
       ],
@@ -858,7 +859,7 @@
       "cases": [
         {
           "name": "trusted_binding_schema_override_is_used_for_access_binding_admission",
-          "line": 73,
+          "line": 74,
           "module": null
         }
       ],
@@ -875,37 +876,37 @@
       "cases": [
         {
           "name": "capability_operation_is_exact_and_non_executing",
-          "line": 239,
+          "line": 240,
           "module": null
         },
         {
           "name": "prepared_apply_validate_and_bootstrap_use_shared_kernels",
-          "line": 286,
+          "line": 287,
           "module": null
         },
         {
           "name": "unsupported_invocation_and_host_policy_mutations_refuse",
-          "line": 426,
+          "line": 427,
           "module": null
         },
         {
           "name": "selector_ast_record_shape_and_parameter_profiles_are_exact",
-          "line": 550,
+          "line": 551,
           "module": null
         },
         {
           "name": "one_sided_string_length_bounds_use_core_literal_validation",
-          "line": 652,
+          "line": 653,
           "module": null
         },
         {
           "name": "preflight_polls_before_copy_and_enforces_parsed_source_depth_and_id_bounds",
-          "line": 700,
+          "line": 701,
           "module": null
         },
         {
           "name": "bootstrap_refuses_unknown_record_key_and_field_meaning_but_retains_unrelated_extension",
-          "line": 829,
+          "line": 830,
           "module": null
         }
       ],
@@ -922,12 +923,12 @@
       "cases": [
         {
           "name": "ordinary_codegen_wire_shares_meter_from_decode_through_encode",
-          "line": 103,
+          "line": 104,
           "module": null
         },
         {
           "name": "host_read_v3_wire_shares_context_through_catalog_and_host_dispatch",
-          "line": 194,
+          "line": 195,
           "module": null
         }
       ],
@@ -944,17 +945,17 @@
       "cases": [
         {
           "name": "public_inspection_dispatches_existing_temporal_inspector",
-          "line": 91,
+          "line": 92,
           "module": null
         },
         {
           "name": "public_inspection_matches_typescript_vectors_and_preserves_sources",
-          "line": 162,
+          "line": 163,
           "module": null
         },
         {
           "name": "public_inspection_controls_remain_terminal_after_work_begins",
-          "line": 199,
+          "line": 200,
           "module": null
         }
       ],
@@ -970,16 +971,20 @@
       "caseCount": 4,
       "cases": [
         {
-          "name": "context::construction_independent_tests::denied_entry_never_calls_operation_or_replaces_live_prior_state"
+          "name": "context::construction_independent_tests::denied_entry_never_calls_operation_or_replaces_live_prior_state",
+          "line": 26
         },
         {
-          "name": "context::construction_independent_tests::nested_success_error_and_unwind_restore_actual_parent_without_reset"
+          "name": "context::construction_independent_tests::nested_success_error_and_unwind_restore_actual_parent_without_reset",
+          "line": 90
         },
         {
-          "name": "context::construction_independent_tests::top_level_success_error_and_unwind_drop_scoped_state"
+          "name": "context::construction_independent_tests::top_level_success_error_and_unwind_drop_scoped_state",
+          "line": 156
         },
         {
-          "name": "context::construction_independent_tests::effective_nondefault_depth_and_node_limits_survive_scopes_and_refusal"
+          "name": "context::construction_independent_tests::effective_nondefault_depth_and_node_limits_survive_scopes_and_refusal",
+          "line": 191
         }
       ],
       "reason": "Independent exact Sol SOURCEPASS private owner/context/schema/registry guard tests; no fabricated admission proof."
@@ -993,28 +998,36 @@
       "caseCount": 8,
       "cases": [
         {
-          "name": "schema::construction_independent_tests::actual_completed_proof_reuses_only_in_its_cold_scope"
+          "name": "schema::construction_independent_tests::actual_completed_proof_reuses_only_in_its_cold_scope",
+          "line": 107
         },
         {
-          "name": "schema::construction_independent_tests::complete_ordered_catalogue_not_root_id_or_equal_prefix_controls_reuse"
+          "name": "schema::construction_independent_tests::complete_ordered_catalogue_not_root_id_or_equal_prefix_controls_reuse",
+          "line": 143
         },
         {
-          "name": "schema::construction_independent_tests::dialect_and_effective_context_limits_are_part_of_actual_proof_identity"
+          "name": "schema::construction_independent_tests::dialect_and_effective_context_limits_are_part_of_actual_proof_identity",
+          "line": 169
         },
         {
-          "name": "schema::construction_independent_tests::each_nonordinary_compiler_policy_invokes_original_path_not_prior_proof"
+          "name": "schema::construction_independent_tests::each_nonordinary_compiler_policy_invokes_original_path_not_prior_proof",
+          "line": 197
         },
         {
-          "name": "schema::construction_independent_tests::python_source_origin_compilation_is_not_replaced_by_ordinary_cached_proof"
+          "name": "schema::construction_independent_tests::python_source_origin_compilation_is_not_replaced_by_ordinary_cached_proof",
+          "line": 249
         },
         {
-          "name": "schema::construction_independent_tests::supplied_absolute_relative_and_dynamic_targets_keep_original_dialect_meaning"
+          "name": "schema::construction_independent_tests::supplied_absolute_relative_and_dynamic_targets_keep_original_dialect_meaning",
+          "line": 278
         },
         {
-          "name": "schema::construction_independent_tests::malformed_catalogue_and_dangling_static_relative_dynamic_refs_never_publish_proof"
+          "name": "schema::construction_independent_tests::malformed_catalogue_and_dangling_static_relative_dynamic_refs_never_publish_proof",
+          "line": 314
         },
         {
-          "name": "schema::construction_independent_tests::cumulative_one_below_actual_fresh_compile_preserves_first_denial_and_drops_state"
+          "name": "schema::construction_independent_tests::cumulative_one_below_actual_fresh_compile_preserves_first_denial_and_drops_state",
+          "line": 359
         }
       ],
       "reason": "Independent exact Sol SOURCEPASS private owner/context/schema/registry guard tests; no fabricated admission proof."
@@ -1028,19 +1041,199 @@
       "caseCount": 4,
       "cases": [
         {
-          "name": "registry::construction_independent_tests::valid_changed_identity_version_scopes_token_and_semantics_are_new_stored_values"
+          "name": "registry::construction_independent_tests::valid_changed_identity_version_scopes_token_and_semantics_are_new_stored_values",
+          "line": 50
         },
         {
-          "name": "registry::construction_independent_tests::every_registration_revalidates_manifest_after_identical_schema_completed"
+          "name": "registry::construction_independent_tests::every_registration_revalidates_manifest_after_identical_schema_completed",
+          "line": 144
         },
         {
-          "name": "registry::construction_independent_tests::failed_extension_schema_compile_publishes_no_registration_and_no_stale_identity"
+          "name": "registry::construction_independent_tests::failed_extension_schema_compile_publishes_no_registration_and_no_stale_identity",
+          "line": 236
         },
         {
-          "name": "registry::construction_independent_tests::cancellation_keeps_first_denied_charge_and_publishes_no_partial_registration"
+          "name": "registry::construction_independent_tests::cancellation_keeps_first_denied_charge_and_publishes_no_partial_registration",
+          "line": 284
         }
       ],
       "reason": "Independent exact Sol SOURCEPASS private owner/context/schema/registry guard tests; no fabricated admission proof."
+    },
+    {
+      "package": "umf-core",
+      "source": "crates/umf-core/src/context.rs",
+      "sourceSHA256": "a5073febb98d9e3db0731ed3b7bdae150adf85a3ce6e27ad3f4f43fab98a06f7",
+      "target": "lib",
+      "features": "native-postgresql",
+      "caseCount": 2,
+      "cases": [
+        {
+          "name": "context::constructor_observation_tests::constructor_metadata_restores_error_unwind_and_nested_context",
+          "line": 960,
+          "module": "constructor_observation_tests"
+        },
+        {
+          "name": "context::constructor_observation_tests::constructor_sites_are_invisible_without_constructor_observer",
+          "line": 990,
+          "module": "constructor_observation_tests"
+        }
+      ]
+    },
+    {
+      "package": "umf-core",
+      "source": "crates/umf-core/src/context_path_tests.rs",
+      "sourceSHA256": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
+      "target": "lib",
+      "features": "native-postgresql",
+      "caseCount": 6,
+      "cases": [
+        {
+          "name": "context::context_path_tests::success_and_zero_leave_admitted_buffer_unchanged",
+          "line": 10,
+          "module": "context_path_tests"
+        },
+        {
+          "name": "context::context_path_tests::overflow_moves_exact_storage_and_matches_owned_error",
+          "line": 29,
+          "module": "context_path_tests"
+        },
+        {
+          "name": "context::context_path_tests::local_cancel_and_deadline_move_paths_with_exact_diagnostics",
+          "line": 46,
+          "module": "context_path_tests"
+        },
+        {
+          "name": "context::context_path_tests::host_error_preserves_fields_and_from_host_origin_without_consuming_scratch",
+          "line": 95,
+          "module": "context_path_tests"
+        },
+        {
+          "name": "context::context_path_tests::wide_and_zero_order_match_owned_state_machine",
+          "line": 130,
+          "module": "context_path_tests"
+        },
+        {
+          "name": "context::context_path_tests::nested_context_and_scratch_failure_are_isolated",
+          "line": 188,
+          "module": "context_path_tests"
+        }
+      ]
+    },
+    {
+      "package": "umf-core",
+      "source": "crates/umf-core/src/schema_budget_reduction_tests.rs",
+      "sourceSHA256": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
+      "target": "lib",
+      "features": "native-postgresql",
+      "caseCount": 7,
+      "cases": [
+        {
+          "name": "schema::schema_budget_reduction_tests::three_and_four_resource_catalogues_keep_retrieval_and_authored_identity",
+          "line": 57,
+          "module": "schema_budget_reduction_tests"
+        },
+        {
+          "name": "schema::schema_budget_reduction_tests::catalogue_order_shared_authored_ids_and_duplicate_retrieval_keys_keep_existing_rules",
+          "line": 102,
+          "module": "schema_budget_reduction_tests"
+        },
+        {
+          "name": "schema::schema_budget_reduction_tests::combinator_annotations_are_branch_local_and_errors_keep_order_and_escaped_paths",
+          "line": 138,
+          "module": "schema_budget_reduction_tests"
+        },
+        {
+          "name": "schema::schema_budget_reduction_tests::dynamic_scope_rebinds_recursive_target_without_leaking_between_siblings",
+          "line": 186,
+          "module": "schema_budget_reduction_tests"
+        },
+        {
+          "name": "schema::schema_budget_reduction_tests::effective_schema_depth_limit_still_applies_after_successful_indexed_evaluation",
+          "line": 210,
+          "module": "schema_budget_reduction_tests"
+        },
+        {
+          "name": "schema::schema_budget_reduction_tests::fresh_index_one_below_total_preserves_first_denial_and_no_candidate_publication",
+          "line": 238,
+          "module": "schema_budget_reduction_tests"
+        },
+        {
+          "name": "schema::schema_budget_reduction_tests::generic_python_origin_spellings_survive_construction_scope_without_reprofiling",
+          "line": 285,
+          "module": "schema_budget_reduction_tests"
+        }
+      ]
+    },
+    {
+      "package": "umf-core",
+      "source": "crates/umf-core/src/schema_construction_index.rs",
+      "sourceSHA256": "ae988128f121646eb3d728f1fe5df8dfb5077ecff96fa4c9809b30c3c08ae928",
+      "target": "lib",
+      "features": "native-postgresql",
+      "caseCount": 4,
+      "cases": [
+        {
+          "name": "schema::construction_index::owner_tests::actual_index_precharge_denial_precedes_materialization_and_publication",
+          "line": 412,
+          "module": "owner_tests"
+        },
+        {
+          "name": "schema::construction_index::semantic_tests::indexed_first_admission_preserves_ordered_errors_and_dynamic_annotations",
+          "line": 463,
+          "module": "semantic_tests"
+        },
+        {
+          "name": "schema::construction_index::semantic_tests::aliases_and_opaque_nested_ids_select_full_interpreter_without_content_loss",
+          "line": 497,
+          "module": "semantic_tests"
+        },
+        {
+          "name": "schema::construction_index::semantic_tests::active_scope_restores_shared_ancestry_policy_and_resource_on_denial_and_unwind",
+          "line": 526,
+          "module": "semantic_tests"
+        }
+      ]
+    },
+    {
+      "package": "umf-core-python",
+      "source": "bindings/core/python/src/python_value_path_tests.rs",
+      "sourceSHA256": "9fc48c0904b0e365c1fa062c2a0b9b7fcc1b3eb0255eafdb7c08dda08b9d46da",
+      "target": "lib",
+      "features": "native-postgresql",
+      "caseCount": 6,
+      "cases": [
+        {
+          "name": "python_value::path_controls::unicode_suffixes_restore_one_buffer_without_changing_parent_or_sibling_paths",
+          "line": 8,
+          "module": "path_controls"
+        },
+        {
+          "name": "python_value::path_controls::adequate_capacity_reuses_the_same_allocation_and_restores_prefix",
+          "line": 30,
+          "module": "path_controls"
+        },
+        {
+          "name": "python_value::path_controls::growth_refusal_precedes_append_and_preserves_exact_host_failure_without_later_callbacks",
+          "line": 45,
+          "module": "path_controls"
+        },
+        {
+          "name": "python_value::path_controls::local_cancellation_takes_existing_prefix_before_any_suffix_is_written",
+          "line": 95,
+          "module": "path_controls"
+        },
+        {
+          "name": "python_value::path_controls::reentrant_other_conversion_path_cannot_replace_outer_buffer_or_outer_first_error",
+          "line": 115,
+          "module": "path_controls"
+        },
+        {
+          "name": "python_value::path_controls::local_deadline_takes_existing_prefix_and_stops_before_append",
+          "line": 147,
+          "module": "path_controls"
+        }
+      ],
+      "manifest": "bindings/core/python/Cargo.toml"
     }
   ],
   "python": [
@@ -1135,6 +1328,17 @@
         "python/tests/test_retained_codegen_saga.py::PrivateRetainedSagaNativeTests::test_malformed_optional_saga_refuses_eagerly_without_returning_native_handle"
       ],
       "whyFresh": "Genuine optional Saga package in actual retained factory; original oracle on actual retained operations; malformed schema eager refusal before handle return. Private component allowance only, no public1M claim."
+    },
+    {
+      "group": "combinedConversion4",
+      "caseCount": 4,
+      "cases": [
+        "python/tests/test_combined_budget_boundaries.py::CombinedBudgetConversionBoundaryTests::test_nested_paths_escape_each_segment_and_preserve_utf16_and_failure_order",
+        "python/tests/test_combined_budget_boundaries.py::CombinedBudgetConversionBoundaryTests::test_normalized_key_collision_refuses_in_both_orders_even_in_unknown_default_data",
+        "python/tests/test_combined_budget_boundaries.py::CombinedBudgetConversionBoundaryTests::test_first_bad_value_precedes_later_collision_and_unsafe_integer_keeps_exact_path",
+        "python/tests/test_combined_budget_boundaries.py::CombinedBudgetConversionBoundaryTests::test_compilation_owns_nested_mutable_python_content_and_reentry_denial_is_terminal"
+      ],
+      "whyFresh": "Changed conversion/path/helper and compiler closure; no prior native pass relabeled."
     }
   ],
   "cold51": {
@@ -1201,16 +1405,16 @@
     "reason": "Separate public malformed Saga registry path must remain covered, not inferred from dedicated Rust6 or old public19 binary."
   },
   "fileHashes": {
-    ".github/workflows/inspector-retained-attribution.yml": "fa4dcf3c0c4b154ecdeb70218c2d653d10810edcc74a12ce490c2afcbd118c53",
+    ".github/workflows/inspector-retained-attribution.yml": "794aafb5017c13a45389e4e70c795416296c4d2b4aae2034da732c7e8841a35d",
     "Cargo.lock": "29a94a49f7471b7802b0ea866331abff1c55337401cd1cd5bcf29b2956fa084e",
     "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
-    "bindings/core/python/src/python_value.rs": "acb123bb7c8506f134dce59f9df18820a5e70b396ff0227c19b338ddd8d34287",
-    "bindings/core/python/src/retained_codegen.rs": "26a764d54f5bba81306fcc0313ccf558f189f939fc9803cc96baa9f589ae2d92",
+    "bindings/core/python/src/python_value.rs": "c80505abafb9435bcc993cdb102408eb769f95fd7b9fd882a89819549954931a",
+    "bindings/core/python/src/retained_codegen.rs": "5979d849ba1c1d5a3d753f7cdf298b221534a0201bec82feb943fd761abe79da",
     "crates/umf-codegen/src/access/inspection.rs": "fcb78d0f9f7db04eadd9e2d2d1f7df513bc656cf0b1500b7dfcf6bcd6f3ce3d0",
     "crates/umf-codegen/src/access/mod.rs": "4e34e229fed211628b4b9441108865cb4e0a4720969f8207c7fa075488997836",
     "crates/umf-codegen/src/actions/mod.rs": "1540b8e9c34d638fb39110e865ec0b5b27066be01f328945ae58debe32fa81f5",
     "crates/umf-codegen/src/actions/saga/tests.rs": "aec2a47ea1092d99b8bab8abbf5f33c41a7aefd9ae2a4ff0c012e82415f57417",
-    "crates/umf-codegen/src/resources.rs": "2c9c02f9b30f20bf83fa4698158c70964269d8f5d46cf0e49256df008aea9eef",
+    "crates/umf-codegen/src/resources.rs": "6397db346538071257efcce9e5c577a64f4007d4e4b4aec097037ee583760d0f",
     "crates/umf-codegen/src/tables/mod.rs": "525ea11d61432b2b17d23d715d582ff059d6f34ea735c7c1aae461955a423cd8",
     "crates/umf-codegen/tests/access_binding_schema_override.rs": "b2694c35ca58b2d3d0230b93720ed32a53e673a80d371507f24014d5c896e2af",
     "crates/umf-codegen/tests/single_set.rs": "21ad82a5ec1b3463579ae462e1e445ca592f9d7e3b502610a510e9ff661e9087",
@@ -1218,15 +1422,15 @@
     "crates/umf-core-wire/src/lib.rs": "90aee471ae0ea6a5688357a646b875a7228cb4477f431bf180397908f8803b96",
     "crates/umf-core-wire/tests/access_inspection_public.rs": "168400ad197a8c1ce94a85113c919a449ac3d3ef38345b4005bb46f93c0be23c",
     "crates/umf-core-wire/tests/codegen_context.rs": "5afd8223d9eb160963a7feac50980ef455fe3dab2c827a1d96d52726901a34fc",
-    "crates/umf-core/src/context.rs": "e4e5dcc4bc1f3e765b9c55b0e76aea3a1ae9611e274eb8ab7942943fa743a745",
+    "crates/umf-core/src/context.rs": "a5073febb98d9e3db0731ed3b7bdae150adf85a3ce6e27ad3f4f43fab98a06f7",
     "crates/umf-core/src/context_construction_tests.rs": "a7081434d41db02a5b785ab172374e124e8ffa4539e367d0ab46da4200dc82fc",
-    "crates/umf-core/src/engine.rs": "70173407b547d334d428627064c7703c8140e5f46cf2e8da4b7c934c97ec1a7d",
+    "crates/umf-core/src/engine.rs": "57dd66087d922c22ae3d529bbdb9db829261db1d98eed97f91913463df7e3019",
     "crates/umf-core/src/full_modules.rs": "f011690138a0933897c2e681b35a844199c4b57c6711357ef3b45599594434a0",
     "crates/umf-core/src/lib.rs": "ff74184e0d01e1367742fac195218fd03db3dcf01449c947b183f1ae9a5e927f",
-    "crates/umf-core/src/registry.rs": "fba44d945810795400542ae711c5e865613ba0f30762f6e3972fc9515e08267e",
+    "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
     "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
     "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-    "crates/umf-core/src/schema.rs": "c26c6fdd6d5971843ff8bec6b39e9302d4f7df029ef39517de4a5ba98bc46199",
+    "crates/umf-core/src/schema.rs": "99bd38dd0ac27a17276ebaabccf9cc3a10a848530ca6d29212e819b5ed5fc98c",
     "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
     "crates/umf-core/src/schema_metas.json": "cecc3fdf8f3977662e71b53c20d6f954c62bec1cc2e96db20cbc9f895cf47195",
     "crates/umf-core/src/value.rs": "5f37637a4c1c8ad1afd5202e8dd5c88768968e530a51a72b69fda1090fb17d70",
@@ -1234,7 +1438,7 @@
     "crates/umf-core/tests/resource_cache.rs": "86db330e51951c6759117d181712adbc7fd3cac3a98c00d84af41fb68e06d1f7",
     "crates/umf-core/tests/schema_python_recursive_resource_scope.rs": "2a344459e7db33ab9a872d65f6833f081805453ca6d1ea88ae6ccc90a7758fd4",
     "crates/umf-core/tests/sol_generation_schema_order_review.rs": "861f46a4c4c5c9ee161e4616e8142a9cc3c81ecbcfed3a880537e96dd3fc8db8",
-    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "b564166f9f52350c5733fecd7cb139ee83391c78d51b77bf2d6fb0a7d31b9a0e",
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "daa36eca56032648f5aee87d0e71544e326cf2a94b9b42c5dd83e2a60d9d37ae",
     "fixtures/saga/portable.json": "6f67fdfe6fba205436490f8b64f55f58e9bdae315d19148d10de799c05a3f1a7",
     "python/hatch_build.py": "ff2b41abceb3f02518cf802fe191629d70ea762546baacce56372e6b198a008f",
     "python/pyproject.toml": "59ef8b5f1242e295cd87d3afec7fec5f6e40a960dac6403c27c913e4fd6e7e93",
@@ -1257,16 +1461,33 @@
     "spec/metamodel/generated/domain-policy.json": "4d742505e483d23f7ef60cc904b45aa44db73473c71a98e01a919f289c414a9c",
     "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
     "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
-    "tests/qualification/test_inspector_attribution_lanes.py": "0c009d284de75d1c39abf9516f8a52e490d542c8585e9ee537dc545e79df2f89",
-    "tests/qualification/test_inspector_construction_batch.py": "61c0f4b67dd2d3ca3c1d64d5b311f00c94e78c548ab482425241a400cc9f1638",
+    "tests/qualification/test_inspector_attribution_lanes.py": "bd8bfdd86bb48945abb26f3b42a422b771f4c67cf4a6c17f646e249da620b9fa",
+    "tests/qualification/test_inspector_construction_batch.py": "e91f483ba6b6fd4a24be78580374283ea1ca846b47e8a737c42a30fc8101bf01",
     "tests/rust-core/fixtures/access-inspection/cases.json": "2e939f0d0f68f71a6b78c38e4fcd151e7b363513311f1aed170f9576333cbdc3",
     "tools/probe_inspector_retained_attribution.py": "2e872326ad62c7fb5f5f4fdecec2322db5159a190fb7fd4495ec6b9919a67625",
-    "tools/qualify_inspector_construction_batch.py": "8dbc01811ada67f88072d01b442e4ba13a3b42e4800dae7b6ebf3222728827be",
-    "tools/run_inspector_attribution_lanes.py": "5d8515631d5cd5f8ac874802d10e51282ef17271f4f26807ebb8fc529338e704",
+    "tools/qualify_inspector_construction_batch.py": "d04ffed8b24e92d76de54415ad36f2cd32b919115867556c8f6a0b9f8711712e",
+    "tools/run_inspector_attribution_lanes.py": "b0a56e174c7fac68d9ce9143d64883ca99f381480bb4a623256b22f51f2ef015",
     "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
     "python/tests/test_retained_codegen_saga.py": "080185a705dce27a83d19ba478eeb475e3b0bca79205dd808cdfbf65c0b0926d",
-    "spec/extensions/saga/package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940"
+    "spec/extensions/saga/package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
+    "bindings/core/python/src/lib.rs": "f9f13ec21ff2501de5fd3c41af524fb954c083a76d5be6240704be7ea87a9aa7",
+    "bindings/core/python/src/python_value_path_tests.rs": "9fc48c0904b0e365c1fa062c2a0b9b7fcc1b3eb0255eafdb7c08dda08b9d46da",
+    "crates/umf-core/src/context_path_tests.rs": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
+    "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
+    "crates/umf-core/src/schema_construction_index.rs": "ae988128f121646eb3d728f1fe5df8dfb5077ecff96fa4c9809b30c3c08ae928",
+    "crates/umf-core/src/schema_evaluation_scope.rs": "e9aa392db244adb2312101e25f37ef5f2d8bdee6825a0b497bda2ddd9413297c",
+    "docs/helix/04-build/evidence/inspector-combined-budget-source.md": "081f709b44bad18c93fcf4ea2493d6f64a427ea353d241cf509b851b62ba2308",
+    "python/tests/test_combined_budget_boundaries.py": "12d6ba6c58ce4bec127a46c1604b19df59619167b816203d3ac83772c2361a5b",
+    "tests/qualification/test_inspector_combined_budget.py": "757690bb09ab4a5e759a066f9fe718d8f7ace508a4bfa86b4d3aec671fd036a5",
+    "tools/qualify_inspector_combined_budget.py": "1222cbe54c07bb2bd35f3ae3e9075e9ec49192190158d6bbdd26bbd0c4ffb05b"
   },
   "compiledCensusTiming": "Approve source-derived names before build; authenticate compiled --list AFTER compilation BEFORE test execution; no prebuild compiled-census claim",
-  "reusedOldNativePasses": false
+  "reusedOldNativePasses": false,
+  "combinedPythonMethods": [
+    "test_nested_paths_escape_each_segment_and_preserve_utf16_and_failure_order",
+    "test_normalized_key_collision_refuses_in_both_orders_even_in_unknown_default_data",
+    "test_first_bad_value_precedes_later_collision_and_unsafe_integer_keeps_exact_path",
+    "test_compilation_owns_nested_mutable_python_content_and_reentry_denial_is_terminal"
+  ],
+  "whyNewNativeQualification": "CR1\u2013CR4 changes shared Context/schema/evaluator and binding conversion. Original successful components remain historical only; genuine affected selection required."
 }
