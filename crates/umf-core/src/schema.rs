@@ -3144,7 +3144,7 @@ impl CompiledSchema {
                     )?;
                     evaluated
                         .dynamic_scope
-                        .push((name.clone(), anchor_path.clone(), *address));
+                        .push((name.clone(), anchor_path.clone(), *address), ctx)?;
                 }
             }
             return Ok(());

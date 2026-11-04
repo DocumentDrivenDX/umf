@@ -119,4 +119,52 @@ class ConsolidatedFindingSourceControls(unittest.TestCase):
         self.assertEqual(current.count(line),1)
         with self.assertRaises(ValueError):self.catalogue_precharge(current.replace(line,'',1))
 
+class DynamicScopePushProtocolSourceControls(unittest.TestCase):
+    @staticmethod
+    def audit(files,signature):
+        import re
+        if not re.search(r'fn\s+push\(&mut self,\s*entry:\s*Entry,\s*ctx:\s*&mut Context<\x27_>\)\s*->\s*Result<\(\),\s*EngineError>',signature):
+            raise ValueError('Actual DynamicScope push signature changed')
+        rows=[]
+        for name,text in files.items():
+            for match in re.finditer(r'\bdynamic_scope\s*\.push\s*\(',text):
+                start=match.end();depth=0;parts=[];part=start;quote=False;escape=False;end=None
+                for at in range(start,len(text)):
+                    char=text[at]
+                    if quote:
+                        if escape:escape=False
+                        elif char=='\\':escape=True
+                        elif char=='"':quote=False
+                        continue
+                    if char=='"':quote=True;continue
+                    if char in '([{':depth+=1
+                    elif char in ')]}':
+                        if char==')' and depth==0:
+                            parts.append(text[part:at].strip());end=at+1;break
+                        depth-=1
+                    elif char==',' and depth==0:parts.append(text[part:at].strip());part=at+1
+                if end is None:raise ValueError('Unterminated DynamicScope push')
+                parts=[p for p in parts if p]
+                test=(name.endswith('schema_construction_index.rs') and match.start()>text.index('mod semantic_tests {'))
+                expected='&mutctx' if test else 'ctx'
+                if len(parts)!=2 or re.sub(r'\s+','',parts[1])!=expected:raise ValueError('Missing/wrong same Context argument: '+name)
+                tail=text[end:].lstrip()
+                if not (tail.startswith('.unwrap()') if test else tail.startswith('?')):raise ValueError('Ignored/nonpropagated DynamicScope Result: '+name)
+                rows.append({'path':name,'line':text.count('\n',0,match.start())+1,'test':test,'context':parts[1],'result':'unwrap in owner test' if test else 'propagated ?'})
+        if len(rows)!=7 or sum(not r['test'] for r in rows)!=6:raise ValueError('DynamicScope push census changed')
+        return rows
+    def test_all_actual_scope_pushes_use_same_context_and_consume_result(self):
+        files={str(p.relative_to(ROOT)):p.read_text() for p in (ROOT/'crates/umf-core/src').glob('*.rs') if 'dynamic_scope' in p.read_text()}
+        signature=(ROOT/'crates/umf-core/src/schema_evaluation_scope.rs').read_text()
+        self.assertEqual(len(self.audit(files,signature)),7)
+        path='crates/umf-core/src/schema.rs';good='.push((name.clone(), anchor_path.clone(), *address), ctx)?;'
+        self.assertEqual(files[path].count(good),1)
+        for bad in ['.push((name.clone(), anchor_path.clone(), *address));',
+                    '.push((name.clone(), anchor_path.clone(), *address), ctx);',
+                    '.push((name.clone(), anchor_path.clone(), *address), different_ctx)?;']:
+            with self.subTest(regression=bad):
+                changed=dict(files);changed[path]=changed[path].replace(good,bad,1)
+                with self.assertRaises(ValueError):self.audit(changed,signature)
+        with self.assertRaises(ValueError):self.audit(files,signature.replace('fn push(&mut self, entry: Entry, ctx:', 'fn push(&mut self, entry: Entry, wrong:',1))
+
 if __name__=='__main__':unittest.main()

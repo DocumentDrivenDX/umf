@@ -157,7 +157,7 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/schema.rs",
-      "sourceSHA256": "f94f71517afdda5eb3647d987bf9fa0640c1fd524c577508bf0ace31f9036c44",
+      "sourceSHA256": "c0c3fe3dc36454519fa7fbba87faa43fa24054a4ad8f51b3cde81acd1bb8ee53",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 44,
@@ -1450,7 +1450,7 @@
     "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
     "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
     "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-    "crates/umf-core/src/schema.rs": "f94f71517afdda5eb3647d987bf9fa0640c1fd524c577508bf0ace31f9036c44",
+    "crates/umf-core/src/schema.rs": "c0c3fe3dc36454519fa7fbba87faa43fa24054a4ad8f51b3cde81acd1bb8ee53",
     "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
     "crates/umf-core/src/schema_metas.json": "cecc3fdf8f3977662e71b53c20d6f954c62bec1cc2e96db20cbc9f895cf47195",
     "crates/umf-core/src/value.rs": "5f37637a4c1c8ad1afd5202e8dd5c88768968e530a51a72b69fda1090fb17d70",
@@ -1498,7 +1498,7 @@
     "crates/umf-core/src/schema_evaluation_scope.rs": "e9aa392db244adb2312101e25f37ef5f2d8bdee6825a0b497bda2ddd9413297c",
     "docs/helix/04-build/evidence/inspector-combined-budget-source.md": "e1b6f424b200132cf76b56834339bb00e161d80f36e8bae09f7b3eb0ef47e08a",
     "python/tests/test_combined_budget_boundaries.py": "12d6ba6c58ce4bec127a46c1604b19df59619167b816203d3ac83772c2361a5b",
-    "tests/qualification/test_inspector_combined_budget.py": "9ba7dfb277fca7201cf1162dd0b6bff777116e2002283017a34adf082dbfcf11",
+    "tests/qualification/test_inspector_combined_budget.py": "fd4ceca7e8ff1bc2b1bf20170ee402c71db5b16eaa6d16eb1feed8b511d246fb",
     "tools/qualify_inspector_combined_budget.py": "1222cbe54c07bb2bd35f3ae3e9075e9ec49192190158d6bbdd26bbd0c4ffb05b"
   },
   "compiledCensusTiming": "Approve source-derived names before build; authenticate compiled --list AFTER compilation BEFORE test execution; no prebuild compiled-census claim",
