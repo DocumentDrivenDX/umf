@@ -265,57 +265,62 @@ assets; the checksum file hashes the other eleven and is separately pinned.
 
 ## Current qualification
 
-PR [#88](https://github.com/DocumentDrivenDX/umf/pull/88) is merged. Canonical
-fixed-point generation, focused Rust/binding checks, both TypeScript
-configurations and package boundary checks pass. The final macOS SDK,
-core/codegen wheels and source archives pass source-payload verification,
-independent fresh-target core rebuild, coordinated pair installation and actual
-PostgreSQL 18 UPDATE-grant checks.
+The Rust port and pack-generator changes are merged through PR
+[#88](https://github.com/DocumentDrivenDX/umf/pull/88). The complete
+[0.10.7 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.7)
+is public at Q, and [PyPI](https://pypi.org/project/umf-core/0.10.7/) serves the
+same three qualified core archives. The newer 0.10.8 latest release is preserved.
 
-Installed Python APIs and SDK Node/Bun/browser surfaces agree on all 28 catalog
-requests. Four focused Python cases, packaged declarations and one real installed
-Saga lifecycle/registry smoke pass. The general SDK follows CONTRACT-001's Ajv
-JIT policy; strict CSP remains a separate, unchanged microsite requirement.
-The Linux Python wheel is built and qualified as `manylinux_2_34_x86_64`; its
-Node addon, installed consumers and final publication/public verification remain
-pending. The local site assets pass strict provenance, locked-renderer and page
-inventory checks. Its completed preview/download evidence and reviewed homepage
-font classification are recorded in [site-local.json](evidence/release-0.10.7/site-local.json).
-Passing checks remain closed unless affected inputs change.
+Both platform SDKs, core/codegen wheels, CLI binaries and source archives pass
+their source and artifact gates. Installed Python APIs and SDK Node/Bun/browser
+surfaces agree on all 28 catalog requests and 188 files: one generated outcome,
+25 partial outcomes and two blocked outcomes with explicit coverage. Four focused
+Python cases, fourteen focused Rust checks, packaged declarations, one real
+installed Saga lifecycle/registry smoke, an independent fresh core-sdist rebuild
+and actual PostgreSQL 18 column-grant checks pass.
+
+Fresh public Node SDK, Rust CLI and Python 3.14 installs generate the expected
+Legal Appellate pack. Both Python APIs pass, and the repaired companion verifies all ten packaged
+generator resources. The general SDK follows CONTRACT-001's Ajv JIT policy; the microsite
+keeps its unchanged strict CSP. The microsite refresh is merged through
+[#110](https://github.com/DocumentDrivenDX/umf/pull/110), deployed, and publicly
+verified for asset hashes, registered build signature, SQL/ORM/CRUD previews,
+individual download equality and seven-file ZIP hashes/CRC.
+
+All twelve public downloads match the reviewed checksums, including the complete
+Git Q source archive. PyPI-served archive bytes match locally as well. All
+delivery gates are complete; passing checks remain closed. Actual source, package, registry and site evidence is recorded in
+[release.json](evidence/release-0.10.7/release.json).
 
 ## Artifact delivery gates
 
-1. **Complete:** canonical regeneration/checks and Q source freeze. Strict
-   source-payload and generated fixed-point checks pass.
-2. **Complete for macOS and Linux Python:** locked builds, direct-wheel checks,
-   independent fresh-target macOS core-sdist rebuild and genuine Linux
-   manylinux qualification. **Pending:** Linux Node addon and SDK assembly.
-3. **Complete for macOS:** installed Python/CLI/Node/Bun/browser pack baseline,
-   repaired pair, declarations and focused Saga registry smoke. **Pending:**
-   Linux installed Python/CLI/Node/Bun checks on the final assembled package.
-4. Review the final twelve assets and exact Q source binding; freeze checksums
-   and release pins. Pin only the three selected core Python archives in
-   `release-pins.files`. Refresh/sign the microsite from the released 0.10.8
-   resource trio matching current main, and verify its normal flow.
-5. Publish immutable GitHub assets and core PyPI 0.10.7. The existing upload-only
-   route uses `locally_qualified=true`, exact Q source SHA and exact public
-   SHA256SUMS digest; all identity/metadata/OIDC/collision checks stay enabled.
-6. Fetch and verify every public asset and PyPI file. Run the full-source pinned
-   checks below and isolated public installed consumers; record actual hashes,
-   versions and receipt identities before closing.
+1. **Complete:** canonical regeneration, Q source freeze and source-payload
+   equality. The SDK source closure is a checked-in fixed point.
+2. **Complete:** both platform builds, genuine Linux manylinux qualification,
+   independent fresh-target core-sdist rebuild, Linux SDK assembly and exact
+   coordinated Python pair.
+3. **Complete:** installed Python/CLI/Node/Bun/browser baselines, declarations,
+   focused Saga smoke and actual deployment-grant checks.
+4. **Complete:** twelve-file roster, core-only Python pins, exact Q binding and
+   the one prepublication canonical/full-source acceptance described below.
+5. **Complete:** immutable GitHub publication, upload-only PyPI publication and
+   signed microsite deployment. Hosted behavioral tests remain skipped.
+6. **Complete:** all twelve public downloads and all three PyPI-served archives
+   match the qualified candidate bytes. Fresh public installs and the actual
+   public browser/download flow pass.
 
 ## Public pinned dependency and resource acceptance
 
-In a new temporary directory, fetch the exact immutable umf-v0.10.7 full source,
-platform SDK and matching Python archives. Verify the public checksum file against
-its separately pinned digest, every selected file against that checksum file, and
-the tag against `release-pins.commit`. Extract the complete declared build and check inputs directly from the verified
-full source asset, preserving their exact paths and bytes. Use the recorded input
+Before immutable publication, extract the complete declared build and check
+inputs directly from the staged full Git Q source archive in a new temporary
+directory. Verify its digest and the platform SDK digest against the final cohort
+and checksum manifest, preserving every selected path and byte. Use the recorded input
 inventories to avoid expanding unrelated documentation. Keep the shared original
 checkout untouched; do not derive source from an SDK or regenerate assets during
 acceptance.
 
-Inside that extracted source, using the recorded Bun/Python/Rust tool cohort:
+Run the following normal checks once in that extracted source, using the recorded
+Bun/Python/Rust tool cohort:
 
 ```sh
 bun install --frozen-lockfile --ignore-scripts
@@ -327,10 +332,10 @@ python3 scripts/sync-python-resources.py --check
 ```
 
 No `--write`, replacement checker or source edit is allowed during this acceptance.
-The normal checks must establish canonical bytes, exact resource inventory and
+The normal checks establish canonical bytes, exact resource inventory and
 manifest pins. With RELEASE_SOURCE and SDK_PACKAGE naming only the verified
-extracted directories, check the downloaded SDK's complete source binding through
-the canonical verifier:
+candidate source and SDK directories, check the SDK's complete source binding
+through the canonical verifier:
 
 ```sh
 python3 - "$RELEASE_SOURCE" "$SDK_PACKAGE" <<'PYTHON'
@@ -345,8 +350,13 @@ print('Public full-source SDK closure verified')
 PYTHON
 ```
 
-Check the downloaded Python archives against the same full source and the
-passing local source-rebuild receipt, bound to their exact public digests. Install the verified SDK into a new consumer
+After publication, download all twelve public assets. Verify the checksum file
+against its separately recorded digest, every payload against that manifest, and
+the public tag against `release-pins.commit`. Require exact candidate/public byte
+identity. That identity carries the already-passing canonical/source-closure
+proof; do not rerun the source suite for identical bytes. Check the downloaded
+Python archives against the same passing source-rebuild/pair receipts, bound to
+their exact public digests. Install the verified SDK into a new consumer
 directory and the exact core/codegen pair into a new virtual environment. Disable
 checkout imports (`python -I`, no PYTHONPATH), assert installed import paths and
 0.10.7 artifact versions, and exercise the public pack generator plus the repaired
