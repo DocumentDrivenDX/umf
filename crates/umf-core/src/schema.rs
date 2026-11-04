@@ -39,6 +39,18 @@ pub struct PythonErrorMetadata {
 pub struct SchemaResources {
     pub entries: Vec<(Utf16, Value)>,
 }
+#[derive(Clone, Debug)]
+enum SchemaBacking { Owned(SchemaResources), Shared(Arc<SchemaResources>) }
+impl std::ops::Deref for SchemaBacking {
+    type Target = SchemaResources;
+    fn deref(&self) -> &SchemaResources { match self { Self::Owned(v) => v, Self::Shared(v) => v } }
+}
+impl SchemaBacking {
+    fn shares(&self, other: &Arc<SchemaResources>) -> bool {
+        matches!(self, Self::Shared(value) if Arc::ptr_eq(value, other))
+    }
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum SchemaDialect {
     Draft3,
@@ -82,7 +94,7 @@ impl Default for KeywordPolicy {
 #[derive(Debug)]
 pub struct CompiledSchema {
     schema: Value,
-    resources: SchemaResources,
+    resources: SchemaBacking,
     dialect: SchemaDialect,
     strict: bool,
     root_keyword_policy: KeywordPolicy,
@@ -122,6 +134,78 @@ impl Clone for CompiledSchema {
             python_resource_roots: self.python_resource_roots.clone(),
             dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
         }
+    }
+}
+
+
+/// Private completed proofs, owned only by one explicit cold construction.
+/// No caller-supplied token/hash or ambient process state participates.
+#[derive(Default)]
+pub(crate) struct ConstructionState {
+    catalogues: Vec<(crate::context::Limits, Arc<SchemaResources>)>,
+    completed: Vec<(crate::context::Limits, Arc<CompiledSchema>)>,
+    metas: Option<(crate::context::Limits, Arc<Value>)>,
+    meta_validators: Vec<(crate::context::Limits, SchemaDialect, Arc<CompiledSchema>)>,
+}
+
+// Ordered, bit-preserving structural identity. Semantic object equality or a
+// matching root ID alone is insufficient for admission/provenance reuse.
+fn construction_equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
+    Ok(match (a, b) {
+        (Value::Null, Value::Null) => true,
+        (Value::Bool(a), Value::Bool(b)) => a == b,
+        (Value::Number(a), Value::Number(b)) => a.to_bits() == b.to_bits(),
+        (Value::String(a), Value::String(b)) => {
+            ctx.charge_work(a.len().min(b.len()), Utf16::default())?; a == b
+        }
+        (Value::Array(a), Value::Array(b)) => {
+            if a.len() != b.len() { return Ok(false); }
+            for (a,b) in a.iter().zip(b) { if !construction_equal(a,b,ctx)? { return Ok(false); } }
+            true
+        }
+        (Value::Object(a), Value::Object(b)) => {
+            if a.len() != b.len() { return Ok(false); }
+            for ((ak,av),(bk,bv)) in a.iter().zip(b) {
+                ctx.charge_work(ak.len().min(bk.len()), Utf16::default())?;
+                if ak != bk || !construction_equal(av,bv,ctx)? { return Ok(false); }
+            }
+            true
+        }
+        _ => false,
+    })
+}
+
+fn construction_catalogue(resources: &SchemaResources, ctx: &mut Context<'_>) -> Result<Option<Arc<SchemaResources>>, EngineError> {
+    let Some(state) = ctx.schema_construction.clone() else { return Ok(None); };
+    let count = state.borrow().catalogues.len();
+    ctx.charge_work(count, Utf16::default())?;
+    let candidates = state.borrow().catalogues.clone();
+    for (limits, candidate) in candidates {
+        if limits != ctx.limits() || candidate.entries.len() != resources.entries.len() { continue; }
+        let mut equal = true;
+        for ((aid,av),(bid,bv)) in candidate.entries.iter().zip(&resources.entries) {
+            ctx.charge_work(aid.len().min(bid.len()), Utf16::default())?;
+            if aid != bid || !construction_equal(av,bv,ctx)? { equal = false; break; }
+        }
+        if equal { ctx.charge_work(1, Utf16::default())?; return Ok(Some(candidate)); }
+    }
+    Ok(None)
+}
+
+impl CompiledSchema {
+    // Only ordinary strict compilation is eligible. Every other origin,
+    // keyword, regex, reference or duplicate/numeric policy retains its full
+    // original operation; no partial policy key can accidentally match it.
+    fn construction_copy(&self, schema: Value, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
+        Ok(Self { schema, resources: self.resources.clone(), dialect: self.dialect,
+            strict: self.strict, root_keyword_policy: self.root_keyword_policy,
+            regex_profile: self.regex_profile, resolve_references_at_compile: self.resolve_references_at_compile,
+            python_text_origins: Default::default(), python_member_keys: Default::default(),
+            python_source_strings: Default::default(), python_source_keys: Default::default(),
+            python_exact_values: Default::default(), python_reference_targets: Default::default(),
+            python_resource_roots: Default::default(), dynamic_anchor_cache: Mutex::new(Default::default()) })
     }
 }
 
@@ -1281,7 +1365,7 @@ impl CompiledSchema {
         }
         Ok(Self {
             schema,
-            resources: SchemaResources { entries },
+            resources: SchemaBacking::Owned(SchemaResources { entries }),
             dialect: self.dialect,
             strict: self.strict,
             root_keyword_policy: self.root_keyword_policy,
@@ -1517,6 +1601,14 @@ impl CompiledSchema {
         } else {
             copy_json(schema, ctx)?
         };
+        let eligible = ctx.schema_construction.is_some() && strict
+            && matches!(regex_profile, RegexProfile::Ecma262Unicode)
+            && resolve_references_at_compile && !apply_local_reference_gate
+            && !allow_duplicate_schema_keys && finite_binary64_admission
+            && root_keyword_policy == KeywordPolicy::DRAFT2020;
+        let shared = if eligible { construction_catalogue(resources, ctx)? } else { None };
+        let new_catalogue = shared.is_none();
+        let shared_resources = if let Some(shared) = shared { SchemaBacking::Shared(shared) } else {
         let mut owned = Vec::with_capacity(resources.entries.len());
         let mut identities: Vec<(&Utf16, &Value)> = Vec::new();
         for (id, value) in &resources.entries {
@@ -1542,9 +1634,31 @@ impl CompiledSchema {
             identities.push((id, value));
             owned.push((id.clone(), copied));
         }
+        if eligible {
+        ctx.charge_work(1, Utf16::default())?;
+        let admitted = Arc::new(SchemaResources { entries: owned });
+        SchemaBacking::Shared(admitted)
+        } else { SchemaBacking::Owned(SchemaResources { entries: owned }) }
+        };
+        if eligible {
+            if let Some(state) = ctx.schema_construction.clone() {
+                let count = state.borrow().completed.len();
+                ctx.charge_work(count, Utf16::default())?;
+                let completed = state.borrow().completed.clone();
+                for (limits, prior) in completed {
+                    // Arc identity is used ONLY after the current full ordered
+                    // catalogue comparison established the same admitted object.
+                    if limits == ctx.limits() && prior.dialect == dialect
+                        && matches!(&shared_resources, SchemaBacking::Shared(catalogue) if prior.resources.shares(catalogue))
+                        && construction_equal(&prior.schema, &schema, ctx)? {
+                        return prior.construction_copy(schema, ctx);
+                    }
+                }
+            }
+        }
         let compiled = Self {
             schema,
-            resources: SchemaResources { entries: owned },
+            resources: shared_resources,
             dialect,
             strict,
             root_keyword_policy,
@@ -1591,6 +1705,20 @@ impl CompiledSchema {
             || declared_dialect(&compiled.schema).is_some()
         {
             validate_schema_against_metaschema(&compiled.schema, dialect, regex_profile, ctx)?;
+        }
+        if eligible {
+            if let Some(state) = ctx.schema_construction.clone() {
+                if new_catalogue {
+                    if let SchemaBacking::Shared(catalogue) = &compiled.resources {
+                        ctx.charge_work(1, Utf16::default())?;
+                        state.borrow_mut().catalogues.push((ctx.limits(), Arc::clone(catalogue)));
+                    }
+                }
+                let schema_copy = copy_schema_json(&compiled.schema, ctx, false)?;
+                let completed = compiled.construction_copy(schema_copy, ctx)?;
+                ctx.charge_work(1, Utf16::default())?;
+                state.borrow_mut().completed.push((ctx.limits(), Arc::new(completed)));
+            }
         }
         Ok(compiled)
     }
@@ -6618,18 +6746,48 @@ fn validate_local_reference_gate(
     Ok(())
 }
 
+enum MetaBacking { Owned(Value), Shared(Arc<Value>) }
+impl std::ops::Deref for MetaBacking {
+    type Target = Value;
+    fn deref(&self) -> &Value { match self { Self::Owned(v) => v, Self::Shared(v) => v } }
+}
+
 fn validate_schema_against_metaschema(
     schema: &Value,
     dialect: SchemaDialect,
     regex_profile: RegexProfile,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
-    let source = include_str!("schema_metas.json");
-    let meta_data = crate::serialization::read_json_value(
-        &source.encode_utf16().collect::<Vec<_>>(),
-        crate::serialization::Format::Json,
-        ctx,
-    )?;
+    let state = if matches!(regex_profile, RegexProfile::Ecma262Unicode) { ctx.schema_construction.clone() } else { None };
+    if let Some(state) = &state {
+        let count = state.borrow().meta_validators.len();
+        ctx.charge_work(count, Utf16::default())?;
+        let validators = state.borrow().meta_validators.clone();
+        for (limits, prior_dialect, validator) in validators {
+            if limits == ctx.limits() && prior_dialect == dialect {
+                let errors = validator.validate_instance(schema, ctx)?;
+                if let Some(error) = errors.first() {
+                    return Err(EngineError::new("SCHEMA_INVALID", error.instance_path.clone(), error.message.clone()));
+                }
+                return Ok(());
+            }
+        }
+    }
+    let prior = state.as_ref().and_then(|s| s.borrow().metas.clone());
+    let meta_data = if let Some((_, data)) = prior.filter(|(limits,_)| *limits == ctx.limits()) {
+        ctx.charge_work(1, Utf16::default())?;
+        MetaBacking::Shared(data)
+    } else {
+        let source = include_str!("schema_metas.json");
+        let data = crate::serialization::read_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(), crate::serialization::Format::Json, ctx)?;
+        if let Some(state) = &state {
+            ctx.charge_work(1, Utf16::default())?;
+            let data = Arc::new(data);
+            state.borrow_mut().metas = Some((ctx.limits(), Arc::clone(&data)));
+            MetaBacking::Shared(data)
+        } else { MetaBacking::Owned(data) }
+    };
     let metas = get(&meta_data, "metaschemas").ok_or_else(|| {
         EngineError::new(
             "SCHEMA_INTERNAL",
@@ -6652,12 +6810,18 @@ fn validate_schema_against_metaschema(
                 Utf16::default(),
                 "Pinned metaschema is missing",
             )
-        })?
-        .clone();
+        })?;
+    let meta_schema = if state.is_some() { copy_schema_json(meta_schema, ctx, false)? } else { meta_schema.clone() };
+
     let resources = match get(&meta_data, "resources") {
         Some(Value::Array(items)) => items
             .iter()
             .map(|item| {
+                if state.is_some() {
+                    if let Some(Value::String(id)) = get(item, "id") {
+                        ctx.charge_work(id.len().saturating_mul(2), Utf16::default())?;
+                    }
+                }
                 let id = get(item, "id").and_then(as_utf8).ok_or_else(|| {
                     EngineError::new(
                         "SCHEMA_INTERNAL",
@@ -6672,7 +6836,8 @@ fn validate_schema_against_metaschema(
                         "Pinned metaschema resource has no schema",
                     )
                 })?;
-                Ok((Utf16::from(id), value.clone()))
+                let value = if state.is_some() { copy_schema_json(value, ctx, false)? } else { value.clone() };
+                Ok((Utf16::from(id), value))
             })
             .collect::<Result<Vec<_>, EngineError>>()?,
         _ => {
@@ -6685,7 +6850,7 @@ fn validate_schema_against_metaschema(
     };
     let meta = CompiledSchema {
         schema: meta_schema,
-        resources: SchemaResources { entries: resources },
+        resources: SchemaBacking::Owned(SchemaResources { entries: resources }),
         dialect,
         strict: false,
         root_keyword_policy: KeywordPolicy::DRAFT2020,
@@ -6707,6 +6872,10 @@ fn validate_schema_against_metaschema(
             error.instance_path.clone(),
             error.message.clone(),
         ));
+    }
+    if let Some(state) = state {
+        ctx.charge_work(1, Utf16::default())?;
+        state.borrow_mut().meta_validators.push((ctx.limits(), dialect, Arc::new(meta)));
     }
     Ok(())
 }
@@ -11046,3 +11215,63 @@ mod draft2020_dynamic_annotation_regressions {
         );
     }
 }
+
+#[cfg(test)]
+mod construction_owner_tests {
+    use super::*;
+    fn typed(kind: &str) -> Value {
+        Value::Object(vec![(Utf16::from("type"), Value::string_utf8(kind))])
+    }
+
+    #[test]
+    fn completed_compile_and_metaschema_sharing_are_local_to_actual_success() {
+        let mut ctx = Context::catalog();
+        ctx.with_codegen_construction(|ctx| {
+            let first = CompiledSchema::compile(&typed("object"), &SchemaResources::default(), ctx).unwrap();
+            let state = ctx.schema_construction.as_ref().unwrap().clone();
+            assert_eq!(state.borrow().completed.len(), 1);
+            let second = CompiledSchema::compile(&typed("object"), &SchemaResources::default(), ctx).unwrap();
+            assert_eq!(state.borrow().completed.len(), 1);
+            assert!(matches!((&first.resources, &second.resources),
+                (SchemaBacking::Shared(a), SchemaBacking::Shared(b)) if Arc::ptr_eq(a,b)));
+            let meta = state.borrow().meta_validators[0].2.clone();
+            CompiledSchema::compile(&typed("array"), &SchemaResources::default(), ctx).unwrap();
+            assert_eq!(state.borrow().meta_validators.len(), 1);
+            assert!(Arc::ptr_eq(&meta, &state.borrow().meta_validators[0].2));
+            Ok::<(), EngineError>(())
+        }).unwrap();
+        assert!(ctx.schema_construction.is_none());
+        ctx.with_codegen_construction(|ctx| {
+            assert!(ctx.schema_construction.as_ref().unwrap().borrow().completed.is_empty());
+            Ok::<(), EngineError>(())
+        }).unwrap();
+    }
+
+    #[test]
+    fn invalid_schema_publishes_no_catalogue_or_completed_proof() {
+        let mut ctx = Context::catalog();
+        ctx.with_codegen_construction(|ctx| {
+            let invalid = Value::Object(vec![(Utf16::from("unknown-root"), Value::Bool(true))]);
+            assert!(CompiledSchema::compile(&invalid, &SchemaResources::default(), ctx).is_err());
+            let state = ctx.schema_construction.as_ref().unwrap().borrow();
+            assert!(state.completed.is_empty()); assert!(state.catalogues.is_empty());
+            Ok::<(), EngineError>(())
+        }).unwrap();
+        assert!(ctx.schema_construction.is_none());
+    }
+
+    #[test]
+    fn terminal_construction_denial_stops_before_reusable_proof() {
+        let mut calls = 0;
+        let mut stop = |_| { calls += 1; Err(EngineError::new("RESOURCE_LIMIT", Utf16::from("/first"), "first denied")) };
+        let mut ctx = Context::catalog().with_host_control(&mut stop);
+        let error = ctx.with_codegen_construction(|ctx| CompiledSchema::compile(&typed("object"), &SchemaResources::default(), ctx)).unwrap_err();
+        assert!(ctx.schema_construction.is_none());
+        assert_eq!(error.code, "RESOURCE_LIMIT"); assert_eq!(error.path, Utf16::from("/first"));
+        drop(ctx); assert_eq!(calls, 1);
+    }
+}
+
+#[cfg(test)]
+#[path = "schema_construction_tests.rs"]
+mod construction_independent_tests;

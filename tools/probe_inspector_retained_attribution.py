@@ -26,13 +26,13 @@ class Trace:
     observation/control overhead; exhausting it refuses, never establishes1M.
     """
     def __init__(self):
-        self.total = 0; self.count = 0; self.phases = Counter(); self.first_denial = None
+        self.total = 0; self.count = 0; self.phases = Counter(); self.phase_events = Counter(); self.first_denial = None
         self.amount_hash = hashlib.sha256(); self.last_event = None
     def __call__(self, amount, phase):
         if self.first_denial is not None: raise AssertionError('Callback after first diagnostic denial')
         if type(amount) is not int or not 0 <= amount <= 0xffffffff or phase not in PHASES:
             raise ValueError('Unknown diagnostic phase/amount')
-        self.count += 1; self.total += amount; self.phases[phase] += amount
+        self.count += 1; self.total += amount; self.phases[phase] += amount; self.phase_events[phase] += 1
         self.amount_hash.update(amount.to_bytes(8,'little'))
         self.last_event = dict(amount=amount,phase=phase,cumulative=self.total,index=self.count-1)
         if self.count > EVENT_CAP or self.total > 2**64-1:
@@ -40,7 +40,7 @@ class Trace:
             return 'RESOURCE_LIMIT','Private attribution event/counter cap exceeded','/private/attribution'
         return None
     def summary(self):
-        return dict(total=self.total,eventCount=self.count,phaseWork=dict(self.phases),
+        return dict(total=self.total,eventCount=self.count,phaseWork=dict(self.phases),phaseEvents=dict(self.phase_events),
                     amountSequenceSHA256=self.amount_hash.hexdigest(),lastEvent=self.last_event,
                     firstDenial=self.first_denial)
 

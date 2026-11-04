@@ -11,6 +11,8 @@ import unittest
 import xml.etree.ElementTree as ET
 
 OWNER='3ba34e412a4c78c0ef01dd1085b8add79db1b7ae'
+WHEEL_SHA='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'
+SCOPE_METHODS=()
 TEST_SHA='eb6bc7b8e8533d4a60d4432a09bb68bef8f67f89e23f0ff15928f5223f7b1719'
 DEPTH='PrivateNativeControlTests.test_private_resource_depth_limit_remains_per_resource_128'
 REFUSALS=(
@@ -60,7 +62,7 @@ def fixture_failure_allowed(case,envelope):
 
 
 def boundary_admission(report,returncode):
-    require(report.get('complete')is True and report.get('identityAfterPassed')is True and len(report['cases'])==17,'Incomplete boundary report')
+    require(report.get('complete')is True and report.get('identityAfterPassed')is True and len(report['cases'])==len(BOUNDARY_CASES),'Incomplete boundary report')
     require({r['case'] for r in report['cases']}==BOUNDARY_CASES,'Boundary census differs')
     failed=[r for r in report['cases'] if r['outcome']!='passed']
     require(returncode==(1 if failed else 0),'Boundary exit/report disagree')
@@ -69,15 +71,33 @@ def boundary_admission(report,returncode):
             'reason':'boundary-pass' if not failed else 'reviewed-fixture-semantic-refusal' if allowed else 'critical-boundary-failure'}
 
 
-def resource_limit_measurement(report,source=OWNER):
-    return (type(report)is dict and report.get('profile')=='umf.private-inspector-retained-feasibility/1'
+def resource_limit_measurement(report,source=None):
+    source=OWNER if source is None else source
+    if type(report)is not dict or type(report.get('wheel'))is not dict:return False
+    if any(key in report and type(report[key])is not dict for key in ('refusal','exception')):return False
+    if not (type(report)is dict and report.get('profile')=='umf.private-inspector-retained-feasibility/1'
       and report.get('actualCandidateSource')==source and type(report.get('maximumWork'))is int
       and report['maximumWork']==1000000 and report.get('status')=='resource-limited'
       and report.get('publishable')is False and report.get('readyForEnrollment')is False
-      and report.get('wheel',{}).get('sha256')=='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'
+      and report.get('wheel',{}).get('sha256')==WHEEL_SHA
       and any(report.get(k,{}).get('code')=='RESOURCE_LIMIT' for k in ('refusal','exception'))
-      and type(report.get('operations'))is list and bool(report['operations'])
-      and any(type(f.get('amount'))is int and f['amount']>0 and f.get('code')=='RESOURCE_LIMIT' and type(f.get('attemptedAtRefusal'))is int and f['attemptedAtRefusal']>1000000 for row in report['operations'] for f in row.get('failures',[])))
+      and type(report.get('operations'))is list and bool(report['operations'])):return False
+    row=report['operations'][-1]
+    if type(row)is not dict:return False
+    # The causal witness is the actual final retained lifetime, never the
+    # legacy constructor's expected budget refusal from an earlier row.
+    corpus=json.loads((Path(__file__).resolve().parents[1]/'tests/rust-core/fixtures/access-inspection/cases.json').read_text())
+    allowed={'retained-cold-construction-1M'}|{r['id']+'/'+c for r in corpus['cases'] for c in ('dispatcher','list','tuple')}
+    if row.get('operation') not in allowed or type(row.get('maximumWork'))is not int or row['maximumWork']!=1000000:return False
+    failures=row.get('failures')
+    if type(failures)is not list or len(failures)!=1 or type(failures[0])is not dict:return False
+    failure=failures[0]
+    amount=failure.get('amount');attempted=failure.get('attemptedAtRefusal');returned=row.get('returnedWork')
+    if not (type(amount)is int and amount>0 and type(attempted)is int and attempted>1000000
+        and type(returned)is int and 0<=returned<=1000000 and returned+amount==attempted
+        and row.get('attemptedWork')==attempted and failure.get('code')=='RESOURCE_LIMIT'
+        and type(failure.get('phase'))is str and bool(failure['phase'])):return False
+    return ('refusal' not in report or report['refusal'].get('phase')==failure.get('phase'))
 
 
 def final_success(state):
@@ -119,7 +139,7 @@ def identity(args,suffix):
     require(sys.flags.isolated and sys.dont_write_bytecode,'Isolated no-bytecode interpreter required')
     require(platform.python_version()=='3.11.17' and platform.system()=='Linux' and platform.machine()=='x86_64','Selected host differs')
     owner=args.owner.resolve();root=args.controller.resolve();out=args.out.resolve()
-    pins=json.loads((root/'tests/qualification/fixtures/inspector-attribution-continuation.json').read_text())
+    pins=json.loads((args.producer_pins if getattr(args,'producer_pins',None) else root/'tests/qualification/fixtures/inspector-attribution-continuation.json').read_text())
     digest=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
     require(digest(args.wheel)==pins['wheel']['sha256'],'Retained wheel differs')
     require(digest(owner/'tools/verify_python_artifacts.py')=='0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355','Strict verifier source differs')
@@ -181,6 +201,7 @@ def boundary(args):
     suite=unittest.TestSuite()
     for name in sorted(PRIVATE_METHODS):suite.addTest(tests.PrivateNativeControlTests(name))
     for name in REFUSALS:suite.addTest(tests.RetainedResourceAdmissionNativeTests(name))
+    for name in SCOPE_METHODS:suite.addTest(tests.PrivateConstructionIsolationNativeTests(name))
     result=unittest.TextTestRunner(resultclass=Result,verbosity=2).run(suite)
     identity(args,'boundary-after')
     report['identityAfterPassed']=True;report['complete']=True;write(target,report)
@@ -194,9 +215,12 @@ def diagnostic(args):
     namespace=argparse.Namespace(root=args.owner,wheel=args.wheel,source_sha=OWNER,
        resource_pins_sha256='72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290',output=args.out/'work-attribution.json',
        controller_source=args.controller_sha,probe_sha256=__import__('hashlib').sha256(probe_path.read_bytes()).hexdigest())
-    result=module.run(namespace)
-    require(namespace.output.stat().st_size<=DIAGNOSTIC_RECEIPT_BYTES,'Diagnostic receipt exceeded storage bound')
-    identity(args,'diagnostic-after');return result
+    try:
+        result=module.run(namespace)
+        require(namespace.output.stat().st_size<=DIAGNOSTIC_RECEIPT_BYTES,'Diagnostic receipt exceeded storage bound')
+        return result
+    finally:
+        identity(args,'diagnostic-after')
 
 
 def run(args):
@@ -212,37 +236,41 @@ def run(args):
         return result.returncode
     common=[sys.executable,'-I','-B',str(Path(__file__).resolve()),'--controller',str(args.controller),
       '--owner',str(args.owner),'--wheel',str(args.wheel),'--out',str(args.out),'--controller-sha',args.controller_sha]
+    if getattr(args,'producer_pins',None):common += ['--producer-pins',str(args.producer_pins)]
     try:
         identity(args,'initial');state['identityPassed']=True;save()
-        intake=json.loads((args.out/'intake.json').read_text())
-        require(intake.get('profile')=='umf.private-inspector-diagnostic-only-intake/1'
-                and intake.get('artifactSource')==OWNER and intake.get('controllerSource')==args.controller_sha
-                and intake.get('correctedTestSHA256')==TEST_SHA and intake.get('originalRun')==41753398285,
-                'Authenticated component reuse receipt differs')
-        reuse=intake['verifiedComponentReuse']
-        require(len(reuse['legacyCases'])==8 and set(reuse['legacyCases'])==LEGACY_CASES
-                and len(reuse['boundaryCases'])==17 and set(reuse['boundaryCases'])==BOUNDARY_CASES
-                and len(reuse['observedIdentityPairs'])==4 and reuse['wholeJobPassed']is False
-                and reuse['originalDiagnosticPassed']is False,'Original component/identity census differs')
-        state.update(legacyPassed=True,boundaryPassed=True,attributionAdmitted=True,
-                     reason='authenticated-original-component-passes',reusedQualificationRun=41753398285)
-        decision={'attributionAdmitted':True,'boundaryPassed':True};save()
-        if decision['attributionAdmitted']:
-            rc=command('diagnostic',common+['--mode','diagnostic'],DIAGNOSTIC_SECONDS)
-            require((args.out/'diagnostic.log').stat().st_size<=DIAGNOSTIC_LOG_BYTES,'Diagnostic log exceeded storage bound')
-            require(rc==0,'Diagnostic failed; no further native gates admitted')
-            observed=json.loads((args.out/'work-attribution.json').read_text())
-            require(observed.get('profile')=='umf.private-inspector-work-attribution/1' and observed.get('source')==OWNER
-                    and observed.get('controllerSource')==args.controller_sha
-                    and observed.get('probeSourceSHA256')==__import__('hashlib').sha256((args.controller/'tools/probe_inspector_retained_attribution.py').read_bytes()).hexdigest()
-                    and observed.get('status')=='observed' and observed.get('amountSequenceEquivalent')is True
-                    and observed.get('resultBytesEquivalent')is True and observed.get('publishable')is False
-                    and observed.get('readyForEnrollment')is False
-                    and observed.get('wheelSHA256')=='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c', 'Diagnostic completion receipt absent/different')
-            require((args.out/'identity-diagnostic-after.json').is_file(),'Diagnostic after-identity missing')
-            state['diagnosticPassed']=True;save()
-        else:raise ValueError('Critical boundary failure blocks attribution and public gates')
-        if decision['boundaryPassed']:
+        if getattr(args,'producer_pins',None):
+            rust=json.loads((args.out/'rust-census-result.json').read_text())
+            require(rust.get('status')=='passed' and rust.get('source')==OWNER
+                    and rust.get('cases')==161 and rust.get('passed')==161,
+                    'New native Rust161 qualification missing/different')
+            rc=command('legacy',[sys.executable,'-I','-B','-m','pytest','-q','-s',
+                '--junitxml='+str(args.out/'legacy.xml'),str(args.controller/'python/tests/test_rust_codegen.py')])
+            cases=list(ET.parse(args.out/'legacy.xml').getroot().iter('testcase'))
+            require(rc==0 and len(cases)==8 and {c.attrib['name'] for c in cases}==LEGACY_CASES
+                and not any(c.find(k)is not None for c in cases for k in ('failure','error','skipped')), 'Fresh legacy8 failed/census differs')
+            state['legacyPassed']=True;save()
+            rc=command('boundary',common+['--mode','boundary'])
+            decision=boundary_admission(json.loads((args.out/'boundary.json').read_text()),rc)
+            require(decision['boundaryPassed'],'Fresh boundary21 failed; no native continuation')
+            state.update(decision);save()
+        else:
+            intake=json.loads((args.out/'intake.json').read_text())
+            require(intake.get('profile')=='umf.private-inspector-diagnostic-only-intake/1'
+                    and intake.get('artifactSource')==OWNER and intake.get('controllerSource')==args.controller_sha
+                    and intake.get('correctedTestSHA256')==TEST_SHA and intake.get('originalRun')==41753398285,
+                    'Authenticated component reuse receipt differs')
+            reuse=intake['verifiedComponentReuse']
+            require(len(reuse['legacyCases'])==8 and set(reuse['legacyCases'])==LEGACY_CASES
+                    and len(reuse['boundaryCases'])==17 and set(reuse['boundaryCases'])==BOUNDARY_CASES
+                    and len(reuse['observedIdentityPairs'])==4 and reuse['wholeJobPassed']is False
+                    and reuse['originalDiagnosticPassed']is False,'Original component/identity census differs')
+            state.update(legacyPassed=True,boundaryPassed=True,attributionAdmitted=True,
+                         reason='authenticated-original-component-passes',reusedQualificationRun=41753398285)
+            decision={'attributionAdmitted':True,'boundaryPassed':True};save()
+        require(decision['boundaryPassed'],'Boundary failure blocks public measurement')
+        identity(args,'public-before')
+        try:
             rc=command('public-probe',[sys.executable,'-I','-B',str(args.owner/'tools/probe_inspector_retained_feasibility.py'),
               '--root',str(args.owner),'--wheel',str(args.wheel),'--source-sha',OWNER,
               '--resource-pins-sha256','72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290',
@@ -256,25 +284,77 @@ def run(args):
                 require(measured.get('status')=='measured-fit' and measured.get('actualCandidateSource')==OWNER
                         and measured.get('inspectionCases')==17 and measured.get('inspectionCalls')==51
                         and type(measured.get('maximumWork'))is int and measured['maximumWork']==1000000
-                        and measured.get('wheel',{}).get('sha256')=='8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c', 'Public probe completion receipt missing/different')
+                        and measured.get('wheel',{}).get('sha256')==WHEEL_SHA, 'Public probe completion receipt missing/different')
                 state['publicProbePassed']=True
                 argv=[sys.executable,'-I','-B','-m','pytest','-q','-s','--junitxml='+str(args.out/'public-controls.xml'),str(args.controller/'python/tests/test_retained_codegen_native.py')+'::PublicRetainedFeasibilityTests']
                 argv += [str(args.controller/'python/tests/test_retained_codegen_native.py')+'::RetainedResourceAdmissionNativeTests::'+n for n in POSITIVES]
                 controls_rc=command('public-controls',argv)
                 cases=list(ET.parse(args.out/'public-controls.xml').getroot().iter('testcase'))
                 state['publicControlsPassed']=controls_rc==0 and len(cases)==12 and not any(c.find(k)is not None for c in cases for k in ('failure','error','skipped'))
+                require(state['publicControlsPassed'],'Public control assertion failure blocks diagnostic')
             save()
-        else:state['qualificationFailureClass']='reviewed-fixture-semantic-refusal';save()
-        identity(args,'final');state['finalIdentityPassed']=True;save()
+        finally:
+            identity(args,'public-after')
+        if decision['attributionAdmitted']:
+            rc=command('diagnostic',common+['--mode','diagnostic'],DIAGNOSTIC_SECONDS)
+            require((args.out/'diagnostic.log').stat().st_size<=DIAGNOSTIC_LOG_BYTES,'Diagnostic log exceeded storage bound')
+            require(rc==0,'Diagnostic failed; no further native gates admitted')
+            observed=json.loads((args.out/'work-attribution.json').read_text())
+            require(observed.get('profile')=='umf.private-inspector-work-attribution/1' and observed.get('source')==OWNER
+                    and observed.get('controllerSource')==args.controller_sha
+                    and observed.get('probeSourceSHA256')==__import__('hashlib').sha256((args.controller/'tools/probe_inspector_retained_attribution.py').read_bytes()).hexdigest()
+                    and observed.get('status')=='observed' and observed.get('amountSequenceEquivalent')is True
+                    and observed.get('resultBytesEquivalent')is True and observed.get('publishable')is False
+                    and observed.get('readyForEnrollment')is False
+                    and observed.get('wheelSHA256')==WHEEL_SHA, 'Diagnostic completion receipt absent/different')
+            require((args.out/'identity-diagnostic-after.json').is_file(),'Diagnostic after-identity missing')
+            state['diagnosticPassed']=True;save()
+        else:raise ValueError('Critical boundary failure blocks attribution and public gates')
     except BaseException as error:
         state['fatal']={'type':type(error).__name__,'message':str(error)};save();traceback.print_exc()
+    finally:
+        if state['identityPassed']:
+            try:
+                identity(args,'final');state['finalIdentityPassed']=True
+            except BaseException as error:
+                state['finalIdentityFailure']={'type':type(error).__name__,'message':str(error)}
+            save()
     state['requiredQualificationPassed']=final_success(state);save()
     return 0 if state['requiredQualificationPassed'] else 1
+
+
+def configure_producer(args):
+    import hashlib
+    global OWNER,WHEEL_SHA,TEST_SHA,SCOPE_METHODS,BOUNDARY_CASES
+    pins=json.loads(args.producer_pins.read_text())
+    root=args.controller.resolve();owner=args.owner.resolve()
+    git=lambda where,*items:subprocess.check_output(['git','-C',str(where),*items],text=True).strip()
+    require(pins.get('profile')=='umf.private-construction-batch-producer/1'
+        and pins.get('source')==args.controller_sha and pins.get('source')!=OWNER
+        and git(root,'rev-parse','HEAD')==args.controller_sha
+        and git(owner,'rev-parse','HEAD')==args.controller_sha
+        and not git(root,'status','--porcelain','--untracked-files=no'), 'Exact changed-source producer required')
+    require(pins.get('testSHA256')=='2f6a35343298ccfa356acf21d559c80c93fc9a8e78de395f9d3fbe92d75e528e'
+        and hashlib.sha256((root/'python/tests/test_retained_codegen_native.py').read_bytes()).hexdigest()==pins['testSHA256']
+        and hashlib.sha256((owner/'Cargo.lock').read_bytes()).hexdigest()==pins['cargoLockSHA256']
+        and pins.get('resourcePinsSHA256')=='72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290'
+        and pins.get('publishable')is False and pins.get('readyForEnrollment')is False,'Producer source/resource/test closure differs')
+    require(args.producer_pins.resolve().is_relative_to(args.out.resolve())
+        and hashlib.sha256(args.wheel.read_bytes()).hexdigest()==pins['wheel']['sha256'], 'Producer wheel/record origin differs')
+    OWNER=pins['source'];WHEEL_SHA=pins['wheel']['sha256'];TEST_SHA=pins['testSHA256']
+    SCOPE_METHODS=(
+      'test_cold_handles_with_same_ids_but_different_catalogue_content_stay_independent',
+      'test_completed_other_handle_cannot_admit_conflicting_or_invalid_resource',
+      'test_required_arrays_preserve_duplicate_and_utf16_collision_refusal',
+      'test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success')
+    BOUNDARY_CASES=BOUNDARY_CASES|frozenset('PrivateConstructionIsolationNativeTests.'+name for name in SCOPE_METHODS)
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
     for name in ('controller','owner','wheel','out'):parser.add_argument('--'+name,type=Path,required=True)
-    parser.add_argument('--controller-sha',required=True);parser.add_argument('--mode',choices=('run','boundary','diagnostic'),default='run')
+    parser.add_argument('--controller-sha',required=True);parser.add_argument('--mode',choices=('run','boundary','diagnostic','identity'),default='run');parser.add_argument('--producer-pins',type=Path)
     args=parser.parse_args()
+    if args.producer_pins:configure_producer(args)
+    if args.mode=='identity':identity(args,'producer-before-rust');raise SystemExit(0)
     raise SystemExit({'run':run,'boundary':boundary,'diagnostic':diagnostic}[args.mode](args))

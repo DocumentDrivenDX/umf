@@ -814,11 +814,11 @@ impl Engine {
             ));
         }
         let resources = ResourceSet {
-            core_schema: copy_json(&resources.core_schema, ctx)?,
-            reference_schema: copy_json(&resources.reference_schema, ctx)?,
-            package_schema: copy_json(&resources.package_schema, ctx)?,
-            constraints: copy_json(&resources.constraints, ctx)?,
-            domain_policy: copy_json(&resources.domain_policy, ctx)?,
+            core_schema: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.core_schema, ctx)? } else { copy_json(&resources.core_schema, ctx)? },
+            reference_schema: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.reference_schema, ctx)? } else { copy_json(&resources.reference_schema, ctx)? },
+            package_schema: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.package_schema, ctx)? } else { copy_json(&resources.package_schema, ctx)? },
+            constraints: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.constraints, ctx)? } else { copy_json(&resources.constraints, ctx)? },
+            domain_policy: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.domain_policy, ctx)? } else { copy_json(&resources.domain_policy, ctx)? },
         };
         let mut schemas = SchemaResources::default();
         for v in [

@@ -42,7 +42,7 @@ def budget_report():
     return dict(profile='umf.private-inspector-retained-feasibility/1',actualCandidateSource=lanes.OWNER,
       maximumWork=1000000,status='resource-limited',publishable=False,readyForEnrollment=False,
       wheel={'sha256':'8b7abde013fc268cf508c30c52507e0db1d2c4c032d981b67ce96adfeea68c0c'},
-      refusal={'code':'RESOURCE_LIMIT'},operations=[{'failures':[dict(amount=1,code='RESOURCE_LIMIT',attemptedAtRefusal=1000001)]}])
+      refusal={'code':'RESOURCE_LIMIT','phase':'native-resource-conversion'},operations=[{'operation':'retained-cold-construction-1M','maximumWork':1000000,'returnedWork':1000000,'attemptedWork':1000001,'failures':[dict(amount=1,code='RESOURCE_LIMIT',phase='native-resource-conversion',attemptedAtRefusal=1000001)]}])
 
 
 def record_bytes(payloads,record_name):
@@ -92,16 +92,25 @@ class LaneControls(unittest.TestCase):
 
     def test_budget_class_and_aggregation_cannot_fake_qualification(self):
         self.assertTrue(lanes.resource_limit_measurement(budget_report()))
-        for field,value in [('maximumWork',2000000),('maximumWork',True),('actualCandidateSource','0'*40),('status','failed'),('publishable',True),('operations',[])]:
+        for field,value in [('maximumWork',2000000),('maximumWork',True),('actualCandidateSource','0'*40),('status','failed'),('publishable',True),('operations',[]),('wheel',None),('refusal','not-an-envelope'),('exception',[])]:
             r=budget_report();r[field]=value
             with self.subTest(field=field,value=value):self.assertFalse(lanes.resource_limit_measurement(r))
+        for mutation in ('legacy-witness','unrelated-last-row','zero-charge','different-total','second-denial','phase-mismatch'):
+            r=budget_report();row=r['operations'][-1]
+            if mutation=='legacy-witness':row['operation']='legacy-construction-1M'
+            elif mutation=='unrelated-last-row':r['operations'].append({'operation':'retained-cold-construction-1M','failures':[]})
+            elif mutation=='zero-charge':row['failures'][0]['amount']=0
+            elif mutation=='different-total':row['attemptedWork']=2000000
+            elif mutation=='second-denial':row['failures'].append(dict(row['failures'][0]))
+            else:r['refusal']['phase']='native-resource-compilation'
+            with self.subTest(causalWitness=mutation):self.assertFalse(lanes.resource_limit_measurement(r))
         good={k:True for k in ('identityPassed','legacyPassed','boundaryPassed','diagnosticPassed','publicProbePassed','publicControlsPassed','finalIdentityPassed')}
         self.assertTrue(lanes.final_success(good))
         for key in good:
             r=dict(good);r[key]=False
             with self.subTest(required=key):self.assertFalse(lanes.final_success(r))
 
-    def simulate(self,fixture=False,critical=False,identity_failure=False,missing_diagnostic_receipt=False,public_fit=False):
+    def simulate(self,fixture=False,critical=False,identity_failure=False,missing_diagnostic_receipt=False,public_fit=False,producer=False,missing_rust=False):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);args=types.SimpleNamespace(controller=root,owner=root,wheel=root/'fixture.whl',out=root,controller_sha='1'*40)
             (root/'tools').mkdir();(root/'tools/probe_inspector_retained_attribution.py').write_text('# inert controller probe fixture\n')
@@ -113,12 +122,15 @@ class LaneControls(unittest.TestCase):
             lanes.write(root/'intake.json',dict(profile='umf.private-inspector-diagnostic-only-intake/1',
                 artifactSource=lanes.OWNER,controllerSource=args.controller_sha,correctedTestSHA256=lanes.TEST_SHA,
                 originalRun=41753398285,verifiedComponentReuse=reuse))
+            if producer:
+                args.producer_pins=root/'producer.json'
+                lanes.write(root/'rust-census-result.json',dict(status='passed',source=lanes.OWNER,cases=160 if missing_rust else 161,passed=161))
             calls=[]
             def identity(*a):
                 if identity_failure:raise ValueError('mandatory loaded identity failed')
             def run(argv,**kw):
                 if 'test_rust_codegen.py' in ' '.join(argv):
-                    calls.append('legacy');(root/'legacy.xml').write_text('<testsuites><testsuite>'+''.join('<testcase name="t'+str(i)+'"/>' for i in range(8))+'</testsuite></testsuites>');return types.SimpleNamespace(returncode=0)
+                    calls.append('legacy');(root/'legacy.xml').write_text('<testsuites><testsuite>'+''.join('<testcase name="'+name+'"/>' for name in sorted(lanes.LEGACY_CASES))+'</testsuite></testsuites>');return types.SimpleNamespace(returncode=0)
                 if '--mode' in argv:
                     mode=argv[argv.index('--mode')+1];calls.append(mode)
                     if mode=='boundary':lanes.write(root/'boundary.json',report(fixture,critical));return types.SimpleNamespace(returncode=1 if fixture or critical else 0)
@@ -138,16 +150,33 @@ class LaneControls(unittest.TestCase):
 
     def test_authenticated_component_reuse_no_replay_and_final_stays_failed(self):
         rc,calls,state=self.simulate()
-        self.assertEqual(calls,['diagnostic','public-probe']);self.assertEqual(rc,1)
+        self.assertEqual(calls,['public-probe','diagnostic']);self.assertEqual(rc,1)
         self.assertEqual(state['qualificationFailureClass'],'ordinary-public-RESOURCE_LIMIT')
         self.assertEqual(state['reusedQualificationRun'],41753398285)
         self.assertFalse(state['requiredQualificationPassed'])
         rc,calls,state=self.simulate(missing_diagnostic_receipt=True)
-        self.assertEqual(rc,1);self.assertNotIn('public-probe',calls);self.assertFalse(state['diagnosticPassed'])
+        self.assertEqual(rc,1);self.assertEqual(calls,['public-probe','diagnostic']);self.assertFalse(state['diagnosticPassed'])
         rc,calls,state=self.simulate(public_fit=True)
-        self.assertEqual(rc,0);self.assertTrue(state['requiredQualificationPassed']);self.assertEqual(calls,['diagnostic','public-probe','public-controls'])
+        self.assertEqual(rc,0);self.assertTrue(state['requiredQualificationPassed']);self.assertEqual(calls,['public-probe','public-controls','diagnostic'])
         for options in [dict(fixture=True),dict(critical=True),dict(identity_failure=True)]:
             rc,calls,state=self.simulate(**options);self.assertEqual(rc,1);self.assertEqual(calls,[]);self.assertFalse(state['requiredQualificationPassed'])
+
+    def test_fresh_producer_reruns_components_and_cannot_reuse_old_receipt(self):
+        extra=frozenset('PrivateConstructionIsolationNativeTests.'+n for n in (
+            'test_cold_handles_with_same_ids_but_different_catalogue_content_stay_independent',
+            'test_completed_other_handle_cannot_admit_conflicting_or_invalid_resource',
+            'test_required_arrays_preserve_duplicate_and_utf16_collision_refusal',
+            'test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success'))
+        with patch.object(lanes,'BOUNDARY_CASES',lanes.BOUNDARY_CASES|extra):
+            rc,calls,state=self.simulate(producer=True)
+            self.assertEqual(calls,['legacy','boundary','public-probe','diagnostic'])
+            self.assertEqual(rc,1);self.assertFalse(state['requiredQualificationPassed'])
+            self.assertNotIn('reusedQualificationRun',state)
+            self.assertEqual(state['reason'],'boundary-pass')
+            rc,calls,state=self.simulate(producer=True,missing_rust=True)
+            self.assertEqual(rc,1);self.assertEqual(calls,[])
+            rc,calls,state=self.simulate(producer=True,critical=True)
+            self.assertEqual(rc,1);self.assertNotIn('public-probe',calls);self.assertNotIn('diagnostic',calls)
 
     def test_pip_record_transform_is_legitimate_and_generated_metadata_is_closed(self):
         with tempfile.TemporaryDirectory() as td:
@@ -294,6 +323,9 @@ class FunctionalAttributionProbeControls(unittest.TestCase):
         self.assertEqual(receipt['status'],'observed');self.assertTrue(receipt['amountSequenceEquivalent'])
         self.assertTrue(receipt['resultBytesEquivalent']);self.assertEqual(receipt['sharedInspectionInnerSubtotal'],7)
         self.assertEqual(receipt['lifetimes']['ordinary-call']['total'],20)
+        for lifetime in receipt['lifetimes'].values():
+            self.assertEqual(sum(lifetime['phaseEvents'].values()),lifetime['eventCount'])
+            self.assertEqual(sum(lifetime['phaseWork'].values()),lifetime['total'])
         self.assertEqual(receipt['lifetimes']['attributed-call']['total'],20)
         self.assertEqual(receipt['controllerSource'],'c'*40)
         self.assertEqual(receipt['probeSourceSHA256'],hashlib.sha256((ROOT/'tools/probe_inspector_retained_attribution.py').read_bytes()).hexdigest())

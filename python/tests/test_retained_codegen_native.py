@@ -719,5 +719,203 @@ class PrivateNativeControlTests(unittest.TestCase):
                          {'ok': True, 'result': row['expected']})
 
 
+class _ConstructionControl:
+    """External callback accounting only; no internal cache/debug counters.
+
+    Fixed phase slots and a rolling digest retain evidence without event lists.
+    Each instance belongs to exactly one cold construction or invocation.
+    """
+    def __init__(self, deny_phase=None):
+        phases = (CONVERSION, COMPILATION, DECODE, INSPECT_ENCODE, ENVELOPE)
+        self.phase_work = dict.fromkeys(phases, 0)
+        self.phase_events = dict.fromkeys(phases, 0)
+        self.total = 0
+        self.events = 0
+        self.rolling = sha256()
+        self.deny_phase = deny_phase
+        self.denial = None
+        self.after_denial = 0
+        self.failure = None
+
+    def __call__(self, amount, phase):
+        if type(amount) is not int or amount < 0 or phase not in self.phase_work:
+            raise AssertionError('Unexpected native control charge/phase')
+        index = self.events
+        self.events += 1
+        self.total += amount
+        self.phase_work[phase] += amount
+        self.phase_events[phase] += 1
+        self.rolling.update(f'{index}:{phase}:{amount}:{self.total}\n'.encode())
+        if self.denial is not None:
+            self.after_denial += 1
+            return ('SECOND_DENIAL_MUST_NOT_ESCAPE', 'late admission failure', '/wrong')
+        if phase == self.deny_phase and amount > 0:
+            self.denial = dict(index=index, phase=phase, amount=amount, cumulative=self.total)
+            self.failure = UmfCoreError('CANCELLED', 'first construction denial', '/private/construction')
+            return (self.failure.code, str(self.failure), self.failure.path)
+        return None
+
+    def receipt(self):
+        return dict(total=self.total, events=self.events, phaseWork=self.phase_work,
+                    phaseEvents=self.phase_events, chargeDigest=self.rolling.hexdigest(),
+                    firstDenial=self.denial, afterDenial=self.after_denial)
+
+
+class PrivateConstructionIsolationNativeTests(unittest.TestCase):
+    """BR1-BR3 black-box diagnostics, NOT public cold1M feasibility proof.
+
+    Python cannot configure internal Context limits/compiler policy or supply
+    registration tokens. H's focused Rust controls cover those internal seams.
+    """
+    def _fresh(self, resources, control):
+        return _rust_core.create_codegen_resources(resources, control)
+
+    def _inspect(self, handle, row):
+        return _native_result(handle.execute_wire(_request_wire(row['request']),
+                                                   lambda amount, phase: None))
+
+    def _reject(self, resources, expected_code):
+        control = _ConstructionControl()
+        unpublished = object()
+        result = unpublished
+        try:
+            with self.assertRaises(ValueError) as native:
+                result = self._fresh(resources, control)
+            self.assertIs(result, unpublished)
+            with self.assertRaises(UmfCoreError) as converted:
+                _raise_native(native.exception)
+            self.assertEqual(converted.exception.code, expected_code)
+            self.assertGreater(control.phase_work[CONVERSION], 0)
+        finally:
+            print('retained-construction-control ' + json.dumps(control.receipt()), flush=True)
+
+    def test_cold_handles_with_same_ids_but_different_catalogue_content_stay_independent(self):
+        row = _cases()[0]
+        controls = [_ConstructionControl() for _ in range(3)]
+        try:
+            original = self._fresh(_resources(), controls[0])
+            changed_resources = _resources()
+            self.assertNotIn('default', changed_resources['coreSchema'])
+            changed_resources['coreSchema']['default'] = {'future.catalog': ['\ud800', {'kept': True}]}
+            # Intentional semantic-policy variation, NOT a payload carrier:
+            # same schema IDs, different actual constraint on the same document.
+            changed_resources['coreSchema']['properties']['id'] = {'type': 'integer'}
+            before = json.dumps(changed_resources, ensure_ascii=True, sort_keys=True)
+            changed = self._fresh(changed_resources, controls[1])
+            self.assertEqual(json.dumps(changed_resources, ensure_ascii=True, sort_keys=True), before)
+            again = self._fresh(_resources(), controls[2])
+            self.assertIsNot(original, changed)
+            self.assertIsNot(original, again)
+            self.assertIsNot(changed, again)
+            expected_changed = {'ok': True, 'result': {'records': [], 'diagnostics': [{
+                'code': 'ACCESS', 'accessCode': 'ACCESS_SHAPE', 'sourceId': 'logical',
+                'pointer': '', 'message': 'Authored access declaration violates ACCESS_SHAPE'}]}}
+            self.assertEqual(self._inspect(changed, row), expected_changed)
+            self.assertEqual(self._inspect(original, row), {'ok': True, 'result': row['expected']})
+            self.assertEqual(self._inspect(again, row), {'ok': True, 'result': row['expected']})
+            changed_resources['coreSchema'].clear()
+            changed_resources.clear()
+            self.assertEqual(self._inspect(changed, row), expected_changed)
+            for control in controls:
+                self.assertGreater(control.phase_work[CONVERSION], 0)
+                self.assertGreater(control.phase_work[COMPILATION], 0)
+            # No constructor-cost equality/savings assertion: semantic identity
+            # and each cold lifetime's admission are the observable requirements.
+        finally:
+            print('retained-catalogue-cold-controls ' + json.dumps(
+                [c.receipt() for c in controls]), flush=True)
+
+    def test_completed_other_handle_cannot_admit_conflicting_or_invalid_resource(self):
+        original = self._fresh(_resources(), _ConstructionControl())
+        cases = ['strict-keyword', 'conflicting-id', 'unresolved-reference', 'package-id-type', 'package-scopes-type']
+        for case in cases:
+            with self.subTest(catalogue_change=case):
+                resources = _resources()
+                if case == 'strict-keyword':
+                    resources['coreSchema']['x-independent-not-a-supported-keyword'] = True
+                    expected = 'SCHEMA_UNKNOWN_KEYWORD'
+                elif case == 'conflicting-id':
+                    resources['referenceSchema']['$id'] = resources['coreSchema']['$id']
+                    expected = 'SCHEMA_ID_CONFLICT'
+                elif case == 'unresolved-reference':
+                    resources['coreSchema']['$ref'] = 'urn:independent:missing-catalogue-resource'
+                    expected = 'SCHEMA_REF_UNRESOLVED'
+                elif case == 'package-id-type':
+                    resources['tablesPackage']['id'] = False
+                    expected = 'CODEGEN_RESOURCE_INVALID'
+                else:
+                    resources['tablesPackage']['scopes'] = [5]
+                    expected = 'CODEGEN_RESOURCE_INVALID'
+                self._reject(resources, expected)
+        row = _cases()[0]
+        self.assertEqual(self._inspect(original, row), {'ok': True, 'result': row['expected']})
+
+    def test_required_arrays_preserve_duplicate_and_utf16_collision_refusal(self):
+        for required in (['id', 'id'], ['\U0001f600', '\ud83d\ude00']):
+            with self.subTest(required_spellings=repr(required)):
+                resources = _resources()
+                resources['coreSchema']['required'] = required
+                control = _ConstructionControl()
+                try:
+                    with self.assertRaises(ValueError) as native:
+                        self._fresh(resources, control)
+                    with self.assertRaises(UmfCoreError) as converted:
+                        _raise_native(native.exception)
+                    # A strict schema/metaschema refusal, never public quota or
+                    # silently distinct origin spellings after UTF16 projection.
+                    self.assertTrue(converted.exception.code.startswith('SCHEMA'), converted.exception.code)
+                    self.assertGreater(control.phase_work[CONVERSION], 0)
+                finally:
+                    print('retained-required-array-control ' + json.dumps(control.receipt()), flush=True)
+
+    def test_reentrant_compilation_and_failed_candidate_publish_no_reusable_success(self):
+        outer = _ConstructionControl(deny_phase=COMPILATION)
+        nested = _ConstructionControl()
+        entered = [False]
+        nested_handle = []
+        def control(amount, phase):
+            if phase == COMPILATION and amount > 0 and not entered[0]:
+                entered[0] = True
+                # The nested construction is a distinct cold lifetime; no
+                # ambient shared proof or initializer lock may authorize it.
+                nested_handle.append(self._fresh(_resources(), nested))
+            return outer(amount, phase)
+        # Preserve the original owner failure by reference through callback.
+        control.failure = None
+        def owner_control(amount, phase):
+            result = control(amount, phase)
+            owner_control.failure = outer.failure
+            return result
+        owner_control.failure = None
+        unpublished = object()
+        published = unpublished
+        try:
+            with self.assertRaises(UmfCoreError) as failure:
+                published = self._fresh(_resources(), owner_control)
+            self.assertIs(published, unpublished)
+            self.assertIs(failure.exception, outer.failure)
+            self.assertEqual(failure.exception.code, 'CANCELLED')
+            self.assertEqual(failure.exception.path, '/private/construction')
+            self.assertTrue(entered[0])
+            self.assertEqual(outer.after_denial, 0)
+            self.assertEqual(outer.total, outer.denial['cumulative'])
+            self.assertEqual(outer.events, outer.denial['index'] + 1)
+            self.assertGreater(nested.phase_work[CONVERSION], 0)
+            self.assertGreater(nested.phase_work[COMPILATION], 0)
+            row = _cases()[0]
+            self.assertEqual(self._inspect(nested_handle[0], row), {'ok': True, 'result': row['expected']})
+            # Failed candidate must not leave a reusable success that bypasses
+            # a later cold lifetime's own first conversion control.
+            later = _ConstructionControl(deny_phase=CONVERSION)
+            with self.assertRaises(UmfCoreError) as subsequent:
+                self._fresh(_resources(), later)
+            self.assertIs(subsequent.exception, later.failure)
+            self.assertEqual(later.after_denial, 0)
+            self.assertEqual(later.denial['phase'], CONVERSION)
+        finally:
+            print('retained-construction-reentrant-controls ' + json.dumps(
+                dict(outer=outer.receipt(), nested=nested.receipt())), flush=True)
+
+
 if __name__ == '__main__':
     unittest.main()

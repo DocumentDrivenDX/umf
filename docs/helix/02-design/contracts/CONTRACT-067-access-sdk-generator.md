@@ -133,6 +133,26 @@ across a conversion admission callback MAY refuse as `REQUEST`; no partially
 converted value or handle may escape. Completed conversion MUST retain no caller
 container references when compilation callbacks run.
 
+Cold retained construction MAY consume already owned admitted trees rather than
+allocate duplicate copies, and MAY share an immutable admitted catalogue or a
+completed schema compilation within that same construction. Such reuse MUST be
+owner-created, scoped to the existing cumulative Context, and authoritative for
+the complete effective content, ordered catalogue, numeric/source-origin profile,
+dialect, regex, strictness, keyword/reference policy and effective limits. A
+matching root ID, caller digest, pointer coincidence or prior request MUST NOT
+establish equivalence. A non-equivalent profile MUST retain the original metered
+admission/compilation. All remaining comparisons, allocations, validation and
+publication MUST be charged before their work; failed construction MUST expose
+neither a handle nor reusable successful state. Scoped state MUST restore on
+return, error and unwind without resetting counters or terminal controls.
+
+This internal reuse MUST NOT omit package/registry validation or substitute old
+ID/version/scopes/token/source data for a new registration. Generic Python Schema
+source-origin behavior, legacy construction, all required resource families and
+explicit optional Saga validation remain governed by their existing contracts.
+A private completed-publication mechanism MUST retain its existing eligibility
+and returned-winner guarantees; it MUST NOT grant global warm-up authority.
+
 Private owner attribution MAY use fixed nested Context labels around existing
 work. It MUST preserve every charge amount and callback order, cumulative Context,
 first denied charge and semantic result. Labels MUST restore on return, refusal

@@ -56,12 +56,12 @@ impl CodegenResources {
         stable_binding_package: Value,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        let tables_package = umf_core::copy_json(&tables_package, ctx)?;
-        let tables_schema = umf_core::copy_json(&tables_schema, ctx)?;
-        let actions_package = umf_core::copy_json(&actions_package, ctx)?;
-        let actions_schema = umf_core::copy_json(&actions_schema, ctx)?;
-        let binding_package = umf_core::copy_json(&binding_package, ctx)?;
-        let stable_binding_package = umf_core::copy_json(&stable_binding_package, ctx)?;
+        let tables_package = if ctx.in_codegen_construction() { umf_core::value::admit_owned_json(tables_package, ctx)? } else { umf_core::copy_json(&tables_package, ctx)? };
+        let tables_schema = if ctx.in_codegen_construction() { umf_core::value::admit_owned_json(tables_schema, ctx)? } else { umf_core::copy_json(&tables_schema, ctx)? };
+        let actions_package = if ctx.in_codegen_construction() { umf_core::value::admit_owned_json(actions_package, ctx)? } else { umf_core::copy_json(&actions_package, ctx)? };
+        let actions_schema = if ctx.in_codegen_construction() { umf_core::value::admit_owned_json(actions_schema, ctx)? } else { umf_core::copy_json(&actions_schema, ctx)? };
+        let binding_package = if ctx.in_codegen_construction() { umf_core::value::admit_owned_json(binding_package, ctx)? } else { umf_core::copy_json(&binding_package, ctx)? };
+        let stable_binding_package = if ctx.in_codegen_construction() { umf_core::value::admit_owned_json(stable_binding_package, ctx)? } else { umf_core::copy_json(&stable_binding_package, ctx)? };
         let engine = Engine::new(core, ctx)?;
         let mut schema_resources = engine.schema_resources_with_context(ctx)?;
         // Operation declarations are governed by the package-owned schema

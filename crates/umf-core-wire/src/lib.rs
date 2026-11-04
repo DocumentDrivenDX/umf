@@ -471,7 +471,7 @@ impl CodegenResourcesHandle {
                 return Err(fail("REQUEST", "Unknown explicit codegen resource"));
             }
         }
-        let resources = codegen::build_resources(&mut raw, ctx)?;
+        let resources = ctx.with_codegen_construction(|ctx| codegen::build_resources(&mut raw, ctx))?;
         if !matches!(&raw, Value::Object(fields) if fields.is_empty()) {
             return Err(fail("REQUEST", "Duplicate explicit codegen resource"));
         }

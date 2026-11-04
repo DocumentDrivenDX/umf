@@ -294,8 +294,7 @@ pub(super) fn create_codegen_resources(
                     }
                     let key = python_value::pytext_from_python(&key, ctx)?.to_utf16(ctx)?;
                     let mut count = 0;
-                    let value = python_value::from_codegen_resource(py, &value, ctx, &mut count)?
-                        .project_schema_to_core(ctx)?;
+                    let value = python_value::from_codegen_resource_owned(py, &value, ctx, &mut count)?;
                     fields.push((key, value));
                 }
                 Ok(Value::Object(fields))

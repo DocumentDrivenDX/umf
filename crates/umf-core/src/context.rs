@@ -56,6 +56,7 @@ pub struct Context<'a> {
     fallible_clock: Option<&'a mut FallibleClock<'a>>,
     deadline_ms: Option<u64>,
     // Explicit optional owner-only observation; no ambient/thread-local state.
+    pub(crate) schema_construction: Option<std::rc::Rc<std::cell::RefCell<crate::schema::ConstructionState>>>,
     work_phase_observer: Option<&'a std::cell::Cell<&'static str>>,
 }
 
@@ -177,9 +178,27 @@ impl<'a> Context<'a> {
             fallible_cancellation: None,
             fallible_clock: None,
             deadline_ms: None,
+            schema_construction: None,
             work_phase_observer: None,
         })
     }
+
+    /// Internal owner construction scope. It conveys no caller-selectable proof:
+    /// only completed admissions created in this cold lifetime are eligible.
+    /// State drops on return/error/unwind; counters and controls never reset.
+    #[doc(hidden)]
+    pub fn with_codegen_construction<T>(&mut self, operation: impl FnOnce(&mut Self) -> Result<T, EngineError>) -> Result<T, EngineError> {
+        struct Scope<'c, 'a> { ctx: &'c mut Context<'a>, prior: Option<std::rc::Rc<std::cell::RefCell<crate::schema::ConstructionState>>> }
+        impl Drop for Scope<'_, '_> { fn drop(&mut self) { self.ctx.schema_construction = self.prior.take(); } }
+        self.charge_work(1, Utf16::default())?;
+        let prior = self.schema_construction.take();
+        self.schema_construction = Some(std::rc::Rc::new(std::cell::RefCell::new(crate::schema::ConstructionState::default())));
+        let mut scope = Scope { ctx: self, prior };
+        operation(&mut *scope.ctx)
+    }
+
+    #[doc(hidden)]
+    pub fn in_codegen_construction(&self) -> bool { self.schema_construction.is_some() }
 
     /// Attach fixed-size phase metadata for a private owner diagnostic. This
     /// changes no work amount, callback order, capability or Context lifetime.
@@ -897,3 +916,7 @@ mod work_phase_observer_tests {
         assert_eq!(ctx.charged_work(), 13);
     }
 }
+
+#[cfg(test)]
+#[path = "context_construction_tests.rs"]
+mod construction_independent_tests;

@@ -669,3 +669,7 @@ impl Registry {
         &self.entries
     }
 }
+
+#[cfg(test)]
+#[path = "registry_construction_tests.rs"]
+mod construction_independent_tests;

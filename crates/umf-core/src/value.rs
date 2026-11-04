@@ -322,6 +322,18 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
     })
 }
 
+/// Consume an owned value through the existing shared JSON validator without
+/// allocating another tree. Keep the same cumulative admission charges.
+pub fn admit_owned_json(value: Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    admit_owned_json_at(value, Utf16::default(), ctx)
+}
+
+/// Preserve an existing caller diagnostic root while using the same validator.
+pub fn admit_owned_json_at(value: Value, root: Utf16, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    ctx.with_work_phase("native-core-copy", |ctx| validate_json_at(&value, &root, ctx))?;
+    Ok(value)
+}
+
 /// Copy an already-admitted completed public result with TypeScript's
 /// nodewise structural-limit order. Generic input copies intentionally retain
 /// `copy_json`'s existing error and preflight behavior.
@@ -429,6 +441,10 @@ pub(crate) fn copy_completed_json_result(
 /// Validate an already-owned JSON tree using the same accounting and
 /// precedence as [`copy_json`], without allocating a duplicate tree.
 pub(crate) fn validate_json(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    validate_json_at(value, &Utf16::default(), ctx)
+}
+
+fn validate_json_at(value: &Value, root: &Utf16, ctx: &mut Context<'_>) -> Result<(), EngineError> {
     fn visit(
         value: &Value,
         ctx: &mut Context<'_>,
@@ -499,7 +515,7 @@ pub(crate) fn validate_json(value: &Value, ctx: &mut Context<'_>) -> Result<(), 
     }
 
     let mut tree_values = 0;
-    visit(value, ctx, &Utf16::default(), 0, &mut tree_values)
+    visit(value, ctx, root, 0, &mut tree_values)
 }
 
 fn append_path(path: &Utf16, key: &Utf16) -> Utf16 {
@@ -557,5 +573,40 @@ mod borrowed_validation_tests {
 
         let invalid_number = Value::Array(vec![Value::Number(f64::NAN)]);
         assert_copy_validation_parity(&invalid_number, Limits::ordinary());
+    }
+}
+
+#[cfg(test)]
+mod owned_admission_owner_tests {
+    use super::*;
+
+    fn fixture() -> Value {
+        Value::Object(vec![(Utf16::from("unknown/default"), Value::String(Utf16::from("retained")))])
+    }
+
+    #[test]
+    fn owned_admission_retains_allocation_and_identical_ordinary_admission_charges() {
+        let owned = fixture();
+        let pointer = match &owned { Value::Object(v) => v.as_ptr(), _ => unreachable!() };
+        let mut copied_charges = Vec::new();
+        let mut copy_control = |n| { copied_charges.push(n); Ok(()) };
+        let copied = copy_json(&fixture(), &mut Context::ordinary().with_host_control(&mut copy_control)).unwrap();
+        let mut owned_charges = Vec::new();
+        let mut owner_control = |n| { owned_charges.push(n); Ok(()) };
+        let admitted = admit_owned_json(owned, &mut Context::ordinary().with_host_control(&mut owner_control)).unwrap();
+        assert_eq!(copied, admitted);
+        assert_eq!(copied_charges, owned_charges);
+        assert!(matches!(&admitted, Value::Object(v) if v.as_ptr() == pointer));
+    }
+
+    #[test]
+    fn owned_admission_keeps_duplicate_and_first_denial_refusals() {
+        let duplicate = Value::Object(vec![(Utf16::from("x"), Value::Null), (Utf16::from("x"), Value::Null)]);
+        assert_eq!(admit_owned_json(duplicate, &mut Context::ordinary()).unwrap_err().code, "DUPLICATE_KEY");
+        let mut calls = 0;
+        let mut stop = |_| { calls += 1; Err(EngineError::new("RESOURCE_LIMIT", Utf16::from("/first"), "first denied")) };
+        let error = admit_owned_json(fixture(), &mut Context::ordinary().with_host_control(&mut stop)).unwrap_err();
+        assert_eq!(calls, 1); assert_eq!(error.code, "RESOURCE_LIMIT");
+        assert_eq!(error.path, Utf16::from("/first"));
     }
 }
