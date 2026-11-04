@@ -1,0 +1,21 @@
+{
+  "observedAtUTC": "2026-11-04T04:23:24.213531+00:00",
+  "run": 41682817644,
+  "currentAttempt": 2,
+  "newPublishJob": 126386243718,
+  "originalVerifiedInput": {
+    "job": 126080648481,
+    "attempt": 1,
+    "artifact": 13253506881
+  },
+  "inheritedVerifierMetadata": {
+    "jobID": 126386245335,
+    "run_attempt": 2,
+    "started_at": "2026-11-03T17:17:42Z",
+    "completed_at": "2026-11-03T17:21:35Z",
+    "exactOriginalStepAndTimeEquality": true
+  },
+  "interpretation": "GitHub attempt2 API clones the successful verifier row with new metadata ID but preserves original timestamps/steps; no new verifier execution observed. Preserve original job/attempt/artifact identity, never claim new verifier execution based on run_attempt alone.",
+  "rerunRequests": 1,
+  "additionalRequests": 0
+}

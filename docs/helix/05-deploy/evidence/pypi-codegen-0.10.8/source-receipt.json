@@ -1,0 +1,91 @@
+{
+  "schema": "umf.codegen-publication-source/1",
+  "source_sha": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+  "source_tree": "a21368a92df488882ef9771e4a1d92205267ddd3",
+  "tag": "umf-v0.10.8",
+  "distribution": "umf-codegen",
+  "version": "0.10.8",
+  "files": {
+    "umf_codegen-0.10.8-py3-none-any.whl": "0d21acef3171442b818a4ad1dfdbaf99cc0f0f5557e5c670d5ce56243235dbc5",
+    "umf_codegen-0.10.8.tar.gz": "f094d73900004debf70516ab5f7e18fb84c564ba5861e305ae29fe021464c52d"
+  },
+  "protocols": {
+    "engine": "umf-core-r2",
+    "native": "umf-codegen-r3-seven-ops-nine-resources/1",
+    "cli": "umf.codegen-cli/1",
+    "resources": "umf.codegen-resources/1"
+  },
+  "resources": {
+    "manifest": "5ebd51f10967ba1a92ed82784cef017ece06633ab158155c26247732f641837e",
+    "releaseAuthority": "b9db9262cc627dd6f891d1490cd45e9563533d3ffc24834e6f6e1da24b030a53"
+  },
+  "admission_sha256": "5130419af7ecf7cc542f73899b2d24c160aef435b15bda2a5272ac58611b4355",
+  "core": {
+    "publication": {
+      "file": "core-publication-receipt.json",
+      "sha256": "c5db86df20e8d9a3416620a31195f7a6629aeb57c50ce883cce6f09db300a39c",
+      "assertions": {
+        "/source_sha": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+        "/status": "passed",
+        "/registry_bytes_verified": true,
+        "/oidc_trusted_publisher": true,
+        "/version": "0.10.8",
+        "/distribution": "umf-core"
+      },
+      "actions": {
+        "run_id": 41677339110,
+        "run_attempt": 1,
+        "job_id": 126064021517,
+        "controller_sha": "1c37dfcb588c7167cfcb5a4b3d730ffa61375b08",
+        "workflow_sha256": "61991333bfaf07b30ea3585bbe8f9f9d3fe629b8aa23ab1f27330b9dc1a765ba",
+        "artifact_id": 13251098122,
+        "artifact_name": "umf-core-pypi-publication-0.10.8",
+        "artifact_sha256": "0e6c594187f6430c54e538d24ab37103fe4e67eb24053d4b9a7d23e0b3b26777",
+        "member": "publication-receipt.json",
+        "members": {
+          "publication-receipt.json": "c5db86df20e8d9a3416620a31195f7a6629aeb57c50ce883cce6f09db300a39c",
+          "source-receipt.json": "f521533b912a21693e9335979629180da892dfb407b6ff3c1b43b68521e844dc"
+        }
+      }
+    },
+    "consumer": {
+      "file": "core-consumer-receipt.json",
+      "sha256": "cb17ed026fef842f9d31a7840ab023816d3af09dc9206285d03d8aa1b8b519d5",
+      "assertions": {
+        "/schema": "pypi-consumer-receipt.v1",
+        "/status": "passed",
+        "/index": "https://pypi.org/simple",
+        "/umf_core_version": "0.10.8",
+        "/source_sha": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+        "/nativeResourceInspection/profile": "umf.fresh-public-core-correspondence/1",
+        "/nativeResourceInspection/status": "passed",
+        "/nativeResourceInspection/sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+        "/nativeResourceInspection/wheelSHA256": "2dd4f00869240b37aa89fb9009e0663bf4c78cde103995d9d5c6e6b2333d92dd",
+        "/nativeResourceInspection/nativeSHA256": "7716d79ae0c85ac92ba679d531c213811fe66501397b0ec0f78e8bad53c296da",
+        "/nativeResourceInspection/resourceManifestSHA256": "5eecd2e367ac58a38df0f4f32a8a7d9bef8020b8340dc4704583f7806d83d571",
+        "/nativeResourceInspection/inspectionCases": 17,
+        "/nativeResourceInspection/inspectionCalls": 51,
+        "/nativeResourceInspection/requestCustodyPreserved": true,
+        "/nativeResourceInspection/canonicalResources": true,
+        "/nativeResourceInspection/engineVersion": "umf-core-r2",
+        "/nativeResourceInspection/codegenProtocol": "umf-codegen-r3-seven-ops-nine-resources/1",
+        "/nativeResourceInspection/semanticCore": "0.10.0"
+      },
+      "actions": {
+        "run_id": 41677339110,
+        "run_attempt": 1,
+        "job_id": 126067217675,
+        "controller_sha": "1c37dfcb588c7167cfcb5a4b3d730ffa61375b08",
+        "workflow_sha256": "61991333bfaf07b30ea3585bbe8f9f9d3fe629b8aa23ab1f27330b9dc1a765ba",
+        "artifact_id": 13252581348,
+        "artifact_name": "umf-core-pypi-consumer-0.10.8",
+        "artifact_sha256": "9468b24a33b9b75293a38765a61c695378b9c4605a05f21569ecaf4ed0bb7288",
+        "member": "consumer-receipt.json",
+        "members": {
+          "consumer-receipt.json": "cb17ed026fef842f9d31a7840ab023816d3af09dc9206285d03d8aa1b8b519d5"
+        }
+      }
+    }
+  },
+  "publisherProof": "UNVERIFIED"
+}
