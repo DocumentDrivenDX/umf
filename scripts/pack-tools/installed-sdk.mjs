@@ -46,11 +46,12 @@ if(mode!=='browser'){
  const require=createRequire(resolve(process.cwd(),'package.json'));
  const {chromium}=require('playwright');
  const external=[];const errors=[];
- const entrySource=`import * as api from '/sdk/umf-browser.js';\ntry {\n const response=await fetch('/requests.ndjson'); if(!response.ok) throw Error('request stream unavailable');\n const requests=(await response.text()).split(/\\r?\\n/).filter(Boolean).map(JSON.parse);\n const results=requests.map(request=>api.generatePackTools(request));\n window.__packTools={status:'passed',results};\n} catch(error) { window.__packTools={status:'failed',error:String(error)}; }`;
- const csp="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; connect-src 'self'; worker-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; object-src 'none'";
+ const entrySource=`try {\n const api=await import('/sdk/umf-browser.js');\n const response=await fetch('/requests.ndjson'); if(!response.ok) throw Error('request stream unavailable');\n const requests=(await response.text()).split(/\\r?\\n/).filter(Boolean).map(JSON.parse);\n const results=requests.map(request=>api.generatePackTools(request));\n window.__packTools={status:'passed',results};\n} catch(error) { window.__packTools={status:'failed',error:String(error)}; }`;
+ // General SDK Registry validation uses Ajv JIT (CONTRACT-001); it requires
+ // permission to evaluate generated functions. The strict-CSP microsite uses
+ // precompiled validators and is qualified separately.
  const server=createServer(async(req,res)=>{
   const path=new URL(req.url??'/','http://127.0.0.1').pathname;
-  res.setHeader('Content-Security-Policy',csp);
   if(path==='/'){res.setHeader('content-type','text/html');res.end('<!doctype html><title>Pack Tools SDK consumer</title><script type="module" src="/entry.js"></script>');return;}
   if(path==='/entry.js'){res.setHeader('content-type','text/javascript');res.end(entrySource);return;}
   if(path==='/requests.ndjson'){res.setHeader('content-type','application/x-ndjson');res.end(requestText);return;}

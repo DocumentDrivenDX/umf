@@ -1,11 +1,11 @@
 {
   "profile": "umf.pack-tools-browser-build/1",
-  "baseRevision": "c9c324f5b3b790c62181bb3496e707a9c44ecb34",
+  "baseRevision": "1c17333cdd85cb1a1210b20ea321106d012178c0",
   "workingTreeDirty": true,
   "bun": "1.4.3",
-  "wasmPackage": "external:umf-pack-tools-wasm-pkg",
+  "wasmPackage": "external:pack-tools",
   "inputs": {
-    "bindings/core/wasm/index.js": "350f1522754dac1639aa06741d0ef11665b96cb5fa7121b55e4f2c3a5785741c",
+    "bindings/core/wasm/index.js": "770766f03dd26696dcfcc51313abd9a684f78dc57280a8762abf8c80d0f40d70",
     "bindings/core/wasm/src/access-rrf.js": "9bc5a20dd98af70eb32d91339079c5b592c27f4d84afd722033e9a8aeaa9b416",
     "bindings/core/wasm/src/action-plan-session.js": "5545208c39cfac40db721efc1c7f6df53d314e0080b31d7b9a1e18a87012ad7d",
     "bindings/core/wasm/src/arrow-ipc.js": "0d7809afd05547a0a020eb3c96e30b011d79f04de83a6e809c5525d7c66fa42f",
@@ -46,7 +46,7 @@
     "bindings/core/wasm/src/smithy-session.js": "49d32751b8803ff99eb5767cf66d2bed09558b2f060c0a0cf5ba83493e6279e6",
     "bindings/core/wasm/src/typespec-session.js": "c66623085b2396cdb095ea147e2ce1962e940e0e08e5cb7e1324c9694b7e61cc",
     "bindings/core/wasm/src/wire.js": "affd43c822f69037c8792990f62179d06a9bb23f0779feefda650df13353f97a",
-    "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "bun.lock": "be330cc657930b3ca85671f604dbff47f9194f00d438d1b496ec311db4a28306",
     "docs/helix/05-deploy/microsite/build-pack-tools.ts": "91e4924d3fda2f396238b47ae26146a1058702c2c625120c9ac281286d0eac69",
     "docs/helix/05-deploy/microsite/pack-tools-archive.ts": "0d02116805e064694633a4b61228751687b38538408bb81a3c04a9c77736f081",
     "docs/helix/05-deploy/microsite/pack-tools-model.ts": "42f4edb78f7b87c2a31ee9a3f890da1b17406c52d92d2d8b7d4cdf790625dcf0",
@@ -58,7 +58,7 @@
     "docs/helix/05-deploy/schema-browser/catalog.schema.json": "f55b13311de0b285a67e774a2726f110aa63005dc66b60bc056f70406b6bbe43",
     "docs/helix/05-deploy/schema-browser/catalog.ts": "43cf4cf68e58613a6e7113d39c51e502f07aa0f4064b3a9ef8f0ad203346c31a",
     "node_modules/ajv/dist/runtime/ucs2length.js": "1df012dd3d23fced07255a7204798004509687cb1f431ae0ab976db436bbd890",
-    "package.json": "ea64acbaf46c134cf44d32842c555e22d602ad874f5780c98cbd42b7fe03bdf6",
+    "package.json": "22c6a97f59a8cfff11dd6cf63aba6dd28186ea43c3aa4ea0c3603b03cd476579",
     "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3"
   },
   "compilerInputScope": [
@@ -80,18 +80,18 @@
     "src/domain-packs/pack-tools-rust.ts"
   ],
   "compilerInputs": {
-    "Cargo.lock": "e1865ddfe44e9fa412497b1471823bbe7aaba2562d27ffca78ccd56acb7b327a",
+    "Cargo.lock": "29a94a49f7471b7802b0ea866331abff1c55337401cd1cd5bcf29b2956fa084e",
     "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
     "bindings/core/node/src/native-family.js": "671378f403f6d72271bba13c412431f77d770b927df39b31a3464bcf1a4fe7f9",
-    "bindings/core/wasm/Cargo.toml": "7ffa18889e04f893fcdf260bcec09bb953cee34ec637a702f94e8df611d179bd",
+    "bindings/core/wasm/Cargo.toml": "5002e3b5880f5d5e128551f9e092da9877b5d734d073b5c91017fcd7a13fc6f8",
     "bindings/core/wasm/src/native-family.js": "671378f403f6d72271bba13c412431f77d770b927df39b31a3464bcf1a4fe7f9",
-    "bindings/pack-tools/wasm/Cargo.toml": "d8438fced6077d0e982ce276691ec541f69fbb1db4e375cee85e0e09f84f4b64",
+    "bindings/pack-tools/wasm/Cargo.toml": "a4274043bc058bfbf11f7c2d24d6209f52307e364f2deb3a6f21f1443b9de19e",
     "bindings/pack-tools/wasm/src/lib.rs": "25dcacea134a6e2719f4cfbd6ee457fcd5998e4e3cd87216d5408c43a75268d2",
-    "crates/umf-codegen/Cargo.toml": "d16d7879aa1fa8ea6c22da3f5db3b47acb9fc2cf18a984e3622614c908dbc708",
-    "crates/umf-codegen/src/lib.rs": "c373647f3d836d62e76a688cf81dd0f1b224353b608fe6e7ec656763cd0c06ea",
+    "crates/umf-codegen/Cargo.toml": "e23c3bd6f01821d5d125ee81cf0ef6c2bfb73bbf153e0a8e4a09c5ed34a8947a",
+    "crates/umf-codegen/src/lib.rs": "44470f0a1de5f27ac21662e665dd8c05fc684302c11a56eef6437866cfb42e4a",
     "crates/umf-codegen/src/pack_tools.rs": "6990d1184d107a2871295eecbfcd6afa726578964bfe96e49a09d8ae8c6b2518",
-    "crates/umf-core-wire/Cargo.toml": "218cc9f3ba83310d7489274e219fb0fbce1ae51346ffe6fd239d23d09c9d8064",
-    "crates/umf-core-wire/src/lib.rs": "55fface7228040900a13359432302a528bc2a4d327d49bda3ca8408d8db63b0b",
+    "crates/umf-core-wire/Cargo.toml": "8d10a50af99421e31c938edc74f1056d140eef694d29c6b127e45176e56e203c",
+    "crates/umf-core-wire/src/lib.rs": "ff090198286f24e90b654581e803caf6ceebfb4ca997007006fad8ba7ccc4a54",
     "crates/umf-core-wire/src/native_family_binding.rs": "3b2ad62988faf9e22f01bc0e251f25a6800c0d84da81eac6a6551393ff62d108",
     "crates/umf-core-wire/src/pack_tools_binding.rs": "3c9b1761a5c3b4682fb1d2aea9404a276db9d61b4abea0786a935accbd6aee0a",
     "src/domain-packs/pack-tools-rust.ts": "6c0d7799efd4adfcd961dc12cf26a9b481ee6e80679cfe459d8fc65db208a1eb",
@@ -100,14 +100,14 @@
   "compilerInputsMissing": [],
   "wasm": {
     "umf_core_wasm.js": "7c69df4336e74ba83fc291b7abecdcbe83a44a2cccd99398d8308ddcae49c2c4",
-    "umf_core_wasm_bg.wasm": "eadf4009f92865046a86e7f6294134f4465e443da16e147b9b475f829534f9f2"
+    "umf_core_wasm_bg.wasm": "e5810f23ae9bdf320bab874cd939f10445342fbc38fffa96e149fdf099071b0f"
   },
   "outputs": {
     "assets/pack-tools.js": "27297850e41f05446a520315e46a88b070e070752f1846927bdd7ae133ac9a47",
     "assets/pack-tools-worker.js": "b1863d8a8f626bf39437903458a963c1daa0ad44bc191e01b0d62b16d0963b86",
     "assets/pack-tools.css": "7a2dd4dc4729be23d962a6e39a7452e713ab0c698e28251560716eb3a8fab321",
     "assets/pack-tools/umf_core_wasm.js": "7c69df4336e74ba83fc291b7abecdcbe83a44a2cccd99398d8308ddcae49c2c4",
-    "assets/pack-tools/umf_core_wasm_bg.wasm": "eadf4009f92865046a86e7f6294134f4465e443da16e147b9b475f829534f9f2"
+    "assets/pack-tools/umf_core_wasm_bg.wasm": "e5810f23ae9bdf320bab874cd939f10445342fbc38fffa96e149fdf099071b0f"
   },
   "unsignedPageHtmlSha256": "3edf679b02dbcf28e3e6c950cf39ed016fca9f585e022932927acc0bc29ba5ed"
 }
