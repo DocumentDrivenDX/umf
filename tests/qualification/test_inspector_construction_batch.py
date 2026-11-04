@@ -18,9 +18,9 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         for row in self.census['rust']:
             self.listings[(row['package'],row['target'])] += [c['name'] for c in row['cases']]
 
-    def test_exact217_and47_sources_and_kepler_hashes_are_closed(self):
+    def test_exact229_and47_sources_and_kepler_hashes_are_closed(self):
         selected=batch.authenticate_lists(self.census,self.executables,self.listings)
-        self.assertEqual(len(selected),217);self.assertEqual(len(set(selected)),217)
+        self.assertEqual(len(selected),229);self.assertEqual(len(set(selected)),229)
         self.assertEqual(sum(len(g['cases']) for g in self.census['python']),47)
         expected={'context':'a7081434d41db02a5b785ab172374e124e8ffa4539e367d0ab46da4200dc82fc',
           'schema':'b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6',
@@ -43,7 +43,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         # Other compiled modules are not qualification selection or execution.
         lib=next(k for k in self.keys if k[1]=='lib')
         self.listings[lib].append('unselected_module::not_executed')
-        self.assertEqual(len(batch.authenticate_lists(self.census,self.executables,self.listings)),217)
+        self.assertEqual(len(batch.authenticate_lists(self.census,self.executables,self.listings)),229)
 
     def test_compiled_target_must_belong_to_exact_workspace_and_be_unambiguous(self):
         metadata={'workspace_root':'/OWNED','packages':[{'name':p,'id':'id:'+p,'manifest_path':'/OWNED/'+next(r.get('manifest','crates/'+p+'/Cargo.toml') for r in self.census['rust'] if r['package']==p)} for p in sorted({k[0] for k in self.keys})]}

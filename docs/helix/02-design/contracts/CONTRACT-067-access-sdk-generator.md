@@ -652,3 +652,56 @@ cases,47 Python methods,51 cold combinations and Saga19 remain native-unexecuted
 in this source proposal. No source-only control establishes a1M fit. The
 cost-first controller, dependency closure, canonical resources and other limits
 remain unchanged.
+
+### Owner-relative locations — private source proposal after run41830979128
+
+The next private source batch MAY replace repeated reverse whole-owner discovery
+with a bounded structural table over the actual admitted immutable owner. A
+cursor MUST contain the private owner lineage and a structural node ordinal;
+root role and object-member/array edges remain explicit, including distinct
+root/catalogue roles over shared backing. No persistent node address, caller
+hash, external ID or diagnostic path may establish identity or admission.
+Transient readback checks only verify a coordinate already selected by the
+actual owner traversal. Public clones discard lineage/table/plan authority.
+
+The structural traversal replaces the selected cold resource index's raw-tree
+scan; all new descriptors, edges, root facts, header storage, capacity relocation,
+comparisons, cursor copies, lookups and publication MUST be admitted before their
+effects. Table/node/depth bounds are conservative optional representation bounds:
+unavailability retains original uncached semantics. Context refusal is terminal,
+not an occasion to retry or fall back. Only a complete owner-bound table may be
+published; reentry observes no partial descriptors or expanded-cache search under
+an old bound. Fixed terminal-error-header handling remains unchanged.
+
+First preflight and the original resolver MUST carry coordinates from their
+actual root/member/array/anchor selection. Static success may retain that result;
+frame/node metadata MUST verify both lineage/ordinal role and actual readback,
+not merely an equal diagnostic spelling or aliased address. Authored/retrieval
+identities, catalogue order, fragments, nested resource fallback and failure
+order remain authoritative. Dynamic/recursive retargeting remains live and
+abandons static location metadata where its selected location is unavailable.
+No location lookup proves schema validity or removes first metaschema evaluation.
+
+Within the same compilation, the completed source root-role ordinal MAY be kept
+across exact catalogue admission without repeating the same role/content scan.
+The borrowed root, ordered catalogue, origin, effective Context and complete
+compiler policy/flags remain the same immutable inputs. Catalogue deduplication
+that changes ordinal correspondence uses separate root backing and original
+validation. Duplicate/numeric/UTF-16/depth/node checks, opaque data custody and
+all fresh package/Registry/token checks remain required. This applies to the
+existing shared wire construction scope as well as retained construction;
+generic and Python-source compilation keep their original admission route.
+
+The closed observation roster adds only `unassigned/location-lookup`:128 slots
+including the previous127. Index build, cursor lookup and remaining plan/admission
+work stay distinct; unknown labels/roles still refuse. Charge amounts and control
+order do not change merely to attach a label. The caps remain1M events per
+independent prefix and300 seconds combined; a matching partial refusal is never a
+completed constructor or support proof. The selected native census is229 Rust
+cases (old217 plus nine independent location controls and three owner integration
+controls),47 Python methods,51 strict cold public combinations and Saga19.
+All new cases are source-only until actual execution. The cost-first producer,
+EARLY wheel retention, normal resolver/observed ownership, strict cold1M/public51,
+conditional semantic compilation, failure aggregation and cleanup gates remain
+mandatory and unchanged in scope. No fit, version, release, enrollment or PG
+claim follows from this source proposal.

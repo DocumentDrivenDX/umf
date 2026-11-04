@@ -4,11 +4,7 @@
 use super::*;
 use std::collections::BTreeMap;
 
-#[derive(Clone, Debug)]
-struct NodeLocator {
-    root: usize,
-    children: Vec<usize>,
-}
+type NodeLocator = OwnerCursor;
 #[derive(Debug)]
 struct ReferencePlan {
     limits: crate::context::Limits,
@@ -39,86 +35,6 @@ pub(super) struct OwnerPlans {
     evaluations: Mutex<BTreeMap<(Utf16, Utf16), Arc<ReferencePlan>>>,
     nodes: Mutex<BTreeMap<(Utf16, bool), Arc<NodePlan>>>,
     frames: Mutex<BTreeMap<(Utf16, bool), Arc<ReferencePlan>>>,
-}
-impl NodeLocator {
-    fn locate(
-        owner: &CompiledSchema,
-        target: &Value,
-        ctx: &mut Context<'_>,
-    ) -> Result<Self, EngineError> {
-        fn visit(
-            value: &Value,
-            target: &Value,
-            path: &mut Vec<usize>,
-            ctx: &mut Context<'_>,
-        ) -> Result<bool, EngineError> {
-            ctx.charge_work(1, Utf16::default())?;
-            // Equality of borrowed nodes is used only to locate the result of
-            // the genuine resolver inside this immutable owner, never to admit it.
-            if std::ptr::eq(value, target) {
-                return Ok(true);
-            }
-            let count = match value {
-                Value::Object(v) => v.len(),
-                Value::Array(v) => v.len(),
-                _ => 0,
-            };
-            for i in 0..count {
-                if path.len() == path.capacity() {
-                    ctx.charge_work(path.len().saturating_add(1), Utf16::default())?;
-                    path.reserve_exact(1);
-                }
-                ctx.charge_work(1, Utf16::default())?;
-                path.push(i);
-                let child = match value {
-                    Value::Object(v) => &v[i].1,
-                    Value::Array(v) => &v[i],
-                    _ => unreachable!(),
-                };
-                if visit(child, target, path, ctx)? {
-                    return Ok(true);
-                }
-                path.pop();
-            }
-            Ok(false)
-        }
-        let mut children = Vec::new();
-        for root in 0..=owner.resources.entries.len() {
-            let value = if root == 0 {
-                &*owner.schema
-            } else {
-                &owner.resources.entries[root - 1].1
-            };
-            if visit(value, target, &mut children, ctx)? {
-                return Ok(Self { root, children });
-            }
-        }
-        Err(schema_error(
-            &Utf16::default(),
-            "Resolved target is outside its immutable schema owner",
-        ))
-    }
-    fn get<'a>(
-        &self,
-        owner: &'a CompiledSchema,
-        ctx: &mut Context<'_>,
-    ) -> Result<&'a Value, EngineError> {
-        ctx.charge_work(1, Utf16::default())?;
-        let mut value = if self.root == 0 {
-            &*owner.schema
-        } else {
-            &owner.resources.entries[self.root - 1].1
-        };
-        for i in &self.children {
-            ctx.charge_work(1, Utf16::default())?;
-            value = match value {
-                Value::Object(v) => &v[*i].1,
-                Value::Array(v) => &v[*i],
-                _ => unreachable!("owner-relative plan"),
-            };
-        }
-        Ok(value)
-    }
 }
 // Callback-free critical sections. A control may reenter the same immutable
 // handle and grow a cache AFTER its comparison bound was admitted. In that
@@ -203,7 +119,8 @@ impl OwnerPlans {
             if !self.belongs_to(owner, ctx)? {
                 return owner.effective_frame_unplanned(schema, path, id_applied, ctx);
             }
-            self.frame_inner(owner, schema, path, id_applied, ctx)
+            let Some(cursor)=owner.location_for_root_value(schema,ctx)? else {return owner.effective_frame_unplanned(schema,path,id_applied,ctx);};
+            self.frame_inner(owner, schema, path, id_applied, &cursor, ctx)
         })
     }
     pub(super) fn node(
@@ -218,36 +135,61 @@ impl OwnerPlans {
             if !self.belongs_to(owner, ctx)? {
                 return Ok(None);
             }
-            self.node_inner(owner, schema, path, compiler, ctx)
+            let Some(cursor)=owner.location_for_root_value(schema,ctx)? else {return Ok(None);};
+            self.node_inner(owner, schema, path, compiler, &cursor, ctx)
         })
     }
-    pub(super) fn resolve_eval<'a>(
+    pub(super) fn resolve_eval<'a>(&self,owner:&'a CompiledSchema,reference:&Value,path:&Utf16,ctx:&mut Context<'_>)->Result<(&'a Value,Utf16,bool),EngineError>{
+        self.resolve_eval_located(owner,reference,path,ctx).map(|(value,path,applied,_)|(value,path,applied))
+    }
+    pub(super) fn resolve_eval_located<'a>(
         &self,
         owner: &'a CompiledSchema,
         reference: &Value,
         path: &Utf16,
         ctx: &mut Context<'_>,
-    ) -> Result<(&'a Value, Utf16, bool), EngineError> {
+    ) -> Result<(&'a Value, Utf16, bool, Option<OwnerCursor>), EngineError> {
         ctx.with_constructor_site("ctor.plan-work", |ctx| {
             if !self.belongs_to(owner, ctx)? {
-                return owner.resolve_eval_ref_unplanned(reference, path, ctx);
+                return owner.resolve_eval_ref_unplanned(reference,path,ctx).map(|(value,path,applied)|(value,path,applied,None));
             }
             self.resolve_eval_inner(owner, reference, path, ctx)
         })
     }
-    pub(super) fn resolve<'a>(
+    pub(super) fn resolve<'a>(&self,owner:&'a CompiledSchema,reference:&Value,path:&Utf16,scope:Option<&str>,ctx:&mut Context<'_>)->Result<(&'a Value,Utf16),EngineError>{
+        self.resolve_located(owner,reference,path,scope,ctx).map(|(value,path,_)|(value,path))
+    }
+    pub(super) fn resolve_located<'a>(
         &self,
         owner: &'a CompiledSchema,
         reference: &Value,
         path: &Utf16,
         scope: Option<&str>,
         ctx: &mut Context<'_>,
-    ) -> Result<(&'a Value, Utf16), EngineError> {
+    ) -> Result<(&'a Value, Utf16, Option<OwnerCursor>), EngineError> {
         ctx.with_constructor_site("ctor.plan-work", |ctx| {
             if !self.belongs_to(owner, ctx)? {
-                return owner.resolve_ref_unplanned(reference, path, scope, ctx);
+                return owner.resolve_ref_unplanned(reference,path,scope,ctx).map(|(value,path)|(value,path,None));
             }
             self.resolve_inner(owner, reference, path, scope, ctx)
+        })
+    }
+    pub(super) fn frame_at(&self,owner:&CompiledSchema,schema:&Value,path:&Utf16,id_applied:bool,cursor:Option<&OwnerCursor>,ctx:&mut Context<'_>)->Result<Utf16,EngineError>{
+        ctx.with_constructor_site("ctor.plan-work",|ctx|{
+            if !self.belongs_to(owner,ctx)? {return owner.effective_frame_unplanned(schema,path,id_applied,ctx);}
+            let Some(cursor)=cursor else {return owner.effective_frame_unplanned(schema,path,id_applied,ctx);};
+            let Some(table)=&owner.owner_locations else{return owner.effective_frame_unplanned(schema,path,id_applied,ctx);};
+            if !table.read(owner,cursor,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return owner.effective_frame_unplanned(schema,path,id_applied,ctx);}
+            self.frame_inner(owner,schema,path,id_applied,cursor,ctx)
+        })
+    }
+    pub(super) fn node_at(&self,owner:&CompiledSchema,schema:&Value,path:&Utf16,compiler:bool,cursor:Option<&OwnerCursor>,ctx:&mut Context<'_>)->Result<Option<Arc<NodePlan>>,EngineError>{
+        ctx.with_constructor_site("ctor.plan-work",|ctx|{
+            if !self.belongs_to(owner,ctx)? {return Ok(None);}
+            let Some(cursor)=cursor else {return Ok(None);};
+            let Some(table)=&owner.owner_locations else{return Ok(None);};
+            if !table.read(owner,cursor,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return Ok(None);}
+            self.node_inner(owner,schema,path,compiler,cursor,ctx)
         })
     }
     fn frame_inner(
@@ -256,6 +198,7 @@ impl OwnerPlans {
         schema: &Value,
         path: &Utf16,
         id_applied: bool,
+        cursor: &OwnerCursor,
         ctx: &mut Context<'_>,
     ) -> Result<Utf16, EngineError> {
         let count = self.frames.lock().unwrap_or_else(|e| e.into_inner()).len();
@@ -271,7 +214,8 @@ impl OwnerPlans {
             }
         };
         if let Some(plan) = prior.filter(|p| p.limits == ctx.limits()) {
-            if std::ptr::eq(plan.target.get(owner, ctx)?, schema) {
+            ctx.charge_work(2,Utf16::default())?;
+            if plan.target.same_location(cursor) && std::ptr::eq(plan.target.get(owner, ctx)?, schema) {
                 return Ok(plan.path.clone());
             }
             // Same diagnostic spelling, different anchor target: retain exact
@@ -282,7 +226,8 @@ impl OwnerPlans {
         if count >= ctx.limits().max_values {
             return Ok(normalized);
         }
-        let target = NodeLocator::locate(owner, schema, ctx)?;
+        ctx.charge_work(1,Utf16::default())?;
+        let target = cursor.clone();
         ctx.charge_work(2, Utf16::default())?;
         let plan = Arc::new(ReferencePlan {
             limits: ctx.limits(),
@@ -305,6 +250,7 @@ impl OwnerPlans {
         schema: &Value,
         path: &Utf16,
         compiler: bool,
+        cursor: &OwnerCursor,
         ctx: &mut Context<'_>,
     ) -> Result<Option<Arc<NodePlan>>, EngineError> {
         let Value::Object(members) = schema else {
@@ -326,7 +272,8 @@ impl OwnerPlans {
             // Diagnostic spelling alone is not node identity: anchor aliases
             // may share that spelling. The structural locator must still name
             // THIS borrowed immutable node before any metadata can be reused.
-            if std::ptr::eq(plan.locator.get(owner, ctx)?, schema) {
+            ctx.charge_work(2,Utf16::default())?;
+            if plan.locator.same_location(cursor) && std::ptr::eq(plan.locator.get(owner, ctx)?, schema) {
                 return Ok(Some(plan));
             }
             return Ok(None);
@@ -334,7 +281,8 @@ impl OwnerPlans {
         if count >= ctx.limits().max_values {
             return Ok(None);
         }
-        let locator = NodeLocator::locate(owner, schema, ctx)?;
+        ctx.charge_work(1,Utf16::default())?;
+        let locator = cursor.clone();
         ctx.charge_work(
             members.len().saturating_mul(if compiler { 130 } else { 1 }),
             Utf16::default(),
@@ -382,9 +330,9 @@ impl OwnerPlans {
         reference: &Value,
         path: &Utf16,
         ctx: &mut Context<'_>,
-    ) -> Result<(&'a Value, Utf16, bool), EngineError> {
+    ) -> Result<(&'a Value, Utf16, bool, Option<OwnerCursor>), EngineError> {
         let Value::String(text) = reference else {
-            return owner.resolve_eval_ref_unplanned(reference, path, ctx);
+            return owner.resolve_eval_ref_unplanned(reference,path,ctx).map(|(v,p,a)|(v,p,a,None));
         };
         let count = self
             .evaluations
@@ -400,21 +348,19 @@ impl OwnerPlans {
         let prior = match read_plan(&self.evaluations, &key, count) {
             Ok(plan) => plan,
             Err(()) => {
-                return owner.resolve_eval_ref_unplanned(reference, path, ctx);
+                return owner.resolve_eval_ref_unplanned(reference,path,ctx).map(|(v,p,a)|(v,p,a,None));
             }
         };
         if let Some(plan) = prior.filter(|p| p.limits == ctx.limits()) {
-            return Ok((
-                plan.target.get(owner, ctx)?,
-                plan.path.clone(),
-                plan.id_applied,
-            ));
+            let target=plan.target.get(owner,ctx)?;
+            let cursor=clone_owner_cursor(Some(&plan.target),ctx)?;
+            return Ok((target,plan.path.clone(),plan.id_applied,cursor));
         }
-        let (target, target_path, id_applied) =
-            owner.resolve_eval_ref_unplanned(reference, path, ctx)?;
-        let locator = NodeLocator::locate(owner, target, ctx)?;
+        let (target, target_path, id_applied, cursor) =
+            owner.resolve_eval_ref_unplanned_located(reference, path, ctx)?;
+        let Some(locator)=cursor else{return Ok((target,target_path,id_applied,None));};
         if count >= ctx.limits().max_values {
-            return Ok((target, target_path, id_applied));
+            return Ok((target, target_path, id_applied,Some(locator)));
         }
         ctx.charge_work(2, Utf16::default())?;
         let plan = Arc::new(ReferencePlan {
@@ -429,8 +375,9 @@ impl OwnerPlans {
                 .saturating_add(1),
             Utf16::default(),
         )?;
+        let cursor=clone_owner_cursor(Some(&plan.target),ctx)?;
         publish_plan(&self.evaluations, count, key, Arc::clone(&plan));
-        Ok((target, plan.path.clone(), id_applied))
+        Ok((target, plan.path.clone(), id_applied,cursor))
     }
     fn resolve_inner<'a>(
         &self,
@@ -439,9 +386,9 @@ impl OwnerPlans {
         path: &Utf16,
         scope: Option<&str>,
         ctx: &mut Context<'_>,
-    ) -> Result<(&'a Value, Utf16), EngineError> {
+    ) -> Result<(&'a Value, Utf16, Option<OwnerCursor>), EngineError> {
         let Value::String(text) = reference else {
-            return owner.resolve_ref_unplanned(reference, path, scope, ctx);
+            return owner.resolve_ref_unplanned(reference,path,scope,ctx).map(|(v,p)|(v,p,None));
         };
         let count = self
             .references
@@ -463,17 +410,19 @@ impl OwnerPlans {
         let prior = match read_plan(&self.references, &key, count) {
             Ok(plan) => plan,
             Err(()) => {
-                return owner.resolve_ref_unplanned(reference, path, scope, ctx);
+                return owner.resolve_ref_unplanned(reference,path,scope,ctx).map(|(v,p)|(v,p,None));
             }
         };
         if let Some(plan) = prior.filter(|p| p.limits == ctx.limits()) {
-            return Ok((plan.target.get(owner, ctx)?, plan.path.clone()));
+            let target=plan.target.get(owner,ctx)?;
+            let cursor=clone_owner_cursor(Some(&plan.target),ctx)?;
+            return Ok((target,plan.path.clone(),cursor));
         }
-        let (target, target_path) = owner.resolve_ref_unplanned(reference, path, scope, ctx)?;
+        let (target, target_path, cursor) = owner.resolve_ref_unplanned_located(reference, path, scope, ctx)?;
         if count >= ctx.limits().max_values {
-            return Ok((target, target_path));
+            return Ok((target, target_path,cursor));
         }
-        let locator = NodeLocator::locate(owner, target, ctx)?;
+        let Some(locator)=cursor else{return Ok((target,target_path,None));};
         ctx.charge_work(2, Utf16::default())?;
         let plan = Arc::new(ReferencePlan {
             limits: ctx.limits(),
@@ -487,8 +436,9 @@ impl OwnerPlans {
                 .saturating_add(1),
             Utf16::default(),
         )?;
+        let cursor=clone_owner_cursor(Some(&plan.target),ctx)?;
         publish_plan(&self.references, count, key, Arc::clone(&plan));
-        Ok((target, plan.path.clone()))
+        Ok((target, plan.path.clone(),cursor))
     }
 }
 
@@ -606,3 +556,11 @@ mod tests;
 #[cfg(test)]
 #[path = "schema_owned_plan_independent_tests.rs"]
 mod independent_tests;
+
+#[cfg(test)]
+#[path = "schema_owner_locations_independent_tests.rs"]
+mod location_independent_tests;
+
+#[cfg(test)]
+#[path = "schema_owner_location_tests.rs"]
+mod location_owner_tests;

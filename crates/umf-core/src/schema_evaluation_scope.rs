@@ -83,6 +83,8 @@ pub(super) struct EvaluationScope<'a> {
     prior_len: usize,
     prior_policy: KeywordPolicy,
     prior_resource: Option<usize>,
+    prior_cursor: Option<OwnerCursor>,
+    prior_selected: Option<OwnerCursor>,
 }
 impl<'a> EvaluationScope<'a> {
     pub(super) fn enter(
@@ -98,12 +100,14 @@ impl<'a> EvaluationScope<'a> {
         let prior_len = state.dynamic_scope.len();
         let prior_policy = state.keyword_policy;
         let prior_resource = state.resolved_resource;
+        let prior_cursor=state.schema_cursor.take();
+        let prior_selected=state.selected_cursor.take();
         Ok(Self {
             state,
             prior_shared,
             prior_len,
             prior_policy,
-            prior_resource,
+            prior_resource,prior_cursor,prior_selected,
         })
     }
 }
@@ -116,5 +120,7 @@ impl Drop for EvaluationScope<'_> {
         }
         self.state.keyword_policy = self.prior_policy;
         self.state.resolved_resource = self.prior_resource;
+        self.state.schema_cursor=self.prior_cursor.take();
+        self.state.selected_cursor=self.prior_selected.take();
     }
 }

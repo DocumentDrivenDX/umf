@@ -7,10 +7,10 @@
   "rows": [
     {
       "file": "crates/umf-core/src/schema.rs",
-      "sha256": "04f1ff2a877514fb01668b59698050a50ec50d1889554d9e69e87b4add2aff92",
+      "sha256": "1974302edb16b18ef857564c4477c10a9688f6aa1a995b3d56c1dfeb3f8f5372",
       "pattern": "enum SchemaRoot",
       "lines": [
-        108
+        111
       ],
       "eliminatedOperation": "duplicate compiled-root / completed-proof trees after complete exact catalogue equality",
       "remainingWork": "first admission and ordered proof comparison; catalogue assembly snapshots remain",
@@ -18,43 +18,43 @@
     },
     {
       "file": "crates/umf-core/src/schema_owned_plans.rs",
-      "sha256": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+      "sha256": "8b002490066fb399cbff2ae86af9627c7b626e5934314179b845391c072a3506",
       "pattern": "fn resolve_eval_inner",
       "lines": [
-        379
+        327
       ],
-      "eliminatedOperation": "repeated successful static URI/fragment/anchor resolution and id-applied reconstruction",
-      "remainingWork": "original first resolver; structural locator discovery/get; key comparisons; live dynamic selection; plan publication",
+      "eliminatedOperation": "repeated successful static URI/fragment resolution and reverse DFS after genuine resolution",
+      "remainingWork": "genuine first resolver plus cursor returned by its actual traversal; map/key construction, lookup/publication; id-applied rules and live dynamic selection",
       "futureCost": "UNKNOWN"
     },
     {
       "file": "crates/umf-core/src/schema_owned_plans.rs",
-      "sha256": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+      "sha256": "8b002490066fb399cbff2ae86af9627c7b626e5934314179b845391c072a3506",
       "pattern": "fn node_inner",
       "lines": [
-        302
+        247
       ],
-      "eliminatedOperation": "repeated keyword projection and compiler rank sorting",
-      "remainingWork": "first member decode/sort; full locator discovery/verification; all interpreter keyword validation",
+      "eliminatedOperation": "eligible repeated keyword projection/sort; no reverse owner/catalogue DFS to publish metadata",
+      "remainingWork": "first keyword projection/sort; authoritative cursor readback and parent-edge replay; all keyword validation",
       "futureCost": "UNKNOWN"
     },
     {
       "file": "crates/umf-core/src/schema_owned_plans.rs",
-      "sha256": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+      "sha256": "8b002490066fb399cbff2ae86af9627c7b626e5934314179b845391c072a3506",
       "pattern": "fn frame_inner",
       "lines": [
-        253
+        195
       ],
-      "eliminatedOperation": "repeated identical effective schema path construction",
-      "remainingWork": "first exact normalization; node/limits verification; inherited policy and live scope",
+      "eliminatedOperation": "repeat normalized path construction and reverse whole-owner target rediscovery",
+      "remainingWork": "exact first normalization, owner/role/limits checks and structural cursor replay",
       "futureCost": "UNKNOWN"
     },
     {
       "file": "crates/umf-core/src/schema_owned_plans.rs",
-      "sha256": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+      "sha256": "8b002490066fb399cbff2ae86af9627c7b626e5934314179b845391c072a3506",
       "pattern": "fn append_kind",
       "lines": [
-        521
+        471
       ],
       "eliminatedOperation": "repeated escaping and buffer allocation for invocation-local repeated paths",
       "remainingWork": "first scratch reserve incl relocation; prefix/suffix write; map compare/storage; bounded cache fallback",
@@ -137,18 +137,50 @@
       "eliminatedOperation": "UNCHANGED new catalogue / derived root assembly",
       "remainingWork": "table schema catalogue copy; action $defs/literal copies; fresh Saga catalogue and registration checks",
       "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/schema_owner_locations.rs",
+      "sha256": "63417f2553258bb40220d83521c871900bec47f29a8d89bdf4be53bd16cb5633",
+      "pattern": "fn build_observed",
+      "lines": [
+        49
+      ],
+      "eliminatedOperation": "per-miss reverse owner/catalogue tree DFS; selected old cold-index raw absence traversal",
+      "remainingWork": "one bounded descriptor/facts traversal; headers/capacity/relocation/edge storage and complete publication",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/schema_owner_locations.rs",
+      "sha256": "63417f2553258bb40220d83521c871900bec47f29a8d89bdf4be53bd16cb5633",
+      "pattern": "fn child(",
+      "lines": [
+        125
+      ],
+      "eliminatedOperation": "repeated whole-root target discovery",
+      "remainingWork": "owner/policy/lineage/range checks, direct actual child edge lookup and cursor Arc retention",
+      "futureCost": "UNKNOWN"
+    },
+    {
+      "file": "crates/umf-core/src/schema_owner_locations.rs",
+      "sha256": "63417f2553258bb40220d83521c871900bec47f29a8d89bdf4be53bd16cb5633",
+      "pattern": "fn read<'a>",
+      "lines": [
+        135
+      ],
+      "eliminatedOperation": "whole-root reverse search",
+      "remainingWork": "bounded owner-relative parent-edge replay; effective depth/value representation bounds and exact readback",
+      "futureCost": "UNKNOWN"
     }
   ],
   "coldInventory": [
-    "facade/native conversion: ER0 separate owner; integration pending",
-    "complete nine-resource admission and custody",
-    "catalogue assembly snapshots still present",
-    "metaschema UTF8/UTF16 materialization and parsing separately charged",
-    "new first plan construction: locator search, keyword projection/sort, original static resolver, map/vector allocations",
-    "full schema/catalogue preflight and dialect metaschema evaluation",
-    "constraints/literal-policy validation",
-    "all fresh registry manifest/ID/version/scopes/capabilities/token validation",
-    "completed proof and final handle publication"
+    "unchanged c805 retained converter and complete nine-resource admission",
+    "catalogue assembly physical snapshots remain",
+    "retained completed root-role ordinal; duplicate-collapse conservative root-copy fallback",
+    "first complete bounded structural descriptors/facts construction replaces selected cold-index raw absence scan",
+    "first original resource/URI/fragment/anchor resolution; genuine selected cursors, parent/child lookup and readback",
+    "full first schema/catalogue preflight, metaschema materialization/parse and evaluation",
+    "constraints/literal policy; all fresh Registry/package/token checks",
+    "remaining plan/path/symbol storage, comparisons and complete publication"
   ],
   "wholeInvocationInventory": [
     "Python request copy/serialization and sizing bound",
@@ -170,14 +202,16 @@
   "ER0": "NOT SELECTED; original converter c80505ab... remains byte-exact",
   "independentTestSHA256": "13408f97a6f33e7b6f60897d8137c769cd5bbac531806fa77c3e42d732f1bea7",
   "sourceSelection": {
-    "rust": 217,
+    "rust": 229,
     "pythonMethods": 47,
     "coldPublicCombinations": 51,
     "installedSaga": 19,
     "nativeExecuted": false,
-    "newOwnerRust": 17,
+    "newOwnerRust": 20,
     "independentRust": 9,
-    "priorRust": 191
+    "priorRust": 191,
+    "newLocationOwnerRust": 3,
+    "newLocationIndependentRust": 9
   },
   "knownBaselineHeadroom": {
     "scope": "Original0c48 observations ONLY; not a prediction/credit for this candidate",
@@ -192,11 +226,12 @@
     "roleEligibility": "exact unfragmented ASCII authored/retrieval URI role, no raw anchors/nested identifiers, full ordered root equality and existing full compiler eligibility",
     "noAliasOrDynamicRoleTransfer": true,
     "remainingWork": [
-      "first admission walk and duplicate-key storage/comparisons",
-      "conservative role/anchor scan",
-      "new first structural locator search may traverse whole owned trees",
-      "catalogue assembly copies",
-      "all first original resolver and required validation work"
+      "first numeric/duplicate/depth/node/UTF16 admission",
+      "first conservative role/anchor scan and ordered equality",
+      "all genuine catalogue admission/proof checks and assembly copies",
+      "duplicate-collapse fallback preserves separate root representation",
+      "one descriptor/facts traversal and remaining parent-edge cursor replay",
+      "all original first resolution, metaschema and semantic work"
     ],
     "quantifiedSavings": null
   },
@@ -280,11 +315,15 @@
   },
   "currentClosureHashes": {
     "crates/umf-core/src/value.rs": "5f2604d62c79a11b9f9dc4fdc05605ecd5bb478fe3f98159b5292bb178faa80a",
-    "crates/umf-core/src/schema.rs": "04f1ff2a877514fb01668b59698050a50ec50d1889554d9e69e87b4add2aff92",
-    "crates/umf-core/src/schema_owned_plans.rs": "4c96d0d47c58aa36c3bfb82f950253c0d66abe84f75bee7a5b1a522b2cd76c49",
+    "crates/umf-core/src/schema.rs": "1974302edb16b18ef857564c4477c10a9688f6aa1a995b3d56c1dfeb3f8f5372",
+    "crates/umf-core/src/schema_owned_plans.rs": "8b002490066fb399cbff2ae86af9627c7b626e5934314179b845391c072a3506",
     "tools/run_inspector_cost_gate.py": "47d560709b1497b5dc624dd793e2c9a1053249099eadbfae8d6f264c6a00801a",
     "tools/run_inspector_attribution_lanes.py": "74e4c6f268c62bb219827cc079e2a2e7ded4f10a0b377ac7d9fb0cc56d77d096",
-    ".github/workflows/inspector-retained-attribution.yml": "ac43f5051d44adbeb18a62119f7448c7a249b8e9d62d407120b60e3104c7bfd0"
+    ".github/workflows/inspector-retained-attribution.yml": "a5a461ae13d0286953446426eb09d33abe56bb568ab367287dd1019f2bc6f30b",
+    "crates/umf-core/src/schema_owner_locations.rs": "63417f2553258bb40220d83521c871900bec47f29a8d89bdf4be53bd16cb5633",
+    "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
+    "crates/umf-core/src/schema_owner_location_tests.rs": "060990953a6fa55640454093724d8072ea004e69043757daba583687ab20cd7f",
+    "tests/qualification/test_inspector_owner_cursors.py": "f5b7599e9d4dba6d422aab0bb6ad30ef2374be8a161558f7ff7da82d230a36c7"
   },
   "admissionPrechargeCorrection": {
     "reviewedBase": "73357488c642429ecf8c99737604f22288b13faf",
@@ -301,5 +340,119 @@
     "sourceGuards": "tiny exact733 source fixture closes hosted shallow-checkout dependency; original source rejected/new source accepted; no native execution",
     "unmeasured": "All new costs and actual1M fit remain UNKNOWN; no price discount",
     "costFirstOrderUnchanged": true
+  },
+  "ownerLocationBatch": {
+    "planSHA256": "9600feb5229c8c6fd33f5d02f23928add597801a6aa10c72d7d0ad0aed5de519",
+    "baseSource": "796a46acff5dc291d8323a3b368b97f38b1968d1",
+    "actualBaseReceiptSHA256": "4ed4469093d99c978fcfb17539dfc999b22ebbe66c226c3dc54e9c70b06b50c1",
+    "actualBaseAuditSHA256": "8da92d6fad74990530a135197f14343468c9fed9ed5c118d8dc1c98ced183557",
+    "sourceOnly": true,
+    "reverseDFSCallersRemoved": [
+      "frame_inner",
+      "node_inner",
+      "resolve_eval_inner",
+      "resolve_inner"
+    ],
+    "table": "private owner lineage + root/node ordinals + parent/edge descriptors; no persistent node addresses, hashes or diagnostic paths",
+    "lineage": "minted after actual schema/catalogue admission; construction copies share only after existing full policy/catalogue/root equality; public Clone clears all authority",
+    "remainingCosts": "UNKNOWN; no share of old3933288plan-work attributed to one function, no completed new ctor/invocation cost or predicted fit",
+    "independentNew9SHA256": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
+    "protectedOld9SHA256": "13408f97a6f33e7b6f60897d8137c769cd5bbac531806fa77c3e42d732f1bea7",
+    "tableBounds": {
+      "descriptorCount": "<=effective max_values",
+      "edgeCount": "<=effective max_values",
+      "rootSlots": "<=effective max_values",
+      "depth": "<=effective max_depth",
+      "noCopiedAncestorVectorPerNode": true,
+      "optionalRepresentationFailure": "drop private partial table and use original semantic route; a Context denial propagates, never fallback/retry"
+    },
+    "chargeMap": [
+      {
+        "operation": "roots/facts/table header allocation",
+        "before": "charge roots*(1+size_of(RootFacts)word-rounded)+size_of(Self)word-rounded+2, before event/try_reserve/lineage Arc clone",
+        "ownership": "private vectors until full publication"
+      },
+      {
+        "operation": "descriptor capacity growth",
+        "before": "charge (existing_len+wanted_capacity)*DESCRIPTOR_WORDS before reserve; wanted doubles within max_values",
+        "ownership": "parent/edge descriptors only; no caller values copied"
+      },
+      {
+        "operation": "edge capacity growth and placeholders",
+        "before": "charge existing_len+wanted_capacity before reserve; count before resize; checked end<=max_values",
+        "ownership": "ordinals filled by genuine raw-tree visit, unpublished during callbacks"
+      },
+      {
+        "operation": "raw node/key facts and edge publication",
+        "before": "node visit + exact bounded key comparison allowance + descriptor/edge writes before effect; per-edge link after complete child",
+        "ownership": "facts preserve cold-index nested-id/anchor fallback; source values immutable"
+      },
+      {
+        "operation": "table Arc publication",
+        "before": "final charge then publish event then Arc::new; no callback after publication",
+        "ownership": "only complete table returned to compiled owner"
+      },
+      {
+        "operation": "root/child/read lookup",
+        "before": "12 root checks/read/clone,20 child checks/read/clone,12 initial read checks then8 per parent-edge frame, all before operations; current range/depth/value limits checked",
+        "ownership": "same private lineage plus exact compiler dialect/strictness/keyword/reference/regex policy; old cursor cannot name a foreign clone"
+      },
+      {
+        "operation": "cursor copies and owner snapshot retention",
+        "before": "explicit1 before each new Arc-retaining cursor copy; construction_copy adds1 when retaining table Arc",
+        "ownership": "no code-unit path copies or ancestor vectors hidden in cursor"
+      },
+      {
+        "operation": "node/frame cache reuse",
+        "before": "existing full key-comparison charge plus2 lineage/ordinal comparisons before role check and actual readback",
+        "ownership": "a diagnostic spelling or shared physical value cannot transfer root/catalogue role"
+      },
+      {
+        "operation": "static reference plan publication",
+        "before": "original resolver returns exact selected cursor; key/storage fees and output cursor copy before publish_plan; no later control callback",
+        "ownership": "cache publication still guards admitted size across reentry; unavailable locator is uncached original semantics"
+      },
+      {
+        "operation": "root-role selection retention",
+        "before": "existing first role/equality check +1 before keeping ordinal;2 before catalogue-length/role selection/Arc retain",
+        "ownership": "same immutable function inputs and policy/limits; ordinal correspondence only when no catalogue collapse; otherwise separate root copy"
+      },
+      {
+        "operation": "preflight/eval cursor propagation",
+        "before": "actual member/array child lookup and explicit Arc copies before transfer; guards restore by moves only",
+        "ownership": "original preflight/keyword interpreter, dynamic retargeting and branch commit rules remain authoritative"
+      }
+    ],
+    "fallbacks": [
+      "no constructor scope or noneligible generic/Python profile: no table/lineage",
+      "optional descriptor/depth/root/value representation unavailable: original route without location caching",
+      "foreign/stale lineage, changed owner policy, out-of-range coordinate: no metadata authority",
+      "ambiguous root-only compatibility wrapper: no cursor",
+      "active dynamic/recursive retarget: discard static cursor, original live selector",
+      "catalogue collapse changes ordinal correspondence: original separate root copy/validation"
+    ],
+    "siteAttribution": {
+      "slots": 128,
+      "newClosedSite": "unassigned/location-lookup",
+      "oldSites": [
+        "index-build",
+        "plan-work",
+        "admission-copy",
+        "other"
+      ],
+      "eventsPerIndependentPrefix": 1000000,
+      "combinedSeconds": 300,
+      "ordinaryChargeOrderUnaffectedByLabels": true
+    },
+    "nativeSelection": {
+      "Rust": 229,
+      "oldRustPreserved": 217,
+      "newIndependent": 9,
+      "newOwner": 3,
+      "PythonMethods": 47,
+      "publicColdPairs": 51,
+      "Saga19": 19
+    },
+    "workflow": "same default-off existing route/cost-first ordering; source guards+229 census only; no build/dispatch admitted"
   }
 }

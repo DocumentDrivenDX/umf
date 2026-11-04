@@ -60,6 +60,7 @@ jobs:
           python -I -B tools/qualify_inspector_construction_batch.py --root "$GITHUB_WORKSPACE" --out "$out" --source "$EXPECTED_SOURCE" bind
           python -I -B tests/qualification/test_inspector_construction_batch.py 2>&1 | tee "$out/census-pure.log"
           python -I -B tests/qualification/test_inspector_admission_precharge.py 2>&1 | tee "$out/admission-precharge-pure.log"
+          python -I -B tests/qualification/test_inspector_owner_cursors.py 2>&1 | tee "$out/owner-cursors-pure.log"
           python -I -B tests/qualification/test_inspector_owned_plan_controller.py 2>&1 | tee "$out/owned-plan-pure.log"
           python -I -B tests/qualification/test_inspector_combined_budget.py 2>&1 | tee "$out/combined-pure.log"
           python -I -B tests/qualification/test_inspector_attribution_lanes.py 2>&1 | tee "$out/lanes-pure.log"
@@ -150,7 +151,7 @@ jobs:
         id: budget-rust
         shell: bash
         run: python -I -B tools/inspector_stage_budget.py --stage rust
-      - name: Authenticate compiled census before executing exactly the Rust217 selection
+      - name: Authenticate compiled census before executing exactly the Rust229 selection
         timeout-minutes: ${{ fromJSON(steps.budget-rust.outputs.minutes) }}
         shell: bash
         run: |

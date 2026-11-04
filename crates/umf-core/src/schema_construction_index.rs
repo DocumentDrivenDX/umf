@@ -435,6 +435,12 @@ impl ColdResourceIndex {
                     }
                     Ok(true)
                 }
+                if let Some(locations)=&owner.owner_locations {
+                    ctx.charge_work(3,Utf16::default())?;
+                    let facts=&locations.facts[ordinal];
+                    nodes=facts.nodes;nested_anchors=facts.nested_anchors;
+                    if facts.nested_ids {return Ok(None);}
+                } else {
                 if !visit(
                     value,
                     true,
@@ -445,6 +451,7 @@ impl ColdResourceIndex {
                     &mut nested_anchors,
                 )? {
                     return Ok(None);
+                }
                 }
                 let has_schema =
                     get_ascii_metered(value, "$schema", ctx, &Utf16::default())?.is_some();
