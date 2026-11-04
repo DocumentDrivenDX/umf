@@ -491,3 +491,17 @@ reclassified as a budget refusal. Full fresh native selection, compiled-list
 correspondence, all51 cold calls, terminal/resource refusal and cleanup are still
 execution gates. The source-only charge and reachability map is recorded in
 [the combined batch packet](../../04-build/evidence/inspector-combined-budget-source.md).
+
+### Distinct resource identities in the combined index
+
+The combined construction index MUST preserve retrieval URI, authored ID and
+resolved embedded-root identity separately, including empty or named fragments.
+Their mismatch MUST NOT disable an otherwise supported complete canonical
+metaschema catalogue. Reference, policy and dynamic-scope lookup MUST preserve
+those selectors' respective original ordered precedence; a single normalized
+alias map is insufficient. A carried frame MAY be used only where the selectors
+agree for that exact incoming base. Ambiguous keys MUST use selector-specific
+lookup or the original qualified resolver, not assume a previous frame's owner.
+The full twenty pinned metaschemas, including the Draft3/4 trailing-`#` aliases,
+MUST remain present and must exercise actual indexed evaluation in qualification.
+No resource IDs or source bytes are relabeled to establish this eligibility.

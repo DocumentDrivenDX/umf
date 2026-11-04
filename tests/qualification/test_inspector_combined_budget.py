@@ -90,4 +90,33 @@ class CombinedBudgetPureControls(unittest.TestCase):
         self.assertIn("identity(args,'diagnostic-before')",s);self.assertIn("identity(args,'diagnostic-after')",s)
         self.assertNotIn('compare_prefix', (ROOT/'tools/qualify_inspector_combined_budget.py').read_text())
 
+class ConsolidatedFindingSourceControls(unittest.TestCase):
+    @staticmethod
+    def python_source_body(text):
+        return text[text.index('    pub fn compile_python_source('):text.index('    /// Compile a strict Draft 2020-12 schema.')]
+    @staticmethod
+    def catalogue_precharge(text):
+        scope=text[text.index('    fn compile_inner('):]
+        loop=scope.index('        for (id, resource) in &compiled.resources.entries {')
+        allocation=scope.index('            let mut root_path = id.units().to_vec();',loop)
+        charge=scope.index('if eligible { ctx.charge_work(id.len().saturating_mul(3).saturating_add(1)',loop)
+        if not loop<charge<allocation:raise ValueError('catalogue path allocation precedes admission')
+    def test_generic_python_source_is_exact_original_not_construction_scope(self):
+        import hashlib
+        current=self.python_source_body((ROOT/'crates/umf-core/src/schema.rs').read_text())
+        self.assertEqual(hashlib.sha256(current.encode()).hexdigest(),'5ddde1045927ec137b0ece625036c893cb4e6739c407a611bc9b8fbdf5e2c74d')
+        self.assertNotIn('eligible',current)
+        # Exact reproduced4833033c defect; original body hashes independently
+        # checked during source preparation, no ancestor fetch needed in CI.
+        loop='        for (id, resource) in &compiled.resources.entries {\n'
+        regression=current.replace(loop,loop+'            if eligible { ctx.charge_work(id.len().saturating_mul(3).saturating_add(1),Utf16::default())?; }\n',1)
+        self.assertEqual(hashlib.sha256(regression.encode()).hexdigest(),'3b4710cad3ce6af6abc71c103dbe8adec34bde8500fbd3afeb7e2b6060ed9a8b')
+        self.assertNotEqual(hashlib.sha256(regression.encode()).hexdigest(),'5ddde1045927ec137b0ece625036c893cb4e6739c407a611bc9b8fbdf5e2c74d')
+    def test_real_compile_inner_precharge_precedes_allocation_and_removed_admission_refuses(self):
+        current=(ROOT/'crates/umf-core/src/schema.rs').read_text()
+        self.catalogue_precharge(current)
+        line='            if eligible { ctx.charge_work(id.len().saturating_mul(3).saturating_add(1),Utf16::default())?; }\n'
+        self.assertEqual(current.count(line),1)
+        with self.assertRaises(ValueError):self.catalogue_precharge(current.replace(line,'',1))
+
 if __name__=='__main__':unittest.main()

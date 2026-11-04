@@ -1217,7 +1217,6 @@ impl CompiledSchema {
             &mut BTreeSet::new(),
         )?;
         for (id, resource) in &compiled.resources.entries {
-            if eligible { ctx.charge_work(id.len().saturating_mul(3).saturating_add(1),Utf16::default())?; }
             let mut root_path = id.units().to_vec();
             root_path.push(0x23);
             let retrieval = id.to_utf8().unwrap_or_default();
@@ -1719,6 +1718,7 @@ impl CompiledSchema {
             &mut BTreeSet::new(),
         ))?;
         for (id, resource) in &compiled.resources.entries {
+            if eligible { ctx.charge_work(id.len().saturating_mul(3).saturating_add(1),Utf16::default())?; }
             let mut root_path = id.units().to_vec();
             root_path.push(0x23);
             let retrieval = id.to_utf8().unwrap_or_default();
@@ -1916,7 +1916,7 @@ impl CompiledSchema {
                 return self.explicit_keyword_policy(schema, inherited, ctx);
             }
             if schema_path.units().first()==Some(&35) {return Ok(inherited);}
-            if let Some(root) = index.for_path(schema_path,ctx)? {
+            if let Some(root) = index.policy_path(schema_path,ctx)? {
                 return index.policy(self,root,inherited,ctx);
             }
         }
@@ -3279,7 +3279,7 @@ impl CompiledSchema {
         ctx: &mut Context<'_>,
     ) -> Result<Option<(&'a Value, Utf16)>, EngineError> {
         if let Some(index) = &self.cold_resource_index {
-            if let Some(root) = index.for_path(path,ctx)? {
+            if let Some(root) = index.dynamic_path(path,ctx)? {
                 ctx.charge_work(path.len().saturating_add(1),Utf16::default())?;
                 let end=path.units().iter().position(|u|*u==35).unwrap_or(path.len());
                 let mut units=path.units()[..end].to_vec();units.push(35);

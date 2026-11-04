@@ -124,7 +124,7 @@ class LaneControls(unittest.TestCase):
                 originalRun=41753398285,verifiedComponentReuse=reuse))
             if producer:
                 args.producer_pins=root/'producer.json'
-                lanes.write(root/'rust-census-result.json',dict(status='passed',source=lanes.OWNER,cases=186 if missing_rust else 187,passed=187))
+                lanes.write(root/'rust-census-result.json',dict(status='passed',source=lanes.OWNER,cases=190 if missing_rust else 191,passed=191))
             calls=[]
             def identity(*a):
                 if identity_failure:raise ValueError('mandatory loaded identity failed')

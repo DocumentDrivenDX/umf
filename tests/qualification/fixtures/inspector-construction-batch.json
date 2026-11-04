@@ -1,6 +1,6 @@
 {
   "profile": "umf.private-construction-batch-census/1",
-  "rustCaseCount": 187,
+  "rustCaseCount": 191,
   "pythonMethodCount": 47,
   "testSHA256": "2f6a35343298ccfa356acf21d559c80c93fc9a8e78de395f9d3fbe92d75e528e",
   "resourcePinsSHA256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
@@ -157,7 +157,7 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/schema.rs",
-      "sourceSHA256": "99bd38dd0ac27a17276ebaabccf9cc3a10a848530ca6d29212e819b5ed5fc98c",
+      "sourceSHA256": "f94f71517afdda5eb3647d987bf9fa0640c1fd524c577508bf0ace31f9036c44",
       "target": "lib",
       "features": "native-postgresql",
       "caseCount": 44,
@@ -1109,7 +1109,7 @@
         },
         {
           "name": "context::context_path_tests::wide_and_zero_order_match_owned_state_machine",
-          "line": 130,
+          "line": 131,
           "module": "context_path_tests"
         },
         {
@@ -1167,30 +1167,50 @@
     {
       "package": "umf-core",
       "source": "crates/umf-core/src/schema_construction_index.rs",
-      "sourceSHA256": "ae988128f121646eb3d728f1fe5df8dfb5077ecff96fa4c9809b30c3c08ae928",
+      "sourceSHA256": "4469b6808803540caf00f4d4795af48413c891a691f695dd270b8eda968f1a9f",
       "target": "lib",
       "features": "native-postgresql",
-      "caseCount": 4,
+      "caseCount": 8,
       "cases": [
         {
           "name": "schema::construction_index::owner_tests::actual_index_precharge_denial_precedes_materialization_and_publication",
-          "line": 412,
+          "line": 563,
           "module": "owner_tests"
         },
         {
           "name": "schema::construction_index::semantic_tests::indexed_first_admission_preserves_ordered_errors_and_dynamic_annotations",
-          "line": 463,
+          "line": 614,
           "module": "semantic_tests"
         },
         {
-          "name": "schema::construction_index::semantic_tests::aliases_and_opaque_nested_ids_select_full_interpreter_without_content_loss",
-          "line": 497,
+          "name": "schema::construction_index::semantic_tests::relative_and_opaque_nested_ids_select_full_interpreter_without_content_loss",
+          "line": 648,
           "module": "semantic_tests"
         },
         {
           "name": "schema::construction_index::semantic_tests::active_scope_restores_shared_ancestry_policy_and_resource_on_denial_and_unwind",
-          "line": 526,
+          "line": 677,
           "module": "semantic_tests"
+        },
+        {
+          "name": "schema::construction_index::alias_correction_tests::complete_pinned_twenty_catalogue_publishes_index_and_first_evaluation_uses_it",
+          "line": 732,
+          "module": "alias_correction_tests"
+        },
+        {
+          "name": "schema::construction_index::alias_correction_tests::lookup_specific_alias_precedence_matches_qualified_interpreter_and_never_uses_ambiguous_frame",
+          "line": 836,
+          "module": "alias_correction_tests"
+        },
+        {
+          "name": "schema::construction_index::alias_correction_tests::exact_fragment_ids_are_distinct_and_named_pointer_or_missing_refs_preserve_outcomes",
+          "line": 884,
+          "module": "alias_correction_tests"
+        },
+        {
+          "name": "schema::construction_index::alias_correction_tests::aliased_owner_moves_resolve_live_locators_and_clone_retains_qualified_fallback",
+          "line": 952,
+          "module": "alias_correction_tests"
         }
       ]
     },
@@ -1405,7 +1425,7 @@
     "reason": "Separate public malformed Saga registry path must remain covered, not inferred from dedicated Rust6 or old public19 binary."
   },
   "fileHashes": {
-    ".github/workflows/inspector-retained-attribution.yml": "794aafb5017c13a45389e4e70c795416296c4d2b4aae2034da732c7e8841a35d",
+    ".github/workflows/inspector-retained-attribution.yml": "5dae440122ae54eec7d6b6a765b696242335aea36973f9caa5526eae14fc896f",
     "Cargo.lock": "29a94a49f7471b7802b0ea866331abff1c55337401cd1cd5bcf29b2956fa084e",
     "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
     "bindings/core/python/src/python_value.rs": "c80505abafb9435bcc993cdb102408eb769f95fd7b9fd882a89819549954931a",
@@ -1430,7 +1450,7 @@
     "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
     "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
     "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-    "crates/umf-core/src/schema.rs": "99bd38dd0ac27a17276ebaabccf9cc3a10a848530ca6d29212e819b5ed5fc98c",
+    "crates/umf-core/src/schema.rs": "f94f71517afdda5eb3647d987bf9fa0640c1fd524c577508bf0ace31f9036c44",
     "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
     "crates/umf-core/src/schema_metas.json": "cecc3fdf8f3977662e71b53c20d6f954c62bec1cc2e96db20cbc9f895cf47195",
     "crates/umf-core/src/value.rs": "5f37637a4c1c8ad1afd5202e8dd5c88768968e530a51a72b69fda1090fb17d70",
@@ -1438,7 +1458,7 @@
     "crates/umf-core/tests/resource_cache.rs": "86db330e51951c6759117d181712adbc7fd3cac3a98c00d84af41fb68e06d1f7",
     "crates/umf-core/tests/schema_python_recursive_resource_scope.rs": "2a344459e7db33ab9a872d65f6833f081805453ca6d1ea88ae6ccc90a7758fd4",
     "crates/umf-core/tests/sol_generation_schema_order_review.rs": "861f46a4c4c5c9ee161e4616e8142a9cc3c81ecbcfed3a880537e96dd3fc8db8",
-    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "daa36eca56032648f5aee87d0e71544e326cf2a94b9b42c5dd83e2a60d9d37ae",
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "6ee5df641e88b07071a908be9178cc451d2d0a1826463cbb11ed6368ce674b44",
     "fixtures/saga/portable.json": "6f67fdfe6fba205436490f8b64f55f58e9bdae315d19148d10de799c05a3f1a7",
     "python/hatch_build.py": "ff2b41abceb3f02518cf802fe191629d70ea762546baacce56372e6b198a008f",
     "python/pyproject.toml": "59ef8b5f1242e295cd87d3afec7fec5f6e40a960dac6403c27c913e4fd6e7e93",
@@ -1461,12 +1481,12 @@
     "spec/metamodel/generated/domain-policy.json": "4d742505e483d23f7ef60cc904b45aa44db73473c71a98e01a919f289c414a9c",
     "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
     "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
-    "tests/qualification/test_inspector_attribution_lanes.py": "bd8bfdd86bb48945abb26f3b42a422b771f4c67cf4a6c17f646e249da620b9fa",
-    "tests/qualification/test_inspector_construction_batch.py": "e91f483ba6b6fd4a24be78580374283ea1ca846b47e8a737c42a30fc8101bf01",
+    "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
+    "tests/qualification/test_inspector_construction_batch.py": "66022c4254bf2fac5667047012e389868d10b4a43a08225cc6f6bfb1ffc9b2ae",
     "tests/rust-core/fixtures/access-inspection/cases.json": "2e939f0d0f68f71a6b78c38e4fcd151e7b363513311f1aed170f9576333cbdc3",
     "tools/probe_inspector_retained_attribution.py": "2e872326ad62c7fb5f5f4fdecec2322db5159a190fb7fd4495ec6b9919a67625",
-    "tools/qualify_inspector_construction_batch.py": "d04ffed8b24e92d76de54415ad36f2cd32b919115867556c8f6a0b9f8711712e",
-    "tools/run_inspector_attribution_lanes.py": "b0a56e174c7fac68d9ce9143d64883ca99f381480bb4a623256b22f51f2ef015",
+    "tools/qualify_inspector_construction_batch.py": "d66c9fbf5bda592250afadb4d08d948ad103b17fabdb602c88af23fa4cd9c3c5",
+    "tools/run_inspector_attribution_lanes.py": "5211d5057b7cd03c763de883c792654b9f15a5cc35147094c94f23ea8ee70b05",
     "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
     "python/tests/test_retained_codegen_saga.py": "080185a705dce27a83d19ba478eeb475e3b0bca79205dd808cdfbf65c0b0926d",
     "spec/extensions/saga/package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
@@ -1474,11 +1494,11 @@
     "bindings/core/python/src/python_value_path_tests.rs": "9fc48c0904b0e365c1fa062c2a0b9b7fcc1b3eb0255eafdb7c08dda08b9d46da",
     "crates/umf-core/src/context_path_tests.rs": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
     "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
-    "crates/umf-core/src/schema_construction_index.rs": "ae988128f121646eb3d728f1fe5df8dfb5077ecff96fa4c9809b30c3c08ae928",
+    "crates/umf-core/src/schema_construction_index.rs": "4469b6808803540caf00f4d4795af48413c891a691f695dd270b8eda968f1a9f",
     "crates/umf-core/src/schema_evaluation_scope.rs": "e9aa392db244adb2312101e25f37ef5f2d8bdee6825a0b497bda2ddd9413297c",
-    "docs/helix/04-build/evidence/inspector-combined-budget-source.md": "081f709b44bad18c93fcf4ea2493d6f64a427ea353d241cf509b851b62ba2308",
+    "docs/helix/04-build/evidence/inspector-combined-budget-source.md": "e1b6f424b200132cf76b56834339bb00e161d80f36e8bae09f7b3eb0ef47e08a",
     "python/tests/test_combined_budget_boundaries.py": "12d6ba6c58ce4bec127a46c1604b19df59619167b816203d3ac83772c2361a5b",
-    "tests/qualification/test_inspector_combined_budget.py": "757690bb09ab4a5e759a066f9fe718d8f7ace508a4bfa86b4d3aec671fd036a5",
+    "tests/qualification/test_inspector_combined_budget.py": "9ba7dfb277fca7201cf1162dd0b6bff777116e2002283017a34adf082dbfcf11",
     "tools/qualify_inspector_combined_budget.py": "1222cbe54c07bb2bd35f3ae3e9075e9ec49192190158d6bbdd26bbd0c4ffb05b"
   },
   "compiledCensusTiming": "Approve source-derived names before build; authenticate compiled --list AFTER compilation BEFORE test execution; no prebuild compiled-census claim",
@@ -1489,5 +1509,11 @@
     "test_first_bad_value_precedes_later_collision_and_unsafe_integer_keeps_exact_path",
     "test_compilation_owns_nested_mutable_python_content_and_reentry_denial_is_terminal"
   ],
-  "whyNewNativeQualification": "CR1\u2013CR4 changes shared Context/schema/evaluator and binding conversion. Original successful components remain historical only; genuine affected selection required."
+  "whyNewNativeQualification": "CR1\u2013CR4 changes shared Context/schema/evaluator and binding conversion. Original successful components remain historical only; genuine affected selection required.",
+  "correctionFrom4833033c": {
+    "genericPythonSource": "restored exact pre-batch body; precharge before compile_inner catalogue allocation",
+    "identities": "retrieval/authored/resolved distinct; exact original reference/policy/dynamic orders; common frame only on selector agreement",
+    "additionalRustControls": 4,
+    "nativeExecuted": false
+  }
 }

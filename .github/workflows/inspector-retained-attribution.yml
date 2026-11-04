@@ -95,7 +95,7 @@ jobs:
           "$candidate_python" -m pip --isolated check | tee "$BATCH_OUT/pip-check.log"
           "$candidate_python" -m pip --isolated freeze > "$BATCH_OUT/freeze.txt"
           "$candidate_python" -I -B tools/run_inspector_attribution_lanes.py --controller "$GITHUB_WORKSPACE" --owner "$GITHUB_WORKSPACE" --wheel "$BATCH_WHEEL" --out "$BATCH_OUT" --controller-sha "$EXPECTED_SOURCE" --producer-pins "$BATCH_OUT/producer.json" --mode identity
-      - name: Authenticate compiled census before executing exactly the Rust187 selection
+      - name: Authenticate compiled census before executing exactly the Rust191 selection
         shell: bash
         run: |
           set -euo pipefail

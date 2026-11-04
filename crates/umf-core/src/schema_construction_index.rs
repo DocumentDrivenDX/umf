@@ -13,7 +13,12 @@ pub(super) enum RootLocation {
 #[derive(Debug)]
 struct RootDescriptor {
     location: RootLocation,
+    // Keep retrieval, authored and dialect-resolved identity distinct. None
+    // of these strings is rewritten to manufacture an alias match.
+    retrieval: Option<Utf16>,
     uri: Utf16,
+    resolved: Option<Utf16>,
+    frame_safe: bool,
     has_schema: bool,
     nested_anchors: bool,
     root_anchor: Option<Utf16>,
@@ -23,7 +28,10 @@ struct RootDescriptor {
 #[derive(Debug)]
 pub(super) struct ColdResourceIndex {
     roots: Vec<RootDescriptor>,
-    by_uri: BTreeMap<Vec<u16>, usize>,
+    reference: BTreeMap<Vec<u16>, usize>,
+    policy_roots: BTreeMap<Vec<u16>, usize>,
+    dynamic_roots: BTreeMap<Vec<u16>, usize>,
+    common: BTreeMap<Vec<u16>, usize>,
     // One bounded replacement slot per root. A changed Context never reuses
     // another limits tuple's completed policy. No callbacks while locked.
     policies: Mutex<Vec<Option<(crate::context::Limits, KeywordPolicy)>>>,
@@ -113,14 +121,22 @@ impl ColdResourceIndex {
         base: &[u16],
         ctx: &mut Context<'_>,
     ) -> Result<Option<usize>, EngineError> {
-        let comparisons = tree_compare_bound(self.by_uri.len());
+        self.lookup_map(&self.reference, base, ctx)
+    }
+    fn lookup_map(
+        &self,
+        map: &BTreeMap<Vec<u16>, usize>,
+        base: &[u16],
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<usize>, EngineError> {
+        let comparisons = tree_compare_bound(map.len());
         ctx.charge_work_u64(
             (base.len() as u64 + 1)
                 .saturating_mul(comparisons)
                 .saturating_add(1),
             Utf16::default(),
         )?;
-        Ok(self.by_uri.get(base).copied())
+        Ok(map.get(base).copied())
     }
     pub(super) fn lookup_text(
         &self,
@@ -141,7 +157,13 @@ impl ColdResourceIndex {
         path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Option<usize>, EngineError> {
-        ctx.charge_work(path.len().saturating_add(1), Utf16::default())?;
+        ctx.charge_work(
+            path.len().saturating_mul(2).saturating_add(1),
+            Utf16::default(),
+        )?;
+        if path.units().iter().any(|u| (0xd800..=0xdfff).contains(u)) {
+            return Ok(None);
+        }
         let Some(end) = path.units().iter().position(|u| *u == 35) else {
             return Ok(None);
         };
@@ -149,7 +171,42 @@ impl ColdResourceIndex {
         if base.is_empty() {
             return Ok(Some(0));
         }
-        self.lookup(base, ctx)
+        self.lookup_map(&self.common, base, ctx)
+    }
+    fn path_in(
+        &self,
+        map: &BTreeMap<Vec<u16>, usize>,
+        path: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<usize>, EngineError> {
+        ctx.charge_work(
+            path.len().saturating_mul(2).saturating_add(1),
+            Utf16::default(),
+        )?;
+        if path.units().iter().any(|u| (0xd800..=0xdfff).contains(u)) {
+            return Ok(None);
+        }
+        let Some(end) = path.units().iter().position(|u| *u == 35) else {
+            return Ok(None);
+        };
+        if end == 0 {
+            return Ok(Some(0));
+        }
+        self.lookup_map(map, &path.units()[..end], ctx)
+    }
+    pub(super) fn policy_path(
+        &self,
+        path: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<usize>, EngineError> {
+        self.path_in(&self.policy_roots, path, ctx)
+    }
+    pub(super) fn dynamic_path(
+        &self,
+        path: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<usize>, EngineError> {
+        self.path_in(&self.dynamic_roots, path, ctx)
     }
     pub(super) fn matches_frame(
         &self,
@@ -157,6 +214,13 @@ impl ColdResourceIndex {
         path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<bool, EngineError> {
+        ctx.charge_work(path.len().saturating_add(1), Utf16::default())?;
+        if path.units().iter().any(|u| (0xd800..=0xdfff).contains(u)) {
+            return Ok(false);
+        }
+        if !self.roots[ordinal].frame_safe {
+            return Ok(false);
+        }
         let uri = &self.roots[ordinal].uri;
         ctx.charge_work(uri.len().saturating_add(1), Utf16::default())?;
         Ok(path.units().starts_with(uri.units()) && path.units().get(uri.len()) == Some(&35))
@@ -248,10 +312,10 @@ impl ColdResourceIndex {
             if count > ctx.limits().max_values {
                 return Ok(None);
             }
-            ctx.charge_work(count.saturating_mul(4).saturating_add(1), Utf16::default())?;
+            ctx.charge_work(count.saturating_mul(7).saturating_add(1), Utf16::default())?;
             materializing();
             let mut roots = Vec::with_capacity(count);
-            let mut by_uri = BTreeMap::new();
+
             for ordinal in 0..count {
                 let (location, value, retrieval) = if ordinal == 0 {
                     (RootLocation::Root, &owner.schema, None)
@@ -263,29 +327,44 @@ impl ColdResourceIndex {
                     some @ Some(_) => some,
                     None => get_ascii_metered(value, "id", ctx, &Utf16::default())?,
                 };
-                let uri = match id {
-                    None if ordinal == 0 => Utf16::default(),
+                let (uri, resolved) = match id {
+                    None => (Utf16::default(), None),
                     Some(Value::String(id)) => {
                         ctx.charge_work(
-                            id.len().saturating_mul(4).saturating_add(1),
+                            id.len().saturating_mul(6).saturating_add(2),
                             Utf16::default(),
                         )?;
                         let Ok(text) = id.to_utf8() else {
                             return Ok(None);
                         };
-                        if !text.contains(':')
-                            || resolve_schema_uri(owner.dialect, "", &text).as_deref()
-                                != Some(text.as_str())
-                        {
-                            return Ok(None);
+                        if text.is_empty() {
+                            (Utf16::default(), None)
+                        } else {
+                            // Relative/fragment-only resource IDs still select
+                            // the qualified resolver. Absolute IDs, including
+                            // their fragments, keep BOTH exact and resolved form.
+                            if url::Url::parse(&text).is_err() {
+                                return Ok(None);
+                            }
+                            let resolved = resolve_schema_uri(owner.dialect, "", &text)
+                                .unwrap_or_else(|| text.clone());
+                            (id.clone(), Some(Utf16::from(resolved)))
                         }
-                        id.clone()
                     }
                     _ => return Ok(None),
                 };
-                if retrieval.is_some_and(|r| r != &uri) {
-                    return Ok(None);
-                }
+                let retrieval = if let Some(retrieval) = retrieval {
+                    ctx.charge_work(
+                        retrieval.len().saturating_mul(4).saturating_add(1),
+                        Utf16::default(),
+                    )?;
+                    if retrieval.to_utf8().is_err() {
+                        return Ok(None);
+                    }
+                    Some(retrieval.clone())
+                } else {
+                    None
+                };
                 let mut nodes = 0usize;
                 let mut nested_anchors = false;
                 fn visit(
@@ -366,15 +445,6 @@ impl ColdResourceIndex {
                 )? {
                     return Ok(None);
                 }
-                ctx.charge_work_u64(
-                    (uri.len() as u64 + 1)
-                        .saturating_mul(tree_compare_bound(by_uri.len()))
-                        .saturating_add(uri.len() as u64 + 2),
-                    Utf16::default(),
-                )?;
-                // Root first, then ordered catalogue. Nested-ID absence and exact
-                // retrieval/authored identity make original lookup orders agree.
-                by_uri.entry(uri.units().to_vec()).or_insert(ordinal);
                 let has_schema =
                     get_ascii_metered(value, "$schema", ctx, &Utf16::default())?.is_some();
                 let root_anchor = if let Some(Value::String(anchor)) =
@@ -387,17 +457,98 @@ impl ColdResourceIndex {
                 };
                 roots.push(RootDescriptor {
                     location,
+                    retrieval,
                     uri,
+                    resolved,
+                    frame_safe: false,
                     has_schema,
                     nested_anchors,
                     root_anchor,
                     nodes,
                 });
             }
+            // These are the original independent selector orders, NOT one
+            // normalized URI map. Nested-ID absence establishes that embedded
+            // discovery can only select the resolved root of each descriptor.
+            fn insert(
+                map: &mut BTreeMap<Vec<u16>, usize>,
+                key: Option<&Utf16>,
+                ordinal: usize,
+                ctx: &mut Context<'_>,
+            ) -> Result<(), EngineError> {
+                let Some(key) = key else {
+                    return Ok(());
+                };
+                ctx.charge_work_u64(
+                    (key.len() as u64 + 1)
+                        .saturating_mul(tree_compare_bound(map.len()))
+                        .saturating_add(key.len() as u64 + 2),
+                    Utf16::default(),
+                )?;
+                map.entry(key.units().to_vec()).or_insert(ordinal);
+                Ok(())
+            }
+            fn authored(root: &RootDescriptor) -> Option<&Utf16> {
+                (!root.uri.is_empty()).then_some(&root.uri)
+            }
+            let mut reference = BTreeMap::new();
+            let mut policy_roots = BTreeMap::new();
+            let mut dynamic_roots = BTreeMap::new();
+            insert(&mut reference, authored(&roots[0]), 0, ctx)?;
+            insert(&mut policy_roots, authored(&roots[0]), 0, ctx)?;
+            insert(&mut dynamic_roots, authored(&roots[0]), 0, ctx)?;
+            for (i, root) in roots.iter().enumerate().skip(1) {
+                insert(&mut reference, root.retrieval.as_ref(), i, ctx)?;
+                insert(&mut policy_roots, root.retrieval.as_ref(), i, ctx)?;
+                insert(&mut policy_roots, authored(root), i, ctx)?;
+            }
+            insert(&mut reference, roots[0].resolved.as_ref(), 0, ctx)?;
+            insert(&mut policy_roots, roots[0].resolved.as_ref(), 0, ctx)?;
+            insert(&mut dynamic_roots, roots[0].resolved.as_ref(), 0, ctx)?;
+            for (i, root) in roots.iter().enumerate().skip(1) {
+                insert(&mut reference, root.resolved.as_ref(), i, ctx)?;
+                insert(&mut policy_roots, root.resolved.as_ref(), i, ctx)?;
+                insert(&mut dynamic_roots, root.retrieval.as_ref(), i, ctx)?;
+                insert(&mut dynamic_roots, root.resolved.as_ref(), i, ctx)?;
+            }
+            let mut common = BTreeMap::new();
+            for (key, ordinal) in &policy_roots {
+                ctx.charge_work_u64(
+                    (key.len() as u64 + 1)
+                        .saturating_mul(
+                            tree_compare_bound(reference.len())
+                                .saturating_add(tree_compare_bound(dynamic_roots.len())),
+                        )
+                        .saturating_add(2),
+                    Utf16::default(),
+                )?;
+                if reference.get(key) == Some(ordinal) && dynamic_roots.get(key) == Some(ordinal) {
+                    ctx.charge_work_u64(
+                        (key.len() as u64 + 1)
+                            .saturating_mul(tree_compare_bound(common.len()))
+                            .saturating_add(key.len() as u64 + 2),
+                        Utf16::default(),
+                    )?;
+                    common.insert(key.clone(), *ordinal);
+                }
+            }
+            for (i, root) in roots.iter_mut().enumerate() {
+                ctx.charge_work_u64(
+                    (root.uri.len() as u64 + 1)
+                        .saturating_mul(tree_compare_bound(common.len()).saturating_add(1))
+                        .saturating_add(1),
+                    Utf16::default(),
+                )?;
+                root.frame_safe =
+                    !root.uri.units().contains(&35) && common.get(root.uri.units()) == Some(&i);
+            }
             ctx.charge_work(count.saturating_add(2), Utf16::default())?;
             Ok(Some(Arc::new(Self {
                 roots,
-                by_uri,
+                reference,
+                policy_roots,
+                dynamic_roots,
+                common,
                 policies: Mutex::new(vec![None; count]),
             })))
         })
@@ -494,12 +645,12 @@ mod semantic_tests {
         .unwrap();
     }
     #[test]
-    fn aliases_and_opaque_nested_ids_select_full_interpreter_without_content_loss() {
+    fn relative_and_opaque_nested_ids_select_full_interpreter_without_content_loss() {
         for schema in [
             json(
                 r#"{"$id":"https://index.test/root","default":{"$id":"opaque"},"type":"integer"}"#,
             ),
-            json(r#"{"$ref":"https://index.test/retrieval"}"#),
+            json(r#"{"$id":"relative","type":"integer"}"#),
         ] {
             let resources = SchemaResources {
                 entries: vec![(
@@ -563,5 +714,263 @@ mod semantic_tests {
         assert!(caught.is_err());
         assert_eq!(state.resolved_resource, Some(3));
         assert!(state.dynamic_scope.is_empty());
+    }
+}
+
+#[cfg(test)]
+mod alias_correction_tests {
+    use super::*;
+    fn json(text: &str) -> Value {
+        crate::serialization::read_json_value(
+            &text.encode_utf16().collect::<Vec<_>>(),
+            crate::serialization::Format::Json,
+            &mut Context::catalog(),
+        )
+        .unwrap()
+    }
+    #[test]
+    fn complete_pinned_twenty_catalogue_publishes_index_and_first_evaluation_uses_it() {
+        let pinned = json(include_str!("schema_metas.json"));
+        let Some(Value::Array(items)) = get_ascii(&pinned, "resources") else {
+            panic!("actual pinned resources missing");
+        };
+        assert_eq!(items.len(), 20);
+        let mut ctx = Context::catalog();
+        ctx.with_codegen_construction(|ctx| {
+            // Use the actual first metaschema factory/materialization and shared
+            // interpreter. No synthetic replacement of its catalogue or IDs.
+            validate_schema_against_metaschema(
+                &json(r#"{"type":"integer"}"#),
+                SchemaDialect::Draft2020_12,
+                RegexProfile::Ecma262Unicode,
+                ctx,
+            )?;
+            let meta = ctx
+                .schema_construction
+                .as_ref()
+                .unwrap()
+                .borrow()
+                .meta_validators
+                .iter()
+                .find(|(_, dialect, _)| *dialect == SchemaDialect::Draft2020_12)
+                .unwrap()
+                .2
+                .clone();
+            assert_eq!(meta.resources.entries.len(), 20);
+            let index = meta
+                .cold_resource_index
+                .as_ref()
+                .expect("complete authentic catalogue must publish its index");
+            assert_eq!(index.roots.len(), 21);
+            for (i, item) in items.iter().enumerate() {
+                let Some(Value::String(id)) = get_ascii(item, "id") else {
+                    panic!("pinned retrieval ID missing");
+                };
+                let source = get_ascii(item, "schema").unwrap();
+                assert_eq!(&meta.resources.entries[i].0, id);
+                assert_eq!(&meta.resources.entries[i].1, source);
+                assert_eq!(index.roots[i + 1].retrieval.as_ref(), Some(id));
+                let authored = get_ascii(source, "$id").or_else(|| get_ascii(source, "id"));
+                if let Some(Value::String(authored)) = authored {
+                    assert_eq!(&index.roots[i + 1].uri, authored);
+                }
+            }
+            for i in [9usize, 10, 18, 19] {
+                let descriptor = &index.roots[i + 1];
+                let retrieval = descriptor.retrieval.as_ref().unwrap();
+                assert_ne!(retrieval, &descriptor.uri);
+                let mut exact = retrieval.units().to_vec();
+                exact.push(35);
+                assert_eq!(
+                    descriptor.uri.units(),
+                    exact.as_slice(),
+                    "trailing fragment must remain authored, not relabeled"
+                );
+                assert_eq!(index.lookup(retrieval.units(), ctx)?, Some(i + 1));
+            }
+            // Only actual indexed interpreter policy lookup can publish these
+            // slots. Mere index construction leaves every slot empty.
+            assert!(
+                index.policies.lock().unwrap().iter().any(Option::is_some),
+                "first evaluation never used the index"
+            );
+            let legacy = meta.as_ref().clone();
+            assert!(legacy.cold_resource_index.is_none());
+            for sample in [
+                r#"{"type":7}"#,
+                r#"{"type":"integer"}"#,
+                r#"{"properties":{"a":{"type":"boolean"}}}"#,
+            ] {
+                let sample = json(sample);
+                assert_eq!(
+                    meta.validate_instance(&sample, ctx)?,
+                    legacy.validate_instance(&sample, &mut Context::catalog())?
+                );
+            }
+            Ok::<_, EngineError>(())
+        })
+        .unwrap();
+    }
+    fn conflicting_aliases() -> (Value, SchemaResources) {
+        (
+            json(r##"{"$id":"https://index.test/root","$ref":"https://index.test/target"}"##),
+            SchemaResources {
+                entries: vec![
+                    (
+                        Utf16::from("https://index.test/alias"),
+                        json(
+                            r##"{"$id":"https://index.test/target","$dynamicAnchor":"first","type":"integer"}"##,
+                        ),
+                    ),
+                    (
+                        Utf16::from("https://index.test/target"),
+                        json(
+                            r##"{"$id":"https://index.test/other","$dynamicAnchor":"second","type":"boolean"}"##,
+                        ),
+                    ),
+                ],
+            },
+        )
+    }
+    #[test]
+    fn lookup_specific_alias_precedence_matches_qualified_interpreter_and_never_uses_ambiguous_frame(
+    ) {
+        let (schema, resources) = conflicting_aliases();
+        let legacy = CompiledSchema::compile(&schema, &resources, &mut Context::catalog()).unwrap();
+        let mut ctx = Context::catalog();
+        ctx.with_codegen_construction(|ctx| {
+            let owner = CompiledSchema::compile(&schema, &resources, ctx)?;
+            let index = owner.cold_resource_index.as_ref().unwrap();
+            let path = Utf16::from("https://index.test/target#");
+            assert_eq!(
+                index.lookup_text("https://index.test/target", ctx)?,
+                Some(2)
+            );
+            assert_eq!(index.policy_path(&path, ctx)?, Some(1));
+            assert_eq!(index.dynamic_path(&path, ctx)?, Some(1));
+            assert_eq!(index.for_path(&path, ctx)?, None);
+            assert!(!index.matches_frame(1, &path, ctx)?);
+            let actual = owner.dynamic_resource_for_path(&path, ctx)?.unwrap();
+            let expected = legacy
+                .dynamic_resource_for_path(&path, &mut Context::catalog())?
+                .unwrap();
+            assert_eq!(actual.0, expected.0);
+            assert_eq!(actual.1, expected.1);
+            for suffix in [vec![0xd800], vec![0xd83d, 0xde00]] {
+                let mut units = path.units().to_vec();
+                units.push(47);
+                units.extend(suffix);
+                let text = Utf16::new(units);
+                assert_eq!(index.for_path(&text, ctx)?, None);
+                assert_eq!(index.policy_path(&text, ctx)?, None);
+                assert_eq!(index.dynamic_path(&text, ctx)?, None);
+                let actual = owner.dynamic_resource_for_path(&text, ctx)?.unwrap();
+                let expected = legacy
+                    .dynamic_resource_for_path(&text, &mut Context::catalog())?
+                    .unwrap();
+                assert_eq!(actual.0, expected.0);
+                assert_eq!(actual.1, expected.1);
+            }
+            for (value, valid) in [(Value::Bool(true), true), (Value::Number(3.0), false)] {
+                let result = owner.validate(&value, ctx)?;
+                assert_eq!(result, legacy.validate(&value, &mut Context::catalog())?);
+                assert_eq!(result.is_empty(), valid);
+            }
+            Ok::<_, EngineError>(())
+        })
+        .unwrap();
+    }
+    #[test]
+    fn exact_fragment_ids_are_distinct_and_named_pointer_or_missing_refs_preserve_outcomes() {
+        let resources = SchemaResources {
+            entries: vec![
+                (
+                    Utf16::from("https://index.test/retrieval"),
+                    json(
+                        r##"{"$id":"https://index.test/authored#","$anchor":"named","$defs":{"n":{"type":"integer"}},"type":"integer"}"##,
+                    ),
+                ),
+                (
+                    Utf16::from("https://index.test/fragment-key#name"),
+                    json(r##"{"$id":"https://index.test/with-fragment#name","type":"boolean"}"##),
+                ),
+            ],
+        };
+        for reference in [
+            "https://index.test/retrieval#named",
+            "https://index.test/retrieval#/$defs/n",
+            "https://index.test/retrieval#missing",
+        ] {
+            let schema = Value::Object(vec![(Utf16::from("$ref"), Value::string_utf8(reference))]);
+            let mut legacy_ctx = Context::catalog();
+            let legacy = CompiledSchema::compile(&schema, &resources, &mut legacy_ctx);
+            assert_eq!(legacy.is_ok(),!reference.ends_with("#missing"),"named/pointer controls must actually enter evaluation; only missing anchor refuses");
+            let mut ctx = Context::catalog();
+            ctx.with_codegen_construction(|ctx| {
+                let actual = CompiledSchema::compile(&schema, &resources, ctx);
+                match (actual, legacy) {
+                    (Ok(owner), Ok(legacy)) => {
+                        let index = owner.cold_resource_index.as_ref().unwrap();
+                        assert_eq!(
+                            index.roots[1].retrieval.as_ref().unwrap(),
+                            &Utf16::from("https://index.test/retrieval")
+                        );
+                        assert_eq!(
+                            index.roots[1].uri,
+                            Utf16::from("https://index.test/authored#")
+                        );
+                        assert_eq!(
+                            index.lookup_text("https://index.test/authored#", ctx)?,
+                            Some(1)
+                        );
+                        assert_eq!(index.lookup_text("https://index.test/authored", ctx)?, None);
+                        assert_eq!(
+                            index.lookup_text("https://index.test/fragment-key#name", ctx)?,
+                            Some(2)
+                        );
+                        assert!(!index.matches_frame(
+                            2,
+                            &Utf16::from("https://index.test/with-fragment#name#"),
+                            ctx
+                        )?);
+                        for value in [Value::Number(3.0), Value::Null] {
+                            assert_eq!(
+                                owner.validate(&value, ctx)?,
+                                legacy.validate(&value, &mut Context::catalog())?
+                            );
+                        }
+                    }
+                    (Err(actual), Err(expected)) => assert_eq!(actual, expected),
+                    _ => panic!("fragment compile/refusal parity changed"),
+                }
+                Ok::<_, EngineError>(())
+            })
+            .unwrap();
+        }
+    }
+    #[test]
+    fn aliased_owner_moves_resolve_live_locators_and_clone_retains_qualified_fallback() {
+        let (schema, resources) = conflicting_aliases();
+        let mut ctx = Context::catalog();
+        let owner = ctx
+            .with_codegen_construction(|ctx| CompiledSchema::compile(&schema, &resources, ctx))
+            .unwrap();
+        let before = &owner.schema as *const Value as usize;
+        let moved = Box::new(owner);
+        assert_ne!(before, &moved.schema as *const Value as usize);
+        let index = moved.cold_resource_index.as_ref().unwrap();
+        assert!(std::ptr::eq(index.root(&moved, 0), &moved.schema));
+        assert!(std::ptr::eq(
+            index.root(&moved, 1),
+            &moved.resources.entries[0].1
+        ));
+        let clone = moved.as_ref().clone();
+        assert!(clone.cold_resource_index.is_none());
+        for value in [Value::Bool(true), Value::Number(1.0), Value::Null] {
+            assert_eq!(
+                moved.validate(&value, &mut Context::catalog()).unwrap(),
+                clone.validate(&value, &mut Context::catalog()).unwrap()
+            );
+        }
     }
 }

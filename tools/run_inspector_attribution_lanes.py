@@ -247,8 +247,8 @@ def run(args):
         if getattr(args,'producer_pins',None):
             rust=json.loads((args.out/'rust-census-result.json').read_text())
             require(rust.get('status')=='passed' and rust.get('source')==OWNER
-                    and rust.get('cases')==187 and rust.get('passed')==187,
-                    'New native Rust187 qualification missing/different')
+                    and rust.get('cases')==191 and rust.get('passed')==191,
+                    'New native Rust191 qualification missing/different')
             rc=command('legacy',[sys.executable,'-I','-B','-m','pytest','-q','-s',
                 '--junitxml='+str(args.out/'legacy.xml'),str(args.controller/'python/tests/test_rust_codegen.py')])
             cases=list(ET.parse(args.out/'legacy.xml').getroot().iter('testcase'))
