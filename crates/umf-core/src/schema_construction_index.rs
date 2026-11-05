@@ -56,10 +56,18 @@ fn path_event(event:&'static str) {
     }}
     #[cfg(not(test))]let _=event;
 }
+/// cfg(test) consumers can observe effects made by the real scoped caller.
+/// In production this compiles to the same inert event sink as path_event.
+#[cfg(test)]
+pub(super) fn scoped_effect_event(event:&'static str) { path_event(event); }
 #[cfg(test)]
 type PathCallObserver=Box<dyn FnMut(&'static str,&CompiledSchema,&CarriedPath)>;
 #[cfg(test)]
+type ScopedPathCallObserver=Box<dyn FnMut(&'static str,&CompiledSchema,&ScopedPreflightPath)>;
+#[cfg(test)]
 thread_local! {static PATH_CALL_OBSERVER:std::cell::RefCell<Option<PathCallObserver>>=std::cell::RefCell::new(None);}
+#[cfg(test)]
+thread_local! {static SCOPED_PATH_CALL_OBSERVER:std::cell::RefCell<Option<ScopedPathCallObserver>>=std::cell::RefCell::new(None);}
 #[cfg(test)]
 pub(super) fn observe_path_calls<T>(observer:PathCallObserver,operation:impl FnOnce()->T)->T {
     struct Restore(Option<PathCallObserver>);
@@ -71,6 +79,21 @@ pub(super) fn path_call(site:&'static str,owner:&CompiledSchema,path:&CarriedPat
     {let observer=PATH_CALL_OBSERVER.with(|s|s.borrow_mut().take());if let Some(observer)=observer {
         struct Restore(Option<PathCallObserver>);
         impl Drop for Restore{fn drop(&mut self){PATH_CALL_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+        let mut restore=Restore(Some(observer));if let Some(observer)=restore.0.as_mut(){observer(site,owner,path);}
+    }}
+    #[cfg(not(test))]let _=(site,owner,path);
+}
+#[cfg(test)]
+pub(super) fn observe_scoped_path_calls<T>(observer:ScopedPathCallObserver,operation:impl FnOnce()->T)->T{
+    struct Restore(Option<ScopedPathCallObserver>);
+    impl Drop for Restore{fn drop(&mut self){SCOPED_PATH_CALL_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+    let prior=SCOPED_PATH_CALL_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+pub(super) fn scoped_path_call(site:&'static str,owner:&CompiledSchema,path:&ScopedPreflightPath){
+    #[cfg(test)]
+    {let observer=SCOPED_PATH_CALL_OBSERVER.with(|s|s.borrow_mut().take());if let Some(observer)=observer{
+        struct Restore(Option<ScopedPathCallObserver>);
+        impl Drop for Restore{fn drop(&mut self){SCOPED_PATH_CALL_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
         let mut restore=Restore(Some(observer));if let Some(observer)=restore.0.as_mut(){observer(site,owner,path);}
     }}
     #[cfg(not(test))]let _=(site,owner,path);
@@ -102,6 +125,124 @@ struct PathSyntax {
 }
 #[derive(Debug)]
 pub(crate) struct CarriedPath { text:Utf16, syntax:Option<PathSyntax> }
+
+/// Invocation-local mutable path custody for indexed construction preflight.
+/// Evaluator paths continue to use immutable `CarriedPath` as their oracle.
+pub(super) struct ScopedPreflightPath { text:Utf16, first_hash:Option<usize>, surrogate:bool, origin:std::rc::Rc<std::cell::RefCell<OriginState>>, poisoned:bool }
+pub(super) struct ScopedPreflightMark { length:usize, first_hash:Option<usize>, surrogate:bool, origin:std::rc::Rc<std::cell::RefCell<OriginState>> }
+#[cfg(test)]
+#[derive(Debug,PartialEq,Eq)]
+pub(super) struct ScopedPreflightObservation { pub text:Vec<u16>,pub length:usize,pub capacity:usize,pub owned:bool,pub first_hash:Option<usize>,pub surrogate:bool,pub poisoned:bool,pub origin_epoch:u64,pub has_origin_binding:bool,pub selections:[Option<Option<usize>>;3] }
+impl ScopedPreflightPath {
+    pub(super) fn new(text:&Utf16,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+        ctx.charge_work(text.clone_work().saturating_add(text.len().saturating_mul(4)).saturating_add(CarriedPath::origin_work()).saturating_add(2*path_words::<Utf16>()+path_words::<Self>()+path_words::<OriginState>()+8),Utf16::default())?;
+        let mut first_hash=None;let mut surrogate=false;
+        for (i,u) in text.units().iter().enumerate(){if first_hash.is_none()&&*u==35{first_hash=Some(i);}surrogate|=(0xd800..=0xdfff).contains(u);}
+        Ok(Self{text:text.clone(),first_hash,surrogate,origin:std::rc::Rc::new(std::cell::RefCell::new(OriginState::default())),poisoned:false})
+    }
+    pub(super) fn text(&self)->&Utf16{&self.text}
+    pub(super) fn charge_current_path(&mut self,amount:usize,ctx:&mut Context<'_>)->Result<(),EngineError>{
+        if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
+        let guarded=amount.saturating_add(path_words::<ScopedPreflightPath>()+2);
+        match std::panic::catch_unwind(std::panic::AssertUnwindSafe(||ctx.charge_work_with_path(guarded,&mut self.text))){
+            Ok(Ok(()))=>Ok(()),Ok(Err(error))=>{self.poisoned=true;Err(error)},Err(payload)=>{self.poisoned=true;std::panic::resume_unwind(payload)}
+        }
+    }
+    pub(super) fn diagnostic_snapshot(&mut self,ctx:&mut Context<'_>)->Result<Utf16,EngineError>{
+        if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
+        let length=self.text.len();
+        let bytes=length.checked_mul(std::mem::size_of::<u16>()).ok_or_else(||EngineError::new("LIMIT",Utf16::default(),"Scoped diagnostic path size overflow"))?;
+        let word=std::mem::size_of::<usize>();
+        let fee=length.saturating_add(bytes.div_ceil(word))
+            .saturating_add(std::mem::size_of::<Vec<u16>>().div_ceil(word))
+            .saturating_add(std::mem::size_of::<std::sync::Arc<Vec<u16>>>().div_ceil(word))
+            .saturating_add(std::mem::size_of::<Utf16>().div_ceil(word)+6);
+        match std::panic::catch_unwind(std::panic::AssertUnwindSafe(||ctx.charge_work(fee,Utf16::default()))){
+            Ok(Ok(()))=>(),Ok(Err(error))=>{self.poisoned=true;return Err(error);},Err(payload)=>{self.poisoned=true;std::panic::resume_unwind(payload);}
+        }
+        match std::panic::catch_unwind(std::panic::AssertUnwindSafe(||Utf16::shared(self.text.units().to_vec()))){
+            Ok(snapshot)=>Ok(snapshot),Err(payload)=>{self.poisoned=true;std::panic::resume_unwind(payload)}
+        }
+    }
+    #[cfg(test)]
+    pub(super) fn observe(&self)->ScopedPreflightObservation{
+        let (owned,capacity)=self.text.preflight_storage_observation();
+        let (origin_epoch,has_origin_binding,selections)={let state=self.origin.borrow();let selections=state.binding.as_ref().map_or([None;3],|b|b.selections.map(|s|match s{PathSelection::Pending=>None,PathSelection::Known(v)=>Some(v)}));(state.epoch,state.binding.is_some(),selections)};
+        ScopedPreflightObservation{text:self.text.units().to_vec(),length:self.text.len(),capacity,owned,first_hash:self.first_hash,surrogate:self.surrogate,poisoned:self.poisoned,origin_epoch,has_origin_binding,selections}
+    }
+    #[cfg(test)]
+    pub(super) fn mark_shares_origin(&self,mark:&ScopedPreflightMark)->bool{std::rc::Rc::ptr_eq(&self.origin,&mark.origin)}
+    pub(super) fn mark(&mut self,ctx:&mut Context<'_>)->Result<ScopedPreflightMark,EngineError>{
+        if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
+        // Includes one reserved local cleanup unit, usable without callbacks
+        // if recursive work or restoration admission refuses.
+        let admission=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||ctx.charge_work(path_words::<ScopedPreflightMark>()+path_words::<ScopedPreflightPath>()+path_words::<std::rc::Rc<std::cell::RefCell<OriginState>>>()+9,Utf16::default())));
+        match admission{Ok(Ok(()))=>(),Ok(Err(error))=>{self.poisoned=true;return Err(error);},Err(payload)=>{self.poisoned=true;std::panic::resume_unwind(payload);}}
+        Ok(ScopedPreflightMark{length:self.text.len(),first_hash:self.first_hash,surrogate:self.surrogate,origin:std::rc::Rc::clone(&self.origin)})
+    }
+    pub(super) fn append(&mut self,segment:&Utf16,kind:PathKind,ctx:&mut Context<'_>)->Result<(),EngineError>{
+        if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
+        #[cfg(test)]
+        { self.append_observed_caught(segment,kind,ctx,&mut scoped_effect_event) }
+        #[cfg(not(test))]
+        { self.append_observed_caught(segment,kind,ctx,&mut |_|{}) }
+    }
+    #[cfg(test)]
+    pub(super) fn append_with_events(&mut self,segment:&Utf16,kind:PathKind,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<(),EngineError>{
+        if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
+        self.append_observed_caught(segment,kind,ctx,event)
+    }
+    fn append_observed_caught(&mut self,segment:&Utf16,kind:PathKind,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<(),EngineError>{
+        match std::panic::catch_unwind(std::panic::AssertUnwindSafe(||self.append_observed(segment,kind,ctx,event))){
+            Ok(Ok(()))=>Ok(()),Ok(Err(error))=>{self.poisoned=true;Err(error)},Err(payload)=>{self.poisoned=true;std::panic::resume_unwind(payload)}
+        }
+    }
+    pub(super) fn append_observed(&mut self,segment:&Utf16,kind:PathKind,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<(),EngineError>{
+        ctx.charge_work(2*path_words::<PathSyntax>()+path_words::<ScopedPreflightPath>()+8,Utf16::default())?;
+        event("sp1-metadata-admission-complete-before-read");
+        let slash=kind==PathKind::InstancePointer||self.text.units().last()!=Some(&47);
+        let escape=kind!=PathKind::RawSchemaStep;
+        ctx.charge_work(segment.len().saturating_mul(5).saturating_add(8),Utf16::default())?;
+        let mut escaped=0usize;let mut first_hash=self.first_hash;let mut surrogate=self.surrogate;
+        for &u in segment.units(){if first_hash.is_none()&&u==35{first_hash=self.text.len().checked_add(usize::from(slash)).and_then(|n|n.checked_add(escaped));}surrogate|=(0xd800..=0xdfff).contains(&u);escaped=escaped.saturating_add(if escape&&(u==47||u==126){2}else{1});}
+        let new_origin=self.first_hash.is_none()&&first_hash.is_some();
+        ctx.charge_work(if new_origin{CarriedPath::origin_work()+path_words::<OriginState>()+4}else{0},Utf16::default())?;
+        event("sp1-suffix-scan-and-metadata-admission-complete-before-buffer-effect");
+        self.text.push_owned_preflight_segment_observed(segment,slash,escape,ctx,event)?;
+        if new_origin{self.origin=std::rc::Rc::new(std::cell::RefCell::new(OriginState::default()));}
+        self.first_hash=first_hash;self.surrogate=surrogate;event("sp1-buffer-after-append");Ok(())
+    }
+    pub(super) fn restore(&mut self,mark:ScopedPreflightMark,ctx:&mut Context<'_>)->Result<(),EngineError>{
+        self.restore_observed(mark,ctx,&mut |_|{})
+    }
+    #[cfg(test)]
+    pub(super) fn restore_with_events(&mut self,mark:ScopedPreflightMark,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<(),EngineError>{
+        self.restore_observed(mark,ctx,event)
+    }
+    fn restore_observed(&mut self,mark:ScopedPreflightMark,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<(),EngineError>{
+        if self.poisoned {
+            self.restore_after_failure(mark);
+            return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));
+        }
+        let cleanup=path_words::<ScopedPreflightMark>()+path_words::<std::rc::Rc<std::cell::RefCell<OriginState>>>()+5;
+        if let Err(payload)=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||event("sp1-before-restoration-admission"))){self.restore_after_failure(mark);std::panic::resume_unwind(payload);}
+        let admission=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||ctx.charge_work(cleanup,Utf16::default())));
+        let admission=match admission {
+            Ok(Ok(()))=>Ok(()),
+            Ok(Err(error))=>{self.restore_after_failure(mark);return Err(error);},
+            Err(payload)=>{self.restore_after_failure(mark);std::panic::resume_unwind(payload);}
+        };
+        self.text.truncate_owned_preflight_path(mark.length);
+        self.first_hash=mark.first_hash;self.surrogate=mark.surrogate;self.origin=mark.origin;
+        if let Err(payload)=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||event("sp1-effect-restoration-after-admission"))){self.poisoned=true;std::panic::resume_unwind(payload);}
+        admission
+    }
+    pub(super) fn restore_after_failure(&mut self,mark:ScopedPreflightMark){
+        self.text.truncate_owned_preflight_path(mark.length);
+        self.first_hash=mark.first_hash;self.surrogate=mark.surrogate;self.origin=mark.origin;self.poisoned=true;
+    }
+}
+impl std::ops::Deref for ScopedPreflightPath { type Target=Utf16; fn deref(&self)->&Utf16{&self.text} }
 impl std::ops::Deref for CarriedPath { type Target=Utf16; fn deref(&self)->&Utf16 { &self.text } }
 impl CarriedPath {
     pub(super) fn text(&self)->&Utf16 { &self.text }
@@ -263,6 +404,28 @@ pub(super) fn origin(
 }
 
 impl ColdResourceIndex {
+    pub(super) fn select_scoped(self:&Arc<Self>,owner:&CompiledSchema,path:&mut ScopedPreflightPath,selector:PathSelector,ctx:&mut Context<'_>)->Result<Option<usize>,EngineError>{
+        if path.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
+        let outcome=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||self.select_scoped_inner(owner,path,selector,ctx)));
+        match outcome{Err(payload)=>{path.poisoned=true;std::panic::resume_unwind(payload)},Ok(Err(error))=>{path.poisoned=true;Err(error)},Ok(Ok(value))=>Ok(value)}
+    }
+    fn select_scoped_inner(self:&Arc<Self>,owner:&CompiledSchema,path:&ScopedPreflightPath,selector:PathSelector,ctx:&mut Context<'_>)->Result<Option<usize>,EngineError>{
+        if path.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
+        path_event("pth-selector-entry");
+        ctx.charge_work(path_words::<OriginState>()+path_words::<OriginBinding>()+path_words::<crate::context::Limits>()+18,Utf16::default())?;
+        let generic=|ctx:&mut Context<'_>|match selector{PathSelector::Policy=>self.policy_path(path.text(),ctx),PathSelector::Common=>self.for_path(path.text(),ctx),PathSelector::Dynamic=>self.dynamic_path(path.text(),ctx)};
+        let Some(lineage)=&owner.owner_lineage else{return generic(ctx);};
+        if !matches!(owner.regex_profile,RegexProfile::Ecma262Unicode)||!owner.cold_resource_index.as_ref().is_some_and(|actual|Arc::ptr_eq(actual,self)){return generic(ctx);}
+        if path.surrogate{return Ok(None);}let Some(end)=path.first_hash else{return Ok(None);};let slot=selector.slot();
+        let(epoch,prior,foreign)={let state=path.origin.borrow();let foreign=state.binding.as_ref().is_some_and(|b|!Arc::ptr_eq(&b.index,self)||!Arc::ptr_eq(&b.lineage,lineage)||b.limits!=ctx.limits()||b.profile!=ctx.profile()||b.dialect!=owner.dialect||b.strict!=owner.strict||b.policy!=owner.root_keyword_policy||b.resolved!=owner.resolve_references_at_compile);(state.epoch,state.binding.as_ref().map(|b|b.selections[slot]),foreign)};
+        if foreign{return generic(ctx);}if let Some(PathSelection::Known(value))=prior{path_event("pth-selector-hit");return Ok(value);}
+        path_event("pth-selector-original-read");
+        let value=if end==0{Some(0)}else{self.lookup_map(match selector{PathSelector::Policy=>&self.policy_roots,PathSelector::Common=>&self.common,PathSelector::Dynamic=>&self.dynamic_roots},&path.text.units()[..end],ctx)?};
+        ctx.charge_work(2*path_words::<OriginBinding>()+path_words::<OriginState>()+path_words::<crate::context::Limits>()+14,Utf16::default())?;
+        path_event("pth-selector-publication");
+        let mut state=path.origin.borrow_mut();if state.epoch==epoch {if let Some(next)=state.epoch.checked_add(1){let binding=state.binding.get_or_insert_with(||OriginBinding{index:Arc::clone(self),lineage:Arc::clone(lineage),limits:ctx.limits(),profile:ctx.profile(),dialect:owner.dialect,strict:owner.strict,policy:owner.root_keyword_policy,resolved:owner.resolve_references_at_compile,selections:[PathSelection::Pending;3],frame:None});binding.selections[slot]=PathSelection::Known(value);state.epoch=next;}}
+        Ok(value)
+    }
     pub(super) fn select_carried(self:&Arc<Self>,owner:&CompiledSchema,path:&CarriedPath,selector:PathSelector,ctx:&mut Context<'_>)->Result<Option<usize>,EngineError> {
         path_call("pth-selector-consumer",owner,path);
         path_event("pth-selector-entry");

@@ -108,41 +108,72 @@ impl Utf16 {
     /// Invocation-local path mutation. Every scan/storage effect is admitted
     /// before borrowing mutable storage; no mutable buffer borrow crosses control.
     pub(crate) fn push_owned_path_segment(&mut self, segment:&Utf16, ctx:&mut Context<'_>)->Result<usize,EngineError> {
-        self.push_owned_path_segment_impl(segment,ctx,&mut |_|{})
+        self.push_owned_path_segment_mode(segment,true,true,true,ctx,&mut |_|{})
     }
     #[cfg(test)]
     pub(crate) fn push_owned_path_segment_with_events(&mut self,segment:&Utf16,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
-        self.push_owned_path_segment_impl(segment,ctx,observer)
+        self.push_owned_path_segment_mode(segment,true,true,true,ctx,observer)
     }
-    fn push_owned_path_segment_impl(&mut self,segment:&Utf16,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
-        ctx.charge_work_with_path(3,self)?;
+    /// Private schema preflight variant. `slash` and `escape` are selected by
+    /// the original path operation; every debit deliberately retains its
+    /// original empty diagnostic path rather than borrowing the live buffer.
+    pub(crate) fn push_owned_preflight_segment(&mut self,segment:&Utf16,slash:bool,escape:bool,ctx:&mut Context<'_>)->Result<usize,EngineError>{
+        self.push_owned_preflight_segment_observed(segment,slash,escape,ctx,&mut |_|{})
+    }
+    pub(crate) fn push_owned_preflight_segment_observed(&mut self,segment:&Utf16,slash:bool,escape:bool,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
+        self.push_owned_path_segment_mode(segment,slash,escape,false,ctx,observer)
+    }
+    #[cfg(test)]
+    pub(crate) fn push_owned_preflight_segment_with_events(&mut self,segment:&Utf16,slash:bool,escape:bool,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
+        self.push_owned_preflight_segment_observed(segment,slash,escape,ctx,observer)
+    }
+    fn push_owned_path_segment_mode(&mut self,segment:&Utf16,slash:bool,escape:bool,current_path_diagnostics:bool,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
+        macro_rules! charge { ($amount:expr) => {{
+            if current_path_diagnostics {ctx.charge_work_with_path($amount,self)} else {ctx.charge_work($amount,Utf16::default())}
+        }}; }
+        charge!(3)?;
         let old=self.len();
-        ctx.charge_work_with_path(segment.len(),self)?;
-        let mut suffix=1usize;
-        for unit in segment.units(){suffix=suffix.checked_add(if matches!(unit,0x7e|0x2f){2}else{1}).ok_or_else(||EngineError::new("LIMIT",std::mem::take(self),"Owned JSON path size overflow"))?;}
-        let wanted=old.checked_add(suffix).ok_or_else(||EngineError::new("LIMIT",std::mem::take(self),"Owned JSON path size overflow"))?;
+        charge!(segment.len())?;
+        let mut suffix=usize::from(slash);
+        for unit in segment.units(){suffix=suffix.checked_add(if escape&&matches!(unit,0x7e|0x2f){2}else{1}).ok_or_else(||EngineError::new("LIMIT",if current_path_diagnostics{std::mem::take(self)}else{Utf16::default()},"Owned JSON path size overflow"))?;}
+        let wanted=old.checked_add(suffix).ok_or_else(||EngineError::new("LIMIT",if current_path_diagnostics{std::mem::take(self)}else{Utf16::default()},"Owned JSON path size overflow"))?;
         let capacity=match &self.0{TextStorage::Owned(v)=>v.capacity(),TextStorage::Shared(_)|TextStorage::Static(_)=>0};
         if wanted>capacity {
             // Includes relocation of the existing prefix, including a shared
             // source's actual detach. No Arc::make_mut hides an unpaid copy.
             let requested=capacity.checked_mul(2).unwrap_or(usize::MAX).max(wanted);
-            ctx.charge_work_with_path(old.saturating_add(requested),self)?;
-            observer("path-growth");
-            let mut next=Vec::new();next.try_reserve_exact(requested).map_err(|_|EngineError::new("LIMIT",std::mem::take(self),"Owned JSON path allocation unavailable"))?;
-            observer("path-relocation");
+            charge!(old.saturating_add(requested))?;
+            observer(if current_path_diagnostics{"path-growth"}else{"sp1-pre-effect-growth-admitted"});
+            let mut next=Vec::new();next.try_reserve_exact(requested).map_err(|_|EngineError::new("LIMIT",if current_path_diagnostics{std::mem::take(self)}else{Utf16::default()},"Owned JSON path allocation unavailable"))?;
+            observer(if current_path_diagnostics{"path-relocation"}else{"sp1-effect-capacity-reserved-before-prefix-relocation"});
             next.extend_from_slice(self.units());self.0=TextStorage::Owned(next);
         }
-        ctx.charge_work_with_path(suffix,self)?;
-        observer("path-write");
+        charge!(suffix)?;
+        observer(if current_path_diagnostics{"path-write"}else{"sp1-pre-effect-suffix-write-admitted"});
         let TextStorage::Owned(units)=&mut self.0 else {unreachable!("shared path has zero mutable capacity")};
-        units.push(0x2f);
-        for unit in segment.units(){match unit {0x7e=>units.extend([0x7e,0x30]),0x2f=>units.extend([0x7e,0x31]),other=>units.push(*other)}}
+        if slash { units.push(0x2f); }
+        for unit in segment.units(){match (escape,*unit) {(true,0x7e)=>units.extend([0x7e,0x30]),(true,0x2f)=>units.extend([0x7e,0x31]),(_,other)=>units.push(other)}}
+        observer(if current_path_diagnostics{"path-write-complete"}else{"sp1-effect-suffix-written"});
         Ok(old)
     }
     pub(crate) fn restore_owned_path(&mut self, old:usize,ctx:&mut Context<'_>)->Result<(),EngineError> {
         ctx.charge_work_with_path(1,self)?;
         match &mut self.0 {TextStorage::Owned(v)=>v.truncate(old),TextStorage::Shared(_)|TextStorage::Static(_)=>unreachable!("successful path append guarantees owned storage")}
         Ok(())
+    }
+    pub(crate) fn truncate_owned_preflight_path(&mut self,old:usize){
+        match &mut self.0 {
+            TextStorage::Owned(v)=>v.truncate(old),
+            TextStorage::Shared(v) if v.len()==old=>(),
+            TextStorage::Static(v) if v.len()==old=>(),
+            // A denied first reserve has not changed shared/static contents.
+            // Cleanup must preserve the first refusal and never detach here.
+            TextStorage::Shared(_)|TextStorage::Static(_)=>(),
+        }
+    }
+    #[cfg(test)]
+    pub(crate) fn preflight_storage_observation(&self)->(bool,usize){
+        match &self.0 {TextStorage::Owned(v)=>(true,v.capacity()),TextStorage::Shared(v)=>(false,v.capacity()),TextStorage::Static(v)=>(false,v.len())}
     }
     pub fn units(&self) -> &[u16] {
         match &self.0 {

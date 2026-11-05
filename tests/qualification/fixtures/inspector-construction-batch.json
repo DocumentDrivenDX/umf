@@ -1831,7 +1831,7 @@
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "b9f9850fdeeb1f4121e2c8726265aaa4690cdb1ed5b2b2125ac37173571cd961",
+      "crates/umf-core/src/schema.rs": "2cae60cdd9669a525cfd5123e615353f99ad6090b99b55ae0b51055f6d15890a",
       "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -1842,7 +1842,7 @@
       "crates/umf-core/src/schema_closed_container_independent_tests.rs": "161b91bdc903df76daab4cf8108a9c3e28b2493759dd8c27188d0eef8bfc803e",
       "crates/umf-core/src/schema_closed_structure.rs": "026045f024a4fb11a126ce0bbd384464fe8c2646b7f8b83aa02b77dcde6ff8ac",
       "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
-      "crates/umf-core/src/schema_construction_index.rs": "da2267884f2420104b4f3e998aeda7a0d20efd2534dbd6941f0c19c0d485602f",
+      "crates/umf-core/src/schema_construction_index.rs": "cf2090877b7ce610d52bb0b18de680a107d86f0a1d7ebedbec939a6f996645c5",
       "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
       "crates/umf-core/src/schema_encoded_source_independent_tests.rs": "20d4e5ba70b94ced8a602097e455024840ee31a87b751ba395c7a29e8a40811a",
       "crates/umf-core/src/schema_evaluation_path_pair_independent_tests.rs": "84e4047e56b748ed314c494eacc6538ea4f7a1681b96eb06ec8b1b99c9bddb9a",
@@ -1866,7 +1866,7 @@
       "crates/umf-core/src/serialization_closed_metadata.rs": "a704ef592e96970e724d24b36e679f7a5bf16c64918992ae9d92b3420b2cae8f",
       "crates/umf-core/src/serialization_construction_owned_independent_tests.rs": "db3bd9625d1fb4bb04ee0a510beb5862d03a65b39440ddc6190b69a2432efd41",
       "crates/umf-core/src/serialization_owned_decode_stack_independent_tests.rs": "c76df4a8e248c0ce147806b864004290125c7d39e45f27c48994f7f0b7a5d691",
-      "crates/umf-core/src/value.rs": "4cac39cc120cc14e6ca9250bf3dea68eece0a880240cd03ad51452b9c64fca45",
+      "crates/umf-core/src/value.rs": "057cfac477f0a1c4e32e10e4c9ac42ed7f38b946cec86b754f4badae1fbdbeda",
       "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "b825da0304386cc2f51531f7e103408888b00e4918170a6bb170011b20115398",
       "crates/umf-core/src/value_decimal_path.rs": "477f37b08fe97e82f857100be653abf81fb997d69fc0baca868ad944ebba7109",
       "crates/umf-core/src/value_fused_admission_independent_tests.rs": "09c6f04b7aedf4f37e8603e908a9b5885f9cf0f4e4081cde0f8e5845fb5b85bc",
@@ -1929,9 +1929,9 @@
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
       "tests/qualification/test_inspector_combined_budget.py": "43810b7edac2b552c49a41d7909470c6bb08e96241b76d77b139495f52206196",
-      "tests/qualification/test_inspector_construction_batch.py": "195d43eacbf8974c7cc57acf3c487e5846c693808db55d844fb1c64bf189f3f8",
+      "tests/qualification/test_inspector_construction_batch.py": "645f95047b0b394fdd8430f4321030d50ec2b7438e50c4cb7973b4d78bb2c3b1",
       "tests/qualification/test_inspector_cost_gate.py": "87a971d3bb5df50648aa862084b4fd9bb9c455d96ff95c332c6a37bfbf9cd3e9",
-      "tests/qualification/test_inspector_installed_factory.py": "110269eadc4ba642d92ff25d80770c3778fe63f9fbe1006aa7296ced8365e20c",
+      "tests/qualification/test_inspector_installed_factory.py": "c0c3f8a919a7880135f29210f28626255d2a54176625a6940434ad01bc704de7",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
       "tests/qualification/test_inspector_owner_cursors.py": "7f2d7d34c5972b7692671ee0a8c92f6ea19d5c14088eae5509a7fd791531a253",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
@@ -1957,7 +1957,8 @@
       "tools/tests/test_codegen_resource_literals.py": "a6458e0547befcb8c2f5c6de5796f4f91e97506d7fd7f4a032004c12bd1cd725",
       "tools/tests/test_operation_schema_utf16_encoding.py": "129eff6a26986a41f9c5fc8f06ca88c673494c3442bcaf2a6fcda69f170be319",
       "tools/tests/test_schema_metas_utf16_encoding.py": "577f088d62abb65864dab66a93c53fc46092b5abd625f63e2e5ddcdd66df02eb",
-      "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355"
+      "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
+      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "3586032c1f6ce90a67c1bc801d3e5c7a5931eb4a5943f2f8b0fad6b2b8b62735"
     },
     "moduleGraph": [
       {
@@ -2887,6 +2888,16 @@
         "cfg": [
           "#[cfg(test)]",
           "#[path=\"resources_codegen_catalogue_independent_tests.rs\"]"
+        ]
+      },
+      {
+        "parent": "crates/umf-core/src/schema.rs",
+        "child": "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs",
+        "module": "schema::scoped_preflight_path_independent_tests",
+        "declaration": "#[cfg(test)]\n#[path = \"schema_scoped_preflight_path_independent_tests.rs\"]\nmod scoped_preflight_path_independent_tests;",
+        "cfg": [
+          "#[cfg(test)]",
+          "#[path = \"schema_scoped_preflight_path_independent_tests.rs\"]"
         ]
       }
     ],
@@ -7849,6 +7860,44 @@
           }
         ],
         "caseCount": 1
+      },
+      {
+        "package": "umf-core",
+        "target": "lib",
+        "features": "native-postgresql",
+        "source": "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs",
+        "cases": [
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp01_literal_raw_pointer_and_index_spelling"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp04_nested_restore_first_hash_surrogate_and_origin_custody"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp05_capacity_reuse_growth_detach_and_snapshot_isolation"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp06_append_denial_empty_diagnostic_and_first_host_error"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp08_owner_policy_limits_and_genuine_original_fallback"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp09_nonempty_parent_reentry_error_unwind_and_poison"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp02_pattern_path_reuse_and_regex_error_order"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp03_demand_only_preparation_and_displaced_ordered_skips"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp07_node_current_path_and_retaining_ref_uri_consumers"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp10_real_root_catalogue_preflight_and_unchanged_evaluator"
+          }
+        ]
       }
     ],
     "python": [
@@ -7985,7 +8034,17 @@
         "rust:umf-core:lib:schema::evaluation_paths_bridge_independent_tests::phb08_installed_scope_restores_on_first_host_refusal_and_observer_unwind",
         "rust:umf-core:lib:schema::evaluation_paths_bridge_independent_tests::phb09_real_branch_recursion_restores_sibling_pairs_and_original_ordered_errors",
         "rust:umf-core:lib:schema::evaluation_paths_bridge_independent_tests::phb10_python_bound_dependency_plain_segments_stay_distinct_from_source_aware_properties",
-        "rust:umf-core:lib:schema::evaluation_paths_bridge_independent_tests::phb11_python_required_array_indices_are_plain_and_property_numeric_keys_stay_marked"
+        "rust:umf-core:lib:schema::evaluation_paths_bridge_independent_tests::phb11_python_required_array_indices_are_plain_and_property_numeric_keys_stay_marked",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp01_literal_raw_pointer_and_index_spelling",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp04_nested_restore_first_hash_surrogate_and_origin_custody",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp05_capacity_reuse_growth_detach_and_snapshot_isolation",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp06_append_denial_empty_diagnostic_and_first_host_error",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp08_owner_policy_limits_and_genuine_original_fallback",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp09_nonempty_parent_reentry_error_unwind_and_poison",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp02_pattern_path_reuse_and_regex_error_order",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp03_demand_only_preparation_and_displaced_ordered_skips",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp07_node_current_path_and_retaining_ref_uri_consumers",
+        "rust:umf-core:lib:schema::scoped_preflight_path_independent_tests::sp10_real_root_catalogue_preflight_and_unchanged_evaluator"
       ],
       "static_nk1": [
         "rust:umf-core:lib:schema::owned_plans::node_coordinate_independent_tests::nk01_same_validated_node_mode_different_diagnostic_paths_reuse_original_arc",
@@ -8045,7 +8104,7 @@
       "fixtureSHA256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "metadataVersion": "0.10.9"
     },
-    "closureSHA256": "caab3c86ed7ff4318aeb7991c5d7cdf39904723b141940e616edf7c26f35bc28"
+    "closureSHA256": "166070dd9f668f52f0c67b63728a638b22d1dfe7154aac0c607c99ca48c2873c"
   },
   "modelReferences": {
     "baseModel": {
@@ -8143,6 +8202,22 @@
       "path": "/private/tmp/umf-oc1-independent-control-preparation/oc08-stale-epoch-correction/SOL-EIGHT-CONTROLS-SOURCE-PASS-INCLUDE-AUTHORIZATION.json",
       "sha256": "a2742f7ebf3ee3ced71e5151bd88db61e16b7dfdde3a0de265cd67286d26d22a"
     },
-    "OW1OC1Interpretation": "Conditional signed operation accounting only, not numeric fit or a proved mandatory floor. Genuine ordered/arbitrary fallback and original catalogue/root/compiler/Registry/first-call semantics remain required. Gross conditional removed equality operations are not observed savings; positive lookup/storage/guard/ABI/Arc/cleanup/later-state and all base/PRE1/PTH1 terms remain. Dynamic counts, target layout, net delta, full constructor and each first public call cost remain UNKNOWN. C5/Q5 refusal history remains immutable; no fit or native qualification is inferred."
+    "OW1OC1Interpretation": "Conditional signed operation accounting only, not numeric fit or a proved mandatory floor. Genuine ordered/arbitrary fallback and original catalogue/root/compiler/Registry/first-call semantics remain required. Gross conditional removed equality operations are not observed savings; positive lookup/storage/guard/ABI/Arc/cleanup/later-state and all base/PRE1/PTH1 terms remain. Dynamic counts, target layout, net delta, full constructor and each first public call cost remain UNKNOWN. C5/Q5 refusal history remains immutable; no fit or native qualification is inferred.",
+    "SP1CorrectedWholeConstructorLedger": {
+      "path": "/private/tmp/umf-c6-scoped-preflight-path-plan/SIGNED-SP1-WHOLE-CONSTRUCTOR-OPERATION-LEDGER-CORRECTED-CURRENT-v3.json",
+      "sha256": "fedb6f1e647af63263d32420c2773d77c36888e4c4a10960c588921db8426db6"
+    },
+    "SP1AdditiveBindingCorrection": {
+      "path": "/private/tmp/umf-c6-scoped-preflight-path-plan/SP1-LEDGER-BINDING-DRIFT-ADDITIVE-CORRECTION.json",
+      "sha256": "5c508aeb0415f9a0ee429edf4faf863a7bae00b7dc9c55d3ab182e93281f9254"
+    },
+    "SP1OwnerPinV3": {
+      "path": "/private/tmp/umf-c6-scoped-preflight-path-plan/H-SP1-FINAL-OWNER-PIN-v3.json",
+      "sha256": "bd876ff91f7b44bd3a12b9a618588f4d92611c5529a99996bc164560cf781cc0"
+    },
+    "SP1GoverningRecoveryPlan": {
+      "path": "/private/tmp/umf-stack-release-truss/docs/helix/04-build/inspector-work-budget-recovery-plan.md",
+      "sha256": "4d6011f409021e93891889ccad8bd613d80e8f77c1875df8395511dc27540671"
+    }
   }
 }

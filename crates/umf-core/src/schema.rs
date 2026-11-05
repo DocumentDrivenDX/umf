@@ -2445,6 +2445,13 @@ impl CompiledSchema {
         if let Some(root)=index.select_carried(self,path,construction_index::PathSelector::Policy,ctx)? {return index.policy(self,root,inherited,ctx);}
         self.keyword_policy_unindexed(schema,path.text(),inherited,ctx)
     }
+    fn keyword_policy_scoped(&self,schema:&Value,path:&mut construction_index::ScopedPreflightPath,inherited:KeywordPolicy,ctx:&mut Context<'_>)->Result<KeywordPolicy,EngineError>{
+        if construction_index::get_ascii_metered(schema,"$schema",ctx,path.text())?.is_some(){return self.explicit_keyword_policy(schema,inherited,ctx);}
+        if path.units().first()==Some(&35){return Ok(inherited);}
+        if let Some(index)=&self.cold_resource_index {if let Some(root)=index.select_scoped(self,path,construction_index::PathSelector::Policy,ctx)?{return index.policy(self,root,inherited,ctx);}}
+        let snapshot=path.diagnostic_snapshot(ctx)?;
+        self.keyword_policy_unindexed(schema,&snapshot,inherited,ctx)
+    }
 
     fn explicit_keyword_policy(
         &self,
@@ -2477,22 +2484,42 @@ impl CompiledSchema {
         }
     }
 
+    fn with_scoped_preflight_child<'ctx,T>(&self,path:&mut construction_index::ScopedPreflightPath,segment:&Utf16,kind:PathKind,ctx:&mut Context<'ctx>,operation:impl FnOnce(&mut construction_index::ScopedPreflightPath,&mut Context<'ctx>)->Result<T,EngineError>)->Result<T,EngineError>{
+        #[cfg(test)]
+        { self.with_scoped_preflight_child_observed(path,segment,kind,ctx,&mut construction_index::scoped_effect_event,operation) }
+        #[cfg(not(test))]
+        { self.with_scoped_preflight_child_observed(path,segment,kind,ctx,&mut |_|{},operation) }
+    }
+    #[cfg(test)]
+    fn with_scoped_preflight_child_with_events<'ctx,T>(&self,path:&mut construction_index::ScopedPreflightPath,segment:&Utf16,kind:PathKind,ctx:&mut Context<'ctx>,event:&mut dyn FnMut(&'static str),operation:impl FnOnce(&mut construction_index::ScopedPreflightPath,&mut Context<'ctx>)->Result<T,EngineError>)->Result<T,EngineError>{
+        self.with_scoped_preflight_child_observed(path,segment,kind,ctx,event,operation)
+    }
+    fn with_scoped_preflight_child_observed<'ctx,T>(&self,path:&mut construction_index::ScopedPreflightPath,segment:&Utf16,kind:PathKind,ctx:&mut Context<'ctx>,event:&mut dyn FnMut(&'static str),operation:impl FnOnce(&mut construction_index::ScopedPreflightPath,&mut Context<'ctx>)->Result<T,EngineError>)->Result<T,EngineError>{
+        let mark=path.mark(ctx)?;
+        let outcome=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||{event("sp1-child-checkpoint-admitted");path.append_observed(segment,kind,ctx,event)?;let result=operation(path,ctx);if result.is_ok(){event("sp1-child-operation-completed");}result}));
+        match outcome{
+            Err(payload)=>{path.restore_after_failure(mark);std::panic::resume_unwind(payload)},
+            Ok(Err(error))=>{path.restore_after_failure(mark);Err(error)},
+            Ok(Ok(value))=>match path.restore(mark,ctx){Ok(())=>Ok(value),Err(error)=>Err(error)}
+        }
+    }
+    fn with_scoped_preflight_index<'ctx,T>(&self,path:&mut construction_index::ScopedPreflightPath,index:usize,ctx:&mut Context<'ctx>,operation:impl FnOnce(&mut construction_index::ScopedPreflightPath,&mut Context<'ctx>)->Result<T,EngineError>)->Result<T,EngineError>{
+        let digits=if index==0{1}else{index.ilog10() as usize+1};
+        ctx.charge_work(digits.saturating_mul(5).saturating_add(2*std::mem::size_of::<Vec<u16>>().div_ceil(std::mem::size_of::<usize>())+6),Utf16::default())?;
+        let segment=Utf16::from(index.to_string());
+        self.with_scoped_preflight_child(path,&segment,PathKind::RawSchemaStep,ctx,operation)
+    }
+    fn scoped_preflight_schema_error(&self,path:&mut construction_index::ScopedPreflightPath,message:&str,ctx:&mut Context<'_>)->Result<EngineError,EngineError>{
+        let snapshot=path.diagnostic_snapshot(ctx)?;
+        Ok(schema_error(&snapshot,message))
+    }
     fn preflight(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>)->Result<(),EngineError>{
         self.preflight_located(schema,path,scope,depth,inherited_policy,ctx,seen,None)
     }
     fn preflight_located(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError> {
         if self.cold_resource_index.is_none() {return self.preflight_original_located(schema,path,scope,depth,inherited_policy,ctx,seen,cursor);}
-        ctx.charge_work(path.clone_work(),Utf16::default())?;
-        let owned=construction_index::CarriedPath::seed(path.clone(),ctx)?;
-        self.preflight_carried(schema,&owned,scope,depth,inherited_policy,ctx,seen,cursor)
-    }
-    fn preflight_index_path(&self,parent:&construction_index::CarriedPath,index:usize,ctx:&mut Context<'_>)->Result<construction_index::CarriedPath,EngineError> {
-        // Preserve actual decimal format and UTF8->UTF16 temporary; no claimed
-        // decimal optimization. Admit both buffers, digits/scans/stores first.
-        let digits=if index==0{1}else{index.ilog10() as usize+1};
-        ctx.charge_work(digits.saturating_mul(5).saturating_add(2*std::mem::size_of::<Vec<u16>>().div_ceil(std::mem::size_of::<usize>())+6),Utf16::default())?;
-        let segment=Utf16::from(index.to_string());
-        parent.append(&segment,PathKind::RawSchemaStep,ctx)
+        let mut owned=construction_index::ScopedPreflightPath::new(path,ctx)?;
+        self.preflight_carried(schema,&mut owned,scope,depth,inherited_policy,ctx,seen,cursor)
     }
     fn preflight_original_located(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
         ctx.charge_work(1, path.clone())?;
@@ -2841,7 +2868,7 @@ impl CompiledSchema {
         Ok(())
 
     }
-    fn preflight_carried<'a>(&'a self,schema:&'a Value,path:&construction_index::CarriedPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
+    fn preflight_carried<'a>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
         let checked=match (&self.owner_locations,cursor.as_ref()) {
             (Some(table),Some(cursor))=>table.checked(self,cursor,ctx)?,_=>None,
         };
@@ -2858,11 +2885,16 @@ impl CompiledSchema {
             // The cursor clone is retained only for the original arbitrary
             // fallback and deferred callers; borrowed-node custody is separate.
             let cursor=match &child{Some(child)=>{ctx.charge_work(1,Utf16::default())?;Some(child.cursor().clone())},None=>None};
+            #[cfg(test)]
+            construction_index::scoped_effect_event("sp1-ordered-selection-performed");
             return Ok((cursor,child));
         }
-        Ok((child_cursor(Some(self),cursor,edge,ctx)?,None))
+        let selected=child_cursor(Some(self),cursor,edge,ctx)?;
+        #[cfg(test)]
+        construction_index::scoped_effect_event("sp1-ordered-selection-performed");
+        Ok((selected,None))
     }
-    fn preflight_carried_checked<'a>(&'a self,schema:&'a Value,path:&construction_index::CarriedPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>,mut checked:Option<owner_locations::CheckedLocation<'a>>)->Result<(),EngineError>{
+    fn preflight_carried_checked<'a>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>,mut checked:Option<owner_locations::CheckedLocation<'a>>)->Result<(),EngineError>{
         // Real private checked readback, not a supplied pointer/ordinal claim.
         if let Some(location)=&checked {
             if !location.read(self,ctx)?.is_some_and(|value|std::ptr::eq(value,schema)){checked=None;}
@@ -2871,16 +2903,14 @@ impl CompiledSchema {
         ctx.charge_work((std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>()+std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>()).div_ceil(std::mem::size_of::<usize>())+2,Utf16::default())?;
         let mut ordered=None;
 
-        ctx.charge_work(1, path.text().clone())?;
+        path.charge_current_path(1,ctx)?;
         if depth > ctx.limits().max_depth {
-            return Err(EngineError::new(
-                "LIMIT",
-                path.text().clone(),
-                "Schema nesting depth exceeded",
-            ));
+            let diagnostic_path=path.diagnostic_snapshot(ctx)?;
+            return Err(EngineError::new("LIMIT",diagnostic_path,"Schema nesting depth exceeded"));
         }
         let Value::Object(m) = schema else {
             if matches!(schema, Value::Bool(_)) {
+                ctx.charge_work(path.len(),Utf16::default())?;
                 let path_text = path.to_utf8().ok();
                 let boolean_allowed_by_legacy_keyword =
                     matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
@@ -2890,20 +2920,17 @@ impl CompiledSchema {
                 if matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
                     && !boolean_allowed_by_legacy_keyword
                 {
-                    return Err(schema_error(
-                        path,
-                        "Boolean schemas are not valid in this dialect",
-                    ));
+                    return Err(self.scoped_preflight_schema_error(path,"Boolean schemas are not valid in this dialect",ctx)?);
                 }
                 return Ok(());
             }
-            return Err(schema_error(path, "Schema must be an object or boolean"));
+            return Err(self.scoped_preflight_schema_error(path,"Schema must be an object or boolean",ctx)?);
         };
-        construction_index::path_call("pth-preflight-policy",self,path);
-        let policy = self.keyword_policy_carried(schema,path,inherited_policy,ctx)?;
+        construction_index::scoped_path_call("sp1-preflight-policy-route",self,path);
+        let policy = self.keyword_policy_scoped(schema,path,inherited_policy,ctx)?;
         let known = keywords(self.dialect);
         let scope = if let Some(id) = schema_id(schema) {
-            ctx.charge_work(scope.len().saturating_add(id.len()), path.text().clone())?;
+            path.charge_current_path(scope.len().saturating_add(id.len()),ctx)?;
             resolve_schema_uri(self.dialect, scope, &id).unwrap_or(id)
         } else {
             scope.to_owned()
@@ -2912,49 +2939,72 @@ impl CompiledSchema {
             let text = match key.to_utf8() {
                 Ok(text) => text,
                 Err(_) if !self.strict => continue,
-                Err(_) => return Err(schema_error(path, "Schema keyword is not valid Unicode")),
+                Err(_) => return Err(self.scoped_preflight_schema_error(path,"Schema keyword is not valid Unicode",ctx)?),
             };
             if !policy.keyword_is_active(&text) {
                 continue;
             }
             if !known.contains(text.as_str()) {
                 if self.strict && !policy.custom {
+                    let diagnostic_path=path.diagnostic_snapshot(ctx)?;
                     return Err(EngineError::new(
                         "SCHEMA_UNKNOWN_KEYWORD",
-                        path.text().clone(),
+                        diagnostic_path,
                         format!("Unknown schema keyword '{text}'"),
                     ));
                 }
                 continue;
             }
-            let (keyword_cursor,mut keyword_checked)=self.preflight_ordered_child(cursor.as_ref(),&mut checked,&mut ordered,member_index,ctx)?;
             ctx.charge_work(std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>().div_ceil(std::mem::size_of::<usize>())+1,Utf16::default())?;
+            ctx.charge_work(
+                std::mem::size_of::<Option<OwnerCursor>>().div_ceil(std::mem::size_of::<usize>())
+                    +std::mem::size_of::<bool>().div_ceil(std::mem::size_of::<usize>())
+                    +std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>().div_ceil(std::mem::size_of::<usize>())
+                    +std::mem::size_of::<Option<construction_index::ScopedPreflightMark>>().div_ceil(std::mem::size_of::<usize>())
+                    +4,
+                Utf16::default(),
+            )?;
+            let mut keyword_cursor:Option<OwnerCursor>=None;
+            let mut keyword_selected=false;
+            let mut keyword_checked=None;
             let mut keyword_ordered=None;
-            let child = path.append(key,PathKind::RawSchemaStep,ctx)?;
+            macro_rules! ensure_keyword_cursor { () => {{
+                if !keyword_selected {
+                    let (selected,selected_checked)=self.preflight_ordered_child(cursor.as_ref(),&mut checked,&mut ordered,member_index,ctx)?;
+                    keyword_cursor=selected; keyword_checked=selected_checked; keyword_selected=true;
+                }
+            }}; }
+            let mut child_mark:Option<construction_index::ScopedPreflightMark>=None;
+            macro_rules! child_path { () => {{
+                if child_mark.is_none() { let mark=path.mark(ctx)?; if let Err(error)=path.append(key,PathKind::RawSchemaStep,ctx){path.restore_after_failure(mark);return Err(error);} child_mark=Some(mark); }
+                path.text()
+            }}; }
+            macro_rules! child_schema_error { ($message:expr) => {{ child_path!(); let diagnostic=path.diagnostic_snapshot(ctx)?; schema_error(&diagnostic,$message) }}; }
             match text.as_str() {
                 "$ref" | "$dynamicRef" | "$recursiveRef" => {
                     if !matches!(val, Value::String(_)) {
-                        return Err(schema_error(&child, "reference keyword must be a string"));
+                        return Err(child_schema_error!("reference keyword must be a string"));
                     }
                     if self.resolve_references_at_compile {
                         // Preflight validates through the authoritative resolver;
                         // optional runtime reference memoization remains unchanged.
-                        let resolved = self.resolve_ref_unplanned(val, &child, Some(scope.as_str()), ctx);
+                        child_path!();
+                        let reference_path=path.diagnostic_snapshot(ctx)?;
+                        let resolved = self.resolve_ref_unplanned(val, &reference_path, Some(scope.as_str()), ctx);
                         #[cfg(test)]
-                        preflight_reference_observation::emit(val, &child, &scope, &resolved);
+                        preflight_reference_observation::emit(val, &reference_path, &scope, &resolved);
                         resolved?;
                     }
                 }
                 "$anchor" | "$dynamicAnchor" => {
-                    let anchor = as_utf8(val)
-                        .ok_or_else(|| schema_error(&child, "anchor must be a string"))?;
+                    let anchor = match as_utf8(val) {Some(anchor)=>anchor,None=>return Err(child_schema_error!("anchor must be a string"))};
                     let mut chars = anchor.chars();
                     let valid = chars.next().is_some_and(|c| c.is_ascii_alphabetic())
                         && chars.all(|c| {
                             c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | ':' | '-')
                         });
                     if !valid {
-                        return Err(schema_error(&child, "Invalid schema anchor"));
+                        return Err(child_schema_error!("Invalid schema anchor"));
                     }
                 }
                 "type" | "disallow" => {
@@ -2962,27 +3012,26 @@ impl CompiledSchema {
                     // type names (and delegates their meaning to its type
                     // checker). Later drafts enumerate the primitive names.
                     if self.dialect != SchemaDialect::Draft3 {
-                        validate_type_declaration(val, &child, self.dialect)?;
+                        child_path!();
+                        let diagnostic=path.diagnostic_snapshot(ctx)?;
+                        validate_type_declaration(val,&diagnostic,self.dialect)?;
                     }
                     if self.dialect == SchemaDialect::Draft3 {
                         match val {
                             Value::Object(_) => {
+                                ensure_keyword_cursor!();
                                 let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
                                 let selected_checked=keyword_checked.take();
-                                self.preflight_carried_checked(val,&child,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
+                                child_path!();
+                                self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
                             }
                             Value::Array(items) => {
                                 for (index, branch) in items.iter().enumerate() {
                                     if matches!(branch, Value::Object(_)) {
+                                        ensure_keyword_cursor!();
                                         let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,index,ctx)?;
-                                        self.preflight_carried_checked(
-                                            branch,
-                                            &self.preflight_index_path(&child,index,ctx)?,
-                                            &scope,
-                                            depth + 1,
-                                            policy,
-                                            ctx,
-                                            seen,selected,selected_checked)?;
+                                        child_path!();
+                                        self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(branch,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
                                     }
                                 }
                             }
@@ -2994,7 +3043,9 @@ impl CompiledSchema {
                     if self.dialect == SchemaDialect::Draft3 && matches!(val, Value::Bool(_)) {
                         // Draft 3 expresses a required property on the property schema itself.
                     } else {
-                        validate_string_array(val, &child, true)?;
+                        child_path!();
+                        let diagnostic=path.diagnostic_snapshot(ctx)?;
+                        validate_string_array(val,&diagnostic,true)?;
                     }
                 }
                 "enum" => {
@@ -3002,13 +3053,10 @@ impl CompiledSchema {
                         if items.is_empty()
                             && matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
                         {
-                            return Err(schema_error(
-                                &child,
-                                "enum must contain at least one value",
-                            ));
+                            return Err(child_schema_error!("enum must contain at least one value"));
                         }
                     } else {
-                        return Err(schema_error(&child, "enum must be an array"));
+                        return Err(child_schema_error!("enum must be an array"));
                     }
                 }
                 "properties" | "patternProperties" | "$defs" | "definitions"
@@ -3021,16 +3069,16 @@ impl CompiledSchema {
                     }
                     if let Value::Object(children) = val {
                         for (child_index, (name, child_schema)) in children.iter().enumerate() {
-                            if text == "patternProperties" {
-                                let pattern_path = child.append(name,PathKind::SchemaPointer,ctx)?;
-                                self.compile_pattern(name, &pattern_path, ctx)?;
-                            }
-                            let p = child.append(name,PathKind::SchemaPointer,ctx)?;
-                            let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,child_index,ctx)?;
-                            self.preflight_carried_checked(child_schema,&p,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
+                            child_path!();
+                            ensure_keyword_cursor!();
+                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,child_index,ctx)?;
+                            self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{
+                                if text == "patternProperties" { let diagnostic=path.diagnostic_snapshot(ctx)?; self.compile_pattern(name,&diagnostic,ctx)?; }
+                                self.preflight_carried_checked(child_schema,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked)
+                            })?;
                         }
                     } else {
-                        return Err(schema_error(&child, "Keyword value must be an object"));
+                        return Err(child_schema_error!("Keyword value must be an object"));
                     }
                 }
                 "items"
@@ -3048,85 +3096,70 @@ impl CompiledSchema {
                         && self.dialect == SchemaDialect::Draft2020_12
                         && matches!(val, Value::Array(_))
                     {
-                        return Err(schema_error(
-                            &child,
-                            "Draft 2020-12 items must be a schema; use prefixItems for tuple validation",
-                        ));
+                        return Err(child_schema_error!("Draft 2020-12 items must be a schema; use prefixItems for tuple validation"));
                     }
                     if text == "additionalItems"
                         && self.dialect == SchemaDialect::Draft2020_12
                         && self.strict
                     {
-                        return Err(schema_error(
-                            &child,
-                            "additionalItems is not available in Draft 2020-12",
-                        ));
+                        return Err(child_schema_error!("additionalItems is not available in Draft 2020-12"));
                     }
                     if text == "additionalItems" && self.dialect == SchemaDialect::Draft2020_12 {
                         continue;
                     }
                     if let Value::Array(items) = val {
                         for (i, x) in items.iter().enumerate() {
-                            let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,i,ctx)?;
-                            self.preflight_carried_checked(
-                                x,
-                                &self.preflight_index_path(&child,i,ctx)?,
-                                &scope,
-                                depth + 1,
-                                policy,
-                                ctx,
-                                seen,selected,selected_checked)?;
+                            child_path!();
+                            ensure_keyword_cursor!();
+                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,i,ctx)?;
+                            self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
                         }
                     } else {
-                        let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                                let selected_checked=keyword_checked.take();
-                        self.preflight_carried_checked(val,&child,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
+                        child_path!();
+                        ensure_keyword_cursor!();
+                                let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
+                        let selected_checked=keyword_checked.take();
+                        self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
                     }
                 }
                 "allOf" | "anyOf" | "oneOf" | "prefixItems" => {
                     if let Value::Array(items) = val {
                         if items.is_empty() && text != "prefixItems" {
-                            return Err(schema_error(&child, "Applicator array must not be empty"));
+                            return Err(child_schema_error!("Applicator array must not be empty"));
                         }
                         for (i, x) in items.iter().enumerate() {
-                            let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,i,ctx)?;
-                            self.preflight_carried_checked(
-                                x,
-                                &self.preflight_index_path(&child,i,ctx)?,
-                                &scope,
-                                depth + 1,
-                                policy,
-                                ctx,
-                                seen,selected,selected_checked)?;
+                            child_path!();
+                            ensure_keyword_cursor!();
+                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,i,ctx)?;
+                            self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
                         }
                     } else {
-                        return Err(schema_error(&child, "Applicator must be an array"));
+                        return Err(child_schema_error!("Applicator must be an array"));
                     }
                 }
                 "extends" if self.dialect == SchemaDialect::Draft3 => {
                     if let Value::Array(items) = val {
                         for (index, item) in items.iter().enumerate() {
-                            let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,index,ctx)?;
-                            self.preflight_carried_checked(
-                                item,
-                                &self.preflight_index_path(&child,index,ctx)?,
-                                &scope,
-                                depth + 1,
-                                policy,
-                                ctx,
-                                seen,selected,selected_checked)?;
+                            child_path!();
+                            ensure_keyword_cursor!();
+                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,index,ctx)?;
+                            self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(item,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
                         }
                     } else {
-                        let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                                let selected_checked=keyword_checked.take();
-                        self.preflight_carried_checked(val,&child,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
+                        child_path!();
+                        ensure_keyword_cursor!();
+                                let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
+                        let selected_checked=keyword_checked.take();
+                        self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
                     }
                 }
                 "pattern" => {
                     let Value::String(pat) = val else {
-                        return Err(schema_error(&child, "pattern must be a string"));
+                        return Err(child_schema_error!("pattern must be a string"));
                     };
-                    self.compile_pattern(pat, &child, ctx)?;
+                    child_path!();
+                    let diagnostic=path.diagnostic_snapshot(ctx)?;
+                    self.compile_pattern(pat,&diagnostic,ctx)?;
                 }
                 "minimum" | "maximum" | "exclusiveMinimum" | "exclusiveMaximum" | "multipleOf"
                 | "divisibleBy" => {
@@ -3134,28 +3167,22 @@ impl CompiledSchema {
                         matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
                             && matches!(text.as_str(), "exclusiveMinimum" | "exclusiveMaximum");
                     if old_exclusive && !matches!(val, Value::Bool(_)) {
-                        return Err(schema_error(
-                            &child,
-                            "Exclusive bound flag must be a boolean",
-                        ));
+                        return Err(child_schema_error!("Exclusive bound flag must be a boolean"));
                     }
                     if !old_exclusive && !matches!(val, Value::Number(_)) {
-                        return Err(schema_error(&child, "Numeric keyword must be a number"));
+                        return Err(child_schema_error!("Numeric keyword must be a number"));
                     }
                     if matches!(text.as_str(), "multipleOf" | "divisibleBy")
                         && matches!(val,Value::Number(n) if *n<=0.0)
                     {
-                        return Err(schema_error(&child, "multipleOf must be greater than zero"));
+                        return Err(child_schema_error!("multipleOf must be greater than zero"));
                     }
                 }
                 "minLength" | "maxLength" | "minItems" | "maxItems" | "minProperties"
                 | "maxProperties" => {
                     if !matches!(val,Value::Number(n) if n.fract()==0.0&&(self.dialect == SchemaDialect::Draft3 || *n>=0.0))
                     {
-                        return Err(schema_error(
-                            &child,
-                            "Size keyword must be a non-negative integer",
-                        ));
+                        return Err(child_schema_error!("Size keyword must be a non-negative integer"));
                     }
                 }
                 "minContains" | "maxContains" => {
@@ -3163,58 +3190,43 @@ impl CompiledSchema {
                         || self.dialect == SchemaDialect::Draft2020_12
                     {
                         if !matches!(val,Value::Number(n) if n.fract()==0.0&&*n>=0.0) {
-                            return Err(schema_error(
-                                &child,
-                                "Size keyword must be a non-negative integer",
-                            ));
+                            return Err(child_schema_error!("Size keyword must be a non-negative integer"));
                         }
                     }
                 }
                 "uniqueItems" => {
                     if !matches!(val, Value::Bool(_)) {
-                        return Err(schema_error(&child, "uniqueItems must be a boolean"));
+                        return Err(child_schema_error!("uniqueItems must be a boolean"));
                     }
                 }
                 "dependencies" => {
                     if let Value::Object(deps) = val {
                         for (child_index,(name, dep)) in deps.iter().enumerate() {
                             if matches!(dep, Value::Array(_)) {
-                                validate_string_array(
-                                    dep,
-                                    child.append(name,PathKind::SchemaPointer,ctx)?.text(),
-                                    true,
-                                )?;
-                            } else if self.dialect == SchemaDialect::Draft3
-                                && matches!(dep, Value::String(_))
-                            {
+                                child_path!();
+                                self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true)})?;
+                            } else if self.dialect == SchemaDialect::Draft3 && matches!(dep, Value::String(_)) {
                                 // Draft 3 permits a string dependency naming a peer property.
                             } else {
-                                let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,child_index,ctx)?;
-                                self.preflight_carried_checked(
-                                    dep,
-                                    &child.append(name,PathKind::SchemaPointer,ctx)?,
-                                    &scope,
-                                    depth + 1,
-                                    policy,
-                                    ctx,
-                                    seen,selected,selected_checked)?;
+                                child_path!();
+                                ensure_keyword_cursor!();
+                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,child_index,ctx)?;
+                                self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|self.preflight_carried_checked(dep,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
                             }
                         }
-                    } else {
-                        return Err(schema_error(&child, "dependencies must be an object"));
-                    }
+                    } else { return Err(child_schema_error!("dependencies must be an object")); }
                 }
                 "dependentRequired" => {
                     if let Value::Object(deps) = val {
                         for (name, dep) in deps {
-                            validate_string_array(dep, child.append(name,PathKind::SchemaPointer,ctx)?.text(), true)?;
+                            child_path!();
+                            self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true)})?;
                         }
-                    } else {
-                        return Err(schema_error(&child, "dependentRequired must be an object"));
-                    }
+                    } else { return Err(child_schema_error!("dependentRequired must be an object")); }
                 }
                 _ => {}
             }
+            if let Some(mark)=child_mark.take(){path.restore(mark,ctx)?;}
         }
         let _ = &mut *seen;
         Ok(())
@@ -12602,3 +12614,7 @@ mod path_facts_independent_tests;
 #[cfg(test)]
 #[path="schema_codegen_catalogue_independent_tests.rs"]
 mod codegen_catalogue_independent_tests;
+
+#[cfg(test)]
+#[path = "schema_scoped_preflight_path_independent_tests.rs"]
+mod scoped_preflight_path_independent_tests;
