@@ -1,13 +1,12 @@
-name: Private inspector retained-wheel attribution continuation
+name: Private C5 installed constructor observation only
 on:
   workflow_dispatch:
     inputs:
       admitted:
-        description: Reviewed retained-wheel continuation admitted; no native rebuild
         type: boolean
         default: false
+        description: Sol-reviewed exact Q and original C5 materials; never qualification
       controller_sha:
-        description: Exact reviewed continuation controller/test source
         type: string
         required: true
 permissions:
@@ -17,15 +16,15 @@ concurrency:
   group: private-inspector-retained-feasibility
   cancel-in-progress: false
 jobs:
-  continuation:
+  observation:
     if: github.event_name == 'workflow_dispatch' && inputs.admitted == true
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
       PYTHONDONTWRITEBYTECODE: '1'
       EXPECTED_CONTROLLER: ${{ inputs.controller_sha }}
-      ORIGINAL_OWNER: 3ba34e412a4c78c0ef01dd1085b8add79db1b7ae
-      CORRECTED_TEST_SHA256: eb6bc7b8e8533d4a60d4432a09bb68bef8f67f89e23f0ff15928f5223f7b1719
+      ORIGINAL_OWNER: 5ddfedc9cd94e3e9552c1eaaa671f431293d2c1a
+      INSPECTOR_INPUT_PROFILE: installed-canonical/1
     steps:
       - uses: actions/checkout@v6
         with:
@@ -36,7 +35,7 @@ jobs:
         with:
           python-version: '3.11.17'
           architecture: x64
-      - name: Authenticate original run and retained materials before install
+      - name: Authenticate original C5 producer and all three immutable artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -44,95 +43,78 @@ jobs:
           set -euo pipefail
           test "$GITHUB_RUN_ATTEMPT" = 1
           test "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf
+          test "$GITHUB_REPOSITORY_ID" = 1382276802
+          test "$GITHUB_REPOSITORY_OWNER_ID" = 273466046
           test "$GITHUB_REF_TYPE" = branch
           test "$EXPECTED_CONTROLLER" = "$GITHUB_SHA"
           test "$(git rev-parse HEAD)" = "$EXPECTED_CONTROLLER"
-          python -I -B -c 'import platform; assert platform.python_version()=="3.11.17" and platform.system()=="Linux" and platform.machine()=="x86_64"'
-          out="$RUNNER_TEMP/retained-continuation"
-          mkdir -p "$out/materials"
-          printf 'CONTINUATION_OUT=%s\n' "$out" >> "$GITHUB_ENV"
-          printf 'OWNER_CHECKOUT=%s/retained-owner-source\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
-          git worktree add --detach "$RUNNER_TEMP/retained-owner-source" "$ORIGINAL_OWNER"
-          gh api repos/DocumentDrivenDX/umf/actions/runs/41753398285 > "$out/materials/run.json"
-          gh api repos/DocumentDrivenDX/umf/actions/runs/41753398285/jobs > "$out/materials/jobs.json"
-          gh api repos/DocumentDrivenDX/umf/actions/runs/41753398285/artifacts > "$out/materials/artifacts.json"
-          gh api repos/DocumentDrivenDX/umf/actions/artifacts/13286019060/zip > "$out/materials/partial.zip"
-          gh api repos/DocumentDrivenDX/umf/actions/artifacts/13287586076/zip > "$out/materials/cleanup.zip"
-          gh api repos/DocumentDrivenDX/umf/actions/runs/41753398285/logs > "$out/materials/original-logs.zip"
-          python -I -B tools/intake_inspector_attribution_continuation.py \
-            --controller "$GITHUB_WORKSPACE" --owner "$RUNNER_TEMP/retained-owner-source" \
-            --evidence "$out/materials" --controller-sha "$EXPECTED_CONTROLLER" \
-            --output "$out/intake.json"
-          printf 'RETAINED_WHEEL=%s\n' "$(python -I -B -c 'import json,sys; print(json.load(open(sys.argv[1]))["wheel"]["actualPath"])' "$out/intake.json")" >> "$GITHUB_ENV"
-      - name: Fresh normal resolver install of authenticated unchanged wheel
+          out="$RUNNER_TEMP/c5-installed-observation"
+          owner="$RUNNER_TEMP/c5-installed-runtime"
+          test ! -e "$out"
+          test ! -e "$owner"
+          mkdir "$out"
+          printf 'OBS_OUT=%s\nOWNER_CHECKOUT=%s\n' "$out" "$owner" >> "$GITHUB_ENV"
+          git worktree add --detach "$owner" "$ORIGINAL_OWNER"
+          python -I -B tools/intake_inspector_installed_observation.py intake \
+            --controller "$GITHUB_WORKSPACE" --owner "$owner" --out "$out" \
+            --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
+          printf 'RETAINED_WHEEL=%s\n' "$(python -I -B -c 'import json,sys; print(json.load(open(sys.argv[1]))["wheelPath"])' "$out/intake.json")" >> "$GITHUB_ENV"
+      - name: Fresh normal resolver install without bytecode or dependency suppression
         shell: bash
         run: |
           set -euo pipefail
-          python -m venv "$CONTINUATION_OUT/consumer"
-          candidate_python="$CONTINUATION_OUT/consumer/bin/python"
-          "$candidate_python" -m pip --isolated install --index-url https://pypi.org/simple --no-cache-dir --no-compile \
-            --report "$CONTINUATION_OUT/install-report.json" --constraint "$CONTINUATION_OUT/dependency-constraints.txt" \
-            "$RETAINED_WHEEL" \
-            'pytest==8.4.2' 'pydantic==2.14.2' 2>&1 | tee "$CONTINUATION_OUT/install.log"
-          "$candidate_python" -m pip --isolated check | tee "$CONTINUATION_OUT/pip-check.log"
-          "$candidate_python" -m pip --isolated freeze > "$CONTINUATION_OUT/freeze.txt"
-      - name: Identity-gated independent qualification and bounded attribution lanes
+          python -m venv "$OBS_OUT/consumer"
+          env -u GH_TOKEN -u GITHUB_TOKEN -u ACTIONS_RUNTIME_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_URL \
+            "$OBS_OUT/consumer/bin/python" -m pip --isolated install --no-cache-dir --no-compile \
+            --index-url https://pypi.org/simple --report "$OBS_OUT/install-report.json" \
+            --constraint "$OBS_OUT/dependency-constraints.txt" "$RETAINED_WHEEL" 'pytest==8.4.2' 'pydantic==2.14.2' \
+            2>&1 | tee "$OBS_OUT/install.log"
+          "$OBS_OUT/consumer/bin/python" -m pip --isolated check | tee "$OBS_OUT/pip-check.log"
+          "$OBS_OUT/consumer/bin/python" -m pip --isolated freeze --all > "$OBS_OUT/freeze.txt"
+      - name: Exactly one unchanged1M installed constructor with fresh pre and finally post identity
+        timeout-minutes: 3
         shell: bash
         run: |
           set -euo pipefail
-          "$CONTINUATION_OUT/consumer/bin/python" -I -B tools/run_inspector_attribution_lanes.py \
-            --controller "$GITHUB_WORKSPACE" --owner "$OWNER_CHECKOUT" \
-            --wheel "$RETAINED_WHEEL" \
-            --out "$CONTINUATION_OUT" --controller-sha "$EXPECTED_CONTROLLER" \
-            2>&1 | tee "$CONTINUATION_OUT/lanes-driver.log"
-      - name: Retain actual partial results original identities and wheel bytes
+          env -u GH_TOKEN -u GITHUB_TOKEN -u ACTIONS_RUNTIME_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_URL \
+            "$OBS_OUT/consumer/bin/python" -I -B tools/probe_inspector_installed_constructor_observation.py \
+            --controller "$GITHUB_WORKSPACE" --owner "$OWNER_CHECKOUT" --wheel "$RETAINED_WHEEL" --out "$OBS_OUT" \
+            --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT" \
+            2>&1 | tee "$OBS_OUT/observation.log"
+      - name: Seal bounded original and partial observation receipts
         if: always()
+        id: retention
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I -B tools/intake_inspector_installed_observation.py seal --controller "$GITHUB_WORKSPACE" \
+            --owner "$RUNNER_TEMP/c5-installed-runtime" --out "$RUNNER_TEMP/c5-installed-observation" \
+            --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
+      - name: Retain only bounded new observation outputs without relabelling original archives
+        if: always() && steps.retention.outputs.bounded == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: private-inspector-attribution-resume-${{ github.run_id }}-${{ github.run_attempt }}
+          name: private-c5-installed-observation-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/retained-continuation/*.json
-            ${{ runner.temp }}/retained-continuation/*.log
-            ${{ runner.temp }}/retained-continuation/*.txt
-            ${{ runner.temp }}/retained-continuation/*.xml
-            ${{ runner.temp }}/retained-continuation/materials/*.json
-            ${{ runner.temp }}/retained-continuation/materials/original-logs.zip
-            ${{ runner.temp }}/retained-continuation/materials/partial/*.json
-            ${{ runner.temp }}/retained-continuation/materials/partial/*.log
-            ${{ runner.temp }}/retained-continuation/materials/partial/*.xml
-            ${{ runner.temp }}/retained-continuation/materials/partial/materials/partial/*.json
-            ${{ runner.temp }}/retained-continuation/materials/partial/materials/partial/*.log
-            ${{ runner.temp }}/retained-continuation/materials/partial/materials/partial/*.txt
-            ${{ runner.temp }}/retained-continuation/materials/partial/materials/partial/wheels/*
-            ${{ runner.temp }}/retained-continuation/materials/cleanup/*.json
+            ${{ runner.temp }}/c5-installed-observation/*.json
+            ${{ runner.temp }}/c5-installed-observation/*.log
+            ${{ runner.temp }}/c5-installed-observation/*.txt
+            ${{ runner.temp }}/c5-installed-observation/materials/*.json
           if-no-files-found: error
           retention-days: 90
-      - name: Dispose only owned continuation consumer and source worktree
+      - name: Dispose only the new consumer and detached C5 runtime checkout
         if: always()
         shell: bash
         run: |
           set -euo pipefail
-          rm -rf "$RUNNER_TEMP/retained-continuation/consumer"
-          if test -e "$RUNNER_TEMP/retained-owner-source"; then
-            git worktree remove --force "$RUNNER_TEMP/retained-owner-source"
-          fi
-          test ! -e "$RUNNER_TEMP/retained-continuation/consumer"
-          test ! -e "$RUNNER_TEMP/retained-owner-source"
-          mkdir -p "$RUNNER_TEMP/retained-continuation"
-          python -I -B - <<'PY'
-          import json, os
-          from pathlib import Path
-          Path(os.environ['RUNNER_TEMP'],'retained-continuation','cleanup.json').write_text(json.dumps({
-              'controllerSource':os.environ['EXPECTED_CONTROLLER'], 'artifactSource':os.environ['ORIGINAL_OWNER'],
-              'run':os.environ['GITHUB_RUN_ID'], 'attempt':os.environ['GITHUB_RUN_ATTEMPT'],
-              'ownedConsumerAbsent':True, 'ownedSourceWorktreeAbsent':True,
-              'localHeavyWork':False, 'ledgerChanged':False, 'signalsSent':False},indent=2)+'\n')
-          PY
-      - name: Retain cleanup observations
+          python -I -B tools/intake_inspector_installed_observation.py cleanup --controller "$GITHUB_WORKSPACE" \
+            --owner "$RUNNER_TEMP/c5-installed-runtime" --out "$RUNNER_TEMP/c5-installed-observation" \
+            --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
+      - name: Retain owned cleanup observation
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: private-inspector-attribution-resume-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/retained-continuation/cleanup.json
+          name: private-c5-installed-observation-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/c5-installed-observation/cleanup.json
           if-no-files-found: error
           retention-days: 90
