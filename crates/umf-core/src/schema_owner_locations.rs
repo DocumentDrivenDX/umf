@@ -311,6 +311,7 @@ impl OwnerLocations {
                 ctx.charge_work(8,Utf16::default())?;
                 if id>=ctx.limits().max_values{return Ok(None);}
                 let Some(node)=table.coordinate(id,ctx)?else{return Ok(None);};
+                owner_walk_event("ow1-original-ancestor-hop",node.root,id);
                 if node.depth>ctx.limits().max_depth{return Ok(None);}
                 let Some(parent)=node.parent else{return Ok(if node.root==0{Some(&*owner.schema)}else{owner.catalogue_entries().get(node.root-1).map(|(_,v)|v)});};
                 let Some(value)=read(table,owner,parent,ctx)?else{return Ok(None);};
@@ -363,3 +364,116 @@ mod admitted_structure_independent_tests;
 #[cfg(test)]
 #[path="schema_bound_coordinate_views_independent_tests.rs"]
 mod bound_coordinate_views_independent_tests;
+
+// OW1 borrowed custody: only actual owner readback/ordered child reads mint it.
+// A Rust borrow prevents owner movement/mutation while this location is live.
+pub(super) struct CheckedLocation<'a> {
+    owner: &'a CompiledSchema, table: &'a OwnerLocations, value: &'a Value,
+    cursor: OwnerCursor, coordinate: Coordinate,
+    limits: crate::context::Limits, profile: crate::context::ResourceProfile,
+}
+pub(super) struct OrderedOwnerChildren<'a> {
+    parent: CheckedLocation<'a>, physical: Option<admitted_structure::OrderedStructureChildren<'a>>,
+    role: usize, base: usize, physical_root: usize, logical_end: usize, valid: bool,
+}
+fn walk_words<T>() -> usize { std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>()) }
+#[cfg(test)]
+thread_local! {static OWNER_WALK_OBSERVER:std::cell::RefCell<Option<Box<dyn FnMut(&'static str,usize,usize)>>>=std::cell::RefCell::new(None);}
+#[cfg(test)]
+pub(super) fn observe_owner_walk<T>(observer:Box<dyn FnMut(&'static str,usize,usize)>,operation:impl FnOnce()->T)->T {
+    struct Restore(Option<Box<dyn FnMut(&'static str,usize,usize)>>);
+    impl Drop for Restore {fn drop(&mut self){OWNER_WALK_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+    let prior=OWNER_WALK_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+pub(super) fn owner_walk_event(event:&'static str,role:usize,node:usize) {
+    #[cfg(test)]
+    {let observer=OWNER_WALK_OBSERVER.with(|s|s.borrow_mut().take());if let Some(observer)=observer {
+        struct Restore(Option<Box<dyn FnMut(&'static str,usize,usize)>>);
+        impl Drop for Restore {fn drop(&mut self){OWNER_WALK_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+        let mut restore=Restore(Some(observer));if let Some(observer)=restore.0.as_mut(){observer(event,role,node);}
+    }}
+    #[cfg(not(test))]let _=(event,role,node);
+}
+impl OwnerLocations {
+    pub(super) fn checked<'a>(&'a self,owner:&'a CompiledSchema,cursor:&OwnerCursor,ctx:&mut Context<'_>)->Result<Option<CheckedLocation<'a>>,EngineError>{
+        let Some(value)=self.read(owner,cursor,ctx)? else {return Ok(None);};
+        let Some(coordinate)=self.coordinate(cursor.node,ctx)? else {return Ok(None);};
+        ctx.charge_work(walk_words::<CheckedLocation<'a>>()+walk_words::<crate::context::Limits>()+8,Utf16::default())?;
+        if !self.belongs_for_access(owner,ctx)? {return Ok(None);}
+        owner_walk_event("ow1-checked-publication",coordinate.root,cursor.node);
+        Ok(Some(CheckedLocation{owner,table:self,value,cursor:cursor.clone(),coordinate,limits:ctx.limits(),profile:ctx.profile()}))
+    }
+}
+impl<'a> CheckedLocation<'a> {
+    #[cfg(test)]
+    pub(super) fn snapshot_for_test(&self)->(usize,usize,&'a Value){(self.coordinate.root,self.cursor.node,self.value)}
+    pub(super) fn read(&self,owner:&CompiledSchema,ctx:&mut Context<'_>)->Result<Option<&'a Value>,EngineError>{
+        ctx.charge_work(walk_words::<crate::context::Limits>()+12,Utf16::default())?;
+        if !std::ptr::eq(owner,self.owner) || self.limits!=ctx.limits() || self.profile!=ctx.profile() || !self.table.belongs_for_access(owner,ctx)? || self.cursor.node>=ctx.limits().max_values || self.coordinate.depth>ctx.limits().max_depth {return Ok(None);}
+        // Pointer equality above is only an owner argument discriminator. The
+        // node came from a private real read, with the same immutable lineage.
+        owner_walk_event("ow1-checked-read",self.coordinate.root,self.cursor.node);
+        Ok(Some(self.value))
+    }
+    pub(super) fn cursor(&self)->&OwnerCursor { &self.cursor }
+    pub(super) fn observe_consumption(&self,site:&'static str) {
+        #[cfg(test)] owner_walk_event(site,self.coordinate.root,self.cursor.node);
+        #[cfg(not(test))] let _=site;
+    }
+    pub(super) fn logical_position(&self,owner:&CompiledSchema,ctx:&mut Context<'_>)->Result<Option<(usize,usize)>,EngineError>{
+        if self.read(owner,ctx)?.is_none(){return Ok(None);}
+        ctx.charge_work(3,Utf16::default())?;
+        Ok(Some((self.coordinate.root,self.cursor.node)))
+    }
+    pub(super) fn children(self,ctx:&mut Context<'_>)->Result<OrderedOwnerChildren<'a>,EngineError>{
+        ctx.charge_work(walk_words::<OrderedOwnerChildren<'a>>()+walk_words::<crate::context::Limits>()+12,Utf16::default())?;
+        let mut physical=None;let mut base=0;let mut physical_root=0;let mut logical_end=0;
+        if self.read(self.owner,ctx)?.is_some() {
+            if let CoordinateStorage::Views{roles,..}=&self.table.storage {
+                ctx.charge_work(8,Utf16::default())?;
+                if let Some(bound)=roles.get(self.coordinate.root) {
+                    if let Some(raw)=self.cursor.node.checked_sub(bound.base).and_then(|n|bound.view.root.checked_add(n)) {
+                        physical=bound.view.structure.ordered_children(raw,ctx)?;
+                        base=bound.base;physical_root=bound.view.root;logical_end=bound.end;
+                    }
+                }
+            }
+        }
+        owner_walk_event("ow1-walk-publication",self.coordinate.root,self.cursor.node);
+        let role=self.coordinate.root;
+        Ok(OrderedOwnerChildren{parent:self,physical,role,base,physical_root,logical_end,valid:true})
+    }
+}
+impl<'a> OrderedOwnerChildren<'a> {
+    pub(super) fn child(&mut self,edge:usize,ctx:&mut Context<'_>)->Result<Option<CheckedLocation<'a>>,EngineError>{
+        struct Guard<'s,'a>{state:&'s mut OrderedOwnerChildren<'a>,success:bool}
+        impl Drop for Guard<'_,'_>{fn drop(&mut self){if !self.success{self.state.valid=false;}}}
+        let mut guard=Guard{state:self,success:false};let result=guard.state.child_impl(edge,ctx);guard.success=result.is_ok();result
+    }
+    fn original(&self,edge:usize,ctx:&mut Context<'_>)->Result<Option<CheckedLocation<'a>>,EngineError>{
+        owner_walk_event("ow1-original-fallback",self.role,self.parent.cursor.node);
+        let Some(cursor)=self.parent.table.child(self.parent.owner,&self.parent.cursor,edge,ctx)? else{return Ok(None);};
+        self.parent.table.checked(self.parent.owner,&cursor,ctx)
+    }
+    fn child_impl(&mut self,edge:usize,ctx:&mut Context<'_>)->Result<Option<CheckedLocation<'a>>,EngineError>{
+        if !self.valid {return Ok(None);}
+        ctx.charge_work(walk_words::<crate::context::Limits>()+12,Utf16::default())?;
+        if !self.valid{return Ok(None);}
+        if self.parent.read(self.parent.owner,ctx)?.is_none(){return self.original(edge,ctx);}
+        let Some(physical)=&mut self.physical else{return self.original(edge,ctx);};
+        let Some(raw)=physical.select(edge,ctx)? else{return self.original(edge,ctx);};
+        ctx.charge_work(walk_words::<CheckedLocation<'a>>()+walk_words::<crate::context::Limits>()+16,Utf16::default())?;
+        let Some(node)=raw.checked_sub(self.physical_root).and_then(|n|self.base.checked_add(n)).filter(|n|*n<self.logical_end&&*n<ctx.limits().max_values) else{return Ok(None);};
+        if self.parent.coordinate.depth>=ctx.limits().max_depth{return Ok(None);}
+        owner_walk_event("ow1-child-value-read",self.role,node);
+        let value=match self.parent.value{Value::Object(v)=>v.get(edge).map(|(_,v)|v),Value::Array(v)=>v.get(edge),_=>None};
+        let Some(value)=value else{return Ok(None);};
+        let count=match value{Value::Object(v)=>v.len(),Value::Array(v)=>v.len(),_=>0};
+        owner_walk_event("ow1-child-publication",self.role,node);
+        Ok(Some(CheckedLocation{owner:self.parent.owner,table:self.parent.table,value,cursor:OwnerCursor{lineage:Arc::clone(&self.parent.cursor.lineage),node},coordinate:Coordinate{root:self.role,parent:Some(self.parent.cursor.node),edge,count,depth:self.parent.coordinate.depth+1},limits:ctx.limits(),profile:ctx.profile()}))
+    }
+}
+
+#[cfg(test)]
+#[path="schema_owner_traversal_independent_tests.rs"]
+mod owner_traversal_independent_tests;

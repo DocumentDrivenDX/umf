@@ -1802,7 +1802,8 @@
       "crates/umf-codegen/src/actions/saga/tests.rs": "aec2a47ea1092d99b8bab8abbf5f33c41a7aefd9ae2a4ff0c012e82415f57417",
       "crates/umf-codegen/src/lib.rs": "44470f0a1de5f27ac21662e665dd8c05fc684302c11a56eef6437866cfb42e4a",
       "crates/umf-codegen/src/operation_schemas_utf16.rs": "876bc6ea0c831f569fc8130b938600e561937bca3b642cc58cc8db9eccaeec4b",
-      "crates/umf-codegen/src/resources.rs": "1a0cfeaf3da75a174f50717b99a348e6244745098b66221f9e45743eeca0dc63",
+      "crates/umf-codegen/src/resources.rs": "39b011cf05e848cd4cebe85daaabcd377575f8fe36e313fae7164f7a98ee061c",
+      "crates/umf-codegen/src/resources_codegen_catalogue_independent_tests.rs": "165248bd48eeea10cc3c122b7fba0cb1fa5572ff73036791a70ddac6f29a043a",
       "crates/umf-codegen/src/tables/mod.rs": "525ea11d61432b2b17d23d715d582ff059d6f34ea735c7c1aae461955a423cd8",
       "crates/umf-codegen/src/value.rs": "5f9b9b2f8b238628e5f8464dc925fc68ce4c8b5172ce9b7ab86ca33d0289c994",
       "crates/umf-codegen/tests/access_binding_schema_override.rs": "b2694c35ca58b2d3d0230b93720ed32a53e673a80d371507f24014d5c896e2af",
@@ -1823,23 +1824,24 @@
       "crates/umf-core/src/context.rs": "5d210c468658cb203cd830688b4677ce2ea1cf199ef59b23f4a86e8eb2efba55",
       "crates/umf-core/src/context_construction_tests.rs": "a7081434d41db02a5b785ab172374e124e8ffa4539e367d0ab46da4200dc82fc",
       "crates/umf-core/src/context_path_tests.rs": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
-      "crates/umf-core/src/engine.rs": "88d7d7590e792ffc993e75b2aef74046ae84c2f9573dbf89e715726acbc96e51",
+      "crates/umf-core/src/engine.rs": "0ab9794911d1cc2461f6f2e37d277e131fe83857297a1aa4eb88a71bae4890f5",
       "crates/umf-core/src/full_modules.rs": "f011690138a0933897c2e681b35a844199c4b57c6711357ef3b45599594434a0",
       "crates/umf-core/src/lib.rs": "336b3838bcdf0e31621208cc5af3635340b5f7aa1bac930842c9b89fa84a63f8",
       "crates/umf-core/src/python_value.rs": "ac9aadb0980520e8343b29a57ef2e44583ef5f84f59c52f68e44ce1dbe57dfd7",
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "ccca52e61314a96b6b771cae6c39e0d7ef080476397ba3bc21bed30c3f46261f",
-      "crates/umf-core/src/schema_admitted_bank.rs": "37a1ce1a7e5be07b526371ab547e62e5fdc732c381b729d7475089ae3e945b97",
+      "crates/umf-core/src/schema.rs": "b9f9850fdeeb1f4121e2c8726265aaa4690cdb1ed5b2b2125ac37173571cd961",
+      "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
-      "crates/umf-core/src/schema_admitted_structure.rs": "009a02fe404a3cf222cea7572adf83d08c07c3697b6d80be7d6786319d62d1c8",
+      "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
       "crates/umf-core/src/schema_admitted_structure_independent_tests.rs": "874a89a8fdc77ca6f5959fe9c11f5bc5423a872731ac73ef638a0ac418573ea6",
       "crates/umf-core/src/schema_annotation_delta.rs": "e6c07f15750cbbd06b1158943bdeb8743be7a09f986d552ebf6c0df21623458d",
       "crates/umf-core/src/schema_bound_coordinate_views_independent_tests.rs": "f255d7d9702c0868cb3b0b52b7feb0653eb621689b3efc39e3ce7e00f88fccb6",
       "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
       "crates/umf-core/src/schema_closed_container_independent_tests.rs": "161b91bdc903df76daab4cf8108a9c3e28b2493759dd8c27188d0eef8bfc803e",
       "crates/umf-core/src/schema_closed_structure.rs": "026045f024a4fb11a126ce0bbd384464fe8c2646b7f8b83aa02b77dcde6ff8ac",
+      "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
       "crates/umf-core/src/schema_construction_index.rs": "da2267884f2420104b4f3e998aeda7a0d20efd2534dbd6941f0c19c0d485602f",
       "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
       "crates/umf-core/src/schema_encoded_source_independent_tests.rs": "20d4e5ba70b94ced8a602097e455024840ee31a87b751ba395c7a29e8a40811a",
@@ -1852,11 +1854,12 @@
       "crates/umf-core/src/schema_node_coordinate_independent_tests.rs": "f9b10076f5034b62fa0c0fa47c218a2f3074424c537da88b2a4b4fa72488a42d",
       "crates/umf-core/src/schema_owned_plan_independent_tests.rs": "01178e789f3522581cd1cd94b77c7b5423a53634f9e717e4552be25712910fdb",
       "crates/umf-core/src/schema_owned_plan_tests.rs": "f3ec94b89b443195b8ffa64c585af76641694d80fb53df0bff9befebbfd749fd",
-      "crates/umf-core/src/schema_owned_plans.rs": "98bc4abe7a79bbe81007a53303729375ecbaaac25ccd4f0d0d55eb55ffda0117",
+      "crates/umf-core/src/schema_owned_plans.rs": "0ce039b603ead9ce4660fae8974d1cb850e0ccd01263e11980e8bd0fd9f18e59",
       "crates/umf-core/src/schema_owner_location_tests.rs": "060990953a6fa55640454093724d8072ea004e69043757daba583687ab20cd7f",
-      "crates/umf-core/src/schema_owner_locations.rs": "6038bbd5a7bb6908d7ae651902c9167c51eb461ba59ed4e58f35f26f71e43f04",
+      "crates/umf-core/src/schema_owner_locations.rs": "595312cba3d2b3990aaca5a211f2d4cb28b5ff239258f4ecdd84f0e3dabf971b",
       "crates/umf-core/src/schema_owner_locations_compact_independent_tests.rs": "db0d8e5addbc27f8e12ea0e6735f08483d15a604655ea70fd83ec5cff6bd2ee9",
       "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
+      "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "1fdd85417529a5aef600642ada92b065e669a0897a54f696de340444d79504d3",
       "crates/umf-core/src/schema_path_facts_independent_tests.rs": "d286ec807d8c4c36564cab6e55c36d4e2e0757c8a59e552c1edb98066b37d260",
       "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
       "crates/umf-core/src/serialization.rs": "9650dbe5d94b0b7db634f0a8a2522171f2c6fcd4da848feef5b2fb7e914ab1ff",
@@ -1925,12 +1928,12 @@
       "tests/qualification/test_inspector_admission_precharge.py": "79546279ad81343a925b3ca102b77e2cb3081f0e49d21e58c0e3937f2f7e07b3",
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
-      "tests/qualification/test_inspector_combined_budget.py": "d5c896d1ffa099a7fdefce9040627395e1868c0d703114099d1d099752fdfdf6",
-      "tests/qualification/test_inspector_construction_batch.py": "6167a1a5e5afe00d4b80631045a2c242fab293508e2b91b1eada8d73438f606a",
+      "tests/qualification/test_inspector_combined_budget.py": "43810b7edac2b552c49a41d7909470c6bb08e96241b76d77b139495f52206196",
+      "tests/qualification/test_inspector_construction_batch.py": "195d43eacbf8974c7cc57acf3c487e5846c693808db55d844fb1c64bf189f3f8",
       "tests/qualification/test_inspector_cost_gate.py": "87a971d3bb5df50648aa862084b4fd9bb9c455d96ff95c332c6a37bfbf9cd3e9",
-      "tests/qualification/test_inspector_installed_factory.py": "be8aab73a3a4895ffc049b7cd3f9c89a97c0f7f6b11201d1d5cc6667487c6466",
+      "tests/qualification/test_inspector_installed_factory.py": "110269eadc4ba642d92ff25d80770c3778fe63f9fbe1006aa7296ced8365e20c",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
-      "tests/qualification/test_inspector_owner_cursors.py": "104497778ebc3ca4475954a7b7c7d4cc1cf7d839d5c4990492e3cde233f40a0e",
+      "tests/qualification/test_inspector_owner_cursors.py": "7f2d7d34c5972b7692671ee0a8c92f6ea19d5c14088eae5509a7fd791531a253",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
       "tests/qualification/test_inspector_retained_controls.py": "017b5b095e6049ff632ba5ecf7f54e8506b21305c88aa87231c2c2da06d821b4",
       "tests/qualification/test_inspector_retained_diagnostic.py": "809a8ff4c78c260a0f54f0774ba70c432460cd06b01618b2579ec4488d244d47",
@@ -2855,6 +2858,36 @@
           "#[cfg(test)]",
           "#[path = \"schema_path_facts_independent_tests.rs\"]"
         ]
+      },
+      {
+        "parent": "crates/umf-core/src/schema_owner_locations.rs",
+        "child": "crates/umf-core/src/schema_owner_traversal_independent_tests.rs",
+        "module": "schema::owner_locations::owner_traversal_independent_tests",
+        "declaration": "#[cfg(test)]\n#[path=\"schema_owner_traversal_independent_tests.rs\"]\nmod owner_traversal_independent_tests;",
+        "cfg": [
+          "#[cfg(test)]",
+          "#[path=\"schema_owner_traversal_independent_tests.rs\"]"
+        ]
+      },
+      {
+        "parent": "crates/umf-core/src/schema.rs",
+        "child": "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs",
+        "module": "schema::codegen_catalogue_independent_tests",
+        "declaration": "#[cfg(test)]\n#[path=\"schema_codegen_catalogue_independent_tests.rs\"]\nmod codegen_catalogue_independent_tests;",
+        "cfg": [
+          "#[cfg(test)]",
+          "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]"
+        ]
+      },
+      {
+        "parent": "crates/umf-codegen/src/resources.rs",
+        "child": "crates/umf-codegen/src/resources_codegen_catalogue_independent_tests.rs",
+        "module": "resources::codegen_catalogue_independent_tests",
+        "declaration": "#[cfg(test)]\n#[path=\"resources_codegen_catalogue_independent_tests.rs\"]\nmod codegen_catalogue_independent_tests;",
+        "cfg": [
+          "#[cfg(test)]",
+          "#[path=\"resources_codegen_catalogue_independent_tests.rs\"]"
+        ]
       }
     ],
     "rust": [
@@ -3183,7 +3216,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/engine.rs",
-        "sourceSHA256": "88d7d7590e792ffc993e75b2aef74046ae84c2f9573dbf89e715726acbc96e51",
+        "sourceSHA256": "0ab9794911d1cc2461f6f2e37d277e131fe83857297a1aa4eb88a71bae4890f5",
         "cases": [
           {
             "name": "engine::registration_provider_tests::admitted_validation_keeps_structural_refusal_before_provider_access",
@@ -4748,7 +4781,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema.rs",
-        "sourceSHA256": "ccca52e61314a96b6b771cae6c39e0d7ef080476397ba3bc21bed30c3f46261f",
+        "sourceSHA256": "b9f9850fdeeb1f4121e2c8726265aaa4690cdb1ed5b2b2125ac37173571cd961",
         "cases": [
           {
             "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
@@ -6926,7 +6959,7 @@
         "target": "lib",
         "features": "umf-core/native-postgresql",
         "source": "crates/umf-codegen/src/resources.rs",
-        "sourceSHA256": "1a0cfeaf3da75a174f50717b99a348e6244745098b66221f9e45743eeca0dc63",
+        "sourceSHA256": "39b011cf05e848cd4cebe85daaabcd377575f8fe36e313fae7164f7a98ee061c",
         "cases": [
           {
             "name": "resources::resource_controls::explicit_binding_packages_share_registry_and_compile_the_supplied_schema",
@@ -7597,6 +7630,225 @@
           }
         ],
         "caseCount": 10
+      },
+      {
+        "package": "umf-core",
+        "target": "lib",
+        "features": "native-postgresql",
+        "source": "crates/umf-core/src/schema_owner_traversal_independent_tests.rs",
+        "sourceSHA256": "1fdd85417529a5aef600642ada92b065e669a0897a54f696de340444d79504d3",
+        "cases": [
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow01_ordered_objects_arrays_scalars_match_original_owner_readback",
+            "line": 131,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow02_skipped_siblings_and_nested_extents_preserve_requested_order",
+            "line": 156,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow03_root_catalogue_aliases_keep_distinct_logical_identity",
+            "line": 287,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow04_nonmonotone_arbitrary_and_invalid_access_use_original_fallback",
+            "line": 334,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow05_foreign_owner_moves_and_effective_limits_preserve_eligibility",
+            "line": 373,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow06_policy_dialect_reference_and_nested_id_keep_original_first_error",
+            "line": 421,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow07_actual_preflight_and_evaluator_consume_checked_children",
+            "line": 454,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow08_new_state_denials_preserve_first_host_error_and_no_publication",
+            "line": 530,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow09_reentry_error_unwind_and_sibling_restore_custody",
+            "line": 677,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::owner_traversal_independent_tests::ow10_genuine_nodeplan_hits_keep_readback_without_ancestor_authority",
+            "line": 823,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          }
+        ],
+        "caseCount": 10
+      },
+      {
+        "package": "umf-core",
+        "target": "lib",
+        "features": "native-postgresql",
+        "source": "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs",
+        "sourceSHA256": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
+        "cases": [
+          {
+            "name": "schema::codegen_catalogue_independent_tests::oc01_original_borrowed_root_first_mode_and_error_order",
+            "line": 114,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[cfg(test)]",
+              "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::oc02_ordered_catalogue_duplicates_and_table_extension",
+            "line": 168,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[cfg(test)]",
+              "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::oc03_genuine_ownership_immutability_context_limits_and_raw_fallback",
+            "line": 231,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[cfg(test)]",
+              "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::oc04_first_complete_schemajson_profile_not_semantic_success",
+            "line": 278,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[cfg(test)]",
+              "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::oc06_completed_compile_cache_displacement_and_late_activation",
+            "line": 320,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[cfg(test)]",
+              "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::oc07_actual_debit_groups_preserve_first_denial_and_no_partial_profile",
+            "line": 356,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[cfg(test)]",
+              "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::oc08_reentry_unwind_and_independent_catalogue_isolation",
+            "line": 459,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[cfg(test)]",
+              "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          }
+        ],
+        "caseCount": 7
+      },
+      {
+        "package": "umf-codegen",
+        "target": "lib",
+        "features": "umf-core/native-postgresql",
+        "source": "crates/umf-codegen/src/resources_codegen_catalogue_independent_tests.rs",
+        "sourceSHA256": "165248bd48eeea10cc3c122b7fba0cb1fa5572ff73036791a70ddac6f29a043a",
+        "cases": [
+          {
+            "name": "resources::codegen_catalogue_independent_tests::oc05_actual_eight_compilers_and_fresh_registry_consumption",
+            "line": 158,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[path=\"resources_codegen_catalogue_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          }
+        ],
+        "caseCount": 1
       }
     ],
     "python": [
@@ -7793,7 +8045,7 @@
       "fixtureSHA256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "metadataVersion": "0.10.9"
     },
-    "closureSHA256": "5fd09f62bcd38b5539ecc66629bc59963c46a86283bb22f22d42d0bf948f2aff"
+    "closureSHA256": "caab3c86ed7ff4318aeb7991c5d7cdf39904723b141940e616edf7c26f35bc28"
   },
   "modelReferences": {
     "baseModel": {
@@ -7858,6 +8110,39 @@
       "path": "/private/tmp/umf-pth1-c4-hosted-cost-run/ACTUAL-C4-SEALED-RECEIPT.json",
       "sha256": "4164783ba546274f46361baa8411bd1f638720bd3b8065a3ec41a1936086ca86"
     },
-    "PTH1C4CompileFixInterpretation": "Exactly two validate_string_array arguments borrow the existing Utf16 via text() after one unchanged genuine CarriedPath append. Original PTH1 ledger688a and all prior model/source pins remain historical evidence; no operation/fee/algorithm/model totals changed. C4 produced no wheel and measured no constructor/call. Actual compilation/native semantics, target ABI/layout, full constructor and percall fit remain UNKNOWN until separately admitted execution."
+    "PTH1C4CompileFixInterpretation": "Exactly two validate_string_array arguments borrow the existing Utf16 via text() after one unchanged genuine CarriedPath append. Original PTH1 ledger688a and all prior model/source pins remain historical evidence; no operation/fee/algorithm/model totals changed. C4 produced no wheel and measured no constructor/call. Actual compilation/native semantics, target ABI/layout, full constructor and percall fit remain UNKNOWN until separately admitted execution.",
+    "OW1SignedWholeRouteLedger": {
+      "path": "/private/tmp/umf-ow1-implementation-review/SIGNED-OW1-WHOLE-ROUTE-LEDGER.json",
+      "sha256": "913c2bfa7f0ee064c5182db15d22dc503af477b69acf67f2455c35907f5bedf4"
+    },
+    "OW1OC1SignedWholeRouteLedger": {
+      "path": "/private/tmp/umf-oc1-implementation-review/SIGNED-OW1-OC1-WHOLE-ROUTE-LEDGER.json",
+      "sha256": "d1dec95ac1e6ab853cae255073755e0d480f8919b7f469ed47ec11676374d846"
+    },
+    "OW1OC1GoverningRecoveryPlan": {
+      "path": "/private/tmp/umf-stack-release-truss/docs/helix/04-build/inspector-work-budget-recovery-plan.md",
+      "sha256": "35ecd5968a7a99bbec0f4f15dd87ed7e8b6d4fb0e433f9dd112ec86c057aae2a"
+    },
+    "OW1OC1OwnerSourceReview": {
+      "path": "/private/tmp/umf-oc1-implementation-review/REVIEW.json",
+      "sha256": "5682654c4e6e0fd7c778d3c0cd96aad7164c92869181bce12e21e23c6fdeda49"
+    },
+    "OW1OC1CombinedSourceReview": {
+      "path": "/private/tmp/umf-oc1-implementation-review/SOL-COMBINED-OWNER-SOURCE-MODEL-PASS-A-CENSUS-SCOPE.json",
+      "sha256": "a3dc483630c6742b7b4e74f1ede6b8dae4b91c4aeb61d6161f4555a5a1969d88"
+    },
+    "OW1OC1CFGIntegration": {
+      "path": "/private/tmp/umf-oc1-implementation-review/cfg-integration/INTEGRATION-RECEIPT.json",
+      "sha256": "07ecc856c38a3844efadd55b87339d18cd96c79f46d560770a31dd9afa180a2f"
+    },
+    "OW1CFGIntegration": {
+      "path": "/private/tmp/umf-ow1-implementation-review/cfg-integration/INTEGRATION-RECEIPT.json",
+      "sha256": "14098101a6240c898e37366a67e3509f04875a8a5fe64fc4df12c87ee22c074c"
+    },
+    "OC1EightControlsSourceReview": {
+      "path": "/private/tmp/umf-oc1-independent-control-preparation/oc08-stale-epoch-correction/SOL-EIGHT-CONTROLS-SOURCE-PASS-INCLUDE-AUTHORIZATION.json",
+      "sha256": "a2742f7ebf3ee3ced71e5151bd88db61e16b7dfdde3a0de265cd67286d26d22a"
+    },
+    "OW1OC1Interpretation": "Conditional signed operation accounting only, not numeric fit or a proved mandatory floor. Genuine ordered/arbitrary fallback and original catalogue/root/compiler/Registry/first-call semantics remain required. Gross conditional removed equality operations are not observed savings; positive lookup/storage/guard/ABI/Arc/cleanup/later-state and all base/PRE1/PTH1 terms remain. Dynamic counts, target layout, net delta, full constructor and each first public call cost remain UNKNOWN. C5/Q5 refusal history remains immutable; no fit or native qualification is inferred."
   }
 }

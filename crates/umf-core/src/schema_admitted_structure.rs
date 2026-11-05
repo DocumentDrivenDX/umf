@@ -117,7 +117,8 @@ impl Structure {
         let Some(node)=view.structure.node(view.root)else{return Ok(None);};
         if ordinal>=node.count as usize{return Ok(None);}
         let mut child=node.first as usize;
-        for _ in 0..ordinal {ctx.charge_work(2,Utf16::default())?;let Some(row)=view.structure.node(child)else{return Ok(None);};child=row.end as usize;}
+        for skipped in 0..ordinal {ctx.charge_work(2,Utf16::default())?;ordered_structure_event("ow1-original-extent-advance",view.root,skipped,child);let Some(row)=view.structure.node(child)else{return Ok(None);};child=row.end as usize;}
+        ordered_structure_event("ow1-original-selected-read",view.root,ordinal,child);
         let Some(row)=view.structure.node(child)else{return Ok(None);};
         if row.parent as usize!=view.root || row.edge as usize!=ordinal{return Ok(None);}
         Ok(Some(View{structure:Arc::clone(&view.structure),root:child}))
@@ -223,3 +224,71 @@ mod fused_dfs_independent_tests;
 
 #[path="schema_closed_structure.rs"]
 pub(crate) mod closed;
+
+// OW1: an invocation-local ordered physical walk, never a JSON/schema proof.
+// Fields are private; the actual immutable parent is read by this constructor.
+pub(crate) struct OrderedStructureChildren<'a> {
+    structure: &'a Structure, parent: usize, parent_end:usize, count: usize,
+    next_edge: usize, next_node: usize,
+    limits: crate::context::Limits, profile: crate::context::ResourceProfile,
+    valid: bool,
+}
+fn ordered_words<T>() -> usize { std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>()) }
+impl Structure {
+    pub(crate) fn ordered_children<'a>(&'a self, parent: usize, ctx: &mut Context<'_>) -> Result<Option<OrderedStructureChildren<'a>>, EngineError> {
+        ctx.charge_work(ordered_words::<OrderedStructureChildren<'a>>() + ordered_words::<crate::context::Limits>() + 12, Utf16::default())?;
+        if !self.compatible(ctx) { return Ok(None); }
+        let Some(node)=self.node(parent) else { return Ok(None); };
+        if parent>=ctx.limits().max_values || node.depth as usize>ctx.limits().max_depth || node.end as usize>self.extent() { return Ok(None); }
+        Ok(Some(OrderedStructureChildren{structure:self,parent,parent_end:node.end as usize,count:node.count as usize,next_edge:0,next_node:node.first as usize,limits:ctx.limits(),profile:ctx.profile(),valid:true}))
+    }
+}
+impl OrderedStructureChildren<'_> {
+    pub(crate) fn select(&mut self, edge: usize, ctx: &mut Context<'_>) -> Result<Option<usize>, EngineError> {
+        struct Guard<'s,'a>{state:&'s mut OrderedStructureChildren<'a>,success:bool}
+        impl Drop for Guard<'_,'_>{fn drop(&mut self){if !self.success{self.state.valid=false;}}}
+        let mut guard=Guard{state:self,success:false};let result=guard.state.select_impl(edge,ctx);guard.success=result.is_ok();result
+    }
+    fn select_impl(&mut self, edge: usize, ctx: &mut Context<'_>) -> Result<Option<usize>, EngineError> {
+        if !self.valid {return Ok(None);}
+        ctx.charge_work(ordered_words::<crate::context::Limits>() + 12, Utf16::default())?;
+        if !self.valid || self.limits!=ctx.limits() || self.profile!=ctx.profile() || edge<self.next_edge || edge>=self.count { return Ok(None); }
+        let mut ordinal=self.next_edge; let mut physical=self.next_node;
+        while ordinal<edge {
+            ctx.charge_work(6,Utf16::default())?;
+            ordered_structure_event("ow1-ordered-extent-read",self.parent,ordinal,physical);
+            let Some(row)=self.structure.node(physical) else { return Ok(None); };
+            if row.parent as usize!=self.parent || row.edge as usize!=ordinal || row.end as usize<=physical || row.end as usize>self.parent_end { return Ok(None); }
+            ordered_structure_event("ow1-ordered-extent-advance",self.parent,ordinal,physical);
+            physical=row.end as usize; ordinal+=1;
+        }
+        ctx.charge_work(ordered_words::<Self>() + 12,Utf16::default())?;
+        ordered_structure_event("ow1-ordered-selected-read",self.parent,edge,physical);
+        let Some(row)=self.structure.node(physical) else { return Ok(None); };
+        if row.parent as usize!=self.parent || row.edge as usize!=edge || row.end as usize<=physical || row.end as usize>self.parent_end || self.limits!=ctx.limits() || self.profile!=ctx.profile() { return Ok(None); }
+        // No state is published across a control call or before the final debit.
+        ordered_structure_event("ow1-ordered-frontier-commit",self.parent,edge,physical);
+        self.next_edge=edge+1; self.next_node=row.end as usize;
+        Ok(Some(physical))
+    }
+}
+
+// Read-only cfg observation of actual physical rows. parent/edge/row are
+// physical metadata, not logical role identity or admission evidence.
+#[cfg(test)]
+thread_local!{static ORDERED_STRUCTURE_OBSERVER:std::cell::RefCell<Option<Box<dyn FnMut(&'static str,usize,usize,usize)>>>=std::cell::RefCell::new(None);}
+#[cfg(test)]
+pub(crate) fn observe_ordered_structure<T>(observer:Box<dyn FnMut(&'static str,usize,usize,usize)>,operation:impl FnOnce()->T)->T{
+    struct Restore(Option<Box<dyn FnMut(&'static str,usize,usize,usize)>>);
+    impl Drop for Restore{fn drop(&mut self){ORDERED_STRUCTURE_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+    let prior=ORDERED_STRUCTURE_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+fn ordered_structure_event(event:&'static str,parent:usize,edge:usize,row:usize){
+    #[cfg(test)]
+    {let observer=ORDERED_STRUCTURE_OBSERVER.with(|s|s.borrow_mut().take());if let Some(observer)=observer{
+        struct Restore(Option<Box<dyn FnMut(&'static str,usize,usize,usize)>>);
+        impl Drop for Restore{fn drop(&mut self){ORDERED_STRUCTURE_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+        let mut restore=Restore(Some(observer));if let Some(observer)=restore.0.as_mut(){observer(event,parent,edge,row);}
+    }}
+    #[cfg(not(test))]let _=(event,parent,edge,row);
+}

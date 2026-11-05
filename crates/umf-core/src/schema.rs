@@ -51,6 +51,121 @@ impl SchemaBacking {
     }
 }
 
+// OC1 immutable input custody, NOT schema/meta/ref/Registry success.
+// The only mint is a completed Engine with its actual admitted Core bank.
+#[doc(hidden)]
+pub struct CodegenCatalogue {
+    bank: Arc<admitted_bank::SchemaBank>,
+    extension: Vec<(Utf16,Value)>,
+    limits: crate::context::Limits,
+    profile: crate::context::ResourceProfile,
+    memo: Mutex<CodegenCatalogueMemo>,
+}
+struct CodegenCatalogueMemo { epoch:u64, completed:Option<(SchemaDialect,Arc<SchemaResources>)> }
+fn catalogue_words<T>()->usize{std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>())}
+#[cfg(test)]
+thread_local!{static CODEGEN_CATALOGUE_OBSERVER:std::cell::RefCell<Option<Box<dyn FnMut(&'static str,usize)>>>=std::cell::RefCell::new(None);}
+#[cfg(test)]
+fn observe_codegen_catalogue<T>(observer:Box<dyn FnMut(&'static str,usize)>,operation:impl FnOnce()->T)->T{
+    struct Restore(Option<Box<dyn FnMut(&'static str,usize)>>);
+    impl Drop for Restore{fn drop(&mut self){CODEGEN_CATALOGUE_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+    let prior=CODEGEN_CATALOGUE_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+fn codegen_catalogue_event(event:&'static str,count:usize){
+    #[cfg(test)]
+    {let observer=CODEGEN_CATALOGUE_OBSERVER.with(|s|s.borrow_mut().take());if let Some(observer)=observer{
+        struct Restore(Option<Box<dyn FnMut(&'static str,usize)>>);
+        impl Drop for Restore{fn drop(&mut self){CODEGEN_CATALOGUE_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+        let mut restore=Restore(Some(observer));if let Some(observer)=restore.0.as_mut(){observer(event,count);}
+    }}
+    #[cfg(not(test))]let _=(event,count);
+}
+impl CodegenCatalogue {
+    #[cfg(test)]
+    fn profile_snapshot_for_test(&self)->(u64,Option<SchemaDialect>,usize){
+        let memo=self.memo.lock().unwrap_or_else(|e|e.into_inner());
+        (memo.epoch,memo.completed.as_ref().map(|(d,_)|*d),memo.completed.as_ref().map_or(0,|(_,v)|v.entries.len()))
+    }
+    pub(crate) fn from_engine(owners:[&CompiledSchema;3],resources:&Arc<crate::engine::ResourceSet>,ctx:&mut Context<'_>)->Result<Option<Self>,EngineError>{
+        ctx.charge_work(catalogue_words::<Self>()+catalogue_words::<crate::context::Limits>()+18,Utf16::default())?;
+        let Some(bank)=&owners[0].resource_bank else{return Ok(None);};
+        if ctx.profile()!=crate::context::ResourceProfile::Cooperative || !bank.input_compatible(ctx)? || !bank.owns_core(resources,ctx)? {return Ok(None);}
+        for (ordinal,owner) in owners.iter().enumerate(){
+            ctx.charge_work(12,Utf16::default())?;
+            if !owner.strict || !owner.resolve_references_at_compile || !matches!(owner.regex_profile,RegexProfile::Ecma262Unicode) || owner.root_keyword_policy!=KeywordPolicy::DRAFT2020 {return Ok(None);}
+            let (Some(actual),SchemaRoot::Bank(root,admitted_bank::BankRoot::Core(role)))=(&owner.resource_bank,&owner.schema)else{return Ok(None);};
+            if !Arc::ptr_eq(actual,bank)||!Arc::ptr_eq(root,bank)||*role!=ordinal{return Ok(None);}
+        }
+        // Bank rows must be the exact original Engine export sequence, not a
+        // caller-provided catalogue or an inferred equal-content identity.
+        if !bank.unique_retrievals(ctx)? {return Ok(None);}
+        #[cfg(test)] codegen_catalogue_event("oc1-engine-mint",bank.len());
+        Ok(Some(Self{bank:Arc::clone(bank),extension:Vec::new(),limits:ctx.limits(),profile:ctx.profile(),memo:Mutex::new(CodegenCatalogueMemo{epoch:0,completed:None})}))
+    }
+    fn compatible(&self,ctx:&mut Context<'_>)->Result<bool,EngineError>{
+        ctx.charge_work(catalogue_words::<crate::context::Limits>()+4,Utf16::default())?;
+        Ok(self.limits==ctx.limits()&&self.profile==ctx.profile()&&self.bank.input_compatible(ctx)?)
+    }
+    fn len(&self)->usize{self.bank.len()+self.extension.len()}
+    fn get(&self,index:usize)->Option<(&Utf16,&Value)>{
+        if index<self.bank.len(){self.bank.get(index)}else{self.extension.get(index-self.bank.len()).map(|(id,v)|(id,v))}
+    }
+    #[doc(hidden)]
+    pub fn with_tables_schema(mut self,tables_schema:&Value,ctx:&mut Context<'_>)->Result<Option<Self>,EngineError>{
+        ctx.charge_work(catalogue_words::<Self>()+8,Utf16::default())?;
+        let mut id=None;
+        if let Value::Object(fields)=tables_schema{for(key,value)in fields{
+            ctx.charge_work(key.len().min(3).saturating_add(1),Utf16::default())?;
+            if key.units()==[36,105,100]{if let Value::String(value)=value{id=Some(value);}break;}
+        }}
+        let id=id.ok_or_else(||EngineError::new("CODEGEN_RESOURCE_INVALID",Utf16::default(),"Tables schema requires an $id"))?;
+        let count=self.len();
+        ctx.charge_work(count,Utf16::default())?;
+        let mut present=false;
+        for index in 0..count{
+            ctx.charge_work(8,Utf16::default())?;
+            let (existing,_)=self.get(index).expect("private ordered catalogue");
+            ctx.charge_work(existing.len(),Utf16::default())?;present|=existing==id;
+        }
+        if present{return Ok(Some(self));}
+        // The public materialized table copy is retained. This additional
+        // immutable extension copy is real, full and separately charged.
+        #[cfg(test)] codegen_catalogue_event("oc1-extension-copy-route",self.len());
+        let value=copy_json(tables_schema,ctx)?;
+        let words=catalogue_words::<(Utf16,Value)>();
+        if self.extension.len()==self.extension.capacity(){
+            let Some(wanted)=self.extension.len().checked_add(1)else{return Ok(None);};
+            ctx.charge_work(self.extension.len().saturating_add(wanted).saturating_mul(words),Utf16::default())?;
+            #[cfg(test)] codegen_catalogue_event("oc1-extension-reserve",wanted);
+            if self.extension.try_reserve_exact(1).is_err(){return Ok(None);}
+        }
+        ctx.charge_work(id.clone_work().saturating_add(words).saturating_add(catalogue_words::<CodegenCatalogueMemo>()).saturating_add(8),Utf16::default())?;
+        #[cfg(test)] codegen_catalogue_event("oc1-extension-publication",self.len()+1);
+        self.extension.push((id.clone(),value));
+        // Consuming self gives exclusive mutation; no lock/control overlap.
+        let memo=self.memo.get_mut().unwrap_or_else(|e|e.into_inner());memo.completed=None;memo.epoch=memo.epoch.saturating_add(1);
+        Ok(Some(self))
+    }
+    fn completed(&self,dialect:SchemaDialect,ctx:&mut Context<'_>)->Result<(u64,Option<Arc<SchemaResources>>),EngineError>{
+        ctx.charge_work(catalogue_words::<CodegenCatalogueMemo>()+catalogue_words::<crate::context::Limits>()+12,Utf16::default())?;
+        if !self.compatible(ctx)?{return Ok((u64::MAX,None));}
+        // No controls while the mutex is held; the return Arc clone is prepaid.
+        let memo=self.memo.lock().unwrap_or_else(|e|e.into_inner());
+        let prior=memo.completed.as_ref().filter(|(d,_)|*d==dialect).map(|(_,v)|Arc::clone(v));let epoch=memo.epoch;drop(memo);
+        #[cfg(test)] if prior.is_some(){codegen_catalogue_event("oc1-completed-profile-hit",self.len());}
+        Ok((epoch,prior))
+    }
+    fn publish_completed(&self,epoch:u64,dialect:SchemaDialect,resources:&SchemaBacking,ctx:&mut Context<'_>)->Result<(),EngineError>{
+        let SchemaBacking::Shared(resources)=resources else{return Ok(());};
+        ctx.charge_work(2*catalogue_words::<CodegenCatalogueMemo>()+catalogue_words::<crate::context::Limits>()+12,Utf16::default())?;
+        if epoch==u64::MAX || !self.compatible(ctx)?{return Ok(());}
+        #[cfg(test)] codegen_catalogue_event("oc1-profile-publication-attempt",self.len());
+        let mut memo=self.memo.lock().unwrap_or_else(|e|e.into_inner());
+        if memo.epoch==epoch {if let Some(next)=epoch.checked_add(1){memo.completed=Some((dialect,Arc::clone(resources)));memo.epoch=next;}}
+        Ok(())
+    }
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum SchemaDialect {
     Draft3,
@@ -316,9 +431,10 @@ fn construction_catalogue_view(resources: admitted_bank::Catalogue<'_>, ctx: &mu
     ctx.charge_work(count, Utf16::default())?;
     let candidates = state.borrow().catalogues.clone();
     for (limits, candidate) in candidates {
-        if limits != ctx.limits() || candidate.entries.len() != resources.len() { continue; }
+        if limits != ctx.limits() || candidate.entries.len() != resources.len_with_context(ctx)? { continue; }
         let mut equal = true;
-        for ((aid,av),(bid,bv)) in candidate.entries.iter().zip(resources.iter()) {
+        for (index,(aid,av)) in candidate.entries.iter().enumerate() {
+            let(bid,bv)=resources.get_with_context(index,ctx)?.expect("same ordered catalogue extent");
             ctx.charge_work(aid.len().min(bid.len()), Utf16::default())?;
             if aid != bid || !construction_equal(av,bv,ctx)? { equal = false; break; }
         }
@@ -1402,6 +1518,15 @@ impl CompiledSchema {
 
     })
 }
+    #[doc(hidden)]
+    pub fn compile_with_codegen_catalogue(schema:&Value,catalogue:&CodegenCatalogue,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+        ctx.with_work_phase("native-schema-compilation",|ctx|{
+            let dialect=select_dialect(schema)?;
+            // Exact same closed mode as compile -> compile_with_dialect(true).
+            // Borrowed-root SchemaJSON/copy still runs in the shared body first.
+            Self::compile_with_dialect_catalogue(schema,&SchemaResources::default(),dialect,true,ctx,Some(catalogue))
+        })
+    }
     /// Consumer entry: honor a declared Draft 7 or Draft 2020-12 dialect and
     /// default an omitted declaration to the current Draft 2020-12 surface.
     pub fn compile_consumer(
@@ -1829,19 +1954,11 @@ impl CompiledSchema {
         strict: bool,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        Self::compile_inner(
-            schema,
-            resources,
-            dialect,
-            strict,
-            RegexProfile::Ecma262Unicode,
-            true,
-            false,
-            false,
-            true,
-            KeywordPolicy::DRAFT2020,
-            ctx,
-        )
+        Self::compile_with_dialect_catalogue(schema,resources,dialect,strict,ctx,None)
+    }
+    // One actual governing mode body for original and OC1 borrowed roots.
+    fn compile_with_dialect_catalogue(schema:&Value,resources:&SchemaResources,dialect:SchemaDialect,strict:bool,ctx:&mut Context<'_>,catalogue:Option<&CodegenCatalogue>)->Result<Self,EngineError>{
+        Self::compile_inner_with_bank(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)
     }
     pub(crate) fn compile_input_bank(bank:Arc<admitted_bank::SchemaBank>,role:usize,ctx:&mut Context<'_>)->Result<Self,EngineError> {
         if role>=3 {return Err(schema_error(&Utf16::default(),"Private core bank role out of range"));}
@@ -1850,7 +1967,7 @@ impl CompiledSchema {
         let admitted=bank.input_compatible(ctx)? && bank.anchor_free_core_role(role,ctx)? && bank.unique_retrievals(ctx)?;
         ctx.charge_work(1,Utf16::default())?;
         let retained=Arc::clone(&bank);
-        Self::compile_inner_with_bank(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted)
+        Self::compile_inner_with_bank(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None)
     }
     fn compile_inner(
         schema: &Value,
@@ -1865,7 +1982,7 @@ impl CompiledSchema {
         root_keyword_policy: KeywordPolicy,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false)
+        Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None)
     }
     fn compile_inner_with_bank(
         schema: &Value,
@@ -1881,6 +1998,7 @@ impl CompiledSchema {
         ctx: &mut Context<'_>,
         supplied_bank: Option<(Arc<admitted_bank::SchemaBank>,admitted_bank::BankRoot)>,
         input_admitted:bool,
+        codegen_catalogue:Option<&CodegenCatalogue>,
     ) -> Result<Self, EngineError> {
         ctx.with_constructor_site("ctor.other", |ctx| {
         if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
@@ -1891,15 +2009,19 @@ impl CompiledSchema {
             && resolve_references_at_compile && !apply_local_reference_gate
             && !allow_duplicate_schema_keys && finite_binary64_admission
             && root_keyword_policy == KeywordPolicy::DRAFT2020;
-        let resources_view=match supplied_bank.as_ref(){Some((bank,_))=>admitted_bank::Catalogue::Bank(bank),None=>admitted_bank::Catalogue::Borrowed(&resources.entries)};
+        if codegen_catalogue.is_some(){ctx.charge_work(catalogue_words::<admitted_bank::Catalogue<'_>>()+catalogue_words::<Option<&CodegenCatalogue>>()+4,Utf16::default())?;}
+        let resources_view=match codegen_catalogue{Some(catalogue)=>admitted_bank::Catalogue::Codegen(catalogue),None=>match supplied_bank.as_ref(){Some((bank,_))=>admitted_bank::Catalogue::Bank(bank),None=>admitted_bank::Catalogue::Borrowed(&resources.entries)}};
+        let mut codegen_epoch=None;
         let bank_input=if input_admitted{supplied_bank.as_ref()}else{None};
         let (schema,shared_resources,new_catalogue)=if let Some((bank,role))=bank_input {
             ctx.charge_work(2,Utf16::default())?;
             (SchemaRoot::Bank(Arc::clone(bank),*role),SchemaBacking::Owned(SchemaResources::default()),false)
         } else {
         let mut share_candidate=None;
+        let resources_count=resources_view.len_with_context(ctx)?;
         if eligible {
-            for (ordinal,(retrieval,candidate)) in resources_view.iter().enumerate() {
+            for ordinal in 0..resources_count {
+                let(retrieval,candidate)=resources_view.get_with_context(ordinal,ctx)?.expect("actual immutable catalogue row");
                 if SchemaRoot::same_anchor_free_role(schema,retrieval,ctx)? && construction_equal(schema,candidate,ctx)? {ctx.charge_work(1,Utf16::default())?;share_candidate=Some(ordinal);break;}
             }
         }
@@ -1910,12 +2032,19 @@ impl CompiledSchema {
                 else if finite_binary64_admission {copy_schema_json(schema,ctx,false)?}
                 else {copy_json(schema,ctx)?})
         };
-        let shared = if eligible { construction_catalogue_view(resources_view, ctx)? } else { None };
+        #[cfg(test)] if codegen_catalogue.is_some(){codegen_catalogue_event("oc1-root-profile-complete",resources_count);}
+        let shared = if eligible {
+            let prior=if let Some(catalogue)=codegen_catalogue {
+                let(epoch,prior)=catalogue.completed(dialect,ctx)?;codegen_epoch=Some(epoch);prior
+            }else{None};
+            if prior.is_some(){prior}else{construction_catalogue_view(resources_view,ctx)?}
+        } else { None };
         let new_catalogue = shared.is_none();
         let shared_resources = if let Some(shared) = shared { SchemaBacking::Shared(shared) } else {
-        let mut owned = Vec::with_capacity(resources_view.len());
+        let mut owned = Vec::with_capacity(resources_count);
         let mut identities: Vec<(&Utf16, &Value)> = Vec::new();
-        for (id, value) in resources_view.iter() {
+        for ordinal in 0..resources_count {
+            let(id,value)=resources_view.get_with_context(ordinal,ctx)?.expect("actual immutable catalogue row");
             ctx.charge_work(id.len(), Utf16::default())?;
             ctx.charge_work(1, id.clone())?;
             if let Some((_, previous)) = identities.iter().find(|(key, _)| *key == id) {
@@ -1951,7 +2080,7 @@ impl CompiledSchema {
                 // before catalogue admission. Ordered catalogue equality or
                 // the exact copy preserves its ordinal only without dedup.
                 ctx.charge_work(2,Utf16::default())?;
-                if catalogue.entries.len()==resources_view.len() {
+                if catalogue.entries.len()==resources_count {
                     root=Some(SchemaRoot::Catalogue(Arc::clone(catalogue),ordinal));
                 }
             }
@@ -1976,7 +2105,9 @@ impl CompiledSchema {
                     if limits == ctx.limits() && prior.dialect == dialect
                         && matches!(&shared_resources, SchemaBacking::Shared(catalogue) if prior.resources.shares(catalogue))
                         && construction_equal(&*prior.schema, &schema, ctx)? {
-                        return prior.construction_copy(schema, ctx);
+                        let completed=prior.construction_copy(schema, ctx)?;
+                        if let(Some(catalogue),Some(epoch))=(codegen_catalogue,codegen_epoch){catalogue.publish_completed(epoch,dialect,&completed.resources,ctx)?;}
+                        return Ok(completed);
                     }
                 }
             }
@@ -2077,6 +2208,7 @@ impl CompiledSchema {
                 state.borrow_mut().completed.push((ctx.limits(), Arc::new(completed)));
             }
         }
+        if let(Some(catalogue),Some(epoch))=(codegen_catalogue,codegen_epoch){catalogue.publish_completed(epoch,dialect,&compiled.resources,ctx)?;}
         Ok(compiled)
 
         })
@@ -2709,7 +2841,36 @@ impl CompiledSchema {
         Ok(())
 
     }
-    fn preflight_carried(&self,schema:&Value,path:&construction_index::CarriedPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
+    fn preflight_carried<'a>(&'a self,schema:&'a Value,path:&construction_index::CarriedPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
+        let checked=match (&self.owner_locations,cursor.as_ref()) {
+            (Some(table),Some(cursor))=>table.checked(self,cursor,ctx)?,_=>None,
+        };
+        self.preflight_carried_checked(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,checked)
+    }
+    // Each real same-parent loop lazily initializes its own local ordered walk.
+    // No future member's semantics run here; filtered/skipped members remain so.
+    fn preflight_ordered_child<'a>(&'a self,cursor:Option<&OwnerCursor>,checked:&mut Option<owner_locations::CheckedLocation<'a>>,walk:&mut Option<owner_locations::OrderedOwnerChildren<'a>>,edge:usize,ctx:&mut Context<'_>)->Result<(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>),EngineError>{
+        type Child<'a>=(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>);
+        ctx.charge_work(std::mem::size_of::<Child<'a>>().div_ceil(std::mem::size_of::<usize>())+6,Utf16::default())?;
+        if let Some(location)=checked.take(){*walk=Some(location.children(ctx)?);}
+        if let Some(walk)=walk {
+            let child=walk.child(edge,ctx)?;
+            // The cursor clone is retained only for the original arbitrary
+            // fallback and deferred callers; borrowed-node custody is separate.
+            let cursor=match &child{Some(child)=>{ctx.charge_work(1,Utf16::default())?;Some(child.cursor().clone())},None=>None};
+            return Ok((cursor,child));
+        }
+        Ok((child_cursor(Some(self),cursor,edge,ctx)?,None))
+    }
+    fn preflight_carried_checked<'a>(&'a self,schema:&'a Value,path:&construction_index::CarriedPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>,mut checked:Option<owner_locations::CheckedLocation<'a>>)->Result<(),EngineError>{
+        // Real private checked readback, not a supplied pointer/ordinal claim.
+        if let Some(location)=&checked {
+            if !location.read(self,ctx)?.is_some_and(|value|std::ptr::eq(value,schema)){checked=None;}
+            else {location.observe_consumption("ow1-preflight-consume");}
+        }
+        ctx.charge_work((std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>()+std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>()).div_ceil(std::mem::size_of::<usize>())+2,Utf16::default())?;
+        let mut ordered=None;
+
         ctx.charge_work(1, path.text().clone())?;
         if depth > ctx.limits().max_depth {
             return Err(EngineError::new(
@@ -2766,7 +2927,9 @@ impl CompiledSchema {
                 }
                 continue;
             }
-            let keyword_cursor=child_cursor(Some(self),cursor.as_ref(),member_index,ctx)?;
+            let (keyword_cursor,mut keyword_checked)=self.preflight_ordered_child(cursor.as_ref(),&mut checked,&mut ordered,member_index,ctx)?;
+            ctx.charge_work(std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>().div_ceil(std::mem::size_of::<usize>())+1,Utf16::default())?;
+            let mut keyword_ordered=None;
             let child = path.append(key,PathKind::RawSchemaStep,ctx)?;
             match text.as_str() {
                 "$ref" | "$dynamicRef" | "$recursiveRef" => {
@@ -2805,20 +2968,21 @@ impl CompiledSchema {
                         match val {
                             Value::Object(_) => {
                                 let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                                self.preflight_carried(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                                let selected_checked=keyword_checked.take();
+                                self.preflight_carried_checked(val,&child,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
                             }
                             Value::Array(items) => {
                                 for (index, branch) in items.iter().enumerate() {
                                     if matches!(branch, Value::Object(_)) {
-                                        let selected=child_cursor(Some(self),keyword_cursor.as_ref(),index,ctx)?;
-                                        self.preflight_carried(
+                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,index,ctx)?;
+                                        self.preflight_carried_checked(
                                             branch,
                                             &self.preflight_index_path(&child,index,ctx)?,
                                             &scope,
                                             depth + 1,
                                             policy,
                                             ctx,
-                                            seen,selected)?;
+                                            seen,selected,selected_checked)?;
                                     }
                                 }
                             }
@@ -2862,8 +3026,8 @@ impl CompiledSchema {
                                 self.compile_pattern(name, &pattern_path, ctx)?;
                             }
                             let p = child.append(name,PathKind::SchemaPointer,ctx)?;
-                            let selected=child_cursor(Some(self),keyword_cursor.as_ref(),child_index,ctx)?;
-                            self.preflight_carried(child_schema,&p,&scope,depth+1,policy,ctx,seen,selected)?;
+                            let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,child_index,ctx)?;
+                            self.preflight_carried_checked(child_schema,&p,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
                         }
                     } else {
                         return Err(schema_error(&child, "Keyword value must be an object"));
@@ -2903,19 +3067,20 @@ impl CompiledSchema {
                     }
                     if let Value::Array(items) = val {
                         for (i, x) in items.iter().enumerate() {
-                            let selected=child_cursor(Some(self),keyword_cursor.as_ref(),i,ctx)?;
-                            self.preflight_carried(
+                            let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,i,ctx)?;
+                            self.preflight_carried_checked(
                                 x,
                                 &self.preflight_index_path(&child,i,ctx)?,
                                 &scope,
                                 depth + 1,
                                 policy,
                                 ctx,
-                                seen,selected)?;
+                                seen,selected,selected_checked)?;
                         }
                     } else {
                         let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                        self.preflight_carried(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                                let selected_checked=keyword_checked.take();
+                        self.preflight_carried_checked(val,&child,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
                     }
                 }
                 "allOf" | "anyOf" | "oneOf" | "prefixItems" => {
@@ -2924,15 +3089,15 @@ impl CompiledSchema {
                             return Err(schema_error(&child, "Applicator array must not be empty"));
                         }
                         for (i, x) in items.iter().enumerate() {
-                            let selected=child_cursor(Some(self),keyword_cursor.as_ref(),i,ctx)?;
-                            self.preflight_carried(
+                            let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,i,ctx)?;
+                            self.preflight_carried_checked(
                                 x,
                                 &self.preflight_index_path(&child,i,ctx)?,
                                 &scope,
                                 depth + 1,
                                 policy,
                                 ctx,
-                                seen,selected)?;
+                                seen,selected,selected_checked)?;
                         }
                     } else {
                         return Err(schema_error(&child, "Applicator must be an array"));
@@ -2941,19 +3106,20 @@ impl CompiledSchema {
                 "extends" if self.dialect == SchemaDialect::Draft3 => {
                     if let Value::Array(items) = val {
                         for (index, item) in items.iter().enumerate() {
-                            let selected=child_cursor(Some(self),keyword_cursor.as_ref(),index,ctx)?;
-                            self.preflight_carried(
+                            let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,index,ctx)?;
+                            self.preflight_carried_checked(
                                 item,
                                 &self.preflight_index_path(&child,index,ctx)?,
                                 &scope,
                                 depth + 1,
                                 policy,
                                 ctx,
-                                seen,selected)?;
+                                seen,selected,selected_checked)?;
                         }
                     } else {
                         let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                        self.preflight_carried(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                                let selected_checked=keyword_checked.take();
+                        self.preflight_carried_checked(val,&child,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
                     }
                 }
                 "pattern" => {
@@ -3023,15 +3189,15 @@ impl CompiledSchema {
                             {
                                 // Draft 3 permits a string dependency naming a peer property.
                             } else {
-                                let selected=child_cursor(Some(self),keyword_cursor.as_ref(),child_index,ctx)?;
-                                self.preflight_carried(
+                                let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,child_index,ctx)?;
+                                self.preflight_carried_checked(
                                     dep,
                                     &child.append(name,PathKind::SchemaPointer,ctx)?,
                                     &scope,
                                     depth + 1,
                                     policy,
                                     ctx,
-                                    seen,selected)?;
+                                    seen,selected,selected_checked)?;
                             }
                         }
                     } else {
@@ -12432,3 +12598,7 @@ mod evaluation_paths_bridge_independent_tests;
 #[cfg(test)]
 #[path = "schema_path_facts_independent_tests.rs"]
 mod path_facts_independent_tests;
+
+#[cfg(test)]
+#[path="schema_codegen_catalogue_independent_tests.rs"]
+mod codegen_catalogue_independent_tests;

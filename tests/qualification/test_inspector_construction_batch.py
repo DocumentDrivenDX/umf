@@ -70,7 +70,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         v=helper.selection(ROOT,self.census);current={**self.census,'rust':v['rust'],'rustCaseCount':sum(len(g['cases']) for g in v['rust'])}
         listings={key:[] for key in self.keys}
         for row in current['rust']:listings[row['package'],row['target']]+=[x['name'] for x in row['cases']]
-        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),433)
+        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),451)
         self.assertEqual({(g['package'],g['target']) for g in current['rust']},self.keys)
         for row in current['rust']:
             if row['package']=='umf-core-python':self.assertEqual(row['manifest'],'bindings/core/python/Cargo.toml')

@@ -151,9 +151,9 @@ class ConsolidatedFindingSourceControls(unittest.TestCase):
         regression=original.replace(loop,loop+'            if eligible { ctx.charge_work(id.len().saturating_mul(3).saturating_add(1),Utf16::default())?; }\n',1)
         self.assertEqual(hashlib.sha256(regression.encode()).hexdigest(),'3b4710cad3ce6af6abc71c103dbe8adec34bde8500fbd3afeb7e2b6060ed9a8b')
         self.assertNotEqual(hashlib.sha256(regression.encode()).hexdigest(),'5ddde1045927ec137b0ece625036c893cb4e6739c407a611bc9b8fbdf5e2c74d')
-        for old,new in [('None,false)','Some(unreviewed),true)'),('Catalogue::Borrowed(&self.resources.entries)','Catalogue::Bank(bank)'),('let retrieval = id.to_utf8().unwrap_or_default();','let retrieval = unreviewed();')]:
+        for old,new,count in [('root_keyword_policy,ctx,None,false,None)','root_keyword_policy,ctx,Some(unreviewed),true,None)',1),('root_keyword_policy,ctx,None,false,None)','root_keyword_policy,ctx,None,false,Some(unreviewed))',1),('Catalogue::Borrowed(&self.resources.entries)','Catalogue::Bank(bank)',1),('let retrieval = id.to_utf8().unwrap_or_default();','let retrieval = unreviewed();',2)]:
             with self.subTest(mutation=old):
-                mutant=source.replace(old,new,1);self.assertNotEqual(mutant,source)
+                mutant=G.changed_mutant(source,old,new,count);self.assertNotEqual(mutant,source)
                 with self.assertRaises(ValueError):self.python_route(mutant)
     def test_real_compile_inner_precharge_precedes_allocation_and_removed_admission_refuses(self):
         current=(ROOT/'crates/umf-core/src/schema.rs').read_text()
@@ -167,6 +167,7 @@ class ConsolidatedFindingSourceControls(unittest.TestCase):
                    current.replace(line,line+line,1),
                    current.replace('compiled.location_root(ordinal+1,true,ctx)?','compiled.location_root(ordinal,true,ctx)?',1)]
         for mutant in mutations:
+            self.assertNotEqual(mutant,current)
             with self.subTest(mutation=mutations.index(mutant)),self.assertRaises(ValueError):self.catalogue_precharge(mutant)
 
 class DynamicScopePushProtocolSourceControls(unittest.TestCase):

@@ -28,25 +28,45 @@ def raw_body(source,name):
 
 def compact(source):return re.sub(r'\s+','',code_only(source))
 
+def changed_mutant(source, old, new, expected_count=1):
+    """A source discriminator must really alter its reviewed intended site."""
+    if source.count(old)!=expected_count:
+        raise AssertionError(('Mutation needle census differs',old,source.count(old),expected_count))
+    mutant=source.replace(old,new,1)
+    if mutant==source:raise AssertionError('Mutation is identity')
+    return mutant
+
 def validate_node_inner_protocol(source):
     text=code_only(source);decl=re.search(r'\bfn\s+node_inner\b',text)
     if not decl:raise ValueError('missing node_inner declaration')
-    params=parenthesized_fields(text,text.index('(',decl.end())+1)
-    names=[p.split(':',1)[0].strip() for p in params[:-1]]
-    if names!=['&self','owner','schema','_path','compiler','cursor','ctx'] or not re.fullmatch(r"#\[cfg\(test\)\]mutevent:Option<&mutdynFnMut\(&'staticstr\)>",re.sub(r'\s+','',params[-1])):
-        raise ValueError('node_inner declaration production/test protocol differs')
+    params=[compact(p) for p in parenthesized_fields(text,text.index('(',decl.end())+1)]
+    expected=['&self','owner:&CompiledSchema','schema:&Value','_path:&Utf16','compiler:bool',
+              'cursor:&OwnerCursor',"checked:Option<&owner_locations::CheckedLocation<'_>>","ctx:&mutContext<'_>",
+              "#[cfg(test)]mutevent:Option<&mutdynFnMut(&'staticstr)>"]
+    if params!=expected:raise ValueError('node_inner declaration production/test protocol differs')
     calls=list(re.finditer(r'\.node_inner\s*\(',text))
     if len(calls)!=2:raise ValueError('node_inner call census differs')
-    for call in calls:
-        fields=parenthesized_fields(text,call.end())
-        if len(fields)!=7 or compact(fields[5])!='ctx' or re.sub(r'\s+','',fields[-1]) not in ('#[cfg(test)]None','#[cfg(test)]event'):
-            raise ValueError('node_inner conditional argument/context differs')
-        # cfg(test)=false must keep six explicit arguments; true keeps seven.
-        for enabled,arity in ((False,6),(True,7)):
-            selected=[f for f in fields if enabled or not f.strip().startswith('#[cfg(test)]')]
+    expected_calls={'node':['owner','schema','path','compiler','&cursor','None','ctx','#[cfg(test)]None'],
+                    'node_at_impl':['owner','schema','path','compiler','cursor','Some(&checked)','ctx','#[cfg(test)]event']}
+    for caller,wanted in expected_calls.items():
+        caller_text=body(source,caller);sites=list(re.finditer(r'\.node_inner\s*\(',caller_text))
+        if len(sites)!=1:raise ValueError('node_inner attached to wrong caller')
+        fields=[compact(f) for f in parenthesized_fields(caller_text,sites[0].end())]
+        if fields!=wanted:raise ValueError('node_inner checked/observer/same-context custody differs: '+caller)
+        for enabled,arity in ((False,7),(True,8)):
+            selected=[f for f in fields if enabled or not f.startswith('#[cfg(test)]')]
             if len(selected)!=arity:raise ValueError('node_inner cfg projection differs')
-    if '#[cfg(test)]None' not in compact(raw_body(source,'node')) or '#[cfg(test)]event' not in compact(raw_body(source,'node_at_impl')):
-        raise ValueError('node_inner observer attached to wrong caller')
+    ordinary=compact(raw_body(source,'node'));located=compact(raw_body(source,'node_at_impl'))
+    for caller_text in (ordinary,located):
+        if 'ctx.with_constructor_site(' not in caller_text or '|ctx|{' not in caller_text or 'if!self.belongs_to(owner,ctx)?{returnOk(None);}' not in caller_text:
+            raise ValueError('node_inner caller loses original owner/same-context gate')
+    if 'letSome(cursor)=owner.location_for_root_value(schema,ctx)?else{returnOk(None);};' not in ordinary:
+        raise ValueError('ordinary node loses genuine root cursor')
+    checked='letSome(checked)=table.checked(owner,cursor,ctx)?else{returnOk(None);};'
+    read='if!checked.read(owner,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){returnOk(None);}'
+    table='letSome(table)=&owner.owner_locationselse{returnOk(None);};'
+    if table+checked+read not in located or located.index(checked)>located.index('self.node_inner('):
+        raise ValueError('optimized node loses checked table/readback custody')
 
 def validate_coordinate_storage(source):
     text=code_only(source);start=re.search(r'\bstruct\s+Descriptor\s*\{',text)
@@ -70,18 +90,38 @@ def validate_coordinate_storage(source):
 
 def validate_root_selection(source):
     wrapper=compact(raw_body(source,'compile_inner'))
-    expected='{Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false)}'
-    if wrapper!=expected:raise ValueError('ordinary compiler does not forward same context/None/false')
+    expected='{Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None)}'
+    if wrapper!=expected:raise ValueError('ordinary compiler does not forward same context/None/false/finalNone')
+    shared=compact(raw_body(source,'compile_with_dialect_catalogue'))
+    mode='{Self::compile_inner_with_bank(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)}'
+    if shared!=mode:raise ValueError('shared dialect compiler changed closed mode/Context/catalogue')
+    public=compact(raw_body(source,'compile_with_dialect'))
+    if public!='{Self::compile_with_dialect_catalogue(schema,resources,dialect,strict,ctx,None)}':
+        raise ValueError('ordinary dialect entry received a catalogue')
+    entry=compact(raw_body(source,'compile_with_codegen_catalogue'))
+    if entry!='{ctx.with_work_phase(,|ctx|{letdialect=select_dialect(schema)?;Self::compile_with_dialect_catalogue(schema,&SchemaResources::default(),dialect,true,ctx,Some(catalogue))})}':
+        raise ValueError('Codegen entry lost original dialect/root/strict/same-context forwarding')
     text=compact(raw_body(source,'compile_inner_with_bank'))
-    if text.count('SchemaRoot::same_anchor_free_role')!=1 or text.count('construction_catalogue_view(resources_view,ctx)?')!=1:raise ValueError('root selection/admission census differs')
-    select=text.index('SchemaRoot::same_anchor_free_role');admit=text.index('construction_catalogue_view(resources_view,ctx)?')
-    if not select<admit:raise ValueError('root rescan after admission')
-    for needle in ('construction_equal(schema,candidate,ctx)?','share_candidate=Some(ordinal)','ifcatalogue.entries.len()==resources_view.len(){root=Some(SchemaRoot::Catalogue(Arc::clone(catalogue),ordinal));}','letbank_input=ifinput_admitted{supplied_bank.as_ref()}else{None};','SchemaRoot::Bank(Arc::clone(bank),*role)'):
+    if text.count('SchemaRoot::same_anchor_free_role')!=1 or text.count('construction_catalogue_view(resources_view,ctx)?')!=1:
+        raise ValueError('root selection/admission census differs')
+    count='letresources_count=resources_view.len_with_context(ctx)?;'
+    row='let(retrieval,candidate)=resources_view.get_with_context(ordinal,ctx)?.expect();'
+    root_loop='ifeligible{forordinalin0..resources_count{'+row+'ifSchemaRoot::same_anchor_free_role(schema,retrieval,ctx)?&&construction_equal(schema,candidate,ctx)?{ctx.charge_work(1,Utf16::default())?;share_candidate=Some(ordinal);break;}}}'
+    root_copy='letroot_copy=ifshare_candidate.is_some(){schema_json_with_mode(schema,ctx,false,false)?;None}else{Some(ifallow_duplicate_schema_keys{copy_schema_json(schema,ctx,true)?}elseiffinite_binary64_admission{copy_schema_json(schema,ctx,false)?}else{copy_json(schema,ctx)?})};'
+    if text.count(count)!=1 or text.count(root_loop)!=1 or text.count(root_copy)!=1:
+        raise ValueError('paid root extent/ordered lookup/original first root validation differs')
+    positions=[text.index(count),text.index(root_loop),text.index(root_copy),text.index('catalogue.completed(dialect,ctx)?'),text.index('construction_catalogue_view(resources_view,ctx)?')]
+    if positions!=sorted(positions):raise ValueError('root selection/validation must precede catalogue checks')
+    for needle in ('ifcatalogue.entries.len()==resources_count{root=Some(SchemaRoot::Catalogue(Arc::clone(catalogue),ordinal));}',
+                   'letbank_input=ifinput_admitted{supplied_bank.as_ref()}else{None};','SchemaRoot::Bank(Arc::clone(bank),*role)',
+                   'letresources_view=matchcodegen_catalogue{Some(catalogue)=>admitted_bank::Catalogue::Codegen(catalogue),None=>matchsupplied_bank.as_ref(){Some((bank,_))=>admitted_bank::Catalogue::Bank(bank),None=>admitted_bank::Catalogue::Borrowed(&resources.entries)}};'):
         if needle not in text:raise ValueError('root role/dedup/custody safeguard missing')
     if 'NodeLocator::locate' in text:raise ValueError('reverse locator search')
     catalogue=compact(raw_body(source,'construction_catalogue_view'))
-    for needle in ('candidate.entries.len()!=resources.len()','candidate.entries.iter().zip(resources.iter())','construction_equal(av,bv,ctx)?'):
-        if needle not in catalogue:raise ValueError('complete ordered catalogue equality missing')
+    paid='letcount=state.borrow().catalogues.len();ctx.charge_work(count,Utf16::default())?;letcandidates=state.borrow().catalogues.clone();'
+    ordered='for(limits,candidate)incandidates{iflimits!=ctx.limits()||candidate.entries.len()!=resources.len_with_context(ctx)?{continue;}letmutequal=true;for(index,(aid,av))incandidate.entries.iter().enumerate(){let(bid,bv)=resources.get_with_context(index,ctx)?.expect();ctx.charge_work(aid.len().min(bid.len()),Utf16::default())?;ifaid!=bid||!construction_equal(av,bv,ctx)?{equal=false;break;}}ifequal{ctx.charge_work(1,Utf16::default())?;returnOk(Some(candidate));}}'
+    if catalogue.count(paid)!=1 or catalogue.count(ordered)!=1 or catalogue.index(paid)>catalogue.index(ordered):
+        raise ValueError('complete paid ordered same-context catalogue equality missing')
 
 def ok_tuple_arities(source,name):
     text=body(source,name);rows=[]
@@ -176,7 +216,7 @@ class OwnerCursorSourceControls(unittest.TestCase):
         expected={'resolve_ref_unplanned_located':4,'resolve_eval_ref_unplanned_located':3,
           'resolve_eval_ref_located':3,'resolve_ref_location_impl':5,'resolve_eval_location_impl':4,
           'resolve_located':5,'resolve_eval_located':4,'frame_at':6,'node_at':6,
-          'frame_inner':6,'node_inner':6,'preflight_located':8,'location_root':3,
+          'frame_inner':6,'node_inner':7,'preflight_located':8,'location_root':3,
           'location_for_root_value':2,'member_cursor':4,'build_with_events':3}
         validate_node_inner_protocol((ROOT/'crates/umf-core/src/schema_owned_plans.rs').read_text())
         counts={name:0 for name in expected}
@@ -195,7 +235,7 @@ class OwnerCursorSourceControls(unittest.TestCase):
                     if text[start:end].rstrip().endswith(','):count-=1
                     if name=='node_inner':
                         fields=parenthesized_fields(text,start)
-                        self.assertEqual(len(fields),7)
+                        self.assertEqual(len(fields),8)
                         self.assertIn(compact(fields[-1]),('#[cfg(test)]None','#[cfg(test)]event'))
                         self.assertEqual(compact(fields[-2]),'ctx')
                         count-=1  # production projection; declaration/cfg(test) checked above
@@ -235,10 +275,25 @@ class OwnerCursorSourceControls(unittest.TestCase):
 
     def test_cfg_observer_mutations_cannot_hide_a_production_protocol_change(self):
         source=(ROOT/'crates/umf-core/src/schema_owned_plans.rs').read_text()
-        mutations=[source.replace('#[cfg(test)] None','None',1),source.replace('cursor,ctx,#[cfg(test)] event)','cursor,ctx,event)',1),source.replace("#[cfg(test)] mut event: Option<&mut dyn FnMut(&'static str)>","mut event: Option<&mut dyn FnMut(&'static str)>",1),source.replace('compiler, &cursor, ctx, #[cfg(test)] None','compiler, &cursor, other, #[cfg(test)] None',1),source.replace('#[cfg(test)] None','#[cfg(test)] None, None',1)]
-        for i,mutant in enumerate(mutations):
+        rows=[
+            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, None, ctx, None'),
+            ('Some(&checked),ctx,#[cfg(test)] event)','Some(&checked),ctx,event)'),
+            ("#[cfg(test)] mut event: Option<&mut dyn FnMut(&'static str)>","mut event: Option<&mut dyn FnMut(&'static str)>"),
+            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, None, other, #[cfg(test)] None'),
+            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, None, ctx, #[cfg(test)] None, None'),
+            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, ctx, #[cfg(test)] None'),
+            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, Some(&checked), ctx, #[cfg(test)] None'),
+            ('cursor,Some(&checked),ctx,#[cfg(test)] event)','cursor,None,ctx,#[cfg(test)] event)'),
+            ('cursor,Some(&checked),ctx,#[cfg(test)] event)','cursor,Some(&foreign),ctx,#[cfg(test)] event)'),
+            ('cursor,Some(&checked),ctx,#[cfg(test)] event)','cursor,Some(&checked),other,#[cfg(test)] event)'),
+            ('cursor,Some(&checked),ctx,#[cfg(test)] event)','cursor,Some(&checked),ctx,#[cfg(test)] None)'),
+            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, #[cfg(test)] None, ctx, None'),
+            ('table.checked(owner,cursor,ctx)?','table.checked(owner,cursor,other)?'),
+            ('if !checked.read(owner,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return Ok(None);}','if !checked.read(foreign,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return Ok(None);}'),
+        ]
+        for i,(old,new) in enumerate(rows):
             with self.subTest(mutation=i):
-                self.assertNotEqual(mutant,source)
+                mutant=changed_mutant(source,old,new)
                 with self.assertRaises(ValueError):validate_node_inner_protocol(mutant)
     def test_pair_slot_debit_clone_cursor_and_terminal_mutations_refuse(self):
         source=(ROOT/'crates/umf-core/src/schema.rs').read_text()
@@ -260,10 +315,32 @@ class OwnerCursorSourceControls(unittest.TestCase):
                 with self.assertRaises(ValueError):validate_coordinate_storage(mutant)
     def test_root_dedup_ordinal_context_and_repeated_selection_mutations_refuse(self):
         source=(ROOT/'crates/umf-core/src/schema.rs').read_text()
-        mutations=[source.replace('if catalogue.entries.len()==resources_view.len()','if true',1),source.replace('SchemaRoot::Catalogue(Arc::clone(catalogue),ordinal)','SchemaRoot::Catalogue(Arc::clone(catalogue),0)',1),source.replace('root_keyword_policy,ctx,None,false)','root_keyword_policy,other,None,false)',1),source.replace('construction_catalogue_view(resources_view, ctx)?','{ SchemaRoot::same_anchor_free_role(schema,retrieval,ctx)?; construction_catalogue_view(resources_view, ctx)? }',1)]
-        for i,mutant in enumerate(mutations):
+        rows=[
+            ('if catalogue.entries.len()==resources_count','if true'),
+            ('SchemaRoot::Catalogue(Arc::clone(catalogue),ordinal)','SchemaRoot::Catalogue(Arc::clone(catalogue),0)'),
+            ('root_keyword_policy,ctx,None,false,None)','root_keyword_policy,other,None,false,None)'),
+            ('construction_catalogue_view(resources_view,ctx)?','{ SchemaRoot::same_anchor_free_role(schema,retrieval,ctx)?; construction_catalogue_view(resources_view,ctx)? }'),
+            ('root_keyword_policy,ctx,None,false,None)','root_keyword_policy,ctx,None,false,Some(unreviewed))'),
+            ('let resources_count=resources_view.len_with_context(ctx)?;','let resources_count=resources_view.len();'),
+            ('let resources_count=resources_view.len_with_context(ctx)?;','let resources_count=resources_view.len_with_context(other)?;'),
+            ('resources_view.get_with_context(ordinal,ctx)?.expect("actual immutable catalogue row");\n                if SchemaRoot::same_anchor_free_role','resources_view.get_with_context(0,ctx)?.expect("actual immutable catalogue row");\n                if SchemaRoot::same_anchor_free_role'),
+            ('candidate.entries.len() != resources.len_with_context(ctx)?','candidate.entries.len() != resources.len_with_context(other)?'),
+            ('candidate.entries.iter().enumerate()','candidate.entries.iter().rev().enumerate()'),
+            ('resources.get_with_context(index,ctx)?','resources.get_with_context(0,ctx)?'),
+            ('resources.get_with_context(index,ctx)?','resources.get_with_context(index,other)?'),
+            ('aid != bid || !construction_equal(av,bv,ctx)?','!construction_equal(av,bv,ctx)?'),
+            ('aid != bid || !construction_equal(av,bv,ctx)?','aid != bid'),
+            ('ctx.charge_work(aid.len().min(bid.len()), Utf16::default())?;',''),
+            ('schema_json_with_mode(schema,ctx,false,false)?;None','None'),
+            ('schema_json_with_mode(schema,ctx,false,false)?;None','schema_json_with_mode(schema,other,false,false)?;None'),
+            ('KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)','KeywordPolicy::DRAFT2020,other,None,false,catalogue)'),
+            ('schema,resources,dialect,strict,ctx,None)','schema,resources,dialect,strict,ctx,Some(unreviewed))'),
+            ('dialect,true,ctx,Some(catalogue))','dialect,false,ctx,Some(catalogue))'),
+        ]
+        for i,(old,new) in enumerate(rows):
             with self.subTest(mutation=i):
-                self.assertNotEqual(mutant,source)
+                mutant=changed_mutant(source,old,new)
                 with self.assertRaises(ValueError):validate_root_selection(mutant)
+
 
 if __name__=='__main__':unittest.main()

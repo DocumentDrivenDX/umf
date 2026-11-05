@@ -158,7 +158,7 @@ impl OwnerPlans {
                 return Ok(None);
             }
             let Some(cursor)=owner.location_for_root_value(schema,ctx)? else {return Ok(None);};
-            self.node_inner(owner, schema, path, compiler, &cursor, ctx, #[cfg(test)] None)
+            self.node_inner(owner, schema, path, compiler, &cursor, None, ctx, #[cfg(test)] None)
         })
     }
     pub(super) fn resolve_eval<'a>(&self,owner:&'a CompiledSchema,reference:&Value,path:&Utf16,ctx:&mut Context<'_>)->Result<(&'a Value,Utf16,bool),EngineError>{
@@ -217,8 +217,10 @@ impl OwnerPlans {
             if !self.belongs_to(owner,ctx)? {return Ok(None);}
             let Some(cursor)=cursor else {return Ok(None);};
             let Some(table)=&owner.owner_locations else{return Ok(None);};
-            if !table.read(owner,cursor,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return Ok(None);}
-            self.node_inner(owner,schema,path,compiler,cursor,ctx,#[cfg(test)] event)
+            let Some(checked)=table.checked(owner,cursor,ctx)? else{return Ok(None);};
+            if !checked.read(owner,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return Ok(None);}
+            checked.observe_consumption("ow1-node-plan-consume");
+            self.node_inner(owner,schema,path,compiler,cursor,Some(&checked),ctx,#[cfg(test)] event)
         })
     }
     fn frame_inner(
@@ -280,6 +282,7 @@ impl OwnerPlans {
         _path: &Utf16,
         compiler: bool,
         cursor: &OwnerCursor,
+        checked: Option<&owner_locations::CheckedLocation<'_>>,
         ctx: &mut Context<'_>,
         #[cfg(test)] mut event: Option<&mut dyn FnMut(&'static str)>,
     ) -> Result<Option<Arc<NodePlan>>, EngineError> {
@@ -288,7 +291,8 @@ impl OwnerPlans {
         };
         // The accessor re-executes owner/table/lineage/current-limit/readback
         // checks and coordinate translation. This repeated real read is paid.
-        let Some((_role, ordinal)) = cursor.logical_position(owner, ctx)? else {
+        let position=match checked {Some(checked)=>checked.logical_position(owner,ctx)?,None=>cursor.logical_position(owner,ctx)?};
+        let Some((_role, ordinal)) = position else {
             return Ok(None);
         };
         ctx.charge_work(1, Utf16::default())?;
@@ -310,7 +314,11 @@ impl OwnerPlans {
             // Fixed coordinates do not replace borrowed-node custody: retain
             // BOTH same-location and actual owner readback checks on every hit.
             ctx.charge_work(2,Utf16::default())?;
-            if plan.locator.same_location(cursor) && std::ptr::eq(plan.locator.get(owner, ctx)?, schema) {
+            // Preserve the original short-circuit: a foreign plan location
+            // never triggers the subsequent owner readback or its callbacks.
+            if !plan.locator.same_location(cursor) {return Ok(None);}
+            let node=match checked {Some(checked)=>checked.read(owner,ctx)?,None=>Some(plan.locator.get(owner,ctx)?)};
+            if node.is_some_and(|node|std::ptr::eq(node,schema)) {
                 return Ok(Some(plan));
             }
             return Ok(None);

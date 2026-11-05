@@ -116,6 +116,12 @@ impl CodegenResources {
                 .entries
                 .push((tables_schema_id, tables_schema_copy));
         }
+        // Retain materialized export/table extension above for ordinary APIs
+        // and Registry. A separate opaque immutable compiler handoff pays its
+        // own extension copy; no export or table-copy credit is claimed.
+        let catalogue=match engine.codegen_catalogue_with_context(ctx)? {
+            Some(catalogue)=>catalogue.with_tables_schema(&tables_schema,ctx)?,None=>None,
+        };
         // Encoding-only DATA; the shared reader still admits and parses the
         // complete source in this same Context before schema compilation.
         let operation_schema = umf_core::serialization::read_json_value(
@@ -124,22 +130,22 @@ impl CodegenResources {
             ctx,
         )?;
         let operation_compiled =
-            ctx.with_constructor_root("operation", |ctx| CompiledSchema::compile(&operation_schema, &schema_resources, ctx))?;
+            ctx.with_constructor_root("operation", |ctx| compile_codegen_schema(&operation_schema, &schema_resources, catalogue.as_ref(), ctx))?;
         let row_expression_operation_schema = umf_core::serialization::read_json_value(
             operation_sources::ROW_EXPRESSION_OPERATION_SCHEMA_UTF16,
             umf_core::serialization::Format::Json,
             ctx,
         )?;
         let row_expression_operation_compiled =
-            ctx.with_constructor_root("operation", |ctx| CompiledSchema::compile(&row_expression_operation_schema, &schema_resources, ctx))?;
+            ctx.with_constructor_root("operation", |ctx| compile_codegen_schema(&row_expression_operation_schema, &schema_resources, catalogue.as_ref(), ctx))?;
         let binding_schema = member(&binding_package, "schema").ok_or_else(invalid_package)?;
         let stable_binding_schema =
             member(&stable_binding_package, "schema").ok_or_else(invalid_package)?;
-        let binding_compiled = ctx.with_constructor_root("binding", |ctx| CompiledSchema::compile(binding_schema, &schema_resources, ctx))?;
+        let binding_compiled = ctx.with_constructor_root("binding", |ctx| compile_codegen_schema(binding_schema, &schema_resources, catalogue.as_ref(), ctx))?;
         let stable_binding_compiled =
-            ctx.with_constructor_root("binding", |ctx| CompiledSchema::compile(stable_binding_schema, &schema_resources, ctx))?;
-        let tables_compiled = ctx.with_constructor_root("tables", |ctx| CompiledSchema::compile(&tables_schema, &schema_resources, ctx))?;
-        let actions_compiled = ctx.with_constructor_root("actions", |ctx| CompiledSchema::compile(&actions_schema, &schema_resources, ctx))?;
+            ctx.with_constructor_root("binding", |ctx| compile_codegen_schema(stable_binding_schema, &schema_resources, catalogue.as_ref(), ctx))?;
+        let tables_compiled = ctx.with_constructor_root("tables", |ctx| compile_codegen_schema(&tables_schema, &schema_resources, catalogue.as_ref(), ctx))?;
+        let actions_compiled = ctx.with_constructor_root("actions", |ctx| compile_codegen_schema(&actions_schema, &schema_resources, catalogue.as_ref(), ctx))?;
         let literal_definition = member(&actions_schema, "$defs")
             .and_then(|defs| member(defs, "literal"))
             .ok_or_else(invalid_package)?;
@@ -156,7 +162,7 @@ impl CodegenResources {
             ),
         ]);
         let actions_literal_compiled =
-            ctx.with_constructor_root("actions-literal", |ctx| CompiledSchema::compile(&literal_schema, &schema_resources, ctx))?;
+            ctx.with_constructor_root("actions-literal", |ctx| compile_codegen_schema(&literal_schema, &schema_resources, catalogue.as_ref(), ctx))?;
         let action_definitions = umf_core::copy_json(
             member(&actions_schema, "$defs").ok_or_else(invalid_package)?,
             ctx,
@@ -170,7 +176,7 @@ impl CodegenResources {
             ),
         ]);
         let actions_action_compiled =
-            ctx.with_constructor_root("actions-action", |ctx| CompiledSchema::compile(&action_schema, &schema_resources, ctx))?;
+            ctx.with_constructor_root("actions-action", |ctx| compile_codegen_schema(&action_schema, &schema_resources, catalogue.as_ref(), ctx))?;
         let tables_registry = ctx.with_constructor_root("registration-tables", |ctx| package_registry(
             &engine,
             &schema_resources,
@@ -949,3 +955,36 @@ mod resource_controls {
         assert_eq!(calls, 2);
     }
 }
+
+// Closed ordinary fallback and same governing borrowed-root compile selection.
+fn compile_codegen_schema(schema:&Value,resources:&SchemaResources,catalogue:Option<&umf_core::schema::CodegenCatalogue>,ctx:&mut Context<'_>)->Result<CompiledSchema,EngineError>{
+    #[cfg(test)] codegen_compilation_event("oc1-codegen-compile-enter",schema,catalogue);
+    let result=match catalogue {
+        Some(catalogue)=>CompiledSchema::compile_with_codegen_catalogue(schema,catalogue,ctx),
+        None=>CompiledSchema::compile(schema,resources,ctx),
+    };
+    #[cfg(test)] codegen_compilation_event(if result.is_ok(){"oc1-codegen-compile-success"}else{"oc1-codegen-compile-error"},schema,catalogue);
+    result
+}
+#[cfg(test)]
+type CodegenCompilationObserver=Box<dyn FnMut(&'static str,&Value,Option<&umf_core::schema::CodegenCatalogue>)>;
+#[cfg(test)]
+thread_local!{static CODEGEN_COMPILATION_OBSERVER:std::cell::RefCell<Option<CodegenCompilationObserver>>=std::cell::RefCell::new(None);}
+#[cfg(test)]
+fn observe_codegen_compilations<T>(observer:CodegenCompilationObserver,operation:impl FnOnce()->T)->T{
+    struct Restore(Option<CodegenCompilationObserver>);
+    impl Drop for Restore{fn drop(&mut self){CODEGEN_COMPILATION_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+    let prior=CODEGEN_COMPILATION_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+#[cfg(test)]
+fn codegen_compilation_event(event:&'static str,schema:&Value,catalogue:Option<&umf_core::schema::CodegenCatalogue>){
+    let observer=CODEGEN_COMPILATION_OBSERVER.with(|s|s.borrow_mut().take());if let Some(observer)=observer{
+        struct Restore(Option<CodegenCompilationObserver>);
+        impl Drop for Restore{fn drop(&mut self){CODEGEN_COMPILATION_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+        let mut restore=Restore(Some(observer));if let Some(observer)=restore.0.as_mut(){observer(event,schema,catalogue);}
+    }
+}
+
+#[cfg(test)]
+#[path="resources_codegen_catalogue_independent_tests.rs"]
+mod codegen_catalogue_independent_tests;

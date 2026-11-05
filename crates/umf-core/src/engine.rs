@@ -1444,6 +1444,16 @@ impl Engine {
             .and_then(|v| get(v, "umf"))
             .and_then(|v| get(v, "const"))
     }
+    /// Opaque construction-owned catalogue; no new admission proof is minted
+    /// for raw Engine backing or an expired/foreign construction Context.
+    #[doc(hidden)]
+    pub fn codegen_catalogue_with_context(&self,ctx:&mut Context<'_>)->Result<Option<crate::schema::CodegenCatalogue>,EngineError>{
+        ctx.charge_work(2,Utf16::default())?;
+        match &self.resources {
+            EngineResources::Admitted(resources)=>crate::schema::CodegenCatalogue::from_engine([&self.core,&self.reference,&self.package],resources,ctx),
+            EngineResources::Owned(_)=>Ok(None),
+        }
+    }
     pub fn schema_resources_with_context(
         &self,
         ctx: &mut Context<'_>,

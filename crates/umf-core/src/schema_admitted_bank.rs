@@ -275,6 +275,10 @@ impl SchemaBank {
             Owner::Meta(tree)=>{let Value::Array(entries)=indexed_field(tree,self.meta_resources)else{return None;};let entry=entries.get(row.role)?;match indexed_field(entry,row.id_member){Value::String(id)=>Some((id,indexed_field(entry,row.schema_member))),_=>None}},
         }
     }
+    pub(crate) fn owns_core(&self,resources:&Arc<ResourceSet>,ctx:&mut Context<'_>)->Result<bool,EngineError>{
+        ctx.charge_work(3,Utf16::default())?;
+        Ok(matches!(&self.owner,Owner::Core(owner) if Arc::ptr_eq(owner,resources)))
+    }
     pub(crate) fn input_compatible(&self,ctx:&mut Context<'_>)->Result<bool,EngineError>{
         ctx.charge_work(3,Utf16::default())?;
         Ok(self.limits==ctx.limits()&&ctx.schema_construction.as_ref().is_some_and(|state|state.borrow().lifetime.as_ref().is_some_and(|token|Arc::ptr_eq(token,&self.lifetime))))
@@ -316,10 +320,20 @@ impl SchemaBank {
     }
 }
 #[derive(Clone,Copy)]
-pub(super) enum Catalogue<'a> { Borrowed(&'a [(Utf16,Value)]), Bank(&'a SchemaBank) }
+pub(super) enum Catalogue<'a> { Borrowed(&'a [(Utf16,Value)]), Bank(&'a SchemaBank), Codegen(&'a CodegenCatalogue) }
 impl<'a> Catalogue<'a> {
-    pub(super) fn len(self)->usize {match self{Self::Borrowed(v)=>v.len(),Self::Bank(b)=>b.len()}}
-    pub(super) fn get(self,i:usize)->Option<(&'a Utf16,&'a Value)> {match self{Self::Borrowed(v)=>v.get(i).map(|(id,v)|(id,v)),Self::Bank(b)=>b.get(i)}}
+    pub(super) fn len(self)->usize {match self{Self::Borrowed(v)=>v.len(),Self::Bank(b)=>b.len(),Self::Codegen(c)=>c.len()}}
+    pub(super) fn get(self,i:usize)->Option<(&'a Utf16,&'a Value)> {match self{Self::Borrowed(v)=>v.get(i).map(|(id,v)|(id,v)),Self::Bank(b)=>b.get(i),Self::Codegen(c)=>c.get(i)}}
+    // Only OC1 adds an owner/extension translation. Original borrowed/bank
+    // access stays uncharged here; its existing callers keep original fees.
+    pub(super) fn len_with_context(self,ctx:&mut Context<'_>)->Result<usize,EngineError>{
+        if matches!(self,Self::Codegen(_)){ctx.charge_work(4,Utf16::default())?;}
+        Ok(self.len())
+    }
+    pub(super) fn get_with_context(self,index:usize,ctx:&mut Context<'_>)->Result<Option<(&'a Utf16,&'a Value)>,EngineError>{
+        if matches!(self,Self::Codegen(_)){ctx.charge_work(8,Utf16::default())?;}
+        Ok(self.get(index))
+    }
     pub(super) fn iter(self)->CatalogueIter<'a>{CatalogueIter{catalogue:self,index:0}}
 }
 pub(super) struct CatalogueIter<'a>{catalogue:Catalogue<'a>,index:usize}
