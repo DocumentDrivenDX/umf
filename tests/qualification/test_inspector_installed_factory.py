@@ -332,7 +332,7 @@ class FinalSourceCensusControls(unittest.TestCase):
         early=v['publicControls'];late=[x for g in v['python'] for x in g['cases']]
         self.assertEqual(len(early),18);self.assertEqual(len(late),31)
         self.assertFalse(set(early)&set(late))
-        self.assertEqual(sum(len(r['cases']) for r in v['rust']),461)
+        self.assertEqual(sum(len(r['cases']) for r in v['rust']),469)
         old=[x for g in c['python'] for x in g['cases']]
         history=v['legacyDisposition']['historicalOnly']
         self.assertEqual(len(history),1);self.assertIn('test_cold_constructor_and_each_17_vector_dispatch_list_tuple_call_fit_strict_1m',history[0])

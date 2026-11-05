@@ -2872,36 +2872,101 @@ impl CompiledSchema {
         let checked=match (&self.owner_locations,cursor.as_ref()) {
             (Some(table),Some(cursor))=>table.checked(self,cursor,ctx)?,_=>None,
         };
-        self.preflight_carried_checked(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,checked)
+        match checked.map(|checked|owner_locations::FusedBinding::try_new(checked,ctx)).transpose()? {
+            Some(owner_locations::OwnerRoute::Fused(binding))=>{
+                let root=binding.root(ctx)?;
+                self.preflight_carried_checked(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,None,Some(root))
+            }
+            Some(owner_locations::OwnerRoute::Legacy(checked))=>self.preflight_carried_checked(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,Some(checked),None),
+            None=>self.preflight_carried_checked(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,None,None),
+        }
     }
     // Each real same-parent loop lazily initializes its own local ordered walk.
     // No future member's semantics run here; filtered/skipped members remain so.
-    fn preflight_ordered_child<'a>(&'a self,cursor:Option<&OwnerCursor>,checked:&mut Option<owner_locations::CheckedLocation<'a>>,walk:&mut Option<owner_locations::OrderedOwnerChildren<'a>>,edge:usize,ctx:&mut Context<'_>)->Result<(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>),EngineError>{
-        type Child<'a>=(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>);
-        ctx.charge_work(std::mem::size_of::<Child<'a>>().div_ceil(std::mem::size_of::<usize>())+6,Utf16::default())?;
+    fn preflight_ordered_child<'a,'binding>(&'a self,cursor:Option<&OwnerCursor>,checked:&mut Option<owner_locations::CheckedLocation<'a>>,walk:&mut Option<owner_locations::OrderedOwnerChildren<'a>>,borrowed:Option<&owner_locations::BorrowedChild<'binding,'a>>,fused_walk:&mut Option<Option<owner_locations::FusedChildren<'binding,'a>>>,edge:usize,ctx:&mut Context<'_>)->Result<(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>,Option<owner_locations::BorrowedChild<'binding,'a>>),EngineError> where 'a:'binding {
+        type Child<'a,'binding>=(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>,Option<owner_locations::BorrowedChild<'binding,'a>>);
+        ctx.charge_work(std::mem::size_of::<Child<'a,'binding>>().div_ceil(std::mem::size_of::<usize>())+7,Utf16::default())?;
+        if let Some(parent)=borrowed {
+            if fused_walk.is_none(){*fused_walk=Some(parent.children(ctx)?);}
+            if let Some(Some(walk))=fused_walk {
+                let selected=walk.select(edge,ctx)?;
+                #[cfg(test)] construction_index::scoped_effect_event("sp1-ordered-selection-performed");
+                return Ok(match selected {
+                    Some(owner_locations::CheckedOwnerLocation::Fused(child))=>{
+                        #[cfg(test)] child.observe_transfer();
+                        (None,None,Some(child))
+                    },
+                    Some(owner_locations::CheckedOwnerLocation::Owned(location))=>(None,Some(location),None),
+                    None=>(None,None,None),
+                });
+            }
+            // The fused route declined before selection; recover the actual
+            // logical parent identity and use the exact legacy child path.
+            let fallback=parent.materialize_cursor(ctx)?;
+            let selected=child_cursor(Some(self),Some(&fallback),edge,ctx)?;
+            #[cfg(test)] construction_index::scoped_effect_event("sp1-ordered-selection-performed");
+            return Ok((selected,None,None));
+        }
         if let Some(location)=checked.take(){*walk=Some(location.children(ctx)?);}
         if let Some(walk)=walk {
             let child=walk.child(edge,ctx)?;
-            // The cursor clone is retained only for the original arbitrary
-            // fallback and deferred callers; borrowed-node custody is separate.
-            let cursor=match &child{Some(child)=>{ctx.charge_work(1,Utf16::default())?;Some(child.cursor().clone())},None=>None};
+            // The checked child already owns the exact fallback identity. Pass
+            // that custody onward instead of materializing a duplicate cursor.
+            #[cfg(test)]
+            if let Some(child)=&child { child.observe_ft1_transfer(); }
             #[cfg(test)]
             construction_index::scoped_effect_event("sp1-ordered-selection-performed");
-            return Ok((cursor,child));
+            return Ok((None,child,None));
         }
         let selected=child_cursor(Some(self),cursor,edge,ctx)?;
         #[cfg(test)]
         construction_index::scoped_effect_event("sp1-ordered-selection-performed");
-        Ok((selected,None))
+        Ok((selected,None,None))
     }
-    fn preflight_carried_checked<'a>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>,mut checked:Option<owner_locations::CheckedLocation<'a>>)->Result<(),EngineError>{
+    fn preflight_duplicate_child<'a,'binding>(&'a self,cursor:Option<&OwnerCursor>,checked:&mut Option<owner_locations::CheckedLocation<'a>>,borrowed:Option<&owner_locations::BorrowedChild<'binding,'a>>,ctx:&mut Context<'_>)->Result<(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>,Option<owner_locations::BorrowedChild<'binding,'a>>),EngineError> where 'a:'binding {
+        ctx.charge_work((std::mem::size_of::<Option<OwnerCursor>>()+std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>()+std::mem::size_of::<Option<owner_locations::BorrowedChild<'binding,'a>>>()).div_ceil(std::mem::size_of::<usize>())+2,Utf16::default())?;
+        if let Some(borrowed)=borrowed{return Ok((None,None,Some(*borrowed)));}
+        let selected=clone_owner_cursor(cursor,ctx)?;
+        ctx.charge_work(std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>().div_ceil(std::mem::size_of::<usize>())+1,Utf16::default())?;
+        let checked=checked.take();
+        Ok((selected,checked,None))
+    }
+    fn preflight_carried_checked<'a,'binding>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,mut cursor:Option<OwnerCursor>,mut checked:Option<owner_locations::CheckedLocation<'a>>,mut borrowed:Option<owner_locations::BorrowedChild<'binding,'a>>)->Result<(),EngineError> where 'a:'binding {
         // Real private checked readback, not a supplied pointer/ordinal claim.
-        if let Some(location)=&checked {
-            if !location.read(self,ctx)?.is_some_and(|value|std::ptr::eq(value,schema)){checked=None;}
-            else {location.observe_consumption("ow1-preflight-consume");}
+        if let Some(location)=checked.as_ref() {
+            if location.read(self,ctx)?.is_some_and(|value|std::ptr::eq(value,schema)) {
+                location.observe_consumption("ow1-preflight-consume");
+            } else if cursor.is_none() {
+                // Admit moving the checked Option and adding fallback custody
+                // before materializing or replacing either local.
+                ctx.charge_work(
+                    std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>().div_ceil(std::mem::size_of::<usize>())
+                        +std::mem::size_of::<Option<OwnerCursor>>().div_ceil(std::mem::size_of::<usize>())+2,
+                    Utf16::default(),
+                )?;
+                let fallback=location.materialize_cursor(ctx)?;
+                checked=None;
+                cursor=Some(fallback);
+            } else {
+                ctx.charge_work(
+                    std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>().div_ceil(std::mem::size_of::<usize>())+1,
+                    Utf16::default(),
+                )?;
+                checked=None;
+            }
         }
-        ctx.charge_work((std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>()+std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>()).div_ceil(std::mem::size_of::<usize>())+2,Utf16::default())?;
+        if let Some(location)=borrowed.as_ref() {
+            if location.read_for(self,ctx)?.is_some_and(|value|std::ptr::eq(value,schema)) {
+                #[cfg(test)] owner_locations::owner_walk_event("ft1-preflight-borrowed-consume",location.logical_position().0,location.logical_position().1);
+            } else {
+                ctx.charge_work(std::mem::size_of::<Option<owner_locations::BorrowedChild<'binding,'a>>>().div_ceil(std::mem::size_of::<usize>())+1,Utf16::default())?;
+                if cursor.is_none() { cursor=Some(location.materialize_cursor(ctx)?); }
+                borrowed=None;
+            }
+        }
+        ctx.charge_work((std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>()+std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>()+std::mem::size_of::<Option<Option<owner_locations::FusedChildren<'binding,'a>>>>()).div_ceil(std::mem::size_of::<usize>())+3,Utf16::default())?;
         let mut ordered=None;
+        let mut fused_ordered:Option<Option<owner_locations::FusedChildren<'binding,'a>>>=None;
 
         path.charge_current_path(1,ctx)?;
         if depth > ctx.limits().max_depth {
@@ -2955,7 +3020,7 @@ impl CompiledSchema {
                 }
                 continue;
             }
-            ctx.charge_work(std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>().div_ceil(std::mem::size_of::<usize>())+1,Utf16::default())?;
+            ctx.charge_work((std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>()+std::mem::size_of::<Option<owner_locations::BorrowedChild<'binding,'a>>>()+std::mem::size_of::<Option<Option<owner_locations::FusedChildren<'binding,'a>>>>()).div_ceil(std::mem::size_of::<usize>())+3,Utf16::default())?;
             ctx.charge_work(
                 std::mem::size_of::<Option<OwnerCursor>>().div_ceil(std::mem::size_of::<usize>())
                     +std::mem::size_of::<bool>().div_ceil(std::mem::size_of::<usize>())
@@ -2968,10 +3033,12 @@ impl CompiledSchema {
             let mut keyword_selected=false;
             let mut keyword_checked=None;
             let mut keyword_ordered=None;
+            let mut keyword_borrowed=None;
+            let mut keyword_fused_ordered:Option<Option<owner_locations::FusedChildren<'binding,'a>>>=None;
             macro_rules! ensure_keyword_cursor { () => {{
                 if !keyword_selected {
-                    let (selected,selected_checked)=self.preflight_ordered_child(cursor.as_ref(),&mut checked,&mut ordered,member_index,ctx)?;
-                    keyword_cursor=selected; keyword_checked=selected_checked; keyword_selected=true;
+                    let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(cursor.as_ref(),&mut checked,&mut ordered,borrowed.as_ref(),&mut fused_ordered,member_index,ctx)?;
+                    keyword_cursor=selected; keyword_checked=selected_checked; keyword_borrowed=selected_borrowed; keyword_selected=true;
                 }
             }}; }
             let mut child_mark:Option<construction_index::ScopedPreflightMark>=None;
@@ -3020,18 +3087,17 @@ impl CompiledSchema {
                         match val {
                             Value::Object(_) => {
                                 ensure_keyword_cursor!();
-                                let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                                let selected_checked=keyword_checked.take();
+                                let (selected,selected_checked,selected_borrowed)=self.preflight_duplicate_child(keyword_cursor.as_ref(),&mut keyword_checked,keyword_borrowed.as_ref(),ctx)?;
                                 child_path!();
-                                self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
+                                self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)?;
                             }
                             Value::Array(items) => {
                                 for (index, branch) in items.iter().enumerate() {
                                     if matches!(branch, Value::Object(_)) {
                                         ensure_keyword_cursor!();
-                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,index,ctx)?;
+                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,index,ctx)?;
                                         child_path!();
-                                        self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(branch,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
+                                        self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(branch,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
                                     }
                                 }
                             }
@@ -3071,10 +3137,10 @@ impl CompiledSchema {
                         for (child_index, (name, child_schema)) in children.iter().enumerate() {
                             child_path!();
                             ensure_keyword_cursor!();
-                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,child_index,ctx)?;
+                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,child_index,ctx)?;
                             self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{
                                 if text == "patternProperties" { let diagnostic=path.diagnostic_snapshot(ctx)?; self.compile_pattern(name,&diagnostic,ctx)?; }
-                                self.preflight_carried_checked(child_schema,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked)
+                                self.preflight_carried_checked(child_schema,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)
                             })?;
                         }
                     } else {
@@ -3111,15 +3177,14 @@ impl CompiledSchema {
                         for (i, x) in items.iter().enumerate() {
                             child_path!();
                             ensure_keyword_cursor!();
-                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,i,ctx)?;
-                            self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
+                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,i,ctx)?;
+                            self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
                         }
                     } else {
                         child_path!();
                         ensure_keyword_cursor!();
-                                let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                        let selected_checked=keyword_checked.take();
-                        self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
+                        let (selected,selected_checked,selected_borrowed)=self.preflight_duplicate_child(keyword_cursor.as_ref(),&mut keyword_checked,keyword_borrowed.as_ref(),ctx)?;
+                        self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)?;
                     }
                 }
                 "allOf" | "anyOf" | "oneOf" | "prefixItems" => {
@@ -3130,8 +3195,8 @@ impl CompiledSchema {
                         for (i, x) in items.iter().enumerate() {
                             child_path!();
                             ensure_keyword_cursor!();
-                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,i,ctx)?;
-                            self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
+                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,i,ctx)?;
+                            self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
                         }
                     } else {
                         return Err(child_schema_error!("Applicator must be an array"));
@@ -3142,15 +3207,14 @@ impl CompiledSchema {
                         for (index, item) in items.iter().enumerate() {
                             child_path!();
                             ensure_keyword_cursor!();
-                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,index,ctx)?;
-                            self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(item,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
+                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,index,ctx)?;
+                            self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(item,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
                         }
                     } else {
                         child_path!();
                         ensure_keyword_cursor!();
-                                let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                        let selected_checked=keyword_checked.take();
-                        self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked)?;
+                        let (selected,selected_checked,selected_borrowed)=self.preflight_duplicate_child(keyword_cursor.as_ref(),&mut keyword_checked,keyword_borrowed.as_ref(),ctx)?;
+                        self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)?;
                     }
                 }
                 "pattern" => {
@@ -3210,8 +3274,8 @@ impl CompiledSchema {
                             } else {
                                 child_path!();
                                 ensure_keyword_cursor!();
-                                        let (selected,selected_checked)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,child_index,ctx)?;
-                                self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|self.preflight_carried_checked(dep,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked))?;
+                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,child_index,ctx)?;
+                                self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|self.preflight_carried_checked(dep,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
                             }
                         }
                     } else { return Err(child_schema_error!("dependencies must be an object")); }

@@ -41,13 +41,13 @@ def validate_node_inner_protocol(source):
     if not decl:raise ValueError('missing node_inner declaration')
     params=[compact(p) for p in parenthesized_fields(text,text.index('(',decl.end())+1)]
     expected=['&self','owner:&CompiledSchema','schema:&Value','_path:&Utf16','compiler:bool',
-              'cursor:&OwnerCursor',"checked:Option<&owner_locations::CheckedLocation<'_>>","ctx:&mutContext<'_>",
+              'cursor:Option<&OwnerCursor>',"checked:Option<&owner_locations::BorrowedCheckedLocation<'_>>",'ctx:&mutContext<\'_>',
               "#[cfg(test)]mutevent:Option<&mutdynFnMut(&'staticstr)>"]
     if params!=expected:raise ValueError('node_inner declaration production/test protocol differs')
     calls=list(re.finditer(r'\.node_inner\s*\(',text))
     if len(calls)!=2:raise ValueError('node_inner call census differs')
-    expected_calls={'node':['owner','schema','path','compiler','&cursor','None','ctx','#[cfg(test)]None'],
-                    'node_at_impl':['owner','schema','path','compiler','cursor','Some(&checked)','ctx','#[cfg(test)]event']}
+    expected_calls={'node':['owner','schema','path','compiler','Some(&cursor)','None','ctx','#[cfg(test)]None'],
+                    'node_at_impl':['owner','schema','path','compiler','Some(cursor)','Some(&checked)','ctx','#[cfg(test)]event']}
     for caller,wanted in expected_calls.items():
         caller_text=body(source,caller);sites=list(re.finditer(r'\.node_inner\s*\(',caller_text))
         if len(sites)!=1:raise ValueError('node_inner attached to wrong caller')
@@ -62,11 +62,16 @@ def validate_node_inner_protocol(source):
             raise ValueError('node_inner caller loses original owner/same-context gate')
     if 'letSome(cursor)=owner.location_for_root_value(schema,ctx)?else{returnOk(None);};' not in ordinary:
         raise ValueError('ordinary node loses genuine root cursor')
-    checked='letSome(checked)=table.checked(owner,cursor,ctx)?else{returnOk(None);};'
-    read='if!checked.read(owner,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){returnOk(None);}'
     table='letSome(table)=&owner.owner_locationselse{returnOk(None);};'
-    if table+checked+read not in located or located.index(checked)>located.index('self.node_inner('):
-        raise ValueError('optimized node loses checked table/readback custody')
+    checked='letSome(checked)=table.checked_borrowed(owner,cursor,ctx)?else{returnOk(None);};'
+    read='if!checked.read(owner,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){returnOk(None);}'
+    consume='self.node_inner(owner,schema,path,compiler,Some(cursor),Some(&checked),ctx,#[cfg(test)]event)'
+    if table+checked+read not in located or not (located.index(table)<located.index(checked)<located.index(read)<located.index(consume)):
+        raise ValueError('borrowed checked-location admission/readback/consumer custody differs')
+    if 'checked_borrowed(owner,cursor,ctx)?' not in located:
+        raise ValueError('current BorrowedCheckedLocation producer/type binding missing')
+    if 'Some(checked)=>checked.read(owner,ctx)?' not in compact(raw_body(source,'node_inner')):
+        raise ValueError('node_inner no longer consumes actual borrowed owner readback')
 
 def validate_coordinate_storage(source):
     text=code_only(source);start=re.search(r'\bstruct\s+Descriptor\s*\{',text)
@@ -275,22 +280,26 @@ class OwnerCursorSourceControls(unittest.TestCase):
 
     def test_cfg_observer_mutations_cannot_hide_a_production_protocol_change(self):
         source=(ROOT/'crates/umf-core/src/schema_owned_plans.rs').read_text()
+        ordinary='self.node_inner(owner, schema, path, compiler, Some(&cursor), None, ctx, #[cfg(test)] None)'
+        located='self.node_inner(owner,schema,path,compiler,Some(cursor),Some(&checked),ctx,#[cfg(test)] event)'
         rows=[
-            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, None, ctx, None'),
+            (ordinary,ordinary.replace('#[cfg(test)] None','None')),
             ('Some(&checked),ctx,#[cfg(test)] event)','Some(&checked),ctx,event)'),
             ("#[cfg(test)] mut event: Option<&mut dyn FnMut(&'static str)>","mut event: Option<&mut dyn FnMut(&'static str)>"),
-            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, None, other, #[cfg(test)] None'),
-            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, None, ctx, #[cfg(test)] None, None'),
-            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, ctx, #[cfg(test)] None'),
-            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, Some(&checked), ctx, #[cfg(test)] None'),
-            ('cursor,Some(&checked),ctx,#[cfg(test)] event)','cursor,None,ctx,#[cfg(test)] event)'),
-            ('cursor,Some(&checked),ctx,#[cfg(test)] event)','cursor,Some(&foreign),ctx,#[cfg(test)] event)'),
-            ('cursor,Some(&checked),ctx,#[cfg(test)] event)','cursor,Some(&checked),other,#[cfg(test)] event)'),
-            ('cursor,Some(&checked),ctx,#[cfg(test)] event)','cursor,Some(&checked),ctx,#[cfg(test)] None)'),
-            ('compiler, &cursor, None, ctx, #[cfg(test)] None','compiler, &cursor, #[cfg(test)] None, ctx, None'),
-            ('table.checked(owner,cursor,ctx)?','table.checked(owner,cursor,other)?'),
+            (ordinary,ordinary.replace('ctx, #[cfg(test)] None)','other, #[cfg(test)] None)')),
+            (ordinary,ordinary[:-1]+', None)'),
+            (ordinary,ordinary.replace('Some(&cursor), None','Some(&cursor)')),
+            (ordinary,ordinary.replace('Some(&cursor), None','Some(&cursor), Some(&checked)')),
+            (located,located.replace('Some(&checked)','None')),
+            (located,located.replace('Some(&checked)','Some(&foreign)')),
+            (located,located.replace(',ctx,#[cfg(test)] event)',',other,#[cfg(test)] event)')),
+            (located,located.replace('#[cfg(test)] event','#[cfg(test)] None')),
+            (ordinary,ordinary.replace('None, ctx, #[cfg(test)] None','#[cfg(test)] None, ctx, None')),
+            ('table.checked_borrowed(owner,cursor,ctx)?','table.checked_borrowed(owner,cursor,other)?'),
             ('if !checked.read(owner,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return Ok(None);}','if !checked.read(foreign,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return Ok(None);}'),
         ]
+        rows.append(('let Some(checked)=table.checked_borrowed(owner,cursor,ctx)? else{return Ok(None);};\n            if !checked.read(owner,ctx)?','let Some(checked)=table.checked_borrowed(owner,cursor,ctx)? else{return Ok(None);};\n            return Ok(None);\n            if !checked.read(owner,ctx)?'))
+        if len(rows)!=15:raise AssertionError('owner-cursor mutation census must preserve14 and add1 early-return control')
         for i,(old,new) in enumerate(rows):
             with self.subTest(mutation=i):
                 mutant=changed_mutant(source,old,new)

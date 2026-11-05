@@ -48,7 +48,7 @@ enum CoordinateStorage {
     Materialized{nodes:Vec<Descriptor>,edges:Vec<usize>},
     Views{bank:Arc<admitted_bank::SchemaBank>,roles:Vec<BoundRole>,logical_nodes:usize},
 }
-#[derive(Debug)]
+#[derive(Clone,Copy,Debug)]
 struct Coordinate {root:usize,parent:Option<usize>,edge:usize,count:usize,depth:usize}
 #[derive(Debug)]
 pub(super) struct OwnerLocations {
@@ -365,6 +365,10 @@ mod admitted_structure_independent_tests;
 #[path="schema_bound_coordinate_views_independent_tests.rs"]
 mod bound_coordinate_views_independent_tests;
 
+#[cfg(test)]
+#[path="schema_fused_owner_traversal_independent_tests.rs"]
+mod fused_owner_traversal_independent_tests;
+
 // OW1 borrowed custody: only actual owner readback/ordered child reads mint it.
 // A Rust borrow prevents owner movement/mutation while this location is live.
 pub(super) struct CheckedLocation<'a> {
@@ -372,6 +376,34 @@ pub(super) struct CheckedLocation<'a> {
     cursor: OwnerCursor, coordinate: Coordinate,
     limits: crate::context::Limits, profile: crate::context::ResourceProfile,
 }
+/// Borrowed owner-bound identity for immediate consumers. It carries the real
+/// owner/table/value and logical node, but no ref-counted owning cursor.
+pub(super) struct BorrowedCheckedLocation<'a> {
+    owner: &'a CompiledSchema, table: &'a OwnerLocations, value: &'a Value,
+    node: usize, coordinate: Coordinate,
+    limits: crate::context::Limits, profile: crate::context::ResourceProfile,
+}
+pub(super) enum CheckedOwnerLocation<'binding,'owner> where 'owner:'binding {
+    Owned(CheckedLocation<'owner>),
+    Fused(BorrowedChild<'binding,'owner>),
+}
+/// One admitted owner/root binding for a recursive preflight invocation.
+/// It owns the legacy seed and only borrows the actual immutable role view.
+pub(super) struct FusedBinding<'a>{
+    seed:CheckedLocation<'a>, bound:&'a BoundRole,
+}
+#[derive(Clone,Copy)]
+pub(super) struct BorrowedChild<'binding,'owner> where 'owner:'binding {
+    binding:&'binding FusedBinding<'owner>, value:&'owner Value,
+    node:usize, physical_node:usize, coordinate:Coordinate,
+}
+pub(super) struct FusedChildren<'binding,'owner> where 'owner:'binding {
+    parent:BorrowedChild<'binding,'owner>, parent_end:usize, count:usize,
+    next_edge:usize, next_node:usize, valid:bool,
+}
+#[derive(Clone,Copy)]
+struct FusedSelectedRow{parent:u32,edge:u32,end:usize}
+pub(super) enum OwnerRoute<'a>{Fused(FusedBinding<'a>),Legacy(CheckedLocation<'a>)}
 pub(super) struct OrderedOwnerChildren<'a> {
     parent: CheckedLocation<'a>, physical: Option<admitted_structure::OrderedStructureChildren<'a>>,
     role: usize, base: usize, physical_root: usize, logical_end: usize, valid: bool,
@@ -403,6 +435,15 @@ impl OwnerLocations {
         owner_walk_event("ow1-checked-publication",coordinate.root,cursor.node);
         Ok(Some(CheckedLocation{owner,table:self,value,cursor:cursor.clone(),coordinate,limits:ctx.limits(),profile:ctx.profile()}))
     }
+    pub(super) fn checked_borrowed<'a>(&'a self,owner:&'a CompiledSchema,cursor:&OwnerCursor,ctx:&mut Context<'_>)->Result<Option<BorrowedCheckedLocation<'a>>,EngineError>{
+        let Some(value)=self.read(owner,cursor,ctx)? else{return Ok(None);};
+        let Some(coordinate)=self.coordinate(cursor.node,ctx)? else{return Ok(None);};
+        ctx.charge_work(walk_words::<BorrowedCheckedLocation<'a>>()+walk_words::<crate::context::Limits>()+8,Utf16::default())?;
+        if !self.belongs_for_access(owner,ctx)?{return Ok(None);}
+        let checked=BorrowedCheckedLocation{owner,table:self,value,node:cursor.node,coordinate,limits:ctx.limits(),profile:ctx.profile()};
+        #[cfg(test)] owner_walk_event("ft1-borrowed-binding-publication",coordinate.root,cursor.node);
+        Ok(Some(checked))
+    }
 }
 impl<'a> CheckedLocation<'a> {
     #[cfg(test)]
@@ -416,6 +457,19 @@ impl<'a> CheckedLocation<'a> {
         Ok(Some(self.value))
     }
     pub(super) fn cursor(&self)->&OwnerCursor { &self.cursor }
+    #[cfg(test)]
+    pub(super) fn observe_ft1_transfer(&self) { owner_walk_event("ft1-checked-child-transferred",self.coordinate.root,self.cursor.node); }
+    /// Materialize the original owner cursor only when fallback or a retaining
+    /// plan actually needs a duplicate. Admission precedes the Arc clone.
+    pub(super) fn materialize_cursor(&self,ctx:&mut Context<'_>)->Result<OwnerCursor,EngineError>{
+        ctx.charge_work(1,Utf16::default())?;
+        #[cfg(test)]
+        owner_walk_event("ft1-owning-cursor-materialized",self.coordinate.root,self.cursor.node);
+        Ok(self.cursor.clone())
+    }
+    pub(super) fn same_location(&self,cursor:&OwnerCursor)->bool {
+        self.cursor.same_location(cursor)
+    }
     pub(super) fn observe_consumption(&self,site:&'static str) {
         #[cfg(test)] owner_walk_event(site,self.coordinate.root,self.cursor.node);
         #[cfg(not(test))] let _=site;
@@ -444,6 +498,171 @@ impl<'a> CheckedLocation<'a> {
         Ok(OrderedOwnerChildren{parent:self,physical,role,base,physical_root,logical_end,valid:true})
     }
 }
+impl<'a> BorrowedCheckedLocation<'a> {
+    pub(super) fn read(&self,owner:&CompiledSchema,ctx:&mut Context<'_>)->Result<Option<&'a Value>,EngineError>{
+        ctx.charge_work(walk_words::<crate::context::Limits>()+12,Utf16::default())?;
+        if !std::ptr::eq(owner,self.owner)||self.limits!=ctx.limits()||self.profile!=ctx.profile()
+            ||!self.table.belongs_for_access(owner,ctx)?||self.node>=ctx.limits().max_values
+            ||self.coordinate.depth>ctx.limits().max_depth{return Ok(None);}
+        #[cfg(test)] owner_walk_event("ft1-borrowed-binding-readback",self.coordinate.root,self.node);
+        Ok(Some(self.value))
+    }
+    pub(super) fn materialize_cursor(&self,ctx:&mut Context<'_>)->Result<OwnerCursor,EngineError>{
+        ctx.charge_work(1,Utf16::default())?;
+        #[cfg(test)] owner_walk_event("ft1-owning-cursor-materialized",self.coordinate.root,self.node);
+        Ok(OwnerCursor{lineage:Arc::clone(&self.table.lineage),node:self.node})
+    }
+    pub(super) fn same_location(&self,cursor:&OwnerCursor)->bool{
+        Arc::ptr_eq(&self.table.lineage,&cursor.lineage)&&self.node==cursor.node
+    }
+    pub(super) fn observe_consumption(&self,site:&'static str){
+        #[cfg(test)] owner_walk_event(site,self.coordinate.root,self.node);
+        #[cfg(not(test))] let _=site;
+    }
+    pub(super) fn logical_position(&self,owner:&CompiledSchema,ctx:&mut Context<'_>)->Result<Option<(usize,usize)>,EngineError>{
+        if self.read(owner,ctx)?.is_none(){return Ok(None);}
+        ctx.charge_work(3,Utf16::default())?;
+        Ok(Some((self.coordinate.root,self.node)))
+    }
+    #[cfg(test)]
+    pub(super) fn observe_transfer(&self){owner_walk_event("ft1-borrowed-child-transferred",self.coordinate.root,self.node);}
+}
+impl<'a> FusedBinding<'a>{
+    pub(super) fn try_new(seed:CheckedLocation<'a>,ctx:&mut Context<'_>)->Result<OwnerRoute<'a>,EngineError>{
+        ctx.charge_work(walk_words::<OwnerRoute<'a>>()+1,Utf16::default())?;
+        let CoordinateStorage::Views{roles,..}=&seed.table.storage else{return Ok(OwnerRoute::Legacy(seed));};
+        ctx.charge_work(walk_words::<Self>()+walk_words::<crate::context::Limits>()+9,Utf16::default())?;
+        if seed.read(seed.owner,ctx)?.is_none(){return Ok(OwnerRoute::Legacy(seed));}
+        ctx.charge_work(2,Utf16::default())?;
+        let Some(bound)=roles.get(seed.coordinate.root)else{return Ok(OwnerRoute::Legacy(seed));};
+        let Some(raw)=seed.cursor.node.checked_sub(bound.base).and_then(|n|bound.view.root.checked_add(n))else{return Ok(OwnerRoute::Legacy(seed));};
+        if raw>=bound.physical_end||seed.cursor.node>=bound.end||seed.cursor.node>=ctx.limits().max_values
+            ||seed.coordinate.depth>ctx.limits().max_depth||!bound.view.structure.compatible(ctx){return Ok(OwnerRoute::Legacy(seed));}
+        ctx.charge_work(walk_words::<&BoundRole>()+2,Utf16::default())?;
+        let binding=Self{seed,bound};
+        #[cfg(test)] owner_walk_event("ft1-binding-publication",binding.seed.coordinate.root,binding.seed.cursor.node);
+        Ok(OwnerRoute::Fused(binding))
+    }
+    pub(super) fn root(&self,ctx:&mut Context<'_>)->Result<BorrowedChild<'_,'a>,EngineError>{
+        ctx.charge_work(walk_words::<BorrowedChild<'_,'a>>()+4,Utf16::default())?;
+        let physical_node=self.bound.view.root+(self.seed.cursor.node-self.bound.base);
+        let coordinate=Coordinate{root:self.seed.coordinate.root,parent:self.seed.coordinate.parent,edge:self.seed.coordinate.edge,count:self.seed.coordinate.count,depth:self.seed.coordinate.depth};
+        Ok(BorrowedChild{binding:self,value:self.seed.value,node:self.seed.cursor.node,physical_node,coordinate})
+    }
+    pub(super) fn children<'binding>(&'binding self,parent:&BorrowedChild<'binding,'a>,ctx:&mut Context<'_>)->Result<Option<FusedChildren<'binding,'a>>,EngineError> where 'a:'binding {
+        ctx.charge_work(walk_words::<FusedChildren<'binding,'a>>()+walk_words::<crate::context::Limits>()+10,Utf16::default())?;
+        if !std::ptr::eq(parent.binding,self)||parent.read(ctx)?.is_none(){return Ok(None);}
+        let structure=&self.bound.view.structure;
+        if self.seed.limits!=ctx.limits()||self.seed.profile!=ctx.profile()||!structure.compatible(ctx){return Ok(None);}
+        let Some(row)=structure.node(parent.physical_node)else{return Ok(None);};
+        if parent.physical_node>=self.bound.physical_end||parent.physical_node>=ctx.limits().max_values||row.end as usize>self.bound.physical_end
+            ||row.end as usize>structure.extent()||row.depth as usize>ctx.limits().max_depth
+            ||parent.node>=self.bound.end||parent.node>=ctx.limits().max_values{return Ok(None);}
+        let walk=FusedChildren{parent:*parent,parent_end:row.end as usize,count:row.count as usize,next_edge:0,next_node:row.first as usize,valid:true};
+        #[cfg(test)] owner_walk_event("ft1-frontier-publication",parent.coordinate.root,parent.node);
+        Ok(Some(walk))
+    }
+    fn original<'binding>(&'binding self,parent:&BorrowedChild<'binding,'a>,edge:usize,ctx:&mut Context<'_>)->Result<Option<CheckedOwnerLocation<'binding,'a>>,EngineError> where 'a:'binding {
+        #[cfg(test)] owner_walk_event("ft1-original-fallback",parent.coordinate.root,parent.node);
+        let cursor=parent.materialize_cursor(ctx)?;
+        let Some(child)=self.seed.table.child(self.seed.owner,&cursor,edge,ctx)?else{return Ok(None);};
+        let Some(checked)=self.seed.table.checked(self.seed.owner,&child,ctx)?else{return Ok(None);};
+        ctx.charge_work(walk_words::<CheckedOwnerLocation<'binding,'a>>()+1,Utf16::default())?;
+        Ok(Some(CheckedOwnerLocation::Owned(checked)))
+    }
+}
+impl<'binding,'owner:'binding> BorrowedChild<'binding,'owner>{
+    pub(super) fn value(&self)->&'owner Value{self.value}
+    pub(super) fn logical_position(&self)->(usize,usize){(self.coordinate.root,self.node)}
+    pub(super) fn read(&self,ctx:&mut Context<'_>)->Result<Option<&'owner Value>,EngineError>{
+        let seed=&self.binding.seed;
+        ctx.charge_work(walk_words::<crate::context::Limits>()+10,Utf16::default())?;
+        if self.node>=ctx.limits().max_values||self.coordinate.depth>ctx.limits().max_depth
+            ||seed.limits!=ctx.limits()||seed.profile!=ctx.profile()
+            ||!seed.table.belongs_for_access(seed.owner,ctx)?{return Ok(None);}
+        #[cfg(test)] owner_walk_event("ft1-borrowed-readback",self.coordinate.root,self.node);
+        Ok(Some(self.value))
+    }
+    pub(super) fn read_for(&self,owner:&CompiledSchema,ctx:&mut Context<'_>)->Result<Option<&'owner Value>,EngineError>{
+        ctx.charge_work(walk_words::<&CompiledSchema>()+1,Utf16::default())?;
+        if !std::ptr::eq(owner,self.binding.seed.owner){return Ok(None);}
+        self.read(ctx)
+    }
+    pub(super) fn materialize_cursor(&self,ctx:&mut Context<'_>)->Result<OwnerCursor,EngineError>{
+        ctx.charge_work(1,Utf16::default())?;
+        #[cfg(test)] owner_walk_event("ft1-owning-cursor-materialized",self.coordinate.root,self.node);
+        Ok(OwnerCursor{lineage:Arc::clone(&self.binding.seed.cursor.lineage),node:self.node})
+    }
+    pub(super) fn same_location(&self,cursor:&OwnerCursor)->bool{
+        Arc::ptr_eq(&self.binding.seed.cursor.lineage,&cursor.lineage)&&self.node==cursor.node
+    }
+    pub(super) fn children(&self,ctx:&mut Context<'_>)->Result<Option<FusedChildren<'binding,'owner>>,EngineError>{
+        self.binding.children(self,ctx)
+    }
+    #[cfg(test)]
+    pub(super) fn observe_transfer(&self){owner_walk_event("ft1-borrowed-child-transferred",self.coordinate.root,self.node);}
+}
+impl<'binding,'owner:'binding> FusedChildren<'binding,'owner>{
+    pub(super) fn select(&mut self,edge:usize,ctx:&mut Context<'_>)->Result<Option<CheckedOwnerLocation<'binding,'owner>>,EngineError>{
+        struct Guard<'s,'b,'o>{walk:&'s mut FusedChildren<'b,'o>,success:bool}
+        impl Drop for Guard<'_,'_,'_>{fn drop(&mut self){if !self.success{self.walk.valid=false;}}}
+        let mut guard=Guard{walk:self,success:false};
+        let result=guard.walk.select_inner(edge,ctx);guard.success=result.is_ok();result
+    }
+    fn select_inner(&mut self,edge:usize,ctx:&mut Context<'_>)->Result<Option<CheckedOwnerLocation<'binding,'owner>>,EngineError>{
+        let binding=self.parent.binding;
+        if !self.valid{return Ok(None);}
+        ctx.charge_work(walk_words::<crate::context::Limits>()+12,Utf16::default())?;
+        if !self.valid{return Ok(None);}
+        let structure=&binding.bound.view.structure;
+        if binding.seed.limits!=ctx.limits()||binding.seed.profile!=ctx.profile()||!structure.compatible(ctx)
+            ||edge<self.next_edge||edge>=self.count{return binding.original(&self.parent,edge,ctx);}
+        ctx.charge_work(2*walk_words::<usize>()+2,Utf16::default())?;
+        let mut ordinal=self.next_edge;let mut physical=self.next_node;
+        while ordinal<edge{
+            ctx.charge_work(6,Utf16::default())?;
+            let Some(row)=structure.node(physical)else{return binding.original(&self.parent,edge,ctx);};
+            if row.parent as usize!=self.parent.physical_node||row.edge as usize!=ordinal
+                ||row.end as usize<=physical||row.end as usize>self.parent_end{return binding.original(&self.parent,edge,ctx);}
+            #[cfg(test)] owner_walk_event("ft1-intervening-row-read",self.parent.coordinate.root,physical);
+            physical=row.end as usize;ordinal+=1;
+        }
+        ctx.charge_work(walk_words::<FusedSelectedRow>()+12,Utf16::default())?;
+        let Some(source_row)=structure.node(physical)else{return binding.original(&self.parent,edge,ctx);};
+        let row=FusedSelectedRow{parent:source_row.parent,edge:source_row.edge,end:source_row.end as usize};
+        if row.parent as usize!=self.parent.physical_node||row.edge as usize!=edge||row.end<=physical
+            ||row.end>self.parent_end||binding.seed.limits!=ctx.limits()
+            ||binding.seed.profile!=ctx.profile()||!structure.compatible(ctx){return binding.original(&self.parent,edge,ctx);}
+        #[cfg(test)] owner_walk_event("ft1-selected-row-read",self.parent.coordinate.root,physical);
+        ctx.charge_work(walk_words::<BorrowedChild<'binding,'owner>>()+walk_words::<CheckedOwnerLocation<'binding,'owner>>()+walk_words::<crate::context::Limits>()+16,Utf16::default())?;
+        if binding.seed.limits!=ctx.limits()||binding.seed.profile!=ctx.profile()||!structure.compatible(ctx){return binding.original(&self.parent,edge,ctx);}
+        let Some(node)=physical.checked_sub(binding.bound.view.root).and_then(|n|binding.bound.base.checked_add(n))
+            .filter(|n|*n<binding.bound.end&&*n<ctx.limits().max_values)else{return Ok(None);};
+        if self.parent.coordinate.depth>=ctx.limits().max_depth{return Ok(None);}
+        let value=match self.parent.value{Value::Object(v)=>v.get(edge).map(|(_,v)|v),Value::Array(v)=>v.get(edge),_=>None};
+        let Some(value)=value else{return Ok(None);};
+        #[cfg(test)] owner_walk_event("ft1-child-value-read",self.parent.coordinate.root,node);
+        if binding.seed.limits!=ctx.limits()||binding.seed.profile!=ctx.profile()||!structure.compatible(ctx){return binding.original(&self.parent,edge,ctx);}
+        let count=match value{Value::Object(v)=>v.len(),Value::Array(v)=>v.len(),_=>0};
+        let child=BorrowedChild{binding,value,node,physical_node:physical,coordinate:Coordinate{
+            root:self.parent.coordinate.root,parent:Some(self.parent.node),edge,count,depth:self.parent.coordinate.depth+1}};
+        self.next_edge=edge+1;self.next_node=row.end;
+        #[cfg(test)] owner_walk_event("ft1-borrowed-child-published",child.coordinate.root,node);
+        Ok(Some(CheckedOwnerLocation::Fused(child)))
+    }
+}
+impl<'binding,'owner:'binding> CheckedOwnerLocation<'binding,'owner> {
+    pub(super) fn read(&self,owner:&CompiledSchema,ctx:&mut Context<'_>)->Result<Option<&'owner Value>,EngineError>{
+        match self{Self::Owned(location)=>location.read(owner,ctx),Self::Fused(location)=>location.read_for(owner,ctx)}
+    }
+    #[cfg(test)]
+    pub(super) fn observe_consumption(&self,site:&'static str){
+        match self{Self::Owned(location)=>location.observe_consumption(site),Self::Fused(location)=>{
+            owner_walk_event(site,location.coordinate.root,location.node);
+        }}
+    }
+}
+
 impl<'a> OrderedOwnerChildren<'a> {
     pub(super) fn child(&mut self,edge:usize,ctx:&mut Context<'_>)->Result<Option<CheckedLocation<'a>>,EngineError>{
         struct Guard<'s,'a>{state:&'s mut OrderedOwnerChildren<'a>,success:bool}

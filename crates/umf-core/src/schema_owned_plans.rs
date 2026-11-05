@@ -158,7 +158,7 @@ impl OwnerPlans {
                 return Ok(None);
             }
             let Some(cursor)=owner.location_for_root_value(schema,ctx)? else {return Ok(None);};
-            self.node_inner(owner, schema, path, compiler, &cursor, None, ctx, #[cfg(test)] None)
+            self.node_inner(owner, schema, path, compiler, Some(&cursor), None, ctx, #[cfg(test)] None)
         })
     }
     pub(super) fn resolve_eval<'a>(&self,owner:&'a CompiledSchema,reference:&Value,path:&Utf16,ctx:&mut Context<'_>)->Result<(&'a Value,Utf16,bool),EngineError>{
@@ -217,10 +217,10 @@ impl OwnerPlans {
             if !self.belongs_to(owner,ctx)? {return Ok(None);}
             let Some(cursor)=cursor else {return Ok(None);};
             let Some(table)=&owner.owner_locations else{return Ok(None);};
-            let Some(checked)=table.checked(owner,cursor,ctx)? else{return Ok(None);};
+            let Some(checked)=table.checked_borrowed(owner,cursor,ctx)? else{return Ok(None);};
             if !checked.read(owner,ctx)?.is_some_and(|node|std::ptr::eq(node,schema)){return Ok(None);}
             checked.observe_consumption("ow1-node-plan-consume");
-            self.node_inner(owner,schema,path,compiler,cursor,Some(&checked),ctx,#[cfg(test)] event)
+            self.node_inner(owner,schema,path,compiler,Some(cursor),Some(&checked),ctx,#[cfg(test)] event)
         })
     }
     fn frame_inner(
@@ -281,8 +281,8 @@ impl OwnerPlans {
         schema: &Value,
         _path: &Utf16,
         compiler: bool,
-        cursor: &OwnerCursor,
-        checked: Option<&owner_locations::CheckedLocation<'_>>,
+        cursor: Option<&OwnerCursor>,
+        checked: Option<&owner_locations::BorrowedCheckedLocation<'_>>,
         ctx: &mut Context<'_>,
         #[cfg(test)] mut event: Option<&mut dyn FnMut(&'static str)>,
     ) -> Result<Option<Arc<NodePlan>>, EngineError> {
@@ -291,7 +291,7 @@ impl OwnerPlans {
         };
         // The accessor re-executes owner/table/lineage/current-limit/readback
         // checks and coordinate translation. This repeated real read is paid.
-        let position=match checked {Some(checked)=>checked.logical_position(owner,ctx)?,None=>cursor.logical_position(owner,ctx)?};
+        let position=match checked {Some(checked)=>checked.logical_position(owner,ctx)?,None=>match cursor{Some(cursor)=>cursor.logical_position(owner,ctx)?,None=>None}};
         let Some((_role, ordinal)) = position else {
             return Ok(None);
         };
@@ -316,9 +316,14 @@ impl OwnerPlans {
             ctx.charge_work(2,Utf16::default())?;
             // Preserve the original short-circuit: a foreign plan location
             // never triggers the subsequent owner readback or its callbacks.
-            if !plan.locator.same_location(cursor) {return Ok(None);}
+            if !match checked {Some(checked)=>checked.same_location(&plan.locator),None=>cursor.is_some_and(|cursor|plan.locator.same_location(cursor))} {return Ok(None);}
             let node=match checked {Some(checked)=>checked.read(owner,ctx)?,None=>Some(plan.locator.get(owner,ctx)?)};
             if node.is_some_and(|node|std::ptr::eq(node,schema)) {
+                #[cfg(test)]
+                {
+                    owner_locations::owner_walk_event("ft1-node-plan-hit-after-readback",_role,ordinal);
+                    if let Some(observer) = event.as_deref_mut() { observer("node-plan-hit-after-readback"); }
+                }
                 return Ok(Some(plan));
             }
             return Ok(None);
@@ -326,8 +331,11 @@ impl OwnerPlans {
         if count >= ctx.limits().max_values {
             return Ok(None);
         }
-        ctx.charge_work(1,Utf16::default())?;
-        let locator = cursor.clone();
+        let locator = match checked {
+            Some(checked)=>checked.materialize_cursor(ctx)?,
+            None=>{ctx.charge_work(1,Utf16::default())?;cursor.expect("node plan admission has an owner cursor").clone()},
+        };
+        #[cfg(test)] owner_locations::owner_walk_event("ft1-node-plan-retaining-materialization",_role,ordinal);
         ctx.charge_work(
             members.len().saturating_mul(if compiler { 130 } else { 1 }),
             Utf16::default(),

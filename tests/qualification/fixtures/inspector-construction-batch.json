@@ -1754,7 +1754,7 @@
     "test_first_bad_value_precedes_later_collision_and_unsafe_integer_keeps_exact_path",
     "test_compilation_owns_nested_mutable_python_content_and_reentry_denial_is_terminal"
   ],
-  "whyNewNativeQualification": "CR1\u2013CR4 changes shared Context/schema/evaluator and binding conversion. Original successful components remain historical only; genuine affected selection required.",
+  "whyNewNativeQualification": "CR1–CR4 changes shared Context/schema/evaluator and binding conversion. Original successful components remain historical only; genuine affected selection required.",
   "correctionFrom4833033c": {
     "genericPythonSource": "restored exact pre-batch body; precharge before compile_inner catalogue allocation",
     "identities": "retrieval/authored/resolved distinct; exact original reference/policy/dynamic orders; common frame only on selector agreement",
@@ -1831,7 +1831,7 @@
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "2cae60cdd9669a525cfd5123e615353f99ad6090b99b55ae0b51055f6d15890a",
+      "crates/umf-core/src/schema.rs": "0336ddd7748a862cd64aeeca5480f4ee6451f0a7858310c66cfa4f55cd787e77",
       "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -1854,9 +1854,9 @@
       "crates/umf-core/src/schema_node_coordinate_independent_tests.rs": "f9b10076f5034b62fa0c0fa47c218a2f3074424c537da88b2a4b4fa72488a42d",
       "crates/umf-core/src/schema_owned_plan_independent_tests.rs": "01178e789f3522581cd1cd94b77c7b5423a53634f9e717e4552be25712910fdb",
       "crates/umf-core/src/schema_owned_plan_tests.rs": "f3ec94b89b443195b8ffa64c585af76641694d80fb53df0bff9befebbfd749fd",
-      "crates/umf-core/src/schema_owned_plans.rs": "0ce039b603ead9ce4660fae8974d1cb850e0ccd01263e11980e8bd0fd9f18e59",
+      "crates/umf-core/src/schema_owned_plans.rs": "d91d82ce36d3ffdc5bee8fd042534a68635fdbc4e304400e0149b3b321a03238",
       "crates/umf-core/src/schema_owner_location_tests.rs": "060990953a6fa55640454093724d8072ea004e69043757daba583687ab20cd7f",
-      "crates/umf-core/src/schema_owner_locations.rs": "595312cba3d2b3990aaca5a211f2d4cb28b5ff239258f4ecdd84f0e3dabf971b",
+      "crates/umf-core/src/schema_owner_locations.rs": "07678db7ca9bfbd8f82d98dea0e3cb50c636f8d469addf3809906956ebbebeda",
       "crates/umf-core/src/schema_owner_locations_compact_independent_tests.rs": "db0d8e5addbc27f8e12ea0e6735f08483d15a604655ea70fd83ec5cff6bd2ee9",
       "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
       "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "1fdd85417529a5aef600642ada92b065e669a0897a54f696de340444d79504d3",
@@ -1929,11 +1929,11 @@
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
       "tests/qualification/test_inspector_combined_budget.py": "43810b7edac2b552c49a41d7909470c6bb08e96241b76d77b139495f52206196",
-      "tests/qualification/test_inspector_construction_batch.py": "645f95047b0b394fdd8430f4321030d50ec2b7438e50c4cb7973b4d78bb2c3b1",
+      "tests/qualification/test_inspector_construction_batch.py": "5b4a2d934fa328dc23a33e969cc013628b5a65a4b561ae72a0d675b59004e6a6",
       "tests/qualification/test_inspector_cost_gate.py": "87a971d3bb5df50648aa862084b4fd9bb9c455d96ff95c332c6a37bfbf9cd3e9",
-      "tests/qualification/test_inspector_installed_factory.py": "c0c3f8a919a7880135f29210f28626255d2a54176625a6940434ad01bc704de7",
+      "tests/qualification/test_inspector_installed_factory.py": "37d207d12fbe3dea049e992d4ebdc4d5633978134ce88b654f6cd38964038725",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
-      "tests/qualification/test_inspector_owner_cursors.py": "7f2d7d34c5972b7692671ee0a8c92f6ea19d5c14088eae5509a7fd791531a253",
+      "tests/qualification/test_inspector_owner_cursors.py": "78c41d56a4ba70543bd1347572fe3e30a40e14a867c68adbbaf248b946d8427c",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
       "tests/qualification/test_inspector_retained_controls.py": "017b5b095e6049ff632ba5ecf7f54e8506b21305c88aa87231c2c2da06d821b4",
       "tests/qualification/test_inspector_retained_diagnostic.py": "809a8ff4c78c260a0f54f0774ba70c432460cd06b01618b2579ec4488d244d47",
@@ -1958,7 +1958,8 @@
       "tools/tests/test_operation_schema_utf16_encoding.py": "129eff6a26986a41f9c5fc8f06ca88c673494c3442bcaf2a6fcda69f170be319",
       "tools/tests/test_schema_metas_utf16_encoding.py": "577f088d62abb65864dab66a93c53fc46092b5abd625f63e2e5ddcdd66df02eb",
       "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
-      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "3586032c1f6ce90a67c1bc801d3e5c7a5931eb4a5943f2f8b0fad6b2b8b62735"
+      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "3586032c1f6ce90a67c1bc801d3e5c7a5931eb4a5943f2f8b0fad6b2b8b62735",
+      "crates/umf-core/src/schema_fused_owner_traversal_independent_tests.rs": "cbc56cba50566b7d5c9c7eb7c95bd396a55bb774634bff68d3a0b24029d383e3"
     },
     "moduleGraph": [
       {
@@ -2898,6 +2899,16 @@
         "cfg": [
           "#[cfg(test)]",
           "#[path = \"schema_scoped_preflight_path_independent_tests.rs\"]"
+        ]
+      },
+      {
+        "parent": "crates/umf-core/src/schema_owner_locations.rs",
+        "child": "crates/umf-core/src/schema_fused_owner_traversal_independent_tests.rs",
+        "module": "schema::owner_locations::fused_owner_traversal_independent_tests",
+        "declaration": "#[cfg(test)]\n#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]\nmod fused_owner_traversal_independent_tests;",
+        "cfg": [
+          "#[cfg(test)]",
+          "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]"
         ]
       }
     ],
@@ -7898,6 +7909,104 @@
             "name": "schema::scoped_preflight_path_independent_tests::sp10_real_root_catalogue_preflight_and_unchanged_evaluator"
           }
         ]
+      },
+      {
+        "package": "umf-core",
+        "target": "lib",
+        "features": "native-postgresql",
+        "source": "crates/umf-core/src/schema_fused_owner_traversal_independent_tests.rs",
+        "sourceSHA256": "cbc56cba50566b7d5c9c7eb7c95bd396a55bb774634bff68d3a0b24029d383e3",
+        "cases": [
+          {
+            "name": "schema::owner_locations::fused_owner_traversal_independent_tests::ft01_literal_ordered_sparse_borrowed_readbacks_match_original",
+            "line": 149,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::fused_owner_traversal_independent_tests::ft02_shared_physical_aliases_preserve_logical_custody",
+            "line": 191,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::fused_owner_traversal_independent_tests::ft03_immediate_borrow_does_not_materialize_retaining_cursor",
+            "line": 226,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::fused_owner_traversal_independent_tests::ft04_real_preflight_and_nodeplan_consumption_keep_eligibility",
+            "line": 261,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::fused_owner_traversal_independent_tests::ft05_effective_limits_and_profiles_rechecked_after_scopes",
+            "line": 364,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::fused_owner_traversal_independent_tests::ft06_nonmonotone_materialized_foreign_and_mode_fallback_parity",
+            "line": 407,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::fused_owner_traversal_independent_tests::ft07_group_denial_preserves_first_fields_and_no_partial_publish",
+            "line": 505,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owner_locations::fused_owner_traversal_independent_tests::ft08_reentry_unwind_poison_and_stale_frontier_custody",
+            "line": 636,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owner_locations.rs\"]",
+              "#[cfg(test)]",
+              "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          }
+        ],
+        "caseCount": 8
       }
     ],
     "python": [
@@ -8085,7 +8194,7 @@
         "python:python/tests/test_retained_codegen_native.py::RetainedResourceAdmissionNativeTests::test_mutation_from_compilation_callback_cannot_change_already_owned_snapshot"
       ]
     },
-    "modelSHA256": "0b0b33bbeca43d54babf6054d0d8ff43e26441fcf1d4b800ce60cee69e433056",
+    "modelSHA256": "d70777be5f327554ac5dc728d17c9a6a0840131c0e12daeff0c1045b3c48c012",
     "legacyDisposition": {
       "oldProbeUnchanged": true,
       "warmed51IsFactoryEvidence": false,
@@ -8104,7 +8213,7 @@
       "fixtureSHA256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "metadataVersion": "0.10.9"
     },
-    "closureSHA256": "166070dd9f668f52f0c67b63728a638b22d1dfe7154aac0c607c99ca48c2873c"
+    "closureSHA256": "615dbde752e447fc4a5202e3eeebf30c4004a3c23dd46dc5f9385e992de97e9f"
   },
   "modelReferences": {
     "baseModel": {
@@ -8218,6 +8327,26 @@
     "SP1GoverningRecoveryPlan": {
       "path": "/private/tmp/umf-stack-release-truss/docs/helix/04-build/inspector-work-budget-recovery-plan.md",
       "sha256": "4d6011f409021e93891889ccad8bd613d80e8f77c1875df8395511dc27540671"
+    },
+    "FT1WholeRouteOperationLedger": {
+      "path": "/private/tmp/umf-ft1-full-producer-v2/FT1-V2-SIGNED-WHOLE-ROUTE-OPERATION-LEDGER.json",
+      "sha256": "d70777be5f327554ac5dc728d17c9a6a0840131c0e12daeff0c1045b3c48c012"
+    },
+    "FT1V2ProducerPin": {
+      "path": "/private/tmp/umf-ft1-full-producer-v2/FT1-FULL-PRODUCER-API-AND-PIN.json",
+      "sha256": "027bbe20f373dc345c21b1a99bdf822accffd41e1f8fe4e66e9a0f7f805a6f88"
+    },
+    "FT1V2PreservationReceipt": {
+      "path": "/private/tmp/umf-ft1-full-producer-v2/FT1-V2-PRESERVATION-RECEIPT.json",
+      "sha256": "2b0497f9a98d3b86f40f892b3dd82997777bbceafb7e75559fceae3a140fba04"
+    },
+    "FT1EightControlSourceClosure": {
+      "path": "/private/tmp/umf-ft1-independent-control-preparation/written-eight/SOL-FT1-EIGHT-CONTROLS-SOURCE-PASS-AND-V2-HOLD-CLOSURE.json",
+      "sha256": "dad2a86b0d7c16679b02beb5689aae13419b9485468c32f802a09d868b2dc418"
+    },
+    "FT1CombinedSourceControlModelAuthorization": {
+      "path": "/private/tmp/umf-ft1-full-producer-v2/SOL-FT1-COMBINED-SOURCE-MODEL-PASS-A469-CENSUS-SCOPE.json",
+      "sha256": "96c3083557398dbcd07b3635854e7e59fca995b2356b39e613e8e5176904b2d7"
     }
   }
 }
