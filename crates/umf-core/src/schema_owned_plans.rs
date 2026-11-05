@@ -606,7 +606,7 @@ struct PathHandle {
 /// Actual immutable diagnostic spelling, carried alongside optional arena custody.
 /// No unmetered Clone or caller-supplied handle constructor.
 pub(crate) struct EvaluationPathPair {
-    text: Utf16,
+    text: construction_index::CarriedPath,
     handle: Option<PathHandle>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -621,10 +621,11 @@ impl PathKind {
     }
 }
 impl EvaluationPathPair {
-    pub(crate) fn text(&self) -> &Utf16 { &self.text }
+    pub(crate) fn text(&self) -> &Utf16 { self.text.text() }
+    pub(super) fn carried(&self)->&construction_index::CarriedPath { &self.text }
     pub(crate) fn untracked(text: Utf16, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         ctx.charge_work(plan_words::<Self>() + 1, Utf16::default())?;
-        Ok(Self { text, handle: None })
+        Ok(Self { text:construction_index::CarriedPath::plain(text), handle: None })
     }
     pub(crate) fn clone_with_context(&self, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         self.clone_with_events(ctx, &mut |_| {})
@@ -635,13 +636,13 @@ impl EvaluationPathPair {
         ctx.charge_work(self.text.clone_work().saturating_add(plan_words::<Self>() + 4), Utf16::default())?;
         event("path-pair-clone");
         Ok(Self {
-            text: self.text.clone(),
+            text: self.text.clone_admitted(),
             handle: self.handle.as_ref().map(|h| PathHandle { arena_identity: Arc::clone(&h.arena_identity), entry: h.entry }),
         })
     }
 }
 struct PathEntry {
-    text: Utf16,
+    text: construction_index::CarriedPath,
     parent: Option<usize>,
     kind: u8,
     depth: usize,
@@ -721,6 +722,7 @@ impl EvaluationPaths {
         // existing real copy fee. No root text equality/intern search occurs.
         ctx.charge_work(plan_words::<Vec<u16>>() + plan_words::<Utf16>() + plan_words::<EvaluationPathPair>() + Self::tracked_guard_work() + 6, Utf16::default())?;
         let text = text.into_shared_with_context(ctx)?;
+        let text = construction_index::CarriedPath::seed(text,ctx)?;
         if !arena.borrow().tracked.as_ref().is_some_and(|t| t.unchanged(s) && t.compatible(ctx)) {
             return Ok(EvaluationPathPair { text, handle: None });
         }
@@ -734,7 +736,7 @@ impl EvaluationPaths {
         Self::reserve_entry(t, s);
         let id = t.entries.len();
         t.units += text.len();
-        t.entries.push(PathEntry { text: text.clone(), parent: None, kind: 3, depth: 0 });
+        t.entries.push(PathEntry { text: text.clone_admitted(), parent: None, kind: 3, depth: 0 });
         Ok(EvaluationPathPair { text, handle: Some(PathHandle { arena_identity: Arc::clone(&t.identity), entry: id }) })
     }
     // Includes requested allocation, all possibly relocated entries, publication
@@ -778,12 +780,12 @@ impl EvaluationPaths {
                 if let Some(id) = hit {
                     // Stored text is Shared; admit wrapper/refcount and fields
                     // BEFORE the callback-free, rechecked read/return.
-                    ctx.charge_work(plan_words::<EvaluationPathPair>() + plan_words::<PathEntry>() + Self::tracked_guard_work() + 12, Utf16::default())?;
+                    ctx.charge_work(2*plan_words::<construction_index::CarriedPath>() + plan_words::<EvaluationPathPair>() + plan_words::<PathEntry>() + Self::tracked_guard_work() + 20, Utf16::default())?;
                     event("path-transition-hit");
                     let a = arena.borrow();
                     if let Some(t) = a.tracked.as_ref().filter(|t| t.unchanged(s) && t.compatible(ctx)) {
                         if let Some(e) = t.entries.get(id).filter(|e| e.parent == Some(p) && e.kind == kind.tag() && e.depth == d + 1) {
-                            return Ok(EvaluationPathPair { text: e.text.clone(), handle: Some(PathHandle { arena_identity: Arc::clone(&t.identity), entry: id }) });
+                            return Ok(EvaluationPathPair { text: e.text.clone_admitted(), handle: Some(PathHandle { arena_identity: Arc::clone(&t.identity), entry: id }) });
                         }
                     }
                 }
@@ -793,7 +795,7 @@ impl EvaluationPaths {
         }
         // Also the foreign/default/capacity fallback: build the original exact
         // spelling ONCE. Tracking failure never becomes a semantic refusal.
-        let text = Self::build_pair_text(parent.text(), segment, kind, ctx, event)?;
+        let text = Self::build_pair_text(&parent.text, segment, kind, ctx, event)?;
         if let (Some((s,p,d)), Some(key)) = (tracking, key) {
             if !arena.borrow().tracked.as_ref().is_some_and(|t| t.unchanged(s) && t.compatible(ctx)) {
                 return Ok(EvaluationPathPair { text, handle: None });
@@ -822,7 +824,7 @@ impl EvaluationPaths {
                     // returned pair admitted. No callbacks in this commit.
                     Self::reserve_entry(t,s);
                     let id = t.entries.len();
-                    t.entries.push(PathEntry { text: text.clone(), parent: Some(p), kind: kind.tag(), depth: d + 1 });
+                    t.entries.push(PathEntry { text: text.clone_admitted(), parent: Some(p), kind: kind.tag(), depth: d + 1 });
                     t.children.insert(key,id);
                     t.units = units;
                     return Ok(EvaluationPathPair { text, handle: Some(PathHandle { arena_identity: Arc::clone(&t.identity), entry: id }) });
@@ -833,32 +835,9 @@ impl EvaluationPaths {
         // No late fallback callback or second path construction.
         Ok(EvaluationPathPair { text, handle: None })
     }
-    fn build_pair_text(parent: &Utf16, segment: &Utf16, kind: PathKind, ctx: &mut Context<'_>, event: &mut dyn FnMut(&'static str)) -> Result<Utf16, EngineError> {
-        ctx.charge_work(segment.len().saturating_add(4), Utf16::default())?;
-        event("path-suffix-scan");
-        let escaped = segment.units().iter().fold(0usize, |n,u| n.saturating_add(if kind != PathKind::RawSchemaStep && (*u == 47 || *u == 126) {2} else {1}));
-        let slash = usize::from(kind == PathKind::InstancePointer || parent.units().last() != Some(&47));
-        let length = parent.len().checked_add(slash).and_then(|n| n.checked_add(escaped))
-            .ok_or_else(|| EngineError::new("LIMIT", Utf16::default(), "Evaluation path size overflow"))?;
-        // Capacity bytes, complete prefix copy, second suffix scan and exact
-        // emitted units, Vec/Arc strong+weak headers/wrappers and cleanup.
-        let allocation = length.checked_mul(std::mem::size_of::<u16>())
-            .ok_or_else(|| EngineError::new("LIMIT", Utf16::default(), "Evaluation path allocation overflow"))?
-            .div_ceil(std::mem::size_of::<usize>());
-        let fee = allocation.saturating_add(parent.len()).saturating_add(segment.len())
-            .saturating_add(escaped).saturating_add(slash)
-            .saturating_add(2 * plan_words::<Vec<u16>>() + plan_words::<Utf16>() + plan_words::<EvaluationPathPair>() + Self::tracked_guard_work() + 12);
-        ctx.charge_work(fee, Utf16::default())?;
-        event("path-output-allocation-and-write");
-        let mut out = Vec::with_capacity(length);
-        out.extend_from_slice(parent.units());
-        if slash == 1 { out.push(47); }
-        for &unit in segment.units() {
-            if kind == PathKind::RawSchemaStep { out.push(unit); }
-            else { match unit { 126 => out.extend_from_slice(&[126,48]), 47 => out.extend_from_slice(&[126,49]), u => out.push(u) } }
-        }
-        event("path-output-move-to-shared");
-        Ok(Utf16::shared(out))
+    fn build_pair_text(parent:&construction_index::CarriedPath,segment:&Utf16,kind:PathKind,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<construction_index::CarriedPath,EngineError> {
+        parent.append_observed(segment,kind,ctx,
+            2*plan_words::<Vec<u16>>()+plan_words::<Utf16>()+plan_words::<EvaluationPathPair>()+Self::tracked_guard_work()+12,event)
     }
 }
 
@@ -928,7 +907,7 @@ impl EvaluationPaths {
             entries: tracked.entries.iter().enumerate().map(|(ordinal, entry)| EvaluationPathEntryView {
                 ordinal, parent: entry.parent, kind: entry.kind,
                 // Actual stored depth, not inferred text slash count.
-                depth: entry.depth, text: entry.text.clone(),
+                depth: entry.depth, text: entry.text.text().clone(),
             }).collect(),
             transitions: tracked.children.iter().map(|((parent, segment, kind), child)|
                 (*parent, segment.clone(), *kind, *child)).collect(),

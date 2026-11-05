@@ -37,6 +37,168 @@ pub(super) struct ColdResourceIndex {
     policies: Mutex<Vec<Option<(crate::context::Limits, KeywordPolicy)>>>,
 }
 
+// PTH1 private path custody. Fields can only be minted by the actual seed and
+// append producers below. Syntax is not schema/selector admission authority.
+#[cfg(test)]
+thread_local! { static PATH_OBSERVER:std::cell::RefCell<Option<Box<dyn FnMut(&'static str)>>> = std::cell::RefCell::new(None); }
+#[cfg(test)]
+pub(super) fn observe_paths<T>(observer:Box<dyn FnMut(&'static str)>,operation:impl FnOnce()->T)->T {
+    struct Restore(Option<Box<dyn FnMut(&'static str)>>);
+    impl Drop for Restore {fn drop(&mut self){PATH_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+    let prior=PATH_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+fn path_event(event:&'static str) {
+    #[cfg(test)]
+    {let observer=PATH_OBSERVER.with(|s|s.borrow_mut().take());if let Some(mut observer)=observer {
+        struct Restore(Option<Box<dyn FnMut(&'static str)>>);
+        impl Drop for Restore {fn drop(&mut self){PATH_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+        let mut restore=Restore(Some(observer));if let Some(observer)=restore.0.as_mut(){observer(event);}
+    }}
+    #[cfg(not(test))]let _=event;
+}
+#[cfg(test)]
+type PathCallObserver=Box<dyn FnMut(&'static str,&CompiledSchema,&CarriedPath)>;
+#[cfg(test)]
+thread_local! {static PATH_CALL_OBSERVER:std::cell::RefCell<Option<PathCallObserver>>=std::cell::RefCell::new(None);}
+#[cfg(test)]
+pub(super) fn observe_path_calls<T>(observer:PathCallObserver,operation:impl FnOnce()->T)->T {
+    struct Restore(Option<PathCallObserver>);
+    impl Drop for Restore{fn drop(&mut self){PATH_CALL_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+    let prior=PATH_CALL_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+pub(super) fn path_call(site:&'static str,owner:&CompiledSchema,path:&CarriedPath) {
+    #[cfg(test)]
+    {let observer=PATH_CALL_OBSERVER.with(|s|s.borrow_mut().take());if let Some(observer)=observer {
+        struct Restore(Option<PathCallObserver>);
+        impl Drop for Restore{fn drop(&mut self){PATH_CALL_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+        let mut restore=Restore(Some(observer));if let Some(observer)=restore.0.as_mut(){observer(site,owner,path);}
+    }}
+    #[cfg(not(test))]let _=(site,owner,path);
+}
+
+fn path_words<T>() -> usize { std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>()) }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(super) enum PathSelector { Policy, Common, Dynamic }
+impl PathSelector { fn slot(self)->usize { match self {Self::Policy=>0,Self::Common=>1,Self::Dynamic=>2} } }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum PathSelection { Pending, Known(Option<usize>) }
+#[derive(Debug)]
+struct OriginBinding {
+    index: Arc<ColdResourceIndex>,
+    lineage: Arc<()>,
+    limits: crate::context::Limits,
+    profile: crate::context::ResourceProfile,
+    dialect:SchemaDialect, strict:bool, policy:KeywordPolicy, resolved:bool,
+    selections: [PathSelection;3],
+    frame: Option<(usize,bool)>,
+}
+#[derive(Debug, Default)]
+struct OriginState { epoch:u64, binding:Option<OriginBinding> }
+#[derive(Debug)]
+struct PathSyntax {
+    first_hash:Option<usize>,
+    surrogate:bool,
+    origin:std::rc::Rc<std::cell::RefCell<OriginState>>,
+}
+#[derive(Debug)]
+pub(crate) struct CarriedPath { text:Utf16, syntax:Option<PathSyntax> }
+impl std::ops::Deref for CarriedPath { type Target=Utf16; fn deref(&self)->&Utf16 { &self.text } }
+impl CarriedPath {
+    pub(super) fn text(&self)->&Utf16 { &self.text }
+    // Plain paths carry no optional proof. The enclosing pair pays its wrapper.
+    pub(super) fn plain(text:Utf16)->Self { Self{text,syntax:None} }
+    fn origin_work()->usize { 2*(path_words::<std::cell::RefCell<OriginState>>()+2)+4 }
+    pub(super) fn seed(text:Utf16,ctx:&mut Context<'_>)->Result<Self,EngineError> {
+        Self::seed_observed(text,ctx,&mut |_|{})
+    }
+    fn seed_observed(text:Utf16,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<Self,EngineError> {
+        ctx.charge_work(text.len().saturating_mul(4).saturating_add(Self::origin_work())
+            .saturating_add(2*path_words::<Self>()+path_words::<PathSyntax>()+8),Utf16::default())?;
+        event("pth-seed-scan");path_event("pth-seed-scan");
+        let mut first_hash=None;let mut surrogate=false;
+        for (i,u) in text.units().iter().enumerate() {
+            if first_hash.is_none() && *u==35 {first_hash=Some(i);}
+            surrogate|=(0xd800..=0xdfff).contains(u);
+        }
+        event("pth-seed-publication");path_event("pth-seed-publication");
+        Ok(Self{text,syntax:Some(PathSyntax{first_hash,surrogate,origin:std::rc::Rc::new(std::cell::RefCell::new(OriginState::default()))})})
+    }
+    // All clones are immediately preceded by admission, including wrapper,
+    // actual text clone, Rc reference/count movement and eventual drops.
+    pub(super) fn clone_work(&self)->usize {
+        self.text.clone_work().saturating_add(2*path_words::<Self>()+path_words::<PathSyntax>()+6)
+    }
+    pub(super) fn clone_admitted(&self)->Self {
+        Self{text:self.text.clone(),syntax:self.syntax.as_ref().map(|s|PathSyntax{first_hash:s.first_hash,surrogate:s.surrogate,origin:std::rc::Rc::clone(&s.origin)})}
+    }
+    pub(super) fn clone_with_context(&self,ctx:&mut Context<'_>)->Result<Self,EngineError> {
+        ctx.charge_work(self.clone_work(),Utf16::default())?;Ok(self.clone_admitted())
+    }
+    pub(super) fn append(&self,segment:&Utf16,kind:PathKind,ctx:&mut Context<'_>)->Result<Self,EngineError> {
+        self.append_observed(segment,kind,ctx,2*path_words::<Vec<u16>>()+path_words::<Utf16>()+path_words::<Self>()+12,&mut |_|{})
+    }
+    // The producer performs the exact original spelling operation. extra is
+    // only the enclosing producer's existing paid wrapper/guard work, not a
+    // caller-supplied claim about syntax, origin, admission or eligibility.
+    pub(super) fn append_observed(&self,segment:&Utf16,kind:PathKind,ctx:&mut Context<'_>,extra:usize,event:&mut dyn FnMut(&'static str))->Result<Self,EngineError> {
+        ctx.charge_work(2*path_words::<PathSyntax>()+8,Utf16::default())?;
+        let slash=usize::from(kind==PathKind::InstancePointer || self.text.units().last()!=Some(&47));
+        // The old suffix/escape scan and added syntax tests are admitted before
+        // either read; no full parent scan is performed here.
+        ctx.charge_work(segment.len().saturating_mul(5).saturating_add(8),Utf16::default())?;
+        event("path-suffix-scan");path_event("pth-append-suffix");
+        let mut escaped=0usize;
+        let mut first_hash=self.syntax.as_ref().and_then(|s|s.first_hash);
+        let mut surrogate=self.syntax.as_ref().is_some_and(|s|s.surrogate);
+        for &u in segment.units() {
+            if first_hash.is_none() && u==35 {
+                first_hash=self.text.len().checked_add(slash).and_then(|n|n.checked_add(escaped));
+            }
+            surrogate|=(0xd800..=0xdfff).contains(&u);
+            escaped=escaped.saturating_add(if kind!=PathKind::RawSchemaStep && (u==47||u==126){2}else{1});
+        }
+        let length=self.text.len().checked_add(slash).and_then(|n|n.checked_add(escaped))
+            .ok_or_else(||EngineError::new("LIMIT",Utf16::default(),"Evaluation path size overflow"))?;
+        let allocation=length.checked_mul(std::mem::size_of::<u16>())
+            .ok_or_else(||EngineError::new("LIMIT",Utf16::default(),"Evaluation path allocation overflow"))?
+            .div_ceil(std::mem::size_of::<usize>());
+        let new_origin=self.syntax.as_ref().is_some_and(|s|s.first_hash.is_none() && first_hash.is_some());
+        let fee=allocation.saturating_add(self.text.len()).saturating_add(segment.len()).saturating_add(escaped).saturating_add(slash)
+            .saturating_add(extra).saturating_add(2*path_words::<Self>()+path_words::<PathSyntax>()+10)
+            .saturating_add(if new_origin{Self::origin_work()}else{0});
+        ctx.charge_work(fee,Utf16::default())?;
+        event("path-output-allocation-and-write");path_event("pth-append-output");
+        let mut out=Vec::with_capacity(length);out.extend_from_slice(self.text.units());if slash==1{out.push(47);}
+        for &u in segment.units() {if kind==PathKind::RawSchemaStep {out.push(u);}else{match u {126=>out.extend_from_slice(&[126,48]),47=>out.extend_from_slice(&[126,49]),u=>out.push(u)}}}
+        let syntax=self.syntax.as_ref().map(|s|PathSyntax{first_hash,surrogate,origin:if new_origin {std::rc::Rc::new(std::cell::RefCell::new(OriginState::default()))}else{std::rc::Rc::clone(&s.origin)}});
+        event("path-output-move-to-shared");
+        Ok(Self{text:Utf16::shared(out),syntax})
+    }
+    pub(super) fn resource_prefix(&self,ctx:&mut Context<'_>)->Result<Utf16,EngineError> {
+        ctx.charge_work(path_words::<PathSyntax>()+3,Utf16::default())?;
+        let end=if let Some(syntax)=&self.syntax {syntax.first_hash.unwrap_or(self.text.len())}else{
+            ctx.charge_work(self.text.len().saturating_add(1),Utf16::default())?;
+            self.text.units().iter().position(|u|*u==35).unwrap_or(self.text.len())
+        };
+        let length=end.checked_add(1).ok_or_else(||EngineError::new("LIMIT",Utf16::default(),"Evaluation path size overflow"))?;
+        let allocation=length.checked_mul(std::mem::size_of::<u16>()).ok_or_else(||EngineError::new("LIMIT",Utf16::default(),"Evaluation path allocation overflow"))?.div_ceil(std::mem::size_of::<usize>());
+        ctx.charge_work(end.saturating_add(allocation).saturating_add(path_words::<Vec<u16>>()+path_words::<Utf16>()+4),Utf16::default())?;
+        path_event("pth-prefix-output");
+        let mut units=Vec::with_capacity(length);units.extend_from_slice(&self.text.units()[..end]);units.push(35);Ok(Utf16::new(units))
+    }
+    #[cfg(test)]
+    pub(super) fn syntax_for_test(&self)->Option<(Option<usize>,bool)> {
+        self.syntax.as_ref().map(|s|(s.first_hash,s.surrogate))
+    }
+    #[cfg(test)]
+    pub(super) fn selections_for_test(&self)->Option<[Option<Option<usize>>;3]> {
+        let s=self.syntax.as_ref()?;let state=s.origin.borrow();let b=state.binding.as_ref()?;
+        Some(b.selections.map(|s|match s {PathSelection::Pending=>None,PathSelection::Known(value)=>Some(value)}))
+    }
+    #[cfg(test)]
+    pub(super) fn seed_for_test(text:Utf16,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<Self,EngineError> {Self::seed_observed(text,ctx,event)}
+}
+
 fn ascii_key(key: &Utf16, name: &str) -> bool {
     key.len() == name.len() && key.units().iter().copied().eq(name.bytes().map(u16::from))
 }
@@ -101,6 +263,73 @@ pub(super) fn origin(
 }
 
 impl ColdResourceIndex {
+    pub(super) fn select_carried(self:&Arc<Self>,owner:&CompiledSchema,path:&CarriedPath,selector:PathSelector,ctx:&mut Context<'_>)->Result<Option<usize>,EngineError> {
+        path_call("pth-selector-consumer",owner,path);
+        path_event("pth-selector-entry");
+        ctx.charge_work(path_words::<OriginState>()+path_words::<OriginBinding>()+path_words::<crate::context::Limits>()+18,Utf16::default())?;
+        let generic=|ctx:&mut Context<'_>|match selector {
+            PathSelector::Policy=>self.policy_path(path.text(),ctx),
+            PathSelector::Common=>self.for_path(path.text(),ctx),
+            PathSelector::Dynamic=>self.dynamic_path(path.text(),ctx),
+        };
+        let Some(syntax)=&path.syntax else{return generic(ctx);};
+        let Some(lineage)=&owner.owner_lineage else{return generic(ctx);};
+        if !matches!(owner.regex_profile,RegexProfile::Ecma262Unicode) || !owner.cold_resource_index.as_ref().is_some_and(|actual|Arc::ptr_eq(actual,self)) {return generic(ctx);}
+        if syntax.surrogate {return Ok(None);}
+        let Some(end)=syntax.first_hash else{return Ok(None);};
+        let slot=selector.slot();
+        let(epoch,prior,foreign)={let state=syntax.origin.borrow();
+            let foreign=state.binding.as_ref().is_some_and(|b|!Arc::ptr_eq(&b.index,self)||!Arc::ptr_eq(&b.lineage,lineage)||b.limits!=ctx.limits()||b.profile!=ctx.profile()||b.dialect!=owner.dialect||b.strict!=owner.strict||b.policy!=owner.root_keyword_policy||b.resolved!=owner.resolve_references_at_compile);
+            (state.epoch,state.binding.as_ref().map(|b|b.selections[slot]),foreign)};
+        if foreign {return generic(ctx);}
+        if let Some(PathSelection::Known(value))=prior {path_event("pth-selector-hit");return Ok(value);}
+        path_event("pth-selector-original-read");
+        let value=if end==0 {Some(0)} else {self.lookup_map(match selector {PathSelector::Policy=>&self.policy_roots,PathSelector::Common=>&self.common,PathSelector::Dynamic=>&self.dynamic_roots},&path.text.units()[..end],ctx)?};
+        ctx.charge_work(2*path_words::<OriginBinding>()+path_words::<OriginState>()+path_words::<crate::context::Limits>()+14,Utf16::default())?;
+        path_event("pth-selector-publication");
+        let mut state=syntax.origin.borrow_mut();
+        if state.epoch==epoch {
+            if let Some(next)=state.epoch.checked_add(1) {
+                let binding=state.binding.get_or_insert_with(||OriginBinding{index:Arc::clone(self),lineage:Arc::clone(lineage),limits:ctx.limits(),profile:ctx.profile(),dialect:owner.dialect,strict:owner.strict,policy:owner.root_keyword_policy,resolved:owner.resolve_references_at_compile,selections:[PathSelection::Pending;3],frame:None});
+                // The callbacks above held no state borrow. An unchanged epoch
+                // proves no reentrant publication replaced the checked binding.
+                binding.selections[slot]=PathSelection::Known(value);state.epoch=next;
+            }
+        }
+        Ok(value)
+    }
+
+    pub(super) fn matches_frame_carried(self:&Arc<Self>,owner:&CompiledSchema,ordinal:usize,path:&CarriedPath,ctx:&mut Context<'_>)->Result<bool,EngineError> {
+        ctx.charge_work(path_words::<OriginState>()+path_words::<OriginBinding>()+path_words::<crate::context::Limits>()+18,Utf16::default())?;
+        let Some(syntax)=&path.syntax else{return self.matches_frame(ordinal,path.text(),ctx);};
+        let Some(lineage)=&owner.owner_lineage else{return self.matches_frame(ordinal,path.text(),ctx);};
+        if !matches!(owner.regex_profile,RegexProfile::Ecma262Unicode) || !owner.cold_resource_index.as_ref().is_some_and(|actual|Arc::ptr_eq(actual,self)) {return self.matches_frame(ordinal,path.text(),ctx);}
+        if syntax.surrogate || syntax.first_hash.is_none() {return Ok(false);}
+        let (epoch,prior,foreign)={let state=syntax.origin.borrow();
+            (state.epoch,state.binding.as_ref().and_then(|b|b.frame),state.binding.as_ref().is_some_and(|b|!Arc::ptr_eq(&b.index,self)||!Arc::ptr_eq(&b.lineage,lineage)||b.limits!=ctx.limits()||b.profile!=ctx.profile()||b.dialect!=owner.dialect||b.strict!=owner.strict||b.policy!=owner.root_keyword_policy||b.resolved!=owner.resolve_references_at_compile))};
+        if foreign {return self.matches_frame(ordinal,path.text(),ctx);}
+        if let Some((root,value))=prior {if root==ordinal {path_event("pth-frame-hit");return Ok(value);}}
+        ctx.charge_work(4,Utf16::default())?;
+        let desc=&self.roots[ordinal];
+        let value=if !desc.frame_safe {false} else {
+            ctx.charge_work(desc.uri.len().saturating_add(3),Utf16::default())?;
+            syntax.first_hash==Some(desc.uri.len()) && path.text.units().starts_with(desc.uri.units())
+        };
+        ctx.charge_work(2*path_words::<OriginBinding>()+path_words::<OriginState>()+path_words::<crate::context::Limits>()+14,Utf16::default())?;
+        path_event("pth-frame-publication");
+        let mut state=syntax.origin.borrow_mut();
+        if state.epoch==epoch {if let Some(next)=state.epoch.checked_add(1) {
+            let binding=state.binding.get_or_insert_with(||OriginBinding{index:Arc::clone(self),lineage:Arc::clone(lineage),limits:ctx.limits(),profile:ctx.profile(),dialect:owner.dialect,strict:owner.strict,policy:owner.root_keyword_policy,resolved:owner.resolve_references_at_compile,selections:[PathSelection::Pending;3],frame:None});
+            binding.frame=Some((ordinal,value));state.epoch=next;
+        }}
+        Ok(value)
+    }
+    pub(super) fn enter_anchors_carried(&self,owner:&CompiledSchema,ordinal:usize,path:&CarriedPath,evaluated:&mut Evaluated,ctx:&mut Context<'_>)->Result<bool,EngineError> {
+        ctx.charge_work(path_words::<PathSyntax>()+3,Utf16::default())?;
+        path_call("pth-anchor-consumer",owner,path);
+        self.enter_anchors_impl(owner,ordinal,path.text(),evaluated,ctx,path.syntax.as_ref().map(|s|s.first_hash))
+    }
+
     pub(super) fn root<'a>(&self, owner: &'a CompiledSchema, ordinal: usize) -> &'a Value {
         match self.roots[ordinal].location {
             RootLocation::Root => &owner.schema,
@@ -234,6 +463,9 @@ impl ColdResourceIndex {
         evaluated: &mut Evaluated,
         ctx: &mut Context<'_>,
     ) -> Result<bool, EngineError> {
+        self.enter_anchors_impl(owner,ordinal,path,evaluated,ctx,None)
+    }
+    fn enter_anchors_impl(&self,owner:&CompiledSchema,ordinal:usize,path:&Utf16,evaluated:&mut Evaluated,ctx:&mut Context<'_>,first_hash:Option<Option<usize>>)->Result<bool,EngineError> {
         let desc = &self.roots[ordinal];
         if desc.nested_anchors {
             return Ok(false);
@@ -251,12 +483,13 @@ impl ColdResourceIndex {
         }
         // Only materialize the URI/root diagnostic prefix for a new scope
         // entry. The live address is branch-local; the index stores locators.
-        ctx.charge_work(path.len(), Utf16::default())?;
-        let end = path
-            .units()
-            .iter()
-            .position(|u| *u == 35)
-            .map_or(0, |i| i + 1);
+        let end=if let Some(first)=first_hash {
+            ctx.charge_work(3,Utf16::default())?;
+            first.map_or(0,|i|i+1)
+        } else {
+            ctx.charge_work(path.len(),Utf16::default())?;
+            path.units().iter().position(|u|*u==35).map_or(0,|i|i+1)
+        };
         let units = if end == 0 {
             &[35u16][..]
         } else {

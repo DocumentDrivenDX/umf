@@ -77,6 +77,12 @@ impl DynamicScope {
         }
     }
 }
+// PTH1 keeps path facts in the immutable owned pair, not mutable branch
+// state. A descended/retargeted pair is local to eval_resolved; its original
+// parent survives on the caller stack across success/error/unwind. Optional
+// origin selectors are immutable-map memo results, not current policy or
+// dynamic-scope authority. Those original mutable fields still restore below.
+// No new field/clone/callback/charge is introduced in this guard.
 pub(super) struct EvaluationScope<'a> {
     pub(super) state: &'a mut Evaluated,
     prior_shared: Option<DynamicScope>,

@@ -2262,6 +2262,9 @@ impl CompiledSchema {
                 return index.policy(self,root,inherited,ctx);
             }
         }
+        self.keyword_policy_unindexed(schema,schema_path,inherited,ctx)
+    }
+    fn keyword_policy_unindexed(&self,schema:&Value,schema_path:&Utf16,inherited:KeywordPolicy,ctx:&mut Context<'_>)->Result<KeywordPolicy,EngineError> {
         if get_metered(schema, "$schema", ctx, schema_path)?.is_some() {
             return self.explicit_keyword_policy(schema, inherited, ctx);
         }
@@ -2303,6 +2306,13 @@ impl CompiledSchema {
         }
         Ok(inherited)
     }
+    fn keyword_policy_carried(&self,schema:&Value,path:&construction_index::CarriedPath,inherited:KeywordPolicy,ctx:&mut Context<'_>)->Result<KeywordPolicy,EngineError> {
+        let Some(index)=&self.cold_resource_index else{return self.keyword_policy_for(schema,path.text(),inherited,ctx);};
+        if construction_index::get_ascii_metered(schema,"$schema",ctx,path.text())?.is_some() {return self.explicit_keyword_policy(schema,inherited,ctx);}
+        if path.units().first()==Some(&35) {return Ok(inherited);}
+        if let Some(root)=index.select_carried(self,path,construction_index::PathSelector::Policy,ctx)? {return index.policy(self,root,inherited,ctx);}
+        self.keyword_policy_unindexed(schema,path.text(),inherited,ctx)
+    }
 
     fn explicit_keyword_policy(
         &self,
@@ -2338,7 +2348,21 @@ impl CompiledSchema {
     fn preflight(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>)->Result<(),EngineError>{
         self.preflight_located(schema,path,scope,depth,inherited_policy,ctx,seen,None)
     }
-    fn preflight_located(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
+    fn preflight_located(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError> {
+        if self.cold_resource_index.is_none() {return self.preflight_original_located(schema,path,scope,depth,inherited_policy,ctx,seen,cursor);}
+        ctx.charge_work(path.clone_work(),Utf16::default())?;
+        let owned=construction_index::CarriedPath::seed(path.clone(),ctx)?;
+        self.preflight_carried(schema,&owned,scope,depth,inherited_policy,ctx,seen,cursor)
+    }
+    fn preflight_index_path(&self,parent:&construction_index::CarriedPath,index:usize,ctx:&mut Context<'_>)->Result<construction_index::CarriedPath,EngineError> {
+        // Preserve actual decimal format and UTF8->UTF16 temporary; no claimed
+        // decimal optimization. Admit both buffers, digits/scans/stores first.
+        let digits=if index==0{1}else{index.ilog10() as usize+1};
+        ctx.charge_work(digits.saturating_mul(5).saturating_add(2*std::mem::size_of::<Vec<u16>>().div_ceil(std::mem::size_of::<usize>())+6),Utf16::default())?;
+        let segment=Utf16::from(index.to_string());
+        parent.append(&segment,PathKind::RawSchemaStep,ctx)
+    }
+    fn preflight_original_located(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
         ctx.charge_work(1, path.clone())?;
         if depth > ctx.limits().max_depth {
             return Err(EngineError::new(
@@ -2433,13 +2457,13 @@ impl CompiledSchema {
                         match val {
                             Value::Object(_) => {
                                 let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                                self.preflight_located(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                                self.preflight_original_located(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
                             }
                             Value::Array(items) => {
                                 for (index, branch) in items.iter().enumerate() {
                                     if matches!(branch, Value::Object(_)) {
                                         let selected=child_cursor(Some(self),keyword_cursor.as_ref(),index,ctx)?;
-                                        self.preflight_located(
+                                        self.preflight_original_located(
                                             branch,
                                             &append_schema_path(&child, &index.to_string()),
                                             &scope,
@@ -2491,7 +2515,7 @@ impl CompiledSchema {
                             }
                             let p = append_schema_pointer(&append_schema_path(path, &text), name);
                             let selected=child_cursor(Some(self),keyword_cursor.as_ref(),child_index,ctx)?;
-                            self.preflight_located(child_schema,&p,&scope,depth+1,policy,ctx,seen,selected)?;
+                            self.preflight_original_located(child_schema,&p,&scope,depth+1,policy,ctx,seen,selected)?;
                         }
                     } else {
                         return Err(schema_error(&child, "Keyword value must be an object"));
@@ -2532,7 +2556,7 @@ impl CompiledSchema {
                     if let Value::Array(items) = val {
                         for (i, x) in items.iter().enumerate() {
                             let selected=child_cursor(Some(self),keyword_cursor.as_ref(),i,ctx)?;
-                            self.preflight_located(
+                            self.preflight_original_located(
                                 x,
                                 &append_schema_path(
                                     &append_schema_path(path, &text),
@@ -2546,7 +2570,7 @@ impl CompiledSchema {
                         }
                     } else {
                         let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                        self.preflight_located(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                        self.preflight_original_located(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
                     }
                 }
                 "allOf" | "anyOf" | "oneOf" | "prefixItems" => {
@@ -2556,7 +2580,7 @@ impl CompiledSchema {
                         }
                         for (i, x) in items.iter().enumerate() {
                             let selected=child_cursor(Some(self),keyword_cursor.as_ref(),i,ctx)?;
-                            self.preflight_located(
+                            self.preflight_original_located(
                                 x,
                                 &append_schema_path(&child, &i.to_string()),
                                 &scope,
@@ -2573,7 +2597,7 @@ impl CompiledSchema {
                     if let Value::Array(items) = val {
                         for (index, item) in items.iter().enumerate() {
                             let selected=child_cursor(Some(self),keyword_cursor.as_ref(),index,ctx)?;
-                            self.preflight_located(
+                            self.preflight_original_located(
                                 item,
                                 &append_schema_path(&child, &index.to_string()),
                                 &scope,
@@ -2584,7 +2608,7 @@ impl CompiledSchema {
                         }
                     } else {
                         let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
-                        self.preflight_located(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                        self.preflight_original_located(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
                     }
                 }
                 "pattern" => {
@@ -2655,7 +2679,7 @@ impl CompiledSchema {
                                 // Draft 3 permits a string dependency naming a peer property.
                             } else {
                                 let selected=child_cursor(Some(self),keyword_cursor.as_ref(),child_index,ctx)?;
-                                self.preflight_located(
+                                self.preflight_original_located(
                                     dep,
                                     &append_schema_pointer(&child, name),
                                     &scope,
@@ -2673,6 +2697,351 @@ impl CompiledSchema {
                     if let Value::Object(deps) = val {
                         for (name, dep) in deps {
                             validate_string_array(dep, &append_schema_pointer(&child, name), true)?;
+                        }
+                    } else {
+                        return Err(schema_error(&child, "dependentRequired must be an object"));
+                    }
+                }
+                _ => {}
+            }
+        }
+        let _ = &mut *seen;
+        Ok(())
+
+    }
+    fn preflight_carried(&self,schema:&Value,path:&construction_index::CarriedPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
+        ctx.charge_work(1, path.text().clone())?;
+        if depth > ctx.limits().max_depth {
+            return Err(EngineError::new(
+                "LIMIT",
+                path.text().clone(),
+                "Schema nesting depth exceeded",
+            ));
+        }
+        let Value::Object(m) = schema else {
+            if matches!(schema, Value::Bool(_)) {
+                let path_text = path.to_utf8().ok();
+                let boolean_allowed_by_legacy_keyword =
+                    matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
+                        && path_text.as_deref().is_some_and(|p| {
+                            p.ends_with("/additionalProperties") || p.ends_with("/additionalItems")
+                        });
+                if matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
+                    && !boolean_allowed_by_legacy_keyword
+                {
+                    return Err(schema_error(
+                        path,
+                        "Boolean schemas are not valid in this dialect",
+                    ));
+                }
+                return Ok(());
+            }
+            return Err(schema_error(path, "Schema must be an object or boolean"));
+        };
+        construction_index::path_call("pth-preflight-policy",self,path);
+        let policy = self.keyword_policy_carried(schema,path,inherited_policy,ctx)?;
+        let known = keywords(self.dialect);
+        let scope = if let Some(id) = schema_id(schema) {
+            ctx.charge_work(scope.len().saturating_add(id.len()), path.text().clone())?;
+            resolve_schema_uri(self.dialect, scope, &id).unwrap_or(id)
+        } else {
+            scope.to_owned()
+        };
+        for (member_index,(key, val)) in m.iter().enumerate() {
+            let text = match key.to_utf8() {
+                Ok(text) => text,
+                Err(_) if !self.strict => continue,
+                Err(_) => return Err(schema_error(path, "Schema keyword is not valid Unicode")),
+            };
+            if !policy.keyword_is_active(&text) {
+                continue;
+            }
+            if !known.contains(text.as_str()) {
+                if self.strict && !policy.custom {
+                    return Err(EngineError::new(
+                        "SCHEMA_UNKNOWN_KEYWORD",
+                        path.text().clone(),
+                        format!("Unknown schema keyword '{text}'"),
+                    ));
+                }
+                continue;
+            }
+            let keyword_cursor=child_cursor(Some(self),cursor.as_ref(),member_index,ctx)?;
+            let child = path.append(key,PathKind::RawSchemaStep,ctx)?;
+            match text.as_str() {
+                "$ref" | "$dynamicRef" | "$recursiveRef" => {
+                    if !matches!(val, Value::String(_)) {
+                        return Err(schema_error(&child, "reference keyword must be a string"));
+                    }
+                    if self.resolve_references_at_compile {
+                        // Preflight validates through the authoritative resolver;
+                        // optional runtime reference memoization remains unchanged.
+                        let resolved = self.resolve_ref_unplanned(val, &child, Some(scope.as_str()), ctx);
+                        #[cfg(test)]
+                        preflight_reference_observation::emit(val, &child, &scope, &resolved);
+                        resolved?;
+                    }
+                }
+                "$anchor" | "$dynamicAnchor" => {
+                    let anchor = as_utf8(val)
+                        .ok_or_else(|| schema_error(&child, "anchor must be a string"))?;
+                    let mut chars = anchor.chars();
+                    let valid = chars.next().is_some_and(|c| c.is_ascii_alphabetic())
+                        && chars.all(|c| {
+                            c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | ':' | '-')
+                        });
+                    if !valid {
+                        return Err(schema_error(&child, "Invalid schema anchor"));
+                    }
+                }
+                "type" | "disallow" => {
+                    // Draft 3's metaschema intentionally permits extension
+                    // type names (and delegates their meaning to its type
+                    // checker). Later drafts enumerate the primitive names.
+                    if self.dialect != SchemaDialect::Draft3 {
+                        validate_type_declaration(val, &child, self.dialect)?;
+                    }
+                    if self.dialect == SchemaDialect::Draft3 {
+                        match val {
+                            Value::Object(_) => {
+                                let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
+                                self.preflight_carried(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                            }
+                            Value::Array(items) => {
+                                for (index, branch) in items.iter().enumerate() {
+                                    if matches!(branch, Value::Object(_)) {
+                                        let selected=child_cursor(Some(self),keyword_cursor.as_ref(),index,ctx)?;
+                                        self.preflight_carried(
+                                            branch,
+                                            &self.preflight_index_path(&child,index,ctx)?,
+                                            &scope,
+                                            depth + 1,
+                                            policy,
+                                            ctx,
+                                            seen,selected)?;
+                                    }
+                                }
+                            }
+                            _ => (),
+                        }
+                    }
+                }
+                "required" => {
+                    if self.dialect == SchemaDialect::Draft3 && matches!(val, Value::Bool(_)) {
+                        // Draft 3 expresses a required property on the property schema itself.
+                    } else {
+                        validate_string_array(val, &child, true)?;
+                    }
+                }
+                "enum" => {
+                    if let Value::Array(items) = val {
+                        if items.is_empty()
+                            && matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
+                        {
+                            return Err(schema_error(
+                                &child,
+                                "enum must contain at least one value",
+                            ));
+                        }
+                    } else {
+                        return Err(schema_error(&child, "enum must be an array"));
+                    }
+                }
+                "properties" | "patternProperties" | "$defs" | "definitions"
+                | "dependentSchemas" => {
+                    // Draft 3's `definitions` has no schema semantics in the
+                    // predecessor profile. Its contents are opaque annotations;
+                    // a `$ref` that later resolves to a boolean fails at runtime.
+                    if self.dialect == SchemaDialect::Draft3 && text == "definitions" {
+                        continue;
+                    }
+                    if let Value::Object(children) = val {
+                        for (child_index, (name, child_schema)) in children.iter().enumerate() {
+                            if text == "patternProperties" {
+                                let pattern_path = child.append(name,PathKind::SchemaPointer,ctx)?;
+                                self.compile_pattern(name, &pattern_path, ctx)?;
+                            }
+                            let p = child.append(name,PathKind::SchemaPointer,ctx)?;
+                            let selected=child_cursor(Some(self),keyword_cursor.as_ref(),child_index,ctx)?;
+                            self.preflight_carried(child_schema,&p,&scope,depth+1,policy,ctx,seen,selected)?;
+                        }
+                    } else {
+                        return Err(schema_error(&child, "Keyword value must be an object"));
+                    }
+                }
+                "items"
+                | "additionalItems"
+                | "additionalProperties"
+                | "unevaluatedProperties"
+                | "unevaluatedItems"
+                | "contains"
+                | "not"
+                | "if"
+                | "then"
+                | "else"
+                | "propertyNames" => {
+                    if text == "items"
+                        && self.dialect == SchemaDialect::Draft2020_12
+                        && matches!(val, Value::Array(_))
+                    {
+                        return Err(schema_error(
+                            &child,
+                            "Draft 2020-12 items must be a schema; use prefixItems for tuple validation",
+                        ));
+                    }
+                    if text == "additionalItems"
+                        && self.dialect == SchemaDialect::Draft2020_12
+                        && self.strict
+                    {
+                        return Err(schema_error(
+                            &child,
+                            "additionalItems is not available in Draft 2020-12",
+                        ));
+                    }
+                    if text == "additionalItems" && self.dialect == SchemaDialect::Draft2020_12 {
+                        continue;
+                    }
+                    if let Value::Array(items) = val {
+                        for (i, x) in items.iter().enumerate() {
+                            let selected=child_cursor(Some(self),keyword_cursor.as_ref(),i,ctx)?;
+                            self.preflight_carried(
+                                x,
+                                &self.preflight_index_path(&child,i,ctx)?,
+                                &scope,
+                                depth + 1,
+                                policy,
+                                ctx,
+                                seen,selected)?;
+                        }
+                    } else {
+                        let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
+                        self.preflight_carried(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                    }
+                }
+                "allOf" | "anyOf" | "oneOf" | "prefixItems" => {
+                    if let Value::Array(items) = val {
+                        if items.is_empty() && text != "prefixItems" {
+                            return Err(schema_error(&child, "Applicator array must not be empty"));
+                        }
+                        for (i, x) in items.iter().enumerate() {
+                            let selected=child_cursor(Some(self),keyword_cursor.as_ref(),i,ctx)?;
+                            self.preflight_carried(
+                                x,
+                                &self.preflight_index_path(&child,i,ctx)?,
+                                &scope,
+                                depth + 1,
+                                policy,
+                                ctx,
+                                seen,selected)?;
+                        }
+                    } else {
+                        return Err(schema_error(&child, "Applicator must be an array"));
+                    }
+                }
+                "extends" if self.dialect == SchemaDialect::Draft3 => {
+                    if let Value::Array(items) = val {
+                        for (index, item) in items.iter().enumerate() {
+                            let selected=child_cursor(Some(self),keyword_cursor.as_ref(),index,ctx)?;
+                            self.preflight_carried(
+                                item,
+                                &self.preflight_index_path(&child,index,ctx)?,
+                                &scope,
+                                depth + 1,
+                                policy,
+                                ctx,
+                                seen,selected)?;
+                        }
+                    } else {
+                        let selected=clone_owner_cursor(keyword_cursor.as_ref(),ctx)?;
+                        self.preflight_carried(val,&child,&scope,depth+1,policy,ctx,seen,selected)?;
+                    }
+                }
+                "pattern" => {
+                    let Value::String(pat) = val else {
+                        return Err(schema_error(&child, "pattern must be a string"));
+                    };
+                    self.compile_pattern(pat, &child, ctx)?;
+                }
+                "minimum" | "maximum" | "exclusiveMinimum" | "exclusiveMaximum" | "multipleOf"
+                | "divisibleBy" => {
+                    let old_exclusive =
+                        matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
+                            && matches!(text.as_str(), "exclusiveMinimum" | "exclusiveMaximum");
+                    if old_exclusive && !matches!(val, Value::Bool(_)) {
+                        return Err(schema_error(
+                            &child,
+                            "Exclusive bound flag must be a boolean",
+                        ));
+                    }
+                    if !old_exclusive && !matches!(val, Value::Number(_)) {
+                        return Err(schema_error(&child, "Numeric keyword must be a number"));
+                    }
+                    if matches!(text.as_str(), "multipleOf" | "divisibleBy")
+                        && matches!(val,Value::Number(n) if *n<=0.0)
+                    {
+                        return Err(schema_error(&child, "multipleOf must be greater than zero"));
+                    }
+                }
+                "minLength" | "maxLength" | "minItems" | "maxItems" | "minProperties"
+                | "maxProperties" => {
+                    if !matches!(val,Value::Number(n) if n.fract()==0.0&&(self.dialect == SchemaDialect::Draft3 || *n>=0.0))
+                    {
+                        return Err(schema_error(
+                            &child,
+                            "Size keyword must be a non-negative integer",
+                        ));
+                    }
+                }
+                "minContains" | "maxContains" => {
+                    if self.dialect == SchemaDialect::Draft2019_09
+                        || self.dialect == SchemaDialect::Draft2020_12
+                    {
+                        if !matches!(val,Value::Number(n) if n.fract()==0.0&&*n>=0.0) {
+                            return Err(schema_error(
+                                &child,
+                                "Size keyword must be a non-negative integer",
+                            ));
+                        }
+                    }
+                }
+                "uniqueItems" => {
+                    if !matches!(val, Value::Bool(_)) {
+                        return Err(schema_error(&child, "uniqueItems must be a boolean"));
+                    }
+                }
+                "dependencies" => {
+                    if let Value::Object(deps) = val {
+                        for (child_index,(name, dep)) in deps.iter().enumerate() {
+                            if matches!(dep, Value::Array(_)) {
+                                validate_string_array(
+                                    dep,
+                                    &child.append(name,PathKind::SchemaPointer,ctx)?,
+                                    true,
+                                )?;
+                            } else if self.dialect == SchemaDialect::Draft3
+                                && matches!(dep, Value::String(_))
+                            {
+                                // Draft 3 permits a string dependency naming a peer property.
+                            } else {
+                                let selected=child_cursor(Some(self),keyword_cursor.as_ref(),child_index,ctx)?;
+                                self.preflight_carried(
+                                    dep,
+                                    &child.append(name,PathKind::SchemaPointer,ctx)?,
+                                    &scope,
+                                    depth + 1,
+                                    policy,
+                                    ctx,
+                                    seen,selected)?;
+                            }
+                        }
+                    } else {
+                        return Err(schema_error(&child, "dependencies must be an object"));
+                    }
+                }
+                "dependentRequired" => {
+                    if let Value::Object(deps) = val {
+                        for (name, dep) in deps {
+                            validate_string_array(dep, &child.append(name,PathKind::SchemaPointer,ctx)?, true)?;
                         }
                     } else {
                         return Err(schema_error(&child, "dependentRequired must be an object"));
@@ -3438,19 +3807,20 @@ impl CompiledSchema {
         } else {
             self.evaluator_origin_path(frame_text,ctx)?
         };
+        construction_index::path_call("pth-evaluator-frame",self,scoped_path.carried());
         if let Some(index)=&self.cold_resource_index {
             let root=if let Some(prior)=evaluated.resolved_resource {
-                if index.matches_frame(prior,&scoped_path,ctx)? {Some(prior)}
-                else {index.for_path(&scoped_path,ctx)?}
-            } else {index.for_path(&scoped_path,ctx)?};
+                if index.matches_frame_carried(self,prior,scoped_path.carried(),ctx)? {Some(prior)}
+                else {index.select_carried(self,scoped_path.carried(),construction_index::PathSelector::Common,ctx)?}
+            } else {index.select_carried(self,scoped_path.carried(),construction_index::PathSelector::Common,ctx)?};
             evaluated.resolved_resource=root;
             evaluated.keyword_policy=if construction_index::get_ascii_metered(schema,"$schema",ctx,&scoped_path)?.is_some() {
                 self.explicit_keyword_policy(schema,previous_policy,ctx)?
             } else if scoped_path.units().first()==Some(&35) {previous_policy}
             else if let Some(root)=root {index.policy(self,root,previous_policy,ctx)?}
-            else {self.keyword_policy_for(schema,&scoped_path,previous_policy,ctx)?};
+            else {self.keyword_policy_carried(schema,scoped_path.carried(),previous_policy,ctx)?};
         } else {
-            evaluated.keyword_policy=self.keyword_policy_for(schema,&scoped_path,previous_policy,ctx)?;
+            evaluated.keyword_policy=self.keyword_policy_carried(schema,scoped_path.carried(),previous_policy,ctx)?;
         }
         // Draft 2020-12 dynamic scope is a chain of entered schema resources,
         // not a stack of only the dynamically anchored nodes visited by normal
@@ -3461,10 +3831,10 @@ impl CompiledSchema {
             && !matches!(self.regex_profile, RegexProfile::Python(_))
         {
             let handled=if let (Some(index),Some(root))=(&self.cold_resource_index,evaluated.resolved_resource) {
-                index.enter_anchors(self,root,&scoped_path,evaluated,ctx)?
+                index.enter_anchors_carried(self,root,scoped_path.carried(),evaluated,ctx)?
             } else {false};
             if !handled {
-                if let Some((resource,resource_path))=self.dynamic_resource_for_path(&scoped_path,ctx)? {
+                if let Some((resource,resource_path))=self.dynamic_resource_for_carried(scoped_path.carried(),ctx)? {
                     self.push_resource_dynamic_anchors(resource,&resource_path,evaluated,ctx)?;
                 }
             }
@@ -3689,6 +4059,9 @@ impl CompiledSchema {
                 return Ok(Some((index.root(self,root),Utf16::new(units))));
             }
         }
+        self.dynamic_resource_unindexed(path,ctx)
+    }
+    fn dynamic_resource_unindexed<'a>(&'a self,path:&Utf16,ctx:&mut Context<'_>)->Result<Option<(&'a Value,Utf16)>,EngineError> {
         ctx.charge_work_u64(
             (path.len() as u64).saturating_mul(2).saturating_add(1),
             path.clone(),
@@ -3719,6 +4092,15 @@ impl CompiledSchema {
             root.push(b'#' as u16);
             (resource, Utf16::new(root))
         }))
+    }
+    fn dynamic_resource_for_carried<'a>(&'a self,path:&construction_index::CarriedPath,ctx:&mut Context<'_>)->Result<Option<(&'a Value,Utf16)>,EngineError> {
+        construction_index::path_call("pth-dynamic-consumer",self,path);
+        if let Some(index)=&self.cold_resource_index {
+            if let Some(root)=index.select_carried(self,path,construction_index::PathSelector::Dynamic,ctx)? {
+                return Ok(Some((index.root(self,root),path.resource_prefix(ctx)?)));
+            }
+        }
+        self.dynamic_resource_unindexed(path.text(),ctx)
     }
 
     fn indexed_path_unchanged(&self,schema:&Value,path:&Utf16,id_applied:bool,ctx:&mut Context<'_>) -> Result<bool,EngineError> {
@@ -12046,3 +12428,7 @@ mod encoded_source_independent_tests;
 #[cfg(test)]
 #[path = "schema_evaluation_paths_bridge_independent_tests.rs"]
 mod evaluation_paths_bridge_independent_tests;
+
+#[cfg(test)]
+#[path = "schema_path_facts_independent_tests.rs"]
+mod path_facts_independent_tests;
