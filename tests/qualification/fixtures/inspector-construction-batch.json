@@ -1830,7 +1830,7 @@
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "c322d4a377d33d8e185bc0340c3d25227bd2186706c9b146acd0fad69f6f7740",
+      "crates/umf-core/src/schema.rs": "e207d84500050157685f593d416c1e501f3328c22a6346fc8cd3f9580583976b",
       "crates/umf-core/src/schema_admitted_bank.rs": "37a1ce1a7e5be07b526371ab547e62e5fdc732c381b729d7475089ae3e945b97",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
       "crates/umf-core/src/schema_admitted_structure.rs": "009a02fe404a3cf222cea7572adf83d08c07c3697b6d80be7d6786319d62d1c8",
@@ -1852,11 +1852,12 @@
       "crates/umf-core/src/schema_node_coordinate_independent_tests.rs": "f9b10076f5034b62fa0c0fa47c218a2f3074424c537da88b2a4b4fa72488a42d",
       "crates/umf-core/src/schema_owned_plan_independent_tests.rs": "01178e789f3522581cd1cd94b77c7b5423a53634f9e717e4552be25712910fdb",
       "crates/umf-core/src/schema_owned_plan_tests.rs": "f3ec94b89b443195b8ffa64c585af76641694d80fb53df0bff9befebbfd749fd",
-      "crates/umf-core/src/schema_owned_plans.rs": "43dc5d0f937b437405d2af21101abe3a1962bfa87f09e5c714a7ebbad36db62b",
+      "crates/umf-core/src/schema_owned_plans.rs": "e7c7f8fa764139e7fdd82d467757fe5fad6210b1bf43849ed420327eae6697b5",
       "crates/umf-core/src/schema_owner_location_tests.rs": "060990953a6fa55640454093724d8072ea004e69043757daba583687ab20cd7f",
       "crates/umf-core/src/schema_owner_locations.rs": "6038bbd5a7bb6908d7ae651902c9167c51eb461ba59ed4e58f35f26f71e43f04",
       "crates/umf-core/src/schema_owner_locations_compact_independent_tests.rs": "db0d8e5addbc27f8e12ea0e6735f08483d15a604655ea70fd83ec5cff6bd2ee9",
       "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
+      "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
       "crates/umf-core/src/serialization.rs": "9650dbe5d94b0b7db634f0a8a2522171f2c6fcd4da848feef5b2fb7e914ab1ff",
       "crates/umf-core/src/serialization_closed_metadata.rs": "a704ef592e96970e724d24b36e679f7a5bf16c64918992ae9d92b3420b2cae8f",
       "crates/umf-core/src/serialization_construction_owned_independent_tests.rs": "db3bd9625d1fb4bb04ee0a510beb5862d03a65b39440ddc6190b69a2432efd41",
@@ -1924,9 +1925,9 @@
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
       "tests/qualification/test_inspector_combined_budget.py": "d5c896d1ffa099a7fdefce9040627395e1868c0d703114099d1d099752fdfdf6",
-      "tests/qualification/test_inspector_construction_batch.py": "936121cb22e3642fee62adf35c714a5aa414ae755058cadccfbc492503e119b3",
+      "tests/qualification/test_inspector_construction_batch.py": "a4c9acb6ab9342207d7bf707a6599cbca41d9c48136ff419f6278e881e5fafae",
       "tests/qualification/test_inspector_cost_gate.py": "87a971d3bb5df50648aa862084b4fd9bb9c455d96ff95c332c6a37bfbf9cd3e9",
-      "tests/qualification/test_inspector_installed_factory.py": "bf631471141f473d5b5004b0397a6ecd09e0b02eae6ecc6b1008f9ffd9e16c82",
+      "tests/qualification/test_inspector_installed_factory.py": "136f0e20ee2c562b4a84fcb4cd58ee8a7f51c67bf279f12c16ccfe7e5af27b7b",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
       "tests/qualification/test_inspector_owner_cursors.py": "104497778ebc3ca4475954a7b7c7d4cc1cf7d839d5c4990492e3cde233f40a0e",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
@@ -2824,6 +2825,25 @@
         "module": "retained_codegen",
         "declaration": "mod retained_codegen;",
         "cfg": []
+      },
+      {
+        "parent": "crates/umf-core/src/schema.rs",
+        "child": "crates/umf-core/src/schema.rs",
+        "module": "schema::preflight_reference_observation",
+        "declaration": "#[cfg(test)]\nmod preflight_reference_observation {",
+        "cfg": [
+          "#[cfg(test)]"
+        ]
+      },
+      {
+        "parent": "crates/umf-core/src/schema_owned_plans.rs",
+        "child": "crates/umf-core/src/schema_preflight_reference_independent_tests.rs",
+        "module": "schema::owned_plans::preflight_reference_independent_tests",
+        "declaration": "#[cfg(test)]\n#[path = \"schema_preflight_reference_independent_tests.rs\"]\nmod preflight_reference_independent_tests;",
+        "cfg": [
+          "#[cfg(test)]",
+          "#[path = \"schema_preflight_reference_independent_tests.rs\"]"
+        ]
       }
     ],
     "rust": [
@@ -4717,7 +4737,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema.rs",
-        "sourceSHA256": "c322d4a377d33d8e185bc0340c3d25227bd2186706c9b146acd0fad69f6f7740",
+        "sourceSHA256": "e207d84500050157685f593d416c1e501f3328c22a6346fc8cd3f9580583976b",
         "cases": [
           {
             "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
@@ -7358,6 +7378,104 @@
           }
         ],
         "caseCount": 1
+      },
+      {
+        "package": "umf-core",
+        "target": "lib",
+        "features": "native-postgresql",
+        "source": "crates/umf-core/src/schema_preflight_reference_independent_tests.rs",
+        "sourceSHA256": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
+        "cases": [
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::pre01_real_preflight_records_genuine_reference_target_location_and_full_origin",
+            "line": 175,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::pre02_effective_local_ids_and_relative_scope_do_not_collapse_equal_reference_text",
+            "line": 216,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::pre03_supported_dynamic_and_recursive_preflight_keeps_original_root_identity",
+            "line": 263,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::pre04_actual_compiler_first_refusal_and_nonstring_check_keep_original_order",
+            "line": 308,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::pre05_runtime_reference_evaluation_and_frame_caches_still_reuse_complete_context_keys",
+            "line": 361,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::pre06_real_semantic_depth_and_owner_eligibility_guards_remain_unchanged",
+            "line": 495,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::pre07_existing_inactive_compile_resolution_gate_does_not_resolve_missing_reference",
+            "line": 632,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::pre08_real_resolver_refusal_host_identity_and_scoped_observer_unwind_restore",
+            "line": 672,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[test]"
+            ]
+          }
+        ],
+        "caseCount": 8
       }
     ],
     "python": [
@@ -7554,6 +7672,33 @@
       "fixtureSHA256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "metadataVersion": "0.10.9"
     },
-    "closureSHA256": "cc9c99332bcfacae08def2c87842c99a479c33a1196c575fb8230c4dc8cb0643"
+    "closureSHA256": "8365f04741baf03e814ce4aeece47d4562abddb6a32fc1b62ff50d8e4eb3950a"
+  },
+  "modelReferences": {
+    "baseModel": {
+      "path": "/private/tmp/umf-inspector-current-main-assembly-review/CURRENT-MAIN-COMBINED-MODEL.json",
+      "sha256": "0b0b33bbeca43d54babf6054d0d8ff43e26441fcf1d4b800ce60cee69e433056"
+    },
+    "PRE1SignedOperationLedger": {
+      "path": "/private/tmp/umf-pre1-preflight-source-review/SIGNED-OPERATION-LEDGER.json",
+      "sha256": "66f8ed6c358a106d58ec3cdfbb72076e252863e55e581e6312dd02581fbeb49e"
+    },
+    "governingRecoveryPlan": {
+      "path": "/private/tmp/umf-stack-release-truss/docs/helix/04-build/inspector-work-budget-recovery-plan.md",
+      "sha256": "e556215ea3db173d73e8b74fe21886627cda54468314ff22c3f14abad1761a88"
+    },
+    "ledgerSourceReview": {
+      "path": "/private/tmp/umf-pre1-preflight-source-review/SOL-CONSOLIDATED-LEDGER-HOLD-CLOSED.json",
+      "sha256": "511fc272b6047453b39e154ba6afb813f973b68b3c5c78a822151ca30f4aee0b"
+    },
+    "callerSeamSource": {
+      "path": "/private/tmp/umf-pre1-preflight-source-review/ACTUAL-PRE1-CALLER-SEAM-v2.json",
+      "sha256": "d8bbdd9dc41772bfe7638295fb4423cdc502c5b3ad17dc73d12ec29b5d6ba644"
+    },
+    "eightControlsSourceReview": {
+      "path": "/private/tmp/umf-pre1-independent-control-preparation/pre06-fixture-correction/SOL-EIGHT-CONTROLS-SOURCE-PASS-AND-A-REFRESH-AUTHORIZATION.json",
+      "sha256": "f73041d8428ea73fa30c518957f585ef174c00b61765556bb32c11c1c79575b8"
+    },
+    "interpretation": "PRE1 supplements the unchanged base model. Preserve repeated former-hit resolver work, deferred binding, Located/Plain vector and cursor effects, later-within-constructor state and first-public-call partitions once each. Actual frequencies, ABI/capacities, signed net delta and whole constructor fit remain UNKNOWN. No numeric saving/headroom/fit or qualification follows from source review."
   }
 }

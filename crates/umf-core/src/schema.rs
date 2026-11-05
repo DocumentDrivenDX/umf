@@ -245,6 +245,36 @@ impl ConstructionState {
     }
 }
 
+#[cfg(test)]
+mod preflight_reference_observation {
+    use super::*;
+    type Observer = Box<dyn FnMut(&Value, &Utf16, &str, &Result<(&Value, Utf16), EngineError>)>;
+    std::thread_local! {
+        static CURRENT: std::cell::RefCell<Option<Observer>> = std::cell::RefCell::new(None);
+    }
+    struct Restore(Option<Observer>);
+    impl Drop for Restore {
+        fn drop(&mut self) {
+            CURRENT.with(|slot| { slot.replace(self.0.take()); });
+        }
+    }
+    /// Test-only scoped readback of genuine call inputs and borrowed result.
+    /// No Context, authority token, result replacement or production flag.
+    pub(super) fn with_observer<T>(observer: Observer, operation: impl FnOnce() -> T) -> T {
+        let prior = CURRENT.with(|slot| slot.replace(Some(observer)));
+        let _restore = Restore(prior);
+        operation()
+    }
+    pub(super) fn emit(reference: &Value, path: &Utf16, scope: &str,
+        result: &Result<(&Value, Utf16), EngineError>) {
+        // Take ownership before invocation. Nested/reentrant observation cannot
+        // borrow this slot or create another Context/host-control notification.
+        let observer = CURRENT.with(|slot| slot.take());
+        let mut restore = Restore(observer);
+        if let Some(observer) = restore.0.as_mut() { observer(reference, path, scope, result); }
+    }
+}
+
 // Ordered, bit-preserving structural identity. Semantic object equality or a
 // matching root ID alone is insufficient for admission/provenance reuse.
 fn construction_equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
@@ -2372,7 +2402,12 @@ impl CompiledSchema {
                         return Err(schema_error(&child, "reference keyword must be a string"));
                     }
                     if self.resolve_references_at_compile {
-                        self.resolve_ref_with_scope(val, &child, &scope, ctx)?;
+                        // Preflight validates through the authoritative resolver;
+                        // optional runtime reference memoization remains unchanged.
+                        let resolved = self.resolve_ref_unplanned(val, &child, Some(scope.as_str()), ctx);
+                        #[cfg(test)]
+                        preflight_reference_observation::emit(val, &child, &scope, &resolved);
+                        resolved?;
                     }
                 }
                 "$anchor" | "$dynamicAnchor" => {

@@ -939,3 +939,7 @@ impl EvaluationPaths {
 #[cfg(test)]
 #[path = "schema_evaluation_path_pair_independent_tests.rs"]
 mod evaluation_path_pair_independent_tests;
+
+#[cfg(test)]
+#[path = "schema_preflight_reference_independent_tests.rs"]
+mod preflight_reference_independent_tests;
