@@ -239,6 +239,12 @@ pub(crate) struct ConstructionState {
     lifetime: Option<Arc<()>>,
 }
 
+impl ConstructionState {
+    pub(crate) fn has_lifetime(&self, lifetime: &Arc<()>) -> bool {
+        self.lifetime.as_ref().is_some_and(|token| Arc::ptr_eq(token, lifetime))
+    }
+}
+
 // Ordered, bit-preserving structural identity. Semantic object equality or a
 // matching root ID alone is insufficient for admission/provenance reuse.
 fn construction_equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
@@ -1293,10 +1299,15 @@ impl CompiledSchema {
             &mut compiled.python_resource_roots,
             ctx,
         )?;
+        // Borrow only catalogue storage; the Python binding maps are disjoint.
+        let catalogue = match &compiled.resource_bank {
+            Some(bank) => admitted_bank::Catalogue::Bank(bank),
+            None => admitted_bank::Catalogue::Borrowed(&compiled.resources.entries),
+        };
         for (resource_index, ((id, source), (_, target))) in resources
             .entries
             .iter()
-            .zip(compiled.catalogue_entries().iter())
+            .zip(catalogue.iter())
             .enumerate()
         {
             bind_python_source_tree(

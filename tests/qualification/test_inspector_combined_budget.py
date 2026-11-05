@@ -101,9 +101,11 @@ class ConsolidatedFindingSourceControls(unittest.TestCase):
     @staticmethod
     def original_python_span(current):
         import hashlib
-        replacements=(('.zip(compiled.catalogue_entries().iter())','.zip(compiled.resources.entries.iter())'),
+        borrowed_catalogue='        // Borrow only catalogue storage; the Python binding maps are disjoint.\n        let catalogue = match &compiled.resource_bank {\n            Some(bank) => admitted_bank::Catalogue::Bank(bank),\n            None => admitted_bank::Catalogue::Borrowed(&compiled.resources.entries),\n        };\n'
+        if current.count(borrowed_catalogue)!=1:raise ValueError('Expected exactly one reviewed disjoint catalogue selection')
+        replacements=(('.zip(catalogue.iter())','.zip(compiled.resources.entries.iter())'),
                       ('for (id, resource) in &compiled.catalogue_entries()','for (id, resource) in &compiled.resources.entries'))
-        original=current
+        original=current.replace(borrowed_catalogue,'',1)
         for new,old in replacements:
             if original.count(new)!=1:raise ValueError('Expected exactly one reviewed catalogue accessor substitution')
             original=original.replace(new,old,1)

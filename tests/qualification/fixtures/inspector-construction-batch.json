@@ -1830,7 +1830,7 @@
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "9df758f58539873dbc03b1f43c007e3a746676abd0cb3fa8b86dd4e2ff8a0aa8",
+      "crates/umf-core/src/schema.rs": "c322d4a377d33d8e185bc0340c3d25227bd2186706c9b146acd0fad69f6f7740",
       "crates/umf-core/src/schema_admitted_bank.rs": "37a1ce1a7e5be07b526371ab547e62e5fdc732c381b729d7475089ae3e945b97",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
       "crates/umf-core/src/schema_admitted_structure.rs": "009a02fe404a3cf222cea7572adf83d08c07c3697b6d80be7d6786319d62d1c8",
@@ -1857,7 +1857,7 @@
       "crates/umf-core/src/schema_owner_locations.rs": "6038bbd5a7bb6908d7ae651902c9167c51eb461ba59ed4e58f35f26f71e43f04",
       "crates/umf-core/src/schema_owner_locations_compact_independent_tests.rs": "db0d8e5addbc27f8e12ea0e6735f08483d15a604655ea70fd83ec5cff6bd2ee9",
       "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
-      "crates/umf-core/src/serialization.rs": "6609d532820b94de27cc31cd128630af0e46610c9b7e2c6bd6ba48535767d425",
+      "crates/umf-core/src/serialization.rs": "9650dbe5d94b0b7db634f0a8a2522171f2c6fcd4da848feef5b2fb7e914ab1ff",
       "crates/umf-core/src/serialization_closed_metadata.rs": "a704ef592e96970e724d24b36e679f7a5bf16c64918992ae9d92b3420b2cae8f",
       "crates/umf-core/src/serialization_construction_owned_independent_tests.rs": "db3bd9625d1fb4bb04ee0a510beb5862d03a65b39440ddc6190b69a2432efd41",
       "crates/umf-core/src/serialization_owned_decode_stack_independent_tests.rs": "c76df4a8e248c0ce147806b864004290125c7d39e45f27c48994f7f0b7a5d691",
@@ -1923,7 +1923,7 @@
       "tests/qualification/test_inspector_admission_precharge.py": "79546279ad81343a925b3ca102b77e2cb3081f0e49d21e58c0e3937f2f7e07b3",
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
-      "tests/qualification/test_inspector_combined_budget.py": "bc56a0b7be25ac646d61b787f9f9901f4723dc1c5e332c119b64b10e9eaa6405",
+      "tests/qualification/test_inspector_combined_budget.py": "d5c896d1ffa099a7fdefce9040627395e1868c0d703114099d1d099752fdfdf6",
       "tests/qualification/test_inspector_construction_batch.py": "936121cb22e3642fee62adf35c714a5aa414ae755058cadccfbc492503e119b3",
       "tests/qualification/test_inspector_cost_gate.py": "87a971d3bb5df50648aa862084b4fd9bb9c455d96ff95c332c6a37bfbf9cd3e9",
       "tests/qualification/test_inspector_installed_factory.py": "bf631471141f473d5b5004b0397a6ecd09e0b02eae6ecc6b1008f9ffd9e16c82",
@@ -4717,7 +4717,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema.rs",
-        "sourceSHA256": "9df758f58539873dbc03b1f43c007e3a746676abd0cb3fa8b86dd4e2ff8a0aa8",
+        "sourceSHA256": "c322d4a377d33d8e185bc0340c3d25227bd2186706c9b146acd0fad69f6f7740",
         "cases": [
           {
             "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
@@ -7345,7 +7345,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/serialization.rs",
-        "sourceSHA256": "6609d532820b94de27cc31cd128630af0e46610c9b7e2c6bd6ba48535767d425",
+        "sourceSHA256": "9650dbe5d94b0b7db634f0a8a2522171f2c6fcd4da848feef5b2fb7e914ab1ff",
         "cases": [
           {
             "name": "serialization::construction_array_index_admission_tests::decimal_formatting_is_not_entered_when_its_own_precharge_is_denied",
@@ -7554,6 +7554,6 @@
       "fixtureSHA256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "metadataVersion": "0.10.9"
     },
-    "closureSHA256": "ac42637e4807dc98cdad681e149f6f0c01ba37987e104cb95847c80332195f92"
+    "closureSHA256": "cc9c99332bcfacae08def2c87842c99a479c33a1196c575fb8230c4dc8cb0643"
   }
 }

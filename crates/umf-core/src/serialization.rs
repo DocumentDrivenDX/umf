@@ -130,7 +130,7 @@ impl CompletedOwnedJson {
     pub(crate) fn structure(&self)->Option<&std::sync::Arc<crate::schema::admitted_structure::Structure>>{self.structure.as_ref()}
     pub(crate) fn compatible(&self,ctx:&mut Context<'_>)->Result<bool,EngineError>{
         ctx.charge_work(3,Utf16::default())?;
-        Ok(self.limits==ctx.limits()&&ctx.schema_construction.as_ref().is_some_and(|s|s.borrow().lifetime.as_ref().is_some_and(|t|std::sync::Arc::ptr_eq(t,&self.lifetime))))
+        Ok(self.limits==ctx.limits()&&ctx.schema_construction.as_ref().is_some_and(|s|s.borrow().has_lifetime(&self.lifetime)))
     }
 }
 pub(crate) fn read_construction_json_completed(source:&[u16],ctx:&mut Context<'_>)->Result<CompletedOwnedJson,EngineError>{
