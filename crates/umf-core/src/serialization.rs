@@ -109,6 +109,74 @@ pub fn read_json_value(
     read_json_value_inner(source, format, ctx, false)
 }
 
+/// Private owned CoreJSON handoff. No public format/profile selector exists.
+pub(crate) fn read_construction_json_owned(source:&[u16],ctx:&mut Context<'_>)->Result<Value,EngineError> {
+    read_construction_json_owned_inner(source,ctx,#[cfg(test)] None)
+}
+#[cfg(test)]
+fn read_construction_json_owned_with_events(source:&[u16],ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<Value,EngineError> {
+    read_construction_json_owned_inner(source,ctx,Some(observer))
+}
+/// Constructible only by the completed private parser, never by an Arc/hash.
+#[derive(Debug)]
+pub(crate) struct CompletedOwnedJson {
+    value:std::sync::Arc<Value>,
+    structure:Option<std::sync::Arc<crate::schema::admitted_structure::Structure>>,
+    limits:crate::context::Limits,
+    lifetime:std::sync::Arc<()>,
+}
+impl CompletedOwnedJson {
+    pub(crate) fn value(&self)->&std::sync::Arc<Value>{&self.value}
+    pub(crate) fn structure(&self)->Option<&std::sync::Arc<crate::schema::admitted_structure::Structure>>{self.structure.as_ref()}
+    pub(crate) fn compatible(&self,ctx:&mut Context<'_>)->Result<bool,EngineError>{
+        ctx.charge_work(3,Utf16::default())?;
+        Ok(self.limits==ctx.limits()&&ctx.schema_construction.as_ref().is_some_and(|s|s.borrow().lifetime.as_ref().is_some_and(|t|std::sync::Arc::ptr_eq(t,&self.lifetime))))
+    }
+}
+pub(crate) fn read_construction_json_completed(source:&[u16],ctx:&mut Context<'_>)->Result<CompletedOwnedJson,EngineError>{
+    read_construction_json_completed_impl(source,ctx,#[cfg(test)] None)
+}
+#[cfg(test)]
+pub(crate) fn read_construction_json_completed_with_events(source:&[u16],ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<CompletedOwnedJson,EngineError>{
+    read_construction_json_completed_impl(source,ctx,Some(observer))
+}
+fn read_construction_json_completed_impl(source:&[u16],ctx:&mut Context<'_>,#[cfg(test)] observer:Option<&mut dyn FnMut(&'static str)>)->Result<CompletedOwnedJson,EngineError>{
+    if !ctx.in_codegen_construction(){return Err(fail("RESOURCE_PROFILE_UNAVAILABLE","Completed reader requires a private construction lifetime"));}
+    let (value,structure)=read_construction_json_owned_full(source,ctx,#[cfg(test)] observer)?;
+    let lifetime=crate::schema::admitted_bank::construction_lifetime(ctx)?;
+    ctx.charge_work(std::mem::size_of::<CompletedOwnedJson>().div_ceil(std::mem::size_of::<usize>()).saturating_add(2),Utf16::default())?;
+    Ok(CompletedOwnedJson{value:std::sync::Arc::new(value),structure,limits:ctx.limits(),lifetime})
+}
+fn read_construction_json_owned_inner(source:&[u16],ctx:&mut Context<'_>,#[cfg(test)] observer:Option<&mut dyn FnMut(&'static str)>)->Result<Value,EngineError> {
+    read_construction_json_owned_full(source,ctx,#[cfg(test)] observer).map(|(value,_)|value)
+}
+fn read_construction_json_owned_full(source:&[u16],ctx:&mut Context<'_>,#[cfg(test)] observer:Option<&mut dyn FnMut(&'static str)>)->Result<(Value,Option<std::sync::Arc<crate::schema::admitted_structure::Structure>>),EngineError> {
+    if !ctx.in_codegen_construction() { return read_json_value(source,Format::Json,ctx).map(|v|(v,None)); }
+    if ctx.profile()==crate::ResourceProfile::HardIsolated {return Err(fail("RESOURCE_PROFILE_UNAVAILABLE","HardIsolated resource profile is unavailable"));}
+    if source.len()>ctx.limits().max_text_units {return Err(fail("LIMIT","Source text limit exceeded"));}
+    ctx.charge_text(source.len(),Utf16::default())?;
+    #[cfg(test)]
+    let mut observer=observer;
+    #[cfg(test)]
+    if let Some(event)=observer.as_deref_mut(){event("source-text-admitted");}
+    crate::schema::admitted_structure::closed::with_root(|root|{
+    let mut parser=JsonParser::<_,CoreJsonBuilder,_>::with_metadata(source,ctx,closed_metadata::ClosedMetadata{root:Some(root)});
+    parser.construction_owned=true;
+    #[cfg(test)]
+    { parser.construction_observer=observer; }
+    let value=parser.parse()?;
+    // Full grammar, numeric/duplicates and trailing-input checks must succeed
+    // before completed metadata or a public owning receipt can be returned.
+    parser.ctx.charge_work(1,Utf16::default())?;
+    parser.construction_event("owned-handoff");
+    let final_count=parser.values;
+    let structure=parser.metadata_call(|metadata,ctx,event|metadata.complete(final_count,ctx,event))?;
+    parser.ctx.charge_work(1,Utf16::default())?;
+    parser.construction_event("owned-publication");
+    Ok((value,structure))
+    })
+}
+
 /// Read a JSON-compatible value with the TypeScript JSON preflight ordering.
 /// This is intended for the explicitly selected Node/WASM serialization alias;
 /// generic Rust callers retain `read_json_value` behavior.
@@ -1148,6 +1216,10 @@ trait JsonBuilder {
     fn array(&self, items: Vec<Self::Value>) -> Self::Value;
     fn object(&self, members: Vec<(Self::Text, Self::Value)>) -> Self::Value;
     fn path_text(&self, text: &Self::Text, ctx: &mut Context<'_>) -> Result<Utf16, EngineError>;
+    fn construction_key<'a>(&self, _: &'a Self::Text) -> Option<&'a Utf16> { None }
+    fn construction_is_string(&self,_:&Self::Value)->bool{false}
+    fn construction_number(&self,token:&str,float:bool,path:&mut Utf16,ctx:&mut Context<'_>)->Result<Self::Value,EngineError>{self.number(token,float,path,ctx)}
+    fn construction_owned_text(&self,_:Vec<u16>)->Result<Self::Text,EngineError>{Err(fail("SOURCE_ENCODING","Private owned decoder requires CoreJSON builder"))}
 }
 #[derive(Default)]
 struct CoreJsonBuilder;
@@ -1156,6 +1228,9 @@ struct PythonJsonBuilder;
 #[derive(Default)]
 struct NativeJsonBuilder;
 impl JsonBuilder for CoreJsonBuilder {
+    fn construction_key<'a>(&self, text: &'a Self::Text) -> Option<&'a Utf16> { Some(text) }
+    fn construction_is_string(&self,value:&Value)->bool{matches!(value,Value::String(_))}
+    fn construction_owned_text(&self,units:Vec<u16>)->Result<Utf16,EngineError>{Ok(Utf16::new(units))}
     type Text = Utf16;
     type Value = Value;
     fn null(&self) -> Value {
@@ -1200,6 +1275,15 @@ impl JsonBuilder for CoreJsonBuilder {
             ));
         }
         Value::number(number, path.clone())
+    }
+    fn construction_number(&self,token:&str,_float:bool,path:&mut Utf16,ctx:&mut Context<'_>)->Result<Value,EngineError>{
+        ctx.charge_work_with_path(token.len().saturating_mul(3),path)?;
+        let number=token.parse::<f64>().map_err(|_|EngineError::new("NUMBER",std::mem::take(path),"Invalid JSON number"))?;
+        let source=decimal_canonical(token).ok_or_else(||EngineError::new("NUMBER",std::mem::take(path),"Invalid decimal number"))?;
+        let converted=decimal_canonical(&crate::ecma_number_to_string(number)).ok_or_else(||EngineError::new("NUMBER",std::mem::take(path),"Invalid converted number"))?;
+        if source!=converted{return Err(EngineError::new("NUMBER",std::mem::take(path),"Parsing would change the decimal value"));}
+        crate::value::validate_owned_number(number,path)?;
+        Ok(Value::Number(number))
     }
     fn array(&self, items: Vec<Value>) -> Value {
         Value::Array(items)
@@ -1332,40 +1416,45 @@ impl JsonBuilder for NativeJsonBuilder {
         Ok(text.clone())
     }
 }
-struct JsonParser<'a, 'b, 'c, S: ?Sized, B> {
-    units: &'a S,
-    at: usize,
-    ctx: &'b mut Context<'c>,
-    values: usize,
-    builder: B,
-    enforce_tree_limits: bool,
-    detect_duplicates: bool,
-    create_paths: bool,
+#[path="serialization_closed_metadata.rs"]
+mod closed_metadata;
+use closed_metadata::{ParserMetadata,NoMetadata};
+struct JsonParser<'a,'b,'c,S:?Sized,B,M=NoMetadata> {
+    units:&'a S,at:usize,ctx:&'b mut Context<'c>,values:usize,builder:B,
+    enforce_tree_limits:bool,detect_duplicates:bool,create_paths:bool,
+    construction_owned:bool,metadata:M,
+    #[cfg(test)]
+    construction_observer:Option<&'b mut dyn FnMut(&'static str)>,
 }
-impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a, 'b, 'c, S, B> {
-    fn new(units: &'a S, ctx: &'b mut Context<'c>) -> Self {
-        Self {
-            units,
-            at: 0,
-            ctx,
-            values: 0,
-            builder: B::default(),
-            enforce_tree_limits: true,
-            detect_duplicates: true,
-            create_paths: true,
-        }
+impl<'a,'b,'c,S:JsonSource+?Sized,B:JsonBuilder+Default> JsonParser<'a,'b,'c,S,B,NoMetadata> {
+    fn new(units:&'a S,ctx:&'b mut Context<'c>)->Self{Self::with_metadata(units,ctx,NoMetadata)}
+    fn native(units:&'a S,ctx:&'b mut Context<'c>)->Self{Self{enforce_tree_limits:true,detect_duplicates:false,create_paths:false,..Self::new(units,ctx)}}
+}
+impl<'a,'b,'c,S:JsonSource+?Sized,B:JsonBuilder+Default,M:ParserMetadata> JsonParser<'a,'b,'c,S,B,M> {
+    fn with_metadata(units:&'a S,ctx:&'b mut Context<'c>,metadata:M)->Self{
+        Self{units,at:0,ctx,values:0,builder:B::default(),enforce_tree_limits:true,detect_duplicates:true,create_paths:true,construction_owned:false,metadata,#[cfg(test)] construction_observer:None}
     }
-    fn native(units: &'a S, ctx: &'b mut Context<'c>) -> Self {
-        Self {
-            enforce_tree_limits: true,
-            detect_duplicates: false,
-            create_paths: false,
-            ..Self::new(units, ctx)
+    fn metadata_call<T>(&mut self,run:impl FnOnce(&mut M,&mut Context<'c>,&mut dyn FnMut(&'static str))->Result<T,EngineError>)->Result<T,EngineError>{
+        #[cfg(test)]
+        if let Some(event)=self.construction_observer.as_mut(){return run(&mut self.metadata,self.ctx,&mut **event);}
+        run(&mut self.metadata,self.ctx,&mut |_|{})
+    }
+    fn construction_event(&mut self, label: &'static str) {
+        #[cfg(test)]
+        if let Some(observer)=self.construction_observer.as_deref_mut() { observer(label); }
+        #[cfg(not(test))]
+        let _=label;
+    }
+    fn push_construction_path(&mut self,path:&mut Utf16,segment:&Utf16)->Result<usize,EngineError>{
+        #[cfg(test)] {
+            let observer=&mut self.construction_observer;
+            return path.push_owned_path_segment_with_events(segment,self.ctx,&mut |label|if let Some(observer)=observer.as_deref_mut(){observer(label)});
         }
+        #[cfg(not(test))] {path.push_owned_path_segment(segment,self.ctx)}
     }
     fn parse(&mut self) -> Result<B::Value, EngineError> {
         self.ws();
-        let root = self.value(0, &Utf16::default())?;
+        let root = self.value(0, &mut Utf16::default())?;
         self.ws();
         if self.at != self.units.len() {
             return Err(fail("SYNTAX", "Trailing JSON source"));
@@ -1389,11 +1478,15 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             false
         }
     }
-    fn value(&mut self, depth: usize, path: &Utf16) -> Result<B::Value, EngineError> {
+    fn error_path(&self,path:&mut Utf16)->Utf16{
+        if self.construction_owned{std::mem::take(path)}else{path.clone()}
+    }
+    fn value(&mut self,depth:usize,path:&mut Utf16)->Result<B::Value,EngineError>{self.value_with_metadata(depth,path,None).map(|(value,_)|value)}
+    fn value_with_metadata(&mut self,depth:usize,path:&mut Utf16,parent:Option<(&M::Node,usize)>)->Result<(B::Value,M::Summary),EngineError>{
         if self.enforce_tree_limits && depth > self.ctx.limits().max_depth {
             return Err(EngineError::new(
                 "LIMIT",
-                path.clone(),
+                self.error_path(path),
                 "Nesting depth exceeded",
             ));
         }
@@ -1401,19 +1494,24 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             self.values = self
                 .values
                 .checked_add(1)
-                .ok_or_else(|| EngineError::new("LIMIT", path.clone(), "Value counter overflow"))?;
-            self.ctx.check_tree_value_count(self.values, path.clone())?;
+                .ok_or_else(|| EngineError::new("LIMIT", self.error_path(path), "Value counter overflow"))?;
+            if self.construction_owned {self.ctx.check_tree_value_count_with_path(self.values,path)?;}
+            else {self.ctx.check_tree_value_count(self.values, self.error_path(path))?;}
         }
-        self.ctx.charge_work(
+        if self.construction_owned { self.ctx.charge_work_with_path(1,path)?; }
+        else {        self.ctx.charge_work(
             1,
             if self.create_paths {
                 path.clone()
             } else {
                 Utf16::default()
             },
-        )?;
+        )?;        }
+        let entry_count=self.values;
         self.ws();
-        match self.units.point(self.at) {
+        let result=match self.units.point(self.at) {
+            Some(0x5b)=>return self.array(depth,path,entry_count,parent),
+            Some(0x7b)=>return self.object(depth,path,entry_count,parent),
             Some(0x6e) => {
                 self.keyword("null")?;
                 Ok(self.builder.null())
@@ -1427,18 +1525,19 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
                 Ok(self.builder.boolean(false))
             }
             Some(0x22) => {
-                let text = self.string()?;
+                let text = self.string(path)?;
                 Ok(self.builder.string_value(text))
             }
-            Some(0x5b) => self.array(depth, path),
-            Some(0x7b) => self.object(depth, path),
             Some(0x2d | 0x30..=0x39) => self.number(path),
             _ => Err(EngineError::new(
                 "SYNTAX",
-                path.clone(),
+                self.error_path(path),
                 "Expected JSON value",
             )),
-        }
+        };
+        let value=result?;
+        let summary=self.metadata_call(|metadata,ctx,event|metadata.scalar(entry_count,depth,parent,ctx,path,event))?;
+        Ok((value,summary))
     }
     fn keyword(&mut self, word: &str) -> Result<(), EngineError> {
         for point in word.bytes().map(u32::from) {
@@ -1448,7 +1547,8 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
         }
         Ok(())
     }
-    fn string(&mut self) -> Result<B::Text, EngineError> {
+    fn string(&mut self, path: &mut Utf16) -> Result<B::Text, EngineError> {
+        if self.construction_owned { return self.construction_string(path); }
         if !self.take(0x22) {
             return Err(fail("SYNTAX", "Expected JSON string"));
         }
@@ -1484,6 +1584,40 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             self.ctx.charge_work(1, Utf16::default())?;
         }
     }
+    fn construction_string(&mut self,path:&mut Utf16)->Result<B::Text,EngineError> {
+        if !self.take(0x22) {return Err(fail("SYNTAX","Expected JSON string"));}
+        let mut output=Vec::<u16>::new();
+        loop {
+            let Some(point)=self.units.point(self.at) else{return Err(fail("SYNTAX","Unterminated JSON string"));};
+            self.at+=1;
+            let decoded=match point {
+                0x22=>{
+                    self.ctx.charge_work_with_path(1,path)?;
+                    self.construction_event("decoded-publication");
+                    return self.builder.construction_owned_text(output);
+                },
+                0x5c=>{
+                    let Some(escape)=self.units.point(self.at) else{return Err(fail("SYNTAX","Incomplete JSON escape"));};
+                    self.at+=1;
+                    match escape {
+                        0x22|0x5c|0x2f=>escape,0x62=>8,0x66=>12,0x6e=>10,0x72=>13,0x74=>9,
+                        0x75=>self.hex_escape()?,_=>return Err(fail("SYNTAX","Invalid JSON escape")),
+                    }
+                },
+                0x00..=0x1f=>return Err(fail("SYNTAX","Unescaped control character in JSON string")),
+                other=>other,
+            };
+            self.ctx.charge_work_with_path(1,path)?;
+            if output.len()==output.capacity() {
+                let wanted=output.capacity().checked_mul(2).unwrap_or(usize::MAX).max(1);
+                self.ctx.charge_work_with_path(output.len().saturating_add(wanted),path)?;
+                self.construction_event("decoded-growth");
+                output.try_reserve_exact(wanted-output.len()).map_err(|_|EngineError::new("LIMIT",std::mem::take(path),"Owned JSON string allocation unavailable"))?;
+            }
+            self.construction_event("decoded-store");
+            output.push(u16::try_from(decoded).map_err(|_|fail("SOURCE_ENCODING","Invalid UTF-16 source"))?);
+        }
+    }
     fn hex_escape(&mut self) -> Result<u32, EngineError> {
         let mut value = 0u32;
         for _ in 0..4 {
@@ -1501,12 +1635,12 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
         }
         Ok(value)
     }
-    fn number(&mut self, path: &Utf16) -> Result<B::Value, EngineError> {
+    fn number(&mut self, path: &mut Utf16) -> Result<B::Value, EngineError> {
         let start = self.at;
         if self.take(0x2d) && self.at >= self.units.len() {
             return Err(EngineError::new(
                 "SYNTAX",
-                path.clone(),
+                self.error_path(path),
                 "Incomplete JSON number",
             ));
         }
@@ -1518,7 +1652,7 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             {
                 return Err(EngineError::new(
                     "SYNTAX",
-                    path.clone(),
+                    self.error_path(path),
                     "Leading zero in JSON number",
                 ));
             }
@@ -1534,7 +1668,7 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             if first == self.at {
                 return Err(EngineError::new(
                     "SYNTAX",
-                    path.clone(),
+                    self.error_path(path),
                     "Malformed JSON number",
                 ));
             }
@@ -1553,7 +1687,7 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             if first == self.at {
                 return Err(EngineError::new(
                     "SYNTAX",
-                    path.clone(),
+                    self.error_path(path),
                     "Malformed JSON fraction",
                 ));
             }
@@ -1578,35 +1712,65 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             if first == self.at {
                 return Err(EngineError::new(
                     "SYNTAX",
-                    path.clone(),
+                    self.error_path(path),
                     "Malformed JSON exponent",
                 ));
             }
         }
         let token_len = self.at - start;
-        self.ctx.charge_work(token_len, Utf16::default())?;
+        if self.construction_owned {
+            self.ctx.charge_work_with_path(token_len,path)?;
+            self.ctx.charge_work_with_path(token_len.saturating_mul(2).saturating_add(2),path)?;
+        } else {self.ctx.charge_work(token_len, Utf16::default())?;}
         let token = ascii_points(
             &(start..self.at)
                 .map(|index| self.units.point(index).unwrap())
                 .collect::<Vec<_>>(),
         )
         .ok_or_else(|| fail("SYNTAX", "Malformed JSON number"))?;
-        self.builder.number(&token, is_float, path, self.ctx)
+        if self.construction_owned{self.builder.construction_number(&token,is_float,path,self.ctx)}
+        else {self.builder.number(&token, is_float, path, self.ctx)}
     }
-    fn array(&mut self, depth: usize, path: &Utf16) -> Result<B::Value, EngineError> {
+    fn array(&mut self,depth:usize,path:&mut Utf16,entry_count:usize,parent:Option<(&M::Node,usize)>)->Result<(B::Value,M::Summary),EngineError> {
         self.at += 1;
         self.ws();
         let mut items = Vec::new();
+        let mut node=self.metadata_call(|metadata,ctx,event|metadata.container(entry_count,depth,parent,ctx,path,event))?;
         if self.take(0x5d) {
-            return Ok(self.builder.array(items));
+            let accepted=items.len();let value=self.builder.array(items);let end_count=self.values;
+            let summary=self.metadata_call(|metadata,ctx,event|metadata.finish(node,accepted,end_count,ctx,path,event))?;
+            return Ok((value,summary));
         }
         loop {
-            let item_path = if self.create_paths {
+            if self.construction_owned { self.ctx.charge_work_with_path(3,path)?; }
+            if self.construction_owned && items.len()==items.capacity() {
+                let wanted=items.capacity().checked_mul(2).unwrap_or(usize::MAX).max(1);
+                let words=std::mem::size_of::<B::Value>().div_ceil(std::mem::size_of::<usize>());
+                self.ctx.charge_work_with_path(items.len().saturating_add(wanted).saturating_mul(words),path)?;
+                items.try_reserve_exact(wanted-items.len()).map_err(|_|EngineError::new("LIMIT",std::mem::take(path),"Owned JSON array allocation unavailable"))?;
+            }
+            if self.construction_owned {
+                let digits=if items.is_empty(){1}else{items.len().ilog10() as usize+1};
+                self.ctx.charge_work_with_path(digits.saturating_mul(3).saturating_add(2),path)?;
+                self.construction_event("array-index-format");
+                let segment=Utf16::from(items.len().to_string());
+                let parent=self.push_construction_path(path,&segment)?;
+                self.construction_event("path-appended");
+                let (value,child_summary)=self.value_with_metadata(depth+1,path,Some((&node,items.len())))?;
+                path.restore_owned_path(parent,self.ctx)?;
+                self.construction_event("path-restored");
+                items.push(value);
+                self.metadata_call(|metadata,ctx,event|metadata.merge(&mut node,child_summary,ctx,path,event))?;
+            } else {
+                let mut item_path = if self.create_paths {
                 append_path(path, &Utf16::from(items.len().to_string()))
             } else {
                 Utf16::default()
             };
-            items.push(self.value(depth + 1, &item_path)?);
+            let(value,child_summary)=self.value_with_metadata(depth+1,&mut item_path,Some((&node,items.len())))?;
+            items.push(value);
+            self.metadata_call(|metadata,ctx,event|metadata.merge(&mut node,child_summary,ctx,path,event))?;
+            }
             self.ws();
             if self.take(0x5d) {
                 break;
@@ -1614,37 +1778,66 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             if !self.take(0x2c) {
                 return Err(EngineError::new(
                     "SYNTAX",
-                    path.clone(),
+                    self.error_path(path),
                     "Expected comma or closing bracket",
                 ));
             }
             self.ws();
         }
-        Ok(self.builder.array(items))
+        let accepted=items.len();let value=self.builder.array(items);let end_count=self.values;
+        let summary=self.metadata_call(|metadata,ctx,event|metadata.finish(node,accepted,end_count,ctx,path,event))?;
+        Ok((value,summary))
     }
-    fn object(&mut self, depth: usize, path: &Utf16) -> Result<B::Value, EngineError> {
+    fn object(&mut self,depth:usize,path:&mut Utf16,entry_count:usize,parent:Option<(&M::Node,usize)>)->Result<(B::Value,M::Summary),EngineError> {
         self.at += 1;
         self.ws();
-        let mut members = Vec::new();
+        let mut members: Vec<(B::Text,B::Value)> = Vec::new();
         let mut seen = std::collections::BTreeSet::<B::Text>::new();
+        let mut node=self.metadata_call(|metadata,ctx,event|metadata.container(entry_count,depth,parent,ctx,path,event))?;
         if self.take(0x7d) {
-            return Ok(self.builder.object(members));
+            let accepted=members.len();let value=self.builder.object(members);let end_count=self.values;
+            let summary=self.metadata_call(|metadata,ctx,event|metadata.finish(node,accepted,end_count,ctx,path,event))?;
+            return Ok((value,summary));
         }
         loop {
             if self.units.point(self.at) != Some(0x22) {
                 return Err(EngineError::new(
                     "SYNTAX",
-                    path.clone(),
+                    self.error_path(path),
                     "JSON object keys must be strings",
                 ));
             }
-            let key = self.string()?;
-            let key_path = self.builder.path_text(&key, self.ctx)?;
+            let key = self.string(path)?;
+            let key_path = if self.construction_owned { Utf16::default() }
+                else { self.builder.path_text(&key, self.ctx)? };
+            if self.construction_owned {
+                let mut duplicate=false;
+                self.ctx.charge_work_with_path(1,path)?;
+                let completed_count=members.len();
+                for index in 0..completed_count {
+                    self.ctx.charge_work_with_path(3,path)?;
+                    self.construction_event("key-metadata");
+                    let candidate=self.builder.construction_key(&key).expect("private CoreJsonBuilder route");
+                    let previous=self.builder.construction_key(&members[index].0).expect("private CoreJsonBuilder route");
+                    let key_len=candidate.len();let previous_len=previous.len();
+                    if key_len!=previous_len { continue; }
+                    let mut equal=true;
+                    for unit in 0..key_len {
+                        self.ctx.charge_work_with_path(3,path)?;
+                        self.construction_event("key-unit");
+                        let candidate=self.builder.construction_key(&key).expect("private CoreJsonBuilder route");
+                        let previous=self.builder.construction_key(&members[index].0).expect("private CoreJsonBuilder route");
+                        if candidate.units()[unit]!=previous.units()[unit] { equal=false;break; }
+                    }
+                    if equal { duplicate=true;break; }
+                }
+                if duplicate {return Err(EngineError::new("DUPLICATE_KEY",std::mem::take(path),"Duplicate object key"));}
+            } else {
             if self.detect_duplicates {
                 self.ctx.charge_work_u64(
                     (key_path.len() as u64).saturating_mul(btree_search_comparisons(seen.len())),
                     if self.create_paths {
-                        path.clone()
+                        self.error_path(path)
                     } else {
                         Utf16::default()
                     },
@@ -1653,26 +1846,49 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             if self.detect_duplicates && !seen.insert(key.clone()) {
                 return Err(EngineError::new(
                     "DUPLICATE_KEY",
-                    path.clone(),
+                    self.error_path(path),
                     "Duplicate object key",
                 ));
+            }
             }
             self.ws();
             if !self.take(0x3a) {
                 return Err(EngineError::new(
                     "SYNTAX",
-                    path.clone(),
+                    self.error_path(path),
                     "Expected colon after object key",
                 ));
             }
             self.ws();
-            let child_path = if self.create_paths {
+            if self.construction_owned { self.ctx.charge_work_with_path(3,path)?; }
+            if self.construction_owned && members.len()==members.capacity() {
+                let wanted=members.capacity().checked_mul(2).unwrap_or(usize::MAX).max(1);
+                let words=std::mem::size_of::<(B::Text,B::Value)>().div_ceil(std::mem::size_of::<usize>());
+                self.ctx.charge_work_with_path(members.len().saturating_add(wanted).saturating_mul(words),path)?;
+                self.construction_event("member-growth");
+                members.try_reserve_exact(wanted-members.len()).map_err(|_|EngineError::new("LIMIT",std::mem::take(path),"Owned JSON member allocation unavailable"))?;
+            }
+            if self.construction_owned {
+                let borrowed=self.builder.construction_key(&key).expect("private CoreJsonBuilder route");
+                let parent=self.push_construction_path(path,borrowed)?;
+                self.construction_event("path-appended");
+                let(value,child_summary)=self.value_with_metadata(depth+1,path,Some((&node,members.len())))?;
+                path.restore_owned_path(parent,self.ctx)?;
+                self.construction_event("path-restored");
+                let ordinal=members.len();let member_key=self.builder.construction_key(&key).expect("owned CoreJSON key");let is_string=self.builder.construction_is_string(&value);
+                self.metadata_call(|metadata,ctx,event|metadata.member(&mut node,ordinal,member_key,is_string,ctx,path,event))?;
+                members.push((key,value));
+                self.metadata_call(|metadata,ctx,event|metadata.merge(&mut node,child_summary,ctx,path,event))?;
+            } else {
+                let mut child_path = if self.create_paths {
                 append_path(path, &key_path)
             } else {
                 Utf16::default()
             };
-            let value = self.value(depth + 1, &child_path)?;
-            members.push((key, value));
+            let(value,child_summary)=self.value_with_metadata(depth+1,&mut child_path,Some((&node,members.len())))?;
+            members.push((key,value));
+            self.metadata_call(|metadata,ctx,event|metadata.merge(&mut node,child_summary,ctx,path,event))?;
+            }
             self.ws();
             if self.take(0x7d) {
                 break;
@@ -1680,13 +1896,15 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             if !self.take(0x2c) {
                 return Err(EngineError::new(
                     "SYNTAX",
-                    path.clone(),
+                    self.error_path(path),
                     "Expected comma or closing brace",
                 ));
             }
             self.ws();
         }
-        Ok(self.builder.object(members))
+        let accepted=members.len();let value=self.builder.object(members);let end_count=self.values;
+        let summary=self.metadata_call(|metadata,ctx,event|metadata.finish(node,accepted,end_count,ctx,path,event))?;
+        Ok((value,summary))
     }
 }
 fn hex(unit: u16) -> Option<u32> {
@@ -5640,3 +5858,43 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path="serialization_construction_owned_independent_tests.rs"]
+mod construction_owned_independent_tests;
+
+#[cfg(test)]
+mod construction_array_index_admission_tests {
+    use super::*;
+    use std::cell::{Cell,RefCell};
+    #[test]
+    fn decimal_formatting_is_not_entered_when_its_own_precharge_is_denied() {
+        let source:Vec<u16>="[null]".encode_utf16().collect();
+        let calls=Cell::new(0usize);
+        let charges=RefCell::new(Vec::new());
+        let format_call=Cell::new(None);
+        let mut meter=|amount| {calls.set(calls.get()+1);charges.borrow_mut().push(amount);Ok(())};
+        let mut event=|label|if label=="array-index-format" {format_call.set(Some(calls.get()));};
+        let mut ctx=Context::catalog().with_meter(&mut meter);
+        ctx.with_codegen_construction(|ctx|read_construction_json_owned_with_events(&source,ctx,&mut event)).unwrap();
+        drop(ctx);
+        let target=format_call.get().expect("actual formatter must be reached");
+        assert_eq!(charges.borrow()[target-1],5); // one digit + two stores
+        let calls=Cell::new(0usize);
+        let formats=Cell::new(0usize);
+        let mut meter=|_| {calls.set(calls.get()+1);if calls.get()==target {
+            Err(EngineError::new("FORMAT_DENIED",Utf16::from("host-path"),"stop before formatting"))
+        }else{Ok(())}};
+        let mut event=|label|if label=="array-index-format" {formats.set(formats.get()+1);};
+        let mut ctx=Context::catalog().with_meter(&mut meter);
+        let error=ctx.with_codegen_construction(|ctx|read_construction_json_owned_with_events(&source,ctx,&mut event)).unwrap_err();
+        assert_eq!(error.code,"FORMAT_DENIED");
+        assert_eq!(error.path,Utf16::from("host-path"));
+        assert_eq!(calls.get(),target);
+        assert_eq!(formats.get(),0);
+    }
+}
+
+#[cfg(test)]
+#[path="serialization_owned_decode_stack_independent_tests.rs"]
+mod owned_decode_stack_independent_tests;

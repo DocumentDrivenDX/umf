@@ -443,6 +443,7 @@ pub(super) fn core_validation(
     doc: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<umf_core::Diagnostic>, EngineError> {
+    ctx.with_work_phase("native-core-document-validation", |ctx| {
     struct Empty;
     impl Capabilities for Empty {
         fn validate_extension(
@@ -460,6 +461,8 @@ pub(super) fn core_validation(
         .engine()
         .validate_document(doc, &Registry::new(), &mut empty, ctx)?
         .diagnostics)
+
+    })
 }
 fn keys_for_record<'a>(doc: &'a Value, module: &Utf16, element: &Utf16) -> &'a [Value] {
     let Some((_, _, _, record)) = find_element(doc, module, element) else {
@@ -661,6 +664,7 @@ pub(super) fn inspect_access_views(
     source_id: &str,
     ctx: &mut Context<'_>,
 ) -> Result<Inspection, EngineError> {
+    ctx.with_work_phase("native-semantic-inspection", |ctx| {
     ctx.charge_work(source_id.len(), Utf16::default())?;
     let source = Utf16::from(source_id);
     let mut out = Inspection::default();
@@ -1703,6 +1707,8 @@ pub(super) fn inspect_access_views(
         ]));
     }
     Ok(out)
+
+    })
 }
 
 fn selected_keys_first(
@@ -2700,8 +2706,10 @@ fn inspect_binding_declaration(
         let package_schema = member(package, "schema");
         // These immutable snapshots are equal by construction; the retained
         // consistency guard still accounts for both complete comparisons.
-        binding_value_work(compiled.schema_value(), ctx)?;
-        binding_value_work(compiled.schema_value(), ctx)?;
+        ctx.with_work_phase("native-resource-consistency-comparison", |ctx| {
+            binding_value_work(compiled.schema_value(), ctx)?;
+            binding_value_work(compiled.schema_value(), ctx)
+        })?;
         if package_schema != Some(compiled.schema_value())
             || registration.is_none_or(|r| {
                 r.token() != Some(expected_token)
@@ -2716,12 +2724,12 @@ fn inspect_binding_declaration(
         }
     }
     let mut capabilities = BindingSemantics;
-    let validation = engine.resources().engine().validate_document(
+    let validation = ctx.with_work_phase("native-binding-document-validation", |ctx| engine.resources().engine().validate_document(
         binding_doc,
         registry,
         &mut capabilities,
         ctx,
-    )?;
+    ))?;
     if vocabulary.is_none_or(|v| v != &Utf16::from("0.1.0") && v != &Utf16::from("0.2.0"))
         || !validation.valid
     {

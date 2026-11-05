@@ -2,6 +2,8 @@
 //! Explicit immutable resource ownership for codegen operations.
 
 use crate::value::member;
+#[path = "operation_schemas_utf16.rs"]
+mod operation_sources;
 use umf_core::{
     schema::{CompiledSchema, SchemaResources},
     Capabilities, Context, Engine, EngineError, Registry, ResourceSet, Utf16, Value,
@@ -43,6 +45,17 @@ pub struct CodegenResources {
     schema_resources: SchemaResources,
 }
 
+enum CoreInput {Raw(ResourceSet),Owned(umf_core::engine::OwnedResourceSet)}
+enum AdmissionInput {Raw(Value),Resource(umf_core::value::OwnedCoreJson),SchemaCopy(umf_core::value::OwnedCoreJson)}
+impl AdmissionInput {
+    fn admit(self,operation:Option<&umf_core::value::OwnedCoreOperation>,ctx:&mut Context<'_>)->Result<Value,EngineError>{
+        match self {
+            Self::Resource(value)=>value.into_resource(operation.expect("typed constructor owns operation"),ctx),
+            Self::SchemaCopy(value)=>value.into_schema_copy(operation.expect("typed constructor owns operation"),ctx),
+            Self::Raw(value)=>if ctx.in_codegen_construction(){umf_core::value::admit_owned_json(value,ctx)}else{umf_core::copy_json(&value,ctx)},
+        }
+    }
+}
 impl CodegenResources {
     /// Compile the explicit core resources and retain the explicitly trusted
     /// table/action schemas and both binding packages for operation validation.
@@ -56,13 +69,27 @@ impl CodegenResources {
         stable_binding_package: Value,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        let tables_package = umf_core::copy_json(&tables_package, ctx)?;
-        let tables_schema = umf_core::copy_json(&tables_schema, ctx)?;
-        let actions_package = umf_core::copy_json(&actions_package, ctx)?;
-        let actions_schema = umf_core::copy_json(&actions_schema, ctx)?;
-        let binding_package = umf_core::copy_json(&binding_package, ctx)?;
-        let stable_binding_package = umf_core::copy_json(&stable_binding_package, ctx)?;
-        let engine = Engine::new(core, ctx)?;
+        Self::new_input(CoreInput::Raw(core),AdmissionInput::Raw(tables_package),AdmissionInput::Raw(tables_schema),AdmissionInput::Raw(actions_package),AdmissionInput::Raw(actions_schema),AdmissionInput::Raw(binding_package),AdmissionInput::Raw(stable_binding_package),None,ctx)
+    }
+    #[doc(hidden)]
+    pub fn from_owned_resources(
+        core:umf_core::engine::OwnedResourceSet,
+        tables_package:umf_core::value::OwnedCoreJson,tables_schema:umf_core::value::OwnedCoreJson,
+        actions_package:umf_core::value::OwnedCoreJson,actions_schema:umf_core::value::OwnedCoreJson,
+        binding_package:umf_core::value::OwnedCoreJson,stable_binding_package:umf_core::value::OwnedCoreJson,
+        operation:&umf_core::value::OwnedCoreOperation,ctx:&mut Context<'_>,
+    )->Result<Self,EngineError>{
+        ctx.charge_work(11,Utf16::default())?;
+        Self::new_input(CoreInput::Owned(core),AdmissionInput::Resource(tables_package),AdmissionInput::SchemaCopy(tables_schema),AdmissionInput::Resource(actions_package),AdmissionInput::SchemaCopy(actions_schema),AdmissionInput::Resource(binding_package),AdmissionInput::Resource(stable_binding_package),Some(operation),ctx)
+    }
+    fn new_input(core:CoreInput,tables_package:AdmissionInput,tables_schema:AdmissionInput,actions_package:AdmissionInput,actions_schema:AdmissionInput,binding_package:AdmissionInput,stable_binding_package:AdmissionInput,operation:Option<&umf_core::value::OwnedCoreOperation>,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+        let tables_package=tables_package.admit(operation,ctx)?;
+        let tables_schema=tables_schema.admit(operation,ctx)?;
+        let actions_package=actions_package.admit(operation,ctx)?;
+        let actions_schema=actions_schema.admit(operation,ctx)?;
+        let binding_package=binding_package.admit(operation,ctx)?;
+        let stable_binding_package=stable_binding_package.admit(operation,ctx)?;
+        let engine=match core {CoreInput::Raw(core)=>Engine::new(core,ctx)?,CoreInput::Owned(core)=>Engine::from_owned_resources(core,operation.expect("typed constructor owns operation"),ctx)?};
         let mut schema_resources = engine.schema_resources_with_context(ctx)?;
         // Operation declarations are governed by the package-owned schema
         // shipped with this crate. Its only external reference is the table
@@ -89,41 +116,30 @@ impl CodegenResources {
                 .entries
                 .push((tables_schema_id, tables_schema_copy));
         }
-        let operation_source_text =
-            include_str!("../../../spec/extensions/tables/operation.schema.json");
-        ctx.charge_work(
-            operation_source_text.encode_utf16().count(),
-            Utf16::default(),
-        )?;
-        let operation_source = Utf16::from(operation_source_text);
+        // Encoding-only DATA; the shared reader still admits and parses the
+        // complete source in this same Context before schema compilation.
         let operation_schema = umf_core::serialization::read_json_value(
-            operation_source.units(),
+            operation_sources::OPERATION_SCHEMA_UTF16,
             umf_core::serialization::Format::Json,
             ctx,
         )?;
         let operation_compiled =
-            CompiledSchema::compile(&operation_schema, &schema_resources, ctx)?;
-        let row_expression_source_text =
-            include_str!("../../../spec/extensions/tables/operation-0.2.schema.json");
-        ctx.charge_work(
-            row_expression_source_text.encode_utf16().count(),
-            Utf16::default(),
-        )?;
+            ctx.with_constructor_root("operation", |ctx| CompiledSchema::compile(&operation_schema, &schema_resources, ctx))?;
         let row_expression_operation_schema = umf_core::serialization::read_json_value(
-            Utf16::from(row_expression_source_text).units(),
+            operation_sources::ROW_EXPRESSION_OPERATION_SCHEMA_UTF16,
             umf_core::serialization::Format::Json,
             ctx,
         )?;
         let row_expression_operation_compiled =
-            CompiledSchema::compile(&row_expression_operation_schema, &schema_resources, ctx)?;
+            ctx.with_constructor_root("operation", |ctx| CompiledSchema::compile(&row_expression_operation_schema, &schema_resources, ctx))?;
         let binding_schema = member(&binding_package, "schema").ok_or_else(invalid_package)?;
         let stable_binding_schema =
             member(&stable_binding_package, "schema").ok_or_else(invalid_package)?;
-        let binding_compiled = CompiledSchema::compile(binding_schema, &schema_resources, ctx)?;
+        let binding_compiled = ctx.with_constructor_root("binding", |ctx| CompiledSchema::compile(binding_schema, &schema_resources, ctx))?;
         let stable_binding_compiled =
-            CompiledSchema::compile(stable_binding_schema, &schema_resources, ctx)?;
-        let tables_compiled = CompiledSchema::compile(&tables_schema, &schema_resources, ctx)?;
-        let actions_compiled = CompiledSchema::compile(&actions_schema, &schema_resources, ctx)?;
+            ctx.with_constructor_root("binding", |ctx| CompiledSchema::compile(stable_binding_schema, &schema_resources, ctx))?;
+        let tables_compiled = ctx.with_constructor_root("tables", |ctx| CompiledSchema::compile(&tables_schema, &schema_resources, ctx))?;
+        let actions_compiled = ctx.with_constructor_root("actions", |ctx| CompiledSchema::compile(&actions_schema, &schema_resources, ctx))?;
         let literal_definition = member(&actions_schema, "$defs")
             .and_then(|defs| member(defs, "literal"))
             .ok_or_else(invalid_package)?;
@@ -140,7 +156,7 @@ impl CodegenResources {
             ),
         ]);
         let actions_literal_compiled =
-            CompiledSchema::compile(&literal_schema, &schema_resources, ctx)?;
+            ctx.with_constructor_root("actions-literal", |ctx| CompiledSchema::compile(&literal_schema, &schema_resources, ctx))?;
         let action_definitions = umf_core::copy_json(
             member(&actions_schema, "$defs").ok_or_else(invalid_package)?,
             ctx,
@@ -154,25 +170,25 @@ impl CodegenResources {
             ),
         ]);
         let actions_action_compiled =
-            CompiledSchema::compile(&action_schema, &schema_resources, ctx)?;
-        let tables_registry = package_registry(
+            ctx.with_constructor_root("actions-action", |ctx| CompiledSchema::compile(&action_schema, &schema_resources, ctx))?;
+        let tables_registry = ctx.with_constructor_root("registration-tables", |ctx| package_registry(
             &engine,
             &schema_resources,
             &tables_package,
             &tables_schema,
             1,
             ctx,
-        )?;
-        let actions_registry = package_registry(
+        ))?;
+        let actions_registry = ctx.with_constructor_root("registration-actions", |ctx| package_registry(
             &engine,
             &schema_resources,
             &actions_package,
             &actions_schema,
             2,
             ctx,
-        )?;
+        ))?;
         let mut binding_registry = Registry::new();
-        register_package(
+        ctx.with_constructor_root("registration-binding", |ctx| register_package(
             &mut binding_registry,
             &engine,
             &schema_resources,
@@ -180,8 +196,8 @@ impl CodegenResources {
             binding_schema,
             3,
             ctx,
-        )?;
-        register_package(
+        ))?;
+        ctx.with_constructor_root("registration-stable", |ctx| register_package(
             &mut binding_registry,
             &engine,
             &schema_resources,
@@ -189,7 +205,7 @@ impl CodegenResources {
             stable_binding_schema,
             4,
             ctx,
-        )?;
+        ))?;
         Ok(Self {
             engine,
             binding_registry,

@@ -1,0 +1,73 @@
+{
+  "profile": "umf.inspector-installed-canonical-current-resources/1",
+  "inputProfile": "installed-canonical/1",
+  "maximumWork": 1000000,
+  "baseline": {
+    "mainCommit": "3300bba80f3ebc095defc9ee6cff69cafff5767b",
+    "mainTree": "c644208e899539df509bb330380e111c338d90a7",
+    "inheritedCoreDistributionVersion": "0.10.9",
+    "scope": "private source-bound component only; inherited owner metadata is not our release identity or final qualification"
+  },
+  "historicalFixture": {
+    "path": "tests/qualification/fixtures/inspector-retained-resources.json",
+    "sha256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
+    "sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+    "scope": "unchanged original explicit/retained input and evidence; never relabeled current"
+  },
+  "resources": {
+    "coreSchema": {
+      "path": "spec/core/schema.json",
+      "bytes": 45342,
+      "sha256": "8625852e8619c3ec69fae75d78379ebae8896a687fda0f5509e2d3235895b7d3"
+    },
+    "referenceSchema": {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "bytes": 45463,
+      "sha256": "54c1fbf20f3ed5a5013519663f9403820a33fabffa4dcadf3de03f2974479643"
+    },
+    "packageSchema": {
+      "path": "spec/core/extension-package.schema.json",
+      "bytes": 45001,
+      "sha256": "0af43a4b01a309fd5a0e045bf92d2aeaeaa1b68e46abfd08a240a18055e6b116"
+    },
+    "constraints": {
+      "path": "spec/metamodel/generated/core-constraints.json",
+      "bytes": 190431,
+      "sha256": "1fc15546f00b6666bac9ec853c2f24afb6261536d4dc6049b0c7bdbf29ab8b2e"
+    },
+    "domainPolicy": {
+      "path": "spec/metamodel/generated/domain-policy.json",
+      "bytes": 14827,
+      "sha256": "4637f71cef27a8f77987b355ced9ca683156fd88f7486a4e54c0307f50753284"
+    },
+    "tablesPackage": {
+      "path": "spec/extensions/tables/package.json",
+      "bytes": 23817,
+      "sha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+    },
+    "actionsPackage": {
+      "path": "spec/extensions/actions/package.json",
+      "bytes": 11497,
+      "sha256": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181"
+    },
+    "bindingPackage": {
+      "path": "spec/extensions/binding/package.json",
+      "bytes": 8840,
+      "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f"
+    },
+    "stableBindingPackage": {
+      "path": "spec/extensions/binding-stable/package.json",
+      "bytes": 8885,
+      "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e"
+    }
+  },
+  "encodingOnlyProducer": {
+    "path": "tools/generate_codegen_resource_literals.py",
+    "sha256": "23b788c916e8a57ca102bb714b17edd87e3749062f4beddc656953afdc67dbb9"
+  },
+  "literalData": {
+    "path": "crates/umf-core/src/canonical_codegen_literals.rs",
+    "sha256": "586c67c832f86ae27b2dc5d83c9d7e73c8aa9f4437b2e7fe296e367737599e76"
+  },
+  "acceptance": "Provenance/source binding only. All9 full runtime JSON/schema/metaschema/reference/package/Registry checks remain in same constructorContext; no generated admission proof. Actual candidate commit binds separately at future controller/run, never self-hashed into this fixture."
+}

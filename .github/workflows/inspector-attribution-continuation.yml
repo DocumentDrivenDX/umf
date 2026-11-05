@@ -53,16 +53,17 @@ jobs:
           printf 'CONTINUATION_OUT=%s\n' "$out" >> "$GITHUB_ENV"
           printf 'OWNER_CHECKOUT=%s/retained-owner-source\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
           git worktree add --detach "$RUNNER_TEMP/retained-owner-source" "$ORIGINAL_OWNER"
-          gh api repos/DocumentDrivenDX/umf/actions/runs/41745720387 > "$out/materials/run.json"
-          gh api repos/DocumentDrivenDX/umf/actions/runs/41745720387/jobs > "$out/materials/jobs.json"
-          gh api repos/DocumentDrivenDX/umf/actions/runs/41745720387/artifacts > "$out/materials/artifacts.json"
-          gh api repos/DocumentDrivenDX/umf/actions/artifacts/13284961794/zip > "$out/materials/partial.zip"
-          gh api repos/DocumentDrivenDX/umf/actions/artifacts/13285096524/zip > "$out/materials/cleanup.zip"
-          gh api repos/DocumentDrivenDX/umf/actions/runs/41745720387/logs > "$out/materials/original-logs.zip"
+          gh api repos/DocumentDrivenDX/umf/actions/runs/41753398285 > "$out/materials/run.json"
+          gh api repos/DocumentDrivenDX/umf/actions/runs/41753398285/jobs > "$out/materials/jobs.json"
+          gh api repos/DocumentDrivenDX/umf/actions/runs/41753398285/artifacts > "$out/materials/artifacts.json"
+          gh api repos/DocumentDrivenDX/umf/actions/artifacts/13286019060/zip > "$out/materials/partial.zip"
+          gh api repos/DocumentDrivenDX/umf/actions/artifacts/13287586076/zip > "$out/materials/cleanup.zip"
+          gh api repos/DocumentDrivenDX/umf/actions/runs/41753398285/logs > "$out/materials/original-logs.zip"
           python -I -B tools/intake_inspector_attribution_continuation.py \
             --controller "$GITHUB_WORKSPACE" --owner "$RUNNER_TEMP/retained-owner-source" \
             --evidence "$out/materials" --controller-sha "$EXPECTED_CONTROLLER" \
             --output "$out/intake.json"
+          printf 'RETAINED_WHEEL=%s\n' "$(python -I -B -c 'import json,sys; print(json.load(open(sys.argv[1]))["wheel"]["actualPath"])' "$out/intake.json")" >> "$GITHUB_ENV"
       - name: Fresh normal resolver install of authenticated unchanged wheel
         shell: bash
         run: |
@@ -71,7 +72,7 @@ jobs:
           candidate_python="$CONTINUATION_OUT/consumer/bin/python"
           "$candidate_python" -m pip --isolated install --index-url https://pypi.org/simple --no-cache-dir --no-compile \
             --report "$CONTINUATION_OUT/install-report.json" --constraint "$CONTINUATION_OUT/dependency-constraints.txt" \
-            "$CONTINUATION_OUT/materials/partial/wheels/umf_core-0.10.8-cp311-abi3-linux_x86_64.whl" \
+            "$RETAINED_WHEEL" \
             'pytest==8.4.2' 'pydantic==2.14.2' 2>&1 | tee "$CONTINUATION_OUT/install.log"
           "$candidate_python" -m pip --isolated check | tee "$CONTINUATION_OUT/pip-check.log"
           "$candidate_python" -m pip --isolated freeze > "$CONTINUATION_OUT/freeze.txt"
@@ -81,7 +82,7 @@ jobs:
           set -euo pipefail
           "$CONTINUATION_OUT/consumer/bin/python" -I -B tools/run_inspector_attribution_lanes.py \
             --controller "$GITHUB_WORKSPACE" --owner "$OWNER_CHECKOUT" \
-            --wheel "$CONTINUATION_OUT/materials/partial/wheels/umf_core-0.10.8-cp311-abi3-linux_x86_64.whl" \
+            --wheel "$RETAINED_WHEEL" \
             --out "$CONTINUATION_OUT" --controller-sha "$EXPECTED_CONTROLLER" \
             2>&1 | tee "$CONTINUATION_OUT/lanes-driver.log"
       - name: Retain actual partial results original identities and wheel bytes
@@ -98,7 +99,11 @@ jobs:
             ${{ runner.temp }}/retained-continuation/materials/original-logs.zip
             ${{ runner.temp }}/retained-continuation/materials/partial/*.json
             ${{ runner.temp }}/retained-continuation/materials/partial/*.log
-            ${{ runner.temp }}/retained-continuation/materials/partial/wheels/*
+            ${{ runner.temp }}/retained-continuation/materials/partial/*.xml
+            ${{ runner.temp }}/retained-continuation/materials/partial/materials/partial/*.json
+            ${{ runner.temp }}/retained-continuation/materials/partial/materials/partial/*.log
+            ${{ runner.temp }}/retained-continuation/materials/partial/materials/partial/*.txt
+            ${{ runner.temp }}/retained-continuation/materials/partial/materials/partial/wheels/*
             ${{ runner.temp }}/retained-continuation/materials/cleanup/*.json
           if-no-files-found: error
           retention-days: 90

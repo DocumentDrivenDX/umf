@@ -6,7 +6,7 @@ use umf_core::{Context, EngineError, Utf16, Value};
 /// Admit and copy a raw operation argument using the core carrier's duplicate,
 /// numeric, depth, value-count, and cooperative work checks.
 pub fn admit_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
-    umf_core::copy_json(value, ctx)
+    ctx.with_work_phase("native-copies-and-projections", |ctx| umf_core::copy_json(value, ctx))
 }
 
 /// Parse source text into an admitted core value. This is syntax parsing only;

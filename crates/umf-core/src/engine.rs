@@ -81,9 +81,29 @@ pub trait Capabilities {
         None
     }
 }
+#[derive(Debug)]
+/// Internal consuming input bundle; the ordinary ResourceSet is unchanged.
+#[doc(hidden)]
+pub struct OwnedResourceSet {
+    pub core_schema:crate::value::OwnedCoreJson,
+    pub reference_schema:crate::value::OwnedCoreJson,
+    pub package_schema:crate::value::OwnedCoreJson,
+    pub constraints:crate::value::OwnedCoreJson,
+    pub domain_policy:crate::value::OwnedCoreJson,
+}
+impl OwnedResourceSet {
+    fn into_raw(self)->ResourceSet {ResourceSet{core_schema:self.core_schema.into_raw(),reference_schema:self.reference_schema.into_raw(),package_schema:self.package_schema.into_raw(),constraints:self.constraints.into_raw(),domain_policy:self.domain_policy.into_raw()}}
+}
+enum EngineInput<'o>{Raw(ResourceSet),Owned(OwnedResourceSet,&'o crate::value::OwnedCoreOperation)}
+#[derive(Clone,Debug)]
+enum EngineResources { Owned(ResourceSet), Admitted(Arc<ResourceSet>) }
+impl std::ops::Deref for EngineResources {
+    type Target=ResourceSet;
+    fn deref(&self)->&ResourceSet {match self{Self::Owned(v)=>v,Self::Admitted(v)=>v}}
+}
 #[derive(Clone, Debug)]
 pub struct Engine {
-    resources: ResourceSet,
+    resources: EngineResources,
     core: CompiledSchema,
     reference: CompiledSchema,
     package: CompiledSchema,
@@ -806,6 +826,13 @@ impl Engine {
     }
 
     pub fn new(resources: ResourceSet, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        Self::new_input(EngineInput::Raw(resources),ctx)
+    }
+    #[doc(hidden)]
+    pub fn from_owned_resources(resources:OwnedResourceSet,operation:&crate::value::OwnedCoreOperation,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+        Self::new_input(EngineInput::Owned(resources,operation),ctx)
+    }
+    fn new_input(input:EngineInput<'_>,ctx:&mut Context<'_>)->Result<Self,EngineError>{
         if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
             return Err(EngineError::new(
                 "RESOURCE_PROFILE_UNAVAILABLE",
@@ -813,13 +840,33 @@ impl Engine {
                 "HardIsolated resource profile is unavailable",
             ));
         }
+        let (resources,input_bank)=match input {
+            EngineInput::Owned(resources,operation) if ctx.in_codegen_construction()=>{
+                let admitted=crate::schema::admitted_bank::SchemaBank::admit_core_owned(resources,operation,ctx)?;
+                (EngineResources::Admitted(admitted.resources),Some(admitted.bank))
+            },
+            EngineInput::Owned(resources,_)=>return Self::new(resources.into_raw(),ctx),
+            EngineInput::Raw(resources)=>{if ctx.in_codegen_construction() {
+            let admitted=crate::schema::admitted_bank::SchemaBank::admit_core(resources,ctx)?;
+            (EngineResources::Admitted(admitted.resources),Some(admitted.bank))
+        } else {
         let resources = ResourceSet {
-            core_schema: copy_json(&resources.core_schema, ctx)?,
-            reference_schema: copy_json(&resources.reference_schema, ctx)?,
-            package_schema: copy_json(&resources.package_schema, ctx)?,
-            constraints: copy_json(&resources.constraints, ctx)?,
-            domain_policy: copy_json(&resources.domain_policy, ctx)?,
+            core_schema: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.core_schema, ctx)? } else { copy_json(&resources.core_schema, ctx)? },
+            reference_schema: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.reference_schema, ctx)? } else { copy_json(&resources.reference_schema, ctx)? },
+            package_schema: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.package_schema, ctx)? } else { copy_json(&resources.package_schema, ctx)? },
+            constraints: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.constraints, ctx)? } else { copy_json(&resources.constraints, ctx)? },
+            domain_policy: if ctx.in_codegen_construction() { crate::value::admit_owned_json(resources.domain_policy, ctx)? } else { copy_json(&resources.domain_policy, ctx)? },
         };
+            (EngineResources::Owned(resources),None)
+        }},
+        };
+        let (core,reference,package)=if let Some(bank)=input_bank {
+            ctx.charge_work(3,Utf16::default())?;
+            let core=ctx.with_constructor_root("core",|ctx|CompiledSchema::compile_input_bank(Arc::clone(&bank),0,ctx))?;
+            let reference=ctx.with_constructor_root("reference",|ctx|CompiledSchema::compile_input_bank(Arc::clone(&bank),1,ctx))?;
+            let package=ctx.with_constructor_root("package",|ctx|CompiledSchema::compile_input_bank(bank,2,ctx))?;
+            (core,reference,package)
+        } else {
         let mut schemas = SchemaResources::default();
         for v in [
             &resources.core_schema,
@@ -831,10 +878,12 @@ impl Engine {
                 schemas.entries.push((id.clone(), copy_json(v, ctx)?))
             }
         }
-        let core = CompiledSchema::compile(&resources.core_schema, &schemas, ctx)?;
-        let reference = CompiledSchema::compile(&resources.reference_schema, &schemas, ctx)?;
-        let package = CompiledSchema::compile(&resources.package_schema, &schemas, ctx)?;
-        let program = prepare_program(&resources.constraints, ctx)?;
+        let core = ctx.with_constructor_root("core", |ctx| CompiledSchema::compile(&resources.core_schema, &schemas, ctx))?;
+        let reference = ctx.with_constructor_root("reference", |ctx| CompiledSchema::compile(&resources.reference_schema, &schemas, ctx))?;
+        let package = ctx.with_constructor_root("package", |ctx| CompiledSchema::compile(&resources.package_schema, &schemas, ctx))?;
+            (core,reference,package)
+        };
+        let program = ctx.with_constructor_root("constraints", |ctx| prepare_program(&resources.constraints, ctx))?;
         let literal_value = get(&resources.domain_policy, "literal").ok_or_else(|| {
             EngineError::new(
                 "CONSTRAINT_POLICY",
@@ -842,7 +891,7 @@ impl Engine {
                 "Missing literal policy",
             )
         })?;
-        let literal = prepare_policy(literal_value, ctx)?;
+        let literal = ctx.with_constructor_root("literal-policy", |ctx| prepare_policy(literal_value, ctx))?;
         Ok(Self {
             resources,
             core,
@@ -975,7 +1024,7 @@ impl Engine {
                 );
             }
         };
-        let structural = self.core_structure_diagnostics(&document, ctx)?;
+        let structural = self.core_structure_admitted_snapshot(&document, ctx)?;
         if !structural.is_empty() {
             return Ok(
                 crate::selection_diagnostics::SelectionDiagnosticMaterialization::from_static_validation(
@@ -1176,7 +1225,7 @@ impl Engine {
         ctx: &mut Context<'_>,
         observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
     ) -> Result<Validation, EngineError> {
-        let diagnostics = self.core_structure_diagnostics(&document, ctx)?;
+        let diagnostics = self.core_structure_admitted_snapshot(&document, ctx)?;
         if !diagnostics.is_empty() {
             return Ok(Validation {
                 valid: false,
@@ -1221,6 +1270,15 @@ impl Engine {
         ctx: &mut Context<'_>,
     ) -> Result<Vec<Diagnostic>, EngineError> {
         let structural = self.core.validate(value, ctx)?;
+        self.present_core_structure(structural,ctx)
+    }
+    // Both callers own the fully checked snapshot; no capability or observer
+    // receives mutable access between admission and this borrowed evaluation.
+    fn core_structure_admitted_snapshot(&self,value:&Value,ctx:&mut Context<'_>) -> Result<Vec<Diagnostic>,EngineError> {
+        let structural=self.core.validate_owned_core_snapshot(value,ctx)?;
+        self.present_core_structure(structural,ctx)
+    }
+    fn present_core_structure(&self,structural:Vec<crate::schema::StructuralError>,ctx:&mut Context<'_>) -> Result<Vec<Diagnostic>,EngineError> {
         if structural.is_empty() {
             return Ok(Vec::new());
         }

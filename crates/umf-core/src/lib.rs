@@ -50,3 +50,6 @@ pub use python_value::{
 #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 pub use registry::Registry;
 pub use value::{Utf16, Value, copy_json, ecma_number_to_string};
+
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+pub mod canonical_codegen_resources;

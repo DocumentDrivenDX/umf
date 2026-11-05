@@ -1,0 +1,106 @@
+{
+  "scope": "HISTORICAL_S_TEST_INPUT_BYTES_ONLY_NOT_RUNTIME_QUALIFICATION",
+  "sourceCommit": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+  "sourceTree": "a21368a92df488882ef9771e4a1d92205267ddd3",
+  "method": "Local git cat-file blob COMMIT:path; exact committed bytes, no working-tree source substitution, smudge/textconv, download or build.",
+  "historicalFixture": {
+    "path": "tests/qualification/fixtures/inspector-retained-resources.json",
+    "sha256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290"
+  },
+  "proposedCorpusRoot": "python/tests/fixtures/inspector-retained-source-S",
+  "resourcePathRule": "Keep original row.path verbatim under this corpus root; K owns minimal loader adapter.",
+  "resources": [
+    {
+      "name": "coreSchema",
+      "originalSourcePath": "spec/core/schema.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/core/schema.json",
+      "gitBlob": "488e6673c4246cedce591a42276363b26dea7808",
+      "gitMode": "100644",
+      "bytes": 45342,
+      "sha256": "f5f7f090e6a4618803c3e0fdbb0be20ad62ae092c99f0d7e0f15a6733d67aabf",
+      "matchesUnchangedHistoricalFixture": true
+    },
+    {
+      "name": "referenceSchema",
+      "originalSourcePath": "spec/core/semantic-type-reference.schema.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/core/semantic-type-reference.schema.json",
+      "gitBlob": "77d205caf656543d829808b495ce836d27c20674",
+      "gitMode": "100644",
+      "bytes": 45463,
+      "sha256": "4a9908810531cced6208289f89dfcbc2e9406c303834a2749591cbe823ca3f65",
+      "matchesUnchangedHistoricalFixture": true
+    },
+    {
+      "name": "packageSchema",
+      "originalSourcePath": "spec/core/extension-package.schema.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/core/extension-package.schema.json",
+      "gitBlob": "2b0a4e9fe49621f30d9da0afb207754c396c0d7c",
+      "gitMode": "100644",
+      "bytes": 45001,
+      "sha256": "fca24a871abf83e89837bf881bc5251b1a71ab98411fa5055af12e1bdd00fda5",
+      "matchesUnchangedHistoricalFixture": true
+    },
+    {
+      "name": "constraints",
+      "originalSourcePath": "spec/metamodel/generated/core-constraints.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/metamodel/generated/core-constraints.json",
+      "gitBlob": "1dff6abcb489eecc71e3f1cdc61023c05166ac5b",
+      "gitMode": "100644",
+      "bytes": 190431,
+      "sha256": "180497da09a76cbbef5332d234258936668e06f7152f119d4be7aeebfa6b39cc",
+      "matchesUnchangedHistoricalFixture": true
+    },
+    {
+      "name": "domainPolicy",
+      "originalSourcePath": "spec/metamodel/generated/domain-policy.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/metamodel/generated/domain-policy.json",
+      "gitBlob": "73fdeee676c1e44fc03194efaba365b1ba21375f",
+      "gitMode": "100644",
+      "bytes": 14827,
+      "sha256": "4d742505e483d23f7ef60cc904b45aa44db73473c71a98e01a919f289c414a9c",
+      "matchesUnchangedHistoricalFixture": true
+    },
+    {
+      "name": "tablesPackage",
+      "originalSourcePath": "spec/extensions/tables/package.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/extensions/tables/package.json",
+      "gitBlob": "132d0fc3928754260fa377fb56a7b91a8be2cd4e",
+      "gitMode": "100644",
+      "bytes": 23817,
+      "sha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
+      "matchesUnchangedHistoricalFixture": true
+    },
+    {
+      "name": "actionsPackage",
+      "originalSourcePath": "spec/extensions/actions/package.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/extensions/actions/package.json",
+      "gitBlob": "f71e8c265ee65c9f52a9480dfba5fa1a3af0d5ea",
+      "gitMode": "100644",
+      "bytes": 11497,
+      "sha256": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
+      "matchesUnchangedHistoricalFixture": true
+    },
+    {
+      "name": "bindingPackage",
+      "originalSourcePath": "spec/extensions/binding/package.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/extensions/binding/package.json",
+      "gitBlob": "00f1ddbe202aca262382344906b66c812eaf367c",
+      "gitMode": "100644",
+      "bytes": 8840,
+      "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+      "matchesUnchangedHistoricalFixture": true
+    },
+    {
+      "name": "stableBindingPackage",
+      "originalSourcePath": "spec/extensions/binding-stable/package.json",
+      "proposedRepositoryPath": "python/tests/fixtures/inspector-retained-source-S/spec/extensions/binding-stable/package.json",
+      "gitBlob": "759e1fc1ebc69127be8bc757d5b54f3535571a26",
+      "gitMode": "100644",
+      "bytes": 8885,
+      "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+      "matchesUnchangedHistoricalFixture": true
+    }
+  ],
+  "totalBytes": 394103,
+  "limitsAndHistory": "Historical fixture and test assertions/IDs/cold positives/refusals/1M unchanged. Not current251 installed-factory input, native qualification, retired153 migration lineage or new release identity."
+}

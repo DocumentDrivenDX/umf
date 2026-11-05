@@ -33,7 +33,10 @@ class CodegenEngine:
 
     def __init__(self, resources: Any, *, profile: str = "cooperative", max_work: int | None = None,
                  meter: Callable[[int], None] | None = None, is_cancelled: Callable[[], bool] | None = None,
-                 now: Callable[[], int] | None = None, deadline_ms: int | None = None) -> None:
+                 now: Callable[[], int] | None = None, deadline_ms: int | None = None,
+                 resource_mode: str | None = None) -> None:
+        if resource_mode is not None and (type(resource_mode) is not str or resource_mode != "retained-native/1"):
+            raise ValueError("Unknown codegen resource mode")
         if profile not in ("cooperative", "hard-isolated"):
             raise ValueError("Unknown resource profile")
         if profile == "hard-isolated":
@@ -56,13 +59,104 @@ class CodegenEngine:
         for name in names:
             if name not in resources:
                 raise TypeError(f"Missing explicit codegen resource {name}")
+        if resource_mode == "retained-native/1":
+            controls = (profile, max_work, meter, is_cancelled, now, deadline_ms)
+            control = _native_control(work)
+            try:
+                retained = _rust_core.create_codegen_resources(resources, control)
+            except ValueError as error:
+                if control.failure is not None:
+                    raise control.failure
+                if isinstance(error, UmfCoreError):
+                    raise
+                work(len(str(error)))
+                _raise_native(error)
+            # No handle is published until every construction-phase control passes.
+            work(0)
+            self._retained_resources = retained
+            self._resource_mode = resource_mode
+            self._controls = controls
+            return
         snapshot = {name: _from_wire(_wire(resources[name], max_depth=128, max_values=1_000_000, work=work), work) for name in names}
         if "sagaPackage" in resources:
             snapshot["sagaPackage"] = _from_wire(_wire(resources["sagaPackage"], max_depth=128, max_values=1_000_000, work=work), work)
+        controls = (profile, max_work, meter, is_cancelled, now, deadline_ms)
+        self._resource_mode = None
         self._resources = _wire(snapshot, max_depth=256, max_values=sys.maxsize, work=work)
         self._resource_serialization_work = _serialization_bound(self._resources, work)
         self._controls = (profile, max_work, meter, is_cancelled, now, deadline_ms)
         self._has_controls = any(value is not None for value in self._controls[1:])
+
+    @classmethod
+    def from_installed(cls, *, profile: str = "cooperative", max_work: int | None = None,
+                       meter: Callable[[int], None] | None = None,
+                       is_cancelled: Callable[[], bool] | None = None,
+                       now: Callable[[], int] | None = None,
+                       deadline_ms: int | None = None) -> "CodegenEngine":
+        """Construct from the qualified installed-canonical/1 DATA cohort only."""
+        if cls is not CodegenEngine:
+            raise TypeError("Installed resources require the concrete CodegenEngine factory")
+        if profile not in ("cooperative", "hard-isolated"):
+            raise ValueError("Unknown resource profile")
+        if profile == "hard-isolated":
+            raise UmfCoreError("RESOURCE_PROFILE_UNAVAILABLE", "HardIsolated resource profile is unavailable")
+        for name, value in (("max_work", max_work), ("deadline_ms", deadline_ms)):
+            if value is not None and (type(value) is not int or value < 0 or value > sys.maxsize):
+                raise ValueError(f"{name} must be a non-negative machine integer")
+        for name, callback in (("meter", meter), ("is_cancelled", is_cancelled), ("now", now)):
+            if callback is not None and not callable(callback):
+                raise TypeError(f"{name} must be callable")
+        if deadline_ms is not None and now is None:
+            raise ValueError("now is required with deadline_ms")
+        work = _host_work(max_work, meter, is_cancelled, now, deadline_ms)
+        work(1)  # admit the new factory/report control carrier before creating it
+        control = _native_control(work)
+        try:
+            retained = _rust_core.create_installed_codegen_resources(control)
+        except ValueError as error:
+            if control.failure is not None:
+                raise control.failure
+            if isinstance(error, UmfCoreError):
+                raise
+            work(len(str(error)))
+            _raise_native(error)
+        # Pre-admit the facade object/attribute and controls-tuple publication.
+        # The final zero check may refuse before any public engine escapes.
+        work(10)
+        controls = (profile, max_work, meter, is_cancelled, now, deadline_ms)
+        engine = object.__new__(CodegenEngine)
+        engine._retained_resources = retained
+        engine._resource_mode = "installed-canonical/1"
+        engine._controls = controls
+        work(0)
+        return engine
+
+    def resource_source_manifest(self) -> dict:
+        """Return paid provenance, never an admission or schema-validity proof."""
+        if self._resource_mode != "installed-canonical/1":
+            raise UmfCoreError("REQUEST", "Installed canonical source manifest is unavailable")
+        retained = getattr(self, "_retained_resources", None)
+        if type(retained) is not getattr(_rust_core, "_CodegenResources", None):
+            raise UmfCoreError("REQUEST", "Installed canonical source manifest is unavailable")
+        profile, max_work, meter, is_cancelled, now, deadline_ms = self._controls
+        work = _host_work(max_work, meter, is_cancelled, now, deadline_ms)
+        work(1)  # admit the new factory/report control carrier before creating it
+        control = _native_control(work)
+        try:
+            response = retained.resource_source_manifest(control)
+        except ValueError as error:
+            if control.failure is not None:
+                raise control.failure
+            if isinstance(error, UmfCoreError):
+                raise
+            work(len(str(error)))
+            _raise_native(error)
+        work(len(response))
+        wire = _checked_envelope(response)
+        work(len(wire))
+        result = _from_wire(json.loads(wire), work)
+        work(0)
+        return result
 
     def call(self, operation: str, request: Any) -> Any:
         """Return the complete compiler outcome, including semantic refusals."""
@@ -76,30 +170,38 @@ class CodegenEngine:
             work(len(request) + len(request["bindings"]))
             request = {**request, "bindings": list(request["bindings"])}
         envelope = _wire({"op": "codegen/" + operation}, max_depth=256, max_values=sys.maxsize, work=work)
-        envelope["members"].extend([
-            {"key": [ord(c) for c in "resources"], "value": self._resources},
-            {"key": [ord(c) for c in "request"], "value": _wire(request, max_depth=256, max_values=sys.maxsize, work=work)},
-        ])
-        def native_control(amount):
-            try:
-                work(amount)
-            except UmfCoreError as error:
-                return error.code, str(error), error.path
-            return None
+        retained = self._resource_mode in ("retained-native/1", "installed-canonical/1")
+        if not retained:
+            envelope["members"].append({"key": [ord(c) for c in "resources"], "value": self._resources})
+        envelope["members"].append({"key": [ord(c) for c in "request"], "value": _wire(request, max_depth=256, max_values=sys.maxsize, work=work)})
+        native_control = _native_control(work)
 
         try:
             # The shared work closure spans host admission, Rust and host result copies.
-            work(self._resource_serialization_work)
-            work(_serialization_bound(envelope, work, skip=self._resources))
+            if not retained:
+                work(self._resource_serialization_work)
+            work(_serialization_bound(envelope, work, skip=None if retained else self._resources))
             serialized = json.dumps(envelope, separators=(",", ":"))
-            response = (_rust_core.execute_codegen_wire(serialized, profile, None, None, None, None, None, native_control)
-                        if self._has_controls else _rust_core.execute_codegen_wire(serialized, profile))
+            if retained:
+                response = self._retained_resources.execute_wire(serialized, native_control)
+            else:
+                response = (_rust_core.execute_codegen_wire(serialized, profile, None, None, None, None, None, native_control)
+                            if self._has_controls else _rust_core.execute_codegen_wire(serialized, profile))
         except ValueError as error:
+            if retained and native_control.failure is not None:
+                raise native_control.failure
+            if retained:
+                if isinstance(error, UmfCoreError):
+                    raise
+                work(len(str(error)))
             _raise_native(error)
         work(len(response))
         wire = _checked_envelope(response)
         work(len(wire))
-        return _from_wire(json.loads(wire), work)
+        result = _from_wire(json.loads(wire), work)
+        if retained:
+            work(0)
+        return result
 
     def _result(self, operation: str, request: Any) -> Any:
         response = self.call(operation, request)
@@ -158,6 +260,20 @@ class CodegenEngine:
 
     def diff_access_packages(self, before: Any, after: Any) -> Any:
         return self._result("diffAccessPackages", {"before": before, "after": after})
+
+
+def _native_control(work):
+    # Optional phase labels are private diagnostic metadata, never budget credits.
+    # The public meter still receives only the original positive work amounts.
+    def control(amount, phase=None):
+        try:
+            work(amount)
+        except UmfCoreError as error:
+            control.failure = error
+            return error.code, str(error), error.path
+        return None
+    control.failure = None
+    return control
 
 
 def _host_work(max_work, meter, is_cancelled, now, deadline_ms):
