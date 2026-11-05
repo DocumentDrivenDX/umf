@@ -1830,7 +1830,7 @@
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "ee7ecad420a4d80d620e67b4712accc7127c6cba3fe1d6529c987740a1b435ca",
+      "crates/umf-core/src/schema.rs": "ccca52e61314a96b6b771cae6c39e0d7ef080476397ba3bc21bed30c3f46261f",
       "crates/umf-core/src/schema_admitted_bank.rs": "37a1ce1a7e5be07b526371ab547e62e5fdc732c381b729d7475089ae3e945b97",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
       "crates/umf-core/src/schema_admitted_structure.rs": "009a02fe404a3cf222cea7572adf83d08c07c3697b6d80be7d6786319d62d1c8",
@@ -4748,7 +4748,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema.rs",
-        "sourceSHA256": "ee7ecad420a4d80d620e67b4712accc7127c6cba3fe1d6529c987740a1b435ca",
+        "sourceSHA256": "ccca52e61314a96b6b771cae6c39e0d7ef080476397ba3bc21bed30c3f46261f",
         "cases": [
           {
             "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
@@ -7793,7 +7793,7 @@
       "fixtureSHA256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "metadataVersion": "0.10.9"
     },
-    "closureSHA256": "9728ceba54bdd533d32394cba12e4f5b983de91791fcdb04e5432aebe0b78702"
+    "closureSHA256": "5fd09f62bcd38b5539ecc66629bc59963c46a86283bb22f22d42d0bf948f2aff"
   },
   "modelReferences": {
     "baseModel": {
@@ -7845,6 +7845,19 @@
       "path": "/private/tmp/umf-pth1-independent-control-preparation/pth08-admission-correction/REVIEW.json",
       "sha256": "29e6724a8421db8488da4542490caa8f3c118e8baeb7596d3c077f81b7882b4d"
     },
-    "PTH1Interpretation": "PTH1 adds carried syntax facts and independent lazy selectors to the unchanged base/PRE1 evidence. Source-reviewed eleven-term ledger retains actual metadata/output/slot/copy/relocation work. Target ABI/layout/capacity, operation frequencies, signed net delta, complete constructor and each first public call cost remain UNKNOWN. Original C3/Q3 999896+115=1000011 refusal is partial evidence, not an11-unit gap or115-unit saving. No native fit or qualification follows from source/census/hash binding."
+    "PTH1Interpretation": "PTH1 adds carried syntax facts and independent lazy selectors to the unchanged base/PRE1 evidence. Source-reviewed eleven-term ledger retains actual metadata/output/slot/copy/relocation work. Target ABI/layout/capacity, operation frequencies, signed net delta, complete constructor and each first public call cost remain UNKNOWN. Original C3/Q3 999896+115=1000011 refusal is partial evidence, not an11-unit gap or115-unit saving. No native fit or qualification follows from source/census/hash binding.",
+    "PTH1C4TwoSiteBorrowFix": {
+      "path": "/private/tmp/umf-pth1-c4-compile-fix-review/REVIEW.json",
+      "sha256": "94b43d6dd4e60cea4a54bfcc1206d9c6a7367b85a4a95de5778e56cf6f740b23"
+    },
+    "PTH1C4TwoSiteFixSourceReview": {
+      "path": "/private/tmp/umf-pth1-c4-compile-fix-review/SOL-ACTUAL-C4-FAILURE-TWO-SITE-SOURCE-PASS-REFRESH-SCOPE.json",
+      "sha256": "708ad4c2869e005a119d9a4c9eff2c34f510656521b2be98de804fe2fbfaf99b"
+    },
+    "PTH1C4ActualFailure": {
+      "path": "/private/tmp/umf-pth1-c4-hosted-cost-run/ACTUAL-C4-SEALED-RECEIPT.json",
+      "sha256": "4164783ba546274f46361baa8411bd1f638720bd3b8065a3ec41a1936086ca86"
+    },
+    "PTH1C4CompileFixInterpretation": "Exactly two validate_string_array arguments borrow the existing Utf16 via text() after one unchanged genuine CarriedPath append. Original PTH1 ledger688a and all prior model/source pins remain historical evidence; no operation/fee/algorithm/model totals changed. C4 produced no wheel and measured no constructor/call. Actual compilation/native semantics, target ABI/layout, full constructor and percall fit remain UNKNOWN until separately admitted execution."
   }
 }

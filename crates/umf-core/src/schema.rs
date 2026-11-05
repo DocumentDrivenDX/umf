@@ -3015,7 +3015,7 @@ impl CompiledSchema {
                             if matches!(dep, Value::Array(_)) {
                                 validate_string_array(
                                     dep,
-                                    &child.append(name,PathKind::SchemaPointer,ctx)?,
+                                    child.append(name,PathKind::SchemaPointer,ctx)?.text(),
                                     true,
                                 )?;
                             } else if self.dialect == SchemaDialect::Draft3
@@ -3041,7 +3041,7 @@ impl CompiledSchema {
                 "dependentRequired" => {
                     if let Value::Object(deps) = val {
                         for (name, dep) in deps {
-                            validate_string_array(dep, &child.append(name,PathKind::SchemaPointer,ctx)?, true)?;
+                            validate_string_array(dep, child.append(name,PathKind::SchemaPointer,ctx)?.text(), true)?;
                         }
                     } else {
                         return Err(schema_error(&child, "dependentRequired must be an object"));
