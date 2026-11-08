@@ -1,0 +1,1474 @@
+{
+  "schemaVersion": 1,
+  "status": "curated-observation-not-extraction-approval",
+  "sourceCommit": "e8575ac61c600409c9032defb15a469c88ac9c19",
+  "observedDate": "2026-10-24",
+  "coverage": "24 current committed consumer/configuration files; excerpts are discovery anchors, not a complete dependency graph",
+  "limitations": [
+    "Dynamic manifests, JSON selectors, glob membership and subprocess/import closure require full expansion on the actual final handoff tree.",
+    "Successor Python/Rust/G02/G03 files absent from this commit are not covered. An untracked crates/ root is present and must be reconciled through its owner handoff; no ownership changes are made.",
+    "No conformance, pack, publication or size gates were rerun for this snapshot."
+  ],
+  "consumers": [
+    {
+      "path": "package.json",
+      "gitBlobOid": "b46cfe839207c5b25ddc8ddce50d4b96c805f644",
+      "sha256": "0340e1336d91f143d6c5e98751693f871d593607c89f34b25f059c5700d14776",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": []
+    },
+    {
+      "path": "python/pyproject.toml",
+      "gitBlobOid": "ad2d2ba845eecf75fa756b2248c89ef9c00fad88",
+      "sha256": "baf20b2356e04d1cad61c94e10f47146c574e700e4a69c81b60d2e60bd624f87",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 21,
+          "excerpt": "[tool.hatch.build.targets.sdist.force-include]"
+        },
+        {
+          "line": 28,
+          "excerpt": "\"../fixtures/metamodel/current-conformance.json\" = \"fixtures/metamodel/current-conformance.json\""
+        }
+      ]
+    },
+    {
+      "path": "scripts/check-build-inputs.ts",
+      "gitBlobOid": "9eb2b6d0a5acebbe21b57ef48ff2448c38e1e91b",
+      "sha256": "e22b439331a6d5ad03cb5bdea75eb564a0ffd1a69ab391a043ce69cd20e3b04a",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 19,
+          "excerpt": " for(const path of ['fixtures/metamodel/current-conformance.json','fixtures/python/core-conformance.json',"
+        },
+        {
+          "line": 20,
+          "excerpt": "  'docs/helix/04-build/evidence/actions-certification.json',"
+        },
+        {
+          "line": 21,
+          "excerpt": "  'docs/helix/04-build/evidence/metamodel-authority/current-native-qualification.json',"
+        },
+        {
+          "line": 22,
+          "excerpt": "  'docs/helix/04-build/evidence/metamodel-authority/retired-core-acceptance.json',"
+        },
+        {
+          "line": 23,
+          "excerpt": "  'docs/helix/04-build/evidence/security/acceptance.json',"
+        },
+        {
+          "line": 24,
+          "excerpt": "  'docs/helix/05-deploy/microsite/dist/reference/manifest.json',"
+        },
+        {
+          "line": 25,
+          "excerpt": "  'docs/helix/05-deploy/microsite/dist/reference/core.html',"
+        },
+        {
+          "line": 26,
+          "excerpt": "  'docs/helix/05-deploy/microsite/dist/actions/manifest.json'])await need(path);"
+        },
+        {
+          "line": 27,
+          "excerpt": " for await(const path of new Bun.Glob('spec/extensions/*/package.json').scan({cwd:root,onlyFiles:true})){"
+        },
+        {
+          "line": 28,
+          "excerpt": "  const pkg=await read(path);for(const evidence of pkg.capabilities.evidence)await need(evidence);"
+        },
+        {
+          "line": 30,
+          "excerpt": " const allocations=await read('docs/helix/05-deploy/reference/evidence-map.json');"
+        },
+        {
+          "line": 31,
+          "excerpt": " for(const allocation of allocations.allocations)await need(allocation.recordPath);"
+        },
+        {
+          "line": 33,
+          "excerpt": " for(const operation of operations.operations)for(const path of operation.fixturePaths)await need(path);"
+        },
+        {
+          "line": 34,
+          "excerpt": " const history=await read('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json');"
+        }
+      ]
+    },
+    {
+      "path": "scripts/check-domain-pack-checkout.ts",
+      "gitBlobOid": "651bfde1e07b41edee2da33727ea53cd3a2ec3c5",
+      "sha256": "6ff7ead61fa1c91e08cb1d83038b91242ad786cc63ab9e70fb8ed018703c4425",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 40,
+          "excerpt": "  for(const component of pack.composition?.components??[]){"
+        }
+      ]
+    },
+    {
+      "path": "scripts/check-repository-size.ts",
+      "gitBlobOid": "890ef1e2c3ca104db8d5e649c6b216bf34cfd215",
+      "sha256": "6a7f8d34135464bd31b8c0d7c366ca76df8d9c83559c60f2b673b5d69af015ee",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": []
+    },
+    {
+      "path": "scripts/conformance.ts",
+      "gitBlobOid": "6c0cf3becc184380c33aa3f6ecd5c2d36ca5591f",
+      "sha256": "6d3cbd3a5ea62b66d6737504e50943b8dcd291adec0941d7359e691a37a653c9",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 168,
+          "excerpt": "  ['bun', 'scripts/iceberg-java-oracle.ts', '--table', '--base', 'fixtures/iceberg/table-binding'],"
+        },
+        {
+          "line": 170,
+          "excerpt": "  ['bun', 'scripts/iceberg-java-oracle.ts', '--rename', '--base', 'fixtures/iceberg/table-rename'],"
+        },
+        {
+          "line": 172,
+          "excerpt": "  ['bun', 'scripts/iceberg-java-oracle.ts', '--promotion', '--base', 'fixtures/iceberg/table-promotion'],"
+        },
+        {
+          "line": 174,
+          "excerpt": "  ['bun', 'scripts/iceberg-java-oracle.ts', '--promotion-data', '--base', 'fixtures/iceberg/table-promotion'],"
+        }
+      ]
+    },
+    {
+      "path": "scripts/loaders/export.ts",
+      "gitBlobOid": "5c520c7164d18ba514fb4890bbef792058152443",
+      "sha256": "5504ae1f3e061ad78601fc8e2310b8d0beb3fa7ba92723a6965308d746c722e1",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 11,
+          "excerpt": "import {readBounded} from './bytes';"
+        },
+        {
+          "line": 14,
+          "excerpt": " const root=await realpath(dirname(resolve(input))),raw=await readBounded(await realpath(input),4*1024*1024,budget),text=new TextDecoder().decode(raw),pack=readJsonValue(text,'json') as any;"
+        },
+        {
+          "line": 22,
+          "excerpt": " async function read(name:string){safe(name);const actual=await realpath(resolve(root,name)),inside=relative(root,actual).split(sep).join('/');if(inside==='..'||inside.startsWith('../')||isAbsolute(inside))throw Error('Artifact symlink leaves pack directory');return readBounded(actual,10*1024*1024,budget);}"
+        },
+        {
+          "line": 33,
+          "excerpt": " const inclusion=profile?new Set<string>([...profile.include_sources,...(pack.source_bindings??[]).filter((b:any)=>b.role==='rows'&&profile.targets.tabular?.includes(b.schema_id)).map((b:any)=>b.source_id)]):null;"
+        },
+        {
+          "line": 52,
+          "excerpt": "  for(const [name,bytes] of entries){let actual:Uint8Array;try{const path=await realpath(join(destination,name)),root=await realpath(destination),inside=relative(root,path);if(inside==='..'||inside.startsWith('../')||isAbsolute(inside))throw Error();actual=await readBounded(path,bytes.length);}catch{throw Error('Stale pack export: '+name);}if(hash(actual)!=="
+        }
+      ]
+    },
+    {
+      "path": "scripts/export-domain-family.ts",
+      "gitBlobOid": "71e62a53a372c5b0cb489eaa163891fdaf7f5e9d",
+      "sha256": "46189c3b876e70ef66eb0774209f26f954117a017e0914ca0b23cfc7ea1830f1",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": []
+    },
+    {
+      "path": "scripts/test-sdk-install.ts",
+      "gitBlobOid": "269293c4274cf8b233fac7a9e5073c04515ea5a1",
+      "sha256": "ea44304fcbaa89d6df8f2b551260ebb63812d2099a1f07cf7de3367b31a0278e",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 15,
+          "excerpt": " await Bun.write(join(directory,'current-conformance.json'),await Bun.file('fixtures/metamodel/current-conformance.json').text());"
+        },
+        {
+          "line": 16,
+          "excerpt": " await Bun.write(join(directory,'approve.json'),await Bun.file('fixtures/actions/approve.json').text());"
+        },
+        {
+          "line": 25,
+          "excerpt": "for(const item of corpus.cases){const r=new Registry();if(item.registry)r.register({id:item.registry.id,version:item.registry.version,coreVersion:CURRENT_CORE_VERSION,description:'Frozen callback probe',schema:true,semantics:'Trusted callback probe',scopes:[item.registry.scope],capabilities:{validation:'semantic',directions:[],evidence:[]}},(payload,context)"
+        }
+      ]
+    },
+    {
+      "path": "scripts/package-sdk.ts",
+      "gitBlobOid": "6aea5117f39a4b728051c819f188b04f15fa8070",
+      "sha256": "87005ad8320eccddcdff62621f39a39a03a83a9e180a17e87c436a574790d250",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": []
+    },
+    {
+      "path": "scripts/package-sdk.py",
+      "gitBlobOid": "344eecd23b945e21828eff83c23ab7618e1cb4b7",
+      "sha256": "fba473d59010e402c17b4b0e6a99e504a9d4aee52d76cf3eac6fd721c1ea87a4",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": []
+    },
+    {
+      "path": "scripts/build-codegen.ts",
+      "gitBlobOid": "aaabcbe34b2bfcf978832d79803c69786ea6fed9",
+      "sha256": "294737ccac19d0b840fa54c874d0ceea90b7eccd330e7ecd6340b37334a8e527",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": []
+    },
+    {
+      "path": "scripts/build-test-prerequisites.ts",
+      "gitBlobOid": "b399e7ff3acd154328e244d11b74e86a6d26882e",
+      "sha256": "de6faba8e824be1420491f55671fbbbabedd0a0e8f15c2b5bf8f9f69daabae6c",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 2,
+          "excerpt": "/** Host-only browser bundles consumed by adapter regression/evidence tests. */"
+        }
+      ]
+    },
+    {
+      "path": "scripts/reference/build.ts",
+      "gitBlobOid": "e25c28350555de8765b004ac2adc1a25b13a26bc",
+      "sha256": "40b0f0b925c988b835b6e8b7e564832a5ccad0a10e69d85f7dd2f32e7b3eb8e3",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 10,
+          "excerpt": "import {evidence,aggregate} from './evidence';"
+        },
+        {
+          "line": 18,
+          "excerpt": "const output=resolve(root,'docs/helix/05-deploy/microsite/dist/reference');"
+        },
+        {
+          "line": 32,
+          "excerpt": " const allocations=await read(config+'/evidence-map.json');await validate('evidence-map',allocations);"
+        },
+        {
+          "line": 38,
+          "excerpt": " const opIds=new Set<string>();for(const op of operationConfig.operations){if(opIds.has(op.id))throw Error('REFERENCE_STRUCTURE duplicate operation');opIds.add(op.id);const allocated=allocations.allocations.filter((a:any)=>a.operationId===op.id);const observations=await Promise.all(allocated.map((a:any)=>evidence(a,op)));const summary=aggregate(observations)"
+        },
+        {
+          "line": 40,
+          "excerpt": "  entries.push({id:identity('integration',op.id),kind:'integration',title:op.title,summary:op.subset,sources:[await source(config+'/operations.json')],links,data:{operation:op,declarations:declared.flatMap(e=>e.sources),evidence:observations,...summary}});"
+        },
+        {
+          "line": 42,
+          "excerpt": " for(const a of allocations.allocations)if(!opIds.has(a.operationId))throw Error('REFERENCE_LINK unknown evidence operation');"
+        },
+        {
+          "line": 53,
+          "excerpt": " console.log('Building fixed runtime, guides and evidence inventory\u2026');"
+        },
+        {
+          "line": 54,
+          "excerpt": " const evidenceExclusions=[{path:'docs/helix/04-build/evidence/generated-reference/**',reason:'This reference consumer\u2019s own verification outputs are excluded to avoid a build-evidence self-hash cycle; they do not establish native integration support.'}];"
+        },
+        {
+          "line": 55,
+          "excerpt": " const inventory=[];const evidencePaths=new Set((await Promise.all(['fixtures/validation/**/*.json','fixtures/*/*results*.json','fixtures/*/*oracle*.json','docs/helix/04-build/evidence/**/*.json','docs/helix/04-build/evidence/**/*.md'].map(paths))).flat().filter(path=>!path.startsWith('docs/helix/04-build/evidence/generated-reference/')));"
+        },
+        {
+          "line": 56,
+          "excerpt": " const sortedEvidence=[...evidencePaths].sort();"
+        },
+        {
+          "line": 57,
+          "excerpt": " for(let offset=0;offset<sortedEvidence.length;offset+=32)inventory.push(...await Promise.all(sortedEvidence.slice(offset,offset+32).map(async path=>{const mapped=allocations.allocations.filter((a:any)=>a.recordPath===path);return {source:await source(path,false),allocationIds:mapped.map((a:any)=>a.id),assessment:mapped.length?'mapped':'unassessed'};})));"
+        },
+        {
+          "line": 58,
+          "excerpt": " await Bun.write(join(stage,'evidence-inventory.json'),json({profile:'umf.reference.evidence-inventory/1',items:inventory,exclusions:evidenceExclusions}));"
+        },
+        {
+          "line": 69,
+          "excerpt": " if(renderer.preview)await source('docs/helix/05-deploy/microsite/dist/schema-browser-release.json',false);"
+        },
+        {
+          "line": 84,
+          "excerpt": " console.log(JSON.stringify({checked:check,renderer:{mode:renderer.preview?'unpublished-candidate':'installed-release',path:renderer.path},entries:entries.length,schemas:schema.length,extensions:ext.length,exports:api.length,operations:opIds.size,evidenceFiles:inventory.length,indexBytes:indexBytes.length,inputDigest}));"
+        }
+      ]
+    },
+    {
+      "path": "scripts/reference/evidence/index.ts",
+      "gitBlobOid": "59c8b63de316120a322321541459f4cf513f7af5",
+      "sha256": "4741954c5be659061e1ae56c9f57a7d88f0a98dd63c4705b05ff3780f77d8b26",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 1,
+          "excerpt": "import {aggregate,type Evidence,type Outcome} from '../../../docs/helix/05-deploy/reference/model';"
+        },
+        {
+          "line": 15,
+          "excerpt": "export function correspondence(required:string[],hashes:{path:string;sha256:string}[],actual:Record<string,string>):Evidence['correspondence'] {"
+        },
+        {
+          "line": 16,
+          "excerpt": " if(hashes.some(h=>actual[h.path]&&actual[h.path]!==h.sha256))return 'historical';"
+        },
+        {
+          "line": 17,
+          "excerpt": " return required.length&&hashes.every(h=>actual[h.path]===h.sha256)&&required.every(p=>hashes.some(h=>h.path===p)&&actual[p])?'matching':'unknown';"
+        },
+        {
+          "line": 21,
+          "excerpt": "export async function observeRecordedHashes(hashes:{path:string;sha256:string}[]):Promise<Record<string,string>>{"
+        },
+        {
+          "line": 23,
+          "excerpt": " for(const h of hashes){"
+        },
+        {
+          "line": 29,
+          "excerpt": "export async function evidence(allocation:any,operation:any):Promise<Evidence>{"
+        },
+        {
+          "line": 30,
+          "excerpt": " const recordSource=await source(allocation.recordPath);let d:any;"
+        },
+        {
+          "line": 31,
+          "excerpt": " if(allocation.recordPath.endsWith('.json')){d=await read(allocation.recordPath);for(const segment of allocation.selector.split('/').slice(1)){const key=segment.replaceAll('~1','/').replaceAll('~0','~');if(!d||!Object.hasOwn(d,key))throw Error('REFERENCE_LINK missing selector '+allocation.id);d=d[key];}}"
+        },
+        {
+          "line": 32,
+          "excerpt": " else {const raw=await text(allocation.recordPath);if(allocation.selector&&!raw.toLowerCase().includes(allocation.selector.toLowerCase()))throw Error('REFERENCE_LINK missing prose selector');d={};}"
+        },
+        {
+          "line": 35,
+          "excerpt": " const hashes:{path:string;sha256:string}[]=[];const scan=(v:any)=>{if(!v||typeof v!=='object')return;for(const [k,x]of Object.entries(v)){if(typeof x==='string'&&/^[a-f0-9]{64}$/.test(x)&&k.includes('/'))hashes.push({path:k,sha256:x});else if(x&&typeof x==='object')scan(x);}};scan(d);"
+        },
+        {
+          "line": 36,
+          "excerpt": " const actual=await observeRecordedHashes(hashes);"
+        },
+        {
+          "line": 37,
+          "excerpt": " const required=allocation.closureProfile==='full-operation-v1'?['package.json','bun.lock',...operation.fixturePaths,...await paths('src/**/*.ts'),...await paths('spec/**/*.json'),...await paths('docs/helix/02-design/contracts/CONTRACT-*.md')]:[];"
+        },
+        {
+          "line": 39,
+          "excerpt": " const current=outcome==='unassessed'?'unassessed':correspondence(required,hashes,actual);"
+        },
+        {
+          "line": 41,
+          "excerpt": " return {id:allocation.id,source:recordSource,readerId:allocation.readerId,selector:allocation.selector,outcome,correspondence:current,scope:typeof d.scope==='string'?d.scope:d.scope?JSON.stringify(d.scope):operation.subset,versions,limitations:[...operation.limitations,...recordedLimits,...(hashes.some(h=>recordedArtifact(h.path))?['Recorded distribution ar"
+        }
+      ]
+    },
+    {
+      "path": "scripts/actions-docs/check.ts",
+      "gitBlobOid": "04d4f84ee0f82bcf8d6851f88a75429fca9db6c7",
+      "sha256": "9c3251ebf6a6a40c517e2809271c4465fd4780109304471463f3a1556929c153",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 6,
+          "excerpt": "const manifest=JSON.parse(await readFile('docs/helix/05-deploy/microsite/dist/actions/manifest.json','utf8'));"
+        },
+        {
+          "line": 7,
+          "excerpt": "for(const [file,expected]of Object.entries(manifest.outputs)){const bytes=await readFile('docs/helix/05-deploy/microsite/dist/actions/'+file);if(createHash('sha256').update(bytes).digest('hex')!==expected)throw Error('Stale asset '+file);}"
+        },
+        {
+          "line": 8,
+          "excerpt": "const original='807a379eae15cf49998890c3ac02f16837192dfde46f1730d438fd1dda7c18da';if(createHash('sha256').update(await readFile('docs/helix/04-build/evidence/actions-certification.json')).digest('hex')!==original)throw Error('Historical certificate changed');"
+        }
+      ]
+    },
+    {
+      "path": "scripts/acceptance-traceability.ts",
+      "gitBlobOid": "539da7cff4308f0c8bfe8494ff016528629ea4cb",
+      "sha256": "9e8ad8c4b852c26033955fc83c96ed058f260b5165a478831e1fda488bf51611",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 17,
+          "excerpt": "  evidence: string[];"
+        },
+        {
+          "line": 43,
+          "excerpt": "  const evidence = index.get(id) ?? new Set<string>();"
+        },
+        {
+          "line": 44,
+          "excerpt": "  evidence.add(`${repositoryPath(path)}:${line}`);"
+        },
+        {
+          "line": 45,
+          "excerpt": "  index.set(id, evidence);"
+        },
+        {
+          "line": 89,
+          "excerpt": "  // Citation presence is partial evidence. Security acceptance requires the separate"
+        },
+        {
+          "line": 91,
+          "excerpt": "  const securityGatePath='docs/helix/04-build/evidence/security/acceptance.json';"
+        },
+        {
+          "line": 93,
+          "excerpt": "  const nativePolicyPath='docs/helix/04-build/evidence/metamodel-authority/current-native-qualification.json';"
+        },
+        {
+          "line": 95,
+          "excerpt": "  const nativeCriteria=new Map<string,{evidence:string[];rationale:string}>();"
+        },
+        {
+          "line": 97,
+          "excerpt": "    if(!criteria.has(row.criterion)||nativeCriteria.has(row.criterion)||row.currentQualification!=='UNQUALIFIED'||!Array.isArray(row.evidence)||typeof row.rationale!=='string')throw Error('Invalid current native qualification disposition: '+row.criterion);"
+        },
+        {
+          "line": 100,
+          "excerpt": "  const retirementPolicy=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/retired-core-acceptance.json').json();"
+        },
+        {
+          "line": 101,
+          "excerpt": "  const retiredCriteria=new Map<string,{evidence:string[];rationale:string}>();"
+        },
+        {
+          "line": 103,
+          "excerpt": "    if(!/^US-04[0-5]-AC10$/.test(row.criterion)||!criteria.has(row.criterion)||retiredCriteria.has(row.criterion)||nativeCriteria.has(row.criterion)||row.status!=='REVIEWED_EXCEPTION'||!Array.isArray(row.evidence)||typeof row.rationale!=='string')throw Error('Invalid retired core acceptance disposition: '+row.criterion);"
+        },
+        {
+          "line": 116,
+          "excerpt": "    if(retiredDisposition)return {id,story,status:'REVIEWED_EXCEPTION' as const,evidence:[...testCitations,...scriptCitations,...retiredDisposition.evidence],rationale:retiredDisposition.rationale};"
+        },
+        {
+          "line": 118,
+          "excerpt": "    if(nativeDisposition)return {id,story,status:'UNTESTED' as const,evidence:[...testCitations,...scriptCitations,...nativeDisposition.evidence],rationale:nativeDisposition.rationale};"
+        },
+        {
+          "line": 122,
+          "excerpt": "        evidence:[...testCitations,...scriptCitations],rationale:'Partial citations may exist; shared security acceptance remains open until all required fresh cases pass and the criterion is explicitly accepted.'};"
+        },
+        {
+          "line": 124,
+          "excerpt": "    if (testCitations.length) return { id, story, status: 'SATISFIED' as const, evidence: testCitations, rationale: 'A live Bun test carries a canonical citation.' };"
+        },
+        {
+          "line": 125,
+          "excerpt": "    if (scriptCitations.length) return { id, story, status: 'REVIEWED_EXCEPTION' as const, evidence: scriptCitations, rationale: 'A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test.' };"
+        },
+        {
+          "line": 126,
+          "excerpt": "    if (testMentions.length) return { id, story, status: 'UNCITED_COVERAGE' as const, evidence: testMentions, rationale: 'A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form.' };"
+        },
+        {
+          "line": 127,
+          "excerpt": "    return { id, story, status: 'UNTESTED' as const, evidence: [], rationale: 'No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim.' };"
+        }
+      ]
+    },
+    {
+      "path": "scripts/check-core-authority.ts",
+      "gitBlobOid": "7f0b805497fb3a9b4eb2038237f49ca26096f344",
+      "sha256": "efabc390841c66d0fe5bae025a111ac0a66fc15a8031443d9fd626f920beced5",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 40,
+          "excerpt": "const retirement=await Bun.file(resolve(import.meta.dir,'../docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json')).json();"
+        },
+        {
+          "line": 49,
+          "excerpt": "const historicalReceiptVerifiers=new Set(['tools/security/weft-admission-check.py','tools/security/weft_protocol_evidence.py']); // Original1598 proof identities only; see host-tools-migration.json."
+        },
+        {
+          "line": 50,
+          "excerpt": "// Exact negative assertions are evidence controls, never producer exemptions."
+        },
+        {
+          "line": 70,
+          "excerpt": "function history(path:string):boolean {return /(?:^|\\/)(?:archive|historical|history)(?:\\/|$)/.test(path)||path.startsWith('docs/helix/04-build/evidence/');}"
+        },
+        {
+          "line": 141,
+          "excerpt": "    if((runtime||compiler)&&history(target))issue(node,'imports inert historical evidence '+target);"
+        },
+        {
+          "line": 188,
+          "excerpt": "  if(/(?:^|\\/)(?:spec\\/(?:historical|history|archive)|docs\\/helix\\/04-build\\/evidence)(?:\\/|$)/.test(path))issues.push(path+': inert historical archive remains distributed');"
+        },
+        {
+          "line": 193,
+          "excerpt": " const files:string[]=[];for await(const path of new Bun.Glob('**/*').scan({cwd:directory,onlyFiles:true}))files.push(path);"
+        },
+        {
+          "line": 200,
+          "excerpt": " for(const pattern of [...producerPatterns,'scripts/**/*.py','tools/**/*.py','python/**/src/**/*.py','spec/**/*.json','docs/helix/05-deploy/schema-browser/**/*.ts',...retiredCorePaths])for await(const path of new Bun.Glob(pattern).scan({cwd:root,onlyFiles:true}))if(!path.includes('/dist/')&&!path.includes('/node_modules/'))paths.add(path);"
+        }
+      ]
+    },
+    {
+      "path": "docs/helix/05-deploy/schema-browser/example-host.ts",
+      "gitBlobOid": "5c0b8a0925a9b34c7fd8caa742e632cd590dfd6b",
+      "sha256": "9b311d893bb89869abd06f10cf7383af102b4bc26ce18ba75f5e5a5c3c4d0bf1",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 5,
+          "excerpt": " const root=resolve(packageRoot),table=await Bun.file('spec/domain-packs/medical-carrier/umf/claims.json').text(),ontology=await Bun.file('spec/domain-packs/commerce/ontology.json').text();"
+        },
+        {
+          "line": 11,
+          "excerpt": " ['iceberg','iceberg/index','importIcebergSchema',await Bun.file('fixtures/iceberg/nested.json').text()],"
+        },
+        {
+          "line": 12,
+          "excerpt": " ['arrow','arrow/index','importArrowSchema',JSON.stringify((await Bun.file('fixtures/arrow/schema-cases.json').json())[0].input)],"
+        },
+        {
+          "line": 13,
+          "excerpt": " ['sqlserver','sqlserver/index','importSqlServerCatalog',await Bun.file('fixtures/sqlserver/catalog.json').text()],"
+        },
+        {
+          "line": 14,
+          "excerpt": " ['postgresql','postgresql/catalog','importPostgresqlCatalogCapture',await Bun.file('fixtures/postgresql/catalog-capture.json').text()],"
+        },
+        {
+          "line": 15,
+          "excerpt": " ['dbt','dbt/index','importDbtManifest',await Bun.file('fixtures/dbt/manifest.json').text()],"
+        },
+        {
+          "line": 16,
+          "excerpt": " ['odcs','odcs/index','importOdcsDocument',await Bun.file((await Bun.file('fixtures/odcs/results.json').json()).results[0].path).text(),'yaml'],"
+        },
+        {
+          "line": 17,
+          "excerpt": " ['linkml','linkml/index','importLinkmlDocument',await Bun.file((await Bun.file('fixtures/linkml/results.json').json()).results[0].path).text(),'yaml'],"
+        },
+        {
+          "line": 20,
+          "excerpt": " ['smithy','smithy/index','importSmithyJson',await Bun.file('fixtures/smithy/domain.json').text()],"
+        },
+        {
+          "line": 40,
+          "excerpt": " const stage=document.createElement('div');document.body.append(stage);let error;const failed=mount(stage,{assetsUrl:'/assets/',catalogUrl:'/401.json',onCatalogError:x=>error=x});const pending=failed.select({schema:'table'}).then(()=>false,()=>true);assert(await failed.ready.then(()=>false,()=>true),'catalog failure rejects ready');assert(await pending&&erro"
+        }
+      ]
+    },
+    {
+      "path": "docs/helix/05-deploy/reference/evidence-map.json",
+      "gitBlobOid": "e50af06bd280044aca55d7d0dd8606b963dff204",
+      "sha256": "762c63351518b9268da5bad5717457d352e5d0dac4ea05ec4c696c649eee5241",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 2,
+          "excerpt": "  \"profile\": \"umf.reference.evidence-map/1\","
+        },
+        {
+          "line": 7,
+          "excerpt": "      \"recordPath\": \"fixtures/json-schema/upstream-results.json\","
+        },
+        {
+          "line": 16,
+          "excerpt": "      \"recordPath\": \"fixtures/json-schema/python-oracle-results.json\","
+        },
+        {
+          "line": 25,
+          "excerpt": "      \"recordPath\": \"fixtures/protobuf/descriptor-results.json\","
+        },
+        {
+          "line": 34,
+          "excerpt": "      \"recordPath\": \"fixtures/protobuf/emission-results.json\","
+        },
+        {
+          "line": 43,
+          "excerpt": "      \"recordPath\": \"fixtures/protobuf/source-compiler-results.json\","
+        },
+        {
+          "line": 52,
+          "excerpt": "      \"recordPath\": \"fixtures/protobuf/behavior-results.json\","
+        },
+        {
+          "line": 61,
+          "excerpt": "      \"recordPath\": \"fixtures/protobuf/source-behavior-results.json\","
+        },
+        {
+          "line": 70,
+          "excerpt": "      \"recordPath\": \"fixtures/protobuf/emission-corpus-results.json\","
+        },
+        {
+          "line": 79,
+          "excerpt": "      \"recordPath\": \"fixtures/protobuf/emission-behavior-results.json\","
+        },
+        {
+          "line": 88,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/field-conformance.json\","
+        },
+        {
+          "line": 97,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/nullability-conformance.json\","
+        },
+        {
+          "line": 106,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/cardinality-conformance.json\","
+        },
+        {
+          "line": 115,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/facets-conformance.json\","
+        },
+        {
+          "line": 124,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/key-conformance.json\","
+        },
+        {
+          "line": 133,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/relationship-conformance.json\","
+        },
+        {
+          "line": 142,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/field-tablespec-acceptance-evidence.json\","
+        },
+        {
+          "line": 151,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/field-postgresql-acceptance-evidence.json\","
+        },
+        {
+          "line": 160,
+          "excerpt": "      \"recordPath\": \"docs/helix/04-build/evidence/uuid-adapter-completion.md\","
+        },
+        {
+          "line": 169,
+          "excerpt": "      \"recordPath\": \"docs/helix/04-build/evidence/typed-reporting/README.md\","
+        },
+        {
+          "line": 178,
+          "excerpt": "      \"recordPath\": \"docs/helix/04-build/evidence/typed-persistence/integrated-native-20261016/README.md\","
+        },
+        {
+          "line": 187,
+          "excerpt": "      \"recordPath\": \"docs/helix/04-build/evidence/actions-certification.json\","
+        },
+        {
+          "line": 196,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/remaining-field-bindings-acceptance-evidence.json\","
+        },
+        {
+          "line": 205,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/remaining-field-bindings-acceptance-evidence.json\","
+        },
+        {
+          "line": 214,
+          "excerpt": "      \"recordPath\": \"fixtures/validation/remaining-field-bindings-acceptance-evidence.json\","
+        }
+      ]
+    },
+    {
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "gitBlobOid": "71b54d572cd67a07e5474262beed95b31fc5e4c1",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 8,
+          "excerpt": "      \"sourceSystem\": \"Apache Arrow integration schema JSON \\u00b7 Grammar profile 0.1.0; native feasibility evidence JS 21.2.0 / PyArrow 21.0.0\","
+        },
+        {
+          "line": 17,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 30,
+          "excerpt": "      \"sourceSystem\": \"Apache Arrow integration schema JSON \\u00b7 Grammar profile 0.1.0; native feasibility evidence JS 21.2.0 / PyArrow 21.0.0\","
+        },
+        {
+          "line": 31,
+          "excerpt": "      \"targetSystem\": \"Apache Arrow integration schema JSON \\u00b7 Grammar profile 0.1.0; native feasibility evidence JS 21.2.0 / PyArrow 21.0.0\","
+        },
+        {
+          "line": 39,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 61,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 83,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 105,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 127,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 149,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 171,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 193,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 215,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 237,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 259,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 281,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 303,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 325,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 347,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 369,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 391,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 413,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 435,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 457,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 479,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 501,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 523,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 545,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 567,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 589,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 611,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 633,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 655,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 677,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 699,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 721,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 743,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 765,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 787,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 809,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 831,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 853,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 875,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 897,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 919,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 936,
+          "excerpt": "      \"subset\": \"Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence.\","
+        },
+        {
+          "line": 941,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 958,
+          "excerpt": "      \"subset\": \"Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence.\","
+        },
+        {
+          "line": 963,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 980,
+          "excerpt": "      \"subset\": \"JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag validation and recorded compatibility blocks; RDF-to-JSON-LD projection with lexical/native type policies; q"
+        },
+        {
+          "line": 985,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1002,
+          "excerpt": "      \"subset\": \"JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag validation and recorded compatibility blocks; RDF-to-JSON-LD projection with lexical/native type policies; q"
+        },
+        {
+          "line": 1007,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1029,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1051,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1073,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1095,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1117,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1139,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1161,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1183,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1205,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1227,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1249,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1271,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1293,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1315,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1337,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1359,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1381,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1403,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1425,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1447,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1469,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1486,
+          "excerpt": "      \"subset\": \"The exact evidence query and metadata fields in capture.schema.json, with pg_dump plain schema-only archive; no full pg_catalog or server-state validation\","
+        },
+        {
+          "line": 1491,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1508,
+          "excerpt": "      \"subset\": \"The exact evidence query and metadata fields in capture.schema.json, with pg_dump plain schema-only archive; no full pg_catalog or server-state validation\","
+        },
+        {
+          "line": 1513,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1535,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1557,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1579,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1601,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1623,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1645,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1667,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1684,
+          "excerpt": "      \"subset\": \"Complete pinned descriptor message graph; proto2/proto3/Editions descriptor representation. Optional WASM source compilation has authored proto2, proto3 and Edition 2023 evidence; newer Editions are not claimed. Source emission has native compiler evidence for 15 standard roots and authored proto2/proto3/Edition 2023 cases; four Edition 2024"
+        },
+        {
+          "line": 1689,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1706,
+          "excerpt": "      \"subset\": \"Complete pinned descriptor message graph; proto2/proto3/Editions descriptor representation. Optional WASM source compilation has authored proto2, proto3 and Edition 2023 evidence; newer Editions are not claimed. Source emission has native compiler evidence for 15 standard roots and authored proto2/proto3/Edition 2023 cases; four Edition 2024"
+        },
+        {
+          "line": 1711,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1733,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1755,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1777,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1799,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1821,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1843,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1865,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1887,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1909,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1931,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1953,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1975,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 1988,
+          "excerpt": "      \"sourceSystem\": \"Apache Spark DataType schema JSON \\u00b7 4.0.1 grammar baseline; Python and JVM evidence separately qualified\","
+        },
+        {
+          "line": 1997,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2010,
+          "excerpt": "      \"sourceSystem\": \"Apache Spark DataType schema JSON \\u00b7 4.0.1 grammar baseline; Python and JVM evidence separately qualified\","
+        },
+        {
+          "line": 2011,
+          "excerpt": "      \"targetSystem\": \"Apache Spark DataType schema JSON \\u00b7 4.0.1 grammar baseline; Python and JVM evidence separately qualified\","
+        },
+        {
+          "line": 2019,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2032,
+          "excerpt": "      \"sourceSystem\": \"Microsoft SQL Server \\u00b7 SQL Server 2022; native evidence 16.0.4295.3; capture profiles v1/v2/v3\","
+        },
+        {
+          "line": 2041,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2054,
+          "excerpt": "      \"sourceSystem\": \"Microsoft SQL Server \\u00b7 SQL Server 2022; native evidence 16.0.4295.3; capture profiles v1/v2/v3\","
+        },
+        {
+          "line": 2055,
+          "excerpt": "      \"targetSystem\": \"Microsoft SQL Server \\u00b7 SQL Server 2022; native evidence 16.0.4295.3; capture profiles v1/v2/v3\","
+        },
+        {
+          "line": 2063,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2085,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2107,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2129,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2151,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2173,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2195,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2217,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2239,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2261,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2283,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2305,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2327,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2349,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2371,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2393,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2415,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2437,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2459,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2481,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2503,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2525,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2547,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2569,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2591,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2613,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2635,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2657,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2679,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2701,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2723,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2745,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2767,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2789,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2811,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2833,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2855,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2877,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2899,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2921,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2943,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2965,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 2989,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3011,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3033,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3055,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3075,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3097,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3119,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3141,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3161,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3183,
+          "excerpt": "      \"fixturePaths\": [],"
+        },
+        {
+          "line": 3205,
+          "excerpt": "      \"fixturePaths\": [],"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/microsite.yml",
+      "gitBlobOid": "b9a12d0ce853dd52630ea86ce7aff55bc0080148",
+      "sha256": "9c1e1475b51777b73f506d96fe61fbace9753a8b463c64eb75e4024ee4f90efa",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": [
+        {
+          "line": 11,
+          "excerpt": "      - 'docs/helix/04-build/evidence/actions-documentation*'"
+        },
+        {
+          "line": 12,
+          "excerpt": "      - 'docs/helix/04-build/evidence/actions-certification*'"
+        },
+        {
+          "line": 13,
+          "excerpt": "      - 'docs/helix/03-test/fixtures/bulk-update/local-products-*.json'"
+        },
+        {
+          "line": 16,
+          "excerpt": "      - 'fixtures/actions/**'"
+        },
+        {
+          "line": 25,
+          "excerpt": "      - 'docs/helix/04-build/evidence/**'"
+        },
+        {
+          "line": 26,
+          "excerpt": "      - 'fixtures/validation/**'"
+        },
+        {
+          "line": 27,
+          "excerpt": "      - 'fixtures/json-schema/**'"
+        },
+        {
+          "line": 28,
+          "excerpt": "      - 'fixtures/protobuf/**'"
+        },
+        {
+          "line": 50,
+          "excerpt": "      - 'docs/helix/04-build/evidence/supreme-court-*'"
+        },
+        {
+          "line": 51,
+          "excerpt": "      - 'docs/helix/04-build/evidence/public-company-live-qualification.*'"
+        },
+        {
+          "line": 73,
+          "excerpt": "      - 'docs/helix/04-build/evidence/actions-documentation*'"
+        },
+        {
+          "line": 74,
+          "excerpt": "      - 'docs/helix/04-build/evidence/actions-certification*'"
+        },
+        {
+          "line": 75,
+          "excerpt": "      - 'docs/helix/03-test/fixtures/bulk-update/local-products-*.json'"
+        },
+        {
+          "line": 78,
+          "excerpt": "      - 'fixtures/actions/**'"
+        },
+        {
+          "line": 87,
+          "excerpt": "      - 'docs/helix/04-build/evidence/**'"
+        },
+        {
+          "line": 88,
+          "excerpt": "      - 'fixtures/validation/**'"
+        },
+        {
+          "line": 89,
+          "excerpt": "      - 'fixtures/json-schema/**'"
+        },
+        {
+          "line": 90,
+          "excerpt": "      - 'fixtures/protobuf/**'"
+        },
+        {
+          "line": 112,
+          "excerpt": "      - 'docs/helix/04-build/evidence/supreme-court-*'"
+        },
+        {
+          "line": 113,
+          "excerpt": "      - 'docs/helix/04-build/evidence/public-company-live-qualification.*'"
+        },
+        {
+          "line": 149,
+          "excerpt": "          rm -rf docs/helix/05-deploy/microsite/dist/action-compiler docs/helix/05-deploy/microsite/dist/truss-browser"
+        },
+        {
+          "line": 150,
+          "excerpt": "          rm -f docs/helix/05-deploy/microsite/dist/action-compiler.html docs/helix/05-deploy/microsite/dist/action-compiler.js docs/helix/05-deploy/microsite/dist/truss-catalog-worker.js"
+        },
+        {
+          "line": 190,
+          "excerpt": "      - name: Publish individual document research tools and evidence"
+        },
+        {
+          "line": 193,
+          "excerpt": "        run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js"
+        },
+        {
+          "line": 230,
+          "excerpt": "          bun scripts/check-core-authority.ts --distribution docs/helix/05-deploy/microsite/dist"
+        },
+        {
+          "line": 233,
+          "excerpt": "          archives = list(Path('docs/helix/05-deploy/microsite/dist').rglob('*.zip'))"
+        },
+        {
+          "line": 243,
+          "excerpt": "      - name: Retain generated reference and visual evidence"
+        },
+        {
+          "line": 248,
+          "excerpt": "            docs/helix/05-deploy/microsite/dist/reference"
+        },
+        {
+          "line": 249,
+          "excerpt": "            docs/helix/04-build/evidence/generated-reference"
+        },
+        {
+          "line": 254,
+          "excerpt": "          path: docs/helix/05-deploy/microsite/dist/actions"
+        },
+        {
+          "line": 270,
+          "excerpt": "        run: node .tools/innsigle/src/cli.mjs publish docs/helix/05-deploy/microsite/dist"
+        },
+        {
+          "line": 274,
+          "excerpt": "          path: docs/helix/05-deploy/microsite/dist"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/python.yml",
+      "gitBlobOid": "d584dd24144d8aaf80941a43871d9e4730ed1fb9",
+      "sha256": "9ede804d1d5c0ffaeb4e3cd1d5161bdee6cc1feee4c622c71c00baa0e5d0af23",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": []
+    },
+    {
+      "path": ".github/workflows/pypi.yml",
+      "gitBlobOid": "d7d51af0500e378270f1b1e9e8dae0d96c8fd600",
+      "sha256": "87a8d9f8f29e5eec65e92e4597a61b68a493bd26861ec71ee862ceeed34daeb4",
+      "workingCopyMatchesSnapshot": true,
+      "observedEdges": []
+    }
+  ]
+}
