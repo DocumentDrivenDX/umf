@@ -1,7 +1,10 @@
 """Pure source/census controls. Never import UMF or execute Cargo/test binaries."""
+import copy
 import importlib.util
 import json
 from pathlib import Path
+import shutil
+import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -18,7 +21,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         for row in self.census['rust']:
             self.listings[(row['package'],row['target'])] += [c['name'] for c in row['cases']]
 
-    def test_historical229_and47_sources_remain_closed_candidate_binding_refuses(self):
+    def test_historical229_and47_sources_remain_closed_candidate_binding_is_authenticated(self):
         selected=batch.authenticate_lists(self.census,self.executables,self.listings)
         self.assertEqual(len(selected),229);self.assertEqual(len(set(selected)),229)
         self.assertEqual(sum(len(g['cases']) for g in self.census['python']),47)
@@ -29,8 +32,17 @@ class ConstructionBatchSourceControls(unittest.TestCase):
             self.assertEqual(batch.sha(ROOT/'crates/umf-core/src'/f'{module}_construction_tests.rs'),digest)
         helper=batch.load(ROOT/'tools/probe_inspector_installed_factory.py','frozen_factory_source')
         self.assertEqual(helper.digest(helper.original_loader((ROOT/helper.LOADER).read_bytes())),batch.TEST_SHA)
-        with self.assertRaisesRegex(ValueError,'Assembled pyproject metadata differs'):
-            helper.selection(ROOT,self.census)
+        selected=helper.selection(ROOT,self.census)
+        candidate,identity=helper.current_inputs(ROOT,selected)
+        self.assertEqual(selected['currentInputs']['fixturePath'],helper.CANDIDATE_FIXTURE)
+        self.assertEqual(selected['currentInputs']['metadataVersion'],'0.10.10')
+        self.assertEqual(candidate['candidateArtifactVersion'],'0.10.10')
+        self.assertEqual(candidate['generation']['sourceCommit'],'93adb14883fd49bfe6404d8733b78eb696078f35')
+        self.assertEqual(helper.input_metadata_version(identity),'0.10.10')
+        wrong_metadata=copy.deepcopy(selected)
+        wrong_metadata['currentInputs']['metadataVersion']='0.10.9'
+        with self.assertRaisesRegex(ValueError,'Candidate artifact version differs'):
+            helper.current_inputs(ROOT,wrong_metadata)
         self.assertEqual(helper.verified_loader_sha(ROOT),self.census['installedFactory']['sourceFiles'][helper.LOADER])
         self.assertEqual(self.census['installedFactory']['status'],'source-frozen')
         # Historical pins retain their original source scope; no relabel.
@@ -84,8 +96,19 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         digest=lambda values:hashlib.sha256(json.dumps(values,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
         self.assertEqual(len(old),469)
         self.assertEqual(digest(old),'f7ec24f00eedfffca8815058eae60a454063d16f2333f08e44e21cf7537dc442')
-        with self.assertRaisesRegex(ValueError,'Assembled pyproject metadata differs'):
-            helper.selection(ROOT,self.census)
+        selected=helper.selection(ROOT,self.census)
+        candidate,identity=helper.current_inputs(ROOT,selected)
+        self.assertEqual(helper.input_metadata_version(identity),'0.10.10')
+        self.assertEqual(candidate['candidateArtifactVersion'],'0.10.10')
+        mixed_authority={**identity,'inheritedPrivateMetadataVersion':'0.10.9'}
+        with self.assertRaisesRegex(ValueError,'Ambiguous or unknown current-input version authority'):
+            helper.input_metadata_version(mixed_authority)
+        legacy_source=copy.deepcopy(selected)
+        legacy_source['currentInputs']={'fixturePath':helper.CURRENT_FIXTURE,
+          'fixtureSHA256':helper.sha(ROOT/'tests/qualification/fixtures/inspector-installed-current-resources.json'),
+          'metadataVersion':'0.10.10'}
+        with self.assertRaisesRegex(ValueError,'Exact inherited private metadata differs'):
+            helper.current_inputs(ROOT,legacy_source)
         for kind in ('missing','duplicate','extra-selected-module','foreign-target'):
             bad={k:list(names) for k,names in listings.items()};key=('umf-core-wire','lib')
             factory=next(n for n in bad[key] if n.startswith('installed_codegen_factory_independent_tests::'))
@@ -94,5 +117,51 @@ class ConstructionBatchSourceControls(unittest.TestCase):
             elif kind=='extra-selected-module':bad[key].append('installed_codegen_factory_independent_tests::unreviewed')
             else:bad[('umf-core','test:unselected')]=['unreviewed']
             with self.subTest(kind=kind),self.assertRaises(ValueError):batch.authenticate_lists(current,self.executables,bad)
+
+    def _copy_closed_source_to(self,helper,selected,destination):
+        for name in selected['sourceFiles']:
+            source=ROOT/name;target=destination/name
+            target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copyfile(source,target)
+
+    def _metadata_overlay_refuses(self,helper,source_path,before,after,reason):
+        selected=helper.selection(ROOT,self.census)
+        with tempfile.TemporaryDirectory(prefix='c1-candidate-metadata-overlay-') as temp:
+            overlay=Path(temp);self._copy_closed_source_to(helper,selected,overlay)
+            target=overlay/source_path;raw=target.read_bytes()
+            self.assertEqual(raw.count(before),1,source_path)
+            target.write_bytes(raw.replace(before,after))
+            synthetic_census=copy.deepcopy(self.census)
+            synthetic=synthetic_census['installedFactory']
+            synthetic['sourceFiles'][source_path]=helper.sha(target)
+            closure={k:synthetic[k] for k in ('sourceFiles','moduleGraph','rust','python','publicControls','coverage','modelSHA256','legacyDisposition','currentInputs')}
+            synthetic['closureSHA256']=helper.digest(helper.canonical(closure))
+            self.assertEqual(len(synthetic['sourceFiles']),179)
+            with self.assertRaisesRegex(ValueError,reason):
+                helper.selection(overlay,synthetic_census)
+
+    def test_actual_candidate_metadata_byte_overlays_reach_real_guards(self):
+        helper=batch.load(ROOT/'tools/probe_inspector_installed_factory.py','candidate_metadata_overlays')
+        cases=[
+          ('python/pyproject.toml',b'name = "umf-core"',b'name = "other-package"','Assembled candidate pyproject metadata differs'),
+          ('python/pyproject.toml',b'version = "0.10.10"',b'version = "0.10.9"','Assembled candidate pyproject metadata differs'),
+          ('python/src/umf/__init__.py',b'__version__ = "0.10.10"',b'__version__ = "0.10.9"','Assembled candidate package metadata differs')]
+        for path,before,after,reason in cases:
+            with self.subTest(path=path,before=before):
+                self._metadata_overlay_refuses(helper,path,before,after,reason)
+
+    def test_candidate_fixture_substituted_bytes_refuse_without_changing_production_pin(self):
+        helper=batch.load(ROOT/'tools/probe_inspector_installed_factory.py','candidate_fixture_substitution')
+        selected=helper.selection(ROOT,self.census);path=helper.CANDIDATE_FIXTURE
+        expected=self.census['installedFactory']['sourceFiles'][path]
+        self.assertEqual(selected['sourceFiles'][path],expected)
+        with tempfile.TemporaryDirectory(prefix='c1-candidate-source-pin-substitution-') as temp:
+            overlay=Path(temp);self._copy_closed_source_to(helper,selected,overlay)
+            substituted=overlay/path;substituted.write_bytes(substituted.read_bytes()+b'\n')
+            self.assertNotEqual(helper.sha(substituted),expected)
+            self.assertEqual(self.census['installedFactory']['sourceFiles'][path],expected)
+            with self.assertRaises(ValueError) as refusal:
+                helper.selection(overlay,self.census)
+            self.assertEqual(str(refusal.exception),'Factory source pin differs: '+path)
 
 if __name__=='__main__':unittest.main()

@@ -221,7 +221,14 @@ class InstalledCostProcessControls(unittest.TestCase):
     """Real new source validators/cost intake, only process/native outputs fake."""
     def simulate(self,root,mode='pass',actual_public=False):
         helpers=load('factory_test_helpers','tests/qualification/test_inspector_installed_factory.py')
-        m,census=helpers.fixture(root);current,input_identity=m.current_inputs(root,census['installedFactory']);selector=census['installedFactory']['publicControls'][0]
+        m,census=helpers.candidate_fixture(root);current,input_identity=m.current_inputs(root,census['installedFactory']);selector=census['installedFactory']['publicControls'][0]
+        # Synthetic positive completion fixture carries the exact existing
+        # lifecycle sources; production source-pin validation stays unchanged.
+        lifecycle_sources=('python/tests/test_saga_lifecycle.py','fixtures/saga/portable.json')
+        for name in lifecycle_sources:
+            target=root/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/name).read_bytes())
+            census['installedFactory']['sourceFiles'][name]=m.sha(target)
+        helpers.resign(m,census['installedFactory']);(root/m.CENSUS).write_text(json.dumps(census))
         if actual_public:
             actual=json.loads((ROOT/m.CENSUS).read_text());v=census['installedFactory'];v['publicControls']=actual['installedFactory']['publicControls'];v['python']=actual['installedFactory']['python'];v['legacyDisposition']=actual['installedFactory']['legacyDisposition'];census['python']=actual['python']
             for selector in [x for g in census['python'] for x in g['cases']]+v['legacyDisposition']['newPythonCases']:
@@ -231,7 +238,7 @@ class InstalledCostProcessControls(unittest.TestCase):
         args=types.SimpleNamespace(out=root/'out',controller=root,owner=root,wheel=root/'FAKE.whl',controller_sha='a'*40)
         args.out.mkdir();args.producer_pins=args.out/'producer.json';args.cost_gate=args.out/'cost-gate.json'
         args.wheel.write_bytes(b'SYNTHETIC NOT A NATIVE WHEEL');native=hashlib.sha256(b'SYNTHETIC NATIVE ID').hexdigest()
-        pins={'source':args.controller_sha,'inputProfile':m.INPUT,'currentInputIdentity':input_identity,'resourcePinsSHA256':input_identity['resourceFixtureSHA256'],'wheel':{'sha256':C.sha(args.wheel)},'nativeMember':{'sha256':native},'censusSHA256':C.sha(root/m.CENSUS)}
+        pins={'source':args.controller_sha,'inputProfile':m.INPUT,'currentInputIdentity':input_identity,'resourcePinsSHA256':input_identity['resourceFixtureSHA256'],'wheel':{'path':str(args.wheel),'bytes':args.wheel.stat().st_size,'sha256':C.sha(args.wheel)},'nativeMember':{'path':'umf/_rust_core.abi3.so','sha256':native},'censusSHA256':C.sha(root/m.CENSUS)}
         args.producer_pins.write_text(json.dumps(pins))
         events=[];driver=FakeDriver(events);driver.OWNER=args.controller_sha;driver.WHEEL_SHA=C.sha(args.wheel)
         original=driver.identity
@@ -239,7 +246,14 @@ class InstalledCostProcessControls(unittest.TestCase):
             original(args,suffix)
             i=args.out/('identity-'+suffix+'.json');v=json.loads(i.read_text());v['loadedModules']['umf/_rust_core.abi3.so']['sha256']=native;driver.write(i,v)
             driver.write(args.out/('installed-record-'+suffix+'.json'),{'status':'passed','wheel_sha256':driver.WHEEL_SHA,'native_sha256':native})
-        driver.identity=identity
+        def lifecycle_identity(args,suffix):
+            identity(args,suffix)
+            path=args.out/('identity-'+suffix+'.json');record=json.loads(path.read_text())
+            record.update(currentInputIdentity=input_identity,completeWheelAndInstalledRecordVerified=True,distributionOwnershipVerified=True)
+            record['loadedModules']['umf/_rust_core.abi3.so']['sha256']=native
+            driver.write(path,record)
+            driver.write(args.out/('installed-record-'+suffix+'.json'),{'status':'passed','wheel_sha256':driver.WHEEL_SHA,'native_sha256':native})
+        driver.identity=lifecycle_identity
         def execute(argv,**kwargs):
             if '--output' in argv:
                 self.assertTrue(argv[3].endswith('probe_inspector_installed_factory.py'));self.assertIn('--producer-pins',argv);events.append('factory51')
@@ -290,9 +304,9 @@ class InstalledCostProcessControls(unittest.TestCase):
             state=json.loads((out/'cost-gate.json').read_text());self.assertEqual(rc,1);self.assertEqual(events,[]);self.assertFalse(state['expensiveTestCompilationAdmitted']);self.assertIn('pending',state['fatal']['message'])
 
     def test_new_finish_consumes_exact_cost_and_named_semantics_without_replaying_factory(self):
-        for mode in ('pass','missing-compiled','semantic-failure'):
+        for mode in ('pass','missing-compiled','semantic-failure','lifecycle-failure'):
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as raw:
-                root=Path(raw);_,_,_,args,driver,m=self.simulate(root)
+                root=Path(raw);_,events,_,args,driver,m=self.simulate(root)
                 # All remaining proofs are explicitly SYNTHETIC process output;
                 # this verifies controller interfaces, not native qualification.
                 census=json.loads((root/m.CENSUS).read_text());selected=census['installedFactory']
@@ -321,15 +335,44 @@ class InstalledCostProcessControls(unittest.TestCase):
                 def process(argv,**kwargs):
                     self.assertEqual(argv[1:5],['-I','-B','-m','pytest']);self.assertIn('--rootdir='+str(root.resolve()),argv);calls.append(argv)
                     xml=Path(next(x.split('=',1)[1] for x in argv if x.startswith('--junitxml=')))
+                    if any('test_saga_lifecycle.py::' in value for value in argv):
+                        from xml.etree.ElementTree import Element,ElementTree,SubElement
+                        expected=[str(root/case) for case in L.LIFECYCLE2_CASES]
+                        self.assertEqual([value for value in argv if '::' in value],expected)
+                        aggregate=json.loads((args.out/'aggregate.json').read_text())
+                        self.assertTrue(aggregate['costGateAuthenticated'] and aggregate['rustPassed'] and aggregate['sagaPassed'])
+                        self.assertEqual(len(aggregate['pythonGroups']),len(selected['python']))
+                        events.append('lifecycle2')
+                        suite=Element('testsuite')
+                        for index,case in enumerate(L.LIFECYCLE2_CASES):
+                            path,class_name,test_name=case.split('::')
+                            testcase=Element('testcase',{'classname':path.removesuffix('.py').replace('/','.')+'.'+class_name,'name':test_name})
+                            if mode=='lifecycle-failure' and index==0:SubElement(testcase,'failure')
+                            suite.append(testcase)
+                        ElementTree(suite).write(xml,encoding='unicode')
+                        kwargs['stdout'].write(b'SYNTHETIC lifecycle2 pytest output\n')
+                        return types.SimpleNamespace(returncode=1 if mode=='lifecycle-failure' else 0)
                     xml.write_text('<testsuites><testsuite><testcase classname="python.tests.factory_fixture.Controls" name="test_original">'+('<failure/>' if mode=='semantic-failure' else '')+'</testcase></testsuite></testsuites>')
                     return types.SimpleNamespace(returncode=1 if mode=='semantic-failure' else 0)
                 import contextlib,io
                 with patch.dict(os.environ,{'INSPECTOR_INPUT_PROFILE':m.INPUT,'GITHUB_RUN_ID':'100','GITHUB_RUN_ATTEMPT':'1'}),patch.object(L,'OWNER',driver.OWNER),patch.object(L,'WHEEL_SHA',driver.WHEEL_SHA),patch.object(L,'identity',driver.identity),patch.object(L.subprocess,'run',side_effect=process),contextlib.redirect_stderr(io.StringIO()):rc=L.run_installed(args)
                 state=json.loads((args.out/'aggregate.json').read_text())
-                self.assertEqual(rc,0 if mode=='pass' else 1);self.assertEqual(state['requiredQualificationPassed'],mode=='pass');self.assertFalse(state['diagnosticPassed']);self.assertEqual(state['diagnosticDisposition'],'not-selected-explicit-route-only');self.assertEqual(len(calls),0 if mode=='missing-compiled' else 1)
+                self.assertEqual(rc,0 if mode=='pass' else 1);self.assertEqual(state['requiredQualificationPassed'],mode in ('pass','lifecycle-failure'));self.assertFalse(state['diagnosticPassed']);self.assertEqual(state['diagnosticDisposition'],'not-selected-explicit-route-only')
+                self.assertEqual(len(calls),0 if mode=='missing-compiled' else 1 if mode=='semantic-failure' else 2)
                 for argv in calls:
-                    self.assertFalse(set(str(root/x) for x in selected['publicControls'])&set(argv))
-                if mode=='pass':self.assertEqual(state['earlyPublicControls']['cases'],selected['publicControls']);self.assertEqual(state['earlyPublicControls']['execution'],'same-job-cost-stage-consumed-once')
+                    values=argv[1] if isinstance(argv,tuple) else argv
+                    self.assertFalse(set(str(root/x) for x in selected['publicControls'])&set(values))
+                if mode in ('pass','lifecycle-failure'):
+                    self.assertEqual(state['earlyPublicControls']['cases'],selected['publicControls']);self.assertEqual(state['earlyPublicControls']['execution'],'same-job-cost-stage-consumed-once')
+                    lifecycle=json.loads((args.out/'saga-lifecycle2-result.json').read_text())
+                    self.assertEqual(lifecycle['status'],'passed' if mode=='pass' else 'failed')
+                    self.assertEqual(set(lifecycle['sourceFiles']),set(L.LIFECYCLE2_SOURCE_FILES))
+                    self.assertEqual(lifecycle['evidenceScope'],'same-wheel-installed-lifecycle-semantics-only')
+                    self.assertNotIn('maximumWork',lifecycle)
+                    self.assertIn('lifecycle2',events)
+                else:
+                    lifecycle=json.loads((args.out/'saga-lifecycle2-result.json').read_text())
+                    self.assertEqual(lifecycle['status'],'not-reached-prerequisites')
 
 
     def test_actual18_batch_all_results_retained_before_compile_and_never_short_circuits(self):

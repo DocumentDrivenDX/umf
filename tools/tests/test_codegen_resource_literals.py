@@ -16,7 +16,17 @@ from unittest import mock
 
 REPO = Path(os.environ.get("UMF_LITERAL_TEST_REPO", Path(__file__).resolve().parents[2]))
 GENERATOR_SHA = "23b788c916e8a57ca102bb714b17edd87e3749062f4beddc656953afdc67dbb9"
-DATA_SHA = "586c67c832f86ae27b2dc5d83c9d7e73c8aa9f4437b2e7fe296e367737599e76"
+HISTORICAL_V2 = {
+    "profile": "historical-v2-0109",
+    "fixtureSHA256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
+    "dataSHA256": "586c67c832f86ae27b2dc5d83c9d7e73c8aa9f4437b2e7fe296e367737599e76",
+}
+CURRENT_01010 = {
+    "profile": "authenticated-g0-candidate-01010",
+    "fixtureSHA256": "1b39d7593535cfa088a0f4643a44d8815b40f6bc1b114c7e66c0698804227767",
+    "dataSHA256": "1e928da01daa535908b6273729977d53ef363d0a57b2717227252665c6b0a7c8",
+    "sourceCommit": "93adb14883fd49bfe6404d8733b78eb696078f35",
+}
 INPUTS = (
     ("coreSchema", "spec/core/schema.json"),
     ("referenceSchema", "spec/core/semantic-type-reference.schema.json"),
@@ -217,14 +227,31 @@ def oracle(raw):
 
 
 class CodegenLiteralCorrespondenceTests(unittest.TestCase):
+    @staticmethod
+    def closed_data_profile(fixture_sha, data_sha):
+        for profile in (CURRENT_01010, HISTORICAL_V2):
+            if fixture_sha == profile["fixtureSHA256"] and data_sha == profile["dataSHA256"]:
+                return profile["profile"]
+        raise ValueError("literal DATA and resource fixture do not match a reviewed closed profile")
+
     @classmethod
     def setUpClass(cls):
         generator = REPO / "tools/generate_codegen_resource_literals.py"
         data = REPO / "crates/umf-core/src/canonical_codegen_literals.rs"
         if hashlib.sha256(generator.read_bytes()).hexdigest() != GENERATOR_SHA:
-            raise AssertionError("v2 generator changed: review/rebind required")
-        if hashlib.sha256(data.read_bytes()).hexdigest() != DATA_SHA:
-            raise AssertionError("v2 DATA changed: review/rebind required")
+            raise AssertionError("reviewed generator changed: review/rebind required")
+        fixture = REPO / "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json"
+        fixture_sha = hashlib.sha256(fixture.read_bytes()).hexdigest()
+        data_sha = hashlib.sha256(data.read_bytes()).hexdigest()
+        if cls.closed_data_profile(fixture_sha, data_sha) != CURRENT_01010["profile"]:
+            raise AssertionError("current candidate DATA/fixture binding differs: review/rebind required")
+        candidate = json.loads(fixture.read_bytes())
+        if (candidate.get("bindingStatus") != "source-bound"
+                or candidate.get("candidateArtifactVersion") != "0.10.10"
+                or candidate.get("generation", {}).get("sourceCommit") != CURRENT_01010["sourceCommit"]
+                or candidate.get("literalData", {}).get("sha256") != CURRENT_01010["dataSHA256"]):
+            raise AssertionError("current candidate fixture lacks its closed authenticated binding")
+        cls.current_fixture = candidate
         spec = importlib.util.spec_from_file_location("actual_codegen_literal_generator_v2", generator)
         cls.gen = importlib.util.module_from_spec(spec); spec.loader.exec_module(cls.gen)
         cls.data_text = data.read_text()
@@ -250,9 +277,7 @@ class CodegenLiteralCorrespondenceTests(unittest.TestCase):
             return self.gen.main()
 
     def test_all_nine_raw_values_order_metadata_and_unknown_content_correspond(self):
-        pins_path = REPO / "tests/qualification/fixtures/inspector-installed-current-resources.json"
-        self.assertEqual(hashlib.sha256(pins_path.read_bytes()).hexdigest(),"251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363")
-        pins = json.loads(pins_path.read_bytes())["resources"]
+        pins = self.current_fixture["resources"]
         self.assertEqual(self.gen.INPUTS,INPUTS)
         self.assertEqual([(r["name"],r["path"]) for r in self.rows],list(INPUTS))
         total=0
@@ -279,6 +304,28 @@ class CodegenLiteralCorrespondenceTests(unittest.TestCase):
         self.assertEqual(self.dictionary,tuple(expected_pool))
         self.assertEqual(len(self.dictionary),888)
         self.assertEqual(sum(map(len,self.dictionary)),16114)
+
+    def test_closed_data_profiles_keep_historical_identity_and_refuse_mixes(self):
+        old_fixture=REPO/"tests/qualification/fixtures/inspector-installed-current-resources.json"
+        self.assertEqual(hashlib.sha256(old_fixture.read_bytes()).hexdigest(),HISTORICAL_V2["fixtureSHA256"])
+        historical=json.loads(old_fixture.read_bytes())
+        self.assertEqual(historical["profile"],"umf.inspector-installed-canonical-current-resources/1")
+        self.assertEqual(historical["baseline"]["inheritedCoreDistributionVersion"],"0.10.9")
+        self.assertEqual(historical["literalData"]["sha256"],HISTORICAL_V2["dataSHA256"])
+        self.assertEqual(set(historical["resources"]),{name for name,_ in INPUTS})
+        for name,relative in INPUTS:
+            self.assertEqual(historical["resources"][name]["path"],relative)
+            self.assertEqual(len(historical["resources"][name]["sha256"]),64)
+        self.assertEqual(self.closed_data_profile(CURRENT_01010["fixtureSHA256"],CURRENT_01010["dataSHA256"]),CURRENT_01010["profile"])
+        self.assertEqual(self.closed_data_profile(HISTORICAL_V2["fixtureSHA256"],HISTORICAL_V2["dataSHA256"]),HISTORICAL_V2["profile"])
+        for fixture_sha,data_sha in (
+            (HISTORICAL_V2["fixtureSHA256"],CURRENT_01010["dataSHA256"]),
+            (CURRENT_01010["fixtureSHA256"],HISTORICAL_V2["dataSHA256"]),
+            ("0"*64,CURRENT_01010["dataSHA256"]),
+            (CURRENT_01010["fixtureSHA256"],"0"*64),
+        ):
+            with self.subTest(fixture=fixture_sha,data=data_sha),self.assertRaises(ValueError):
+                self.closed_data_profile(fixture_sha,data_sha)
 
     def test_authored_order_unknown_data_and_exact_utf16_units(self):
         raw=r'{"z":null,"unknown":{"a":[true,false,"\u0000\r\n\ud800\ud83d\ude00"]},"2":2,"1":1}'.encode()
