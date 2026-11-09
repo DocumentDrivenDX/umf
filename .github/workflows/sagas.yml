@@ -104,6 +104,8 @@ jobs:
           cargo test --locked -p umf-codegen saga
           cargo build --locked --release -p umf-core-node -p umf-cli --features umf-core-node/native-postgresql,umf-cli/native-postgresql
           cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
+          mkdir -p .cache/saga
+          cp target/release/umf .cache/saga/umf-qualified-cli
           cargo build --locked --release -p umf-core-wasm --target wasm32-unknown-unknown
           wasm-bindgen --target web --out-dir bindings/core/wasm/pkg --out-name umf_core_wasm target/wasm32-unknown-unknown/release/umf_core_wasm.wasm
           bun run typecheck
@@ -139,7 +141,7 @@ jobs:
           bun run build:sdk
           bun scripts/saga-portable/native.ts
           bun scripts/saga-portable/browser.ts
-          UMF_SAGA_CLI=target/release/umf bun scripts/saga-portable/other-hosts.ts cli
+          UMF_SAGA_CLI=.cache/saga/umf-qualified-cli bun scripts/saga-portable/other-hosts.ts cli
           UMF_SDK_INSTALL_RETAIN_DIR="$RUNNER_TEMP/saga-sdk-consumer" bun scripts/test-sdk-install.ts
       - name: Build and qualify the publishable Linux wheel
         if: needs.impact.outputs.packages == 'true'
@@ -190,7 +192,7 @@ jobs:
         env:
           UMF_SAGA_SDK_CONSUMER: ${{ runner.temp }}/saga-sdk-consumer
           UMF_SAGA_DIST: ${{ runner.temp }}/saga-python-dist
-          UMF_SAGA_CLI: target/release/umf
+          UMF_SAGA_CLI: .cache/saga/umf-qualified-cli
         run: bun scripts/saga-portable/collect.ts
       - name: Preserve exact qualification artifacts
         if: always()
