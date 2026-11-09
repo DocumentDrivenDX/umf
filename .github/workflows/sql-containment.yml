@@ -21,6 +21,7 @@ jobs:
         os: [ubuntu-24.04]
         python: ['3.11', '3.14']
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     env:
       MATRIX_PYTHON: ${{ matrix.python }}
     steps:

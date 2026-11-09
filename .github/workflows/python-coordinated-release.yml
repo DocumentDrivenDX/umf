@@ -43,6 +43,7 @@ jobs:
             python-version: '3.13.16'
             expected-platform: macos_arm64
     runs-on: ${{ matrix.runs-on }}
+    timeout-minutes: 60
     steps:
       - name: Require a fresh workflow run for artifact custody
         if: ${{ github.run_attempt != 1 }}
@@ -263,6 +264,7 @@ jobs:
   aggregate-release-cohorts:
     needs: build-verify-pair
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - name: Require a fresh workflow run for artifact custody
         if: ${{ github.run_attempt != 1 }}
