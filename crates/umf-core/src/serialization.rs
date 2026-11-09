@@ -163,7 +163,7 @@ fn read_construction_json_owned_full(source:&[u16],ctx:&mut Context<'_>,#[cfg(te
     let mut parser=JsonParser::<_,CoreJsonBuilder,_>::with_metadata(source,ctx,closed_metadata::ClosedMetadata{root:Some(root)});
     parser.construction_owned=true;
     #[cfg(test)]
-    { parser.construction_observer=observer; }
+    { parser.construction_observer=observer.map(|o|{let o:&mut dyn FnMut(&'static str)=o;o}); }
     let value=parser.parse()?;
     // Full grammar, numeric/duplicates and trailing-input checks must succeed
     // before completed metadata or a public owning receipt can be returned.

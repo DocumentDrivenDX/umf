@@ -515,9 +515,11 @@ fn ow07_actual_preflight_and_evaluator_consume_checked_children() {
         )
     });
     result.unwrap();
-    assert!(events
-        .iter()
-        .any(|r| r.0 == "ow1-preflight-consume" && (r.1, r.2) == target));
+    // Views-backed owners route through FT1 and report the borrowed consumer.
+    assert!(events.iter().any(|r| {
+        (r.0 == "ow1-preflight-consume" || r.0 == "ft1-preflight-borrowed-consume")
+            && (r.1, r.2) == target
+    }));
     let sample = json(r#"{"x":false}"#);
     let (actual, events) = observed(|| fresh.validate(&sample, &mut Context::catalog()));
     assert_eq!(actual, raw.validate(&sample, &mut Context::catalog()));
@@ -871,9 +873,11 @@ fn ow10_genuine_nodeplan_hits_keep_readback_without_ancestor_authority() {
             .any(|r| r.0 == "ow1-original-ancestor-hop"),
         "no repeated ancestor walk after actual checked consumption"
     );
+    // Fused (FT1) routing replaces the legacy checked-read probe with the
+    // node-plan hit-after-readback probe; either proves owner readback.
     assert!(events[consume + 1..]
         .iter()
-        .any(|r| r.0 == "ow1-checked-read"));
+        .any(|r| r.0 == "ow1-checked-read" || r.0 == "ft1-node-plan-hit-after-readback"));
     let other = plans
         .node_at(
             &o,
@@ -898,11 +902,15 @@ fn ow10_genuine_nodeplan_hits_keep_readback_without_ancestor_authority() {
         )
         .unwrap()
         .is_none());
-    // The arbitrary original root path remains guardful and available.
-    let (_, original) = observed(|| {
+    // A bank-compiled owner publishes its root both as the schema and as
+    // catalogue role 0, so a bare root *value* is ambiguous: the original
+    // value-addressed path must refuse (None) rather than guess a role, and it
+    // must do so without any unguarded ancestor walk.
+    let (resolved, original) = observed(|| {
         plans
             .node(&o, o.schema_value(), &Utf16::from("#"), true, &mut ctx)
             .unwrap()
     });
-    assert!(original.iter().any(|r| r.0 == "ow1-original-ancestor-hop"));
+    assert!(resolved.is_none());
+    assert!(!original.iter().any(|r| r.0 == "ow1-original-ancestor-hop"));
 }

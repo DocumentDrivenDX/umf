@@ -108,19 +108,42 @@ struct PathCallReadback {
 fn observed_calls<T>(operation: impl FnOnce() -> T) -> (T, Vec<PathCallReadback>) {
     let rows = Rc::new(RefCell::new(Vec::new()));
     let sink = rows.clone();
-    let result = construction_index::observe_path_calls(
+    let scoped_sink = rows.clone();
+    // Preflight policy routing now consumes the scoped preflight path (SP1),
+    // which carries first-delimiter/surrogate facts but no selection cache.
+    // Map that real consumer onto the historical PTH1 row shape.
+    let result = construction_index::observe_scoped_path_calls(
         Box::new(move |site, owner, path| {
-            sink.borrow_mut().push(PathCallReadback {
-                site,
+            if site != "sp1-preflight-policy-route" {
+                return;
+            }
+            let seen = path.observe();
+            scoped_sink.borrow_mut().push(PathCallReadback {
+                site: "pth-preflight-policy",
                 owner_schema: owner.schema_value().clone(),
                 lineage: owner.owner_lineage.clone(),
                 path: path.text().clone(),
-                syntax: path.syntax_for_test(),
-                selections: path.selections_for_test(),
+                syntax: Some((seen.first_hash, seen.surrogate)),
+                selections: None,
                 indexed: owner.cold_resource_index.is_some(),
             });
         }),
-        operation,
+        || {
+            construction_index::observe_path_calls(
+                Box::new(move |site, owner, path| {
+                    sink.borrow_mut().push(PathCallReadback {
+                        site,
+                        owner_schema: owner.schema_value().clone(),
+                        lineage: owner.owner_lineage.clone(),
+                        path: path.text().clone(),
+                        syntax: path.syntax_for_test(),
+                        selections: path.selections_for_test(),
+                        indexed: owner.cold_resource_index.is_some(),
+                    });
+                }),
+                operation,
+            )
+        },
     );
     let copy = rows.borrow().clone();
     (result, copy)
@@ -552,9 +575,12 @@ fn pth06_foreign_owner_arena_and_retarget_invalidate_optional_facts() {
     let (_, rows) =
         observed_calls(|| fallback.validate(&Value::Bool(false), &mut Context::catalog()));
     assert!(!calls_for(&rows, &fallback, "pth-evaluator-frame").is_empty());
+    // The evaluator frame now travels in a scoped path that may carry syntax
+    // facts, but an unsupported-index fallback must not enroll an index or
+    // publish any cached selection.
     assert!(calls_for(&rows, &fallback, "pth-evaluator-frame")
         .iter()
-        .all(|r| r.syntax.is_none()));
+        .all(|r| !r.indexed && r.selections.is_none()));
 }
 
 #[test]

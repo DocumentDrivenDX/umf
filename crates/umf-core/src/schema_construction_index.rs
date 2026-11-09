@@ -1359,11 +1359,13 @@ mod alias_correction_tests {
         let owner = ctx
             .with_codegen_construction(|ctx| CompiledSchema::compile(&schema, &resources, ctx))
             .unwrap();
-        let before = &owner.schema as *const Value as usize;
+        let before = &*owner.schema as *const Value as usize;
         let moved = Box::new(owner);
-        assert_ne!(before, &moved.schema as *const Value as usize);
+        // The compiled root is a shared, heap-published SchemaRoot: moving the
+        // owner must not move it, and locators must still resolve against it.
+        assert_eq!(before, &*moved.schema as *const Value as usize);
         let index = moved.cold_resource_index.as_ref().unwrap();
-        assert!(std::ptr::eq(index.root(&moved, 0), &moved.schema));
+        assert!(std::ptr::eq(index.root(&moved, 0), &*moved.schema));
         assert!(std::ptr::eq(
             index.root(&moved, 1),
             &moved.resources.entries[0].1

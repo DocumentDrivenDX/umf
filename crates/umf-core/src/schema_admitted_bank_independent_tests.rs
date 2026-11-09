@@ -79,7 +79,7 @@ fn same_five(a: &ResourceSet, b: &ResourceSet) {
         assert_eq!(actual, expected);
     }
 }
-fn context(limits: crate::context::Limits) -> Context<'static> {
+fn context<'a>(limits: crate::context::Limits) -> Context<'a> {
     Context::with_limits(crate::context::ResourceProfile::Cooperative, limits).unwrap()
 }
 fn owned_meta_tree(source: &[u16], ctx: &mut Context<'_>) -> Arc<Value> {
@@ -311,7 +311,7 @@ fn construction_lifetime_and_limits_never_transfer_input_proof_to_foreign_contex
             Ok(a.bank)
         })
         .unwrap();
-    assert!(!bank.input_compatible(&mut ctx)?);
+    assert!(!bank.input_compatible(&mut ctx).unwrap());
     ctx.with_codegen_construction(|ctx| {
         assert!(!bank.input_compatible(ctx)?);
         Ok::<(), EngineError>(())

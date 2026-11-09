@@ -702,7 +702,7 @@ fn nk08_real_cold_and_warm_callback_denial_cannot_publish_or_damage_existing_pla
         if warm {
             assert_eq!(
                 baseline.iter().map(|(_, e)| *e).collect::<Vec<_>>(),
-                vec!["node-key-and-lookup"]
+                vec!["node-key-and-lookup", "node-plan-hit-after-readback"]
             );
         } else {
             for required in [

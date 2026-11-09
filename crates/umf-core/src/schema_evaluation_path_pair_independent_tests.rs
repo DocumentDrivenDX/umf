@@ -24,7 +24,7 @@ fn verify(a: &Arena, p: &EvaluationPathPair) {
     let t = b.tracked.as_ref().unwrap();
     let (i, depth) = t.parent(p).expect("actual minted pair in original arena");
     let e = &t.entries[i];
-    assert_eq!(e.text, *p.text());
+    assert_eq!(*e.text.text(), *p.text());
     assert_eq!(e.depth, depth);
 }
 fn state(a: &Arena) -> (usize, usize, usize, usize) {

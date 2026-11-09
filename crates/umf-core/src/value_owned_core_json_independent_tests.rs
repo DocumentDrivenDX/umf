@@ -27,7 +27,7 @@ fn package() -> Value {
         (Utf16::from("retained"), Value::Bool(false)),
     ])
 }
-fn context(limits: crate::context::Limits) -> Context<'static> {
+fn context<'a>(limits: crate::context::Limits) -> Context<'a> {
     Context::with_limits(crate::context::ResourceProfile::Cooperative, limits).unwrap()
 }
 fn span(trace: &Charges, start: usize) -> Vec<usize> {

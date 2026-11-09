@@ -47,7 +47,7 @@ fn fixture() -> Value {
         ),
     ])
 }
-fn context(limits: crate::context::Limits) -> Context<'static> {
+fn context<'a>(limits: crate::context::Limits) -> Context<'a> {
     Context::with_limits(crate::ResourceProfile::Cooperative, limits).unwrap()
 }
 fn original(

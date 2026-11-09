@@ -811,7 +811,10 @@ fn interpreter_annotation_commit_rollback_and_ordered_errors_match_original() {
         ),
         (
             r#"{"contains":{"type":"integer"},"unevaluatedItems":false}"#,
-            vec![("[1,2]", true), (r#"[1,"x"]"#, false)],
+            // The admitted Ajv profile evaluates the whole array for
+            // unevaluatedItems once a nontrivial contains runs, so the owner
+            // and the fallback agree that this instance is valid.
+            vec![("[1,2]", true), (r#"[1,"x"]"#, true)],
         ),
         (
             r#"{"anyOf":[{"prefixItems":[{"type":"integer"}]},{"prefixItems":[{"type":"string"}]}],"unevaluatedItems":false}"#,
@@ -834,7 +837,7 @@ fn interpreter_annotation_commit_rollback_and_ordered_errors_match_original() {
                 actual, expected,
                 "full ordered errors: {source} / {instance}"
             );
-            assert_eq!(actual.is_empty(), valid);
+            assert_eq!(actual.is_empty(), valid, "validity: {source} / {instance}");
         }
     }
     let source = json(

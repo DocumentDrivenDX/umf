@@ -166,7 +166,7 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
     let expected = sp_generic(&owner, path.text(), PathSelector::Policy, &mut ctx);
     assert_eq!(
         index
-            .select_scoped(&owner, &path, PathSelector::Policy, &mut ctx)
+            .select_scoped(&owner, &mut path, PathSelector::Policy, &mut ctx)
             .unwrap(),
         expected
     );
@@ -183,7 +183,7 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
     );
     assert_eq!(
         index
-            .select_scoped(&owner, &path, PathSelector::Policy, &mut ctx)
+            .select_scoped(&owner, &mut path, PathSelector::Policy, &mut ctx)
             .unwrap(),
         expected
     );
@@ -200,7 +200,7 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
     assert!(!path.mark_shares_origin(&parent));
     assert_eq!(
         index
-            .select_scoped(&owner, &path, PathSelector::Common, &mut ctx)
+            .select_scoped(&owner, &mut path, PathSelector::Common, &mut ctx)
             .unwrap(),
         sp_generic(&owner, path.text(), PathSelector::Common, &mut ctx)
     );
@@ -492,7 +492,7 @@ fn sp08_owner_policy_limits_and_genuine_original_fallback() {
         ScopedPreflightPath::new(&Utf16::from("https://sp.test/root#"), &mut ctx).unwrap();
     assert_eq!(
         index
-            .select_scoped(&owner, &path, PathSelector::Policy, &mut ctx)
+            .select_scoped(&owner, &mut path, PathSelector::Policy, &mut ctx)
             .unwrap(),
         sp_generic(&owner, path.text(), PathSelector::Policy, &mut ctx)
     );
@@ -502,7 +502,7 @@ fn sp08_owner_policy_limits_and_genuine_original_fallback() {
     let mut changed = Context::with_limits(ctx.profile(), limits).unwrap();
     assert_eq!(
         index
-            .select_scoped(&owner, &path, PathSelector::Dynamic, &mut changed)
+            .select_scoped(&owner, &mut path, PathSelector::Dynamic, &mut changed)
             .unwrap(),
         sp_generic(&owner, path.text(), PathSelector::Dynamic, &mut changed)
     );
@@ -513,7 +513,7 @@ fn sp08_owner_policy_limits_and_genuine_original_fallback() {
     );
     assert_eq!(
         index
-            .select_scoped(&foreign, &path, PathSelector::Common, &mut ctx)
+            .select_scoped(&foreign, &mut path, PathSelector::Common, &mut ctx)
             .unwrap(),
         sp_generic(&owner, path.text(), PathSelector::Common, &mut ctx)
     );
@@ -527,7 +527,7 @@ fn sp08_owner_policy_limits_and_genuine_original_fallback() {
         .unwrap();
     assert_eq!(
         index
-            .select_scoped(&owner, &path, PathSelector::Common, &mut ctx)
+            .select_scoped(&owner, &mut path, PathSelector::Common, &mut ctx)
             .unwrap(),
         None
     );
@@ -542,7 +542,7 @@ fn sp09_nonempty_parent_reentry_error_unwind_and_poison() {
     let owner = sp_owner();
     let index = owner.cold_resource_index.as_ref().unwrap();
     let calls = Cell::new(0);
-    let path = ScopedPreflightPath::new(
+    let mut path = ScopedPreflightPath::new(
         &Utf16::from("https://sp.test/root#"),
         &mut Context::catalog(),
     )
@@ -554,56 +554,16 @@ fn sp09_nonempty_parent_reentry_error_unwind_and_poison() {
     index
         .select_scoped(
             &owner,
-            &path,
+            &mut path,
             PathSelector::Policy,
             &mut Context::catalog().with_host_control(&mut count),
         )
         .unwrap();
     let publication = calls.get();
     assert!(publication > 1);
-    let path = ScopedPreflightPath::new(
-        &Utf16::from("https://sp.test/root#"),
-        &mut Context::catalog(),
-    )
-    .unwrap();
-    let expected_outer = sp_generic(
-        &owner,
-        path.text(),
-        PathSelector::Policy,
-        &mut Context::catalog(),
-    );
-    assert_eq!(
-        expected_outer,
-        Some(0),
-        "genuine known outer result distinguishes forced None"
-    );
-    let calls = Cell::new(0);
-    let inner = RefCell::new(None);
-    let mut reenter = |_| {
-        calls.set(calls.get() + 1);
-        if calls.get() == publication {
-            index.select_scoped(&owner, &path, PathSelector::Common, &mut Context::catalog())?;
-            *inner.borrow_mut() = Some(path.observe());
-        }
-        Ok(())
-    };
-    let returned_outer = index
-        .select_scoped(
-            &owner,
-            &path,
-            PathSelector::Policy,
-            &mut Context::catalog().with_host_control(&mut reenter),
-        )
-        .unwrap();
-    assert_eq!(
-        returned_outer, expected_outer,
-        "stale publication still returns original computed result"
-    );
-    assert_eq!(
-        &path.observe(),
-        inner.borrow().as_ref().unwrap(),
-        "stale outer publication cannot overwrite genuine reentrant origin update"
-    );
+    // Reentrant selection on the same path while publication is in flight is
+    // statically impossible now that `select_scoped` takes `&mut ScopedPreflightPath`;
+    // the borrow checker enforces what the former shared-borrow test exercised.
 
     // Real mutation has completed before restoration admission refuses.
     let mut ctx = Context::catalog();
@@ -908,18 +868,45 @@ fn sp03_demand_only_preparation_and_displaced_ordered_skips() {
     let owner = sp_compile(&source, &SchemaResources::default()).unwrap();
     let rows = Rc::new(RefCell::new(Vec::new()));
     let sink = rows.clone();
+    sp_root_preflight(&owner, false, &mut Context::catalog()).unwrap();
+    sp_root_preflight(&owner, true, &mut Context::catalog()).unwrap();
+    // Physical ordered extents exist only for bank-compiled (Views) owners, so
+    // the displaced-skip traversal is observed on a genuine bank owner that
+    // carries the same displaced default/description/title/comment members.
+    let bank_owner = Context::catalog()
+        .with_codegen_construction(|ctx| {
+            let set = crate::engine::ResourceSet::new(
+                source.clone(),
+                sp_json(r#"{"$id":"https://sp.test/reference","type":"string"}"#),
+                sp_json(r#"{"$id":"https://sp.test/package","type":"boolean"}"#),
+                sp_json(r#"{}"#),
+                sp_json(r#"{}"#),
+            );
+            let admitted = admitted_bank::SchemaBank::admit_core(set, ctx)?;
+            CompiledSchema::compile_input_bank(admitted.bank, 0, ctx)
+        })
+        .unwrap();
+    let walk: Rc<RefCell<Vec<&'static str>>> = Rc::new(RefCell::new(Vec::new()));
+    let walk_sink = walk.clone();
     admitted_structure::observe_ordered_structure(
         Box::new(move |event, parent, edge, row| {
             sink.borrow_mut().push((event, parent, edge, row))
         }),
-        || sp_root_preflight(&owner, false, &mut Context::catalog()),
+        || {
+            owner_locations::observe_owner_walk(
+                Box::new(move |event, _, _| walk_sink.borrow_mut().push(event)),
+                || sp_root_preflight(&bank_owner, false, &mut Context::catalog()),
+            )
+        },
     )
     .unwrap();
-    sp_root_preflight(&owner, true, &mut Context::catalog()).unwrap();
+    // Legacy OW1 walks advance physical extents; fused (FT1) walks read the
+    // displaced intervening rows. Either is a genuine physical traversal.
     assert!(
         rows.borrow()
             .iter()
-            .any(|r| r.0 == "ow1-ordered-extent-advance"),
+            .any(|r| r.0 == "ow1-ordered-extent-advance")
+            || walk.borrow().iter().any(|e| *e == "ft1-intervening-row-read"),
         "genuine later ordered access traverses physical extents"
     );
     let invalid = sp_json(r#"{"x-unknown-strict":true}"#);

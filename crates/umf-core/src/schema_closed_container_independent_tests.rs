@@ -159,7 +159,7 @@ fn exact_host(actual: &EngineError) {
     assert!(!actual.is_python_schema_terminal());
 }
 
-fn context(limits: Limits) -> Context<'static> {
+fn context<'a>(limits: Limits) -> Context<'a> {
     Context::with_limits(ResourceProfile::Cooperative, limits).unwrap()
 }
 fn admitted(

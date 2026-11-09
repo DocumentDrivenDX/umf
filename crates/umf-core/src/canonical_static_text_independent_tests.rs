@@ -486,7 +486,10 @@ fn static07_static_path_append_escapes_detaches_then_owned_restore_and_decimal()
         )
         .unwrap();
     assert_eq!(old, 1);
-    assert_eq!(events, vec!["path-growth", "path-relocation", "path-write"]);
+    assert_eq!(
+        events,
+        vec!["path-growth", "path-relocation", "path-write", "path-write-complete"]
+    );
     assert_eq!(path.units(), &[35, 47, 97, 126, 49, 126, 48, 0xd800]);
     assert_eq!(original.units(), ROOT);
     assert_eq!(ROOT, &[35]);
@@ -536,7 +539,7 @@ fn static08_shared_and_path_effect_groups_deny_before_copy_reserve_or_mutation()
         if operation == 1 {
             assert_eq!(
                 trace.iter().map(|(_, e)| *e).collect::<Vec<_>>(),
-                vec!["path-growth", "path-relocation", "path-write"]
+                vec!["path-growth", "path-relocation", "path-write", "path-write-complete"]
             );
         }
         if operation == 2 {

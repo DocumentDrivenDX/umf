@@ -45,7 +45,7 @@ fn field<'a>(v: &'a Value, name: &str) -> &'a Value {
         .unwrap()
         .1
 }
-fn limited(limits: crate::context::Limits) -> Context<'static> {
+fn limited<'a>(limits: crate::context::Limits) -> Context<'a> {
     Context::with_limits(crate::ResourceProfile::Cooperative, limits).unwrap()
 }
 fn raw(source: &[u16], limits: crate::context::Limits) -> Result<Value, EngineError> {
