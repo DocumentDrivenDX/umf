@@ -110,5 +110,42 @@ class BoundaryRuleTests(unittest.TestCase):
 
 
 
+    def _check_production_core_without_toolchain_processes(self, root):
+        with patch.object(MODULE, "ROOT", root), patch.object(
+            MODULE, "cargo_tree", return_value={"status": "resolved", "stdout": "umf-core v0.1.0\n", "stderr": ""}
+        ), patch.object(
+            MODULE.subprocess, "run", return_value=SimpleNamespace(stdout="host: x86_64-unknown-linux-gnu\n")
+        ):
+            return MODULE.check_production_core()[0]
+
+    def test_thread_local_macro_is_not_a_thread_module_but_host_modules_still_refuse(self):
+        controls = {
+            "thread_local.rs": "std::thread_local! { static SLOT: u8 = 0; }",
+            "thread_spawn.rs": "std::thread::spawn(|| {});",
+            "thread_use.rs": "use std::thread;",
+            "thread_sleep.rs": "std::thread::sleep(duration);",
+            "fs.rs": "std::fs::read(path);",
+            "net.rs": "std::net::TcpStream;",
+            "process.rs": "std::process::exit(1);",
+            "time.rs": "std::time::Instant::now();",
+            "env.rs": "std::env::var(\"X\");",
+            "tokio.rs": "tokio::spawn(future);",
+        }
+        with tempfile.TemporaryDirectory(prefix="umf-core-host-capability-") as temp:
+            source_dir = Path(temp) / "crates/umf-core/src"
+            source_dir.mkdir(parents=True)
+            for name, body in controls.items():
+                (source_dir / name).write_text(f"#[cfg(test)] mod probe {{ {body} }}\n")
+            findings = self._check_production_core_without_toolchain_processes(Path(temp))
+        observed = {row["path"] for row in findings if row["rule"] == "production-core-host-capability"}
+        expected = {f"crates/umf-core/src/{name}" for name in controls if name != "thread_local.rs"}
+        self.assertEqual(expected, observed)
+
+    def test_current_production_core_scan_accepts_test_only_thread_local_observer(self):
+        findings = self._check_production_core_without_toolchain_processes(ROOT)
+        observed = [row for row in findings if row["rule"] == "production-core-host-capability"]
+        self.assertEqual([], observed)
+
+
 if __name__ == "__main__":
     unittest.main()

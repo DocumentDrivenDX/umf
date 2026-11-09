@@ -29,7 +29,7 @@ CORE_HOST_CRATES = {
     "v8", "rusty_v8", "deno_core", "rquickjs", "quick-js", "boa_engine",
     "clap", "tokio", "async-std", "reqwest", "ureq", "hyper", "axum", "actix-web", "std_fs",
 }
-CORE_HOST_MODULES = re.compile(r"\b(?:std::(?:fs|net|process|thread|time|env)|tokio::|async_std::|reqwest::|ureq::|napi::|pyo3::|wasm_bindgen::|web_sys::|js_sys::)")
+CORE_HOST_MODULES = re.compile(r"\b(?:std::(?:fs|net|process|thread\b|time|env)|tokio::|async_std::|reqwest::|ureq::|napi::|pyo3::|wasm_bindgen::|web_sys::|js_sys::)")
 FORBIDDEN_PY_IMPORTS = re.compile(r"(?m)^\s*(?:from\s+py_mini_racer\b|import\s+py_mini_racer\b|from\s+quickjs\b|import\s+quickjs\b)")
 FORBIDDEN_TS_IMPORTS = re.compile(r"(?m)^\s*(?:import|export)\b[^\n]*?['\"](?:node:vm|node:v8|vm2|quickjs-emscripten|pyodide)['\"]")
 RETIRED_CORE_RUNTIME_IMPORTS = re.compile(r"(?m)^\s*(?:from\s+(?:jsonschema|ruamel)(?:\.|\s)|import\s+(?:jsonschema|ruamel)(?:\.|\s|$))")

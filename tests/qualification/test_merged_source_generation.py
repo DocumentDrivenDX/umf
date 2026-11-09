@@ -1,6 +1,7 @@
 """Pure controls for the embedded hosted GEN1 G0 custody controller."""
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import os
@@ -9,7 +10,10 @@ import re
 import shutil
 import subprocess
 import tempfile
+import warnings
+import zipfile
 import unittest
+from unittest.mock import patch
 
 import yaml
 
@@ -344,6 +348,155 @@ class WorkflowContractTests(unittest.TestCase):
             (root / "source.ts").write_text("changed during D\n")
             with self.assertRaisesRegex(ValueError, "source write during C/D"):
                 ctl["attest"](str(anchor), str(oracle_path), str(attestation_path), str(initial), str(artifact_dir))
+
+
+
+    def test_continuation_binding_is_fixed_to_the_actual_failed_attempt(self):
+        ctl = embedded_controller()
+        run = {"id": 42699606117, "run_attempt": 1, "workflow_id": 396700537,
+               "event": "workflow_dispatch", "head_sha": ctl["ORIGINAL_SOURCE"],
+               "head_branch": "codex/truss-constructor-recovery", "status": "completed",
+               "conclusion": "failure", "actor": {"login": "easel"}}
+        jobs = [{"id": 129440512678, "name": "generate", "conclusion": "failure"}]
+        artifact = {"id": 13711641327, "name": ctl["ORIGINAL_ARTIFACT_NAME"],
+                    "size_in_bytes": ctl["ORIGINAL_ZIP_BYTES"],
+                    "digest": "sha256:" + ctl["ORIGINAL_ZIP_SHA"], "expired": False,
+                    "workflow_run": {"id": 42699606117, "head_sha": ctl["ORIGINAL_SOURCE"],
+                                     "head_branch": "codex/truss-constructor-recovery"}}
+        request = {"run_id": "42699606117", "run_attempt": "1", "artifact_id": "13711641327",
+                   "artifact_digest": "sha256:" + ctl["ORIGINAL_ZIP_SHA"],
+                   "source_sha": ctl["ORIGINAL_SOURCE"]}
+        ctl["validate_original_binding"](request, run, jobs, [artifact])
+        mutations = [
+            ("run_id", {**run, "id": 1}, jobs, [artifact]),
+            ("source", {**run, "head_sha": "0" * 40}, jobs, [artifact]),
+            ("event", {**run, "event": "push"}, jobs, [artifact]),
+            ("phase", {**run, "conclusion": "success"}, jobs, [artifact]),
+            ("job", run, [{**jobs[0], "id": 1}], [artifact]),
+            ("artifact", run, jobs, [{**artifact, "digest": "sha256:" + "0" * 64}]),
+        ]
+        for name, bad_run, bad_jobs, bad_artifacts in mutations:
+            with self.subTest(binding=name), self.assertRaises(ValueError):
+                ctl["validate_original_binding"](request, bad_run, bad_jobs, bad_artifacts)
+        bad_request = dict(request); bad_request["artifact_digest"] = "sha256:" + "0" * 64
+        with self.assertRaisesRegex(ValueError, "inputs mismatch"):
+            ctl["validate_original_binding"](bad_request, run, jobs, [artifact])
+
+    def test_original_zip_auth_rejects_bad_digest_roster_traversal_and_symlink(self):
+        import io
+        ctl = embedded_controller()
+        def zipped(name, mode=None):
+            buf = io.BytesIO()
+            with zipfile.ZipFile(buf, "w") as archive:
+                info = zipfile.ZipInfo(name)
+                if mode is not None:
+                    info.external_attr = mode << 16
+                archive.writestr(info, b"payload")
+            return buf.getvalue()
+        valid = zipped("member.txt")
+        with patch.dict(ctl, {"ORIGINAL_ZIP_BYTES": len(valid),
+                              "ORIGINAL_ZIP_SHA": sha(valid),
+                              "ORIGINAL_MEMBERS": {"member.txt"}}):
+            files, rows = ctl["archive_members"](valid, {"size_in_bytes": len(valid),
+                                                           "digest": "sha256:" + sha(valid)})
+            self.assertEqual(files, {"member.txt": b"payload"})
+            self.assertEqual(rows[0]["sha256"], sha(b"payload"))
+            with self.assertRaisesRegex(ValueError, "size/SHA"):
+                ctl["archive_members"](valid + b"x", {"size_in_bytes": len(valid),
+                                                       "digest": "sha256:" + sha(valid)})
+        for name, mode in [("../escape", None), ("/absolute", None), ("link", 0o120777)]:
+            bad = zipped(name, mode)
+            with patch.dict(ctl, {"ORIGINAL_ZIP_BYTES": len(bad),
+                                  "ORIGINAL_ZIP_SHA": sha(bad),
+                                  "ORIGINAL_MEMBERS": {name}}):
+                with self.subTest(member=name), self.assertRaisesRegex(ValueError, "unsafe"):
+                    ctl["archive_members"](bad, {"size_in_bytes": len(bad),
+                                                  "digest": "sha256:" + sha(bad)})
+        duplicate = io.BytesIO()
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            with zipfile.ZipFile(duplicate, "w") as archive:
+                archive.writestr("member.txt", b"a")
+                archive.writestr("member.txt", b"b")
+        raw = duplicate.getvalue()
+        with patch.dict(ctl, {"ORIGINAL_ZIP_BYTES": len(raw),
+                              "ORIGINAL_ZIP_SHA": sha(raw),
+                              "ORIGINAL_MEMBERS": {"member.txt"}}):
+            with self.assertRaisesRegex(ValueError, "roster"):
+                ctl["archive_members"](raw, {"size_in_bytes": len(raw),
+                                              "digest": "sha256:" + sha(raw)})
+
+    def test_closed_patch_parser_refuses_extra_path_rename_mode_and_traversal(self):
+        ctl = embedded_controller()
+        good = b"diff --git a/spec/core/schema.json b/spec/core/schema.json\n"
+        self.assertEqual({"spec/core/schema.json"}, ctl["patch_paths"](good))
+        for patch_bytes in [
+            b"diff --git a/unlisted.rs b/unlisted.rs\n",
+            b"diff --git a/../escape b/../escape\n",
+            b"diff --git a/spec/core/schema.json b/spec/core/other.json\n",
+            b"diff --git a/spec/core/schema.json b/spec/core/schema.json\nnew mode 120000\n",
+        ]:
+            with self.subTest(patch=patch_bytes[:70]), self.assertRaises(ValueError):
+                ctl["patch_paths"](patch_bytes)
+
+    def test_successor_reuses_original_maps_only_for_exact_four_controller_paths(self):
+        ctl = embedded_controller()
+        old_sources = {path: "1" * 64 for path in ctl["SOURCE_DELTA"]}
+        old_sources["unchanged.rs"] = "2" * 64
+        original = {"sources": old_sources,
+                    "outputs": {path: {"bytes": 1, "sha256": "3" * 64} for path in ctl["OUTPUTS"]},
+                    "metamodelManifest": {"sources": {}, "workspaceInputs": {}, "compilerInputs": {}},
+                    "actionIdentityNonProducerSha256": "4" * 64}
+        initial = {"sources": dict(old_sources)}
+        successor = copy.deepcopy(original)
+        successor["sources"]["scripts/check-rust-boundaries.py"] = ctl["CHECKER_SHA"]
+        successor["sources"]["tests/rust-inventory/test_boundaries.py"] = ctl["CHECKER_TEST_SHA"]
+        successor["sources"][".github/workflows/merged-source-generation.yml"] = "5" * 64
+        successor["sources"]["tests/qualification/test_merged_source_generation.py"] = "6" * 64
+        self.assertEqual(sorted(ctl["SOURCE_DELTA"]),
+                         ctl["validate_successor"](original, initial, successor))
+        cases = []
+        extra = copy.deepcopy(successor); extra["sources"]["unchanged.rs"] = "7" * 64; cases.append(extra)
+        output = copy.deepcopy(successor); output["outputs"][ctl["DATA"]]["sha256"] = "8" * 64; cases.append(output)
+        missing = copy.deepcopy(successor); del missing["outputs"][ctl["DATA"]]; cases.append(missing)
+        recipe = copy.deepcopy(successor); recipe["metamodelManifest"]["compilerInputs"]["scripts/check-rust-boundaries.py"] = "9" * 64; cases.append(recipe)
+        altered = copy.deepcopy(successor); altered["sources"]["scripts/check-rust-boundaries.py"] = "0" * 64; cases.append(altered)
+        partial = copy.deepcopy(successor); partial["sources"]["tests/qualification/test_merged_source_generation.py"] = old_sources["tests/qualification/test_merged_source_generation.py"]; cases.append(partial)
+        for index, bad in enumerate(cases):
+            with self.subTest(case=index), self.assertRaises(ValueError):
+                ctl["validate_successor"](original, initial, bad)
+
+    def test_original_c8_failure_and_new_c8_d_are_never_relabelled(self):
+        ctl = embedded_controller()
+        expected = "".join(f"{name} {0 if name != 'C8' else 1}\n"
+                           for name in [*(f"A{i}" for i in range(1, 5)),
+                                        *(f"B{i}" for i in range(1, 5)),
+                                        *(f"C{i}" for i in range(1, 9))])
+        self.assertEqual(expected, ctl["validate_original_status"](expected,
+                         {"success": False, "status": expected}))
+        changed = expected.replace("C8 1", "C8 0")
+        with self.assertRaisesRegex(ValueError, "phase/status"):
+            ctl["validate_original_status"](changed, {"success": True, "status": changed})
+        ctl["validate_new_status"]("C8 0\nD1 0\n")
+        for status in ("C8 1\nD1 0\n", "C8 0\n", "C8 0\nD1 1\n"):
+            with self.subTest(status=status), self.assertRaises(ValueError):
+                ctl["validate_new_status"](status)
+        with tempfile.TemporaryDirectory() as temp:
+            directory = pathlib.Path(temp); (directory / "stages").mkdir()
+            (directory / "stages/status.txt").write_text("C8 1\nD1 0\n")
+            with self.assertRaises(ValueError):
+                ctl["continuation_join"](str(directory))
+            self.assertFalse((directory / "continuation-receipt.json").exists())
+
+    def test_original_anchor_immutability_guard(self):
+        ctl = embedded_controller()
+        with tempfile.TemporaryDirectory() as temp:
+            anchor = pathlib.Path(temp) / "C.roster.json"
+            original = b'{"original":"C"}\n'; anchor.write_bytes(original)
+            ctl["verify_immutable_file"](anchor, original)
+            anchor.write_bytes(b'{"rewritten":"successor"}\n')
+            with self.assertRaisesRegex(ValueError, "rewritten"):
+                ctl["verify_immutable_file"](anchor, original)
 
 
 if __name__ == "__main__":
