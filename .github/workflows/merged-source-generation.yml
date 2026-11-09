@@ -352,6 +352,17 @@ jobs:
               if set(rows)!=ORIGINAL_CONTROLLER_PATHS: raise ValueError('original source-controller roster mismatch')
               for path,digest in rows.items():
                   if hashlib.sha256(subprocess.check_output(['git','show',ORIGINAL_SOURCE+':'+path],cwd=ROOT)).hexdigest()!=digest: raise ValueError('original source-controller blob mismatch: '+path)
+          def validate_source_record(path,record):
+              if not isinstance(record,dict) or set(record)!={'bytes','sha256'}: raise ValueError('invalid source record shape: '+path)
+              if type(record['bytes']) is not int or record['bytes']<0: raise ValueError('invalid source record byte count: '+path)
+              if not isinstance(record['sha256'],str) or re.fullmatch(r'[0-9a-f]{64}',record['sha256']) is None: raise ValueError('invalid source record SHA-256: '+path)
+              return record
+          def verify_successor_source_pin(sources,path,expected_sha):
+              record=validate_source_record(path,sources.get(path))
+              actual=safe_regular(path).read_bytes()
+              actual_sha=hashlib.sha256(actual).hexdigest()
+              if record['bytes']!=len(actual) or record['sha256']!=actual_sha: raise ValueError('successor source record bytes/hash mismatch: '+path)
+              if record['sha256']!=expected_sha: raise ValueError('approved checker source hashes mismatch: '+path)
           def validate_successor(original_c,initial,successor):
               if initial['sources']!=original_c['sources']: raise ValueError('original pre-A/C source maps differ')
               if set(successor['outputs'])!=OUTPUTS or successor['outputs']!=original_c['outputs']: raise ValueError('reconstructed output differs from original C map')
@@ -361,9 +372,11 @@ jobs:
                   if SOURCE_DELTA & set(recipe): raise ValueError('approved controller delta appears in compiler recipe inputs')
               old,new=original_c['sources'],successor['sources']
               if set(old)!=set(new): raise ValueError('source snapshot member set changed')
+              for path,record in new.items(): validate_source_record(path,record)
               changed={p for p in old if old[p]!=new[p]}
               if changed!=SOURCE_DELTA: raise ValueError('successor source delta is not exactly the four approved paths')
-              if new['scripts/check-rust-boundaries.py']!=CHECKER_SHA or new['tests/rust-inventory/test_boundaries.py']!=CHECKER_TEST_SHA: raise ValueError('approved checker source hashes mismatch')
+              verify_successor_source_pin(new,'scripts/check-rust-boundaries.py',CHECKER_SHA)
+              verify_successor_source_pin(new,'tests/rust-inventory/test_boundaries.py',CHECKER_TEST_SHA)
               return sorted(changed)
           def gh_api(path):
               p=subprocess.run(['gh','api',path],cwd=ROOT,check=False,stdout=subprocess.PIPE,stderr=subprocess.PIPE)

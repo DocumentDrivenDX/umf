@@ -441,26 +441,37 @@ class WorkflowContractTests(unittest.TestCase):
 
     def test_successor_reuses_original_maps_only_for_exact_four_controller_paths(self):
         ctl = embedded_controller()
-        old_sources = {path: "1" * 64 for path in ctl["SOURCE_DELTA"]}
-        old_sources["unchanged.rs"] = "2" * 64
+        checker_paths = ["scripts/check-rust-boundaries.py",
+                         "tests/rust-inventory/test_boundaries.py"]
+        actual_checker_records = ctl["filemap"](checker_paths)
+        old_sources = {path: {"bytes": 1, "sha256": "1" * 64}
+                       for path in ctl["SOURCE_DELTA"]}
+        old_sources["unchanged.rs"] = {"bytes": 1, "sha256": "2" * 64}
         original = {"sources": old_sources,
                     "outputs": {path: {"bytes": 1, "sha256": "3" * 64} for path in ctl["OUTPUTS"]},
                     "metamodelManifest": {"sources": {}, "workspaceInputs": {}, "compilerInputs": {}},
                     "actionIdentityNonProducerSha256": "4" * 64}
         initial = {"sources": dict(old_sources)}
         successor = copy.deepcopy(original)
-        successor["sources"]["scripts/check-rust-boundaries.py"] = ctl["CHECKER_SHA"]
-        successor["sources"]["tests/rust-inventory/test_boundaries.py"] = ctl["CHECKER_TEST_SHA"]
-        successor["sources"][".github/workflows/merged-source-generation.yml"] = "5" * 64
-        successor["sources"]["tests/qualification/test_merged_source_generation.py"] = "6" * 64
+        successor["sources"].update(actual_checker_records)
+        successor["sources"][".github/workflows/merged-source-generation.yml"] = {
+            "bytes": 1, "sha256": "5" * 64}
+        successor["sources"]["tests/qualification/test_merged_source_generation.py"] = {
+            "bytes": 1, "sha256": "6" * 64}
         self.assertEqual(sorted(ctl["SOURCE_DELTA"]),
                          ctl["validate_successor"](original, initial, successor))
         cases = []
-        extra = copy.deepcopy(successor); extra["sources"]["unchanged.rs"] = "7" * 64; cases.append(extra)
+        extra = copy.deepcopy(successor); extra["sources"]["unchanged.rs"] = {"bytes": 1, "sha256": "7" * 64}; cases.append(extra)
         output = copy.deepcopy(successor); output["outputs"][ctl["DATA"]]["sha256"] = "8" * 64; cases.append(output)
         missing = copy.deepcopy(successor); del missing["outputs"][ctl["DATA"]]; cases.append(missing)
         recipe = copy.deepcopy(successor); recipe["metamodelManifest"]["compilerInputs"]["scripts/check-rust-boundaries.py"] = "9" * 64; cases.append(recipe)
-        altered = copy.deepcopy(successor); altered["sources"]["scripts/check-rust-boundaries.py"] = "0" * 64; cases.append(altered)
+        altered = copy.deepcopy(successor); altered["sources"]["scripts/check-rust-boundaries.py"]["sha256"] = "0" * 64; cases.append(altered)
+        missing_checker = copy.deepcopy(successor); del missing_checker["sources"]["scripts/check-rust-boundaries.py"]; cases.append(missing_checker)
+        missing_field = copy.deepcopy(successor); del missing_field["sources"]["scripts/check-rust-boundaries.py"]["sha256"]; cases.append(missing_field)
+        extra_field = copy.deepcopy(successor); extra_field["sources"]["scripts/check-rust-boundaries.py"]["path"] = "scripts/check-rust-boundaries.py"; cases.append(extra_field)
+        wrong_byte_type = copy.deepcopy(successor); wrong_byte_type["sources"]["scripts/check-rust-boundaries.py"]["bytes"] = True; cases.append(wrong_byte_type)
+        wrong_byte_count = copy.deepcopy(successor); wrong_byte_count["sources"]["scripts/check-rust-boundaries.py"]["bytes"] += 1; cases.append(wrong_byte_count)
+        malformed_sha = copy.deepcopy(successor); malformed_sha["sources"]["tests/rust-inventory/test_boundaries.py"]["sha256"] = "not-a-digest"; cases.append(malformed_sha)
         partial = copy.deepcopy(successor); partial["sources"]["tests/qualification/test_merged_source_generation.py"] = old_sources["tests/qualification/test_merged_source_generation.py"]; cases.append(partial)
         for index, bad in enumerate(cases):
             with self.subTest(case=index), self.assertRaises(ValueError):
