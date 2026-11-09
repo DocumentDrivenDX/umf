@@ -2,7 +2,9 @@
 name: Lakeview current runtime qualification
 on:
   workflow_dispatch:
+  # PRs run this heavy suite only when labelled `ci:full` (otherwise the evidence-gate job in sagas.yml applies).
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
     paths:
       - '.github/workflows/lakeview-qualification.yml'
       - 'crates/umf-core/src/lakeview.rs'
@@ -25,6 +27,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   native-installed-browser:
+    if: (github.event_name != 'pull_request' || (contains(github.event.pull_request.labels.*.name, 'ci:full') && (github.event.action != 'labeled' || github.event.label.name == 'ci:full')))
     runs-on: ubuntu-24.04
     timeout-minutes: 55
     env:
