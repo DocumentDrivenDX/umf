@@ -28,6 +28,8 @@ POSITIVES=(
  'test_retained_constructor_removes_host_wire_roundtrip_not_only_its_charges',
  'test_mutation_from_compilation_callback_cannot_change_already_owned_snapshot')
 PRIVATE_METHODS=('test_private_native_envelope_exact_quota_and_one_below_refuse_before_publication', 'test_private_same_handle_warm_replay_is_diagnostic_not_cold_feasibility', 'test_private_native_envelope_cancel_deadline_and_meter_refuse_before_publication', 'test_private_native_envelope_meter_exception_preserves_first_error_and_charge', 'test_private_native_envelope_first_denial_object_survives_without_error_serialization', 'test_private_unknown_root_schema_keyword_refuses_after_native_conversion', 'test_private_resource_depth_limit_remains_per_resource_128', 'test_private_resource_node_limit_is_not_only_public_work_precheck', 'test_private_reentrant_failure_does_not_replace_first_outer_control_denial', 'test_private_native_factory_conversion_compilation_callbacks_refuse', 'test_private_native_decode_and_combined_inspection_encoding_controls_refuse', 'test_private_native_callback_exception_is_not_semantic_success', 'test_private_native_handle_retains_neither_callback_nor_mutable_resources')
+LIFECYCLE2_CASES=('python/tests/test_saga_lifecycle.py::InstalledSagaLifecycle::test_author_declare_edit_exchange_and_assess','python/tests/test_saga_lifecycle.py::InstalledSagaLifecycle::test_unknown_recovery_meaning_refuses_edit')
+LIFECYCLE2_SOURCE_FILES=('python/tests/test_saga_lifecycle.py','fixtures/saga/portable.json')
 BOUNDARY_CASES=frozenset(["PrivateNativeControlTests."+n for n in PRIVATE_METHODS]+["RetainedResourceAdmissionNativeTests."+n for n in REFUSALS])
 LEGACY_CASES=frozenset(('test_constructor_copy_observes_controls','test_host_callback_cannot_spoof_semantic_origin_and_preserves_text','test_native_control_error_retains_python_origin_and_remains_an_operation_error','test_carrier_copy_is_controlled_and_keeps_utf16_and_negative_zero','test_installed_codegen_late_controls_and_output_isolation','test_codegen_import_fails_closed_without_native_artifact','test_cached_resources_are_charged_before_json_serialization','test_wire_serialization_bound_covers_ascii_growth'))
 DIAGNOSTIC_SECONDS=300
@@ -152,23 +154,23 @@ def identity(args,suffix):
         selected=helper.selection(root,json.loads((root/helper.CENSUS).read_text()))
         resources,input_identity=helper.current_inputs(root,selected)
         require(pins.get('currentInputIdentity')==input_identity and pins.get('resourcePinsSHA256')==input_identity['resourceFixtureSHA256'],'Identity producer/current input differs')
-        version=input_identity['inheritedPrivateMetadataVersion']
+        core_version=helper.input_metadata_version(input_identity)
         require(digest(owner/'tools/verify_python_artifacts.py')==selected['sourceFiles']['tools/verify_python_artifacts.py'],'Current strict verifier source differs')
     else:
-        version='0.10.8';input_identity=None
+        core_version='0.10.8';input_identity=None
         require(digest(owner/'tools/verify_python_artifacts.py')=='0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355','Strict verifier source differs')
-    pip_generated_metadata(Path(sysconfig.get_path('platlib')).resolve(),args.wheel,pins['wheel']['sha256'],version)
+    pip_generated_metadata(Path(sysconfig.get_path('platlib')).resolve(),args.wheel,pins['wheel']['sha256'],core_version)
     subprocess.run([sys.executable,'-I','-B',str(owner/'tools/verify_python_artifacts.py'),
-       '--wheel',str(args.wheel),'--expected-version',version,'--verify-installed-wheel',
+       '--wheel',str(args.wheel),'--expected-version',core_version,'--verify-installed-wheel',
        '--receipt',str(out/('installed-record-'+suffix+'.json'))],check=True)
     if not installed:
         probe=load(owner/'tools/probe_inspector_retained_feasibility.py','owner_probe_'+suffix)
         _,resources=probe.resources(owner,'72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290')
     import umf,umf._rust as rust,umf._rust_core as native,umf.rust_codegen as compiler
-    dist=importlib.metadata.distribution('umf-core');require(dist.version==version,'Inherited private distribution differs')
-    require(umf.__version__==version and native.engine_version()=='umf-core-r2' and native.codegen_protocol_version()=='umf-codegen-r3-seven-ops-nine-resources/1','Loaded owner version/protocol differs')
-    for name,version in pins['dependencies'].items():require(importlib.metadata.version(name)==version,'Dependency differs: '+name)
-    members=helper.installed_wheel(args.wheel,dist,input_identity['inheritedPrivateMetadataVersion']) if installed else probe.installed_wheel(args.wheel,dist)
+    dist=importlib.metadata.distribution('umf-core');require(dist.version==core_version,'Inherited private distribution differs')
+    require(umf.__version__==core_version and native.engine_version()=='umf-core-r2' and native.codegen_protocol_version()=='umf-codegen-r3-seven-ops-nine-resources/1','Loaded owner version/protocol differs')
+    for name,dependency_version in pins['dependencies'].items():require(importlib.metadata.version(name)==dependency_version,'Dependency differs: '+name)
+    members=helper.installed_wheel(args.wheel,dist,core_version) if installed else probe.installed_wheel(args.wheel,dist)
     base=Path(sysconfig.get_path('platlib')).resolve();package=base/'umf';owned={str(f) for f in dist.files}
     files={'umf/__init__.py':Path(umf.__file__),'umf/rust_codegen.py':Path(compiler.__file__),
        'umf/_rust.py':Path(rust.__file__),'umf/_rust_core.abi3.so':Path(native.__file__)}
@@ -374,6 +376,12 @@ def run_installed(args):
        'diagnosticPassed':False,'diagnosticDisposition':'not-selected-explicit-route-only'}
     def save():write(args.out/'aggregate.json',state)
     save()
+    lifecycle_path=args.out/'saga-lifecycle2-result.json'
+    require(not lifecycle_path.exists(),'Prior lifecycle2 result cannot be overwritten')
+    write(lifecycle_path,{'profile':'umf.private-installed-saga-lifecycle2/1','status':'not-reached-prerequisites',
+       'source':args.controller_sha,'run':os.environ.get('GITHUB_RUN_ID'),'attempt':os.environ.get('GITHUB_RUN_ATTEMPT'),
+       'cases':list(LIFECYCLE2_CASES),'publishable':False,'readyForEnrollment':False})
+    lifecycle2_passed=False
     try:
         identity(args,'initial');early=cost_module.intake(args,sys.modules[__name__]);state['costGateAuthenticated']=True
         state['earlyPublicControls']={'cases':selected['publicControls'],'xmlSHA256':early['members']['public-controls.xml']['sha256'],'execution':'same-job-cost-stage-consumed-once'};save()
@@ -396,6 +404,9 @@ def run_installed(args):
                 state['pythonGroups'].append({'group':group['group'],'cases':group['cases'],'passed':True,'xmlSHA256':hashlib.sha256(xml.read_bytes()).hexdigest()});save()
             finally:identity(args,after)
         state['requiredQualificationPassed']=bool(state['costGateAuthenticated'] and state['rustPassed'] and state['sagaPassed'] and len(state['pythonGroups'])==len(selected['python']))
+        if state['requiredQualificationPassed']:
+            lifecycle=run_installed_lifecycle2(args,helper,selected)
+            lifecycle2_passed=lifecycle.get('status')=='passed'
     except BaseException as error:
         state['fatal']={'type':type(error).__name__,'message':str(error)[:1024]};traceback.print_exc()
     finally:
@@ -403,7 +414,81 @@ def run_installed(args):
         except BaseException as error:state['finalIdentityError']=type(error).__name__
         state['requiredQualificationPassed']=state['requiredQualificationPassed'] and state['finalIdentityPassed']
         save()
-    return 0 if state['requiredQualificationPassed'] else 1
+    return 0 if state['requiredQualificationPassed'] and lifecycle2_passed else 1
+
+
+def run_installed_lifecycle2(args,helper,selected):
+    """Run exactly two existing saga lifecycle methods after cost/semantic PASS.
+
+    The result is separate from the frozen 18/477/19/31 aggregate. Inputs and
+    the installed wheel/native/RECORD are bound to this same admitted job.
+    """
+    import hashlib
+    result_path=args.out/'saga-lifecycle2-result.json'
+    result=json.loads(result_path.read_text())
+    require(result.get('profile')=='umf.private-installed-saga-lifecycle2/1' and result.get('status')=='not-reached-prerequisites' and result.get('source')==args.controller_sha,'Lifecycle2 result is not a fresh same-job record')
+    result.update({'status':'running','cases':list(LIFECYCLE2_CASES),'sourceFiles':{},'identityBefore':None,'identityAfter':None,
+       'wheel':None,'nativeMember':None,'log':None,'junit':None,'passed':False})
+    log_path=args.out/'saga-lifecycle2.log';junit_path=args.out/'saga-lifecycle2.xml'
+    before_attempted=False;process_exit=None;junit_passed=False;source_after=False;before_identity_ok=False;after_identity_ok=False
+    def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+    def retain_identity(suffix):
+        path=args.out/('identity-'+suffix+'.json');record=json.loads(path.read_text())
+        producer=json.loads(args.producer_pins.read_text());identity=producer['currentInputIdentity']
+        require(record.get('profile')=='umf.private-retained-installed-identity/1'
+            and record.get('artifactSource')==OWNER and record.get('controllerSource')==args.controller_sha
+            and record.get('completeWheelAndInstalledRecordVerified')is True
+            and record.get('distributionOwnershipVerified')is True
+            and record.get('wheelSHA256')==producer['wheel']['sha256']
+            and record.get('currentInputIdentity')==identity
+            and record.get('loadedModules',{}).get('umf/_rust_core.abi3.so',{}).get('sha256')==producer['nativeMember']['sha256'],
+            'Lifecycle2 same-wheel installed identity differs')
+        return {'path':path.name,'sha256':sha(path)}
+    try:
+        files=selected.get('sourceFiles');require(type(files)is dict,'Lifecycle2 source closure missing')
+        for path in LIFECYCLE2_SOURCE_FILES:
+            expected=files.get(path);require(type(expected)is str and len(expected)==64,'Lifecycle2 source pin missing: '+path)
+            actual=sha(args.controller/path);require(actual==expected,'Lifecycle2 source pin differs: '+path)
+            result['sourceFiles'][path]={'sha256':actual,'bytes':(args.controller/path).stat().st_size}
+        producer=json.loads(args.producer_pins.read_text())
+        require(producer.get('source')==args.controller_sha and producer.get('inputProfile')=='installed-canonical/1','Lifecycle2 producer source/profile differs')
+        current_identity=producer.get('currentInputIdentity');require(helper.input_metadata_version(current_identity)=='0.10.10','Lifecycle2 candidate metadata identity differs')
+        wheel=producer['wheel'];native=producer['nativeMember']
+        require(type(wheel)is dict and set(wheel)=={'path','bytes','sha256'} and type(wheel['bytes'])is int and wheel['bytes']>0 and type(wheel['sha256'])is str and len(wheel['sha256'])==64,'Lifecycle2 wheel identity missing')
+        require(type(native)is dict and native.get('path')=='umf/_rust_core.abi3.so' and type(native.get('sha256'))is str and len(native['sha256'])==64,'Lifecycle2 native identity missing')
+        result.update({'source':producer['source'],'run':os.environ.get('GITHUB_RUN_ID'),'attempt':os.environ.get('GITHUB_RUN_ATTEMPT'),
+           'currentInputIdentity':current_identity,'wheel':wheel,'nativeMember':native,'consumerInterpreter':sys.executable,
+           'controllerRoot':str(args.controller.resolve()),
+           'evidenceScope':'same-wheel-installed-lifecycle-semantics-only','execution':'same-job-after-cost-and-required-semantics'})
+        require(not log_path.exists() and not junit_path.exists(),'Prior lifecycle2 log/JUnit cannot be overwritten')
+        before_attempted=True;identity(args,'lifecycle2-before');result['identityBefore']=retain_identity('lifecycle2-before');before_identity_ok=True
+        argv=[sys.executable,'-I','-B','-m','pytest','--rootdir='+str(args.controller.resolve()),'--maxfail=0','-q','-s','--junitxml='+str(junit_path),*[str(args.controller/case) for case in LIFECYCLE2_CASES]]
+        with log_path.open('xb') as stream:
+            completed=subprocess.run(argv,stdout=stream,stderr=subprocess.STDOUT,timeout=600)
+        process_exit=completed.returncode;result['processExitCode']=process_exit;result['pytestArgv']=argv
+        require(log_path.is_file(),'Lifecycle2 complete log missing')
+        result['log']={'path':log_path.name,'sha256':sha(log_path),'bytes':log_path.stat().st_size}
+        result['junit']={'path':junit_path.name,'sha256':sha(junit_path),'bytes':junit_path.stat().st_size} if junit_path.is_file() else None
+        if process_exit==0:
+            helper.junit(junit_path,list(LIFECYCLE2_CASES));junit_passed=True
+        source_after=all(sha(args.controller/path)==result['sourceFiles'][path]['sha256'] for path in LIFECYCLE2_SOURCE_FILES)
+        require(source_after,'Lifecycle2 source/corpus changed during same-job execution')
+    except BaseException as error:
+        result['failure']={'type':type(error).__module__+'.'+type(error).__name__,'message':str(error)[:1024]}
+    finally:
+        if before_attempted:
+            try:
+                identity(args,'lifecycle2-after');result['identityAfter']=retain_identity('lifecycle2-after');after_identity_ok=True
+            except BaseException as error:
+                result['identityAfterFailure']={'type':type(error).__module__+'.'+type(error).__name__,'message':str(error)[:1024]}
+        if log_path.is_file() and result.get('log')is None:result['log']={'path':log_path.name,'sha256':sha(log_path),'bytes':log_path.stat().st_size}
+        if junit_path.is_file() and result.get('junit')is None:result['junit']={'path':junit_path.name,'sha256':sha(junit_path),'bytes':junit_path.stat().st_size}
+        result['processExitCode']=process_exit
+        result['passed']=bool(process_exit==0 and junit_passed and source_after and before_identity_ok and after_identity_ok and result.get('identityBefore') and result.get('identityAfter'))
+        result['status']='passed' if result['passed'] else 'failed'
+        result['publishable']=False;result['readyForEnrollment']=False
+        write(result_path,result)
+    return result
 
 
 def checked_producer_census(args,pins):

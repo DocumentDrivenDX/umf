@@ -1,0 +1,88 @@
+{
+  "profile": "umf.inspector-installed-canonical-candidate-resources/1",
+  "inputProfile": "installed-canonical/1",
+  "maximumWork": 1000000,
+  "candidateArtifactVersion": "0.10.10",
+  "baseline": {
+    "mainCommit": "ed09f345e38e70fd8c718cb904ffd9185f0ca392",
+    "mainTree": "ad4d87ffcf2ce2a5aff15fc26e60e5a0e82021c3",
+    "inheritedCoreDistributionVersion": "0.10.9",
+    "scope": "private component candidate only; baseline metadata is not candidate artifact identity or release proof"
+  },
+  "historicalFixture": {
+    "path": "tests/qualification/fixtures/inspector-retained-resources.json",
+    "sha256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
+    "sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+    "scope": "unchanged retained historical fixture; never relabeled as candidate resources"
+  },
+  "bindingStatus": "source-bound",
+  "generation": {
+    "sourceCommit": "93adb14883fd49bfe6404d8733b78eb696078f35",
+    "sourceTree": "0ea24ed5802129f00c7d0b30de5e40640df6aecb",
+    "runId": "42711404179",
+    "attempt": "1",
+    "jobId": "129481592124",
+    "artifactId": "13715003465",
+    "artifactDigest": "sha256:4a166447804ba5766dedab5df54f1d2c66179ec1da6936d867385791ffb8c8be",
+    "outputManifestSHA256": "9b9965dd27b221239ebebc27fe8fedfa174bb1b9018e98ec1bbf4d6d486ab0a0",
+    "finalAttestationSHA256": "3dd482635e6bee52a3b914040430e51bc7cef3a2c39fe4e941be803c418fbe34",
+    "correspondenceReceiptSHA256": "bad8ef94439de1cf7bf835333d6dbf72253f8c21550101d61cc1dca76b9244df"
+  },
+  "resources": {
+    "coreSchema": {
+      "path": "spec/core/schema.json",
+      "bytes": 45342,
+      "sha256": "416a2c7b60ee7e7a9896f981bd843c026b54f21a49f93f82eb0d3de4cc8fc477"
+    },
+    "referenceSchema": {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "bytes": 45463,
+      "sha256": "cb417d9d80e00ccb25a760450c639ca814565436c33ee779e044955ff44bfa25"
+    },
+    "packageSchema": {
+      "path": "spec/core/extension-package.schema.json",
+      "bytes": 45001,
+      "sha256": "3c8cd558ee9523d6a65a4ba40e327df3b87086684c298a5689a2dc087a7471a2"
+    },
+    "constraints": {
+      "path": "spec/metamodel/generated/core-constraints.json",
+      "bytes": 190431,
+      "sha256": "661699562ebff1f4928c630f22e74bf7df5b7c03ad7513e1dc4ee1720a6420ab"
+    },
+    "domainPolicy": {
+      "path": "spec/metamodel/generated/domain-policy.json",
+      "bytes": 14827,
+      "sha256": "f0fa8d00003e882949bed3445438c7a0b9010f54fc1d3633f31bae80c74c4a1f"
+    },
+    "tablesPackage": {
+      "path": "spec/extensions/tables/package.json",
+      "bytes": 23817,
+      "sha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+    },
+    "actionsPackage": {
+      "path": "spec/extensions/actions/package.json",
+      "bytes": 11497,
+      "sha256": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181"
+    },
+    "bindingPackage": {
+      "path": "spec/extensions/binding/package.json",
+      "bytes": 8840,
+      "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f"
+    },
+    "stableBindingPackage": {
+      "path": "spec/extensions/binding-stable/package.json",
+      "bytes": 8885,
+      "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e"
+    }
+  },
+  "encodingOnlyProducer": {
+    "path": "tools/generate_codegen_resource_literals.py",
+    "sha256": "23b788c916e8a57ca102bb714b17edd87e3749062f4beddc656953afdc67dbb9"
+  },
+  "literalData": {
+    "path": "crates/umf-core/src/canonical_codegen_literals.rs",
+    "sha256": "1e928da01daa535908b6273729977d53ef363d0a57b2717227252665c6b0a7c8"
+  },
+  "candidateModelSHA256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
+  "acceptance": "Source correspondence provenance only; authenticity requires separately reviewed complete G0 joined D evidence. No native admission proof."
+}

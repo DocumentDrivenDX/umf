@@ -85,7 +85,10 @@ def producer(args):
     require(source['source']==args.source,'Producer source differs')
     wheels=list((args.out/'wheels').glob('*.whl'));require(len(wheels)==1,'Exactly one genuine owner wheel required')
     wheel=wheels[0]
-    version=source['currentInputIdentity']['inheritedPrivateMetadataVersion'] if source['inputProfile']=='installed-canonical/1' else '0.10.8'
+    if source['inputProfile']=='installed-canonical/1':
+        probe=load(args.root/'tools/probe_inspector_installed_factory.py','factory_version_selection')
+        version=probe.input_metadata_version(source.get('currentInputIdentity'))
+    else:version='0.10.8'
     verifier=load(args.root/'tools/verify_python_artifacts.py','strict_built_wheel')
     # The unchanged verifier applies all wheel/RECORD/member/profile bounds.
     subprocess.run([sys.executable,'-I','-B',str(args.root/'tools/verify_python_artifacts.py'),

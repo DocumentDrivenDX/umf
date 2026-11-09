@@ -143,16 +143,14 @@ def selection(root,census):
 
 CURRENT_FIXTURE='tests/qualification/fixtures/inspector-installed-current-resources.json'
 CURRENT_PROFILE='umf.inspector-installed-canonical-current-resources/1'
+CANDIDATE_FIXTURE='tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json'
+CANDIDATE_PROFILE='umf.inspector-installed-canonical-candidate-resources/1'
 RAW_PATHS=('spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json','spec/extensions/tables/package.json','spec/extensions/actions/package.json','spec/extensions/binding/package.json','spec/extensions/binding-stable/package.json')
 
 REQUIRED_SOURCE+=RAW_PATHS+(CURRENT_FIXTURE,'tests/qualification/fixtures/inspector-retained-resources.json','python/pyproject.toml','python/src/umf/__init__.py','tools/verify_python_artifacts.py')
 
-def current_inputs(root,selected):
+def _current_inputs_0109(root,selected,binding):
     """Authenticated PRIVATE assembly inputs. No caller version or legacy alias."""
-    binding=selected.get('currentInputs')
-    require(type(binding)is dict,'Current input bindings pending')
-    closed(binding,('fixturePath','fixtureSHA256','metadataVersion'))
-    require(binding['fixturePath']==CURRENT_FIXTURE,'Wrong current fixture path')
     hexsha(binding['fixtureSHA256'])
     require(selected['sourceFiles'].get(CURRENT_FIXTURE)==binding['fixtureSHA256'] and sha(safe(root,CURRENT_FIXTURE))==binding['fixtureSHA256'],'Current fixture source custody differs')
     value=json.loads(safe(root,CURRENT_FIXTURE).read_text())
@@ -181,6 +179,72 @@ def current_inputs(root,selected):
         row=value[key];closed(row,('path','sha256'));hexsha(row['sha256'])
         require(row['path']==path and sha(safe(root,path))==row['sha256'] and selected['sourceFiles'].get(path)==row['sha256'],'Current DATA/producer source differs')
     return value,{'resourceFixture':CURRENT_FIXTURE,'resourceFixtureSHA256':binding['fixtureSHA256'],'inheritedPrivateMetadataVersion':version,'literalDataSHA256':value['literalData']['sha256'],'scope':'private-component-only-not-release-proof'}
+
+GENERATION_FIELDS=('sourceCommit','sourceTree','runId','attempt','jobId','artifactId','artifactDigest','outputManifestSHA256','finalAttestationSHA256','correspondenceReceiptSHA256')
+
+def _candidate_inputs_01010(root,selected,binding):
+    closed(binding,('fixturePath','fixtureSHA256','metadataVersion'))
+    require(binding['fixturePath']==CANDIDATE_FIXTURE,'Wrong candidate fixture path')
+    hexsha(binding['fixtureSHA256'])
+    require(selected['sourceFiles'].get(CANDIDATE_FIXTURE)==binding['fixtureSHA256'] and sha(safe(root,CANDIDATE_FIXTURE))==binding['fixtureSHA256'],'Candidate fixture source custody differs')
+    value=json.loads(safe(root,CANDIDATE_FIXTURE).read_text())
+    require(type(value)is dict and value.get('bindingStatus')=='source-bound','Candidate source binding pending')
+    closed(value,('profile','inputProfile','maximumWork','candidateArtifactVersion','baseline','historicalFixture','bindingStatus','generation','resources','encodingOnlyProducer','literalData','candidateModelSHA256','acceptance'))
+    require(value['profile']==CANDIDATE_PROFILE and value['inputProfile']==INPUT and type(value['maximumWork'])is int and value['maximumWork']==LIMIT,'Candidate fixture profile/allowance differs')
+    require(binding['metadataVersion']=='0.10.10' and value['candidateArtifactVersion']=='0.10.10','Candidate artifact version differs')
+    closed(value['baseline'],('mainCommit','mainTree','inheritedCoreDistributionVersion','scope'))
+    baseline=value['baseline']
+    require(baseline['mainCommit']=='ed09f345e38e70fd8c718cb904ffd9185f0ca392' and baseline['mainTree']=='ad4d87ffcf2ce2a5aff15fc26e60e5a0e82021c3' and baseline['inheritedCoreDistributionVersion']=='0.10.9' and type(baseline['scope'])is str and bool(baseline['scope']),'Candidate baseline differs')
+    import tomllib
+    for name in ('python/pyproject.toml','python/src/umf/__init__.py'):
+        require(name in selected['sourceFiles'] and sha(safe(root,name))==selected['sourceFiles'][name],'Candidate metadata source pin differs')
+    project=tomllib.loads(safe(root,'python/pyproject.toml').read_text())
+    require(project['project']['name']=='umf-core' and project['project']['version']=='0.10.10','Assembled candidate pyproject metadata differs')
+    assignments=[n.value.value for n in ast.parse(safe(root,'python/src/umf/__init__.py').read_bytes()).body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='__version__' for t in n.targets) and isinstance(n.value,ast.Constant)]
+    require(assignments==['0.10.10'],'Assembled candidate package metadata differs')
+    historical=value['historicalFixture'];closed(historical,('path','sha256','sourceS','scope'))
+    require(historical['path']=='tests/qualification/fixtures/inspector-retained-resources.json' and historical['sha256']==PINS_SHA and sha(safe(root,historical['path']))==PINS_SHA and historical['sourceS']=='e3f38ef6f05ae636d2837f9d69f8d6805222664b','Original historical fixture changed/relabelled')
+    generation=value['generation'];closed(generation,GENERATION_FIELDS)
+    for key in ('sourceCommit','sourceTree'):
+        require(type(generation[key])is str and re.fullmatch('[a-f0-9]{40}',generation[key]) is not None,'Candidate generation source identity missing')
+    require(generation['sourceCommit']=='93adb14883fd49bfe6404d8733b78eb696078f35' and generation['sourceTree']=='0ea24ed5802129f00c7d0b30de5e40640df6aecb','Candidate generation source differs')
+    for key in GENERATION_FIELDS[2:]:
+        require(type(generation[key])is str and bool(generation[key]),'Authenticated candidate generation binding missing: '+key)
+    closed(value['resources'],NAMES)
+    for name,path in zip(NAMES,RAW_PATHS):
+        row=value['resources'][name];closed(row,('path','bytes','sha256'))
+        require(row['path']==path and type(row['bytes'])is int and 0<row['bytes']<=2**53-1,'Candidate raw9 role/path/length differs')
+        raw=safe(root,path).read_bytes();hexsha(row['sha256'])
+        require(len(raw)==row['bytes'] and digest(raw)==row['sha256'] and selected['sourceFiles'].get(path)==row['sha256'],'Candidate raw9 source custody differs: '+name)
+    for key,path in (('encodingOnlyProducer','tools/generate_codegen_resource_literals.py'),('literalData','crates/umf-core/src/canonical_codegen_literals.rs')):
+        row=value[key];closed(row,('path','sha256'));hexsha(row['sha256'])
+        require(row['path']==path and sha(safe(root,path))==row['sha256'] and selected['sourceFiles'].get(path)==row['sha256'],'Candidate DATA/producer source differs')
+    hexsha(value['candidateModelSHA256'])
+    require(selected.get('modelSHA256')==value['candidateModelSHA256'],'Candidate reviewed model binding differs')
+    require(value['acceptance']=='Source correspondence provenance only; authenticity requires separately reviewed complete G0 joined D evidence. No native admission proof.','Candidate acceptance scope differs')
+    return value,{'resourceFixture':CANDIDATE_FIXTURE,'resourceFixtureSHA256':binding['fixtureSHA256'],'candidateArtifactVersion':'0.10.10','literalDataSHA256':value['literalData']['sha256'],'generation':generation,'scope':'private-candidate-component-only-not-release-proof'}
+
+def current_inputs(root,selected):
+    binding=selected.get('currentInputs')
+    require(type(binding)is dict,'Current input bindings pending')
+    closed(binding,('fixturePath','fixtureSHA256','metadataVersion'))
+    if binding.get('fixturePath')==CURRENT_FIXTURE:
+        return _current_inputs_0109(root,selected,binding)
+    if binding.get('fixturePath')==CANDIDATE_FIXTURE:
+        return _candidate_inputs_01010(root,selected,binding)
+    raise ValueError('Unknown fixed current-input fixture')
+
+def input_metadata_version(identity):
+    require(type(identity)is dict,'Current input identity missing')
+    legacy=('resourceFixture','resourceFixtureSHA256','inheritedPrivateMetadataVersion','literalDataSHA256','scope')
+    candidate=('resourceFixture','resourceFixtureSHA256','candidateArtifactVersion','literalDataSHA256','generation','scope')
+    if set(identity)==set(legacy):
+        require(identity['resourceFixture']==CURRENT_FIXTURE and type(identity['inheritedPrivateMetadataVersion'])is str and re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+',identity['inheritedPrivateMetadataVersion']) is not None,'Legacy metadata authority differs')
+        return identity['inheritedPrivateMetadataVersion']
+    if set(identity)==set(candidate):
+        require(identity['resourceFixture']==CANDIDATE_FIXTURE and identity['candidateArtifactVersion']=='0.10.10' and type(identity['generation'])is dict,'Candidate metadata authority differs')
+        return identity['candidateArtifactVersion']
+    raise ValueError('Ambiguous or unknown current-input version authority')
 
 def installed_wheel(wheel,dist,version):
     """Version-aware archive/full RECORD/installed bytes; strict verifier remains.
@@ -318,7 +382,7 @@ def run(args):
     import umf._rust as wire
     import umf.rust_codegen as compiler
     import umf._rust_core as native
-    dist=metadata.distribution('umf-core');version=input_identity['inheritedPrivateMetadataVersion'];installed_wheel(args.wheel,dist,version)
+    dist=metadata.distribution('umf-core');version=input_metadata_version(input_identity);installed_wheel(args.wheel,dist,version)
     package=Path(compiler.__file__).resolve().parent
     require(dist.version==version and umf.__version__==version and native.engine_version()=='umf-core-r2' and native.codegen_protocol_version()=='umf-codegen-r3-seven-ops-nine-resources/1','Inherited private wheel version/protocol differs')
     base=Path(sysconfig.get_path('platlib')).resolve()

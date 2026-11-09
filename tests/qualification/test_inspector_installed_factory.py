@@ -11,9 +11,10 @@ import types
 import unittest
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[2]
+SCRATCH_ROOT=ROOT
 
 def load():
-    spec=importlib.util.spec_from_file_location('factory_probe_pure',ROOT/'tools/probe_inspector_installed_factory.py')
+    spec=importlib.util.spec_from_file_location('factory_probe_pure',SCRATCH_ROOT/'tools/probe_inspector_installed_factory.py')
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 
 class InstalledFactoryControls(unittest.TestCase):
@@ -98,6 +99,28 @@ def fixture(root):
     return m,c
 
 def resign(m,v):v['closureSHA256']=m.digest(m.canonical({k:v[k] for k in ('sourceFiles','moduleGraph','rust','python','publicControls','coverage','modelSHA256','legacyDisposition','currentInputs')}))
+
+def candidate_fixture(root,status='source-bound'):
+    m,c=fixture(root);v=c['installedFactory']
+    (root/'python/pyproject.toml').write_text('[project]\nname="umf-core"\nversion="0.10.10"\n')
+    (root/'python/src/umf/__init__.py').write_text('__version__ = "0.10.10"\n')
+    v['sourceFiles']['python/pyproject.toml']=m.sha(root/'python/pyproject.toml')
+    v['sourceFiles']['python/src/umf/__init__.py']=m.sha(root/'python/src/umf/__init__.py')
+    prior=json.loads((root/m.CURRENT_FIXTURE).read_text())
+    generation={'sourceCommit':'93adb14883fd49bfe6404d8733b78eb696078f35','sourceTree':'0ea24ed5802129f00c7d0b30de5e40640df6aecb',
+      'runId':'SYNTHETIC-NOT-A-G0-RUN','attempt':'1','jobId':'SYNTHETIC-JOB','artifactId':'SYNTHETIC-ARTIFACT','artifactDigest':'a'*64,
+      'outputManifestSHA256':'b'*64,'finalAttestationSHA256':'c'*64,'correspondenceReceiptSHA256':'d'*64}
+    candidate={'profile':m.CANDIDATE_PROFILE,'inputProfile':m.INPUT,'maximumWork':m.LIMIT,'candidateArtifactVersion':'0.10.10',
+      'baseline':{'mainCommit':'ed09f345e38e70fd8c718cb904ffd9185f0ca392','mainTree':'ad4d87ffcf2ce2a5aff15fc26e60e5a0e82021c3','inheritedCoreDistributionVersion':'0.10.9','scope':'SYNTHETIC BASELINE ONLY'},
+      'historicalFixture':prior['historicalFixture'],'bindingStatus':status,'generation':generation,'resources':prior['resources'],
+      'encodingOnlyProducer':prior['encodingOnlyProducer'],'literalData':prior['literalData'],'candidateModelSHA256':'e'*64,
+      'acceptance':'Source correspondence provenance only; authenticity requires separately reviewed complete G0 joined D evidence. No native admission proof.'}
+    path=root/m.CANDIDATE_FIXTURE;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(candidate))
+    v['sourceFiles'][m.CANDIDATE_FIXTURE]=m.sha(path)
+    v['modelSHA256']=candidate['candidateModelSHA256']
+    v['currentInputs']={'fixturePath':m.CANDIDATE_FIXTURE,'fixtureSHA256':m.sha(path),'metadataVersion':'0.10.10'}
+    resign(m,v)
+    return m,c
 
 def report_fixture(m,source='a'*40,wheel='b'*64,expected=None,cases=None):
     cases=cases or json.loads((ROOT/m.CORPUS).read_text())['cases']
@@ -270,10 +293,107 @@ class CurrentInputBindingControls(unittest.TestCase):
     def test_exact_current_fixture_metadata_and_raw9_are_bound_without_legacy_relabel(self):
         with tempfile.TemporaryDirectory() as raw:
             root=Path(raw);m,c=fixture(root);pins,identity=m.current_inputs(root,c['installedFactory'])
+            self.assertEqual(set(identity),{'resourceFixture','resourceFixtureSHA256','inheritedPrivateMetadataVersion','literalDataSHA256','scope'})
             self.assertEqual(identity['inheritedPrivateMetadataVersion'],'7.8.6');self.assertEqual(identity['scope'],'private-component-only-not-release-proof');self.assertEqual(pins['profile'],m.CURRENT_PROFILE);self.assertNotEqual(identity['resourceFixtureSHA256'],m.PINS_SHA)
             original=json.loads((ROOT/'tests/qualification/fixtures/inspector-retained-resources.json').read_text());self.assertNotEqual(pins['resources']['coreSchema']['sha256'],original['resources']['coreSchema']['sha256'])
+    def test_pending_candidate_refuses_without_fallback_and_old_fixture_stays_exact(self):
+        old=(ROOT/'tests/qualification/fixtures/inspector-installed-current-resources.json').read_bytes()
+        self.assertEqual(hashlib.sha256(old).hexdigest(),'251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363')
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);m,c=candidate_fixture(root,'pending')
+            with self.assertRaisesRegex(ValueError,'Candidate source binding pending'):m.current_inputs(root,c['installedFactory'])
+            self.assertEqual(c['installedFactory']['currentInputs']['fixturePath'],m.CANDIDATE_FIXTURE)
+            self.assertEqual(m.input_metadata_version({'resourceFixture':m.CURRENT_FIXTURE,'resourceFixtureSHA256':'a'*64,'inheritedPrivateMetadataVersion':'0.10.9','literalDataSHA256':'b'*64,'scope':'private-component-only-not-release-proof'}),'0.10.9')
+    def test_synthetic_complete_candidate_is_separate_from_baseline_and_helpers_agree(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);m,c=candidate_fixture(root);pins,identity=m.current_inputs(root,c['installedFactory'])
+            self.assertEqual(pins['baseline']['inheritedCoreDistributionVersion'],'0.10.9')
+            self.assertEqual(identity['candidateArtifactVersion'],'0.10.10')
+            self.assertEqual(identity['resourceFixture'],m.CANDIDATE_FIXTURE)
+            self.assertEqual(m.input_metadata_version(identity),'0.10.10')
+            batch_spec=importlib.util.spec_from_file_location('candidate_batch_pure',SCRATCH_ROOT/'tools/qualify_inspector_construction_batch.py')
+            batch=importlib.util.module_from_spec(batch_spec);batch_spec.loader.exec_module(batch)
+            self.assertEqual(m.input_metadata_version(identity),batch.load(SCRATCH_ROOT/'tools/probe_inspector_installed_factory.py','candidate_probe_for_batch').input_metadata_version(identity))
+            producer_source=(SCRATCH_ROOT/'tools/qualify_inspector_construction_batch.py').read_text()
+            self.assertIn('version=probe.input_metadata_version(source.get(\'currentInputIdentity\'))',producer_source)
+    def test_candidate_path_is_fixed_and_runtime_version_reader_is_shared(self):
+        m=load();tree=ast.parse((SCRATCH_ROOT/'tools/probe_inspector_installed_factory.py').read_bytes())
+        run=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='run')
+        self.assertTrue(any(isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='input_metadata_version' for n in ast.walk(run)))
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);_,c=candidate_fixture(root);c['installedFactory']['currentInputs']['fixturePath']='/tmp/caller.json'
+            with self.assertRaisesRegex(ValueError,'Unknown fixed'):m.current_inputs(root,c['installedFactory'])
+    def test_mocked_attribution_identity_uses_candidate_version_for_verifier_and_wheel(self):
+        import importlib.metadata,os,platform,sys,sysconfig
+        from pathlib import PurePosixPath
+        spec=importlib.util.spec_from_file_location('attribution_identity_pure',SCRATCH_ROOT/'tools/run_inspector_attribution_lanes.py')
+        caller=importlib.util.module_from_spec(spec);spec.loader.exec_module(caller)
+        with tempfile.TemporaryDirectory() as raw:
+            work=Path(raw);owner=work/'owner';controller=work/'controller';out=work/'out';platlib=work/'site';wheel=work/'candidate.whl'
+            for directory in (owner/'tools',controller,out,platlib/'umf'):directory.mkdir(parents=True,exist_ok=True)
+            verifier=owner/'tools/verify_python_artifacts.py';verifier.write_bytes(b'SYNTHETIC PURE VERIFIER SOURCE')
+            wheel.write_bytes(b'SYNTHETIC WHEEL IDENTITY INPUT');wheel_sha=hashlib.sha256(wheel.read_bytes()).hexdigest()
+            identity={'resourceFixture':'tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json','resourceFixtureSHA256':'a'*64,'candidateArtifactVersion':'0.10.10','literalDataSHA256':'b'*64,'generation':{'sourceCommit':'c'*40,'sourceTree':'d'*40},'scope':'synthetic-only'}
+            dep_versions={'annotated-types':'0.8.0','iniconfig':'2.3.1','packaging':'26.3','pluggy':'1.7.0','pydantic':'2.14.2','pydantic_core':'2.50.2','Pygments':'2.21.0','pytest':'8.4.2','typing-inspection':'0.4.4','typing_extensions':'4.16.0'}
+            pins={'wheel':{'sha256':wheel_sha},'resourcePinsSHA256':identity['resourceFixtureSHA256'],'currentInputIdentity':identity,'nativeMember':{'sha256':'unused-in-pure-mock'},'dependencies':dep_versions}
+            pinfile=work/'producer.json';pinfile.write_text(json.dumps(pins));(controller/'candidate-census.json').write_text('{}')
+            modules={};member_rows=[]
+            for name in ('umf/__init__.py','umf/rust_codegen.py','umf/_rust.py','umf/_rust_core.abi3.so'):
+                path=platlib/name;path.parent.mkdir(parents=True,exist_ok=True);body=('SYNTHETIC '+name).encode();path.write_bytes(body)
+                member_rows.append({'name':name,'sha256':hashlib.sha256(body).hexdigest()})
+                module_name={'umf/__init__.py':'umf','umf/rust_codegen.py':'umf.rust_codegen','umf/_rust.py':'umf._rust','umf/_rust_core.abi3.so':'umf._rust_core'}[name]
+                module=types.ModuleType(module_name);module.__file__=str(path);modules[module_name]=module
+            pins['nativeMember']['sha256']=next(row['sha256'] for row in member_rows if row['name']=='umf/_rust_core.abi3.so')
+            pinfile.write_text(json.dumps(pins))
+            modules['umf'].__path__=[];modules['umf'].__version__='0.10.10'
+            modules['umf._rust_core'].engine_version=lambda:'umf-core-r2'
+            modules['umf._rust_core'].codegen_protocol_version=lambda:'umf-codegen-r3-seven-ops-nine-resources/1'
+            modules['umf']._rust=modules['umf._rust'];modules['umf']._rust_core=modules['umf._rust_core'];modules['umf'].rust_codegen=modules['umf.rust_codegen']
+            dist=types.SimpleNamespace(version='0.10.10',files=[PurePosixPath(row['name']) for row in member_rows],locate_file=lambda name:platlib/name)
+            helper=types.SimpleNamespace(CENSUS='candidate-census.json')
+            helper.selection=lambda root,census:{'sourceFiles':{'tools/verify_python_artifacts.py':hashlib.sha256(verifier.read_bytes()).hexdigest()}}
+            helper.current_inputs=lambda root,selected:({'resources':{}},identity)
+            helper.input_metadata_version=unittest.mock.Mock(return_value='0.10.10')
+            helper.installed_wheel=unittest.mock.Mock(return_value=member_rows)
+            caller.load=lambda path,name:helper if path.name=='probe_inspector_installed_factory.py' else types.SimpleNamespace()
+            caller.pip_generated_metadata=unittest.mock.Mock()
+            commands=[]
+            def subprocess_run(argv,**kwargs):commands.append(argv);return types.SimpleNamespace(returncode=0)
+            args=types.SimpleNamespace(owner=owner,controller=controller,out=out,producer_pins=pinfile,wheel=wheel,controller_sha='synthetic-controller')
+            fake_sys=types.SimpleNamespace(flags=types.SimpleNamespace(isolated=True),dont_write_bytecode=True,executable=sys.executable)
+            with patch.dict(os.environ,{'INSPECTOR_INPUT_PROFILE':'installed-canonical/1'}),patch.dict(sys.modules,modules),patch.object(caller,'sys',fake_sys),patch.object(platform,'python_version',return_value='3.11.17'),patch.object(platform,'system',return_value='Linux'),patch.object(platform,'machine',return_value='x86_64'),patch.object(sysconfig,'get_path',return_value=str(platlib)),patch.object(importlib.metadata,'distribution',return_value=dist),patch.object(importlib.metadata,'version',side_effect=dep_versions.__getitem__) as dependency_lookup,patch.object(caller.subprocess,'run',side_effect=subprocess_run):
+                caller.identity(args,'initial')
+                caller.identity(args,'public-before')
+            self.assertEqual(helper.input_metadata_version.call_args_list,[unittest.mock.call(identity),unittest.mock.call(identity)])
+            self.assertEqual([call.args[2] for call in helper.installed_wheel.call_args_list],['0.10.10','0.10.10'])
+            self.assertEqual([call.args[3] for call in caller.pip_generated_metadata.call_args_list],['0.10.10','0.10.10'])
+            self.assertEqual([argv[argv.index('--expected-version')+1] for argv in commands],['0.10.10','0.10.10'])
+            self.assertEqual(dependency_lookup.call_args_list,[unittest.mock.call(name) for _ in range(2) for name in dep_versions])
+    def test_candidate_version_authority_and_genuine_bindings_are_closed(self):
+        for mode in ('metadata','pyproject','baseline','mixed-version','missing-evidence','source-tree'):
+            with self.subTest(mode=mode),tempfile.TemporaryDirectory() as raw:
+                root=Path(raw);m,c=candidate_fixture(root);v=c['installedFactory'];path=root/m.CANDIDATE_FIXTURE;value=json.loads(path.read_text())
+                if mode=='metadata':v['currentInputs']['metadataVersion']='0.10.9'
+                elif mode=='pyproject':(root/'python/pyproject.toml').write_text('[project]\nname="umf-core"\nversion="0.10.9"\n');v['sourceFiles']['python/pyproject.toml']=m.sha(root/'python/pyproject.toml')
+                elif mode=='baseline':value['baseline']['inheritedCoreDistributionVersion']='0.10.10'
+                elif mode=='source-tree':value['generation']['sourceTree']='f'*40
+                elif mode=='missing-evidence':value['generation']['finalAttestationSHA256']=None
+                path.write_text(json.dumps(value));v['sourceFiles'][m.CANDIDATE_FIXTURE]=m.sha(path);v['currentInputs']['fixtureSHA256']=m.sha(path);resign(m,v)
+                if mode=='mixed-version':
+                    identity={'resourceFixture':m.CANDIDATE_FIXTURE,'resourceFixtureSHA256':'a'*64,'candidateArtifactVersion':'0.10.10','inheritedPrivateMetadataVersion':'0.10.9','literalDataSHA256':'b'*64,'generation':value['generation'],'scope':'private'}
+                    with self.assertRaises(ValueError):m.input_metadata_version(identity)
+                else:
+                    with self.assertRaises(ValueError):m.current_inputs(root,v)
+    def test_candidate_raw_data_producer_mismatches_refuse_after_resigning(self):
+        for key in ('coreSchema','literalData','encodingOnlyProducer'):
+            with self.subTest(key=key),tempfile.TemporaryDirectory() as raw:
+                root=Path(raw);m,c=candidate_fixture(root);v=c['installedFactory'];path=root/m.CANDIDATE_FIXTURE;value=json.loads(path.read_text())
+                if key=='coreSchema':value['resources'][key]['sha256']='0'*64
+                else:value[key]['sha256']='0'*64
+                path.write_text(json.dumps(value));v['sourceFiles'][m.CANDIDATE_FIXTURE]=m.sha(path);v['currentInputs']['fixtureSHA256']=m.sha(path);resign(m,v)
+                with self.assertRaises(ValueError):m.current_inputs(root,v)
     def test_resigned_wrong_current_profile_counts_paths_metadata_or_data_refuse(self):
-        for mode in ('profile','count-bool','raw-path','metadata','data','old-alias'):
+        for mode in ('profile','count-bool','raw-path','metadata','data','old-alias','legacy-extra-version','mixed-version-authority'):
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as raw:
                 root=Path(raw);m,c=fixture(root);v=c['installedFactory'];path=root/m.CURRENT_FIXTURE;value=json.loads(path.read_text())
                 if mode=='profile':value['profile']='umf.inspector-retained-feasibility-resources/1'
@@ -282,6 +402,8 @@ class CurrentInputBindingControls(unittest.TestCase):
                 elif mode=='metadata':value['baseline']['inheritedCoreDistributionVersion']='0.10.8'
                 elif mode=='data':value['literalData']['sha256']='0'*64
                 elif mode=='old-alias':v['currentInputs']['fixturePath']='tests/qualification/fixtures/inspector-retained-resources.json'
+                elif mode=='legacy-extra-version':v['currentInputs']['inheritedPrivateMetadataVersion']='0.10.10'
+                elif mode=='mixed-version-authority':v['currentInputs']['candidateArtifactVersion']='0.10.10'
                 path.write_text(json.dumps(value));v['sourceFiles'][m.CURRENT_FIXTURE]=m.sha(path);v['currentInputs']['fixtureSHA256']=m.sha(path);resign(m,v)
                 with self.assertRaises(ValueError):m.current_inputs(root,v)
     def test_current_fixture_missing_pending_or_unpinned_refuses(self):
@@ -308,6 +430,102 @@ class CurrentInputBindingControls(unittest.TestCase):
             with self.assertRaises(ValueError):m.installed_wheel(wheel,dist,version)
 
 
+class Lifecycle2Controls(unittest.TestCase):
+    def run_mocked_lifecycle(self,mode='pass'):
+        import os,xml.etree.ElementTree as ET
+        m=load();spec=importlib.util.spec_from_file_location('lifecycle2_driver_pure',SCRATCH_ROOT/'tools/run_inspector_attribution_lanes.py')
+        driver=importlib.util.module_from_spec(spec);spec.loader.exec_module(driver)
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);out=root/'out';out.mkdir();
+            sources={}
+            for name in driver.LIFECYCLE2_SOURCE_FILES:
+                source=ROOT/name;path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(source.read_bytes())
+                sources[name]=hashlib.sha256(path.read_bytes()).hexdigest()
+            identity={'resourceFixture':m.CANDIDATE_FIXTURE,'resourceFixtureSHA256':'a'*64,'candidateArtifactVersion':'0.10.10','literalDataSHA256':'b'*64,'generation':{'sourceCommit':'c'*40,'sourceTree':'d'*40},'scope':'synthetic lifecycle control only'}
+            producer={'source':'e'*40,'inputProfile':'installed-canonical/1','currentInputIdentity':identity,
+              'wheel':{'path':'/synthetic/same-job.whl','bytes':123,'sha256':'f'*64},
+              'nativeMember':{'path':'umf/_rust_core.abi3.so','sha256':'1'*64}}
+            pinfile=root/'producer.json';pinfile.write_text(json.dumps(producer))
+            result_path=out/'saga-lifecycle2-result.json';result_path.write_text(json.dumps({'profile':'umf.private-installed-saga-lifecycle2/1','status':'not-reached-prerequisites','source':'e'*40,'cases':list(driver.LIFECYCLE2_CASES)}))
+            selected={'sourceFiles':dict(sources)}
+            if mode=='source':selected['sourceFiles'][driver.LIFECYCLE2_SOURCE_FILES[0]]='0'*64
+            if mode=='corpus':selected['sourceFiles'][driver.LIFECYCLE2_SOURCE_FILES[1]]='0'*64
+            if mode=='producer':producer['source']='9'*40;pinfile.write_text(json.dumps(producer))
+            args=types.SimpleNamespace(controller=root,out=out,controller_sha='e'*40,producer_pins=pinfile)
+            calls=[]
+            def identity_call(args,suffix):
+                calls.append(suffix);wheel_sha='0'*64 if mode=='wheel' and suffix=='lifecycle2-before' else producer['wheel']['sha256']
+                row={'profile':'umf.private-retained-installed-identity/1','artifactSource':driver.OWNER,'controllerSource':args.controller_sha,
+                  'completeWheelAndInstalledRecordVerified':True,'distributionOwnershipVerified':True,'wheelSHA256':wheel_sha,
+                  'currentInputIdentity':identity,'loadedModules':{'umf/_rust_core.abi3.so':{'sha256':producer['nativeMember']['sha256']}}}
+                (out/('identity-'+suffix+'.json')).write_text(json.dumps(row))
+            driver.identity=identity_call
+            def subprocess_run(argv,stdout,stderr,timeout):
+                calls.append('pytest');stdout.write(b'synthetic mocked pytest log\n')
+                junit=Path(next(x.split('=',1)[1] for x in argv if x.startswith('--junitxml=')))
+                cases=[]
+                for index,selector in enumerate(driver.LIFECYCLE2_CASES):
+                    _,class_name,method=selector.split('::');classname=selector.split('::')[0].removesuffix('.py').replace('/','.')+'.'+class_name
+                    if mode=='missing' and index==1:continue
+                    testcase=ET.Element('testcase',{'classname':classname,'name':method})
+                    if mode=='skip' and index==0:ET.SubElement(testcase,'skipped')
+                    if mode=='failure' and index==0:ET.SubElement(testcase,'failure')
+                    cases.append(testcase)
+                if mode=='extra':cases.append(ET.Element('testcase',{'classname':'foreign','name':'unselected'}))
+                if mode=='invalid-xml':junit.write_text('<testsuites><broken>')
+                else:
+                    suite=ET.Element('testsuite');suite.extend(cases);ET.ElementTree(suite).write(junit,encoding='unicode')
+                return types.SimpleNamespace(returncode=1 if mode=='exit' else 0)
+            driver.subprocess.run=subprocess_run
+            with patch.dict(os.environ,{'GITHUB_RUN_ID':'42600000000','GITHUB_RUN_ATTEMPT':'1'}):result=driver.run_installed_lifecycle2(args,m,selected)
+            retained=json.loads(result_path.read_text())
+            return retained,calls
+
+    def test_two_fixed_cases_run_after_semantic_stages_without_changing_censuses(self):
+        row,calls=self.run_mocked_lifecycle()
+        self.assertEqual(row['status'],'passed');self.assertTrue(row['passed'])
+        self.assertEqual(row['cases'],['python/tests/test_saga_lifecycle.py::InstalledSagaLifecycle::test_author_declare_edit_exchange_and_assess','python/tests/test_saga_lifecycle.py::InstalledSagaLifecycle::test_unknown_recovery_meaning_refuses_edit'])
+        self.assertEqual(row['wheel']['sha256'],'f'*64);self.assertEqual(row['nativeMember']['sha256'],'1'*64)
+        self.assertEqual(row['identityBefore']['path'],'identity-lifecycle2-before.json');self.assertEqual(row['identityAfter']['path'],'identity-lifecycle2-after.json')
+        self.assertEqual((row['run'],row['attempt']),('42600000000','1'))
+        self.assertEqual(set(row['sourceFiles']),{'python/tests/test_saga_lifecycle.py','fixtures/saga/portable.json'})
+        self.assertEqual(row['processExitCode'],0);self.assertTrue(row['log']['sha256']);self.assertTrue(row['junit']['sha256']);self.assertEqual(row['evidenceScope'],'same-wheel-installed-lifecycle-semantics-only');self.assertNotIn('maximumWork',row)
+        argv=row['pytestArgv'];self.assertEqual(argv[0],row['consumerInterpreter']);self.assertEqual(argv[1:8],['-I','-B','-m','pytest','--rootdir='+row['controllerRoot'],'--maxfail=0','-q'])
+        self.assertEqual(argv[8],'-s');self.assertEqual(Path(argv[9].split('=',1)[1]).resolve(),(Path(row['controllerRoot'])/'out/saga-lifecycle2.xml').resolve());self.assertEqual([str(Path(value).resolve().relative_to(Path(row['controllerRoot']).resolve())) for value in argv[-2:]],row['cases'])
+        self.assertEqual(calls,['lifecycle2-before','pytest','lifecycle2-after'])
+        census=json.loads((ROOT/'tests/qualification/fixtures/inspector-construction-batch.json').read_text());factory=census['installedFactory']
+        self.assertEqual(len(factory['publicControls']),18);self.assertEqual(sum(len(group['cases']) for group in factory['python']),31)
+        self.assertEqual(sum(len(target['cases']) for target in factory['rust']),477)
+        source=(SCRATCH_ROOT/'tools/run_inspector_attribution_lanes.py').read_text();tree=ast.parse(source)
+        run=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='run_installed')
+
+    def test_lifecycle2_actual_runner_refuses_missing_extra_skip_failure_xml_and_exit(self):
+        for mode in ('missing','extra','skip','failure','invalid-xml','exit'):
+            with self.subTest(mode=mode):
+                row,calls=self.run_mocked_lifecycle(mode)
+                self.assertEqual(row['status'],'failed');self.assertFalse(row['passed'])
+                self.assertEqual(calls,['lifecycle2-before','pytest','lifecycle2-after'])
+                self.assertIn('identityBefore',row);self.assertIn('identityAfter',row)
+
+    def test_lifecycle2_source_producer_and_wheel_identity_mismatch_refuse_before_pytest(self):
+        for mode in ('source','corpus','producer','wheel'):
+            with self.subTest(mode=mode):
+                row,calls=self.run_mocked_lifecycle(mode)
+                self.assertEqual(row['status'],'failed');self.assertFalse(row['passed']);self.assertNotIn('pytest',calls)
+
+    def test_lifecycle2_run_is_after_existing_cost_and_all_semantic_stages(self):
+        source=(SCRATCH_ROOT/'tools/run_inspector_attribution_lanes.py').read_text();tree=ast.parse(source)
+        run=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='run_installed')
+        call=next(n for n in ast.walk(run) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='run_installed_lifecycle2')
+        stages=[n.lineno for n in ast.walk(run) if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr in ('intake','saga')]
+        self.assertTrue(stages and max(stages)<call.lineno)
+        self.assertGreater(call.lineno,max(n.lineno for n in ast.walk(run) if isinstance(n,ast.For)))
+        conditional=next(n for n in ast.walk(run) if isinstance(n,ast.If) and call in ast.walk(n))
+        self.assertEqual(ast.unparse(conditional.test),"state['requiredQualificationPassed']")
+        self.assertNotIn("pythonGroups'].append({'group':'lifecycle2'",source)
+        self.assertIn('for name,dependency_version in pins[\'dependencies\'].items()',source)
+
+
 class FinalSourceCensusControls(unittest.TestCase):
     def test_saga_single_pin_adapter_inverse_preserves_original_file(self):
         m=load();p=ROOT/'python/tests/test_retained_codegen_saga.py';raw=p.read_bytes()
@@ -329,8 +547,10 @@ class FinalSourceCensusControls(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'partition|overlap'):m.selection(root,c)
     def test_frozen_actual_named_roster_and_required_18_public_controls(self):
         m=load();c=json.loads((ROOT/m.CENSUS).read_text());v=c['installedFactory']
-        with self.assertRaisesRegex(ValueError,'Assembled pyproject metadata differs'):
-            m.selection(ROOT,c)
+        selected=m.selection(ROOT,c);candidate,identity=m.current_inputs(ROOT,selected)
+        self.assertEqual(candidate['generation']['sourceCommit'],'93adb14883fd49bfe6404d8733b78eb696078f35')
+        self.assertEqual(identity['candidateArtifactVersion'],'0.10.10')
+        self.assertFalse(c['candidateInputBindingPending']['candidateAdmission'])
         early=v['publicControls'];late=[x for g in v['python'] for x in g['cases']]
         self.assertEqual(len(early),18);self.assertEqual(len(late),31)
         self.assertFalse(set(early)&set(late))
