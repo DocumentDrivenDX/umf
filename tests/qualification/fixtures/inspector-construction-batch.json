@@ -1785,16 +1785,16 @@
     "status": "source-frozen",
     "inputProfile": "installed-canonical/1",
     "sourceFiles": {
-      ".github/workflows/inspector-attribution-continuation.yml": "af2a9037c3da30830ca2805952fae8fbc5cb66183eb174b857e149f13617ba3d",
+      ".github/workflows/inspector-attribution-continuation.yml": "da8452d19f11e4b1c46e823370bdda5e90d106d3a1f8b401fe55d28d143f5454",
       ".github/workflows/inspector-retained-attribution.yml": "c88b10fb379f9b387c9d848bfd09ed0ce86cea3119daa086c61970ce65ef7a5d",
-      "Cargo.lock": "e43596d23d1e75e5621f56527202acf728c05893378caed98840049380eff590",
+      "Cargo.lock": "c7777063f16762bea888aacefdf74fe6628ae65fbeae9db9cd907e0fd412145f",
       "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
-      "bindings/core/python/Cargo.toml": "a13434a35d38723aa7c5a97dbb81ff530b3d396de60e2168455a5b7362990717",
+      "bindings/core/python/Cargo.toml": "c6e2691e6fe8e2cd3f61929ae3d8269a6fa9166779984e216054856de0e3b367",
       "bindings/core/python/src/lib.rs": "6a2efdb0d339882d684c2a6f6757a1f4dac0e786b107b277e41cbfe34b24f7d2",
       "bindings/core/python/src/python_value.rs": "64898bf4384c12d30aa00e05eac828bfbcd29c3b2a2c50e745739e88cd7ddc3a",
       "bindings/core/python/src/python_value_path_tests.rs": "9fc48c0904b0e365c1fa062c2a0b9b7fcc1b3eb0255eafdb7c08dda08b9d46da",
       "bindings/core/python/src/retained_codegen.rs": "753229f77c296481f9ad0ce65f1edd38f8a418e35b10590b1b7d2387d9ea7739",
-      "crates/umf-codegen/Cargo.toml": "7838b10a92de2a6b4c10cba2e39f074393d1bf27bd063e6eae033c01909dd1d2",
+      "crates/umf-codegen/Cargo.toml": "0ec2b615a674429ceed0c0a575cf31b8d502dadd5d3828f0f8c2db32504df69e",
       "crates/umf-codegen/src/access/inspection.rs": "fcb78d0f9f7db04eadd9e2d2d1f7df513bc656cf0b1500b7dfcf6bcd6f3ce3d0",
       "crates/umf-codegen/src/access/mod.rs": "4e34e229fed211628b4b9441108865cb4e0a4720969f8207c7fa075488997836",
       "crates/umf-codegen/src/actions/mod.rs": "1540b8e9c34d638fb39110e865ec0b5b27066be01f328945ae58debe32fa81f5",
@@ -1808,70 +1808,70 @@
       "crates/umf-codegen/src/value.rs": "5f9b9b2f8b238628e5f8464dc925fc68ce4c8b5172ce9b7ab86ca33d0289c994",
       "crates/umf-codegen/tests/access_binding_schema_override.rs": "b2694c35ca58b2d3d0230b93720ed32a53e673a80d371507f24014d5c896e2af",
       "crates/umf-codegen/tests/single_set.rs": "21ad82a5ec1b3463579ae462e1e445ca592f9d7e3b502610a510e9ff661e9087",
-      "crates/umf-core-wire/Cargo.toml": "23cc3cbf12b782ce6d215cd2a52415288d7d55fe87e1a61fb1df5158d85595ab",
+      "crates/umf-core-wire/Cargo.toml": "e1171263903df13fa11c1a7470c6cde5fc94f67a2f18dc06ab88e836943abf0f",
       "crates/umf-core-wire/src/codegen.rs": "b970430499ae0135fff68248b544ed1cb9e308d0f60c79a3a437612c1ac46a16",
       "crates/umf-core-wire/src/controlled_envelope.rs": "88b50c424842e1a56f8f3f7d7f9c23a47b341fa4d6eb76a29b411b3f5c728cad",
       "crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs": "71a821a4bc4898010ca68cc46d4df4b0c5e69fb8923e791a139edd7cdaa091b3",
       "crates/umf-core-wire/src/lib.rs": "8c9696ea55e8553609facc33ddfb863598c1ebdb72154d717364ae0a0741d682",
       "crates/umf-core-wire/tests/access_inspection_public.rs": "168400ad197a8c1ce94a85113c919a449ac3d3ef38345b4005bb46f93c0be23c",
       "crates/umf-core-wire/tests/codegen_context.rs": "5afd8223d9eb160963a7feac50980ef455fe3dab2c827a1d96d52726901a34fc",
-      "crates/umf-core/Cargo.toml": "ad692541c5bf2d169bbe335672472c5165f39d444a74bf4a5d6190c07d865f55",
+      "crates/umf-core/Cargo.toml": "b84949f42da22ae01277d1b8fe38391ee1dfb98e372a5a0ad785195b75e9d7c5",
       "crates/umf-core/src/canonical_codegen_literals.rs": "586c67c832f86ae27b2dc5d83c9d7e73c8aa9f4437b2e7fe296e367737599e76",
       "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "d528ef296f9cd6d433146c9f8421cd01d0205272e1d6e3cc539b91c91168aac3",
       "crates/umf-core/src/canonical_codegen_resources.rs": "bfacfdd785bfbc249a0dbc47167f0cc76d316b298653fb1f332506bc58b596e6",
-      "crates/umf-core/src/canonical_static_text_independent_tests.rs": "45232319d6ab78dbf57bfd631c70c97fb43a26ab894d8b131a26b8a05a62639f",
+      "crates/umf-core/src/canonical_static_text_independent_tests.rs": "9b619dca3aae22919a59988093004b8eac23cb1395e6ecfc16df78add51caf43",
       "crates/umf-core/src/canonical_text_cache_independent_tests.rs": "e6cf917f3bd2ad86f8aa3e13d6f4f81041b7acd181d2cb143126948dac36c9f7",
       "crates/umf-core/src/context.rs": "5d210c468658cb203cd830688b4677ce2ea1cf199ef59b23f4a86e8eb2efba55",
       "crates/umf-core/src/context_construction_tests.rs": "a7081434d41db02a5b785ab172374e124e8ffa4539e367d0ab46da4200dc82fc",
       "crates/umf-core/src/context_path_tests.rs": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
-      "crates/umf-core/src/engine.rs": "0ab9794911d1cc2461f6f2e37d277e131fe83857297a1aa4eb88a71bae4890f5",
+      "crates/umf-core/src/engine.rs": "c7e2d23644f056c29af1aac4087cfc6d9aa83299a91028d2a1d9316d6dc4865e",
       "crates/umf-core/src/full_modules.rs": "f011690138a0933897c2e681b35a844199c4b57c6711357ef3b45599594434a0",
-      "crates/umf-core/src/lib.rs": "336b3838bcdf0e31621208cc5af3635340b5f7aa1bac930842c9b89fa84a63f8",
+      "crates/umf-core/src/lib.rs": "ae6eef2068889cdba3b34198bd37030567f1dc20909f398c12054d194028ffe0",
       "crates/umf-core/src/python_value.rs": "ac9aadb0980520e8343b29a57ef2e44583ef5f84f59c52f68e44ce1dbe57dfd7",
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "0336ddd7748a862cd64aeeca5480f4ee6451f0a7858310c66cfa4f55cd787e77",
+      "crates/umf-core/src/schema.rs": "6809c95585a5209684c86a5f298166031126821191171fc975121f2dddba7b02",
       "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
-      "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
+      "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
       "crates/umf-core/src/schema_admitted_structure_independent_tests.rs": "874a89a8fdc77ca6f5959fe9c11f5bc5423a872731ac73ef638a0ac418573ea6",
       "crates/umf-core/src/schema_annotation_delta.rs": "e6c07f15750cbbd06b1158943bdeb8743be7a09f986d552ebf6c0df21623458d",
       "crates/umf-core/src/schema_bound_coordinate_views_independent_tests.rs": "f255d7d9702c0868cb3b0b52b7feb0653eb621689b3efc39e3ce7e00f88fccb6",
       "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
-      "crates/umf-core/src/schema_closed_container_independent_tests.rs": "161b91bdc903df76daab4cf8108a9c3e28b2493759dd8c27188d0eef8bfc803e",
+      "crates/umf-core/src/schema_closed_container_independent_tests.rs": "2964bcb2484bd433b6576dd759f4003e4d8a27901c3b15821abc5f586304733a",
       "crates/umf-core/src/schema_closed_structure.rs": "026045f024a4fb11a126ce0bbd384464fe8c2646b7f8b83aa02b77dcde6ff8ac",
       "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
-      "crates/umf-core/src/schema_construction_index.rs": "cf2090877b7ce610d52bb0b18de680a107d86f0a1d7ebedbec939a6f996645c5",
+      "crates/umf-core/src/schema_construction_index.rs": "d1e6b66dd95536f1c08a843bb4ecce33f390785cebd8bfa6d3a79a24aaee0c69",
       "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
-      "crates/umf-core/src/schema_encoded_source_independent_tests.rs": "20d4e5ba70b94ced8a602097e455024840ee31a87b751ba395c7a29e8a40811a",
-      "crates/umf-core/src/schema_evaluation_path_pair_independent_tests.rs": "84e4047e56b748ed314c494eacc6538ea4f7a1681b96eb06ec8b1b99c9bddb9a",
+      "crates/umf-core/src/schema_encoded_source_independent_tests.rs": "0460c457349a0cdbdbcba0214275be6d8a79a00fe002065ed2aeefe62ee2079f",
+      "crates/umf-core/src/schema_evaluation_path_pair_independent_tests.rs": "1006fbf5b145ed2b13f2e3349a5b71882d791d125905fdf45b4a210c48ccb235",
       "crates/umf-core/src/schema_evaluation_paths_bridge_independent_tests.rs": "2b537e2f6eb5df3262ba05a0c8abd6691b6d34b9e234fc36e7a0ab54f75c6f1e",
       "crates/umf-core/src/schema_evaluation_scope.rs": "53890272ac8193f43595c56aae48604e2c27fec42b7f457fafac1fea4dcf423c",
       "crates/umf-core/src/schema_fused_dfs_independent_tests.rs": "a91e5d5a92b87bc63d75cfc1779bf10d58766ae51f8a9d6f7d055906a5e124d8",
       "crates/umf-core/src/schema_metas.json": "cecc3fdf8f3977662e71b53c20d6f954c62bec1cc2e96db20cbc9f895cf47195",
       "crates/umf-core/src/schema_metas_utf16.rs": "8562b4967604d8706347d6df4e31b40358d33b5fee98eb256018d3aa09f6e99f",
-      "crates/umf-core/src/schema_node_coordinate_independent_tests.rs": "f9b10076f5034b62fa0c0fa47c218a2f3074424c537da88b2a4b4fa72488a42d",
-      "crates/umf-core/src/schema_owned_plan_independent_tests.rs": "01178e789f3522581cd1cd94b77c7b5423a53634f9e717e4552be25712910fdb",
+      "crates/umf-core/src/schema_node_coordinate_independent_tests.rs": "be118610070a4f7974d0de6fb9ab8bbf0f40a725ae2a137f38192f1eaecc7d4f",
+      "crates/umf-core/src/schema_owned_plan_independent_tests.rs": "b49a65a37548918945426e3e0c14d2e52d529a0e39dacfcc38066aa0f88e965a",
       "crates/umf-core/src/schema_owned_plan_tests.rs": "f3ec94b89b443195b8ffa64c585af76641694d80fb53df0bff9befebbfd749fd",
       "crates/umf-core/src/schema_owned_plans.rs": "d91d82ce36d3ffdc5bee8fd042534a68635fdbc4e304400e0149b3b321a03238",
       "crates/umf-core/src/schema_owner_location_tests.rs": "060990953a6fa55640454093724d8072ea004e69043757daba583687ab20cd7f",
-      "crates/umf-core/src/schema_owner_locations.rs": "07678db7ca9bfbd8f82d98dea0e3cb50c636f8d469addf3809906956ebbebeda",
+      "crates/umf-core/src/schema_owner_locations.rs": "d2d0fa5421bba32c8579aa448f2dac391ef856e6761c75f92ba8cf078d62bf19",
       "crates/umf-core/src/schema_owner_locations_compact_independent_tests.rs": "db0d8e5addbc27f8e12ea0e6735f08483d15a604655ea70fd83ec5cff6bd2ee9",
       "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
-      "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "1fdd85417529a5aef600642ada92b065e669a0897a54f696de340444d79504d3",
-      "crates/umf-core/src/schema_path_facts_independent_tests.rs": "d286ec807d8c4c36564cab6e55c36d4e2e0757c8a59e552c1edb98066b37d260",
+      "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "2ee93d54ad85fc3f80b94c3bd8663827134a91ec97eb87fec1c0d3ab8fe239ec",
+      "crates/umf-core/src/schema_path_facts_independent_tests.rs": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
       "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
-      "crates/umf-core/src/serialization.rs": "9650dbe5d94b0b7db634f0a8a2522171f2c6fcd4da848feef5b2fb7e914ab1ff",
+      "crates/umf-core/src/serialization.rs": "0ee58f6dc49c140b8bdeec1c427462a5b9e884d4153bc41953f9851c6fd184d0",
       "crates/umf-core/src/serialization_closed_metadata.rs": "a704ef592e96970e724d24b36e679f7a5bf16c64918992ae9d92b3420b2cae8f",
       "crates/umf-core/src/serialization_construction_owned_independent_tests.rs": "db3bd9625d1fb4bb04ee0a510beb5862d03a65b39440ddc6190b69a2432efd41",
       "crates/umf-core/src/serialization_owned_decode_stack_independent_tests.rs": "c76df4a8e248c0ce147806b864004290125c7d39e45f27c48994f7f0b7a5d691",
       "crates/umf-core/src/value.rs": "057cfac477f0a1c4e32e10e4c9ac42ed7f38b946cec86b754f4badae1fbdbeda",
-      "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "b825da0304386cc2f51531f7e103408888b00e4918170a6bb170011b20115398",
+      "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "c7c7d16dfaae8cc5e6e62970deeeeccc4cd84d7e13239e15195b349ed2f28711",
       "crates/umf-core/src/value_decimal_path.rs": "477f37b08fe97e82f857100be653abf81fb997d69fc0baca868ad944ebba7109",
-      "crates/umf-core/src/value_fused_admission_independent_tests.rs": "09c6f04b7aedf4f37e8603e908a9b5885f9cf0f4e4081cde0f8e5845fb5b85bc",
-      "crates/umf-core/src/value_original_visit_independent_tests.rs": "251112b990d0bb1c1f73b65653af3bcf15e99578c6b422727b647ab7906c6559",
-      "crates/umf-core/src/value_owned_core_json_independent_tests.rs": "785b4e14b66b210208d4eff2897c68701f1673220a262089db29bf0c8062f953",
+      "crates/umf-core/src/value_fused_admission_independent_tests.rs": "62a3d88fd1dd9331eb2a7bb683a98d1ec884b159e0a5c032fdd57b0880948f41",
+      "crates/umf-core/src/value_original_visit_independent_tests.rs": "0d8d89f7ca02c5b238bfcb03f512c5a9e748ffbbd31c3b7dd3a1f80a28542daf",
+      "crates/umf-core/src/value_owned_core_json_independent_tests.rs": "4c89cc19b5592de2c784aecddd60d817163b9976c2dbdac8eb01873d6ebb00dd",
       "crates/umf-core/tests/consumer_schema.rs": "2abfb36696a66d603366c38870826fdbb94b0f5d368d08833ae7ae2a8b030c0a",
       "crates/umf-core/tests/resource_cache.rs": "86db330e51951c6759117d181712adbc7fd3cac3a98c00d84af41fb68e06d1f7",
       "crates/umf-core/tests/schema_python_recursive_resource_scope.rs": "2a344459e7db33ab9a872d65f6833f081805453ca6d1ea88ae6ccc90a7758fd4",
@@ -1881,8 +1881,8 @@
       "docs/helix/04-build/evidence/retained-owned-evaluation-plans/operation-map.json": "59c9405c5be4d04c43662c101b7cd28ff517e50ee09731e94249646d2977ea7f",
       "fixtures/saga/portable.json": "6f67fdfe6fba205436490f8b64f55f58e9bdae315d19148d10de799c05a3f1a7",
       "python/hatch_build.py": "ff2b41abceb3f02518cf802fe191629d70ea762546baacce56372e6b198a008f",
-      "python/pyproject.toml": "605f5aa7b8c1a29ae6905a8b98ee29fa125940f0254863cd3f3aaf57f2a216ad",
-      "python/src/umf/__init__.py": "0de93978178350bb37344b2154a5b57c9c652bde1fb511a2ab01028ea9a82c23",
+      "python/pyproject.toml": "87d51db865ece210f051c8096f6586fb3a4c334c029ccc09c34dd1102fc9884c",
+      "python/src/umf/__init__.py": "6672aa5930a5583e7c88f4d0ae8d6734bd15c440b47af119608d328d22bb15ff",
       "python/src/umf/rust_codegen.py": "3c165bd4c6f51bb4ba62f98583cc61b5efe672a01eb895c5b07143f0abf6719a",
       "python/tests/fixtures/inspector-retained-source-S/PROVENANCE.json": "81e09c18a702fddf6891a9f4dd605f3c084e846e37da0fc31074f2897835832e",
       "python/tests/fixtures/inspector-retained-source-S/spec/core/extension-package.schema.json": "fca24a871abf83e89837bf881bc5251b1a71ab98411fa5055af12e1bdd00fda5",
@@ -1906,9 +1906,9 @@
       "scripts/saga-portable/other-hosts.ts": "b96a7919ad992ee11702d63f947a1e4f1155883cc6461efbf14a65abf0ba3536",
       "scripts/saga-portable/python-probe.py": "82a5f20917cd7ffca700be90ddeaf5426841a4375ab0a7d7c2056c653e49f083",
       "scripts/saga-portable/verify.ts": "09bf569611574c28e6728dead6ad10137271bf26366f99faec6803ccf5fca9e5",
-      "spec/core/extension-package.schema.json": "0af43a4b01a309fd5a0e045bf92d2aeaeaa1b68e46abfd08a240a18055e6b116",
-      "spec/core/schema.json": "8625852e8619c3ec69fae75d78379ebae8896a687fda0f5509e2d3235895b7d3",
-      "spec/core/semantic-type-reference.schema.json": "54c1fbf20f3ed5a5013519663f9403820a33fabffa4dcadf3de03f2974479643",
+      "spec/core/extension-package.schema.json": "d8713da2df53d0e8c7f56eb9a0b3126ca181b2d3a100037b5d2c544cc0cd4205",
+      "spec/core/schema.json": "f2cb8ff4367d929d20a13185668264d3d4198b24cee332ad26bacf1a161c9fcd",
+      "spec/core/semantic-type-reference.schema.json": "02066ce14e86140c160688e9053c8b3fcede3c97b0320a67afa676b4264f99c7",
       "spec/extensions/actions/package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
       "spec/extensions/binding-stable/package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
       "spec/extensions/binding/package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
@@ -1916,8 +1916,8 @@
       "spec/extensions/tables/operation-0.2.schema.json": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e",
       "spec/extensions/tables/operation.schema.json": "af217abc87d2f4a5205d82c2146040ef986d29252c78a4ec76d59787828578cc",
       "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
-      "spec/metamodel/generated/core-constraints.json": "1fc15546f00b6666bac9ec853c2f24afb6261536d4dc6049b0c7bdbf29ab8b2e",
-      "spec/metamodel/generated/domain-policy.json": "4637f71cef27a8f77987b355ced9ca683156fd88f7486a4e54c0307f50753284",
+      "spec/metamodel/generated/core-constraints.json": "132d757b44f5bbf0a34195c9f73a4bc9fcc8c21481d1ad5064f77ef3b64c65c6",
+      "spec/metamodel/generated/domain-policy.json": "f0b76da382c7d59479698fff52c3e26d282a9161201a739b91dfbe9d894ea956",
       "tests/qualification/constructor_observation_pure_test.py": "e677919eba2ad1d544f75dab3d844a48a05df081505ee59542a6f8326459390c",
       "tests/qualification/fixtures/inspector-admission-precharge-baseline.json": "068ebe51004e7e03d6ef26aca7774209f5ef3beceb9fa0e40d0e274cb52bdc18",
       "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
@@ -1929,9 +1929,9 @@
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
       "tests/qualification/test_inspector_combined_budget.py": "43810b7edac2b552c49a41d7909470c6bb08e96241b76d77b139495f52206196",
-      "tests/qualification/test_inspector_construction_batch.py": "5b4a2d934fa328dc23a33e969cc013628b5a65a4b561ae72a0d675b59004e6a6",
+      "tests/qualification/test_inspector_construction_batch.py": "771b1bd4ebee75e4ec2eff8c53a3ecfce21806a634990513ae4c5f97c8dc5a56",
       "tests/qualification/test_inspector_cost_gate.py": "87a971d3bb5df50648aa862084b4fd9bb9c455d96ff95c332c6a37bfbf9cd3e9",
-      "tests/qualification/test_inspector_installed_factory.py": "37d207d12fbe3dea049e992d4ebdc4d5633978134ce88b654f6cd38964038725",
+      "tests/qualification/test_inspector_installed_factory.py": "7d8be2421e86e9ba93b05a5455273b32883734419f0f07c26f0d0511d4b49b2d",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
       "tests/qualification/test_inspector_owner_cursors.py": "78c41d56a4ba70543bd1347572fe3e30a40e14a867c68adbbaf248b946d8427c",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
@@ -1958,8 +1958,9 @@
       "tools/tests/test_operation_schema_utf16_encoding.py": "129eff6a26986a41f9c5fc8f06ca88c673494c3442bcaf2a6fcda69f170be319",
       "tools/tests/test_schema_metas_utf16_encoding.py": "577f088d62abb65864dab66a93c53fc46092b5abd625f63e2e5ddcdd66df02eb",
       "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355",
-      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "3586032c1f6ce90a67c1bc801d3e5c7a5931eb4a5943f2f8b0fad6b2b8b62735",
-      "crates/umf-core/src/schema_fused_owner_traversal_independent_tests.rs": "cbc56cba50566b7d5c9c7eb7c95bd396a55bb774634bff68d3a0b24029d383e3"
+      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "29e866240abe621b121094286595c4fa8c5e1bf4be9ae57cf6b7acd138f745ce",
+      "crates/umf-core/src/schema_fused_owner_traversal_independent_tests.rs": "cbc56cba50566b7d5c9c7eb7c95bd396a55bb774634bff68d3a0b24029d383e3",
+      "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "6ca3822d64edf746a4ba10ac9070a7d442e40064bc327e26c90ea7189846c5be"
     },
     "moduleGraph": [
       {
@@ -2910,6 +2911,16 @@
           "#[cfg(test)]",
           "#[path=\"schema_fused_owner_traversal_independent_tests.rs\"]"
         ]
+      },
+      {
+        "parent": "crates/umf-core/src/schema.rs",
+        "child": "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs",
+        "module": "schema::preflight_route_storage_independent_tests",
+        "declaration": "#[cfg(test)]\n#[path = \"schema_preflight_route_storage_independent_tests.rs\"]\nmod preflight_route_storage_independent_tests;",
+        "cfg": [
+          "#[cfg(test)]",
+          "#[path = \"schema_preflight_route_storage_independent_tests.rs\"]"
+        ]
       }
     ],
     "rust": [
@@ -3238,7 +3249,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/engine.rs",
-        "sourceSHA256": "0ab9794911d1cc2461f6f2e37d277e131fe83857297a1aa4eb88a71bae4890f5",
+        "sourceSHA256": "c7e2d23644f056c29af1aac4087cfc6d9aa83299a91028d2a1d9316d6dc4865e",
         "cases": [
           {
             "name": "engine::registration_provider_tests::admitted_validation_keeps_structural_refusal_before_provider_access",
@@ -3307,7 +3318,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_construction_index.rs",
-        "sourceSHA256": "da2267884f2420104b4f3e998aeda7a0d20efd2534dbd6941f0c19c0d485602f",
+        "sourceSHA256": "d1e6b66dd95536f1c08a843bb4ecce33f390785cebd8bfa6d3a79a24aaee0c69",
         "cases": [
           {
             "name": "schema::construction_index::owner_tests::actual_index_precharge_denial_precedes_materialization_and_publication",
@@ -3594,7 +3605,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_owned_plan_independent_tests.rs",
-        "sourceSHA256": "01178e789f3522581cd1cd94b77c7b5423a53634f9e717e4552be25712910fdb",
+        "sourceSHA256": "b49a65a37548918945426e3e0c14d2e52d529a0e39dacfcc38066aa0f88e965a",
         "cases": [
           {
             "name": "schema::owned_plans::independent_tests::pinned_twenty_first_admission_and_real_warm_reference_plans_match_original",
@@ -3855,7 +3866,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_node_coordinate_independent_tests.rs",
-        "sourceSHA256": "f9b10076f5034b62fa0c0fa47c218a2f3074424c537da88b2a4b4fa72488a42d",
+        "sourceSHA256": "be118610070a4f7974d0de6fb9ab8bbf0f40a725ae2a137f38192f1eaecc7d4f",
         "cases": [
           {
             "name": "schema::owned_plans::node_coordinate_independent_tests::nk01_same_validated_node_mode_different_diagnostic_paths_reuse_original_arc",
@@ -3964,7 +3975,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_evaluation_path_pair_independent_tests.rs",
-        "sourceSHA256": "84e4047e56b748ed314c494eacc6538ea4f7a1681b96eb06ec8b1b99c9bddb9a",
+        "sourceSHA256": "1006fbf5b145ed2b13f2e3349a5b71882d791d125905fdf45b4a210c48ccb235",
         "cases": [
           {
             "name": "schema::owned_plans::evaluation_path_pair_independent_tests::ph01_admitted_root_controlled_clone_and_default_do_not_mint_caller_authority",
@@ -4433,7 +4444,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_admitted_bank_independent_tests.rs",
-        "sourceSHA256": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
+        "sourceSHA256": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
         "cases": [
           {
             "name": "schema::admitted_bank::independent_tests::cold_canonical_five_admissions_have_ordered_roles_and_first_semantic_validation",
@@ -4673,7 +4684,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_closed_container_independent_tests.rs",
-        "sourceSHA256": "161b91bdc903df76daab4cf8108a9c3e28b2493759dd8c27188d0eef8bfc803e",
+        "sourceSHA256": "2964bcb2484bd433b6576dd759f4003e4d8a27901c3b15821abc5f586304733a",
         "cases": [
           {
             "name": "schema::admitted_structure::closed::closed_container_independent_tests::closed01_actual_validator_literal_container_summaries_match_both_original_collectors",
@@ -4803,7 +4814,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema.rs",
-        "sourceSHA256": "b9f9850fdeeb1f4121e2c8726265aaa4690cdb1ed5b2b2125ac37173571cd961",
+        "sourceSHA256": "6809c95585a5209684c86a5f298166031126821191171fc975121f2dddba7b02",
         "cases": [
           {
             "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
@@ -5379,7 +5390,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_encoded_source_independent_tests.rs",
-        "sourceSHA256": "20d4e5ba70b94ced8a602097e455024840ee31a87b751ba395c7a29e8a40811a",
+        "sourceSHA256": "0460c457349a0cdbdbcba0214275be6d8a79a00fe002065ed2aeefe62ee2079f",
         "cases": [
           {
             "name": "schema::encoded_source_independent_tests::actual_loader_completed_receipt_preserves_all_twenty_roles_selected_roots_and_opaque_text",
@@ -5789,7 +5800,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value.rs",
-        "sourceSHA256": "4cac39cc120cc14e6ca9250bf3dea68eece0a880240cd03ad51452b9c64fca45",
+        "sourceSHA256": "057cfac477f0a1c4e32e10e4c9ac42ed7f38b946cec86b754f4badae1fbdbeda",
         "cases": [
           {
             "name": "value::completed_result_copy_tests::follows_typescript_nodewise_limit_path_and_charges_copy_work",
@@ -5853,7 +5864,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value_owned_core_json_independent_tests.rs",
-        "sourceSHA256": "785b4e14b66b210208d4eff2897c68701f1673220a262089db29bf0c8062f953",
+        "sourceSHA256": "4c89cc19b5592de2c784aecddd60d817163b9976c2dbdac8eb01873d6ebb00dd",
         "cases": [
           {
             "name": "value::owned_core_json_independent_tests::real_complete_admission_then_actual_consumer_differs_from_bare_paid_validation",
@@ -5963,7 +5974,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value_fused_admission_independent_tests.rs",
-        "sourceSHA256": "09c6f04b7aedf4f37e8603e908a9b5885f9cf0f4e4081cde0f8e5845fb5b85bc",
+        "sourceSHA256": "62a3d88fd1dd9331eb2a7bb683a98d1ec884b159e0a5c032fdd57b0880948f41",
         "cases": [
           {
             "name": "value::fused_admission_independent_tests::genuine_fused_admission_preserves_safe_numbers_unknown_utf16_and_member_order",
@@ -6073,7 +6084,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value_original_visit_independent_tests.rs",
-        "sourceSHA256": "251112b990d0bb1c1f73b65653af3bcf15e99578c6b422727b647ab7906c6559",
+        "sourceSHA256": "0d8d89f7ca02c5b238bfcb03f512c5a9e748ffbbd31c3b7dd3a1f80a28542daf",
         "cases": [
           {
             "name": "value::original_visit_independent_tests::ordinary_and_no_collector_keep_literal_original_callbacks_and_member_observer_order",
@@ -6183,7 +6194,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value_closed_metadata_independent_tests.rs",
-        "sourceSHA256": "b825da0304386cc2f51531f7e103408888b00e4918170a6bb170011b20115398",
+        "sourceSHA256": "c7c7d16dfaae8cc5e6e62970deeeeccc4cd84d7e13239e15195b349ed2f28711",
         "cases": [
           {
             "name": "value::closed_metadata_independent_tests::scalar_roots_have_direct_final_literal_rows_and_no_child_frame_or_container",
@@ -6453,7 +6464,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/canonical_static_text_independent_tests.rs",
-        "sourceSHA256": "45232319d6ab78dbf57bfd631c70c97fb43a26ab894d8b131a26b8a05a62639f",
+        "sourceSHA256": "9b619dca3aae22919a59988093004b8eac23cb1395e6ecfc16df78add51caf43",
         "cases": [
           {
             "name": "canonical_codegen_resources::static_independent_tests::static01_genuine_static_units_clone_eq_ord_hash_and_owned_copy_isolation",
@@ -7431,7 +7442,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/serialization.rs",
-        "sourceSHA256": "9650dbe5d94b0b7db634f0a8a2522171f2c6fcd4da848feef5b2fb7e914ab1ff",
+        "sourceSHA256": "0ee58f6dc49c140b8bdeec1c427462a5b9e884d4153bc41953f9851c6fd184d0",
         "cases": [
           {
             "name": "serialization::construction_array_index_admission_tests::decimal_formatting_is_not_entered_when_its_own_precharge_is_denied",
@@ -7548,7 +7559,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_path_facts_independent_tests.rs",
-        "sourceSHA256": "d286ec807d8c4c36564cab6e55c36d4e2e0757c8a59e552c1edb98066b37d260",
+        "sourceSHA256": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
         "cases": [
           {
             "name": "schema::path_facts_independent_tests::pth01_genuine_seed_append_and_retarget_match_paid_original_path_oracle",
@@ -7658,7 +7669,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_owner_traversal_independent_tests.rs",
-        "sourceSHA256": "1fdd85417529a5aef600642ada92b065e669a0897a54f696de340444d79504d3",
+        "sourceSHA256": "2ee93d54ad85fc3f80b94c3bd8663827134a91ec97eb87fec1c0d3ab8fe239ec",
         "cases": [
           {
             "name": "schema::owner_locations::owner_traversal_independent_tests::ow01_ordered_objects_arrays_scalars_match_original_owner_readback",
@@ -7908,7 +7919,8 @@
           {
             "name": "schema::scoped_preflight_path_independent_tests::sp10_real_root_catalogue_preflight_and_unchanged_evaluator"
           }
-        ]
+        ],
+        "sourceSHA256": "29e866240abe621b121094286595c4fa8c5e1bf4be9ae57cf6b7acd138f745ce"
       },
       {
         "package": "umf-core",
@@ -8007,6 +8019,80 @@
           }
         ],
         "caseCount": 8
+      },
+      {
+        "package": "umf-core",
+        "target": "lib",
+        "features": "native-postgresql",
+        "source": "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs",
+        "sourceSHA256": "6ca3822d64edf746a4ba10ac9070a7d442e40064bc327e26c90ea7189846c5be",
+        "caseCount": 8,
+        "cases": [
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps01_actual_specialized_type_field_closure_and_layout",
+            "line": 46,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps02_real_root_catalogue_and_legacy_calls_share_semantic_body",
+            "line": 66,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps03_owned_cold_keyword_keeps_advanced_parent_frontier_and_readback",
+            "line": 84,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps04_unavailable_transition_uses_two_distinct_retained_legacy_demands",
+            "line": 108,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps05_semantic_error_path_and_order_match_original_preflight",
+            "line": 134,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps06_changed_limits_and_foreign_owner_fail_real_borrowed_readback",
+            "line": 222,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps07_pre_effect_cold_denial_retains_real_owned_checked_custody",
+            "line": 274,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps08_independent_reentry_and_panic_poison_cleanup",
+            "line": 374,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          }
+        ]
       }
     ],
     "python": [
@@ -8213,7 +8299,7 @@
       "fixtureSHA256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "metadataVersion": "0.10.9"
     },
-    "closureSHA256": "615dbde752e447fc4a5202e3eeebf30c4004a3c23dd46dc5f9385e992de97e9f"
+    "closureSHA256": "62d11a46438e4a6b5e924456a64527f6798b497999710d0ab3724fbcbc7c055d"
   },
   "modelReferences": {
     "baseModel": {
@@ -8347,6 +8433,171 @@
     "FT1CombinedSourceControlModelAuthorization": {
       "path": "/private/tmp/umf-ft1-full-producer-v2/SOL-FT1-COMBINED-SOURCE-MODEL-PASS-A469-CENSUS-SCOPE.json",
       "sha256": "96c3083557398dbcd07b3635854e7e59fca995b2356b39e613e8e5176904b2d7"
+    }
+  },
+  "reviewedControlAdapterExceptions": {
+    "profile": "umf.reviewed-c8-control-adapter-exceptions/1",
+    "c8Commit": "67b6dbae9d969f8c7e5eb955e97a312be5f45787",
+    "e7Commit": "e7c14dac587c2f5b00f85b929cc2d49619cd52bb",
+    "solReceipt": {
+      "path": "/private/tmp/umf-ps1-final-source-model/SOL-FINAL-SOURCE-MODEL-CONTROLS-PASS.json",
+      "sha256": "1396f1cf65183c008928389c95812d00acb86171d3e56f96fa76d954abf76813"
+    },
+    "fourControlClosureReceipt": "30bbfad10c8629567daac8ee59f62ef284d3e9295a1950fe2380985834b38568",
+    "files": {
+      "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": {
+        "frozenC8SHA256": "333c3aae26db91fd4283c276cc2538c55a23bd989e22fca4651a63408548bad6",
+        "previousE7SHA256": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
+        "reviewedCurrentSHA256": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47"
+      },
+      "crates/umf-core/src/schema_closed_container_independent_tests.rs": {
+        "frozenC8SHA256": "161b91bdc903df76daab4cf8108a9c3e28b2493759dd8c27188d0eef8bfc803e",
+        "previousE7SHA256": "2964bcb2484bd433b6576dd759f4003e4d8a27901c3b15821abc5f586304733a",
+        "reviewedCurrentSHA256": "2964bcb2484bd433b6576dd759f4003e4d8a27901c3b15821abc5f586304733a"
+      },
+      "crates/umf-core/src/schema_encoded_source_independent_tests.rs": {
+        "frozenC8SHA256": "20d4e5ba70b94ced8a602097e455024840ee31a87b751ba395c7a29e8a40811a",
+        "previousE7SHA256": "0460c457349a0cdbdbcba0214275be6d8a79a00fe002065ed2aeefe62ee2079f",
+        "reviewedCurrentSHA256": "0460c457349a0cdbdbcba0214275be6d8a79a00fe002065ed2aeefe62ee2079f"
+      },
+      "crates/umf-core/src/schema_evaluation_path_pair_independent_tests.rs": {
+        "frozenC8SHA256": "84e4047e56b748ed314c494eacc6538ea4f7a1681b96eb06ec8b1b99c9bddb9a",
+        "previousE7SHA256": "1006fbf5b145ed2b13f2e3349a5b71882d791d125905fdf45b4a210c48ccb235",
+        "reviewedCurrentSHA256": "1006fbf5b145ed2b13f2e3349a5b71882d791d125905fdf45b4a210c48ccb235"
+      },
+      "crates/umf-core/src/schema_node_coordinate_independent_tests.rs": {
+        "frozenC8SHA256": "f9b10076f5034b62fa0c0fa47c218a2f3074424c537da88b2a4b4fa72488a42d",
+        "previousE7SHA256": "be118610070a4f7974d0de6fb9ab8bbf0f40a725ae2a137f38192f1eaecc7d4f",
+        "reviewedCurrentSHA256": "be118610070a4f7974d0de6fb9ab8bbf0f40a725ae2a137f38192f1eaecc7d4f"
+      },
+      "crates/umf-core/src/schema_owned_plan_independent_tests.rs": {
+        "frozenC8SHA256": "01178e789f3522581cd1cd94b77c7b5423a53634f9e717e4552be25712910fdb",
+        "previousE7SHA256": "bde7011673669aba6738b69d4ae34c78b416aaf589b2104a04db182c4fcfbf93",
+        "reviewedCurrentSHA256": "b49a65a37548918945426e3e0c14d2e52d529a0e39dacfcc38066aa0f88e965a"
+      },
+      "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": {
+        "frozenC8SHA256": "1fdd85417529a5aef600642ada92b065e669a0897a54f696de340444d79504d3",
+        "previousE7SHA256": "34cf884755fa61453f6d2582585779b5c2f8d49f1a3968cdf3991c9cc0aa757e",
+        "reviewedCurrentSHA256": "2ee93d54ad85fc3f80b94c3bd8663827134a91ec97eb87fec1c0d3ab8fe239ec"
+      },
+      "crates/umf-core/src/schema_path_facts_independent_tests.rs": {
+        "frozenC8SHA256": "d286ec807d8c4c36564cab6e55c36d4e2e0757c8a59e552c1edb98066b37d260",
+        "previousE7SHA256": "653e1cdd4470fcc07b6ea08fbf7217b72509b83b11bfcd57b6e980f513c69d0b",
+        "reviewedCurrentSHA256": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e"
+      },
+      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": {
+        "frozenC8SHA256": "3586032c1f6ce90a67c1bc801d3e5c7a5931eb4a5943f2f8b0fad6b2b8b62735",
+        "previousE7SHA256": "b3a952847f782c7db4fdf7e89262fced8ce0be8145c7cc33a11968406ad530d3",
+        "reviewedCurrentSHA256": "29e866240abe621b121094286595c4fa8c5e1bf4be9ae57cf6b7acd138f745ce"
+      }
+    }
+  },
+  "candidateInputBindingPending": {
+    "profile": "umf.private-candidate-input-binding-review/1",
+    "status": "pending-genuine-generation-and-binding-review",
+    "candidateMetadataVersion": "0.10.10",
+    "currentFixture": {
+      "path": "tests/qualification/fixtures/inspector-installed-current-resources.json",
+      "sha256": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
+      "metadataVersion": "0.10.9",
+      "classification": "historical-input-only"
+    },
+    "candidateAdmission": false,
+    "requiredNextEvidence": [
+      "candidate-version-bound resource adapter reviewed",
+      "GEN1 output DATA and resource hashes from genuine admitted generation",
+      "current source/model/resource correspondence revalidated"
+    ],
+    "sourceModelControlReceipt": {
+      "path": "/private/tmp/umf-ps1-final-source-model/SOL-FINAL-SOURCE-MODEL-CONTROLS-PASS.json",
+      "sha256": "1396f1cf65183c008928389c95812d00acb86171d3e56f96fa76d954abf76813"
+    },
+    "retainedHistoricalModelSHA256": "d70777be5f327554ac5dc728d17c9a6a0840131c0e12daeff0c1045b3c48c012",
+    "candidateModelSHA256": null,
+    "proposedAdapterShape": {
+      "profile": "umf.inspector-installed-canonical-current-resources/1",
+      "inputProfile": "installed-canonical/1",
+      "maximumWork": 1000000,
+      "baseline": {
+        "mainCommit": null,
+        "mainTree": null,
+        "inheritedCoreDistributionVersion": "0.10.10",
+        "scope": "private component only; not release proof"
+      },
+      "historicalFixture": {
+        "path": "tests/qualification/fixtures/inspector-retained-resources.json",
+        "sha256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
+        "sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+        "scope": "retained historical fixture; not candidate resources"
+      },
+      "resources": {
+        "coreSchema": {
+          "path": "spec/core/schema.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        },
+        "referenceSchema": {
+          "path": "spec/core/semantic-type-reference.schema.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        },
+        "packageSchema": {
+          "path": "spec/core/extension-package.schema.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        },
+        "constraints": {
+          "path": "spec/metamodel/generated/core-constraints.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        },
+        "domainPolicy": {
+          "path": "spec/metamodel/generated/domain-policy.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        },
+        "tablesPackage": {
+          "path": "spec/extensions/tables/package.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        },
+        "actionsPackage": {
+          "path": "spec/extensions/actions/package.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        },
+        "bindingPackage": {
+          "path": "spec/extensions/binding/package.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        },
+        "stableBindingPackage": {
+          "path": "spec/extensions/binding-stable/package.json",
+          "bytes": null,
+          "sha256": null,
+          "status": "pending genuine generated resource binding"
+        }
+      },
+      "encodingOnlyProducer": {
+        "path": "tools/generate_codegen_resource_literals.py",
+        "sha256": null,
+        "status": "pending genuine generation"
+      },
+      "literalData": {
+        "path": "crates/umf-core/src/canonical_codegen_literals.rs",
+        "sha256": null,
+        "status": "pending genuine generation"
+      },
+      "candidateModelSHA256": null,
+      "admission": "not admitted"
     }
   }
 }

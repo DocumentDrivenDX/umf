@@ -328,11 +328,31 @@ class FinalSourceCensusControls(unittest.TestCase):
             v['python'][0]['cases']=[v['publicControls'][0]];resign(m,v)
             with self.assertRaisesRegex(ValueError,'partition|overlap'):m.selection(root,c)
     def test_frozen_actual_named_roster_and_required_18_public_controls(self):
-        m=load();c=json.loads((ROOT/m.CENSUS).read_text());v=m.selection(ROOT,c)
+        m=load();c=json.loads((ROOT/m.CENSUS).read_text());v=c['installedFactory']
+        with self.assertRaisesRegex(ValueError,'Assembled pyproject metadata differs'):
+            m.selection(ROOT,c)
         early=v['publicControls'];late=[x for g in v['python'] for x in g['cases']]
         self.assertEqual(len(early),18);self.assertEqual(len(late),31)
         self.assertFalse(set(early)&set(late))
-        self.assertEqual(sum(len(r['cases']) for r in v['rust']),469)
+        self.assertEqual(sum(len(r['cases']) for r in v['rust']),477)
+        additions=[case for row in v['rust'] for case in row['cases'] if 'preflight_route_storage_independent_tests::ps0' in case['name']]
+        self.assertEqual(len(additions),8)
+        self.assertEqual({case['name'].rsplit('::',1)[-1] for case in additions},{
+            'ps01_actual_specialized_type_field_closure_and_layout',
+            'ps02_real_root_catalogue_and_legacy_calls_share_semantic_body',
+            'ps03_owned_cold_keyword_keeps_advanced_parent_frontier_and_readback',
+            'ps04_unavailable_transition_uses_two_distinct_retained_legacy_demands',
+            'ps05_semantic_error_path_and_order_match_original_preflight',
+            'ps06_changed_limits_and_foreign_owner_fail_real_borrowed_readback',
+            'ps07_pre_effect_cold_denial_retains_real_owned_checked_custody',
+            'ps08_independent_reentry_and_panic_poison_cleanup'})
+        self.assertTrue(any(edge['child']=='crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs' for edge in v['moduleGraph']))
+        self.assertEqual(c['rustCaseCount'],229)
+        self.assertEqual(len(c['reviewedControlAdapterExceptions']['files']),9)
+        pending=c['candidateInputBindingPending']
+        self.assertEqual(pending['candidateMetadataVersion'],'0.10.10')
+        self.assertEqual(pending['currentFixture']['metadataVersion'],'0.10.9')
+        self.assertFalse(pending['candidateAdmission'])
         old=[x for g in c['python'] for x in g['cases']]
         history=v['legacyDisposition']['historicalOnly']
         self.assertEqual(len(history),1);self.assertIn('test_cold_constructor_and_each_17_vector_dispatch_list_tuple_call_fit_strict_1m',history[0])

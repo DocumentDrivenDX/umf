@@ -34,9 +34,10 @@ class WheelContractTests(unittest.TestCase):
         package = Path(__file__).resolve().parents[1]
         document = tomllib.loads((package / "pyproject.toml").read_text())
         profile = json.loads((package / "compatibility-profile.json").read_text())
+        self.assertEqual(profile["runtimeAbi"], PIN)
         self.assertEqual(
             resolve_source_version(package, document),
-            profile["runtimeAbi"]["version"],
+            "0.1.0.dev10",
         )
         malformed = {**document, "project": {**document["project"], "version": "0.0"}}
         with self.assertRaisesRegex(ValueError, "fixed Hatch source version path"):
@@ -100,18 +101,34 @@ class WheelContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             wheel = Path(folder) / "runtime.whl"
 
-            def write(metadata="Name: umf_access\nVersion: 0.1.0.dev9\n", marker=True):
+            def write(
+                metadata="Name: umf_access\nVersion: 0.1.0.dev9\n",
+                marker=True,
+                dist_info_version="0.1.0.dev9",
+            ):
                 with zipfile.ZipFile(wheel, "w") as z:
                     z.writestr(
                         "umf_access/__init__.py",
                         'RUNTIME_ABI="umf-access-runtime/0.1"\n',
                     )
-                    z.writestr("umf_access-0.1.0.dev9.dist-info/METADATA", metadata)
+                    z.writestr(
+                        f"umf_access-{dist_info_version}.dist-info/METADATA",
+                        metadata,
+                    )
                     if marker:
                         z.writestr("umf_access/py.typed", "")
 
             write()
             self.assertIn("umf_access/__init__.py", inspect_wheel(wheel, PIN))
+            write(
+                "Name: umf_access\nVersion: 0.1.0.dev10\n",
+                True,
+                "0.1.0.dev10",
+            )
+            with self.assertRaisesRegex(
+                ValueError, "wheel distribution/version mismatch"
+            ):
+                inspect_wheel(wheel, PIN)
             for metadata, marker in [
                 ("Name: wrong\nVersion: 0.1.0.dev9\n", True),
                 ("Name: umf_access\nVersion: 1.0\n", True),

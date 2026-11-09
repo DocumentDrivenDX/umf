@@ -811,10 +811,9 @@ fn interpreter_annotation_commit_rollback_and_ordered_errors_match_original() {
         ),
         (
             r#"{"contains":{"type":"integer"},"unevaluatedItems":false}"#,
-            // The admitted Ajv profile evaluates the whole array for
-            // unevaluatedItems once a nontrivial contains runs, so the owner
-            // and the fallback agree that this instance is valid.
-            vec![("[1,2]", true), (r#"[1,"x"]"#, true)],
+            // Only items that actually match contains are annotated in
+            // Draft 2020-12, in both ordinary and codegen diagnostic modes.
+            vec![("[1,2]", true), (r#"[1,"x"]"#, false)],
         ),
         (
             r#"{"anyOf":[{"prefixItems":[{"type":"integer"}]},{"prefixItems":[{"type":"string"}]}],"unevaluatedItems":false}"#,
@@ -840,6 +839,20 @@ fn interpreter_annotation_commit_rollback_and_ordered_errors_match_original() {
             assert_eq!(actual.is_empty(), valid, "validity: {source} / {instance}");
         }
     }
+    let ordinary_source = json(r#"{"contains":{"type":"integer"},"unevaluatedItems":false}"#);
+    let ordinary = CompiledSchema::compile(
+        &ordinary_source,
+        &SchemaResources::default(),
+        &mut Context::catalog(),
+    )
+    .unwrap();
+    assert!(
+        !ordinary
+            .validate(&json(r#"[1,"x"]"#), &mut Context::catalog())
+            .unwrap()
+            .is_empty(),
+        "ordinary validation rejects the unmatched unevaluated item"
+    );
     let source = json(
         r#"{"type":"object","properties":{"a/b~☃":{"type":"integer"},"z":{"type":"string"}}}"#,
     );

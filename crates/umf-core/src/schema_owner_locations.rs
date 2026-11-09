@@ -412,10 +412,28 @@ fn walk_words<T>() -> usize { std::mem::size_of::<T>().div_ceil(std::mem::size_o
 #[cfg(test)]
 thread_local! {static OWNER_WALK_OBSERVER:std::cell::RefCell<Option<Box<dyn FnMut(&'static str,usize,usize)>>>=std::cell::RefCell::new(None);}
 #[cfg(test)]
+thread_local! {static FUSED_SKIP_ROW_OBSERVER:std::cell::RefCell<Option<Box<dyn FnMut(&'static str,usize,usize,usize,usize,usize,usize)>>>=std::cell::RefCell::new(None);}
+#[cfg(test)]
 pub(super) fn observe_owner_walk<T>(observer:Box<dyn FnMut(&'static str,usize,usize)>,operation:impl FnOnce()->T)->T {
     struct Restore(Option<Box<dyn FnMut(&'static str,usize,usize)>>);
     impl Drop for Restore {fn drop(&mut self){OWNER_WALK_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
     let prior=OWNER_WALK_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+#[cfg(test)]
+pub(super) fn observe_fused_skip_rows<T>(observer:Box<dyn FnMut(&'static str,usize,usize,usize,usize,usize,usize)>,operation:impl FnOnce()->T)->T {
+    struct Restore(Option<Box<dyn FnMut(&'static str,usize,usize,usize,usize,usize,usize)>>);
+    impl Drop for Restore {fn drop(&mut self){FUSED_SKIP_ROW_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+    let prior=FUSED_SKIP_ROW_OBSERVER.with(|s|s.borrow_mut().replace(observer));let _restore=Restore(prior);operation()
+}
+#[cfg(test)]
+fn fused_skip_row_event(root:usize,parent_logical:usize,parent_physical:usize,ordinal:usize,physical:usize,extent_end:usize) {
+    let observer=FUSED_SKIP_ROW_OBSERVER.with(|s|s.borrow_mut().take());
+    if let Some(observer)=observer {
+        struct Restore(Option<Box<dyn FnMut(&'static str,usize,usize,usize,usize,usize,usize)>>);
+        impl Drop for Restore {fn drop(&mut self){FUSED_SKIP_ROW_OBSERVER.with(|s|*s.borrow_mut()=self.0.take());}}
+        let mut restore=Restore(Some(observer));
+        if let Some(observer)=restore.0.as_mut(){observer("ft1-intervening-row-read",root,parent_logical,parent_physical,ordinal,physical,extent_end);}
+    }
 }
 pub(super) fn owner_walk_event(event:&'static str,role:usize,node:usize) {
     #[cfg(test)]
@@ -625,6 +643,7 @@ impl<'binding,'owner:'binding> FusedChildren<'binding,'owner>{
             if row.parent as usize!=self.parent.physical_node||row.edge as usize!=ordinal
                 ||row.end as usize<=physical||row.end as usize>self.parent_end{return binding.original(&self.parent,edge,ctx);}
             #[cfg(test)] owner_walk_event("ft1-intervening-row-read",self.parent.coordinate.root,physical);
+            #[cfg(test)] fused_skip_row_event(self.parent.coordinate.root,self.parent.node,self.parent.physical_node,ordinal,physical,row.end as usize);
             physical=row.end as usize;ordinal+=1;
         }
         ctx.charge_work(walk_words::<FusedSelectedRow>()+12,Utf16::default())?;

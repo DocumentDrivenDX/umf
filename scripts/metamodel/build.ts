@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {rustMetamodel} from './rust';
 import {structuralSource} from './structural';
 import {structuralAccountingSource} from './structural-accounting';
-import {rustCompilePackages,rustCompileResources} from './source-closure';
+import {assertStableSourcePartition,collectSourceRosters,loadSourceBoundary,partitionRustSources} from './source-closure';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 const ACCOUNTED_COMPANION_PATH='src/generated/core-validators-accounted.ts';
 const OUTPUT_PATHS=[
@@ -16,36 +16,12 @@ const OUTPUT_PATHS=[
  'spec/metamodel/generated/python-shapes.json','python/umf_access/src/umf_access/generated_core.py',
  'src/generated/core-model.ts','src/generated/core-validators.ts',ACCOUNTED_COMPANION_PATH,'spec/metamodel/generated/manifest.json',
 ] as const;
-// External compile-time inputs in the Rust CLI dependency closure. The other
-// schema-looking includes in Rust sources are behind cfg(test) and are not
-// part of this CLI build's compile-time resource set.
-// The explicit Ajv backend remains a build-time dependency until the JS cutover.
-// It never executes inside the native core, CLI, Python wheel or WASM engine.
-async function compilerClosure():Promise<string[]>{
- const files=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml',...rustCompileResources];
- for(const dir of rustCompilePackages){
-  async function visit(path:string):Promise<void>{for(const entry of await readdir(resolve(root,path),{withFileTypes:true})){if(['target','node_modules','.git','__pycache__'].includes(entry.name))continue;const child=path+'/'+entry.name;if(entry.isDirectory())await visit(child);else if(entry.isFile())files.push(child);}}
-  await visit(dir);
- }
- return files.sort();
-}
-async function workspaceClosure():Promise<string[]>{
- const files=['.cargo/config.toml'];
- // Generated native modules and wasm-bindgen pkg files belong to artifact
- // build artifacts; including them here makes source provenance machine-dependent.
- async function visit(path:string):Promise<void>{
-  for(const entry of await readdir(resolve(root,path),{withFileTypes:true})){
-   if(['target','node_modules','.git','__pycache__','.venv'].includes(entry.name))continue;
-   const child=path+'/'+entry.name;
-   if(child.startsWith('bindings/') && (/(?:^|\/)wasm\/pkg(?:\/|$)/.test(child)||/\.(?:node|so|dylib|dll|pyd|wasm|pyc)$/i.test(child)))continue;
-   if(entry.isDirectory())await visit(child);else if(entry.isFile())files.push(child);
-  }
- }
- for(const path of ['crates','bindings'])await visit(path);
- return files.sort();
-}
 export async function generate(options:{check?:boolean;outputRoot?:string}={}){
- const compilerFiles=await compilerClosure(),workspaceFiles=(await workspaceClosure()).filter(path=>!compilerFiles.includes(path));
+ const {compilerFiles:compilerRoster,workspaceFiles:workspaceRoster}=await collectSourceRosters(root);
+ const rustSourcePaths=[...new Set([...compilerRoster,...workspaceRoster])].filter(path=>path.endsWith('.rs'));
+ const boundary=await loadSourceBoundary(root,rustSourcePaths,process.env);
+ const partition=partitionRustSources(compilerRoster,workspaceRoster,boundary);
+ const compilerFiles=partition.compilerInputs,workspaceFiles=partition.workspaceInputs;
  const backendFiles=['scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/source-closure.ts','scripts/metamodel/structural.ts','scripts/metamodel/structural-accounting.ts','src/validation/json-equality.ts','bindings/core/node/src/wire.js','package.json','bun.lock'];
  const sources=Object.fromEntries(await Promise.all(['spec/metamodel/umf.yaml',...compilerFiles,...workspaceFiles,...backendFiles].map(async p=>[p,hash(await readFile(resolve(root,p)))])));
  const provenance={modelSha256:sources['spec/metamodel/umf.yaml'],compilerSha256:hash(json(Object.fromEntries(compilerFiles.map(p=>[p,sources[p]]))))};
@@ -65,7 +41,12 @@ export async function generate(options:{check?:boolean;outputRoot?:string}={}){
  if(OUTPUT_PATHS.length!==Object.keys(outputs).length||OUTPUT_PATHS.some(path=>!Object.hasOwn(outputs,path)))throw Error('METAMODEL_OUTPUT_ROSTER');
  // Check the whole declared source set after compilation/backend emission and
  // before touching outputs, including added/removed workspace files.
- const finalPaths=['spec/metamodel/umf.yaml',...await compilerClosure(),...(await workspaceClosure()).filter(path=>!compilerFiles.includes(path)),...backendFiles];
+ const {compilerFiles:finalCompilerRoster,workspaceFiles:finalWorkspaceRoster}=await collectSourceRosters(root);
+ const finalRustSourcePaths=[...new Set([...finalCompilerRoster,...finalWorkspaceRoster])].filter(path=>path.endsWith('.rs'));
+ const finalBoundary=await loadSourceBoundary(root,finalRustSourcePaths,process.env);
+ const finalPartition=partitionRustSources(finalCompilerRoster,finalWorkspaceRoster,finalBoundary);
+ assertStableSourcePartition(partition,finalPartition);
+ const finalPaths=['spec/metamodel/umf.yaml',...finalCompilerRoster,...finalWorkspaceRoster.filter(path=>!finalCompilerRoster.includes(path)),...backendFiles];
  const finalSources=Object.fromEntries(await Promise.all(finalPaths.map(async path=>[path,hash(await readFile(resolve(root,path)))])));
  if(JSON.stringify(Object.entries(sources).sort())!==JSON.stringify(Object.entries(finalSources).sort()))throw Error('METAMODEL_SOURCE_CHANGED_DURING_GENERATION');
  const outRoot=options.outputRoot??root;

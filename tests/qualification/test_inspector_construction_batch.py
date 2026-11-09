@@ -18,7 +18,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         for row in self.census['rust']:
             self.listings[(row['package'],row['target'])] += [c['name'] for c in row['cases']]
 
-    def test_exact229_and47_sources_and_kepler_hashes_are_closed(self):
+    def test_historical229_and47_sources_remain_closed_candidate_binding_refuses(self):
         selected=batch.authenticate_lists(self.census,self.executables,self.listings)
         self.assertEqual(len(selected),229);self.assertEqual(len(set(selected)),229)
         self.assertEqual(sum(len(g['cases']) for g in self.census['python']),47)
@@ -29,8 +29,9 @@ class ConstructionBatchSourceControls(unittest.TestCase):
             self.assertEqual(batch.sha(ROOT/'crates/umf-core/src'/f'{module}_construction_tests.rs'),digest)
         helper=batch.load(ROOT/'tools/probe_inspector_installed_factory.py','frozen_factory_source')
         self.assertEqual(helper.digest(helper.original_loader((ROOT/helper.LOADER).read_bytes())),batch.TEST_SHA)
-        selected=helper.selection(ROOT,self.census)
-        self.assertEqual(helper.verified_loader_sha(ROOT),selected['sourceFiles'][helper.LOADER])
+        with self.assertRaisesRegex(ValueError,'Assembled pyproject metadata differs'):
+            helper.selection(ROOT,self.census)
+        self.assertEqual(helper.verified_loader_sha(ROOT),self.census['installedFactory']['sourceFiles'][helper.LOADER])
         self.assertEqual(self.census['installedFactory']['status'],'source-frozen')
         # Historical pins retain their original source scope; no relabel.
         self.assertTrue(any(batch.sha(ROOT/name)!=digest for name,digest in self.census['fileHashes'].items()))
@@ -65,15 +66,26 @@ class ConstructionBatchSourceControls(unittest.TestCase):
 
 
 
-    def test_current415_existing_targets_and_compiled_lists_are_exact(self):
+    def test_current477_existing_targets_and_compiled_lists_are_exact(self):
         helper=batch.load(ROOT/'tools/probe_inspector_installed_factory.py','frozen_list_controls')
-        v=helper.selection(ROOT,self.census);current={**self.census,'rust':v['rust'],'rustCaseCount':sum(len(g['cases']) for g in v['rust'])}
+        v=self.census['installedFactory'];current={**self.census,'rust':v['rust'],'rustCaseCount':sum(len(g['cases']) for g in v['rust'])}
         listings={key:[] for key in self.keys}
         for row in current['rust']:listings[row['package'],row['target']]+=[x['name'] for x in row['cases']]
-        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),469)
+        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),477)
         self.assertEqual({(g['package'],g['target']) for g in current['rust']},self.keys)
         for row in current['rust']:
             if row['package']=='umf-core-python':self.assertEqual(row['manifest'],'bindings/core/python/Cargo.toml')
+        added=[c for row in v['rust'] for c in row['cases'] if 'preflight_route_storage_independent_tests::ps0' in c['name']]
+        self.assertEqual(len(added),8)
+        self.assertTrue(all(c['name'].startswith('schema::preflight_route_storage_independent_tests::ps0') for c in added))
+        all_cases=[c for row in v['rust'] for c in row['cases']]
+        old=[c for c in all_cases if c not in added]
+        import hashlib,json
+        digest=lambda values:hashlib.sha256(json.dumps(values,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
+        self.assertEqual(len(old),469)
+        self.assertEqual(digest(old),'f7ec24f00eedfffca8815058eae60a454063d16f2333f08e44e21cf7537dc442')
+        with self.assertRaisesRegex(ValueError,'Assembled pyproject metadata differs'):
+            helper.selection(ROOT,self.census)
         for kind in ('missing','duplicate','extra-selected-module','foreign-target'):
             bad={k:list(names) for k,names in listings.items()};key=('umf-core-wire','lib')
             factory=next(n for n in bad[key] if n.startswith('installed_codegen_factory_independent_tests::'))

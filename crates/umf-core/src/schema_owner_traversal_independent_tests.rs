@@ -878,6 +878,13 @@ fn ow10_genuine_nodeplan_hits_keep_readback_without_ancestor_authority() {
     assert!(events[consume + 1..]
         .iter()
         .any(|r| r.0 == "ow1-checked-read" || r.0 == "ft1-node-plan-hit-after-readback"));
+    let position = p.logical_position_for_test(&o, &mut ctx).unwrap();
+    assert_eq!(position.map(|(root, _)| root), Some(0));
+    assert_eq!(checked.read(&o, &mut ctx).unwrap(), Some(node));
+    assert_eq!(
+        checked.logical_position(&o, &mut ctx).unwrap(),
+        position
+    );
     let other = plans
         .node_at(
             &o,
@@ -913,4 +920,10 @@ fn ow10_genuine_nodeplan_hits_keep_readback_without_ancestor_authority() {
     });
     assert!(resolved.is_none());
     assert!(!original.iter().any(|r| r.0 == "ow1-original-ancestor-hop"));
+
+    // Preserve the actual legacy ancestry/readback obligation through the
+    // explicit cursor. A nested node value is not an owner root lookup.
+    let (legacy, ancestry) = observed(|| table(&o).read(&o, &p, &mut ctx).unwrap().unwrap());
+    assert!(std::ptr::eq(legacy, node));
+    assert!(ancestry.iter().any(|r| r.0 == "ow1-original-ancestor-hop"));
 }

@@ -561,9 +561,55 @@ fn sp09_nonempty_parent_reentry_error_unwind_and_poison() {
         .unwrap();
     let publication = calls.get();
     assert!(publication > 1);
-    // Reentrant selection on the same path while publication is in flight is
-    // statically impossible now that `select_scoped` takes `&mut ScopedPreflightPath`;
-    // the borrow checker enforces what the former shared-borrow test exercised.
+    // Same-path callback mutation is statically impossible with the exclusive
+    // path borrow. Re-enter a genuinely independent path late in the outer
+    // selection instead; both selections use the real owner/index operation.
+    let mut outer = ScopedPreflightPath::new(
+        &Utf16::from("https://sp.test/root#"),
+        &mut Context::catalog(),
+    )
+    .unwrap();
+    let mut independent = ScopedPreflightPath::new(
+        &Utf16::from("https://sp.test/root#/independent"),
+        &mut Context::catalog(),
+    )
+    .unwrap();
+    let entered = Cell::new(false);
+    let outer_calls = Cell::new(0usize);
+    let mut reenter = |_| {
+        let call = outer_calls.get() + 1;
+        outer_calls.set(call);
+        if call == publication {
+            entered.set(true);
+            assert_eq!(
+                index
+                    .select_scoped(
+                        &owner,
+                        &mut independent,
+                        PathSelector::Common,
+                        &mut Context::catalog(),
+                    )?,
+                Some(0),
+                "independent path re-enters through genuine selector operation"
+            );
+        }
+        Ok(())
+    };
+    assert_eq!(
+        index
+            .select_scoped(
+                &owner,
+                &mut outer,
+                PathSelector::Policy,
+                &mut Context::catalog().with_host_control(&mut reenter),
+            )
+            .unwrap(),
+        Some(0)
+    );
+    assert!(entered.get(), "late host-control reentry actually occurred");
+    assert_eq!(outer_calls.get(), publication, "calibrated final callback");
+    assert_eq!(outer.observe().selections[0], Some(Some(0)));
+    assert_eq!(independent.observe().selections[1], Some(Some(0)));
 
     // Real mutation has completed before restoration admission refuses.
     let mut ctx = Context::catalog();
@@ -886,16 +932,45 @@ fn sp03_demand_only_preparation_and_displaced_ordered_skips() {
             CompiledSchema::compile_input_bank(admitted.bank, 0, ctx)
         })
         .unwrap();
-    let walk: Rc<RefCell<Vec<&'static str>>> = Rc::new(RefCell::new(Vec::new()));
+    let bank_root = bank_owner
+        .owner_locations
+        .as_ref()
+        .unwrap()
+        .root(&bank_owner, 0, &mut Context::catalog())
+        .unwrap()
+        .unwrap();
+    let bank_root_coordinate = bank_root
+        .logical_position_for_test(&bank_owner, &mut Context::catalog())
+        .unwrap()
+        .unwrap();
+    let walk: Rc<RefCell<Vec<(&'static str, usize, usize)>>> = Rc::new(RefCell::new(Vec::new()));
     let walk_sink = walk.clone();
+    let fused_skips: Rc<RefCell<Vec<(&'static str, usize, usize, usize, usize, usize, usize)>>> =
+        Rc::new(RefCell::new(Vec::new()));
+    let fused_sink = fused_skips.clone();
     admitted_structure::observe_ordered_structure(
         Box::new(move |event, parent, edge, row| {
             sink.borrow_mut().push((event, parent, edge, row))
         }),
         || {
             owner_locations::observe_owner_walk(
-                Box::new(move |event, _, _| walk_sink.borrow_mut().push(event)),
-                || sp_root_preflight(&bank_owner, false, &mut Context::catalog()),
+                Box::new(move |event, root, row| walk_sink.borrow_mut().push((event, root, row))),
+                || {
+                    owner_locations::observe_fused_skip_rows(
+                        Box::new(move |event, root, parent, parent_physical, ordinal, physical, end| {
+                            fused_sink.borrow_mut().push((
+                                event,
+                                root,
+                                parent,
+                                parent_physical,
+                                ordinal,
+                                physical,
+                                end,
+                            ))
+                        }),
+                        || sp_root_preflight(&bank_owner, false, &mut Context::catalog()),
+                    )
+                },
             )
         },
     )
@@ -906,9 +981,54 @@ fn sp03_demand_only_preparation_and_displaced_ordered_skips() {
         rows.borrow()
             .iter()
             .any(|r| r.0 == "ow1-ordered-extent-advance")
-            || walk.borrow().iter().any(|e| *e == "ft1-intervening-row-read"),
+            || walk.borrow().iter().any(|e| e.0 == "ft1-intervening-row-read"),
         "genuine later ordered access traverses physical extents"
     );
+    // Preserve and cross-check real legacy physical read/skip coordinates when
+    // that traversal is observed.
+    for advance in rows
+        .borrow()
+        .iter()
+        .filter(|r| r.0 == "ow1-ordered-extent-advance")
+    {
+        assert!(rows.borrow().iter().any(|read| {
+            read.0 == "ow1-ordered-extent-read"
+                && read.1 == advance.1
+                && read.2 == advance.2
+                && read.3 == advance.3
+        }));
+    }
+    let fused_route_observed = walk
+        .borrow()
+        .iter()
+        .any(|event| event.0 == "ft1-intervening-row-read");
+    if fused_route_observed {
+        let skips = fused_skips.borrow();
+        assert!(!skips.is_empty(), "FT1 route must expose an actual skipped row");
+        let Value::Object(root_members) = bank_owner.schema_value() else {
+            panic!("authored bank root object")
+        };
+        let displaced_ordinals: Vec<_> = root_members
+            .iter()
+            .enumerate()
+            .filter_map(|(ordinal, (name, _))| {
+                ["$id", "$comment", "default", "description", "title"]
+                    .iter()
+                    .any(|expected| name == &Utf16::from(*expected))
+                    .then_some(ordinal)
+            })
+            .collect();
+        assert!(skips.iter().all(|skip| {
+            let (event, root, parent, _parent_physical, ordinal, physical, end) = *skip;
+            event == "ft1-intervening-row-read"
+                && root == bank_root_coordinate.0
+                && parent == bank_root_coordinate.1
+                && displaced_ordinals.contains(&ordinal)
+                && end > physical
+        }), "FT1 observations must identify guarded displaced rows at the authored root");
+        let first_parent_physical = skips[0].3;
+        assert!(skips.iter().all(|skip| skip.3 == first_parent_physical));
+    }
     let invalid = sp_json(r#"{"x-unknown-strict":true}"#);
     assert_eq!(
         sp_compile(&invalid, &SchemaResources::default())

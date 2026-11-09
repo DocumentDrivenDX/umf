@@ -98,6 +98,7 @@ fn select(
 #[derive(Clone)]
 struct PathCallReadback {
     site: &'static str,
+    source_site: &'static str,
     owner_schema: Value,
     lineage: Option<Arc<()>>,
     path: Utf16,
@@ -120,6 +121,7 @@ fn observed_calls<T>(operation: impl FnOnce() -> T) -> (T, Vec<PathCallReadback>
             let seen = path.observe();
             scoped_sink.borrow_mut().push(PathCallReadback {
                 site: "pth-preflight-policy",
+                source_site: site,
                 owner_schema: owner.schema_value().clone(),
                 lineage: owner.owner_lineage.clone(),
                 path: path.text().clone(),
@@ -133,6 +135,7 @@ fn observed_calls<T>(operation: impl FnOnce() -> T) -> (T, Vec<PathCallReadback>
                 Box::new(move |site, owner, path| {
                     sink.borrow_mut().push(PathCallReadback {
                         site,
+                        source_site: site,
                         owner_schema: owner.schema_value().clone(),
                         lineage: owner.owner_lineage.clone(),
                         path: path.text().clone(),
@@ -390,6 +393,7 @@ fn pth04_local_schema_and_multi_invalid_order_precede_origin_selection() {
     let child_path = Utf16::from("https://pth.test/root#/properties/a");
     assert!(rows.iter().any(|r| r.owner_schema == schema
         && r.site == "pth-preflight-policy"
+        && r.source_site == "sp1-preflight-policy-route"
         && r.path == child_path));
     assert!(
         !rows.iter().any(|r| r.owner_schema == schema
@@ -505,6 +509,11 @@ fn pth05_actual_caller_inherited_policy_and_effective_limits_are_preserved() {
             "missing actual recursive preflight consumer {expected}"
         );
     }
+    assert!(calls.iter().all(|r| {
+        r.site == "pth-preflight-policy"
+            && r.source_site == "sp1-preflight-policy-route"
+            && r.indexed
+    }), "PTH historical rows retain their actual SP1 source provenance");
     let sample = json(r#"{"a/b~☃":false}"#);
     let (actual, rows) = observed_calls(|| routed.validate(&sample, &mut Context::catalog()));
     assert_eq!(actual, original.validate(&sample, &mut Context::catalog()));
@@ -559,6 +568,16 @@ fn pth06_foreign_owner_arena_and_retarget_invalidate_optional_facts() {
         Some(0)
     );
     assert_eq!(plain.selections_for_test(), None);
+    let syntax_path = CarriedPath::seed(Utf16::from("https://pth.test/root"), &mut ctx)
+        .unwrap()
+        .append(&Utf16::from("#"), PathKind::RawSchemaStep, &mut ctx)
+        .unwrap();
+    syntax(&syntax_path);
+    assert_eq!(
+        syntax_path.syntax_for_test(),
+        Some((Some(syntax_path.text().units().iter().position(|u| *u == 35).unwrap()), false)),
+        "syntax facts describe the current literal text"
+    );
     let (_, rows) =
         observed_calls(|| ordinary.validate(&Value::Bool(false), &mut Context::catalog()));
     let calls = calls_for(&rows, &ordinary, "pth-evaluator-frame");
@@ -581,6 +600,15 @@ fn pth06_foreign_owner_arena_and_retarget_invalidate_optional_facts() {
     assert!(calls_for(&rows, &fallback, "pth-evaluator-frame")
         .iter()
         .all(|r| !r.indexed && r.selections.is_none()));
+    let fallback_frames = calls_for(&rows, &fallback, "pth-evaluator-frame");
+    assert!(fallback_frames.iter().all(|r| {
+        let units = r.path.units();
+        let literal_facts = (
+            units.iter().position(|u| *u == 35),
+            units.iter().any(|u| (0xd800..=0xdfff).contains(u)),
+        );
+        r.syntax == Some(literal_facts)
+    }), "actual fallback evaluator rows carry syntax facts matching their current text");
 }
 
 #[test]
