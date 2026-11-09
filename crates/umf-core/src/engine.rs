@@ -8,32 +8,8 @@ use crate::{
     schema::{CompiledSchema, SchemaResources},
     value::{copy_json, Utf16, Value},
 };
+pub use crate::resource_set::{OwnedResourceSet, ResourceSet};
 use std::sync::Arc;
-#[derive(Clone, Debug)]
-pub struct ResourceSet {
-    pub core_schema: Value,
-    pub reference_schema: Value,
-    pub package_schema: Value,
-    pub constraints: Value,
-    pub domain_policy: Value,
-}
-impl ResourceSet {
-    pub fn new(
-        core_schema: Value,
-        reference_schema: Value,
-        package_schema: Value,
-        constraints: Value,
-        domain_policy: Value,
-    ) -> Self {
-        Self {
-            core_schema,
-            reference_schema,
-            package_schema,
-            constraints,
-            domain_policy,
-        }
-    }
-}
 #[derive(Clone, Debug)]
 pub struct SemanticContext {
     pub document: Value,
@@ -80,19 +56,6 @@ pub trait Capabilities {
     fn python_source_document(&self) -> Option<&crate::python_value::PythonConsumerValue> {
         None
     }
-}
-#[derive(Debug)]
-/// Internal consuming input bundle; the ordinary ResourceSet is unchanged.
-#[doc(hidden)]
-pub struct OwnedResourceSet {
-    pub core_schema:crate::value::OwnedCoreJson,
-    pub reference_schema:crate::value::OwnedCoreJson,
-    pub package_schema:crate::value::OwnedCoreJson,
-    pub constraints:crate::value::OwnedCoreJson,
-    pub domain_policy:crate::value::OwnedCoreJson,
-}
-impl OwnedResourceSet {
-    fn into_raw(self)->ResourceSet {ResourceSet{core_schema:self.core_schema.into_raw(),reference_schema:self.reference_schema.into_raw(),package_schema:self.package_schema.into_raw(),constraints:self.constraints.into_raw(),domain_policy:self.domain_policy.into_raw()}}
 }
 enum EngineInput<'o>{Raw(ResourceSet),Owned(OwnedResourceSet,&'o crate::value::OwnedCoreOperation)}
 #[derive(Clone,Debug)]
