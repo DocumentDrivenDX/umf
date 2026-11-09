@@ -897,6 +897,20 @@
       "sha256": "641f3b6f6d4569ada260173af65eadb621fe24ef493cd33ab87a3389b6ba00a9",
       "source": "218de4005ffa5385fbcc72421d8e4691ce0ef7ae",
       "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/facets-postgresql-constraints-native.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-postgresql-constraints-native.ts",
+      "sha256": "1cfce6a6e616730573ee2a5dfdc251a85b61ab3aeb562e9655232e6d9dfb1ede",
+      "source": "70ec94657ccfe64bf2548a572d6d45b456733e0f",
+      "reason": "The PostgreSQL facet constraint native supplement (live server 17.4, fixtures/validation/facets-postgresql-constraints-native.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the supplement's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-predicate.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-predicate.ts",
+      "sha256": "76e113ec5cb1e93fc4239f22095c981280984b9392a8f93be84f1d66e617d523",
+      "source": "0791f8ce96956b3d822832b2cff05a5df772bc25",
+      "reason": "The PostgreSQL facet constraint native supplement (live server 17.4, fixtures/validation/facets-postgresql-constraints-native.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the supplement's byte pin is retained against the archived copy."
     }
   ]
 }
