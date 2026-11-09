@@ -869,6 +869,34 @@
       "sha256": "cb063e24b8a9f0d739c3547ed84a29bdbe00b11eeb9971bfd3504b28a3c7f896",
       "source": "HEAD",
       "reason": "Original mixed-version semantic-type tests retained byte-exactly; current semantic-reference structure, declarations, registries, validation, selection, serialization and native round-trip behavior are actively tested in the current replacement file."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-catalog.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-catalog.ts",
+      "sha256": "94aaf4263cb2e2306bbdd84073929601fc503ca4291faaa5c4bc1a652db46940",
+      "source": "0699d31f7b7821c0686f9c0e3bff5ba42b1d9d45^",
+      "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-resolved-predicate.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-resolved-predicate.ts",
+      "sha256": "0bdd25d239a7d136ba7e791a3b2c278fbee1c0ddaeab611871e2f695ef182391",
+      "source": "6c8989b84a7d115f212afe746577a50bade31eb3",
+      "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-node-tree.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-node-tree.ts",
+      "sha256": "d07c5246c144cd20a93a8aa404a276b8bb9ef2996f0f04276ec5312f5812d99c",
+      "source": "15c39d5e0bbf769242aed847bec5f97f403b8d7d",
+      "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-typmod.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-typmod.ts",
+      "sha256": "641f3b6f6d4569ada260173af65eadb621fe24ef493cd33ab87a3389b6ba00a9",
+      "source": "218de4005ffa5385fbcc72421d8e4691ce0ef7ae",
+      "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
     }
   ]
 }
