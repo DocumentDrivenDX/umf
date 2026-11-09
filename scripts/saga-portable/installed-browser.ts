@@ -47,7 +47,7 @@ try{
   const vectors=await (await fetch('/vectors.json')).json();
   const subject={inspectSagas:(source:any)=>sdk.inspectSagas(source,registry),declareSaga:(source:any,module:string,definition:any)=>sdk.declareSaga(source,module,definition,registry),editSaga:(source:any,identity:any,replacement:any)=>sdk.editSaga(source,identity,replacement,registry),assessSaga:(source:any,identity:any,capabilities:any)=>sdk.assessSaga(source,identity,capabilities,registry)};
   const fetchBefore=globalThis.fetch;let hostCalls=0;
-  globalThis.fetch=(()=>{hostCalls++;throw Error('Saga attempted host fetch');}) as typeof fetch;
+  globalThis.fetch=(()=>{hostCalls++;throw Error('Saga attempted host fetch');}) as unknown as typeof fetch;
   try{
    verifySagaExchange(core,subject,vectors.cases.find((v:any)=>v.expected.unknown).source);
    const result=verifySagaVectors(subject,vectors.cases);
