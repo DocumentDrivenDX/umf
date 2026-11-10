@@ -220,3 +220,43 @@ retained producer output, but the failed workflow conclusion and cost report
 make it ineligible for initial intake. The registry remains empty and workflow
 dispatch remains default-off; this source change does not claim a qualified
 0.10.10 component or grant native admission.
+
+## First-production observation and unchanged continuation
+
+The existing default-off multipart candidate can now use the separate `observe`
+operation for a Linux 0.10.10 first producer only. Its closed observation
+configuration supplies fixed role slots, file modes, per-object maximums, a
+complete source identity and finite byte, workspace, proof, part and time
+budgets. It supplies no guessed object digest, length or part list. The
+controller still authenticates the registered immutable P admission, frozen Q
+controller, source checkout and original Inspector input before work begins.
+
+Observation executes the existing job-setup, source, common, wheel, SDK and
+independent rebuild bodies in their original order and on the one persisted
+monotonic deadline. It reuses the authenticated initial raw wheel; it does not
+run a second Linux raw-wheel producer. SDK and rebuild receipts retain their
+original stage meanings. Consumers, inspection, final identity, aggregate and
+finish do not run. The component remains `producer-observed` after all six
+stages, or `failed` at the first refusal. A failed attempt may retain only
+objects actually present and a complete authenticated source object; absent
+roles are omitted from that partial transport plan and cannot become a
+successful continuation.
+
+After production, the controller measures each present fixed-path object and
+derives exact whole-object hashes and ordered parts under the original
+multipart reader's limits. Seal reauthenticates P/Q/source, recomputes those
+identities, and compares the local plan before invoking the existing multipart
+sealer. The resulting transport artifact remains explicitly unqualified and
+its independent GitHub artifact/member readback is still required. Only a
+separate normal registry-pinned continuation may import authenticated completed
+producer stages, rerun job setup, execute the unchanged consumers, inspection
+and final identity, and satisfy the existing full aggregate. No observation
+receipt or registry pin alone proves a passed component, and no 0.10.10 native
+or SDK qualification is claimed here.
+
+Pure controls cover the closed observe configuration and operation boundary,
+the exact six-stage stop and first failure, a synthetic committed source plus
+source-shaped role outputs through the real plan derivation and existing
+multipart seal/readback validators, and a failed partial-source plan. These
+fixtures exercise source/controller logic only; they are not an actual
+producer run, GitHub readback, Linux-hosted execution or native SDK result.

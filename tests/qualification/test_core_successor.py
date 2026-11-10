@@ -1321,6 +1321,48 @@ class CoupledExtensionTests(unittest.TestCase):
             return value
 
     def test_complete_original_two_platforms_streamed_and_checksums(self):self.invoke();self.invoke(execute=True)
+    def test_observed_continuation_sdk_bundle_reaches_actual_coupled_reader(self):
+        def continuation(a,reg,member_sets,corrupt=None):
+            for index,platform in enumerate(c.PLATFORMS):
+                members=member_sets[platform];sdk=json.loads(members['sdk.json'])
+                original=f'original/{123+index}-1-{789+index}'
+                with tempfile.TemporaryDirectory() as raw:
+                    out=Path(raw);retained=out/'retained';retained.mkdir()
+                    for directory,profile,existing in (('sdk-consumer-full','umf.sdk-installed-archive-custody/2','passed'),
+                                                       ('sdk-consumer-saga','umf.sdk-installed-saga-custody/1','not-run-in-saga-phase')):
+                        source=out/directory/'g03-sdk-install-custody.json';source.parent.mkdir(parents=True)
+                        source.write_text(json.dumps({'profile':profile,'existing139ConsumerChecks':existing,'sagaResult':{'cases':19,'passed':19}})+'\n')
+                        source.chmod(0o644)
+                    def copy_current(source,target):
+                        target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(source.read_bytes());target.chmod(source.stat().st_mode&0o777)
+                    custody=c.retain_sdk_custody(out,retained,c.OperationDeadline(30),copy_current)
+                    custody_bodies={name:(retained/name).read_bytes() for name in (c.SDK_FULL_CUSTODY,c.SDK_SAGA_CUSTODY)}
+                    sdk['custody']=custody
+                if corrupt=='wrong-mode' and platform=='linux-x86_64':sdk['custody']['full139']['mode']=0o755
+                sdk_bytes=(json.dumps(sdk)+'\n').encode()
+                with tempfile.TemporaryDirectory() as raw:
+                    material=Path(raw)/'continuation-original';material.mkdir();working=Path(raw)/'working';working.mkdir()
+                    (material/'sdk.json').write_bytes(sdk_bytes)
+                    for name,body in custody_bodies.items():(material/name).write_bytes(body)
+                    c.restore_continuation_working_members(material,working,False,copy_current)
+                    members['sdk.json']=(working/'sdk.json').read_bytes()
+                    for name in (c.SDK_FULL_CUSTODY,c.SDK_SAGA_CUSTODY):members[name]=(working/name).read_bytes()
+                members[original+'/sdk.json']=sdk_bytes
+                for name in (c.SDK_FULL_CUSTODY,c.SDK_SAGA_CUSTODY):members[original+'/'+name]=members[name]
+                receipt=json.loads(members['component.json'])
+                receipt['steps']['sdk']['evidence']={'path':original+'/sdk.json','sha256':hashlib.sha256(sdk_bytes).hexdigest()}
+                members['component.json']=json.dumps(receipt).encode()
+                if corrupt=='partial-restoration' and platform=='linux-x86_64':del members[c.SDK_SAGA_CUSTODY]
+        self.invoke(lambda a,r,m:continuation(a,r,m))
+        for corrupt in ('partial-restoration','wrong-mode'):
+            with self.subTest(corrupt=corrupt),self.assertRaises(c.Refusal):
+                self.invoke(lambda a,r,m,corrupt=corrupt:continuation(a,r,m,corrupt))
+        def unknown_legacy(a,reg,member_sets):
+            members=member_sets['linux-x86_64'];sdk=json.loads(members['sdk.json']);sdk['unreviewed']=True
+            members['sdk.json']=(json.dumps(sdk)+'\n').encode()
+            receipt=json.loads(members['component.json']);receipt['steps']['sdk']['evidence']['sha256']=hashlib.sha256(members['sdk.json']).hexdigest()
+            members['component.json']=json.dumps(receipt).encode()
+        with self.assertRaises(c.Refusal):self.invoke(unknown_legacy)
     def test_missing_extra_platform_and_role_refuse(self):
         a,_,_=self.prepared()
         for key in ['macos-arm64','foreign']:
@@ -1413,7 +1455,7 @@ class CoupledExtensionTests(unittest.TestCase):
         self.assertEqual(c.read(ROOT/c.REGISTRY_PATH)['admissions'],[])
         workflow=c.read(ROOT/c.WORKFLOW)
         self.assertFalse(workflow['on']['workflow_dispatch']['inputs']['admitted']['default'])
-        self.assertEqual(workflow['on']['workflow_dispatch']['inputs']['operation']['options'],['run','aggregate'])
+        self.assertEqual(workflow['on']['workflow_dispatch']['inputs']['operation']['options'],['run','aggregate','observe'])
         a,_,_=self.prepared()
         with self.assertRaises(c.Refusal):c.admit({'profile':c.REGISTRY,'admissions':[]},a['id'],context(a))
         self.assertEqual(c.MAX_BYTES,67108864)
@@ -1554,6 +1596,308 @@ class ThreeHoldCorrectionTests(unittest.TestCase):
             bad=copy.deepcopy(a);bad['inputs']['crates/umf-core/src/canonical_codegen_literals.rs']='f'*64
             d=deep_report(a,next(iter(c.CELLS)))
             with self.assertRaises(c.Refusal):c.validate_deep(d,bad,d['runtime']['cell'])
+
+
+class FirstProductionObservationTests(unittest.TestCase):
+    def isolated_caches(self,root):
+        values={}
+        for key in ('CARGO_HOME','RUSTUP_HOME','UV_CACHE_DIR','BUN_INSTALL_CACHE_DIR'):
+            path=root/'empty-cache'/key;path.mkdir(parents=True,exist_ok=True);values[key]=str(path)
+        return values
+
+    def admission_and_plan(self,source_commit='1'*40,source_tree='2'*40):
+        a,_=InitialInspectorIntakeTests().admission(source_commit,source_tree)
+        a['profile']=c.MULTIPART_CANDIDATE
+        wheel=a['initialInspector']['wheel']['member']
+        roles=list(c.COMMON_ROLES)+['linux-x86_64/'+r for r in c.HOST_ROLES]+['raw-wheel','rebuilt-wheel','initial-input:'+wheel]
+        objects={role:{'roles':[role],'mode':0o755 if role.endswith('standalone-cli') else 0o644,
+                       'maximum_bytes':1048576 if role=='source' else 65536} for role in roles}
+        logical=sum(row['maximum_bytes'] for row in objects.values());parts=sum((row['maximum_bytes']+c.MAX_PAYLOAD-1)//c.MAX_PAYLOAD for row in objects.values())
+        proof=1048576;control=(3*parts+4)*c.BUFFER;external=1048576
+        budgets={'logical_bytes':logical,'role_bytes':logical,'transport_bytes':logical+proof,
+                 'expanded_bytes':logical+proof,'workspace_bytes':3*logical+(logical+proof)+proof+control+external,
+                 'proof_bytes':proof,'seconds':5400,'control_bytes':control,'external_workspace_bytes':external}
+        value={'payload_bytes':c.MAX_PAYLOAD,'objects':objects,
+               'source':{'object':'source','prefix':'umf-v0.10.10/','commit':source_commit,'tree':source_tree,
+                         'maximum_tar_bytes':1048576,'maximum_member_bytes':1048576,'maximum_members':1000},
+               'budgets':budgets}
+        a['transportObservation']=value
+        return a,value
+
+    def test_closed_observe_config_and_only_first_linux_production(self):
+        a,plan=self.admission_and_plan();self.assertTrue(c.observation_config(plan,a));c.validate(a)
+        schema=c.read(ROOT/'qualification-inputs/core-successor-qualification.schema.json')
+        shape=schema['$defs']['multipart-admission']
+        self.assertIn('transportObservation',shape['properties']);self.assertNotIn('transport',shape['required'])
+        self.assertEqual(len(shape['allOf'][-1]['oneOf']),2)
+        workflow=c.read(ROOT/c.WORKFLOW);dispatch=workflow['on']['workflow_dispatch']['inputs']['operation']
+        self.assertIn('observe',dispatch['options'])
+        seal=next(row for row in workflow['jobs']['linux']['steps'] if row.get('name')=='Seal final byte-bounded evidence including receipts')
+        self.assertIn('--controller controller --source source',seal['run'])
+        c.require_operation(a,'observe')
+        for operation in ('run','aggregate','inspect'):
+            with self.subTest(operation=operation),self.assertRaises(c.Refusal):c.require_operation(a,operation)
+        bad=copy.deepcopy(plan);bad['unresolved_sha256']='0'*64
+        with self.assertRaises(c.Refusal):c.observation_config(bad,a)
+        bad=copy.deepcopy(plan);bad['objects']['source']['roles']=['core-sdist']
+        with self.assertRaises(c.Refusal):c.observation_config(bad,a)
+        for field,value in [('platform','macos-arm64'),('version','0.10.9')]:
+            wrong=copy.deepcopy(a);wrong[field]=value
+            with self.subTest(field=field),self.assertRaises(c.Refusal):c.require_operation(wrong,'observe')
+        wrong=copy.deepcopy(a);wrong['common']={}
+        with self.assertRaises(c.Refusal):c.require_operation(wrong,'observe')
+
+    def test_observation_control_budget_keeps_original_ceiling_at_admission(self):
+        a,plan=self.admission_and_plan()
+        ceiling=(3*c.MAX_PARTS+4)*c.BUFFER
+        schema=c.read(ROOT/'qualification-inputs/core-successor-qualification.schema.json')
+        self.assertEqual(schema['$defs']['multipart-budgets']['properties']['control_bytes']['maximum'],ceiling)
+        bounded=copy.deepcopy(plan);bounded['budgets']['control_bytes']=ceiling
+        bounded['budgets']['workspace_bytes']=3*bounded['budgets']['logical_bytes']+bounded['budgets']['transport_bytes']+bounded['budgets']['proof_bytes']+ceiling+bounded['budgets']['external_workspace_bytes']
+        self.assertTrue(c.observation_config(bounded,a))
+        rejected=copy.deepcopy(bounded);rejected['budgets']['control_bytes']=ceiling+1
+        rejected['budgets']['workspace_bytes']+=1
+        a['transportObservation']=rejected
+        with self.assertRaisesRegex(c.Refusal,'observation-control-budget'):
+            c.validate(a)
+
+    def test_observation_mode_schema_matches_runtime_optional_hash_boundary(self):
+        schema=c.read(ROOT/'qualification-inputs/core-successor-qualification.schema.json')
+        shape=schema['$defs']['multipart-mode']
+        self.assertEqual(shape['properties']['observationConfigSHA256'],{'$ref':'#/$defs/hash'})
+        self.assertFalse(shape['additionalProperties'])
+        self.assertNotIn('observationConfigSHA256',shape['required'])
+        a,plan=self.admission_and_plan();a['transportObservation']=plan
+        with tempfile.TemporaryDirectory() as raw:
+            output=Path(raw);deadline=c.operation_deadline(output,a)
+            mode=c.read(output/'multipart-mode.json')
+            mode_schema=schema['$defs']['multipart-mode'];mode_hash=schema['$defs']['hash']['pattern']
+            self.assertTrue(set(mode_schema['required'])<=set(mode))
+            self.assertTrue(set(mode)<=set(mode_schema['properties']))
+            self.assertFalse(mode_schema['additionalProperties'])
+            self.assertRegex(mode['id'],r'^[a-z0-9][a-z0-9-]{0,63}$')
+            self.assertRegex(mode['observationConfigSHA256'],mode_hash)
+            self.assertEqual(mode['observationConfigSHA256'],hashlib.sha256(json.dumps(plan,sort_keys=True,separators=(',',':')).encode()).hexdigest())
+            self.assertNotIn('observationConfigSHA256',mode_schema['required'])
+            self.assertNotIn('futureField',mode_schema['properties'])
+            self.assertEqual(deadline.seconds,min(a['bounds']['seconds'],plan['budgets']['seconds']))
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);output=root/'out';output.mkdir()
+            legacy=fixture();legacy.update(profile=c.MULTIPART_CANDIDATE,transport=MultipartTransportTests().plan())
+            (root/c.REGISTRY_PATH).parent.mkdir(parents=True);(root/c.REGISTRY_PATH).write_text(json.dumps(registry(legacy)))
+            mode={'id':legacy['id'],'source':legacy['source'],'controller':legacy['controller'],
+                  'deadline':{'startedMonotonic':1,'seconds':30},'observationConfigSHA256':'a'*64}
+            (output/'multipart-mode.json').write_text(json.dumps(mode))
+            with patch.object(c,'validate'):
+                with self.assertRaisesRegex(c.Refusal,'multipart-mode-observation-config-unexpected'):
+                    c.authorized_seal(output,root)
+
+    def test_observe_runs_exact_six_producer_stages_then_stays_nonpassing(self):
+        a,_=self.admission_and_plan();seen=[];ctx=context(a);deadline=c.OperationDeadline(30)
+        def run(stage):seen.append(stage);return {'status':'passed','evidence':{'path':stage+'.json','sha256':'a'*64}}
+        receipt=c.orchestrate_observation(a,ctx,run,deadline)
+        self.assertEqual(seen,list(c.OBSERVE_GATES));self.assertEqual(receipt['status'],'producer-observed')
+        self.assertIsNone(receipt['inspection']);self.assertFalse(receipt['releaseQualified'])
+        seen.clear()
+        def fail(stage):
+            seen.append(stage)
+            if stage=='wheel':raise c.Refusal('synthetic-stage-refusal')
+            return {'status':'passed','evidence':{'path':stage+'.json','sha256':'a'*64}}
+        failed=c.orchestrate_observation(a,ctx,fail,c.OperationDeadline(30))
+        self.assertEqual(seen,list(c.OBSERVE_GATES[:4]));self.assertEqual(failed['status'],'failed')
+        self.assertEqual(failed['steps']['wheel']['status'],'failed')
+        self.assertEqual(failed['failure'],'synthetic-stage-refusal')
+
+    def test_existing_continuation_reuses_first_six_then_runs_later_gates(self):
+        a,_=self.admission_and_plan();ctx=context(a)
+        prior=c.orchestrate_observation(a,ctx,lambda stage:{'status':'passed','evidence':{'path':stage+'.json','sha256':'a'*64}},c.OperationDeadline(30))
+        continuation={k:v for k,v in a.items() if k!='transportObservation'};continuation['transport']=MultipartTransportTests().plan()
+        seen=[]
+        def run(stage):seen.append(stage);return {'status':'passed','evidence':{'path':stage+'.json','sha256':'b'*64}}
+        result=c.orchestrate(continuation,ctx,run,lambda receipt:True,prior=prior)
+        self.assertEqual(seen,['job-setup','consumers','inspection','final-identity'])
+        self.assertEqual(result['steps']['source']['evidence']['sha256'],'a'*64)
+        self.assertEqual(result['status'],'passed')
+        self.assertFalse(result['releaseQualified'])
+
+    def test_multipart_continuation_source_and_restored_working_copy_are_declared_custody(self):
+        a=fixture();a['profile']=c.MULTIPART_CANDIDATE;a['transport']=MultipartTransportTests().plan()
+        members={'component.json':b'{"status":"producer-observed"}',
+                 'source.tar.gz':b'original full source archive',
+                 'common/umf_core-0.10.10.tar.gz':b'original core sdist'}
+        continuation=material(a,'continuation');continuation['members']={name:hashlib.sha256(body).hexdigest() for name,body in members.items()}
+        c.material_shape(continuation,multipart=True);a['continuation']=continuation
+        with tempfile.TemporaryDirectory() as raw:
+            out=Path(raw);retained=out/'retained';retained.mkdir()
+            namespace='original/123-1-789'
+            for name,body in members.items():
+                target=retained/namespace/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(body)
+            working=retained/'common/umf_core-0.10.10.tar.gz';working.parent.mkdir(parents=True,exist_ok=True);working.write_bytes(members['common/umf_core-0.10.10.tar.gz'])
+            usage=c.multipart_stage_accounting(out,a,complete=True)
+            self.assertEqual(usage['proof_bytes'],0)
+            self.assertEqual(usage['continuation_copy_bytes'],sum(map(len,members.values()))+len(members['common/umf_core-0.10.10.tar.gz']))
+            self.assertGreaterEqual(usage['workspace_bytes'],usage['continuation_copy_bytes'])
+            working.chmod(0o755)
+            with self.assertRaisesRegex(c.Refusal,'multipart-continuation-copy-mode-or-size'):
+                c.multipart_stage_accounting(out,a,complete=True)
+            working.chmod(0o644)
+            working.write_bytes(b'X'*len(members['common/umf_core-0.10.10.tar.gz']))
+            with self.assertRaisesRegex(c.Refusal,'multipart-continuation-copy-hash'):
+                c.multipart_stage_accounting(out,a,complete=True)
+            working.write_bytes(members['common/umf_core-0.10.10.tar.gz']);working.unlink()
+            with self.assertRaisesRegex(c.Refusal,'multipart-continuation-copy-missing'):
+                c.multipart_stage_accounting(out,a,complete=True)
+
+    def test_actual_source_shaped_outputs_derive_and_seal_existing_multipart_plan(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);source=root/'source';source.mkdir()
+            def git(*args):return subprocess.check_output(['git','-C',str(source),*args]).decode().strip()
+            subprocess.run(['git','-C',str(source),'init','-q'],check=True)
+            subprocess.run(['git','-C',str(source),'config','user.email','pure@example.invalid'],check=True)
+            subprocess.run(['git','-C',str(source),'config','user.name','Pure Fixture'],check=True)
+            (source/'tracked.txt').write_bytes(b'complete immutable source member\n')
+            subprocess.run(['git','-C',str(source),'add','tracked.txt'],check=True)
+            subprocess.run(['git','-C',str(source),'commit','-qm','pure source fixture'],check=True)
+            commit=git('rev-parse','HEAD');tree=git('rev-parse','HEAD^{tree}')
+            a,plan=self.admission_and_plan(commit,tree);out=root/'output';retained=out/'retained';retained.mkdir(parents=True)
+            archive=retained/'source.tar.gz'
+            subprocess.run(['git','-C',str(source),'archive','--format=tar.gz','--prefix=umf-v0.10.10/','--output',str(archive),commit],check=True)
+            with patch.dict(os.environ,self.isolated_caches(root)):
+                reserve=c.observation_stage_reservation(out,a,source,('linux-x86_64/sdk',),c.OperationDeadline(5400))
+                self.assertEqual(reserve['logicalBytesReserved'],plan['objects']['linux-x86_64/sdk']['maximum_bytes'])
+            wheel='wheels/'+c.INSPECTOR_RAW
+            paths={
+                'core-sdist':'common/umf_core-0.10.10.tar.gz',
+                'codegen-wheel':'common/umf_codegen-0.10.10-py3-none-any.whl',
+                'codegen-sdist':'common/umf_codegen-0.10.10.tar.gz',
+                'linux-x86_64/core-wheel':'selected/umf_core-0.10.10-cp311-cp311-manylinux.whl',
+                'linux-x86_64/standalone-cli':'standalone-umf',
+                'linux-x86_64/sdk':'umf-sdk-linux-x86_64.tgz',
+                'linux-x86_64/sdk-manifest':'sdk-manifest.json',
+                'raw-wheel':'raw/umf_core-0.10.10-cp311-cp311-linux.whl',
+                'rebuilt-wheel':'rebuilt/umf_core-0.10.10-cp311-cp311-linux.whl',
+                'initial-input:'+wheel:'initial-inspector/'+wheel}
+            for role,name in paths.items():
+                target=retained/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(('verified fixture '+role).encode())
+                target.chmod(0o755 if role.endswith('standalone-cli') else 0o644)
+            with patch.dict(os.environ,self.isolated_caches(root)):
+                exact=c.observed_transport(out,a,source,c.OperationDeadline(5400),require_complete=True)
+            self.assertEqual(set(row for obj in exact['objects'].values() for row in obj['roles']),set(plan['objects']))
+            component={'status':'producer-observed','steps':{name:{'status':'passed'} for name in c.OBSERVE_GATES},'releaseQualified':False}
+            exact_admission={k:v for k,v in a.items() if k!='transportObservation'};exact_admission['transport']=exact
+            result=c.seal_multipart(out,exact_admission,component,deadline=c.OperationDeadline(5400))
+            self.assertTrue(result['fullRetention']);self.assertFalse(result['qualified']);self.assertFalse(result['uploadReadbackAuthenticated'])
+            slots=c.multipart_upload_outputs(out,exact_admission,deadline=c.OperationDeadline(5400))
+            self.assertEqual(slots,list(range(len(slots))))
+            with patch.dict(os.environ,self.isolated_caches(root)):
+                self.assertEqual(c.observed_transport(out,a,source,c.OperationDeadline(5400),require_complete=True),exact)
+
+    def test_failed_observation_can_retain_verified_source_and_partial_outputs_only(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);source=root/'source';source.mkdir()
+            subprocess.run(['git','-C',str(source),'init','-q'],check=True)
+            subprocess.run(['git','-C',str(source),'config','user.email','pure@example.invalid'],check=True)
+            subprocess.run(['git','-C',str(source),'config','user.name','Pure Fixture'],check=True)
+            (source/'tracked.txt').write_bytes(b'bounded source\n');subprocess.run(['git','-C',str(source),'add','tracked.txt'],check=True)
+            subprocess.run(['git','-C',str(source),'commit','-qm','fixture'],check=True)
+            commit=subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD']).decode().strip()
+            tree=subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD^{tree}']).decode().strip()
+            a,_=self.admission_and_plan(commit,tree);out=root/'out';retained=out/'retained';retained.mkdir(parents=True)
+            subprocess.run(['git','-C',str(source),'archive','--format=tar.gz','--prefix=umf-v0.10.10/','--output',str(retained/'source.tar.gz'),commit],check=True)
+            with patch.dict(os.environ,self.isolated_caches(root)):
+                exact=c.observed_transport(out,a,source,c.OperationDeadline(5400),require_complete=False)
+            self.assertEqual(list(exact['objects']),['source.tar.gz'])
+            self.assertFalse(any(row['roles']!=['source'] for row in exact['objects'].values()))
+            partial_admission={k:v for k,v in a.items() if k!='transportObservation'};partial_admission['transport']=exact
+            failed={'status':'failed','failure':'later producer stage refused','releaseQualified':False}
+            sealed=c.seal_multipart(out,partial_admission,failed,deadline=c.OperationDeadline(5400))
+            self.assertTrue(sealed['fullRetention']);self.assertFalse(sealed['qualified'])
+            self.assertEqual(len(sealed['objects']),1)
+            slots=c.multipart_upload_outputs(out,partial_admission,deadline=c.OperationDeadline(5400))
+            self.assertEqual(slots,list(range(len(slots))))
+
+    def test_seal_rechecks_observe_context_and_recomputed_local_plan(self):
+        a,plan=self.admission_and_plan();exact=MultipartTransportTests().plan()
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);(root/'qualification-inputs').mkdir();(root/c.REGISTRY_PATH).write_text(json.dumps({'profile':c.REGISTRY,'admissions':[a]}))
+            out=root/'out';(out/'retained').mkdir(parents=True)
+            config=hashlib.sha256(json.dumps(plan,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+            mode={'id':a['id'],'source':a['source'],'controller':a['controller'],'deadline':{'startedMonotonic':0,'seconds':5400},'observationConfigSHA256':config}
+            (out/'multipart-mode.json').write_text(json.dumps(mode));(out/'retained/component.json').write_text(json.dumps({'status':'producer-observed'}))
+            (out/'observed-transport.json').write_text(json.dumps(exact))
+            ctx={'controller':a['controller'],'admitted':True};clock=c.OperationDeadline(5400)
+            with patch.dict(os.environ,{'SUCCESSOR_OPERATION':'observe'}), \
+                 patch.object(c,'authority_binding',return_value=({},ctx)) as authority, \
+                 patch.object(c,'checkout_identity') as source_check, \
+                 patch.object(c,'operation_deadline',return_value=clock), \
+                 patch.object(c,'observed_transport',return_value=exact) as derive:
+                sealed=c.authorized_seal(out,root,root/'controller',root/'source')
+                self.assertNotIn('transportObservation',sealed);self.assertEqual(sealed['transport'],exact)
+                authority.assert_called_once();source_check.assert_called_once();derive.assert_called_once()
+            (out/'observed-transport.json').write_text(json.dumps({'forged':True}))
+            with patch.dict(os.environ,{'SUCCESSOR_OPERATION':'observe'}), \
+                 patch.object(c,'authority_binding',return_value=({},ctx)), \
+                 patch.object(c,'checkout_identity'),patch.object(c,'operation_deadline',return_value=clock), \
+                 patch.object(c,'observed_transport',return_value=exact):
+                with self.assertRaisesRegex(c.Refusal,'observation-local-plan-substitution'):
+                    c.authorized_seal(out,root,root/'controller',root/'source')
+            (out/'observed-transport.json').write_text(json.dumps(exact))
+            with patch.dict(os.environ,{'SUCCESSOR_OPERATION':'run'}), \
+                 patch.object(c,'authority_binding',return_value=({},ctx)),patch.object(c,'checkout_identity'), \
+                 patch.object(c,'observed_transport',return_value=exact) as derive:
+                with self.assertRaisesRegex(c.Refusal,'observation-seal-Q-context'):
+                    c.authorized_seal(out,root,root/'controller',root/'source')
+                derive.assert_not_called()
+
+    def test_observe_entrypoint_authenticates_before_outputs_then_seals_after_stages(self):
+        a,plan=self.admission_and_plan();ctx=context(a);exact=MultipartTransportTests().plan()
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);controller=root/'controller';source=root/'source';out=root/'out'
+            for path in (controller,source,out):path.mkdir()
+            (root/c.REGISTRY_PATH).parent.mkdir(parents=True)
+            (root/c.REGISTRY_PATH).write_text(json.dumps(registry(a)))
+            config=hashlib.sha256(json.dumps(plan,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+            seconds=min(a['bounds']['seconds'],plan['budgets']['seconds'])
+            mode={'id':a['id'],'source':a['source'],'controller':a['controller'],'deadline':{'startedMonotonic':c.time.monotonic(),'seconds':seconds},'observationConfigSHA256':config}
+            (out/'multipart-mode.json').write_text(json.dumps(mode))
+            ctx['controller']=a['controller'];ctx['admitted']=True
+            ghout=root/'github-output';ghout.write_text('')
+            def authority(_):return {},ctx
+            def authorize(_):return a,ctx
+            def execute(*_):
+                self.assertFalse((out/'retained/component.json').exists())
+                self.assertFalse((out/'observed-transport.json').exists())
+                (out/'retained').mkdir(exist_ok=True)
+                (out/'retained/component.json').write_text(json.dumps({'status':'producer-observed'}))
+                (out/'observed-transport.json').write_text(json.dumps(exact))
+                return 0
+            with patch.dict(os.environ,{'SUCCESSOR_OPERATION':'observe','GITHUB_OUTPUT':str(ghout)}), \
+                 patch.object(c,'authority_binding',side_effect=authority),patch.object(c,'checkout_identity'), \
+                 patch.object(c,'authorize',side_effect=authorize),patch.object(c,'execute_candidate',side_effect=execute) as stages, \
+                 patch.object(sys,'argv',['controller','observe','--root',str(root),'--controller',str(controller),'--source',str(source),'--id',a['id'],'--platform','linux-x86_64','--output',str(out)]):
+                status=c.main()
+                self.assertEqual(status,0,c.read(out/'retained/failure.json') if status else '')
+            stages.assert_called_once()
+            self.assertEqual(json.loads((out/'multipart-mode.json').read_text())['deadline'],mode['deadline'])
+            # Seal is refused until the producer's final component is present.
+            (out/'retained/component.json').unlink();(out/'observed-transport.json').unlink()
+            with patch.dict(os.environ,{'SUCCESSOR_OPERATION':'observe','GITHUB_OUTPUT':str(ghout)}), \
+                 patch.object(c,'authority_binding',side_effect=authority),patch.object(c,'checkout_identity'), \
+                 patch.object(c,'observed_transport',return_value=exact), \
+                 patch.object(c,'seal_multipart') as seal,patch.object(c,'multipart_upload_outputs',return_value=[0]), \
+                 patch.object(sys,'argv',['controller','seal','--root',str(root),'--controller',str(controller),'--source',str(source),'--id',a['id'],'--platform','linux-x86_64','--output',str(out)]):
+                self.assertEqual(c.main(),2)
+                seal.assert_not_called()
+            (out/'retained/component.json').write_text(json.dumps({'status':'producer-observed'}))
+            (out/'observed-transport.json').write_text(json.dumps(exact))
+            with patch.dict(os.environ,{'SUCCESSOR_OPERATION':'observe','GITHUB_OUTPUT':str(ghout)}), \
+                 patch.object(c,'authority_binding',side_effect=authority),patch.object(c,'checkout_identity'), \
+                 patch.object(c,'observed_transport',return_value=exact), \
+                 patch.object(c,'seal_multipart',return_value={'fullRetention':False}) as seal, \
+                 patch.object(c,'multipart_upload_outputs',return_value=[0]), \
+                 patch.object(sys,'argv',['controller','seal','--root',str(root),'--controller',str(controller),'--source',str(source),'--id',a['id'],'--platform','linux-x86_64','--output',str(out)]):
+                self.assertEqual(c.main(),0)
+                self.assertEqual(seal.call_args.args[1]['transport'],exact)
 
 
 class MultipartTransportTests(unittest.TestCase):
