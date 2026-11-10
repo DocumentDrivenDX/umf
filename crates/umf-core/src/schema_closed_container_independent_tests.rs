@@ -252,6 +252,21 @@ fn table_readback(
 
 #[test]
 fn closed01_actual_validator_literal_container_summaries_match_both_original_collectors() {
+    // A genuine sized admission reserves once yet publishes only rows written
+    // by the complete original validator. No direct metadata kernel mint.
+    OwnedCoreOperation::with_context(&mut Context::catalog(),|ctx,op|{
+        let value=fixture();let count=size(&value);
+        let custody=op.count_custody(ctx)?;
+        let hint=crate::value::FactoryRowHint::from_count(count,custody.as_ref(),ctx)?.unwrap();
+        let carrier=OwnedCoreJson::admit_factory_resource_sized(value.clone(),&Utf16::from("coreSchema"),op,Some(hint),ctx)?;
+        let(actual,structure)=carrier.into_core_metadata(op,ctx)?;
+        assert_eq!(actual,value);let structure=structure.unwrap();
+        assert_eq!(structure.extent(),count);parity(&structure,&original(&value));
+        // None/cap mismatch never creates a second admission authority.
+        let ordinary=OwnedCoreJson::admit_factory_resource_sized(value.clone(),&Utf16::from("coreSchema"),op,None,ctx)?;
+        parity(&ordinary.into_core_metadata(op,ctx)?.1.unwrap(),&structure);Ok(())
+    }).unwrap();
+
     let value = fixture();
     let (actual, structure) =
         admitted(value.clone(), &mut Context::catalog(), &mut |_| {}).unwrap();

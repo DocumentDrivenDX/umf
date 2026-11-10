@@ -148,3 +148,35 @@ impl<'r> ClosedRoot<'r> {
 #[cfg(test)]
 #[path="schema_closed_container_independent_tests.rs"]
 mod closed_container_independent_tests;
+
+impl<'r> ClosedRoot<'r> {
+    // Only the sized factory collector calls this at original entry_count==1.
+    // No ordinary State/Context/parser field or shared growth tariff changes.
+    pub(crate) fn reserve_initial_rows(&mut self,hint:crate::value::FactoryRowHint,ctx:&mut Context<'_>,path:&mut Utf16,event:&mut dyn FnMut(&'static str))->Result<Option<usize>,EngineError>{
+        self.guarded(|root|{
+            let w=|n:usize|n.div_ceil(std::mem::size_of::<usize>());
+            // Hint movement/drop, optional result, extra start/empty/mode
+            // checks, all size/cap arithmetic and both current-custody guards.
+            ctx.charge_work_with_path(2*w(std::mem::size_of::<Option<crate::value::FactoryRowHint>>())
+                +w(std::mem::size_of::<crate::value::FactoryRowHint>())+w(std::mem::size_of::<Option<usize>>())
+                +2*w(std::mem::size_of::<crate::context::Limits>())+48,path)?;
+            root.start(ctx,path,event)?;
+            let state=root.state.as_mut().expect("original root state initialized");
+            if !matches!(state.mode,Mode::Compact)||!state.rows.is_empty()||state.rows.capacity()!=0{return Ok(None);}
+            let n=hint.nodes;
+            if !hint.current(ctx)||n==0||n>ctx.limits().max_values||n>=NONE as usize{return Ok(None);}
+            if n.checked_mul(std::mem::size_of::<Option<Node>>()).is_none(){return Ok(None);}
+            let Some(fee)=n.checked_mul(w(std::mem::size_of::<Option<Node>>()))else{return Ok(None);};
+            // Genuine N-slot allocation, same per-slot word tariff as reserve.
+            // Guard work after this callback was prepaid above. No borrow of
+            // Context construction state or Vec storage crosses a callback.
+            ctx.charge_work_with_path(fee,path)?;
+            if !hint.current(ctx){return Ok(None);}
+            event("closed-row-growth");
+            // Additional is relative to len, which is exactly zero here; no
+            // resize, synthetic initialized None rows, clamping or count trust.
+            if state.rows.try_reserve_exact(n).is_err(){state.mode=Mode::Unavailable;return Ok(None);}
+            Ok(Some(n))
+        })
+    }
+}

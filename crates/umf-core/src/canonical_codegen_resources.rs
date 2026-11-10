@@ -325,3 +325,81 @@ mod cache_independent_tests;
 #[cfg(test)]
 #[path = "canonical_static_text_independent_tests.rs"]
 mod static_independent_tests;
+
+// Sealed counted transport. Counts are sizing DATA, never admission evidence.
+#[doc(hidden)]
+#[derive(Debug)]
+pub struct CountedInstalledBundle {
+    raw:Value, counts:[usize;9], custody:Option<crate::value::FactoryCountCustody>,
+}
+#[doc(hidden)]
+#[derive(Debug)]
+pub struct CountedInstalledFields {
+    raw:std::vec::IntoIter<(Utf16,Value)>, counts:[usize;9], position:usize,
+    custody:Option<crate::value::FactoryCountCustody>,
+}
+#[doc(hidden)]
+#[derive(Debug)]
+pub struct CountedInstalledField {name:Utf16,value:Value,hint:Option<crate::value::FactoryRowHint>}
+fn materialize_counted<S:LiteralTextSource>(literal:&Literal,source:&mut S,ctx:&mut Context<'_>,event:&mut dyn FnMut(MaterializeEvent))->Result<(Value,usize),EngineError>{
+    // The original visitor/initialization/RootComplete and all semantic DATA
+    // operations are unchanged. Only its actual final counter is retained.
+    ctx.charge_work(words::<Utf16>()+4,Utf16::default())?;
+    let mut path=Utf16::from("#");let mut count=0;
+    let value=visit(literal,0,&mut count,source,ctx,&mut path,event)?;
+    work(ctx,&mut path,0)?;event(MaterializeEvent::RootComplete);
+    work(ctx,&mut path,2*words::<(Value,usize)>()+words::<usize>()+4)?;
+    Ok((value,count))
+}
+#[doc(hidden)]
+pub fn materialize_counted_installed_codegen_resources(ctx:&mut Context<'_>,operation:&crate::value::OwnedCoreOperation)->Result<CountedInstalledBundle,EngineError>{
+    let mut path=Utf16::default();check_sources(ctx,&mut path)?;
+    // Count slots, wrapper/result moves and eventual drop traversal prepaid.
+    work(ctx,&mut path,5*words::<CountedInstalledBundle>()+2*words::<[usize;9]>()+48)?;
+    let custody=operation.count_custody(ctx)?;let mut counts=[0usize;9];
+    let mut event=|_|{};let mut cache=StaticTextSource::new(data::TEXTS,ctx,&mut path,&mut event)?;
+    let mut fields=reserve::<(Utf16,Value)>(NAMES.len(),ctx,&mut path,&mut event)?;
+    for (index,source) in data::SOURCES.iter().enumerate(){
+        let key=ascii(source.name,ctx,&mut path,&mut event)?;
+        let(value,count)=materialize_counted(&source.value,&mut cache,ctx,&mut event)?;
+        work(ctx,&mut path,words::<(Utf16,Value)>()+1)?;
+        fields.push((key,value));counts[index]=count;
+    }
+    work(ctx,&mut path,words::<Value>()+1)?;
+    Ok(CountedInstalledBundle{raw:Value::Object(fields),counts,custody})
+}
+impl CountedInstalledBundle {
+    pub fn into_fields(self,ctx:&mut Context<'_>)->Result<CountedInstalledFields,EngineError>{
+        // Original raw Object decomposition plus genuinely new wrapper/iterator
+        // storage, count/custody moves, length read and terminal cleanup.
+        ctx.charge_work(words::<Value>()+1+2*words::<CountedInstalledFields>()
+            +words::<[usize;9]>()+words::<Option<crate::value::FactoryCountCustody>>()+12,Utf16::default())?;
+        let Value::Object(raw)=self.raw else{return Err(EngineError::new("REQUEST",Utf16::default(),"Installed canonical resource bundle is invalid"));};
+        Ok(CountedInstalledFields{raw:raw.into_iter(),counts:self.counts,position:0,custody:self.custody})
+    }
+}
+impl CountedInstalledFields {
+    // Read-only scalar projections used by the closed factory exactly once;
+    // their work is prepaid in into_fields/next respectively, not new scans.
+    pub fn len(&self)->usize{self.raw.len()}
+    pub fn next(&mut self,ctx:&mut Context<'_>)->Result<Option<CountedInstalledField>,EngineError>{
+        ctx.charge_work(2*words::<Option<CountedInstalledField>>()+words::<CountedInstalledField>()
+            +words::<Option<crate::value::FactoryRowHint>>()+10,Utf16::default())?;
+        let Some((name,value))=self.raw.next()else{return Ok(None);};
+        let index=self.position;self.position=self.position.checked_add(1).expect("sealed nine-field iterator");
+        let hint=if index<3 {
+            crate::value::FactoryRowHint::from_count(self.counts[index],self.custody.as_ref(),ctx)?
+        }else{None};
+        Ok(Some(CountedInstalledField{name,value,hint}))
+    }
+}
+impl CountedInstalledField {
+    pub fn name(&self)->&Utf16{&self.name}
+    pub fn admit(self,operation:&crate::value::OwnedCoreOperation,ctx:&mut Context<'_>)->Result<(Utf16,crate::value::OwnedCoreJson),EngineError>{
+        ctx.charge_work(words::<Self>()+words::<Option<crate::value::FactoryRowHint>>()
+            +2*words::<(Utf16,crate::value::OwnedCoreJson)>()+6,Utf16::default())?;
+        let Self{name,value,hint}=self;
+        let value=crate::value::OwnedCoreJson::admit_factory_resource_sized(value,&name,operation,hint,ctx)?;
+        Ok((name,value))
+    }
+}

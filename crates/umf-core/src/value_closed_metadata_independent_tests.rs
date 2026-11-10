@@ -194,8 +194,140 @@ fn scalar_roots_have_direct_final_literal_rows_and_no_child_frame_or_container()
     }
 }
 
+// Synthetic private corrupt hints below are adversarial controls, not factory
+// qualification or a production count source. Counts used by real production
+// are sealed materializer results; this recursion is an independent test oracle.
+fn sizing_count(v:&Value)->usize{1+match v{Value::Array(a)=>a.iter().map(sizing_count).sum(),Value::Object(o)=>o.iter().map(|(_,v)|sizing_count(v)).sum(),_=>0}}
+fn sizing_hint(n:usize,op:&OwnedCoreOperation,ctx:&mut Context<'_>)->FactoryRowHint{
+    FactoryRowHint::from_count(n,op.count_custody(ctx).unwrap().as_ref(),ctx).unwrap().unwrap()
+}
+fn sizing_route_controls(){
+    let v=fixture();let n=sizing_count(&v);let name=Utf16::from("coreSchema");
+    let mut ctx=Context::catalog();
+    OwnedCoreOperation::with_context(&mut ctx,|ctx,op|{
+        let old=generic(v.clone(),ctx.limits());
+        let hint=sizing_hint(n,op,ctx);
+        let carrier=OwnedCoreJson::admit_factory_resource_sized(v.clone(),&name,op,Some(hint),ctx)?;
+        let(actual,structure)=carrier.into_core_metadata(op,ctx)?;
+        assert_eq!(actual,v);assert_eq!(rows(&structure.unwrap()),rows(&old));
+        for bad in [0usize,usize::MAX,ctx.limits().max_values+1] {
+            let hint=sizing_hint(bad,op,ctx);
+            let carrier=OwnedCoreJson::admit_factory_resource_sized(v.clone(),&name,op,Some(hint),ctx)?;
+            let(_,structure)=carrier.into_core_metadata(op,ctx)?;
+            assert_eq!(rows(&structure.unwrap()),rows(&old)); // invalid hint -> original adaptive
+        }
+        for wrong in [1usize,n+1] {
+            let hint=sizing_hint(wrong,op,ctx);
+            let carrier=OwnedCoreJson::admit_factory_resource_sized(v.clone(),&name,op,Some(hint),ctx)?;
+            let(actual,structure)=carrier.into_core_metadata(op,ctx)?;
+            assert_eq!(actual,v);assert!(structure.is_none()); // final independent mismatch
+        }
+        let hint=sizing_hint(n,op,ctx);
+        OwnedCoreOperation::with_context(ctx,|foreign,other|{
+            let carrier=OwnedCoreJson::admit_factory_resource_sized(v.clone(),&name,other,Some(hint),foreign)?;
+            let(actual,structure)=carrier.into_core_metadata(other,foreign)?;
+            assert_eq!(actual,v);assert_eq!(rows(&structure.unwrap()),rows(&old));Ok(())
+        })?;
+        for limits in [crate::context::Limits::ordinary(),{let mut l=ctx.limits();l.max_depth-=1;l}] {
+            let mut hint=sizing_hint(n,op,ctx);hint.custody.limits=limits;
+            let carrier=OwnedCoreJson::admit_factory_resource_sized(v.clone(),&name,op,Some(hint),ctx)?;
+            assert_eq!(rows(&carrier.into_core_metadata(op,ctx)?.1.unwrap()),rows(&old));
+        }
+        let mut hint=sizing_hint(n,op,ctx);hint.custody.profile=crate::ResourceProfile::HardIsolated;
+        let carrier=OwnedCoreJson::admit_factory_resource_sized(v.clone(),&name,op,Some(hint),ctx)?;
+        assert_eq!(rows(&carrier.into_core_metadata(op,ctx)?.1.unwrap()),rows(&old));
+        Ok(())
+    }).unwrap();
+    // Absent hint keeps the EXACT original callback amounts, not just outcome.
+    let expected=trace(v.clone(),Some("coreSchema"));
+    let work=RefCell::new(Vec::new());let mut meter=|n|{work.borrow_mut().push(n);Ok(())};
+    let mut ctx=Context::catalog().with_meter(&mut meter);
+    let actual=OwnedCoreOperation::with_context(&mut ctx,|ctx,op|{
+        let start=work.borrow().len();
+        drop(OwnedCoreJson::admit_factory_resource_sized(v.clone(),&name,op,None,ctx)?);
+        Ok(work.borrow()[start..].to_vec())
+    }).unwrap();assert_eq!(actual,expected);
+    // Full original semantic checks still run with a forged but bounded hint.
+    for invalid in [Value::Number(f64::NAN),Value::Object(vec![(Utf16::from("x"),Value::Null),(Utf16::from("x"),Value::Number(f64::NAN))])] {
+        let expected=original(invalid.clone(),"#",Context::catalog().limits()).unwrap_err();
+        OwnedCoreOperation::with_context(&mut Context::catalog(),|ctx,op|{
+            let hint=sizing_hint(sizing_count(&invalid),op,ctx);
+            let error=OwnedCoreJson::admit_factory_resource_sized(invalid,&name,op,Some(hint),ctx).unwrap_err();
+            assert_eq!(error.code,expected.code);assert_eq!(error.path,expected.path);assert_eq!(error.message,expected.message);Ok(())
+        }).unwrap();
+    }
+}
+fn sizing_unwind_control(){
+    let armed=Cell::new(false);let nested=Cell::new(false);
+    let mut control=|_|{
+        if armed.replace(false){
+            OwnedCoreOperation::with_context(&mut Context::catalog(),|inner,operation|{
+                assert!(inner.owned_core_operation.as_ref().is_some_and(|a|Arc::ptr_eq(a,&operation.identity)));
+                nested.set(true);Ok(())
+            }).unwrap();
+            panic!("original sized allocation callback panic");
+        }Ok(())
+    };
+    let mut ctx=Context::catalog().with_host_control(&mut control);
+    OwnedCoreOperation::with_context(&mut ctx,|ctx,op|{
+        let value=fixture();let hint=sizing_hint(sizing_count(&value),op,ctx);let mut events=Vec::new();
+        let unwind=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||{
+            admit_factory_json_sized(value,hint,ctx,&mut |event|{events.push(event);if event=="closed-compact-guard"{armed.set(true);}})
+        }));
+        assert!(unwind.is_err());assert!(nested.get());assert!(!events.contains(&"closed-structure-publication"));
+        assert!(ctx.owned_core_operation.as_ref().is_some_and(|a|Arc::ptr_eq(a,&op.identity)));
+        let carrier=OwnedCoreJson::admit_factory_resource(fixture(),&Utf16::from("coreSchema"),op,ctx)?;
+        assert!(carrier.into_core_metadata(op,ctx)?.1.is_some());Ok(())
+    }).unwrap();assert!(ctx.owned_core_operation.is_none());
+}
+fn sizing_ordering_a_control(){
+    let invalid=Value::Object(vec![(Utf16::from("x"),Value::Null),(Utf16::from("x"),Value::Number(f64::NAN))]);
+    let n=sizing_count(&invalid);let enabled=Cell::new(false);let calls=Cell::new(0usize);let target=Cell::new(None);
+    let mut meter=|_|{if enabled.get(){calls.set(calls.get()+1);}Ok(())};
+    OwnedCoreOperation::with_context(&mut Context::catalog().with_host_control(&mut meter),|ctx,op|{
+        let hint=sizing_hint(n,op,ctx);enabled.set(true);
+        let error=admit_factory_json_sized(invalid.clone(),hint,ctx,&mut |e|{if e=="closed-row-growth"{target.set(Some(calls.get()));}}).unwrap_err();
+        enabled.set(false);assert_eq!(error.code,"DUPLICATE_KEY");assert_eq!(error.path,Utf16::from("#"));Ok(())
+    }).unwrap();
+    let target=target.get().unwrap();let enabled=Cell::new(false);let seen=Cell::new(0usize);let refused=Cell::new(false);let late=Cell::new(0usize);
+    let mut control=|_|{if refused.get(){late.set(late.get()+1);}if enabled.get(){let at=seen.get()+1;seen.set(at);if at==target{refused.set(true);return Err(EngineError::new("RESOURCE_LIMIT",Utf16::from("#"),"actual allocation control refusal"));}}Ok(())};
+    OwnedCoreOperation::with_context(&mut Context::catalog().with_host_control(&mut control),|ctx,op|{
+        let hint=sizing_hint(n,op,ctx);enabled.set(true);
+        let error=admit_factory_json_sized(invalid,hint,ctx,&mut |_|{}).unwrap_err();enabled.set(false);
+        assert_eq!(error.code,"RESOURCE_LIMIT");assert_eq!(error.message,"actual allocation control refusal");assert_eq!(error.path,Utf16::from("#"));assert_eq!(late.get(),0);Ok(())
+    }).unwrap();
+}
+fn sizing_denial_controls(){
+    let value=fixture();let n=sizing_count(&value);
+    let enabled=Cell::new(false);let calls=Cell::new(0usize);
+    let mut meter=|_|{if enabled.get(){calls.set(calls.get()+1);}Ok(())};
+    OwnedCoreOperation::with_context(&mut Context::catalog().with_host_control(&mut meter),|ctx,op|{
+        let hint=sizing_hint(n,op,ctx);enabled.set(true);
+        let carrier=OwnedCoreJson::admit_factory_resource_sized(value.clone(),&Utf16::from("coreSchema"),op,Some(hint),ctx)?;
+        enabled.set(false);drop(carrier);Ok(())
+    }).unwrap();
+    for deny in 1..=calls.get(){
+        let armed=Cell::new(false);let seen=Cell::new(0usize);let late=Cell::new(0usize);let denied=Cell::new(false);
+        let mut control=|_|{
+            if denied.get(){late.set(late.get()+1);return Err(host());}
+            if armed.get(){let at=seen.get()+1;seen.set(at);if at==deny{denied.set(true);return Err(host());}}Ok(())
+        };
+        OwnedCoreOperation::with_context(&mut Context::catalog().with_host_control(&mut control),|ctx,op|{
+            let hint=sizing_hint(n,op,ctx);armed.set(true);
+            let error=OwnedCoreJson::admit_factory_resource_sized(value.clone(),&Utf16::from("coreSchema"),op,Some(hint),ctx).unwrap_err();
+            same_host(&error,&host());armed.set(false);assert_eq!(seen.get(),deny);assert_eq!(late.get(),0);
+            denied.set(false);
+            let good=OwnedCoreJson::admit_factory_resource(value.clone(),&Utf16::from("coreSchema"),op,ctx)?;
+            assert!(good.into_core_metadata(op,ctx)?.1.is_some());Ok(())
+        }).unwrap();
+    }
+}
 #[test]
 fn nested_scalar_rows_and_metadata_keys_match_literal_coordinates_and_original_builder() {
+    sizing_route_controls();
+    sizing_denial_controls();
+    sizing_ordering_a_control();
+    sizing_unwind_control();
     let value = fixture();
     let old = generic(value.clone(), Context::catalog().limits());
     let events = RefCell::new(Vec::new());

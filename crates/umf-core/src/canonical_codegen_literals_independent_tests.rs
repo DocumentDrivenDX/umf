@@ -113,8 +113,55 @@ fn trace(
     (amounts.into_inner(), events.into_inner())
 }
 
+fn counted_nodes(value:&Value)->usize{1+match value{Value::Array(a)=>a.iter().map(counted_nodes).sum(),Value::Object(o)=>o.iter().map(|(_,v)|counted_nodes(v)).sum(),_=>0}}
+fn counted_transport_controls(){
+    crate::value::OwnedCoreOperation::with_context(&mut Context::catalog(),|ctx,op|{
+        let bundle=materialize_counted_installed_codegen_resources(ctx,op)?;
+        let Value::Object(raw)=&bundle.raw else{panic!("raw Object")};
+        assert_eq!(raw.len(),9);
+        for (i,(_,v)) in raw.iter().enumerate(){assert_eq!(bundle.counts[i],counted_nodes(v));}
+        assert_eq!(&bundle.counts[..3],&[1318,1317,1317]); // oracle only, no production count
+        let mut fields=bundle.into_fields(ctx)?;
+        for i in 0..9 {
+            let field=fields.next(ctx)?.unwrap();assert_eq!(field.name(),&Utf16::from(NAMES[i]));
+            assert_eq!(field.hint.is_some(),i<3);
+            let(key,carrier)=field.admit(op,ctx)?;assert_eq!(key,Utf16::from(NAMES[i]));
+            let actual=carrier.into_resource(op,ctx)?;let expected=raw_value(RAW[i],ctx);
+            exact_value(&actual,&expected);
+        }
+        assert!(fields.next(ctx)?.is_none());
+        // Deliberate private-test corruption swaps payloads without counts.
+        // Public callers cannot do this; mismatch cannot publish metadata.
+        let mut corrupt=materialize_counted_installed_codegen_resources(ctx,op)?;
+        let Value::Object(raw)=&mut corrupt.raw else{panic!("raw Object")};
+        let (a,b)=raw.split_at_mut(1);std::mem::swap(&mut a[0].1,&mut b[0].1);
+        let mut fields=corrupt.into_fields(ctx)?;
+        for _ in 0..2 {
+            let(_,carrier)=fields.next(ctx)?.unwrap().admit(op,ctx)?;
+            assert!(carrier.into_core_metadata(op,ctx)?.1.is_none());
+        }
+        Ok(())
+    }).unwrap();
+}
+fn counted_return_denials(){
+    let calls=Cell::new(0usize);let mut control=|_|{calls.set(calls.get()+1);Ok(())};
+    let mut ctx=Context::ordinary().with_host_control(&mut control);
+    let mut source=StaticTextSource::new(SMALL_TEXTS,&mut ctx,&mut Utf16::default(),&mut |_|{}).unwrap();
+    let before=calls.get();let(value,n)=materialize_counted(&SMALL,&mut source,&mut ctx,&mut |_|{}).unwrap();
+    assert_eq!(n,counted_nodes(&value));let steps=calls.get()-before;
+    for deny in 1..=steps {
+        let enabled=Cell::new(false);let seen=Cell::new(0usize);let late=Cell::new(0usize);let failed=Cell::new(false);
+        let mut control=|_|{if failed.get(){late.set(late.get()+1);return Err(host_error());}if enabled.get(){let n=seen.get()+1;seen.set(n);if n==deny{failed.set(true);return Err(host_error());}}Ok(())};
+        let mut ctx=Context::ordinary().with_host_control(&mut control);
+        let mut source=StaticTextSource::new(SMALL_TEXTS,&mut ctx,&mut Utf16::default(),&mut |_|{}).unwrap();
+        enabled.set(true);let error=materialize_counted(&SMALL,&mut source,&mut ctx,&mut |_|{}).unwrap_err();
+        host(&error);assert_eq!(seen.get(),deny);assert_eq!(late.get(),0);
+    }
+}
 #[test]
 fn literal01_all_nine_actual_owned_roots_match_raw_core_reader_bits_units_and_order() {
+    counted_transport_controls();
+    counted_return_denials();
     let mut ctx = Context::catalog();
     let actual = materialize_installed_codegen_resources(&mut ctx).unwrap();
     let after_materialization = ctx.charged_work();

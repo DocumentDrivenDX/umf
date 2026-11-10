@@ -403,6 +403,20 @@ fn host_error() -> EngineError {
 }
 #[test]
 fn fw06_selected_actual_stage_denials_preserve_first_host_error_without_handle() {
+    // New counted route: refuse the first admission effect after authentic
+    // all-nine materialization. No returned handle or later stage is permitted.
+    let armed=Cell::new(false);let refused=Cell::new(false);let late=Cell::new(0usize);
+    let mut control=|_|{if refused.get(){late.set(late.get()+1);return Err(host_error());}if armed.get(){refused.set(true);return Err(host_error());}Ok(())};
+    let mut ctx=Context::ordinary().with_host_control(&mut control);
+    let mut events=Vec::new();
+    let e=require_error(CodegenResourcesHandle::from_installed_with_stage_events(&mut ctx,&mut |event|{
+        if matches!(event,InstalledFactoryStage::AdmissionStart(_)){armed.set(true);}
+        events.push(stage(event));
+    }));
+    assert_eq!(e.code,host_error().code);assert_eq!(e.path,host_error().path);
+    assert_eq!(e.python_message_origin,host_error().python_message_origin);
+    assert_eq!(events,vec!["start:coreSchema"]);assert_eq!(late.get(),0);
+
     for selected in ["admission", "compilation", "registration"] {
         let raw = bundle();
         let stage_ready = Cell::new(false);
