@@ -3145,46 +3145,64 @@ impl CompiledSchema {
         Ok((selected,checked,None))
     }
     fn preflight_fused_ordered_child<'a,'binding>(&'a self,parent:&owner_locations::BorrowedChild<'binding,'a>,frontier:&mut FusedPreflightFrontier<'binding,'a>,edge:usize,ctx:&mut Context<'_>)->Result<FusedPreflightSelection<'binding,'a>,EngineError> where 'a:'binding {
-        // Admit the wrapper's own state before replacing the live frontier.
-        // The original Child result/selection debit remains in the callee.
-        type Nested<'b,'o> = Option<Option<owner_locations::FusedChildren<'b,'o>>>;
-        type Child<'o,'b> = (Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'o>>,Option<owner_locations::BorrowedChild<'b,'o>>);
+        // Admit the two frontier discriminations before any lazy initialization or
+        // selection effect. A refusal here leaves even an active walk intact.
+        ctx.charge_work(2,Utf16::default())?;
+        if matches!(frontier,FusedPreflightFrontier::Unattempted) {
+            // Admit the real children result, its extracted option, and one
+            // frontier publication. No legacy checked/walker scratch exists.
+            ctx.charge_work(
+                3*catalogue_words::<Result<Option<owner_locations::FusedChildren<'binding,'a>>,EngineError>>()
+                    +2*catalogue_words::<Option<owner_locations::FusedChildren<'binding,'a>>>()
+                    +catalogue_words::<FusedPreflightFrontier<'binding,'a>>()
+                    +3,
+                Utf16::default(),
+            )?;
+            *frontier=match parent.children(ctx)? {
+                Some(walk)=>FusedPreflightFrontier::Active(walk),
+                None=>FusedPreflightFrontier::Unavailable,
+            };
+        }
+        if let FusedPreflightFrontier::Active(walk)=frontier {
+            // Admit only this actual selected result and its direct fused
+            // return. The selector still pays every guard/read/advance itself.
+            ctx.charge_work(
+                3*catalogue_words::<Result<Option<owner_locations::CheckedOwnerLocation<'binding,'a>>,EngineError>>()
+                    +2*catalogue_words::<Option<owner_locations::CheckedOwnerLocation<'binding,'a>>>()
+                    +3*catalogue_words::<FusedPreflightSelection<'binding,'a>>()
+                    +2,
+                Utf16::default(),
+            )?;
+            let selected=walk.select(edge,ctx)?;
+            #[cfg(test)] construction_index::scoped_effect_event("sp1-ordered-selection-performed");
+            return Ok(match selected {
+                Some(location)=>{
+                    #[cfg(test)]
+                    if let owner_locations::CheckedOwnerLocation::Fused(child)=&location { child.observe_transfer(); }
+                    FusedPreflightSelection::Located(location)
+                },
+                None=>FusedPreflightSelection::Missing,
+            });
+        }
+        // Unavailable never manufactures a successful fused selection. Retain
+        // the original paid parent materialization and exact child demand.
         ctx.charge_work(
-            5*catalogue_words::<FusedPreflightFrontier<'binding,'a>>()
-                +3*catalogue_words::<Nested<'binding,'a>>()
-                +2*catalogue_words::<Option<owner_locations::CheckedLocation<'a>>>()
-                +2*catalogue_words::<Option<owner_locations::OrderedOwnerChildren<'a>>>()
-                +3*catalogue_words::<Result<Child<'a,'binding>,EngineError>>()
+            2*catalogue_words::<OwnerCursor>()
+                +3*catalogue_words::<Result<Option<OwnerCursor>,EngineError>>()
+                +2*catalogue_words::<Option<OwnerCursor>>()
                 +3*catalogue_words::<FusedPreflightSelection<'binding,'a>>()
-                +2*catalogue_words::<Option<&owner_locations::BorrowedChild<'binding,'a>>>()
-                +8,
+                +2,
             Utf16::default(),
         )?;
-        let prior=std::mem::replace(frontier,FusedPreflightFrontier::Unattempted);
-        let mut fused=match prior {
-            FusedPreflightFrontier::Unattempted=>None,
-            FusedPreflightFrontier::Unavailable=>Some(None),
-            FusedPreflightFrontier::Active(walk)=>Some(Some(walk)),
-        };
-        let mut checked=None;
-        let mut ordered=None;
-        let result=self.preflight_ordered_child(None,&mut checked,&mut ordered,Some(parent),&mut fused,edge,ctx);
-        *frontier=match fused {
-            None=>FusedPreflightFrontier::Unattempted,
-            Some(None)=>FusedPreflightFrontier::Unavailable,
-            Some(Some(walk))=>FusedPreflightFrontier::Active(walk),
-        };
-        let(cursor,checked,borrowed)=result?;
-        Ok(if let Some(child)=borrowed {
-            FusedPreflightSelection::Located(owner_locations::CheckedOwnerLocation::Fused(child))
-        } else if let Some(checked)=checked {
-            FusedPreflightSelection::Located(owner_locations::CheckedOwnerLocation::Owned(checked))
-        } else if let Some(cursor)=cursor {
-            FusedPreflightSelection::Cursor(cursor)
-        } else {
-            FusedPreflightSelection::Missing
+        let fallback=parent.materialize_cursor(ctx)?;
+        let selected=child_cursor(Some(self),Some(&fallback),edge,ctx)?;
+        #[cfg(test)] construction_index::scoped_effect_event("sp1-ordered-selection-performed");
+        Ok(match selected {
+            Some(cursor)=>FusedPreflightSelection::Cursor(cursor),
+            None=>FusedPreflightSelection::Missing,
         })
     }
+
     fn preflight_fused_original_child(&self,parent:&owner_locations::BorrowedChild<'_,'_>,member:usize,edge:Option<usize>,ctx:&mut Context<'_>)->Result<Option<OwnerCursor>,EngineError>{
         let parent_cursor=parent.materialize_cursor(ctx)?;
         let Some(member_cursor)=child_cursor(Some(self),Some(&parent_cursor),member,ctx)? else{return Ok(None);};

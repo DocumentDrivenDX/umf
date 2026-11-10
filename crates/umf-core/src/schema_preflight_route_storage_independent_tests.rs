@@ -60,6 +60,18 @@ fn ps01_actual_specialized_type_field_closure_and_layout() {
     assert!(std::mem::align_of::<FusedPreflightFrame<'static, 'static>>() > 0);
     assert!(std::mem::size_of::<LegacyPreflightFrame<'static>>() > 0);
     // Layout is target-relative; source field closure, not size, proves absence.
+    let direct = src.split("fn preflight_fused_ordered_child").nth(1).unwrap().split("fn preflight_fused_original_child").next().unwrap();
+    assert!(direct.contains("walk.select(edge,ctx)?"));
+    for absent in ["preflight_ordered_child(", "type Child", "type Nested", "let mut checked", "let mut ordered", "mem::replace", "Some(Some(walk))"] {
+        assert!(!direct.contains(absent), "removed mixed transport: {absent}");
+    }
+    assert!(direct.contains("*frontier=match parent.children(ctx)?"));
+    assert!(direct.find("ctx.charge_work(2,").unwrap() < direct.find("if matches!(frontier").unwrap());
+    assert!(direct.contains("parent.materialize_cursor(ctx)?"));
+    assert!(direct.contains("child_cursor(Some(self),Some(&fallback),edge,ctx)?"));
+    // The separate legacy helper and both semantic routes remain real code.
+    let legacy_select = src.split("fn preflight_ordered_child").nth(1).unwrap().split("fn preflight_duplicate_child").next().unwrap();
+    assert!(legacy_select.contains("checked.take()") && legacy_select.contains("walk.child(edge,ctx)?"));
 }
 
 #[test]
@@ -128,6 +140,23 @@ fn ps04_unavailable_transition_uses_two_distinct_retained_legacy_demands() {
     assert_eq!(path.text(), &Utf16::from("#"));
     assert!(matches!(&keyword.frontier, FusedPreflightFrontier::Unavailable));
     assert_eq!(props(owner.schema_value()).len(), 2);
+
+    // A fresh real children attempt in a changed profile actually declines;
+    // this reaches the direct Cursor fallback, not the cold Owned arm above.
+    let mut direct_frontier = FusedPreflightFrontier::Unattempted;
+    let fallback_events = Rc::new(RefCell::new(Vec::new())); let fallback_sink = fallback_events.clone();
+    let direct = owner_locations::observe_owner_walk(Box::new(move |e, r, n| fallback_sink.borrow_mut().push((e, r, n))), ||
+        owner.preflight_fused_ordered_child(&frame.parent, &mut direct_frontier, edge, &mut changed_ctx)).unwrap();
+    let FusedPreflightSelection::Cursor(direct_cursor) = direct else { panic!("declined children retain original cursor demand") };
+    assert!(matches!(&direct_frontier, FusedPreflightFrontier::Unavailable));
+    assert!(std::ptr::eq(table.read(&owner, &direct_cursor, &mut changed_ctx).unwrap().unwrap(), child(owner.schema_value(), "properties")));
+    let original_parent = frame.parent.materialize_cursor(&mut changed_ctx).unwrap();
+    let original_child = table.child(&owner, &original_parent, edge, &mut changed_ctx).unwrap().unwrap();
+    assert!(direct_cursor.same_location(&original_child));
+    assert_eq!(fallback_events.borrow().iter().filter(|e| e.0 == "ft1-owning-cursor-materialized").count(), 1);
+    assert!(!fallback_events.borrow().iter().any(|e| e.0 == "ft1-frontier-publication"));
+    assert!(matches!(owner.preflight_fused_ordered_child(&frame.parent, &mut direct_frontier, usize::MAX, &mut changed_ctx).unwrap(), FusedPreflightSelection::Missing));
+    assert!(matches!(&direct_frontier, FusedPreflightFrontier::Unavailable));
 }
 
 #[test]
@@ -276,7 +305,7 @@ fn ps07_pre_effect_cold_denial_retains_real_owned_checked_custody() {
     let owner = psr_bank(&s);
     // This is a separate denial target from the publisher callbacks below: begin
     // with a genuine active FusedChildren frontier and deny the wrapper's first
-    // admission, before its first replace or any selection/owner observation.
+    // admission, before its first frontier inspection or selection/owner observation.
     let mut retry_ctx = Context::catalog();
     let table = owner.owner_locations.as_ref().unwrap();
     let cursor = table.root(&owner, 0, &mut retry_ctx).unwrap().unwrap();
@@ -288,16 +317,9 @@ fn ps07_pre_effect_cold_denial_retains_real_owned_checked_custody() {
     assert!(matches!(first, FusedPreflightSelection::Located(owner_locations::CheckedOwnerLocation::Fused(_))));
     assert!(matches!(&frontier, FusedPreflightFrontier::Active(_)));
 
-    type Nested<'b, 'o> = Option<Option<owner_locations::FusedChildren<'b, 'o>>>;
-    type Child<'o, 'b> = (Option<OwnerCursor>, Option<owner_locations::CheckedLocation<'o>>, Option<owner_locations::BorrowedChild<'b, 'o>>);
-    let expected = 5 * catalogue_words::<FusedPreflightFrontier<'_, '_>>()
-        + 3 * catalogue_words::<Nested<'_, '_>>()
-        + 2 * catalogue_words::<Option<owner_locations::CheckedLocation<'_>>>()
-        + 2 * catalogue_words::<Option<owner_locations::OrderedOwnerChildren<'_>>>()
-        + 3 * catalogue_words::<Result<Child<'_, '_>, EngineError>>()
-        + 3 * catalogue_words::<FusedPreflightSelection<'_, '_>>()
-        + 2 * catalogue_words::<Option<&owner_locations::BorrowedChild<'_, '_>>>()
-        + 8;
+    // Two existing-frontier discriminations; no replacement or temporary
+    // frontier is created. Branch-local transport is admitted separately.
+    let expected = 2;
     let amounts = Rc::new(RefCell::new(Vec::new()));
     let recorded = amounts.clone();
     let mut deny_wrapper = move |amount| {
@@ -333,6 +355,58 @@ fn ps07_pre_effect_cold_denial_retains_real_owned_checked_custody() {
     assert!(!resume_owner_events.borrow().iter().any(|event| event.0 == "ft1-frontier-publication"));
     assert!(resume_owner_events.borrow().iter().any(|event| event.0 == "ft1-selected-row-read"));
     assert!(resume_path_events.borrow().contains(&"sp1-ordered-selection-performed"));
+
+    // Independent target-layout formulas derived from the branch's actual
+    // typed results and publications, not a production fee constant/helper.
+    let word = std::mem::size_of::<usize>();
+    let lazy_fee = 3 * std::mem::size_of::<Result<Option<owner_locations::FusedChildren<'_, '_>>, EngineError>>().div_ceil(word)
+        + 2 * std::mem::size_of::<Option<owner_locations::FusedChildren<'_, '_>>>().div_ceil(word)
+        + std::mem::size_of::<FusedPreflightFrontier<'_, '_>>().div_ceil(word) + 3;
+    let selected_fee = 3 * std::mem::size_of::<Result<Option<owner_locations::CheckedOwnerLocation<'_, '_>>, EngineError>>().div_ceil(word)
+        + 2 * std::mem::size_of::<Option<owner_locations::CheckedOwnerLocation<'_, '_>>>().div_ceil(word)
+        + 3 * std::mem::size_of::<FusedPreflightSelection<'_, '_>>().div_ceil(word) + 2;
+    for (active, denied_call, branch_fee) in [(false, 1usize, 0usize), (false, 2, lazy_fee), (true, 2, selected_fee)] {
+        let mut branch_frontier = FusedPreflightFrontier::Unattempted;
+        if active { owner.preflight_fused_ordered_child(&parent, &mut branch_frontier, member(&s, "allOf"), &mut retry_ctx).unwrap(); }
+        let branch_amounts = Rc::new(RefCell::new(Vec::new())); let branch_recorded = branch_amounts.clone();
+        let mut deny = move |amount| {
+            let mut rows = branch_recorded.borrow_mut(); rows.push(amount);
+            if rows.len() == denied_call { Err(EngineError::new("PS1_BRANCH_DENIAL", Utf16::from("/ps1/branch"), "branch predebit denied")) } else { Ok(()) }
+        };
+        let mut branch_ctx = Context::catalog().with_host_control(&mut deny);
+        let events = Rc::new(RefCell::new(Vec::new())); let sink = events.clone();
+        let paths = Rc::new(RefCell::new(Vec::new())); let path_sink = paths.clone();
+        let denied = owner_locations::observe_owner_walk(Box::new(move |e, r, n| sink.borrow_mut().push((e, r, n))), ||
+            construction_index::observe_paths(Box::new(move |e| path_sink.borrow_mut().push(e)), ||
+                owner.preflight_fused_ordered_child(&parent, &mut branch_frontier, member(&s, "properties"), &mut branch_ctx)));
+        let error = match denied { Err(e) => e, Ok(_) => panic!("branch admission must deny before effect") };
+        assert!(error.is_control_failure()); assert_eq!(error.path, Utf16::from("/ps1/branch"));
+        if denied_call == 1 { assert_eq!(&*branch_amounts.borrow(), &[2]); }
+        else { assert_eq!(&*branch_amounts.borrow(), &[2, branch_fee]); }
+        assert!(events.borrow().is_empty() && paths.borrow().is_empty());
+        drop(branch_ctx);
+        if active {
+            assert!(matches!(&branch_frontier, FusedPreflightFrontier::Active(_)));
+            let next = owner.preflight_fused_ordered_child(&parent, &mut branch_frontier, member(&s, "properties"), &mut retry_ctx).unwrap();
+            let FusedPreflightSelection::Located(owner_locations::CheckedOwnerLocation::Fused(next)) = next else { panic!("pre-effect denial retains live walk") };
+            assert!(std::ptr::eq(next.read_for(&owner, &mut retry_ctx).unwrap().unwrap(), child(owner.schema_value(), "properties")));
+        } else { assert!(matches!(&branch_frontier, FusedPreflightFrontier::Unattempted)); }
+    }
+
+    // Admission inside select is different: its existing guard poisons the
+    // actual walk, so a later request cannot resume through a forged frontier.
+    let mut failed_walk = FusedPreflightFrontier::Unattempted;
+    owner.preflight_fused_ordered_child(&parent, &mut failed_walk, member(&s, "allOf"), &mut retry_ctx).unwrap();
+    let mut call = 0;
+    let mut deny_select = |_| { call += 1; if call == 3 { Err(EngineError::new("PS1_SELECT_DENIAL", Utf16::from("/ps1/select"), "selector guard admission denied")) } else { Ok(()) } };
+    let mut select_ctx = Context::catalog().with_host_control(&mut deny_select);
+    let error = match owner.preflight_fused_ordered_child(&parent, &mut failed_walk, member(&s, "properties"), &mut select_ctx) { Err(e) => e, Ok(_) => panic!("selector must deny") };
+    assert!(error.is_control_failure()); assert_eq!(error.code, "PS1_SELECT_DENIAL"); drop(select_ctx);
+    let after = Rc::new(RefCell::new(Vec::new())); let sink = after.clone();
+    let missing = owner_locations::observe_owner_walk(Box::new(move |e, r, n| sink.borrow_mut().push((e, r, n))), ||
+        owner.preflight_fused_ordered_child(&parent, &mut failed_walk, member(&s, "properties"), &mut retry_ctx)).unwrap();
+    assert!(matches!(missing, FusedPreflightSelection::Missing));
+    assert!(after.borrow().is_empty());
 
     // The following deny_at cases target PreflightCold::publish's own two
     // admission boundaries; their callback indices are independent of the
@@ -386,4 +460,15 @@ fn ps08_independent_reentry_and_panic_poison_cleanup() {
     let mut poisoned=construction_index::ScopedPreflightPath::new(&Utf16::from("#"),&mut ctx).unwrap();
     let result=catch_unwind(AssertUnwindSafe(|| owner.with_preflight_child_path(&mut poisoned,PreflightChildPath::Index(0),&mut ctx,|_,_|panic!("original panic"),|_,_|Ok::<(),EngineError>(()))));
     assert!(result.is_err()); assert!(poisoned.observe().poisoned);
+
+    // Unwinding inside the unchanged selector must poison its in-place walk;
+    // the wrapper cannot reset it to an unattempted, resumable state.
+    let mut panic_walk = FusedPreflightFrontier::Unattempted;
+    owner.preflight_fused_ordered_child(&parent, &mut panic_walk, edge, &mut ctx).unwrap();
+    let mut calls = 0;
+    let mut panic_select = |_| { calls += 1; if calls == 3 { panic!("selector control panic"); } Ok(()) };
+    let mut panic_ctx = Context::catalog().with_host_control(&mut panic_select);
+    let panic = catch_unwind(AssertUnwindSafe(|| owner.preflight_fused_ordered_child(&parent, &mut panic_walk, member(&s, "properties"), &mut panic_ctx)));
+    assert!(panic.is_err()); drop(panic_ctx);
+    assert!(matches!(owner.preflight_fused_ordered_child(&parent, &mut panic_walk, member(&s, "properties"), &mut ctx).unwrap(), FusedPreflightSelection::Missing));
 }
