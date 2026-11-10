@@ -107,9 +107,9 @@ def candidate_fixture(root,status='source-bound'):
     v['sourceFiles']['python/pyproject.toml']=m.sha(root/'python/pyproject.toml')
     v['sourceFiles']['python/src/umf/__init__.py']=m.sha(root/'python/src/umf/__init__.py')
     prior=json.loads((root/m.CURRENT_FIXTURE).read_text())
-    generation={'sourceCommit':'93adb14883fd49bfe6404d8733b78eb696078f35','sourceTree':'0ea24ed5802129f00c7d0b30de5e40640df6aecb',
+    generation={'sourceCommit':'268dbb734278406a6545c261dee90e3fb63dab69','sourceTree':'0beb3908a07bef9c2888162f389cb5d71b087106',
       'runId':'SYNTHETIC-NOT-A-G0-RUN','attempt':'1','jobId':'SYNTHETIC-JOB','artifactId':'SYNTHETIC-ARTIFACT','artifactDigest':'a'*64,
-      'outputManifestSHA256':'b'*64,'finalAttestationSHA256':'c'*64,'correspondenceReceiptSHA256':'d'*64}
+      'outputManifestSHA256':'b'*64,'finalAttestationSHA256':'c'*64,'correspondenceReceiptSHA256':'d'*64,'compilerSHA256':'e'*64,'compilerBinarySHA256':'f'*64}
     candidate={'profile':m.CANDIDATE_PROFILE,'inputProfile':m.INPUT,'maximumWork':m.LIMIT,'candidateArtifactVersion':'0.10.10',
       'baseline':{'mainCommit':'ed09f345e38e70fd8c718cb904ffd9185f0ca392','mainTree':'ad4d87ffcf2ce2a5aff15fc26e60e5a0e82021c3','inheritedCoreDistributionVersion':'0.10.9','scope':'SYNTHETIC BASELINE ONLY'},
       'historicalFixture':prior['historicalFixture'],'bindingStatus':status,'generation':generation,'resources':prior['resources'],
@@ -179,6 +179,237 @@ class FactoryProbePureControls(unittest.TestCase):
         for stage in ('ctor','call','manifest'):
             with self.subTest(stage=stage):
                 report,events=self.fake_probe(stage);self.assertEqual(report['status'],'resource-limited');self.assertEqual(len(report['pairs']),4);self.assertEqual(report['failure']['code'],'RESOURCE_LIMIT');self.assertFalse(report['pairs'][-1].get('completed',False));self.assertEqual(events[-1][0],stage)
+    def test_phase_observation_preserves_exact_999971_plus_denied_43_failure(self):
+        m=load();events=[];refusal=type('Refusal',(Exception,),{'code':'RESOURCE_LIMIT'})('Host work budget exceeded')
+        def host_work(maximum,*controls):
+            total=[0]
+            def work(amount):
+                if total[0]+amount>maximum:raise refusal
+                total[0]+=amount
+            return work
+        def native_control(work):
+            def control(amount,phase=None):
+                events.append(('delegated',amount,phase))
+                try:work(amount)
+                except BaseException as error:
+                    control.failure=error
+                    return (error.code,str(error),None)
+                return None
+            control.failure=None
+            return control
+        compiler=types.SimpleNamespace(_host_work=host_work,_native_control=native_control)
+        expected=m.expected_manifest(json.loads((ROOT/'tests/qualification/fixtures/inspector-retained-resources.json').read_text()))
+        cases=[{'id':str(i),'request':{'document':{},'selected':[]},'expected':{}} for i in range(17)]
+        callbacks=[]
+        class Engine:
+            @classmethod
+            def from_installed(cls,*,max_work):
+                work=compiler._host_work(max_work);work(999971)
+                control=compiler._native_control(work);callbacks.append(control)
+                outcome=control(43,'ordered-fused-transport')
+                if outcome is not None:raise control.failure
+                return cls()
+        with tempfile.TemporaryDirectory() as raw:
+            out=Path(raw)/'partial.json'
+            with m.WorkObserver(compiler) as observer:
+                with self.assertRaises(type(refusal)) as raised:
+                    m.probe(Engine,cases,expected,out,{'actualCandidateSource':'a'*40,'wheelSHA256':'b'*64},observer)
+            self.assertIs(raised.exception,refusal);self.assertIs(callbacks[0].failure,refusal)
+            self.assertIs(compiler._host_work,host_work);self.assertIs(compiler._native_control,native_control)
+            report=json.loads(out.read_text());life=report['pairs'][0]['constructor'];phase=life['phaseObservation']
+        self.assertEqual(events,[('delegated',43,'ordered-fused-transport')])
+        self.assertEqual((life['attemptedWork'],life['returnedWork'],life['completed']),(1000014,999971,False))
+        self.assertEqual(phase['phases']['ordered-fused-transport'],{'calls':1,'attemptedWork':43,'returnedWork':0})
+        self.assertEqual(phase['unlabeledHostWork'],{'attemptedWork':999971,'returnedWork':999971})
+        self.assertEqual(phase['firstFailure'],{'phase':'ordered-fused-transport','phaseSupplied':True,'phaseAvailable':True,
+            'root':None,'rootSupplied':False,'rootAvailable':False,'site':None,'siteSupplied':False,'siteAvailable':False,
+            'amount':43,'amountAvailable':True,'returnedWorkBefore':999971,'attemptedWorkThroughFailure':1000014})
+        self.assertNotIn('remainingWork',phase['firstFailure'])
+    def test_phase_aggregates_preserve_forwarding_zero_and_unlabeled_host_work(self):
+        m=load();calls=[]
+        def host_work(maximum,*controls):
+            def work(amount):calls.append(('work',amount))
+            return work
+        def native_control(work):
+            def control(*args,**kwargs):
+                calls.append(('control',args,dict(kwargs)));work(args[0]);return None
+            control.failure=None
+            return control
+        compiler=types.SimpleNamespace(_host_work=host_work,_native_control=native_control)
+        with m.WorkObserver(compiler) as observer:
+            life=observer.begin();work=compiler._host_work(m.LIMIT);work(4)
+            control=compiler._native_control(work)
+            self.assertIsNone(control(3,'portable-compile',root='model.yaml',site='schema'))
+            phase=life['phaseObservation']
+            self.assertEqual((phase['lastPhase']['root'],phase['lastPhase']['site']),('model.yaml','schema'))
+            work(5);self.assertIsNone(control(0,'zero-check'))
+        self.assertEqual(calls,[('work',4),('control',(3,'portable-compile'),{'root':'model.yaml','site':'schema'}),
+                                ('work',3),('work',5),('control',(0,'zero-check'),{}),('work',0)])
+        self.assertEqual(phase['nativeControlCalls'],2)
+        self.assertEqual(phase['phases']['portable-compile'],{'calls':1,'attemptedWork':3,'returnedWork':3})
+        self.assertEqual(phase['phases']['zero-check'],{'calls':1,'attemptedWork':0,'returnedWork':0})
+        self.assertEqual(phase['unlabeledHostWork'],{'attemptedWork':9,'returnedWork':9})
+        self.assertIsNone(phase['lastPhase']['root']);self.assertFalse(phase['lastPhase']['rootAvailable'])
+        self.assertIsNone(phase['firstFailure']);self.assertFalse(phase['overflow'])
+    def test_unlabeled_native_callback_preserves_forwarding_without_false_overflow(self):
+        m=load()
+        # Every row is a real native callback; unavailable metadata is not
+        # capacity exhaustion. Compare exact forwarding with no observer too.
+        invalid=object()
+        for args in [(7,), (7,None), (7,0), (7,''), (7,'x'*129), (7,invalid)]:
+            for outcome in [None,object()]:
+                with self.subTest(args=args,outcome=outcome):
+                    def exercise(observe):
+                        received=[]
+                        def host_work(maximum,*controls):
+                            self.assertEqual(maximum,m.LIMIT)
+                            def work(amount):received.append(('work',amount))
+                            return work
+                        def native_control(work):
+                            def control(*actual,**kwargs):
+                                received.append(('delegate',actual,kwargs));work(actual[0]);return outcome
+                            control.failure=None
+                            return control
+                        compiler=types.SimpleNamespace(_host_work=host_work,_native_control=native_control)
+                        life=None
+                        if observe:
+                            with m.WorkObserver(compiler) as observer:
+                                life=observer.begin();control=compiler._native_control(compiler._host_work(m.LIMIT));actual=control(*args)
+                        else:actual=compiler._native_control(compiler._host_work(m.LIMIT))(*args)
+                        self.assertIs(actual,outcome)
+                        self.assertIs(compiler._host_work,host_work);self.assertIs(compiler._native_control,native_control)
+                        return received,life
+                    baseline,_=exercise(False);received,life=exercise(True)
+                    self.assertEqual(received,baseline)
+                    self.assertEqual(received,[('delegate',args,{}),('work',7)])
+                    detail=life['phaseObservation']
+                    self.assertEqual((life['attemptedWork'],life['returnedWork']),(7,7))
+                    self.assertEqual(detail['nativeControlCalls'],1)
+                    self.assertEqual(detail['unlabeledNativeWork'],{'calls':1,'attemptedWork':7,'returnedWork':7})
+                    self.assertEqual(detail['phases'],{})
+                    self.assertEqual(detail['lastPhase']['phaseSupplied'],len(args)>1)
+                    self.assertFalse(detail['lastPhase']['phaseAvailable'])
+                    self.assertIsNone(detail['lastPhase']['phase'])
+                    self.assertFalse(detail['lastPhase']['rootAvailable']);self.assertFalse(detail['lastPhase']['siteAvailable'])
+                    self.assertFalse(detail['overflow'])
+                    if outcome is None:self.assertIsNone(detail['firstFailure'])
+                    else:self.assertEqual(detail['firstFailure']['amount'],7)
+
+    def test_phase_cancellation_deadline_and_opaque_outcomes_preserve_first_failure(self):
+        m=load()
+        for code in ('CANCELLED','DEADLINE'):
+            with self.subTest(code=code):
+                failure=type('OriginalControlFailure',(Exception,),{'code':code})(code+' original')
+                def exercise(observe):
+                    events=[];outcomes=[]
+                    def host_work(maximum,*controls):
+                        self.assertEqual(maximum,m.LIMIT)
+                        def work(amount):
+                            events.append(('work',amount))
+                            if amount==5:raise failure
+                        return work
+                    def native_control(work):
+                        def control(*args,**kwargs):
+                            events.append(('control',args,kwargs))
+                            try:work(args[0])
+                            except BaseException as error:
+                                control.failure=error
+                                result=(error.code,str(error),None);outcomes.append(result);return result
+                            return None
+                        control.failure=None
+                        return control
+                    compiler=types.SimpleNamespace(_host_work=host_work,_native_control=native_control)
+                    def calls():
+                        callback=compiler._native_control(compiler._host_work(m.LIMIT))
+                        self.assertIsNone(callback(11,'before'))
+                        result=callback(5,'failure',root='supplied-root',site='supplied-site')
+                        self.assertIs(result,outcomes[-1]);self.assertIs(callback.failure,failure)
+                        first=copy.deepcopy(life['phaseObservation']['firstFailure']) if observe else None
+                        self.assertIsNone(callback(0,'cleanup'))
+                        self.assertIs(callback.failure,failure)
+                        if observe:
+                            self.assertEqual(life['phaseObservation']['firstFailure'],first)
+                            self.assertEqual(first,{'phase':'failure','phaseSupplied':True,'phaseAvailable':True,
+                                'root':'supplied-root','rootSupplied':True,'rootAvailable':True,
+                                'site':'supplied-site','siteSupplied':True,'siteAvailable':True,
+                                'amount':5,'amountAvailable':True,'returnedWorkBefore':11,'attemptedWorkThroughFailure':16})
+                        return result
+                    life=None
+                    if observe:
+                        with m.WorkObserver(compiler) as observer:
+                            life=observer.begin();result=calls()
+                    else:result=calls()
+                    self.assertIs(compiler._host_work,host_work);self.assertIs(compiler._native_control,native_control)
+                    return events,result,life
+                baseline,result,_=exercise(False);observed,actual,life=exercise(True)
+                self.assertEqual(observed,baseline);self.assertEqual(actual,result)
+                self.assertEqual((life['attemptedWork'],life['returnedWork']),(16,11))
+                self.assertEqual(life['phaseObservation']['lastPhase']['phase'],'cleanup')
+                self.assertFalse(life['phaseObservation']['overflow'])
+        # Invalid or opaque outcomes must be returned by identity, never
+        # normalized into a valid error tuple or swallowed into success.
+        for outcome in [object(),('malformed',),{'opaque':'outcome'}]:
+            events=[]
+            def host_work(maximum,*controls):
+                def work(amount):events.append(('work',amount))
+                return work
+            def native_control(work):
+                def control(amount,phase=None):events.append(('delegate',amount,phase));work(amount);return outcome
+                control.failure=None
+                return control
+            compiler=types.SimpleNamespace(_host_work=host_work,_native_control=native_control)
+            with m.WorkObserver(compiler) as observer:
+                life=observer.begin();callback=compiler._native_control(compiler._host_work(m.LIMIT))
+                self.assertIs(callback(3,'opaque-result'),outcome)
+                first=copy.deepcopy(life['phaseObservation']['firstFailure'])
+                self.assertIs(callback(0,'cleanup'),outcome)
+                self.assertEqual(life['phaseObservation']['firstFailure'],first)
+                self.assertIsNone(callback.failure)
+            self.assertEqual(events,[('delegate',3,'opaque-result'),('work',3),('delegate',0,'cleanup'),('work',0)])
+            self.assertFalse(life['phaseObservation']['overflow'])
+            self.assertIs(compiler._host_work,host_work);self.assertIs(compiler._native_control,native_control)
+        sentinel=RuntimeError('unchanged callback exception escaping observer context')
+        def host_work(maximum,*controls):return lambda amount:None
+        def native_control(work):
+            def control(amount,phase=None):raise sentinel
+            return control
+        compiler=types.SimpleNamespace(_host_work=host_work,_native_control=native_control)
+        with self.assertRaises(RuntimeError) as raised:
+            with m.WorkObserver(compiler) as observer:
+                life=observer.begin();callback=compiler._native_control(compiler._host_work(m.LIMIT));callback(1,'escaping')
+        self.assertIs(raised.exception,sentinel)
+        self.assertIs(compiler._host_work,host_work);self.assertIs(compiler._native_control,native_control)
+
+    def test_phase_failure_exception_hook_restore_missing_hook_and_bounded_overflow(self):
+        m=load();sentinel=RuntimeError('original callback exception')
+        def host_work(maximum,*controls):return lambda amount:None
+        def raising_control(work):
+            def control(amount,phase=None):raise sentinel
+            return control
+        compiler=types.SimpleNamespace(_host_work=host_work,_native_control=raising_control)
+        with m.WorkObserver(compiler) as observer:
+            life=observer.begin();control=compiler._native_control(compiler._host_work(m.LIMIT))
+            with self.assertRaises(RuntimeError) as raised:control(7,'terminal-exception')
+            self.assertIs(raised.exception,sentinel)
+            self.assertEqual(life['phaseObservation']['firstFailure']['phase'],'terminal-exception')
+        self.assertIs(compiler._host_work,host_work);self.assertIs(compiler._native_control,raising_control)
+        no_hook=types.SimpleNamespace(_host_work=host_work)
+        with m.WorkObserver(no_hook) as observer:
+            unavailable=observer.begin()
+            work=no_hook._host_work(m.LIMIT);work(2)
+        self.assertFalse(unavailable['phaseObservation']['nativeControlAvailable'])
+        self.assertEqual(unavailable['phaseObservation']['unlabeledHostWork'],{'attemptedWork':2,'returnedWork':2})
+        def zero_control(work):
+            def control(amount,phase=None):return work(amount)
+            return control
+        compiler=types.SimpleNamespace(_host_work=host_work,_native_control=zero_control)
+        with m.WorkObserver(compiler) as observer:
+            overflow=observer.begin();work=compiler._host_work(m.LIMIT)
+            for index in range(observer.MAX_PHASES+3):compiler._native_control(work)(0,'phase-'+str(index))
+        detail=overflow['phaseObservation']
+        self.assertEqual(len(detail['phases']),observer.MAX_PHASES);self.assertTrue(detail['overflow'])
+        self.assertEqual(detail['nativeControlCalls'],observer.MAX_PHASES+3)
+        self.assertEqual(detail['overflowWork'],{'calls':3,'attemptedWork':0,'returnedWork':0})
     def test_complete_receipt_rejects_old_warm_partial_types_results_and_allowances(self):
         m=load();expected=m.expected_manifest(json.loads((ROOT/'tests/qualification/fixtures/inspector-retained-resources.json').read_text()));cases=json.loads((ROOT/m.CORPUS).read_text())['cases'];pairs=[(r['id'],c,m.digest(m.canonical({'ok':True,'result':r['expected']} if c=='dispatcher' else r['expected']))) for r in cases for c in ('dispatcher','list','tuple')]
         mutations=[lambda r:r.update(profile='umf.private-inspector-retained-feasibility/1'),lambda r:r.update(freshConstructors=1),lambda r:r.update(inspectionCalls=True),lambda r:r['pairs'].pop(),lambda r:r['pairs'].__setitem__(0,copy.deepcopy(r['pairs'][1])),lambda r:r['pairs'][0]['constructor'].update(maximumWork=2000000),lambda r:r['pairs'][0]['call'].update(completed=False),lambda r:r['pairs'][0].update(resultSHA256='0'*64),lambda r:r['pairs'][0]['manifest'].update(workCreated=1)]
@@ -548,7 +779,7 @@ class FinalSourceCensusControls(unittest.TestCase):
     def test_frozen_actual_named_roster_and_required_18_public_controls(self):
         m=load();c=json.loads((ROOT/m.CENSUS).read_text());v=c['installedFactory']
         selected=m.selection(ROOT,c);candidate,identity=m.current_inputs(ROOT,selected)
-        self.assertEqual(candidate['generation']['sourceCommit'],'93adb14883fd49bfe6404d8733b78eb696078f35')
+        self.assertEqual(candidate['generation']['sourceCommit'],'268dbb734278406a6545c261dee90e3fb63dab69')
         self.assertEqual(identity['candidateArtifactVersion'],'0.10.10')
         self.assertFalse(c['candidateInputBindingPending']['candidateAdmission'])
         early=v['publicControls'];late=[x for g in v['python'] for x in g['cases']]

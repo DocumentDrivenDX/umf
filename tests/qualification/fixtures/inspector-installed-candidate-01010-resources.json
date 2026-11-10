@@ -17,42 +17,44 @@
   },
   "bindingStatus": "source-bound",
   "generation": {
-    "sourceCommit": "93adb14883fd49bfe6404d8733b78eb696078f35",
-    "sourceTree": "0ea24ed5802129f00c7d0b30de5e40640df6aecb",
-    "runId": "42711404179",
+    "sourceCommit": "268dbb734278406a6545c261dee90e3fb63dab69",
+    "sourceTree": "0beb3908a07bef9c2888162f389cb5d71b087106",
+    "runId": "42731073351",
     "attempt": "1",
-    "jobId": "129481592124",
-    "artifactId": "13715003465",
-    "artifactDigest": "sha256:4a166447804ba5766dedab5df54f1d2c66179ec1da6936d867385791ffb8c8be",
-    "outputManifestSHA256": "9b9965dd27b221239ebebc27fe8fedfa174bb1b9018e98ec1bbf4d6d486ab0a0",
-    "finalAttestationSHA256": "3dd482635e6bee52a3b914040430e51bc7cef3a2c39fe4e941be803c418fbe34",
-    "correspondenceReceiptSHA256": "bad8ef94439de1cf7bf835333d6dbf72253f8c21550101d61cc1dca76b9244df"
+    "jobId": "129548936635",
+    "artifactId": "13723914476",
+    "artifactDigest": "sha256:245dc9f00d76de4dcfb1a2d8f6ea8c9786ca3bc52e7e4d9ad3597e4af06a5336",
+    "outputManifestSHA256": "825c11eee4aee2935ad2c26611dedc532fd4ac18e2ca4fc764a1991963e6a67b",
+    "finalAttestationSHA256": "e6700cb9947cd6dda775f39ae7349da421d25d5bce3bad4fef616481c317f560",
+    "correspondenceReceiptSHA256": "39bd84f0c49bdb8774242bbb9032698c47a7327546e8c98a4fa9f04c50b820a2",
+    "compilerSHA256": "a22543319b0ebdd9a73c7fab061fc6a86848b5e9cfb7c5799622698592c99826",
+    "compilerBinarySHA256": "309e3033ee1d6f86c0e629285534dece335e28403f326206787f4a6e243ff268"
   },
   "resources": {
     "coreSchema": {
       "path": "spec/core/schema.json",
       "bytes": 45342,
-      "sha256": "416a2c7b60ee7e7a9896f981bd843c026b54f21a49f93f82eb0d3de4cc8fc477"
+      "sha256": "b2c5bd9e65ec9e584fc1241f4fdad91c96bf3f01fd7da5a038000fec4c80c150"
     },
     "referenceSchema": {
       "path": "spec/core/semantic-type-reference.schema.json",
       "bytes": 45463,
-      "sha256": "cb417d9d80e00ccb25a760450c639ca814565436c33ee779e044955ff44bfa25"
+      "sha256": "7373ed9b7b2234dc85e05b18d0e4746a90385205422692e8ff2ff6f218c70557"
     },
     "packageSchema": {
       "path": "spec/core/extension-package.schema.json",
       "bytes": 45001,
-      "sha256": "3c8cd558ee9523d6a65a4ba40e327df3b87086684c298a5689a2dc087a7471a2"
+      "sha256": "9268e9ed117afb121df5a45029b2b1e37d9b704494c085e761669953d60011ce"
     },
     "constraints": {
       "path": "spec/metamodel/generated/core-constraints.json",
       "bytes": 190431,
-      "sha256": "661699562ebff1f4928c630f22e74bf7df5b7c03ad7513e1dc4ee1720a6420ab"
+      "sha256": "b6f477f43f0a03f9fd43f8fc465709aa64ef3f33b83a623e2e741459669743e0"
     },
     "domainPolicy": {
       "path": "spec/metamodel/generated/domain-policy.json",
       "bytes": 14827,
-      "sha256": "f0fa8d00003e882949bed3445438c7a0b9010f54fc1d3633f31bae80c74c4a1f"
+      "sha256": "a56ad122f395631296e884545ef99bc3a96b0a2e1697dd62d8765f2ac13a281d"
     },
     "tablesPackage": {
       "path": "spec/extensions/tables/package.json",
@@ -81,7 +83,7 @@
   },
   "literalData": {
     "path": "crates/umf-core/src/canonical_codegen_literals.rs",
-    "sha256": "1e928da01daa535908b6273729977d53ef363d0a57b2717227252665c6b0a7c8"
+    "sha256": "24a26835100aeec1673f3367225582f407c0d9c7159791bdb20b4fbf1c31c5f9"
   },
   "candidateModelSHA256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
   "acceptance": "Source correspondence provenance only; authenticity requires separately reviewed complete G0 joined D evidence. No native admission proof."

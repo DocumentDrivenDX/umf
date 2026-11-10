@@ -180,7 +180,7 @@ def _current_inputs_0109(root,selected,binding):
         require(row['path']==path and sha(safe(root,path))==row['sha256'] and selected['sourceFiles'].get(path)==row['sha256'],'Current DATA/producer source differs')
     return value,{'resourceFixture':CURRENT_FIXTURE,'resourceFixtureSHA256':binding['fixtureSHA256'],'inheritedPrivateMetadataVersion':version,'literalDataSHA256':value['literalData']['sha256'],'scope':'private-component-only-not-release-proof'}
 
-GENERATION_FIELDS=('sourceCommit','sourceTree','runId','attempt','jobId','artifactId','artifactDigest','outputManifestSHA256','finalAttestationSHA256','correspondenceReceiptSHA256')
+GENERATION_FIELDS=('sourceCommit','sourceTree','runId','attempt','jobId','artifactId','artifactDigest','outputManifestSHA256','finalAttestationSHA256','correspondenceReceiptSHA256','compilerSHA256','compilerBinarySHA256')
 
 def _candidate_inputs_01010(root,selected,binding):
     closed(binding,('fixturePath','fixtureSHA256','metadataVersion'))
@@ -207,9 +207,10 @@ def _candidate_inputs_01010(root,selected,binding):
     generation=value['generation'];closed(generation,GENERATION_FIELDS)
     for key in ('sourceCommit','sourceTree'):
         require(type(generation[key])is str and re.fullmatch('[a-f0-9]{40}',generation[key]) is not None,'Candidate generation source identity missing')
-    require(generation['sourceCommit']=='93adb14883fd49bfe6404d8733b78eb696078f35' and generation['sourceTree']=='0ea24ed5802129f00c7d0b30de5e40640df6aecb','Candidate generation source differs')
+    require(generation['sourceCommit']=='268dbb734278406a6545c261dee90e3fb63dab69' and generation['sourceTree']=='0beb3908a07bef9c2888162f389cb5d71b087106','Candidate generation source differs')
     for key in GENERATION_FIELDS[2:]:
         require(type(generation[key])is str and bool(generation[key]),'Authenticated candidate generation binding missing: '+key)
+    for key in ('compilerSHA256','compilerBinarySHA256'):hexsha(generation[key])
     closed(value['resources'],NAMES)
     for name,path in zip(NAMES,RAW_PATHS):
         row=value['resources'][name];closed(row,('path','bytes','sha256'))
@@ -294,21 +295,141 @@ def manifest(value,expected):
     return digest(canonical(value))
 
 class WorkObserver:
-    """Pass-through actual _host_work; no patched allowance/native return value."""
-    def __init__(self,compiler):self.compiler=compiler;self.current=None
+    """Observe the existing meter and native callback metadata without changing either."""
+    MAX_PHASES=32
+    MAX_CONTROL_CALLS=4096
+    def __init__(self,compiler):self.compiler=compiler;self.current=None;self.active=None
     def __enter__(self):
         self.original=self.compiler._host_work
+        self.native_available=callable(getattr(self.compiler,'_native_control',None))
+        self.original_native=getattr(self.compiler,'_native_control',None)
         def host_work(maximum,*controls):
             require(maximum==LIMIT and self.current is not None and not self.current['workCreated'],'One original1M work lifetime required')
             row=self.current;row['workCreated']=True;delegate=self.original(maximum,*controls)
             def work(amount):
                 require(type(amount)is int and amount>=0,'Invalid work amount');row['attemptedWork']+=amount
-                result=delegate(amount);row['returnedWork']+=amount;return result
+                self._work_observation(amount,False)
+                try:result=delegate(amount)
+                except BaseException:
+                    self._capture_host_failure(amount)
+                    raise
+                row['returnedWork']+=amount;self._work_observation(amount,True);return result
             return work
-        self.compiler._host_work=host_work;return self
-    def __exit__(self,*args):self.compiler._host_work=self.original
+        self.compiler._host_work=host_work
+        if self.native_available:
+            def native_control(*args,**kwargs):
+                callback=self.original_native(*args,**kwargs)
+                return self._wrap_native(callback)
+            self.compiler._native_control=native_control
+        return self
+    def __exit__(self,*args):
+        self.compiler._host_work=self.original
+        if self.native_available:self.compiler._native_control=self.original_native
+    @staticmethod
+    def _diagnostic_string(value,limit):
+        return value if type(value)is str and len(value)<=limit else None
+    def _snapshot(self,args,kwargs):
+        amount=args[0] if args else kwargs.get('amount')
+        phase=args[1] if len(args)>1 else kwargs.get('phase')
+        phase_available=type(phase)is str and 0<len(phase)<=128
+        row={'phase':phase if phase_available else None,'phaseSupplied':len(args)>1 or 'phase' in kwargs,
+             'phaseAvailable':phase_available,
+             'root':self._diagnostic_string(kwargs.get('root'),256),
+             'rootSupplied':'root' in kwargs,
+             'rootAvailable':type(kwargs.get('root'))is str and len(kwargs['root'])<=256,
+             'site':self._diagnostic_string(kwargs.get('site'),256),
+             'siteSupplied':'site' in kwargs,
+             'siteAvailable':type(kwargs.get('site'))is str and len(kwargs['site'])<=256,
+             'amount':amount if type(amount)is int and -(2**63)<=amount<2**64 else None,
+             'amountAvailable':type(amount)is int and -(2**63)<=amount<2**64}
+        # Values outside the bounded metadata representation remain passed through
+        # unchanged; they are reported as unavailable rather than coerced.
+        return row
+    def _detail(self):
+        return self.current.get('phaseObservation') if self.current is not None else None
+    def _phase_bucket(self,detail,context):
+        if context is None:return detail['unlabeledHostWork']
+        if not context['phaseAvailable']:return detail['unlabeledNativeWork']
+        label=context['phase']
+        bucket=detail['phases'].get(label)
+        if bucket is not None:return bucket
+        if len(detail['phases'])>=self.MAX_PHASES:
+            detail['overflow']=True;return detail['overflowWork']
+        bucket={'calls':0,'attemptedWork':0,'returnedWork':0}
+        detail['phases'][label]=bucket;return bucket
+    def _work_observation(self,amount,returned):
+        try:
+            detail=self._detail()
+            if detail is None:return
+            bucket=self._phase_bucket(detail,self.active)
+            key='returnedWork' if returned else 'attemptedWork'
+            bucket[key]+=amount
+        except BaseException:
+            detail=self._detail()
+            if detail is not None:detail['overflow']=True
+    def _record_failure(self,context):
+        try:
+            detail=self._detail()
+            if detail is None or detail['firstFailure'] is not None:return
+            row=self.current
+            detail['firstFailure']={
+                'phase':context['phase'],'phaseSupplied':context['phaseSupplied'],'phaseAvailable':context['phaseAvailable'],
+                'root':context['root'],'rootSupplied':context['rootSupplied'],'rootAvailable':context['rootAvailable'],
+                'site':context['site'],'siteSupplied':context['siteSupplied'],'siteAvailable':context['siteAvailable'],
+                'amount':context['amount'],'amountAvailable':context['amountAvailable'],
+                'returnedWorkBefore':row['returnedWork'],
+                'attemptedWorkThroughFailure':row['attemptedWork']}
+        except BaseException:
+            detail=self._detail()
+            if detail is not None:detail['overflow']=True
+    def _capture_host_failure(self,amount):
+        if self.active is not None:return
+        self._record_failure({'phase':None,'phaseSupplied':False,'phaseAvailable':False,
+                              'root':None,'rootSupplied':False,'rootAvailable':False,
+                              'site':None,'siteSupplied':False,'siteAvailable':False,
+                              'amount':amount,'amountAvailable':True})
+    def _wrap_native(self,callback):
+        try:has_failure=hasattr(callback,'failure')
+        except BaseException:has_failure=False
+        if has_failure:
+            try:initial_failure=callback.failure
+            except BaseException:has_failure=False
+        def observed(*args,**kwargs):
+            context=self._snapshot(args,kwargs);detail=self._detail();previous=self.active
+            if detail is not None:
+                try:
+                    if detail['nativeControlCalls']<self.MAX_CONTROL_CALLS:
+                        detail['nativeControlCalls']+=1
+                    else:detail['overflow']=True
+                    detail['lastPhase']=dict(context)
+                    bucket=self._phase_bucket(detail,context)
+                    if bucket['calls']<self.MAX_CONTROL_CALLS:bucket['calls']+=1
+                    else:detail['overflow']=True
+                except BaseException:detail['overflow']=True
+            self.active=context
+            try:
+                try:outcome=callback(*args,**kwargs)
+                except BaseException:
+                    self._record_failure(context)
+                    raise
+                if outcome is not None or (has_failure and callback.failure is not None):
+                    self._record_failure(context)
+                return outcome
+            finally:
+                self.active=previous
+                if has_failure:
+                    # Preserve the exact failure object consumed by the production facade.
+                    observed.failure=callback.failure
+        if has_failure:observed.failure=initial_failure
+        return observed
     def begin(self):
-        self.current={'maximumWork':LIMIT,'attemptedWork':0,'returnedWork':0,'workCreated':False,'completed':False};return self.current
+        self.current={'maximumWork':LIMIT,'attemptedWork':0,'returnedWork':0,'workCreated':False,'completed':False,
+                      'phaseObservation':{'nativeControlAvailable':self.native_available,'nativeControlCalls':0,
+                        'phases':{},'unlabeledNativeWork':{'calls':0,'attemptedWork':0,'returnedWork':0},
+                        'unlabeledHostWork':{'attemptedWork':0,'returnedWork':0},
+                        'overflowWork':{'calls':0,'attemptedWork':0,'returnedWork':0},
+                        'lastPhase':None,'firstFailure':None,'overflow':False}}
+        return self.current
     def complete(self):
         require(self.current['workCreated'] and self.current['returnedWork']<=LIMIT,'Missing/over-budget actual lifetime');self.current['completed']=True
 

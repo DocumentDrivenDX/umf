@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-    "compilerSha256": "afd0e591c85e4f50b092836e163cf91e08055fd5ab366c471a0b42879ba22a22"
+    "compilerSha256": "a22543319b0ebdd9a73c7fab061fc6a86848b5e9cfb7c5799622698592c99826"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
@@ -233,7 +233,7 @@
     "crates/umf-core/src/reviewed_parameters.rs": "074ee122216855ea5ee39d7b0709435458eb4f921f28b5d34cd161f883ded6da",
     "crates/umf-core/src/rfc3339_exact_instant.rs": "822debe5dbcf9dceec7dd0ffb73b89d9c090265128879c629e52601ac0b046f7",
     "crates/umf-core/src/scalar_type_inspection.rs": "9078192e60c3031a793beb6151002ed3a3f1a990a8d98b667b128026621ba57e",
-    "crates/umf-core/src/schema.rs": "6809c95585a5209684c86a5f298166031126821191171fc975121f2dddba7b02",
+    "crates/umf-core/src/schema.rs": "32fd52b0e7f1a96f6e215b51f127ef7e03632953ede218ec7dd6331560ddeab3",
     "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
     "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
     "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -266,7 +266,7 @@
     "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "2ee93d54ad85fc3f80b94c3bd8663827134a91ec97eb87fec1c0d3ab8fe239ec",
     "crates/umf-core/src/schema_path_facts_independent_tests.rs": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
     "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
-    "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "6ca3822d64edf746a4ba10ac9070a7d442e40064bc327e26c90ea7189846c5be",
+    "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "51929e6229517957e9d280647398b41bf85fcd6037042206279f87d4dfa14683",
     "crates/umf-core/src/schema_properties.rs": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14",
     "crates/umf-core/src/schema_properties_host_json.rs": "62337c99c22b5e2e6322deae761008f2504fc0ca3c11fa3ce1ef86d8a6628257",
     "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "29e866240abe621b121094286595c4fa8c5e1bf4be9ae57cf6b7acd138f745ce",
@@ -1606,7 +1606,7 @@
     "crates/umf-core-wire/tests/sqlserver_wire.rs": "663a5472c1776cb2f2bec9a0ccde7499775fbf6f21da02af8904757d5fd00a49",
     "crates/umf-core-wire/tests/tablespec_binding.rs": "67c9d52010812c72699e199b34f2c81a1f0aafd4cbcf83a695a5a98a5bb5381f",
     "crates/umf-core-wire/tests/typespec_binding.rs": "97fcab2f4a9182635dd2c82fcb4199b1bb19a6c474aec2c3b5a5cf416c110a70",
-    "crates/umf-core/src/canonical_codegen_literals.rs": "1e928da01daa535908b6273729977d53ef363d0a57b2717227252665c6b0a7c8",
+    "crates/umf-core/src/canonical_codegen_literals.rs": "24a26835100aeec1673f3367225582f407c0d9c7159791bdb20b4fbf1c31c5f9",
     "crates/umf-graphql/Cargo.toml": "7e05c3edbb7fdeafbc4efae59b76353b0c679c6a7afbdbb8e3f5842226589deb",
     "crates/umf-graphql/src/apollo_mapper.rs": "79f22e2769111d3be20ca8174d06138cca8b5a2c8bfbfc8f5e69476513661d31",
     "crates/umf-graphql/src/core_value_bridge.rs": "a77b7a641af6c4936c2e64d289a01b0d4cd1da680134662b808bfe9ab4949f95",
@@ -2513,7 +2513,7 @@
     "crates/umf-core/src/reviewed_parameters.rs": "074ee122216855ea5ee39d7b0709435458eb4f921f28b5d34cd161f883ded6da",
     "crates/umf-core/src/rfc3339_exact_instant.rs": "822debe5dbcf9dceec7dd0ffb73b89d9c090265128879c629e52601ac0b046f7",
     "crates/umf-core/src/scalar_type_inspection.rs": "9078192e60c3031a793beb6151002ed3a3f1a990a8d98b667b128026621ba57e",
-    "crates/umf-core/src/schema.rs": "6809c95585a5209684c86a5f298166031126821191171fc975121f2dddba7b02",
+    "crates/umf-core/src/schema.rs": "32fd52b0e7f1a96f6e215b51f127ef7e03632953ede218ec7dd6331560ddeab3",
     "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
     "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
     "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -2546,7 +2546,7 @@
     "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "2ee93d54ad85fc3f80b94c3bd8663827134a91ec97eb87fec1c0d3ab8fe239ec",
     "crates/umf-core/src/schema_path_facts_independent_tests.rs": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
     "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
-    "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "6ca3822d64edf746a4ba10ac9070a7d442e40064bc327e26c90ea7189846c5be",
+    "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "51929e6229517957e9d280647398b41bf85fcd6037042206279f87d4dfa14683",
     "crates/umf-core/src/schema_properties.rs": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14",
     "crates/umf-core/src/schema_properties_host_json.rs": "62337c99c22b5e2e6322deae761008f2504fc0ca3c11fa3ce1ef86d8a6628257",
     "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "29e866240abe621b121094286595c4fa8c5e1bf4be9ae57cf6b7acd138f745ce",
@@ -3888,7 +3888,7 @@
     "crates/umf-core-wire/tests/sqlserver_wire.rs": "663a5472c1776cb2f2bec9a0ccde7499775fbf6f21da02af8904757d5fd00a49",
     "crates/umf-core-wire/tests/tablespec_binding.rs": "67c9d52010812c72699e199b34f2c81a1f0aafd4cbcf83a695a5a98a5bb5381f",
     "crates/umf-core-wire/tests/typespec_binding.rs": "97fcab2f4a9182635dd2c82fcb4199b1bb19a6c474aec2c3b5a5cf416c110a70",
-    "crates/umf-core/src/canonical_codegen_literals.rs": "1e928da01daa535908b6273729977d53ef363d0a57b2717227252665c6b0a7c8",
+    "crates/umf-core/src/canonical_codegen_literals.rs": "24a26835100aeec1673f3367225582f407c0d9c7159791bdb20b4fbf1c31c5f9",
     "crates/umf-graphql/Cargo.toml": "7e05c3edbb7fdeafbc4efae59b76353b0c679c6a7afbdbb8e3f5842226589deb",
     "crates/umf-graphql/src/apollo_mapper.rs": "79f22e2769111d3be20ca8174d06138cca8b5a2c8bfbfc8f5e69476513661d31",
     "crates/umf-graphql/src/core_value_bridge.rs": "a77b7a641af6c4936c2e64d289a01b0d4cd1da680134662b808bfe9ab4949f95",
@@ -4576,15 +4576,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "416a2c7b60ee7e7a9896f981bd843c026b54f21a49f93f82eb0d3de4cc8fc477",
+      "sha256": "b2c5bd9e65ec9e584fc1241f4fdad91c96bf3f01fd7da5a038000fec4c80c150",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "cb417d9d80e00ccb25a760450c639ca814565436c33ee779e044955ff44bfa25",
+      "sha256": "7373ed9b7b2234dc85e05b18d0e4746a90385205422692e8ff2ff6f218c70557",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "3c8cd558ee9523d6a65a4ba40e327df3b87086684c298a5689a2dc087a7471a2",
+      "sha256": "9268e9ed117afb121df5a45029b2b1e37d9b704494c085e761669953d60011ce",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -4592,23 +4592,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "661699562ebff1f4928c630f22e74bf7df5b7c03ad7513e1dc4ee1720a6420ab",
+      "sha256": "b6f477f43f0a03f9fd43f8fc465709aa64ef3f33b83a623e2e741459669743e0",
       "bytes": 190431
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "f0fa8d00003e882949bed3445438c7a0b9010f54fc1d3633f31bae80c74c4a1f",
+      "sha256": "a56ad122f395631296e884545ef99bc3a96b0a2e1697dd62d8765f2ac13a281d",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "c2771fddb840d98b46aab48ce7b44f8aec126b9fbc235708f3d905d82fe300a4",
+      "sha256": "ed8a7c4762920040cd3ee9f25d6b225d8895d3f252a569debbc4caefc6d1dea4",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "68b4b02c49b200205a89be285eb80ce02fabb8dab3285cdb50a3dae1ec008f89",
+      "sha256": "5896502b8b59bb506ee1569c2aaffe54bf55fe12583c969cf427705755277f2a",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "d088190c69219a4941e5746836b6f6fb1648974eeff02a755b2f46cba6ac73b7",
+      "sha256": "616f9b375ab305d8737e4108233797d9bef8eea4ce0efb6753f4bd40daf00b5e",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -4636,11 +4636,11 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "2707a2d7ca05b8ba25f605d9ceb76bf4e1614c9bd32f17c2b69fac3ae438496d",
+      "sha256": "fdeffff4e53a308ea2dbd513b9e75ee39ffffc958b64d2b98ca7c8a4b6471818",
       "bytes": 305070
     },
     "src/generated/core-validators-accounted.ts": {
-      "sha256": "18fdf4f9bc1bc288f930a36b5c94900fa60de67745c680f18bb9a131cadb2ec8",
+      "sha256": "3303a16ab112f9638cf33e51585ecc4fd4f7000fe98fea4b3328498feefe82ae",
       "bytes": 1525347
     }
   }
