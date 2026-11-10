@@ -207,7 +207,7 @@ def _candidate_inputs_01010(root,selected,binding):
     generation=value['generation'];closed(generation,GENERATION_FIELDS)
     for key in ('sourceCommit','sourceTree'):
         require(type(generation[key])is str and re.fullmatch('[a-f0-9]{40}',generation[key]) is not None,'Candidate generation source identity missing')
-    require(generation['sourceCommit']=='cf8d0bdf0e547463a9c979991e7de5126bab6996' and generation['sourceTree']=='19de640bade6dff6b9daa80f29394cd21d373287','Candidate generation source differs')
+    require(generation['sourceCommit']=='9f9ae1a3d9aa830e6841b62568bfae872efe94ee' and generation['sourceTree']=='15282d42c2624c7a8943bf52f94b1c65a155fff1','Candidate generation source differs')
     for key in GENERATION_FIELDS[2:]:
         require(type(generation[key])is str and bool(generation[key]),'Authenticated candidate generation binding missing: '+key)
     for key in ('compilerSHA256','compilerBinarySHA256'):hexsha(generation[key])
@@ -222,7 +222,7 @@ def _candidate_inputs_01010(root,selected,binding):
         require(row['path']==path and sha(safe(root,path))==row['sha256'] and selected['sourceFiles'].get(path)==row['sha256'],'Candidate DATA/producer source differs')
     hexsha(value['candidateModelSHA256'])
     require(selected.get('modelSHA256')==value['candidateModelSHA256'],'Candidate reviewed model binding differs')
-    require(value['acceptance']=='GEN1 source correspondence is independently joined to run 42748361991; this source binding is not native admission and candidate execution/fit remains unknown.','Candidate acceptance scope differs')
+    require(value['acceptance']=='GEN1 source correspondence is independently joined to run 42760711427; this source binding is not native admission and candidate execution/fit remains unknown.','Candidate acceptance scope differs')
     return value,{'resourceFixture':CANDIDATE_FIXTURE,'resourceFixtureSHA256':binding['fixtureSHA256'],'candidateArtifactVersion':'0.10.10','literalDataSHA256':value['literalData']['sha256'],'generation':generation,'scope':'private-candidate-component-only-not-release-proof'}
 
 def current_inputs(root,selected):
