@@ -1754,7 +1754,7 @@
     "test_first_bad_value_precedes_later_collision_and_unsafe_integer_keeps_exact_path",
     "test_compilation_owns_nested_mutable_python_content_and_reentry_denial_is_terminal"
   ],
-  "whyNewNativeQualification": "CR1\u2013CR4 changes shared Context/schema/evaluator and binding conversion. Original successful components remain historical only; genuine affected selection required.",
+  "whyNewNativeQualification": "CR1–CR4 changes shared Context/schema/evaluator and binding conversion. Original successful components remain historical only; genuine affected selection required.",
   "correctionFrom4833033c": {
     "genericPythonSource": "restored exact pre-batch body; precharge before compile_inner catalogue allocation",
     "identities": "retrieval/authored/resolved distinct; exact original reference/policy/dynamic orders; common frame only on selector agreement",
@@ -1786,7 +1786,7 @@
     "inputProfile": "installed-canonical/1",
     "sourceFiles": {
       ".github/workflows/inspector-attribution-continuation.yml": "da8452d19f11e4b1c46e823370bdda5e90d106d3a1f8b401fe55d28d143f5454",
-      ".github/workflows/inspector-retained-attribution.yml": "c9c1505512d1ee117f2fc0e634af750d71344cefa1b9a0286f1d207ab104f71e",
+      ".github/workflows/inspector-retained-attribution.yml": "db3867baf13b947186277e8686f3f5df5c058ff5b7fd2d034f4e83c5d7048c8b",
       "Cargo.lock": "c7777063f16762bea888aacefdf74fe6628ae65fbeae9db9cd907e0fd412145f",
       "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
       "bindings/core/python/Cargo.toml": "c6e2691e6fe8e2cd3f61929ae3d8269a6fa9166779984e216054856de0e3b367",
@@ -1816,7 +1816,7 @@
       "crates/umf-core-wire/tests/access_inspection_public.rs": "168400ad197a8c1ce94a85113c919a449ac3d3ef38345b4005bb46f93c0be23c",
       "crates/umf-core-wire/tests/codegen_context.rs": "5afd8223d9eb160963a7feac50980ef455fe3dab2c827a1d96d52726901a34fc",
       "crates/umf-core/Cargo.toml": "b84949f42da22ae01277d1b8fe38391ee1dfb98e372a5a0ad785195b75e9d7c5",
-      "crates/umf-core/src/canonical_codegen_literals.rs": "83f0b31ffc7f2a4263cdf1aec8707612bb55d9b8e3069ff24c8a31ff3a210b17",
+      "crates/umf-core/src/canonical_codegen_literals.rs": "d4c18b5900185b3f579f22ca4b4db5a34d79969541d667aa4541a7a8ea0d95c5",
       "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "40ed9a68e50d1da28c67432c852348c78eae1b7a87bbb622cdb8faaf55d7dafa",
       "crates/umf-core/src/canonical_codegen_resources.rs": "ec6eb4226ec45fa2fbb6dd9e07c6a0f2e8f8c2beca789dbd372f31521ce683c7",
       "crates/umf-core/src/canonical_static_text_independent_tests.rs": "9b619dca3aae22919a59988093004b8eac23cb1395e6ecfc16df78add51caf43",
@@ -1831,7 +1831,7 @@
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "2b003282775f9d3ba6ded1570f0125f81eeb80bf53456808efa8bb76b5c7ded8",
+      "crates/umf-core/src/schema.rs": "aa7f6d0a25166b80b51a5663d5e9192832b92da61690db622ccce1d18e912e34",
       "crates/umf-core/src/schema_admitted_bank.rs": "92591cb73c54411b5cb930bc2af4c9471e5c7fbb150a38b8dec0ca56976aec42",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -1863,8 +1863,8 @@
       "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "c760175d90c25c6f27f8f959d436ba4a3c7a72f80b7535c5c1ddbd0285e9415c",
       "crates/umf-core/src/schema_path_facts_independent_tests.rs": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
       "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
-      "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "51929e6229517957e9d280647398b41bf85fcd6037042206279f87d4dfa14683",
-      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "29e866240abe621b121094286595c4fa8c5e1bf4be9ae57cf6b7acd138f745ce",
+      "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "8ae913bf6774df294959800586dd8219015fd1fad264761dd83fbc8c859a7263",
+      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "df842e2ca4dd099ad44512f1e821631247ff444065570e890eea730a4b4d0201",
       "crates/umf-core/src/serialization.rs": "0ee58f6dc49c140b8bdeec1c427462a5b9e884d4153bc41953f9851c6fd184d0",
       "crates/umf-core/src/serialization_closed_metadata.rs": "a704ef592e96970e724d24b36e679f7a5bf16c64918992ae9d92b3420b2cae8f",
       "crates/umf-core/src/serialization_construction_owned_independent_tests.rs": "db3bd9625d1fb4bb04ee0a510beb5862d03a65b39440ddc6190b69a2432efd41",
@@ -1910,9 +1910,9 @@
       "scripts/saga-portable/other-hosts.ts": "b96a7919ad992ee11702d63f947a1e4f1155883cc6461efbf14a65abf0ba3536",
       "scripts/saga-portable/python-probe.py": "82a5f20917cd7ffca700be90ddeaf5426841a4375ab0a7d7c2056c653e49f083",
       "scripts/saga-portable/verify.ts": "09bf569611574c28e6728dead6ad10137271bf26366f99faec6803ccf5fca9e5",
-      "spec/core/extension-package.schema.json": "bbb50c34c1fb80fb64ec1ed5bd5927418d25bae817d6103a8e772638181b8053",
-      "spec/core/schema.json": "c4f2dc68b3b357caa2ebc55f6afde080ef09f91c8f08c39574539b0435b57b76",
-      "spec/core/semantic-type-reference.schema.json": "fa07299e4f0aa1bd91ba9f4e345e29e1a809fc3346b17d2ef15e600f3e8c9917",
+      "spec/core/extension-package.schema.json": "2d06da8bd38d3ff05e7813f8915de8c51a9a84446a7837ee2f397677f463a16c",
+      "spec/core/schema.json": "eef4753b23f6b1070e1d2a6be67b86e7078b0441e5dff9efb6c2a426f366714f",
+      "spec/core/semantic-type-reference.schema.json": "5e55d8326afb07455b0d67e3ab864e6d3c2932893267ef49838446e1ec99060d",
       "spec/extensions/actions/package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
       "spec/extensions/binding-stable/package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
       "spec/extensions/binding/package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
@@ -1920,24 +1920,24 @@
       "spec/extensions/tables/operation-0.2.schema.json": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e",
       "spec/extensions/tables/operation.schema.json": "af217abc87d2f4a5205d82c2146040ef986d29252c78a4ec76d59787828578cc",
       "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
-      "spec/metamodel/generated/core-constraints.json": "276b725346bec680586596e51d491494de16bba588d2ca6bdbd931dbdd106ef9",
-      "spec/metamodel/generated/domain-policy.json": "f0ff9335496257184ef9b907a234b00eb192687f94440a2f89d8141b7e863ab6",
+      "spec/metamodel/generated/core-constraints.json": "d91ac55d353a1ca80db4920ea5cb1da2df619b06e6ee429c929a493229ba06ee",
+      "spec/metamodel/generated/domain-policy.json": "d95d41b4eed0f6ada6dae3c87565a54b88e5e8099fc2e884252792eba04a1694",
       "tests/qualification/constructor_observation_pure_test.py": "e677919eba2ad1d544f75dab3d844a48a05df081505ee59542a6f8326459390c",
       "tests/qualification/fixtures/inspector-admission-precharge-baseline.json": "068ebe51004e7e03d6ef26aca7774209f5ef3beceb9fa0e40d0e274cb52bdc18",
       "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
       "tests/qualification/fixtures/inspector-constructor-observation.json": "fef5bda142d304f1eadfa2c1c56e26b3e528c97895c3a224754bdd13868db6ae",
-      "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json": "acece328d698ce24e942a65c9945898533fcec2cfea4ced74dac80b9971a3f2a",
+      "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json": "48e617f452f1b79795de6aa50749056047eac2d43e3de60c2c5db82190799d3f",
       "tests/qualification/fixtures/inspector-installed-current-resources.json": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "tests/qualification/fixtures/inspector-retained-continuation.json": "7e40212a4554570aae34b17f29104c1c97cfe26471efd58b6ab95a72e97e3036",
       "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
       "tests/qualification/test_inspector_admission_precharge.py": "79546279ad81343a925b3ca102b77e2cb3081f0e49d21e58c0e3937f2f7e07b3",
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
-      "tests/qualification/test_inspector_c1_binding_closure.py": "84e181c55570992ec14b9e26eb2db44f778a2406e4ff59d6887d8794751fd577",
+      "tests/qualification/test_inspector_c1_binding_closure.py": "333e78688fa18ae837f637aef804f67f09996c06e7e4fa865ad3f539677ed8a0",
       "tests/qualification/test_inspector_combined_budget.py": "43810b7edac2b552c49a41d7909470c6bb08e96241b76d77b139495f52206196",
-      "tests/qualification/test_inspector_construction_batch.py": "053779fb9429d4226a2ec947d7c1481a58c13d2d7a0bf7f091a6534631a80dac",
+      "tests/qualification/test_inspector_construction_batch.py": "2cf324664bc7ca48550a510b78f7aa80599ac86205b110dd0e5ec1889228a346",
       "tests/qualification/test_inspector_cost_gate.py": "77c63dbe64e81337278bc311a314a91e95d9979d6368e48bc50f07b9469b9dd5",
-      "tests/qualification/test_inspector_installed_factory.py": "1a79e00b7deacef993e60c618a87758c9e26cbb76d54676624c17085d8c1b308",
+      "tests/qualification/test_inspector_installed_factory.py": "5d99380f17c840db3f7d0cdf93e0871e60d326e4aec523a3f3f4ef6e84c5dbf5",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
       "tests/qualification/test_inspector_owner_cursors.py": "3251d594419079004506a1b416313ecb8acfccfbb37448ddb9df231eabb86a6a",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
@@ -1952,7 +1952,7 @@
       "tools/intake_inspector_attribution_continuation.py": "f554597f8395458e495f20f8115bf118a1b48f15ca5cf5d1de94ee8592f6b39c",
       "tools/intake_inspector_retained_continuation.py": "25692b0f877b81cfd5e45e8b007b001064ea6d25384465f957203f5f25e0e33d",
       "tools/probe_inspector_constructor_prefix.py": "bb308ddbe9eeb9c21c4d1f25264d6ab07fd414e0764e7d2cd653dec2019c768f",
-      "tools/probe_inspector_installed_factory.py": "8d86e15130cf2a626308eff94c0992ae80c00c74a7423995f3feab09e9e078f8",
+      "tools/probe_inspector_installed_factory.py": "98de5cc61aab7faa85ef7b5ec0948a688cb2fe847512ffa245b48925297747ef",
       "tools/probe_inspector_retained_attribution.py": "2e872326ad62c7fb5f5f4fdecec2322db5159a190fb7fd4495ec6b9919a67625",
       "tools/probe_inspector_retained_feasibility.py": "e33e1d352c9861970a7aeb192dc1803e11e6455b086a1cc6c9391ce283c9d49d",
       "tools/qualify_inspector_combined_budget.py": "895fd9e0d3264519570a38fdbda33d4511810f884dcce9d8695d9204ed70ac9a",
@@ -1960,7 +1960,7 @@
       "tools/qualify_inspector_constructor_observation.py": "e8874d1dd074ea2c7089c5f526426e22a7dd91114b65126caed12c37e65d3385",
       "tools/run_inspector_attribution_lanes.py": "3ea17a8c8e71d04a090bde9fa94498dfa821991dc3332f283785b17d21bf8129",
       "tools/run_inspector_cost_gate.py": "752c1014b36c83d2a20b415a46a1e74c52971f043b987786fe5de702fc0332a4",
-      "tools/tests/test_codegen_resource_literals.py": "c7161d6139e72076a0ee4f7ebff6c5cb2cb98892e83dca04f17bd2b9cfaf5a09",
+      "tools/tests/test_codegen_resource_literals.py": "188758a79f77e44bac03b18aab65395ec948c4274d62bc320d862b493053b970",
       "tools/tests/test_operation_schema_utf16_encoding.py": "129eff6a26986a41f9c5fc8f06ca88c673494c3442bcaf2a6fcda69f170be319",
       "tools/tests/test_schema_metas_utf16_encoding.py": "577f088d62abb65864dab66a93c53fc46092b5abd625f63e2e5ddcdd66df02eb",
       "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355"
@@ -2932,7 +2932,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/context.rs",
-        "sourceSHA256": "5d210c468658cb203cd830688b4677ce2ea1cf199ef59b23f4a86e8eb2efba55",
+        "sourceSHA256": "f1575a41a9fcf781c324f054900babb3c987d504265a9e6cb3a6e984217d026b",
         "cases": [
           {
             "name": "context::tests::aggregate_text_scope_caps_and_restores_without_resetting_controls_or_counters",
@@ -3252,7 +3252,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/engine.rs",
-        "sourceSHA256": "c7e2d23644f056c29af1aac4087cfc6d9aa83299a91028d2a1d9316d6dc4865e",
+        "sourceSHA256": "5369bc570855e364b3b8c3c8e37ea49d5368435fbd89d2647163f13ac8372bcd",
         "cases": [
           {
             "name": "engine::registration_provider_tests::admitted_validation_keeps_structural_refusal_before_provider_access",
@@ -4687,7 +4687,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_closed_container_independent_tests.rs",
-        "sourceSHA256": "2964bcb2484bd433b6576dd759f4003e4d8a27901c3b15821abc5f586304733a",
+        "sourceSHA256": "63d37fc50d98d0b8f88af3bae40eb27bd362d7ae621e02785d7ab37f2826ecbc",
         "cases": [
           {
             "name": "schema::admitted_structure::closed::closed_container_independent_tests::closed01_actual_validator_literal_container_summaries_match_both_original_collectors",
@@ -4817,7 +4817,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema.rs",
-        "sourceSHA256": "6809c95585a5209684c86a5f298166031126821191171fc975121f2dddba7b02",
+        "sourceSHA256": "aa7f6d0a25166b80b51a5663d5e9192832b92da61690db622ccce1d18e912e34",
         "cases": [
           {
             "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
@@ -5803,7 +5803,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value.rs",
-        "sourceSHA256": "057cfac477f0a1c4e32e10e4c9ac42ed7f38b946cec86b754f4badae1fbdbeda",
+        "sourceSHA256": "f46547766ad7d2e6be7ef34aeace087b5b0ae7a64f5f31363ebb77e55b7fc69e",
         "cases": [
           {
             "name": "value::completed_result_copy_tests::follows_typescript_nodewise_limit_path_and_charges_copy_work",
@@ -5867,7 +5867,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value_owned_core_json_independent_tests.rs",
-        "sourceSHA256": "4c89cc19b5592de2c784aecddd60d817163b9976c2dbdac8eb01873d6ebb00dd",
+        "sourceSHA256": "b976e4c26465a5a0906b94ede9ec646e42d4168cbb05e027f0fa35e0241dc12d",
         "cases": [
           {
             "name": "value::owned_core_json_independent_tests::real_complete_admission_then_actual_consumer_differs_from_bare_paid_validation",
@@ -6202,7 +6202,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value_closed_metadata_independent_tests.rs",
-        "sourceSHA256": "c7c7d16dfaae8cc5e6e62970deeeeccc4cd84d7e13239e15195b349ed2f28711",
+        "sourceSHA256": "7e5c714688bf81fafdda16ad586000dbd48183c39e6364968988a79f6cc130fc",
         "cases": [
           {
             "name": "value::closed_metadata_independent_tests::scalar_roots_have_direct_final_literal_rows_and_no_child_frame_or_container",
@@ -6302,7 +6302,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs",
-        "sourceSHA256": "d528ef296f9cd6d433146c9f8421cd01d0205272e1d6e3cc539b91c91168aac3",
+        "sourceSHA256": "40ed9a68e50d1da28c67432c852348c78eae1b7a87bbb622cdb8faaf55d7dafa",
         "cases": [
           {
             "name": "canonical_codegen_resources::independent_tests::literal01_all_nine_actual_owned_roots_match_raw_core_reader_bits_units_and_order",
@@ -6640,7 +6640,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs",
-        "sourceSHA256": "71a821a4bc4898010ca68cc46d4df4b0c5e69fb8923e791a139edd7cdaa091b3",
+        "sourceSHA256": "bb66a321eaf015adb04108c7d5953931b7de574e92ca223eb44795cdf228dda9",
         "cases": [
           {
             "name": "installed_codegen_factory_independent_tests::fw01_real_fixed_factory_manifest_copy_and_original_inspection_golden",
@@ -6876,7 +6876,7 @@
         "target": "lib",
         "features": "umf-core/native-postgresql",
         "source": "crates/umf-codegen/src/actions/saga/tests.rs",
-        "sourceSHA256": "aec2a47ea1092d99b8bab8abbf5f33c41a7aefd9ae2a4ff0c012e82415f57417",
+        "sourceSHA256": "00dab59336655e9f4e04bd676adb5cf71f2682450926729de2e0f3076ca94fee",
         "cases": [
           {
             "name": "actions::saga::tests::allocation_fixture_inspects_order_and_keeps_execution_unverified",
@@ -7005,7 +7005,7 @@
         "target": "lib",
         "features": "umf-core/native-postgresql",
         "source": "crates/umf-codegen/src/resources.rs",
-        "sourceSHA256": "39b011cf05e848cd4cebe85daaabcd377575f8fe36e313fae7164f7a98ee061c",
+        "sourceSHA256": "eeda0c5ecd8eed779354f4c31059429d3c7a6872c136da57f085fabcef1c1a17",
         "cases": [
           {
             "name": "resources::resource_controls::explicit_binding_packages_share_registry_and_compile_the_supplied_schema",
@@ -7682,7 +7682,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_owner_traversal_independent_tests.rs",
-        "sourceSHA256": "2ee93d54ad85fc3f80b94c3bd8663827134a91ec97eb87fec1c0d3ab8fe239ec",
+        "sourceSHA256": "c760175d90c25c6f27f8f959d436ba4a3c7a72f80b7535c5c1ddbd0285e9415c",
         "cases": [
           {
             "name": "schema::owner_locations::owner_traversal_independent_tests::ow01_ordered_objects_arrays_scalars_match_original_owner_readback",
@@ -7802,7 +7802,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs",
-        "sourceSHA256": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
+        "sourceSHA256": "3311df880da3b85a07acf75d97bc15b297d41db7012e745d474d56312cf7067b",
         "cases": [
           {
             "name": "schema::codegen_catalogue_independent_tests::oc01_original_borrowed_root_first_mode_and_error_order",
@@ -7897,7 +7897,7 @@
         "target": "lib",
         "features": "umf-core/native-postgresql",
         "source": "crates/umf-codegen/src/resources_codegen_catalogue_independent_tests.rs",
-        "sourceSHA256": "165248bd48eeea10cc3c122b7fba0cb1fa5572ff73036791a70ddac6f29a043a",
+        "sourceSHA256": "6533f7b08b4ff399d5351474734833a3c307a29e36f5a1692ccd6c13411225be",
         "cases": [
           {
             "name": "resources::codegen_catalogue_independent_tests::oc05_actual_eight_compilers_and_fresh_registry_consumption",
@@ -7961,9 +7961,17 @@
           },
           {
             "name": "schema::scoped_preflight_path_independent_tests::sp10_real_root_catalogue_preflight_and_unchanged_evaluator"
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::sp_r3_path_only_keyword_reuses_one_mark_and_restores_actual_root",
+            "line": 1216,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
           }
         ],
-        "sourceSHA256": "29e866240abe621b121094286595c4fa8c5e1bf4be9ae57cf6b7acd138f745ce"
+        "sourceSHA256": "df842e2ca4dd099ad44512f1e821631247ff444065570e890eea730a4b4d0201"
       },
       {
         "package": "umf-core",
@@ -8068,8 +8076,8 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs",
-        "sourceSHA256": "6ca3822d64edf746a4ba10ac9070a7d442e40064bc327e26c90ea7189846c5be",
-        "caseCount": 8,
+        "sourceSHA256": "8ae913bf6774df294959800586dd8219015fd1fad264761dd83fbc8c859a7263",
+        "caseCount": 11,
         "cases": [
           {
             "name": "schema::preflight_route_storage_independent_tests::ps01_actual_specialized_type_field_closure_and_layout",
@@ -8130,6 +8138,30 @@
           {
             "name": "schema::preflight_route_storage_independent_tests::ps08_independent_reentry_and_panic_poison_cleanup",
             "line": 374,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps_r3_actual_nonchild_callers_omit_full_keyword_state_in_both_routes",
+            "line": 483,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps_r3_scalar_and_path_errors_preserve_original_first_error_fields",
+            "line": 516,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::ps_r3_small_fixture_each_new_state_admission_denies_before_effect",
+            "line": 528,
             "cfg": [
               "#[cfg(test)]",
               "#[test]"
@@ -8339,10 +8371,10 @@
     },
     "currentInputs": {
       "fixturePath": "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json",
-      "fixtureSHA256": "acece328d698ce24e942a65c9945898533fcec2cfea4ced74dac80b9971a3f2a",
+      "fixtureSHA256": "48e617f452f1b79795de6aa50749056047eac2d43e3de60c2c5db82190799d3f",
       "metadataVersion": "0.10.10"
     },
-    "closureSHA256": "7f9dc81360be42a93c7e44325f13aa7b118720381211e4881b34c63e0907e5a3"
+    "closureSHA256": "f9091b05d65dacb36c32ca5677008b81eb9cc6b991b2e10394861e6313913cd5"
   },
   "modelReferences": {
     "baseModel": {
