@@ -37,7 +37,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         self.assertEqual(selected['currentInputs']['fixturePath'],helper.CANDIDATE_FIXTURE)
         self.assertEqual(selected['currentInputs']['metadataVersion'],'0.10.10')
         self.assertEqual(candidate['candidateArtifactVersion'],'0.10.10')
-        self.assertEqual((candidate['generation']['sourceCommit'],candidate['generation']['sourceTree']),('1be860e4a1c4af17e2ec635869d843b3c4b14bab','114f6578ef68fa03417ec22c82d015034a5f8fc9'))
+        self.assertEqual((candidate['generation']['sourceCommit'],candidate['generation']['sourceTree']),('3fcf4b80d017793e1d5da059a206d0fe5ca834a0','d9135287312d7b1f4304bb72de1dab68301b7abf'))
         self.assertEqual(helper.input_metadata_version(identity),'0.10.10')
         wrong_metadata=copy.deepcopy(selected)
         wrong_metadata['currentInputs']['metadataVersion']='0.10.9'
@@ -78,12 +78,12 @@ class ConstructionBatchSourceControls(unittest.TestCase):
 
 
 
-    def test_current489_expected_targets_and_compiled_lists_are_exact(self):
+    def test_current493_expected_targets_and_compiled_lists_are_exact(self):
         helper=batch.load(ROOT/'tools/probe_inspector_installed_factory.py','frozen_list_controls')
         v=self.census['installedFactory'];current={**self.census,'rust':v['rust'],'rustCaseCount':sum(len(g['cases']) for g in v['rust'])}
         listings={key:[] for key in self.keys}
         for row in current['rust']:listings[row['package'],row['target']]+=[x['name'] for x in row['cases']]
-        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),489)
+        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),493)
         self.assertEqual({(g['package'],g['target']) for g in current['rust']},self.keys)
         for row in current['rust']:
             if row['package']=='umf-core-python':self.assertEqual(row['manifest'],'bindings/core/python/Cargo.toml')
@@ -106,7 +106,13 @@ class ConstructionBatchSourceControls(unittest.TestCase):
             'schema::preflight_route_storage_independent_tests::ps_r3_small_fixture_each_new_state_admission_denies_before_effect',
             'schema::scoped_preflight_path_independent_tests::sp_r3_path_only_keyword_reuses_one_mark_and_restores_actual_root'}
         self.assertEqual({case['name'] for row in v['rust'] for case in row['cases'] if case['name'] in expected_r3},expected_r3)
-        original=[case for row in v['rust'] for case in row['cases'] if case['name'] not in expected_added|expected_r3]
+        expected_a0={
+            'schema::preflight_route_storage_independent_tests::a0_reason_wrappers_preserve_original_declaration_errors_and_acceptance',
+            'schema::preflight_route_storage_independent_tests::a0_each_new_wrapper_boundary_refuses_before_reason_or_map_effect',
+            'schema::scoped_preflight_path_independent_tests::a0_success_preserves_keyword_path_custody_without_diagnostic_snapshot',
+            'schema::scoped_preflight_path_independent_tests::a0_scoped_reason_error_admissions_poison_and_preserve_host_fields'}
+        self.assertEqual({case['name'] for row in v['rust'] for case in row['cases'] if case['name'] in expected_a0},expected_a0)
+        original=[case for row in v['rust'] for case in row['cases'] if case['name'] not in expected_added|expected_r3|expected_a0]
         import hashlib,json
         digest=lambda values:hashlib.sha256(json.dumps(values,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
         self.assertEqual(len(original),477)

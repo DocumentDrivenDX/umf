@@ -1786,7 +1786,7 @@
     "inputProfile": "installed-canonical/1",
     "sourceFiles": {
       ".github/workflows/inspector-attribution-continuation.yml": "da8452d19f11e4b1c46e823370bdda5e90d106d3a1f8b401fe55d28d143f5454",
-      ".github/workflows/inspector-retained-attribution.yml": "db3867baf13b947186277e8686f3f5df5c058ff5b7fd2d034f4e83c5d7048c8b",
+      ".github/workflows/inspector-retained-attribution.yml": "c8bfd005397b5dd91da218497dc06b0cea470bf0a9795b674ad633c492ca679a",
       "Cargo.lock": "c7777063f16762bea888aacefdf74fe6628ae65fbeae9db9cd907e0fd412145f",
       "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
       "bindings/core/python/Cargo.toml": "c6e2691e6fe8e2cd3f61929ae3d8269a6fa9166779984e216054856de0e3b367",
@@ -1816,7 +1816,7 @@
       "crates/umf-core-wire/tests/access_inspection_public.rs": "168400ad197a8c1ce94a85113c919a449ac3d3ef38345b4005bb46f93c0be23c",
       "crates/umf-core-wire/tests/codegen_context.rs": "5afd8223d9eb160963a7feac50980ef455fe3dab2c827a1d96d52726901a34fc",
       "crates/umf-core/Cargo.toml": "b84949f42da22ae01277d1b8fe38391ee1dfb98e372a5a0ad785195b75e9d7c5",
-      "crates/umf-core/src/canonical_codegen_literals.rs": "d4c18b5900185b3f579f22ca4b4db5a34d79969541d667aa4541a7a8ea0d95c5",
+      "crates/umf-core/src/canonical_codegen_literals.rs": "d7e2e3be1903aeab9da0aff0f8d4572c5310846c0c9b8f5a5099abd55d04cc02",
       "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "40ed9a68e50d1da28c67432c852348c78eae1b7a87bbb622cdb8faaf55d7dafa",
       "crates/umf-core/src/canonical_codegen_resources.rs": "ec6eb4226ec45fa2fbb6dd9e07c6a0f2e8f8c2beca789dbd372f31521ce683c7",
       "crates/umf-core/src/canonical_static_text_independent_tests.rs": "9b619dca3aae22919a59988093004b8eac23cb1395e6ecfc16df78add51caf43",
@@ -1831,7 +1831,7 @@
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "aa7f6d0a25166b80b51a5663d5e9192832b92da61690db622ccce1d18e912e34",
+      "crates/umf-core/src/schema.rs": "60b2dcbca118aa13399e409761b0fdb835dcc4276baf4a52694fed39f5d1cc36",
       "crates/umf-core/src/schema_admitted_bank.rs": "92591cb73c54411b5cb930bc2af4c9471e5c7fbb150a38b8dec0ca56976aec42",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -1863,8 +1863,8 @@
       "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "c760175d90c25c6f27f8f959d436ba4a3c7a72f80b7535c5c1ddbd0285e9415c",
       "crates/umf-core/src/schema_path_facts_independent_tests.rs": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
       "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
-      "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "8ae913bf6774df294959800586dd8219015fd1fad264761dd83fbc8c859a7263",
-      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "df842e2ca4dd099ad44512f1e821631247ff444065570e890eea730a4b4d0201",
+      "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "f63e7f8a3b1b3d65f6987f6186dd6c6718d3b594e414860bb22c2c557d0db180",
+      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "f5d673d973c1011a122d9e1cfcc0f74c7c4e8f1ac9b3f108271570c4bcfb0b81",
       "crates/umf-core/src/serialization.rs": "0ee58f6dc49c140b8bdeec1c427462a5b9e884d4153bc41953f9851c6fd184d0",
       "crates/umf-core/src/serialization_closed_metadata.rs": "a704ef592e96970e724d24b36e679f7a5bf16c64918992ae9d92b3420b2cae8f",
       "crates/umf-core/src/serialization_construction_owned_independent_tests.rs": "db3bd9625d1fb4bb04ee0a510beb5862d03a65b39440ddc6190b69a2432efd41",
@@ -1910,9 +1910,9 @@
       "scripts/saga-portable/other-hosts.ts": "b96a7919ad992ee11702d63f947a1e4f1155883cc6461efbf14a65abf0ba3536",
       "scripts/saga-portable/python-probe.py": "82a5f20917cd7ffca700be90ddeaf5426841a4375ab0a7d7c2056c653e49f083",
       "scripts/saga-portable/verify.ts": "09bf569611574c28e6728dead6ad10137271bf26366f99faec6803ccf5fca9e5",
-      "spec/core/extension-package.schema.json": "2d06da8bd38d3ff05e7813f8915de8c51a9a84446a7837ee2f397677f463a16c",
-      "spec/core/schema.json": "eef4753b23f6b1070e1d2a6be67b86e7078b0441e5dff9efb6c2a426f366714f",
-      "spec/core/semantic-type-reference.schema.json": "5e55d8326afb07455b0d67e3ab864e6d3c2932893267ef49838446e1ec99060d",
+      "spec/core/extension-package.schema.json": "642ace1cb88a1f6116157a653cb2c5cda362fcca976b7bdfabc92a9efb92cbc5",
+      "spec/core/schema.json": "1bd18f8e5542bf05986bfea58dcf5e9739a2c091c7969854f178d07cd97ecb34",
+      "spec/core/semantic-type-reference.schema.json": "96755a6e124ecc0a1c6533688582c2569d3c46962b90047f1101f479f237eaf6",
       "spec/extensions/actions/package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
       "spec/extensions/binding-stable/package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
       "spec/extensions/binding/package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
@@ -1920,24 +1920,24 @@
       "spec/extensions/tables/operation-0.2.schema.json": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e",
       "spec/extensions/tables/operation.schema.json": "af217abc87d2f4a5205d82c2146040ef986d29252c78a4ec76d59787828578cc",
       "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
-      "spec/metamodel/generated/core-constraints.json": "d91ac55d353a1ca80db4920ea5cb1da2df619b06e6ee429c929a493229ba06ee",
-      "spec/metamodel/generated/domain-policy.json": "d95d41b4eed0f6ada6dae3c87565a54b88e5e8099fc2e884252792eba04a1694",
+      "spec/metamodel/generated/core-constraints.json": "e9cf607d23b39f7faa200532d0e016c95461013addfcb22f0316c856c04bd0dd",
+      "spec/metamodel/generated/domain-policy.json": "6d5acacb252a622df4f644f7266dc49ffe551833dd8812d0b87c64847d3f8234",
       "tests/qualification/constructor_observation_pure_test.py": "e677919eba2ad1d544f75dab3d844a48a05df081505ee59542a6f8326459390c",
       "tests/qualification/fixtures/inspector-admission-precharge-baseline.json": "068ebe51004e7e03d6ef26aca7774209f5ef3beceb9fa0e40d0e274cb52bdc18",
       "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
       "tests/qualification/fixtures/inspector-constructor-observation.json": "fef5bda142d304f1eadfa2c1c56e26b3e528c97895c3a224754bdd13868db6ae",
-      "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json": "48e617f452f1b79795de6aa50749056047eac2d43e3de60c2c5db82190799d3f",
+      "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json": "e6ef223861744d2e5c077e7c9bfc17ad912dd00c023c68c0341cbb76b15315a0",
       "tests/qualification/fixtures/inspector-installed-current-resources.json": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "tests/qualification/fixtures/inspector-retained-continuation.json": "7e40212a4554570aae34b17f29104c1c97cfe26471efd58b6ab95a72e97e3036",
       "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
       "tests/qualification/test_inspector_admission_precharge.py": "79546279ad81343a925b3ca102b77e2cb3081f0e49d21e58c0e3937f2f7e07b3",
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
-      "tests/qualification/test_inspector_c1_binding_closure.py": "333e78688fa18ae837f637aef804f67f09996c06e7e4fa865ad3f539677ed8a0",
+      "tests/qualification/test_inspector_c1_binding_closure.py": "5d039b177383cf111142fbd3d97725d8fb949a4db6d6e1aab0f521ac00ddbc9c",
       "tests/qualification/test_inspector_combined_budget.py": "43810b7edac2b552c49a41d7909470c6bb08e96241b76d77b139495f52206196",
-      "tests/qualification/test_inspector_construction_batch.py": "2cf324664bc7ca48550a510b78f7aa80599ac86205b110dd0e5ec1889228a346",
+      "tests/qualification/test_inspector_construction_batch.py": "04ed3c6a8481236f9dfce5893fdfdc4bc53426801723162131d429c3b4d568d8",
       "tests/qualification/test_inspector_cost_gate.py": "77c63dbe64e81337278bc311a314a91e95d9979d6368e48bc50f07b9469b9dd5",
-      "tests/qualification/test_inspector_installed_factory.py": "5d99380f17c840db3f7d0cdf93e0871e60d326e4aec523a3f3f4ef6e84c5dbf5",
+      "tests/qualification/test_inspector_installed_factory.py": "9f24432dd3dbc2d9b1a318bdc77efcf0427d6084d78a3d0ba251644ec6ed12d5",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
       "tests/qualification/test_inspector_owner_cursors.py": "3251d594419079004506a1b416313ecb8acfccfbb37448ddb9df231eabb86a6a",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
@@ -1952,7 +1952,7 @@
       "tools/intake_inspector_attribution_continuation.py": "f554597f8395458e495f20f8115bf118a1b48f15ca5cf5d1de94ee8592f6b39c",
       "tools/intake_inspector_retained_continuation.py": "25692b0f877b81cfd5e45e8b007b001064ea6d25384465f957203f5f25e0e33d",
       "tools/probe_inspector_constructor_prefix.py": "bb308ddbe9eeb9c21c4d1f25264d6ab07fd414e0764e7d2cd653dec2019c768f",
-      "tools/probe_inspector_installed_factory.py": "98de5cc61aab7faa85ef7b5ec0948a688cb2fe847512ffa245b48925297747ef",
+      "tools/probe_inspector_installed_factory.py": "443667cf3c5d439e89aaeed4ae30edd79b71cc91e23046fd1a27d4739eb972ac",
       "tools/probe_inspector_retained_attribution.py": "2e872326ad62c7fb5f5f4fdecec2322db5159a190fb7fd4495ec6b9919a67625",
       "tools/probe_inspector_retained_feasibility.py": "e33e1d352c9861970a7aeb192dc1803e11e6455b086a1cc6c9391ce283c9d49d",
       "tools/qualify_inspector_combined_budget.py": "895fd9e0d3264519570a38fdbda33d4511810f884dcce9d8695d9204ed70ac9a",
@@ -1960,7 +1960,7 @@
       "tools/qualify_inspector_constructor_observation.py": "e8874d1dd074ea2c7089c5f526426e22a7dd91114b65126caed12c37e65d3385",
       "tools/run_inspector_attribution_lanes.py": "3ea17a8c8e71d04a090bde9fa94498dfa821991dc3332f283785b17d21bf8129",
       "tools/run_inspector_cost_gate.py": "752c1014b36c83d2a20b415a46a1e74c52971f043b987786fe5de702fc0332a4",
-      "tools/tests/test_codegen_resource_literals.py": "188758a79f77e44bac03b18aab65395ec948c4274d62bc320d862b493053b970",
+      "tools/tests/test_codegen_resource_literals.py": "e92ef0d6bc64b0f757ae213732cff82f31b30428e503848b235833a9a7d1f9eb",
       "tools/tests/test_operation_schema_utf16_encoding.py": "129eff6a26986a41f9c5fc8f06ca88c673494c3442bcaf2a6fcda69f170be319",
       "tools/tests/test_schema_metas_utf16_encoding.py": "577f088d62abb65864dab66a93c53fc46092b5abd625f63e2e5ddcdd66df02eb",
       "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355"
@@ -7969,9 +7969,25 @@
               "#[cfg(test)]",
               "#[test]"
             ]
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::a0_success_preserves_keyword_path_custody_without_diagnostic_snapshot",
+            "line": 1233,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::scoped_preflight_path_independent_tests::a0_scoped_reason_error_admissions_poison_and_preserve_host_fields",
+            "line": 1248,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
           }
         ],
-        "sourceSHA256": "df842e2ca4dd099ad44512f1e821631247ff444065570e890eea730a4b4d0201"
+        "sourceSHA256": "f5d673d973c1011a122d9e1cfcc0f74c7c4e8f1ac9b3f108271570c4bcfb0b81"
       },
       {
         "package": "umf-core",
@@ -8076,8 +8092,8 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs",
-        "sourceSHA256": "8ae913bf6774df294959800586dd8219015fd1fad264761dd83fbc8c859a7263",
-        "caseCount": 11,
+        "sourceSHA256": "f63e7f8a3b1b3d65f6987f6186dd6c6718d3b594e414860bb22c2c557d0db180",
+        "caseCount": 13,
         "cases": [
           {
             "name": "schema::preflight_route_storage_independent_tests::ps01_actual_specialized_type_field_closure_and_layout",
@@ -8162,6 +8178,22 @@
           {
             "name": "schema::preflight_route_storage_independent_tests::ps_r3_small_fixture_each_new_state_admission_denies_before_effect",
             "line": 528,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::a0_reason_wrappers_preserve_original_declaration_errors_and_acceptance",
+            "line": 607,
+            "cfg": [
+              "#[cfg(test)]",
+              "#[test]"
+            ]
+          },
+          {
+            "name": "schema::preflight_route_storage_independent_tests::a0_each_new_wrapper_boundary_refuses_before_reason_or_map_effect",
+            "line": 621,
             "cfg": [
               "#[cfg(test)]",
               "#[test]"
@@ -8371,10 +8403,10 @@
     },
     "currentInputs": {
       "fixturePath": "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json",
-      "fixtureSHA256": "48e617f452f1b79795de6aa50749056047eac2d43e3de60c2c5db82190799d3f",
+      "fixtureSHA256": "e6ef223861744d2e5c077e7c9bfc17ad912dd00c023c68c0341cbb76b15315a0",
       "metadataVersion": "0.10.10"
     },
-    "closureSHA256": "f9091b05d65dacb36c32ca5677008b81eb9cc6b991b2e10394861e6313913cd5"
+    "closureSHA256": "616ee280b949c9ebe0649662bf21918dc73e8f0806155ec894bdfc2bc5e80ed0"
   },
   "modelReferences": {
     "baseModel": {
