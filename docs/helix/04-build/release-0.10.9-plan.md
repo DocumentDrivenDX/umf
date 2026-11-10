@@ -171,9 +171,9 @@ linux/amd64 containers (emulated on an arm64 host). Installed Core/Codegen keyed
 and unkeyed requests, ten resource hashes and `pip check` passed on CPython
 3.11.18. The SDK passed Node 22 and Bun 1.4.4 keyed/unkeyed probes, the installed
 consumer and declaration checks, with a Pack Tools digest identical across
-Python, Node and Bun. The SDK source closure equals the Mac SDK closure. The Node
+Python, Node and Bun. The Linux SDK manifest declares the same source closure digest as the Mac record (read from the manifest, not recomputed). The Node
 explicit WASM file-URL loader probe fails as it did on the Mac and remains an
-excluded, retained failure. Receipts are in
+excluded, retained failure. The CLI check covered only the `--version`/`codegen --version` handshake and byte equality with the wheel's embedded CLI. `linux-core-wheel-verification.json` was produced on macOS arm64 with Python 3.14, not on Linux. The Node image digest is recorded in the receipt. Receipts are in
 [`evidence/release-0.10.9/`](evidence/release-0.10.9/linux-qualification-0109.json).
 Not established: original Linux build provenance (not retained), native x86_64
 execution and raw-wheel/sdist rebuild parity for the manylinux wheel. Global

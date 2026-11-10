@@ -1,6 +1,7 @@
 {
  "coreWheelSourceVerification": {
   "notRun": "--expected-platform linux_x86_64 refuses the manylinux_2_34 tag (verifier accepts only the raw tag) and --sdist needs a Rust rebuild that cannot reproduce an auditwheel-repaired wheel",
+  "ranOn": "macOS arm64, host Python 3.14.8; not run on Linux",
   "receipt": "linux-core-wheel-verification.json",
   "receiptSha256": "9ba73ee5069bed0d00dc8f5609323b78603436ba5b7e1b9b07335629a1be8f40",
   "result": "source_payload_verification passed",
@@ -10,11 +11,13 @@
   "SHA256SUMS": "b1d0f35e211c556e59ca63ecf550e25f1569c2d983bae1d9f1f6fda768b4b40f",
   "assets": {
    "umf-sdk-0.10.9-linux-x86_64.tgz": "9584e4940298b6b9e8128c25568895d0b4e2e2dacc2aa39e622218765451788e",
+   "umf-v0.10.9-x86_64-unknown-linux-gnu.tar.gz": "9b9529bf37b446fd065ae231395291095d2504cb331fc96eea74db07a45e1efb",
    "umf_codegen-0.10.9-py3-none-any.whl": "17c90cb379bd8a967ebcdfbdf91bc3d8b62e021fad880e25849ba66711937226",
    "umf_codegen-0.10.9.tar.gz": "f2e7fd6861da2c8fc389459766e229c19f1312aa6a0fd4a7cd9d963bfa93d83c",
    "umf_core-0.10.9-cp311-abi3-manylinux_2_34_x86_64.whl": "ce4c8dd3894f5f3bcf39c775f9f9796ef4b818fb22f025de18bca414b256238d",
    "umf_core-0.10.9.tar.gz": "632b3851f14fa8d80c0639b4286971ff183bc15d3beb93752f4cb60a64c31ba5"
   },
+  "cliTarballComputedSha256": "9b9529bf37b446fd065ae231395291095d2504cb331fc96eea74db07a45e1efb (recomputed with shasum -a 256 from the downloaded asset)",
   "digestsMatchDraft": true
  },
  "execution": {
@@ -22,7 +25,7 @@
   "host": "macOS arm64 (OrbStack, Docker 29.8.2, linux/arm64 server)",
   "images": {
    "bun": "oven/bun:1 sha256:1d22548f177f4ff38e0c15baa3c2c46c6c2060ba2d1bc573bb4720b407548f1d (Bun 1.4.4)",
-   "node": "node:22-slim",
+   "node": "node:22-slim sha256:5ec23b7c622b00547753bc6ffd78085dd868a68aeb41c8e0a1418f033e13d96d (from docker image inspect after the run)",
    "python": "python:3.11-slim sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535"
   },
   "inputs": "Assets downloaded from the Draft release umf-v0.10.9 into a fresh directory mounted read-only; every SHA-256 compared with the draft SHA256SUMS and GitHub digests before use. Registry dependencies (pydantic 2.11.9, npm/bun SDK dependency tree) were resolved from public indexes; no UMF archive came from a registry.",
@@ -34,7 +37,7 @@
   "result": "failed"
  },
  "notEstablished": [
-  "Original Linux build provenance (before/after input maps, auditwheel/patchelf reports, tool lock) for the Linux SDK, CLI and wheel is not retained in /private/tmp/umf-0109-release (linux/output/receipts is empty); no provenance join is claimed.",
+  "Original Linux build provenance (before/after input maps, auditwheel/patchelf reports, tool lock) for the Linux SDK, CLI and wheel is not retained in the private release working area (its Linux receipts directory is empty); no provenance join is claimed.",
   "No native x86_64 host run; emulation only.",
   "Strict raw-wheel/sdist rebuild parity for the manylinux wheel not run.",
   "Release remains a Draft; no tag, GitHub publication or PyPI upload exists."
@@ -51,6 +54,7 @@
  },
  "profile": "umf.linux-x86_64-local-qualification/1",
  "python": {
+  "cliScope": "CLI check covered only `umf --version` usage output, `umf codegen --version` handshake, and SHA-256 equality between the release CLI and the wheel-embedded CLI; no other CLI behavior was exercised.",
   "codegenCliVersionHandshake": "passed (wheel-embedded and release CLI)",
   "embeddedCliSha256": "081e3ba65b90bac359f8f06ef439a1c8ff5e3b56d1598e8bad7f924d03b6c08f",
   "keyed": "generated ddl/orm/crud; Core and Codegen APIs identical",
@@ -74,7 +78,6 @@
    "logSha256": "928e687ad97525e52c54eb4eb5789f5bbf9f096c298e02a89a4e102feff622dd",
    "result": "node and browser declarations pass, skipLibCheck false, frozen repo lockfile"
   },
-  "equalsMacSdkClosure": true,
   "manifestSourceClosureSha256": "da56e912e38fbc01b1f14155cd97d584962aaa09ebf95969e86d84bb2a357ede",
   "nativeTarget": "ELF x86-64 umf_core_node.node",
   "node": {
@@ -82,7 +85,8 @@
    "probe": "keyed/unkeyed Pack Tools passed; repo installed consumer test-native-sdk-install.mjs passed",
    "version": "22.23.4"
   },
-  "result": "passed"
+  "result": "passed",
+  "sourceClosureNote": "Value is read from the Linux SDK package's own manifest.json (sourceTreeSha256 and capturedLiveSourceTreeSha256, fixed-point, 0 transforms). It textually equals the Mac record mac-sdk-0109.json; it was NOT recomputed here, so no independent derivation is claimed."
  },
  "sourceSha": "9b36814d5b9eda1867d7893575e1acd718cfe4bb",
  "status": "passed-with-explicit-gaps",
