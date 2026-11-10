@@ -29,7 +29,7 @@ export const rustFeatureBoundaryFiles = [
   'crates/umf-core-wire/Cargo.toml',
 ] as const;
 const runtimeConsumerPins:Record<string,string>={
-  'crates/umf-core/src/value.rs':'b4218897df608c9ad86bc320896ac6d96092f7cc5b3cb4ef5a2e07050d0456d1',
+  'crates/umf-core/src/value.rs':'6a5b3e827e97cfa04dd6167cd62c488132759486f2eb603dccaf3cab0e9ad22d',
   'crates/umf-core-wire/src/lib.rs':'991e9be4abbfb2ffc5baee3c02d78621eda0c9cfa41b70c246816926dacfa13e',
   'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs':'bb66a321eaf015adb04108c7d5953931b7de574e92ca223eb44795cdf228dda9',
 };
@@ -255,7 +255,7 @@ export function projectCountedRuntimeBoundary(source:string):{bootstrap:string;f
       while(/\s/.test(code[open]??'')&&open<code.length)open++;
       if(code[open]!=='(')throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
       const body=delimitedContent(code,open);
-      if(!body||!body.content.trim().startsWith('counted_hint_model_overhead()+6*3952'))
+      if(!body||!body.content.trim().startsWith('3*factory_root_front_work()<23712\n    &&counted_hint_model_overhead()<14474*'))
         throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
       let end=body.end;while(/\s/.test(code[end]??'')&&end<code.length)end++;
       if(code[end]!==';')throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');

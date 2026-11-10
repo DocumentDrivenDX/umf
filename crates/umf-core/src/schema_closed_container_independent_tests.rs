@@ -252,6 +252,21 @@ fn table_readback(
 
 #[test]
 fn closed01_actual_validator_literal_container_summaries_match_both_original_collectors() {
+    // Root-only front must preserve raw UTF16 keys/values and descendant
+    // coordinates through the OLD Paid walker, including escaped keys.
+    OwnedCoreOperation::with_context(&mut Context::catalog(),|ctx,op|{
+        let value=Value::Object(vec![
+            (Utf16::new(vec![0xd800]),Value::Array(vec![Value::String(Utf16::new(vec![0xdc00])),Value::Null])),
+            (Utf16::from("q/~"),Value::Object(vec![(Utf16::from("n"),Value::Number(1.0))])),
+        ]);
+        let count=size(&value);let custody=op.count_custody(ctx)?;
+        let hint=crate::value::FactoryRowHint::from_count(count,custody.as_ref(),ctx)?.unwrap();
+        let carrier=OwnedCoreJson::admit_factory_resource_sized(value.clone(),&Utf16::from("coreSchema"),op,Some(hint),ctx)?;
+        let(actual,structure)=carrier.into_core_metadata(op,ctx)?;
+        assert_eq!(actual,value);let structure=structure.unwrap();
+        parity(&structure,&original(&value));assert_eq!(readback(&structure.root().unwrap(),&value,ctx),count);Ok(())
+    }).unwrap();
+
     // A genuine sized admission reserves once yet publishes only rows written
     // by the complete original validator. No direct metadata kernel mint.
     OwnedCoreOperation::with_context(&mut Context::catalog(),|ctx,op|{

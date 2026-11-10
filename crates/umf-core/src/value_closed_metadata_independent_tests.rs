@@ -201,6 +201,41 @@ fn sizing_count(v:&Value)->usize{1+match v{Value::Array(a)=>a.iter().map(sizing_
 fn sizing_hint(n:usize,op:&OwnedCoreOperation,ctx:&mut Context<'_>)->FactoryRowHint{
     FactoryRowHint::from_count(n,op.count_custody(ctx).unwrap().as_ref(),ctx).unwrap().unwrap()
 }
+fn once_root_fallback_and_frontier_controls(){
+    // Nonobjects use the original Paid visitor. Aside from the ONE root-kind
+    // predebit, its exact callbacks/events/rows must be unchanged.
+    for value in [Value::Null,Value::Bool(true),Value::Number(1.0),Value::String(Utf16::new(vec![0xd800])),Value::Array(vec![Value::Null,fixture()])] {
+        let old_work=RefCell::new(Vec::new());let new_work=RefCell::new(Vec::new());
+        let old_events=RefCell::new(Vec::new());let new_events=RefCell::new(Vec::new());
+        let mut old_meter=|n|{old_work.borrow_mut().push(n);Ok(())};
+        let mut new_meter=|n|{new_work.borrow_mut().push(n);Ok(())};
+        let old=admit_factory_json(value.clone(),&mut Context::catalog().with_meter(&mut old_meter),&mut |e|old_events.borrow_mut().push(e)).unwrap();
+        let mut ctx=Context::catalog().with_meter(&mut new_meter);
+        OwnedCoreOperation::with_context(&mut ctx,|ctx,op|{
+            let hint=sizing_hint(sizing_count(&value),op,ctx);new_work.borrow_mut().clear();
+            let actual=admit_factory_json_sized(value.clone(),hint,ctx,&mut |e|new_events.borrow_mut().push(e))?;
+            assert_eq!(actual.0,old.0);assert_eq!(rows(&actual.1.unwrap()),rows(&old.1.as_ref().unwrap()));
+            assert_eq!(new_work.borrow()[0],factory_root_kind_work());
+            assert_eq!(&new_work.borrow()[1..],old_work.borrow().as_slice());
+            assert_eq!(*new_events.borrow(),*old_events.borrow());Ok(())
+        }).unwrap();
+    }
+    // Root frontier is refused before existing reserve/start/row events.
+    // Descendant depth failure remains on the ORIGINAL recursive walker.
+    for (value,limits) in [
+        (Value::Object(vec![(Utf16::from("a"),Value::Null),(Utf16::from("b"),Value::Null)]),{let mut l=Context::catalog().limits();l.max_values=2;l}),
+        (Value::Object(vec![(Utf16::from("q/~"),Value::Array(vec![Value::Null]))]),{let mut l=Context::catalog().limits();l.max_depth=0;l}),
+    ] {
+        let expected=original(value.clone(),"#",limits).unwrap_err();
+        OwnedCoreOperation::with_context(&mut context(limits),|ctx,op|{
+            let hint=sizing_hint(sizing_count(&value),op,ctx);let mut events=Vec::new();
+            let error=admit_factory_json_sized(value.clone(),hint,ctx,&mut |e|events.push(e)).unwrap_err();
+            assert_eq!(error.code,expected.code);assert_eq!(error.path,expected.path);assert_eq!(error.message,expected.message);
+            if limits.max_values==2{assert!(events.is_empty());}
+            assert!(!events.contains(&"closed-structure-publication"));Ok(())
+        }).unwrap();
+    }
+}
 fn sizing_route_controls(){
     let v=fixture();let n=sizing_count(&v);let name=Utf16::from("coreSchema");
     let mut ctx=Context::catalog();
@@ -325,6 +360,7 @@ fn sizing_denial_controls(){
 #[test]
 fn nested_scalar_rows_and_metadata_keys_match_literal_coordinates_and_original_builder() {
     sizing_route_controls();
+    once_root_fallback_and_frontier_controls();
     sizing_denial_controls();
     sizing_ordering_a_control();
     sizing_unwind_control();

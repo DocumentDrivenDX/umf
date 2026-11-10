@@ -101,9 +101,9 @@ describe('metamodel source provenance partition',()=>{
   expect(projected.bootstrap).not.toMatch(/\bcanonical_codegen_resources\b/);
   expect(projected.bootstrap).not.toMatch(/\bcounted_hint_model_overhead\b/);
   expect(projected.fullRuntime).toContain('use crate::canonical_codegen_resources::');
-  expect(projected.fullRuntime).toContain('const _:()=assert!(counted_hint_model_overhead()+6*3952');
-  // Frozen dcf4 runtime bytes, not a new fee/body implementation or a target execution.
-  expect(createHash('sha256').update(projected.fullRuntime).digest('hex')).toBe('1073121ae19cc6705613dab853f6c0ef5575d2f283193765ecf1a71a45952c6c');
+  expect(projected.fullRuntime).toContain('const _:()=assert!(3*factory_root_front_work()<23712');
+  // Exact reviewed once-root runtime bytes; not target/native execution.
+  expect(createHash('sha256').update(projected.fullRuntime).digest('hex')).toBe('08540207e31cbf1a4362cad0ffcac35c02738ce149af826ea737075b22b36d93');
   expect(actual.compilerInputs).toContain('crates/umf-core/src/value.rs');
   expect(actual.compilerInputs).not.toContain(runtimeCodegenData);
   expect(actual.workspaceInputs).toContain(runtimeCodegenData);
@@ -126,7 +126,7 @@ describe('metamodel source provenance partition',()=>{
   }
   expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source+'\nconst UNGATED:usize=counted_hint_model_overhead();\n'))).toThrow('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_RUNTIME_EDGE');
   expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source+'\npub fn unreviewed_value_change() {}\n'))).toThrow('METAMODEL_SOURCE_PARTITION_RUNTIME_CONSUMER');
-  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source.replace('counted_hint_model_overhead()+6*3952','counted_hint_model_overhead()+0*3952')))).toThrow('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source.replace('3*factory_root_front_work()<23712','0*factory_root_front_work()<23712')))).toThrow('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
  });
 
  test('reviewed value consumer cannot disappear from complete source custody',()=>{
