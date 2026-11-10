@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {rustMetamodel} from './rust';
 import {structuralSource} from './structural';
 import {structuralAccountingSource} from './structural-accounting';
-import {rustCompilePackages,rustCompileResources} from './source-closure';
+import {rustCompilePackages,rustCompileResources,compilerDigestExcluded} from './source-closure';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 const ACCOUNTED_COMPANION_PATH='src/generated/core-validators-accounted.ts';
 const OUTPUT_PATHS=[
@@ -48,7 +48,7 @@ export async function generate(options:{check?:boolean;outputRoot?:string}={}){
  const compilerFiles=await compilerClosure(),workspaceFiles=(await workspaceClosure()).filter(path=>!compilerFiles.includes(path));
  const backendFiles=['scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/source-closure.ts','scripts/metamodel/structural.ts','scripts/metamodel/structural-accounting.ts','src/validation/json-equality.ts','bindings/core/node/src/wire.js','package.json','bun.lock'];
  const sources=Object.fromEntries(await Promise.all(['spec/metamodel/umf.yaml',...compilerFiles,...workspaceFiles,...backendFiles].map(async p=>[p,hash(await readFile(resolve(root,p)))])));
- const provenance={modelSha256:sources['spec/metamodel/umf.yaml'],compilerSha256:hash(json(Object.fromEntries(compilerFiles.map(p=>[p,sources[p]]))))};
+ const provenance={modelSha256:sources['spec/metamodel/umf.yaml'],compilerSha256:hash(json(Object.fromEntries(compilerFiles.filter(p=>!compilerDigestExcluded.includes(p)).map(p=>[p,sources[p]]))))};
  const compiled=rustMetamodel(['outputs','--input','spec/metamodel/umf.yaml','--compiler-sha256',provenance.compilerSha256],undefined,{sourceBound:true});
  for(const [path,value] of Object.entries(compiled.sourceAttestation?.sources??{}))if(sources[path]!==value)throw Error('METAMODEL_COMPILED_SOURCE_COHORT_CHANGED '+path);
  if(!compiled.sourceAttestation?.binarySha256)throw Error('METAMODEL_MISSING_SOURCE_ATTESTATION');

@@ -14,3 +14,7 @@ export const rustCompilePackages = [
   'crates/umf-tagged-wire',
   'crates/umf-metamodel-cli',
 ];
+// Generated DATA derived from the metamodel outputs (tools/generate_codegen_resource_literals.py).
+// It embeds the compiler digest, so it cannot be an input to that digest without a hash cycle.
+// It is still listed in manifest sources/compilerInputs and still part of the build fingerprint.
+export const compilerDigestExcluded = ['crates/umf-core/src/canonical_codegen_literals.rs'];
