@@ -37,7 +37,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         self.assertEqual(selected['currentInputs']['fixturePath'],helper.CANDIDATE_FIXTURE)
         self.assertEqual(selected['currentInputs']['metadataVersion'],'0.10.10')
         self.assertEqual(candidate['candidateArtifactVersion'],'0.10.10')
-        self.assertEqual((candidate['generation']['sourceCommit'],candidate['generation']['sourceTree']),('e20da8192185b43aab48aa018440dca8717dea6d','6f1932085aaec36ff688c477ba38b524f807ca2c'))
+        self.assertEqual((candidate['generation']['sourceCommit'],candidate['generation']['sourceTree']),('0eab4efe63eb909f5a2be84ca69f99385885580a','a636d335f7126295920c3831e7bb100e0f41ed31'))
         self.assertEqual(helper.input_metadata_version(identity),'0.10.10')
         wrong_metadata=copy.deepcopy(selected)
         wrong_metadata['currentInputs']['metadataVersion']='0.10.9'
@@ -78,24 +78,33 @@ class ConstructionBatchSourceControls(unittest.TestCase):
 
 
 
-    def test_current477_existing_targets_and_compiled_lists_are_exact(self):
+    def test_current485_expected_targets_and_compiled_lists_are_exact(self):
         helper=batch.load(ROOT/'tools/probe_inspector_installed_factory.py','frozen_list_controls')
         v=self.census['installedFactory'];current={**self.census,'rust':v['rust'],'rustCaseCount':sum(len(g['cases']) for g in v['rust'])}
         listings={key:[] for key in self.keys}
         for row in current['rust']:listings[row['package'],row['target']]+=[x['name'] for x in row['cases']]
-        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),477)
+        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),485)
         self.assertEqual({(g['package'],g['target']) for g in current['rust']},self.keys)
         for row in current['rust']:
             if row['package']=='umf-core-python':self.assertEqual(row['manifest'],'bindings/core/python/Cargo.toml')
-        added=[c for row in v['rust'] for c in row['cases'] if 'preflight_route_storage_independent_tests::ps0' in c['name']]
+        expected_added={
+            'value::owned_core_json_independent_tests::storage_text_copy_preserves_all_storage_kinds_without_new_input_admission',
+            'schema::codegen_catalogue_independent_tests::prepared_export_is_shared_only_with_actual_owner_operation_and_lifetime',
+            'schema::codegen_catalogue_independent_tests::prepared_builder_does_not_confer_schema_success_or_accept_incomplete_protocol',
+            'schema::codegen_catalogue_independent_tests::failed_table_export_cannot_retry_or_publish_a_receipt',
+            'resources::codegen_catalogue_independent_tests::paid_storage_copy_is_not_current_limit_readmission_and_stops_at_each_denial',
+            'resources::codegen_catalogue_independent_tests::snapshot_insert_unique_shared_denial_and_public_deep_clone_are_isolated',
+            'resources::codegen_catalogue_independent_tests::saga_two_insertions_are_isolated_and_old_core_limits_still_refuse_in_compiler',
+            'actions::saga::tests::cloned_saga_resources_keep_original_snapshot_and_noop_or_invalid_installation'}
+        added=[(row['package'],row['target'],row['features'],case['name']) for row in v['rust'] for case in row['cases'] if case['name'] in expected_added]
+        self.assertEqual({name for _,_,_,name in added},expected_added)
         self.assertEqual(len(added),8)
-        self.assertTrue(all(c['name'].startswith('schema::preflight_route_storage_independent_tests::ps0') for c in added))
-        all_cases=[c for row in v['rust'] for c in row['cases']]
-        old=[c for c in all_cases if c not in added]
+        all_cases=[case for row in v['rust'] for case in row['cases']]
+        original=[case for row in v['rust'] for case in row['cases'] if case['name'] not in expected_added]
         import hashlib,json
         digest=lambda values:hashlib.sha256(json.dumps(values,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
-        self.assertEqual(len(old),469)
-        self.assertEqual(digest(old),'f7ec24f00eedfffca8815058eae60a454063d16f2333f08e44e21cf7537dc442')
+        self.assertEqual(len(original),477)
+        self.assertEqual(digest(original),'d67154ed194c734a2fc7b3101fe9a4c65fa550a1f2b5d854cd74a022542b33ad')
         selected=helper.selection(ROOT,self.census)
         candidate,identity=helper.current_inputs(ROOT,selected)
         self.assertEqual(helper.input_metadata_version(identity),'0.10.10')

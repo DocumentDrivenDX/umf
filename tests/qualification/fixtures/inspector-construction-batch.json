@@ -1786,7 +1786,7 @@
     "inputProfile": "installed-canonical/1",
     "sourceFiles": {
       ".github/workflows/inspector-attribution-continuation.yml": "da8452d19f11e4b1c46e823370bdda5e90d106d3a1f8b401fe55d28d143f5454",
-      ".github/workflows/inspector-retained-attribution.yml": "5605720a4e6b66e251e7a36a40432b1d742b5d5d013f7973bc4b12eaa3c55c06",
+      ".github/workflows/inspector-retained-attribution.yml": "45af36027377b28df003ee6b440f541381bc1606259769f22b13fa99cf15cb68",
       "Cargo.lock": "c7777063f16762bea888aacefdf74fe6628ae65fbeae9db9cd907e0fd412145f",
       "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
       "bindings/core/python/Cargo.toml": "c6e2691e6fe8e2cd3f61929ae3d8269a6fa9166779984e216054856de0e3b367",
@@ -1799,11 +1799,11 @@
       "crates/umf-codegen/src/access/mod.rs": "4e34e229fed211628b4b9441108865cb4e0a4720969f8207c7fa075488997836",
       "crates/umf-codegen/src/actions/mod.rs": "1540b8e9c34d638fb39110e865ec0b5b27066be01f328945ae58debe32fa81f5",
       "crates/umf-codegen/src/actions/saga/mod.rs": "8742bf9b0ca3165aff04233c5c8fca50f420c0cf100e602e520dbe0d7e9a28eb",
-      "crates/umf-codegen/src/actions/saga/tests.rs": "aec2a47ea1092d99b8bab8abbf5f33c41a7aefd9ae2a4ff0c012e82415f57417",
+      "crates/umf-codegen/src/actions/saga/tests.rs": "00dab59336655e9f4e04bd676adb5cf71f2682450926729de2e0f3076ca94fee",
       "crates/umf-codegen/src/lib.rs": "44470f0a1de5f27ac21662e665dd8c05fc684302c11a56eef6437866cfb42e4a",
       "crates/umf-codegen/src/operation_schemas_utf16.rs": "876bc6ea0c831f569fc8130b938600e561937bca3b642cc58cc8db9eccaeec4b",
-      "crates/umf-codegen/src/resources.rs": "39b011cf05e848cd4cebe85daaabcd377575f8fe36e313fae7164f7a98ee061c",
-      "crates/umf-codegen/src/resources_codegen_catalogue_independent_tests.rs": "165248bd48eeea10cc3c122b7fba0cb1fa5572ff73036791a70ddac6f29a043a",
+      "crates/umf-codegen/src/resources.rs": "2cbc6f5ad342c271563d948fa0af13b4f08c4985c8769f021b1239d93925a053",
+      "crates/umf-codegen/src/resources_codegen_catalogue_independent_tests.rs": "6533f7b08b4ff399d5351474734833a3c307a29e36f5a1692ccd6c13411225be",
       "crates/umf-codegen/src/tables/mod.rs": "525ea11d61432b2b17d23d715d582ff059d6f34ea735c7c1aae461955a423cd8",
       "crates/umf-codegen/src/value.rs": "5f9b9b2f8b238628e5f8464dc925fc68ce4c8b5172ce9b7ab86ca33d0289c994",
       "crates/umf-codegen/tests/access_binding_schema_override.rs": "b2694c35ca58b2d3d0230b93720ed32a53e673a80d371507f24014d5c896e2af",
@@ -1816,7 +1816,7 @@
       "crates/umf-core-wire/tests/access_inspection_public.rs": "168400ad197a8c1ce94a85113c919a449ac3d3ef38345b4005bb46f93c0be23c",
       "crates/umf-core-wire/tests/codegen_context.rs": "5afd8223d9eb160963a7feac50980ef455fe3dab2c827a1d96d52726901a34fc",
       "crates/umf-core/Cargo.toml": "b84949f42da22ae01277d1b8fe38391ee1dfb98e372a5a0ad785195b75e9d7c5",
-      "crates/umf-core/src/canonical_codegen_literals.rs": "169e8a3c0c9d5ea1b2fd3c8b7982a4ae8da1b3ec17ad1ca2c257b490b773fcf1",
+      "crates/umf-core/src/canonical_codegen_literals.rs": "a13d02c66233f4d669c6ff95c063e09701aa7380c7e95a81052df04f19f9c050",
       "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "40ed9a68e50d1da28c67432c852348c78eae1b7a87bbb622cdb8faaf55d7dafa",
       "crates/umf-core/src/canonical_codegen_resources.rs": "ec6eb4226ec45fa2fbb6dd9e07c6a0f2e8f8c2beca789dbd372f31521ce683c7",
       "crates/umf-core/src/canonical_static_text_independent_tests.rs": "9b619dca3aae22919a59988093004b8eac23cb1395e6ecfc16df78add51caf43",
@@ -1824,14 +1824,14 @@
       "crates/umf-core/src/context.rs": "5d210c468658cb203cd830688b4677ce2ea1cf199ef59b23f4a86e8eb2efba55",
       "crates/umf-core/src/context_construction_tests.rs": "a7081434d41db02a5b785ab172374e124e8ffa4539e367d0ab46da4200dc82fc",
       "crates/umf-core/src/context_path_tests.rs": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
-      "crates/umf-core/src/engine.rs": "c7e2d23644f056c29af1aac4087cfc6d9aa83299a91028d2a1d9316d6dc4865e",
+      "crates/umf-core/src/engine.rs": "9a13def438ed4cb8bbc6e7ff6e2fb34ea9475a8b3a507c987684af0dee3de980",
       "crates/umf-core/src/full_modules.rs": "f011690138a0933897c2e681b35a844199c4b57c6711357ef3b45599594434a0",
       "crates/umf-core/src/lib.rs": "ae6eef2068889cdba3b34198bd37030567f1dc20909f398c12054d194028ffe0",
       "crates/umf-core/src/python_value.rs": "ac9aadb0980520e8343b29a57ef2e44583ef5f84f59c52f68e44ce1dbe57dfd7",
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "32fd52b0e7f1a96f6e215b51f127ef7e03632953ede218ec7dd6331560ddeab3",
+      "crates/umf-core/src/schema.rs": "2b003282775f9d3ba6ded1570f0125f81eeb80bf53456808efa8bb76b5c7ded8",
       "crates/umf-core/src/schema_admitted_bank.rs": "92591cb73c54411b5cb930bc2af4c9471e5c7fbb150a38b8dec0ca56976aec42",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -1841,7 +1841,7 @@
       "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
       "crates/umf-core/src/schema_closed_container_independent_tests.rs": "63d37fc50d98d0b8f88af3bae40eb27bd362d7ae621e02785d7ab37f2826ecbc",
       "crates/umf-core/src/schema_closed_structure.rs": "27d6487c5d0792f2361302eb4c3cb13d94e16bcca4c4d218ba5acea398074a0f",
-      "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
+      "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "3311df880da3b85a07acf75d97bc15b297d41db7012e745d474d56312cf7067b",
       "crates/umf-core/src/schema_construction_index.rs": "d1e6b66dd95536f1c08a843bb4ecce33f390785cebd8bfa6d3a79a24aaee0c69",
       "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
       "crates/umf-core/src/schema_encoded_source_independent_tests.rs": "0460c457349a0cdbdbcba0214275be6d8a79a00fe002065ed2aeefe62ee2079f",
@@ -1869,12 +1869,12 @@
       "crates/umf-core/src/serialization_closed_metadata.rs": "a704ef592e96970e724d24b36e679f7a5bf16c64918992ae9d92b3420b2cae8f",
       "crates/umf-core/src/serialization_construction_owned_independent_tests.rs": "db3bd9625d1fb4bb04ee0a510beb5862d03a65b39440ddc6190b69a2432efd41",
       "crates/umf-core/src/serialization_owned_decode_stack_independent_tests.rs": "c76df4a8e248c0ce147806b864004290125c7d39e45f27c48994f7f0b7a5d691",
-      "crates/umf-core/src/value.rs": "6a5b3e827e97cfa04dd6167cd62c488132759486f2eb603dccaf3cab0e9ad22d",
+      "crates/umf-core/src/value.rs": "f46547766ad7d2e6be7ef34aeace087b5b0ae7a64f5f31363ebb77e55b7fc69e",
       "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "7e5c714688bf81fafdda16ad586000dbd48183c39e6364968988a79f6cc130fc",
       "crates/umf-core/src/value_decimal_path.rs": "477f37b08fe97e82f857100be653abf81fb997d69fc0baca868ad944ebba7109",
       "crates/umf-core/src/value_fused_admission_independent_tests.rs": "62a3d88fd1dd9331eb2a7bb683a98d1ec884b159e0a5c032fdd57b0880948f41",
       "crates/umf-core/src/value_original_visit_independent_tests.rs": "0d8d89f7ca02c5b238bfcb03f512c5a9e748ffbbd31c3b7dd3a1f80a28542daf",
-      "crates/umf-core/src/value_owned_core_json_independent_tests.rs": "4c89cc19b5592de2c784aecddd60d817163b9976c2dbdac8eb01873d6ebb00dd",
+      "crates/umf-core/src/value_owned_core_json_independent_tests.rs": "b976e4c26465a5a0906b94ede9ec646e42d4168cbb05e027f0fa35e0241dc12d",
       "crates/umf-core/tests/consumer_schema.rs": "2abfb36696a66d603366c38870826fdbb94b0f5d368d08833ae7ae2a8b030c0a",
       "crates/umf-core/tests/resource_cache.rs": "86db330e51951c6759117d181712adbc7fd3cac3a98c00d84af41fb68e06d1f7",
       "crates/umf-core/tests/schema_python_recursive_resource_scope.rs": "2a344459e7db33ab9a872d65f6833f081805453ca6d1ea88ae6ccc90a7758fd4",
@@ -1910,9 +1910,9 @@
       "scripts/saga-portable/other-hosts.ts": "b96a7919ad992ee11702d63f947a1e4f1155883cc6461efbf14a65abf0ba3536",
       "scripts/saga-portable/python-probe.py": "82a5f20917cd7ffca700be90ddeaf5426841a4375ab0a7d7c2056c653e49f083",
       "scripts/saga-portable/verify.ts": "09bf569611574c28e6728dead6ad10137271bf26366f99faec6803ccf5fca9e5",
-      "spec/core/extension-package.schema.json": "1ed5aa9ffc93f317d94bfbd63d575c1ff636a60314aa3806abd8df45a77fcbbf",
-      "spec/core/schema.json": "7a150cd4cd5e29172e1247d7dcfa94cfc03d0fe7795f1a1f888ad8c63d5b935d",
-      "spec/core/semantic-type-reference.schema.json": "f8a5b37547542cd772b97df00683e1994f3261cf6dfc85ed8c8b2cd66edf88e2",
+      "spec/core/extension-package.schema.json": "1a5de3a01a315e58702f822b424d42ac019ec98eb12d4701fcdb32bfe40e25da",
+      "spec/core/schema.json": "f07f2b1ff862b2738f2cff03ff20144f378aae471ee066382a3367d926355275",
+      "spec/core/semantic-type-reference.schema.json": "5efb908e1482fd262338bc39faea101ec29077fb37ddbc1d964b38141aff4702",
       "spec/extensions/actions/package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
       "spec/extensions/binding-stable/package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
       "spec/extensions/binding/package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
@@ -1920,24 +1920,24 @@
       "spec/extensions/tables/operation-0.2.schema.json": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e",
       "spec/extensions/tables/operation.schema.json": "af217abc87d2f4a5205d82c2146040ef986d29252c78a4ec76d59787828578cc",
       "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
-      "spec/metamodel/generated/core-constraints.json": "320876d9a50ed74c198271ab5ee30f41b0412389a114c2e27b6b5b773dc70f47",
-      "spec/metamodel/generated/domain-policy.json": "9c3bcc30cbfe071bac3f4c2df46f50d562a5419ac97a07db9187a76645fa4594",
+      "spec/metamodel/generated/core-constraints.json": "35437e6a18785534f4b9759e398b682dac2860f67f4a6d7b049c6607dd78877c",
+      "spec/metamodel/generated/domain-policy.json": "ead91218c274637952fe54e6eb352691598ca182a0845b92bd572b3cb2730265",
       "tests/qualification/constructor_observation_pure_test.py": "e677919eba2ad1d544f75dab3d844a48a05df081505ee59542a6f8326459390c",
       "tests/qualification/fixtures/inspector-admission-precharge-baseline.json": "068ebe51004e7e03d6ef26aca7774209f5ef3beceb9fa0e40d0e274cb52bdc18",
       "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
       "tests/qualification/fixtures/inspector-constructor-observation.json": "fef5bda142d304f1eadfa2c1c56e26b3e528c97895c3a224754bdd13868db6ae",
-      "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json": "681e1fe9422acfc0dcd652007fb4fb06818f2e08f006d8574083fc01a2da0992",
+      "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json": "7d0ab9a2ba01cf58515f0997959c8aefee3e3cab8c3b36e164730cea55d32071",
       "tests/qualification/fixtures/inspector-installed-current-resources.json": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "tests/qualification/fixtures/inspector-retained-continuation.json": "7e40212a4554570aae34b17f29104c1c97cfe26471efd58b6ab95a72e97e3036",
       "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
       "tests/qualification/test_inspector_admission_precharge.py": "79546279ad81343a925b3ca102b77e2cb3081f0e49d21e58c0e3937f2f7e07b3",
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
-      "tests/qualification/test_inspector_c1_binding_closure.py": "5134dd4f2c46c95939afe7e7c10996f66bc65049e3cddfd6590ea876e1d8d18a",
+      "tests/qualification/test_inspector_c1_binding_closure.py": "60f1fc3b1c66e951a076d38f581b311de4ce1dfc53c0c30a11158279ff39a265",
       "tests/qualification/test_inspector_combined_budget.py": "43810b7edac2b552c49a41d7909470c6bb08e96241b76d77b139495f52206196",
-      "tests/qualification/test_inspector_construction_batch.py": "19a7d292cca78eff46037e598024a491094b62f067620c6645ab56b613e423c1",
+      "tests/qualification/test_inspector_construction_batch.py": "0bad691815062f1011d90aeeed8a78abbdc6893fe7f83239e29bbac06b582170",
       "tests/qualification/test_inspector_cost_gate.py": "77c63dbe64e81337278bc311a314a91e95d9979d6368e48bc50f07b9469b9dd5",
-      "tests/qualification/test_inspector_installed_factory.py": "3e0b2be6b8a2dd656f56c67288420e6c5708ef8db83d9b36fb92e1654a302589",
+      "tests/qualification/test_inspector_installed_factory.py": "949174555630c2f46e44de881963cfe50d32360674295962b9d00f89a34665a7",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
       "tests/qualification/test_inspector_owner_cursors.py": "3251d594419079004506a1b416313ecb8acfccfbb37448ddb9df231eabb86a6a",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
@@ -1952,7 +1952,7 @@
       "tools/intake_inspector_attribution_continuation.py": "f554597f8395458e495f20f8115bf118a1b48f15ca5cf5d1de94ee8592f6b39c",
       "tools/intake_inspector_retained_continuation.py": "25692b0f877b81cfd5e45e8b007b001064ea6d25384465f957203f5f25e0e33d",
       "tools/probe_inspector_constructor_prefix.py": "bb308ddbe9eeb9c21c4d1f25264d6ab07fd414e0764e7d2cd653dec2019c768f",
-      "tools/probe_inspector_installed_factory.py": "14fcabd02c6386ac8b98fa7f62aa731e7b4cf0832d91f7de280a03090d8ee959",
+      "tools/probe_inspector_installed_factory.py": "01f1fb169c2bf11685698b54d87c811e95ce7f5a9f00c4c743482893126dbf92",
       "tools/probe_inspector_retained_attribution.py": "2e872326ad62c7fb5f5f4fdecec2322db5159a190fb7fd4495ec6b9919a67625",
       "tools/probe_inspector_retained_feasibility.py": "e33e1d352c9861970a7aeb192dc1803e11e6455b086a1cc6c9391ce283c9d49d",
       "tools/qualify_inspector_combined_budget.py": "895fd9e0d3264519570a38fdbda33d4511810f884dcce9d8695d9204ed70ac9a",
@@ -1960,7 +1960,7 @@
       "tools/qualify_inspector_constructor_observation.py": "e8874d1dd074ea2c7089c5f526426e22a7dd91114b65126caed12c37e65d3385",
       "tools/run_inspector_attribution_lanes.py": "3ea17a8c8e71d04a090bde9fa94498dfa821991dc3332f283785b17d21bf8129",
       "tools/run_inspector_cost_gate.py": "752c1014b36c83d2a20b415a46a1e74c52971f043b987786fe5de702fc0332a4",
-      "tools/tests/test_codegen_resource_literals.py": "fc01e958c0b16a6dcce33c7ce31aaa67af5ddf2960e94013aaa6031ea05f321a",
+      "tools/tests/test_codegen_resource_literals.py": "92e8de2ab97b136da17a27b4730ab64a17549619cf298c1dad3a03ceb7f57cf9",
       "tools/tests/test_operation_schema_utf16_encoding.py": "129eff6a26986a41f9c5fc8f06ca88c673494c3442bcaf2a6fcda69f170be319",
       "tools/tests/test_schema_metas_utf16_encoding.py": "577f088d62abb65864dab66a93c53fc46092b5abd625f63e2e5ddcdd66df02eb",
       "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355"
@@ -5968,9 +5968,14 @@
               "#[path=\"value_owned_core_json_independent_tests.rs\"]",
               "#[test]"
             ]
+          },
+          {
+            "name": "value::owned_core_json_independent_tests::storage_text_copy_preserves_all_storage_kinds_without_new_input_admission",
+            "line": 693,
+            "module": "value::owned_core_json_independent_tests"
           }
         ],
-        "caseCount": 10
+        "caseCount": 11
       },
       {
         "package": "umf-core",
@@ -6920,9 +6925,14 @@
               "#[cfg(test)]",
               "#[test]"
             ]
+          },
+          {
+            "name": "actions::saga::tests::cloned_saga_resources_keep_original_snapshot_and_noop_or_invalid_installation",
+            "line": 372,
+            "module": "actions::saga::tests"
           }
         ],
-        "caseCount": 6
+        "caseCount": 7
       },
       {
         "package": "umf-codegen",
@@ -7863,9 +7873,24 @@
               "#[path=\"schema_codegen_catalogue_independent_tests.rs\"]",
               "#[test]"
             ]
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::prepared_export_is_shared_only_with_actual_owner_operation_and_lifetime",
+            "line": 549,
+            "module": "schema::codegen_catalogue_independent_tests"
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::prepared_builder_does_not_confer_schema_success_or_accept_incomplete_protocol",
+            "line": 593,
+            "module": "schema::codegen_catalogue_independent_tests"
+          },
+          {
+            "name": "schema::codegen_catalogue_independent_tests::failed_table_export_cannot_retry_or_publish_a_receipt",
+            "line": 614,
+            "module": "schema::codegen_catalogue_independent_tests"
           }
         ],
-        "caseCount": 7
+        "caseCount": 10
       },
       {
         "package": "umf-codegen",
@@ -7882,9 +7907,24 @@
               "#[path=\"resources_codegen_catalogue_independent_tests.rs\"]",
               "#[test]"
             ]
+          },
+          {
+            "name": "resources::codegen_catalogue_independent_tests::paid_storage_copy_is_not_current_limit_readmission_and_stops_at_each_denial",
+            "line": 294,
+            "module": "resources::codegen_catalogue_independent_tests"
+          },
+          {
+            "name": "resources::codegen_catalogue_independent_tests::snapshot_insert_unique_shared_denial_and_public_deep_clone_are_isolated",
+            "line": 317,
+            "module": "resources::codegen_catalogue_independent_tests"
+          },
+          {
+            "name": "resources::codegen_catalogue_independent_tests::saga_two_insertions_are_isolated_and_old_core_limits_still_refuse_in_compiler",
+            "line": 409,
+            "module": "resources::codegen_catalogue_independent_tests"
           }
         ],
-        "caseCount": 1
+        "caseCount": 4
       },
       {
         "package": "umf-core",
@@ -8299,10 +8339,10 @@
     },
     "currentInputs": {
       "fixturePath": "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json",
-      "fixtureSHA256": "681e1fe9422acfc0dcd652007fb4fb06818f2e08f006d8574083fc01a2da0992",
+      "fixtureSHA256": "7d0ab9a2ba01cf58515f0997959c8aefee3e3cab8c3b36e164730cea55d32071",
       "metadataVersion": "0.10.10"
     },
-    "closureSHA256": "123a7344f4932e6c2b293ee9eec3d68f7d1f17beebd3c238ea1bd4a0eebea768"
+    "closureSHA256": "7f4e37a60b3989ccaee1400561bb076667d36aaa61c8c85f33652f629c3b719a"
   },
   "modelReferences": {
     "baseModel": {
