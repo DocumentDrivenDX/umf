@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Exact admitted release tag: umf-v0.10.8 or umf-v0.10.9"
+        description: "Exact admitted release tag: umf-v0.10.8, umf-v0.10.9, or umf-v0.10.10"
         type: string
         required: true
       source_sha:
@@ -30,7 +30,7 @@ permissions:
   contents: read
   actions: read
 concurrency:
-  group: ${{ inputs.tag == 'umf-v0.10.8' && 'codegen-pypi-0108' || inputs.tag == 'umf-v0.10.9' && 'codegen-pypi-0109' || 'codegen-pypi-unsupported' }}
+  group: ${{ inputs.tag == 'umf-v0.10.8' && 'codegen-pypi-0108' || inputs.tag == 'umf-v0.10.9' && 'codegen-pypi-0109' || inputs.tag == 'umf-v0.10.10' && 'codegen-pypi-0110-candidate' || 'codegen-pypi-unsupported' }}
   cancel-in-progress: false
 env:
   TAG: ${{ inputs.tag }}
@@ -40,7 +40,7 @@ env:
   LOCALLY_QUALIFIED: ${{ inputs.locally_qualified }}
 jobs:
   verify:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && inputs.tag == 'umf-v0.10.8'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && (inputs.tag == 'umf-v0.10.8' || inputs.tag == 'umf-v0.10.10')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
@@ -61,6 +61,12 @@ jobs:
           import os, pathlib, re, subprocess, sys
           sys.path.insert(0, 'scripts')
           import publish_codegen_pypi_release as p
+          if os.environ['TAG'] == 'umf-v0.10.10':
+              value = p.core.load_candidate01010_profile(pathlib.Path('.'), 'umf-codegen',
+                  os.environ['SOURCE_SHA'], os.environ['TAG'], os.environ['ADMISSION_SHA'])
+              names = p.core.candidate01010_release_download_roster(value, 'umf-codegen')
+              pathlib.Path('download-roster.txt').write_text(''.join(p.core._candidate_path(n) + '\n' for n in sorted(names)))
+              raise SystemExit(0)
           p.require(os.environ['TAG'] == p.TAG and os.environ['SOURCE_SHA'] == p.SOURCE, 'exact coupled source required')
           p.require(all(re.fullmatch('[0-9a-f]{64}', os.environ[n]) for n in ('SUMS_SHA', 'ADMISSION_SHA')), 'digest pins required')
           raw = subprocess.check_output(['git', 'show', 'HEAD:' + p.ADMISSION_PATH])
@@ -104,13 +110,13 @@ jobs:
           python scripts/publish_codegen_pypi_release.py "${ARGS[@]}"
       - uses: actions/upload-artifact@v4
         with:
-          name: admitted-codegen-0108
+          name: admitted-codegen-${{ inputs.tag == 'umf-v0.10.10' && '01010' || '0108' }}
           path: dist/*
           if-no-files-found: error
           retention-days: 90
   publish:
     needs: verify
-    if: inputs.publish == true && github.ref == 'refs/heads/main' && inputs.tag == 'umf-v0.10.8'
+    if: inputs.publish == true && github.ref == 'refs/heads/main' && (inputs.tag == 'umf-v0.10.8' || inputs.tag == 'umf-v0.10.10')
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     environment: pypi
@@ -130,7 +136,7 @@ jobs:
           python-version: '3.11'
       - uses: actions/download-artifact@v4
         with:
-          name: admitted-codegen-0108
+          name: admitted-codegen-${{ inputs.tag == 'umf-v0.10.10' && '01010' || '0108' }}
           path: dist
       - name: Revalidate original bytes and public Core; refuse PyPI collisions
         id: preflight
@@ -141,7 +147,11 @@ jobs:
         if: steps.preflight.outputs.status == 'absent'
         run: |
           mkdir .verified-codegen-packages
-          cp dist/umf_codegen-0.10.8-py3-none-any.whl dist/umf_codegen-0.10.8.tar.gz .verified-codegen-packages/
+          if [[ "$TAG" == umf-v0.10.10 ]]; then
+            cp dist/umf_codegen-0.10.10-py3-none-any.whl dist/umf_codegen-0.10.10.tar.gz .verified-codegen-packages/
+          else
+            cp dist/umf_codegen-0.10.8-py3-none-any.whl dist/umf_codegen-0.10.8.tar.gz .verified-codegen-packages/
+          fi
       - uses: pypa/gh-action-pypi-publish@release/v1
         if: steps.preflight.outputs.status == 'absent'
         with:
@@ -152,7 +162,7 @@ jobs:
             --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA" --wait > dist/public-bytes-receipt.json
       - uses: actions/upload-artifact@v4
         with:
-          name: codegen-0108-public-bytes
+          name: codegen-${{ inputs.tag == 'umf-v0.10.10' && '01010' || '0108' }}-public-bytes
           path: dist/*receipt.json
           retention-days: 365
   public-consumer:
@@ -236,8 +246,80 @@ jobs:
             ${{ runner.temp }}/codegen-cli-help.txt
           if-no-files-found: error
           retention-days: 365
+  public-consumer-01010:
+    needs: [verify, publish]
+    if: inputs.tag == 'umf-v0.10.10'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: admitted-codegen-01010
+          path: ${{ runner.temp }}/qualified-codegen-inputs
+      - name: Fresh normal public resolver and exact candidate archive consumer
+        working-directory: ${{ runner.temp }}
+        env:
+          PIP_CONFIG_FILE: /dev/null
+        run: |
+          set -euo pipefail
+          python -m venv codegen-public-consumer
+          codegen-public-consumer/bin/python -m pip --isolated install --disable-pip-version-check --no-cache-dir \
+            --only-binary=umf-core,umf-codegen --index-url https://pypi.org/simple \
+            --report "$RUNNER_TEMP/codegen-public-install-report.json" 'umf-codegen==0.10.10'
+          codegen-public-consumer/bin/python -m pip --isolated check
+          codegen-public-consumer/bin/python -I - <<'PY'
+          import hashlib, importlib.metadata as m, json, os, pathlib, re, sysconfig
+          import umf, umf_codegen
+          from umf_codegen import _native, _release
+          inputs = pathlib.Path(os.environ['RUNNER_TEMP']) / 'qualified-codegen-inputs'
+          source = json.loads((inputs / 'source-receipt.json').read_text())
+          publications = []
+          for path in inputs.glob('*.json'):
+              try: value = json.loads(path.read_text())
+              except (OSError, ValueError): continue
+              if value.get('schema') == 'pypi-publication-receipt.v1' and value.get('distribution') == 'umf-core':
+                  publications.append(value)
+          assert len(publications) == 1 and publications[0]['version'] == '0.10.10'
+          expected = {'umf-core': publications[0]['files'], 'umf-codegen': source['files']}
+          install = json.loads(pathlib.Path('codegen-public-install-report.json').read_text())
+          selected = {}
+          for row in install['install']:
+              name = re.sub('[-_.]+', '-', row['metadata']['name']).lower()
+              if name not in expected: continue
+              url = row['download_info']['url']
+              assert url.startswith('https://files.pythonhosted.org/')
+              filename = url.rsplit('/', 1)[1].split('#', 1)[0]
+              digest = row['download_info']['archive_info']['hashes']['sha256']
+              assert expected[name][filename] == digest and row['metadata']['version'] == '0.10.10'
+              assert name not in selected
+              selected[name] = digest
+          assert set(selected) == {'umf-core', 'umf-codegen'}
+          for name, module in [('umf-core', umf), ('umf-codegen', umf_codegen)]:
+              dist = m.distribution(name)
+              assert dist.version == '0.10.10' and dist.read_text('direct_url.json') is None
+              assert pathlib.Path(module.__file__).is_relative_to(sysconfig.get_path('purelib'))
+          assert m.requires('umf-codegen') == ['umf-core==0.10.10']
+          assert umf.current_core_version() == '0.10.0'
+          assert _release.UMF_CORE_ENGINE_VERSION == 'umf-core-r2'
+          assert _release.CODEGEN_PROTOCOL_VERSION == 'umf-codegen-r3-seven-ops-nine-resources/1'
+          _native._verify_native()
+          pathlib.Path('codegen-consumer-receipt.json').write_text(json.dumps({
+              'schema': 'umf.codegen-public-consumer/1', 'status': 'passed', 'index': 'https://pypi.org/simple',
+              'codegen': '0.10.10', 'core': '0.10.10', 'normalPublicResolverArchiveHashes': selected,
+              'scope': 'fresh public resolver and installed package identity; not qualification evidence'
+          }, indent=2) + '\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegen-01010-public-consumer
+          path: ${{ runner.temp }}/codegen-consumer-receipt.json
+          if-no-files-found: error
+          retention-days: 365
   verify-0109:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && inputs.tag != 'umf-v0.10.8'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && inputs.tag == 'umf-v0.10.9'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:

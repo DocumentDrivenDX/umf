@@ -498,4 +498,16 @@ class CodegenPublisherTests(unittest.TestCase):
         self.assertEqual(json.loads(output.getvalue())['publisherProof'], 'UNVERIFIED')
 
 
+
+
+class Closed01010RouteDispatchTests(unittest.TestCase):
+    def test_new_route_refuses_missing_real_admission_and_preserves_old_constants(self):
+        from unittest.mock import patch
+        old=(p.SOURCE,p.TREE,p.VERSION,dict(p.FILES))
+        with patch.object(p.core,'verify_candidate01010_packet',side_effect=p.core.ReleaseError('actual candidate missing')) as verify:
+            with self.assertRaisesRegex(p.core.ReleaseError,'actual candidate missing'):
+                p.verify_packet(Path('/synthetic'),b'', 'a'*64,'b'*64,'umf-v0.10.10','1'*40)
+            self.assertEqual(verify.call_args.kwargs['distribution'],'umf-codegen')
+        self.assertEqual((p.SOURCE,p.TREE,p.VERSION,dict(p.FILES)),old)
+
 if __name__ == '__main__': unittest.main()
