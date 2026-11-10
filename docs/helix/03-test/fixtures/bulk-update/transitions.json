@@ -1,0 +1,1835 @@
+{
+ "profile": "umf.actions.bulk-transitions/1",
+ "owner": "US-907",
+ "status": "planned",
+ "note": "Hand-authored expectations derived from CONTRACT-904 (transition table, decision order, item tokens); they require owner review before qualification.",
+ "tableRows": [
+  "T1",
+  "T2",
+  "T3",
+  "T4",
+  "T5",
+  "T6",
+  "T7",
+  "T8",
+  "T9",
+  "T10",
+  "T11"
+ ],
+ "controls": [
+  "resume-from-stopped",
+  "reexecute-on-expiry",
+  "rollback-from-not-found",
+  "guard-code-translated"
+ ],
+ "fences": {
+  "next": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "9",
+    "10"
+   ],
+   [
+    "18446744073709551615",
+    "18446744073709551616"
+   ],
+   [
+    "99999999999999999999",
+    "100000000000000000000"
+   ]
+  ],
+  "invalid": [
+   "",
+   "01",
+   "-1",
+   "1.0",
+   "١",
+   "+1",
+   " 1"
+  ]
+ },
+ "samples": {
+  "initial": null,
+  "queued": {
+   "status": "queued",
+   "batchCount": 3,
+   "nextBatch": 0,
+   "committedBatches": 0,
+   "fence": "0",
+   "claim": null,
+   "cancelRequested": false,
+   "stop": null
+  },
+  "running": {
+   "status": "running",
+   "batchCount": 3,
+   "nextBatch": 0,
+   "committedBatches": 0,
+   "fence": "1",
+   "claim": {
+    "batch": 0,
+    "fence": "1",
+    "effectAdmitted": false
+   },
+   "cancelRequested": false,
+   "stop": null
+  },
+  "reconciling": {
+   "status": "reconciling",
+   "batchCount": 3,
+   "nextBatch": 1,
+   "committedBatches": 1,
+   "fence": "2",
+   "claim": {
+    "batch": 1,
+    "fence": "2",
+    "effectAdmitted": true
+   },
+   "cancelRequested": false,
+   "stop": null
+  },
+  "completed": {
+   "status": "completed",
+   "batchCount": 3,
+   "nextBatch": 3,
+   "committedBatches": 3,
+   "fence": "0",
+   "claim": null,
+   "cancelRequested": false,
+   "stop": null
+  },
+  "stopped": {
+   "status": "stopped",
+   "batchCount": 3,
+   "nextBatch": 0,
+   "committedBatches": 0,
+   "fence": "0",
+   "claim": null,
+   "cancelRequested": false,
+   "stop": {
+    "batch": 0,
+    "code": "PAP_GUARD"
+   }
+  },
+  "cancelled": {
+   "status": "cancelled",
+   "batchCount": 3,
+   "nextBatch": 0,
+   "committedBatches": 0,
+   "fence": "0",
+   "claim": null,
+   "cancelRequested": false,
+   "stop": null
+  }
+ },
+ "eventSamples": {
+  "submit": {
+   "kind": "submit",
+   "batchCount": 3
+  },
+  "claim": {
+   "kind": "claim"
+  },
+  "execute": {
+   "kind": "execute",
+   "batch": 0,
+   "fence": "1"
+  },
+  "commit": {
+   "kind": "commit"
+  },
+  "failure": {
+   "kind": "failure",
+   "failure": "authorization-loss",
+   "code": "AUTHORIZATION"
+  },
+  "lose-custody": {
+   "kind": "lose-custody"
+  },
+  "reconcile": {
+   "kind": "reconcile",
+   "evidence": "committed"
+  },
+  "expire-claim": {
+   "kind": "expire-claim",
+   "confirmedNoExecution": true
+  },
+  "cancel": {
+   "kind": "cancel"
+  },
+  "resume": {
+   "kind": "resume"
+  }
+ },
+ "permittedPairs": [
+  [
+   "initial",
+   "submit"
+  ],
+  [
+   "queued",
+   "claim"
+  ],
+  [
+   "queued",
+   "cancel"
+  ],
+  [
+   "running",
+   "execute"
+  ],
+  [
+   "running",
+   "failure"
+  ],
+  [
+   "running",
+   "expire-claim"
+  ],
+  [
+   "running",
+   "cancel"
+  ],
+  [
+   "reconciling",
+   "reconcile"
+  ],
+  [
+   "reconciling",
+   "cancel"
+  ],
+  [
+   "completed",
+   "cancel"
+  ],
+  [
+   "stopped",
+   "cancel"
+  ],
+  [
+   "cancelled",
+   "cancel"
+  ]
+ ],
+ "transitions": [
+  {
+   "id": "t1-submit",
+   "covers": "US-907-AC1",
+   "row": "T1",
+   "state": null,
+   "event": {
+    "kind": "submit",
+    "batchCount": 3
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "queued",
+     "batchCount": 3,
+     "nextBatch": 0,
+     "committedBatches": 0,
+     "claim": null,
+     "cancelRequested": false,
+     "stop": null
+    },
+    "basis": "seal-delegation-intent-capacity"
+   }
+  },
+  {
+   "id": "t2-empty-submit",
+   "covers": "US-907-AC1",
+   "row": "T2",
+   "state": null,
+   "event": {
+    "kind": "submit",
+    "batchCount": 0
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "completed",
+     "batchCount": 0,
+     "nextBatch": 0,
+     "committedBatches": 0,
+     "claim": null
+    },
+    "basis": "empty-manifest"
+   }
+  },
+  {
+   "id": "t3-claim",
+   "covers": "US-907-AC1",
+   "row": "T3",
+   "state": {
+    "status": "queued",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "0",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "claim"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "running",
+     "fence": "1",
+     "claim": {
+      "batch": 0,
+      "fence": "1",
+      "effectAdmitted": false
+     }
+    }
+   }
+  },
+  {
+   "id": "t4a-commit-more",
+   "covers": "US-907-AC1",
+   "row": "T4",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "commit"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "queued",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "t4b-commit-last",
+   "covers": "US-907-AC1",
+   "row": "T4",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 2,
+    "committedBatches": 2,
+    "fence": "3",
+    "claim": {
+     "batch": 2,
+     "fence": "3",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "commit"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "completed",
+     "nextBatch": 3,
+     "committedBatches": 3,
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "t5-conflict",
+   "covers": "US-907-AC1",
+   "row": "T5",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "failure",
+    "failure": "conflict",
+    "code": "PAP_GUARD"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "stopped",
+     "committedBatches": 1,
+     "nextBatch": 1,
+     "stop": {
+      "batch": 1,
+      "code": "PAP_GUARD"
+     },
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "t5-rejected",
+   "covers": "US-907-AC1",
+   "row": "T5",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "failure",
+    "failure": "rejected",
+    "code": "PARAMETER"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "stopped",
+     "committedBatches": 1,
+     "nextBatch": 1,
+     "stop": {
+      "batch": 1,
+      "code": "PARAMETER"
+     },
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "t5-authorization-loss",
+   "covers": "US-907-AC1",
+   "row": "T5",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "failure",
+    "failure": "authorization-loss",
+    "code": "AUTHORIZATION"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "stopped",
+     "committedBatches": 1,
+     "nextBatch": 1,
+     "stop": {
+      "batch": 1,
+      "code": "AUTHORIZATION"
+     },
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "t5-known-failure",
+   "covers": "US-907-AC1",
+   "row": "T5",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "failure",
+    "failure": "known-failure",
+    "code": "NATIVE_ABORT"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "stopped",
+     "committedBatches": 1,
+     "nextBatch": 1,
+     "stop": {
+      "batch": 1,
+      "code": "NATIVE_ABORT"
+     },
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "t6-lose-custody",
+   "covers": "US-907-AC1",
+   "row": "T6",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "lose-custody"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "reconciling",
+     "claim": {
+      "batch": 0,
+      "fence": "1",
+      "effectAdmitted": true
+     }
+    }
+   }
+  },
+  {
+   "id": "t11-terminal-resume-stopped",
+   "covers": "US-907-AC1",
+   "row": "T11",
+   "state": {
+    "status": "stopped",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "0",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": {
+     "batch": 0,
+     "code": "PAP_GUARD"
+    }
+   },
+   "event": {
+    "kind": "resume"
+   },
+   "expect": {
+    "ok": false
+   },
+   "control": "resume-from-stopped"
+  },
+  {
+   "id": "t11-commit-before-admission",
+   "covers": "US-907-AC1",
+   "row": "T4",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": false
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "commit"
+   },
+   "expect": {
+    "ok": false
+   }
+  },
+  {
+   "id": "exec-0-2",
+   "covers": "US-907-AC2",
+   "row": "T3",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "2",
+    "claim": {
+     "batch": 0,
+     "fence": "2",
+     "effectAdmitted": false
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "execute",
+    "batch": 0,
+    "fence": "1"
+   },
+   "expect": {
+    "ok": false,
+    "code": "PAP_FENCE"
+   }
+  },
+  {
+   "id": "exec-0-01",
+   "covers": "US-907-AC2",
+   "row": "T3",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": false
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "execute",
+    "batch": 0,
+    "fence": "01"
+   },
+   "expect": {
+    "ok": false,
+    "code": "PAP_FENCE"
+   }
+  },
+  {
+   "id": "exec-1-1",
+   "covers": "US-907-AC2",
+   "row": "T3",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": false
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "execute",
+    "batch": 1,
+    "fence": "1"
+   },
+   "expect": {
+    "ok": false,
+    "code": "PAP_ORDER"
+   }
+  },
+  {
+   "id": "exec-absent-claim",
+   "covers": "US-907-AC2",
+   "row": "T3",
+   "state": {
+    "status": "queued",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "execute",
+    "batch": 0,
+    "fence": "1"
+   },
+   "expect": {
+    "ok": false,
+    "code": "PAP_FENCE"
+   }
+  },
+  {
+   "id": "exec-valid",
+   "covers": "US-907-AC2",
+   "row": "T3",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": false
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "execute",
+    "batch": 0,
+    "fence": "1"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "running",
+     "claim": {
+      "batch": 0,
+      "fence": "1",
+      "effectAdmitted": true
+     }
+    }
+   }
+  },
+  {
+   "id": "expire-admitted-refused",
+   "covers": "US-907-AC2",
+   "row": "T8",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "expire-claim",
+    "confirmedNoExecution": true
+   },
+   "expect": {
+    "ok": false
+   },
+   "control": "reexecute-on-expiry"
+  },
+  {
+   "id": "expire-unconfirmed-refused",
+   "covers": "US-907-AC2",
+   "row": "T8",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": false
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "expire-claim",
+    "confirmedNoExecution": false
+   },
+   "expect": {
+    "ok": false
+   }
+  },
+  {
+   "id": "expire-confirmed-requeues",
+   "covers": "US-907-AC2",
+   "row": "T8",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": false
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "expire-claim",
+    "confirmedNoExecution": true
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "queued",
+     "nextBatch": 0,
+     "committedBatches": 0,
+     "fence": "1",
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "reclaim-higher-fence",
+   "covers": "US-907-AC2",
+   "row": "T8",
+   "state": {
+    "status": "queued",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "claim"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "running",
+     "fence": "2",
+     "claim": {
+      "batch": 0,
+      "fence": "2",
+      "effectAdmitted": false
+     }
+    }
+   }
+  },
+  {
+   "id": "rec-committed-more",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "committed"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "queued",
+     "nextBatch": 2,
+     "committedBatches": 2,
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "rec-committed-last",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 2,
+    "committedBatches": 2,
+    "fence": "3",
+    "claim": {
+     "batch": 2,
+     "fence": "3",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "committed"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "completed",
+     "nextBatch": 3,
+     "committedBatches": 3,
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "rec-noncommit-admitted",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "noncommit-admitted"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "stopped",
+     "committedBatches": 1,
+     "stop": {
+      "batch": 1,
+      "code": "PAP_ABORT_DISPOSITION_UNKNOWN"
+     }
+    }
+   }
+  },
+  {
+   "id": "rec-ambiguous-receipt-not-found",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "receipt-not-found"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "reconciling",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "stop": null,
+     "claim": {
+      "batch": 1,
+      "fence": "2",
+      "effectAdmitted": true
+     }
+    },
+    "basis": "unresolved"
+   },
+   "control": "rollback-from-not-found"
+  },
+  {
+   "id": "rec-ambiguous-native-status-null",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "native-status-null"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "reconciling",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "stop": null,
+     "claim": {
+      "batch": 1,
+      "fence": "2",
+      "effectAdmitted": true
+     }
+    },
+    "basis": "unresolved"
+   }
+  },
+  {
+   "id": "rec-ambiguous-lease-expired",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "lease-expired"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "reconciling",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "stop": null,
+     "claim": {
+      "batch": 1,
+      "fence": "2",
+      "effectAdmitted": true
+     }
+    },
+    "basis": "unresolved"
+   }
+  },
+  {
+   "id": "rec-ambiguous-session-changed",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "session-changed"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "reconciling",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "stop": null,
+     "claim": {
+      "batch": 1,
+      "fence": "2",
+      "effectAdmitted": true
+     }
+    },
+    "basis": "unresolved"
+   }
+  },
+  {
+   "id": "rec-ambiguous-unavailable",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "unavailable"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "reconciling",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "stop": null,
+     "claim": {
+      "batch": 1,
+      "fence": "2",
+      "effectAdmitted": true
+     }
+    },
+    "basis": "unresolved"
+   }
+  },
+  {
+   "id": "rec-stopped-no-retry",
+   "covers": "US-907-AC3",
+   "row": "T11",
+   "state": {
+    "status": "stopped",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "0",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": {
+     "batch": 1,
+     "code": "PAP_ABORT_DISPOSITION_UNKNOWN"
+    }
+   },
+   "event": {
+    "kind": "claim"
+   },
+   "expect": {
+    "ok": false
+   }
+  },
+  {
+   "id": "rec-cancel-pending-commit",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": true,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "committed"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "cancelled",
+     "nextBatch": 2,
+     "committedBatches": 2,
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "cancel-queued",
+   "covers": "US-907-AC4",
+   "row": "T9",
+   "state": {
+    "status": "queued",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "0",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "cancel"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "cancelled",
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "cancel-before-admission",
+   "covers": "US-907-AC4",
+   "row": "T9",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": false
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "cancel"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "cancelled",
+     "claim": null,
+     "committedBatches": 0
+    }
+   }
+  },
+  {
+   "id": "cancel-admitted",
+   "covers": "US-907-AC4",
+   "row": "T10",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "cancel"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "running",
+     "cancelRequested": true,
+     "claim": {
+      "batch": 0,
+      "fence": "1",
+      "effectAdmitted": true
+     },
+     "stop": null
+    },
+    "basis": "cancel-requested"
+   }
+  },
+  {
+   "id": "cancel-admitted-then-commit",
+   "covers": "US-907-AC4",
+   "row": "T10",
+   "state": {
+    "status": "running",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": true
+    },
+    "cancelRequested": true,
+    "stop": null
+   },
+   "event": {
+    "kind": "commit"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "cancelled",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "cancel-reconciling",
+   "covers": "US-907-AC4",
+   "row": "T10",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "2",
+    "claim": {
+     "batch": 1,
+     "fence": "2",
+     "effectAdmitted": true
+    },
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "cancel"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "reconciling",
+     "cancelRequested": true,
+     "stop": null,
+     "claim": {
+      "batch": 1,
+      "fence": "2",
+      "effectAdmitted": true
+     }
+    },
+    "basis": "cancel-requested"
+   }
+  },
+  {
+   "id": "cancelled-execute-refused",
+   "covers": "US-907-AC4",
+   "row": "T9",
+   "state": {
+    "status": "cancelled",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "execute",
+    "batch": 0,
+    "fence": "1"
+   },
+   "expect": {
+    "ok": false,
+    "code": "PAP_CANCELLED"
+   }
+  },
+  {
+   "id": "cancelled-claim-refused",
+   "covers": "US-907-AC4",
+   "row": "T9",
+   "state": {
+    "status": "cancelled",
+    "batchCount": 3,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "0",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "claim"
+   },
+   "expect": {
+    "ok": false,
+    "code": "PAP_CANCELLED"
+   }
+  },
+  {
+   "id": "terminal-cancel-noop-completed",
+   "covers": "US-907-AC4",
+   "row": "T11",
+   "state": {
+    "status": "completed",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "0",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "cancel"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "completed",
+     "batchCount": 3,
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "fence": "0",
+     "claim": null,
+     "cancelRequested": false,
+     "stop": null
+    },
+    "basis": "terminal-noop"
+   }
+  },
+  {
+   "id": "terminal-cancel-noop-stopped",
+   "covers": "US-907-AC4",
+   "row": "T11",
+   "state": {
+    "status": "stopped",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "0",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": {
+     "batch": 1,
+     "code": "PAP_GUARD"
+    }
+   },
+   "event": {
+    "kind": "cancel"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "stopped",
+     "batchCount": 3,
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "fence": "0",
+     "claim": null,
+     "cancelRequested": false,
+     "stop": {
+      "batch": 1,
+      "code": "PAP_GUARD"
+     }
+    },
+    "basis": "terminal-noop"
+   }
+  },
+  {
+   "id": "terminal-cancel-noop-cancelled",
+   "covers": "US-907-AC4",
+   "row": "T11",
+   "state": {
+    "status": "cancelled",
+    "batchCount": 3,
+    "nextBatch": 1,
+    "committedBatches": 1,
+    "fence": "0",
+    "claim": null,
+    "cancelRequested": false,
+    "stop": null
+   },
+   "event": {
+    "kind": "cancel"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "cancelled",
+     "batchCount": 3,
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "fence": "0",
+     "claim": null,
+     "cancelRequested": false,
+     "stop": null
+    },
+    "basis": "terminal-noop"
+   }
+  }
+ ],
+ "decisionOrder": [
+  {
+   "id": "delegation-missing",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "missing",
+    "guards": "pass",
+    "tx1": {
+     "decision": "committed"
+    }
+   },
+   "expect": {
+    "status": "denied",
+    "code": "AUTHORIZATION",
+    "tx1Invoked": false,
+    "itemOutcome": false
+   }
+  },
+  {
+   "id": "delegation-expired",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "expired",
+    "guards": "pass",
+    "tx1": {
+     "decision": "committed"
+    }
+   },
+   "expect": {
+    "status": "denied",
+    "code": "AUTHORIZATION",
+    "tx1Invoked": false,
+    "itemOutcome": false
+   }
+  },
+  {
+   "id": "delegation-human-lost",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "human-lost",
+    "guards": "pass",
+    "tx1": {
+     "decision": "committed"
+    }
+   },
+   "expect": {
+    "status": "denied",
+    "code": "AUTHORIZATION",
+    "tx1Invoked": false,
+    "itemOutcome": false
+   }
+  },
+  {
+   "id": "delegation-before-guards",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "missing",
+    "guards": "changed",
+    "guardItem": 0,
+    "tx1": null
+   },
+   "expect": {
+    "status": "denied",
+    "code": "AUTHORIZATION",
+    "tx1Invoked": false,
+    "itemOutcome": false
+   }
+  },
+  {
+   "id": "guard-changed",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "valid",
+    "guards": "changed",
+    "guardItem": 1,
+    "tx1": null
+   },
+   "expect": {
+    "status": "conflict",
+    "code": "PAP_GUARD",
+    "item": 1,
+    "tx1Invoked": false,
+    "itemOutcome": false
+   }
+  },
+  {
+   "id": "guard-deleted",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "valid",
+    "guards": "deleted",
+    "guardItem": 1,
+    "tx1": null
+   },
+   "expect": {
+    "status": "conflict",
+    "code": "PAP_GUARD",
+    "item": 1,
+    "tx1Invoked": false,
+    "itemOutcome": false
+   },
+   "control": "guard-code-translated"
+  },
+  {
+   "id": "guard-rebound",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "valid",
+    "guards": "rebound",
+    "guardItem": 1,
+    "tx1": null
+   },
+   "expect": {
+    "status": "conflict",
+    "code": "PAP_GUARD",
+    "item": 1,
+    "tx1Invoked": false,
+    "itemOutcome": false
+   }
+  },
+  {
+   "id": "all-pass-commit",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "valid",
+    "guards": "pass",
+    "tx1": {
+     "decision": "committed"
+    }
+   },
+   "expect": {
+    "status": "committed",
+    "tx1Invoked": true,
+    "itemOutcome": true
+   }
+  },
+  {
+   "id": "tx1-conflict",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "valid",
+    "guards": "pass",
+    "tx1": {
+     "decision": "conflict",
+     "code": "EXPECTED_VERSION",
+     "item": 2
+    }
+   },
+   "expect": {
+    "status": "conflict",
+    "code": "EXPECTED_VERSION",
+    "item": 2,
+    "tx1Invoked": true,
+    "itemOutcome": true
+   }
+  },
+  {
+   "id": "tx1-rejected",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "valid",
+    "guards": "pass",
+    "tx1": {
+     "decision": "rejected",
+     "code": "PARAMETER",
+     "item": 0
+    }
+   },
+   "expect": {
+    "status": "rejected",
+    "code": "PARAMETER",
+    "item": 0,
+    "tx1Invoked": true,
+    "itemOutcome": true
+   }
+  },
+  {
+   "id": "tx1-entity-missing-fault",
+   "covers": "US-907-AC5",
+   "input": {
+    "delegation": "valid",
+    "guards": "pass",
+    "tx1": {
+     "decision": "entity-missing",
+     "item": 1
+    }
+   },
+   "expect": {
+    "status": "rejected",
+    "code": "ENTITY_MISSING",
+    "item": 1,
+    "tx1Invoked": true,
+    "itemOutcome": true,
+    "qualificationFault": true
+   }
+  }
+ ],
+ "tokens": {
+  "valid": [
+   {
+    "ns": "owned",
+    "id": "j1",
+    "batch": 0,
+    "item": 0,
+    "token": "pap1/owned/j1/0/0"
+   },
+   {
+    "ns": "a-b_C",
+    "id": "x",
+    "batch": 12,
+    "item": 34,
+    "token": "pap1/a-b_C/x/12/34"
+   },
+   {
+    "ns": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "id": "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+    "batch": 9999,
+    "item": 99,
+    "token": "pap1/nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn/iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii/9999/99"
+   }
+  ],
+  "invalid": [
+   {
+    "ns": "",
+    "id": "j",
+    "batch": 0,
+    "item": 0
+   },
+   {
+    "ns": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "id": "j",
+    "batch": 0,
+    "item": 0
+   },
+   {
+    "ns": "a",
+    "id": "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+    "batch": 0,
+    "item": 0
+   },
+   {
+    "ns": "a/b",
+    "id": "j",
+    "batch": 0,
+    "item": 0
+   },
+   {
+    "ns": "a.b",
+    "id": "j",
+    "batch": 0,
+    "item": 0
+   },
+   {
+    "ns": "é",
+    "id": "j",
+    "batch": 0,
+    "item": 0
+   },
+   {
+    "ns": "😀",
+    "id": "j",
+    "batch": 0,
+    "item": 0
+   },
+   {
+    "ns": "a b",
+    "id": "j",
+    "batch": 0,
+    "item": 0
+   },
+   {
+    "ns": "a",
+    "id": "j",
+    "batch": -1,
+    "item": 0
+   },
+   {
+    "ns": "a",
+    "id": "j",
+    "batch": 0,
+    "item": 1.5
+   },
+   {
+    "ns": "a",
+    "id": "j",
+    "batch": "01",
+    "item": 0
+   }
+  ],
+  "distinct": [
+   [
+    {
+     "ns": "a",
+     "id": "b-c",
+     "batch": 1,
+     "item": 1
+    },
+    {
+     "ns": "a-b",
+     "id": "c",
+     "batch": 1,
+     "item": 1
+    }
+   ],
+   [
+    {
+     "ns": "a",
+     "id": "b",
+     "batch": 1,
+     "item": 23
+    },
+    {
+     "ns": "a",
+     "id": "b",
+     "batch": 12,
+     "item": 3
+    }
+   ]
+  ],
+  "parseRefuse": [
+   "pap1/a/b/01/0",
+   "pap1/a/b/0",
+   "pap1/a/b/0/0/0",
+   "pap1/a//0/0",
+   "pap1/a/b/-1/0",
+   "pap1/a/b/x/0",
+   "pap1/é/b/0/0"
+  ],
+  "reserved": [
+   "pap1/a/b/0/0",
+   "pap1/x"
+  ],
+  "notReserved": [
+   "order-17",
+   "xpap1/a",
+   "PAP1/a"
+  ],
+  "maxTokenUnits": 1024
+ }
+}

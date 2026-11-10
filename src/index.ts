@@ -454,6 +454,8 @@ export type {SecurityActionPurpose,SecurityActionPurposeDeclaration} from './ext
 export {inspectProtectionObligations,type ProtectionDeclarationInspection,type ProtectionDeclarationObligation,type ProtectionDeclarationObligationKind} from './extensions/security/protection/obligations';
 
 export {inspectActionPlan,assessActionPlan,prepareActionPlanModel} from './extensions/actions/plans';
+export {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse} from './extensions/actions/bulk-state';
+export type {BulkJobStatus,BulkClaim,BulkJobState,BulkReconcileEvidence,BulkEvent,BulkTransitionResult,BulkDecisionInput,BulkDecision} from './extensions/actions/bulk-state';
 export type {ActionPlanArtifact,ActionPlanModelPin,PortableActionPin,PortableActionPlan,ActionPlanDiagnostic,ActionPlanSelectionInspector,ActionPlanInspectionContext,ActionPlanInspection,ActionPlanCapability,ActionPlanCapabilities,ActionPlanAssessment,PreparedActionPlanModel} from './extensions/actions/plan-types';
 
 export {inspectActionManifest,assessActionManifest} from './extensions/actions/manifests';
