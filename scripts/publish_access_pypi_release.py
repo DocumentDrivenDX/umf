@@ -232,6 +232,9 @@ def _archive_members(names, read, wheel):
 
 
 def verify_packet(*, assets, admission_raw, admission_sha256, sums_sha256, tag, source_sha):
+    if tag == 'access-v0.1.0.dev10' and source_sha != SOURCE:
+        return core.verify_candidate01010_packet(Path(__file__).resolve().parents[1], assets,
+            distribution='umf-access',source_sha=source_sha,tag=tag,sums_sha256=sums_sha256,admission_sha256=admission_sha256)
     require(tag == TAG and source_sha == SOURCE, "only exact Access tag at S is supported")
     admitted = admission(admission_raw, admission_sha256, assets)
     sums_raw = read_asset(assets, "SHA256SUMS", sums_sha256)
@@ -562,6 +565,8 @@ def main():
             "package route requires all immutable admission/source pins")
     require(not args.upload or args.command == "stage-github", "upload is only supported for explicit GitHub staging")
     root = Path(__file__).resolve().parents[1]
+    if args.tag == 'access-v0.1.0.dev10' and args.source_sha != SOURCE:
+        return core.candidate01010_source_command(args, 'umf-access')
     # Require tracked controller bytes, not a producer/caller supplied admission.
     raw = subprocess.check_output(["git", "show", "HEAD:" + ADMISSION_PATH], cwd=root)
     receipt = verify_packet(assets=args.assets_dir, admission_raw=raw, admission_sha256=args.expected_admission_sha256,

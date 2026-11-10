@@ -341,6 +341,9 @@ def archive_metadata(path):
 
 
 def verify_packet(assets, raw, admission_hash, sums_hash, tag, source):
+    if tag == 'umf-v0.10.10':
+        return core.verify_candidate01010_packet(Path(__file__).resolve().parents[1], assets,
+            distribution='umf-codegen',source_sha=source,tag=tag,sums_sha256=sums_hash,admission_sha256=admission_hash)
     require(tag == TAG and source == SOURCE, "only coupled umf-v0.10.8 at S is supported")
     value = admission(raw, admission_hash, assets)
     sums = core.parse_sums(read_asset(assets, "SHA256SUMS", sums_hash))
@@ -413,6 +416,8 @@ def main():
     parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--wait", action="store_true", default=False)
     args = parser.parse_args()
+    if args.tag == 'umf-v0.10.10':
+        return core.candidate01010_source_command(args, 'umf-codegen')
     root = Path(__file__).resolve().parents[1]
     raw = subprocess.check_output(["git", "show", "HEAD:" + ADMISSION_PATH], cwd=root)
     if args.command == "fetch-core-proofs":
