@@ -114,13 +114,16 @@ struct FusedPreflightKeyword<'binding, 'owner> where 'owner: 'binding {
 const _: () = assert!(553*std::mem::size_of::<FusedPreflightKeyword<'static,'static>>().div_ceil(std::mem::size_of::<usize>()) > 1536*std::mem::size_of::<Option<construction_index::ScopedPreflightMark>>().div_ceil(std::mem::size_of::<usize>())+6773);
 const _: () = assert!(553*std::mem::size_of::<LegacyPreflightKeyword<'static>>().div_ceil(std::mem::size_of::<usize>()) > 1536*std::mem::size_of::<Option<construction_index::ScopedPreflightMark>>().div_ceil(std::mem::size_of::<usize>())+6773);
 struct LegacyPreflightRoute;
+struct CountedLegacyPreflightRoute;
 struct FusedPreflightRoute<'binding, 'owner>(std::marker::PhantomData<(&'binding (), &'owner ())>) where 'owner: 'binding;
+struct CountedFusedPreflightRoute<'binding, 'owner>(std::marker::PhantomData<(&'binding (), &'owner ())>) where 'owner: 'binding;
 enum PreflightChildPath<'a> {
     Current,
     Index(usize),
     Key(&'a Utf16),
 }
 trait PreflightRoute<'owner: 'binding, 'binding> {
+    const COUNTED: bool;
     type Frame;
     type Keyword;
     fn pathmark(keyword:&mut Self::Keyword)->&mut Option<construction_index::ScopedPreflightMark>;
@@ -2273,16 +2276,27 @@ impl CompiledSchema {
     }
     // One actual governing mode body for original and OC1 borrowed roots.
     fn compile_with_dialect_catalogue(schema:&Value,resources:&SchemaResources,dialect:SchemaDialect,strict:bool,ctx:&mut Context<'_>,catalogue:Option<&CodegenCatalogue>)->Result<Self,EngineError>{
-        Self::compile_inner_with_bank(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)
+        Self::compile_inner_with_bank::<false>(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)
     }
-    pub(crate) fn compile_input_bank(bank:Arc<admitted_bank::SchemaBank>,role:usize,ctx:&mut Context<'_>)->Result<Self,EngineError> {
+    #[cfg(test)]
+    pub(crate) fn compile_input_bank(bank: Arc<admitted_bank::SchemaBank>, role: usize, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        Self::compile_input_bank_for::<false>(bank, role, ctx)
+    }
+
+    pub(crate) fn compile_input_bank_for<const COUNTED: bool>(bank:Arc<admitted_bank::SchemaBank>,role:usize,ctx:&mut Context<'_>)->Result<Self,EngineError> {
         if role>=3 {return Err(schema_error(&Utf16::default(),"Private core bank role out of range"));}
         let selected=admitted_bank::BankRoot::Core(role);
         let dialect=select_dialect(bank.root(selected))?;
         let admitted=bank.input_compatible(ctx)? && bank.anchor_free_core_role(role,ctx)? && bank.unique_retrievals(ctx)?;
         ctx.charge_work(1,Utf16::default())?;
         let retained=Arc::clone(&bank);
-        Self::compile_inner_with_bank(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None)
+        if COUNTED {
+            ctx.charge_work(16, Utf16::default())?;
+            if admitted && bank.is_counted_core() {
+                return Self::compile_inner_with_bank::<true>(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None);
+            }
+        }
+        Self::compile_inner_with_bank::<false>(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None)
     }
     fn compile_inner(
         schema: &Value,
@@ -2297,9 +2311,9 @@ impl CompiledSchema {
         root_keyword_policy: KeywordPolicy,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None)
+        Self::compile_inner_with_bank::<false>(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None)
     }
-    fn compile_inner_with_bank(
+    fn compile_inner_with_bank<const COUNTED: bool>(
         schema: &Value,
         resources: &SchemaResources,
         dialect: SchemaDialect,
@@ -2483,7 +2497,7 @@ impl CompiledSchema {
                 .map(|id|resolve_schema_uri(dialect,"",&id).unwrap_or(id)).unwrap_or_default())
         };
         let root_cursor=compiled.location_root(0,true,ctx)?;
-        ctx.with_constructor_site("ctor.preflight-root", |ctx| compiled.preflight_located(
+        ctx.with_constructor_site("ctor.preflight-root", |ctx| compiled.preflight_located_for::<COUNTED>(
             &*compiled.schema,
             &root_origin,
             &root_scope,
@@ -2506,7 +2520,7 @@ impl CompiledSchema {
                     && construction_equal(&*compiled.schema,resource,ctx)? { continue; }
             }
             let resource_cursor=compiled.location_root(ordinal+1,true,ctx)?;
-            ctx.with_constructor_site("ctor.preflight-catalogue", |ctx| compiled.preflight_located(
+            ctx.with_constructor_site("ctor.preflight-catalogue", |ctx| compiled.preflight_located_for::<COUNTED>(
                 resource,
                 &Utf16::new(root_path),
                 &retrieval,
@@ -2865,12 +2879,16 @@ impl CompiledSchema {
         Ok(schema_error(&snapshot,message))
     }
     fn preflight(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>)->Result<(),EngineError>{
-        self.preflight_located(schema,path,scope,depth,inherited_policy,ctx,seen,None)
+        self.preflight_located_for::<false>(schema,path,scope,depth,inherited_policy,ctx,seen,None)
     }
+    #[cfg(test)]
     fn preflight_located(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError> {
+        self.preflight_located_for::<false>(schema,path,scope,depth,inherited_policy,ctx,seen,cursor)
+    }
+    fn preflight_located_for<const COUNTED: bool>(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError> {
         if self.cold_resource_index.is_none() {return self.preflight_original_located(schema,path,scope,depth,inherited_policy,ctx,seen,cursor);}
         let mut owned=construction_index::ScopedPreflightPath::new(path,ctx)?;
-        self.preflight_carried(schema,&mut owned,scope,depth,inherited_policy,ctx,seen,cursor)
+        self.preflight_carried::<COUNTED>(schema,&mut owned,scope,depth,inherited_policy,ctx,seen,cursor)
     }
     fn preflight_original_located(&self,schema:&Value,path:&Utf16,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
         ctx.charge_work(1, path.clone())?;
@@ -3219,17 +3237,17 @@ impl CompiledSchema {
         Ok(())
 
     }
-    fn preflight_carried<'a>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
+    fn preflight_carried<'a, const COUNTED: bool>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,cursor:Option<OwnerCursor>)->Result<(),EngineError>{
         let checked=match (&self.owner_locations,cursor.as_ref()) {
             (Some(table),Some(cursor))=>table.checked(self,cursor,ctx)?,_=>None,
         };
         match checked.map(|checked|owner_locations::FusedBinding::try_new(checked,ctx)).transpose()? {
             Some(owner_locations::OwnerRoute::Fused(binding))=>{
                 let root=binding.root(ctx)?;
-                self.preflight_carried_checked(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,None,Some(root))
+                self.preflight_carried_checked::<COUNTED>(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,None,Some(root))
             }
-            Some(owner_locations::OwnerRoute::Legacy(checked))=>self.preflight_carried_checked(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,Some(checked),None),
-            None=>self.preflight_carried_checked(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,None,None),
+            Some(owner_locations::OwnerRoute::Legacy(checked))=>self.preflight_carried_checked::<COUNTED>(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,Some(checked),None),
+            None=>self.preflight_carried_checked::<COUNTED>(schema,path,scope,depth,inherited_policy,ctx,seen,cursor,None,None),
         }
     }
     // Each real same-parent loop lazily initializes its own local ordered walk.
@@ -3359,22 +3377,22 @@ impl CompiledSchema {
         }
         Ok(())
     }
-    fn preflight_legacy_ordered_from_keyword<'a,'binding,B>(&'a self,keyword:&mut LegacyPreflightKeyword<'a>,external_mark:Option<&mut Option<construction_index::ScopedPreflightMark>>,edge:usize,child:&'a Value,path:&mut construction_index::ScopedPreflightPath,child_path:PreflightChildPath<'_>,keyword_key:Option<&Utf16>,scope:&str,depth:usize,policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,before:B)->Result<(),EngineError>
+    fn preflight_legacy_ordered_from_keyword<'a,'binding,B,const COUNTED: bool>(&'a self,keyword:&mut LegacyPreflightKeyword<'a>,external_mark:Option<&mut Option<construction_index::ScopedPreflightMark>>,edge:usize,child:&'a Value,path:&mut construction_index::ScopedPreflightPath,child_path:PreflightChildPath<'_>,keyword_key:Option<&Utf16>,scope:&str,depth:usize,policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,before:B)->Result<(),EngineError>
     where 'a:'binding, B:FnOnce(&mut construction_index::ScopedPreflightPath,&mut Context<'_>)->Result<(),EngineError>{
         ctx.charge_work(2*catalogue_words::<Option<Option<owner_locations::FusedChildren<'binding,'a>>>>()+2*catalogue_words::<&mut Option<Option<owner_locations::FusedChildren<'binding,'a>>>>()+2,Utf16::default())?;
         let mut fused=None;
         let(cursor,checked,borrowed)=self.preflight_ordered_child(keyword.cursor.as_ref(),&mut keyword.checked,&mut keyword.ordered,None,&mut fused,edge,ctx)?;
         debug_assert!(borrowed.is_none());
         self.append_preflight_keyword_path(path,keyword_key,external_mark.unwrap_or(&mut keyword.mark),ctx)?;
-        self.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|self.preflight_carried_checked(child,path,scope,depth,policy,ctx,seen,cursor,checked,borrowed))
+        self.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|self.preflight_carried_checked::<COUNTED>(child,path,scope,depth,policy,ctx,seen,cursor,checked,borrowed))
     }
-    fn preflight_legacy_duplicate_from_keyword<'a,'binding>(&'a self,keyword:&mut LegacyPreflightKeyword<'a>,external_mark:Option<&mut Option<construction_index::ScopedPreflightMark>>,child:&'a Value,path:&mut construction_index::ScopedPreflightPath,keyword_key:Option<&Utf16>,scope:&str,depth:usize,policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>)->Result<(),EngineError> where 'a:'binding {
+    fn preflight_legacy_duplicate_from_keyword<'a,'binding,const COUNTED: bool>(&'a self,keyword:&mut LegacyPreflightKeyword<'a>,external_mark:Option<&mut Option<construction_index::ScopedPreflightMark>>,child:&'a Value,path:&mut construction_index::ScopedPreflightPath,keyword_key:Option<&Utf16>,scope:&str,depth:usize,policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>)->Result<(),EngineError> where 'a:'binding {
         let(cursor,checked,borrowed)=self.preflight_duplicate_child(keyword.cursor.as_ref(),&mut keyword.checked,None,ctx)?;
         debug_assert!(borrowed.is_none());
         self.append_preflight_keyword_path(path,keyword_key,external_mark.unwrap_or(&mut keyword.mark),ctx)?;
-        self.preflight_carried_checked(child,path,scope,depth,policy,ctx,seen,cursor,checked,borrowed)
+        self.preflight_carried_checked::<COUNTED>(child,path,scope,depth,policy,ctx,seen,cursor,checked,borrowed)
     }
-    fn preflight_carried_checked<'a,'binding>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,mut cursor:Option<OwnerCursor>,mut checked:Option<owner_locations::CheckedLocation<'a>>,mut borrowed:Option<owner_locations::BorrowedChild<'binding,'a>>)->Result<(),EngineError> where 'a:'binding {
+    fn preflight_carried_checked<'a,'binding,const COUNTED: bool>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,mut cursor:Option<OwnerCursor>,mut checked:Option<owner_locations::CheckedLocation<'a>>,mut borrowed:Option<owner_locations::BorrowedChild<'binding,'a>>)->Result<(),EngineError> where 'a:'binding {
         // Real private checked readback, not a supplied pointer/ordinal claim.
         if let Some(location)=checked.as_ref() {
             if location.read(self,ctx)?.is_some_and(|value|std::ptr::eq(value,schema)) {
@@ -3409,10 +3427,18 @@ impl CompiledSchema {
         }
         if let Some(parent) = borrowed {
             let frame = fused_preflight_frame(parent,ctx)?;
-            self.preflight_semantic::<FusedPreflightRoute<'binding,'a>>(schema,path,scope,depth,inherited_policy,ctx,seen,frame)
+            if COUNTED {
+                self.preflight_semantic::<CountedFusedPreflightRoute<'binding,'a>>(schema,path,scope,depth,inherited_policy,ctx,seen,frame)
+            } else {
+                self.preflight_semantic::<FusedPreflightRoute<'binding,'a>>(schema,path,scope,depth,inherited_policy,ctx,seen,frame)
+            }
         } else {
             let frame = legacy_preflight_frame(cursor,checked,ctx)?;
-            self.preflight_semantic::<LegacyPreflightRoute>(schema,path,scope,depth,inherited_policy,ctx,seen,frame)
+            if COUNTED {
+                self.preflight_semantic::<CountedLegacyPreflightRoute>(schema,path,scope,depth,inherited_policy,ctx,seen,frame)
+            } else {
+                self.preflight_semantic::<LegacyPreflightRoute>(schema,path,scope,depth,inherited_policy,ctx,seen,frame)
+            }
         }
     }
     fn preflight_semantic<'a,'binding,R>(&'a self,schema:&'a Value,path:&mut construction_index::ScopedPreflightPath,scope:&str,depth:usize,inherited_policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>,mut frame:R::Frame)->Result<(),EngineError>
@@ -3505,7 +3531,17 @@ impl CompiledSchema {
                         // optional runtime reference memoization remains unchanged.
                         child_path!(&mut keyword_mark);
                         let reference_path=path.diagnostic_snapshot(ctx)?;
-                        let resolved = self.resolve_ref_unplanned(val, &reference_path, Some(scope.as_str()), ctx);
+                        let resolved = if R::COUNTED {
+                            ctx.charge_work(12, Utf16::default())?;
+                            if text == "$ref" {
+                                self.resolve_ref_location_impl::<true>(val, &reference_path, Some(scope.as_str()), false, ctx)
+                                    .map(|(target, path, _)| (target, path))
+                            } else {
+                                self.resolve_ref_unplanned(val, &reference_path, Some(scope.as_str()), ctx)
+                            }
+                        } else {
+                            self.resolve_ref_unplanned(val, &reference_path, Some(scope.as_str()), ctx)
+                        };
                         #[cfg(test)]
                         preflight_reference_observation::emit(val, &reference_path, &scope, &resolved);
                         resolved?;
@@ -4138,13 +4174,13 @@ if self.dialect == SchemaDialect::Draft3 {
         self.resolve_ref_unplanned(reference,path,scope_override,ctx)
     }
     fn resolve_ref_unplanned<'a>(&'a self,reference:&Value,path:&Utf16,scope_override:Option<&str>,ctx:&mut Context<'_>)->Result<(&'a Value,Utf16),EngineError>{
-        let(value,path,_)=self.resolve_ref_location_impl(reference,path,scope_override,false,ctx)?;
+        let(value,path,_)=self.resolve_ref_location_impl::<false>(reference,path,scope_override,false,ctx)?;
         Ok((value,path))
     }
     // Selected locations come ONLY from the actual first-match resolver and
     // traversal. An absent optional cursor keeps the uncached original route.
     fn resolve_ref_unplanned_located<'a>(&'a self,reference:&Value,path:&Utf16,scope_override:Option<&str>,ctx:&mut Context<'_>)->Result<(&'a Value,Utf16,Option<OwnerCursor>),EngineError>{
-        self.resolve_ref_location_impl(reference,path,scope_override,true,ctx)
+        self.resolve_ref_location_impl::<false>(reference,path,scope_override,true,ctx)
     }
     fn member_cursor(&self,schema:&Value,parent:Option<&OwnerCursor>,name:&str,ctx:&mut Context<'_>)->Result<Option<OwnerCursor>,EngineError>{
         let Some(parent)=parent else{return Ok(None);};
@@ -4168,7 +4204,30 @@ if self.dialect == SchemaDialect::Draft3 {
         if !tracked {return Ok(None);}
         match &self.owner_locations {Some(table)=>table.root(self,role,ctx),None=>Ok(None)}
     }
-    fn resolve_ref_location_impl<'a>(&'a self, reference:&Value,path:&Utf16,scope_override:Option<&str>,tracked:bool,ctx:&mut Context<'_>)->Result<(&'a Value,Utf16,Option<OwnerCursor>),EngineError>{
+    fn counted_pointer_root(
+        &self, indexed_root: Option<(&Value, usize)>, ctx: &mut Context<'_>,
+    ) -> Result<bool, EngineError> {
+        let Some((actual, role)) = indexed_root else { return Ok(false); };
+        let Some(bank) = &self.resource_bank else { return Ok(false); };
+        let SchemaRoot::Bank(root_bank, admitted_bank::BankRoot::Core(primary)) = &self.schema else { return Ok(false); };
+        if !bank.is_counted_core() || !Arc::ptr_eq(bank, root_bank)
+            || ctx.profile() != crate::context::ResourceProfile::Cooperative
+            || !self.strict || self.dialect != SchemaDialect::Draft2020_12
+            || !matches!(self.regex_profile, RegexProfile::Ecma262Unicode)
+            || !self.resolve_references_at_compile || self.root_keyword_policy != KeywordPolicy::DRAFT2020
+            || !bank.input_compatible(ctx)?
+        {
+            return Ok(false);
+        }
+        let expected = if role == 0 {
+            bank.root_checked(admitted_bank::BankRoot::Core(*primary))
+        } else {
+            bank.get(role - 1).map(|(_, value)| value)
+        };
+        Ok(expected.is_some_and(|expected| std::ptr::eq(actual, expected)))
+    }
+
+    fn resolve_ref_location_impl<'a, const COUNTED: bool>(&'a self, reference:&Value,path:&Utf16,scope_override:Option<&str>,tracked:bool,ctx:&mut Context<'_>)->Result<(&'a Value,Utf16,Option<OwnerCursor>),EngineError>{
         ctx.with_constructor_site("ctor.reference", |ctx| {
         ctx.charge_work_u64(
             path.len() as u64 + btree_index_lookup_work(self.python_reference_targets.len()) + 1,
@@ -4307,6 +4366,12 @@ if self.dialect == SchemaDialect::Draft3 {
             if effective_base.is_empty() {Some((&*self.schema,0))}
             else {index.lookup_text(&effective_base,ctx)?.map(|root| (index.root(self,root),match index.location(root){construction_index::RootLocation::Root=>0,construction_index::RootLocation::Catalogue(i)=>i+1}))}
         } else {None};
+        let identity_path = if COUNTED {
+            // The static-ref entry paid 12. Reserve 49 for this selector;
+            // input_compatible has its own existing three-unit debit.
+            ctx.charge_work(49, Utf16::default())?;
+            !tracked && !effective_base.is_empty() && self.counted_pointer_root(indexed_root, ctx)?
+        } else { false };
         let owner=tracked.then_some(self);
         let selected = if let Some((value,role))=indexed_root {
             LocatedNode{value,cursor:self.location_root(role,tracked,ctx)?}
@@ -4428,6 +4493,16 @@ if self.dialect == SchemaDialect::Draft3 {
                         }
                     };
                     current = next;
+                    if COUNTED {
+                        ctx.charge_work(16, Utf16::default())?;
+                        // The completed reference index excludes nested string
+                        // IDs on this actual root. The original pointer walk
+                        // selected this child from the owned descendant tree.
+                        if identity_path && !std::ptr::eq(current, root) && !std::ptr::eq(current, &*self.schema) {
+                            sp = next_path;
+                            continue;
+                        }
+                    }
                     if !matches!(self.regex_profile, RegexProfile::Python(_)) {
                         let normalized = self.effective_schema_path(current, &next_path, ctx)?;
                         let entered_resource = schema_id(current).is_some();
@@ -13204,7 +13279,43 @@ mod construction_owner_tests {
     }
 }
 
-impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for FusedPreflightRoute<'binding,'owner> {
+// Match the ordinary impl header and duplicate only its compile-time route
+// selection. Both generated impls use the same original traversal methods.
+macro_rules! preflight_route_pair {
+    (impl<$owner:lifetime:$binding:lifetime, $binding_decl:lifetime>
+     PreflightRoute<$trait_owner:lifetime,$trait_binding:lifetime>
+     for $ordinary:ident $(<$route_binding:lifetime,$route_owner:lifetime>)?
+     => $counted:ident { $($items:tt)* }) => {
+        impl<$owner:$binding,$binding_decl> PreflightRoute<$trait_owner,$trait_binding>
+            for $ordinary $(<$route_binding,$route_owner>)?
+        {
+            const COUNTED: bool = false;
+            $($items)*
+        }
+        impl<$owner:$binding,$binding_decl> PreflightRoute<$trait_owner,$trait_binding>
+            for $counted $(<$route_binding,$route_owner>)?
+        {
+            const COUNTED: bool = true;
+            $($items)*
+        }
+    };
+}
+
+// Self::COUNTED is a type constant. Each expansion calls exactly one
+// original traversal helper and carries no runtime routing argument.
+macro_rules! continue_preflight_route {
+    ($route:ty, $engine:ident, $method:ident [$($prefix:tt)*] ($($args:expr),* $(,)?)) => {
+        if <$route>::COUNTED {
+            $engine.$method::<$($prefix)* true>($($args),*)
+        } else {
+            $engine.$method::<$($prefix)* false>($($args),*)
+        }
+    };
+}
+
+preflight_route_pair! {
+impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for FusedPreflightRoute<'binding,'owner>
+    => CountedFusedPreflightRoute {
     type Frame=FusedPreflightFrame<'binding,'owner>;
     type Keyword=FusedPreflightKeyword<'binding,'owner>;
 
@@ -13244,7 +13355,7 @@ impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for FusedPrefligh
         ctx.charge_work(5*catalogue_words::<Option<&Utf16>>()+3*catalogue_words::<Option<&mut Option<construction_index::ScopedPreflightMark>>>()+3,Utf16::default())?;
         Self::ensure_keyword(engine,frame,keyword,member,ctx)?;
         if let Some(legacy)=keyword.legacy.as_mut(){
-            return engine.preflight_legacy_ordered_from_keyword(legacy.get_mut(),Some(&mut keyword.mark),edge,child,path,child_path,keyword_key,scope,depth,policy,ctx,seen,before);
+            return continue_preflight_route!(Self, engine, preflight_legacy_ordered_from_keyword [_, ] (legacy.get_mut(),Some(&mut keyword.mark),edge,child,path,child_path,keyword_key,scope,depth,policy,ctx,seen,before));
         }
         let selection=if let Some(parent)=keyword.parent.as_ref(){
             engine.preflight_fused_ordered_child(parent,&mut keyword.frontier,edge,ctx)?
@@ -13258,16 +13369,16 @@ impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for FusedPrefligh
         engine.append_preflight_keyword_path(path,keyword_key,&mut keyword.mark,ctx)?;
         match selection {
             FusedPreflightSelection::Located(owner_locations::CheckedOwnerLocation::Fused(parent))=>{
-                engine.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|engine.preflight_carried_checked(child,path,scope,depth,policy,ctx,seen,None,None,Some(parent)))
+                engine.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|continue_preflight_route!(Self, engine, preflight_carried_checked [] (child,path,scope,depth,policy,ctx,seen,None,None,Some(parent))))
             }
             FusedPreflightSelection::Located(owner_locations::CheckedOwnerLocation::Owned(checked))=>{
-                engine.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|engine.preflight_carried_checked(child,path,scope,depth,policy,ctx,seen,None,Some(checked),None))
+                engine.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|continue_preflight_route!(Self, engine, preflight_carried_checked [] (child,path,scope,depth,policy,ctx,seen,None,Some(checked),None)))
             }
             FusedPreflightSelection::Cursor(cursor)=>{
-                engine.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|engine.preflight_carried_checked(child,path,scope,depth,policy,ctx,seen,Some(cursor),None,None))
+                engine.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|continue_preflight_route!(Self, engine, preflight_carried_checked [] (child,path,scope,depth,policy,ctx,seen,Some(cursor),None,None)))
             }
             FusedPreflightSelection::Missing=>{
-                engine.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|engine.preflight_carried_checked(child,path,scope,depth,policy,ctx,seen,None,None,None))
+                engine.with_preflight_child_path(path,child_path,ctx,before,|path,ctx|continue_preflight_route!(Self, engine, preflight_carried_checked [] (child,path,scope,depth,policy,ctx,seen,None,None,None)))
             }
         }
     }
@@ -13275,13 +13386,13 @@ impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for FusedPrefligh
         ctx.charge_work(5*catalogue_words::<Option<&Utf16>>()+3*catalogue_words::<Option<&mut Option<construction_index::ScopedPreflightMark>>>()+3,Utf16::default())?;
         Self::ensure_keyword(engine,frame,keyword,member,ctx)?;
         if let Some(legacy)=keyword.legacy.as_mut(){
-            return engine.preflight_legacy_duplicate_from_keyword(legacy.get_mut(),Some(&mut keyword.mark),child,path,keyword_key,scope,depth,policy,ctx,seen);
+            return continue_preflight_route!(Self, engine, preflight_legacy_duplicate_from_keyword [] (legacy.get_mut(),Some(&mut keyword.mark),child,path,keyword_key,scope,depth,policy,ctx,seen));
         }
         if let Some(parent)=keyword.parent.as_ref(){
             let mut checked=None;
             let(cursor,checked,borrowed)=engine.preflight_duplicate_child(None,&mut checked,Some(parent),ctx)?;
             engine.append_preflight_keyword_path(path,keyword_key,&mut keyword.mark,ctx)?;
-            return engine.preflight_carried_checked(child,path,scope,depth,policy,ctx,seen,cursor,checked,borrowed);
+            return continue_preflight_route!(Self, engine, preflight_carried_checked [] (child,path,scope,depth,policy,ctx,seen,cursor,checked,borrowed));
         }
         let selected_member=keyword.member.expect("selected fused keyword retains its member edge");
         let selected=engine.preflight_fused_original_child(&frame.parent,selected_member,None,ctx)?;
@@ -13289,11 +13400,14 @@ impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for FusedPrefligh
         let(cursor,checked,borrowed)=engine.preflight_duplicate_child(selected.as_ref(),&mut checked,None,ctx)?;
         debug_assert!(borrowed.is_none());
         engine.append_preflight_keyword_path(path,keyword_key,&mut keyword.mark,ctx)?;
-        engine.preflight_carried_checked(child,path,scope,depth,policy,ctx,seen,cursor,checked,borrowed)
+        continue_preflight_route!(Self, engine, preflight_carried_checked [] (child,path,scope,depth,policy,ctx,seen,cursor,checked,borrowed))
     }
 }
+}
 
-impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for LegacyPreflightRoute {
+preflight_route_pair! {
+impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for LegacyPreflightRoute
+    => CountedLegacyPreflightRoute {
     type Frame=LegacyPreflightFrame<'owner>;
     type Keyword=LegacyPreflightKeyword<'owner>;
 
@@ -13316,15 +13430,15 @@ impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for LegacyPreflig
     where B:FnOnce(&mut construction_index::ScopedPreflightPath,&mut Context<'_>)->Result<(),EngineError>{
         ctx.charge_work(5*catalogue_words::<Option<&Utf16>>()+3*catalogue_words::<Option<&mut Option<construction_index::ScopedPreflightMark>>>()+3,Utf16::default())?;
         Self::ensure_keyword(engine,frame,keyword,member,ctx)?;
-        engine.preflight_legacy_ordered_from_keyword(keyword,None,edge,child,path,child_path,keyword_key,scope,depth,policy,ctx,seen,before)
+        continue_preflight_route!(Self, engine, preflight_legacy_ordered_from_keyword [_, ] (keyword,None,edge,child,path,child_path,keyword_key,scope,depth,policy,ctx,seen,before))
     }
     fn recurse_duplicate(engine:&'owner CompiledSchema,frame:&mut Self::Frame,keyword:&mut Self::Keyword,member:usize,child:&'owner Value,path:&mut construction_index::ScopedPreflightPath,keyword_key:Option<&Utf16>,scope:&str,depth:usize,policy:KeywordPolicy,ctx:&mut Context<'_>,seen:&mut BTreeSet<usize>)->Result<(),EngineError>{
         ctx.charge_work(5*catalogue_words::<Option<&Utf16>>()+3*catalogue_words::<Option<&mut Option<construction_index::ScopedPreflightMark>>>()+3,Utf16::default())?;
         Self::ensure_keyword(engine,frame,keyword,member,ctx)?;
-        engine.preflight_legacy_duplicate_from_keyword(keyword,None,child,path,keyword_key,scope,depth,policy,ctx,seen)
+        continue_preflight_route!(Self, engine, preflight_legacy_duplicate_from_keyword [] (keyword,None,child,path,keyword_key,scope,depth,policy,ctx,seen))
     }
 }
-
+}
 #[cfg(test)]
 #[path = "schema_construction_tests.rs"]
 mod construction_independent_tests;

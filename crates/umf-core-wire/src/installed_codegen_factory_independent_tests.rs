@@ -515,3 +515,74 @@ fn fw06_selected_actual_stage_denials_preserve_first_host_error_without_handle()
     assert_eq!(calls.get(), target);
     assert!(!events.iter().any(|e| e == "origin:attempt"));
 }
+
+#[test]
+fn counted_prepare_refusal_cannot_release_core_before_companions() {
+    use umf_core::canonical_codegen_resources::materialize_counted_installed_codegen_resources;
+    use umf_core::value::OwnedCoreOperation;
+
+    // The successful preparation has the original entry and six compatible
+    // consumes, then the new current check and only then its Result staging.
+    let fees = RefCell::new(Vec::new());
+    {
+        let active = Cell::new(false);
+        let mut capture = |amount| {
+            if active.get() { fees.borrow_mut().push(amount); }
+            Ok(())
+        };
+        let mut ctx = Context::catalog().with_host_control(&mut capture);
+        OwnedCoreOperation::with_context(&mut ctx, |ctx, operation| {
+            let raw = materialize_counted_installed_codegen_resources(ctx, operation)?;
+            let mut admitted = raw.admit_all(operation, ctx)?;
+            ctx.with_codegen_construction(|ctx| {
+                active.set(true);
+                let result = admitted.prepare(ctx);
+                active.set(false);
+                result.map(drop)
+            })
+        }).unwrap();
+    }
+    let successful = fees.into_inner();
+    let compat = std::mem::size_of::<umf_core::Limits>().div_ceil(std::mem::size_of::<usize>()) + 7;
+    let schedule = [11, compat, compat, compat, compat, compat, compat, 26, 172];
+    assert!(successful.ends_with(&schedule));
+    let first = successful.len() - schedule.len();
+    for deny_at in first..successful.len() {
+        let step = Cell::new(0);
+        let active = Cell::new(false);
+        let denied = Cell::new(false);
+        let mut control = |amount| {
+            if active.get() {
+                assert!(!denied.get(), "a terminal prepare denial must not retry");
+                let at = step.get();
+                assert_eq!(amount, successful[at]);
+                step.set(at + 1);
+                if at == deny_at {
+                    denied.set(true);
+                    return Err(host_error());
+                }
+            }
+            Ok(())
+        };
+        let mut ctx = Context::catalog().with_host_control(&mut control);
+        let result = OwnedCoreOperation::with_context(&mut ctx, |ctx, operation| {
+            let raw = materialize_counted_installed_codegen_resources(ctx, operation)?;
+            let mut admitted = raw.admit_all(operation, ctx)?;
+            ctx.with_codegen_construction(|ctx| {
+                active.set(true);
+                let result = admitted.prepare(ctx);
+                active.set(false);
+                match result {
+                    Ok(_) => panic!("denied preparation must not release Core"),
+                    Err(error) => Err::<(), _>(error),
+                }
+            })
+        });
+        let error = result.unwrap_err();
+        assert!(denied.get());
+        assert_eq!(step.get(), deny_at + 1);
+        assert_eq!(error.code, host_error().code);
+        assert_eq!(error.path, host_error().path);
+        assert_eq!(error.python_message_origin, host_error().python_message_origin);
+    }
+}

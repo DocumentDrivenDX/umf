@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Additive R3 qualification transport. Artifact values cannot supply code.
 use umf_codegen::{CodegenEngine, CodegenResources};
+use umf_core::canonical_codegen_resources::{required_owned, take_owned};
 use umf_core::{Context, EngineError, ResourceSet, Utf16, Value};
 
 use super::{encode, field, take_field};
@@ -568,19 +569,6 @@ pub(super) fn build_resources(
     })
 }
 
-fn take_owned(raw:&mut Vec<(Utf16,umf_core::value::OwnedCoreJson)>,name:&str,ctx:&mut Context<'_>)->Result<Option<umf_core::value::OwnedCoreJson>,EngineError>{
-    for index in 0..raw.len(){
-        ctx.charge_work(raw[index].0.len().min(name.len()).saturating_add(1),Utf16::default())?;
-        if raw[index].0.units().iter().copied().eq(name.encode_utf16()){
-            ctx.charge_work(raw.len().saturating_sub(index).saturating_mul(std::mem::size_of::<(Utf16,umf_core::value::OwnedCoreJson)>().div_ceil(std::mem::size_of::<usize>())),Utf16::default())?;
-            return Ok(Some(raw.remove(index).1));
-        }
-    }
-    Ok(None)
-}
-fn required_owned(raw:&mut Vec<(Utf16,umf_core::value::OwnedCoreJson)>,name:&str,ctx:&mut Context<'_>)->Result<umf_core::value::OwnedCoreJson,EngineError>{
-    take_owned(raw,name,ctx)?.ok_or_else(||EngineError::new("REQUEST",name.into(),"Explicit codegen resource is required"))
-}
 pub(super) fn build_owned_resources(raw:&mut Vec<(Utf16,umf_core::value::OwnedCoreJson)>,operation:&umf_core::value::OwnedCoreOperation,ctx:&mut Context<'_>)->Result<CodegenResources,EngineError>{
     ctx.with_catalog_value_limit(|catalog|{
         let core_schema=required_owned(raw,"coreSchema",catalog)?;

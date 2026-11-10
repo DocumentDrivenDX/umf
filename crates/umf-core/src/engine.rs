@@ -57,7 +57,19 @@ pub trait Capabilities {
         None
     }
 }
-enum EngineInput<'o>{Raw(ResourceSet),Owned(OwnedResourceSet,&'o crate::value::OwnedCoreOperation)}
+enum EngineInput<'op, 'batch, 'slot> {
+    Raw(ResourceSet),
+    Owned(OwnedResourceSet, &'op crate::value::OwnedCoreOperation),
+    Counted(&'slot mut crate::canonical_codegen_resources::CountedCore<'batch, 'op>),
+}
+
+#[allow(dead_code)]
+enum OriginalEngineInput<'op> { Raw(ResourceSet), Owned(OwnedResourceSet, &'op crate::value::OwnedCoreOperation) }
+
+const _: () = {
+    assert!(std::mem::size_of::<EngineInput<'static, 'static, 'static>>() == std::mem::size_of::<OriginalEngineInput<'static>>());
+    assert!(std::mem::align_of::<EngineInput<'static, 'static, 'static>>() == std::mem::align_of::<OriginalEngineInput<'static>>());
+};
 #[derive(Clone,Debug)]
 enum EngineResources { Owned(ResourceSet), Admitted(Arc<ResourceSet>) }
 impl std::ops::Deref for EngineResources {
@@ -789,13 +801,22 @@ impl Engine {
     }
 
     pub fn new(resources: ResourceSet, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
-        Self::new_input(EngineInput::Raw(resources),ctx)
+        Self::new_input::<false>(EngineInput::Raw(resources),ctx)
     }
     #[doc(hidden)]
     pub fn from_owned_resources(resources:OwnedResourceSet,operation:&crate::value::OwnedCoreOperation,ctx:&mut Context<'_>)->Result<Self,EngineError>{
-        Self::new_input(EngineInput::Owned(resources,operation),ctx)
+        Self::new_input::<false>(EngineInput::Owned(resources,operation),ctx)
     }
-    fn new_input(input:EngineInput<'_>,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+    #[doc(hidden)]
+    pub fn from_counted_core(
+        core: &mut crate::canonical_codegen_resources::CountedCore<'_, '_>,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        ctx.charge_work(16, Utf16::default())?;
+        Self::new_input::<true>(EngineInput::Counted(core), ctx)
+    }
+
+    fn new_input<const COUNTED: bool>(input: EngineInput<'_, '_, '_>,ctx:&mut Context<'_>)->Result<Self,EngineError>{
         if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
             return Err(EngineError::new(
                 "RESOURCE_PROFILE_UNAVAILABLE",
@@ -804,6 +825,11 @@ impl Engine {
             ));
         }
         let (resources,input_bank)=match input {
+            EngineInput::Counted(core) if ctx.in_codegen_construction() => {
+                let admitted = core.admit_bank(ctx)?;
+                (EngineResources::Admitted(admitted.resources), Some(admitted.bank))
+            },
+            EngineInput::Counted(core) => return Self::new(core.take_raw(ctx)?, ctx),
             EngineInput::Owned(resources,operation) if ctx.in_codegen_construction()=>{
                 let admitted=crate::schema::admitted_bank::SchemaBank::admit_core_owned(resources,operation,ctx)?;
                 (EngineResources::Admitted(admitted.resources),Some(admitted.bank))
@@ -825,9 +851,9 @@ impl Engine {
         };
         let (core,reference,package)=if let Some(bank)=input_bank {
             ctx.charge_work(3,Utf16::default())?;
-            let core=ctx.with_constructor_root("core",|ctx|CompiledSchema::compile_input_bank(Arc::clone(&bank),0,ctx))?;
-            let reference=ctx.with_constructor_root("reference",|ctx|CompiledSchema::compile_input_bank(Arc::clone(&bank),1,ctx))?;
-            let package=ctx.with_constructor_root("package",|ctx|CompiledSchema::compile_input_bank(bank,2,ctx))?;
+            let core=ctx.with_constructor_root("core",|ctx|CompiledSchema::compile_input_bank_for::<COUNTED>(Arc::clone(&bank),0,ctx))?;
+            let reference=ctx.with_constructor_root("reference",|ctx|CompiledSchema::compile_input_bank_for::<COUNTED>(Arc::clone(&bank),1,ctx))?;
+            let package=ctx.with_constructor_root("package",|ctx|CompiledSchema::compile_input_bank_for::<COUNTED>(bank,2,ctx))?;
             (core,reference,package)
         } else {
         let mut schemas = SchemaResources::default();

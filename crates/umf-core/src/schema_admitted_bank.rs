@@ -8,7 +8,15 @@ struct CoreFacts { root_id:Option<usize>, anchor_free:bool, nested_id:bool }
 #[derive(Clone,Copy,Debug)]
 pub(crate) enum BankRoot { Core(usize), Meta }
 #[derive(Debug)]
-enum Owner { Core(Arc<ResourceSet>), Meta(Arc<Value>) }
+enum Owner { Core(Arc<ResourceSet>), Meta(Arc<Value>), CountedCore(Arc<ResourceSet>) }
+
+#[allow(dead_code)]
+enum OriginalOwner { Core(Arc<ResourceSet>), Meta(Arc<Value>) }
+
+const _: () = {
+    assert!(std::mem::size_of::<Owner>() == std::mem::size_of::<OriginalOwner>());
+    assert!(std::mem::align_of::<Owner>() == std::mem::align_of::<OriginalOwner>());
+};
 #[derive(Debug)]
 struct Row { role:usize, id_member:usize, schema_member:usize }
 #[derive(Debug)]
@@ -176,6 +184,23 @@ impl SchemaBank {
         let domain_policy=resources.domain_policy.into_resource(operation,ctx)?;
         Self::publish_core(ResourceSet{core_schema,reference_schema,package_schema,constraints,domain_policy},[core,reference,package],[core_structure,reference_structure,package_structure],ctx,events)
     }
+    #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+    pub(crate) fn mark_counted_owner(
+        admitted: &mut AdmittedCore,
+        _route: crate::canonical_codegen_resources::CountedBankRoute,
+    ) {
+        // The token is minted only for the exact fresh bank that consumed
+        // the sealed fields. At this point no alias of the bank exists.
+        let bank = Arc::get_mut(&mut admitted.bank).expect("fresh Core bank is uniquely held");
+        if matches!(&bank.owner, Owner::Core(owner) if Arc::ptr_eq(owner, &admitted.resources)) {
+            bank.owner = Owner::CountedCore(Arc::clone(&admitted.resources));
+        }
+    }
+
+    pub(super) fn is_counted_core(&self) -> bool {
+        matches!(&self.owner, Owner::CountedCore(_))
+    }
+
     pub(crate) fn from_meta(tree:Arc<Value>,dialect:SchemaDialect,ctx:&mut Context<'_>)->Result<Arc<Self>,EngineError>{
         Self::from_meta_observed(tree,dialect,ctx,&mut BankEvents::default())
     }
@@ -227,7 +252,7 @@ impl SchemaBank {
         ctx.charge_work(3,Utf16::default())?;
         ctx.charge_work(1,Utf16::default())?; // actual Structure profile comparison
         match (&self.owner,role){
-            (Owner::Core(_),BankRoot::Core(index))=>Ok(self.structures.get(index).and_then(|s|s.as_ref()).filter(|s|s.compatible(ctx)).and_then(|s|s.root())),
+            (Owner::Core(_) | Owner::CountedCore(_),BankRoot::Core(index))=>Ok(self.structures.get(index).and_then(|s|s.as_ref()).filter(|s|s.compatible(ctx)).and_then(|s|s.root())),
             (Owner::Meta(_),BankRoot::Meta)=>{
                 let Some(parsed)=&self.parsed_owner else{return Ok(None);};
                 if !parsed.compatible(ctx)?{return Ok(None);}
@@ -242,7 +267,7 @@ impl SchemaBank {
         ctx.charge_work(4,Utf16::default())?;
         let Some(row)=self.rows.get(index)else{return Ok(None);};
         match &self.owner{
-            Owner::Core(_)=>self.structure_role(BankRoot::Core(row.role),ctx),
+            Owner::Core(_) | Owner::CountedCore(_)=>self.structure_role(BankRoot::Core(row.role),ctx),
             Owner::Meta(_)=>{
                 let Some(parsed)=&self.parsed_owner else{return Ok(None);};
                 if !parsed.compatible(ctx)?{return Ok(None);}
@@ -256,28 +281,28 @@ impl SchemaBank {
     }
     pub(crate) fn root(&self,role:BankRoot)->&Value {
         match(&self.owner,role){
-            (Owner::Core(core),BankRoot::Core(0))=>&core.core_schema,
-            (Owner::Core(core),BankRoot::Core(1))=>&core.reference_schema,
-            (Owner::Core(core),BankRoot::Core(2))=>&core.package_schema,
+            (Owner::Core(core) | Owner::CountedCore(core),BankRoot::Core(0))=>&core.core_schema,
+            (Owner::Core(core) | Owner::CountedCore(core),BankRoot::Core(1))=>&core.reference_schema,
+            (Owner::Core(core) | Owner::CountedCore(core),BankRoot::Core(2))=>&core.package_schema,
             (Owner::Meta(tree),BankRoot::Meta)=>indexed_field(indexed_field(tree,self.meta_group),self.meta_root),
             _=>panic!("private bank role was not admitted"),
         }
     }
     pub(crate) fn root_checked(&self,role:BankRoot)->Option<&Value> {
-        match(&self.owner,role){(Owner::Core(_),BankRoot::Core(i))if i<3=>Some(self.root(role)),(Owner::Meta(_),BankRoot::Meta)=>Some(self.root(role)),_=>None}
+        match(&self.owner,role){(Owner::Core(_) | Owner::CountedCore(_),BankRoot::Core(i))if i<3=>Some(self.root(role)),(Owner::Meta(_),BankRoot::Meta)=>Some(self.root(role)),_=>None}
     }
     pub(crate) fn whole_metatree(&self)->Option<&Value>{match &self.owner{Owner::Meta(tree)=>Some(tree),_=>None}}
     pub(crate) fn len(&self)->usize {self.rows.len()}
     pub(crate) fn get(&self,index:usize)->Option<(&Utf16,&Value)> {
         let row=self.rows.get(index)?;
         match &self.owner {
-            Owner::Core(_)=>{let value=self.root(BankRoot::Core(row.role));match indexed_field(value,row.id_member){Value::String(id)=>Some((id,value)),_=>None}},
+            Owner::Core(_) | Owner::CountedCore(_)=>{let value=self.root(BankRoot::Core(row.role));match indexed_field(value,row.id_member){Value::String(id)=>Some((id,value)),_=>None}},
             Owner::Meta(tree)=>{let Value::Array(entries)=indexed_field(tree,self.meta_resources)else{return None;};let entry=entries.get(row.role)?;match indexed_field(entry,row.id_member){Value::String(id)=>Some((id,indexed_field(entry,row.schema_member))),_=>None}},
         }
     }
     pub(crate) fn owns_core(&self,resources:&Arc<ResourceSet>,ctx:&mut Context<'_>)->Result<bool,EngineError>{
         ctx.charge_work(3,Utf16::default())?;
-        Ok(matches!(&self.owner,Owner::Core(owner) if Arc::ptr_eq(owner,resources)))
+        Ok(matches!(&self.owner,Owner::Core(owner) | Owner::CountedCore(owner) if Arc::ptr_eq(owner,resources)))
     }
     pub(crate) fn input_compatible(&self,ctx:&mut Context<'_>)->Result<bool,EngineError>{
         ctx.charge_work(3,Utf16::default())?;

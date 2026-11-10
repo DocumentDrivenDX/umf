@@ -527,8 +527,30 @@ impl CodegenResourcesHandle {
                 let raw = ctx.with_work_phase("native-installed-materialization", |ctx| {
                     umf_core::canonical_codegen_resources::materialize_counted_installed_codegen_resources(ctx,operation)
                 })?;
-                let mut handle = Self::admit_and_compile_counted_installed_bundle(raw, operation, ctx,
-                    #[cfg(test)] &mut observe)?;
+                #[cfg(not(test))]
+                let mut admitted = raw.admit_all(operation, ctx)?;
+                #[cfg(test)]
+                let mut admitted = raw.admit_all_observed(operation, ctx, |starting, name| {
+                    if let Some(observer) = observe.as_deref_mut() {
+                        observer(if starting { InstalledFactoryStage::AdmissionStart(name) }
+                            else { InstalledFactoryStage::AdmissionComplete(name) });
+                    }
+                })?;
+                #[cfg(test)]
+                if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::CompilationStart); }
+                let mut handle = ctx.with_work_phase("native-resource-compilation", |ctx| {
+                    Self::check_resource_names(admitted.names(), ctx)?;
+                    ctx.charge_work(10, Utf16::default())?;
+                    let resources = ctx.with_codegen_construction(|ctx| {
+                        ctx.with_catalog_value_limit(|catalog| umf_codegen::CodegenResources::from_counted_admitted(&mut admitted, catalog))
+                    })?;
+                    if !admitted.is_empty() { return Err(fail("REQUEST", "Duplicate explicit codegen resource")); }
+                    ctx.charge_work(1, Utf16::default())?;
+                    ctx.charge_work(0, Utf16::default())?;
+                    Ok::<_, EngineError>(Self { resources, origin: CodegenResourceOrigin::Ordinary })
+                })?;
+                #[cfg(test)]
+                if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::CompilationComplete); }
                 // Only this closed factory may mark completed installed origin.
                 // Initial ordinary construction and this real write are both paid.
                 ctx.charge_work(1, Utf16::default())?;
@@ -578,39 +600,6 @@ impl CodegenResourcesHandle {
         Ok(handle)
     }
 
-    fn admit_and_compile_counted_installed_bundle(raw: umf_core::canonical_codegen_resources::CountedInstalledBundle, operation: &umf_core::value::OwnedCoreOperation, ctx: &mut Context<'_>, #[cfg(test)] observe: &mut Option<&mut dyn FnMut(InstalledFactoryStage<'_>)>) -> Result<Self, EngineError> {
-        let mut raw=raw.into_fields(ctx)?;
-        let count = raw.len();
-        let pair_words = std::mem::size_of::<(Utf16, umf_core::value::OwnedCoreJson)>().div_ceil(std::mem::size_of::<usize>());
-        let raw_pair_words = std::mem::size_of::<(Utf16, Value)>().div_ceil(std::mem::size_of::<usize>());
-        // Reserve storage, iterator state and all raw-pair moves before
-        // the iterator consumes its first item. Real publication writes
-        // below are separately paid; generated values mint nothing.
-        ctx.charge_work(count.saturating_mul(pair_words.saturating_add(raw_pair_words)).saturating_add(6), Utf16::default())?;
-        let mut admitted = Vec::new();
-        admitted.try_reserve_exact(count).map_err(|_| fail("LIMIT", "Installed admitted resource storage unavailable"))?;
-        ctx.with_work_phase("native-installed-full-admission", |ctx| {
-            for _ in 0..count {
-                let field=raw.next(ctx)?.expect("sealed installed field count");
-                #[cfg(test)]
-                if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::AdmissionStart(field.name())); }
-                let (key,value)=field.admit(operation,ctx)?;
-                #[cfg(test)]
-                if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::AdmissionComplete(&key)); }
-                ctx.charge_work(pair_words.saturating_add(1), Utf16::default())?;
-                admitted.push((key, value));
-            }
-            Ok::<(), EngineError>(())
-        })?;
-        #[cfg(test)]
-        if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::CompilationStart); }
-        let handle = ctx.with_work_phase("native-resource-compilation", |ctx| {
-            Self::from_owned_resources_with_context(admitted, operation, ctx)
-        })?;
-        #[cfg(test)]
-        if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::CompilationComplete); }
-        Ok(handle)
-    }
 
     #[cfg(test)]
     fn from_installed_with_stage_events(ctx: &mut Context<'_>, observer: &mut dyn FnMut(InstalledFactoryStage<'_>)) -> Result<Self, EngineError> {

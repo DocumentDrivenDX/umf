@@ -760,3 +760,61 @@ fn pre08_real_resolver_refusal_host_identity_and_scoped_observer_unwind_restore(
     assert_eq!(outer.get(), 2);
     unchanged(&o, &before);
 }
+
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+#[test]
+fn counted_pointer_path_matches_original_target_and_utf16_with_paid_move() {
+    let denied_amount = Cell::new(None);
+    let refused = Cell::new(false);
+    let mut host = |amount| {
+        if denied_amount.get() == Some(amount) {
+            refused.set(true);
+            return Err(EngineError::new("COUNTED_HOST", Utf16::from("#/host"), "counted pointer refusal"));
+        }
+        Ok(())
+    };
+    let mut ctx = Context::catalog().with_host_control(&mut host);
+    crate::value::OwnedCoreOperation::with_context(&mut ctx, |ctx, operation| {
+        let raw = crate::canonical_codegen_resources::materialize_counted_installed_codegen_resources(ctx, operation)?;
+        let mut admitted = raw.admit_all(operation, ctx)?;
+        ctx.with_codegen_construction(|ctx| {
+            let mut prepared = admitted.prepare(ctx)?;
+            let bank = prepared.core.admit_bank(ctx)?.bank;
+            assert!(bank.is_counted_core());
+            let owner = CompiledSchema::compile_input_bank_for::<true>(bank, 0, ctx)?;
+            assert!(owner.cold_resource_index.is_some());
+            let base = "urn:umf:core:0.10.0";
+            let path = Utf16::from("#/$ref");
+            assert!(!owner.counted_pointer_root(Some((&*owner.schema, 2)), ctx)?);
+            for text in ["#/$defs/id", "#/%24defs/id", "#/$defs/scalarType/anyOf/0"] {
+                let reference = Value::String(Utf16::from(text));
+                let before = ctx.charged_work();
+                let (old_node, old_path, _) = owner.resolve_ref_location_impl::<false>(&reference, &path, Some(base), false, ctx)?;
+                let old_work = ctx.charged_work() - before;
+                let before = ctx.charged_work();
+                let (new_node, new_path, cursor) = owner.resolve_ref_location_impl::<true>(&reference, &path, Some(base), false, ctx)?;
+                assert!(std::ptr::eq(old_node, new_node));
+                assert_eq!(old_path.units(), new_path.units());
+                assert!(cursor.is_none());
+                assert!(ctx.charged_work() - before < old_work);
+            }
+            let reference = Value::String(Utf16::from("#/$defs/id"));
+            let (old, old_path, _) = owner.resolve_ref_location_impl::<false>(&reference, &path, Some(base), true, ctx)?;
+            let (tracked, tracked_path, cursor) = owner.resolve_ref_location_impl::<true>(&reference, &path, Some(base), true, ctx)?;
+            assert!(std::ptr::eq(old, tracked));
+            assert_eq!(old_path, tracked_path);
+            if let Some(cursor) = cursor {
+                assert!(std::ptr::eq(cursor.get(&owner, ctx)?, tracked));
+            }
+            denied_amount.set(Some(16));
+            let error = match owner.resolve_ref_location_impl::<true>(&reference, &path, Some(base), false, ctx) {
+                Ok(_) => panic!("denied identity-path move must not resolve"),
+                Err(error) => error,
+            };
+            assert!(refused.get());
+            assert_eq!(error.code, "COUNTED_HOST");
+            assert_eq!(error.path, Utf16::from("#/host"));
+            Ok(())
+        })
+    }).unwrap();
+}

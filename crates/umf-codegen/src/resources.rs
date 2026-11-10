@@ -163,6 +163,136 @@ impl AdmissionInput {
         }
     }
 }
+// Expand in the caller's existing owning locals, without a continuation tuple.
+macro_rules! finish_codegen_resources {
+    ($result:ident, $ctx:ident, $engine:expr, $tables_package:ident, $tables_schema:ident,
+     $actions_package:ident, $actions_schema:ident, $binding_package:ident, $stable_binding_package:ident) => {{
+        let engine = $engine?;
+        let mut snapshot=$ctx.with_constructor_frontier("unassigned","ctor.snapshot-setup",|$ctx|engine.codegen_snapshot_with_context($ctx))?;
+        $ctx.with_constructor_frontier("tables","ctor.snapshot-table",|$ctx|snapshot.include_table(&$tables_schema,$ctx))?;
+        let catalogue=$ctx.with_constructor_frontier("unassigned","ctor.snapshot-catalogue",|$ctx|engine.codegen_catalogue_with_context($ctx))?;
+        let (schema_resources,catalogue)=$ctx.with_constructor_frontier("unassigned","ctor.snapshot-finish",|$ctx|snapshot.finish(catalogue,$ctx))?;
+        // Encoding-only DATA; the shared reader still admits and parses the
+        // complete source in this same Context before schema compilation.
+        let operation_schema = $ctx.with_constructor_frontier("operation","ctor.operation-read",|$ctx|umf_core::serialization::read_json_value(
+            operation_sources::OPERATION_SCHEMA_UTF16,
+            umf_core::serialization::Format::Json,
+            $ctx,
+        ))?;
+        let operation_compiled =
+            $ctx.with_constructor_root("operation", |$ctx| compile_codegen_schema(&operation_schema, &schema_resources, catalogue.as_ref(), $ctx))?;
+        let row_expression_operation_schema = umf_core::serialization::read_json_value(
+            operation_sources::ROW_EXPRESSION_OPERATION_SCHEMA_UTF16,
+            umf_core::serialization::Format::Json,
+            $ctx,
+        )?;
+        let row_expression_operation_compiled =
+            $ctx.with_constructor_root("operation", |$ctx| compile_codegen_schema(&row_expression_operation_schema, &schema_resources, catalogue.as_ref(), $ctx))?;
+        let binding_schema = member(&$binding_package, "schema").ok_or_else(invalid_package)?;
+        let stable_binding_schema =
+            member(&$stable_binding_package, "schema").ok_or_else(invalid_package)?;
+        let binding_compiled = $ctx.with_constructor_root("binding", |$ctx| compile_codegen_schema(binding_schema, &schema_resources, catalogue.as_ref(), $ctx))?;
+        let stable_binding_compiled =
+            $ctx.with_constructor_root("binding", |$ctx| compile_codegen_schema(stable_binding_schema, &schema_resources, catalogue.as_ref(), $ctx))?;
+        let tables_compiled = $ctx.with_constructor_root("tables", |$ctx| compile_codegen_schema(&$tables_schema, &schema_resources, catalogue.as_ref(), $ctx))?;
+        let actions_compiled = $ctx.with_constructor_root("actions", |$ctx| compile_codegen_schema(&$actions_schema, &schema_resources, catalogue.as_ref(), $ctx))?;
+        let literal_definition = member(&$actions_schema, "$defs")
+            .and_then(|defs| member(defs, "literal"))
+            .ok_or_else(invalid_package)?;
+        let literal_definition = umf_core::copy_json(literal_definition, $ctx)?;
+        $ctx.charge_work(64, Utf16::default())?;
+        let literal_schema = Value::Object(vec![
+            (
+                Utf16::from("$defs"),
+                Value::Object(vec![(Utf16::from("literal"), literal_definition)]),
+            ),
+            (
+                Utf16::from("$ref"),
+                Value::String(Utf16::from("#/$defs/literal")),
+            ),
+        ]);
+        let actions_literal_compiled =
+            $ctx.with_constructor_root("actions-literal", |$ctx| compile_codegen_schema(&literal_schema, &schema_resources, catalogue.as_ref(), $ctx))?;
+        let action_definitions = umf_core::copy_json(
+            member(&$actions_schema, "$defs").ok_or_else(invalid_package)?,
+            $ctx,
+        )?;
+        $ctx.charge_work(64, Utf16::default())?;
+        let action_schema = Value::Object(vec![
+            (Utf16::from("$defs"), action_definitions),
+            (
+                Utf16::from("$ref"),
+                Value::String(Utf16::from("#/$defs/action")),
+            ),
+        ]);
+        let actions_action_compiled =
+            $ctx.with_constructor_root("actions-action", |$ctx| compile_codegen_schema(&action_schema, &schema_resources, catalogue.as_ref(), $ctx))?;
+        let tables_registry = $ctx.with_constructor_root("registration-tables", |$ctx| package_registry(
+            &engine,
+            &schema_resources,
+            &$tables_package,
+            &$tables_schema,
+            1,
+            $ctx,
+        ))?;
+        let actions_registry = $ctx.with_constructor_root("registration-actions", |$ctx| package_registry(
+            &engine,
+            &schema_resources,
+            &$actions_package,
+            &$actions_schema,
+            2,
+            $ctx,
+        ))?;
+        let mut binding_registry = Registry::new();
+        $ctx.with_constructor_root("registration-binding", |$ctx| register_package(
+            &mut binding_registry,
+            &engine,
+            &schema_resources,
+            &$binding_package,
+            binding_schema,
+            3,
+            $ctx,
+        ))?;
+        $ctx.with_constructor_root("registration-stable", |$ctx| register_package(
+            &mut binding_registry,
+            &engine,
+            &schema_resources,
+            &$stable_binding_package,
+            stable_binding_schema,
+            4,
+            $ctx,
+        ))?;
+        Ok($result {
+            engine,
+            binding_registry,
+            binding_package: $binding_package,
+            binding_compiled,
+            stable_binding_package: $stable_binding_package,
+            stable_binding_compiled,
+            tables_registry,
+            actions_registry,
+            tables_package: $tables_package,
+            tables_schema: $tables_schema,
+            tables_compiled,
+            actions_package: $actions_package,
+            actions_schema: $actions_schema,
+            actions_compiled,
+            actions_literal_compiled,
+            actions_action_compiled,
+            saga_registry: None,
+            saga_package: None,
+            saga_schema: None,
+            saga_compiled: None,
+            saga_capabilities_compiled: None,
+            operation_schema,
+            operation_compiled,
+            row_expression_operation_schema,
+            row_expression_operation_compiled,
+            schema_resources,
+        })
+    }};
+}
+
 impl CodegenResources {
     /// Compile the explicit core resources and retain the explicitly trusted
     /// table/action schemas and both binding packages for operation validation.
@@ -196,129 +326,20 @@ impl CodegenResources {
         let actions_schema=actions_schema.admit(operation,ctx)?;
         let binding_package=binding_package.admit(operation,ctx)?;
         let stable_binding_package=stable_binding_package.admit(operation,ctx)?;
-        let engine=ctx.with_constructor_frontier("unassigned","ctor.engine-construction",|ctx|match core {CoreInput::Raw(core)=>Engine::new(core,ctx),CoreInput::Owned(core)=>Engine::from_owned_resources(core,operation.expect("typed constructor owns operation"),ctx)})?;
-        let mut snapshot=ctx.with_constructor_frontier("unassigned","ctor.snapshot-setup",|ctx|engine.codegen_snapshot_with_context(ctx))?;
-        ctx.with_constructor_frontier("tables","ctor.snapshot-table",|ctx|snapshot.include_table(&tables_schema,ctx))?;
-        let catalogue=ctx.with_constructor_frontier("unassigned","ctor.snapshot-catalogue",|ctx|engine.codegen_catalogue_with_context(ctx))?;
-        let (schema_resources,catalogue)=ctx.with_constructor_frontier("unassigned","ctor.snapshot-finish",|ctx|snapshot.finish(catalogue,ctx))?;
-        // Encoding-only DATA; the shared reader still admits and parses the
-        // complete source in this same Context before schema compilation.
-        let operation_schema = ctx.with_constructor_frontier("operation","ctor.operation-read",|ctx|umf_core::serialization::read_json_value(
-            operation_sources::OPERATION_SCHEMA_UTF16,
-            umf_core::serialization::Format::Json,
-            ctx,
-        ))?;
-        let operation_compiled =
-            ctx.with_constructor_root("operation", |ctx| compile_codegen_schema(&operation_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let row_expression_operation_schema = umf_core::serialization::read_json_value(
-            operation_sources::ROW_EXPRESSION_OPERATION_SCHEMA_UTF16,
-            umf_core::serialization::Format::Json,
-            ctx,
-        )?;
-        let row_expression_operation_compiled =
-            ctx.with_constructor_root("operation", |ctx| compile_codegen_schema(&row_expression_operation_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let binding_schema = member(&binding_package, "schema").ok_or_else(invalid_package)?;
-        let stable_binding_schema =
-            member(&stable_binding_package, "schema").ok_or_else(invalid_package)?;
-        let binding_compiled = ctx.with_constructor_root("binding", |ctx| compile_codegen_schema(binding_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let stable_binding_compiled =
-            ctx.with_constructor_root("binding", |ctx| compile_codegen_schema(stable_binding_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let tables_compiled = ctx.with_constructor_root("tables", |ctx| compile_codegen_schema(&tables_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let actions_compiled = ctx.with_constructor_root("actions", |ctx| compile_codegen_schema(&actions_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let literal_definition = member(&actions_schema, "$defs")
-            .and_then(|defs| member(defs, "literal"))
-            .ok_or_else(invalid_package)?;
-        let literal_definition = umf_core::copy_json(literal_definition, ctx)?;
-        ctx.charge_work(64, Utf16::default())?;
-        let literal_schema = Value::Object(vec![
-            (
-                Utf16::from("$defs"),
-                Value::Object(vec![(Utf16::from("literal"), literal_definition)]),
-            ),
-            (
-                Utf16::from("$ref"),
-                Value::String(Utf16::from("#/$defs/literal")),
-            ),
-        ]);
-        let actions_literal_compiled =
-            ctx.with_constructor_root("actions-literal", |ctx| compile_codegen_schema(&literal_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let action_definitions = umf_core::copy_json(
-            member(&actions_schema, "$defs").ok_or_else(invalid_package)?,
-            ctx,
-        )?;
-        ctx.charge_work(64, Utf16::default())?;
-        let action_schema = Value::Object(vec![
-            (Utf16::from("$defs"), action_definitions),
-            (
-                Utf16::from("$ref"),
-                Value::String(Utf16::from("#/$defs/action")),
-            ),
-        ]);
-        let actions_action_compiled =
-            ctx.with_constructor_root("actions-action", |ctx| compile_codegen_schema(&action_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let tables_registry = ctx.with_constructor_root("registration-tables", |ctx| package_registry(
-            &engine,
-            &schema_resources,
-            &tables_package,
-            &tables_schema,
-            1,
-            ctx,
-        ))?;
-        let actions_registry = ctx.with_constructor_root("registration-actions", |ctx| package_registry(
-            &engine,
-            &schema_resources,
-            &actions_package,
-            &actions_schema,
-            2,
-            ctx,
-        ))?;
-        let mut binding_registry = Registry::new();
-        ctx.with_constructor_root("registration-binding", |ctx| register_package(
-            &mut binding_registry,
-            &engine,
-            &schema_resources,
-            &binding_package,
-            binding_schema,
-            3,
-            ctx,
-        ))?;
-        ctx.with_constructor_root("registration-stable", |ctx| register_package(
-            &mut binding_registry,
-            &engine,
-            &schema_resources,
-            &stable_binding_package,
-            stable_binding_schema,
-            4,
-            ctx,
-        ))?;
-        Ok(Self {
-            engine,
-            binding_registry,
-            binding_package,
-            binding_compiled,
-            stable_binding_package,
-            stable_binding_compiled,
-            tables_registry,
-            actions_registry,
-            tables_package,
-            tables_schema,
-            tables_compiled,
-            actions_package,
-            actions_schema,
-            actions_compiled,
-            actions_literal_compiled,
-            actions_action_compiled,
-            saga_registry: None,
-            saga_package: None,
-            saga_schema: None,
-            saga_compiled: None,
-            saga_capabilities_compiled: None,
-            operation_schema,
-            operation_compiled,
-            row_expression_operation_schema,
-            row_expression_operation_compiled,
-            schema_resources,
-        })
+        finish_codegen_resources!(Self, ctx, ctx.with_constructor_frontier("unassigned","ctor.engine-construction",|ctx|match core {CoreInput::Raw(core)=>Engine::new(core,ctx),CoreInput::Owned(core)=>Engine::from_owned_resources(core,operation.expect("typed constructor owns operation"),ctx)}), tables_package, tables_schema, actions_package, actions_schema, binding_package, stable_binding_package)
+    }
+
+    #[doc(hidden)]
+    pub fn from_counted_admitted(bundle: &mut umf_core::canonical_codegen_resources::CountedAdmitted<'_>, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        let umf_core::canonical_codegen_resources::PreparedCounted {
+            mut core, tables_package, tables_schema, actions_package, actions_schema,
+            binding_package, stable_binding_package,
+        } = bundle.prepare(ctx)?;
+        ctx.charge_work(16, Utf16::default())?;
+        finish_codegen_resources!(Self, ctx, ctx.with_constructor_frontier("unassigned", "ctor.engine-construction", |ctx| {
+            Engine::from_counted_core(&mut core, ctx)
+        }), tables_package, tables_schema, actions_package, actions_schema, binding_package, stable_binding_package)
+
     }
 
     pub(crate) fn binding_registry(&self) -> &Registry {

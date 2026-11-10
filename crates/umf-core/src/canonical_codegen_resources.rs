@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Closed installed input DATA. Nothing in this module is admission proof.
+use crate::engine::OwnedResourceSet;
+use crate::value::{FactoryCountCustody, OwnedCoreJson, OwnedCoreOperation};
 use crate::{Context, EngineError, Utf16, Value};
 use std::sync::Arc;
 
@@ -401,5 +403,199 @@ impl CountedInstalledField {
         let Self{name,value,hint}=self;
         let value=crate::value::OwnedCoreJson::admit_factory_resource_sized(value,&name,operation,hint,ctx)?;
         Ok((name,value))
+    }
+}
+
+#[doc(hidden)]
+pub fn take_owned(raw:&mut Vec<(Utf16,OwnedCoreJson)>,name:&str,ctx:&mut Context<'_>)->Result<Option<OwnedCoreJson>,EngineError>{
+    for index in 0..raw.len(){
+        ctx.charge_work(raw[index].0.len().min(name.len()).saturating_add(1),Utf16::default())?;
+        if raw[index].0.units().iter().copied().eq(name.encode_utf16()){
+            ctx.charge_work(raw.len().saturating_sub(index).saturating_mul(std::mem::size_of::<(Utf16,OwnedCoreJson)>().div_ceil(std::mem::size_of::<usize>())),Utf16::default())?;
+            return Ok(Some(raw.remove(index).1));
+        }
+    }
+    Ok(None)
+}
+#[doc(hidden)]
+pub fn required_owned(raw:&mut Vec<(Utf16,OwnedCoreJson)>,name:&str,ctx:&mut Context<'_>)->Result<OwnedCoreJson,EngineError>{
+    take_owned(raw,name,ctx)?.ok_or_else(||EngineError::new("REQUEST",name.into(),"Explicit codegen resource is required"))
+}
+
+/// Completed original nine-field admission. No field replacement or iteration
+/// over owned fields is available across the crate boundary.
+#[doc(hidden)]
+pub struct CountedAdmitted<'op> {
+    fields: Vec<(Utf16, OwnedCoreJson)>,
+    operation: &'op OwnedCoreOperation,
+    route: Option<FactoryCountCustody>,
+}
+
+#[doc(hidden)]
+pub struct CountedCore<'batch, 'op> {
+    fields: Option<OwnedResourceSet>,
+    operation: &'op OwnedCoreOperation,
+    route: Option<&'batch FactoryCountCustody>,
+}
+
+#[doc(hidden)]
+pub struct PreparedCounted<'batch, 'op> {
+    pub core: CountedCore<'batch, 'op>,
+    pub tables_package: Value,
+    pub tables_schema: Value,
+    pub actions_package: Value,
+    pub actions_schema: Value,
+    pub binding_package: Value,
+    pub stable_binding_package: Value,
+}
+
+const fn counted_words<T>() -> usize {
+    std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>())
+}
+const _: () = {
+    assert!(counted_words::<Value>() <= 8);
+    assert!(counted_words::<OwnedCoreJson>() <= 18);
+    assert!(counted_words::<Option<FactoryCountCustody>>() <= 8);
+    assert!(counted_words::<CountedAdmitted<'static>>() <= 12);
+    assert!(counted_words::<Option<OwnedResourceSet>>() <= 91);
+    assert!(counted_words::<Result<PreparedCounted<'static, 'static>, EngineError>>() <= 142);
+};
+
+// Preserve the observer's original name-only visibility. The production
+// expansion contains no observer parameter or runtime observer test.
+macro_rules! counted_admit {
+    ($bundle:expr, $operation:ident, $ctx:ident $(, $observe:ident)?) => {{
+        let mut raw = $bundle.into_fields($ctx)?;
+        let count = raw.len();
+        let pair_words = words::<(Utf16, OwnedCoreJson)>();
+        let raw_pair_words = words::<(Utf16, Value)>();
+        $ctx.charge_work(count.saturating_mul(pair_words.saturating_add(raw_pair_words)).saturating_add(6), Utf16::default())?;
+        let mut fields = Vec::new();
+        fields.try_reserve_exact(count).map_err(|_| EngineError::new("LIMIT", Utf16::default(), "Installed admitted resource storage unavailable"))?;
+        $ctx.with_work_phase("native-installed-full-admission", |ctx| {
+            for _ in 0..count {
+                let field = raw.next(ctx)?.expect("sealed installed field count");
+                $($observe(true, field.name());)?
+                let (key, value) = field.admit($operation, ctx)?;
+                $($observe(false, &key);)?
+                ctx.charge_work(pair_words.saturating_add(1), Utf16::default())?;
+                fields.push((key, value));
+            }
+            Ok::<(), EngineError>(())
+        })?;
+        // Two wrapper movements, custody transfer and the first live guard.
+        $ctx.charge_work(68, Utf16::default())?;
+        let route = raw.custody.take().filter(|custody| custody.matches_operation($operation, $ctx));
+        Ok(CountedAdmitted { fields, operation: $operation, route })
+    }};
+}
+
+impl CountedInstalledBundle {
+    #[doc(hidden)]
+    pub fn admit_all<'op>(self, operation: &'op OwnedCoreOperation, ctx: &mut Context<'_>) -> Result<CountedAdmitted<'op>, EngineError> {
+        counted_admit!(self, operation, ctx)
+    }
+
+    #[doc(hidden)]
+    pub fn admit_all_observed<'op>(self, operation: &'op OwnedCoreOperation, ctx: &mut Context<'_>, mut observe: impl FnMut(bool, &Utf16)) -> Result<CountedAdmitted<'op>, EngineError> {
+        counted_admit!(self, operation, ctx, observe)
+    }
+}
+
+impl<'op> CountedAdmitted<'op> {
+    pub fn names(&self) -> impl Iterator<Item = &Utf16> {
+        self.fields.iter().map(|(name, _)| name)
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.fields.is_empty()
+    }
+
+    #[doc(hidden)]
+    pub fn prepare<'batch>(&'batch mut self, ctx: &mut Context<'_>) -> Result<PreparedCounted<'batch, 'op>, EngineError> {
+        // The failure paths can dispose of an unconsumed wrapper without
+        // requesting additional host work.
+        ctx.charge_work(18, Utf16::default())?;
+        ctx.charge_work(26, Utf16::default())?;
+        let operation = self.operation;
+        let route = self.route.as_ref().filter(|custody| custody.matches_operation(operation, ctx));
+        let core_schema = required_owned(&mut self.fields, "coreSchema", ctx)?;
+        let reference_schema = required_owned(&mut self.fields, "referenceSchema", ctx)?;
+        let package_schema = required_owned(&mut self.fields, "packageSchema", ctx)?;
+        let constraints = required_owned(&mut self.fields, "constraints", ctx)?;
+        let domain_policy = required_owned(&mut self.fields, "domainPolicy", ctx)?;
+        ctx.charge_work(5, Utf16::default())?;
+        let fields = OwnedResourceSet { core_schema, reference_schema, package_schema, constraints, domain_policy };
+        let tables = required_owned(&mut self.fields, "tablesPackage", ctx)?;
+        let actions = required_owned(&mut self.fields, "actionsPackage", ctx)?;
+        let binding = required_owned(&mut self.fields, "bindingPackage", ctx)?;
+        let stable_binding = required_owned(&mut self.fields, "stableBindingPackage", ctx)?;
+        let tables_schema = tables.copy_schema_member(operation, ctx, "Table package schema is required")?;
+        let actions_schema = actions.copy_schema_member(operation, ctx, "Action package schema is required")?;
+        ctx.charge_work(11, Utf16::default())?;
+        let tables_package = tables.into_resource(operation, ctx)?;
+        let tables_schema = tables_schema.into_schema_copy(operation, ctx)?;
+        let actions_package = actions.into_resource(operation, ctx)?;
+        let actions_schema = actions_schema.into_schema_copy(operation, ctx)?;
+        let binding_package = binding.into_resource(operation, ctx)?;
+        let stable_binding_package = stable_binding.into_resource(operation, ctx)?;
+        ctx.charge_work(26, Utf16::default())?;
+        let route = route.filter(|custody| custody.matches_operation(operation, ctx));
+        ctx.charge_work(172, Utf16::default())?;
+        Ok(PreparedCounted {
+            core: CountedCore { fields: Some(fields), operation, route },
+            tables_package, tables_schema, actions_package, actions_schema,
+            binding_package, stable_binding_package,
+        })
+    }
+}
+
+// Only the exact counted consumer below can construct this permit. No
+// field extraction path returns a permit or exposes the original route.
+pub(crate) struct CountedBankRoute(());
+
+impl CountedCore<'_, '_> {
+    pub(crate) fn admit_bank(
+        &mut self,
+        ctx: &mut Context<'_>,
+    ) -> Result<crate::schema::admitted_bank::AdmittedCore, EngineError> {
+        ctx.charge_work(98, Utf16::default())?;
+        let Some(resources) = self.fields.take() else {
+            return Err(counted_core_consumed(ctx));
+        };
+        let mut admitted = crate::schema::admitted_bank::SchemaBank::admit_core_owned(
+            resources, self.operation, ctx,
+        )?;
+        ctx.charge_work(26, Utf16::default())?;
+        if self.route.is_some_and(|custody| custody.matches_operation(self.operation, ctx)) {
+            // The original owner check/store costs 12. Another 16 covers
+            // permit construction and the new borrowed call/return effects.
+            ctx.charge_work(28, Utf16::default())?;
+            crate::schema::admitted_bank::SchemaBank::mark_counted_owner(
+                &mut admitted, CountedBankRoute(()),
+            );
+        }
+        Ok(admitted)
+    }
+
+    pub(crate) fn take_raw(&mut self, ctx: &mut Context<'_>) -> Result<crate::engine::ResourceSet, EngineError> {
+        type RawResult = Result<crate::engine::ResourceSet, EngineError>;
+        // The raw fallback cannot carry the route. Prepay its extra result
+        // staging and complete raw movement separately from the slot take.
+        ctx.charge_work(98 + counted_words::<RawResult>() + counted_words::<crate::engine::ResourceSet>(), Utf16::default())?;
+        let Some(resources) = self.fields.take() else {
+            return Err(counted_core_consumed(ctx));
+        };
+        Ok(resources.into_raw())
+    }
+}
+
+// Only a misuse of the public hidden borrowed consuming entry can reach
+// this error. A genuine preparation calls Engine once with a full slot.
+fn counted_core_consumed(ctx: &mut Context<'_>) -> EngineError {
+    const MESSAGE: &str = "Counted Core input already consumed";
+    match ctx.charge_work(counted_words::<EngineError>() + 2 * MESSAGE.len() + "REQUEST".len() + 8, Utf16::default()) {
+        Ok(()) => EngineError::new("REQUEST", Utf16::default(), MESSAGE),
+        Err(error) => error,
     }
 }

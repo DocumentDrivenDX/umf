@@ -1107,6 +1107,19 @@ pub(crate) struct FactoryCountCustody {
 }
 #[derive(Debug)]
 pub(crate) struct FactoryRowHint {pub(crate) nodes:usize,custody:FactoryCountCustody}
+impl FactoryCountCustody {
+    // The caller prepays the complete current-state readback.
+    pub(crate) fn matches_operation(&self, operation: &OwnedCoreOperation, ctx: &Context<'_>) -> bool {
+        // The original custody mint already checked the immutable operation's
+        // profile before capturing this exact identity.
+        self.limits == ctx.limits()
+            && self.profile == ctx.profile()
+            && ctx.owned_core_operation.as_ref().is_some_and(|active| {
+                std::sync::Arc::ptr_eq(active, &self.operation)
+                    && std::sync::Arc::ptr_eq(active, &operation.identity)
+            })
+    }
+}
 impl OwnedCoreOperation {
     pub(crate) fn count_custody(&self,ctx:&mut Context<'_>)->Result<Option<FactoryCountCustody>,EngineError>{
         let w=|n:usize|n.div_ceil(std::mem::size_of::<usize>());
