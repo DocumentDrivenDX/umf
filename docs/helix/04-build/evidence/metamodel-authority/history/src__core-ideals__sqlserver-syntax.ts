@@ -1,0 +1,5 @@
+import {UmfError} from '../model/types';
+export const sqlServerCarriers={bit:'boolean',tinyint:'integer',smallint:'integer',int:'integer',bigint:'integer','decimal(38,9)':'decimal',real:'float','float(53)':'float','nvarchar(max)':'string','varbinary(max)':'binary',date:'date','time(7)':'time','datetime2(7)':'timestamp','datetimeoffset(7)':'timestamp'} as const;
+function text(value:unknown):asserts value is string {if(typeof value!=='string'||value.includes('\0')||/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/u.test(value))throw new UmfError('SQLSERVER_TEXT','Expected valid Unicode without NUL');}
+export function sqlServerIdentifier(value:unknown){text(value);if(!value||value.length>128||value.trim()!==value||value.startsWith('#'))throw new UmfError('SQLSERVER_IDENTIFIER','Expected a permanent, nonempty identifier of at most 128 UTF-16 units without edge whitespace');return '['+value.replace(/]/g,']]')+']';}
+export function sqlServerLiteral(value:unknown){text(value);return "N'"+value.replace(/'/g,"''")+"'";}
