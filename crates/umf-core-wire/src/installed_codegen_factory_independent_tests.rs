@@ -433,7 +433,7 @@ fn fw06_selected_actual_stage_denials_preserve_first_host_error_without_handle()
             .with_host_control(&mut control)
             .with_constructor_root_observer(&root);
         let limits = ctx.limits();
-        let mut observe = |e| {
+        let mut observe = |e: InstalledFactoryStage<'_>| {
             let s = stage(e);
             if (selected == "admission" && s == "start:coreSchema")
                 || (selected == "compilation" && s == "compile:start")
