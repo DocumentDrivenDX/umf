@@ -364,7 +364,7 @@ impl ConstructionState {
 mod preflight_reference_observation {
     use super::*;
     type Observer = Box<dyn FnMut(&Value, &Utf16, &str, &Result<(&Value, Utf16), EngineError>)>;
-    std::thread_local! {
+    thread_local! {
         static CURRENT: std::cell::RefCell<Option<Observer>> = std::cell::RefCell::new(None);
     }
     struct Restore(Option<Observer>);
