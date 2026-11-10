@@ -60,7 +60,7 @@ test('generic host admission preserves its remaining distinct refusal behavior',
  expect(cycleResult.predecessor).toMatchObject({name:'UmfError',code:'CYCLE',path:'/extensions/self'});
  expect(cycleResult.rustRoute.code).toBe('RESOURCE_LIMIT');
  expect(numberResult.predecessor).toMatchObject({name:'UmfError',code:'NUMBER',path:'/extensions/future'});
- expect(numberResult.rustRoute).toMatchObject({name:'UmfCoreError',code:'NUMBER',path:''});
+ expect(numberResult.rustRoute).toMatchObject({name:'UmfCoreError',code:'NUMBER',path:'/source/extensions/future',message:'Number outside the core interoperable numeric profile'});
  let getterCalls=0;
  const accessor=source(value=>Object.defineProperty(value,'future',{enumerable:true,get(){getterCalls++;return true;}}));
  const accessorResult=probe(accessor);
