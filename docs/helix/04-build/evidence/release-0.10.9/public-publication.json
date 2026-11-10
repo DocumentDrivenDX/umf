@@ -1,0 +1,228 @@
+{
+  "profile": "umf.release-publication-verification/1",
+  "status": "verified",
+  "github": {
+    "releaseId": 433528462,
+    "tag": "umf-v0.10.9",
+    "targetCommit": "9b36814d5b9eda1867d7893575e1acd718cfe4bb",
+    "immutable": true,
+    "assetCount": 12,
+    "rosterAndDigestsMatch": true,
+    "assets": [
+      {
+        "name": "SHA256SUMS",
+        "bytes": 1106,
+        "sha256": "b1d0f35e211c556e59ca63ecf550e25f1569c2d983bae1d9f1f6fda768b4b40f"
+      },
+      {
+        "name": "release-pins.json",
+        "bytes": 1199,
+        "sha256": "75c14ed090590cb1ff068f2e8212f3161e61ce08f046d0b0fb6f8e189c5fca5c"
+      },
+      {
+        "name": "umf-sdk-0.10.9-linux-x86_64.tgz",
+        "bytes": 67306452,
+        "sha256": "9584e4940298b6b9e8128c25568895d0b4e2e2dacc2aa39e622218765451788e"
+      },
+      {
+        "name": "umf-sdk-0.10.9-macos-aarch64.tgz",
+        "bytes": 66127546,
+        "sha256": "53923b0606ee399737e32fb1836383c97e851f34d1c4fa19773563639455942a"
+      },
+      {
+        "name": "umf-v0.10.9-aarch64-apple-darwin.tar.gz",
+        "bytes": 14930278,
+        "sha256": "56fb0e64b53bf22eeae35d7e6ba33dc63143bef5967ca5c273adccb9667e498b"
+      },
+      {
+        "name": "umf-v0.10.9-source.tar.gz",
+        "bytes": 1677512383,
+        "sha256": "4702a4e55fb7dd57f8fa91601bb434c56a24a56bb1d9e306915dbebe159603da"
+      },
+      {
+        "name": "umf-v0.10.9-x86_64-unknown-linux-gnu.tar.gz",
+        "bytes": 16477917,
+        "sha256": "9b9529bf37b446fd065ae231395291095d2504cb331fc96eea74db07a45e1efb"
+      },
+      {
+        "name": "umf_codegen-0.10.9-py3-none-any.whl",
+        "bytes": 66246,
+        "sha256": "17c90cb379bd8a967ebcdfbdf91bc3d8b62e021fad880e25849ba66711937226"
+      },
+      {
+        "name": "umf_codegen-0.10.9.tar.gz",
+        "bytes": 53159,
+        "sha256": "f2e7fd6861da2c8fc389459766e229c19f1312aa6a0fd4a7cd9d963bfa93d83c"
+      },
+      {
+        "name": "umf_core-0.10.9-cp311-abi3-macosx_11_0_arm64.whl",
+        "bytes": 30439879,
+        "sha256": "563947e0b2cf0132c88383b34b97c7416f5fa31beaa1342a5fcf8dd2455e7a1a"
+      },
+      {
+        "name": "umf_core-0.10.9-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "bytes": 33946927,
+        "sha256": "ce4c8dd3894f5f3bcf39c775f9f9796ef4b818fb22f025de18bca414b256238d"
+      },
+      {
+        "name": "umf_core-0.10.9.tar.gz",
+        "bytes": 7624978,
+        "sha256": "632b3851f14fa8d80c0639b4286971ff183bc15d3beb93752f4cb60a64c31ba5"
+      }
+    ],
+    "latest": true,
+    "url": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.9",
+    "sourceTree": "3ddb0ff850c92500818d6a0031c856bae0bd0554",
+    "sourceMembersVerified": 70594
+  },
+  "pypi": {
+    "umf-core": {
+      "version": "0.10.9",
+      "assetCount": 3,
+      "files": {
+        "umf_core-0.10.9-cp311-abi3-macosx_11_0_arm64.whl": "563947e0b2cf0132c88383b34b97c7416f5fa31beaa1342a5fcf8dd2455e7a1a",
+        "umf_core-0.10.9-cp311-abi3-manylinux_2_34_x86_64.whl": "ce4c8dd3894f5f3bcf39c775f9f9796ef4b818fb22f025de18bca414b256238d",
+        "umf_core-0.10.9.tar.gz": "632b3851f14fa8d80c0639b4286971ff183bc15d3beb93752f4cb60a64c31ba5"
+      },
+      "projectUrl": "https://pypi.org/project/umf-core/0.10.9/",
+      "publisherRun": "https://github.com/DocumentDrivenDX/umf/actions/runs/42922738349",
+      "publisherReceiptSha256": "4c6e90e7ad1ff313d02267c0bb4c8d1aae9f8cb814a3d4eb5fc103cd492207ce",
+      "publicBytesVerifiedByPublisher": true
+    },
+    "umf-codegen": {
+      "version": "0.10.9",
+      "assetCount": 2,
+      "files": {
+        "umf_codegen-0.10.9-py3-none-any.whl": "17c90cb379bd8a967ebcdfbdf91bc3d8b62e021fad880e25849ba66711937226",
+        "umf_codegen-0.10.9.tar.gz": "f2e7fd6861da2c8fc389459766e229c19f1312aa6a0fd4a7cd9d963bfa93d83c"
+      },
+      "projectUrl": "https://pypi.org/project/umf-codegen/0.10.9/",
+      "publisherRun": "https://github.com/DocumentDrivenDX/umf/actions/runs/42923621040",
+      "publisherReceiptSha256": "c08b75e80cbb9ab4b80f7a7854cf0282a82dca006fc2341dfd76f867f439c3f0",
+      "publicBytesVerifiedByPublisher": true
+    }
+  },
+  "consumers": {
+    "python": {
+      "codegenResources": 10,
+      "embeddedCliSha256": "466a7443b3725e041d9e191ac566597c537a754569e1a054f4ca1fa877e07461",
+      "keyedFiles": [
+        "README.md",
+        "linux_probe/__init__.py",
+        "linux_probe/crud.py",
+        "linux_probe/models.py",
+        "report.json",
+        "schema.sql",
+        "source-companion.json"
+      ],
+      "keyedSha256": "2a87662c489aa35c2c7f98703b77dc310c6f2efe22215f78be692c67cb1415c9",
+      "machine": "arm64",
+      "pydantic": "2.11.9",
+      "python": "3.11.17",
+      "status": "passed",
+      "unkeyedSha256": "f0f8aded0787f5162614a5aa5e9724da0bb22e9f5c46a0bb867ec8d1d09adf34",
+      "pipCheck": "No broken requirements found.",
+      "packages": {
+        "umf-codegen": {
+          "filename": "umf_codegen-0.10.9-py3-none-any.whl",
+          "sha256": "17c90cb379bd8a967ebcdfbdf91bc3d8b62e021fad880e25849ba66711937226",
+          "url": "https://files.pythonhosted.org/packages/62/19/3bb8606df3e2943c26e2f0a62096bb8b8992984109472f788d53b23e684e/umf_codegen-0.10.9-py3-none-any.whl",
+          "requested": true,
+          "version": "0.10.9"
+        },
+        "umf-core": {
+          "filename": "umf_core-0.10.9-cp311-abi3-macosx_11_0_arm64.whl",
+          "sha256": "563947e0b2cf0132c88383b34b97c7416f5fa31beaa1342a5fcf8dd2455e7a1a",
+          "url": "https://files.pythonhosted.org/packages/90/1c/860bce1f36c54b8ef38f1c3965835233a6ae1202d3e33a99c0f1f03b32a4/umf_core-0.10.9-cp311-abi3-macosx_11_0_arm64.whl",
+          "requested": false,
+          "version": "0.10.9"
+        }
+      }
+    },
+    "node": {
+      "status": "passed",
+      "runtime": "node v26.12.1",
+      "arch": "arm64",
+      "platform": "darwin",
+      "keyedSha256": "2a87662c489aa35c2c7f98703b77dc310c6f2efe22215f78be692c67cb1415c9",
+      "unkeyedSha256": "f0f8aded0787f5162614a5aa5e9724da0bb22e9f5c46a0bb867ec8d1d09adf34",
+      "keyedFiles": [
+        "README.md",
+        "linux_probe/__init__.py",
+        "linux_probe/crud.py",
+        "linux_probe/models.py",
+        "report.json",
+        "schema.sql",
+        "source-companion.json"
+      ]
+    },
+    "bun": {
+      "status": "passed",
+      "runtime": "bun 1.4.3",
+      "arch": "arm64",
+      "platform": "darwin",
+      "keyedSha256": "2a87662c489aa35c2c7f98703b77dc310c6f2efe22215f78be692c67cb1415c9",
+      "unkeyedSha256": "f0f8aded0787f5162614a5aa5e9724da0bb22e9f5c46a0bb867ec8d1d09adf34",
+      "keyedFiles": [
+        "README.md",
+        "linux_probe/__init__.py",
+        "linux_probe/crud.py",
+        "linux_probe/models.py",
+        "report.json",
+        "schema.sql",
+        "source-companion.json"
+      ]
+    },
+    "macCli": {
+      "status": "passed",
+      "cliSha256": "466a7443b3725e041d9e191ac566597c537a754569e1a054f4ca1fa877e07461",
+      "codegenVersionOutput": {
+        "protocol": "umf.codegen-cli/1",
+        "version": "0.10.9",
+        "profile": "umf.codegen-resources/1",
+        "inputFormat": "umf.codegen-json-core-admission/1",
+        "outputWireProtocol": "umf.core-wire/1",
+        "resourceManifestSha256": "934cd1c046b1846e143b2d8f079cf5fb15628d94a99ad547b9e118616adc5860"
+      }
+    }
+  },
+  "linuxProducerRecoverySha256": "98c56f9945eb43551d31ba52b3c3dea009c4211bfdf6c15d6317f0779543f9a4",
+  "linuxInstalledProofSha256": "e3359f307ae8145622102b9206d2bbfe0907cfebe8f41af750c8cdfb5048f9a9",
+  "sdkPlatformPayloadComparison": {
+    "status": "passed",
+    "regularFileCount": 2077,
+    "equalPayloadFiles": 2074,
+    "differentFiles": {
+      "package/dist/rust-default-manifest.json": {
+        "mac": "2aed5991421547858afb0212e5d253ea8c184e71f214a84730d7c4a4df67eadb",
+        "linux": "9e2454b273ad77d5e7230acaf70904706bc28339f4f45fa14b740889622f6278"
+      },
+      "package/dist/umf_core_node.node": {
+        "mac": "87a070dfb0c634b7229d744f6f1248e0e7fe46ee269569952aded53659d7beb5",
+        "linux": "f6ff8b28a07742bd3cab0466b95231d0c8c8cf497b24565e4011cfca0ea7f7a6"
+      },
+      "package/manifest.json": {
+        "mac": "527d3b2e886e1aff85046065bc0b3de1b5babbdefa742ba7eab19dcb5c025b04",
+        "linux": "738ef8d0688a4e4c24d755ca773e0defadfae85154ac22d67bb6f136f4992c40"
+      }
+    }
+  },
+  "microsite": {
+    "status": "passed",
+    "scope": "Live bytes match the already qualified microsite compiler and provenance",
+    "assets": {
+      "provenance.json": {
+        "url": "https://documentdrivendx.github.io/umf/assets/pack-tools/provenance.json",
+        "bytes": 9956,
+        "sha256": "fdf0f8cedea8acb2f97d84a43ee7a4ad6d9da827a5754ac335c04a8c6f3eaeff"
+      },
+      "umf_core_wasm_bg.wasm": {
+        "url": "https://documentdrivendx.github.io/umf/assets/pack-tools/umf_core_wasm_bg.wasm",
+        "bytes": 1035135,
+        "sha256": "db83171d5e6cce45f28dad3670cf8423aee4090b57f65ce5c6c1f54cabd8e9f3"
+      }
+    },
+    "workbenchUrl": "https://documentdrivendx.github.io/umf/pack-tools.html",
+    "existingSignedBrowserProofSha256": "19dfaf60dabc0abfb497b3000f1c5a38f5abf0597a820891af0ceb6f942d7fc3"
+  }
+}
