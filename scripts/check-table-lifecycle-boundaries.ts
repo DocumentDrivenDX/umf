@@ -14,7 +14,9 @@ const owners:Record<string,readonly string[]>={
  'policies.ts':['./context','./types'],
  'seeds.ts':['./columns','./context','./types'],
  'operations.ts':['../../model/schema-literals','../../../spec/extensions/tables/operation.schema.json','../../../spec/extensions/tables/operation-0.2.schema.json','../../../spec/extensions/tables/schema.json','../../validation/schema','./columns','./context','./row-expressions','./types'],
- 'index.ts':['../../../spec/extensions/tables/package.json','../../model/types','../../model/json','../../registry/registry','../../validation/document','./context','./columns','./policies','./seeds','./operations','./types'],
+ 'index.ts':['../../../spec/extensions/tables/package.json','../../model/types','../../model/json','../../registry/registry','../../validation/document','./context','./columns','./policies','./seeds','./operations','./package','./types'],
+ 'package.ts':['../../../spec/extensions/tables/package.json','../../model/json','../../model/types'],
+ 'rust-default.ts':['../../model/types','./index'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket','Deno','globalThis','window','postMessage']);
 function exactAccountingTypeRoute(file:string,node:ts.Node):boolean{

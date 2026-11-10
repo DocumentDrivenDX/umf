@@ -8,8 +8,10 @@ const rows=proof.declarations as {case:string;sourceText:string;normalizedText?:
 const named=(name:string)=>rows.find(r=>r.case===name)!;
 test('TableSpec native facet evidence is pinned and separates generator and execution profiles',async()=>{
  expect(proof.nativeVersion).toBe('647e8e566ad78b864282ec65c0b0b2237aa63084');expect(proof.versions.spark).toBe('4.0.1');expect(proof.versions.greatExpectations).toBe('1.15.1');
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
  for(const [path,hash] of Object.entries(proof.sha256 as Record<string,string>)){
-  expect(createHash('sha256').update(new Uint8Array(await Bun.file(recordedRepositoryPath(path)).arrayBuffer())).digest('hex'),path).toBe(hash);
+  const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;
+  expect(createHash('sha256').update(new Uint8Array(await Bun.file(archived??recordedRepositoryPath(path)).arrayBuffer())).digest('hex'),path).toBe(hash);
  }
  expect(JSON.parse(named('length-one').raw.jsonSchemaText).properties.value.maxLength).toBeUndefined();
  expect(JSON.parse(named('max-only').raw.jsonSchemaText).properties.value.maxLength).toBe(2);

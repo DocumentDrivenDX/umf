@@ -41,9 +41,19 @@ pub type Clock<'a> = dyn FnMut() -> Option<u64> + 'a;
 pub type FallibleCancellationCheck<'a> = dyn FnMut() -> Result<bool, EngineError> + 'a;
 pub type FallibleClock<'a> = dyn FnMut() -> Result<Option<u64>, EngineError> + 'a;
 
+// A scratch path is already admitted storage. It moves only on Context-owned
+// refusal; host errors retain their own origin/path without consuming scratch.
+enum WorkPath<'p> { Owned(Utf16), Scratch(&'p mut Utf16) }
+impl WorkPath<'_> {
+    fn take(&mut self) -> Utf16 {
+        match self { Self::Owned(path)=>std::mem::take(path), Self::Scratch(path)=>std::mem::take(*path) }
+    }
+}
+
 /// Per-invocation limits and explicit host capabilities. The context owns all
 /// counters; no global or ambient runtime state is consulted.
 pub struct Context<'a> {
+    pub(crate) evaluation_paths: Option<std::rc::Rc<std::cell::RefCell<crate::schema::owned_plans::EvaluationPaths>>>,
     limits: Limits,
     profile: ResourceProfile,
     charged_work: u64,
@@ -55,6 +65,11 @@ pub struct Context<'a> {
     fallible_cancellation: Option<&'a mut FallibleCancellationCheck<'a>>,
     fallible_clock: Option<&'a mut FallibleClock<'a>>,
     deadline_ms: Option<u64>,
+    // Explicit optional owner-only observation; no ambient/thread-local state.
+    pub(crate) owned_core_operation:Option<std::sync::Arc<()>>,
+    pub(crate) schema_construction: Option<std::rc::Rc<std::cell::RefCell<crate::schema::ConstructionState>>>,
+    work_phase_observer: Option<&'a std::cell::Cell<&'static str>>,
+    constructor_root_observer: Option<&'a std::cell::Cell<&'static str>>,
 }
 
 /// Work accumulated by transport decoders for one host operation.
@@ -144,7 +159,22 @@ impl Drop for AggregateTextScope<'_, '_> {
     }
 }
 
+struct EvaluationPathScope<'ctx,'cap> {
+    context: &'ctx mut Context<'cap>,
+    prior: Option<std::rc::Rc<std::cell::RefCell<crate::schema::owned_plans::EvaluationPaths>>>,
+}
+impl Drop for EvaluationPathScope<'_, '_> {
+    fn drop(&mut self) { self.context.evaluation_paths = self.prior.take(); }
+}
 impl<'a> Context<'a> {
+    pub(crate) fn with_evaluation_paths<T>(&mut self, operation:impl FnOnce(&mut Self)->Result<T,EngineError>) -> Result<T,EngineError> {
+        let arena = crate::schema::owned_plans::EvaluationPaths::new_tracked(self)?;
+        self.charge_work(1,Utf16::default())?;
+        let prior = self.evaluation_paths.replace(arena);
+        let scope = EvaluationPathScope { context:self, prior };
+        operation(&mut *scope.context)
+    }
+
     pub fn ordinary() -> Self {
         Self::with_limits(ResourceProfile::Cooperative, Limits::ordinary())
             .expect("the cooperative profile is available")
@@ -175,7 +205,75 @@ impl<'a> Context<'a> {
             fallible_cancellation: None,
             fallible_clock: None,
             deadline_ms: None,
+            owned_core_operation:None,
+            schema_construction: None,
+            evaluation_paths: None,
+            work_phase_observer: None,
+            constructor_root_observer: None,
         })
+    }
+
+    /// Internal owner construction scope. It conveys no caller-selectable proof:
+    /// only completed admissions created in this cold lifetime are eligible.
+    /// State drops on return/error/unwind; counters and controls never reset.
+    #[doc(hidden)]
+    pub fn with_codegen_construction<T>(&mut self, operation: impl FnOnce(&mut Self) -> Result<T, EngineError>) -> Result<T, EngineError> {
+        struct Scope<'c, 'a> { ctx: &'c mut Context<'a>, prior: Option<std::rc::Rc<std::cell::RefCell<crate::schema::ConstructionState>>> }
+        impl Drop for Scope<'_, '_> { fn drop(&mut self) { self.ctx.schema_construction = self.prior.take(); } }
+        self.charge_work(1, Utf16::default())?;
+        let prior = self.schema_construction.take();
+        self.schema_construction = Some(std::rc::Rc::new(std::cell::RefCell::new(crate::schema::ConstructionState::default())));
+        let mut scope = Scope { ctx: self, prior };
+        operation(&mut *scope.ctx)
+    }
+
+    #[doc(hidden)]
+    pub fn in_codegen_construction(&self) -> bool { self.schema_construction.is_some() }
+
+    /// Attach fixed-size phase metadata for a private owner diagnostic. This
+    /// changes no work amount, callback order, capability or Context lifetime.
+    pub fn with_work_phase_observer(mut self, phase: &'a std::cell::Cell<&'static str>) -> Self {
+        self.work_phase_observer = Some(phase);
+        self
+    }
+
+    /// Private fixed-root metadata uses the same scoped Cell/restore protocol as
+    /// work phases. It is never admission authority or a notification boundary.
+    #[doc(hidden)]
+    pub fn with_constructor_root_observer(mut self, root: &'a std::cell::Cell<&'static str>) -> Self {
+        self.constructor_root_observer = Some(root);
+        self
+    }
+
+    #[doc(hidden)]
+    pub fn with_constructor_root<T>(&mut self, root: &'static str, operation: impl FnOnce(&mut Self) -> T) -> T {
+        struct Restore<'a> { cell: Option<&'a std::cell::Cell<&'static str>>, prior: &'static str }
+        impl Drop for Restore<'_> {
+            fn drop(&mut self) { if let Some(cell) = self.cell { cell.set(self.prior); } }
+        }
+        let prior = self.constructor_root_observer.map(|cell| cell.replace(root)).unwrap_or("");
+        let _restore = Restore { cell: self.constructor_root_observer, prior };
+        operation(self)
+    }
+
+    /// Constructor sites are invisible to legacy/call-attributed observers.
+    /// No callback or charge is generated when entering or restoring a site.
+    #[doc(hidden)]
+    pub fn with_constructor_site<T>(&mut self, label: &'static str, operation: impl FnOnce(&mut Self) -> T) -> T {
+        if self.constructor_root_observer.is_some() { self.with_work_phase(label, operation) }
+        else { operation(self) }
+    }
+
+    /// Nested observational label, restored on return, refusal and unwinding.
+    /// No notification/callback/charge occurs at a label boundary.
+    pub fn with_work_phase<T>(&mut self, label: &'static str, operation: impl FnOnce(&mut Self) -> T) -> T {
+        struct Restore<'a> { cell: Option<&'a std::cell::Cell<&'static str>>, prior: &'static str }
+        impl Drop for Restore<'_> {
+            fn drop(&mut self) { if let Some(cell) = self.cell { cell.set(self.prior); } }
+        }
+        let prior = self.work_phase_observer.map(|cell| cell.replace(label)).unwrap_or("");
+        let _restore = Restore { cell: self.work_phase_observer, prior };
+        operation(self)
     }
 
     pub fn with_meter(mut self, meter: &'a mut WorkMeter<'a>) -> Self {
@@ -326,12 +424,14 @@ impl<'a> Context<'a> {
     }
 
     pub fn check_tree_value_count(&self, count: usize, path: Utf16) -> Result<(), EngineError> {
-        if count > self.limits.max_values {
-            return Err(EngineError::new(
-                "LIMIT",
-                path,
-                "JSON structural value limit exceeded",
-            ));
+        self.check_tree_value_count_path(count, WorkPath::Owned(path))
+    }
+    pub(crate) fn check_tree_value_count_with_path(&self,count:usize,path:&mut Utf16)->Result<(),EngineError> {
+        self.check_tree_value_count_path(count,WorkPath::Scratch(path))
+    }
+    fn check_tree_value_count_path(&self,count:usize,mut path:WorkPath<'_>)->Result<(),EngineError> {
+        if count>self.limits.max_values {
+            return Err(EngineError::new("LIMIT",path.take(),"JSON structural value limit exceeded"));
         }
         Ok(())
     }
@@ -356,8 +456,26 @@ impl<'a> Context<'a> {
     /// native and wasm32. Host notifications use the same bounded chunks on
     /// both targets, preserving the existing usize callback interface.
     pub fn charge_work_u64(&mut self, amount: u64, path: Utf16) -> Result<(), EngineError> {
+        self.charge_work_path(amount, WorkPath::Owned(path))
+    }
+
+    /// Same work/control state machine. Success borrows the admitted buffer;
+    /// Context-generated refusal moves it, host refusal never substitutes it.
+    /// Fixed error code/message construction remains the existing behavior.
+    pub fn charge_work_with_path(&mut self, amount: usize, path: &mut Utf16) -> Result<(), EngineError> {
+        self.charge_work_path(amount as u64, WorkPath::Scratch(path))
+    }
+
+    // Crate-owned admission needs the same movable diagnostic custody for
+    // wide key/comparison bounds. This delegates the exact existing state
+    // machine, including zero/wide chunks and first host-error provenance.
+    pub(crate) fn charge_work_u64_with_path(&mut self, amount:u64, path:&mut Utf16)->Result<(),EngineError> {
+        self.charge_work_path(amount,WorkPath::Scratch(path))
+    }
+
+    fn charge_work_path(&mut self, amount: u64, mut path: WorkPath<'_>) -> Result<(), EngineError> {
         let Some(total) = self.charged_work.checked_add(amount) else {
-            return Err(EngineError::new("LIMIT", path, "Work counter overflow"));
+            return Err(EngineError::new("LIMIT", path.take(), "Work counter overflow"));
         };
         self.charged_work = total;
         if self.meter.is_none()
@@ -377,76 +495,57 @@ impl<'a> Context<'a> {
             if let Some(control) = self.host_control.as_deref_mut() {
                 control(chunk).map_err(EngineError::from_host)?;
             }
-            self.check_cancelled(path.clone())?;
-            self.check_deadline(path.clone())?;
+            self.check_cancelled_path(&mut path)?;
+            self.check_deadline_path(&mut path)?;
             remaining -= chunk as u64;
-            if remaining == 0 {
-                return Ok(());
+            if remaining == 0 { return Ok(()); }
+        }
+    }
+
+    fn check_cancelled_path(&mut self, path: &mut WorkPath<'_>) -> Result<(), EngineError> {
+        if let Some(check) = self.fallible_cancellation.as_deref_mut() {
+            if check().map_err(EngineError::from_host)? {
+                return Err(EngineError::new("CANCELLED", path.take(), "Operation cancelled").with_control_failure());
             }
         }
+        if self.cancellation.as_deref_mut().is_some_and(|check| check()) {
+            return Err(EngineError::new("CANCELLED", path.take(), "Operation cancelled").with_control_failure());
+        }
+        Ok(())
+    }
+
+    fn check_deadline_path(&mut self, path: &mut WorkPath<'_>) -> Result<(), EngineError> {
+        let Some(deadline) = self.deadline_ms else { return Ok(()); };
+        if let Some(clock) = self.fallible_clock.as_deref_mut() {
+            let Some(now) = clock().map_err(EngineError::from_host)? else {
+                return Err(EngineError::new("CLOCK_CAPABILITY_REQUIRED", path.take(),
+                    "Host clock capability did not return a time").with_control_failure());
+            };
+            if now > deadline {
+                return Err(EngineError::new("DEADLINE", path.take(), "Deadline elapsed").with_control_failure());
+            }
+        } else {
+            let Some(clock) = self.clock.as_deref_mut() else {
+                return Err(EngineError::new("CLOCK_CAPABILITY_REQUIRED", path.take(),
+                    "Host clock capability is required for deadline requests").with_control_failure());
+            };
+            let Some(now) = clock() else {
+                return Err(EngineError::new("CLOCK_CAPABILITY_REQUIRED", path.take(),
+                    "Host clock capability did not return a time").with_control_failure());
+            };
+            if now > deadline {
+                return Err(EngineError::new("DEADLINE", path.take(), "Deadline elapsed").with_control_failure());
+            }
+        }
+        Ok(())
     }
 
     pub fn check_cancelled(&mut self, path: Utf16) -> Result<(), EngineError> {
-        if let Some(check) = self.fallible_cancellation.as_deref_mut() {
-            if check().map_err(EngineError::from_host)? {
-                return Err(EngineError::new("CANCELLED", path, "Operation cancelled")
-                    .with_control_failure());
-            }
-        }
-        if self
-            .cancellation
-            .as_deref_mut()
-            .is_some_and(|check| check())
-        {
-            return Err(
-                EngineError::new("CANCELLED", path, "Operation cancelled").with_control_failure()
-            );
-        }
-        Ok(())
+        self.check_cancelled_path(&mut WorkPath::Owned(path))
     }
 
     pub fn check_deadline(&mut self, path: Utf16) -> Result<(), EngineError> {
-        let Some(deadline) = self.deadline_ms else {
-            return Ok(());
-        };
-        if let Some(clock) = self.fallible_clock.as_deref_mut() {
-            let Some(now) = clock().map_err(EngineError::from_host)? else {
-                return Err(EngineError::new(
-                    "CLOCK_CAPABILITY_REQUIRED",
-                    path,
-                    "Host clock capability did not return a time",
-                )
-                .with_control_failure());
-            };
-            if now > deadline {
-                return Err(
-                    EngineError::new("DEADLINE", path, "Deadline elapsed").with_control_failure()
-                );
-            }
-            return Ok(());
-        }
-        let Some(clock) = self.clock.as_deref_mut() else {
-            return Err(EngineError::new(
-                "CLOCK_CAPABILITY_REQUIRED",
-                path,
-                "Host clock capability is required for deadline requests",
-            )
-            .with_control_failure());
-        };
-        let Some(now) = clock() else {
-            return Err(EngineError::new(
-                "CLOCK_CAPABILITY_REQUIRED",
-                path,
-                "Host clock capability did not return a time",
-            )
-            .with_control_failure());
-        };
-        if now > deadline {
-            return Err(
-                EngineError::new("DEADLINE", path, "Deadline elapsed").with_control_failure()
-            );
-        }
-        Ok(())
+        self.check_deadline_path(&mut WorkPath::Owned(path))
     }
 }
 
@@ -815,3 +914,118 @@ mod tests {
         );
     }
 }
+
+
+#[cfg(test)]
+mod work_phase_observer_tests {
+    use super::*;
+    use std::cell::{Cell, RefCell};
+
+    #[test]
+    fn scopes_preserve_charges_callback_order_and_prior_work() {
+        let phase = Cell::new("outer");
+        let rows = RefCell::new(Vec::new());
+        let mut control = |n| { rows.borrow_mut().push((n, phase.get())); Ok(()) };
+        let mut ctx = Context::ordinary().with_host_control(&mut control).with_work_phase_observer(&phase);
+        ctx.charge_work(5, Utf16::default()).unwrap();
+        ctx.with_work_phase("admission", |ctx| {
+            ctx.charge_work(7, Utf16::default()).unwrap();
+            ctx.with_work_phase("copy", |ctx| ctx.charge_work(11, Utf16::default())).unwrap();
+            assert_eq!(phase.get(), "admission");
+            ctx.charge_work(0, Utf16::default()).unwrap();
+        });
+        assert_eq!(ctx.charged_work(), 23);
+        assert_eq!(phase.get(), "outer");
+        assert_eq!(*rows.borrow(), vec![(5,"outer"),(7,"admission"),(11,"copy"),(0,"admission")]);
+    }
+
+    #[test]
+    fn first_denial_stays_charged_and_stops_before_later_work() {
+        let phase = Cell::new("outer");
+        let rows = RefCell::new(Vec::new());
+        let mut control = |n| {
+            rows.borrow_mut().push((n, phase.get()));
+            if n == 7 { Err(EngineError::new("RESOURCE_LIMIT", Utf16::default(), "first denial")) } else { Ok(()) }
+        };
+        let mut ctx = Context::ordinary().with_host_control(&mut control).with_work_phase_observer(&phase);
+        let result = ctx.with_work_phase("admission", |ctx| {
+            ctx.charge_work(3, Utf16::default())?;
+            ctx.with_work_phase("copy", |ctx| ctx.charge_work(7, Utf16::default()))?;
+            ctx.charge_work(11, Utf16::default())
+        });
+        assert_eq!(result.unwrap_err().code, "RESOURCE_LIMIT");
+        assert_eq!(ctx.charged_work(), 10);
+        assert_eq!(phase.get(), "outer");
+        assert_eq!(*rows.borrow(), vec![(3,"admission"),(7,"copy")]);
+    }
+
+    #[test]
+    fn metadata_restores_on_unwind_without_resetting_work() {
+        let phase = Cell::new("outer");
+        let mut ctx = Context::ordinary().with_work_phase_observer(&phase);
+        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            ctx.with_work_phase("copy", |ctx| {
+                ctx.charge_work(13, Utf16::default()).unwrap();
+                panic!("observation scope unwind");
+            });
+        }));
+        assert!(result.is_err());
+        assert_eq!(phase.get(), "outer");
+        assert_eq!(ctx.charged_work(), 13);
+    }
+}
+
+#[cfg(test)]
+#[path = "context_construction_tests.rs"]
+mod construction_independent_tests;
+
+#[cfg(test)]
+mod constructor_observation_tests {
+    use super::*;
+    use std::{cell::Cell, panic::{catch_unwind, AssertUnwindSafe}};
+
+    #[test]
+    fn constructor_metadata_restores_error_unwind_and_nested_context() {
+        let root = Cell::new("unassigned");
+        let phase = Cell::new("coarse");
+        let mut amounts = Vec::new();
+        let mut meter = |amount| { amounts.push(amount); Err(EngineError::new("CANCELLED", Utf16::default(), "first")) };
+        let mut ctx = Context::ordinary().with_host_control(&mut meter)
+            .with_work_phase_observer(&phase).with_constructor_root_observer(&root);
+        let result: Result<(), EngineError> = ctx.with_constructor_root("core", |ctx| {
+            ctx.with_constructor_site("ctor.preflight-root", |ctx| {
+                assert_eq!(root.get(), "core"); assert_eq!(phase.get(), "ctor.preflight-root");
+                let nested_root = Cell::new("unassigned");
+                let mut nested = Context::ordinary().with_constructor_root_observer(&nested_root);
+                nested.with_constructor_root("reference", |_| assert_eq!(root.get(), "core"));
+                assert_eq!(nested_root.get(), "unassigned");
+                ctx.charge_work(7, Utf16::default())
+            })
+        });
+        assert_eq!(result.unwrap_err().code, "CANCELLED");
+        assert_eq!(root.get(), "unassigned"); assert_eq!(phase.get(), "coarse");
+        let panic = catch_unwind(AssertUnwindSafe(|| ctx.with_constructor_root("package", |ctx| {
+            ctx.with_constructor_site("ctor.reference", |_| panic!("observation unwind"))
+        })));
+        assert!(panic.is_err()); assert_eq!(root.get(), "unassigned"); assert_eq!(phase.get(), "coarse");
+        ctx.with_constructor_root("actions", |_| assert_eq!(root.get(), "actions"));
+        assert_eq!(root.get(), "unassigned");
+        assert_eq!(ctx.charged_work(), 7);
+        drop(ctx); assert_eq!(amounts, vec![7]);
+    }
+
+    #[test]
+    fn constructor_sites_are_invisible_without_constructor_observer() {
+        let phase = Cell::new("existing-attributed-call");
+        let mut ctx = Context::ordinary().with_work_phase_observer(&phase);
+        ctx.with_constructor_site("ctor.preflight-root", |ctx| {
+            assert_eq!(phase.get(), "existing-attributed-call");
+            ctx.with_constructor_root("core", |_| assert_eq!(phase.get(), "existing-attributed-call"));
+        });
+        assert_eq!(ctx.charged_work(), 0);
+    }
+}
+
+#[cfg(test)]
+#[path = "context_path_tests.rs"]
+mod context_path_tests;

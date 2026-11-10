@@ -36,5 +36,6 @@ test('pinned native counterexamples and source fingerprints match',async()=>{
  const sorting=proof.cases.find((r:any)=>r.id==='sorting-not-enforced');expect(sorting.sortingDeclared).toBe(true);expect(sorting.rows[0].id).toBeGreaterThan(sorting.rows.at(-1).id);
  for(const id of ['required-embedded','required-no-arrow','nullable','repeated-list']){const r=proof.cases.find((c:any)=>c.id===id);expect(r.rows[0]).toEqual(r.rows[1]);}
  expect(proof.cases.find((r:any)=>r.id==='float-narrowing').rows).toEqual([{v:1},{v:1}]);expect(proof.cases.find((r:any)=>r.id==='integer-input-truncation').rows).toEqual([{v:1},{v:1}]);
- for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(recordedRepositoryPath(path)).arrayBuffer())).digest('hex')).toBe(hash as string);
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
+ for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(history.entries.find((entry:any)=>entry.path===path)?.archive??recordedRepositoryPath(path)).arrayBuffer())).digest('hex')).toBe(hash as string);
 });

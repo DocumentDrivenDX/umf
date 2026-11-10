@@ -557,6 +557,7 @@ impl Registry {
         schema_resources: &SchemaResources,
         ctx: &mut Context<'_>,
     ) -> Result<(), EngineError> {
+        ctx.with_constructor_site("ctor.registry-manifest", |ctx| {
         self.register_inner_with_source(
             manifest,
             token,
@@ -567,6 +568,8 @@ impl Registry {
             false,
             ctx,
         )
+
+        })
     }
 
     fn register_inner_with_source(
@@ -669,3 +672,7 @@ impl Registry {
         &self.entries
     }
 }
+
+#[cfg(test)]
+#[path = "registry_construction_tests.rs"]
+mod construction_independent_tests;

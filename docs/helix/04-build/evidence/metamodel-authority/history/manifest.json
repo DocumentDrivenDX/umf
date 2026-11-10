@@ -869,6 +869,160 @@
       "sha256": "cb063e24b8a9f0d739c3547ed84a29bdbe00b11eeb9971bfd3504b28a3c7f896",
       "source": "HEAD",
       "reason": "Original mixed-version semantic-type tests retained byte-exactly; current semantic-reference structure, declarations, registries, validation, selection, serialization and native round-trip behavior are actively tested in the current replacement file."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-catalog.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-catalog.ts",
+      "sha256": "94aaf4263cb2e2306bbdd84073929601fc503ca4291faaa5c4bc1a652db46940",
+      "source": "0699d31f7b7821c0686f9c0e3bff5ba42b1d9d45^",
+      "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-resolved-predicate.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-resolved-predicate.ts",
+      "sha256": "0bdd25d239a7d136ba7e791a3b2c278fbee1c0ddaeab611871e2f695ef182391",
+      "source": "6c8989b84a7d115f212afe746577a50bade31eb3",
+      "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-node-tree.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-node-tree.ts",
+      "sha256": "d07c5246c144cd20a93a8aa404a276b8bb9ef2996f0f04276ec5312f5812d99c",
+      "source": "15c39d5e0bbf769242aed847bec5f97f403b8d7d",
+      "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-typmod.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-typmod.ts",
+      "sha256": "641f3b6f6d4569ada260173af65eadb621fe24ef493cd33ab87a3389b6ba00a9",
+      "source": "218de4005ffa5385fbcc72421d8e4691ce0ef7ae",
+      "reason": "The PostgreSQL facet composition proof (live server 17.4, fixtures/validation/facets-postgresql-composition.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/facets-postgresql-constraints-native.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-postgresql-constraints-native.ts",
+      "sha256": "1cfce6a6e616730573ee2a5dfdc251a85b61ab3aeb562e9655232e6d9dfb1ede",
+      "source": "70ec94657ccfe64bf2548a572d6d45b456733e0f",
+      "reason": "The PostgreSQL facet constraint native supplement (live server 17.4, fixtures/validation/facets-postgresql-constraints-native.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the supplement's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/postgresql/facet-predicate.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__postgresql__facet-predicate.ts",
+      "sha256": "76e113ec5cb1e93fc4239f22095c981280984b9392a8f93be84f1d66e617d523",
+      "source": "0791f8ce96956b3d822832b2cff05a5df772bc25",
+      "reason": "The PostgreSQL facet constraint native supplement (live server 17.4, fixtures/validation/facets-postgresql-constraints-native.json) was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the supplement's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/facets-sqlserver-discovery-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-sqlserver-discovery-cases.ts",
+      "sha256": "3a6755b7c376f1392547a6064f6831706a41fabe5c3236820794f7b345fe22b9",
+      "source": "d629a3eb199c979b9a4109caee36f3de35a7fcfc",
+      "reason": "The pinned SQL Server facet discovery proof was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the proof's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/core-ideals/sqlserver-syntax.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__sqlserver-syntax.ts",
+      "sha256": "5099fb29ea4672e70f155cb3e999f8c6eaa9a914831dc9c042e6887134a97ef9",
+      "source": "aae3fdf3cddc83d0deae76ab72385ad628e2104c",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/facets-tablespec-profile-oracle.py",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-tablespec-profile-oracle.py",
+      "sha256": "9b3738b8744977ff7f5d55e2e190ca05bd091d64740d76f759d0250a538214de",
+      "source": "9d253b49213ebde9a18e77465a3797fb0193077b",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/key-avro-projection-native.py",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-avro-projection-native.py",
+      "sha256": "7537dcea4da46a6a8134401ccfe188a136033347f49f04200badad9e6b74ee75",
+      "source": "6ada21bebf64620c7803c4f205aa3a256d1b9675",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/key-parquet-projection-native.py",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-parquet-projection-native.py",
+      "sha256": "178f2f87a4c80c65910b8cb7d2ad730d1222d735442fad1a766d2920d44060c9",
+      "source": "65b787892fab18a848e6430c7e680389d8382252",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/key-sqlserver-encoding-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-sqlserver-encoding-cases.ts",
+      "sha256": "54db004b2ea0ea321073c8506a67f1857d126621fc6c3aef8ce511d5389cfe60",
+      "source": "ab38d6a6a7497529f59ae091df931db89e59cd76",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/core-ideals/key-sqlserver-carriers.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__key-sqlserver-carriers.ts",
+      "sha256": "767b08efc49099e42eac058a37de19882ced5203fa945b342c9a8a54a5badee4",
+      "source": "ba9d62206a801d15e902d92b5f25de11d9634d40",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/key-parquet-projection-cases.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-parquet-projection-cases.ts",
+      "sha256": "881ca0cfff36b56d34e71efe6db92eefa2c6987961536876c03a0223986779c5",
+      "source": "65b787892fab18a848e6430c7e680389d8382252",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/facets-tablespec-profile-oracle.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__facets-tablespec-profile-oracle.ts",
+      "sha256": "6245585de86671a7ff0cd94cb5cd2795bfec0840cb55bc4017d32774d0dfe6fb",
+      "source": "9d253b49213ebde9a18e77465a3797fb0193077b",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/core-ideals/parquet-key-carrier.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__parquet-key-carrier.ts",
+      "sha256": "04b3bae964ebcd32a376cbec7bbda955a21b7579be386d62b7811b4062f0685e",
+      "source": "65b787892fab18a848e6430c7e680389d8382252",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/core-ideals/parquet-facet-carrier.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__core-ideals__parquet-facet-carrier.ts",
+      "sha256": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
+      "source": "025f2996603112d45ffbafd6085d44ad32902fb2",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "src/adapters/parquet/encode.ts",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/src__adapters__parquet__encode.ts",
+      "sha256": "f9cd14a3386bbc7c8d4de8e7440e3960714b39812bfc8e9436a5e732b5440383",
+      "source": "fc77c010af979f3708261f9526c7e69072a25438",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/key-avro-discovery-native.py",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-avro-discovery-native.py",
+      "sha256": "8efa0c5af1f6c5e1cb1bdddaddaa589f9e27181f927b32298997b10fabbe937b",
+      "source": "ee9a9c87fb13786061a5ed5cb5848b48b1f04af6",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/key-parquet-discovery-native.py",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__key-parquet-discovery-native.py",
+      "sha256": "672a65bf06d6a537b5345742a8ac2aa41858cd077411de5276a37cd0dd73ea2a",
+      "source": "e599c6e41c9255123fdccaa165322191f295d465",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/relationship-avro-carrier-native.py",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__relationship-avro-carrier-native.py",
+      "sha256": "0218ae2a41826eff537cedbb3262045399c02c95cd970886cb5a0b7e8a3c06f8",
+      "source": "cd0f4c13a81f6dc7ad09132fc795b00aba08aa5f",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
+    },
+    {
+      "path": "scripts/core-ideals/relationship-avro-discovery-native.py",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/scripts__core-ideals__relationship-avro-discovery-native.py",
+      "sha256": "477d68b6b7bce61775a5a0946570afc65570a37645dd0ad7d9c734abe8237000",
+      "source": "5690b48c4c9119dc1ebde050e00c10feb43589a3",
+      "reason": "The pinned native evidence was produced from this exact pre-dual-license source; the later license commit only prepended the SPDX header line, so the evidence's byte pin is retained against the archived copy."
     }
   ]
 }

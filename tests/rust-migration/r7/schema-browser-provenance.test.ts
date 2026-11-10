@@ -13,7 +13,9 @@ test('schema-browser provenance includes transitive Cargo sources and literal in
   expect(hashes['crates/umf-core/vendor/saphyr-parser/Cargo.toml']).toBeString();
   for(const path of ['crates/umf-tagged-wire','crates/umf-graphql','crates/umf-graphql/vendor/apollo-compiler','crates/umf-core/vendor/oxttl','crates/umf-core/vendor/oxrdf','crates/umf-core/vendor/hashbrown-0.12.3','crates/umf-core/vendor/json-ld-core-0.21.4']) expect(hashes[path+'/Cargo.toml']).toBeString();
   expect(hashes['crates/umf-core/vendor/saphyr-parser/src/parser.rs']).toBeString();
-  expect(hashes['spec/extensions/tables/operation.schema.json']).toBeString();
+  // The tables operation schema is compiled from an inlined UTF-16 copy that lives under the crate source tree.
+  expect(hashes['crates/umf-codegen/src/operation_schemas_utf16.rs']).toBeString();
+  expect(hashes['spec/extensions/tables/package.json']).toBeString();
 }, {timeout: 60_000});
 
 test('changing a transitive local Cargo source changes provenance and release digest', async () => {
