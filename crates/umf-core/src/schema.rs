@@ -109,6 +109,10 @@ struct FusedPreflightKeyword<'binding, 'owner> where 'owner: 'binding {
     legacy: Option<PreflightCold<LegacyPreflightKeyword<'owner>>>,
     mark: Option<construction_index::ScopedPreflightMark>,
 }
+// Full successful Core-root source census; NOT observed prefix or admission proof.
+// Fail closed on each target if the selected physical representation has no net opportunity.
+const _: () = assert!(553*std::mem::size_of::<FusedPreflightKeyword<'static,'static>>().div_ceil(std::mem::size_of::<usize>()) > 1536*std::mem::size_of::<Option<construction_index::ScopedPreflightMark>>().div_ceil(std::mem::size_of::<usize>())+6773);
+const _: () = assert!(553*std::mem::size_of::<LegacyPreflightKeyword<'static>>().div_ceil(std::mem::size_of::<usize>()) > 1536*std::mem::size_of::<Option<construction_index::ScopedPreflightMark>>().div_ceil(std::mem::size_of::<usize>())+6773);
 struct LegacyPreflightRoute;
 struct FusedPreflightRoute<'binding, 'owner>(std::marker::PhantomData<(&'binding (), &'owner ())>) where 'owner: 'binding;
 enum PreflightChildPath<'a> {
@@ -3465,97 +3469,130 @@ impl CompiledSchema {
                 }
                 continue;
             }
-            let mut keyword=R::begin_keyword(self,&mut frame,ctx)?;
-            macro_rules! ensure_keyword_cursor { () => {{
-                R::ensure_keyword(self,&mut frame,&mut keyword,member_index,ctx)?;
+            // The one semantic match below owns only the scratch its arm uses.
+            // All retained semantic helpers and path/selection debits are unchanged.
+            ctx.charge_work(4,Utf16::default())?;
+            macro_rules! ensure_keyword_cursor { ($keyword:ident) => {{
+                R::ensure_keyword(self,&mut frame,&mut $keyword,member_index,ctx)?;
             }}; }
-            macro_rules! child_path { () => {{
-                if R::pathmark(&mut keyword).is_none() { let mark=path.mark(ctx)?; if let Err(error)=path.append(key,PathKind::RawSchemaStep,ctx){path.restore_after_failure(mark);return Err(error);} *R::pathmark(&mut keyword)=Some(mark); }
+            macro_rules! child_path { ($mark:expr) => {{
+                if ($mark).is_none() { let mark=path.mark(ctx)?; if let Err(error)=path.append(key,PathKind::RawSchemaStep,ctx){path.restore_after_failure(mark);return Err(error);} *($mark)=Some(mark); }
                 path.text()
             }}; }
-            macro_rules! child_schema_error { ($message:expr) => {{ child_path!(); let diagnostic=path.diagnostic_snapshot(ctx)?; schema_error(&diagnostic,$message) }}; }
-            macro_rules! recurse_ordered { ($edge:expr,$child:expr,$route_path:expr) => {{
-                R::recurse_ordered(self,&mut frame,&mut keyword,member_index,$edge,$child,path,$route_path,None,&scope,depth+1,policy,ctx,seen,|_,_|Ok(()))?;
+            macro_rules! child_schema_error { ($mark:expr,$message:expr) => {{ child_path!($mark); let diagnostic=path.diagnostic_snapshot(ctx)?; schema_error(&diagnostic,$message) }}; }
+            macro_rules! scalar_schema_error { ($message:expr) => {{
+                ctx.charge_work(4*catalogue_words::<Option<construction_index::ScopedPreflightMark>>()+16,Utf16::default())?;
+                #[cfg(test)] construction_index::scoped_effect_event("ps1-error-keyword-init");
+                let mut error_mark=None;
+                child_schema_error!(&mut error_mark,$message)
             }}; }
-            macro_rules! recurse_duplicate { ($child:expr) => {{
-                R::recurse_duplicate(self,&mut frame,&mut keyword,member_index,$child,path,None,&scope,depth+1,policy,ctx,seen)?;
+            macro_rules! recurse_ordered { ($keyword:ident,$edge:expr,$child:expr,$route_path:expr) => {{
+                R::recurse_ordered(self,&mut frame,&mut $keyword,member_index,$edge,$child,path,$route_path,None,&scope,depth+1,policy,ctx,seen,|_,_|Ok(()))?;
+            }}; }
+            macro_rules! recurse_duplicate { ($keyword:ident,$child:expr) => {{
+                R::recurse_duplicate(self,&mut frame,&mut $keyword,member_index,$child,path,None,&scope,depth+1,policy,ctx,seen)?;
             }}; }
             match text.as_str() {
                 "$ref" | "$dynamicRef" | "$recursiveRef" => {
+                    ctx.charge_work(4*catalogue_words::<Option<construction_index::ScopedPreflightMark>>()+16,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-path-keyword-init");
+                    let mut keyword_mark=None;
                     if !matches!(val, Value::String(_)) {
-                        return Err(child_schema_error!("reference keyword must be a string"));
+                        return Err(child_schema_error!(&mut keyword_mark,"reference keyword must be a string"));
                     }
                     if self.resolve_references_at_compile {
                         // Preflight validates through the authoritative resolver;
                         // optional runtime reference memoization remains unchanged.
-                        child_path!();
+                        child_path!(&mut keyword_mark);
                         let reference_path=path.diagnostic_snapshot(ctx)?;
                         let resolved = self.resolve_ref_unplanned(val, &reference_path, Some(scope.as_str()), ctx);
                         #[cfg(test)]
                         preflight_reference_observation::emit(val, &reference_path, &scope, &resolved);
                         resolved?;
                     }
-                }
+
+                    if let Some(mark)=keyword_mark.take(){path.restore(mark,ctx)?;}
+                },
                 "$anchor" | "$dynamicAnchor" => {
-                    let anchor = match as_utf8(val) {Some(anchor)=>anchor,None=>return Err(child_schema_error!("anchor must be a string"))};
+                    let mut keyword=R::begin_keyword(self,&mut frame,ctx)?;
+                    let anchor = match as_utf8(val) {Some(anchor)=>anchor,None=>return Err(child_schema_error!(R::pathmark(&mut keyword),"anchor must be a string"))};
                     let mut chars = anchor.chars();
                     let valid = chars.next().is_some_and(|c| c.is_ascii_alphabetic())
                         && chars.all(|c| {
                             c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | ':' | '-')
                         });
                     if !valid {
-                        return Err(child_schema_error!("Invalid schema anchor"));
+                        return Err(child_schema_error!(R::pathmark(&mut keyword),"Invalid schema anchor"));
                     }
-                }
+
+                    if let Some(mark)=R::pathmark(&mut keyword).take(){path.restore(mark,ctx)?;}
+                },
                 "type" | "disallow" => {
                     // Draft 3's metaschema intentionally permits extension
                     // type names (and delegates their meaning to its type
                     // checker). Later drafts enumerate the primitive names.
                     if self.dialect != SchemaDialect::Draft3 {
-                        child_path!();
+                        ctx.charge_work(4*catalogue_words::<Option<construction_index::ScopedPreflightMark>>()+16,Utf16::default())?;
+                        #[cfg(test)] construction_index::scoped_effect_event("ps1-path-keyword-init");
+                        let mut keyword_mark=None;
+                        child_path!(&mut keyword_mark);
                         let diagnostic=path.diagnostic_snapshot(ctx)?;
                         validate_type_declaration(val,&diagnostic,self.dialect)?;
+
+                        if let Some(mark)=keyword_mark.take(){path.restore(mark,ctx)?;}
                     }
-                    if self.dialect == SchemaDialect::Draft3 {
+                    
+if self.dialect == SchemaDialect::Draft3 {
+                        let mut keyword=R::begin_keyword(self,&mut frame,ctx)?;
                         match val {
                             Value::Object(_) => {
-                                ensure_keyword_cursor!();
+                                ensure_keyword_cursor!(keyword);
                                 R::recurse_duplicate(self,&mut frame,&mut keyword,member_index,val,path,Some(key),&scope,depth+1,policy,ctx,seen)?;
                             }
                             Value::Array(items) => {
                                 for (index, branch) in items.iter().enumerate() {
                                     if matches!(branch, Value::Object(_)) {
-                                        ensure_keyword_cursor!();
+                                        ensure_keyword_cursor!(keyword);
                                         R::recurse_ordered(self,&mut frame,&mut keyword,member_index,index,branch,path,PreflightChildPath::Index(index),Some(key),&scope,depth+1,policy,ctx,seen,|_,_|Ok(()))?;
                                     }
                                 }
                             }
                             _ => (),
                         }
+
+                        if let Some(mark)=R::pathmark(&mut keyword).take(){path.restore(mark,ctx)?;}
                     }
-                }
+                },
                 "required" => {
+                    ctx.charge_work(4*catalogue_words::<Option<construction_index::ScopedPreflightMark>>()+16,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-path-keyword-init");
+                    let mut keyword_mark=None;
                     if self.dialect == SchemaDialect::Draft3 && matches!(val, Value::Bool(_)) {
                         // Draft 3 expresses a required property on the property schema itself.
                     } else {
-                        child_path!();
+                        child_path!(&mut keyword_mark);
                         let diagnostic=path.diagnostic_snapshot(ctx)?;
                         validate_string_array(val,&diagnostic,true)?;
                     }
-                }
+
+                    if let Some(mark)=keyword_mark.take(){path.restore(mark,ctx)?;}
+                },
                 "enum" => {
+                    ctx.charge_work(12,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-scalar-predicate");
                     if let Value::Array(items) = val {
                         if items.is_empty()
                             && matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
                         {
-                            return Err(child_schema_error!("enum must contain at least one value"));
+                            return Err(scalar_schema_error!("enum must contain at least one value"));
                         }
                     } else {
-                        return Err(child_schema_error!("enum must be an array"));
+                        return Err(scalar_schema_error!("enum must be an array"));
                     }
-                }
+                },
                 "properties" | "patternProperties" | "$defs" | "definitions"
                 | "dependentSchemas" => {
+                    let mut keyword=R::begin_keyword(self,&mut frame,ctx)?;
                     // Draft 3's `definitions` has no schema semantics in the
                     // predecessor profile. Its contents are opaque annotations;
                     // a `$ref` that later resolves to a boolean fails at runtime.
@@ -3564,17 +3601,19 @@ impl CompiledSchema {
                     }
                     if let Value::Object(children) = val {
                         for (child_index, (name, child_schema)) in children.iter().enumerate() {
-                            child_path!();
-                            ensure_keyword_cursor!();
+                            child_path!(R::pathmark(&mut keyword));
+                            ensure_keyword_cursor!(keyword);
                             R::recurse_ordered(self,&mut frame,&mut keyword,member_index,child_index,child_schema,path,PreflightChildPath::Key(name),None,&scope,depth+1,policy,ctx,seen,|path,ctx|{
                                 if text == "patternProperties" { let diagnostic=path.diagnostic_snapshot(ctx)?; self.compile_pattern(name,&diagnostic,ctx)?; }
                                 Ok(())
                             })?;
                         }
                     } else {
-                        return Err(child_schema_error!("Keyword value must be an object"));
+                        return Err(child_schema_error!(R::pathmark(&mut keyword),"Keyword value must be an object"));
                     }
-                }
+
+                    if let Some(mark)=R::pathmark(&mut keyword).take(){path.restore(mark,ctx)?;}
+                },
                 "items"
                 | "additionalItems"
                 | "additionalProperties"
@@ -3586,133 +3625,162 @@ impl CompiledSchema {
                 | "then"
                 | "else"
                 | "propertyNames" => {
+                    let mut keyword=R::begin_keyword(self,&mut frame,ctx)?;
                     if text == "items"
                         && self.dialect == SchemaDialect::Draft2020_12
                         && matches!(val, Value::Array(_))
                     {
-                        return Err(child_schema_error!("Draft 2020-12 items must be a schema; use prefixItems for tuple validation"));
+                        return Err(child_schema_error!(R::pathmark(&mut keyword),"Draft 2020-12 items must be a schema; use prefixItems for tuple validation"));
                     }
                     if text == "additionalItems"
                         && self.dialect == SchemaDialect::Draft2020_12
                         && self.strict
                     {
-                        return Err(child_schema_error!("additionalItems is not available in Draft 2020-12"));
+                        return Err(child_schema_error!(R::pathmark(&mut keyword),"additionalItems is not available in Draft 2020-12"));
                     }
                     if text == "additionalItems" && self.dialect == SchemaDialect::Draft2020_12 {
                         continue;
                     }
                     if let Value::Array(items) = val {
                         for (i, x) in items.iter().enumerate() {
-                            child_path!();
-                            ensure_keyword_cursor!();
-                            recurse_ordered!(i,x,PreflightChildPath::Index(i));
+                            child_path!(R::pathmark(&mut keyword));
+                            ensure_keyword_cursor!(keyword);
+                            recurse_ordered!(keyword,i,x,PreflightChildPath::Index(i));
                         }
                     } else {
-                        child_path!();
-                        ensure_keyword_cursor!();
-                        recurse_duplicate!(val);
+                        child_path!(R::pathmark(&mut keyword));
+                        ensure_keyword_cursor!(keyword);
+                        recurse_duplicate!(keyword,val);
                     }
-                }
+
+                    if let Some(mark)=R::pathmark(&mut keyword).take(){path.restore(mark,ctx)?;}
+                },
                 "allOf" | "anyOf" | "oneOf" | "prefixItems" => {
+                    let mut keyword=R::begin_keyword(self,&mut frame,ctx)?;
                     if let Value::Array(items) = val {
                         if items.is_empty() && text != "prefixItems" {
-                            return Err(child_schema_error!("Applicator array must not be empty"));
+                            return Err(child_schema_error!(R::pathmark(&mut keyword),"Applicator array must not be empty"));
                         }
                         for (i, x) in items.iter().enumerate() {
-                            child_path!();
-                            ensure_keyword_cursor!();
-                            recurse_ordered!(i,x,PreflightChildPath::Index(i));
+                            child_path!(R::pathmark(&mut keyword));
+                            ensure_keyword_cursor!(keyword);
+                            recurse_ordered!(keyword,i,x,PreflightChildPath::Index(i));
                         }
                     } else {
-                        return Err(child_schema_error!("Applicator must be an array"));
+                        return Err(child_schema_error!(R::pathmark(&mut keyword),"Applicator must be an array"));
                     }
-                }
+
+                    if let Some(mark)=R::pathmark(&mut keyword).take(){path.restore(mark,ctx)?;}
+                },
                 "extends" if self.dialect == SchemaDialect::Draft3 => {
+                    let mut keyword=R::begin_keyword(self,&mut frame,ctx)?;
                     if let Value::Array(items) = val {
                         for (index, item) in items.iter().enumerate() {
-                            child_path!();
-                            ensure_keyword_cursor!();
-                            recurse_ordered!(index,item,PreflightChildPath::Index(index));
+                            child_path!(R::pathmark(&mut keyword));
+                            ensure_keyword_cursor!(keyword);
+                            recurse_ordered!(keyword,index,item,PreflightChildPath::Index(index));
                         }
                     } else {
-                        child_path!();
-                        ensure_keyword_cursor!();
-                        recurse_duplicate!(val);
+                        child_path!(R::pathmark(&mut keyword));
+                        ensure_keyword_cursor!(keyword);
+                        recurse_duplicate!(keyword,val);
                     }
-                }
+
+                    if let Some(mark)=R::pathmark(&mut keyword).take(){path.restore(mark,ctx)?;}
+                },
                 "pattern" => {
+                    ctx.charge_work(4*catalogue_words::<Option<construction_index::ScopedPreflightMark>>()+16,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-path-keyword-init");
+                    let mut keyword_mark=None;
                     let Value::String(pat) = val else {
-                        return Err(child_schema_error!("pattern must be a string"));
+                        return Err(child_schema_error!(&mut keyword_mark,"pattern must be a string"));
                     };
-                    child_path!();
+                    child_path!(&mut keyword_mark);
                     let diagnostic=path.diagnostic_snapshot(ctx)?;
                     self.compile_pattern(pat,&diagnostic,ctx)?;
-                }
+
+                    if let Some(mark)=keyword_mark.take(){path.restore(mark,ctx)?;}
+                },
                 "minimum" | "maximum" | "exclusiveMinimum" | "exclusiveMaximum" | "multipleOf"
                 | "divisibleBy" => {
+                    ctx.charge_work(24,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-scalar-predicate");
                     let old_exclusive =
                         matches!(self.dialect, SchemaDialect::Draft3 | SchemaDialect::Draft4)
                             && matches!(text.as_str(), "exclusiveMinimum" | "exclusiveMaximum");
                     if old_exclusive && !matches!(val, Value::Bool(_)) {
-                        return Err(child_schema_error!("Exclusive bound flag must be a boolean"));
+                        return Err(scalar_schema_error!("Exclusive bound flag must be a boolean"));
                     }
                     if !old_exclusive && !matches!(val, Value::Number(_)) {
-                        return Err(child_schema_error!("Numeric keyword must be a number"));
+                        return Err(scalar_schema_error!("Numeric keyword must be a number"));
                     }
                     if matches!(text.as_str(), "multipleOf" | "divisibleBy")
                         && matches!(val,Value::Number(n) if *n<=0.0)
                     {
-                        return Err(child_schema_error!("multipleOf must be greater than zero"));
+                        return Err(scalar_schema_error!("multipleOf must be greater than zero"));
                     }
-                }
+                },
                 "minLength" | "maxLength" | "minItems" | "maxItems" | "minProperties"
                 | "maxProperties" => {
+                    ctx.charge_work(12,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-scalar-predicate");
                     if !matches!(val,Value::Number(n) if n.fract()==0.0&&(self.dialect == SchemaDialect::Draft3 || *n>=0.0))
                     {
-                        return Err(child_schema_error!("Size keyword must be a non-negative integer"));
+                        return Err(scalar_schema_error!("Size keyword must be a non-negative integer"));
                     }
-                }
+                },
                 "minContains" | "maxContains" => {
+                    ctx.charge_work(12,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-scalar-predicate");
                     if self.dialect == SchemaDialect::Draft2019_09
                         || self.dialect == SchemaDialect::Draft2020_12
                     {
                         if !matches!(val,Value::Number(n) if n.fract()==0.0&&*n>=0.0) {
-                            return Err(child_schema_error!("Size keyword must be a non-negative integer"));
+                            return Err(scalar_schema_error!("Size keyword must be a non-negative integer"));
                         }
                     }
-                }
+                },
                 "uniqueItems" => {
+                    ctx.charge_work(12,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-scalar-predicate");
                     if !matches!(val, Value::Bool(_)) {
-                        return Err(child_schema_error!("uniqueItems must be a boolean"));
+                        return Err(scalar_schema_error!("uniqueItems must be a boolean"));
                     }
-                }
+                },
                 "dependencies" => {
+                    let mut keyword=R::begin_keyword(self,&mut frame,ctx)?;
                     if let Value::Object(deps) = val {
                         for (child_index,(name, dep)) in deps.iter().enumerate() {
                             if matches!(dep, Value::Array(_)) {
-                                child_path!();
+                                child_path!(R::pathmark(&mut keyword));
                                 self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true)})?;
                             } else if self.dialect == SchemaDialect::Draft3 && matches!(dep, Value::String(_)) {
                                 // Draft 3 permits a string dependency naming a peer property.
                             } else {
-                                child_path!();
-                                ensure_keyword_cursor!();
-                                recurse_ordered!(child_index,dep,PreflightChildPath::Key(name));
+                                child_path!(R::pathmark(&mut keyword));
+                                ensure_keyword_cursor!(keyword);
+                                recurse_ordered!(keyword,child_index,dep,PreflightChildPath::Key(name));
                             }
                         }
-                    } else { return Err(child_schema_error!("dependencies must be an object")); }
-                }
+                    } else { return Err(child_schema_error!(R::pathmark(&mut keyword),"dependencies must be an object")); }
+
+                    if let Some(mark)=R::pathmark(&mut keyword).take(){path.restore(mark,ctx)?;}
+                },
                 "dependentRequired" => {
+                    ctx.charge_work(4*catalogue_words::<Option<construction_index::ScopedPreflightMark>>()+16,Utf16::default())?;
+                    #[cfg(test)] construction_index::scoped_effect_event("ps1-path-keyword-init");
+                    let mut keyword_mark=None;
                     if let Value::Object(deps) = val {
                         for (name, dep) in deps {
-                            child_path!();
+                            child_path!(&mut keyword_mark);
                             self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true)})?;
                         }
-                    } else { return Err(child_schema_error!("dependentRequired must be an object")); }
-                }
-                _ => {}
+                    } else { return Err(child_schema_error!(&mut keyword_mark,"dependentRequired must be an object")); }
+
+                    if let Some(mark)=keyword_mark.take(){path.restore(mark,ctx)?;}
+                },
+                _ => {},
             }
-            if let Some(mark)=R::pathmark(&mut keyword).take(){path.restore(mark,ctx)?;}
         }
         let _ = &mut *seen;
         Ok(())
@@ -13082,6 +13150,7 @@ impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for FusedPrefligh
     fn pathmark(keyword:&mut Self::Keyword)->&mut Option<construction_index::ScopedPreflightMark>{&mut keyword.mark}
     fn begin_keyword(_engine:&'owner CompiledSchema,_frame:&mut Self::Frame,ctx:&mut Context<'_>)->Result<Self::Keyword,EngineError>{
         ctx.charge_work(std::mem::size_of::<Self::Keyword>().div_ceil(std::mem::size_of::<usize>())+7,Utf16::default())?;
+        #[cfg(test)] construction_index::scoped_effect_event("ps1-full-keyword-init");
         Ok(FusedPreflightKeyword{selected:false,member:None,parent:None,frontier:FusedPreflightFrontier::Unattempted,legacy:None,mark:None})
     }
     fn ensure_keyword(engine:&'owner CompiledSchema,frame:&mut Self::Frame,keyword:&mut Self::Keyword,member:usize,ctx:&mut Context<'_>)->Result<(),EngineError>{
@@ -13170,6 +13239,7 @@ impl<'owner:'binding,'binding> PreflightRoute<'owner,'binding> for LegacyPreflig
     fn pathmark(keyword:&mut Self::Keyword)->&mut Option<construction_index::ScopedPreflightMark>{&mut keyword.mark}
     fn begin_keyword(_engine:&'owner CompiledSchema,_frame:&mut Self::Frame,ctx:&mut Context<'_>)->Result<Self::Keyword,EngineError>{
         ctx.charge_work(std::mem::size_of::<Self::Keyword>().div_ceil(std::mem::size_of::<usize>())+7,Utf16::default())?;
+        #[cfg(test)] construction_index::scoped_effect_event("ps1-full-keyword-init");
         Ok(LegacyPreflightKeyword{cursor:None,checked:None,ordered:None,selected:false,mark:None})
     }
     fn ensure_keyword(engine:&'owner CompiledSchema,frame:&mut Self::Frame,keyword:&mut Self::Keyword,member:usize,ctx:&mut Context<'_>)->Result<(),EngineError>{

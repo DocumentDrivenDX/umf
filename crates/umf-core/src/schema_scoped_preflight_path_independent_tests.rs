@@ -1211,3 +1211,20 @@ fn sp_effects<T>(operation: impl FnOnce() -> T) -> (T, Vec<&'static str>) {
     let rows = events.borrow().clone();
     (result, rows)
 }
+
+#[test]
+fn sp_r3_path_only_keyword_reuses_one_mark_and_restores_actual_root(){
+    let owner=sp_owner();
+    // Re-enter the actual generic body on explicitly supplied schema content;
+    // required/type are path-only, enum is a successful scalar, title is opaque.
+    let schema=sp_json(r#"{"type":"object","required":[],"enum":[1],"title":"opaque"}"#);
+    let mut ctx=Context::catalog();let mut path=ScopedPreflightPath::new(&Utf16::from("#"),&mut ctx).unwrap();
+    let before=path.observe();let events=Rc::new(RefCell::new(Vec::new()));let sink=events.clone();
+    construction_index::observe_paths(Box::new(move|e|sink.borrow_mut().push(e)),||{
+        let frame=legacy_preflight_frame(None,None,&mut ctx)?;
+        owner.preflight_semantic::<LegacyPreflightRoute>(&schema,&mut path,"",0,owner.root_keyword_policy,&mut ctx,&mut BTreeSet::new(),frame)
+    }).unwrap();
+    let after=path.observe();assert_eq!(after.text,before.text);assert_eq!(after.first_hash,before.first_hash);assert_eq!(after.surrogate,before.surrogate);assert!(!after.poisoned);
+    let e=events.borrow();assert_eq!(e.iter().filter(|&&s|s=="ps1-path-keyword-init").count(),2);assert!(!e.contains(&"ps1-full-keyword-init"));
+    assert_eq!(e.iter().filter(|&&s|s=="sp1-buffer-after-append").count(),2);
+}

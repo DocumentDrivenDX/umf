@@ -472,3 +472,83 @@ fn ps08_independent_reentry_and_panic_poison_cleanup() {
     assert!(panic.is_err()); drop(panic_ctx);
     assert!(matches!(owner.preflight_fused_ordered_child(&parent, &mut panic_walk, member(&s, "properties"), &mut ctx).unwrap(), FusedPreflightSelection::Missing));
 }
+
+// R3 additions are SOURCE controls until executed by an admitted producer.
+fn psr_r3_legacy(owner:&CompiledSchema,schema:&Value,path:&mut construction_index::ScopedPreflightPath,ctx:&mut Context<'_>)->Result<(),EngineError>{
+    let frame=legacy_preflight_frame(None,None,ctx)?;
+    owner.preflight_semantic::<LegacyPreflightRoute>(schema,path,"",0,owner.root_keyword_policy,ctx,&mut BTreeSet::new(),frame)
+}
+
+#[test]
+fn ps_r3_actual_nonchild_callers_omit_full_keyword_state_in_both_routes(){
+    let input=psr_json(r#"{"title":"opaque","minimum":1,"maximum":9,"minLength":0,"uniqueItems":false,"enum":["x"],"type":"object","required":[],"properties":{},"$id":"https://ps1.test/r3-root"}"#);
+    let owner=psr_bank(&input);
+    for fused in [false,true]{
+        let events=Rc::new(RefCell::new(Vec::new()));let sink=events.clone();
+        let walks=Rc::new(RefCell::new(Vec::new()));let walk_sink=walks.clone();
+        let mut ctx=Context::catalog();
+        owner_locations::observe_owner_walk(Box::new(move|event,root,node|walk_sink.borrow_mut().push((event,root,node))),||construction_index::observe_paths(Box::new(move|e|sink.borrow_mut().push(e)),||{
+            if fused{
+                let cursor=owner.location_root(0,true,&mut ctx)?;
+                owner.preflight_located(owner.schema_value(),&Utf16::from("#"),"",0,owner.root_keyword_policy,&mut ctx,&mut BTreeSet::new(),cursor)
+            }else{
+                let mut path=construction_index::ScopedPreflightPath::new(&Utf16::from("#"),&mut ctx)?;
+                psr_r3_legacy(&owner,owner.schema_value(),&mut path,&mut ctx)?;
+                assert_eq!(path.text(),&Utf16::from("#"));Ok(())
+            }
+        })).unwrap();
+        let w=walks.borrow();
+        if fused{
+            assert!(w.iter().any(|e|e.0=="ft1-binding-publication"),"actual caller must publish a fused binding");
+            assert!(w.iter().any(|e|e.0=="ft1-preflight-borrowed-consume"),"actual caller must consume its checked borrowed root");
+        }else{
+            assert!(!w.iter().any(|e|e.0=="ft1-binding-publication"),"explicit Legacy common-body entry must not create fused custody");
+        }
+        let e=events.borrow();
+        assert_eq!(e.iter().filter(|&&s|s=="ps1-full-keyword-init").count(),1,"empty recursive properties still constructs its original route");
+        assert_eq!(e.iter().filter(|&&s|s=="ps1-path-keyword-init").count(),2);
+        assert_eq!(e.iter().filter(|&&s|s=="ps1-scalar-predicate").count(),5);
+        assert!(!e.contains(&"ps1-error-keyword-init"));
+    }
+}
+
+#[test]
+fn ps_r3_scalar_and_path_errors_preserve_original_first_error_fields(){
+    let owner=psr_bank(&psr_json("{}"));
+    for source in [r#"{"minimum":"bad","required":7}"#,r#"{"uniqueItems":7}"#,r#"{"type":7}"#,r#"{"required":[7]}"#,r#"{"pattern":"["}"#,r##"{"$ref":"#/missing"}"##,r#"{"dependentRequired":{"x":[7]}}"#]{
+        let input=psr_json(source);let mut ctx=Context::catalog();
+        let mut path=construction_index::ScopedPreflightPath::new(&Utf16::from("#"),&mut ctx).unwrap();
+        let actual=psr_r3_legacy(&owner,&input,&mut path,&mut ctx).unwrap_err();
+        let original=owner.preflight_original_located(&input,&Utf16::from("#"),"",0,owner.root_keyword_policy,&mut Context::catalog(),&mut BTreeSet::new(),None).unwrap_err();
+        assert_eq!(actual.code,original.code,"{source}");assert_eq!(actual.path,original.path,"{source}");assert_eq!(actual.message,original.message,"{source}");
+    }
+}
+
+#[test]
+fn ps_r3_small_fixture_each_new_state_admission_denies_before_effect(){
+    // Recover exact real callback ordinals from a bounded two-member fixture;
+    // no schema-sized quadratic callback sweep or synthetic operation sequence.
+    let owner=psr_bank(&psr_json("{}"));
+    for source in [r#"{"minimum":"bad"}"#,r#"{"type":"object"}"#]{
+        let input=psr_json(source);let calls=Rc::new(std::cell::Cell::new(0usize));let host_calls=calls.clone();
+        let mut host=move|_|{host_calls.set(host_calls.get()+1);Ok(())};
+        let observations=Rc::new(RefCell::new(Vec::new()));let sink=observations.clone();let count=calls.clone();
+        let mut ctx=Context::catalog().with_host_control(&mut host);
+        let mut path=construction_index::ScopedPreflightPath::new(&Utf16::from("#"),&mut Context::catalog()).unwrap();
+        let _=construction_index::observe_paths(Box::new(move|e|{
+            if matches!(e,"ps1-error-keyword-init"|"ps1-path-keyword-init"|"ps1-scalar-predicate"){sink.borrow_mut().push((count.get(),e));}
+        }),||psr_r3_legacy(&owner,&input,&mut path,&mut ctx));
+        drop(ctx);
+        let recorded=observations.borrow().clone();assert!(!recorded.is_empty());
+        for(target,event)in recorded{
+            let seen=Rc::new(RefCell::new(Vec::new()));let effects=seen.clone();let mut n=0;
+            let mut deny=move|_|{n+=1;if n==target{Err(EngineError::new("PSR_R3_HOST",Utf16::from("/first"),"stop before new effect"))}else{Ok(())}};
+            let mut denied=Context::catalog().with_host_control(&mut deny);
+            let mut path=construction_index::ScopedPreflightPath::new(&Utf16::from("#"),&mut Context::catalog()).unwrap();
+            let error=construction_index::observe_paths(Box::new(move|e|effects.borrow_mut().push(e)),||psr_r3_legacy(&owner,&input,&mut path,&mut denied)).unwrap_err();
+            assert_eq!(error.code,"PSR_R3_HOST");assert_eq!(error.path,Utf16::from("/first"));assert_eq!(error.message,Utf16::from("stop before new effect"));
+            assert!(!seen.borrow().contains(&event),"{event} must follow its admission");
+            assert_eq!(path.text(),&Utf16::from("#"));
+        }
+    }
+}
