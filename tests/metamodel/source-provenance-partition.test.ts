@@ -103,7 +103,7 @@ describe('metamodel source provenance partition',()=>{
   expect(projected.fullRuntime).toContain('use crate::canonical_codegen_resources::');
   expect(projected.fullRuntime).toContain('const _:()=assert!(3*factory_root_front_work()<23712');
   // Exact reviewed once-root runtime bytes; not target/native execution.
-  expect(createHash('sha256').update(projected.fullRuntime).digest('hex')).toBe('08540207e31cbf1a4362cad0ffcac35c02738ce149af826ea737075b22b36d93');
+  expect(createHash('sha256').update(projected.fullRuntime).digest('hex')).toBe('a23d9027b93a7a2d642f50ebd7ef281b7ecdbaf0ca99ab9a806a0bb1f9850b58');
   expect(actual.compilerInputs).toContain('crates/umf-core/src/value.rs');
   expect(actual.compilerInputs).not.toContain(runtimeCodegenData);
   expect(actual.workspaceInputs).toContain(runtimeCodegenData);

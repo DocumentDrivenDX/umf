@@ -98,6 +98,37 @@ impl Utf16 {
         event("static-shared-return");
         Ok(shared)
     }
+    /// Internal physical storage copy, NOT text/JSON/schema admission. The
+    /// caller owns the immutable source; all current work/host controls remain.
+    #[doc(hidden)]
+    pub fn copy_storage_with_context(&self,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+        let w=|n:usize|n.div_ceil(std::mem::size_of::<usize>());
+        ctx.charge_work(3*w(std::mem::size_of::<Self>())+8,Utf16::default())?;
+        match &self.0 {
+            TextStorage::Owned(source)=>{
+                // Includes the fallible error/header path and cleanup before
+                // allocator effect; no source text/depth/value limit is read.
+                let failure=w(std::mem::size_of::<EngineError>())+2*"Owned text allocation unavailable".len()+"RESOURCE_LIMIT".len()+8;
+                ctx.charge_work(failure+8,Utf16::default())?;
+                let bytes=source.len().checked_mul(std::mem::size_of::<u16>()).ok_or_else(||EngineError::new("RESOURCE_LIMIT",Utf16::default(),"Owned text allocation unavailable"))?;
+                ctx.charge_work(bytes.div_ceil(std::mem::size_of::<usize>())+3*w(std::mem::size_of::<Vec<u16>>())+source.len()+6,Utf16::default())?;
+                let mut copied=Vec::new();
+                copied.try_reserve_exact(source.len()).map_err(|_|EngineError::new("RESOURCE_LIMIT",Utf16::default(),"Owned text allocation unavailable"))?;
+                let extra=copied.capacity().saturating_sub(source.len()).saturating_mul(std::mem::size_of::<u16>()).div_ceil(std::mem::size_of::<usize>());
+                ctx.charge_work(extra+3,Utf16::default())?;
+                copied.extend_from_slice(source);
+                Ok(Self::new(copied))
+            },
+            TextStorage::Shared(source)=>{
+                ctx.charge_work(2*w(std::mem::size_of::<std::sync::Arc<Vec<u16>>>())+4,Utf16::default())?;
+                Ok(Self(TextStorage::Shared(std::sync::Arc::clone(source))))
+            },
+            TextStorage::Static(source)=>{
+                ctx.charge_work(w(std::mem::size_of::<&[u16]>())+3,Utf16::default())?;
+                Ok(Self(TextStorage::Static(*source)))
+            },
+        }
+    }
     pub(crate) fn clone_work(&self) -> usize {
         match &self.0 {
             TextStorage::Owned(_) => self.len(),

@@ -686,3 +686,29 @@ fn actual_operation_reentry_errors_and_unwind_restore_parent_without_resetting_w
     })
     .unwrap();
 }
+
+
+// Legacy Shared/storage successor controls: SOURCE ONLY, UNCOMPILED/UNEXECUTED.
+#[test]
+fn storage_text_copy_preserves_all_storage_kinds_without_new_input_admission() {
+    let values=[Utf16::new(vec![0xd800,0,0xdc00]),
+        Utf16::shared(vec![0xd800,0,0xdc00]),Utf16::from_static_units(&[0xd800,0,0xdc00])];
+    for value in values {
+        let limits=crate::context::Limits{max_text_units:0,max_values:0,max_depth:0,..crate::context::Limits::ordinary()};
+        let calls=Cell::new(0);let mut meter=|_|{calls.set(calls.get()+1);Ok(())};
+        let copied=value.copy_storage_with_context(&mut context(limits).with_meter(&mut meter)).unwrap();
+        assert_eq!(copied.units(),value.units());
+        match (&value.0,&copied.0) {
+            (TextStorage::Owned(a),TextStorage::Owned(b))=>assert_ne!(a.as_ptr(),b.as_ptr()),
+            (TextStorage::Shared(a),TextStorage::Shared(b))=>assert!(std::sync::Arc::ptr_eq(a,b)),
+            (TextStorage::Static(a),TextStorage::Static(b))=>assert_eq!(a.as_ptr(),b.as_ptr()),
+            _=>panic!("storage provenance changed"),
+        }
+        for deny in 0..calls.get(){
+            let at=Cell::new(0);let mut stop=|_|{let n=at.replace(at.get()+1);if n==deny{Err(host_error())}else{Ok(())}};
+            host_fields(&value.copy_storage_with_context(&mut context(limits).with_meter(&mut stop)).unwrap_err(),&host_error());
+            assert_eq!(value.units(),&[0xd800,0,0xdc00]);
+            assert_eq!(at.get(),deny+1,"no terminal cleanup callback");
+        }
+    }
+}

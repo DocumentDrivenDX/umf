@@ -188,12 +188,124 @@ impl SchemaBacking {
     }
 }
 
+// Constructor-only facts from ACTUAL completed export copies. No schema,
+// CoreRole, reference, keyword or Registry success is conferred by this receipt.
+struct SnapshotInputScope {
+    limits:crate::context::Limits, profile:crate::context::ResourceProfile,
+    operation:Arc<()>, lifetime:Arc<()>,
+}
+impl SnapshotInputScope {
+    fn capture(ctx:&mut Context<'_>)->Result<Option<Self>,EngineError>{
+        ctx.charge_work(3*catalogue_words::<Self>()+8,Utf16::default())?;
+        if ctx.schema_construction.is_none(){return Ok(None);}
+        let Some(operation)=ctx.owned_core_operation.as_ref().map(Arc::clone)else{return Ok(None);};
+        let lifetime=admitted_bank::construction_lifetime(ctx)?;
+        Ok(Some(Self{limits:ctx.limits(),profile:ctx.profile(),operation,lifetime}))
+    }
+    fn compatible(&self,ctx:&mut Context<'_>)->Result<bool,EngineError>{
+        ctx.charge_work(2*catalogue_words::<crate::context::Limits>()+12,Utf16::default())?;
+        if self.limits!=ctx.limits()||self.profile!=ctx.profile()||ctx.schema_construction.is_none()
+            ||!ctx.owned_core_operation.as_ref().is_some_and(|current|Arc::ptr_eq(current,&self.operation)){return Ok(false);}
+        Ok(Arc::ptr_eq(&self.lifetime,&admitted_bank::construction_lifetime(ctx)?))
+    }
+}
+fn snapshot_protocol_error(message:&str,ctx:&mut Context<'_>)->Result<EngineError,EngineError>{
+    ctx.charge_work(3*catalogue_words::<EngineError>()+2*message.len()+"CODEGEN_RESOURCE_INVALID".len()+12,Utf16::default())?;
+    Ok(EngineError::new("CODEGEN_RESOURCE_INVALID",Utf16::default(),message))
+}
+struct CompletedSnapshotInput { data:Arc<SchemaResources>, scope:SnapshotInputScope }
+// SOURCE model guard, not measured work or constructor fit. Gross positive
+// new debits are bounded without taking layout shrinkage or old Arc credit.
+// The fixed ordinary constructor has 3 bank entries + 8 later compilers +
+// 4 registrations. Meta validators are constructed directly, not recursively
+// through compile_inner_with_bank. At most 4 rows per such catalogue.
+const fn snapshot_handoff_added_work_upper()->usize {
+    const fn w<T>()->usize {std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>())}
+    let scope_check=2*w::<crate::context::Limits>()+12+3;
+    let catalogue_check=w::<crate::context::Limits>()+7;
+    3*w::<Option<Arc<crate::engine::ResourceSet>>>()+4
+        +3*w::<CodegenSnapshotBuilder<'static>>()+w::<SchemaResources>()+12
+        +3*w::<SnapshotInputScope>()+8+3
+        +2*w::<Option<&Value>>()+w::<Utf16>()+8+2*w::<(Utf16,Value)>()+4+scope_check
+        +6+3*w::<SchemaResources>()+3*w::<Arc<SchemaResources>>()
+        +2*w::<(Arc<SchemaResources>,Option<CodegenCatalogue>)>()+16
+        +scope_check+catalogue_check+3+3*w::<CompletedSnapshotInput>()+8
+        // Count ENTIRE new layouts, not merely their actual growth, in the two
+        // existing size-based catalogue charges (mint + table extension).
+        +2*w::<CodegenCatalogue>()
+        +8*(3*w::<Option<Arc<SchemaResources>>>()+8+scope_check+catalogue_check)
+        +15*(2*w::<Option<Arc<SchemaResources>>>()+4)+60*4
+        +8*(2*w::<SchemaBacking>()+4)
+}
+const _:()=assert!(snapshot_handoff_added_work_upper()<60936,
+    "completed-export handoff positive-work bound must stay below actual first-copy opportunity");
+/// Opaque internal cross-crate producer. Only Engine's actual checked export
+/// creates it. The temporary source borrow prevents changing the table between
+/// its two ORIGINAL checked copies; no borrowed pointer survives finish.
+#[doc(hidden)]
+pub struct CodegenSnapshotBuilder<'table> {
+    data:SchemaResources, core_owner:Option<Arc<crate::engine::ResourceSet>>,
+    core_rows:usize, table:Option<&'table Value>,scope:Option<SnapshotInputScope>, attempted:bool,
+}
+impl<'table> CodegenSnapshotBuilder<'table> {
+    pub(crate) fn completed_export(data:SchemaResources,core_owner:Option<Arc<crate::engine::ResourceSet>>,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+        ctx.charge_work(3*catalogue_words::<Self>()+catalogue_words::<SchemaResources>()+12,Utf16::default())?;
+        let scope=SnapshotInputScope::capture(ctx)?;
+        let core_rows=data.entries.len();
+        Ok(Self{data,core_owner,core_rows,table:None,scope,attempted:false})
+    }
+    /// Original public snapshot ID/append operation, now inside the sealed
+    /// producer. Both actual copy_json calls retain their original positions.
+    pub fn include_table(&mut self,table:&'table Value,ctx:&mut Context<'_>)->Result<(),EngineError>{
+        ctx.charge_work(2*catalogue_words::<Option<&Value>>()+catalogue_words::<Utf16>()+8,Utf16::default())?;
+        if self.attempted{return Err(snapshot_protocol_error("Table export already attempted",ctx)?);}
+        // A failed attempt may have built local output before a host denial.
+        // It is never retryable with another table and cannot publish input facts.
+        self.attempted=true;
+        let id=match get(table,"$id"){Some(Value::String(id))=>id.clone(),_=>return Err(EngineError::new("CODEGEN_RESOURCE_INVALID",Utf16::default(),"Tables schema requires an $id"))};
+        ctx.charge_work(self.data.entries.len(),Utf16::default())?;
+        let mut present=false;
+        for(existing,_)in &self.data.entries {ctx.charge_work(existing.len(),Utf16::default())?;present|=existing==&id;}
+        if !present {
+            let value=copy_json(table,ctx)?;
+            ctx.charge_work(2*catalogue_words::<(Utf16,Value)>()+4,Utf16::default())?;
+            self.data.entries.push((id,value));
+        }
+        // This is INPUT proof invalidation only. Storage remains an actual
+        // completed owned copy even when the constructor context has changed.
+        if let Some(scope)=&self.scope {if !scope.compatible(ctx)? {self.scope=None;}}
+        self.table=Some(table);Ok(())
+    }
+    pub fn finish(self,catalogue:Option<CodegenCatalogue>,ctx:&mut Context<'_>)->Result<(Arc<SchemaResources>,Option<CodegenCatalogue>),EngineError>{
+        ctx.charge_work(6,Utf16::default())?;
+        let Some(table)=self.table else{return Err(snapshot_protocol_error("Table export is incomplete",ctx)?);};
+        // The existing separate catalogue table copy is deliberately retained.
+        let fresh=catalogue.as_ref().is_some_and(|c|c.extension.is_empty()&&c.prepared_snapshot.is_none());
+        let mut catalogue=match catalogue{Some(c)=>c.with_tables_schema(table,ctx)?,None=>None};
+        ctx.charge_work(3*catalogue_words::<SchemaResources>()+3*catalogue_words::<Arc<SchemaResources>>()
+            +2*catalogue_words::<(Arc<SchemaResources>,Option<CodegenCatalogue>)>()+16,Utf16::default())?;
+        let data=Arc::new(self.data);
+        if let(Some(c),Some(owner),Some(scope))=(&mut catalogue,self.core_owner,self.scope){
+            if fresh&&scope.compatible(ctx)?&&c.compatible(ctx)?&&c.bank.owns_core(&owner,ctx)? {
+                ctx.charge_work(3*catalogue_words::<CompletedSnapshotInput>()+8,Utf16::default())?;
+                // Producer lineage + immutable source borrow established exact
+                // content. These scalar extents retain the ordered row mapping;
+                // neither caller digests nor pointer coincidence prove JSON.
+                if self.core_rows==c.bank.len()&&data.entries.len()==c.len(){
+                    c.prepared_snapshot=Some(CompletedSnapshotInput{data:Arc::clone(&data),scope});
+                }
+            }
+        }
+        Ok((data,catalogue))
+    }
+}
 // OC1 immutable input custody, NOT schema/meta/ref/Registry success.
 // The only mint is a completed Engine with its actual admitted Core bank.
 #[doc(hidden)]
 pub struct CodegenCatalogue {
     bank: Arc<admitted_bank::SchemaBank>,
     extension: Vec<(Utf16,Value)>,
+    prepared_snapshot:Option<CompletedSnapshotInput>,
     limits: crate::context::Limits,
     profile: crate::context::ResourceProfile,
     memo: Mutex<CodegenCatalogueMemo>,
@@ -237,7 +349,7 @@ impl CodegenCatalogue {
         // caller-provided catalogue or an inferred equal-content identity.
         if !bank.unique_retrievals(ctx)? {return Ok(None);}
         #[cfg(test)] codegen_catalogue_event("oc1-engine-mint",bank.len());
-        Ok(Some(Self{bank:Arc::clone(bank),extension:Vec::new(),limits:ctx.limits(),profile:ctx.profile(),memo:Mutex::new(CodegenCatalogueMemo{epoch:0,completed:None})}))
+        Ok(Some(Self{bank:Arc::clone(bank),extension:Vec::new(),prepared_snapshot:None,limits:ctx.limits(),profile:ctx.profile(),memo:Mutex::new(CodegenCatalogueMemo{epoch:0,completed:None})}))
     }
     fn compatible(&self,ctx:&mut Context<'_>)->Result<bool,EngineError>{
         ctx.charge_work(catalogue_words::<crate::context::Limits>()+4,Utf16::default())?;
@@ -278,10 +390,18 @@ impl CodegenCatalogue {
         }
         ctx.charge_work(id.clone_work().saturating_add(words).saturating_add(catalogue_words::<CodegenCatalogueMemo>()).saturating_add(8),Utf16::default())?;
         #[cfg(test)] codegen_catalogue_event("oc1-extension-publication",self.len()+1);
+        if self.prepared_snapshot.is_some(){ctx.charge_work(2*catalogue_words::<CompletedSnapshotInput>()+4,Utf16::default())?;}
+        self.prepared_snapshot=None;
         self.extension.push((id.clone(),value));
         // Consuming self gives exclusive mutation; no lock/control overlap.
         let memo=self.memo.get_mut().unwrap_or_else(|e|e.into_inner());memo.completed=None;memo.epoch=memo.epoch.saturating_add(1);
         Ok(Some(self))
+    }
+    fn prepared_input(&self,ctx:&mut Context<'_>)->Result<Option<Arc<SchemaResources>>,EngineError>{
+        ctx.charge_work(3*catalogue_words::<Option<Arc<SchemaResources>>>()+8,Utf16::default())?;
+        let Some(prepared)=&self.prepared_snapshot else{return Ok(None);};
+        if !prepared.scope.compatible(ctx)?||!self.compatible(ctx)? {return Ok(None);}
+        Ok(Some(Arc::clone(&prepared.data)))
     }
     fn completed(&self,dialect:SchemaDialect,ctx:&mut Context<'_>)->Result<(u64,Option<Arc<SchemaResources>>),EngineError>{
         ctx.charge_work(catalogue_words::<CodegenCatalogueMemo>()+catalogue_words::<crate::context::Limits>()+12,Utf16::default())?;
@@ -2232,7 +2352,9 @@ impl CompiledSchema {
         } else { None };
         let new_catalogue = shared.is_none();
         let shared_resources = if let Some(shared) = shared { SchemaBacking::Shared(shared) } else {
-        let mut owned = Vec::with_capacity(resources_count);
+        let prepared=if eligible {match codegen_catalogue{Some(c)=>c.prepared_input(ctx)?,None=>None}}else{None};
+        ctx.charge_work(2*catalogue_words::<Option<Arc<SchemaResources>>>()+4,Utf16::default())?;
+        let mut owned = if prepared.is_some(){Vec::new()}else{Vec::with_capacity(resources_count)};
         let mut identities: Vec<(&Utf16, &Value)> = Vec::new();
         for ordinal in 0..resources_count {
             let(id,value)=resources_view.get_with_context(ordinal,ctx)?.expect("actual immutable catalogue row");
@@ -2248,6 +2370,14 @@ impl CompiledSchema {
                 }
                 continue;
             }
+            // New physical selector is paid on BOTH prepared and fallback rows.
+            ctx.charge_work(4,Utf16::default())?;
+            if prepared.is_some(){
+                // Same completed strict CoreJSON profile implies only this
+                // finite-binary64/no-duplicate representation admission. The
+                // genuine owned output already exists; no copy is performed.
+                identities.push((id,value));continue;
+            }
             let copied = if allow_duplicate_schema_keys {
                 copy_schema_json(value, ctx, true)?
             } else if finite_binary64_admission {
@@ -2258,7 +2388,11 @@ impl CompiledSchema {
             identities.push((id, value));
             owned.push((id.clone(), copied));
         }
-        if eligible {
+        if let Some(prepared)=prepared {
+            ctx.charge_work(2*catalogue_words::<SchemaBacking>()+4,Utf16::default())?;
+            #[cfg(test)] codegen_catalogue_event("prepared-export-input-handoff",resources_count);
+            SchemaBacking::Shared(prepared)
+        } else if eligible {
         ctx.charge_work(1, Utf16::default())?;
         let admitted = Arc::new(SchemaResources { entries: owned });
         SchemaBacking::Shared(admitted)

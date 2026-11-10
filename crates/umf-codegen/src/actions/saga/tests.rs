@@ -365,3 +365,20 @@ fn capability_source_uses_json_object_equality_and_preserves_array_order() {
         "SAGA_PROFILE"
     );
 }
+
+
+// Shared-storage successor SOURCE control. UNCOMPILED/UNEXECUTED locally.
+#[test]
+fn cloned_saga_resources_keep_original_snapshot_and_noop_or_invalid_installation() {
+    let original=resources();
+    let before=original.schema_resources().clone();
+    let package=parse(include_str!("../../../../../spec/extensions/saga/package.json"));
+    let schema=get(&package,"schema").unwrap().clone();
+    // Both rows already present: existing installation semantics run without
+    // inserting/replacing the original immutable storage.
+    let again=original.clone().with_sagas(package.clone(),schema.clone(),&mut Context::catalog()).unwrap();
+    assert_eq!(original.schema_resources(),&before);
+    assert_eq!(again.schema_resources(),&before);
+    assert!(original.clone().with_sagas(Value::Null,schema,&mut Context::catalog()).is_err());
+    assert_eq!(original.schema_resources(),&before);
+}

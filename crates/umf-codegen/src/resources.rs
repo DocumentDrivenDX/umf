@@ -42,9 +42,116 @@ pub struct CodegenResources {
     operation_compiled: CompiledSchema,
     row_expression_operation_schema: Value,
     row_expression_operation_compiled: CompiledSchema,
-    schema_resources: SchemaResources,
+    schema_resources: std::sync::Arc<SchemaResources>,
 }
 
+// Physical storage copying only: never JSON/schema/limit admission. Every
+// source is already owned by this private immutable CodegenResources snapshot.
+fn storage_words<T>()->usize{std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>())}
+fn storage_failure_work()->usize{storage_words::<EngineError>()+2*"Native storage allocation unavailable".len()+"RESOURCE_LIMIT".len()+12}
+fn storage_error()->EngineError{EngineError::new("RESOURCE_LIMIT",Utf16::default(),"Native storage allocation unavailable")}
+fn storage_reserve<T>(mut values:Vec<T>,wanted:usize,ctx:&mut Context<'_>)->Result<Vec<T>,EngineError>{
+    // The vector is OWNED, not a borrowed mutable buffer across a callback.
+    ctx.charge_work(3*storage_words::<Vec<T>>()+6,Utf16::default())?;
+    if wanted>values.capacity(){
+        ctx.charge_work(storage_failure_work()+4,Utf16::default())?;
+        let bytes=wanted.checked_mul(std::mem::size_of::<T>()).ok_or_else(storage_error)?;
+        ctx.charge_work(bytes.div_ceil(std::mem::size_of::<usize>())
+            +values.len().saturating_mul(storage_words::<T>())+4,Utf16::default())?;
+        // Requested allocation and all old-prefix movement were paid above.
+        // Allocator-chosen excess is observable only AFTER allocation; admit
+        // it before stores/publication, retaining the original source on error.
+        // This allocator contract is separately identified in the review ledger.
+        values.try_reserve_exact(wanted-values.len()).map_err(|_|storage_error())?;
+        let extra=values.capacity().saturating_sub(wanted).saturating_mul(std::mem::size_of::<T>()).div_ceil(std::mem::size_of::<usize>());
+        ctx.charge_work(extra+3,Utf16::default())?;
+    }
+    Ok(values)
+}
+enum StorageCopyFrame<'a> {
+    Array{source:&'a[Value],next:usize,output:Vec<Value>},
+    Object{source:&'a[(Utf16,Value)],next:usize,output:Vec<(Utf16,Value)>,key:Option<Utf16>},
+}
+// Return references into the immutable SOURCE, never into the frame vector.
+// This is physical child selection only, not a semantic recursive walker.
+fn storage_child<'a>(frame:&StorageCopyFrame<'a>)->(&'a Value,Option<&'a Utf16>){
+    match frame {
+        StorageCopyFrame::Array{source,next,..}=>{let source=*source;(&source[*next],None)},
+        StorageCopyFrame::Object{source,next,..}=>{let source=*source;(&source[*next].1,Some(&source[*next].0))},
+    }
+}
+fn copy_value_storage(source:&Value,ctx:&mut Context<'_>)->Result<Value,EngineError>{
+    ctx.charge_work(3*storage_words::<Vec<StorageCopyFrame<'_>>>()
+        +3*storage_words::<Option<&Value>>()+3*storage_words::<Option<Value>>()+8,Utf16::default())?;
+    let mut frames:Vec<StorageCopyFrame<'_>>=Vec::new();
+    let mut next=Some(source);let mut completed:Option<Value>=None;
+    loop {
+        // All work/headers/transports and both partial-output/old-owner cleanup
+        // are admitted before touching a node. No structural Limits are read.
+        ctx.charge_work(3*storage_words::<Value>()+3*storage_words::<Option<Value>>()
+            +2*storage_words::<Option<&Value>>()+10,Utf16::default())?;
+        if let Some(node)=next.take(){
+            match node {
+                Value::Null=>completed=Some(Value::Null),
+                Value::Bool(value)=>completed=Some(Value::Bool(*value)),
+                Value::Number(value)=>completed=Some(Value::Number(*value)),
+                Value::String(value)=>completed=Some(Value::String(value.copy_storage_with_context(ctx)?)),
+                Value::Array(items)=>{
+                    ctx.charge_work(storage_words::<Vec<Value>>()+2*storage_words::<StorageCopyFrame<'_>>()+4,Utf16::default())?;
+                    let output=storage_reserve(Vec::new(),items.len(),ctx)?;
+                    let wanted=frames.len().checked_add(1).ok_or_else(storage_error)?;
+                    frames=storage_reserve(frames,wanted,ctx)?;
+                    frames.push(StorageCopyFrame::Array{source:items,next:0,output});
+                },
+                Value::Object(members)=>{
+                    ctx.charge_work(storage_words::<Vec<(Utf16,Value)>>() +2*storage_words::<StorageCopyFrame<'_>>()+storage_words::<Option<Utf16>>()+4,Utf16::default())?;
+                    let output=storage_reserve(Vec::new(),members.len(),ctx)?;
+                    let wanted=frames.len().checked_add(1).ok_or_else(storage_error)?;
+                    frames=storage_reserve(frames,wanted,ctx)?;
+                    frames.push(StorageCopyFrame::Object{source:members,next:0,output,key:None});
+                },
+            }
+        }
+        if completed.is_some(){
+            ctx.charge_work(2*storage_words::<(Utf16,Value)>()+3*storage_words::<Option<Value>>()+8,Utf16::default())?;
+            let value=completed.take().expect("completed child");
+            let Some(frame)=frames.last_mut()else{return Ok(value);};
+            match frame {
+                StorageCopyFrame::Array{next,output,..}=>{output.push(value);*next+=1;},
+                StorageCopyFrame::Object{next,output,key,..}=>{output.push((key.take().expect("paid object key"),value));*next+=1;},
+            }
+        }
+        if frames.is_empty(){unreachable!("storage root returns its completed value");}
+        ctx.charge_work(2*storage_words::<StorageCopyFrame<'_>>()+2*storage_words::<Option<&Value>>()+8,Utf16::default())?;
+        let finished=match frames.last().expect("active frame"){
+            StorageCopyFrame::Array{source,next,..}=>*next==source.len(),
+            StorageCopyFrame::Object{source,next,..}=>*next==source.len(),
+        };
+        if finished {
+            let frame=frames.pop().expect("paid completed frame");
+            completed=Some(match frame{StorageCopyFrame::Array{output,..}=>Value::Array(output),StorageCopyFrame::Object{output,..}=>Value::Object(output)});
+            continue;
+        }
+        ctx.charge_work(2*storage_words::<Option<Utf16>>()+2*storage_words::<Option<&Value>>()+5,Utf16::default())?;
+        let (child,key)=storage_child(frames.last().expect("active frame"));
+        let copied_key=match key{Some(key)=>Some(key.copy_storage_with_context(ctx)?),None=>None};
+        if let StorageCopyFrame::Object{key,..}=frames.last_mut().expect("active frame"){*key=copied_key;}
+        next=Some(child);
+    }
+}
+fn copy_catalogue_storage_with_row(source:&SchemaResources,row:(Utf16,Value),ctx:&mut Context<'_>)->Result<SchemaResources,EngineError>{
+    ctx.charge_work(3*storage_words::<SchemaResources>()+3*storage_words::<(Utf16,Value)>()+storage_failure_work()+8,Utf16::default())?;
+    let wanted=source.entries.len().checked_add(1).ok_or_else(storage_error)?;
+    let mut entries=storage_reserve(Vec::new(),wanted,ctx)?;
+    for(id,value)in &source.entries{
+        ctx.charge_work(3*storage_words::<(Utf16,Value)>()+6,Utf16::default())?;
+        let id=id.copy_storage_with_context(ctx)?;
+        let value=copy_value_storage(value,ctx)?;
+        entries.push((id,value));
+    }
+    ctx.charge_work(2*storage_words::<(Utf16,Value)>()+6,Utf16::default())?;
+    entries.push(row);Ok(SchemaResources{entries})
+}
 enum CoreInput {Raw(ResourceSet),Owned(umf_core::engine::OwnedResourceSet)}
 enum AdmissionInput {Raw(Value),Resource(umf_core::value::OwnedCoreJson),SchemaCopy(umf_core::value::OwnedCoreJson)}
 impl AdmissionInput {
@@ -90,38 +197,10 @@ impl CodegenResources {
         let binding_package=binding_package.admit(operation,ctx)?;
         let stable_binding_package=stable_binding_package.admit(operation,ctx)?;
         let engine=match core {CoreInput::Raw(core)=>Engine::new(core,ctx)?,CoreInput::Owned(core)=>Engine::from_owned_resources(core,operation.expect("typed constructor owns operation"),ctx)?};
-        let mut schema_resources = engine.schema_resources_with_context(ctx)?;
-        // Operation declarations are governed by the package-owned schema
-        // shipped with this crate. Its only external reference is the table
-        // package's `$defs/ref`; resolve it against the exact explicit schema
-        // supplied to this resource constructor.
-        let tables_schema_id = crate::value::string_member(&tables_schema, "$id")
-            .cloned()
-            .ok_or_else(|| {
-                EngineError::new(
-                    "CODEGEN_RESOURCE_INVALID",
-                    Utf16::default(),
-                    "Tables schema requires an $id",
-                )
-            })?;
-        ctx.charge_work(schema_resources.entries.len(), Utf16::default())?;
-        let mut schema_present = false;
-        for (id, _) in &schema_resources.entries {
-            ctx.charge_work(id.len(), Utf16::default())?;
-            schema_present |= id == &tables_schema_id;
-        }
-        if !schema_present {
-            let tables_schema_copy = umf_core::copy_json(&tables_schema, ctx)?;
-            schema_resources
-                .entries
-                .push((tables_schema_id, tables_schema_copy));
-        }
-        // Retain materialized export/table extension above for ordinary APIs
-        // and Registry. A separate opaque immutable compiler handoff pays its
-        // own extension copy; no export or table-copy credit is claimed.
-        let catalogue=match engine.codegen_catalogue_with_context(ctx)? {
-            Some(catalogue)=>catalogue.with_tables_schema(&tables_schema,ctx)?,None=>None,
-        };
+        let mut snapshot=engine.codegen_snapshot_with_context(ctx)?;
+        snapshot.include_table(&tables_schema,ctx)?;
+        let catalogue=engine.codegen_catalogue_with_context(ctx)?;
+        let (schema_resources,catalogue)=snapshot.finish(catalogue,ctx)?;
         // Encoding-only DATA; the shared reader still admits and parses the
         // complete source in this same Context before schema compilation.
         let operation_schema = umf_core::serialization::read_json_value(
@@ -307,6 +386,32 @@ impl CodegenResources {
         &self.schema_resources
     }
 
+    fn insert_snapshot_row(&mut self,row:(Utf16,Value),ctx:&mut Context<'_>)->Result<(),EngineError>{
+        ctx.charge_work(3*storage_words::<(Utf16,Value)>()+3*storage_words::<std::sync::Arc<SchemaResources>>()
+            +storage_failure_work()+10,Utf16::default())?;
+        let unique=std::sync::Arc::strong_count(&self.schema_resources)==1&&std::sync::Arc::weak_count(&self.schema_resources)==0;
+        if unique {
+            // Allocate only a new outer row vector; move existing values, never
+            // clone or re-admit them. Old vector is untouched until commit.
+            let count=self.schema_resources.entries.len();
+            let wanted=count.checked_add(1).ok_or_else(storage_error)?;
+            ctx.charge_work(storage_words::<Vec<(Utf16,Value)>>() +count.saturating_mul(storage_words::<(Utf16,Value)>())
+                +2*storage_words::<(Utf16,Value)>()+12,Utf16::default())?;
+            let fresh=storage_reserve(Vec::new(),wanted,ctx)?;
+            ctx.charge_work(2*storage_words::<SchemaResources>()+8,Utf16::default())?;
+            if let Some(data)=std::sync::Arc::get_mut(&mut self.schema_resources){
+                let old=std::mem::replace(&mut data.entries,fresh);
+                data.entries.extend(old);
+                data.entries.push(row);return Ok(());
+            }
+            // No mutable element borrow crosses any control. An unexpected
+            // ownership change uses the same explicit paid shared copy below.
+        }
+        let detached=copy_catalogue_storage_with_row(&self.schema_resources,row,ctx)?;
+        ctx.charge_work(3*storage_words::<SchemaResources>()+4*storage_words::<std::sync::Arc<SchemaResources>>()+12,Utf16::default())?;
+        self.schema_resources=std::sync::Arc::new(detached);
+        Ok(())
+    }
     /// Install the explicitly trusted saga declaration package. Saga support
     /// is opt-in so existing engines do not silently acquire new semantics.
     pub fn with_sagas(
@@ -345,10 +450,8 @@ impl CodegenResources {
             }
         }
         if !actions_schema_present {
-            self.schema_resources.entries.push((
-                actions_schema_id,
-                umf_core::copy_json(&self.actions_schema, ctx)?,
-            ));
+            let copied=umf_core::copy_json(&self.actions_schema,ctx)?;
+            self.insert_snapshot_row((actions_schema_id,copied),ctx)?;
         }
         let mut found = false;
         for (id, _) in &self.schema_resources.entries {
@@ -356,9 +459,8 @@ impl CodegenResources {
             found |= id == &schema_id;
         }
         if !found {
-            self.schema_resources
-                .entries
-                .push((schema_id, umf_core::copy_json(&schema, ctx)?));
+            let copied=umf_core::copy_json(&schema,ctx)?;
+            self.insert_snapshot_row((schema_id,copied),ctx)?;
         }
         let compiled = CompiledSchema::compile(&schema, &self.schema_resources, ctx)?;
         let saga_defs = crate::value::member(&schema, "$defs").ok_or_else(invalid_package)?;

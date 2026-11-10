@@ -541,3 +541,101 @@ fn oc08_reentry_unwind_and_independent_catalogue_isolation() {
         Ok(())
     });
 }
+
+
+// Real Engine/export producer; no unchecked construction of input facts.
+// SOURCE ONLY, UNCOMPILED/UNEXECUTED.
+#[test]
+fn prepared_export_is_shared_only_with_actual_owner_operation_and_lifetime() {
+    crate::value::OwnedCoreOperation::with_context(&mut Context::catalog(),|ctx,_| {
+        in_engine(ctx,|engine,ctx| {
+            let table=table_value();
+            let mut builder=engine.codegen_snapshot_with_context(ctx)?;
+            builder.include_table(&table,ctx)?;
+            let (snapshot,c)=builder.finish(engine.codegen_catalogue_with_context(ctx)?,ctx)?;
+            let c=c.expect("actual matching Engine");
+            assert_eq!(snapshot.entries,rows(&c));
+            assert!(Arc::ptr_eq(&c.prepared_input(ctx)?.unwrap(),&snapshot));
+            let root=json(r#"{"type":"boolean"}"#);
+            let (compiled,events)=observed(||CompiledSchema::compile_with_codegen_catalogue(&root,&c,ctx));
+            let compiled=compiled?;
+            assert!(compiled.resources.shares(&snapshot));
+            assert!(events.iter().any(|e|e.0=="prepared-export-input-handoff"));
+            assert_eq!(compiled.catalogue_entries(),snapshot.entries.as_slice());
+            // Nested operation and nested construction are independently expired
+            // INPUT contexts. Neither can consume the retained receipt.
+            crate::value::OwnedCoreOperation::with_context(ctx,|ctx,_|{
+                assert!(c.prepared_input(ctx)?.is_none());Ok(())
+            })?;
+            ctx.with_codegen_construction(|ctx|{assert!(c.prepared_input(ctx)?.is_none());Ok(())})?;
+            let mut changed=Context::with_limits(crate::context::ResourceProfile::Cooperative,
+                crate::context::Limits{max_values:1000,..ctx.limits()})?;
+            assert!(c.prepared_input(&mut changed)?.is_none());
+            assert!(c.prepared_input(&mut Context::catalog())?.is_none());
+            // A real different Engine cannot authorize this producer's data.
+            let foreign=Engine::new(inputs(),ctx)?;
+            let mut builder=engine.codegen_snapshot_with_context(ctx)?;
+            builder.include_table(&table,ctx)?;
+            let (_,foreign)=builder.finish(foreign.codegen_catalogue_with_context(ctx)?,ctx)?;
+            assert!(foreign.unwrap().prepared_snapshot.is_none());
+            // Existing extension mutation invalidates the receipt, never any
+            // underlying immutable snapshot still held by compiled schemas.
+            let more=json(r#"{"$id":"https://storage.test/another","type":"null"}"#);
+            let changed=c.with_tables_schema(&more,ctx)?.unwrap();
+            assert!(changed.prepared_snapshot.is_none());
+            assert_eq!(snapshot.entries.len(),4);
+            Ok(())
+        })
+    }).unwrap();
+}
+
+#[test]
+fn prepared_builder_does_not_confer_schema_success_or_accept_incomplete_protocol() {
+    crate::value::OwnedCoreOperation::with_context(&mut Context::catalog(),|ctx,_| {
+        in_engine(ctx,|engine,ctx| {
+            let incomplete=engine.codegen_snapshot_with_context(ctx)?;
+            assert_eq!(incomplete.finish(None,ctx).err().unwrap().code,"CODEGEN_RESOURCE_INVALID");
+            let table=table_value();let mut builder=engine.codegen_snapshot_with_context(ctx)?;
+            builder.include_table(&table,ctx)?;
+            assert_eq!(builder.include_table(&table,ctx).unwrap_err().code,"CODEGEN_RESOURCE_INVALID");
+            let (_,c)=builder.finish(engine.codegen_catalogue_with_context(ctx)?,ctx)?;
+            let c=c.unwrap();let epoch=c.profile_snapshot_for_test();
+            let bad=json(r##"{"$ref":"#/$defs/missing"}"##);
+            let expected=CompiledSchema::compile(&bad,&SchemaResources{entries:rows(&c)},ctx).err().unwrap();
+            let actual=CompiledSchema::compile_with_codegen_catalogue(&bad,&c,ctx).err().unwrap();
+            assert_eq!(actual,expected);
+            assert_eq!(c.profile_snapshot_for_test(),epoch,"no semantic memo from input proof alone");
+            Ok(())
+        })
+    }).unwrap();
+}
+
+#[test]
+fn failed_table_export_cannot_retry_or_publish_a_receipt() {
+    fn attempt(deny:Option<usize>)->Vec<usize>{
+        let trace=RefCell::new(Vec::new());let armed=Cell::new(false);
+        let mut meter=|n|{
+            if armed.get(){let at=trace.borrow().len();trace.borrow_mut().push(n);
+                if deny==Some(at){return Err(EngineError::new("HOST_EXPORT_STOP",Utf16::from("host"),"unchanged"));}}
+            Ok(())
+        };
+        crate::value::OwnedCoreOperation::with_context(&mut Context::catalog().with_meter(&mut meter),|ctx,_|{
+            in_engine(ctx,|engine,ctx|{
+                let table=table_value();let mut builder=engine.codegen_snapshot_with_context(ctx)?;
+                armed.set(true);let result=builder.include_table(&table,ctx);armed.set(false);
+                if deny.is_some(){
+                    assert_eq!(result.unwrap_err().code,"HOST_EXPORT_STOP");
+                    assert!(builder.table.is_none(),"no completed source binding after denial");
+                    let retry=Value::Bool(false);
+                    assert_eq!(builder.include_table(&retry,ctx).unwrap_err().code,"CODEGEN_RESOURCE_INVALID");
+                    assert_eq!(builder.finish(None,ctx).err().unwrap().code,"CODEGEN_RESOURCE_INVALID");
+                }else{result?;}
+                Ok(())
+            })
+        }).unwrap();
+        trace.into_inner()
+    }
+    let trace=attempt(None);
+    let late=trace.iter().rposition(|n|*n==2*catalogue_words::<crate::context::Limits>()+12).unwrap();
+    assert_eq!(attempt(Some(late)),trace[..=late],"late denial has no cleanup callback/replay");
+}

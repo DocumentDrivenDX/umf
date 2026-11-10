@@ -966,3 +966,84 @@ before semantic ports. It is a planning requirement. Loading APIs, exact string
 carriers, callbacks, resource isolation and platform ABI choices remain R1 outputs.
 The [migration plan](../04-build/rust-migration-plan.md) owns sequencing, qualified
 cutovers, retirement census and completion evidence.
+
+
+## Proposed successor: materialized catalogue ownership handoff
+
+Source0a654d07fd5b1bde869ae25fac9a90859e7648aa remains frozen and strict1M failed. Boundary02 is rejected as a net optimization: authenticated count review644f003bb071c0e36e854d15cdf82657c0b61fecffd16beb412ff6242999c107 establishes G>=7344, getter work>=73440 plus length work>=192, exceeding60936 by>=12696 before other costs. This is full-route source arithmetic, not a native tail measurement. Boundary02 and earlier design receipts remain immutable.
+
+This successor is DESIGN ONLY under ADR-006 and the existing architecture, CONTRACT-001/002/080, TD-091 and STP-091. Explicit current owner instructions and the closed-factory/C1 source profile govern full-nine validation, constructor/call1M manifests and900s cap. No new public schema, Contract ID, version or framework is introduced.
+
+### Selected compatibility option
+
+Reuse the ACTUAL already-materialized public catalogue as the existing Shared(Arc<SchemaResources>) compiler backing. Public Value and SchemaResources.entries retain their Vec types. CodegenResources.schema_resources() retains exactly &SchemaResources, preserving public .clone() as a deep SchemaResources/Value copy. Its private storage may hold Arc plus a sealed ownership wrapper. Clone isolation is enforced by explicit paid detachment at mutation, never implicit Arc::make_mut.
+
+Keep baseline Shared/Bank/SchemaRoot/CompiledSchema layouts and literal compiler getter/index/OwnerLocations/checked-location routing. No Input variant, new per-node getters or Result plumbing. Original engine/public table snapshot copies and the separate with_tables_schema table copy remain actual work; only60936 duplicate first catalogue representation-copy work is a conditional source opportunity. Retaining that table copy preserves the original bank+extension getter shape. Do not claim the withdrawn16188 or7638 credits.
+
+At the original catalogue-admission position AFTER root profile and original ordered-ID/conflict/cache handling, a constructor-only handoff may consume a sealed receipt from actual completed copy outputs and return the same existing Shared Arc. Closed producer lineage must identify the real ordered copies without a free full comparison walk. No caller hash/address flag proves validity. Foreign/wrong-profile/limits/lifetime or unavailable provenance follows original paid admission. Original completed compilation memo epoch/publication policy remains; no input receipt is completed schema/meta/ref/Registry/CoreRole success.
+
+### Two capabilities
+
+Transient ConstructorInputReceipt: exact CURRENT limits/resource profile/operation/construction lifetime and actual immutable ordered producer lineage. It authorizes only the initial JSON-representation implication at the original site. It expires with construction and is invalidated by raw escape or mutation.
+
+Persistent CatalogueStorage: sealed same finite immutable owned tree and storage-copy provenance. It may outlive construction and authorize a later paid storage copy in another Context. It conveys ZERO new-input/schema/Registry/current-limit acceptance and cannot populate completed compiler memo state. Do not require an expired constructor operation for storage detachment or fall back to copy_json because it expired. Newly inserted rows retain their original actual admission; future ordinary compiler validation still runs at original sites/current limits.
+
+### Incremental paid storage-copy contract
+
+For actual shared-owner insertion, keep original Saga/package/schema/id checks and copy the original NEW row first. Only then incrementally copy OLD storage into a private destination. An explicit concrete stack borrows old immutable Values and owns partial Array/Object buffers, pending keys/children and ordered rows. It is a storage walker, not another recursive generic semantic compiler/validator family.
+
+Before each effect charge actual node-kind/length/branch/header/initialized field/move/return work. Fallibly reserve frame and output Vec storage, paying requested storage, relocation and actual capacity effects before initialization/publication. Preserve exact UTF16: Owned allocates and copies admitted units with no normalization; Shared pays Arc retain/release and wrapper work; Static pays wrapper/transports. Inspect actual storage tags, not DATA assumptions. Do not use Value::clone, a hidden delegated clone or an unpriced preliminary walk.
+
+Pay old/new liveness, loop/cursor updates, pending storage, every cleanup/drop/refcount and final publication. Cleanup is admitted when storage is initialized, performs no controls after terminal refusal and never publishes partial success. Keep the old Arc/snapshots untouched until the detached complete storage and pending insertion are ready and final publication is approved. Any reserve/work/cancel/deadline/host failure propagates with original host provenance. Fixed Arc allocation follows existing allocator policy; do not claim recoverable OOM or hard isolation.
+
+No new max_values/max_depth/max_text_units/number/duplicate/schema admission runs on old already-owned storage. Context's direct-copy charge_work rule is distinct from charge_text source/output admission, and there is no generic memory-byte limit. This is not a waiver: ALL original new Saga/input/full-nine/root/schema/meta/ref/Registry/limit checks remain under current limits at original points. No cap, clock, catalogue-limit scope or allowance is raised/reset.
+
+with_sagas itself has no catalogue scope. Source sizes Saga package456/schema444/actions806 versus Core1318 make max_values1000 an early-refusal-order counterexample to copy_json COW. Old later compilation may still reject Core; do not claim whole old-call success. Storage-only detach introduces no earlier structural refusal; real added-work RESOURCE_LIMIT is visible OptionA. Wire/CLI existing resource scopes stay unchanged.
+
+If unique, use an explicit prepaid noncopying ownership operation, not implicit COW. No detach for invalid/no-insertion paths. Original compiled validators and resource clones keep old immutable data; mutated snapshot uses a new owner/generation and cannot retain constructor input admission. Public getters, deep clone/export and caller mutation semantics remain unchanged. Required tests cover constructor expiry versus persistent storage, attempted proof forgery/mutation, changed limits, clone isolation, both insertions, all UTF16 storage branches, denial before each effect and atomic cleanup.
+
+### Separate cost ledgers and source boundary
+
+Constructor: net change N_ctor-R, R<=60936 only when old code actually made the first four copies (R=0 on an old cache/prior-catalogue hit). N_ctor includes every Arc/header/receipt/producer-lineage/limits/profile/lifetime/order/return/refcount/drop/layout and actual comparison effect. No constructor statistics walk. Preserve root sharing so no new Q root materialization or G/L read tax is introduced; source must prove this against actual baseline getters.
+
+Mutation: N_detach=N_unique+sum(node/kind/header/returns)+sum(frame/loop/stack/reserve/relocation)+sum(container/capacity/store/moves)+sum(Owned units/buffers/wrappers)+sum(Shared refcounts)+sum(Static wrappers)+old/new live storage+cleanup+publication. All original mutation work remains. These added costs are explicitly visible in the later SAME1M call budget, not claimed away by a constructor improvement. Exact type/primitive totals, positive constructor inequality and all native fits remain unproved.
+
+Proposed production scope: engine.rs actual opaque export producer; schema.rs constructor-only Shared handoff and receipt; codegen/resources.rs private snapshot ownership and two explicit insertions; value.rs private incremental storage-copy primitives. Existing tests in value_owned_core_json_independent_tests.rs, schema_codegen_catalogue_independent_tests.rs, resources_codegen_catalogue_independent_tests.rs, actions/saga/tests.rs plus inline Engine producer controls cover the boundaries. No source edits are selected. Current guard changes, if later needed, bind actual successor bytes only with the existing strict full-roster/cfg/edge preflight; history and canonical DATA stay unchanged.
+
+Before implementation selection independently review producer capability/ownership/semantics. Before SOURCE/net admission close every positive cost, actual scope and fallback branch; before any native campaign require reviewed source and existing fresh canonical GEN1/current evidence bindings. Constructor strict1M/51+18 and later native/Saga/platform/SDK qualification remain separately mandatory with the existing900s cap. Design is not fit, runtime qualification or publication authority.
+
+### Parked implementation correspondence (unqualified source)
+
+The isolated successor uses `Engine::codegen_snapshot_with_context` and an opaque
+`CodegenSnapshotBuilder`. The existing export kernel still makes the real first
+copies. The table producer is single-attempt: incomplete/denied attempts cannot
+publish a receipt or retry with another source. Successful finish retains its own
+immutable output and binds the actual Engine bank, original ordered mapping,
+current operation, construction lifetime, profile and limits. The compiler uses
+that output only at the original cold catalogue-copy point, after root admission,
+prior lookup and original ordered-ID/conflict checks; all semantic completion and
+memo publication stay at their original sites. Legacy getters and compiler layouts
+are unchanged. New selector work is also paid on fallback rows.
+
+`CodegenResources` privately retains an Arc while `schema_resources()` still
+returns `&SchemaResources`. Actual insertion uses an explicit unique-owner outer
+row move or the concrete incremental storage copier. There is no implicit COW,
+Value clone or old-data structural readmission in the copier. New Saga row copies,
+both insertion decisions and subsequent compiler/Registry checks stay in order.
+
+Reserve accounting has two stages: charge requested storage, allocator attempt,
+old-prefix relocation and cleanup before reservation; charge reported excess
+AFTER reservation and BEFORE initialization/publication. Excess is not claimed
+prepaid. A late denial drops only owned partial destination storage with admitted
+cleanup; the original Arc remains unchanged. This follows the selected storage
+contract and existing PreflightCold publication pattern, subject to independent
+review of exact arithmetic. Fixed Arc allocation retains the existing allocator
+policy; there is no recoverable-OOM or hard-isolation claim.
+
+The source model bounds gross new constructor costs symbolically using actual
+Rust type-word expressions and the fixed three bank/eight compiler/four Registry
+call sites, without claiming target type sizes were measured. The source constant
+requires that bound below the conditional first-copy opportunity60936. Neither the
+assertion nor authored Rust controls have been compiled/executed locally. Full
+constructor remaining cost, target/allocator behavior, mutation fit and900s
+producer fit remain unknown until separately admitted hosted qualification.

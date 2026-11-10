@@ -1417,6 +1417,15 @@ impl Engine {
             EngineResources::Owned(_)=>Ok(None),
         }
     }
+    /// Internal completed-copy producer. The existing public export is still
+    /// the actual copy kernel; callers cannot manufacture its input receipt.
+    #[doc(hidden)]
+    pub fn codegen_snapshot_with_context<'table>(&self,ctx:&mut Context<'_>)->Result<crate::schema::CodegenSnapshotBuilder<'table>,EngineError>{
+        let data=self.schema_resources_with_context(ctx)?;
+        ctx.charge_work(3*std::mem::size_of::<Option<std::sync::Arc<ResourceSet>>>().div_ceil(std::mem::size_of::<usize>())+4,Utf16::default())?;
+        let owner=match &self.resources{EngineResources::Admitted(owner)=>Some(std::sync::Arc::clone(owner)),EngineResources::Owned(_)=>None};
+        crate::schema::CodegenSnapshotBuilder::completed_export(data,owner,ctx)
+    }
     pub fn schema_resources_with_context(
         &self,
         ctx: &mut Context<'_>,

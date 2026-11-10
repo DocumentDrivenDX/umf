@@ -29,7 +29,7 @@ export const rustFeatureBoundaryFiles = [
   'crates/umf-core-wire/Cargo.toml',
 ] as const;
 const runtimeConsumerPins:Record<string,string>={
-  'crates/umf-core/src/value.rs':'6a5b3e827e97cfa04dd6167cd62c488132759486f2eb603dccaf3cab0e9ad22d',
+  'crates/umf-core/src/value.rs':'f46547766ad7d2e6be7ef34aeace087b5b0ae7a64f5f31363ebb77e55b7fc69e',
   'crates/umf-core-wire/src/lib.rs':'991e9be4abbfb2ffc5baee3c02d78621eda0c9cfa41b70c246816926dacfa13e',
   'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs':'bb66a321eaf015adb04108c7d5953931b7de574e92ca223eb44795cdf228dda9',
 };
