@@ -2961,7 +2961,7 @@ impl CompiledSchema {
                     // type names (and delegates their meaning to its type
                     // checker). Later drafts enumerate the primitive names.
                     if self.dialect != SchemaDialect::Draft3 {
-                        validate_type_declaration(val, &child, self.dialect)?;
+                        validate_type_declaration(val, &child, self.dialect,ctx)?;
                     }
                     if self.dialect == SchemaDialect::Draft3 {
                         match val {
@@ -2992,7 +2992,7 @@ impl CompiledSchema {
                     if self.dialect == SchemaDialect::Draft3 && matches!(val, Value::Bool(_)) {
                         // Draft 3 expresses a required property on the property schema itself.
                     } else {
-                        validate_string_array(val, &child, true)?;
+                        validate_string_array(val, &child, true,ctx)?;
                     }
                 }
                 "enum" => {
@@ -3181,7 +3181,7 @@ impl CompiledSchema {
                                 validate_string_array(
                                     dep,
                                     &append_schema_pointer(&child, name),
-                                    true,
+                                    true,ctx,
                                 )?;
                             } else if self.dialect == SchemaDialect::Draft3
                                 && matches!(dep, Value::String(_))
@@ -3206,7 +3206,7 @@ impl CompiledSchema {
                 "dependentRequired" => {
                     if let Value::Object(deps) = val {
                         for (name, dep) in deps {
-                            validate_string_array(dep, &append_schema_pointer(&child, name), true)?;
+                            validate_string_array(dep, &append_schema_pointer(&child, name), true,ctx)?;
                         }
                     } else {
                         return Err(schema_error(&child, "dependentRequired must be an object"));
@@ -3536,8 +3536,17 @@ impl CompiledSchema {
                         #[cfg(test)] construction_index::scoped_effect_event("ps1-path-keyword-init");
                         let mut keyword_mark=None;
                         child_path!(&mut keyword_mark);
-                        let diagnostic=path.diagnostic_snapshot(ctx)?;
-                        validate_type_declaration(val,&diagnostic,self.dialect)?;
+                        path.charge_current_path(DECLARATION_REASON_WORK,ctx)?;
+                        match type_declaration_reason(val,self.dialect) {
+                            Ok(())=>(),
+                            Err(reason)=>{
+                                path.charge_current_path(DECLARATION_ERROR_WORK,ctx)?;
+                                #[cfg(test)] construction_index::scoped_effect_event("a0-error-map-admitted");
+                                #[cfg(test)] construction_index::scoped_effect_event("a0-type-error-snapshot");
+                                let diagnostic=path.diagnostic_snapshot(ctx)?;
+                                return Err(schema_error(&diagnostic,reason.message()));
+                            }
+                        }
 
                         if let Some(mark)=keyword_mark.take(){path.restore(mark,ctx)?;}
                     }
@@ -3571,8 +3580,17 @@ if self.dialect == SchemaDialect::Draft3 {
                         // Draft 3 expresses a required property on the property schema itself.
                     } else {
                         child_path!(&mut keyword_mark);
-                        let diagnostic=path.diagnostic_snapshot(ctx)?;
-                        validate_string_array(val,&diagnostic,true)?;
+                        path.charge_current_path(DECLARATION_REASON_WORK,ctx)?;
+                        match string_array_reason(val,true) {
+                            Ok(())=>(),
+                            Err(reason)=>{
+                                path.charge_current_path(DECLARATION_ERROR_WORK,ctx)?;
+                                #[cfg(test)] construction_index::scoped_effect_event("a0-error-map-admitted");
+                                #[cfg(test)] construction_index::scoped_effect_event("a0-required-error-snapshot");
+                                let diagnostic=path.diagnostic_snapshot(ctx)?;
+                                return Err(schema_error(&diagnostic,reason.message()));
+                            }
+                        }
                     }
 
                     if let Some(mark)=keyword_mark.take(){path.restore(mark,ctx)?;}
@@ -3753,7 +3771,7 @@ if self.dialect == SchemaDialect::Draft3 {
                         for (child_index,(name, dep)) in deps.iter().enumerate() {
                             if matches!(dep, Value::Array(_)) {
                                 child_path!(R::pathmark(&mut keyword));
-                                self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true)})?;
+                                self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true,ctx)})?;
                             } else if self.dialect == SchemaDialect::Draft3 && matches!(dep, Value::String(_)) {
                                 // Draft 3 permits a string dependency naming a peer property.
                             } else {
@@ -3773,7 +3791,7 @@ if self.dialect == SchemaDialect::Draft3 {
                     if let Value::Object(deps) = val {
                         for (name, dep) in deps {
                             child_path!(&mut keyword_mark);
-                            self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true)})?;
+                            self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true,ctx)})?;
                         }
                     } else { return Err(child_schema_error!(&mut keyword_mark,"dependentRequired must be an object")); }
 
@@ -10019,31 +10037,74 @@ fn as_usize(v: &Value) -> Option<usize> {
         None
     }
 }
-fn validate_string_array(v: &Value, path: &Utf16, unique: bool) -> Result<(), EngineError> {
+// A0 private semantic reasons contain no path, allocation or admission proof.
+#[derive(Clone,Copy,Debug,Eq,PartialEq)]
+enum DeclarationReason { StringArray, DuplicateStringArray, TypeShape, TypeMember, TypeUnicode, TypeDuplicate }
+impl DeclarationReason {
+    fn message(self)->&'static str { match self {
+        Self::StringArray=>"Expected an array of strings",
+        Self::DuplicateStringArray=>"Array values must be unique",
+        Self::TypeShape=>"type must be a string or array",
+        Self::TypeMember=>"type array values must be strings",
+        Self::TypeUnicode=>"Invalid type name",
+        Self::TypeDuplicate=>"Invalid or duplicate type name",
+    } }
+}
+const DECLARATION_REASON_WORK:usize=4*std::mem::size_of::<Result<(),DeclarationReason>>().div_ceil(std::mem::size_of::<usize>())+2*std::mem::size_of::<DeclarationReason>().div_ceil(std::mem::size_of::<usize>())+4*std::mem::size_of::<&'static mut Context<'static>>().div_ceil(std::mem::size_of::<usize>())+12;
+const DECLARATION_SCOPED_WORK:usize=std::mem::size_of::<construction_index::ScopedPreflightPath>().div_ceil(std::mem::size_of::<usize>())+2;
+const DECLARATION_WRAPPER_WORK:usize=DECLARATION_REASON_WORK+2*std::mem::size_of::<&'static Utf16>().div_ceil(std::mem::size_of::<usize>())+12;
+const DECLARATION_ERROR_WORK:usize=2*std::mem::size_of::<DeclarationReason>().div_ceil(std::mem::size_of::<usize>())+2*std::mem::size_of::<&'static str>().div_ceil(std::mem::size_of::<usize>())+8;
+// Complete successful first Core root source census only; not native-prefix savings.
+const _: ()=assert!(19816usize+39632usize.div_ceil(std::mem::size_of::<usize>())+313*(std::mem::size_of::<Vec<u16>>().div_ceil(std::mem::size_of::<usize>())+std::mem::size_of::<Arc<Vec<u16>>>().div_ceil(std::mem::size_of::<usize>())+std::mem::size_of::<Utf16>().div_ceil(std::mem::size_of::<usize>())+6)>313*(DECLARATION_REASON_WORK+DECLARATION_SCOPED_WORK)+2*DECLARATION_WRAPPER_WORK);
+fn validate_string_array(v:&Value,path:&Utf16,unique:bool,ctx:&mut Context<'_>)->Result<(),EngineError>{
+    // Includes the reason admission; shared body must never debit it again.
+    ctx.charge_work(DECLARATION_WRAPPER_WORK,Utf16::default())?;
+    match string_array_reason(v,unique){
+        Ok(())=>Ok(()),
+        Err(reason)=>{
+            ctx.charge_work(DECLARATION_ERROR_WORK,Utf16::default())?;
+            #[cfg(test)] construction_index::scoped_effect_event("a0-error-map-admitted");
+            Err(schema_error(path,reason.message()))
+        }
+    }
+}
+fn validate_type_declaration(v:&Value,path:&Utf16,dialect:SchemaDialect,ctx:&mut Context<'_>)->Result<(),EngineError>{
+    ctx.charge_work(DECLARATION_WRAPPER_WORK,Utf16::default())?;
+    match type_declaration_reason(v,dialect){
+        Ok(())=>Ok(()),
+        Err(reason)=>{
+            ctx.charge_work(DECLARATION_ERROR_WORK,Utf16::default())?;
+            #[cfg(test)] construction_index::scoped_effect_event("a0-error-map-admitted");
+            Err(schema_error(path,reason.message()))
+        }
+    }
+}
+fn string_array_reason(v: &Value, unique: bool) -> Result<(), DeclarationReason> {
+    #[cfg(test)] construction_index::scoped_effect_event("a0-string-reason-enter");
     let Value::Array(a) = v else {
-        return Err(schema_error(path, "Expected an array of strings"));
+        return Err(DeclarationReason::StringArray);
     };
     let mut seen = BTreeSet::new();
     for x in a {
         let Value::String(s) = x else {
-            return Err(schema_error(path, "Expected an array of strings"));
+            return Err(DeclarationReason::StringArray);
         };
         if unique && !seen.insert(s.units().to_vec()) {
-            return Err(schema_error(path, "Array values must be unique"));
+            return Err(DeclarationReason::DuplicateStringArray);
         }
     }
     Ok(())
 }
-fn validate_type_declaration(
+fn type_declaration_reason(
     v: &Value,
-    path: &Utf16,
     dialect: SchemaDialect,
-) -> Result<(), EngineError> {
+) -> Result<(), DeclarationReason> {
+    #[cfg(test)] construction_index::scoped_effect_event("a0-type-reason-enter");
     let branches: Vec<&Value> = match v {
         Value::String(_) => vec![v],
         Value::Object(_) if dialect == SchemaDialect::Draft3 => vec![v],
         Value::Array(items) => items.iter().collect(),
-        _ => return Err(schema_error(path, "type must be a string or array")),
+        _ => return Err(DeclarationReason::TypeShape),
     };
     let mut seen = BTreeSet::new();
     for branch in branches {
@@ -10051,18 +10112,18 @@ fn validate_type_declaration(
             continue;
         }
         let Value::String(name) = branch else {
-            return Err(schema_error(path, "type array values must be strings"));
+            return Err(DeclarationReason::TypeMember);
         };
         let name = name
             .to_utf8()
-            .map_err(|_| schema_error(path, "Invalid type name"))?;
+            .map_err(|_| DeclarationReason::TypeUnicode)?;
         if ![
             "null", "boolean", "object", "array", "number", "integer", "string",
         ]
         .contains(&name.as_str())
             || !seen.insert(name)
         {
-            return Err(schema_error(path, "Invalid or duplicate type name"));
+            return Err(DeclarationReason::TypeDuplicate);
         }
     }
     Ok(())

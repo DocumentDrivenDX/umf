@@ -552,3 +552,86 @@ fn ps_r3_small_fixture_each_new_state_admission_denies_before_effect(){
         }
     }
 }
+
+// A0 retained prechange semantic oracles. SOURCE-only until admitted execution.
+fn a0_original_string_array(v: &Value, path: &Utf16, unique: bool) -> Result<(), EngineError> {
+    let Value::Array(a) = v else {
+        return Err(schema_error(path, "Expected an array of strings"));
+    };
+    let mut seen = BTreeSet::new();
+    for x in a {
+        let Value::String(s) = x else {
+            return Err(schema_error(path, "Expected an array of strings"));
+        };
+        if unique && !seen.insert(s.units().to_vec()) {
+            return Err(schema_error(path, "Array values must be unique"));
+        }
+    }
+    Ok(())
+}
+fn a0_original_type(
+    v: &Value,
+    path: &Utf16,
+    dialect: SchemaDialect,
+) -> Result<(), EngineError> {
+    let branches: Vec<&Value> = match v {
+        Value::String(_) => vec![v],
+        Value::Object(_) if dialect == SchemaDialect::Draft3 => vec![v],
+        Value::Array(items) => items.iter().collect(),
+        _ => return Err(schema_error(path, "type must be a string or array")),
+    };
+    let mut seen = BTreeSet::new();
+    for branch in branches {
+        if matches!(branch, Value::Object(_)) && dialect == SchemaDialect::Draft3 {
+            continue;
+        }
+        let Value::String(name) = branch else {
+            return Err(schema_error(path, "type array values must be strings"));
+        };
+        let name = name
+            .to_utf8()
+            .map_err(|_| schema_error(path, "Invalid type name"))?;
+        if ![
+            "null", "boolean", "object", "array", "number", "integer", "string",
+        ]
+        .contains(&name.as_str())
+            || !seen.insert(name)
+        {
+            return Err(schema_error(path, "Invalid or duplicate type name"));
+        }
+    }
+    Ok(())
+}
+
+#[test]
+fn a0_reason_wrappers_preserve_original_declaration_errors_and_acceptance(){
+    let paths=[Utf16::from("#/properties/a~1b/type"),Utf16::new(vec![35,47,0xd800,126,47,35])];
+    let mut types=vec![Value::Bool(true),psr_json("[]"),psr_json(r#"[true]"#),psr_json(r#"["string","string"]"#),psr_json(r#""mystery""#),psr_json(r#""string""#),psr_json("{}")];
+    types.push(Value::String(Utf16::new(vec![0xd800])));
+    for path in &paths{for dialect in [SchemaDialect::Draft3,SchemaDialect::Draft4,SchemaDialect::Draft2020_12]{for value in &types{
+        let actual=validate_type_declaration(value,path,dialect,&mut Context::catalog());
+        assert_eq!(actual,a0_original_type(value,path,dialect));
+    }}}
+    for path in &paths{for value in [psr_json("7"),psr_json("[]"),psr_json("[true]"),psr_json(r#"["a","a"]"#),Value::Array(vec![Value::String(Utf16::new(vec![0xd800]))])]{for unique in [false,true]{
+        assert_eq!(validate_string_array(&value,path,unique,&mut Context::catalog()),a0_original_string_array(&value,path,unique));
+    }}}
+}
+
+#[test]
+fn a0_each_new_wrapper_boundary_refuses_before_reason_or_map_effect(){
+    let value=psr_json(r#"["x","x"]"#);let path=Utf16::from("#/required");
+    let calls=Rc::new(std::cell::Cell::new(0usize));let host_calls=calls.clone();
+    let mut host=move|_|{host_calls.set(host_calls.get()+1);Ok(())};
+    let events=Rc::new(RefCell::new(Vec::new()));let sink=events.clone();let count=calls.clone();
+    let mut ctx=Context::catalog().with_host_control(&mut host);
+    let error=construction_index::observe_paths(Box::new(move|e|{if matches!(e,"a0-string-reason-enter"|"a0-error-map-admitted"){sink.borrow_mut().push((count.get(),e));}}),||validate_string_array(&value,&path,true,&mut ctx)).unwrap_err();
+    assert_eq!(error.message,Utf16::from("Array values must be unique"));drop(ctx);
+    let targets=events.borrow().clone();assert_eq!(targets.len(),2);assert_eq!(targets[0].0,1,"wrapper includes reason debit exactly once");assert_eq!(targets[1].0,2,"error mapping has its own positive admission");
+    for(target,event)in targets{
+        let seen=Rc::new(RefCell::new(Vec::new()));let effects=seen.clone();let mut n=0;
+        let mut deny=move|_|{n+=1;if n==target{Err(EngineError::new("A0_HOST",Utf16::from("/authentic-host"),"terminal"))}else{Ok(())}};
+        let mut ctx=Context::catalog().with_host_control(&mut deny);
+        let error=construction_index::observe_paths(Box::new(move|e|effects.borrow_mut().push(e)),||validate_string_array(&value,&path,true,&mut ctx)).unwrap_err();
+        assert_eq!(error.code,"A0_HOST");assert_eq!(error.path,Utf16::from("/authentic-host"));assert_eq!(error.message,Utf16::from("terminal"));assert!(!seen.borrow().contains(&event));
+    }
+}

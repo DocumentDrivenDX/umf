@@ -1228,3 +1228,49 @@ fn sp_r3_path_only_keyword_reuses_one_mark_and_restores_actual_root(){
     let e=events.borrow();assert_eq!(e.iter().filter(|&&s|s=="ps1-path-keyword-init").count(),2);assert!(!e.contains(&"ps1-full-keyword-init"));
     assert_eq!(e.iter().filter(|&&s|s=="sp1-buffer-after-append").count(),2);
 }
+
+#[test]
+fn a0_success_preserves_keyword_path_custody_without_diagnostic_snapshot(){
+    let owner=sp_owner();let schema=sp_json(r#"{"type":"object","required":[],"dependentRequired":{"x":[]}}"#);
+    let mut ctx=Context::catalog();let mut path=ScopedPreflightPath::new(&Utf16::from("#"),&mut ctx).unwrap();let before=path.observe();
+    let events=Rc::new(RefCell::new(Vec::new()));let sink=events.clone();
+    construction_index::observe_paths(Box::new(move|e|sink.borrow_mut().push(e)),||{
+        let frame=legacy_preflight_frame(None,None,&mut ctx)?;
+        owner.preflight_semantic::<LegacyPreflightRoute>(&schema,&mut path,"",0,owner.root_keyword_policy,&mut ctx,&mut BTreeSet::new(),frame)
+    }).unwrap();
+    let after=path.observe();assert_eq!(after.text,before.text);assert_eq!(after.first_hash,before.first_hash);assert_eq!(after.surrogate,before.surrogate);assert!(!after.poisoned);
+    let e=events.borrow();assert_eq!(e.iter().filter(|&&s|s=="a0-type-reason-enter").count(),1);assert_eq!(e.iter().filter(|&&s|s=="a0-string-reason-enter").count(),2,"required plus unchanged dependentRequired wrapper");
+    assert!(!e.contains(&"a0-type-error-snapshot"));assert!(!e.contains(&"a0-required-error-snapshot"));
+    assert_eq!(e.iter().filter(|&&s|s=="sp1-buffer-after-append").count(),4,"original type/required and dependency paths still append");
+}
+
+#[test]
+fn a0_scoped_reason_error_admissions_poison_and_preserve_host_fields(){
+    let owner=sp_owner();let schema=sp_json(r#"{"type":7}"#);
+    let calls=Rc::new(Cell::new(0usize));let host_calls=calls.clone();let mut host=move|_|{host_calls.set(host_calls.get()+1);Ok(())};
+    let events=Rc::new(RefCell::new(Vec::new()));let sink=events.clone();let count=calls.clone();
+    let mut ctx=Context::catalog().with_host_control(&mut host);let mut path=ScopedPreflightPath::new(&Utf16::from("#"),&mut Context::catalog()).unwrap();
+    let actual=construction_index::observe_paths(Box::new(move|e|{if matches!(e,"a0-type-reason-enter"|"a0-error-map-admitted"|"a0-type-error-snapshot"){sink.borrow_mut().push((count.get()+usize::from(e=="a0-type-error-snapshot"),e));}}),||{
+        let frame=legacy_preflight_frame(None,None,&mut ctx)?;
+        owner.preflight_semantic::<LegacyPreflightRoute>(&schema,&mut path,"",0,owner.root_keyword_policy,&mut ctx,&mut BTreeSet::new(),frame)
+    }).unwrap_err();assert_eq!(actual.message,Utf16::from("type must be a string or array"));drop(ctx);
+    let targets=events.borrow().clone();assert_eq!(targets.len(),3);
+    for(target,event)in targets{for mode in 0..4{
+        let seen=Rc::new(RefCell::new(Vec::new()));let effects=seen.clone();let mut n=0;
+        let armed=Rc::new(Cell::new(false));let host_arm=armed.clone();let cancel_arm=armed.clone();let clock_arm=armed.clone();
+        let mut deny=move|_|{n+=1;if n==target{host_arm.set(true);if mode==1{std::panic::panic_any("a0-host-panic");}if mode==0{Err(EngineError::new("A0_HOST",Utf16::from("/authentic-host"),"terminal"))}else{Ok(())}}else{Ok(())}};
+        let mut cancel=move||mode==2&&cancel_arm.get();let mut clock=move||Some(if mode==3&&clock_arm.get(){2}else{0});
+        let mut ctx=Context::catalog().with_host_control(&mut deny).with_cancellation(&mut cancel).with_clock(&mut clock,1);let mut path=ScopedPreflightPath::new(&Utf16::from("#"),&mut Context::catalog()).unwrap();
+        let checkpoint=path.mark(&mut Context::catalog()).unwrap();
+        let outcome=catch_unwind(AssertUnwindSafe(||construction_index::observe_paths(Box::new(move|e|effects.borrow_mut().push(e)),||{
+            let frame=legacy_preflight_frame(None,None,&mut ctx)?;
+            owner.preflight_semantic::<LegacyPreflightRoute>(&schema,&mut path,"",0,owner.root_keyword_policy,&mut ctx,&mut BTreeSet::new(),frame)
+        })));
+        assert!(path.observe().poisoned);if event=="a0-type-error-snapshot"{assert!(seen.borrow().contains(&event),"attempt marker precedes the original snapshot admission");}else{assert!(!seen.borrow().contains(&event));}
+        if mode==1{let panic=outcome.unwrap_err();assert_eq!(panic.downcast_ref::<&str>(),Some(&"a0-host-panic"));}
+        else{let error=outcome.unwrap().unwrap_err();if mode==0{assert_eq!(error.code,"A0_HOST");assert_eq!(error.path,Utf16::from("/authentic-host"));assert_eq!(error.message,Utf16::from("terminal"));}else{assert_eq!(error.code,if mode==2{"CANCELLED"}else{"DEADLINE"});assert_eq!(error.path,if event=="a0-type-error-snapshot"{Utf16::default()}else{Utf16::from("#/type")});}}
+        // Real enclosing checkpoint cleanup after terminal error/unwind. It
+        // performs no controls and cannot publish a reusable successful path.
+        path.restore_after_failure(checkpoint);if mode<2||event=="a0-type-error-snapshot"{assert_eq!(path.text(),&Utf16::from("#"));}else{assert!(path.text().is_empty(),"moved local diagnostic is not reconstructed during cleanup");}assert!(path.observe().poisoned);
+    }}
+}
