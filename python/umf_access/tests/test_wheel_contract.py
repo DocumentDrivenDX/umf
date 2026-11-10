@@ -24,7 +24,7 @@ from snapshot_runtime import generated_snapshot_identity, reserve_generated_snap
 
 PIN = {
     "distribution": "umf_access",
-    "version": "0.1.0.dev9",
+    "version": "0.1.0.dev10",
     "abi": "umf-access-runtime/0.1",
 }
 
@@ -100,22 +100,22 @@ class WheelContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             wheel = Path(folder) / "runtime.whl"
 
-            def write(metadata="Name: umf_access\nVersion: 0.1.0.dev9\n", marker=True):
+            def write(metadata="Name: umf_access\nVersion: 0.1.0.dev10\n", marker=True):
                 with zipfile.ZipFile(wheel, "w") as z:
                     z.writestr(
                         "umf_access/__init__.py",
                         'RUNTIME_ABI="umf-access-runtime/0.1"\n',
                     )
-                    z.writestr("umf_access-0.1.0.dev9.dist-info/METADATA", metadata)
+                    z.writestr("umf_access-0.1.0.dev10.dist-info/METADATA", metadata)
                     if marker:
                         z.writestr("umf_access/py.typed", "")
 
             write()
             self.assertIn("umf_access/__init__.py", inspect_wheel(wheel, PIN))
             for metadata, marker in [
-                ("Name: wrong\nVersion: 0.1.0.dev9\n", True),
+                ("Name: wrong\nVersion: 0.1.0.dev10\n", True),
                 ("Name: umf_access\nVersion: 1.0\n", True),
-                ("Name: umf_access\nVersion: 0.1.0.dev9\n", False),
+                ("Name: umf_access\nVersion: 0.1.0.dev10\n", False),
             ]:
                 write(metadata, marker)
                 with self.assertRaises(ValueError):
