@@ -74,5 +74,5 @@ test('@covers US-907-AC7 formal_correspondence: fixture covers every table row a
  for(const c of controls.get('rollback-from-not-found')!){const r=run(c);expect(r.state.status).toBe('reconciling');}
  for(const c of controls.get('guard-code-translated')!)expect((model.bulkDecisionOrder(c.input) as any).code).toBe('PAP_GUARD');
 });
-test.todo('@covers US-907-AC7 formal_correspondence: Truss BulkUpdate.tla consumes transitions.json and rejects the same broken mechanisms (cross-repo, owned by Truss US-048-AC7)');
-test.todo('@covers US-907-AC8 state_oracle_parity: actual Chromium evaluates the fixture via scripts/actions-bulk-state-browser.ts and agrees with the independent expectations');
+test.todo('@covers US-907-AC7 formal_correspondence: Truss BulkUpdate.tla consumes transitions.json and rejects the same broken mechanisms (cross-repo, owned by Truss US-048-AC7)',()=>{});
+test.todo('@covers US-907-AC8 state_oracle_parity: actual Chromium evaluates the fixture via scripts/actions-bulk-state-browser.ts and agrees with the independent expectations',()=>{});
