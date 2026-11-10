@@ -3295,7 +3295,6 @@
                 "nullable": false
               }
             ],
-            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"OrderRequest\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"orderId\",\n      \"type\": \"string\",\n      \"doc\": \"External order identifier\"\n    },\n    {\n      \"name\": \"quantity\",\n      \"type\": \"int\",\n      \"doc\": \"Requested quantity\"\n    },\n    {\n      \"name\": \"isActive\",\n      \"type\": \"boolean\",\n      \"doc\": \"Whether the request is active\"\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "example:orders-avro",
@@ -3420,7 +3419,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"OrderRequest\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"orderId\",\n      \"type\": \"string\",\n      \"doc\": \"External order identifier\"\n    },\n    {\n      \"name\": \"quantity\",\n      \"type\": \"int\",\n      \"doc\": \"Requested quantity\"\n    },\n    {\n      \"name\": \"isActive\",\n      \"type\": \"boolean\",\n      \"doc\": \"Whether the request is active\"\n    }\n  ]\n}\n"
           },
           "document": {
             "status": "projected",
@@ -3559,6 +3559,13 @@
             },
             "issues": [
               {
+                "path": "",
+                "code": "AVRO_PROFILE_LIMIT",
+                "classification": "unsupported",
+                "detail": "Inspection covers a bounded schema-structure subset; Avro 1.12 semantic validity is not certified",
+                "retainedInSource": true
+              },
+              {
                 "path": "/root",
                 "code": "NATIVE_TYPE_IDENTITY",
                 "classification": "not-enforced",
@@ -3587,7 +3594,6 @@
                 "targetPointer": "/$defs/type_0"
               }
             ],
-            "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:example:orders-dto\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"example.sales.OrderRequest\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"orderId\": {\n          \"type\": \"string\",\n          \"description\": \"External order identifier\"\n        },\n        \"quantity\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647,\n          \"description\": \"Requested quantity\"\n        },\n        \"isActive\": {\n          \"type\": \"boolean\",\n          \"description\": \"Whether the request is active\"\n        }\n      },\n      \"required\": [\n        \"orderId\",\n        \"quantity\",\n        \"isActive\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "example:orders-json",
@@ -3722,7 +3728,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:example:orders-dto\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"example.sales.OrderRequest\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"orderId\": {\n          \"type\": \"string\",\n          \"description\": \"External order identifier\"\n        },\n        \"quantity\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647,\n          \"description\": \"Requested quantity\"\n        },\n        \"isActive\": {\n          \"type\": \"boolean\",\n          \"description\": \"Whether the request is active\"\n        }\n      },\n      \"required\": [\n        \"orderId\",\n        \"quantity\",\n        \"isActive\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
           }
         },
         "form": {
@@ -7303,7 +7310,6 @@
                 "nullable": false
               }
             ],
-            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"OrderRequest\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"orderId\",\n      \"type\": \"string\",\n      \"doc\": \"External order identifier\"\n    },\n    {\n      \"name\": \"quantity\",\n      \"type\": \"int\",\n      \"doc\": \"Requested quantity\"\n    },\n    {\n      \"name\": \"isActive\",\n      \"type\": \"boolean\",\n      \"doc\": \"Whether the request is active\"\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "example:orders-avro",
@@ -7428,7 +7434,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"OrderRequest\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"orderId\",\n      \"type\": \"string\",\n      \"doc\": \"External order identifier\"\n    },\n    {\n      \"name\": \"quantity\",\n      \"type\": \"int\",\n      \"doc\": \"Requested quantity\"\n    },\n    {\n      \"name\": \"isActive\",\n      \"type\": \"boolean\",\n      \"doc\": \"Whether the request is active\"\n    }\n  ]\n}\n"
           },
           "document": {
             "status": "projected",
@@ -7567,6 +7574,13 @@
             },
             "issues": [
               {
+                "path": "",
+                "code": "AVRO_PROFILE_LIMIT",
+                "classification": "unsupported",
+                "detail": "Inspection covers a bounded schema-structure subset; Avro 1.12 semantic validity is not certified",
+                "retainedInSource": true
+              },
+              {
                 "path": "/root",
                 "code": "NATIVE_TYPE_IDENTITY",
                 "classification": "not-enforced",
@@ -7595,7 +7609,6 @@
                 "targetPointer": "/$defs/type_0"
               }
             ],
-            "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:example:orders-dto\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"example.sales.OrderRequest\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"orderId\": {\n          \"type\": \"string\",\n          \"description\": \"External order identifier\"\n        },\n        \"quantity\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647,\n          \"description\": \"Requested quantity\"\n        },\n        \"isActive\": {\n          \"type\": \"boolean\",\n          \"description\": \"Whether the request is active\"\n        }\n      },\n      \"required\": [\n        \"orderId\",\n        \"quantity\",\n        \"isActive\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "example:orders-json",
@@ -7730,7 +7743,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:example:orders-dto\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"example.sales.OrderRequest\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"orderId\": {\n          \"type\": \"string\",\n          \"description\": \"External order identifier\"\n        },\n        \"quantity\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647,\n          \"description\": \"Requested quantity\"\n        },\n        \"isActive\": {\n          \"type\": \"boolean\",\n          \"description\": \"Whether the request is active\"\n        }\n      },\n      \"required\": [\n        \"orderId\",\n        \"quantity\",\n        \"isActive\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
           }
         },
         "form": {

@@ -5,6 +5,9 @@ import {projectAvroToJsonSchema,projectTableSpecToAvro} from '../../src/index-no
 const projectors={projectAvroToJsonSchema,projectTableSpecToAvro};
 import {readDocument,writeDocument,editTableSpecColumn,exportTableSpec,exportOpenapiDocument,getDddDefinition} from '../../src';
 import {createValidator} from '../../src/validation/schema';
+import {mkdtemp} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 
 test('CONTRACT-036 seven authored consumers retain mixed native context across both UMF formats',async()=>{
  const ajv=createValidator(false);
@@ -24,7 +27,8 @@ test('CONTRACT-036 seven authored consumers retain mixed native context across b
   const {run}=compileOrdersTransform(source,projectors),rows=[{order_id:'A-雪',quantity:0,active:false},{order_id:'B',quantity:2147483647,active:true},{order_id:'C',quantity:-2147483648,active:false}].map(run);
   expect(rows.every(r=>r.status==='accepted')).toBe(true);cases.push({unknown,source,bundle,rows});
  }
- await Bun.write('fixtures/validation/orders-consumers.json',JSON.stringify({scope:'Authored mixed-model demonstrator; no general merge, domain enforcement, or delivery',cases},null,2)+'\n');
+ // Tests must not rewrite tracked evidence. The oracle scripts read the committed fixture; refresh it deliberately with UMF_ORDERS_CONSUMERS_FIXTURE=fixtures/validation/orders-consumers.json.
+ await Bun.write(process.env.UMF_ORDERS_CONSUMERS_FIXTURE??join(await mkdtemp(join(tmpdir(),'umf-orders-consumers-')),'orders-consumers.json'),JSON.stringify({scope:'Authored mixed-model demonstrator; no general merge, domain enforcement, or delivery',cases},null,2)+'\n');
 },30_000);
 
 test('CONTRACT-036 executable row transform rejects loss, coercion and overflow; snapshots remain isolated',()=>{
