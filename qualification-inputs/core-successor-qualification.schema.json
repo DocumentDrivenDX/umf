@@ -219,34 +219,101 @@
     "initial-inspector": {
       "type": "object",
       "properties": {
-        "workflow": {"const": ".github/workflows/inspector-retained-attribution.yml"},
-        "workflow_id": {"const": 406353585},
-        "run": {"type": "integer", "minimum": 1},
-        "attempt": {"const": 1},
-        "job": {"type": "integer", "minimum": 1},
-        "ref": {"type": "string", "pattern": "^refs/heads/[A-Za-z0-9._/-]+$"},
-        "controller": {"$ref": "#/$defs/commit"},
-        "source": {"$ref": "#/$defs/commit"},
-        "tree": {"$ref": "#/$defs/commit"},
-        "artifact": {"type": "integer", "minimum": 1},
-        "artifact_name": {"type": "string", "pattern": "^private-inspector-construction-batch-[1-9][0-9]*-1$"},
-        "sha256": {"$ref": "#/$defs/hash"},
-        "members": {"$ref": "#/$defs/pins"},
-        "census_sha256": {"$ref": "#/$defs/hash"},
-        "fixture_sha256": {"$ref": "#/$defs/hash"},
+        "workflow": {
+          "const": ".github/workflows/inspector-retained-attribution.yml"
+        },
+        "workflow_id": {
+          "const": 406353585
+        },
+        "run": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt": {
+          "const": 1
+        },
+        "job": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ref": {
+          "type": "string",
+          "pattern": "^refs/heads/[A-Za-z0-9._/-]+$"
+        },
+        "controller": {
+          "$ref": "#/$defs/commit"
+        },
+        "source": {
+          "$ref": "#/$defs/commit"
+        },
+        "tree": {
+          "$ref": "#/$defs/commit"
+        },
+        "artifact": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "artifact_name": {
+          "type": "string",
+          "pattern": "^private-inspector-construction-batch-[1-9][0-9]*-1$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "members": {
+          "$ref": "#/$defs/pins"
+        },
+        "census_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "fixture_sha256": {
+          "$ref": "#/$defs/hash"
+        },
         "wheel": {
           "type": "object",
           "properties": {
-            "member": {"const": "wheels/umf_core-0.10.10-cp311-abi3-linux_x86_64.whl"},
-            "sha256": {"$ref": "#/$defs/hash"},
-            "bytes": {"type": "integer", "minimum": 1, "maximum": 67108864},
-            "native_sha256": {"$ref": "#/$defs/hash"}
+            "member": {
+              "const": "wheels/umf_core-0.10.10-cp311-abi3-linux_x86_64.whl"
+            },
+            "sha256": {
+              "$ref": "#/$defs/hash"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 67108864
+            },
+            "native_sha256": {
+              "$ref": "#/$defs/hash"
+            }
           },
-          "required": ["member", "sha256", "bytes", "native_sha256"],
+          "required": [
+            "member",
+            "sha256",
+            "bytes",
+            "native_sha256"
+          ],
           "additionalProperties": false
         }
       },
-      "required": ["workflow", "workflow_id", "run", "attempt", "job", "ref", "controller", "source", "tree", "artifact", "artifact_name", "sha256", "members", "census_sha256", "fixture_sha256", "wheel"],
+      "required": [
+        "workflow",
+        "workflow_id",
+        "run",
+        "attempt",
+        "job",
+        "ref",
+        "controller",
+        "source",
+        "tree",
+        "artifact",
+        "artifact_name",
+        "sha256",
+        "members",
+        "census_sha256",
+        "fixture_sha256",
+        "wheel"
+      ],
       "additionalProperties": false
     },
     "admission": {
@@ -321,7 +388,9 @@
             }
           ]
         },
-        "initialInspector": {"$ref": "#/$defs/initial-inspector"},
+        "initialInspector": {
+          "$ref": "#/$defs/initial-inspector"
+        },
         "compatibility": {
           "$ref": "#/$defs/compatibility-contract"
         }
@@ -2322,6 +2391,9 @@
         },
         "transport": {
           "$ref": "#/$defs/multipart-plan"
+        },
+        "transportObservation": {
+          "$ref": "#/$defs/multipart-observation"
         }
       },
       "required": [
@@ -2339,8 +2411,7 @@
         "recipes",
         "common",
         "continuation",
-        "compatibility",
-        "transport"
+        "compatibility"
       ],
       "additionalProperties": false,
       "allOf": [
@@ -2359,6 +2430,30 @@
               }
             }
           }
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "transport"
+              ],
+              "not": {
+                "required": [
+                  "transportObservation"
+                ]
+              }
+            },
+            {
+              "required": [
+                "transportObservation"
+              ],
+              "not": {
+                "required": [
+                  "transport"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -2797,6 +2892,9 @@
         },
         "deadline": {
           "$ref": "#/$defs/multipart-operation-clock"
+        },
+        "observationConfigSHA256": {
+          "$ref": "#/$defs/hash"
         }
       },
       "required": [
@@ -2804,6 +2902,118 @@
         "source",
         "controller",
         "deadline"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-observation-object": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
+        },
+        "mode": {
+          "type": "integer",
+          "enum": [
+            420,
+            493
+          ]
+        },
+        "maximum_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8589934592
+        }
+      },
+      "required": [
+        "roles",
+        "mode",
+        "maximum_bytes"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-observation-source": {
+      "type": "object",
+      "properties": {
+        "object": {
+          "const": "source"
+        },
+        "prefix": {
+          "type": "string",
+          "pattern": "^umf-v[0-9]+\\.[0-9]+\\.[0-9]+/$"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "tree": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "maximum_tar_bytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 8589934592
+        },
+        "maximum_member_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8589934592
+        },
+        "maximum_members": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      },
+      "required": [
+        "object",
+        "prefix",
+        "commit",
+        "tree",
+        "maximum_tar_bytes",
+        "maximum_member_bytes",
+        "maximum_members"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-observation": {
+      "type": "object",
+      "properties": {
+        "payload_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 62914560
+        },
+        "objects": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 128,
+          "propertyNames": {
+            "pattern": "^(source|core-sdist|codegen-wheel|codegen-sdist|linux-x86_64/(core-wheel|standalone-cli|sdk|sdk-manifest)|raw-wheel|rebuilt-wheel|initial-input:.+)$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/multipart-observation-object"
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/multipart-observation-source"
+        },
+        "budgets": {
+          "$ref": "#/$defs/multipart-budgets"
+        }
+      },
+      "required": [
+        "payload_bytes",
+        "objects",
+        "source",
+        "budgets"
       ],
       "additionalProperties": false
     }

@@ -7,6 +7,7 @@ release or import historical S receipts as successor qualification.
 """
 from __future__ import annotations
 import argparse
+import types
 from datetime import datetime
 import hashlib
 import importlib.util
@@ -15,6 +16,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import selectors
 import shutil
 import signal
 import subprocess
@@ -733,18 +735,26 @@ def initial_inspector_reports(a,p,source,root,deadline=None):
     return wheel
 
 
-def initial_inspector_material(a,source,destination,deadline=None):
+def initial_inspector_material(a,source,destination,deadline=None,workspace_limit=None,workspace_roots=()):
     p=a['initialInspector'];initial_inspector_shape(p,a)
+    if workspace_limit is None and 'transportObservation' in a:
+        workspace_limit=transport_budgets(a)['workspace_bytes'];workspace_roots=external_workspace_roots(source)
     fetch=lambda *args,**kwargs:deadline_api(*args,deadline=deadline,**kwargs)
     run=fetch('actions/runs/'+str(p['run'])+'/attempts/1');job=fetch('actions/jobs/'+str(p['job']));art=fetch('actions/artifacts/'+str(p['artifact']))
     initial_inspector_provenance(a,p,run,job,art)
     limit=a['bounds']['artifact_bytes'];insist(type(art.get('size_in_bytes')) is int and 0<art['size_in_bytes']<=limit,'initial-inspector-artifact-bound')
+    if workspace_limit is not None:
+        root=destination.parent.parent
+        if 'transportObservation' in a:external_workspace_size(workspace_roots,transport_budgets(a)['external_workspace_bytes'],deadline)
+        insist(workspace_bound(root,workspace_limit,workspace_roots,deadline=deadline)+art['size_in_bytes']<=workspace_limit,'initial-inspector-workspace-before-download')
     destination.mkdir(parents=True,exist_ok=False);transport=destination.parent/(destination.name+'.transport.zip')
     count=fetch('actions/artifacts/'+str(p['artifact'])+'/zip',True,limit,sink=transport)
     insist(count==art['size_in_bytes'] and digest(transport,deadline)==p['sha256'],'initial-inspector-artifact-bytes')
     with zipfile.ZipFile(transport) as archive:
         rows=archive.infolist();insist(len(rows)==len(p['members']) and {row.filename for row in rows}==set(p['members'])
             and sum(row.file_size for row in rows)<=limit,'initial-inspector-original-member-roster-bound')
+        if workspace_limit is not None:
+            insist(workspace_bound(root,workspace_limit,workspace_roots,deadline=deadline)+sum(row.file_size for row in rows)<=workspace_limit,'initial-inspector-workspace-before-extract')
         for row in rows:
             path_name(row.filename);insist(not row.is_dir() and (row.external_attr>>16)&0o170000 in (0,0o100000), 'initial-inspector-original-member-kind')
             target=destination/row.filename;target.parent.mkdir(parents=True,exist_ok=True)
@@ -757,13 +767,20 @@ def initial_inspector_material(a,source,destination,deadline=None):
     return initial_inspector_reports(a,p,source,destination,deadline)
 
 
-def initial_or_produced_raw(a,source,rawdir,command,initial=None,deadline=None):
+def initial_or_produced_raw(a,source,rawdir,command,initial=None,deadline=None,copy=None):
     if initial is None:
         command(['python3','-m','build','--no-isolation','--wheel','--outdir',str(rawdir),'python'])
     else:
         insist(a.get('initialInspector') is not None and digest(initial,deadline)==a['initialInspector']['wheel']['sha256'],
                'initial-inspector-reuse-original-byte-identity')
-        rawdir.mkdir(parents=True,exist_ok=False);operation_copy(initial,rawdir/initial.name,deadline)
+        rawdir.mkdir(parents=True,exist_ok=False)
+        if copy is None:
+            target=rawdir/initial.name
+            if a.get('profile')==MULTIPART_CANDIDATE:
+                multipart_stage_accounting(rawdir.parents[1],a,deadline,[(initial,target)],complete=False,source_root=source)
+            operation_copy(initial,target,deadline)
+            if a.get('profile')==MULTIPART_CANDIDATE:target.chmod(initial.stat().st_mode&0o777)
+        else:copy(initial,rawdir/initial.name)
     return one(rawdir,'*.whl')
 
 
@@ -794,13 +811,386 @@ def material_shape(p,multipart=False):
     sha(p['controller'],40);sha(p['source'],40);sha(p['sha256']);pins(p['members'])
 
 
+OBSERVE_GATES = GATES[:6]
+SDK_FULL_CUSTODY = 'sdk-full139-custody.json'
+SDK_SAGA_CUSTODY = 'sdk-saga-custody.json'
+
+
+def transport_budgets(a):
+    return a['transportObservation']['budgets'] if 'transportObservation' in a else a['transport']['budgets']
+
+
+def continuation_working_members(members,completed_rebuild):
+    """Exact admitted member paths copied back to recipe-consumer locations."""
+    return {member for member in members
+            if member.startswith(('common/','raw/','selected/'))
+            or (completed_rebuild and (member.startswith('rebuilt/') or member in ('core-artifact.json','rebuild.json')))
+            or member in ('wheel.json','pair.json','standalone-umf','sdk.json',SDK_FULL_CUSTODY,SDK_SAGA_CUSTODY)
+            or member.startswith(('inspection-','interpreter-','install-','freeze-','record-','native-','saga-','compatibility-','factory-origin-'))}
+
+
+def restore_continuation_working_members(material,retained,completed_rebuild,copy_current):
+    material=Path(material);retained=Path(retained)
+    files={p.relative_to(material).as_posix() for p in material.rglob('*') if p.is_file()}
+    working=continuation_working_members(files,completed_rebuild)
+    if 'sdk.json' in working:
+        sdk=read(material/'sdk.json')
+        if 'custody' in sdk:
+            closed(sdk,('archive_sha256','manifest_sha256','platform','checks','custody'))
+            custody=sdk['custody'];closed(custody,('full139','saga'))
+            required={SDK_FULL_CUSTODY,SDK_SAGA_CUSTODY}
+            for key,filename in (('full139',SDK_FULL_CUSTODY),('saga',SDK_SAGA_CUSTODY)):
+                row=custody[key];closed(row,('path','sha256','bytes','mode'));sha(row['sha256'])
+                insist(row['path']==filename and type(row['bytes']) is int and row['bytes']>0
+                       and type(row['mode']) is int and row['mode'] in (0o644,0o755),'continuation-sdk-custody-identity')
+                source=material/filename
+                insist(filename in files and source.is_file() and not source.is_symlink()
+                       and source.stat().st_size==row['bytes'] and source.stat().st_mode&0o777==row['mode']
+                       and digest(source)==row['sha256'],'continuation-sdk-custody-member-mismatch')
+            insist(required<=files,'continuation-sdk-custody-members-missing')
+    for name in sorted(working):
+        source=material/name;insist(source.is_file() and not source.is_symlink(),'continuation-working-member-missing')
+        target=retained/name;target.parent.mkdir(parents=True,exist_ok=True);copy_current(source,target)
+    return working
+
+
+def observation_config(value, a):
+    """P supplies finite slots/roles, never guessed future lengths or hashes."""
+    closed(value, ('payload_bytes','objects','source','budgets'))
+    payload=bounded_integer(value['payload_bytes'],MAX_PAYLOAD,'observation-payload',1)
+    objects=value['objects'];insist(type(objects) is dict and 0<len(objects)<=MAX_OBJECTS,'observation-object-count')
+    budget=value['budgets'];closed(budget,('logical_bytes','role_bytes','transport_bytes','expanded_bytes','workspace_bytes','proof_bytes','seconds','control_bytes','external_workspace_bytes'))
+    for key in ('logical_bytes','role_bytes','transport_bytes','expanded_bytes','workspace_bytes','control_bytes','external_workspace_bytes'):
+        bounded_integer(budget[key],(12 if key=='role_bytes' else 4)*MAX_AGGREGATE,'observation-'+key,1)
+    bounded_integer(budget['control_bytes'],(3*MAX_PARTS+4)*BUFFER,'observation-control-budget',1)
+    bounded_integer(budget['logical_bytes'],MAX_AGGREGATE,'observation-logical',1)
+    bounded_integer(budget['transport_bytes'],MAX_AGGREGATE,'observation-transport',1)
+    bounded_integer(budget['proof_bytes'],MAX_BYTES,'observation-proof',4096)
+    bounded_integer(budget['seconds'],MAX_SECONDS,'observation-seconds',1)
+    names=set();roles=set();logical=role_bytes=parts=0
+    required=set(COMMON_ROLES)|{'linux-x86_64/'+r for r in HOST_ROLES}|{'raw-wheel','rebuilt-wheel','initial-input:'+a['initialInspector']['wheel']['member']}
+    allowed=required|{'initial-input:'+name for name in a['initialInspector']['members']}
+    for path,obj in objects.items():
+        path_name(path);insist(len(path.encode())<=MAX_SOURCE_PATH,'observation-object-path')
+        closed(obj,('roles','mode','maximum_bytes'))
+        insist(path not in names,'observation-name-collision');names.add(path)
+        insist(type(obj['mode']) is int and obj['mode'] in (0o644,0o755),'observation-object-mode')
+        n=bounded_integer(obj['maximum_bytes'],MAX_AGGREGATE,'observation-object-bytes',1)
+        rr=obj['roles'];insist(type(rr) is list and len(rr)==1 and rr[0]==path and path in allowed
+                              and path not in roles,'observation-object-roles');roles.add(path)
+        logical+=n;role_bytes+=n*len(rr);parts+=(n+payload-1)//payload
+        insist(not any(path.startswith(other+'/') or other.startswith(path+'/') for other in objects if other!=path),'observation-path-overlap')
+    insist(required<=roles and parts<=MAX_PARTS,'observation-complete-roles-or-parts')
+    insist(logical<=budget['logical_bytes'] and role_bytes<=budget['role_bytes']
+           and logical+budget['proof_bytes']<=budget['expanded_bytes']
+           and logical+budget['proof_bytes']<=budget['transport_bytes']
+           and budget['control_bytes']>=(3*parts+4)*BUFFER
+           and budget['workspace_bytes']>=3*logical+budget['transport_bytes']+budget['proof_bytes']+budget['control_bytes']+budget['external_workspace_bytes'],
+           'observation-derived-budget')
+    src=value['source'];closed(src,('object','prefix','commit','tree','maximum_tar_bytes','maximum_member_bytes','maximum_members'))
+    insist(src['object']=='source' and src['object'] in objects and src['prefix']=='umf-v'+a['version']+'/'
+           and src['commit']==a['source']['commit'] and src['tree']==a['source']['tree'],'observation-source-identity')
+    bounded_integer(src['maximum_tar_bytes'],MAX_AGGREGATE,'observation-source-tar',1024)
+    bounded_integer(src['maximum_member_bytes'],src['maximum_tar_bytes'],'observation-source-members')
+    bounded_integer(src['maximum_members'],MAX_SOURCE_MEMBERS,'observation-source-count',1)
+    insist(budget['external_workspace_bytes']>=src['maximum_member_bytes'],'observation-source-workspace')
+    return value
+
+
+def require_operation(a, operation):
+    if 'transportObservation' in a:
+        insist(type(a) is dict and all(k in a for k in ('purpose','profile','platform','version','common','continuation')),'observation-admission-fields')
+        insist(operation=='observe','observation-only-operation')
+        insist(a['purpose']=='candidate-production' and a['profile']==MULTIPART_CANDIDATE
+               and a['platform']=='linux-x86_64' and a['version']=='0.10.10'
+               and a['common'] is None and a['continuation'] is None and 'initialInspector' in a,'observation-first-linux-only')
+    else:insist(operation!='observe','observe-requires-observation-config')
+
+
+def observation_object_path(role,a,retained):
+    """Resolve a fixed admitted role to its one original producer path."""
+    retained=Path(retained);version=a['version']
+    fixed={
+        'source':retained/'source.tar.gz',
+        'core-sdist':retained/'common'/('umf_core-'+version+'.tar.gz'),
+        'codegen-wheel':retained/'common'/('umf_codegen-'+version+'-py3-none-any.whl'),
+        'codegen-sdist':retained/'common'/('umf_codegen-'+version+'.tar.gz'),
+        'linux-x86_64/standalone-cli':retained/'standalone-umf',
+        'linux-x86_64/sdk':retained/'umf-sdk-linux-x86_64.tgz',
+        'linux-x86_64/sdk-manifest':retained/'sdk-manifest.json',
+    }
+    if role in fixed:return fixed[role]
+    if role in ('linux-x86_64/core-wheel','raw-wheel','rebuilt-wheel'):
+        folder={'linux-x86_64/core-wheel':'selected','raw-wheel':'raw','rebuilt-wheel':'rebuilt'}[role]
+        directory=retained/folder
+        found=list(directory.glob('*.whl')) if directory.exists() else []
+        if not found:
+            owned_directory=retained.parent/'owned'/'multipart-originals'/folder
+            owned_found=list(owned_directory.glob('*.whl')) if owned_directory.exists() else []
+            if owned_found:directory=owned_directory;found=owned_found
+        insist(len(found)<=1 and all(p.is_file() and not p.is_symlink() for p in found),'observation-nonunique-wheel')
+        if found and not found[0].is_relative_to(retained):return retained/folder/found[0].name
+        return found[0] if found else retained/folder/('__missing-'+folder+'-'+version+'.whl')
+    if role.startswith('initial-input:'):
+        member=role.removeprefix('initial-input:');path_name(member)
+        return retained/'initial-inspector'/member
+    raise Refusal('observation-unknown-role')
+
+
+def observation_role_for_path(name):
+    """Map only the controller's fixed producer locations to admitted roles."""
+    if name in ('source.tar.gz','standalone-umf','umf-sdk-linux-x86_64.tgz','sdk-manifest.json'):
+        return {'source.tar.gz':'source','standalone-umf':'linux-x86_64/standalone-cli',
+                'umf-sdk-linux-x86_64.tgz':'linux-x86_64/sdk','sdk-manifest.json':'linux-x86_64/sdk-manifest'}[name]
+    common={
+        'common/umf_core-0.10.10.tar.gz':'core-sdist',
+        'common/umf_codegen-0.10.10-py3-none-any.whl':'codegen-wheel',
+        'common/umf_codegen-0.10.10.tar.gz':'codegen-sdist',
+    }
+    if name in common:return common[name]
+    if name.startswith('selected/') and name.endswith('.whl'):return 'linux-x86_64/core-wheel'
+    if name.startswith('raw/') and name.endswith('.whl'):return 'raw-wheel'
+    if name.startswith('rebuilt/') and name.endswith('.whl'):return 'rebuilt-wheel'
+    if name.startswith('initial-inspector/'):
+        return 'initial-input:'+name.removeprefix('initial-inspector/')
+    return None
+
+
+def observed_source(path, a, source_root, deadline):
+    """Measure hosted bytes, then execute the unchanged complete source reader."""
+    import gzip
+    cfg=a['transportObservation'];src=cfg['source'];obj=cfg['objects'][src['object']]
+    insist(path.is_file() and not path.is_symlink() and 0<path.stat().st_size<=obj['maximum_bytes'],'observation-source-compressed-bound')
+    # Both passes are streaming and share the SAME operation clock. Sizes from
+    # Git's immutable blob roster are authority, not caller TAR claims.
+    roster=complete_git_roster(source_root,a['source']['commit'],deadline,bounded=True)
+    raw=bounded_check_output(['git','-C',str(source_root),'ls-tree','-r','-l','-z',a['source']['commit']],MAX_BYTES,cwd=source_root,deadline=deadline)
+    sized={};member_bytes=0
+    for row in raw.split(b'\0'):
+        if not row:continue
+        header,name=row.split(b'\t',1);mode,kind,oid,size=header.decode().split();name=name.decode('utf8','surrogateescape')
+        insist(kind=='blob' and size.isdecimal() and name not in sized,'observation-source-roster')
+        sized[name]=(mode,oid)
+        if mode!='120000':member_bytes+=int(size)
+    insist(sized==roster and len(roster)<=src['maximum_members'] and member_bytes<=src['maximum_member_bytes'],'observation-source-member-bound')
+    h=hashlib.sha256();count=0
+    with gzip.open(path,'rb') as stream:
+        while chunk:=timed_read(stream,BUFFER,deadline):
+            count+=len(chunk);insist(count<=src['maximum_tar_bytes'],'observation-decoded-source-bound');h.update(chunk)
+    facts={'object':'source.tar.gz','prefix':src['prefix'],'members':len(roster),'member_bytes':member_bytes,'tar_bytes':count,'tar_sha256':h.hexdigest()}
+    with path.open('rb') as stream:stream_source_archive(stream,roster,a['source']['commit'],facts,deadline)
+    checkpoint(deadline);return facts
+
+
+def bounded_check_output(argv,maximum,cwd=None,deadline=None):
+    """Capture bounded metadata without unbounded communicate/check_output."""
+    bounded_integer(maximum,MAX_BYTES,'metadata-output-bound',1)
+    checkpoint(deadline)
+    proc=subprocess.Popen(argv,cwd=cwd,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL)
+    selector=selectors.DefaultSelector();selector.register(proc.stdout,selectors.EVENT_READ);chunks=[];size=0
+    try:
+        while True:
+            checkpoint(deadline)
+            timeout=min(0.25,deadline.remaining()) if deadline is not None else 0.25
+            ready=selector.select(timeout)
+            if ready:
+                block=proc.stdout.read1(BUFFER)
+                if block:
+                    size+=len(block);insist(size<=maximum,'metadata-output-bound');chunks.append(block)
+                elif proc.poll() is not None:break
+            elif proc.poll() is not None:
+                block=proc.stdout.read1(BUFFER)
+                if not block:break
+                size+=len(block);insist(size<=maximum,'metadata-output-bound');chunks.append(block)
+        code=proc.wait(timeout=deadline.remaining() if deadline is not None else None)
+        insist(code==0,'metadata-command-failed')
+        checkpoint(deadline);return b''.join(chunks)
+    finally:
+        selector.close()
+        proc.stdout.close()
+        if proc.poll() is None:proc.kill();proc.wait()
+
+
+def external_workspace_size(roots,limit,deadline=None):
+    total=0;count=0
+    for root in roots:
+        insist(not root.is_symlink(),'observation-external-root-symlink')
+        for path in root.rglob('*'):
+            checkpoint(deadline)
+            if path.is_symlink():continue
+            if path.is_file():
+                total+=path.stat().st_size;count+=1
+                insist(count<=4*MAX_SOURCE_MEMBERS and total<=limit,'observation-external-workspace-bound')
+    return total
+
+
+def multipart_stage_accounting(output,a,deadline=None,pending=(),complete=True,source_root=None):
+    """No directory exemptions; every physical copy consumes its own bytes."""
+    budget=transport_budgets(a);retained=output/'retained'
+    objects=a['transportObservation']['objects'] if 'transportObservation' in a else a['transport']['objects']
+    rows={}
+    if retained.exists():
+        for path in retained.rglob('*'):
+            checkpoint(deadline);insist(not path.is_symlink(),'multipart-retained-symlink')
+            if path.is_file():rows[path.relative_to(retained).as_posix()]=(path.stat().st_size,path.stat().st_mode&0o777,path)
+    for src,dst in pending:
+        checkpoint(deadline);insist(src.is_file() and not src.is_symlink(),'multipart-copy-source')
+        insist(dst.is_relative_to(retained) and not dst.exists(),'multipart-copy-destination')
+        for parent in dst.parents:
+            insist(not parent.is_symlink(),'multipart-copy-parent-symlink')
+        name=dst.relative_to(retained).as_posix();path_name(name)
+        insist(name not in rows,'multipart-copy-alias');rows[name]=(src.stat().st_size,src.stat().st_mode&0o777,src)
+    continuation_paths={};continuation_expected=set();continuation_limit=0
+    cont=a.get('continuation')
+    if cont is not None:
+        origin=cont['proof'] if cont.get('profile')==MULTIPART_MATERIAL else cont
+        members=origin['members']
+        namespace=Path('original/%s-%s-%s'%(origin['run'],origin['attempt'],origin['artifact']))
+        continuation_limit=(cont['proof_expanded_bytes'] if cont.get('profile')==MULTIPART_MATERIAL else a['bounds']['artifact_bytes'])
+        completed_rebuild=False
+        component_path=retained/(namespace/'component.json')
+        if component_path.is_file() and not component_path.is_symlink():
+            try:completed_rebuild=read(component_path,deadline).get('steps',{}).get('rebuild',{}).get('status')=='passed'
+            except (ValueError,OSError):completed_rebuild=False
+        continuation_expected=continuation_working_members(members,completed_rebuild)
+        for member,expected_hash in members.items():
+            path_name(member)
+            continuation_paths[(namespace/member).as_posix()]=expected_hash
+            if member in continuation_expected:continuation_paths[member]=expected_hash
+        for member in continuation_expected:
+            original=rows.get((namespace/member).as_posix());working=rows.get(member)
+            if working is not None:
+                insist(original is not None and (working[0],working[1])==(original[0],original[1]),'multipart-continuation-copy-mode-or-size')
+    logical=proof=roles=custody=0
+    for name,(size,mode,path) in rows.items():
+        path_name(name)
+        if name in continuation_paths:
+            insist(digest(path,deadline)==continuation_paths[name],'multipart-continuation-copy-hash')
+            custody+=size
+            continue
+        if 'transportObservation' in a:
+            role=observation_role_for_path(name);obj=objects.get(role) if role is not None else None
+        else:obj=objects.get(name)
+        if obj is None:proof+=size;continue
+        maximum=obj.get('maximum_bytes',obj.get('bytes'))
+        insist(size<=maximum and mode==obj['mode'],'multipart-logical-size-mode')
+        if complete and 'maximum_bytes' not in obj:insist(size==obj['bytes'] and digest(path,deadline)==obj['sha256'],'multipart-logical-hash')
+        logical+=size;roles+=size*len(obj['roles'])
+    insist(logical<=budget['logical_bytes'] and roles<=budget['role_bytes'] and proof<=budget['proof_bytes'],'multipart-logical-or-proof-bound')
+    insist(custody<=2*continuation_limit,'multipart-continuation-copy-bound')
+    if complete and cont is not None:
+        expected_members=cont['proof']['members'] if cont.get('profile')==MULTIPART_MATERIAL else cont['members']
+        expected_paths={(namespace/member).as_posix() for member in expected_members}|continuation_expected
+        insist(expected_paths<=set(rows),'multipart-continuation-copy-missing')
+    roots=external_workspace_roots(source_root) if source_root is not None else ()
+    if 'transportObservation' in a and roots:external_workspace_size(roots,budget['external_workspace_bytes'],deadline)
+    used=workspace_bound(output,budget['workspace_bytes'],roots,deadline=deadline)
+    # Copies, not hashes, are counted: pending sources may already occupy owned
+    # workspace. Their destination bytes need an additional reservation.
+    insist(used+sum(src.stat().st_size for src,_ in pending)<=budget['workspace_bytes'],'multipart-copy-workspace-before-write')
+    return {'logical_bytes':logical,'proof_bytes':proof,'continuation_copy_bytes':custody,'workspace_bytes':used}
+
+
+def retain_sdk_custody(out, retained, deadline, copy_current):
+    rows={}
+    for directory,profile,name,full in [('sdk-consumer-full','umf.sdk-installed-archive-custody/2',SDK_FULL_CUSTODY,True),
+                                       ('sdk-consumer-saga','umf.sdk-installed-saga-custody/1',SDK_SAGA_CUSTODY,False)]:
+        src=out/directory/'g03-sdk-install-custody.json'
+        insist(src.is_file() and not src.is_symlink() and src.stat().st_size<=MAX_BYTES,'sdk-custody-original-missing')
+        value=read(src,deadline)
+        insist(value.get('profile')==profile and value.get('existing139ConsumerChecks')==('passed' if full else 'not-run-in-saga-phase')
+               and value.get('sagaResult',{}).get('cases')==19 and value['sagaResult'].get('passed')==19,'sdk-custody-original-profile-or-outcome')
+        copy_current(src,retained/name)
+        insist(digest(src,deadline)==digest(retained/name,deadline),'sdk-custody-byte-copy')
+        mode=retained/name
+        insist(mode.stat().st_mode&0o777 in (0o644,0o755),'sdk-custody-mode')
+        rows['full139' if full else 'saga']={'path':name,'sha256':digest(mode,deadline),'bytes':mode.stat().st_size,'mode':mode.stat().st_mode&0o777}
+    return rows
+
+
+def orchestrate_observation(a,ctx,execute,deadline):
+    require_operation(a,'observe');r=empty_receipt(a,ctx)
+    try:
+        for gate in OBSERVE_GATES:
+            deadline.check()
+            r['steps'][gate]={'status':'unobserved'}
+            item=execute(gate);insist(item.get('status')=='passed' and type(item.get('evidence')) is dict and bool(item['evidence']),'required-step-failed')
+            r['steps'][gate]=item
+        r['status']='producer-observed'
+    except Exception as error:
+        r['status']='failed';r['failure']=str(error) if isinstance(error,Refusal) else 'unexpected-exception-withheld'
+        if gate in r['steps']:r['steps'][gate]['status']='failed'
+    return r
+
+
+def observed_transport(output,a,source_root,deadline,require_complete=False):
+    """Actual post-production identities under P's unchanged finite ceilings."""
+    cfg=observation_config(a['transportObservation'],a);retained=output/'retained';owned=output/'owned'/'multipart-originals'
+    objects={};parts=0;seen_paths=set()
+    for role,slot in cfg['objects'].items():
+        checkpoint(deadline);path=observation_object_path(role,a,retained)
+        insist(path.is_relative_to(retained) and path not in seen_paths,'observation-object-path-collision');seen_paths.add(path)
+        old=owned/path.relative_to(retained);live=path
+        insist(not (live.exists() and old.exists()),'observation-duplicate-logical-copy')
+        if not live.exists() and old.exists():path=old
+        if not path.exists():
+            insist(not require_complete and role!='source','observation-object-missing')
+            continue
+        insist(path.is_file() and not path.is_symlink() and 0<path.stat().st_size<=slot['maximum_bytes'] and path.stat().st_mode&0o777==slot['mode'],'observation-object-size-mode')
+        storage_root=retained if path.is_relative_to(retained) else owned
+        insist(not storage_root.is_symlink(),'observation-storage-root-symlink')
+        for parent in path.parents:
+            if not parent.is_relative_to(storage_root):break
+            insist(not parent.is_symlink(),'observation-object-parent-symlink')
+        name=path.relative_to(retained if path.is_relative_to(retained) else owned).as_posix()
+        whole=hashlib.sha256();rows=[];offset=0
+        with path.open('rb') as src:
+            while offset<path.stat().st_size:
+                h=hashlib.sha256();length=min(cfg['payload_bytes'],path.stat().st_size-offset);left=length
+                while left:
+                    chunk=timed_read(src,min(BUFFER,left),deadline);insist(chunk,'observation-short-object');h.update(chunk);whole.update(chunk);left-=len(chunk)
+                rows.append({'ordinal':len(rows),'offset':offset,'length':length,'sha256':h.hexdigest()});offset+=length;parts+=1
+                insist(parts<=MAX_PARTS,'observation-part-count')
+        objects[name]={'name':Path(name).name,'roles':[role],'mode':slot['mode'],'bytes':offset,'sha256':whole.hexdigest(),'parts':rows}
+    insist('source.tar.gz' in objects,'observation-source-not-observed')
+    source_path=observation_object_path('source',a,retained)
+    if not source_path.exists() and (owned/'source.tar.gz').exists():source_path=owned/'source.tar.gz'
+    source=observed_source(source_path,a,source_root,deadline)
+    source['object']=next(name for name,row in objects.items() if 'source' in row['roles'])
+    budget=dict(cfg['budgets']);logical=sum(row['bytes'] for row in objects.values());role_bytes=sum(row['bytes']*len(row['roles']) for row in objects.values())
+    budget['logical_bytes']=logical;budget['role_bytes']=role_bytes;budget['expanded_bytes']=logical+budget['proof_bytes']
+    exact={'profile':MULTIPART,'payload_bytes':cfg['payload_bytes'],'objects':objects,'source':source,'budgets':budget}
+    multipart_plan(exact);return exact
+
+
+def observation_stage_reservation(output,a,source_root,roles,deadline):
+    """Reserve each stage's possible logical outputs plus remaining external/proof capacity."""
+    cfg=observation_config(a['transportObservation'],a);budget=cfg['budgets'];retained=output/'retained'
+    used=multipart_stage_accounting(output,a,deadline,complete=False,source_root=source_root)
+    roots=external_workspace_roots(source_root);external=external_workspace_size(roots,budget['external_workspace_bytes'],deadline)
+    reserve=0
+    for role in roles:
+        slot=cfg['objects'][role];path=observation_object_path(role,a,retained)
+        owned=output/'owned'/'multipart-originals'/path.relative_to(retained)
+        if not path.exists() and not owned.exists():reserve+=slot['maximum_bytes']
+    insist(used['logical_bytes']+reserve<=budget['logical_bytes'] and used['proof_bytes']<=budget['proof_bytes'],'observation-stage-logical-reservation')
+    remaining_external=budget['external_workspace_bytes']-external
+    remaining_proof=budget['proof_bytes']-used['proof_bytes']
+    total=workspace_bound(output,budget['workspace_bytes'],roots,deadline=deadline)
+    insist(total+remaining_external+reserve+remaining_proof<=budget['workspace_bytes'],'observation-stage-workspace-before-write')
+    return {'logicalBytesReserved':reserve,'externalWorkspaceRemaining':remaining_external,'proofBytesRemaining':remaining_proof}
+
 def validate(a):
     multi=type(a) is dict and a.get('profile')==MULTIPART_CANDIDATE
-    if multi:multipart_plan(a['transport'])
+    observing=type(a) is dict and 'transportObservation' in a
+    if observing:
+        insist(multi and 'transport' not in a,'observation-exclusive-profile');require_operation(a,'observe')
+        observation_config(a['transportObservation'],a)
+    elif multi:multipart_plan(a['transport'])
     if type(a) is dict and a.get('purpose')=='candidate-aggregate':
         return validate_coupled_admission(a)
     closed(a, ('id','profile','purpose','version','source','controller','platform','bounds',
-               'resources','protocols','inputs','recipes','common','continuation','compatibility') + (('transport',) if multi else ()) + (('initialInspector',) if 'initialInspector' in a else ()))
+               'resources','protocols','inputs','recipes','common','continuation','compatibility') + (('transportObservation',) if observing else ('transport',) if multi else ()) + (('initialInspector',) if 'initialInspector' in a else ()))
     insist(type(a['id']) is str and re.fullmatch('[a-z0-9][a-z0-9-]{0,63}', a['id']), 'invalid-admission-id')
     insist(a['profile'] in (PROFILE,MULTIPART_CANDIDATE) and a['purpose'] == 'candidate-production', 'unknown-profile-or-purpose')
     insist(type(a['version']) is str and re.fullmatch(r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)',a['version'])
@@ -827,7 +1217,7 @@ def validate(a):
     if 'initialInspector' in a:initial_inspector_shape(a['initialInspector'],a)
     if multi:
         required=set(COMMON_ROLES)|{a['platform']+'/'+r for r in HOST_ROLES}
-        roles={role for obj in a['transport']['objects'].values() for role in obj['roles']}
+        roles={role for obj in (a['transportObservation'] if observing else a['transport'])['objects'].values() for role in obj['roles']}
         insist(required<=roles,'multipart-complete-logical-roles')
 
 
@@ -991,11 +1381,26 @@ def coupled_materials(a,registry,output,source_root=None,deadline=None):
         wheel_receipt=read_value(root/'wheel.json')
         insist(wheel_receipt.get('wheel')==a['roster'][platform+'/core-wheel']['sha256'] and wheel_receipt.get('standaloneCLI')==a['roster'][platform+'/standalone-cli']['sha256'],'selected-wheel-or-cli-differs')
         sdk=read_value(root/'sdk.json');sdkrow=a['roster'][platform+'/sdk'];mrow=a['roster'][platform+'/sdk-manifest']
-        closed(sdk,('archive_sha256','manifest_sha256','platform','checks'))
+        closed(sdk,('archive_sha256','manifest_sha256','platform','checks')+(('custody',) if 'custody' in sdk else ()))
         insist(sdk['platform']==platform,'sdk-native-platform')
         insist(sdk['archive_sha256']==sdkrow['sha256'] and sdk['manifest_sha256']==mrow['sha256'],'sdk-platform-material')
         closed(sdk['checks'],SDK_CHECKS)
         insist(all(v is True for v in sdk['checks'].values()),'sdk-native-wasm-browser-missing')
+        if a.get('profile')==MULTIPART_CANDIDATE:insist('custody' in sdk,'sdk-custody-proof-missing')
+        if 'custody' in sdk:
+            custody=sdk['custody'];closed(custody,('full139','saga'))
+            custody_specs=(('full139',SDK_FULL_CUSTODY,'umf.sdk-installed-archive-custody/2','passed'),
+                           ('saga',SDK_SAGA_CUSTODY,'umf.sdk-installed-saga-custody/1','not-run-in-saga-phase'))
+            for key,filename,profile,existing in custody_specs:
+                row=custody[key];closed(row,('path','sha256','bytes')+(('mode',) if 'mode' in row else ()));sha(row['sha256'])
+                insist(row['path']==filename and type(row['bytes']) is int and row['bytes']>0,'sdk-custody-path-or-size')
+                path=root/filename
+                insist(path.is_file() and not path.is_symlink() and path.stat().st_size==row['bytes'] and measure(path)==row['sha256'],'sdk-custody-member-identity')
+                if a.get('profile')==MULTIPART_CANDIDATE:insist(type(row.get('mode')) is int and row['mode'] in (0o644,0o755),'sdk-custody-mode-missing')
+                if 'mode' in row:insist(path.stat().st_mode&0o777==row['mode'],'sdk-custody-mode-differs')
+                value=read_value(path)
+                insist(value.get('profile')==profile and value.get('existing139ConsumerChecks')==existing
+                       and value.get('sagaResult',{}).get('cases')==19 and value['sagaResult'].get('passed')==19,'sdk-custody-member-result')
         source=read_value(root/receipt['steps']['source']['evidence']['path'])
         insist(source.get('allModesSymlinksAndBlobBytesMatch') is True and source.get('archive_sha256' if a.get('profile')==MULTIPART_CANDIDATE else 'tar_sha256')==a['roster']['source']['sha256'],'full-source-material')
         consumers=read_value(root/'consumers.json')
@@ -1184,6 +1589,7 @@ def factory_manifest(manifest,a,package):
 
 
 def aggregate(r,a):
+    insist('transportObservation' not in a and r.get('status')!='producer-observed','observation-not-qualified')
     insist(r['source']==a['source'] and r['version']==a['version'] and r['platform']==a['platform']
            and r['inputs']==a['inputs'] and r['resources']==a['resources'] and r['protocols']==a['protocols']
            and r['controller']==a['controller'], 'receipt-final-identity')
@@ -1200,6 +1606,8 @@ def aggregate(r,a):
 def orchestrate(a,ctx,execute,finish,prior=None,clock=time.monotonic):
     r=empty_receipt(a,ctx);start=clock()
     if prior is not None:
+        if prior.get('status')=='producer-observed':
+            insist(set(prior['steps'])==set(OBSERVE_GATES) and prior.get('inspection') is None and all(row.get('status')=='passed' for row in prior['steps'].values()),'observed-continuation-first-six-only')
         insist(all(prior.get(k)==r[k] for k in ('profile','source','version','platform','controller','inputs','resources','protocols')), 'continuation-inputs-differ')
         for gate,item in prior['steps'].items():
             insist(gate in GATES, 'unknown-continuation-gate')
@@ -1345,7 +1753,8 @@ def authorize(args):
     ctx['job']=str(job['id'])
     a=admit(read(args.root/REGISTRY_PATH),args.id,ctx)
     operation=os.environ.get('SUCCESSOR_OPERATION','run')
-    insist(operation in ('run','aggregate') and (a['purpose']=='candidate-aggregate')==(operation=='aggregate'),'operation-admission-differs')
+    insist(operation in ('run','aggregate','observe') and (a['purpose']=='candidate-aggregate')==(operation=='aggregate'),'operation-admission-differs')
+    require_operation(a,operation)
     no_replay(args.id,ctx,deadline=deadline)
     checkpoint(deadline)
     return a,ctx
@@ -1472,9 +1881,10 @@ def original_material(a,p,destination,proof_dir=None,source_root=None,budget=Non
     checkpoint(deadline);return manifest
 
 
-def complete_git_roster(root,commit,deadline=None):
+def complete_git_roster(root,commit,deadline=None,bounded=False):
     checkpoint(deadline)
-    raw=subprocess.check_output(['git','-C',str(root),'ls-tree','-r','-z',commit],**({'timeout':deadline.remaining()} if deadline is not None else {}))
+    command=['git','-C',str(root),'ls-tree','-r','-z',commit]
+    raw=bounded_check_output(command,MAX_BYTES,cwd=root,deadline=deadline) if bounded else subprocess.check_output(command,**({'timeout':deadline.remaining()} if deadline is not None else {}))
     checkpoint(deadline)
     insist(len(raw)<=MAX_BYTES,'multipart-git-metadata-bound');rows={}
     for row in raw.split(b'\0'):
@@ -1623,11 +2033,13 @@ def multipart_upload_outputs(output,admission,deadline=None):
 
 def operation_deadline(output,a,clock=time.monotonic):
     """Persist one origin once; later run/inspect/seal never grants a new span."""
-    seconds=min(a['bounds']['seconds'],a['transport']['budgets']['seconds'])
+    seconds=min(a['bounds']['seconds'],transport_budgets(a)['seconds'])
     path=output/'multipart-mode.json'
     identity_fields={'id':a['id'],'source':a['source'],'controller':a['controller']}
+    if 'transportObservation' in a:
+        identity_fields['observationConfigSHA256']=hashlib.sha256(json.dumps(a['transportObservation'],sort_keys=True,separators=(',',':')).encode()).hexdigest()
     if path.exists():
-        mode=read(path);closed(mode,('id','source','controller','deadline'))
+        mode=read(path);closed(mode,tuple(identity_fields)+('deadline',))
         insist(all(mode[k]==v for k,v in identity_fields.items()),'multipart-mode-changed')
         closed(mode['deadline'],('startedMonotonic','seconds'))
         insist(type(mode['deadline']['seconds']) is int and mode['deadline']['seconds']==seconds,'multipart-deadline-span-changed')
@@ -1639,12 +2051,45 @@ def operation_deadline(output,a,clock=time.monotonic):
     deadline.check();return deadline
 
 
-def authorized_seal(output,root):
-    mode=read(output/'multipart-mode.json');closed(mode,('id','source','controller','deadline'))
+def authorized_observation_admission(output,root,controller=None,source=None):
+    """Authenticate unchanged observation authority before producer outputs exist."""
+    mode=read(output/'multipart-mode.json');closed(mode,('id','source','controller','deadline')+(('observationConfigSHA256',) if 'observationConfigSHA256' in mode else ()))
     registry=read(root/REGISTRY_PATH);closed(registry,('profile','admissions'));insist(registry['profile']==REGISTRY,'multipart-seal-registry')
     matched=[a for a in registry['admissions'] if a['id']==mode['id']];insist(len(matched)==1,'multipart-seal-not-admitted')
     a=matched[0];validate(a)
     insist(a['profile']==MULTIPART_CANDIDATE and a['source']==mode['source'] and a['controller']==mode['controller'],'multipart-seal-authority')
+    insist('transportObservation' in a and controller is not None and source is not None,'observation-seal-source-controller-required')
+    config_hash=hashlib.sha256(json.dumps(a['transportObservation'],sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    insist(mode.get('observationConfigSHA256')==config_hash,'observation-seal-config-changed')
+    # Re-authenticate immutable actual P checkout and frozen Q, not a local
+    # generated result or producer readiness flag. Startup needs no future
+    # component or output-plan files; those are derived only at final seal.
+    authority,ctx=authority_binding(types.SimpleNamespace(root=root,controller=controller,platform=a['platform']))
+    insist(ctx['controller']==a['controller'] and ctx['admitted'] is True and os.environ.get('SUCCESSOR_OPERATION')=='observe','observation-seal-Q-context')
+    require_operation(a,'observe');checkout_identity(source,a['source'])
+    return a,operation_deadline(output,a)
+
+
+def authorized_seal(output,root,controller=None,source=None):
+    mode=read(output/'multipart-mode.json')
+    closed(mode,('id','source','controller','deadline')+(('observationConfigSHA256',) if 'observationConfigSHA256' in mode else ()))
+    registry=read(root/REGISTRY_PATH);closed(registry,('profile','admissions'));insist(registry['profile']==REGISTRY,'multipart-seal-registry')
+    matched=[a for a in registry['admissions'] if a.get('id')==mode.get('id')]
+    insist(len(matched)==1,'multipart-seal-not-admitted')
+    original=matched[0]
+    if 'transportObservation' in original:
+        a,deadline=authorized_observation_admission(output,root,controller,source)
+        component=read(output/'retained/component.json',deadline)
+        insist(component.get('status') in ('producer-observed','failed'),'observation-component-state')
+        exact=observed_transport(output,a,source,deadline,require_complete=component['status']=='producer-observed')
+        claimed=read(output/'observed-transport.json',deadline)
+        insist(claimed==exact,'observation-local-plan-substitution')
+        a={k:v for k,v in a.items() if k!='transportObservation'};a['transport']=exact
+    else:
+        a=original
+        validate(a)
+        insist('observationConfigSHA256' not in mode,'multipart-mode-observation-config-unexpected')
+        insist(a['profile']==MULTIPART_CANDIDATE and a['source']==mode['source'] and a['controller']==mode['controller'],'multipart-seal-authority')
     return a
 
 
@@ -1826,8 +2271,10 @@ def validate_rebuild(retained,value):
 
 def execute_candidate(a,ctx,args):
     import platform
+    observing='transportObservation' in a
+    require_operation(a,getattr(args,'operation','run'))
     deadline=getattr(args,'multipart_deadline',None)
-    if a.get('profile')==MULTIPART_CANDIDATE and deadline is None:deadline=OperationDeadline(min(a['bounds']['seconds'],a['transport']['budgets']['seconds']))
+    if a.get('profile')==MULTIPART_CANDIDATE and deadline is None:deadline=OperationDeadline(min(a['bounds']['seconds'],transport_budgets(a)['seconds']))
     elif 'initialInspector' in a and deadline is None:deadline=OperationDeadline(a['bounds']['seconds'])
     checkpoint(deadline)
     start=deadline.started if deadline is not None else time.monotonic()
@@ -1844,6 +2291,21 @@ def execute_candidate(a,ctx,args):
         'PYTHONDONTWRITEBYTECODE':'1','PYO3_PYTHON':os.environ.get('PY','python3'),
         'CARGO_TARGET_DIR':str(work/'target'),'UMF_SDK_CARGO_TARGET':str(work/'sdk-target'),
         'UMF_SDK_INSTALL_RETAIN_DIR':str(out/'sdk-consumer'),'UMF_TEMPORAL_OUTPUT':str(retained)})
+    def copy_current(src,dst):
+        if a.get('profile')==MULTIPART_CANDIDATE:
+            if dst.is_relative_to(retained):multipart_stage_accounting(out,a,deadline,[(src,dst)],complete=False,source_root=source)
+            else:insist(workspace_bound(out,transport_budgets(a)['workspace_bytes'],external_workspace_roots(source) if observing else (),deadline=deadline)+src.stat().st_size<=transport_budgets(a)['workspace_bytes'],'multipart-copy-workspace-before-write')
+        operation_copy(src,dst,deadline)
+        if a.get('profile')==MULTIPART_CANDIDATE:dst.chmod(src.stat().st_mode&0o777)
+    def copytree_current(src,dst):
+        if a.get('profile')!=MULTIPART_CANDIDATE:return operation_copytree(src,dst,deadline)
+        pending=[(p,dst/p.relative_to(src)) for p in src.rglob('*') if p.is_file()]
+        insist(not any(p.is_symlink() for p in src.rglob('*')),'multipart-copytree-symlink')
+        multipart_stage_accounting(out,a,deadline,pending,complete=False,source_root=source)
+        dst.mkdir(exist_ok=False)
+        for old,new in pending:
+            new.parent.mkdir(parents=True,exist_ok=True);copy_current(old,new)
+        return dst
     logs=retained/'current'/(ctx['run']+'-'+ctx['attempt']);logs.mkdir(parents=True,exist_ok=False)
     counter=[0]
     def command(argv,cwd=source,override=None):
@@ -1853,14 +2315,28 @@ def execute_candidate(a,ctx,args):
         argv=[os.environ.get('PY','python3') if i==0 and x=='python3' else x for i,x in enumerate(argv)]
         log=logs/('%03d.log'%counter[0])
         if a.get('profile')==MULTIPART_CANDIDATE:
-            run_bounded(argv,cwd,{**env,**(override or {})},remaining,log,a['bounds']['log_bytes'],audit=lambda:workspace_bound(out,a['transport']['budgets']['workspace_bytes'],external_workspace_roots(source),deadline=deadline),op_deadline=deadline)
+            run_bounded(argv,cwd,{**env,**(override or {})},remaining,log,a['bounds']['log_bytes'],audit=lambda:multipart_stage_accounting(out,a,deadline,complete=False,source_root=source),op_deadline=deadline)
         elif deadline is not None:run_bounded(argv,cwd,{**env,**(override or {})},remaining,log,a['bounds']['log_bytes'],op_deadline=deadline)
         else:run_bounded(argv,cwd,{**env,**(override or {})},remaining,log,a['bounds']['log_bytes'])
         return log
     def save(name,value):
-        p=retained/name;timed_publish(p,(json.dumps(value,indent=2)+'\n').encode(),deadline);return {'sha256':measure(p),'path':name}
+        p=retained/name;data=(json.dumps(value,indent=2)+'\n').encode()
+        if observing:
+            used=multipart_stage_accounting(out,a,deadline,complete=False,source_root=source)
+            insist(used['proof_bytes']+len(data)<=transport_budgets(a)['proof_bytes'],'observation-proof-reservation')
+            insist(workspace_bound(out,transport_budgets(a)['workspace_bytes'],external_workspace_roots(source),deadline=deadline)+len(data)<=transport_budgets(a)['workspace_bytes'],'observation-proof-workspace-before-write')
+        timed_publish(p,data,deadline);return {'sha256':measure(p),'path':name}
     def stage(gate):
         result={}
+        if observing:
+            stage_roles={
+                'job-setup':(), 'source':('source',),
+                'common':('core-sdist','codegen-wheel','codegen-sdist'),
+                'wheel':('raw-wheel','linux-x86_64/core-wheel','linux-x86_64/standalone-cli'),
+                'sdk':('linux-x86_64/sdk','linux-x86_64/sdk-manifest'),
+                'rebuild':('rebuilt-wheel',),
+            }
+            observation_stage_reservation(out,a,source,stage_roles[gate],deadline)
         if gate=='job-setup':
             # Per-JOB prerequisites are never reusable qualification evidence.
             # Every fresh runner acquires its own dependencies, even when source,
@@ -1875,7 +2351,9 @@ def execute_candidate(a,ctx,args):
             # Stream the FULL Git tar and compare every blob/mode. No partial tar
             # and no S-specific verifier. The large source stream is not bundled
             # into the bounded component evidence artifact.
-            raw=subprocess.check_output(['git','ls-tree','-r','-z',a['source']['commit']],cwd=source)
+            roster_command=['git','ls-tree','-r','-z',a['source']['commit']]
+            raw=(bounded_check_output(roster_command,MAX_BYTES,cwd=source,deadline=deadline) if observing else
+                 subprocess.check_output(roster_command,**({'timeout':deadline.remaining()} if deadline is not None else {})))
             roster={}
             for row in raw.split(b'\0'):
                 checkpoint(deadline)
@@ -1883,15 +2361,24 @@ def execute_candidate(a,ctx,args):
                 header,name=row.split(b'\t',1);mode,kind,oid=header.decode().split();insist(kind=='blob','unsupported-git-member');roster[name.decode('utf8','surrogateescape')]=(mode,oid)
             archive=work/'full-source.tar';prefix='umf-v'+a['version']+'/'
             if a.get('profile')==MULTIPART_CANDIDATE:
-                t=a['transport'];src=t['source'];insist(len(roster)==src['members'],'multipart-source-roster-before-write')
-                obj=t['objects'][src['object']];archive=retained/src['object'];archive.parent.mkdir(parents=True,exist_ok=True)
-                insist(obj['bytes']+src['tar_bytes']<=t['budgets']['workspace_bytes'],'multipart-source-before-write')
-                command(['git','archive','--format=tar.gz','--prefix='+prefix,'--output='+str(archive),a['source']['commit']])
-                insist(archive.stat().st_size==obj['bytes'] and measure(archive)==obj['sha256'],'multipart-source-original-compressed')
-                with archive.open('rb') as stream:stream_source_archive(stream,roster,a['source']['commit'],src,deadline)
-                result={'members':len(roster),'git_roster_sha256':hashlib.sha256(raw).hexdigest(),'tar_sha256':src['tar_sha256'],
-                        'archive_sha256':obj['sha256'],'archive_bytes':obj['bytes'],'tar_bytes':src['tar_bytes'],
-                        'member_bytes':src['member_bytes'],'allModesSymlinksAndBlobBytesMatch':True,'archiveRetainedInOwnedWorkspaceUntilCleanup':True}
+                if observing:
+                    cfg=a['transportObservation'];slot=cfg['objects'][cfg['source']['object']];archive=observation_object_path(cfg['source']['object'],a,retained);archive.parent.mkdir(parents=True,exist_ok=True)
+                    insist(len(roster)<=cfg['source']['maximum_members'] and workspace_bound(out,cfg['budgets']['workspace_bytes'],external_workspace_roots(source),deadline=deadline)+slot['maximum_bytes']<=cfg['budgets']['workspace_bytes'],'observation-source-before-write')
+                    command(['git','archive','--format=tar.gz','--prefix='+prefix,'--output='+str(archive),a['source']['commit']])
+                    facts=observed_source(archive,a,source,deadline)
+                    result={'members':facts['members'],'git_roster_sha256':hashlib.sha256(raw).hexdigest(),'tar_sha256':facts['tar_sha256'],
+                            'archive_sha256':measure(archive),'archive_bytes':archive.stat().st_size,'tar_bytes':facts['tar_bytes'],
+                            'member_bytes':facts['member_bytes'],'allModesSymlinksAndBlobBytesMatch':True,'archiveRetainedInOwnedWorkspaceUntilCleanup':True}
+                else:
+                    t=a['transport'];src=t['source'];insist(len(roster)==src['members'],'multipart-source-roster-before-write')
+                    obj=t['objects'][src['object']];archive=retained/src['object'];archive.parent.mkdir(parents=True,exist_ok=True)
+                    insist(obj['bytes']+src['tar_bytes']<=t['budgets']['workspace_bytes'],'multipart-source-before-write')
+                    command(['git','archive','--format=tar.gz','--prefix='+prefix,'--output='+str(archive),a['source']['commit']])
+                    insist(archive.stat().st_size==obj['bytes'] and measure(archive)==obj['sha256'],'multipart-source-original-compressed')
+                    with archive.open('rb') as stream:stream_source_archive(stream,roster,a['source']['commit'],src,deadline)
+                    result={'members':len(roster),'git_roster_sha256':hashlib.sha256(raw).hexdigest(),'tar_sha256':src['tar_sha256'],
+                            'archive_sha256':obj['sha256'],'archive_bytes':obj['bytes'],'tar_bytes':src['tar_bytes'],
+                            'member_bytes':src['member_bytes'],'allModesSymlinksAndBlobBytesMatch':True,'archiveRetainedInOwnedWorkspaceUntilCleanup':True}
             else:
                 command(['git','archive','--format=tar','--prefix='+prefix,'--output='+str(archive),a['source']['commit']])
                 with archive.open('rb') as stream:archive_correspondence(stream,roster,a['source']['commit'],prefix)
@@ -1907,7 +2394,7 @@ def execute_candidate(a,ctx,args):
                 else:original_material(a,a['common'],material,retained)
                 common=retained/'common';common.mkdir()
                 for name in ('umf_core-'+a['version']+'.tar.gz','umf_codegen-'+a['version']+'-py3-none-any.whl','umf_codegen-'+a['version']+'.tar.gz'):
-                    original=one(material,'**/'+name);operation_copy(original,common/name,deadline)
+                    original=one(material,'**/'+name);copy_current(original,common/name)
             result={'files':{p.name:measure(p) for p in (retained/'common').iterdir()}}
             insist(set(result['files'])=={'umf_core-'+a['version']+'.tar.gz','umf_codegen-'+a['version']+'-py3-none-any.whl','umf_codegen-'+a['version']+'.tar.gz'},'common-missing-extra')
         elif gate=='wheel':
@@ -1922,7 +2409,7 @@ def execute_candidate(a,ctx,args):
                 def capture(argv,name):
                     # Output still passes the same deadline/byte-bounded runner.
                     command(argv)
-                    log=logs/('%03d.log'%counter[0]);operation_copy(log,retained/name,deadline)
+                    log=logs/('%03d.log'%counter[0]);copy_current(log,retained/name)
                 capture(['auditwheel','--version'],'auditwheel-version.txt');capture(['patchelf','--version'],'patchelf-version.txt')
                 capture(['auditwheel','show','--json',str(rawwheel)],'auditwheel-before.json')
                 command(['auditwheel','repair','--plat','auto','--only-plat','--wheel-dir',str(retained/'repaired'),str(rawwheel)])
@@ -1937,7 +2424,7 @@ def execute_candidate(a,ctx,args):
                 # distinct from the mandatory independent rebuild proof below.
                 command(['python3','tools/qualify_python_release_wheel.py','--version',a['version'],'--platform','macos','--source-wheel',str(selected),'--sdist',str(sdist),'--output-wheel-directory',str(retained/'mac-selected'),'--receipt',str(retained/'selection.json')])
             standalone=standalone_cli_source(a,work,command)
-            operation_copy(standalone,retained/'standalone-umf',deadline);(retained/'standalone-umf').chmod(0o755)
+            copy_current(standalone,retained/'standalone-umf');(retained/'standalone-umf').chmod(0o755)
             result={**result,'rawWheel':measure(rawwheel) if a['platform']=='linux-x86_64' else measure(selected),
                 'wheel':measure(one(retained/'selected','*.whl')),'sdist':measure(sdist),'standaloneCLI':measure(retained/'standalone-umf')}
             if initial_raw is not None:result['originalInspectorWheel']=measure(initial_raw)
@@ -1946,9 +2433,11 @@ def execute_candidate(a,ctx,args):
             # is authenticated before and after all installed consumers.
             for argv,override in sdk_recipe(out):command(argv,override=override)
             sdk=source/'.cache/sdk-distribution';archive=one(sdk,'umf-sdk.tgz')
-            operation_copy(archive,retained/('umf-sdk-'+a['platform']+'.tgz'),deadline)
-            for name in ('manifest.json','receipt.json'):operation_copy(sdk/name,retained/('sdk-'+name),deadline)
+            copy_current(archive,retained/('umf-sdk-'+a['platform']+'.tgz'))
+            for name in ('manifest.json','receipt.json'):copy_current(sdk/name,retained/('sdk-'+name))
             result={'archive_sha256':measure(archive),'manifest_sha256':measure(sdk/'manifest.json'),'platform':a['platform'],'checks':{name:True for name in SDK_CHECKS}}
+            if a.get('profile')==MULTIPART_CANDIDATE:
+                result['custody']=retain_sdk_custody(out,retained,deadline,copy_current)
         elif gate=='rebuild':
             # One independent sdist rebuild and its native/RECORD/source proof;
             # do not multiply this by runtime. Existing verifier owns semantics.
@@ -1976,10 +2465,10 @@ def execute_candidate(a,ctx,args):
             standalone=work/'target'/('aarch64-apple-darwin/release/umf' if a['platform']=='macos-arm64' else 'release/umf')
             if not (retained/'standalone-umf').exists():
                 insist(standalone.is_file() and not standalone.is_symlink(),'standalone-cli-missing')
-                operation_copy(standalone,retained/'standalone-umf',deadline);(retained/'standalone-umf').chmod(0o755)
+                copy_current(standalone,retained/'standalone-umf');(retained/'standalone-umf').chmod(0o755)
             command(['bun','scripts/saga-portable/other-hosts.ts','cli'],override={'UMF_SAGA_CLI':str(retained/'standalone-umf'),'UMF_SAGA_RESULT_PATH':str(retained/'standalone-cli19.json')})
             pair=work/'pair';pair.mkdir()
-            for p in [one(retained/'raw','*.whl'),*list((retained/'common').iterdir())]:operation_copy(p,pair/p.name,deadline)
+            for p in [one(retained/'raw','*.whl'),*list((retained/'common').iterdir())]:copy_current(p,pair/p.name)
             command(['python3','tools/verify_python_release_pair.py','--repository',str(source),'--artifacts',str(pair),'--core-receipt',str(retained/'core-artifact.json'),'--receipt',str(retained/'pair.json')],override={'GITHUB_SHA':a['source']['commit']})
             result={'cells':cells,'normalResolverCells':list(CELLS),'embeddedCLI19':{'path':'embedded-cli19.json','sha256':measure(retained/'embedded-cli19.json')},'standaloneCLI19':{'path':'standalone-cli19.json','sha256':measure(retained/'standalone-cli19.json')},'pairInputScope':'raw-pre-repair-source-pair; selected wheel independently installed', 'core_artifact_sha256':measure(retained/'core-artifact.json'),'pair_sha256':measure(retained/'pair.json')}
         elif gate=='inspection':
@@ -1990,7 +2479,8 @@ def execute_candidate(a,ctx,args):
         elif gate=='final-identity':
             source_check(a,source) if deadline is None else source_check(a,source,deadline=deadline);checkout_identity(args.controller,a['controller'])
             result={'sourceUnchanged':True,'controllerUnchanged':True}
-        insist(sum(p.stat().st_size for p in retained.rglob('*') if p.is_file())<=a['bounds']['artifact_bytes'],'retention-byte-bound')
+        if a.get('profile')==MULTIPART_CANDIDATE:multipart_stage_accounting(out,a,deadline,source_root=source)
+        else:insist(sum(p.stat().st_size for p in retained.rglob('*') if p.is_file())<=a['bounds']['artifact_bytes'],'retention-byte-bound')
         return {'status':'passed','evidence':save(gate+'.json',result)}
     prior=None
     if a['continuation'] is not None:
@@ -2005,19 +2495,11 @@ def execute_candidate(a,ctx,args):
                 p=material/step['evidence']['path'];insist(measure(p)==step['evidence']['sha256'],'continuation-gate-hash')
         origin=a['continuation']['proof'] if a['continuation'].get('profile')==MULTIPART_MATERIAL else a['continuation']
         namespace=Path('original')/(str(origin['run'])+'-'+str(origin['attempt'])+'-'+str(origin['artifact']))
-        operation_copytree(material,retained/namespace,deadline)
+        copytree_current(material,retained/namespace)
         for step in prior['steps'].values():
             if step.get('status')=='passed':step['evidence']={**step['evidence'],'path':(namespace/step['evidence']['path']).as_posix()}
         completed_rebuild=prior['steps'].get('rebuild',{}).get('status')=='passed'
-        for p in material.rglob('*'):
-            if not p.is_file():continue
-            name=p.relative_to(material);text=name.as_posix()
-            working=(name.parts[0] in ('common','raw','selected') or
-                     (completed_rebuild and (name.parts[0]=='rebuilt' or text in ('core-artifact.json','rebuild.json'))) or
-                     text in ('wheel.json','pair.json','standalone-umf') or
-                     any(text.startswith(prefix) for prefix in ('inspection-','interpreter-','install-','freeze-','record-','native-','saga-','compatibility-','factory-origin-')))
-            if working:
-                target=retained/name;target.parent.mkdir(parents=True,exist_ok=True);operation_copy(p,target,deadline)
+        restore_continuation_working_members(material,retained,completed_rebuild,copy_current)
         if completed_rebuild:
             # Admission pins the authentic original ZIP/member hashes. Also bind
             # this component to the restored raw wheel/sdist/receipt/wheel tuple;
@@ -2032,12 +2514,28 @@ def execute_candidate(a,ctx,args):
         if full_source.exists():
             save('source-transport-size.json',{'bytes':full_source.stat().st_size,'sha256':measure(full_source),'limitBytes':a['bounds']['artifact_bytes']})
             insist(full_source.stat().st_size+retention_size(retained)<=a['bounds']['artifact_bytes'],'source-transport-size-pending-review')
-            operation_copy(full_source,retained/'full-source.tar',deadline)
+            copy_current(full_source,retained/'full-source.tar')
         for step in r['steps'].values():
             evidence=step['evidence'];insist(measure(retained/evidence['path'])==evidence['sha256'],'final-gate-evidence-hash')
         return True
-    r=orchestrate(a,ctx,stage,finish,prior)
-    timed_publish(retained/'component.json',(json.dumps(r,indent=2)+'\n').encode(),deadline)
+    r=orchestrate_observation(a,ctx,stage,deadline) if observing else orchestrate(a,ctx,stage,finish,prior)
+    component_bytes=(json.dumps(r,indent=2)+'\n').encode()
+    if observing:
+        used=multipart_stage_accounting(out,a,deadline,complete=False,source_root=source)
+        insist(used['proof_bytes']+len(component_bytes)<=transport_budgets(a)['proof_bytes'],'observation-component-proof-reservation')
+        insist(workspace_bound(out,transport_budgets(a)['workspace_bytes'],external_workspace_roots(source),deadline=deadline)+len(component_bytes)<=transport_budgets(a)['workspace_bytes'],'observation-component-workspace-before-write')
+    timed_publish(retained/'component.json',component_bytes,deadline)
+    if observing:
+        try:
+            exact=observed_transport(out,a,source,deadline,require_complete=r['status']=='producer-observed')
+        except Refusal:
+            if r['status']=='producer-observed':raise
+        else:
+            for target in (out/'observed-transport.json',retained/'observed-transport.json'):
+                data=(json.dumps(exact,indent=2)+'\n').encode()
+                insist(workspace_bound(out,transport_budgets(a)['workspace_bytes'],external_workspace_roots(source),deadline=deadline)+len(data)<=transport_budgets(a)['workspace_bytes'],'observation-plan-workspace-before-write')
+                timed_publish(target,data,deadline)
+        checkpoint(deadline);return 0 if r['status']=='producer-observed' else 2
     seal_multipart(out,a,r,deadline=deadline) if a.get('profile')==MULTIPART_CANDIDATE else finalize_retention(out,a['bounds']['artifact_bytes'],r)
     checkpoint(deadline);return 0 if r['status']=='passed' else 2
 
@@ -2278,7 +2776,7 @@ def cleanup(output):
 
 def parser():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('operation',choices=('authorize','run','inspect','aggregate','cleanup','seal'))
+    p.add_argument('operation',choices=('authorize','run','observe','inspect','aggregate','cleanup','seal'))
     for name in ('root','output'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--controller',type=Path);p.add_argument('--source',type=Path)
     p.add_argument('--offline-context',type=Path);p.add_argument('--offline-context-sha256')
@@ -2316,10 +2814,14 @@ def main():
     try:
         if args.operation=='cleanup':return cleanup(args.output)
         if (args.output/'multipart-mode.json').exists():
-            registered=authorized_seal(args.output,args.root)
-            args.multipart_deadline=operation_deadline(args.output,registered)
+            mode=read(args.output/'multipart-mode.json')
+            if 'observationConfigSHA256' in mode:
+                registered,args.multipart_deadline=authorized_observation_admission(args.output,args.root,args.controller,args.source)
+            else:
+                registered=authorized_seal(args.output,args.root,args.controller,args.source)
+                args.multipart_deadline=operation_deadline(args.output,registered)
         if args.operation=='seal' and (args.output/'multipart-mode.json').exists():
-            a=authorized_seal(args.output,args.root)
+            a=authorized_seal(args.output,args.root,args.controller,args.source)
             if not (args.output/'retained/multipart-index.json').exists():seal_multipart(args.output,a,deadline=args.multipart_deadline)
             slots=multipart_upload_outputs(args.output,a,deadline=args.multipart_deadline)
             with Path(os.environ['GITHUB_OUTPUT']).open('a') as f:
@@ -2347,7 +2849,8 @@ def main():
             insist(a['purpose']=='candidate-aggregate','wrong-aggregate-admission')
             return execute_coupled(a,ctx,args)
         insist(a['purpose']=='candidate-production','aggregate-cannot-produce')
-        if args.operation=='inspect':return inspect_installed(a,ctx,args)
+        if args.operation=='inspect':
+            require_operation(a,'run');return inspect_installed(a,ctx,args)
         return execute_candidate(a,ctx,args)
     except Exception as error:
         record={'profile':PROFILE,'status':'refused','releaseQualified':False,

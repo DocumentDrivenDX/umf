@@ -30,10 +30,11 @@
           "type": "choice",
           "options": [
             "run",
-            "aggregate"
+            "aggregate",
+            "observe"
           ],
           "default": "run",
-          "description": "Registered component production or distinct material-readiness aggregate; neither publishes"
+          "description": "Registered component production or distinct material-readiness aggregate; neither publishes; observe retains producer output without qualification"
         }
       }
     }
@@ -102,7 +103,7 @@
           "with": {
             "version": "0.13.3"
           },
-          "if": "inputs.operation == 'run'"
+          "if": "inputs.operation == 'run' || inputs.operation == 'observe'"
         },
         {
           "uses": "actions/checkout@v6",
@@ -118,21 +119,21 @@
             "toolchain": "1.90.0",
             "targets": "wasm32-unknown-unknown"
           },
-          "if": "inputs.operation == 'run'"
+          "if": "inputs.operation == 'run' || inputs.operation == 'observe'"
         },
         {
           "uses": "oven-sh/setup-bun@v2",
           "with": {
             "bun-version": "1.4.3"
           },
-          "if": "inputs.operation == 'run'"
+          "if": "inputs.operation == 'run' || inputs.operation == 'observe'"
         },
         {
           "uses": "actions/setup-node@v4",
           "with": {
             "node-version": "26.12.0"
           },
-          "if": "inputs.operation == 'run'"
+          "if": "inputs.operation == 'run' || inputs.operation == 'observe'"
         },
         {
           "name": "Execute only the registered candidate recipe",
@@ -147,7 +148,7 @@
           "id": "retention",
           "if": "always()",
           "shell": "bash",
-          "run": "set -euo pipefail\n\"$PY\" -I -B authority/tools/qualify_core_successor.py seal --root authority --output \"$RUNNER_TEMP/successor-proof\""
+          "run": "set -euo pipefail\nif [[ \"$SUCCESSOR_OPERATION\" == observe ]]; then\n  \"$PY\" -I -B authority/tools/qualify_core_successor.py seal --root authority --controller controller --source source --output \"$RUNNER_TEMP/successor-proof\"\nelse\n  \"$PY\" -I -B authority/tools/qualify_core_successor.py seal --root authority --output \"$RUNNER_TEMP/successor-proof\"\nfi"
         },
         {
           "name": "Retain sanitized failures and original component custody",
