@@ -5,7 +5,7 @@ use std::cell::{Cell, RefCell};
 use pyo3::{
     exceptions::{PyBaseException, PyTypeError, PyValueError},
     prelude::*,
-    types::{PyDict, PyString, PyTuple},
+    types::{PyBool, PyBoolMethods, PyDict, PyString, PyTuple},
 };
 use umf_core::{Context, EngineError, Utf16, Value};
 use umf_core_wire::CodegenResourcesHandle;
@@ -100,6 +100,78 @@ impl RetainedControl {
             Some(root) => callback.call1((amount, phase, root)),
             None => callback.call1((amount, phase)),
         };
+        let failure = match outcome {
+            Ok(value) if value.is_none() => return Ok(()),
+            Ok(value) => {
+                if let Ok(original) = callback.getattr("failure") {
+                    if original.is_instance_of::<PyBaseException>() {
+                        *self.first.borrow_mut() = Some(PyErr::from_value_bound(original));
+                        return Err(Self::denied());
+                    }
+                }
+                if let Ok(tuple) = value.downcast::<PyTuple>() {
+                    if tuple.len() == 3 {
+                        let fields = (
+                            tuple.get_item(0).expect("checked tuple index"),
+                            tuple.get_item(1).expect("checked tuple index"),
+                            tuple.get_item(2).expect("checked tuple index"),
+                        );
+                        if fields.0.is_exact_instance_of::<PyString>()
+                            && fields.1.is_exact_instance_of::<PyString>()
+                            && fields.2.is_exact_instance_of::<PyString>()
+                        {
+                            Self::owner_error(py, &fields.0, &fields.1, &fields.2)
+                        } else {
+                            Self::fixed_error(py, "Malformed owner control outcome")
+                        }
+                    } else {
+                        Self::fixed_error(py, "Malformed owner control outcome")
+                    }
+                } else {
+                    Self::fixed_error(py, "Malformed owner control outcome")
+                }
+            }
+            Err(error) => {
+                // Preserve the common exact-string exception argument by
+                // reference; never stringify an arbitrary host exception here.
+                let args = error.value_bound(py).getattr("args");
+                if let Ok(args) = args {
+                    if let Ok(tuple) = args.downcast::<PyTuple>() {
+                        if tuple.len() == 1 {
+                            if let Ok(text) = tuple.get_item(0) {
+                                if text.is_exact_instance_of::<PyString>() {
+                                    let code = PyString::new_bound(py, "METER_FAILURE");
+                                    let path = PyString::new_bound(py, "");
+                                    *self.first.borrow_mut() = Some(Self::owner_error(
+                                        py,
+                                        code.as_any(),
+                                        &text,
+                                        path.as_any(),
+                                    ));
+                                    return Err(Self::denied());
+                                }
+                            }
+                        }
+                    }
+                }
+                Self::fixed_error(py, "Owner control callback failed")
+            }
+        };
+        *self.first.borrow_mut() = Some(failure);
+        Err(Self::denied())
+    }
+    fn check_installed_metadata(
+        &self, py: Python<'_>, callback: &Bound<'_, PyAny>, amount: usize,
+        phase: &str, root: &str, site: &str, keywords: &Bound<'_, PyDict>,
+    ) -> Result<(), EngineError> {
+        if self.first.borrow().is_some() {
+            return Err(Self::denied());
+        }
+        // Diagnostic keyword carrier is reused; original meter dispatch is
+        // still exactly once with TWO positional args. Never retry TypeError.
+        let outcome = keywords.set_item("root", root)
+            .and_then(|_| keywords.set_item("site", site))
+            .and_then(|_| callback.call((amount, phase), Some(keywords)));
         let failure = match outcome {
             Ok(value) if value.is_none() => return Ok(()),
             Ok(value) => {
@@ -394,19 +466,51 @@ fn create_codegen_resources_impl(
     result
 }
 
+// Retain the raw private opt-in only until the EXISTING callable check has
+// run. No truthiness/signature/attribute probing is permitted. A supplied None
+// is not the default: only exact Python bool values are accepted.
+pub(super) struct ConstructorMetadata<'py>(Option<Bound<'py, PyAny>>);
+impl<'py> FromPyObject<'py> for ConstructorMetadata<'py> {
+    fn extract_bound(value: &Bound<'py, PyAny>) -> PyResult<Self> {
+        Ok(Self(Some(value.clone())))
+    }
+}
+impl ConstructorMetadata<'_> {
+    fn enabled(self) -> PyResult<bool> {
+        match self.0 {
+            None => Ok(false),
+            Some(value) if value.is_exact_instance_of::<PyBool>() => Ok(value.downcast::<PyBool>()?.is_true()),
+            Some(_) => Err(PyTypeError::new_err("constructor_metadata must be an exact bool")),
+        }
+    }
+}
+
 // Dedicated closed-input entry. Existing explicit constructors above are exact.
 #[pyfunction]
+#[pyo3(signature = (control, *, constructor_metadata = ConstructorMetadata(None)), text_signature = "(control, *, constructor_metadata=False)")]
 pub(super) fn create_installed_codegen_resources(
-    py: Python<'_>, control: &Bound<'_, PyAny>,
+    py: Python<'_>, control: &Bound<'_, PyAny>, constructor_metadata: ConstructorMetadata<'_>,
 ) -> PyResult<RetainedCodegenResources> {
     if !control.is_callable() {
         return Err(PyTypeError::new_err("Owner control must be callable"));
     }
+    let observe_constructor = constructor_metadata.enabled()?;
     let failure = RetainedControl::new();
     let phase = Cell::new("native-installed-materialization");
-    let mut hook = |amount| failure.check(py, control, amount, phase.get());
+    let root = Cell::new("unassigned");
+    let site = Cell::new("ctor.installed-factory");
+    // Fixed observation cells/carriers are diagnostic overhead, as existing
+    // phase/root labels; no Core value/storage operation borrows that policy.
+    let keywords = observe_constructor.then(|| PyDict::new_bound(py));
+    let mut hook = |amount| match &keywords {
+        Some(keywords) => failure.check_installed_metadata(py, control, amount, phase.get(), root.get(), site.get(), keywords),
+        None => failure.check(py, control, amount, phase.get()),
+    };
     let result = {
         let mut ctx = Context::ordinary().with_host_control(&mut hook).with_work_phase_observer(&phase);
+        if observe_constructor {
+            ctx = ctx.with_constructor_root_observer(&root).with_constructor_site_observer(&site);
+        }
         match CodegenResourcesHandle::from_installed_with_context(&mut ctx) {
             Ok(handle) => {
                 ctx.charge_work(std::mem::size_of::<RetainedCodegenResources>().div_ceil(std::mem::size_of::<usize>()).saturating_add(1), Utf16::default())

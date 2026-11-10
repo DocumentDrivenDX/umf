@@ -62,11 +62,11 @@ def forward_real_native_control(state):
     def factory(work):
         control = original(work)
 
-        def observed(amount, phase=None):
+        def observed(amount, phase=None, *, root=None, site=None):
             state['trace'].append((amount, phase))
             state['in_native'] = True
             try:
-                return control(amount, phase)
+                return control(amount, phase, root=root, site=site)
             finally:
                 observed.failure = control.failure
                 state['failure'] = control.failure
@@ -195,6 +195,30 @@ class InstalledCodegenFactoryNativeTests(unittest.TestCase):
         self.assertIs(caught.exception, failure)
         self.assertEqual(refused_trace, trace, 'same fresh fixed input; no callback after final refusal')
         self.assertEqual(published, [])
+        # Same installed entry/first actual debit, default OFF vs explicit ON.
+        # This is a bounded guard within the existing hosted test, not a new
+        # full native diagnostic campaign or replacement for strict public51.
+        first=[]
+        for opted in (False,True):
+            seen=[];denial=UmfCoreError('CANCELLED','first-installed-control','/native/first')
+            if opted:
+                def control(amount,phase=None,*,root=None,site=None):
+                    self.assertEqual(root,'unassigned');self.assertEqual(site,'ctor.installed-factory')
+                    seen.append((amount,phase));return denial.code,str(denial),denial.path
+            else:
+                def control(amount,phase=None):
+                    seen.append((amount,phase));return denial.code,str(denial),denial.path
+            control.failure=denial
+            with self.assertRaises(UmfCoreError) as error:
+                if opted:_rust_core.create_installed_codegen_resources(control,constructor_metadata=True)
+                else:_rust_core.create_installed_codegen_resources(control)
+            self.assertIs(error.exception,denial);self.assertEqual(len(seen),1);first.append(seen)
+        self.assertEqual(first[0],first[1])
+        class Truthy:
+            def __bool__(self):raise AssertionError('must not probe opt-in truthiness')
+        for invalid in (None,0,1,'yes',Truthy()):
+            with self.assertRaises(TypeError):
+                _rust_core.create_installed_codegen_resources(lambda amount,phase=None:None,constructor_metadata=invalid)
 
 
 if __name__ == '__main__':

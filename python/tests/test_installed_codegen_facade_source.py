@@ -32,8 +32,11 @@ class FacadeSourceTests(unittest.TestCase):
             def __init__(self):
                 self.constructed = 0
                 self.manifests = 0
-            def create_installed_codegen_resources(self, control):
-                failure = control(19, 'native-installed-materialization')
+                self.metadata_optins = []
+            def create_installed_codegen_resources(self, control, *, constructor_metadata=False):
+                if type(constructor_metadata) is not bool: raise TypeError('exact bool required')
+                self.metadata_optins.append(constructor_metadata)
+                failure = control(19, 'native-installed-materialization', **({'root':'unassigned','site':'ctor.installed-factory'} if constructor_metadata else {}))
                 if failure is not None:
                     raise ValueError('must recover original control failure')
                 self.constructed += 1
@@ -58,6 +61,7 @@ class FacadeSourceTests(unittest.TestCase):
         self.assertEqual(engine._resource_mode, 'installed-canonical/1')
         self.assertEqual(self.native.constructed, 1)
         self.assertEqual(amounts, [1, 19, 10])
+        self.assertEqual(self.native.metadata_optins, [True])
 
     def test_resources_paths_hash_modes_and_saga_are_not_accepted(self):
         for key in ('resources', 'path', 'sha256', 'resource_mode', 'sagaPackage'):

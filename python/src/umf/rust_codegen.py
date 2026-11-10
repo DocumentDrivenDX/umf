@@ -112,7 +112,7 @@ class CodegenEngine:
         work(1)  # admit the new factory/report control carrier before creating it
         control = _native_control(work)
         try:
-            retained = _rust_core.create_installed_codegen_resources(control)
+            retained = _rust_core.create_installed_codegen_resources(control, constructor_metadata=True)
         except ValueError as error:
             if control.failure is not None:
                 raise control.failure
@@ -265,7 +265,7 @@ class CodegenEngine:
 def _native_control(work):
     # Optional phase labels are private diagnostic metadata, never budget credits.
     # The public meter still receives only the original positive work amounts.
-    def control(amount, phase=None):
+    def control(amount, phase=None, *, root=None, site=None):
         try:
             work(amount)
         except UmfCoreError as error:

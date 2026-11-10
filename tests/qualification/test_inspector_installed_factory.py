@@ -225,6 +225,7 @@ class FactoryProbePureControls(unittest.TestCase):
             'root':None,'rootSupplied':False,'rootAvailable':False,'site':None,'siteSupplied':False,'siteAvailable':False,
             'amount':43,'amountAvailable':True,'returnedWorkBefore':999971,'attemptedWorkThroughFailure':1000014})
         self.assertNotIn('remainingWork',phase['firstFailure'])
+
     def test_phase_aggregates_preserve_forwarding_zero_and_unlabeled_host_work(self):
         m=load();calls=[]
         def host_work(maximum,*controls):
@@ -251,6 +252,65 @@ class FactoryProbePureControls(unittest.TestCase):
         self.assertEqual(phase['unlabeledHostWork'],{'attemptedWork':9,'returnedWork':9})
         self.assertIsNone(phase['lastPhase']['root']);self.assertFalse(phase['lastPhase']['rootAvailable'])
         self.assertIsNone(phase['firstFailure']);self.assertFalse(phase['overflow'])
+        m=load();sentinel=RuntimeError('same metadata failure');total=[0];delegated=[]
+        def host_work(maximum,*controls):
+            self.assertEqual(maximum,m.LIMIT)
+            def work(amount):
+                if total[0]+amount>4100:raise sentinel
+                total[0]+=amount
+            return work
+        def native_control(work):
+            def control(amount,phase=None,*,root=None,site=None):
+                delegated.append(amount)
+                try:work(amount)
+                except BaseException as error:
+                    control.failure=error;return ('RESOURCE_LIMIT','same','/host')
+                return None
+            control.failure=None;return control
+        compiler=types.SimpleNamespace(_host_work=host_work,_native_control=native_control)
+        with m.WorkObserver(compiler) as observer:
+            life=observer.begin();callback=compiler._native_control(compiler._host_work(m.LIMIT))
+            for _ in range(4100):self.assertIsNone(callback(1,'native-resource-compilation',root='core',site='ctor.preflight-root'))
+            labels={'root':'package','site':'ctor.engine-export'}
+            self.assertEqual(callback(56,'native-resource-compilation',**labels),('RESOURCE_LIMIT','same','/host'))
+            labels.update(root='unassigned',site='ctor.installed-factory')
+            detail=life['phaseObservation'];failure=copy.deepcopy(detail['firstFailure'])
+            self.assertIs(callback.failure,sentinel)
+            self.assertEqual((failure['root'],failure['site']),('package','ctor.engine-export'))
+            self.assertEqual((life['returnedWork'],life['attemptedWork']),(4100,4156))
+            self.assertEqual(detail['nativeControlCalls'],4096)
+            self.assertEqual(detail['phases'],{'native-resource-compilation':{'calls':4096,'returnedWork':4100,'attemptedWork':4156}})
+            self.assertEqual(detail['overflowWork'],{'calls':0,'returnedWork':0,'attemptedWork':0})
+            self.assertEqual(detail['firstFailure'],failure)
+        self.assertEqual(len(delegated),4101);self.assertIs(compiler._native_control,native_control)
+        # A raw callback exception also snapshots metadata before unwind, keeps
+        # exact exception identity and is never retried with another signature.
+        def raising(work):
+            def control(amount,phase=None,*,root=None,site=None):raise sentinel
+            return control
+        compiler=types.SimpleNamespace(_host_work=host_work,_native_control=raising)
+        with self.assertRaises(RuntimeError) as raised:
+            with m.WorkObserver(compiler) as observer:
+                life=observer.begin();callback=compiler._native_control(compiler._host_work(m.LIMIT))
+                callback(7,'native-resource-compilation',root='core',site='ctor.meta-evaluation')
+        self.assertIs(raised.exception,sentinel)
+        self.assertEqual((life['phaseObservation']['firstFailure']['root'],life['phaseObservation']['firstFailure']['site']),('core','ctor.meta-evaluation'))
+
+        binding=(ROOT/'bindings/core/python/src/retained_codegen.rs').read_text()
+        context=(ROOT/'crates/umf-core/src/context.rs').read_text()
+        resources=(ROOT/'crates/umf-codegen/src/resources.rs').read_text()
+        engine=(ROOT/'crates/umf-core/src/engine.rs').read_text()
+        self.assertIn('constructor_metadata = ConstructorMetadata(None)',binding)
+        self.assertIn('constructor_metadata=False',binding)
+        self.assertIn('is_exact_instance_of::<PyBool>()',binding)
+        self.assertIn('callback.call((amount, phase), Some(keywords))',binding)
+        self.assertIn('None => failure.check(py, control, amount, phase.get())',binding)
+        self.assertIn('constructor_site_observer',context)
+        self.assertIn('else if self.constructor_root_observer.is_some() { self.with_work_phase(label, operation) }',context)
+        for label in ('ctor.engine-construction','ctor.snapshot-setup','ctor.snapshot-table','ctor.snapshot-catalogue','ctor.snapshot-finish','ctor.operation-read'):
+            self.assertIn(label,resources)
+        self.assertIn('ctor.engine-export',engine)
+
     def test_unlabeled_native_callback_preserves_forwarding_without_false_overflow(self):
         m=load()
         # Every row is a real native callback; unavailable metadata is not

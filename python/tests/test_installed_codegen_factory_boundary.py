@@ -33,6 +33,7 @@ class _Backend(types.ModuleType):
         super().__init__(name)
         self.calls=[]
         self.controls=[]
+        self.metadata_optins=[]
         self.factory_hook=None
         self.report_hook=None
         # Synthetic opaque receiver: no per-handle writable origin field. Registry
@@ -48,7 +49,9 @@ class _Backend(types.ModuleType):
         self.report={'profile':'umf.codegen.installed-source-manifest/1',
                      'inputProfile':'installed-canonical/1','resources':[]}
 
-    def create_installed_codegen_resources(self, control):
+    def create_installed_codegen_resources(self, control, *, constructor_metadata=False):
+        if type(constructor_metadata) is not bool: raise TypeError('constructor_metadata must be an exact bool')
+        self.metadata_optins.append(constructor_metadata)
         self.calls.append('installed-factory'); self.controls.append(control)
         if self.factory_hook is not None: self.factory_hook(control)
         return self._mint('installed')
@@ -113,11 +116,13 @@ def _loaded():
             raise AssertionError('Unexpected real backend module escaped isolation')
 
 class InstalledCodegenFactoryBoundaryTests(unittest.TestCase):
+
     def test_closed_factory_keywords_and_subclass_cannot_select_resources(self):
         with _loaded() as (m,b):
             for kwargs in ({'resources':{}},{'path':'/tmp/input'},{'resource_mode':'retained-native/1'},
                            {'mode':'installed-canonical/1'},{'hash':'00'},{'sha256':'00'},
-                           {'proof':True},{'sagaPackage':{}},{'source':'checkout'}):
+                           {'proof':True},{'sagaPackage':{}},{'source':'checkout'},
+                           {'constructor_metadata':True},{'constructor_metadata':False}):
                 with self.subTest(kwargs=kwargs), self.assertRaises(TypeError):
                     m.CodegenEngine.from_installed(**kwargs)
             with self.assertRaises(TypeError): m.CodegenEngine.from_installed({})
@@ -237,6 +242,27 @@ class InstalledCodegenFactoryBoundaryTests(unittest.TestCase):
             m.CodegenEngine.from_installed(meter=meter)
             self.assertEqual(got,[1,4,2,10])
             self.assertIsNone(b.controls[0].failure)
+
+        with _loaded() as (w,b):
+            seen=[]
+            def hook(control):
+                self.assertEqual(b.metadata_optins, [True])
+                self.assertIsNone(control(3,'native-resource-compilation',root='core',site='ctor.preflight-root'))
+            b.factory_hook=hook
+            w.CodegenEngine.from_installed(max_work=100, meter=seen.append)
+            self.assertEqual(seen,[1,3,10])
+            # The ORIGINAL private callback still supports two arguments and
+            # ignores metadata for acceptance/work; no TypeError retry exists.
+            forwarded=[];c=w._native_control(forwarded.append)
+            self.assertIsNone(c(7,'coarse'));self.assertIsNone(c(0,'coarse',root='package',site='ctor.engine-export'))
+            self.assertEqual(forwarded,[7,0]);self.assertIsNone(c.failure)
+            calls=[]
+            def denied(n):
+                calls.append(n);raise b.rust.UmfCoreError('CANCELLED','same','/host')
+            c=w._native_control(denied)
+            outcome=c(56,'coarse',root='core',site='ctor.preflight-root')
+            self.assertEqual(calls,[56]);self.assertEqual(outcome,('CANCELLED','same','/host'))
+            self.assertIsNotNone(c.failure)
 
     def test_native_control_denial_preserves_first_host_error_no_after_calls(self):
         for kind in ('meter','cancel','deadline'):

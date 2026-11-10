@@ -1431,15 +1431,18 @@ impl Engine {
         ctx: &mut Context<'_>,
     ) -> Result<SchemaResources, EngineError> {
         let mut resources = SchemaResources::default();
-        for value in [
-            &self.resources.core_schema,
-            &self.resources.reference_schema,
-            &self.resources.package_schema,
+        for (role,value) in [
+            ("core",&self.resources.core_schema),
+            ("reference",&self.resources.reference_schema),
+            ("package",&self.resources.package_schema),
         ] {
-            if let Some(id) = resource_id(value) {
-                ctx.charge_work(id.len(), Utf16::default())?;
-                resources.entries.push((id.clone(), copy_json(value, ctx)?));
-            }
+            ctx.with_constructor_frontier(role,"ctor.engine-export",|ctx| {
+                if let Some(id) = resource_id(value) {
+                    ctx.charge_work(id.len(), Utf16::default())?;
+                    resources.entries.push((id.clone(), copy_json(value, ctx)?));
+                }
+                Ok::<(),EngineError>(())
+            })?;
         }
         Ok(resources)
     }

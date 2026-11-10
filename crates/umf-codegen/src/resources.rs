@@ -196,18 +196,18 @@ impl CodegenResources {
         let actions_schema=actions_schema.admit(operation,ctx)?;
         let binding_package=binding_package.admit(operation,ctx)?;
         let stable_binding_package=stable_binding_package.admit(operation,ctx)?;
-        let engine=match core {CoreInput::Raw(core)=>Engine::new(core,ctx)?,CoreInput::Owned(core)=>Engine::from_owned_resources(core,operation.expect("typed constructor owns operation"),ctx)?};
-        let mut snapshot=engine.codegen_snapshot_with_context(ctx)?;
-        snapshot.include_table(&tables_schema,ctx)?;
-        let catalogue=engine.codegen_catalogue_with_context(ctx)?;
-        let (schema_resources,catalogue)=snapshot.finish(catalogue,ctx)?;
+        let engine=ctx.with_constructor_frontier("unassigned","ctor.engine-construction",|ctx|match core {CoreInput::Raw(core)=>Engine::new(core,ctx),CoreInput::Owned(core)=>Engine::from_owned_resources(core,operation.expect("typed constructor owns operation"),ctx)})?;
+        let mut snapshot=ctx.with_constructor_frontier("unassigned","ctor.snapshot-setup",|ctx|engine.codegen_snapshot_with_context(ctx))?;
+        ctx.with_constructor_frontier("tables","ctor.snapshot-table",|ctx|snapshot.include_table(&tables_schema,ctx))?;
+        let catalogue=ctx.with_constructor_frontier("unassigned","ctor.snapshot-catalogue",|ctx|engine.codegen_catalogue_with_context(ctx))?;
+        let (schema_resources,catalogue)=ctx.with_constructor_frontier("unassigned","ctor.snapshot-finish",|ctx|snapshot.finish(catalogue,ctx))?;
         // Encoding-only DATA; the shared reader still admits and parses the
         // complete source in this same Context before schema compilation.
-        let operation_schema = umf_core::serialization::read_json_value(
+        let operation_schema = ctx.with_constructor_frontier("operation","ctor.operation-read",|ctx|umf_core::serialization::read_json_value(
             operation_sources::OPERATION_SCHEMA_UTF16,
             umf_core::serialization::Format::Json,
             ctx,
-        )?;
+        ))?;
         let operation_compiled =
             ctx.with_constructor_root("operation", |ctx| compile_codegen_schema(&operation_schema, &schema_resources, catalogue.as_ref(), ctx))?;
         let row_expression_operation_schema = umf_core::serialization::read_json_value(

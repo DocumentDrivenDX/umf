@@ -70,6 +70,7 @@ pub struct Context<'a> {
     pub(crate) schema_construction: Option<std::rc::Rc<std::cell::RefCell<crate::schema::ConstructionState>>>,
     work_phase_observer: Option<&'a std::cell::Cell<&'static str>>,
     constructor_root_observer: Option<&'a std::cell::Cell<&'static str>>,
+    constructor_site_observer: Option<&'a std::cell::Cell<&'static str>>,
 }
 
 /// Work accumulated by transport decoders for one host operation.
@@ -210,6 +211,7 @@ impl<'a> Context<'a> {
             evaluation_paths: None,
             work_phase_observer: None,
             constructor_root_observer: None,
+            constructor_site_observer: None,
         })
     }
 
@@ -256,11 +258,33 @@ impl<'a> Context<'a> {
         operation(self)
     }
 
+    /// Installed-only diagnostic site channel. Like phase/root observation,
+    /// static label transport is outside modeled Core work, not admission.
+    #[doc(hidden)]
+    pub fn with_constructor_site_observer(mut self, site: &'a std::cell::Cell<&'static str>) -> Self {
+        self.constructor_site_observer = Some(site);
+        self
+    }
+
+    /// Fixed lexical frontier scopes are visible ONLY to the separate-site
+    /// installed observer. Legacy root-only/phase-only protocols stay exact.
+    #[doc(hidden)]
+    pub fn with_constructor_frontier<T>(&mut self, root: &'static str, site: &'static str, operation: impl FnOnce(&mut Self) -> T) -> T {
+        if self.constructor_site_observer.is_some() {
+            self.with_constructor_root(root, |ctx| ctx.with_constructor_site(site, operation))
+        } else { operation(self) }
+    }
+
     /// Constructor sites are invisible to legacy/call-attributed observers.
     /// No callback or charge is generated when entering or restoring a site.
     #[doc(hidden)]
     pub fn with_constructor_site<T>(&mut self, label: &'static str, operation: impl FnOnce(&mut Self) -> T) -> T {
-        if self.constructor_root_observer.is_some() { self.with_work_phase(label, operation) }
+        if let Some(cell) = self.constructor_site_observer {
+            struct Restore<'a> { cell: &'a std::cell::Cell<&'static str>, prior: &'static str }
+            impl Drop for Restore<'_> { fn drop(&mut self) { self.cell.set(self.prior); } }
+            let _restore = Restore { cell, prior: cell.replace(label) };
+            operation(self)
+        } else if self.constructor_root_observer.is_some() { self.with_work_phase(label, operation) }
         else { operation(self) }
     }
 
@@ -1012,6 +1036,38 @@ mod constructor_observation_tests {
         assert_eq!(root.get(), "unassigned");
         assert_eq!(ctx.charged_work(), 7);
         drop(ctx); assert_eq!(amounts, vec![7]);
+        // The separate installed site channel must NOT consume the coarse
+        // phase label or add work/control calls, including after failure.
+        let phase = Cell::new("native-resource-compilation");
+        let root = Cell::new("unassigned");
+        let site = Cell::new("ctor.installed-factory");
+        let mut amounts = Vec::new();
+        let mut meter = |amount| {
+            assert_eq!(phase.get(), "native-resource-compilation");
+            assert_eq!(root.get(), "core");
+            assert_eq!(site.get(), "ctor.preflight-root");
+            amounts.push(amount);
+            if amount == 56 { Err(EngineError::new("CANCELLED",Utf16::from("host"),"same")) } else { Ok(()) }
+        };
+        let mut ctx=Context::ordinary().with_host_control(&mut meter)
+            .with_work_phase_observer(&phase).with_constructor_root_observer(&root)
+            .with_constructor_site_observer(&site);
+        let result:Result<(),EngineError>=ctx.with_constructor_frontier("unassigned","ctor.engine-construction",|ctx| {
+            ctx.with_constructor_root("core",|ctx|ctx.with_constructor_site("ctor.preflight-root",|ctx| {
+                ctx.charge_work(3,Utf16::default())?;
+                ctx.charge_work(56,Utf16::default())?;
+                panic!("no effect after terminal control denial")
+            }))
+        });
+        assert_eq!(result.unwrap_err().path,Utf16::from("host"));
+        assert_eq!(phase.get(),"native-resource-compilation");
+        assert_eq!(root.get(),"unassigned");assert_eq!(site.get(),"ctor.installed-factory");
+        let panic=catch_unwind(AssertUnwindSafe(||ctx.with_constructor_frontier("tables","ctor.snapshot-table",|ctx| {
+            ctx.with_constructor_site("ctor.reference",|_|panic!("separate-site unwind"))
+        })));
+        assert!(panic.is_err());assert_eq!(root.get(),"unassigned");assert_eq!(site.get(),"ctor.installed-factory");
+        assert_eq!(phase.get(),"native-resource-compilation");
+        drop(ctx);assert_eq!(amounts,vec![3,56]);
     }
 
     #[test]
@@ -1023,6 +1079,17 @@ mod constructor_observation_tests {
             ctx.with_constructor_root("core", |_| assert_eq!(phase.get(), "existing-attributed-call"));
         });
         assert_eq!(ctx.charged_work(), 0);
+        // A new frontier tag is a no-op for BOTH phase-only and legacy
+        // root-only modes; it cannot leak new labels into the old protocol.
+        ctx.with_constructor_frontier("package","ctor.snapshot-finish",|_|assert_eq!(phase.get(),"existing-attributed-call"));
+        let root=Cell::new("unassigned");
+        let mut legacy=Context::ordinary().with_work_phase_observer(&phase).with_constructor_root_observer(&root);
+        legacy.with_constructor_frontier("tables","ctor.snapshot-table",|ctx| {
+            assert_eq!(root.get(),"unassigned");assert_eq!(phase.get(),"existing-attributed-call");
+            ctx.with_constructor_site("ctor.preflight-root",|_|assert_eq!(phase.get(),"ctor.preflight-root"));
+        });
+        assert_eq!(phase.get(),"existing-attributed-call");assert_eq!(root.get(),"unassigned");
+        assert_eq!(legacy.charged_work(),0);
     }
 }
 
