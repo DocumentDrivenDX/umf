@@ -1,0 +1,8 @@
+x86_64
+v22.23.4
+--- node probe
+{"status":"passed","runtime":"node v22.23.4","arch":"x64","platform":"linux","keyedSha256":"2a87662c489aa35c2c7f98703b77dc310c6f2efe22215f78be692c67cb1415c9","unkeyedSha256":"f0f8aded0787f5162614a5aa5e9724da0bb22e9f5c46a0bb867ec8d1d09adf34","keyedFiles":["README.md","linux_probe/__init__.py","linux_probe/crud.py","linux_probe/models.py","report.json","schema.sql","source-companion.json"]}
+--- node installed consumer (repo script)
+{"status":"passed","sdkRoot":"core","runtime":"node","document":"valid-complete-roundtrip","refusal":true,"adapter":"openapi-roundtrip","authoredProjection":"avro-cardinality-projected-and-recovered","projectionRefusal":true}
+--- node explicit wasm loader probe
+{"status":"failed","probe":"node-wasm-default-file-url-loader","error":"fetch failed"}
