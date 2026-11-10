@@ -103,7 +103,7 @@ describe('metamodel source provenance partition',()=>{
   expect(projected.fullRuntime).toContain('use crate::canonical_codegen_resources::');
   expect(projected.fullRuntime).toContain('const _:()=assert!(3*factory_root_front_work()<23712');
   // Exact reviewed once-root runtime bytes; not target/native execution.
-  expect(createHash('sha256').update(projected.fullRuntime).digest('hex')).toBe('a23d9027b93a7a2d642f50ebd7ef281b7ecdbaf0ca99ab9a806a0bb1f9850b58');
+  expect(createHash('sha256').update(projected.fullRuntime).digest('hex')).toBe('7da6ca282bb7c446f4c909d880e430dd37aa299fe966f1922302ab814779aacc');
   expect(actual.compilerInputs).toContain('crates/umf-core/src/value.rs');
   expect(actual.compilerInputs).not.toContain(runtimeCodegenData);
   expect(actual.workspaceInputs).toContain(runtimeCodegenData);
@@ -134,6 +134,44 @@ describe('metamodel source provenance partition',()=>{
   expect(()=>partitionRustSources(compilerFiles.filter(p=>p!==path),workspaceFiles.filter(p=>p!==path),{
    ...boundary,rustSources:boundary.rustSources.filter(file=>file.path!==path),
   })).toThrow('METAMODEL_SOURCE_PARTITION_CONSUMER_EDGE');
+ });
+
+ test('exact counted bank stamp and reference test remain gated in the reduced closure',()=>{
+  const bank='crates/umf-core/src/schema_admitted_bank.rs';
+  const tests='crates/umf-core/src/schema_preflight_reference_independent_tests.rs';
+  const rewrite=(path:string,change:(source:string)=>string):SourceBoundary=>({
+   ...boundary,rustSources:boundary.rustSources.map(file=>file.path===path?{path,source:change(file.source)}:file),
+  });
+  const bankHeader=fullRuntimeCfg+'\n    pub(crate) fn mark_counted_owner(';
+  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,
+   rewrite(bank,source=>source.replace(bankHeader,'    pub(crate) fn mark_counted_owner('))))
+   .toThrow('METAMODEL_SOURCE_PARTITION_COUNTED_ITEM_BOUNDARY '+bank);
+  const actualRead='        let raw = crate::canonical_codegen_resources::materialize_counted_installed_codegen_resources(ctx, operation)?;';
+  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,rewrite(tests,source=>{
+   expect(source).toContain(actualRead);
+   return source.replace(actualRead,'')+'\nfn ungated(ctx: &mut Context, operation: &crate::value::OwnedCoreOperation) -> Result<(), EngineError> {\n'+actualRead+'\nOk(())\n}\n';
+  }))).toThrow('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_RUNTIME_EDGE '+tests);
+  const unexpected='crates/umf-core/src/counted_unexpected_consumer.rs';
+  expect(()=>partitionRustSources([...compilerFiles,unexpected],[...workspaceFiles,unexpected],
+   withRustSource(unexpected,'use crate::canonical_codegen_resources::CountedBankRoute;')))
+   .toThrow('METAMODEL_SOURCE_PARTITION_CONSUMER_EDGE');
+ });
+
+ test('full engine exemption requires the exact module list and guarded inclusion',()=>{
+  const modules='crates/umf-core/src/full_modules.rs',lib='crates/umf-core/src/lib.rs';
+  const guard=fullRuntimeCfg+'\ninclude!("full_modules.rs");';
+  const unguarded=boundary.coreLib.replace(guard,'include!("full_modules.rs");');
+  expect(unguarded).not.toBe(boundary.coreLib);
+  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,{
+   ...boundary,coreLib:unguarded,rustSources:boundary.rustSources.map(file=>file.path===lib?{path:lib,source:unguarded}:file),
+  })).toThrow('METAMODEL_SOURCE_PARTITION_MODULE_BOUNDARY');
+  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withFileSource(modules,'\n// unreviewed module-list bytes\n')))
+   .toThrow('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_ENGINE_BOUNDARY');
+  const newRoot='crates/umf-core/src/alternate_engine_entry.rs';
+  for(const edge of ['include!("./engine.rs");','#[path="./full_modules.rs"] mod full;', 'mod engine;']){
+   expect(()=>partitionRustSources([...compilerFiles,newRoot],[...workspaceFiles,newRoot],withRustSource(newRoot,edge)))
+    .toThrow('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_ENGINE_BOUNDARY '+newRoot);
+  }
  });
 
 });

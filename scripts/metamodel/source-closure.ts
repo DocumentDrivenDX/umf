@@ -29,9 +29,14 @@ export const rustFeatureBoundaryFiles = [
   'crates/umf-core-wire/Cargo.toml',
 ] as const;
 const runtimeConsumerPins:Record<string,string>={
-  'crates/umf-core/src/value.rs':'f46547766ad7d2e6be7ef34aeace087b5b0ae7a64f5f31363ebb77e55b7fc69e',
-  'crates/umf-core-wire/src/lib.rs':'991e9be4abbfb2ffc5baee3c02d78621eda0c9cfa41b70c246816926dacfa13e',
-  'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs':'bb66a321eaf015adb04108c7d5953931b7de574e92ca223eb44795cdf228dda9',
+  'crates/umf-core/src/value.rs':'f0eab222652b0f735c05d347325a50227b1c0867971d995c1ba798a2af04e228',
+  'crates/umf-core/src/engine.rs':'e3ea4ae4d0705c5d644fe8e0385fe56756b5de9d232d1b426d733870eaaafb6f',
+  'crates/umf-core/src/schema_admitted_bank.rs':'009c842d597578cc437a6fc0b2d1f37cea662f505dcae6e5ae33091e20756247',
+  'crates/umf-core/src/schema_preflight_reference_independent_tests.rs':'8ad286496d348c0b36b2110446888b28473a528bb765949954d214c57bb081cb',
+  'crates/umf-core-wire/src/lib.rs':'cc551dd17707556af445e709e077a9db2a617ef12769ecd5914ebe7055859116',
+  'crates/umf-core-wire/src/codegen.rs':'dbd036a2ceb42f421bea8c992365e6285d0cbe8f0ea1b568566d9d0d5cc53887',
+  'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs':'0987d66aff572e78e1eb0177d13837d48f02577137c8e1921e1a3fc381b3d25d',
+  'crates/umf-codegen/src/resources.rs':'6185a6bcaa050436aca04cea56f15836ead043b28aa2b9f140193c0152dec1bd',
 };
 
 const boundarySha256: Record<string,string> = {
@@ -44,7 +49,8 @@ const boundarySha256: Record<string,string> = {
   'crates/umf-tagged-wire/Cargo.toml':'8574d1b8592dbb38e4c07f030bcf468d0e474a20c1bed9de0f4023cf6323ba2e',
   'crates/umf-core-wire/Cargo.toml':'e1171263903df13fa11c1a7470c6cde5fc94f67a2f18dc06ab88e836943abf0f',
   'crates/umf-core/src/lib.rs':'ae6eef2068889cdba3b34198bd37030567f1dc20909f398c12054d194028ffe0',
-  'crates/umf-core/src/canonical_codegen_resources.rs':'ec6eb4226ec45fa2fbb6dd9e07c6a0f2e8f8c2beca789dbd372f31521ce683c7',
+  'crates/umf-core/src/canonical_codegen_resources.rs':'285337fae52121694b3f77cceb8b39c6e57239b62b0fb7cdbc8ac1ab77dd0fde',
+  'crates/umf-core/src/full_modules.rs':'f011690138a0933897c2e681b35a844199c4b57c6711357ef3b45599594434a0',
 };
 const sha256 = (value:string) => createHash('sha256').update(value).digest('hex');
 
@@ -229,6 +235,31 @@ function pathAttributes(source:string):string[]|undefined {
 // Do not accept a generic cfg evaluator or unknown feature expression here.
 export const fullRuntimeCfg='#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]';
 const countedValueConsumer='crates/umf-core/src/value.rs';
+const coreLibPath='crates/umf-core/src/lib.rs';
+const fullModulesPath='crates/umf-core/src/full_modules.rs';
+const fullEnginePath='crates/umf-core/src/engine.rs';
+const fullModulesInclude=fullRuntimeCfg+'\ninclude!("full_modules.rs");';
+const countedBankConsumer='crates/umf-core/src/schema_admitted_bank.rs';
+const countedReferenceTest='crates/umf-core/src/schema_preflight_reference_independent_tests.rs';
+const guardedRuntimeItems:Readonly<Record<string,string>>={
+  [countedBankConsumer]:
+    fullRuntimeCfg+'\n    pub(crate) fn mark_counted_owner(\n'+
+    '        admitted: &mut AdmittedCore,\n'+
+    '        _route: crate::canonical_codegen_resources::CountedBankRoute,\n'+
+    '    ) ',
+  [countedReferenceTest]:
+    fullRuntimeCfg+'\n#[test]\nfn counted_pointer_path_matches_original_target_and_utf16_with_paid_move() ',
+};
+
+function maskGuardedRuntimeItem(code:string,path:string,header:string):string {
+  const start=code.indexOf(header);
+  if(start<0||code.indexOf(header,start+header.length)>=0)
+    throw Error('METAMODEL_SOURCE_PARTITION_COUNTED_ITEM_BOUNDARY '+path);
+  const body=delimitedContent(code,start+header.length);
+  if(!body||code[start+header.length]!=='{')
+    throw Error('METAMODEL_SOURCE_PARTITION_COUNTED_ITEM_BOUNDARY '+path);
+  return code.slice(0,start)+' '.repeat(body.end-start)+code.slice(body.end);
+}
 
 /** Recognize ONLY the two reviewed items, retaining their bodies in full-core. */
 export function projectCountedRuntimeBoundary(source:string):{bootstrap:string;fullRuntime:string} {
@@ -274,13 +305,24 @@ function assertCompilerRuntimeProjection(compilerFiles:readonly string[],boundar
   if(value===undefined)throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
   const projected=projectCountedRuntimeBoundary(value);
   const declaration=fullRuntimeCfg+'\npub mod canonical_codegen_resources;';
+  const modules=boundary.rustSources.find(file=>file.path===fullModulesPath)?.source;
   if(!boundary.coreLib.includes(declaration))throw Error('METAMODEL_SOURCE_PARTITION_MODULE_BOUNDARY');
+  // lib.rs is already pinned. Only its exact gated include can select the
+  // pinned full module list, whose engine declaration resolves to engine.rs.
+  if(!boundary.coreLib.includes(fullModulesInclude)||!modules||
+    sha256(modules)!==boundarySha256[fullModulesPath]||
+    !withoutRustComments(modules).split('\n').includes('pub mod engine;')||
+    ![coreLibPath,fullModulesPath,fullEnginePath,countedBankConsumer,countedReferenceTest].every(path=>compilerFiles.includes(path)))
+    throw Error('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_ENGINE_BOUNDARY');
   for(const {path,source} of boundary.rustSources){
     if(!compilerFiles.includes(path))continue;
-    // The canonical module is disabled as a whole by the pinned lib declaration.
-    if(path==='crates/umf-core/src/canonical_codegen_resources.rs')continue;
-    const code=path===countedValueConsumer?projected.bootstrap:
-      withoutRustComments(path==='crates/umf-core/src/lib.rs'?source.replace(declaration,''):source);
+    // These modules are unreachable under the pinned reduced lib graph.
+    // They still participate in the full-source edge scan and custody.
+    if(path==='crates/umf-core/src/canonical_codegen_resources.rs'||path===fullEnginePath)continue;
+    let code=path===countedValueConsumer?projected.bootstrap:
+      withoutRustComments(path===coreLibPath?source.replace(declaration,''):source);
+    const header=guardedRuntimeItems[path];
+    if(header)code=maskGuardedRuntimeItem(code,path,header);
     if(/\bcanonical_codegen_resources\b/.test(code))throw Error('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_RUNTIME_EDGE '+path);
   }
 }
@@ -302,13 +344,18 @@ export function partitionRustSources(compilerFiles:readonly string[],workspaceFi
   }
   if(Object.entries(boundary.featureOverrides).some(([,value])=>value!==undefined&&value!==''))
     throw Error('METAMODEL_SOURCE_PARTITION_FEATURE_OVERRIDE');
-  if(sha256(boundary.coreLib)!==boundarySha256['crates/umf-core/src/lib.rs']||
-    sha256(boundary.canonicalResources)!==boundarySha256['crates/umf-core/src/canonical_codegen_resources.rs'])
+  if(sha256(boundary.coreLib)!==boundarySha256[coreLibPath]||
+    boundary.rustSources.find(file=>file.path===coreLibPath)?.source!==boundary.coreLib||
+    sha256(boundary.canonicalResources)!==boundarySha256['crates/umf-core/src/canonical_codegen_resources.rs']||
+    boundary.rustSources.find(file=>file.path==='crates/umf-core/src/canonical_codegen_resources.rs')?.source!==boundary.canonicalResources)
     throw Error('METAMODEL_SOURCE_PARTITION_MODULE_BOUNDARY');
 
   const references:Array<{path:string;kind:string}> = [];
   for(const {path,source} of boundary.rustSources){
     const code=withoutRustComments(source);
+    const inCompiler=compilerFiles.includes(path);
+    if(inCompiler&&path!==fullModulesPath&&/\bmod\s+engine\s*;/.test(code))
+      throw Error('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_ENGINE_BOUNDARY '+path);
     const names=code.match(/\bcanonical_codegen_resources\b/g)??[];
     for(const name of names)references.push({path,kind:name});
     const attributes=pathAttributes(code);
@@ -316,28 +363,40 @@ export function partitionRustSources(compilerFiles:readonly string[],workspaceFi
     for(const literal of attributes){
       const target=rustRelativeTarget(path,literal);
       if(target===undefined)throw Error('METAMODEL_SOURCE_PARTITION_UNRESOLVED_PATH '+path);
+      if(inCompiler&&(target===fullEnginePath||target===fullModulesPath))
+        throw Error('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_ENGINE_BOUNDARY '+path);
       if(target===candidate)references.push({path,kind:'path:'+target});
     }
     // Only compiler-closure includes can affect the reduced bootstrap graph.
     // Any source that directly names the runtime module is checked too.
-    if(compilerFiles.includes(path)||names.length>0||/canonical_codegen/i.test(code)){
+    if(inCompiler||names.length>0||/canonical_codegen/i.test(code)){
       const includes=includeExpressions(code);
       if(!includes)throw Error('METAMODEL_SOURCE_PARTITION_UNKNOWN_INCLUDE '+path);
       for(const include of includes){
         const target=rustRelativeTarget(path,include.path);
         if(target===undefined)throw Error('METAMODEL_SOURCE_PARTITION_UNRESOLVED_INCLUDE '+path);
+        if(inCompiler&&(target===fullEnginePath||target===fullModulesPath)&&
+          !(path===coreLibPath&&target===fullModulesPath&&include.macro==='include'))
+          throw Error('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_ENGINE_BOUNDARY '+path);
         if(target===candidate)references.push({path,kind:include.macro+':'+target});
       }
     }
   }
   const expected=[
     {path:'crates/umf-core/src/value.rs',kind:'canonical_codegen_resources'},
-    {path:'crates/umf-core-wire/src/lib.rs',kind:'canonical_codegen_resources'},
-    {path:'crates/umf-core/src/canonical_codegen_resources.rs',kind:'path:'+candidate},
     {path:'crates/umf-core/src/lib.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core/src/engine.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core/src/engine.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core/src/schema_admitted_bank.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core/src/schema_preflight_reference_independent_tests.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core-wire/src/lib.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core-wire/src/lib.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core-wire/src/codegen.rs',kind:'canonical_codegen_resources'},
     {path:'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs',kind:'canonical_codegen_resources'},
-    {path:'crates/umf-core-wire/src/lib.rs',kind:'canonical_codegen_resources'},
-    {path:'crates/umf-core-wire/src/lib.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-codegen/src/resources.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-codegen/src/resources.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core/src/canonical_codegen_resources.rs',kind:'path:'+candidate},
   ];
   references.sort((a,b)=>a.path.localeCompare(b.path)||a.kind.localeCompare(b.kind));
   expected.sort((a,b)=>a.path.localeCompare(b.path)||a.kind.localeCompare(b.kind));
