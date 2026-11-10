@@ -1,0 +1,2811 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core-successor-qualification:2",
+  "title": "Closed default-off component intake and two-platform material readiness; never publication authority",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/admission"
+    },
+    {
+      "$ref": "#/$defs/receipt"
+    },
+    {
+      "$ref": "#/$defs/registry"
+    },
+    {
+      "$ref": "#/$defs/aggregate-admission"
+    },
+    {
+      "$ref": "#/$defs/material-readiness"
+    },
+    {
+      "$ref": "#/$defs/multipart-admission"
+    },
+    {
+      "$ref": "#/$defs/multipart-aggregate-admission"
+    },
+    {
+      "$ref": "#/$defs/multipart-receipt"
+    }
+  ],
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^(?!0{64}$)[0-9a-f]{64}$"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^(?!0{40}$)[0-9a-f]{40}$"
+    },
+    "pins": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/hash"
+      }
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "commit",
+        "tree"
+      ],
+      "additionalProperties": false
+    },
+    "controller": {
+      "type": "object",
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "tree": {
+          "$ref": "#/$defs/commit"
+        },
+        "workflow_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "script_sha256": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": [
+        "commit",
+        "tree",
+        "workflow_sha256",
+        "script_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "protocols": {
+      "type": "object",
+      "properties": {
+        "semantic": {
+          "const": "0.10.0"
+        },
+        "engine": {
+          "const": "umf-core-r2"
+        },
+        "codegen": {
+          "const": "umf-codegen-r3-seven-ops-nine-resources/1"
+        }
+      },
+      "required": [
+        "semantic",
+        "engine",
+        "codegen"
+      ],
+      "additionalProperties": false
+    },
+    "bounds": {
+      "type": "object",
+      "properties": {
+        "workers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1
+        },
+        "seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5400
+        },
+        "log_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "artifact_bytes": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 67108864
+        }
+      },
+      "required": [
+        "workers",
+        "seconds",
+        "log_bytes",
+        "artifact_bytes"
+      ],
+      "additionalProperties": false
+    },
+    "material": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "common",
+            "continuation"
+          ]
+        },
+        "run": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "job": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "artifact": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workflow": {
+          "const": ".github/workflows/core-successor-qualification.yml"
+        },
+        "controller": {
+          "$ref": "#/$defs/commit"
+        },
+        "source": {
+          "$ref": "#/$defs/commit"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "members": {
+          "$ref": "#/$defs/pins"
+        },
+        "workflow_sha": {
+          "$ref": "#/$defs/commit"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "job_name": {
+          "enum": [
+            "linux",
+            "macos"
+          ]
+        },
+        "upload_step": {
+          "const": "Retain sanitized failures and original component custody"
+        }
+      },
+      "required": [
+        "kind",
+        "run",
+        "job",
+        "attempt",
+        "artifact",
+        "workflow",
+        "controller",
+        "source",
+        "sha256",
+        "members",
+        "workflow_sha",
+        "platform",
+        "job_name",
+        "upload_step"
+      ],
+      "additionalProperties": false
+    },
+    "initial-inspector": {
+      "type": "object",
+      "properties": {
+        "workflow": {"const": ".github/workflows/inspector-retained-attribution.yml"},
+        "workflow_id": {"const": 406353585},
+        "run": {"type": "integer", "minimum": 1},
+        "attempt": {"const": 1},
+        "job": {"type": "integer", "minimum": 1},
+        "ref": {"type": "string", "pattern": "^refs/heads/[A-Za-z0-9._/-]+$"},
+        "controller": {"$ref": "#/$defs/commit"},
+        "source": {"$ref": "#/$defs/commit"},
+        "tree": {"$ref": "#/$defs/commit"},
+        "artifact": {"type": "integer", "minimum": 1},
+        "artifact_name": {"type": "string", "pattern": "^private-inspector-construction-batch-[1-9][0-9]*-1$"},
+        "sha256": {"$ref": "#/$defs/hash"},
+        "members": {"$ref": "#/$defs/pins"},
+        "census_sha256": {"$ref": "#/$defs/hash"},
+        "fixture_sha256": {"$ref": "#/$defs/hash"},
+        "wheel": {
+          "type": "object",
+          "properties": {
+            "member": {"const": "wheels/umf_core-0.10.10-cp311-abi3-linux_x86_64.whl"},
+            "sha256": {"$ref": "#/$defs/hash"},
+            "bytes": {"type": "integer", "minimum": 1, "maximum": 67108864},
+            "native_sha256": {"$ref": "#/$defs/hash"}
+          },
+          "required": ["member", "sha256", "bytes", "native_sha256"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["workflow", "workflow_id", "run", "attempt", "job", "ref", "controller", "source", "tree", "artifact", "artifact_name", "sha256", "members", "census_sha256", "fixture_sha256", "wheel"],
+      "additionalProperties": false
+    },
+    "admission": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+        },
+        "profile": {
+          "const": "umf.core-successor.candidate/2"
+        },
+        "purpose": {
+          "const": "candidate-production"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+          "not": {
+            "enum": [
+              "0.0.0",
+              "0.10.7",
+              "0.10.8",
+              "0.10.9"
+            ]
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "bounds": {
+          "$ref": "#/$defs/bounds"
+        },
+        "resources": {
+          "$ref": "#/$defs/installed-resource-pins"
+        },
+        "protocols": {
+          "$ref": "#/$defs/protocols"
+        },
+        "inputs": {
+          "$ref": "#/$defs/pins"
+        },
+        "recipes": {
+          "$ref": "#/$defs/pins"
+        },
+        "common": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/material"
+            }
+          ]
+        },
+        "continuation": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/material"
+            }
+          ]
+        },
+        "initialInspector": {"$ref": "#/$defs/initial-inspector"},
+        "compatibility": {
+          "$ref": "#/$defs/compatibility-contract"
+        }
+      },
+      "required": [
+        "id",
+        "profile",
+        "purpose",
+        "version",
+        "source",
+        "controller",
+        "platform",
+        "bounds",
+        "resources",
+        "protocols",
+        "inputs",
+        "recipes",
+        "common",
+        "continuation",
+        "compatibility"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "platform": {
+                "const": "macos-arm64"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "common": {
+                "$ref": "#/$defs/material"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "original": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "job": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "workflow_sha": {
+          "$ref": "#/$defs/commit"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "job_name": {
+          "enum": [
+            "linux",
+            "macos"
+          ]
+        },
+        "upload_step": {
+          "const": "Retain sanitized failures and original component custody"
+        },
+        "controller_sha": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "run",
+        "job",
+        "attempt",
+        "workflow_sha",
+        "platform",
+        "job_name",
+        "upload_step",
+        "controller_sha"
+      ],
+      "additionalProperties": false
+    },
+    "inspection": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.installed-inspection/3"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "version": {
+          "type": "string"
+        },
+        "resources": {
+          "$ref": "#/$defs/installed-resource-pins"
+        },
+        "protocols": {
+          "$ref": "#/$defs/protocols"
+        },
+        "maximumWork": {
+          "type": "integer",
+          "const": 1000000
+        },
+        "cases": {
+          "type": "integer",
+          "const": 17
+        },
+        "calls": {
+          "type": "integer",
+          "const": 51
+        },
+        "constructorPassed": {
+          "type": "boolean",
+          "const": true
+        },
+        "custodyPreserved": {
+          "type": "boolean",
+          "const": true
+        },
+        "installedFilesUnchanged": {
+          "type": "boolean",
+          "const": true
+        },
+        "loadedOwnershipVerified": {
+          "type": "boolean",
+          "const": true
+        },
+        "recordVerified": {
+          "type": "boolean",
+          "const": true
+        },
+        "embeddedCLIVerified": {
+          "type": "boolean",
+          "const": true
+        },
+        "normalResolver": {
+          "type": "boolean",
+          "const": true
+        },
+        "resourceSuccess": {
+          "type": "boolean",
+          "const": true
+        },
+        "wheel_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "native_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "resource_manifest_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "coldConstructors": {
+          "type": "integer",
+          "const": 51
+        },
+        "coldPerCall": {
+          "type": "boolean",
+          "const": true
+        },
+        "runtime": {
+          "$ref": "#/$defs/runtime"
+        },
+        "budgetRefusalVerified": {
+          "type": "boolean",
+          "const": true
+        },
+        "inputProfile": {
+          "const": "installed-canonical/1"
+        },
+        "data_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "factory_manifest_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "paidManifestReports": {
+          "type": "integer",
+          "const": 51
+        },
+        "compatibility": {
+          "$ref": "#/$defs/named-compatibility"
+        }
+      },
+      "required": [
+        "profile",
+        "source",
+        "version",
+        "resources",
+        "protocols",
+        "maximumWork",
+        "cases",
+        "calls",
+        "constructorPassed",
+        "custodyPreserved",
+        "installedFilesUnchanged",
+        "loadedOwnershipVerified",
+        "recordVerified",
+        "embeddedCLIVerified",
+        "normalResolver",
+        "resourceSuccess",
+        "wheel_sha256",
+        "native_sha256",
+        "resource_manifest_sha256",
+        "coldConstructors",
+        "coldPerCall",
+        "runtime",
+        "budgetRefusalVerified",
+        "inputProfile",
+        "data_sha256",
+        "factory_manifest_sha256",
+        "compatibility",
+        "paidManifestReports"
+      ],
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "unobserved"
+          ]
+        },
+        "evidence": {
+          "type": "object",
+          "properties": {
+            "sha256": {
+              "$ref": "#/$defs/hash"
+            },
+            "path": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "sha256",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        "original": {
+          "$ref": "#/$defs/original"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "receipt": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.candidate/2"
+        },
+        "status": {
+          "enum": [
+            "unobserved",
+            "passed",
+            "failed"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "version": {
+          "type": "string"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "inputs": {
+          "$ref": "#/$defs/pins"
+        },
+        "resources": {
+          "$ref": "#/$defs/installed-resource-pins"
+        },
+        "protocols": {
+          "$ref": "#/$defs/protocols"
+        },
+        "original": {
+          "$ref": "#/$defs/original"
+        },
+        "steps": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "$ref": "#/$defs/step"
+            },
+            "common": {
+              "$ref": "#/$defs/step"
+            },
+            "wheel": {
+              "$ref": "#/$defs/step"
+            },
+            "sdk": {
+              "$ref": "#/$defs/step"
+            },
+            "consumers": {
+              "$ref": "#/$defs/step"
+            },
+            "inspection": {
+              "$ref": "#/$defs/step"
+            },
+            "final-identity": {
+              "$ref": "#/$defs/step"
+            },
+            "job-setup": {
+              "$ref": "#/$defs/step"
+            },
+            "rebuild": {
+              "$ref": "#/$defs/step"
+            }
+          },
+          "additionalProperties": false
+        },
+        "inspection": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/inspections"
+            }
+          ]
+        },
+        "releaseQualified": {
+          "const": false
+        },
+        "nativeReleaseQualified": {
+          "const": false
+        },
+        "failure": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "coupledQualified": {
+          "const": false
+        }
+      },
+      "required": [
+        "profile",
+        "status",
+        "source",
+        "version",
+        "platform",
+        "controller",
+        "inputs",
+        "resources",
+        "protocols",
+        "original",
+        "steps",
+        "inspection",
+        "releaseQualified",
+        "nativeReleaseQualified",
+        "failure",
+        "coupledQualified"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "passed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "inspection": {
+                "$ref": "#/$defs/inspections"
+              },
+              "steps": {
+                "required": [
+                  "job-setup",
+                  "source",
+                  "common",
+                  "wheel",
+                  "sdk",
+                  "rebuild",
+                  "consumers",
+                  "inspection",
+                  "final-identity"
+                ],
+                "additionalProperties": {
+                  "properties": {
+                    "status": {
+                      "const": "passed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "registry": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.registry/2"
+        },
+        "admissions": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/admission"
+              },
+              {
+                "$ref": "#/$defs/aggregate-admission"
+              },
+              {
+                "$ref": "#/$defs/multipart-admission"
+              },
+              {
+                "$ref": "#/$defs/multipart-aggregate-admission"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "profile",
+        "admissions"
+      ],
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "properties": {
+        "cell": {
+          "enum": [
+            "direct-3.11.17",
+            "direct-3.13.16",
+            "rebuilt-3.11.17",
+            "rebuilt-3.13.16"
+          ]
+        },
+        "python": {
+          "enum": [
+            "3.11.17",
+            "3.13.16"
+          ]
+        },
+        "implementation": {
+          "const": "cpython"
+        },
+        "executable_sha256": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": [
+        "cell",
+        "python",
+        "implementation",
+        "executable_sha256"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "cell": {
+                "const": "direct-3.11.17"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "python": {
+                "const": "3.11.17"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "cell": {
+                "const": "direct-3.13.16"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "python": {
+                "const": "3.13.16"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "cell": {
+                "const": "rebuilt-3.11.17"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "python": {
+                "const": "3.11.17"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "cell": {
+                "const": "rebuilt-3.13.16"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "python": {
+                "const": "3.13.16"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "inspections": {
+      "type": "object",
+      "properties": {
+        "direct-3.11.17": {
+          "$ref": "#/$defs/inspection"
+        },
+        "direct-3.13.16": {
+          "$ref": "#/$defs/inspection"
+        },
+        "rebuilt-3.11.17": {
+          "$ref": "#/$defs/inspection"
+        },
+        "rebuilt-3.13.16": {
+          "$ref": "#/$defs/inspection"
+        }
+      },
+      "required": [
+        "direct-3.11.17",
+        "direct-3.13.16",
+        "rebuilt-3.11.17",
+        "rebuilt-3.13.16"
+      ],
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "tree": {
+          "$ref": "#/$defs/commit"
+        },
+        "registry_sha256": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": [
+        "commit",
+        "tree",
+        "registry_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "parent-context": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.parent-context/1"
+        },
+        "authority": {
+          "$ref": "#/$defs/authority"
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        },
+        "admission_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "cell": {
+          "enum": [
+            "direct-3.11.17",
+            "direct-3.13.16",
+            "rebuilt-3.11.17",
+            "rebuilt-3.13.16"
+          ]
+        },
+        "files": {
+          "$ref": "#/$defs/pins"
+        }
+      },
+      "required": [
+        "profile",
+        "authority",
+        "context",
+        "admission_sha256",
+        "source",
+        "controller",
+        "cell",
+        "files"
+      ],
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "const": "DocumentDrivenDX/umf"
+        },
+        "repository_id": {
+          "const": "1382276802"
+        },
+        "owner_id": {
+          "const": "273466046"
+        },
+        "event": {
+          "const": "workflow_dispatch"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "workflow": {
+          "const": "DocumentDrivenDX/umf/.github/workflows/core-successor-qualification.yml@refs/heads/main"
+        },
+        "workflow_sha": {
+          "$ref": "#/$defs/commit"
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "admitted": {
+          "type": "boolean",
+          "const": true
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "job_name": {
+          "enum": [
+            "linux",
+            "macos"
+          ]
+        },
+        "upload_step": {
+          "const": "Retain sanitized failures and original component custody"
+        },
+        "run": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "job": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$",
+          "const": "1"
+        }
+      },
+      "required": [
+        "repository",
+        "repository_id",
+        "owner_id",
+        "event",
+        "ref",
+        "workflow",
+        "workflow_sha",
+        "controller",
+        "admitted",
+        "platform",
+        "job_name",
+        "upload_step",
+        "run",
+        "job",
+        "attempt"
+      ],
+      "additionalProperties": false
+    },
+    "retention-file": {
+      "type": "object",
+      "properties": {
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": [
+        "bytes",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "retention-omitted": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "kind": {
+          "enum": [
+            "file",
+            "symlink-target-text"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "retention": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.retention/1"
+        },
+        "bounded": {
+          "const": true
+        },
+        "limitBytes": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 67108864
+        },
+        "fullRetention": {
+          "type": "boolean"
+        },
+        "retained": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/retention-file"
+          }
+        },
+        "omitted": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/retention-omitted"
+          }
+        },
+        "markerExcludedFromHashRoster": {
+          "const": true
+        },
+        "markerIncludedInByteCount": {
+          "const": true
+        },
+        "previousFailure": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "finalRetainedBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 67108864
+        },
+        "omissionIndex": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sha256": {
+              "$ref": "#/$defs/hash"
+            },
+            "retained": {
+              "const": false
+            }
+          },
+          "required": [
+            "count",
+            "bytes",
+            "sha256",
+            "retained"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "profile",
+        "bounded",
+        "limitBytes",
+        "fullRetention",
+        "retained",
+        "omitted",
+        "markerExcludedFromHashRoster",
+        "markerIncludedInByteCount",
+        "previousFailure",
+        "finalRetainedBytes"
+      ],
+      "additionalProperties": false
+    },
+    "qualified-material": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "qualified"
+        },
+        "run": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "job": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "artifact": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workflow": {
+          "const": ".github/workflows/core-successor-qualification.yml"
+        },
+        "controller": {
+          "$ref": "#/$defs/commit"
+        },
+        "source": {
+          "$ref": "#/$defs/commit"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "members": {
+          "$ref": "#/$defs/pins"
+        },
+        "workflow_sha": {
+          "$ref": "#/$defs/commit"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "job_name": {
+          "enum": [
+            "linux",
+            "macos"
+          ]
+        },
+        "upload_step": {
+          "const": "Retain sanitized failures and original component custody"
+        }
+      },
+      "required": [
+        "kind",
+        "run",
+        "job",
+        "attempt",
+        "artifact",
+        "workflow",
+        "controller",
+        "source",
+        "sha256",
+        "members",
+        "workflow_sha",
+        "platform",
+        "job_name",
+        "upload_step"
+      ],
+      "additionalProperties": false
+    },
+    "coupled-asset": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[^/\\\\]+$"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "member": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "mode": {
+          "enum": [
+            420,
+            493
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "platform",
+        "member",
+        "sha256",
+        "bytes",
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "aggregate-admission": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+        },
+        "profile": {
+          "const": "umf.core-successor.candidate/2"
+        },
+        "purpose": {
+          "const": "candidate-aggregate"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+          "not": {
+            "enum": [
+              "0.0.0",
+              "0.10.7",
+              "0.10.8",
+              "0.10.9"
+            ]
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "platform": {
+          "const": "linux-x86_64"
+        },
+        "bounds": {
+          "$ref": "#/$defs/bounds"
+        },
+        "resources": {
+          "$ref": "#/$defs/installed-resource-pins"
+        },
+        "protocols": {
+          "$ref": "#/$defs/protocols"
+        },
+        "inputs": {
+          "$ref": "#/$defs/pins"
+        },
+        "recipes": {
+          "$ref": "#/$defs/pins"
+        },
+        "common": {
+          "type": "null"
+        },
+        "continuation": {
+          "type": "null"
+        },
+        "components": {
+          "type": "object",
+          "properties": {
+            "linux-x86_64": {
+              "type": "object",
+              "properties": {
+                "admission_id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+                },
+                "material": {
+                  "$ref": "#/$defs/qualified-material"
+                }
+              },
+              "required": [
+                "admission_id",
+                "material"
+              ],
+              "additionalProperties": false
+            },
+            "macos-arm64": {
+              "type": "object",
+              "properties": {
+                "admission_id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+                },
+                "material": {
+                  "$ref": "#/$defs/qualified-material"
+                }
+              },
+              "required": [
+                "admission_id",
+                "material"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "linux-x86_64",
+            "macos-arm64"
+          ],
+          "additionalProperties": false
+        },
+        "roster": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "core-sdist": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "codegen-wheel": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "codegen-sdist": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "linux-x86_64/core-wheel": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "linux-x86_64/standalone-cli": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "linux-x86_64/sdk": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "linux-x86_64/sdk-manifest": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "macos-arm64/core-wheel": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "macos-arm64/standalone-cli": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "macos-arm64/sdk": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "macos-arm64/sdk-manifest": {
+              "$ref": "#/$defs/coupled-asset"
+            }
+          },
+          "required": [
+            "source",
+            "core-sdist",
+            "codegen-wheel",
+            "codegen-sdist",
+            "linux-x86_64/core-wheel",
+            "linux-x86_64/standalone-cli",
+            "linux-x86_64/sdk",
+            "linux-x86_64/sdk-manifest",
+            "macos-arm64/core-wheel",
+            "macos-arm64/standalone-cli",
+            "macos-arm64/sdk",
+            "macos-arm64/sdk-manifest"
+          ],
+          "additionalProperties": false
+        },
+        "compatibility": {
+          "$ref": "#/$defs/compatibility-contract"
+        }
+      },
+      "required": [
+        "id",
+        "profile",
+        "purpose",
+        "version",
+        "source",
+        "controller",
+        "platform",
+        "bounds",
+        "resources",
+        "protocols",
+        "inputs",
+        "recipes",
+        "common",
+        "continuation",
+        "components",
+        "roster",
+        "compatibility"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "platform": {
+                "const": "macos-arm64"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "common": {
+                "$ref": "#/$defs/material"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "material-readiness": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.material-readiness/1"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "version": {
+          "type": "string"
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "resources": {
+          "$ref": "#/$defs/installed-resource-pins"
+        },
+        "inputs": {
+          "$ref": "#/$defs/pins"
+        },
+        "protocols": {
+          "$ref": "#/$defs/protocols"
+        },
+        "originals": {
+          "type": "object",
+          "properties": {
+            "linux-x86_64": {
+              "$ref": "#/$defs/qualified-material"
+            },
+            "macos-arm64": {
+              "$ref": "#/$defs/qualified-material"
+            }
+          },
+          "required": [
+            "linux-x86_64",
+            "macos-arm64"
+          ],
+          "additionalProperties": false
+        },
+        "assets": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "core-sdist": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "codegen-wheel": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "codegen-sdist": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "linux-x86_64/core-wheel": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "linux-x86_64/standalone-cli": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "linux-x86_64/sdk": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "linux-x86_64/sdk-manifest": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "macos-arm64/core-wheel": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "macos-arm64/standalone-cli": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "macos-arm64/sdk": {
+              "$ref": "#/$defs/coupled-asset"
+            },
+            "macos-arm64/sdk-manifest": {
+              "$ref": "#/$defs/coupled-asset"
+            }
+          },
+          "required": [
+            "source",
+            "core-sdist",
+            "codegen-wheel",
+            "codegen-sdist",
+            "linux-x86_64/core-wheel",
+            "linux-x86_64/standalone-cli",
+            "linux-x86_64/sdk",
+            "linux-x86_64/sdk-manifest",
+            "macos-arm64/core-wheel",
+            "macos-arm64/standalone-cli",
+            "macos-arm64/sdk",
+            "macos-arm64/sdk-manifest"
+          ],
+          "additionalProperties": false
+        },
+        "inventoriedAssetBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "status": {
+          "const": "material-gates-passed"
+        },
+        "releaseQualified": {
+          "const": false
+        },
+        "nativeReleaseQualified": {
+          "const": false
+        },
+        "coupledQualified": {
+          "const": false
+        },
+        "publicationAuthorized": {
+          "const": false
+        }
+      },
+      "required": [
+        "profile",
+        "source",
+        "version",
+        "controller",
+        "resources",
+        "inputs",
+        "protocols",
+        "originals",
+        "assets",
+        "inventoriedAssetBytes",
+        "status",
+        "releaseQualified",
+        "nativeReleaseQualified",
+        "coupledQualified",
+        "publicationAuthorized"
+      ],
+      "additionalProperties": false
+    },
+    "compatibility-contract": {
+      "type": "object",
+      "properties": {
+        "census_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "early": {
+          "type": "array",
+          "minItems": 18,
+          "maxItems": 18,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^python/tests/[A-Za-z0-9_]+\\.py::(?:[A-Za-z0-9_]+::)?test_[A-Za-z0-9_]+$"
+          }
+        },
+        "later": {
+          "type": "array",
+          "minItems": 31,
+          "maxItems": 31,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^python/tests/[A-Za-z0-9_]+\\.py::(?:[A-Za-z0-9_]+::)?test_[A-Za-z0-9_]+$"
+          }
+        },
+        "historicalExcluded": {
+          "const": [
+            "python/tests/test_retained_codegen_native.py::PublicRetainedFeasibilityTests::test_cold_constructor_and_each_17_vector_dispatch_list_tuple_call_fit_strict_1m"
+          ]
+        }
+      },
+      "required": [
+        "census_sha256",
+        "early",
+        "later",
+        "historicalExcluded"
+      ],
+      "additionalProperties": false
+    },
+    "named-compatibility": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.named-compatibility/1"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "inputProfile": {
+          "const": "installed-canonical/1"
+        },
+        "census_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "wheel_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "native_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "original": {
+          "$ref": "#/$defs/original"
+        },
+        "groups": {
+          "type": "object",
+          "properties": {
+            "early": {
+              "type": "object",
+              "properties": {
+                "cases": {
+                  "type": "object",
+                  "minProperties": 18,
+                  "maxProperties": 18,
+                  "propertyNames": {
+                    "type": "string",
+                    "pattern": "^python/tests/[A-Za-z0-9_]+\\.py::(?:[A-Za-z0-9_]+::)?test_[A-Za-z0-9_]+$"
+                  },
+                  "additionalProperties": {
+                    "const": "passed"
+                  }
+                },
+                "xml_sha256": {
+                  "$ref": "#/$defs/hash"
+                }
+              },
+              "required": [
+                "cases",
+                "xml_sha256"
+              ],
+              "additionalProperties": false
+            },
+            "later": {
+              "type": "object",
+              "properties": {
+                "cases": {
+                  "type": "object",
+                  "minProperties": 31,
+                  "maxProperties": 31,
+                  "propertyNames": {
+                    "type": "string",
+                    "pattern": "^python/tests/[A-Za-z0-9_]+\\.py::(?:[A-Za-z0-9_]+::)?test_[A-Za-z0-9_]+$"
+                  },
+                  "additionalProperties": {
+                    "const": "passed"
+                  }
+                },
+                "xml_sha256": {
+                  "$ref": "#/$defs/hash"
+                }
+              },
+              "required": [
+                "cases",
+                "xml_sha256"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "early",
+            "later"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "profile",
+        "source",
+        "inputProfile",
+        "census_sha256",
+        "wheel_sha256",
+        "native_sha256",
+        "original",
+        "groups"
+      ],
+      "additionalProperties": false
+    },
+    "installed-resource-pins": {
+      "type": "object",
+      "properties": {
+        "action_runtime_resources/coreSchema.json": {
+          "$ref": "#/$defs/hash"
+        },
+        "action_runtime_resources/referenceSchema.json": {
+          "$ref": "#/$defs/hash"
+        },
+        "action_runtime_resources/packageSchema.json": {
+          "$ref": "#/$defs/hash"
+        },
+        "action_runtime_resources/constraints.json": {
+          "$ref": "#/$defs/hash"
+        },
+        "action_runtime_resources/domainPolicy.json": {
+          "$ref": "#/$defs/hash"
+        },
+        "action_runtime_resources/tablesPackage.json": {
+          "$ref": "#/$defs/hash"
+        },
+        "action_runtime_resources/actionsPackage.json": {
+          "$ref": "#/$defs/hash"
+        },
+        "action_runtime_resources/bindingPackage.json": {
+          "$ref": "#/$defs/hash"
+        },
+        "action_runtime_resources/stableBindingPackage.json": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": [
+        "action_runtime_resources/coreSchema.json",
+        "action_runtime_resources/referenceSchema.json",
+        "action_runtime_resources/packageSchema.json",
+        "action_runtime_resources/constraints.json",
+        "action_runtime_resources/domainPolicy.json",
+        "action_runtime_resources/tablesPackage.json",
+        "action_runtime_resources/actionsPackage.json",
+        "action_runtime_resources/bindingPackage.json",
+        "action_runtime_resources/stableBindingPackage.json"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-part": {
+      "type": "object",
+      "properties": {
+        "ordinal": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 127
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8589934592
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 62914560
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": [
+        "ordinal",
+        "offset",
+        "length",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-object": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^[^/\\\\]+$"
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "mode": {
+          "enum": [
+            420,
+            493
+          ]
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8589934592
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "parts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/multipart-part"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "roles",
+        "mode",
+        "bytes",
+        "sha256",
+        "parts"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-objects": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 128,
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096,
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/multipart-object"
+      }
+    },
+    "multipart-budgets": {
+      "type": "object",
+      "properties": {
+        "logical_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 34359738368
+        },
+        "transport_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 34359738368
+        },
+        "expanded_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 34359738368
+        },
+        "workspace_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 34359738368
+        },
+        "proof_bytes": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 67108864
+        },
+        "seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5400
+        },
+        "role_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 103079215104
+        },
+        "control_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 406847488
+        },
+        "external_workspace_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 34359738368
+        }
+      },
+      "required": [
+        "logical_bytes",
+        "transport_bytes",
+        "expanded_bytes",
+        "workspace_bytes",
+        "proof_bytes",
+        "seconds",
+        "role_bytes",
+        "control_bytes",
+        "external_workspace_bytes"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-source": {
+      "type": "object",
+      "properties": {
+        "object": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "tar_bytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 8589934592
+        },
+        "tar_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "member_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8589934592
+        },
+        "members": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "prefix": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        }
+      },
+      "required": [
+        "object",
+        "tar_bytes",
+        "tar_sha256",
+        "member_bytes",
+        "members",
+        "prefix"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-plan": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.multipart/1"
+        },
+        "payload_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 62914560
+        },
+        "objects": {
+          "$ref": "#/$defs/multipart-objects"
+        },
+        "budgets": {
+          "$ref": "#/$defs/multipart-budgets"
+        },
+        "source": {
+          "$ref": "#/$defs/multipart-source"
+        }
+      },
+      "required": [
+        "profile",
+        "payload_bytes",
+        "objects",
+        "budgets",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-envelope-provenance": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "common",
+            "continuation",
+            "qualified"
+          ]
+        },
+        "run": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "job": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "artifact": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workflow": {
+          "const": ".github/workflows/core-successor-qualification.yml"
+        },
+        "controller": {
+          "$ref": "#/$defs/commit"
+        },
+        "source": {
+          "$ref": "#/$defs/commit"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "members": {
+          "$ref": "#/$defs/pins",
+          "maxProperties": 1024
+        },
+        "workflow_sha": {
+          "$ref": "#/$defs/commit"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "job_name": {
+          "enum": [
+            "linux",
+            "macos"
+          ]
+        },
+        "upload_step": {
+          "type": "string",
+          "pattern": "^Retain sanitized failures and original component custody(?: / part-[0-9]{3})?$"
+        },
+        "envelope": {
+          "type": "string",
+          "pattern": "^(proof|part-[0-9]{3})$"
+        }
+      },
+      "required": [
+        "kind",
+        "run",
+        "job",
+        "attempt",
+        "artifact",
+        "workflow",
+        "controller",
+        "source",
+        "sha256",
+        "members",
+        "workflow_sha",
+        "platform",
+        "job_name",
+        "upload_step",
+        "envelope"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-material": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.multipart-material/1"
+        },
+        "source": {
+          "$ref": "#/$defs/commit"
+        },
+        "controller": {
+          "$ref": "#/$defs/commit"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "common",
+            "continuation",
+            "qualified"
+          ]
+        },
+        "objects": {
+          "$ref": "#/$defs/multipart-objects"
+        },
+        "envelopes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {
+            "type": "object",
+            "properties": {
+              "object": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096,
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+              },
+              "ordinal": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 127
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 67108864
+              },
+              "expanded_bytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 67108864
+              },
+              "provenance": {
+                "$ref": "#/$defs/multipart-envelope-provenance"
+              }
+            },
+            "required": [
+              "object",
+              "ordinal",
+              "bytes",
+              "expanded_bytes",
+              "provenance"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "proof": {
+          "$ref": "#/$defs/multipart-envelope-provenance"
+        },
+        "proof_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "proof_expanded_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "totals": {
+          "type": "object",
+          "properties": {
+            "budgets": {
+              "$ref": "#/$defs/multipart-budgets"
+            },
+            "source": {
+              "$ref": "#/$defs/multipart-source"
+            },
+            "transport_bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8589934592
+            },
+            "expanded_bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8589934592
+            }
+          },
+          "required": [
+            "budgets",
+            "source",
+            "transport_bytes",
+            "expanded_bytes"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "profile",
+        "source",
+        "controller",
+        "platform",
+        "kind",
+        "objects",
+        "envelopes",
+        "proof",
+        "proof_bytes",
+        "proof_expanded_bytes",
+        "totals"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-admission": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+        },
+        "profile": {
+          "const": "umf.core-successor.candidate-multipart/1"
+        },
+        "purpose": {
+          "const": "candidate-production"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+          "not": {
+            "enum": [
+              "0.0.0",
+              "0.10.7",
+              "0.10.8",
+              "0.10.9"
+            ]
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "bounds": {
+          "$ref": "#/$defs/bounds"
+        },
+        "resources": {
+          "$ref": "#/$defs/installed-resource-pins"
+        },
+        "protocols": {
+          "$ref": "#/$defs/protocols"
+        },
+        "inputs": {
+          "$ref": "#/$defs/pins"
+        },
+        "recipes": {
+          "$ref": "#/$defs/pins"
+        },
+        "common": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/multipart-material"
+            }
+          ]
+        },
+        "continuation": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/multipart-material"
+            }
+          ]
+        },
+        "compatibility": {
+          "$ref": "#/$defs/compatibility-contract"
+        },
+        "transport": {
+          "$ref": "#/$defs/multipart-plan"
+        }
+      },
+      "required": [
+        "id",
+        "profile",
+        "purpose",
+        "version",
+        "source",
+        "controller",
+        "platform",
+        "bounds",
+        "resources",
+        "protocols",
+        "inputs",
+        "recipes",
+        "common",
+        "continuation",
+        "compatibility",
+        "transport"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "platform": {
+                "const": "macos-arm64"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "common": {
+                "$ref": "#/$defs/multipart-material"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "multipart-aggregate-admission": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+        },
+        "profile": {
+          "const": "umf.core-successor.candidate-multipart/1"
+        },
+        "purpose": {
+          "const": "candidate-aggregate"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+          "not": {
+            "enum": [
+              "0.0.0",
+              "0.10.7",
+              "0.10.8",
+              "0.10.9"
+            ]
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "platform": {
+          "const": "linux-x86_64"
+        },
+        "bounds": {
+          "$ref": "#/$defs/bounds"
+        },
+        "resources": {
+          "$ref": "#/$defs/installed-resource-pins"
+        },
+        "protocols": {
+          "$ref": "#/$defs/protocols"
+        },
+        "inputs": {
+          "$ref": "#/$defs/pins"
+        },
+        "recipes": {
+          "$ref": "#/$defs/pins"
+        },
+        "common": {
+          "type": "null"
+        },
+        "continuation": {
+          "type": "null"
+        },
+        "components": {
+          "type": "object",
+          "properties": {
+            "linux-x86_64": {
+              "type": "object",
+              "properties": {
+                "admission_id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+                },
+                "material": {
+                  "$ref": "#/$defs/multipart-material"
+                }
+              },
+              "required": [
+                "admission_id",
+                "material"
+              ],
+              "additionalProperties": false
+            },
+            "macos-arm64": {
+              "type": "object",
+              "properties": {
+                "admission_id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+                },
+                "material": {
+                  "$ref": "#/$defs/multipart-material"
+                }
+              },
+              "required": [
+                "admission_id",
+                "material"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "linux-x86_64",
+            "macos-arm64"
+          ],
+          "additionalProperties": false
+        },
+        "roster": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "core-sdist": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "codegen-wheel": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "codegen-sdist": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "linux-x86_64/core-wheel": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "linux-x86_64/standalone-cli": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "linux-x86_64/sdk": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "linux-x86_64/sdk-manifest": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "macos-arm64/core-wheel": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "macos-arm64/standalone-cli": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "macos-arm64/sdk": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            },
+            "macos-arm64/sdk-manifest": {
+              "$ref": "#/$defs/multipart-coupled-asset"
+            }
+          },
+          "required": [
+            "source",
+            "core-sdist",
+            "codegen-wheel",
+            "codegen-sdist",
+            "linux-x86_64/core-wheel",
+            "linux-x86_64/standalone-cli",
+            "linux-x86_64/sdk",
+            "linux-x86_64/sdk-manifest",
+            "macos-arm64/core-wheel",
+            "macos-arm64/standalone-cli",
+            "macos-arm64/sdk",
+            "macos-arm64/sdk-manifest"
+          ],
+          "additionalProperties": false
+        },
+        "compatibility": {
+          "$ref": "#/$defs/compatibility-contract"
+        },
+        "transport": {
+          "$ref": "#/$defs/multipart-plan"
+        }
+      },
+      "required": [
+        "id",
+        "profile",
+        "purpose",
+        "version",
+        "source",
+        "controller",
+        "platform",
+        "bounds",
+        "resources",
+        "protocols",
+        "inputs",
+        "recipes",
+        "common",
+        "continuation",
+        "components",
+        "roster",
+        "compatibility",
+        "transport"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "platform": {
+                "const": "macos-arm64"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "common": {
+                "$ref": "#/$defs/material"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "multipart-coupled-asset": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[^/\\\\]+$"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "member": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8589934592
+        },
+        "mode": {
+          "enum": [
+            420,
+            493
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "platform",
+        "member",
+        "sha256",
+        "bytes",
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-receipt": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.core-successor.candidate-multipart/1"
+        },
+        "status": {
+          "enum": [
+            "unobserved",
+            "passed",
+            "failed"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "version": {
+          "type": "string"
+        },
+        "platform": {
+          "enum": [
+            "linux-x86_64",
+            "macos-arm64"
+          ]
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "inputs": {
+          "$ref": "#/$defs/pins"
+        },
+        "resources": {
+          "$ref": "#/$defs/installed-resource-pins"
+        },
+        "protocols": {
+          "$ref": "#/$defs/protocols"
+        },
+        "original": {
+          "$ref": "#/$defs/original"
+        },
+        "steps": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "$ref": "#/$defs/step"
+            },
+            "common": {
+              "$ref": "#/$defs/step"
+            },
+            "wheel": {
+              "$ref": "#/$defs/step"
+            },
+            "sdk": {
+              "$ref": "#/$defs/step"
+            },
+            "consumers": {
+              "$ref": "#/$defs/step"
+            },
+            "inspection": {
+              "$ref": "#/$defs/step"
+            },
+            "final-identity": {
+              "$ref": "#/$defs/step"
+            },
+            "job-setup": {
+              "$ref": "#/$defs/step"
+            },
+            "rebuild": {
+              "$ref": "#/$defs/step"
+            }
+          },
+          "additionalProperties": false
+        },
+        "inspection": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/inspections"
+            }
+          ]
+        },
+        "releaseQualified": {
+          "const": false
+        },
+        "nativeReleaseQualified": {
+          "const": false
+        },
+        "failure": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "coupledQualified": {
+          "const": false
+        }
+      },
+      "required": [
+        "profile",
+        "status",
+        "source",
+        "version",
+        "platform",
+        "controller",
+        "inputs",
+        "resources",
+        "protocols",
+        "original",
+        "steps",
+        "inspection",
+        "releaseQualified",
+        "nativeReleaseQualified",
+        "failure",
+        "coupledQualified"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "passed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "inspection": {
+                "$ref": "#/$defs/inspections"
+              },
+              "steps": {
+                "required": [
+                  "job-setup",
+                  "source",
+                  "common",
+                  "wheel",
+                  "sdk",
+                  "rebuild",
+                  "consumers",
+                  "inspection",
+                  "final-identity"
+                ],
+                "additionalProperties": {
+                  "properties": {
+                    "status": {
+                      "const": "passed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "multipart-operation-clock": {
+      "type": "object",
+      "properties": {
+        "startedMonotonic": {
+          "type": "number",
+          "minimum": 0
+        },
+        "seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5400
+        }
+      },
+      "required": [
+        "startedMonotonic",
+        "seconds"
+      ],
+      "additionalProperties": false
+    },
+    "multipart-mode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "controller": {
+          "$ref": "#/$defs/controller"
+        },
+        "deadline": {
+          "$ref": "#/$defs/multipart-operation-clock"
+        }
+      },
+      "required": [
+        "id",
+        "source",
+        "controller",
+        "deadline"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

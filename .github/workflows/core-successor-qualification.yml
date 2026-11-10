@@ -1,0 +1,3384 @@
+{
+  "name": "Closed Core successor candidate qualification",
+  "on": {
+    "workflow_dispatch": {
+      "inputs": {
+        "admitted": {
+          "type": "boolean",
+          "default": false,
+          "description": "Explicit reviewed protocol-2 component admission; empty registry refuses; no coupled/release qualification"
+        },
+        "admission_id": {
+          "type": "string",
+          "required": true
+        },
+        "controller_sha": {
+          "type": "string",
+          "required": true
+        },
+        "platform": {
+          "type": "choice",
+          "required": true,
+          "options": [
+            "none",
+            "linux-x86_64",
+            "macos-arm64"
+          ],
+          "default": "none"
+        },
+        "operation": {
+          "type": "choice",
+          "options": [
+            "run",
+            "aggregate"
+          ],
+          "default": "run",
+          "description": "Registered component production or distinct material-readiness aggregate; neither publishes"
+        }
+      }
+    }
+  },
+  "permissions": {
+    "contents": "read",
+    "actions": "read"
+  },
+  "concurrency": {
+    "group": "core-successor-${{ inputs.admission_id }}-${{ inputs.platform }}",
+    "cancel-in-progress": false
+  },
+  "jobs": {
+    "linux": {
+      "if": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.admitted == true && inputs.platform == 'linux-x86_64'",
+      "runs-on": "ubuntu-24.04",
+      "timeout-minutes": 90,
+      "env": {
+        "CARGO_BUILD_JOBS": "1",
+        "NUM_JOBS": "1",
+        "CMAKE_BUILD_PARALLEL_LEVEL": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SUCCESSOR_ADMITTED": "${{ inputs.admitted }}",
+        "SUCCESSOR_ID": "${{ inputs.admission_id }}",
+        "SUCCESSOR_PLATFORM": "linux-x86_64",
+        "SUCCESSOR_JOB_NAME": "linux",
+        "GH_TOKEN": "${{ github.token }}",
+        "SUCCESSOR_OPERATION": "${{ inputs.operation }}"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@v6",
+          "with": {
+            "ref": "${{ github.workflow_sha }}",
+            "path": "authority",
+            "persist-credentials": false
+          }
+        },
+        {
+          "uses": "actions/checkout@v6",
+          "with": {
+            "ref": "${{ inputs.controller_sha }}",
+            "path": "controller",
+            "persist-credentials": false
+          }
+        },
+        {
+          "uses": "actions/setup-python@v5",
+          "with": {
+            "python-version": "3.11.17"
+          }
+        },
+        {
+          "name": "Select controller Python without touching credentials",
+          "shell": "bash",
+          "run": "set -euo pipefail\necho \"PY=$(command -v python)\" >> \"$GITHUB_ENV\""
+        },
+        {
+          "name": "Authenticate main registry before producer setup",
+          "id": "binding",
+          "shell": "bash",
+          "run": "set -euo pipefail\n\"$PY\" -I -B authority/tools/qualify_core_successor.py authorize --root authority --controller controller --id \"$SUCCESSOR_ID\" --platform \"$SUCCESSOR_PLATFORM\" --output \"$RUNNER_TEMP/successor-proof\""
+        },
+        {
+          "uses": "astral-sh/setup-uv@v6",
+          "with": {
+            "version": "0.13.3"
+          },
+          "if": "inputs.operation == 'run'"
+        },
+        {
+          "uses": "actions/checkout@v6",
+          "with": {
+            "ref": "${{ steps.binding.outputs.source }}",
+            "path": "source",
+            "persist-credentials": false
+          }
+        },
+        {
+          "uses": "dtolnay/rust-toolchain@stable",
+          "with": {
+            "toolchain": "1.90.0",
+            "targets": "wasm32-unknown-unknown"
+          },
+          "if": "inputs.operation == 'run'"
+        },
+        {
+          "uses": "oven-sh/setup-bun@v2",
+          "with": {
+            "bun-version": "1.4.3"
+          },
+          "if": "inputs.operation == 'run'"
+        },
+        {
+          "uses": "actions/setup-node@v4",
+          "with": {
+            "node-version": "26.12.0"
+          },
+          "if": "inputs.operation == 'run'"
+        },
+        {
+          "name": "Execute only the registered candidate recipe",
+          "shell": "bash",
+          "run": "set -euo pipefail\n\"$PY\" -I -B authority/tools/qualify_core_successor.py \"$SUCCESSOR_OPERATION\" --root authority --controller controller --source source --id \"$SUCCESSOR_ID\" --platform \"$SUCCESSOR_PLATFORM\" --output \"$RUNNER_TEMP/successor-proof\"",
+          "env": {
+            "SUCCESSOR_OPERATION": "${{ inputs.operation }}"
+          }
+        },
+        {
+          "name": "Seal final byte-bounded evidence including receipts",
+          "id": "retention",
+          "if": "always()",
+          "shell": "bash",
+          "run": "set -euo pipefail\n\"$PY\" -I -B authority/tools/qualify_core_successor.py seal --root authority --output \"$RUNNER_TEMP/successor-proof\""
+        },
+        {
+          "name": "Retain sanitized failures and original component custody",
+          "if": "always() && steps.retention.outputs.bounded == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}${{ steps.retention.outputs.multipart == 'true' && '-proof' || '' }}",
+            "path": "${{ runner.temp }}/successor-proof/retained/",
+            "if-no-files-found": "warn",
+            "retention-days": 90,
+            "compression-level": "${{ fromJSON(steps.retention.outputs.multipart == 'true' && '0' || '6') }}"
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-000",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_000 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-000",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/000/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-001",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_001 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-001",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/001/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-002",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_002 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-002",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/002/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-003",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_003 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-003",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/003/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-004",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_004 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-004",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/004/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-005",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_005 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-005",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/005/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-006",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_006 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-006",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/006/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-007",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_007 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-007",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/007/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-008",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_008 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-008",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/008/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-009",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_009 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-009",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/009/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-010",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_010 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-010",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/010/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-011",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_011 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-011",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/011/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-012",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_012 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-012",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/012/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-013",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_013 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-013",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/013/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-014",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_014 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-014",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/014/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-015",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_015 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-015",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/015/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-016",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_016 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-016",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/016/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-017",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_017 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-017",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/017/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-018",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_018 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-018",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/018/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-019",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_019 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-019",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/019/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-020",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_020 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-020",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/020/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-021",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_021 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-021",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/021/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-022",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_022 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-022",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/022/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-023",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_023 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-023",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/023/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-024",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_024 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-024",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/024/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-025",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_025 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-025",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/025/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-026",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_026 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-026",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/026/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-027",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_027 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-027",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/027/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-028",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_028 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-028",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/028/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-029",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_029 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-029",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/029/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-030",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_030 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-030",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/030/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-031",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_031 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-031",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/031/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-032",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_032 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-032",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/032/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-033",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_033 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-033",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/033/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-034",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_034 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-034",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/034/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-035",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_035 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-035",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/035/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-036",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_036 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-036",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/036/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-037",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_037 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-037",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/037/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-038",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_038 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-038",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/038/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-039",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_039 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-039",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/039/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-040",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_040 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-040",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/040/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-041",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_041 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-041",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/041/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-042",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_042 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-042",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/042/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-043",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_043 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-043",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/043/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-044",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_044 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-044",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/044/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-045",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_045 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-045",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/045/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-046",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_046 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-046",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/046/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-047",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_047 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-047",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/047/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-048",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_048 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-048",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/048/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-049",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_049 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-049",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/049/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-050",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_050 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-050",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/050/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-051",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_051 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-051",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/051/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-052",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_052 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-052",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/052/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-053",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_053 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-053",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/053/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-054",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_054 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-054",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/054/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-055",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_055 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-055",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/055/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-056",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_056 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-056",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/056/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-057",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_057 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-057",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/057/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-058",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_058 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-058",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/058/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-059",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_059 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-059",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/059/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-060",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_060 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-060",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/060/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-061",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_061 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-061",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/061/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-062",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_062 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-062",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/062/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-063",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_063 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-063",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/063/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-064",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_064 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-064",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/064/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-065",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_065 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-065",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/065/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-066",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_066 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-066",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/066/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-067",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_067 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-067",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/067/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-068",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_068 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-068",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/068/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-069",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_069 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-069",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/069/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-070",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_070 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-070",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/070/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-071",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_071 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-071",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/071/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-072",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_072 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-072",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/072/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-073",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_073 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-073",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/073/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-074",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_074 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-074",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/074/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-075",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_075 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-075",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/075/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-076",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_076 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-076",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/076/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-077",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_077 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-077",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/077/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-078",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_078 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-078",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/078/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-079",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_079 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-079",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/079/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-080",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_080 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-080",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/080/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-081",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_081 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-081",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/081/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-082",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_082 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-082",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/082/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-083",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_083 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-083",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/083/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-084",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_084 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-084",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/084/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-085",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_085 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-085",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/085/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-086",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_086 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-086",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/086/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-087",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_087 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-087",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/087/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-088",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_088 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-088",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/088/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-089",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_089 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-089",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/089/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-090",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_090 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-090",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/090/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-091",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_091 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-091",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/091/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-092",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_092 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-092",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/092/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-093",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_093 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-093",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/093/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-094",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_094 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-094",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/094/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-095",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_095 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-095",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/095/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-096",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_096 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-096",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/096/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-097",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_097 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-097",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/097/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-098",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_098 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-098",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/098/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-099",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_099 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-099",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/099/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-100",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_100 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-100",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/100/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-101",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_101 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-101",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/101/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-102",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_102 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-102",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/102/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-103",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_103 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-103",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/103/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-104",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_104 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-104",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/104/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-105",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_105 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-105",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/105/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-106",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_106 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-106",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/106/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-107",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_107 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-107",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/107/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-108",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_108 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-108",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/108/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-109",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_109 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-109",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/109/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-110",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_110 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-110",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/110/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-111",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_111 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-111",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/111/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-112",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_112 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-112",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/112/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-113",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_113 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-113",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/113/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-114",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_114 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-114",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/114/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-115",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_115 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-115",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/115/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-116",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_116 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-116",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/116/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-117",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_117 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-117",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/117/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-118",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_118 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-118",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/118/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-119",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_119 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-119",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/119/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-120",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_120 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-120",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/120/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-121",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_121 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-121",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/121/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-122",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_122 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-122",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/122/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-123",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_123 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-123",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/123/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-124",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_124 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-124",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/124/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-125",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_125 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-125",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/125/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-126",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_126 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-126",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/126/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-127",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_127 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-${{ github.run_id }}-${{ github.run_attempt }}-part-127",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/127/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Dispose only this job target and consumers",
+          "if": "always()",
+          "shell": "bash",
+          "run": "set -euo pipefail\nif [ -d \"$RUNNER_TEMP/successor-proof\" ]; then\n  \"$PY\" -I -B authority/tools/qualify_core_successor.py cleanup --root authority --output \"$RUNNER_TEMP/successor-proof\"\nfi"
+        },
+        {
+          "name": "Retain cleanup outcome separately",
+          "if": "always()",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-linux-cleanup-${{ github.run_id }}-${{ github.run_attempt }}",
+            "path": "${{ runner.temp }}/successor-proof/cleanup.json",
+            "if-no-files-found": "warn",
+            "retention-days": 90
+          }
+        }
+      ]
+    },
+    "macos": {
+      "if": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.admitted == true && inputs.platform == 'macos-arm64' && inputs.operation == 'run'",
+      "runs-on": "macos-15",
+      "timeout-minutes": 90,
+      "env": {
+        "CARGO_BUILD_JOBS": "1",
+        "NUM_JOBS": "1",
+        "CMAKE_BUILD_PARALLEL_LEVEL": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SUCCESSOR_ADMITTED": "${{ inputs.admitted }}",
+        "SUCCESSOR_ID": "${{ inputs.admission_id }}",
+        "SUCCESSOR_PLATFORM": "macos-arm64",
+        "SUCCESSOR_JOB_NAME": "macos",
+        "GH_TOKEN": "${{ github.token }}",
+        "SUCCESSOR_OPERATION": "${{ inputs.operation }}"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@v6",
+          "with": {
+            "ref": "${{ github.workflow_sha }}",
+            "path": "authority",
+            "persist-credentials": false
+          }
+        },
+        {
+          "uses": "actions/checkout@v6",
+          "with": {
+            "ref": "${{ inputs.controller_sha }}",
+            "path": "controller",
+            "persist-credentials": false
+          }
+        },
+        {
+          "uses": "astral-sh/setup-uv@v6",
+          "with": {
+            "version": "0.13.3"
+          },
+          "if": "inputs.operation == 'run'"
+        },
+        {
+          "name": "Select controller Python without touching credentials",
+          "shell": "bash",
+          "run": "set -euo pipefail\nuv python install --managed-python 3.11.17\necho \"PY=$(uv python find --managed-python 3.11.17)\" >> \"$GITHUB_ENV\""
+        },
+        {
+          "name": "Authenticate main registry before producer setup",
+          "id": "binding",
+          "shell": "bash",
+          "run": "set -euo pipefail\n\"$PY\" -I -B authority/tools/qualify_core_successor.py authorize --root authority --controller controller --id \"$SUCCESSOR_ID\" --platform \"$SUCCESSOR_PLATFORM\" --output \"$RUNNER_TEMP/successor-proof\""
+        },
+        {
+          "uses": "actions/checkout@v6",
+          "with": {
+            "ref": "${{ steps.binding.outputs.source }}",
+            "path": "source",
+            "persist-credentials": false
+          }
+        },
+        {
+          "uses": "dtolnay/rust-toolchain@stable",
+          "with": {
+            "toolchain": "1.90.0",
+            "targets": "wasm32-unknown-unknown"
+          },
+          "if": "inputs.operation == 'run'"
+        },
+        {
+          "uses": "oven-sh/setup-bun@v2",
+          "with": {
+            "bun-version": "1.4.3"
+          },
+          "if": "inputs.operation == 'run'"
+        },
+        {
+          "uses": "actions/setup-node@v4",
+          "with": {
+            "node-version": "26.12.0"
+          },
+          "if": "inputs.operation == 'run'"
+        },
+        {
+          "name": "Execute only the registered candidate recipe",
+          "shell": "bash",
+          "run": "set -euo pipefail\n\"$PY\" -I -B authority/tools/qualify_core_successor.py \"$SUCCESSOR_OPERATION\" --root authority --controller controller --source source --id \"$SUCCESSOR_ID\" --platform \"$SUCCESSOR_PLATFORM\" --output \"$RUNNER_TEMP/successor-proof\"",
+          "env": {
+            "SUCCESSOR_OPERATION": "${{ inputs.operation }}"
+          }
+        },
+        {
+          "name": "Seal final byte-bounded evidence including receipts",
+          "id": "retention",
+          "if": "always()",
+          "shell": "bash",
+          "run": "set -euo pipefail\n\"$PY\" -I -B authority/tools/qualify_core_successor.py seal --root authority --output \"$RUNNER_TEMP/successor-proof\""
+        },
+        {
+          "name": "Retain sanitized failures and original component custody",
+          "if": "always() && steps.retention.outputs.bounded == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}${{ steps.retention.outputs.multipart == 'true' && '-proof' || '' }}",
+            "path": "${{ runner.temp }}/successor-proof/retained/",
+            "if-no-files-found": "warn",
+            "retention-days": 90,
+            "compression-level": "${{ fromJSON(steps.retention.outputs.multipart == 'true' && '0' || '6') }}"
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-000",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_000 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-000",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/000/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-001",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_001 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-001",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/001/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-002",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_002 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-002",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/002/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-003",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_003 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-003",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/003/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-004",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_004 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-004",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/004/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-005",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_005 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-005",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/005/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-006",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_006 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-006",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/006/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-007",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_007 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-007",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/007/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-008",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_008 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-008",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/008/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-009",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_009 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-009",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/009/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-010",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_010 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-010",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/010/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-011",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_011 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-011",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/011/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-012",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_012 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-012",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/012/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-013",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_013 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-013",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/013/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-014",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_014 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-014",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/014/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-015",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_015 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-015",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/015/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-016",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_016 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-016",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/016/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-017",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_017 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-017",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/017/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-018",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_018 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-018",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/018/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-019",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_019 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-019",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/019/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-020",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_020 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-020",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/020/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-021",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_021 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-021",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/021/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-022",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_022 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-022",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/022/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-023",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_023 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-023",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/023/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-024",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_024 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-024",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/024/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-025",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_025 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-025",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/025/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-026",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_026 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-026",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/026/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-027",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_027 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-027",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/027/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-028",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_028 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-028",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/028/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-029",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_029 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-029",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/029/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-030",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_030 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-030",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/030/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-031",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_031 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-031",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/031/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-032",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_032 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-032",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/032/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-033",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_033 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-033",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/033/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-034",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_034 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-034",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/034/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-035",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_035 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-035",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/035/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-036",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_036 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-036",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/036/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-037",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_037 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-037",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/037/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-038",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_038 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-038",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/038/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-039",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_039 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-039",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/039/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-040",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_040 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-040",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/040/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-041",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_041 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-041",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/041/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-042",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_042 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-042",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/042/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-043",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_043 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-043",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/043/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-044",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_044 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-044",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/044/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-045",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_045 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-045",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/045/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-046",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_046 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-046",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/046/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-047",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_047 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-047",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/047/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-048",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_048 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-048",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/048/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-049",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_049 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-049",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/049/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-050",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_050 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-050",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/050/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-051",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_051 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-051",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/051/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-052",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_052 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-052",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/052/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-053",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_053 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-053",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/053/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-054",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_054 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-054",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/054/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-055",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_055 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-055",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/055/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-056",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_056 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-056",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/056/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-057",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_057 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-057",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/057/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-058",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_058 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-058",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/058/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-059",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_059 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-059",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/059/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-060",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_060 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-060",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/060/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-061",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_061 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-061",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/061/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-062",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_062 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-062",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/062/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-063",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_063 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-063",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/063/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-064",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_064 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-064",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/064/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-065",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_065 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-065",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/065/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-066",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_066 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-066",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/066/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-067",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_067 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-067",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/067/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-068",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_068 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-068",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/068/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-069",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_069 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-069",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/069/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-070",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_070 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-070",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/070/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-071",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_071 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-071",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/071/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-072",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_072 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-072",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/072/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-073",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_073 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-073",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/073/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-074",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_074 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-074",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/074/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-075",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_075 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-075",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/075/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-076",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_076 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-076",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/076/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-077",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_077 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-077",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/077/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-078",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_078 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-078",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/078/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-079",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_079 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-079",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/079/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-080",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_080 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-080",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/080/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-081",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_081 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-081",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/081/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-082",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_082 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-082",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/082/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-083",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_083 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-083",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/083/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-084",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_084 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-084",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/084/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-085",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_085 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-085",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/085/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-086",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_086 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-086",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/086/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-087",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_087 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-087",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/087/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-088",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_088 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-088",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/088/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-089",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_089 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-089",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/089/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-090",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_090 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-090",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/090/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-091",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_091 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-091",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/091/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-092",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_092 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-092",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/092/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-093",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_093 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-093",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/093/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-094",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_094 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-094",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/094/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-095",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_095 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-095",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/095/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-096",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_096 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-096",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/096/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-097",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_097 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-097",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/097/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-098",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_098 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-098",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/098/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-099",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_099 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-099",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/099/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-100",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_100 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-100",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/100/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-101",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_101 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-101",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/101/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-102",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_102 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-102",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/102/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-103",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_103 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-103",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/103/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-104",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_104 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-104",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/104/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-105",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_105 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-105",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/105/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-106",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_106 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-106",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/106/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-107",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_107 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-107",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/107/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-108",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_108 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-108",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/108/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-109",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_109 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-109",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/109/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-110",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_110 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-110",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/110/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-111",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_111 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-111",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/111/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-112",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_112 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-112",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/112/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-113",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_113 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-113",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/113/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-114",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_114 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-114",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/114/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-115",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_115 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-115",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/115/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-116",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_116 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-116",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/116/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-117",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_117 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-117",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/117/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-118",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_118 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-118",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/118/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-119",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_119 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-119",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/119/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-120",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_120 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-120",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/120/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-121",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_121 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-121",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/121/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-122",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_122 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-122",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/122/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-123",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_123 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-123",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/123/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-124",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_124 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-124",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/124/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-125",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_125 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-125",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/125/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-126",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_126 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-126",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/126/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Retain sanitized failures and original component custody / part-127",
+          "if": "always() && steps.retention.outputs.bounded == 'true' && steps.retention.outputs.multipart == 'true' && steps.retention.outputs.part_127 == 'true'",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-${{ github.run_id }}-${{ github.run_attempt }}-part-127",
+            "path": "${{ runner.temp }}/successor-proof/multipart-payloads/127/payload.bin",
+            "if-no-files-found": "error",
+            "compression-level": 0,
+            "retention-days": 90
+          }
+        },
+        {
+          "name": "Dispose only this job target and consumers",
+          "if": "always()",
+          "shell": "bash",
+          "run": "set -euo pipefail\nif [ -d \"$RUNNER_TEMP/successor-proof\" ]; then\n  \"$PY\" -I -B authority/tools/qualify_core_successor.py cleanup --root authority --output \"$RUNNER_TEMP/successor-proof\"\nfi"
+        },
+        {
+          "name": "Retain cleanup outcome separately",
+          "if": "always()",
+          "uses": "actions/upload-artifact@v4",
+          "with": {
+            "name": "core-successor-macos-cleanup-${{ github.run_id }}-${{ github.run_attempt }}",
+            "path": "${{ runner.temp }}/successor-proof/cleanup.json",
+            "if-no-files-found": "warn",
+            "retention-days": 90
+          }
+        }
+      ]
+    }
+  },
+  "run-name": "core-successor:${{ inputs.admission_id }}:${{ inputs.platform }}"
+}
