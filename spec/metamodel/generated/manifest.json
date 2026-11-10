@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-    "compilerSha256": "d676e6c20339d416d127a54cc53e228da009209df583c568ab41fdb4529ec165"
+    "compilerSha256": "a1e8527822fb5a14c9bcfcdc4a04244b050ccbeaf04400701de5ac0cfdb4a54d"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
@@ -241,7 +241,7 @@
     "crates/umf-core/src/schema_annotation_delta.rs": "e6c07f15750cbbd06b1158943bdeb8743be7a09f986d552ebf6c0df21623458d",
     "crates/umf-core/src/schema_bound_coordinate_views_independent_tests.rs": "f255d7d9702c0868cb3b0b52b7feb0653eb621689b3efc39e3ce7e00f88fccb6",
     "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
-    "crates/umf-core/src/schema_closed_container_independent_tests.rs": "cd48d8e3472461e1594c46bda615880b6e60020240ed17f03a90f76cca16b135",
+    "crates/umf-core/src/schema_closed_container_independent_tests.rs": "63d37fc50d98d0b8f88af3bae40eb27bd362d7ae621e02785d7ab37f2826ecbc",
     "crates/umf-core/src/schema_closed_structure.rs": "27d6487c5d0792f2361302eb4c3cb13d94e16bcca4c4d218ba5acea398074a0f",
     "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
     "crates/umf-core/src/schema_construction_index.rs": "d1e6b66dd95536f1c08a843bb4ecce33f390785cebd8bfa6d3a79a24aaee0c69",
@@ -325,8 +325,8 @@
     "crates/umf-core/src/target_pin.rs": "45309fb10bc0f696b9e0332dde38d1335bf91dc34fc14b5313ecf8f1d8c9d854",
     "crates/umf-core/src/typespec_adapter.rs": "f33f128415c9b74a421cdf737993e37ceaa6660b4ffe15ad9eb5dab5154669a3",
     "crates/umf-core/src/typespec_smithy_jsonschema_projection.rs": "9171fd01260d90b240aba325381e1de8ef82e61d07e31ba962899ba129c23d11",
-    "crates/umf-core/src/value.rs": "b4218897df608c9ad86bc320896ac6d96092f7cc5b3cb4ef5a2e07050d0456d1",
-    "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "bd8433aea4fecf8611065391096907d640ba48379e83ead6f387a04300e8e05b",
+    "crates/umf-core/src/value.rs": "6a5b3e827e97cfa04dd6167cd62c488132759486f2eb603dccaf3cab0e9ad22d",
+    "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "7e5c714688bf81fafdda16ad586000dbd48183c39e6364968988a79f6cc130fc",
     "crates/umf-core/src/value_decimal_path.rs": "477f37b08fe97e82f857100be653abf81fb997d69fc0baca868ad944ebba7109",
     "crates/umf-core/src/value_fused_admission_independent_tests.rs": "62a3d88fd1dd9331eb2a7bb683a98d1ec884b159e0a5c032fdd57b0880948f41",
     "crates/umf-core/src/value_original_visit_independent_tests.rs": "0d8d89f7ca02c5b238bfcb03f512c5a9e748ffbbd31c3b7dd3a1f80a28542daf",
@@ -1606,7 +1606,7 @@
     "crates/umf-core-wire/tests/sqlserver_wire.rs": "663a5472c1776cb2f2bec9a0ccde7499775fbf6f21da02af8904757d5fd00a49",
     "crates/umf-core-wire/tests/tablespec_binding.rs": "67c9d52010812c72699e199b34f2c81a1f0aafd4cbcf83a695a5a98a5bb5381f",
     "crates/umf-core-wire/tests/typespec_binding.rs": "97fcab2f4a9182635dd2c82fcb4199b1bb19a6c474aec2c3b5a5cf416c110a70",
-    "crates/umf-core/src/canonical_codegen_literals.rs": "350738a3c1cbcd86f407da749537fc2fdb988d93db11b8e842bc2b73b7bdaa51",
+    "crates/umf-core/src/canonical_codegen_literals.rs": "169e8a3c0c9d5ea1b2fd3c8b7982a4ae8da1b3ec17ad1ca2c257b490b773fcf1",
     "crates/umf-graphql/Cargo.toml": "7e05c3edbb7fdeafbc4efae59b76353b0c679c6a7afbdbb8e3f5842226589deb",
     "crates/umf-graphql/src/apollo_mapper.rs": "79f22e2769111d3be20ca8174d06138cca8b5a2c8bfbfc8f5e69476513661d31",
     "crates/umf-graphql/src/core_value_bridge.rs": "a77b7a641af6c4936c2e64d289a01b0d4cd1da680134662b808bfe9ab4949f95",
@@ -2278,7 +2278,7 @@
     "crates/umf-graphql/vendor/serde_json_bytes/src/value/ser.rs": "db9f72c99b6a051a8c05219d210a9e1c313b65727914948b4d2218e87792efc7",
     "scripts/metamodel/build.ts": "d5ba46cd2db626acf49f670074aef180cdf877e9ede40b357c8ba6c89bb87eab",
     "scripts/metamodel/rust.ts": "6013a5435aa93da3eee998384f5eb8a6ee3b18798bcfc613af6e76dd0986a7bc",
-    "scripts/metamodel/source-closure.ts": "b7207dd2b27a9e8843b3bafa1e28f1ed679c67f4b321d304dbd7a4317f0d683e",
+    "scripts/metamodel/source-closure.ts": "b88ba2d8eaa1d78854fd181250f3272b019ef6eac0d03b36c4e3864965cd75de",
     "scripts/metamodel/structural.ts": "5a938650d2c67681c68439e9cfcda797132bfbb4dea692e3ca9b78382be7a964",
     "scripts/metamodel/structural-accounting.ts": "0926228a7f4101b7062e0d634824e37ee10957f0742893f01c1e641e2e05b2f2",
     "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
@@ -2521,7 +2521,7 @@
     "crates/umf-core/src/schema_annotation_delta.rs": "e6c07f15750cbbd06b1158943bdeb8743be7a09f986d552ebf6c0df21623458d",
     "crates/umf-core/src/schema_bound_coordinate_views_independent_tests.rs": "f255d7d9702c0868cb3b0b52b7feb0653eb621689b3efc39e3ce7e00f88fccb6",
     "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
-    "crates/umf-core/src/schema_closed_container_independent_tests.rs": "cd48d8e3472461e1594c46bda615880b6e60020240ed17f03a90f76cca16b135",
+    "crates/umf-core/src/schema_closed_container_independent_tests.rs": "63d37fc50d98d0b8f88af3bae40eb27bd362d7ae621e02785d7ab37f2826ecbc",
     "crates/umf-core/src/schema_closed_structure.rs": "27d6487c5d0792f2361302eb4c3cb13d94e16bcca4c4d218ba5acea398074a0f",
     "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
     "crates/umf-core/src/schema_construction_index.rs": "d1e6b66dd95536f1c08a843bb4ecce33f390785cebd8bfa6d3a79a24aaee0c69",
@@ -2605,8 +2605,8 @@
     "crates/umf-core/src/target_pin.rs": "45309fb10bc0f696b9e0332dde38d1335bf91dc34fc14b5313ecf8f1d8c9d854",
     "crates/umf-core/src/typespec_adapter.rs": "f33f128415c9b74a421cdf737993e37ceaa6660b4ffe15ad9eb5dab5154669a3",
     "crates/umf-core/src/typespec_smithy_jsonschema_projection.rs": "9171fd01260d90b240aba325381e1de8ef82e61d07e31ba962899ba129c23d11",
-    "crates/umf-core/src/value.rs": "b4218897df608c9ad86bc320896ac6d96092f7cc5b3cb4ef5a2e07050d0456d1",
-    "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "bd8433aea4fecf8611065391096907d640ba48379e83ead6f387a04300e8e05b",
+    "crates/umf-core/src/value.rs": "6a5b3e827e97cfa04dd6167cd62c488132759486f2eb603dccaf3cab0e9ad22d",
+    "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "7e5c714688bf81fafdda16ad586000dbd48183c39e6364968988a79f6cc130fc",
     "crates/umf-core/src/value_decimal_path.rs": "477f37b08fe97e82f857100be653abf81fb997d69fc0baca868ad944ebba7109",
     "crates/umf-core/src/value_fused_admission_independent_tests.rs": "62a3d88fd1dd9331eb2a7bb683a98d1ec884b159e0a5c032fdd57b0880948f41",
     "crates/umf-core/src/value_original_visit_independent_tests.rs": "0d8d89f7ca02c5b238bfcb03f512c5a9e748ffbbd31c3b7dd3a1f80a28542daf",
@@ -3888,7 +3888,7 @@
     "crates/umf-core-wire/tests/sqlserver_wire.rs": "663a5472c1776cb2f2bec9a0ccde7499775fbf6f21da02af8904757d5fd00a49",
     "crates/umf-core-wire/tests/tablespec_binding.rs": "67c9d52010812c72699e199b34f2c81a1f0aafd4cbcf83a695a5a98a5bb5381f",
     "crates/umf-core-wire/tests/typespec_binding.rs": "97fcab2f4a9182635dd2c82fcb4199b1bb19a6c474aec2c3b5a5cf416c110a70",
-    "crates/umf-core/src/canonical_codegen_literals.rs": "350738a3c1cbcd86f407da749537fc2fdb988d93db11b8e842bc2b73b7bdaa51",
+    "crates/umf-core/src/canonical_codegen_literals.rs": "169e8a3c0c9d5ea1b2fd3c8b7982a4ae8da1b3ec17ad1ca2c257b490b773fcf1",
     "crates/umf-graphql/Cargo.toml": "7e05c3edbb7fdeafbc4efae59b76353b0c679c6a7afbdbb8e3f5842226589deb",
     "crates/umf-graphql/src/apollo_mapper.rs": "79f22e2769111d3be20ca8174d06138cca8b5a2c8bfbfc8f5e69476513661d31",
     "crates/umf-graphql/src/core_value_bridge.rs": "a77b7a641af6c4936c2e64d289a01b0d4cd1da680134662b808bfe9ab4949f95",
@@ -4565,7 +4565,7 @@
     "inputs": {
       "scripts/metamodel/build.ts": "d5ba46cd2db626acf49f670074aef180cdf877e9ede40b357c8ba6c89bb87eab",
       "scripts/metamodel/rust.ts": "6013a5435aa93da3eee998384f5eb8a6ee3b18798bcfc613af6e76dd0986a7bc",
-      "scripts/metamodel/source-closure.ts": "b7207dd2b27a9e8843b3bafa1e28f1ed679c67f4b321d304dbd7a4317f0d683e",
+      "scripts/metamodel/source-closure.ts": "b88ba2d8eaa1d78854fd181250f3272b019ef6eac0d03b36c4e3864965cd75de",
       "scripts/metamodel/structural.ts": "5a938650d2c67681c68439e9cfcda797132bfbb4dea692e3ca9b78382be7a964",
       "scripts/metamodel/structural-accounting.ts": "0926228a7f4101b7062e0d634824e37ee10957f0742893f01c1e641e2e05b2f2",
       "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
@@ -4576,15 +4576,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "b37dda833ee47bb524696d8de9f1b355fd6498dfd2933d905da1f2e5a8759672",
+      "sha256": "7a150cd4cd5e29172e1247d7dcfa94cfc03d0fe7795f1a1f888ad8c63d5b935d",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "1ce018264e61d4b08874bcf64be4aeea2919dbe9da45d4a84ce273b10636aae4",
+      "sha256": "f8a5b37547542cd772b97df00683e1994f3261cf6dfc85ed8c8b2cd66edf88e2",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "49d425214eb9cd9d330e1fc29fd65e16d99e2fe2f46b529a81d0ac058d4ea81b",
+      "sha256": "1ed5aa9ffc93f317d94bfbd63d575c1ff636a60314aa3806abd8df45a77fcbbf",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -4592,23 +4592,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "3ad6360d43598cb3fe33dcf744158e9b68cda1371ec84d13662b1d91d447c478",
+      "sha256": "320876d9a50ed74c198271ab5ee30f41b0412389a114c2e27b6b5b773dc70f47",
       "bytes": 190431
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "880d55ce3f89520fd5942a5e09d76eb11c2ffe321a6b7ec14c3138d22e273db2",
+      "sha256": "9c3bcc30cbfe071bac3f4c2df46f50d562a5419ac97a07db9187a76645fa4594",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "31edd5149232d7b95f4e05b51979d1e856f7d4737af7b1475fd6c894238a2c18",
+      "sha256": "63671980fda1eb31db4cccac2a3708ec46a16b2acc7ccec18fb1324b9c0bff4a",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "b32a1e75f8d793dbf3aaccece5158b3d0bbc3c5002d3ba9e4bb9a03f65f4a1b9",
+      "sha256": "983db5b5d3f4cafe55319bf69198d5cb5e385ffb5dd7ac2189b56dc346d7109c",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "23c791040a4161325c4430737ff0eee4b899b60d2ca4c8a4b3b7dac7ca8597d8",
+      "sha256": "c480b28cb8f8cf8c943fadb5d8f818f4725bb59bb06017adb5dae981540ed300",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -4636,11 +4636,11 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "6e2803fae3033d46659c87786a37981d087a4958df77f82595f42e9459f7ef64",
+      "sha256": "ca2167122babf69e8580383b2b7b7b060f880e0934ac3751fc47b820c0020e93",
       "bytes": 305070
     },
     "src/generated/core-validators-accounted.ts": {
-      "sha256": "f92ae9b7a6f8a428ce3e3a8539ea5faaa3efccc3ab47b6b1267f122dc2181966",
+      "sha256": "f0de8610e9c8bd7e1274bd732a3ffd94d7afcd4e17224612b657279090f467cf",
       "bytes": 1525347
     }
   }

@@ -53,7 +53,7 @@ jobs:
           test "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf
           test "$GITHUB_REF_TYPE" = branch
           test "$EXPECTED_SOURCE" = "$GITHUB_SHA"
-          test "$EXPECTED_RESOURCE_PINS" = 19c415339a61a036e78d26f21e020e6830f8af8d71a61ca10b54fb591cf80d85
+          test "$EXPECTED_RESOURCE_PINS" = 681e1fe9422acfc0dcd652007fb4fb06818f2e08f006d8574083fc01a2da0992
           out="$RUNNER_TEMP/inspector-feasibility"
           printf 'BATCH_OUT=%s\n' "$out" >> "$GITHUB_ENV"
           printf 'CARGO_TARGET_DIR=%s/inspector-feasibility-target\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"

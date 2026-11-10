@@ -107,14 +107,14 @@ def candidate_fixture(root,status='source-bound'):
     v['sourceFiles']['python/pyproject.toml']=m.sha(root/'python/pyproject.toml')
     v['sourceFiles']['python/src/umf/__init__.py']=m.sha(root/'python/src/umf/__init__.py')
     prior=json.loads((root/m.CURRENT_FIXTURE).read_text())
-    generation={'sourceCommit':'9f9ae1a3d9aa830e6841b62568bfae872efe94ee','sourceTree':'15282d42c2624c7a8943bf52f94b1c65a155fff1',
+    generation={'sourceCommit':'e20da8192185b43aab48aa018440dca8717dea6d','sourceTree':'6f1932085aaec36ff688c477ba38b524f807ca2c',
       'runId':'SYNTHETIC-NOT-A-G0-RUN','attempt':'1','jobId':'SYNTHETIC-JOB','artifactId':'SYNTHETIC-ARTIFACT','artifactDigest':'a'*64,
       'outputManifestSHA256':'b'*64,'finalAttestationSHA256':'c'*64,'correspondenceReceiptSHA256':'d'*64,'compilerSHA256':'e'*64,'compilerBinarySHA256':'f'*64}
     candidate={'profile':m.CANDIDATE_PROFILE,'inputProfile':m.INPUT,'maximumWork':m.LIMIT,'candidateArtifactVersion':'0.10.10',
       'baseline':{'mainCommit':'ed09f345e38e70fd8c718cb904ffd9185f0ca392','mainTree':'ad4d87ffcf2ce2a5aff15fc26e60e5a0e82021c3','inheritedCoreDistributionVersion':'0.10.9','scope':'SYNTHETIC BASELINE ONLY'},
       'historicalFixture':prior['historicalFixture'],'bindingStatus':status,'generation':generation,'resources':prior['resources'],
       'encodingOnlyProducer':prior['encodingOnlyProducer'],'literalData':prior['literalData'],'candidateModelSHA256':'e'*64,
-      'acceptance':'GEN1 source correspondence is independently joined to run 42760711427; this source binding is not native admission and candidate execution/fit remains unknown.'}
+      'acceptance':'GEN1 source correspondence is independently joined to run 42773606445; this source binding is not native admission and candidate execution/fit remains unknown.'}
     path=root/m.CANDIDATE_FIXTURE;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(candidate))
     v['sourceFiles'][m.CANDIDATE_FIXTURE]=m.sha(path)
     v['modelSHA256']=candidate['candidateModelSHA256']
@@ -779,7 +779,7 @@ class FinalSourceCensusControls(unittest.TestCase):
     def test_frozen_actual_named_roster_and_required_18_public_controls(self):
         m=load();c=json.loads((ROOT/m.CENSUS).read_text());v=c['installedFactory']
         selected=m.selection(ROOT,c);candidate,identity=m.current_inputs(ROOT,selected)
-        self.assertEqual(candidate['generation']['sourceCommit'],'9f9ae1a3d9aa830e6841b62568bfae872efe94ee')
+        self.assertEqual(candidate['generation']['sourceCommit'],'e20da8192185b43aab48aa018440dca8717dea6d')
         self.assertEqual(identity['candidateArtifactVersion'],'0.10.10')
         self.assertFalse(c['candidateInputBindingPending']['candidateAdmission'])
         early=v['publicControls'];late=[x for g in v['python'] for x in g['cases']]

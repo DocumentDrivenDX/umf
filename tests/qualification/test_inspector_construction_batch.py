@@ -37,7 +37,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         self.assertEqual(selected['currentInputs']['fixturePath'],helper.CANDIDATE_FIXTURE)
         self.assertEqual(selected['currentInputs']['metadataVersion'],'0.10.10')
         self.assertEqual(candidate['candidateArtifactVersion'],'0.10.10')
-        self.assertEqual((candidate['generation']['sourceCommit'],candidate['generation']['sourceTree']),('9f9ae1a3d9aa830e6841b62568bfae872efe94ee','15282d42c2624c7a8943bf52f94b1c65a155fff1'))
+        self.assertEqual((candidate['generation']['sourceCommit'],candidate['generation']['sourceTree']),('e20da8192185b43aab48aa018440dca8717dea6d','6f1932085aaec36ff688c477ba38b524f807ca2c'))
         self.assertEqual(helper.input_metadata_version(identity),'0.10.10')
         wrong_metadata=copy.deepcopy(selected)
         wrong_metadata['currentInputs']['metadataVersion']='0.10.9'
