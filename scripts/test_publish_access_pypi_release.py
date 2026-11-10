@@ -520,5 +520,18 @@ class AccessPublisherTests(unittest.TestCase):
                     p._archive_members(list(changed), changed.__getitem__, True)
 
 
+
+
+class Closed01010RouteDispatchTests(unittest.TestCase):
+    def test_new_route_refuses_missing_real_admission_and_preserves_old_constants(self):
+        from unittest.mock import patch
+        old=(p.SOURCE,p.TREE,p.VERSION,dict(p.FILES))
+        with patch.object(p.core,'verify_candidate01010_packet',side_effect=p.core.ReleaseError('actual candidate missing')) as verify:
+            with self.assertRaisesRegex(p.core.ReleaseError,'actual candidate missing'):
+                p.verify_packet(assets=Path('/synthetic'),admission_raw=b'',admission_sha256='a'*64,
+                    sums_sha256='b'*64,tag='access-v0.1.0.dev10',source_sha='1'*40)
+            self.assertEqual(verify.call_args.kwargs['distribution'],'umf-access')
+        self.assertEqual((p.SOURCE,p.TREE,p.VERSION,dict(p.FILES)),old)
+
 if __name__ == '__main__':
     unittest.main()

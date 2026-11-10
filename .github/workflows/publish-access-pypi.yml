@@ -90,6 +90,8 @@ jobs:
     if: inputs.capability_only != true
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    outputs:
+      route: ${{ steps.dispatch.outputs.route }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -98,15 +100,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Check fixed dispatch identity before remote lookup
+      - name: Check fixed legacy identity or closed 0.10.10 candidate before remote lookup
+        id: dispatch
         run: |
           python - <<'PY'
-          import os, re, sys
+          import os, pathlib, re, sys
           sys.path.insert(0, 'scripts')
           import publish_access_pypi_release as p
-          assert os.environ['TAG'] == p.TAG
-          assert os.environ['SOURCE_SHA'] == p.SOURCE
-          assert all(re.fullmatch('[0-9a-f]{64}', os.environ[n]) for n in ('SUMS_SHA', 'ADMISSION_SHA'))
+          assert re.fullmatch('[0-9a-f]{64}', os.environ['SUMS_SHA'])
+          assert re.fullmatch('[0-9a-f]{64}', os.environ['ADMISSION_SHA'])
+          if os.environ['TAG'] == p.TAG and os.environ['SOURCE_SHA'] == p.SOURCE:
+              print('route=legacy', file=open(os.environ['GITHUB_OUTPUT'], 'a'))
+          else:
+              p.core.load_candidate01010_profile(pathlib.Path('.'), 'umf-access',
+                  os.environ['SOURCE_SHA'], os.environ['TAG'], os.environ['ADMISSION_SHA'])
+              print('route=candidate01010', file=open(os.environ['GITHUB_OUTPUT'], 'a'))
           PY
       - name: Test pure publisher controls
         run: python -m unittest scripts.test_publish_access_pypi_release -v
@@ -184,7 +192,8 @@ jobs:
           path: dist/*receipt.json
           retention-days: 365
   public-consumer:
-    needs: publish
+    needs: [verify, publish]
+    if: needs.verify.outputs.route == 'legacy'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -217,6 +226,84 @@ jobs:
               'schema': 'umf.access-public-consumer/1', 'status': 'passed',
               'index': 'https://pypi.org/simple', 'access': '0.1.0.dev10', 'core': '0.10.8',
               'runtimeIdentity': RUNTIME_IDENTITY, 'scope': 'public resolver/origin/identity/inert smoke; not full temporal requalification'
+          }, indent=2) + '\n')
+          PY
+          access-public-consumer/bin/umf-access --help > access-cli-help.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: access-dev10-public-consumer
+          path: |
+            ${{ runner.temp }}/consumer-receipt.json
+            ${{ runner.temp }}/access-cli-help.txt
+          if-no-files-found: error
+          retention-days: 365
+  public-consumer-01010:
+    needs: [verify, publish]
+    if: needs.verify.outputs.route == 'candidate01010'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: admitted-access-dev10
+          path: ${{ runner.temp }}/qualified-access-inputs
+      - name: Fresh public Access and Core resolver with exact source release identity
+        working-directory: ${{ runner.temp }}
+        env:
+          PIP_CONFIG_FILE: /dev/null
+        run: |
+          set -euo pipefail
+          python -m venv access-public-consumer
+          access-public-consumer/bin/python -m pip --isolated install --disable-pip-version-check --no-cache-dir \
+            --only-binary=umf-core,umf-access --index-url https://pypi.org/simple \
+            --report "$RUNNER_TEMP/access-public-install-report.json" 'umf-access==0.1.0.dev10'
+          access-public-consumer/bin/python -m pip --isolated check
+          access-public-consumer/bin/python -I - <<'PY'
+          import importlib.metadata as m, json, os, pathlib, re, sysconfig
+          import umf, umf_access
+          from umf_access.types import RUNTIME_IDENTITY
+          from umf_access.catalog import Argument, ReadPlan
+          inputs = pathlib.Path(os.environ['RUNNER_TEMP']) / 'qualified-access-inputs'
+          publication = []
+          for path in inputs.glob('*.json'):
+              try: value = json.loads(path.read_text())
+              except (OSError, ValueError): continue
+              if value.get('schema') == 'pypi-publication-receipt.v1' and value.get('distribution') == 'umf-core':
+                  publication.append(value)
+          assert len(publication) == 1 and publication[0]['version'] == '0.10.10'
+          expected = {'umf-core': publication[0]['files']}
+          access_receipt = json.loads((inputs / 'source-receipt.json').read_text())
+          expected['umf-access'] = access_receipt['files']
+          report = json.loads(pathlib.Path('access-public-install-report.json').read_text())
+          selected = {}
+          for row in report['install']:
+              name = re.sub('[-_.]+', '-', row['metadata']['name']).lower()
+              if name not in expected: continue
+              url = row['download_info']['url']
+              assert url.startswith('https://files.pythonhosted.org/')
+              filename = url.rsplit('/', 1)[1].split('#', 1)[0]
+              digest = row['download_info']['archive_info']['hashes']['sha256']
+              assert expected[name][filename] == digest
+              assert row['metadata']['version'] == ('0.10.10' if name == 'umf-core' else '0.1.0.dev10')
+              assert name not in selected
+              selected[name] = digest
+          assert set(selected) == {'umf-core', 'umf-access'}
+          assert m.requires('umf-access') and 'umf-core==0.10.10' in m.requires('umf-access')
+          for name, version, module in [('umf-access', '0.1.0.dev10', umf_access), ('umf-core', '0.10.10', umf)]:
+              dist = m.distribution(name)
+              assert dist.version == version and dist.read_text('direct_url.json') is None
+              assert pathlib.Path(module.__file__).is_relative_to(sysconfig.get_path('purelib'))
+          assert RUNTIME_IDENTITY == ('umf_access', '0.1.0.dev10', 'umf-access-runtime/0.1')
+          assert Argument('n', int).validate(17) == 17
+          assert ReadPlan('inert', 'rows', (), ()).variants == ()
+          pathlib.Path('consumer-receipt.json').write_text(json.dumps({
+              'schema': 'umf.access-public-consumer/1', 'status': 'passed',
+              'index': 'https://pypi.org/simple', 'access': '0.1.0.dev10', 'core': '0.10.10',
+              'normalPublicResolverArchiveHashes': selected,
+              'scope': 'fresh public resolver/origin/identity/inert smoke; not qualification evidence'
           }, indent=2) + '\n')
           PY
           access-public-consumer/bin/umf-access --help > access-cli-help.txt
