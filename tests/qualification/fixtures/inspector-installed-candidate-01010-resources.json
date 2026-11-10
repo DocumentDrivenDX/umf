@@ -17,44 +17,44 @@
   },
   "bindingStatus": "source-bound",
   "generation": {
-    "sourceCommit": "0eab4efe63eb909f5a2be84ca69f99385885580a",
-    "sourceTree": "a636d335f7126295920c3831e7bb100e0f41ed31",
-    "runId": "42818677378",
+    "sourceCommit": "ad44051385128c96f9cfa5a04fe718e867b23542",
+    "sourceTree": "476d6106cbdc092dd591febb957a60ab40ca2f3e",
+    "runId": "42843245725",
     "attempt": "1",
-    "jobId": "129838266191",
-    "artifactId": "13765483460",
-    "artifactDigest": "sha256:e41da33e0ddc6d678f1ee3720dcbb573fe60fecb10838458bbc765a4a44c6554",
-    "outputManifestSHA256": "58f1de59dad172edac99e8e3bbdbb0367d78aee40743e0bb13d9149cca6073c2",
-    "finalAttestationSHA256": "398b61cf6f4606ca271f237e39dcd614af0fa1ffc44d737c420511c5299ed96c",
-    "correspondenceReceiptSHA256": "880d82f1ea269fe730191b909d3bc499d6a9e071a8e74886f23a6d552d5e316a",
-    "compilerSHA256": "2a36bc8bffd6ffc3b6de05d24231d6433d30775d4fc004f4d2dcda3b04c1e549",
-    "compilerBinarySHA256": "c7d8f3ee9560c997d74803643cd7568ec279d278cc263017ffd99ca2f0fa06f6"
+    "jobId": "129923771374",
+    "artifactId": "13776834625",
+    "artifactDigest": "sha256:7d75aa5de28a960f64786527d74891539dab54d9382f29601e33ac1c74dbde3c",
+    "outputManifestSHA256": "5540cedbf0a709ee227a7e3439516b2bd7efa1f1106ff37d403aba2003972b63",
+    "finalAttestationSHA256": "bd2710e6d2166801d0d01043a50e573ea99198ede9f70c594ae5ee79d398e356",
+    "correspondenceReceiptSHA256": "460d6726457a83c57f6e48b5e5015ed5c2f4e5b3b1ad9918276f94d9fe3501f0",
+    "compilerSHA256": "b8a4f5316b6532e1fdcc370fd71448e66c8302ad9e0d0bad3dfb8dc73599f9c1",
+    "compilerBinarySHA256": "488dd68842d3d8a9cc861a39a29f279ab2c945c3531befd1e3b73d71e432a8ce"
   },
   "resources": {
     "coreSchema": {
       "path": "spec/core/schema.json",
       "bytes": 45342,
-      "sha256": "f07f2b1ff862b2738f2cff03ff20144f378aae471ee066382a3367d926355275"
+      "sha256": "c4f2dc68b3b357caa2ebc55f6afde080ef09f91c8f08c39574539b0435b57b76"
     },
     "referenceSchema": {
       "path": "spec/core/semantic-type-reference.schema.json",
       "bytes": 45463,
-      "sha256": "5efb908e1482fd262338bc39faea101ec29077fb37ddbc1d964b38141aff4702"
+      "sha256": "fa07299e4f0aa1bd91ba9f4e345e29e1a809fc3346b17d2ef15e600f3e8c9917"
     },
     "packageSchema": {
       "path": "spec/core/extension-package.schema.json",
       "bytes": 45001,
-      "sha256": "1a5de3a01a315e58702f822b424d42ac019ec98eb12d4701fcdb32bfe40e25da"
+      "sha256": "bbb50c34c1fb80fb64ec1ed5bd5927418d25bae817d6103a8e772638181b8053"
     },
     "constraints": {
       "path": "spec/metamodel/generated/core-constraints.json",
       "bytes": 190431,
-      "sha256": "35437e6a18785534f4b9759e398b682dac2860f67f4a6d7b049c6607dd78877c"
+      "sha256": "276b725346bec680586596e51d491494de16bba588d2ca6bdbd931dbdd106ef9"
     },
     "domainPolicy": {
       "path": "spec/metamodel/generated/domain-policy.json",
       "bytes": 14827,
-      "sha256": "ead91218c274637952fe54e6eb352691598ca182a0845b92bd572b3cb2730265"
+      "sha256": "f0ff9335496257184ef9b907a234b00eb192687f94440a2f89d8141b7e863ab6"
     },
     "tablesPackage": {
       "path": "spec/extensions/tables/package.json",
@@ -83,8 +83,8 @@
   },
   "literalData": {
     "path": "crates/umf-core/src/canonical_codegen_literals.rs",
-    "sha256": "a13d02c66233f4d669c6ff95c063e09701aa7380c7e95a81052df04f19f9c050"
+    "sha256": "83f0b31ffc7f2a4263cdf1aec8707612bb55d9b8e3069ff24c8a31ff3a210b17"
   },
   "candidateModelSHA256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-  "acceptance": "GEN1 source correspondence is independently joined to run 42818677378; this source binding is not native admission and candidate execution/fit remains unknown."
+  "acceptance": "GEN1 source correspondence is independently joined to run 42843245725; this source binding is not native admission and candidate execution/fit remains unknown."
 }
