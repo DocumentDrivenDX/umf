@@ -210,7 +210,8 @@ def inspect_codegen(path: Path, *, wheel: bool, admission: dict) -> None:
         raw = members.get(package + "_resources/" + name)
         require(raw is not None and digest(raw) == expected, "packaged resource bytes differ: " + name)
     release_text = release.decode("utf-8")
-    for identifier in (VERSION, PROTOCOLS["engine"], PROTOCOLS["native"], PROTOCOLS["cli"], PROTOCOLS["resources"]):
+    # The resources protocol is bound by manifest["profile"] above; the frozen _release.py never carried it.
+    for identifier in (VERSION, PROTOCOLS["engine"], PROTOCOLS["native"], PROTOCOLS["cli"]):
         require(identifier in release_text, "release protocol/version identity missing: " + identifier)
     if wheel:
         wheel_info = BytesParser().parsebytes(members[root + ".dist-info/WHEEL"])
