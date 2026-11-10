@@ -29,8 +29,9 @@ export const rustFeatureBoundaryFiles = [
   'crates/umf-core-wire/Cargo.toml',
 ] as const;
 const runtimeConsumerPins:Record<string,string>={
-  'crates/umf-core-wire/src/lib.rs':'8c9696ea55e8553609facc33ddfb863598c1ebdb72154d717364ae0a0741d682',
-  'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs':'71a821a4bc4898010ca68cc46d4df4b0c5e69fb8923e791a139edd7cdaa091b3',
+  'crates/umf-core/src/value.rs':'b4218897df608c9ad86bc320896ac6d96092f7cc5b3cb4ef5a2e07050d0456d1',
+  'crates/umf-core-wire/src/lib.rs':'991e9be4abbfb2ffc5baee3c02d78621eda0c9cfa41b70c246816926dacfa13e',
+  'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs':'bb66a321eaf015adb04108c7d5953931b7de574e92ca223eb44795cdf228dda9',
 };
 
 const boundarySha256: Record<string,string> = {
@@ -43,7 +44,7 @@ const boundarySha256: Record<string,string> = {
   'crates/umf-tagged-wire/Cargo.toml':'8574d1b8592dbb38e4c07f030bcf468d0e474a20c1bed9de0f4023cf6323ba2e',
   'crates/umf-core-wire/Cargo.toml':'e1171263903df13fa11c1a7470c6cde5fc94f67a2f18dc06ab88e836943abf0f',
   'crates/umf-core/src/lib.rs':'ae6eef2068889cdba3b34198bd37030567f1dc20909f398c12054d194028ffe0',
-  'crates/umf-core/src/canonical_codegen_resources.rs':'bfacfdd785bfbc249a0dbc47167f0cc76d316b298653fb1f332506bc58b596e6',
+  'crates/umf-core/src/canonical_codegen_resources.rs':'ec6eb4226ec45fa2fbb6dd9e07c6a0f2e8f8c2beca789dbd372f31521ce683c7',
 };
 const sha256 = (value:string) => createHash('sha256').update(value).digest('hex');
 
@@ -224,6 +225,66 @@ function pathAttributes(source:string):string[]|undefined {
   return paths;
 }
 
+// This exact predicate is already enforced by the pinned core module boundary.
+// Do not accept a generic cfg evaluator or unknown feature expression here.
+export const fullRuntimeCfg='#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]';
+const countedValueConsumer='crates/umf-core/src/value.rs';
+
+/** Recognize ONLY the two reviewed items, retaining their bodies in full-core. */
+export function projectCountedRuntimeBoundary(source:string):{bootstrap:string;fullRuntime:string} {
+  const code=withoutRustComments(source),spans:Array<{start:number;end:number}>=[];
+  const positions:number[]=[];
+  for(let at=code.indexOf(fullRuntimeCfg);at>=0;at=code.indexOf(fullRuntimeCfg,at+fullRuntimeCfg.length))positions.push(at);
+  if(positions.length!==2)throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+  for(const [index,start] of positions.entries()){
+    let item=start+fullRuntimeCfg.length;
+    while(/\s/.test(code[item]??'')&&item<code.length)item++;
+    if(index===0){
+      const signature='pub(crate) const fn counted_hint_model_overhead()->usize';
+      if(!code.startsWith(signature,item))throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+      let open=item+signature.length;
+      while(/\s/.test(code[open]??'')&&open<code.length)open++;
+      if(code[open]!=='{')throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+      const body=delimitedContent(code,open);
+      if(!body)throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+      spans.push({start,end:body.end});
+    }else{
+      const signature='const _:()=assert!';
+      if(!code.startsWith(signature,item))throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+      let open=item+signature.length;
+      while(/\s/.test(code[open]??'')&&open<code.length)open++;
+      if(code[open]!=='(')throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+      const body=delimitedContent(code,open);
+      if(!body||!body.content.trim().startsWith('counted_hint_model_overhead()+6*3952'))
+        throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+      let end=body.end;while(/\s/.test(code[end]??'')&&end<code.length)end++;
+      if(code[end]!==';')throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+      spans.push({start,end:end+1});
+    }
+  }
+  let bootstrap=code;
+  for(const {start,end} of spans.reverse())bootstrap=bootstrap.slice(0,start)+' '.repeat(end-start)+bootstrap.slice(end);
+  if(/\b(?:canonical_codegen_resources|counted_hint_model_overhead)\b/.test(bootstrap))
+    throw Error('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_RUNTIME_EDGE');
+  return {bootstrap,fullRuntime:source.split(fullRuntimeCfg+'\n').join('')};
+}
+
+function assertCompilerRuntimeProjection(compilerFiles:readonly string[],boundary:SourceBoundary):void {
+  const value=boundary.rustSources.find(file=>file.path===countedValueConsumer)?.source;
+  if(value===undefined)throw Error('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+  const projected=projectCountedRuntimeBoundary(value);
+  const declaration=fullRuntimeCfg+'\npub mod canonical_codegen_resources;';
+  if(!boundary.coreLib.includes(declaration))throw Error('METAMODEL_SOURCE_PARTITION_MODULE_BOUNDARY');
+  for(const {path,source} of boundary.rustSources){
+    if(!compilerFiles.includes(path))continue;
+    // The canonical module is disabled as a whole by the pinned lib declaration.
+    if(path==='crates/umf-core/src/canonical_codegen_resources.rs')continue;
+    const code=path===countedValueConsumer?projected.bootstrap:
+      withoutRustComments(path==='crates/umf-core/src/lib.rs'?source.replace(declaration,''):source);
+    if(/\bcanonical_codegen_resources\b/.test(code))throw Error('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_RUNTIME_EDGE '+path);
+  }
+}
+
 /** Partition the single proven DATA leaf, retaining every path in full custody. */
 export function partitionRustSources(compilerFiles:readonly string[],workspaceFiles:readonly string[],boundary:SourceBoundary):SourcePartition {
   const candidate=runtimeCodegenData;
@@ -270,6 +331,8 @@ export function partitionRustSources(compilerFiles:readonly string[],workspaceFi
     }
   }
   const expected=[
+    {path:'crates/umf-core/src/value.rs',kind:'canonical_codegen_resources'},
+    {path:'crates/umf-core-wire/src/lib.rs',kind:'canonical_codegen_resources'},
     {path:'crates/umf-core/src/canonical_codegen_resources.rs',kind:'path:'+candidate},
     {path:'crates/umf-core/src/lib.rs',kind:'canonical_codegen_resources'},
     {path:'crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs',kind:'canonical_codegen_resources'},
@@ -279,6 +342,7 @@ export function partitionRustSources(compilerFiles:readonly string[],workspaceFi
   references.sort((a,b)=>a.path.localeCompare(b.path)||a.kind.localeCompare(b.kind));
   expected.sort((a,b)=>a.path.localeCompare(b.path)||a.kind.localeCompare(b.kind));
   if(JSON.stringify(references)!==JSON.stringify(expected))throw Error('METAMODEL_SOURCE_PARTITION_CONSUMER_EDGE');
+  assertCompilerRuntimeProjection(compilerFiles,boundary);
   for(const [path,pin] of Object.entries(runtimeConsumerPins)){
     const source=boundary.rustSources.find(file=>file.path===path)?.source;
     if(!source||sha256(source)!==pin)throw Error('METAMODEL_SOURCE_PARTITION_RUNTIME_CONSUMER '+path);

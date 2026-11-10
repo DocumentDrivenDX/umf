@@ -2,7 +2,7 @@
 import {beforeAll,describe,expect,test} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {resolve} from 'node:path';
-import {assertStableSourcePartition,collectSourceRosters,loadSourceBoundary,partitionRustSources,runtimeCodegenData,rustFeatureBoundaryFiles} from '../../scripts/metamodel/source-closure';
+import {assertStableSourcePartition,collectSourceRosters,loadSourceBoundary,partitionRustSources,runtimeCodegenData,rustFeatureBoundaryFiles,projectCountedRuntimeBoundary,fullRuntimeCfg} from '../../scripts/metamodel/source-closure';
 import type {SourceBoundary,SourcePartition} from '../../scripts/metamodel/source-closure';
 
 const root=resolve(import.meta.dir,'../..');
@@ -95,4 +95,45 @@ describe('metamodel source provenance partition',()=>{
   const extra='crates/umf-core/src/new-roster-input.rs';
   expect(partitionRustSources([...compilerFiles,extra],[...workspaceFiles,extra],withRustSource(extra,'pub fn added_input() {}')).compilerInputs).toContain(extra);
  });
+ test('reviewed counted value items are absent only in reduced bootstrap and unchanged in full runtime',()=>{
+  const source=boundary.rustSources.find(file=>file.path==='crates/umf-core/src/value.rs')!.source;
+  const projected=projectCountedRuntimeBoundary(source);
+  expect(projected.bootstrap).not.toMatch(/\bcanonical_codegen_resources\b/);
+  expect(projected.bootstrap).not.toMatch(/\bcounted_hint_model_overhead\b/);
+  expect(projected.fullRuntime).toContain('use crate::canonical_codegen_resources::');
+  expect(projected.fullRuntime).toContain('const _:()=assert!(counted_hint_model_overhead()+6*3952');
+  // Frozen dcf4 runtime bytes, not a new fee/body implementation or a target execution.
+  expect(createHash('sha256').update(projected.fullRuntime).digest('hex')).toBe('1073121ae19cc6705613dab853f6c0ef5575d2f283193765ecf1a71a45952c6c');
+  expect(actual.compilerInputs).toContain('crates/umf-core/src/value.rs');
+  expect(actual.compilerInputs).not.toContain(runtimeCodegenData);
+  expect(actual.workspaceInputs).toContain(runtimeCodegenData);
+  for(const [metamodel,full,expected] of [[false,false,true],[false,true,true],[true,false,false],[true,true,true]]){
+   expect(!(metamodel&&!full)).toBe(expected!);
+  }
+ });
+
+ test('both exact item cfg boundaries and projected closure are required independently of pins',()=>{
+  const path='crates/umf-core/src/value.rs';
+  const source=boundary.rustSources.find(file=>file.path===path)!.source;
+  const withValue=(value:string):SourceBoundary=>({...boundary,rustSources:boundary.rustSources.map(file=>file.path===path?{...file,source:value}:file)});
+  const first=source.indexOf(fullRuntimeCfg),second=source.indexOf(fullRuntimeCfg,first+fullRuntimeCfg.length);
+  expect(first).toBeGreaterThan(0);expect(second).toBeGreaterThan(first);
+  for(const at of [first,second]){
+   expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source.slice(0,at)+source.slice(at+fullRuntimeCfg.length+1)))).toThrow('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+  }
+  for(const replacement of ['#[cfg(feature = "full-core")]','#[cfg(not(all(feature = "other-compiler", not(feature = "full-core"))))]']){
+   expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source.replace(fullRuntimeCfg,replacement)))).toThrow('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+  }
+  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source+'\nconst UNGATED:usize=counted_hint_model_overhead();\n'))).toThrow('METAMODEL_SOURCE_PARTITION_BOOTSTRAP_RUNTIME_EDGE');
+  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source+'\npub fn unreviewed_value_change() {}\n'))).toThrow('METAMODEL_SOURCE_PARTITION_RUNTIME_CONSUMER');
+  expect(()=>partitionRustSources(compilerFiles,workspaceFiles,withValue(source.replace('counted_hint_model_overhead()+6*3952','counted_hint_model_overhead()+0*3952')))).toThrow('METAMODEL_SOURCE_PARTITION_VALUE_CFG_BOUNDARY');
+ });
+
+ test('reviewed value consumer cannot disappear from complete source custody',()=>{
+  const path='crates/umf-core/src/value.rs';
+  expect(()=>partitionRustSources(compilerFiles.filter(p=>p!==path),workspaceFiles.filter(p=>p!==path),{
+   ...boundary,rustSources:boundary.rustSources.filter(file=>file.path!==path),
+  })).toThrow('METAMODEL_SOURCE_PARTITION_CONSUMER_EDGE');
+ });
+
 });

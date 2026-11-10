@@ -1155,6 +1155,7 @@ fn admit_factory_json_sized(value:Value,hint:FactoryRowHint,ctx:&mut Context<'_>
 // cardinalities 1318/1317/1317 and requested-capacity growth coefficient14474.
 // The target compiler checks actual representation sizes, not a guessed layout.
 // It proves neither allocator capacity behavior nor whole-constructor 1M fit.
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 pub(crate) const fn counted_hint_model_overhead()->usize {
     const fn w<T>()->usize{std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>())}
     use crate::canonical_codegen_resources::{CountedInstalledBundle as B,CountedInstalledFields as I,CountedInstalledField as F};
@@ -1171,5 +1172,6 @@ pub(crate) const fn counted_hint_model_overhead()->usize {
     let e=w::<Option<usize>>()+5;
     9*(r+f+d)+b+c+i+3*(h+g+s+q+e)
 }
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 const _:()=assert!(counted_hint_model_overhead()+6*3952
     <14474*std::mem::size_of::<Option<crate::schema::admitted_structure::Node>>().div_ceil(std::mem::size_of::<usize>()));
