@@ -27,5 +27,14 @@ Git tree: `3ddb0ff850c92500818d6a0031c856bae0bd0554`.
 
 `SHA256SUMS` covers these portable records. `site-public-completion.json` combines the actual public functional prefix,
 byte-identical downloads, valid public signature and separate navigation-only
-font attribution. The original helper exit 1 is retained. Linux qualification
-and complete package publication remain pending.
+font attribution. The original helper exit 1 is retained. Complete package
+publication remains pending.
+
+- `linux-qualification-0109.json`, `linux-{python,node,bun,decl}.log`,
+  `linux-core-wheel-verification.json` and `linux-probes/` are the Linux x86_64
+  receipts for the draft's own SDK, manylinux Core wheel, CLI and Codegen wheel.
+  They ran in linux/amd64 containers emulated on an arm64 Mac, from draft assets
+  whose digests matched the draft `SHA256SUMS`. The Node explicit WASM
+  file-URL loader probe fails exactly as on the Mac and is retained. Original
+  Linux build provenance is not retained, so no provenance join is claimed.
+Linux still pending: native x86_64 execution (the run was emulated), original Linux build provenance, manylinux raw-wheel/sdist rebuild parity, an independently recomputed SDK source closure, and publication.

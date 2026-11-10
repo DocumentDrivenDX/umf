@@ -1,0 +1,32 @@
+Unable to find image 'python:3.11-slim' locally
+3.11-slim: Pulling from library/python
+Digest: sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535
+Status: Downloaded newer image for python:3.11-slim
+--- pip check
+No broken requirements found.
+--- pip list
+annotated-types==0.8.0
+pip==24.0
+pydantic==2.11.9
+pydantic_core==2.33.2
+setuptools==79.0.1
+typing_extensions==4.16.0
+typing-inspection==0.4.5
+umf-codegen==0.10.9
+umf-core==0.10.9
+
+[notice] A new release of pip is available: 24.0 -> 26.3
+[notice] To update, run: python -m pip install --upgrade pip
+--- uname
+x86_64
+ldd (Debian GLIBC 2.41-12+deb13u4) 2.41
+--- probe
+{"codegenResources": 10, "embeddedCliSha256": "081e3ba65b90bac359f8f06ef439a1c8ff5e3b56d1598e8bad7f924d03b6c08f", "keyedFiles": ["README.md", "linux_probe/__init__.py", "linux_probe/crud.py", "linux_probe/models.py", "report.json", "schema.sql", "source-companion.json"], "keyedSha256": "2a87662c489aa35c2c7f98703b77dc310c6f2efe22215f78be692c67cb1415c9", "machine": "x86_64", "nativeExtension": ["_rust_core.abi3.so"], "pydantic": "2.11.9", "python": "3.11.18", "status": "passed", "unkeyedSha256": "f0f8aded0787f5162614a5aa5e9724da0bb22e9f5c46a0bb867ec8d1d09adf34"}
+--- embedded cli
+usage: umf <metamodel|domain-pack|reference|cardinality|facets|csv-boolean-lexical|iceberg|arrow|protobuf|avro|json-schema> ...
+{"protocol":"umf.codegen-cli/1","version":"0.10.9","profile":"umf.codegen-resources/1","inputFormat":"umf.codegen-json-core-admission/1","outputWireProtocol":"umf.core-wire/1","resourceManifestSha256":"934cd1c046b1846e143b2d8f079cf5fb15628d94a99ad547b9e118616adc5860"}
+--- release cli
+usage: umf <metamodel|domain-pack|reference|cardinality|facets|csv-boolean-lexical|iceberg|arrow|protobuf|avro|json-schema> ...
+{"protocol":"umf.codegen-cli/1","version":"0.10.9","profile":"umf.codegen-resources/1","inputFormat":"umf.codegen-json-core-admission/1","outputWireProtocol":"umf.core-wire/1","resourceManifestSha256":"934cd1c046b1846e143b2d8f079cf5fb15628d94a99ad547b9e118616adc5860"}
+081e3ba65b90bac359f8f06ef439a1c8ff5e3b56d1598e8bad7f924d03b6c08f  /tmp/c/umf-v0.10.9-x86_64-unknown-linux-gnu/umf
+081e3ba65b90bac359f8f06ef439a1c8ff5e3b56d1598e8bad7f924d03b6c08f  /tmp/v/lib/python3.11/site-packages/umf/_bin/umf
