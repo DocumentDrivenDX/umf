@@ -375,8 +375,153 @@ fn closed03_genuine_root_core_bank_aliases_and_subtrees_have_distinct_logical_po
     .unwrap();
 }
 
+// New controls extend existing case04; no additional named Rust test case.
+fn parent_capture<T>(run:impl FnOnce()->T)->(T,Vec<(&'static str,usize,usize,usize)>) {
+    let events=std::rc::Rc::new(RefCell::new(Vec::new()));let sink=events.clone();
+    let result=crate::schema::admitted_structure::observe_ordered_structure(Box::new(move |e,p,o,r|sink.borrow_mut().push((e,p,o,r))),run);
+    let rows=events.borrow().clone();(result,rows)
+}
+fn parent_bank(text:&str,ctx:&mut Context<'_>)->Arc<SchemaBank> {
+    let encoded:Vec<u16>=text.encode_utf16().collect();
+    let parsed=crate::serialization::read_construction_json_completed(&encoded,ctx).unwrap();
+    SchemaBank::from_completed_reader(Arc::new(parsed),SchemaDialect::Draft2020_12,ctx).unwrap()
+}
+fn parent_wide_text(n:usize)->String {
+    let rows=(0..n).map(|i|match i%3 {
+        0=>format!(r#"{{"schema":{{"properties":{{"nested":{{"enum":[null,{{"wide":[1,2,3]}}]}}}}}},"id":"urn:parent:{i}"}}"#),
+        1=>format!(r#"{{"id":"urn:parent:{i}","schema":{{"allOf":[{{}},{{"properties":{{"wide":{{}}}}}}]}}}}"#),
+        _=>format!(r#"{{"pad":[{{"extent":[1,2,3]}}],"id":"urn:parent:{i}","schema":{{"type":"object"}}}}"#),
+    }).collect::<Vec<_>>().join(",");
+    format!(r#"{{"pad0":null,"metaschemas":{{"Draft202012Validator":{{}}}},"pad2":[null,{{"extent":[]}}],"resources":[{rows}]}}"#)
+}
+fn parent_parity(bank:&SchemaBank,ctx:&mut Context<'_>)->(usize,usize) {
+    let (expected,old_events)=parent_capture(||(0..bank.len()).map(|i|bank.structure_catalogue(i,ctx).unwrap().unwrap()).collect::<Vec<_>>());
+    let (_,new_events)=parent_capture(||{
+        let parent=bank.resources_parent(ctx).unwrap().unwrap();
+        // Random/repeated and out-of-range requests remain stateless. Their
+        // ordinal is always the genuine row, never a fabricated frontier.
+        for i in (0..bank.len()).chain((0..bank.len()).rev()) {
+            let actual=parent.select(i,ctx).unwrap().unwrap();
+            assert_eq!(actual.root,expected[i].root);
+            assert!(Arc::ptr_eq(&actual.structure,&expected[i].structure));
+            assert_eq!(row(actual.structure.node(actual.root).unwrap()),row(expected[i].structure.node(expected[i].root).unwrap()));
+        }
+        assert!(parent.select(usize::MAX,ctx).unwrap().is_none());
+    });
+    let old=old_events.iter().filter(|e|e.0=="ow1-original-extent-advance").count();
+    // Two identical per-row passes share exactly one root->resources prefix.
+    let new=new_events.iter().filter(|e|e.0=="ow1-original-extent-advance").count();
+    assert!(new_events.iter().all(|e|!e.0.starts_with("catalogue-")));
+    (old,new)
+}
+fn parent_guard_controls(ctx:&mut Context<'_>) {
+    for n in [0usize,1,2,7,33,97] {
+        let text=parent_wide_text(n);let bank=parent_bank(&text,ctx);
+        let (old,new)=parent_parity(&bank,ctx);
+        let nested=(0..n).map(|i|i%3).sum::<usize>();
+        assert_eq!(old,3*n+n.saturating_sub(1)*n/2+nested);
+        assert_eq!(new,3+2*(n.saturating_sub(1)*n/2+nested));
+        let parent=bank.resources_parent(ctx).unwrap().unwrap();
+        let other=parent_bank(&text,ctx);let other_parent=other.resources_parent(ctx).unwrap().unwrap();
+        if n>0 {
+            let a=parent.select(0,ctx).unwrap().unwrap();let b=other_parent.select(0,ctx).unwrap().unwrap();
+            assert!(!Arc::ptr_eq(&a.structure,&b.structure));
+        }
+        let mut ordinary_limits=Context::ordinary();
+        assert!(parent.select(0,&mut ordinary_limits).unwrap().is_none());
+        let mut wrong_lifetime=Context::catalog();
+        wrong_lifetime.with_codegen_construction(|foreign|{
+            assert!(parent.select(0,foreign)?.is_none());Ok(())
+        }).unwrap();
+        let mut limits=Limits::catalog();limits.max_depth-=1;
+        assert!(parent.select(0,&mut context(limits)).unwrap().is_none());
+        let raw=SchemaBank::from_meta(Arc::new(json(&text)),SchemaDialect::Draft2020_12,ctx).unwrap();
+        assert!(raw.resources_parent(ctx).unwrap().is_none());
+        // The old fallback remains independently callable and unchanged.
+        assert!(raw.structure_catalogue(0,ctx).unwrap().is_none());
+    }
+}
+fn parent_callback_lifetime_controls() {
+    // Invalidate the actual shared cold-operation lifetime inside each of the
+    // first three original per-row callbacks. The retained immutable parent
+    // does not replace the dynamic bank/parser checks or mint a new token.
+    for trip in 1..=3 {
+        type State=std::rc::Rc<RefCell<crate::schema::ConstructionState>>;
+        let shared=std::rc::Rc::new(RefCell::new(None::<State>));let captured=shared.clone();
+        let armed=std::rc::Rc::new(Cell::new(false));let flag=armed.clone();
+        let calls=std::rc::Rc::new(Cell::new(0));let count=calls.clone();
+        let mut control=move |_|{
+            if flag.get(){let n=count.get()+1;count.set(n);if n==trip{
+                captured.borrow().as_ref().unwrap().borrow_mut().lifetime=None;
+            }}Ok(())
+        };
+        let mut ctx=Context::catalog().with_host_control(&mut control);
+        ctx.with_codegen_construction(|ctx|{
+            let bank=parent_bank(&parent_wide_text(4),ctx);
+            let parent=bank.resources_parent(ctx)?.unwrap();
+            let state=std::rc::Rc::clone(ctx.schema_construction.as_ref().unwrap());
+            let original=state.borrow().lifetime.clone();*shared.borrow_mut()=Some(state.clone());
+            armed.set(true);
+            let (actual,events)=parent_capture(||parent.select(0,ctx));
+            armed.set(false);assert!(actual?.is_none());assert!(events.is_empty());
+            assert!(bank.structure_catalogue(0,ctx)?.is_none());
+            state.borrow_mut().lifetime=original;
+            assert!(parent.select(0,ctx)?.is_some());Ok(())
+        }).unwrap();
+    }
+}
+fn parent_denial_controls() {
+    // Deny every actual predebit in setup+first lookup. A denied operation
+    // returns the original host error; it never emits a later physical read.
+    let text=parent_wide_text(4);
+    let enabled=std::rc::Rc::new(Cell::new(false));let flag=enabled.clone();
+    let calls=std::rc::Rc::new(Cell::new(0));let count=calls.clone();
+    let mut control=move |_|{if flag.get(){count.set(count.get()+1);}Ok(())};
+    let mut ctx=Context::catalog().with_host_control(&mut control);
+    let mut trace=Vec::new();
+    ctx.with_codegen_construction(|ctx|{
+        let bank=parent_bank(&text,ctx);enabled.set(true);
+        let (result,events)=parent_capture(||{
+            let parent=bank.resources_parent(ctx)?.unwrap();parent.select(0,ctx)
+        });
+        result?;trace=events;enabled.set(false);Ok(())
+    }).unwrap();
+    let charges=calls.get();assert!(charges>0);assert!(!trace.is_empty());
+    for deny in 1..=charges {
+        let enabled=std::rc::Rc::new(Cell::new(false));let flag=enabled.clone();
+        let calls=std::rc::Rc::new(Cell::new(0));let count=calls.clone();
+        let mut control=move |_|{if flag.get(){let n=count.get()+1;count.set(n);assert!(n<=deny);if n==deny{return Err(host_error());}}Ok(())};
+        let mut ctx=Context::catalog().with_host_control(&mut control);
+        ctx.with_codegen_construction(|ctx|{
+            let bank=parent_bank(&text,ctx);enabled.set(true);
+            let (result,events)=parent_capture(||{
+                let parent=bank.resources_parent(ctx)?.unwrap();parent.select(0,ctx)
+            });
+            exact_host(&result.unwrap_err());enabled.set(false);
+            assert_eq!(calls.get(),deny);
+            assert!(trace.starts_with(&events));
+            // No mutable traversal state survives: a fresh invocation repeats
+            // genuine lookups, rather than resuming a half-advanced cursor.
+            let parent=bank.resources_parent(ctx)?.unwrap();
+            let actual=parent.select(0,ctx)?.unwrap();let old=bank.structure_catalogue(0,ctx)?.unwrap();
+            assert_eq!(actual.root,old.root);assert!(Arc::ptr_eq(&actual.structure,&old.structure));Ok(())
+        }).unwrap();
+    }
+    let armed=std::rc::Rc::new(Cell::new(false));let flag=armed.clone();
+    let mut control=move |_|{if flag.replace(false){panic!("original parent host panic");}Ok(())};
+    let mut ctx=Context::catalog().with_host_control(&mut control);
+    ctx.with_codegen_construction(|ctx|{
+        let bank=parent_bank(&text,ctx);let parent=bank.resources_parent(ctx)?.unwrap();armed.set(true);
+        assert!(catch_unwind(AssertUnwindSafe(||parent.select(0,ctx))).is_err());
+        let actual=parent.select(0,ctx)?.unwrap();let old=bank.structure_catalogue(0,ctx)?.unwrap();
+        assert_eq!(actual.root,old.root);assert!(Arc::ptr_eq(&actual.structure,&old.structure));Ok(())
+    }).unwrap();
+}
+
 #[test]
 fn closed04_all_twenty_real_meta_roles_have_relative_subtree_readback_and_alias_identity() {
+    parent_denial_controls();
+    parent_callback_lifetime_controls();
     let pinned = json(include_str!("schema_metas.json"));
     let Value::Array(rows) = field(&pinned, "resources") else {
         panic!("resources")
@@ -396,6 +541,21 @@ fn closed04_all_twenty_real_meta_roles_have_relative_subtree_readback_and_alias_
                     .2,
             )
         };
+        let bank=meta.resource_bank.as_ref().unwrap();
+        let before=ctx.charged_work();
+        for i in 0..bank.len(){assert!(bank.structure_catalogue(i,ctx)?.is_some());}
+        let old_fee=ctx.charged_work()-before;
+        let before=ctx.charged_work();
+        ctx.charge_work(3,Utf16::default())?;
+        let retained=bank.resources_parent(ctx)?.unwrap();
+        for i in 0..bank.len(){ctx.charge_work(2,Utf16::default())?;assert!(retained.select(i,ctx)?.is_some());}
+        let new_fee=ctx.charged_work()-before;
+        assert_eq!(old_fee,1000);
+        assert!(new_fee<old_fee,"actual target debit comparison, not a layout guess");
+        let (old,new)=parent_parity(bank,ctx);
+        assert_eq!(old,270);
+        assert_eq!(new,423); // 3 once + two passes of (190+20).
+        parent_guard_controls(ctx);
         let table = OwnerLocations::build(&meta, ctx)?.unwrap();
         let root = table.root(&meta, 0, ctx)?.unwrap();
         assert_eq!(

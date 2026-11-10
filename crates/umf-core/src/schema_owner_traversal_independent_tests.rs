@@ -285,6 +285,11 @@ fn ow02_skipped_siblings_and_nested_extents_preserve_requested_order() {
 
 #[test]
 fn ow03_root_catalogue_aliases_keep_distinct_logical_identity() {
+    Context::catalog().with_codegen_construction(|ctx|{
+        let admitted=admitted_bank::SchemaBank::admit_core(input(),ctx)?;
+        assert!(admitted.bank.resources_parent(ctx)?.is_none());
+        Ok(())
+    }).unwrap();
     let o = owner();
     let mut ctx = Context::catalog();
     let t = table(&o);

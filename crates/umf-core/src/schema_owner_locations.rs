@@ -97,8 +97,10 @@ impl OwnerLocations {
             let mut roles=Vec::new();let mut roots=Vec::new();let mut facts=Vec::new();
             if roles.try_reserve_exact(root_count).is_err()||roots.try_reserve_exact(root_count).is_err()||facts.try_reserve_exact(root_count).is_err(){return Ok(None);}
             let mut total=0usize;
-            for logical_role in 0..root_count {
-                let view=if logical_role==0{bank.structure_role(*role,ctx)?}else{bank.structure_catalogue(logical_role-1,ctx)?};
+            // One expansion body retains every original map/store check,
+            // observer, duplicate-role count, reserve and publication operation.
+            macro_rules! bind_role {($view:expr)=>{{
+                let view=$view;
                 let Some(view)=view else{return Ok(None);};
                 ctx.charge_work(14,Utf16::default())?;
                 observer("binding-role-map");
@@ -120,6 +122,31 @@ impl OwnerLocations {
                 roots.push(total);facts.push(root_facts);
                 roles.push(BoundRole{view,base:total,end:next,physical_end:end,base_depth,max_relative_depth:max_depth as usize});
                 total=next;
+            }};}
+            // Root role zero precedes all catalogue setup, as before.
+            bind_role!(bank.structure_role(*role,ctx)?);
+            // New route predicate: count comparison, role comparison and
+            // conjunction, prepaid before either read. Core pays this explicit
+            // three-unit branch too; its original selectors/fees are unchanged.
+            ctx.charge_work(3,Utf16::default())?;
+            if root_count>1 && matches!(role,admitted_bank::BankRoot::Meta) {
+                // This Option is invocation-local and never published into the
+                // owner or bank. Failure leaves no reusable partial traversal.
+                let parent=bank.resources_parent(ctx)?;
+                for logical_role in 1..root_count {
+                    // New Option dispatch and borrowed-parent transport, paid
+                    // before matching. Existing child View moves stay in child.
+                    ctx.charge_work(2,Utf16::default())?;
+                    bind_role!(match &parent {
+                        Some(parent)=>parent.select(logical_role-1,ctx)?,
+                        None=>bank.structure_catalogue(logical_role-1,ctx)?,
+                    });
+                }
+            } else {
+                // Core retains the original per-row method and fee schedule.
+                for logical_role in 1..root_count {
+                    bind_role!(bank.structure_catalogue(logical_role-1,ctx)?);
+                }
             }
             ctx.charge_work(1,Utf16::default())?;
             observer("binding-publication");

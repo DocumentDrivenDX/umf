@@ -348,3 +348,64 @@ impl<'a> IntoIterator for &Catalogue<'a>{type Item=(&'a Utf16,&'a Value);type In
 #[cfg(test)]
 #[path="schema_admitted_bank_independent_tests.rs"]
 mod independent_tests;
+
+// Invocation-local custody: the bank borrow and resources View are created
+// together here. No caller can substitute a bank or a physical parent. The
+// immutable bank/parser/Structure remain alive throughout this lexical borrow.
+// No cursor/frontier/index cache and no owned Limits snapshot are introduced.
+pub(crate) struct ResourcesParent<'a> {
+    bank: &'a SchemaBank,
+    view: admitted_structure::View,
+}
+impl SchemaBank {
+    pub(crate) fn resources_parent(&self,ctx:&mut Context<'_>)->Result<Option<ResourcesParent<'_>>,EngineError>{
+        let words=|n:usize|n.div_ceil(std::mem::size_of::<usize>());
+        // Prepay every new initialized representation/move: local+returned+
+        // caller Option<Parent>, constructed+returned Parent, root/parent
+        // Option<View> temporaries, and their two View payload transports.
+        // Twelve scalar operations cover owner/parser/structure/option branches,
+        // borrowed-bank binding, root Arc clone/drop, final parent Arc cleanup,
+        // and successful publication/return. All are paid even on early refusal.
+        ctx.charge_work(3*words(std::mem::size_of::<Option<ResourcesParent<'_>>>())
+            +2*words(std::mem::size_of::<ResourcesParent<'_>>())
+            +2*words(std::mem::size_of::<Option<admitted_structure::View>>())
+            +2*words(std::mem::size_of::<admitted_structure::View>())+12,Utf16::default())?;
+        if !self.input_compatible(ctx)?{return Ok(None);}
+        let Owner::Meta(_)=&self.owner else{return Ok(None);};
+        let Some(parsed)=&self.parsed_owner else{return Ok(None);};
+        if !parsed.compatible(ctx)?{return Ok(None);}
+        ctx.charge_work(1,Utf16::default())?;
+        let Some(root)=parsed.structure().filter(|s|s.compatible(ctx)).and_then(|s|s.root())else{return Ok(None);};
+        let Some(view)=admitted_structure::Structure::child(&root,self.meta_resources,ctx)?else{return Ok(None);};
+        Ok(Some(ResourcesParent{bank:self,view}))
+    }
+}
+impl ResourcesParent<'_> {
+    pub(crate) fn select(&self,index:usize,ctx:&mut Context<'_>)->Result<Option<admitted_structure::View>,EngineError>{
+        // The same original per-row dynamic checks, lookup order and tariffs.
+        // The lexical immutable borrow replaces ONLY root->resources lookup.
+        if !self.bank.input_compatible(ctx)?{return Ok(None);}
+        ctx.charge_work(4,Utf16::default())?;
+        let Some(row)=self.bank.rows.get(index)else{return Ok(None);};
+        let Some(parsed)=&self.bank.parsed_owner else{return Ok(None);};
+        if !parsed.compatible(ctx)?{return Ok(None);}
+        ctx.charge_work(1,Utf16::default())?;
+        if !self.view.structure.compatible(ctx){return Ok(None);}
+        let Some(entry)=admitted_structure::Structure::child(&self.view,row.role,ctx)?else{return Ok(None);};
+        admitted_structure::Structure::child(&entry,row.schema_member,ctx)
+    }
+}
+
+// Private compile-time performance bound for the independently authenticated
+// twenty-row catalogue geometry. It never selects a runtime route or changes
+// acceptance/limits. The target compiler, not a guessed field layout, must prove
+// the complete local model is strictly below the original 1000. No claim about
+// whole-constructor cost, remaining work, stack footprint or allocator calls.
+const _: () = {
+    const fn words(bytes:usize)->usize{bytes.div_ceil(std::mem::size_of::<usize>())}
+    assert!(872
+        +3*words(std::mem::size_of::<Option<ResourcesParent<'static>>>())
+        +2*words(std::mem::size_of::<ResourcesParent<'static>>())
+        +2*words(std::mem::size_of::<Option<admitted_structure::View>>())
+        +2*words(std::mem::size_of::<admitted_structure::View>()) < 1000);
+};
