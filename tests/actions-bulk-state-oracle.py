@@ -61,7 +61,7 @@ def apply(state, event):
         if k == 'commit':
             if not c['effectAdmitted']: return refuse()
             n = s['nextBatch'] + 1; s.update(nextBatch=n, committedBatches=s['committedBatches'] + 1, claim=None)
-            s['status'] = 'cancelled' if s['cancelRequested'] else ('completed' if n == s['batchCount'] else 'queued'); return accept(s)
+            s['status'] = 'completed' if n == s['batchCount'] else ('cancelled' if s['cancelRequested'] else 'queued'); return accept(s)
         if k == 'failure':
             s.update(status='stopped', stop={'batch': c['batch'], 'code': event['code']}, claim=None); return accept(s)
         if k == 'lose-custody':
@@ -76,7 +76,7 @@ def apply(state, event):
         e = event['evidence']
         if e == 'committed':
             n = s['nextBatch'] + 1; s.update(nextBatch=n, committedBatches=s['committedBatches'] + 1, claim=None)
-            s['status'] = 'cancelled' if s['cancelRequested'] else ('completed' if n == s['batchCount'] else 'queued'); return accept(s)
+            s['status'] = 'completed' if n == s['batchCount'] else ('cancelled' if s['cancelRequested'] else 'queued'); return accept(s)
         if e == 'noncommit-admitted':
             s.update(status='stopped', stop={'batch': c['batch'], 'code': 'PAP_ABORT_DISPOSITION_UNKNOWN'}, claim=None); return accept(s)
         return accept(s, 'unresolved')
