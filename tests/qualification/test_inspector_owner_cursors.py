@@ -87,8 +87,21 @@ def validate_coordinate_storage(source):
     for needle in ('try_reserve_exact(roots)','checked_add(1)','roots>ctx.limits().max_values','event("publish")'):
         if needle not in re.sub(r'\s+','',legacy):raise ValueError('legacy storage bound/publication missing')
     view=compact(raw_body(source,'bind_admitted_impl'))
-    for needle in ('Arc::ptr_eq(bank,root_bank)','top.max_depth.checked_sub(top.depth)','next>ctx.limits().max_values','forlogical_rolein0..root_count','bank.structure_catalogue(logical_role-1,ctx)?','roots.push(total)','base:total,end:next','total=next','roles.try_reserve_exact(root_count)','roots.try_reserve_exact(root_count)','facts.try_reserve_exact(root_count)'):
+    for needle in ('Arc::ptr_eq(bank,root_bank)','top.max_depth.checked_sub(top.depth)','next>ctx.limits().max_values','roots.push(total)','base:total,end:next','total=next','roles.try_reserve_exact(root_count)','roots.try_reserve_exact(root_count)','facts.try_reserve_exact(root_count)'):
         if needle not in view:raise ValueError('view role/lineage/limit/reserve missing: '+needle)
+    # Bind logical role zero from the compiled root, then use the retained
+    # resources parent for Meta catalogue rows. A missing parent falls back to
+    # the bank's catalogue selector. Core keeps its original per-row selector.
+    root_role='bind_role!(bank.structure_role(*role,ctx)?);'
+    parent_route=('ifroot_count>1&&matches!(role,admitted_bank::BankRoot::Meta){'
+        'letparent=bank.resources_parent(ctx)?;forlogical_rolein1..root_count{'
+        'ctx.charge_work(2,Utf16::default())?;bind_role!(match&parent{'
+        'Some(parent)=>parent.select(logical_role-1,ctx)?,None=>bank.structure_catalogue(logical_role-1,ctx)?,});}}'
+        'else{forlogical_rolein1..root_count{bind_role!(bank.structure_catalogue(logical_role-1,ctx)?);}}')
+    if view.count(root_role)!=1:raise ValueError('compiled logical role zero selector differs')
+    if parent_route not in view:raise ValueError('Meta parent/select/fallback and Core per-row route differs')
+    if not (view.index(root_role)<view.index(parent_route)):
+        raise ValueError('role zero must be bound before parent-view catalogue selection')
     # Keep original traversal/read bounds, not only the new view fast route.
     for needle in ('checked_add(count)','if id>=ctx.limits().max_values'):
         if needle not in source:raise ValueError('original structural bound missing')
@@ -317,7 +330,7 @@ class OwnerCursorSourceControls(unittest.TestCase):
                 with self.assertRaises(ValueError):validate_annotation_staging(mutant)
     def test_descriptor_storage_and_view_role_mutations_refuse(self):
         source=(ROOT/'crates/umf-core/src/schema_owner_locations.rs').read_text()
-        mutations=[source.replace('struct Descriptor {','struct Descriptor {\n    cached: Utf16,',1),source.replace('u32::try_from(root)','root as u32',1),source.replace('roles.try_reserve_exact(root_count)','roles.reserve(root_count)',1),source.replace('bank.structure_catalogue(logical_role-1,ctx)?','bank.structure_catalogue(0,ctx)?',1),source.replace('next>ctx.limits().max_values','false',1)]
+        mutations=[source.replace('struct Descriptor {','struct Descriptor {\n    cached: Utf16,',1),source.replace('u32::try_from(root)','root as u32',1),source.replace('roles.try_reserve_exact(root_count)','roles.reserve(root_count)',1),source.replace('bank.structure_role(*role,ctx)?','bank.structure_catalogue(0,ctx)?',1),source.replace('parent.select(logical_role-1,ctx)?','parent.select(0,ctx)?',1),source.replace('None=>bank.structure_catalogue(logical_role-1,ctx)?','None=>return Ok(None)',1),source.replace('if root_count>1 && matches!(role,admitted_bank::BankRoot::Meta)','if root_count>1',1),source.replace('for logical_role in 1..root_count {\n                    bind_role!(bank.structure_catalogue(logical_role-1,ctx)?);','for logical_role in 1..root_count {\n                    bind_role!(bank.structure_catalogue(0,ctx)?);',1),source.replace('next>ctx.limits().max_values','false',1)]
         for i,mutant in enumerate(mutations):
             with self.subTest(mutation=i):
                 self.assertNotEqual(mutant,source)
