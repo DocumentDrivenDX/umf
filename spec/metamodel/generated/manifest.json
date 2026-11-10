@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-    "compilerSha256": "a22543319b0ebdd9a73c7fab061fc6a86848b5e9cfb7c5799622698592c99826"
+    "compilerSha256": "27bbb522e4aed7fa8d2173fbf321aa4597b450f57d7b3e67289bc5b2cf8743ce"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
@@ -234,14 +234,14 @@
     "crates/umf-core/src/rfc3339_exact_instant.rs": "822debe5dbcf9dceec7dd0ffb73b89d9c090265128879c629e52601ac0b046f7",
     "crates/umf-core/src/scalar_type_inspection.rs": "9078192e60c3031a793beb6151002ed3a3f1a990a8d98b667b128026621ba57e",
     "crates/umf-core/src/schema.rs": "32fd52b0e7f1a96f6e215b51f127ef7e03632953ede218ec7dd6331560ddeab3",
-    "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
+    "crates/umf-core/src/schema_admitted_bank.rs": "92591cb73c54411b5cb930bc2af4c9471e5c7fbb150a38b8dec0ca56976aec42",
     "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
     "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
     "crates/umf-core/src/schema_admitted_structure_independent_tests.rs": "874a89a8fdc77ca6f5959fe9c11f5bc5423a872731ac73ef638a0ac418573ea6",
     "crates/umf-core/src/schema_annotation_delta.rs": "e6c07f15750cbbd06b1158943bdeb8743be7a09f986d552ebf6c0df21623458d",
     "crates/umf-core/src/schema_bound_coordinate_views_independent_tests.rs": "f255d7d9702c0868cb3b0b52b7feb0653eb621689b3efc39e3ce7e00f88fccb6",
     "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
-    "crates/umf-core/src/schema_closed_container_independent_tests.rs": "2964bcb2484bd433b6576dd759f4003e4d8a27901c3b15821abc5f586304733a",
+    "crates/umf-core/src/schema_closed_container_independent_tests.rs": "d425b50f34deba461e96c2ea8f2dbfddd7f5db7e16452f07d1d4da66481408f6",
     "crates/umf-core/src/schema_closed_structure.rs": "026045f024a4fb11a126ce0bbd384464fe8c2646b7f8b83aa02b77dcde6ff8ac",
     "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
     "crates/umf-core/src/schema_construction_index.rs": "d1e6b66dd95536f1c08a843bb4ecce33f390785cebd8bfa6d3a79a24aaee0c69",
@@ -260,10 +260,10 @@
     "crates/umf-core/src/schema_owned_plan_tests.rs": "f3ec94b89b443195b8ffa64c585af76641694d80fb53df0bff9befebbfd749fd",
     "crates/umf-core/src/schema_owned_plans.rs": "d91d82ce36d3ffdc5bee8fd042534a68635fdbc4e304400e0149b3b321a03238",
     "crates/umf-core/src/schema_owner_location_tests.rs": "060990953a6fa55640454093724d8072ea004e69043757daba583687ab20cd7f",
-    "crates/umf-core/src/schema_owner_locations.rs": "d2d0fa5421bba32c8579aa448f2dac391ef856e6761c75f92ba8cf078d62bf19",
+    "crates/umf-core/src/schema_owner_locations.rs": "f206db67ea2e8a8a1c5af0867e9a56d8c889f558f05a92e38fe34c8774dde71d",
     "crates/umf-core/src/schema_owner_locations_compact_independent_tests.rs": "db0d8e5addbc27f8e12ea0e6735f08483d15a604655ea70fd83ec5cff6bd2ee9",
     "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
-    "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "2ee93d54ad85fc3f80b94c3bd8663827134a91ec97eb87fec1c0d3ab8fe239ec",
+    "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "c760175d90c25c6f27f8f959d436ba4a3c7a72f80b7535c5c1ddbd0285e9415c",
     "crates/umf-core/src/schema_path_facts_independent_tests.rs": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
     "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
     "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "51929e6229517957e9d280647398b41bf85fcd6037042206279f87d4dfa14683",
@@ -1606,7 +1606,7 @@
     "crates/umf-core-wire/tests/sqlserver_wire.rs": "663a5472c1776cb2f2bec9a0ccde7499775fbf6f21da02af8904757d5fd00a49",
     "crates/umf-core-wire/tests/tablespec_binding.rs": "67c9d52010812c72699e199b34f2c81a1f0aafd4cbcf83a695a5a98a5bb5381f",
     "crates/umf-core-wire/tests/typespec_binding.rs": "97fcab2f4a9182635dd2c82fcb4199b1bb19a6c474aec2c3b5a5cf416c110a70",
-    "crates/umf-core/src/canonical_codegen_literals.rs": "24a26835100aeec1673f3367225582f407c0d9c7159791bdb20b4fbf1c31c5f9",
+    "crates/umf-core/src/canonical_codegen_literals.rs": "a51b7be86a99326f962e4e026919378617c9d2a74722c90554b4c0c81a508fa1",
     "crates/umf-graphql/Cargo.toml": "7e05c3edbb7fdeafbc4efae59b76353b0c679c6a7afbdbb8e3f5842226589deb",
     "crates/umf-graphql/src/apollo_mapper.rs": "79f22e2769111d3be20ca8174d06138cca8b5a2c8bfbfc8f5e69476513661d31",
     "crates/umf-graphql/src/core_value_bridge.rs": "a77b7a641af6c4936c2e64d289a01b0d4cd1da680134662b808bfe9ab4949f95",
@@ -2514,14 +2514,14 @@
     "crates/umf-core/src/rfc3339_exact_instant.rs": "822debe5dbcf9dceec7dd0ffb73b89d9c090265128879c629e52601ac0b046f7",
     "crates/umf-core/src/scalar_type_inspection.rs": "9078192e60c3031a793beb6151002ed3a3f1a990a8d98b667b128026621ba57e",
     "crates/umf-core/src/schema.rs": "32fd52b0e7f1a96f6e215b51f127ef7e03632953ede218ec7dd6331560ddeab3",
-    "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
+    "crates/umf-core/src/schema_admitted_bank.rs": "92591cb73c54411b5cb930bc2af4c9471e5c7fbb150a38b8dec0ca56976aec42",
     "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
     "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
     "crates/umf-core/src/schema_admitted_structure_independent_tests.rs": "874a89a8fdc77ca6f5959fe9c11f5bc5423a872731ac73ef638a0ac418573ea6",
     "crates/umf-core/src/schema_annotation_delta.rs": "e6c07f15750cbbd06b1158943bdeb8743be7a09f986d552ebf6c0df21623458d",
     "crates/umf-core/src/schema_bound_coordinate_views_independent_tests.rs": "f255d7d9702c0868cb3b0b52b7feb0653eb621689b3efc39e3ce7e00f88fccb6",
     "crates/umf-core/src/schema_budget_reduction_tests.rs": "b110c8453d4a00754d2e7bd6995d6f6c0cbc55328b2a0acfc476753fdc4b17cc",
-    "crates/umf-core/src/schema_closed_container_independent_tests.rs": "2964bcb2484bd433b6576dd759f4003e4d8a27901c3b15821abc5f586304733a",
+    "crates/umf-core/src/schema_closed_container_independent_tests.rs": "d425b50f34deba461e96c2ea8f2dbfddd7f5db7e16452f07d1d4da66481408f6",
     "crates/umf-core/src/schema_closed_structure.rs": "026045f024a4fb11a126ce0bbd384464fe8c2646b7f8b83aa02b77dcde6ff8ac",
     "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "a2bc8d91468efa718bf191b829c68c183258af0f75ed7a29be856f6a0ec2da0d",
     "crates/umf-core/src/schema_construction_index.rs": "d1e6b66dd95536f1c08a843bb4ecce33f390785cebd8bfa6d3a79a24aaee0c69",
@@ -2540,10 +2540,10 @@
     "crates/umf-core/src/schema_owned_plan_tests.rs": "f3ec94b89b443195b8ffa64c585af76641694d80fb53df0bff9befebbfd749fd",
     "crates/umf-core/src/schema_owned_plans.rs": "d91d82ce36d3ffdc5bee8fd042534a68635fdbc4e304400e0149b3b321a03238",
     "crates/umf-core/src/schema_owner_location_tests.rs": "060990953a6fa55640454093724d8072ea004e69043757daba583687ab20cd7f",
-    "crates/umf-core/src/schema_owner_locations.rs": "d2d0fa5421bba32c8579aa448f2dac391ef856e6761c75f92ba8cf078d62bf19",
+    "crates/umf-core/src/schema_owner_locations.rs": "f206db67ea2e8a8a1c5af0867e9a56d8c889f558f05a92e38fe34c8774dde71d",
     "crates/umf-core/src/schema_owner_locations_compact_independent_tests.rs": "db0d8e5addbc27f8e12ea0e6735f08483d15a604655ea70fd83ec5cff6bd2ee9",
     "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
-    "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "2ee93d54ad85fc3f80b94c3bd8663827134a91ec97eb87fec1c0d3ab8fe239ec",
+    "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "c760175d90c25c6f27f8f959d436ba4a3c7a72f80b7535c5c1ddbd0285e9415c",
     "crates/umf-core/src/schema_path_facts_independent_tests.rs": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
     "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
     "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "51929e6229517957e9d280647398b41bf85fcd6037042206279f87d4dfa14683",
@@ -3888,7 +3888,7 @@
     "crates/umf-core-wire/tests/sqlserver_wire.rs": "663a5472c1776cb2f2bec9a0ccde7499775fbf6f21da02af8904757d5fd00a49",
     "crates/umf-core-wire/tests/tablespec_binding.rs": "67c9d52010812c72699e199b34f2c81a1f0aafd4cbcf83a695a5a98a5bb5381f",
     "crates/umf-core-wire/tests/typespec_binding.rs": "97fcab2f4a9182635dd2c82fcb4199b1bb19a6c474aec2c3b5a5cf416c110a70",
-    "crates/umf-core/src/canonical_codegen_literals.rs": "24a26835100aeec1673f3367225582f407c0d9c7159791bdb20b4fbf1c31c5f9",
+    "crates/umf-core/src/canonical_codegen_literals.rs": "a51b7be86a99326f962e4e026919378617c9d2a74722c90554b4c0c81a508fa1",
     "crates/umf-graphql/Cargo.toml": "7e05c3edbb7fdeafbc4efae59b76353b0c679c6a7afbdbb8e3f5842226589deb",
     "crates/umf-graphql/src/apollo_mapper.rs": "79f22e2769111d3be20ca8174d06138cca8b5a2c8bfbfc8f5e69476513661d31",
     "crates/umf-graphql/src/core_value_bridge.rs": "a77b7a641af6c4936c2e64d289a01b0d4cd1da680134662b808bfe9ab4949f95",
@@ -4576,15 +4576,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "b2c5bd9e65ec9e584fc1241f4fdad91c96bf3f01fd7da5a038000fec4c80c150",
+      "sha256": "5faa404e9fc0c6effa3681c569e22f55af4032b7d4b090fbec84fcc60da48cfd",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "7373ed9b7b2234dc85e05b18d0e4746a90385205422692e8ff2ff6f218c70557",
+      "sha256": "b4abdf3cd5c6135e337a3b542179436e1e29371084c056132fa0388a1d9f8255",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "9268e9ed117afb121df5a45029b2b1e37d9b704494c085e761669953d60011ce",
+      "sha256": "5a823eaa4554a6f04dacd53dea026e36e03a019aaafc1500929340939498edc0",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -4592,23 +4592,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "b6f477f43f0a03f9fd43f8fc465709aa64ef3f33b83a623e2e741459669743e0",
+      "sha256": "0a744fffff4266538e3643a266261eaf05d604953acf590abaa0cd517630699c",
       "bytes": 190431
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "a56ad122f395631296e884545ef99bc3a96b0a2e1697dd62d8765f2ac13a281d",
+      "sha256": "4a7c675293ba2b237650cfafd388cc82e5cc571d101a914c644c10f172d9979c",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "ed8a7c4762920040cd3ee9f25d6b225d8895d3f252a569debbc4caefc6d1dea4",
+      "sha256": "2c201dae72dbc140f59e785775939f88986f80ea9d922c6d36f022415cf4e0fd",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "5896502b8b59bb506ee1569c2aaffe54bf55fe12583c969cf427705755277f2a",
+      "sha256": "915b46894c8966bc3ece5f6972f4a4b8a67dd962356824fb38d440c93916a681",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "616f9b375ab305d8737e4108233797d9bef8eea4ce0efb6753f4bd40daf00b5e",
+      "sha256": "f99e261dcaa0863e1b72790125a4a7e920a234587306a9d62059160f149dda65",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -4636,11 +4636,11 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "fdeffff4e53a308ea2dbd513b9e75ee39ffffc958b64d2b98ca7c8a4b6471818",
+      "sha256": "120db0b01c71033680dd3a4c6242c404c3e40c7796447ce6e3b2b8c1ad2ba1fc",
       "bytes": 305070
     },
     "src/generated/core-validators-accounted.ts": {
-      "sha256": "3303a16ab112f9638cf33e51585ecc4fd4f7000fe98fea4b3328498feefe82ae",
+      "sha256": "3db15855a1a2fe9837cadfee79288f8f89c713c9c9b2387cdbe62fbc8b95e390",
       "bytes": 1525347
     }
   }
