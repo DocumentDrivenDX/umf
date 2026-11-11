@@ -313,7 +313,7 @@ jobs:
               validate_compiler_attestation(final,att)
               verify_source_attestation(att.get('sourceAttestation',{}).get('sources'))
               verify_compiler_artifact(att.get('compilerArtifact',{}),att.get('executable',{}),d)
-              verify_pins(initial)
+              verify_pins(initial_path)
               oracle=load(d/'stages/C.oracle.json'); validate_oracle_receipt(final,oracle)
               receipt=load(d/'output-receipt.json')
               if receipt.get('profile')!='umf.gen1.g0-source-output/1' or receipt.get('outputs')!=final['outputs']: raise ValueError('source output receipt does not match final C roster')

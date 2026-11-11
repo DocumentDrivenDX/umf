@@ -60,6 +60,63 @@ def source_text(path: str) -> str:
     return (REPO / path).read_text()
 
 class FullOnlyWorkflowTests(unittest.TestCase):
+    def test_complete_passes_initial_path_to_pin_verifier(self):
+        ns = load_controller()
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            stages = directory / "stages"
+            stages.mkdir()
+            for stage in ns["STAGES"]:
+                (stages / f"{stage}.log").write_text("")
+            (stages / "status.txt").write_text(
+                "".join(f"{stage} 0\n" for stage in ns["STAGES"])
+            )
+
+            outputs = {
+                path: {"bytes": 0, "sha256": "0" * 64}
+                for path in ns["OUTPUTS"]
+            }
+            pin_baselines = {}
+            for path in (ns["RELEASE"], ns["ACTION_RUNTIME"]):
+                raw = (REPO / path).read_bytes()
+                _, normalized = ns["pin_parts"](path, raw)
+                digest = hashlib.sha256(raw).hexdigest()
+                outputs[path] = {"bytes": len(raw), "sha256": digest}
+                pin_baselines[path] = {
+                    "bytes": len(raw),
+                    "sha256": digest,
+                    "normalizedSha256": hashlib.sha256(normalized).hexdigest(),
+                }
+
+            initial_path = directory / "source-inputs.json"
+            final_path = directory / "final-roster.json"
+            attestation_path = directory / "final-attestation.json"
+            initial_path.write_text(json.dumps({"outputs": outputs, "derivedPinBaselines": pin_baselines}))
+            final_path.write_text(json.dumps({"outputs": outputs}))
+            attestation_path.write_text("{}")
+            (stages / "C.oracle.json").write_text("{}")
+            (directory / "output-receipt.json").write_text(
+                json.dumps({"profile": "umf.gen1.g0-source-output/1", "outputs": outputs})
+            )
+            (directory / "final-source.patch").write_bytes(b"")
+            (directory / "source-controller.json").write_text("{}")
+
+            with (
+                patch.dict(ns, {
+                    "validate_compiler_attestation": lambda *_: None,
+                    "verify_source_attestation": lambda *_: None,
+                    "verify_compiler_artifact": lambda *_: None,
+                    "validate_oracle_receipt": lambda *_: None,
+                }),
+            ):
+                ns["complete"](
+                    str(directory), str(initial_path), str(final_path), str(attestation_path)
+                )
+
+            receipt = json.loads((directory / "success-receipt.json").read_text())
+            self.assertTrue(receipt["success"])
+            self.assertEqual(receipt["outputCount"], len(ns["OUTPUTS"]))
+
     def test_all_decoded_run_steps_under_github_character_limit(self):
         bodies = decoded_run_bodies()
         self.assertGreater(len(bodies), 0)
