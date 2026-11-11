@@ -23,14 +23,14 @@ on:
         type: boolean
         default: false
       locally_qualified:
-        description: Confirm the tracked local qualification admission for the 0.10.9 route
+        description: Select the separately admitted local qualification route for 0.10.9 or 0.10.10
         type: boolean
         default: false
 permissions:
   contents: read
   actions: read
 concurrency:
-  group: ${{ inputs.tag == 'umf-v0.10.8' && 'codegen-pypi-0108' || inputs.tag == 'umf-v0.10.9' && 'codegen-pypi-0109' || inputs.tag == 'umf-v0.10.10' && 'codegen-pypi-0110-candidate' || 'codegen-pypi-unsupported' }}
+  group: ${{ inputs.tag == 'umf-v0.10.8' && 'codegen-pypi-0108' || inputs.tag == 'umf-v0.10.9' && 'codegen-pypi-0109' || inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true && 'codegen-pypi-0110-local' || inputs.tag == 'umf-v0.10.10' && 'codegen-pypi-0110-candidate' || 'codegen-pypi-unsupported' }}
   cancel-in-progress: false
 env:
   TAG: ${{ inputs.tag }}
@@ -40,7 +40,7 @@ env:
   LOCALLY_QUALIFIED: ${{ inputs.locally_qualified }}
 jobs:
   verify:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && (inputs.tag == 'umf-v0.10.8' || inputs.tag == 'umf-v0.10.10')
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && (inputs.tag == 'umf-v0.10.8' || (inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified != true))
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
@@ -54,6 +54,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Test pure Codegen publisher controls
+        if: ${{ !(inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true) }}
         run: python -m unittest scripts.test_publish_codegen_pypi_release -v
       - name: Validate dispatch and reviewed download roster before public lookup
         run: |
@@ -116,7 +117,7 @@ jobs:
           retention-days: 90
   publish:
     needs: verify
-    if: inputs.publish == true && github.ref == 'refs/heads/main' && (inputs.tag == 'umf-v0.10.8' || inputs.tag == 'umf-v0.10.10')
+    if: inputs.publish == true && github.ref == 'refs/heads/main' && (inputs.tag == 'umf-v0.10.8' || (inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified != true))
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     environment: pypi
@@ -248,7 +249,7 @@ jobs:
           retention-days: 365
   public-consumer-01010:
     needs: [verify, publish]
-    if: inputs.tag == 'umf-v0.10.10'
+    if: inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified != true
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -316,6 +317,108 @@ jobs:
         with:
           name: codegen-01010-public-consumer
           path: ${{ runner.temp }}/codegen-consumer-receipt.json
+          if-no-files-found: error
+          retention-days: 365
+  verify-01010-local:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          fetch-depth: 64
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate local admission pins and write the exact roster
+        run: |
+          set -euo pipefail
+          mkdir -p incoming/assets
+          python scripts/publish_local_pypi_01010.py roster --distribution umf-codegen --assets-dir incoming/assets \
+            --tag "$TAG" --source-sha "$SOURCE_SHA" --expected-sums-sha256 "$SUMS_SHA" \
+            --expected-admission-sha256 "$ADMISSION_SHA" > download-roster.txt
+      - name: Download exact immutable release metadata and admitted assets
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > incoming/release.json
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > incoming/tag-ref.json
+          if [[ "$(jq -r .object.type incoming/tag-ref.json)" == tag ]]; then
+            gh api "repos/$GITHUB_REPOSITORY/git/tags/$(jq -r .object.sha incoming/tag-ref.json)" > incoming/tag-object.json
+          fi
+          git fetch --no-tags --depth=2 --filter=blob:none origin "$SOURCE_SHA"
+          while IFS= read -r name; do
+            gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern="$name" --dir incoming/assets
+          done < download-roster.txt
+      - name: Verify the exact local Codegen admission and source cohort
+        run: |
+          set -euo pipefail
+          ARGS=(prepare --distribution umf-codegen --assets-dir incoming/assets --output-dir dist
+            --tag "$TAG" --source-sha "$SOURCE_SHA" --expected-sums-sha256 "$SUMS_SHA"
+            --expected-admission-sha256 "$ADMISSION_SHA" --release-json incoming/release.json
+            --tag-ref-json incoming/tag-ref.json)
+          if [[ -f incoming/tag-object.json ]]; then ARGS+=(--tag-object-json incoming/tag-object.json); fi
+          python scripts/publish_local_pypi_01010.py "${ARGS[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: admitted-codegen-01010-local
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 90
+  publish-01010-local:
+    needs: verify-01010-local
+    if: inputs.publish == true && inputs.locally_qualified == true && github.ref == 'refs/heads/main' && github.event.repository.default_branch == 'main' && github.repository == 'DocumentDrivenDX/umf' && inputs.tag == 'umf-v0.10.10'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: pypi
+    env:
+      GH_TOKEN: ${{ github.token }}
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          fetch-depth: 64
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: admitted-codegen-01010-local
+          path: dist
+      - name: Revalidate local admission, exact Core prerequisite and PyPI collision state
+        id: preflight
+        run: |
+          git fetch --no-tags --depth=2 --filter=blob:none origin "$SOURCE_SHA"
+          python scripts/publish_local_pypi_01010.py check-pypi --distribution umf-codegen \
+            --assets-dir dist --tag "$TAG" --source-sha "$SOURCE_SHA" \
+            --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA"
+      - name: Select exactly the two admitted Codegen archives
+        if: steps.preflight.outputs.status == 'absent'
+        run: |
+          mkdir .verified-codegen-packages
+          cp dist/umf_codegen-0.10.10-py3-none-any.whl dist/umf_codegen-0.10.10.tar.gz .verified-codegen-packages/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        if: steps.preflight.outputs.status == 'absent'
+        with:
+          packages-dir: .verified-codegen-packages/
+      - name: Verify exact PyPI Codegen inventory and served bytes
+        run: |
+          python scripts/publish_local_pypi_01010.py check-pypi --distribution umf-codegen \
+            --assets-dir dist --tag "$TAG" --source-sha "$SOURCE_SHA" \
+            --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA" \
+            --wait > dist/public-bytes-receipt.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegen-01010-local-public-bytes
+          path: dist/public-bytes-receipt.json
           if-no-files-found: error
           retention-days: 365
   verify-0109:
