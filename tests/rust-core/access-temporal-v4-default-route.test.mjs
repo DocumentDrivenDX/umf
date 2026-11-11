@@ -16,11 +16,11 @@ for(const [host,path] of [['Node','../../src/index-node-v4.ts'],['browser','../.
   });
 }
 
-test('V4 facade selects the local host routes while ./reference remains TypeScript',async()=>{
+test('V4 facade selects the local Rust host routes',async()=>{
   const generated=generateFacade();
   expect(generated.localOverrides).toContain('ACCESS_TEMPORAL_PROFILE');
   expect(generated.localOverrides).toContain('parseAccessTemporal');
   expect(generated.text).not.toContain("export { parseAccessTemporal } from './adapters/access-temporal';");
   const reference=await source('../../src/index.ts');
-  expect(reference).toContain("export * from './adapters/access-temporal';");
+  expect(reference).toContain("export * from '#umf-source';");
 });

@@ -2,9 +2,10 @@
 /** Native carrier construction evidence, not complete authored facet projection. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {parquetFacetFile, type ParquetFacetCarrier} from '../../src/core-ideals/parquet-facet-carrier';
-import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';
-import {importParquetSchema, exportParquetCapture, readDocument, writeDocument} from '../../src';
+import {type ParquetFacetCarrier} from "./parquet-facet-carrier";
+import {parquetFacetFile} from "./parquet-facet-carrier";
+import {parquetCarriers} from './parquet-carriers';
+import {importParquetSchema, exportParquetCapture, readDocument, writeDocument} from '../../src/index-node-v4';
 const carriers:ParquetFacetCarrier[]=[
  ...Object.keys(parquetCarriers).map(nativeType=>({kind:'primitive' as const,nativeType:nativeType as keyof typeof parquetCarriers})),
  ...([8,16,32,64] as const).flatMap(bits=>[true,false].map(signed=>({kind:'integer' as const,bits,signed}))),

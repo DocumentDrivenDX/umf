@@ -1,9 +1,15 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,Diagnostic,Json,Scope} from '../../model/types';
 import {UmfError} from '../../model/errors';
-import type {
- exportArrowSchema, getArrowNode, importArrowSchema, inspectArrow, proposeArrowNodeEdit,
-} from './index';
+import type {NativeJson} from "../../model/native-json";
+import type {Validation} from "../../model/types";
+
+type ExportArrowSchema = (document: Document) => string;
+type GetArrowNode = (document: Document, path: string) => NativeJson;
+type ImportArrowSchema = (text: string, options: { id: string; }) => Document;
+type InspectArrow = (document: Document) => Validation;
+type ProposeArrowNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+
 export {UmfError};
 
 /** The common five-operation surface exposed by the Node and WASM bindings. */
@@ -34,22 +40,22 @@ function rustCall<T>(operation:()=>T,isNativeUmfCoreError:NativeCoreErrorGuard):
 export function bindArrowSchemaRust(engine:ArrowSchemaRustEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false){
  const call=<T>(operation:()=>T)=>rustCall(operation,isNativeUmfCoreError);
  return Object.freeze({
-  importArrowSchema(text:string,options:{id:string}):ReturnType<typeof importArrowSchema>{
+  importArrowSchema(text:string,options:{id:string}):ReturnType<ImportArrowSchema>{
    // Keep the predecessor's single read of options.id before crossing the host boundary.
    const id=options.id;
-   return call(()=>engine.importSchema(text,id)) as ReturnType<typeof importArrowSchema>;
+   return call(()=>engine.importSchema(text,id)) as ReturnType<ImportArrowSchema>;
   },
-  inspectArrow(document:Document):ReturnType<typeof inspectArrow>{
-   return call(()=>engine.inspect(document)) as ReturnType<typeof inspectArrow>;
+  inspectArrow(document:Document):ReturnType<InspectArrow>{
+   return call(()=>engine.inspect(document)) as ReturnType<InspectArrow>;
   },
-  exportArrowSchema(document:Document):ReturnType<typeof exportArrowSchema>{
-   return call(()=>engine.exportSchema(document)) as ReturnType<typeof exportArrowSchema>;
+  exportArrowSchema(document:Document):ReturnType<ExportArrowSchema>{
+   return call(()=>engine.exportSchema(document)) as ReturnType<ExportArrowSchema>;
   },
-  getArrowNode(document:Document,path:string):ReturnType<typeof getArrowNode>{
-   return call(()=>engine.getNode(document,path)) as ReturnType<typeof getArrowNode>;
+  getArrowNode(document:Document,path:string):ReturnType<GetArrowNode>{
+   return call(()=>engine.getNode(document,path)) as ReturnType<GetArrowNode>;
   },
-  proposeArrowNodeEdit(document:Document,path:string,text:string):ReturnType<typeof proposeArrowNodeEdit>{
-   return call(()=>engine.proposeNodeEdit(document,path,text)) as ReturnType<typeof proposeArrowNodeEdit>;
+  proposeArrowNodeEdit(document:Document,path:string,text:string):ReturnType<ProposeArrowNodeEdit>{
+   return call(()=>engine.proposeNodeEdit(document,path,text)) as ReturnType<ProposeArrowNodeEdit>;
   },
   validateArrowExtensionPayload(payload:Json,context:{document:Document;path:string;scope:Scope}):Diagnostic[]{
    return call(()=>engine.validatePayload(payload,context.document,context.path,context.scope)) as Diagnostic[];

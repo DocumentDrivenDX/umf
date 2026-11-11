@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parseNativeJson} from '../../src/model/native-json';
-import {importSqlServerCatalog, exportSqlServerCatalog} from '../../src/adapters/sqlserver';
-import {inspectSqlServerFacetConstraints as inspect} from '../../src/adapters/sqlserver/facet-constraints';
+import {importSqlServerCatalog,exportSqlServerCatalog} from "../../src/index-node-v4";
+import {inspectSqlServerFacetConstraints as inspect} from "../../src/index-node-v4";
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-discovery-native.json').json();
 const source=JSON.parse(proof.sourceText);
 function sample(name:string,edit?:(table:any,root:any)=>void){const root=structuredClone(source),index=root.tables.findIndex((t:any)=>t.name===name);if(edit)edit(root.tables[index],root);return {document:importSqlServerCatalog(JSON.stringify(root),{id:'facet-constraints'}),path:`/tables/${index}/columns/0`};}

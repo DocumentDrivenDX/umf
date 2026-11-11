@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importIcebergSchema,exportIcebergSchema,proposeIcebergNodeEdit,readDocument,writeDocument,getIcebergNode} from '../../src';
+import {importIcebergSchema,exportIcebergSchema,proposeIcebergNodeEdit,readDocument,writeDocument,getIcebergNode} from '../../src/index-node-v4';
 const base='fixtures/iceberg/upstream/',m=await Bun.file(base+'manifest.json').json(),results=(await Bun.file(base+'results.json').json()).results;
 test('US-020-AC4: pinned table/view resources retain exact standalone schema fragments',async()=>{
  expect(m.schemas).toHaveLength(21);expect(m.distinctSchemaCount).toBe(7);for(const f of m.files)expect(new Bun.CryptoHasher('sha256').update(new Uint8Array(await Bun.file(base+f.path).arrayBuffer())).digest('hex')).toBe(f.sha256);

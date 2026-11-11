@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {sqlserverCardinalityProjectionCases} from '../../scripts/core-ideals/cardinality-sqlserver-projection-cases';
-import {projectCardinalityToSqlServer, recoverCardinalityFromSqlServer} from '../../src/core-ideals/cardinality-sqlserver-projection';
+import {projectCardinalityToSqlServer,recoverCardinalityFromSqlServer} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 test('scalar/JSON carriers retain nested/cyclic items, availability and unknown metadata through both formats',()=>{

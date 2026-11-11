@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host boundary; generator and generated clients contain no filesystem access. */
 import {readFile} from 'node:fs/promises';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient} from '../src/index-node-v4';
 import {checkAccessPackage,writeAccessPackage,type WriterOptions} from './umf-access-generate';
 
 export async function runClientCli(args:readonly string[],writer:WriterOptions={}):Promise<number> {

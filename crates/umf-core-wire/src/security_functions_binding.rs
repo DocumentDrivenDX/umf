@@ -23,6 +23,101 @@ pub fn execute_security_functions_wire_with_control(
             return Err(fail("REQUEST", "Security functions profile is required"));
         }
         let operation = text_field(&request, "op");
+        if matches!(
+            operation.as_deref(),
+            Some("inspectCandidateLiteral" | "inspectCoreCandidateLiteral")
+        ) {
+            let core_limits = operation.as_deref() == Some("inspectCoreCandidateLiteral");
+            if !closed_object(
+                &request,
+                &[
+                    "profile",
+                    "op",
+                    "source",
+                    "field",
+                    "value",
+                    "includeIdentity",
+                    "workLimit",
+                    "textLimit",
+                ],
+            ) {
+                return Err(fail("REQUEST", "Closed candidate literal request required"));
+            }
+            let source = field(&request, "source")
+                .ok_or_else(|| fail("REQUEST", "Source document is required"))?;
+            let field_ref = field(&request, "field")
+                .ok_or_else(|| fail("REQUEST", "Qualified Field is required"))?;
+            let value = field(&request, "value")
+                .ok_or_else(|| fail("REQUEST", "Literal value is required"))?;
+            let include_identity = match field(&request, "includeIdentity") {
+                Some(Value::Bool(value)) => *value,
+                _ => return Err(fail("REQUEST", "includeIdentity must be a boolean")),
+            };
+            let limit = |name: &str| -> Result<usize, EngineError> {
+                match field(&request, name) {
+                    Some(Value::Number(value))
+                        if value.is_finite()
+                            && value.fract() == 0.0
+                            && *value >= 0.0
+                            && *value
+                                <= if core_limits {
+                                    if name == "workLimit" {
+                                        5_000_000.0
+                                    } else {
+                                        8_000_000.0
+                                    }
+                                } else {
+                                    100_000.0
+                                } =>
+                    {
+                        Ok(*value as usize)
+                    }
+                    _ => Err(fail(
+                        "REQUEST",
+                        "Candidate literal limits must be bounded nonnegative integers",
+                    )),
+                }
+            };
+            let work_limit = limit("workLimit")?;
+            let text_limit = limit("textLimit")?;
+            drop(context);
+            let mut work_used = 0usize;
+            let mut limited_control = |amount: usize| {
+                work_used = work_used.saturating_add(amount);
+                if work_used > work_limit {
+                    return Err(EngineError::new(
+                        "PROTECTION_LITERAL_BOUND",
+                        Default::default(),
+                        "resource-exhausted: literal work budget exceeded",
+                    ));
+                }
+                control(amount)
+            };
+            let mut operation_context = Context::ordinary().with_host_control(&mut limited_control);
+            let mut output = umf_core::security_functions::inspect_candidate_literal(
+                source,
+                field_ref,
+                value,
+                include_identity,
+                text_limit,
+                &mut operation_context,
+            )?;
+            if operation_context.charged_work() > work_limit as u64 {
+                return Err(fail(
+                    "PROTECTION_LITERAL_BOUND",
+                    "resource-exhausted: literal work budget exceeded",
+                ));
+            }
+            if let Value::Object(fields) = &mut output {
+                fields.push((
+                    "workUnits".into(),
+                    Value::Number(operation_context.charged_work() as f64),
+                ));
+            }
+            drop(operation_context);
+            let mut output_context = Context::ordinary().with_host_control(control);
+            return encode(&output, &mut output_context);
+        }
         let evaluate = match operation.as_deref() {
             Some("inspectProtectionFunction") => false,
             Some("evaluateProtectionValue") => true,
@@ -73,14 +168,14 @@ fn closed_object(value: &Value, expected: &[&str]) -> bool {
 #[cfg(test)]
 mod tests {
     use super::{
-        SECURITY_FUNCTIONS_PROFILE, execute_security_functions_wire,
-        execute_security_functions_wire_with_control,
+        execute_security_functions_wire, execute_security_functions_wire_with_control,
+        SECURITY_FUNCTIONS_PROFILE,
     };
     use crate::{decode, encode};
     use serde_json::Value as Json;
     use umf_core::{
+        serialization::{read_json_value, Format},
         Context, Utf16, Value,
-        serialization::{Format, read_json_value},
     };
 
     fn parse(source: &str) -> Value {

@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {facetsSqlServerProjectionCases} from './facets-sqlserver-projection-cases';
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-projection-native.json').json();
 for(const [path,sha] of Object.entries(proof.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),sha,'Stale native projection '+path);

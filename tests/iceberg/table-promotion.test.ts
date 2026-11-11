@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importIcebergTable,exportIcebergTable,proposeIcebergTablePromotion,writeDocument,readDocument} from '../../src';
+import {importIcebergTable,exportIcebergTable,proposeIcebergTablePromotion,writeDocument,readDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import grammar from '../../spec/extensions/iceberg-table/promotion-report-schema.json';
 const valid=createValidator().compile(grammar),base='fixtures/iceberg/table-promotion/';

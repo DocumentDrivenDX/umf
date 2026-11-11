@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';import {declareCoreElementKind} from '../../src/model/field-kind';import type {Document} from '../../src/model/types';
+import {parquetCarriers} from './parquet-carriers';import {declareCoreElementKind} from "../../src/index-node-v4";import type {Document} from '../../src/model/types';
 export function parquetProjectionCases(){return Object.keys(parquetCarriers).flatMap(type=>(['required','optional','repeated'] as const).map(repetition=>{const source:Document={umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'e',name:'value',extensions:{}}]}]};return {author:declareCoreElementKind(source,{module:'m',element:'e'},'field'),request:{id:'native',recordName:'Example',fieldName:'value',nativeType:type as keyof typeof parquetCarriers,repetition,mode:'strict' as const}};}));}

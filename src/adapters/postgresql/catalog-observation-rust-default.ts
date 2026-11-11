@@ -1,14 +1,36 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../../model/types';
+import type {NativeJson} from '../../model/native-json';
 import type {PostgresqlBackend} from './index';
 import type {PostgresqlKeyRequest} from '../../core-ideals/key-postgresql';
+import type {ObservedType,PostgresqlTypeIdentity} from './cardinality-catalog';
+import type {PostgresqlKeyIndex} from './key-catalog';
 
 type Guard=(error:unknown)=>boolean;
-type KeyInspection=ReturnType<typeof import('./key-catalog').inspectPostgresqlKeyCatalog>;
-type KeyCorrelation=Awaited<ReturnType<typeof import('./key-correlation').correlatePostgresqlKeyCatalog>>;
-type CardinalityInspection=ReturnType<typeof import('./cardinality-catalog').inspectPostgresqlCardinalityCatalog>;
-type CardinalityResolution=ReturnType<typeof import('./cardinality-catalog').resolvePostgresqlCardinalityType>;
-type CardinalityCorrelation=ReturnType<typeof import('./cardinality-catalog').correlatePostgresqlCardinalityCatalog>;
+type KeyInspection={
+ root:NativeJson;nativeSource:string;serverVersion:170004;encoding:'UTF8';
+ query:string;indexes:PostgresqlKeyIndex[];provenance:'unverified';
+};
+type KeyCorrelation={
+ nativeSupplement:string;root:NativeJson;nativeCatalog:string;
+ matches:{identity:{schema:string;table:string;index:string};relationPath:string;indexPath:string;componentPaths:(string|null)[]}[];
+ sameSnapshotVerified:false;authenticated:false;idealEqualityVerified:false;
+};
+type CardinalityColumn={
+ schema:string;relation:string;name:string;ordinal:number;declaredDimensions:number;type:PostgresqlTypeIdentity;
+};
+type CardinalityInspection={
+ nativeSource:string;root:NativeJson;serverVersion:number;qualifiedVersion:boolean;
+ columns:CardinalityColumn[];types:ObservedType[];
+};
+type CardinalityResolution={
+ nativeSource:string;root:NativeJson;qualifiedVersion:boolean;column:CardinalityColumn;
+ domains:ObservedType[];native:ObservedType;element:ObservedType|null;standardArray:boolean;
+};
+type CardinalityCorrelation={
+ matches:{column:string;path:string;identity:{schema:string;relation:string;name:string};type:PostgresqlTypeIdentity}[];
+ qualifiedVersion:boolean;sameSnapshotVerified:false;nativeSupplement:string;
+};
 interface Engine {postgresql:{
  keyCatalog(fields:{source:string}):unknown;
  keyCorrelate(fields:{source:Document;request:PostgresqlKeyRequest;parser:{responses:{id:string;sql:string;ast:unknown}[]}}):unknown;

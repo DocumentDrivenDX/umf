@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {parquetNullabilityProjectionCases} from './nullability-parquet-projection-cases';
-import {projectNullabilityToParquet, recoverNullabilityFromParquet} from '../../src/core-ideals/nullability-parquet-projection';
-import {classifyParquetNullability, recoverParquetNullabilityBytes} from '../../src/core-ideals/nullability-parquet';
+import {projectNullabilityToParquet,recoverNullabilityFromParquet} from "../../src/index-node-v4";
+import {classifyParquetNullability,recoverParquetNullabilityBytes} from "../../src/index-node-v4";
 import {parquetAvailabilitySource} from './nullability-parquet-cases';
-import {exportParquetCapture} from '../../src/adapters/parquet';
+import {exportParquetCapture} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 const rows=[];let idealRecoveries=0,nativeRecoveries=0,classified=0,blocked=0;

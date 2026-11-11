@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importOwlTurtle,exportOwlTurtle,getOwlDeclarations,getOwlQuads,proposeOwlQuadEdit,readDocument,writeDocument} from '../src';
+import {importOwlTurtle,exportOwlTurtle,getOwlDeclarations,getOwlQuads,proposeOwlQuadEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const cases=[];
 for(const file of ['declarations.ttl','authored.ttl','primer-corrected.ttl']){
  const input=await Bun.file('native/owl/'+file).text();

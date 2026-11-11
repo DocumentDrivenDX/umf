@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreElementKind} from '../../src/model/field-kind';import type {Document} from '../../src/model/types';import type {RecordParquetRequest} from '../../src/core-ideals/record-parquet-projection';
+import {declareCoreElementKind} from "../../src/index-node-v4";import type {Document} from '../../src/model/types';import type {RecordParquetRequest} from '../../src/core-ideals/record-parquet-projection';
 export function parquetRecordCases(){const cases=(['strict','report'] as const).flatMap(mode=>(['clean','mismatch','missing','metadata'] as const).map(variant=>{
  const source:Document={umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'r',name:'Orders',kind:'record',extensions:{},references:['id','labels','active'].map(element=>({role:'member',module:'m',element}))},{id:'id',name:'id',kind:'field',scalarType:'integer',extensions:{}},{id:'labels',name:'labels',kind:'field',scalarType:'string',extensions:{}},{id:'active',name:'active',kind:'field',scalarType:'boolean',extensions:{}}]}]};
  if(variant==='metadata'){source.modules[0]!.namespace='sales';source.modules[0]!.elements[0]!.description='Order record';source.modules[0]!.elements[1]!.description='Identifier';}

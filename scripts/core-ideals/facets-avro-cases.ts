@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import selection from '../../fixtures/avro/facet-selection-cases.json';
 export function avroFacetCase(nativeSource:string,scalarType:u.ScalarType,options:Partial<u.AvroFacetRequest>={}){
  const native=u.importAvroSchema(nativeSource,{id:'avro-facets',...(options.dependencies?{dependencies:options.dependencies}:{})});

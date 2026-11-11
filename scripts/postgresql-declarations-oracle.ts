@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {backend} from '../native/postgresql/runtime';
-import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlDdlDeclarations} from '../src';
+import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlDdlDeclarations} from '../src/index-node-v4';
 const name='umf-pg-declarations-'+crypto.randomUUID(),image=(await Bun.file('native/postgresql/catalog/image.json').json()).reference;
 async function run(args:string[],input?:string){const child=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});if(input!==undefined){child.stdin!.write(input);child.stdin!.end();}const [out,err,code]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);if(code)throw Error(err);return out;}
 const exec=(args:string[],input?:string)=>run(['docker','exec',...(input===undefined?[]:['-i']),name,...args],input);

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {randomUUID} from 'node:crypto';
-import {compileTableDeployment} from '../../src/table-deployment';
+import {compileTableDeployment} from '../../src/index-node-v4';
 import note from '../binding/fixtures/table-lifecycle-note.json';
 const source=structuredClone(note) as any,ref=(element:string)=>({module:'demo',element});
 const field=(id:string)=>({id,kind:'field',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}});

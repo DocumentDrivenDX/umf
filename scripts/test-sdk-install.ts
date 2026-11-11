@@ -62,9 +62,14 @@ try{
  await Bun.write(join(directory,'approve.json'),await Bun.file('fixtures/actions/approve.json').text());
  await Bun.write(join(directory,'commerce.json'),await Bun.file('tests/unified/commerce.json').text());
  await Bun.write(join(directory,'probe.ts'),`import {createUmfRegistry,inspectActions,readDocument,Registry,validateDocument,CURRENT_CORE_VERSION,generatePythonClient,generatePackTools} from '@umf/core';
-import {createValidator} from '@umf/core/loader-contract';
+import {createValidator,readJsonValue,inspectDomainPackLoader,generateDomainPackLoaderSchema,generateLoaderInventorySchema} from '@umf/core/loader-contract';
 const registry=createUmfRegistry();
 if(!registry.get('umf.actions','0.1.0')?.semantics||typeof createValidator!=='function')throw Error('Missing installed SDK entrypoint');
+const ajv=createValidator(),generic=ajv.compile({type:'object',required:['ok'],properties:{ok:{type:'boolean'}},additionalProperties:false});
+if(!generic({ok:true})||generic({ok:'true'})||generic({ok:true,extra:1}))throw Error('Installed generic AJV interop changed');
+if(!Bun.deepEquals(readJsonValue('{"ok":true}','json'),{ok:true}))throw Error('Installed native JSON admission changed');
+const loader={version:'1.0.0',id:'umf.document-loader',implementation_version:'1.0.0',profile:'court-documents',runtime:'bun',entrypoint:'run.ts',configuration_schema:'inventory.schema.json',qualification:'Finite explicit inventory only',artifacts:[{reference:'run.ts',sha256:'a'.repeat(64)},{reference:'inventory.schema.json',sha256:'b'.repeat(64)}]};
+if(!inspectDomainPackLoader(loader).valid||inspectDomainPackLoader({...loader,entrypoint:'../run.ts'}).valid||generateDomainPackLoaderSchema().$id!=='urn:umf:domain-pack-loader:1.0.0'||generateLoaderInventorySchema().$id!=='urn:umf:loader-inventory:1.0.0')throw Error('Installed Rust loader contract changed');
 const source=readDocument(await Bun.file('approve.json').text(),'json');const result=inspectActions(source,registry);
 if(!result.validation.valid||result.validation.complete||result.actions[0]?.action.id!=='approve')throw Error('Installed action behavior differs');
 const corpus=await Bun.file('current-conformance.json').json();if(corpus.currentVersion!==CURRENT_CORE_VERSION)throw Error('Installed generated current marker differs');

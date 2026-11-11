@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {exportSqlServerCatalog,projectBindingTablesToSqlServer,type Document} from '../../src';
+import {exportSqlServerCatalog,projectBindingTablesToSqlServer,type Document} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/sqlserver-tables/case.json').json();
 const project=(binding=fixture.binding,policy=fixture.policy,loss:'strict'|'report'='report')=>projectBindingTablesToSqlServer(fixture.logical as Document,binding as Document,policy,loss);

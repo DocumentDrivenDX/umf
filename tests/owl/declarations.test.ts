@@ -2,7 +2,7 @@
 import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
-import {importOwlTurtle,exportOwlTurtle,getOwlDeclarations,getOwlQuads,proposeOwlQuadEdit,readDocument,writeDocument} from '../../src';
+import {importOwlTurtle,exportOwlTurtle,getOwlDeclarations,getOwlQuads,proposeOwlQuadEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 test('US-029 explicit declarations preserve roles, occurrences and unknown source through both formats',async()=>{
  const input=await Bun.file('native/owl/declarations.ttl').text(),doc=importOwlTurtle(input,{id:'decl',baseIRI:'https://example.org/',blankNodeScope:'decl-scope'});
  const ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/declarations-schema.json').json());

@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource,securityRegistry,securityPackage} from '../../src/extensions/security/policy';
+import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource,securityRegistry,securityPackage} from '../../src/index-node-v4';
 import {validateDocument} from '../../src/validation/document';
 import {securityFixture,ref} from './fixture';
 import type {SecurityExpr} from '../../src/extensions/security/types';
 import {copyJson} from '../../src/model/json';
 import {securityPolicyCorpus} from './browser-corpus';
+import * as securityRuntime from '../../src/index-node-v4';
+import {configureSecurityRuntime} from './browser-corpus';
+configureSecurityRuntime(securityRuntime);
 
 test('Staff/Project nested correlated policy resolves exact qualified types and keys',()=>{
   // @covers US-079-AC1

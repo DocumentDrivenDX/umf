@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql,projectBindingIndexesToPostgresql,type Document} from '../../src';
+import {importPostgresqlSql,projectBindingIndexesToPostgresql,type Document} from '../../src/index-node-v4';
+import {buildBindingBrowserRuntime} from './browser-runtime';
 
 const fixture=await Bun.file('fixtures/binding/postgresql-indexes/case.json').json();
 const native=await importPostgresqlSql(await Bun.file(fixture.native).text(),backend,{id:'native-table'});
 const expected=await projectBindingIndexesToPostgresql(fixture.logical as Document,fixture.binding as Document,native,backend,'report');
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;
-  if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});
+  if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});
+  if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});
   if(path==='/postgresql-runtime.js')return new Response(Bun.file('dist/postgresql/runtime.js'),{headers:{'content-type':'text/javascript'}});
   if(path==='/libpg-query.wasm')return new Response(Bun.file('dist/postgresql/libpg-query.wasm'),{headers:{'content-type':'application/wasm'}});
   if(path==='/case')return Response.json({logical:fixture.logical,binding:fixture.binding,native,expected});

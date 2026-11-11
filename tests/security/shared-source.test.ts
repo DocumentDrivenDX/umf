@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-079-AC3
 import {test,expect} from 'bun:test';
+import '../../src/index-node-v4';
 import {securityFixture,ref} from './fixture';
 import {captureCandidateCoreSource,readCandidateCoreSource,isIssuedCandidateCoreSource} from '../../src/extensions/security/core-source-candidate';
 import {migrateCandidateSecurityOntology} from '../../src/extensions/security/ontology-migration-candidate';

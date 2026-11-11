@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipSqlServerCases,relationshipSqlServerCase} from '../../scripts/core-ideals/relationship-sqlserver-cases';
-import {projectRelationshipToSqlServer, recoverRelationshipSqlServerIdeal, recoverRelationshipSqlServerBinding, recoverRelationshipSqlServerNative, verifyRelationshipSqlServerProjection} from '../../src/core-ideals/relationship-sqlserver-projection';
-import {createSqlServerRelationshipProjection} from '../../src/core-ideals/relationship-sqlserver-projection-factory';
-import {lookupCoreRelationship as typescriptLookup,verifyCoreRelationshipOperation as typescriptVerify} from '../../src/model/relationships';
-import {classifySqlServerRelationships, recoverSqlServerRelationshipSource} from '../../src/core-ideals/relationship-sqlserver';
-import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
+import {projectRelationshipToSqlServer, recoverRelationshipSqlServerIdeal, recoverRelationshipSqlServerBinding, recoverRelationshipSqlServerNative, verifyRelationshipSqlServerProjection} from '../../src/index-node-v4';
+import {classifySqlServerRelationships,recoverSqlServerRelationshipSource} from "../../src/index-node-v4";
+import {importSqlServerCatalog} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 // @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipSqlServerCases())test('SQL Server relationship '+c.name,()=>{
@@ -13,16 +11,6 @@ for(const c of relationshipSqlServerCases())test('SQL Server relationship '+c.na
  expect(r.target!.sql).toContain('FOREIGN KEY');expect(r.residuals.length).toBeGreaterThan(5);
  for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(r,format),format) as unknown as typeof r;expect(recoverRelationshipSqlServerIdeal(saved,saved.target!)).toEqual(c.source);expect(recoverRelationshipSqlServerBinding(saved,saved.target!)).toEqual(c.binding);expect(recoverRelationshipSqlServerNative(saved,saved.target!)).toBe(r.target!.sql);}
  const forged=structuredClone(r);forged.residuals.pop();expect(()=>verifyRelationshipSqlServerProjection(forged,r.target!)).toThrow();expect(()=>verifyRelationshipSqlServerProjection(r,{...r.target!,sql:r.target!.sql+'-- changed'})).toThrow();
-});
-test('SQL Server projection factory injects relationship operations through replay and recovery',()=>{
- const calls={lookup:0,verify:0},api=createSqlServerRelationshipProjection({
-  lookupCoreRelationship:(...args:Parameters<typeof typescriptLookup>)=>{calls.lookup++;return typescriptLookup(...args);},
-  verifyCoreRelationshipOperation:(...args:Parameters<typeof typescriptVerify>)=>{calls.verify++;return typescriptVerify(...args);},
- });
- const c=relationshipSqlServerCases().find(x=>x.expected==='projected')!;
- const result=api.projectRelationshipToSqlServer(c.source,c.author,c.binding,c.request);
- expect(api.recoverRelationshipSqlServerIdeal(result,result.target!)).toEqual(c.source);
- expect(calls.lookup).toBeGreaterThan(2);expect(calls.verify).toBeGreaterThan(1);
 });
 test('stable IDs, altered binding/author, unknown content, hostile accessors and naming refusal',()=>{
  const c=relationshipSqlServerCase();let reads=0;expect(()=>projectRelationshipToSqlServer(c.source,c.author,c.binding,{...c.request,get namespace(){reads++;return 'dbo';}})).toThrow();expect(reads).toBe(0);

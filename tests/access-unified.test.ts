@@ -4,7 +4,7 @@ import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
 import {createHash} from 'node:crypto';
-import {generatePythonClient as referenceGeneratePythonClient} from '../src/access';
+import {generatePythonClient as referenceGeneratePythonClient} from '../src/index-node-v4';
 import {readFileSync} from 'node:fs';
 
 function generatePythonClient(request:Parameters<typeof referenceGeneratePythonClient>[0]):ReturnType<typeof referenceGeneratePythonClient>{

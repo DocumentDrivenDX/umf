@@ -3,8 +3,8 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {classifySqlServerKeys} from '../../src/core-ideals/key-sqlserver';
-import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
+import {classifySqlServerKeys} from "../../src/index-node-v4";
+import {importSqlServerCatalog} from "../../src/index-node-v4";
 import {encodeCoreKeyTuple} from '../../src/model/key-tuple';
 import type {Document} from '../../src/model/types';
 const proof=await Bun.file('fixtures/validation/key-sqlserver-encoding-native.json').json(),nativeSource=proof.sourceText;

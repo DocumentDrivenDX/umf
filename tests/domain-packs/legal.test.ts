@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {createValidator} from '../../src/validation/schema';
 import {generateDomainPackSchema} from '../../src/domain-packs/schema';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 
 const root='spec/domain-packs/legal';
 test('mixed legal corpus pins originals and keeps real evidence separate from fabricated operations',async()=>{

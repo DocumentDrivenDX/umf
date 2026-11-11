@@ -346,8 +346,24 @@ fn parse_json_bounded(source: &[u8], ctx: &Context<'_>) -> Result<Json, EngineEr
 pub fn decode(wire_json: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     preflight(wire_json.as_bytes(), ctx)?;
     let json = parse_json_bounded(wire_json.as_bytes(), ctx)?;
-    let value = decode_node(json)?;
+    let value = decode_node(json, true)?;
     copy_json(&value, ctx)
+}
+
+/// Admit a tagged host value whose numbers are opaque to the core document
+/// profile. Use this only for explicitly host-valued operation boundaries.
+#[doc(hidden)]
+pub fn decode_host_value(wire_json: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    preflight(wire_json.as_bytes(), ctx)?;
+    let json = parse_json_bounded(wire_json.as_bytes(), ctx)?;
+    let value = decode_node(json, false)?;
+    umf_core::value::copy_host_value(&value, ctx)
+}
+
+#[doc(hidden)]
+pub fn encode_host_value(value: &Value, ctx: &mut Context<'_>) -> Result<String, EngineError> {
+    let value = umf_core::value::copy_host_value(value, ctx)?;
+    encode_owned(&value, ctx)
 }
 
 pub fn encode(value: &Value, ctx: &mut Context<'_>) -> Result<String, EngineError> {
@@ -559,7 +575,7 @@ impl JsonPointerPath {
     }
 }
 
-fn decode_node(node: Json) -> Result<Value, EngineError> {
+fn decode_node(node: Json, require_core_numbers: bool) -> Result<Value, EngineError> {
     enum Task {
         Visit(Json, JsonPointerPath),
         BuildArray(usize),
@@ -627,7 +643,12 @@ fn decode_node(node: Json) -> Result<Value, EngineError> {
                         ensure_empty(fields)?;
                         let bits = u64::from_str_radix(&bits, 16)
                             .map_err(|_| fail("WIRE_FORMAT", "Malformed binary64 bits"))?;
-                        values.push(Value::number(f64::from_bits(bits), path.to_utf16())?);
+                        let number = f64::from_bits(bits);
+                        values.push(if require_core_numbers {
+                            Value::number(number, path.to_utf16())?
+                        } else {
+                            Value::Number(number)
+                        });
                     }
                     "string" => {
                         let units = read_units(remove_field(&mut fields, "units")?)?;

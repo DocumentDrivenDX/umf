@@ -6,7 +6,7 @@ import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/flatten-schema.json';
 import {equalJsonLdText} from '../../scripts/jsonld-compare';
-import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFlatten,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src';
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFlatten,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 const validate=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC8: full pinned flatten corpus, archives, report schema and qualified oracle',async()=>{
  const manifest=await Bun.file('native/jsonld/sources/flatten-manifest.jsonld').json(),sources=await Bun.file('native/jsonld/sources/manifest.json').json(),cases=(await Bun.file('fixtures/jsonld/flatten/results.json').json()).cases,oracle=(await Bun.file('fixtures/jsonld/flatten/oracle-results.json').json()).results;

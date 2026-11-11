@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {runLocalProfileCorpus} from '../tests/actions-local-profile-corpus';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {createHash} from 'node:crypto';
 const expected=runLocalProfileCorpus(api),bundle=await Bun.build({entrypoints:['tests/actions-local-profile-corpus.ts'],target:'browser',format:'esm'});
 if(!bundle.success)throw Error(bundle.logs.join('\n'));

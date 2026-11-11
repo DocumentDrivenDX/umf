@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importAvroSchema,proposeAvroNodeEdit,editAvroNode,exportAvroBundle,exportAvroSchema,getAvroFieldMetadata,writeDocument,readDocument,coreSchema} from '../../src';
+import {importAvroSchema,proposeAvroNodeEdit,editAvroNode,exportAvroBundle,exportAvroSchema,getAvroFieldMetadata,writeDocument,readDocument,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/avro/node-edit-proposal.schema.json';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(schema);

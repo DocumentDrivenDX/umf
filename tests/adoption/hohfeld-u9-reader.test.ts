@@ -1,5 +1,5 @@
 import {expect, test} from 'bun:test';
-import {readDddDocument,inspectDdd} from '../../src/index';
+import {readDddDocument,inspectDdd} from '../../src/index-node-v4';
 
 const path='tests/adoption/hohfeld-u9-document.json';
 

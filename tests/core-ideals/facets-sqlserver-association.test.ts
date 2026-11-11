@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
-import {inspectSqlServerFacetConstraints as inspect} from '../../src/adapters/sqlserver/facet-constraints';
+import * as u from '../../src/index-node-v4';
+import {inspectSqlServerFacetConstraints as inspect} from "../../src/index-node-v4";
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-association-native.json').json();
 const native=JSON.parse(proof.sourceText),document=u.importSqlServerCatalog(proof.sourceText,{id:'association'});
 test('independent table declaration probes establish catalog association and counterexamples',async()=>{

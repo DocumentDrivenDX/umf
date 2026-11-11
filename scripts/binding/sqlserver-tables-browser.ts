@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {projectBindingTablesToSqlServer,type Document} from '../../src';
+import {projectBindingTablesToSqlServer,type Document} from '../../src/index-node-v4';
+import {buildBindingBrowserRuntime} from './browser-runtime';
 
 const fixture=await Bun.file('fixtures/binding/sqlserver-tables/case.json').json();
 const expected=projectBindingTablesToSqlServer(fixture.logical as Document,fixture.binding as Document,fixture.policy,'report');
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;
-  if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});
+  if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});
+  if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});
   if(path==='/case')return Response.json({fixture,expected});
   return new Response('<!doctype html><html>SQL Server table binding</html>',{headers:{'content-type':'text/html'}});
 }});

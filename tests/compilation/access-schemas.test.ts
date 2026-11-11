@@ -6,7 +6,7 @@ import resultSchema from '../../spec/compilation/access-result.schema.json';
 import manifestSchema from '../../spec/compilation/access-manifest.schema.json';
 import {Registry} from '../../src/registry/registry';
 import type {JsonObject} from '../../src/model/types';
-import {generateAccessPackage} from '../../src/compilation/index';
+import {generateAccessPackage} from '../../src/node-access-compilation';
 import {request,profile} from './access-fixtures';
 // @covers US-080-AC1
  test('request, candidate/refusal and manifest have closed structural schemas',()=>{

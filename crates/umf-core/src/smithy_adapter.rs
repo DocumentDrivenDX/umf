@@ -16,6 +16,7 @@ const EXT: &str = "umf.smithy";
 const VERSION: &str = "0.1.0";
 const CORE: &str = "0.10.0";
 const BACKEND: &str = "smithy-model@1.73.0/teavm@0.15.0/umf-compat-v1";
+const ASSEMBLY_NORMALIZATION_LIMITATION: &str = "Native assembly normalizes models and may serialize mixin overrides as explicit apply entries. Retained source preserves formatting and provenance.";
 
 pub struct PreparedAssembly {
     document: Value,
@@ -181,6 +182,22 @@ impl SmithyRuntime {
             if let Some(Value::Array(dependencies)) = member(&payload, "dependencies") {
                 let mut ids = std::collections::BTreeSet::new();
                 for (index, dependency) in dependencies.iter().enumerate() {
+                    if let Some(fields) = object_fields(dependency) {
+                        for (key, _) in fields {
+                            if key != &Utf16::from("id") && key != &Utf16::from("root") {
+                                extras.push(diagnostic(
+                                    "SMITHY_REPRESENTATION",
+                                    &pointer_child(
+                                        &Utf16::from(format!("/dependencies/{index}")),
+                                        key,
+                                        ctx,
+                                    )?,
+                                    "Unknown dependency representation field is retained",
+                                    Severity::Warning,
+                                ));
+                            }
+                        }
+                    }
                     if let Some(id) = member(dependency, "id").and_then(text) {
                         if !ids.insert(id) {
                             extras.push(diagnostic(
@@ -552,6 +569,9 @@ impl SmithyRuntime {
         let edited = tree.replace_node(&pointer, &replacement, ctx)?;
         *target = edited.tagged_value_preserving_extras(ctx)?;
         let validation = self.inspect(&candidate, ctx)?;
+        if !validation.valid {
+            return Err(validation_error("SMITHY_DOCUMENT", validation));
+        }
         Ok(object(vec![
             ("document", candidate),
             ("validation", validation_value(&validation, ctx)?),
@@ -801,7 +821,7 @@ impl SmithyRuntime {
                 "limitations",
                 strings(&[
                     "Pinned Smithy 1.73.0 runtime only; generic-superclass reflection remains unsupported",
-                    "Assembly normalizes native models; retained source remains authoritative for formatting and provenance",
+                    ASSEMBLY_NORMALIZATION_LIMITATION,
                     "This operation does not establish protocol execution or cross-system projection equivalence",
                 ]),
             ),
@@ -851,6 +871,7 @@ impl SmithyRuntime {
                 "limitations",
                 strings(&[
                     "Native assembly response or assembled model could not be admitted",
+                    ASSEMBLY_NORMALIZATION_LIMITATION,
                     "Assembly success does not establish protocol behavior or cross-system equivalence",
                 ]),
             ),
@@ -1240,20 +1261,11 @@ fn tagged_native(value: &Value, path: &Utf16, ctx: &mut Context<'_>) -> Result<V
             )),
         },
         Some("number") => {
-            let token = member(value, "value")
-                .and_then(text)
-                .and_then(|s| s.to_utf8().ok())
-                .ok_or_else(|| err("SMITHY_REPRESENTATION", "Tagged number token is invalid"))?;
-            let number = token.parse::<f64>().map_err(|_| {
-                err(
-                    "SMITHY_REPRESENTATION",
-                    "Tagged number cannot be projected for structural validation",
-                )
-            })?;
-            if !number.is_finite() {
-                return Err(err("SMITHY_REPRESENTATION", "Tagged number is not finite"));
-            }
-            Ok(Value::Number(number))
+            // The tagged tree has already admitted the exact JSON number token.
+            // Smithy's pinned structure schema imposes no numeric constraints;
+            // this finite placeholder is used only to check JSON-kind shape.
+            // Export and native assembly continue to consume the original token.
+            Ok(Value::Number(0.0))
         }
         Some("array") => {
             let items =
@@ -1483,6 +1495,19 @@ fn reject_unknown_payload_fields(payload: &Value) -> Result<(), EngineError> {
             return Err(err(
                 "SMITHY_REPRESENTATION",
                 "Unknown payload fields cannot be assembled losslessly",
+            ));
+        }
+    }
+    if let Some(Value::Array(dependencies)) = member(payload, "dependencies") {
+        let id = Utf16::from("id");
+        let root = Utf16::from("root");
+        if dependencies.iter().any(|dependency| {
+            object_fields(dependency)
+                .is_some_and(|fields| fields.iter().any(|(key, _)| key != &id && key != &root))
+        }) {
+            return Err(err(
+                "SMITHY_REPRESENTATION",
+                "Unknown dependency representation cannot be exported",
             ));
         }
     }

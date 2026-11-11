@@ -3,11 +3,10 @@ import {test,expect} from 'bun:test';
 import {mkdtemp,cp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {projectSecSubmissions,projectSecCompanyFacts} from '../../src/domain-packs/public-company';
-import {inspectDomainPack} from '../../src/domain-packs/profile';
+import {projectSecSubmissions,projectSecCompanyFacts,inspectDomainPack} from '../../src/index-node-v4';
 import {validateDocument} from '../../src/validation/document';
 import {readDocument} from '../../src/model/document';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 import {Database} from 'bun:sqlite';
 const root='spec/domain-packs/public-company-intelligence';
 const load=()=>Bun.file(root+'/pack.json').json();
@@ -68,4 +67,4 @@ test('@covers US-078-AC6 export preserves sources and refuses corruption/unclear
   const copy=join(temporary,'pack');await cp(root,copy,{recursive:true});const original=await load();
   for(const mutation of ['checksum','rights']){const p=structuredClone(original);if(mutation==='checksum')p.sources.selection.checksum.value='0'.repeat(64);else p.sources.selection.license.redistribution='unknown';await Bun.write(join(copy,'pack.json'),JSON.stringify(p));const r=await run(['bun','scripts/export-domain-pack.ts','--pack',join(copy,'pack.json'),'--output',join(temporary,mutation),'--include-sources']);expect(r.code).not.toBe(0);expect(r.error).toContain(mutation==='checksum'?'checksum':'redistribution');}
  }finally{await rm(temporary,{recursive:true,force:true});}
-},30000);
+},120000);

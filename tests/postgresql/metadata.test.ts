@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,proposePostgresqlCatalogEdit,readDocument,writeDocument} from '../../src';
+import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,proposePostgresqlCatalogEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/postgresql-catalog/column-metadata.schema.json';
 const source=await Bun.file('fixtures/postgresql/catalog-capture.json').text();

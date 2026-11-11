@@ -2,9 +2,9 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {captureParquet} from '../../src/adapters/parquet';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
-import {classifyParquetKeys} from '../../src/core-ideals/key-parquet';
+import {captureParquet} from "../../src/index-node-v4";
+import {importParquetSchema} from "../../src/index-node-v4";
+import {classifyParquetKeys} from "../../src/index-node-v4";
 const proof=await Bun.file('fixtures/validation/key-parquet-discovery-native.json').json(),cases:{source:ReturnType<typeof captureParquet>;bytes:number[];expected:ReturnType<typeof classifyParquetKeys>}[]=[];
 for(const row of proof.cases){const bytes=new Uint8Array(await Bun.file(row.path).arrayBuffer()),source=row.expectedSchema==='blocked'?captureParquet(bytes,{id:row.id}):importParquetSchema(bytes,{id:row.id});source.vocabularies.future={version:'1.0.0'};source.extensions={future:{opaque:['retained','9007199254740993']}};cases.push({source,bytes:Array.from(bytes),expected:classifyParquetKeys(source,{mode:'report',profile:'file-schema'})});}
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const p=new URL(req.url).pathname;if(p==='/cases')return Response.json(cases);if(p==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});return new Response('<!doctype html><title>Parquet Key observations</title>',{headers:{'content-type':'text/html'}});}});

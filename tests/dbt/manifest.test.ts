@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,readDocument,writeDocument,DBT_MANIFEST_EXTENSION} from '../../src';
+import {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,readDocument,writeDocument,DBT_MANIFEST_EXTENSION} from '../../src/index-node-v4';
 const base='fixtures/dbt/',raw=await Bun.file(base+'manifest.json').text(),editPath='/nodes/model.umf_fixture.order_totals/description';
 test('US-022-AC1/3: native-generated manifest round trips and description edits preserve resources',async()=>{
  const d=importDbtManifest(raw,{id:'dbt-fixture'}),report=await Bun.file(base+'oracle-results.json').json();expect(createHash('sha256').update(raw).digest('hex')).toBe(report.sourceSha256);expect(report.buildResults).toBe(6);expect(report.macros).toBe(429);expect(inspectDbtManifest(d).diagnostics.some(d=>d.code==='DBT_MANIFEST_NATIVE_SCHEMA')).toBe(false);

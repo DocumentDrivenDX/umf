@@ -447,7 +447,7 @@ impl CodegenEngine<'_> {
         request: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
-        self.normalize_row_scope(request, ctx)
+        self.normalize_row_scope_inner(request, true, ctx)
     }
 
     /// Finish a prepared result with bounded diagnostics from the caller's
@@ -463,7 +463,7 @@ impl CodegenEngine<'_> {
         // The prepared value crosses a host callback boundary. Recompute it
         // from the original request before accepting callback diagnostics so
         // the host cannot replace the candidate policy or provenance map.
-        let expected = self.normalize_row_scope(request, ctx)?;
+        let expected = self.normalize_row_scope_inner(request, true, ctx)?;
         if &expected != prepared {
             return Err(EngineError::new(
                 "ROW_SCOPE_CALLBACK",
@@ -558,6 +558,15 @@ impl CodegenEngine<'_> {
     pub fn normalize_row_scope(
         &self,
         request: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        self.normalize_row_scope_inner(request, false, ctx)
+    }
+
+    fn normalize_row_scope_inner(
+        &self,
+        request: &Value,
+        callback_admission: bool,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
         let request = match admit_json(request, ctx) {
@@ -1112,7 +1121,15 @@ impl CodegenEngine<'_> {
                         .map(|(field, info)| (format!("/person/{command}{suffix}{field}"), *info))
                 })
             });
-            diagnostics.extend(self.admit_row_policy(&policy, context, non_json, ctx)?);
+            if !callback_admission || member(context, "lifecycleDocument").is_some() {
+                diagnostics.extend(self.admit_row_policy(&policy, context, non_json, ctx)?);
+            } else if let Some((path, info)) = non_json {
+                diagnostics.push(diagnostic_at(
+                    "NON_JSON",
+                    Utf16::from(format!("/policy{path}{}", info.suffix)),
+                    info.message,
+                ));
+            }
         }
         let valid = diagnostics.is_empty();
         let mut result = vec![("valid", Value::Bool(valid)), ("source", source)];

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {sqlServerPhysicalCases} from '../../scripts/binding/sqlserver-cases';
-import {projectBindingToSqlServer,recoverBindingSqlServerSources,recoverBindingSqlServerNative,verifyBindingSqlServerProjection} from '../../src/projections/binding-sqlserver';
+import {projectBindingToSqlServer,recoverBindingSqlServerSources,recoverBindingSqlServerNative,verifyBindingSqlServerProjection} from '../../src/index-node-v4';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 // @covers US-046-AC4 @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC6 @covers US-047-AC7
 for(const c of sqlServerPhysicalCases())test('full SQL Server physical binding '+c.id,()=>{

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {encodeBit128CarrierValue} from '../src/extensions/binding/bit128';
+import {encodeBit128CarrierValue} from "../src/index-node-v4";
 import {randomUUID,createHash} from 'node:crypto';
 import {uuidBinding,uuidDocument,FIELD} from '../tests/helpers/uuid-fixtures';
-import {projectBit128CarrierSchema} from '../src/projections/bit128';
+import {projectBit128CarrierSchema} from "../src/index-node-v4";
 import oracle from '../fixtures/validation/uuid/bit128-oracle.json';
 const name='umf-uuid-'+randomUUID(),label='umf.uuid-qualification='+name;
 async function command(args:string[],stdin?:string){

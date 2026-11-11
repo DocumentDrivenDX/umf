@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {uuidModel,PARENT,CHILD} from '../../tests/helpers/uuid-model-fixtures';
-import {projectBit128Model} from '../../src/projections/bit128-model';
-import {encodeBit128FileRecord,decodeBit128FileRecord} from '../../src/projections/bit128-file-values';
+import {projectBit128Model} from "../../src/index-node-v4";
+import {encodeBit128FileRecord,decodeBit128FileRecord} from "../../src/index-node-v4";
 import oracle from '../../fixtures/validation/uuid/bit128-oracle.json';
 const cases=[];
 for(const system of ['avro','parquet','tablespec'])for(const domain of ['uuid','bits128'])for(const kind of system==='tablespec'?[domain==='uuid'?'uuid-text':'hex128-text']:domain==='uuid'?['native-uuid','bytes16','uuid-text','words64']:['bytes16','hex128-text','words64']){

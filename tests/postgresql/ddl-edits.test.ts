@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
-import {proposePostgresqlNodeEdit,exportPostgresqlSql,getPostgresqlSource,getPostgresqlCatalogNode,getPostgresqlColumnMetadata,writeDocument,readDocument} from '../../src';
+import {proposePostgresqlNodeEdit,exportPostgresqlSql,getPostgresqlSource,getPostgresqlCatalogNode,getPostgresqlColumnMetadata,writeDocument,readDocument} from '../../src/index-node-v4';
 const base='fixtures/postgresql/edits/';
 test('US-015-AC12 edited native DDL evidence binds current proposals and fresh catalog recovery',async()=>{
  const text=await Bun.file(base+'candidates.json').text(),fixture=JSON.parse(text),oracle=await Bun.file(base+'oracle.json').json();

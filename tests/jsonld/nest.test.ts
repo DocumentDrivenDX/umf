@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src';
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 test('US-026-AC5: scoped nesting uses its own context without changing siblings or JSON literals',async()=>{
  const cases=await Bun.file('native/jsonld/examples/nest-cases.json').json(),evidence=(await Bun.file('fixtures/jsonld/nest/results.json').json()).results;expect(cases).toHaveLength(7);
  for(const c of cases){const raw=JSON.stringify(c.source),d=importJsonLdDocument(raw,{id:c.id,baseIRI:'https://example.org/source',contexts:c.contexts??[]}),r=await proposeJsonLdExpansion(d,{lossPolicy:'report'}),saved=evidence.find((e:any)=>e.id===c.id);expect(exportJsonLdDocument(r.source)).toBe(raw);expect(r.status).toBe(c.blocked?'blocked':'candidate');if(c.blocked){expect(r.candidate).toBeUndefined();expect(r.diagnostics.at(-1)!.message).toContain('nested value');continue;}expect(JSON.parse(exportJsonLdDocument(r.candidate!))).toEqual(c.expected);expect(r.resourcesUsed).toEqual(c.contexts?['https://example.org/scoped']:[]);

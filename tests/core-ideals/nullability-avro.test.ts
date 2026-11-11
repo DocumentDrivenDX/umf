@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {avroAvailabilitySource,avroNullabilityCases} from '../../scripts/core-ideals/nullability-avro-cases';
-import {classifyAvroNullability, verifyAvroNullabilityClassification, recoverAvroNullabilityBundle, avroNullabilityPackage, AVRO_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src';
-import type {AvroNullabilityRequest} from '../../src';
+import {avroNullabilityPackage, AVRO_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src/index-node-v4';
+import {classifyAvroNullability,verifyAvroNullabilityClassification,recoverAvroNullabilityBundle} from '../../src/index-node-v4';
+import type {AvroNullabilityRequest} from '../../src/core-ideals/nullability-avro-types';
 const rows=(await Bun.file('fixtures/avro/nullability-cases.json').json()).cases as {id:string;schema:string}[];
 const base={scope:'underlying-field-value',carrier:'avro-null',mode:'strict'} as const;
 test('Avro underlying-value availability matrix preserves exact source, scope and both formats',()=>{

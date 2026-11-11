@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {createUmfRegistry,readDocument,inspectActions,compileActionRule,evaluateActionRule,actionFieldValueKey} from '../../src/index';
+import {createUmfRegistry,readDocument,inspectActions,compileActionRule,evaluateActionRule,actionFieldValueKey} from '../../src/index-node-v4';
 import fixture from '../../fixtures/actions/tutorial-postcondition.json';
 const document=readDocument(JSON.stringify(fixture),'json');
 const inspection=inspectActions(document,createUmfRegistry());

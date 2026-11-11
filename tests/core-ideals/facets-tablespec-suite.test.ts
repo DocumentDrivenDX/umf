@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {tableSpecFacetSource} from '../../scripts/core-ideals/facets-tablespec-cases';
 import evidence from '../../fixtures/validation/facets-tablespec-suite-native.json';
 const request={column:0,mode:'strict',profile:'gx-suite-spark',input:'raw',obligation:'value-domain'} as const;

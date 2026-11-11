@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';
 import type {Document} from '../../src/model/types';
-import type {Action} from '../../src/extensions/actions';
+import type {Action} from '../../src/index-node-v4';
 import {referenceIntent} from '../../scripts/actions-reference/intent';
 import type {ReferenceInvokeRequest} from '../../scripts/actions-reference/protocol';
 test('original-revision intent uses exact typed equality, presence and declared concurrency order',()=>{

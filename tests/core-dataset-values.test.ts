@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
-import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues,validateCoreRecordValues,validateDocument} from '../src/index';
+import {readDocument,validateDocument} from '../src/index';
+import {validateCoreDatasetValues,verifyCoreDatasetValues,validateCoreRecordValues} from '../src/index-node-v4';
 import {commerceDataset} from './helpers/commerce-dataset';
 import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 const source=readDocument(readFileSync('spec/domain-packs/commerce/ontology.json','utf8'),'json');

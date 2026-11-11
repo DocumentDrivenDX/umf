@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {sqlserverFacetCase as sample,sqlserverFacetExamples} from './facets-sqlserver-cases';
 const rows=sqlserverFacetExamples.map(e=>sample(e.table,e.column));
 for(const table of ['signed8','decimal_checked','bytes_bound','binary2','length_len','untrusted','disabled','replica_value','alias_value'])rows.push(sample(table,'value',{mode:'strict'}));

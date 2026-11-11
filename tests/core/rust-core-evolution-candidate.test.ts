@@ -4,11 +4,9 @@ import {createCoreModelEngine,isNativeUmfCoreError} from '../../bindings/core/no
 import frozen from '../../tests/rust-core/fixtures/r5-core-evolution/frozen-typescript-0.10.json';
 import {CORE_MODEL_RESOURCES} from '../../src/access/core-model-resources';
 import {bindCoreEvolutionRustCandidate} from '../../src/access/rust-core-evolution-candidate';
-import {inspectCoreEvolution as inspectTypeScriptCoreEvolution} from '../../src/model/evolution';
-import {ValueWork} from '../../src/model/internal/value-context';
 import {UmfError} from '../../src/model/errors';
 import type {Document} from '../../src/model/types';
-import type {CoreEvolutionPolicy} from '../../src/model/evolution';
+import type {CoreEvolutionPolicy} from '../../src/model/evolution-types';
 
 type FrozenCase={before:Document;after:Document;policy:CoreEvolutionPolicy};
 type Outcome={ok:true;value:unknown}|{ok:false;error:{code:unknown;message:unknown;path:unknown}};
@@ -63,60 +61,7 @@ test('private Rust candidate maps semantic engine errors and preserves native re
   catch(error){expect(error).toBe(resourceError);}
 });
 
-test('private Rust candidate matches same-host TypeScript on core preservation controls',()=>{
-  const api=bindCoreEvolutionRustCandidate(createCoreModelEngine(CORE_MODEL_RESOURCES),isNativeUmfCoreError);
-  const base=structuredClone(cases.unchanged!.before) as any;
-  const policy=cases.unchanged!.policy;
-  const copy=()=>structuredClone(base);
-  const module=(doc:any)=>doc.modules.find((item:any)=>item.id==='domain');
-  const element=(doc:any,id:string)=>module(doc).elements.find((item:any)=>item.id===id);
-  const added=(doc:any,id:string,name:string,required=false)=>{
-    const mod=module(doc);
-    mod.elements.push({id,name,kind:'field',scalarType:'string',cardinality:'one',nullability:required?'required':'absent-allowed',extensions:{}});
-    mod.elements.find((item:any)=>item.id==='products').members.push({module:'domain',element:id});
-    return doc;
-  };
-  const changedUnknownBefore=copy();
-  changedUnknownBefore.opaque={retained:'before'};
-  const changedUnknownAfter=structuredClone(changedUnknownBefore);
-  changedUnknownAfter.opaque.retained='after';
-  const duplicateNames=added(copy(),'products.note_a','repeated');
-  added(duplicateNames,'products.note_b','repeated');
-  const changedKey=copy();
-  element(changedKey,'products').keys[0].name='Changed identity label';
-  const changedRelationship=copy();
-  module(changedRelationship).relationships[0].name='changed relationship label';
-  const changedFacet=copy();
-  element(changedFacet,'products.unit_price').facets.scale=3;
-  const removed=copy();
-  module(removed).elements=module(removed).elements.filter((item:any)=>item.id!=='products.sku');
-  const reordered=copy();
-  module(reordered).elements.reverse();
-  const scenarios=[
-    ['absent-addition',base,added(copy(),'products.presence_note','presence_note')],
-    ['required-addition',base,added(copy(),'products.required_note','required_note',true)],
-    ['changed-unknown-extension',changedUnknownBefore,changedUnknownAfter],
-    ['unchanged-unknown-extension',changedUnknownBefore,structuredClone(changedUnknownBefore)],
-    ['removed-member',base,removed],
-    ['reordered-members',base,reordered],
-    ['changed-facet',base,changedFacet],
-    ['changed-key',base,changedKey],
-    ['changed-relationship',base,changedRelationship],
-    ['wrong-identity',base,{...copy(),id:'urn:umf:other'}],
-    ['duplicate-presentation-names',base,duplicateNames],
-  ] as const;
-  for(const [name,before,after] of scenarios){
-    const typescript=capture(()=>inspectTypeScriptCoreEvolution(before,after,policy));
-    const rust=capture(()=>api.inspectCoreEvolution(before,after,policy));
-    expect(canonical(rust),name).toBe(canonical(typescript));
-  }
-  const wrongVersion={...copy(),umf:'0.8.0'};
-  const typescript=capture(()=>inspectTypeScriptCoreEvolution(wrongVersion,base,policy));
-  const rust=capture(()=>api.inspectCoreEvolution(wrongVersion,base,policy));
-  expect(canonical(rust),'wrong-source-version').toBe(canonical(typescript));
-},60_000);
-
-test('Rust retained-output byte edge is exact and predecessor bounded calls remain local',()=>{
+test('Rust retained-output byte edge is exact',()=>{
   const api=bindCoreEvolutionRustCandidate(createCoreModelEngine(CORE_MODEL_RESOURCES),isNativeUmfCoreError);
   const base=structuredClone(cases.unchanged!.before) as any;
   const after=structuredClone(cases.unchanged!.after) as any;
@@ -136,13 +81,4 @@ test('Rust retained-output byte edge is exact and predecessor bounded calls rema
   expect(rustOver.ok).toBe(false);
   if(rustOver.ok)throw new Error('Rust accepted aggregate receipt bytes above the limit');
   expect(rustOver.error.code).toBe('LIMIT');
-  const predecessorOver=capture(()=>inspectTypeScriptCoreEvolution(overLimit,after,policy));
-  expect(predecessorOver.ok).toBe(true);
 },60_000);
-
-test('both source work counters accept 1,000,000 units and reject the next unit',()=>{
-  const work=new ValueWork();
-  work.charge('boundary',1_000_000);
-  expect(work.used).toBe(1_000_000);
-  expect(()=>work.charge('boundary',1)).toThrow('budget exceeded');
-});

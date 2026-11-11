@@ -5,7 +5,7 @@ import type {Document} from '../../src/model/types';
 import {ReferenceMutationGateway} from '../../scripts/actions-reference/gateway';
 import type {FrozenReferenceFrame,FrozenReferenceState} from '../../scripts/actions-reference/state';
 import {encodeReferenceIdentity} from '../../scripts/actions-reference/codec';
-import {inspectActions,registerActions} from '../../src/extensions/actions';
+import {inspectActions,registerActions} from '../../src/index-node-v4';
 import {Registry} from '../../src/registry/registry';
 const relation={module:'sales',relationship:'asymmetric'};
 function environment(){

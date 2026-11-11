@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {parse,buildASTSchema,validateSchema,print} from 'graphql';
-import {importGraphqlSchema,exportGraphqlSchema,inspectGraphql,getGraphqlAst,readDocument,writeDocument} from '../../src';
+import {importGraphqlSchema,exportGraphqlSchema,inspectGraphql,getGraphqlAst,readDocument,writeDocument} from '../../src/index-node-v4';
 import manifest from '../../fixtures/graphql/upstream/manifest.json';
 import corpus from '../../fixtures/graphql/parser-cases.json';
 

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Diagnostic,type Document,type Json} from '../../model/types';
-import {Registry} from '../../registry/registry';
-import {validateDocument} from '../../validation/document';
+import type {Registry} from '../../registry/registry';
 import {postgresqlCatalogPackage,type PostgresqlCatalogObjectIdentity} from './catalog-package';
 import type {PostgresqlColumnMetadata} from './column-metadata';
 import type {NativeJson} from '../../model/native-json';
@@ -37,7 +36,7 @@ function report(value:unknown):{valid:boolean;complete:false;diagnostics:Diagnos
 
 /** Public catalog API backed by the native capture kernel. The facade only
  * shapes the existing public result types; capture validation and edits remain Rust-owned. */
-export function createPostgresqlCatalogRustDefault(engine:Engine,isNativeUmfCoreError:Guard=()=>false,createRegistry:()=>Registry=()=>new Registry()) {
+export function createPostgresqlCatalogRustDefault(engine:Engine,isNativeUmfCoreError:Guard,createRegistry:()=>Registry) {
  const inspectPayload=(payload:Json)=>{
   try{return report(engine.postgresql.inspectPayload({payload}) as unknown)}
   catch(error){
@@ -49,7 +48,12 @@ export function createPostgresqlCatalogRustDefault(engine:Engine,isNativeUmfCore
  function postgresqlCatalogRegistry():Registry {
   return createRegistry().register(postgresqlCatalogPackage,(payload)=>inspectPayload(payload as Json).diagnostics);
  }
- function inspectPostgresqlCatalog(document:Document):Validation {return validateDocument(document,postgresqlCatalogRegistry());}
+ function inspectPostgresqlCatalog(document:Document):Validation {
+  const registry=postgresqlCatalogRegistry();
+  const runtime=registry.kindRuntime;
+  if(!runtime)throw new UmfError('EXTENSION_KIND_RUNTIME_REQUIRED','A shared runtime is required for PostgreSQL catalog inspection');
+  return runtime.validateDocument(document,registry.registrations());
+ }
  function importPostgresqlCatalogCapture(text:string,options:{id:string}):Document {
   return invoke(()=>engine.postgresql.import({source:text,id:options.id}),isNativeUmfCoreError) as Document;
  }

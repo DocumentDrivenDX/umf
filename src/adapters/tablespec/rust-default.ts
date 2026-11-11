@@ -2,9 +2,9 @@
 import type {Diagnostic,Document,ExtensionPackage} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 import {UmfError} from '../../model/errors';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/tablespec/package.json';
-import type {importTableSpec,exportTableSpec,getTableSpecColumn,getTableSpecTable,editTableSpecColumn,editTableSpecTable,importTableSpecBundle,exportTableSpecBundle} from './index';
+
 import type {TableSpecFieldClassification,TableSpecFieldRequest} from '../../core-ideals/tablespec-field';
 import type {TableSpecRecordClassification,TableSpecRecordRequest} from '../../core-ideals/tablespec-record-package';
 import type {TableSpecCardinalityClassification,TableSpecCardinalityRequest} from '../../core-ideals/cardinality-tablespec';
@@ -23,6 +23,17 @@ import type {NullabilityTableSpecProjection,NullabilityTableSpecRequest} from '.
 import type {CoreCardinalityDeclaration} from '../../model/cardinality';
 import type {CoreNullabilityDeclaration} from '../../model/nullability';
 import type {CoreKindDeclaration} from '../../model/field-kind';
+import type {Validation} from "../../model/types";
+
+type ImportTableSpec = (text: string, options: { id: string; format: "json" | "yaml"; }) => Document;
+type ExportTableSpec = (document: Document) => string;
+type GetTableSpecColumn = (document: Document, index: number) => NativeJson;
+type GetTableSpecTable = (document: Document) => NativeJson;
+type EditTableSpecColumn = (document: Document, index: number, changes: Record<string, NativeJson>) => Document;
+type EditTableSpecTable = (document: Document, changes: Record<string, NativeJson>) => Document;
+type ImportTableSpecBundle = (files: Record<string, string>, options: { id: string; }) => Document;
+type ExportTableSpecBundle = (document: Document) => Record<string, string>;
+type InspectTableSpec = (document: Document) => Validation;
 
 export interface TableSpecNativeFamilyEngine {
  tablespec:{
@@ -73,7 +84,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Preserve TableSpec's synchronous public API while routing its semantics through Rust. */
-export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
+export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){
@@ -85,15 +96,15 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
  };
  return Object.freeze({
   tablespecRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage);},
-  importTableSpec(text:string,options:Parameters<typeof importTableSpec>[1]):ReturnType<typeof importTableSpec>{return call(()=>engine.tablespec.importTableSpec({source:text,id:options.id,format:options.format}) as ReturnType<typeof importTableSpec>);},
-  exportTableSpec(document:Parameters<typeof exportTableSpec>[0]):ReturnType<typeof exportTableSpec>{return call(()=>engine.tablespec.exportTableSpec({document}) as ReturnType<typeof exportTableSpec>);},
-  inspectTableSpec(document:Document):ReturnType<typeof import('./index').inspectTableSpec>{return call(()=>engine.tablespec.inspectTableSpec({document}) as ReturnType<typeof import('./index').inspectTableSpec>);},
-  getTableSpecColumn(document:Parameters<typeof getTableSpecColumn>[0],index:Parameters<typeof getTableSpecColumn>[1]):ReturnType<typeof getTableSpecColumn>{return call(()=>engine.tablespec.getTableSpecColumn({document,index}) as ReturnType<typeof getTableSpecColumn>);},
-  getTableSpecTable(document:Parameters<typeof getTableSpecTable>[0]):ReturnType<typeof getTableSpecTable>{return call(()=>engine.tablespec.getTableSpecTable({document}) as ReturnType<typeof getTableSpecTable>);},
-  editTableSpecColumn(document:Parameters<typeof editTableSpecColumn>[0],index:Parameters<typeof editTableSpecColumn>[1],changes:Parameters<typeof editTableSpecColumn>[2]):ReturnType<typeof editTableSpecColumn>{return call(()=>engine.tablespec.editTableSpecColumn({document,index,changes}) as ReturnType<typeof editTableSpecColumn>);},
-  editTableSpecTable(document:Parameters<typeof editTableSpecTable>[0],changes:Parameters<typeof editTableSpecTable>[1]):ReturnType<typeof editTableSpecTable>{return call(()=>engine.tablespec.editTableSpecTable({document,changes}) as ReturnType<typeof editTableSpecTable>);},
-  importTableSpecBundle(files:Parameters<typeof importTableSpecBundle>[0],options:Parameters<typeof importTableSpecBundle>[1]):ReturnType<typeof importTableSpecBundle>{return call(()=>engine.tablespec.importTableSpecBundle({files,id:options.id}) as ReturnType<typeof importTableSpecBundle>);},
-  exportTableSpecBundle(document:Parameters<typeof exportTableSpecBundle>[0]):ReturnType<typeof exportTableSpecBundle>{return call(()=>engine.tablespec.exportTableSpecBundle({document}) as ReturnType<typeof exportTableSpecBundle>);},
+  importTableSpec(text:string,options:Parameters<ImportTableSpec>[1]):ReturnType<ImportTableSpec>{return call(()=>engine.tablespec.importTableSpec({source:text,id:options.id,format:options.format}) as ReturnType<ImportTableSpec>);},
+  exportTableSpec(document:Parameters<ExportTableSpec>[0]):ReturnType<ExportTableSpec>{return call(()=>engine.tablespec.exportTableSpec({document}) as ReturnType<ExportTableSpec>);},
+  inspectTableSpec(document:Document):ReturnType<InspectTableSpec>{return call(()=>engine.tablespec.inspectTableSpec({document}) as ReturnType<InspectTableSpec>);},
+  getTableSpecColumn(document:Parameters<GetTableSpecColumn>[0],index:Parameters<GetTableSpecColumn>[1]):ReturnType<GetTableSpecColumn>{return call(()=>engine.tablespec.getTableSpecColumn({document,index}) as ReturnType<GetTableSpecColumn>);},
+  getTableSpecTable(document:Parameters<GetTableSpecTable>[0]):ReturnType<GetTableSpecTable>{return call(()=>engine.tablespec.getTableSpecTable({document}) as ReturnType<GetTableSpecTable>);},
+  editTableSpecColumn(document:Parameters<EditTableSpecColumn>[0],index:Parameters<EditTableSpecColumn>[1],changes:Parameters<EditTableSpecColumn>[2]):ReturnType<EditTableSpecColumn>{return call(()=>engine.tablespec.editTableSpecColumn({document,index,changes}) as ReturnType<EditTableSpecColumn>);},
+  editTableSpecTable(document:Parameters<EditTableSpecTable>[0],changes:Parameters<EditTableSpecTable>[1]):ReturnType<EditTableSpecTable>{return call(()=>engine.tablespec.editTableSpecTable({document,changes}) as ReturnType<EditTableSpecTable>);},
+  importTableSpecBundle(files:Parameters<ImportTableSpecBundle>[0],options:Parameters<ImportTableSpecBundle>[1]):ReturnType<ImportTableSpecBundle>{return call(()=>engine.tablespec.importTableSpecBundle({files,id:options.id}) as ReturnType<ImportTableSpecBundle>);},
+  exportTableSpecBundle(document:Parameters<ExportTableSpecBundle>[0]):ReturnType<ExportTableSpecBundle>{return call(()=>engine.tablespec.exportTableSpecBundle({document}) as ReturnType<ExportTableSpecBundle>);},
   projectFieldToTableSpec(author:CoreKindDeclaration,request:FieldTableSpecRequest):FieldTableSpecProjection & {diagnostics:Diagnostic[]}{return call(()=>engine.tablespec.projectFieldToTableSpec({author,request}) as FieldTableSpecProjection & {diagnostics:Diagnostic[]});},
   recoverFieldFromTableSpec(receipt:FieldTableSpecProjection,nativeText:string):Document{return call(()=>engine.tablespec.recoverFieldFromTableSpec({receipt,nativeText}) as Document);},
   projectRecordToTableSpec(author:CoreKindDeclaration,request:RecordTableSpecRequest):RecordTableSpecProjection{return call(()=>engine.tablespec.projectRecordToTableSpec({author,request}) as RecordTableSpecProjection);},

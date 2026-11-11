@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importShaclTurtle,exportShaclTurtle,getShaclQuads,getShaclPropertyPath,writeDocument,readDocument} from '../src';
+import {importShaclTurtle,exportShaclTurtle,getShaclQuads,getShaclPropertyPath,writeDocument,readDocument} from '../src/index-node-v4';
 const manifest=await Bun.file('native/shacl/sources/manifest.json').json(),cases=[];
 for(const file of manifest.files){const sourcePath='native/shacl/sources/'+file.path,bytes=await Bun.file(sourcePath).arrayBuffer();if(createHash('sha256').update(new Uint8Array(bytes)).digest('hex')!==file.sha256)throw Error('Source hash differs: '+file.path);if(!file.path.startsWith('data-shapes-test-suite/tests/')||!file.path.endsWith('.ttl'))continue;
  const source=await Bun.file(sourcePath).text(),d=importShaclTurtle(source,{id:file.url,baseIRI:file.url}),exports=[],paths=[];

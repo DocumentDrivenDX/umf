@@ -8,6 +8,7 @@ import {normalize,correspondence,observeRecordedHashes} from '../../scripts/refe
 import {rendererArguments,assertRendererInputs} from '../../scripts/reference/renderer-package';
 import {checkBoundaries,allowed} from '../../scripts/reference/check-boundaries';
 import {execute} from '../../docs/helix/05-deploy/reference/runtime';
+import * as sdk from '../../src/index-node-v4';
 const root=resolve(import.meta.dir,'../..'),dist=join(root,'docs/helix/05-deploy/microsite/dist/reference');
 const index=await Bun.file(join(dist,'index.json')).json();
 const sha=(s:string|Uint8Array)=>new Bun.CryptoHasher('sha256').update(s).digest('hex');
@@ -84,10 +85,10 @@ test('exclusions require an existing source and nonempty reason',()=>{
 test('public Bun runtime preserves unknown payload, validates current core and refuses unsafe input',async()=>{
  const expected=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/expected.json')).json();
  const source=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/unknown.json')).text();const request={protocol:1 as const,requestId:'test',operationId:'core-write',coreProfile:'0.10.0',registryProfile:'empty',inputs:{source}};
- const result=await execute(request);expect(result.state).toBe('completed');expect(result.outputs[0]!.text.includes('keepMe')).toBe(expected.unknownPayloadRetained);expect(result.diagnostics.some(d=>d.code==='UNKNOWN_EXTENSION')).toBe(true);
- const invalid=await execute({...request,inputs:{source:'{broken'}});expect(invalid.state==='refused').toBe(expected.malformedInputRefused);expect(invalid.retainedSources[0]!.text).toBe('{broken');expect(invalid.outputs).toHaveLength(0);
- const over=await execute({...request,inputs:{source:'x'.repeat(4_000_001)}});expect(over.state).toBe('refused');expect(over.diagnostics[0]!.code).toBe('REFERENCE_LIMIT');
- const uuid=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/uuid.json')).text();expect((await execute({...request,operationId:'core-validate',coreProfile:'0.10.0',inputs:{source:uuid}})).state).toBe('completed');
+ const result=await execute(sdk,request);expect(result.state).toBe('completed');expect(result.outputs[0]!.text.includes('keepMe')).toBe(expected.unknownPayloadRetained);expect(result.diagnostics.some(d=>d.code==='UNKNOWN_EXTENSION')).toBe(true);
+ const invalid=await execute(sdk,{...request,inputs:{source:'{broken'}});expect(invalid.state==='refused').toBe(expected.malformedInputRefused);expect(invalid.retainedSources[0]!.text).toBe('{broken');expect(invalid.outputs).toHaveLength(0);
+ const over=await execute(sdk,{...request,inputs:{source:'x'.repeat(4_000_001)}});expect(over.state).toBe('refused');expect(over.diagnostics[0]!.code).toBe('REFERENCE_LIMIT');
+ const uuid=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/uuid.json')).text();expect((await execute(sdk,{...request,operationId:'core-validate',coreProfile:'0.10.0',inputs:{source:uuid}})).state).toBe('completed');
 });
 // @covers US-089-AC1 @covers US-089-AC10
 test('boundary checker rejects actual forbidden source and import cycle injections',async()=>{

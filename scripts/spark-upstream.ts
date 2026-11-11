@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importSparkSchema,exportSparkSchema,readDocument,writeDocument} from '../src';
+import {importSparkSchema,exportSparkSchema,readDocument,writeDocument} from '../src/index-node-v4';
 import {parseNativeJson,renderTree} from '../src/model/native-json';
 const cases=parseNativeJson(await Bun.file('fixtures/spark/upstream-cases.json').text());if(cases.kind!=='array'||cases.items.length!==42)throw Error('Upstream corpus changed');
 for(const item of cases.items){if(item.kind!=='object'||item.members.id?.kind!=='string')throw Error('Invalid case');const id=item.members.id.value,text=renderTree(item.members.input!),doc=id==='41-schema_json'?undefined:importSparkSchema(text,{id});

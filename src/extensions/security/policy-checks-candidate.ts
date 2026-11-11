@@ -2,7 +2,7 @@
 /** Draft whole-policy consistency and per-target expression checks; no enforcement authority. */
 import {copyJson} from '../../model/json';
 import {createValidator} from '../../validation/schema';
-import {checkSchemaLiteral} from '../../model/schema-literals';
+import {ProtectionLiteralBudget} from './protection/literals';
 import schema from '../../../docs/helix/02-design/spikes/security/policy-v0.2.schema.json';
 import {resolveCandidateSecurityOntology} from './ontology-checks-candidate';
 import {createCandidateEntityTermScope} from './entity-terms-candidate';
@@ -19,6 +19,7 @@ function unique(values:string[]):void{if(new Set(values).size!==values.length)fa
 function freeze(v:any):any{if(v&&typeof v==='object'&&!Object.isFrozen(v)){Object.values(v).forEach(freeze);Object.freeze(v);}return v;}
 export function resolveCandidateSecurityPolicy(input:unknown,ontologyInput:unknown,documentsInput:unknown,bindingsInput:unknown=[]):unknown{
  const packet:any=copyJson({policy:input,ontology:ontologyInput,documents:documentsInput,bindings:bindingsInput}),policy=packet.policy;
+ const literalBudget=new ProtectionLiteralBudget();
  if(!Boolean(check(policy))||!Array.isArray(packet.bindings)||packet.bindings.length>4096)fail();
  const pending=policy.rules.map((r:any)=>r.condition);let expressionNodes=0;while(pending.length){const expr=pending.pop();if(++expressionNodes>4096)fail();if(expr.op==='and'||expr.op==='or')pending.push(...expr.args);else if(expr.op==='not')pending.push(expr.arg);else if(expr.op==='exists')pending.push(expr.where);}
  const checked=resolveCandidateSecurityOntology(packet.ontology,packet.documents),ontology:any=checked.ontology;
@@ -34,8 +35,8 @@ export function resolveCandidateSecurityPolicy(input:unknown,ontologyInput:unkno
  for(const [index,rule] of policy.rules.entries()){
   unique(rule.actions);unique(rule.target.map(id));if(rule.actions.some((a:string)=>!ontology.actions.includes(a)))fail();if(rule.effect!=='permit'&&rule.disclosure!==undefined)fail();unique((rule.disclosure??[]).map((d:any)=>id(d.field)));
   for(const target of rule.target){const entity=entities.get(id(target));if(!entity)fail();
-   for(const disclosure of rule.disclosure??[]){if(!entity.fields.some((f:any)=>id(f.ref)===id(disclosure.field)))fail();if(disclosure.disposition.kind==='transformed'){const output=fields.get(id(disclosure.disposition.field));if(!output||output.field?.kind!=='field'||!['boolean','string','integer','decimal','binary'].includes(output.field.scalarType)||output.field.cardinality!=='one'||!['required','absent-allowed'].includes(output.field.nullability)||output.field.references?.some((r:any)=>r.role==='record-type')||Object.keys(output.field.extensions??{}).length)fail();if(output!.field.scalarType==='decimal'&&(!Number.isSafeInteger(output!.field.facets?.precision)||!Number.isSafeInteger(output!.field.facets?.scale)))fail();checkSchemaLiteral(output!.document,output!.field,disclosure.disposition.value);}}
-   const entityScope=createCandidateEntityTermScope(packet.ontology,packet.documents,target),normalized=normalizeCandidateAssociationExpression(rule.condition,checked.associations,bindings.get(JSON.stringify([rule.id,id(target)])),entityScope);residuals.push(...normalized.residuals.map(r=>({ruleId:rule.id,target,path:'/rules/'+index+'/condition'+r.path,reason:r.reason})));conditions.push({ruleId:rule.id,target,...(normalized.residuals.length?{normalized}:{transport:serializeCandidateAssociationExpression(normalized)})});
+   for(const disclosure of rule.disclosure??[]){if(!entity.fields.some((f:any)=>id(f.ref)===id(disclosure.field)))fail();if(disclosure.disposition.kind==='transformed'){const output=fields.get(id(disclosure.disposition.field));if(!output||output.field?.kind!=='field'||!['boolean','string','integer','decimal','binary'].includes(output.field.scalarType)||output.field.cardinality!=='one'||!['required','absent-allowed'].includes(output.field.nullability)||output.field.references?.some((r:any)=>r.role==='record-type')||Object.keys(output.field.extensions??{}).length)fail();if(output!.field.scalarType==='decimal'&&(!Number.isSafeInteger(output!.field.facets?.precision)||!Number.isSafeInteger(output!.field.facets?.scale)))fail();literalBudget.check(output!.document,output!.field,disclosure.disposition.value);}}
+   const entityScope=createCandidateEntityTermScope(packet.ontology,packet.documents,target,literalBudget),normalized=normalizeCandidateAssociationExpression(rule.condition,checked.associations,bindings.get(JSON.stringify([rule.id,id(target)])),entityScope,literalBudget);residuals.push(...normalized.residuals.map(r=>({ruleId:rule.id,target,path:'/rules/'+index+'/condition'+r.path,reason:r.reason})));conditions.push({ruleId:rule.id,target,...(normalized.residuals.length?{normalized}:{transport:serializeCandidateAssociationExpression(normalized)})});
   }
  }
  const result=freeze({kind:'candidate-security-policy-checks/0.1',policy:packet.policy,ontology:checked,conditions,residuals});issued.add(result);return result;

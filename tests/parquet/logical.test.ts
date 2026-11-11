@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,inspectParquetLogicalTypes,coreSchema,parquetLogicalInspectionSchema} from '../../src';
+import {captureParquet,exportParquetCapture,inspectParquetLogicalTypes,coreSchema,parquetLogicalInspectionSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(parquetLogicalInspectionSchema);
 test('US-019-AC8: scalar annotations match native acceptance while preserving all sources',async()=>{

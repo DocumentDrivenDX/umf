@@ -4,7 +4,7 @@ import {ref} from './fixture';
 import {catalogRuntimeFixture,graphRuntimeFixture,compileRuntimeFixture} from './catalog-runtime-fixture';
 import {evaluateCandidateCatalogReadDisclosureBatch as produce,evaluateCandidateCatalogReadDisclosureBatchWithinOperation as within,evaluateCandidateCatalogReadDisclosureScan,evaluateCandidateCatalogScan} from '../../src/extensions/security/catalog-runtime-candidate';
 import {CandidateSecurityOperationBudget} from '../../src/extensions/security/operation-budget-candidate';
-import {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from '../../src/extensions/security/protection/disclosure';
+import {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from '../../src/index-node-v4';
 import {GREGORIAN_DATE_PROFILE} from '../../src/adapters/gregorian-date';
 const canon=(x:any):string=>x&&typeof x==='object'?Array.isArray(x)?'['+x.map(canon).join(',')+']':'{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canon(x[k])).join(',')+'}':JSON.stringify(x);
 const input=(f:any)=>f.cut.facts.find((r:any)=>r.type.elementId==='Resource');

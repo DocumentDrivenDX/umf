@@ -2,8 +2,8 @@
 import {test,expect} from 'bun:test';
 import datums from '../../fixtures/validation/facets-postgresql-resolved-native.json';
 import evidence from '../../fixtures/validation/facets-postgresql-constraints-native.json';
-import {inspectResolvedFacetPredicate as inspect} from '../../src/adapters/postgresql/facet-resolved-predicate';
-import {readFacetNodeTree, decodeFacetConstant, type PgFacetNode} from '../../src/adapters/postgresql/facet-node-tree';
+import {inspectResolvedFacetPredicate as inspect} from '../../scripts/core-ideals/postgresql-facet-resolved-predicate';
+import {readFacetNodeTree, decodeFacetConstant, type PgFacetNode} from '../../scripts/core-ideals/postgresql-facet-node-tree';
 const profile={serverVersion:170004,encoding:'UTF8',datumFormat:'little-endian-datum64'};
 const row=(name:string)=>evidence.capture.constraints.find(c=>c.relation===name)!;
 test('complete resolved expressions yield exact predicates and explicit value scope',()=>{

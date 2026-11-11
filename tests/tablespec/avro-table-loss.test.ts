@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importTableSpec,importTableSpecBundle,editTableSpecTable,projectTableSpecToAvro,readDocument,writeDocument,type TableSpecAvroPolicy} from '../../src';
+import {importTableSpec,importTableSpecBundle,editTableSpecTable,readDocument,writeDocument} from '../../src/index-node-v4';
+import {projectTableSpecToAvro,type TableSpecAvroPolicy} from '../../src/index-node-v4';
 import {parseNativeJson} from '../../src/model/native-json';
 const policy:TableSpecAvroPolicy={id:'target',recordName:'Target',namespace:'example',context:'sales',lossPolicy:'allow-reported-loss',fields:{id:{name:'id',representation:'int32',nullable:'source'}}};
 test('CONTRACT-033 table keys, context dispatch and opaque metadata survive edits and report path-specific losses',async()=>{

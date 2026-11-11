@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {securityIdentityTransportDependencies} from '../../src/extensions/security/dependencies';
+import {securityIdentityTransportDependencies} from '../../src/index-node-v4';
 import {securityFixture,ref} from './fixture';
 // @covers US-079-AC3
 const closure=()=>{const f=securityFixture();return securityIdentityTransportDependencies(f.policy,f.resolution);};

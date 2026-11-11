@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {bindCoreElementSelectionRust} from '../../src/access/rust-selection-default';
-import type {CoreElementSelection} from '../../src/model/selection';
+import type {CoreElementSelection} from '../../src/model/selection-types';
 
 test('Selection facade forwards original inputs and Registry lazily to its engine',()=>{
  const source={source:true} as any,query={references:'none'} as any,registry={get(){throw new Error('must remain caller-owned');}} as any;

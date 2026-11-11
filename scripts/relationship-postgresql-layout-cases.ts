@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/model/types';
-import {migrateBindingRelationships,type Document,type PostgresqlRelationshipLayoutPolicy} from '../src';
+import {migrateBindingRelationships,type Document} from '../src/index-node-v4';
+import type {PostgresqlRelationshipLayoutPolicy} from '../src/projections/ddd-postgresql-types';
 import graph from '../fixtures/projections/ddd-authored-relationships/base.json';
 import proposal from '../fixtures/projections/ddd-authored-relationships/postgresql-layout-proposal.json';
 export function postgresqlLayoutCase():{logical:Document;binding:Document;policy:PostgresqlRelationshipLayoutPolicy}{

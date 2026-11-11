@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {latestProfile,propertyPresence,shape,schemaNode,unknownKeyPolicy,schemaRules,identity,conditionText} from '../../docs/helix/05-deploy/reference/model';
-import {parseNativeJson,validateDocument,readDocument} from '../../src/index';
+import {parseNativeJson,validateDocument,readDocument} from '../../src/index-node-v4';
+import * as sdk from '../../src/index-node-v4';
 const root=parseNativeJson(await Bun.file('spec/core/schema.json').text());
 // @covers US-089-AC12 @covers US-089-AC13
 test('latest uses numeric core versions and preserves conditional, open and recursive meaning',async()=>{
@@ -41,7 +42,7 @@ test('latest uses numeric core versions and preserves conditional, open and recu
  const reader=await Bun.file('docs/helix/05-deploy/microsite/dist/reference/reader.json').json();
  const bad=structuredClone(reader.examples[0]);bad.modules[0].elements[2].itemType='string';expect(validateDocument(bad).valid).toBe(false);
  const conflict=structuredClone(reader.examples[0]);conflict.modules[0].elements[2].scalarType='string';expect(validateDocument(conflict).valid).toBe(false);
- const {readDocument,AVRO_KEYS_EXTENSION}=await import('../../src/index');
+ const {readDocument,AVRO_KEYS_EXTENSION}=await import('../../src/index-node-v4');
  const document=readDocument('{"umf":"0.10.0","id":"example","vocabularies":{},"modules":[]}');
  expect(document.umf).toBe('0.10.0');expect(document.extensions?.[AVRO_KEYS_EXTENSION]).toBeUndefined();expect(document.vocabularies[AVRO_KEYS_EXTENSION]).toBeUndefined();
 });
@@ -58,8 +59,8 @@ test('the generated YAML example preserves all JSON example values',async()=>{
  test('workbench formatting retains edited values and refuses silent loss',async()=>{
  const {execute}=await import('../../docs/helix/05-deploy/reference/runtime');
  const request={protocol:1 as const,requestId:'format',operationId:'format-source',coreProfile:'0.10.0',registryProfile:'empty',inputs:{source:'id: edited\nunknown:\n  keep: true\n',format:'yaml',outputFormat:'json'}};
- const result=await execute(request);expect(result.state).toBe('completed');expect(JSON.parse(result.outputs[0]!.text)).toEqual({id:'edited',unknown:{keep:true}});
- for(const source of ['{broken','id: one\nid: two','unsafe: 9007199254740993']){const refusal=await execute({...request,inputs:{...request.inputs,source}});expect(refusal.state).toBe('refused');expect(refusal.outputs).toHaveLength(0);expect(refusal.retainedSources.find(s=>s.name==='source')!.text).toBe(source);}
+ const result=await execute(sdk,request);expect(result.state).toBe('completed');expect(JSON.parse(result.outputs[0]!.text)).toEqual({id:'edited',unknown:{keep:true}});
+ for(const source of ['{broken','id: one\nid: two','unsafe: 9007199254740993']){const refusal=await execute(sdk,{...request,inputs:{...request.inputs,source}});expect(refusal.state).toBe('refused');expect(refusal.outputs).toHaveLength(0);expect(refusal.retainedSources.find(s=>s.name==='source')!.text).toBe(source);}
  const catalog=await Bun.file('docs/helix/05-deploy/reference/examples/catalog.json').json();
  for(const example of catalog){const source=await Bun.file(example.inputPaths.source).text(),d=JSON.parse(source);if(d.umf){expect(d.umf).toBe('0.10.0');expect(validateDocument(d).valid).toBe(true);}}
  });

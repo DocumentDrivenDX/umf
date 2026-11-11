@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../model/types';
-import type {SqlServerPlannedColumn,SqlServerPlannedIndexProjection} from './binding-sqlserver/indexes';
+import type {SqlServerPlannedColumn,SqlServerPlannedIndexProjection} from './binding-sqlserver-types';
 type Engine={['binding-sqlserver-planned-index-projection']:Record<'projectBindingIndexesAgainstSqlServerPlan',(fields?:Record<string,unknown>)=>unknown>};
 export function createBindingSqlServerPlannedIndexRustDefault(engine:Engine){
  return Object.freeze({

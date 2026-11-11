@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-/** Portable contract primitives used by the TableSpec acquisition runtime. */
+/** Node-facing TypeScript contract for the SDK's conditionally routed subpath. */
 export {createValidator} from '../validation/schema';
-export {readJsonValue} from '../model/serialization';
-export {inspectDomainPackLoader,generateDomainPackLoaderSchema} from './loader';
-export {generateLoaderInventorySchema} from './loader-inventory';
+export {readJsonValue,inspectDomainPackLoader,generateDomainPackLoaderSchema,generateLoaderInventorySchema} from '../index-node-v4';

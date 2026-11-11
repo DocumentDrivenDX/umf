@@ -3,7 +3,7 @@
 // @covers US-079-AC7
 // @covers US-079-AC10
 import {test,expect} from 'bun:test';
-import {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from '../../../src/extensions/security/protection/disclosure';
+import {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from '../../../src/index-node-v4';
 import {domainFixture,domainRef} from './domain-fixture';
 import {GREGORIAN_DATE_PROFILE} from '../../../src/adapters/gregorian-date';
 function fixture(){

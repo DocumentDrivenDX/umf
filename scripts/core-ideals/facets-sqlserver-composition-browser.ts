@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {facetsSqlServerProjectionCases} from './facets-sqlserver-projection-cases';
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-projection-native.json').json(),composition=await Bun.file('fixtures/validation/facets-sqlserver-composition.json').json();
 for(const evidence of [proof,composition])for(const [path,hash] of Object.entries(evidence.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),hash);

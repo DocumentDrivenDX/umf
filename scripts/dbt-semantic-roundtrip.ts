@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,writeDocument,readDocument} from '../src';
+import {importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,writeDocument,readDocument} from '../src/index-node-v4';
 const base='fixtures/dbt/semantic/',raw=await Bun.file(base+'semantic-manifest.json').text(),d=importDbtSemanticManifest(raw,{id:'semantic'}),results=[];
 for(const [id,editPath,value] of [
  ['model','/semantic_models/0/description','Reviewed semantic model.'],

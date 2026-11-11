@@ -2,9 +2,9 @@
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core binding case; target system version remains native.
 import {relationshipCandidate} from '../core-relationship-cases';
-import {declareCoreRelationship} from '../../src/model/relationships';
+import {declareCoreRelationship} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
-import type {RelationshipSqlServerRequest} from '../../src/core-ideals/relationship-sqlserver-projection';
+import type {RelationshipSqlServerRequest} from '../../src/core-ideals/relationship-sqlserver-projection-types';
 export function relationshipSqlServerCase(name='many-to-one'){
  const logical=relationshipCandidate(),rel=logical.modules[0].relationships[0];
  if(name.includes('optional'))rel.targetMultiplicity.min=0;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {CoreKindDeclaration} from '../model/field-kind';
-import type {CoreRecordTypeDeclaration} from '../model/record-type';
+import type {CoreRecordTypeDeclaration} from '../model/record-type-types';
 import type {Document} from '../model/types';
 import {copyJson} from '../model/json';
 import {UmfError} from '../model/errors';

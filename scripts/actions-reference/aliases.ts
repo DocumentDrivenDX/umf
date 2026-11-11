@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {knownActionModel} from '../../src/extensions/actions/known-model';
-import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
-import type {ActionEntityInput} from '../../src/extensions/actions/selector';
+import {actionFieldValueKey,type ActionEntityInput} from '../../src/index-node-v4';
 import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../src/model/key-tuple';
 import {UmfError,type Document} from '../../src/model/types';
 import type {NativeReferenceEntity} from './state';

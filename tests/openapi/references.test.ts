@@ -2,7 +2,7 @@
 import {createValidator} from '../../src/validation/schema';
 import referenceSchema from '../../spec/extensions/openapi/reference-result.schema.json';
 import {test,expect} from 'bun:test';
-import {importOpenapiDocument,resolveOpenapiObjectReference,getOpenapiNode} from '../../src';
+import {importOpenapiDocument,resolveOpenapiObjectReference,getOpenapiNode} from '../../src/index-node-v4';
 const root={openapi:'3.1.2',info:{title:'References',version:'1'},paths:{'/x':{get:{responses:{'200':{$ref:'middle.json#/answer',description:'Outer override','x-native':'retain'}}}}}};
 function fixture(target:any={description:'Actual response',content:{'application/json':{schema:{type:'string'}}}},middle:any={answer:{$ref:'nested/target.json#/answer',description:'Inner override'}}){return importOpenapiDocument(JSON.stringify(root),{id:'references',format:'json',baseUri:'https://example.test/api.json',resources:[{uri:'https://example.test/middle.json',text:JSON.stringify(middle),format:'json'},{uri:'https://example.test/nested/target.json',text:JSON.stringify({answer:target}),format:'json'}]});}
 const request={pointer:'/paths/~1x/get/responses/200',kind:'response'} as const;

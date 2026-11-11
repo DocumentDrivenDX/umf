@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {facetsTableSpecProjectionCases} from './facets-tablespec-projection-cases';
-import {projectFacetsToTableSpec} from '../../src';
+import {projectFacetsToTableSpec} from '../../src/index-node-v4';
 const rows=facetsTableSpecProjectionCases().map(row=>({...row,expected:projectFacetsToTableSpec(row.author,row.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const p=new URL(request.url).pathname;if(p==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(p==='/cases')return Response.json(rows);return new Response('<!doctype html><title>TableSpec facet suites</title>',{headers:{'content-type':'text/html'}});}});
 let browser;

@@ -8,8 +8,7 @@ import inspectionSchema from '../../spec/extensions/actions/inspection.schema.js
 import assessmentSchema from '../../spec/extensions/actions/assessment.schema.json';
 import fixture from '../../fixtures/actions/approve.json';
 import {createValidator} from '../../src/validation/schema';
-import {inspectActions,assessAction,registerActions,type ActionExecutorProfile} from '../../src/extensions/actions';
-import {Registry} from '../../src/registry/registry';
+import {inspectActions,assessAction,registerActions,Registry,type ActionExecutorProfile} from '../../src/index-node-v4';
 import type {Document} from '../../src/model/types';
 const validator=createValidator();for(const schema of [core,actions,profileSchema,inspectionSchema,assessmentSchema])validator.addSchema(schema);
 const checkProfile=validator.getSchema(profileSchema.$id)!,checkInspection=validator.getSchema(inspectionSchema.$id)!,checkAssessment=validator.getSchema(assessmentSchema.$id)!;

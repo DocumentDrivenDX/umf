@@ -2,7 +2,7 @@
 import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
-import {getOwlExpressionView,importOwlTurtle,exportOwlTurtle,writeDocument,readDocument} from '../../src';
+import {getOwlExpressionView,importOwlTurtle,exportOwlTurtle,writeDocument,readDocument} from '../../src/index-node-v4';
 const iri=(name:string)=>({kind:'iri' as const,value:'https://example.org/'+name});
 test('US-029 expression views retain constructor lists and exact restrictions',async()=>{
  const raw=await Bun.file('native/owl/expressions.ttl').text(),doc=importOwlTurtle(raw,{id:'expressions',baseIRI:'https://example.org/',blankNodeScope:'scope'}),ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/expression-schema.json').json());

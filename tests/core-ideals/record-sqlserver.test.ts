@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {classifySqlServerRecord, recoverSqlServerRecordCapture} from '../../src/core-ideals/sqlserver-record';
-import {importSqlServerCatalog, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';import {declareCoreElementKind} from '../../src/model/field-kind';import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
+import {classifySqlServerRecord,recoverSqlServerRecordCapture} from "../../src/index-node-v4";
+import {importSqlServerCatalog,getSqlServerColumnMetadata} from "../../src/index-node-v4";import {declareCoreElementKind} from "../../src/index-node-v4";import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const nativeSource=await Bun.file('fixtures/sqlserver/catalog.json').text(),capture=JSON.parse(nativeSource);
 const source=()=>importSqlServerCatalog(nativeSource,{id:'records'});
 const request={recordModule:'records',recordId:'record',mode:'strict' as const,nativeSource,relation:{schema:'sales',name:'Types'}};

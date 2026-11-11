@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/avro/native-schema.json').json();
-const built=await Bun.build({entrypoints:['src/index.ts','src/validation/schema.ts'],target:'browser',format:'esm',outdir:'.cache/avro-native-schema-browser',naming:'[name].js'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts','src/validation/schema.ts'],target:'browser',format:'esm',outdir:'.cache/avro-native-schema-browser',naming:'[name].js'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const name=new URL(req.url).pathname.slice(1);return ['index.js','schema.js'].includes(name)?new Response(Bun.file('.cache/avro-native-schema-browser/'+name),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Native Avro schema</title>');}});
 let browser;
 try{

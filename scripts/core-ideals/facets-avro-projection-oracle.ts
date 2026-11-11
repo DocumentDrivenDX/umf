@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {assertJsonDataEqual} from './json-data-assert';
 import {facetsAvroProjectionCases} from './facets-avro-projection-cases';
-import {projectFacetsToAvro, recoverFacetsFromAvro} from '../../src/core-ideals/facets-avro-projection';
+import {projectFacetsToAvro,recoverFacetsFromAvro} from "../../src/index-node-v4";
 import assert from 'node:assert/strict';
 const rows=facetsAvroProjectionCases(),targets=[];
 for(const row of rows){const r=projectFacetsToAvro(row.author,row.request);if(r.status==='blocked'){assert.equal(r.target,undefined);assert.ok(r.residuals.length);continue;}assertJsonDataEqual(recoverFacetsFromAvro(r,r.nativeSchema!),row.author.target);targets.push({id:row.id,request:row.request,schema:r.nativeSchema});}

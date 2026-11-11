@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {cardinalityTableSpecProjectionCases} from '../../scripts/core-ideals/cardinality-tablespec-projection-cases';
 test('authored shapes and item obligations project or explicitly residualize, with both retained recovery formats',()=>{
  const rows=cardinalityTableSpecProjectionCases();expect(rows).toHaveLength(78);

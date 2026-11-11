@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';
 import {tupleCases,tupleDocument,tupleIdentity} from '../../scripts/core-key-tuple-cases';
 import {encodeCoreKeyTuple,verifyCoreKeyTuple,prepareCoreKeyTuples} from '../../src/model/key-tuple';
-import {admitActionInputs,selectActionIdentity,prepareActionIdentities} from '../../src/extensions/actions/selector';
+import {admitActionInputs,selectActionIdentity,prepareActionIdentities} from '../../src/index-node-v4';
 import type {Document} from '../../src/model/types';
 import type {Action} from '../../src/extensions/actions/types';
 const outcome=(call:()=>unknown)=>{try{return {value:JSON.parse(JSON.stringify(call()))};}catch(error:any){return {code:error.code,path:error.path};}};

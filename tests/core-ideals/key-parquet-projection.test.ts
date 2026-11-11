@@ -2,9 +2,9 @@
 import {recordedRepositoryPath} from '../helpers/recorded-repository-path';
 import {test,expect} from 'bun:test';
 import {parquetKeyProjectionCases,parquetKeyAuthors} from '../../scripts/core-ideals/key-parquet-projection-cases';
-import {projectKeysToParquet, verifyKeysParquetProjection, recoverKeysParquetIdeal} from '../../src/core-ideals/key-parquet-projection';
-import {exportParquetCapture} from '../../src/adapters/parquet';
-import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+import {projectKeysToParquet,verifyKeysParquetProjection,recoverKeysParquetIdeal} from "../../src/index-node-v4";
+import {exportParquetCapture} from "../../src/index-node-v4";
+import {importParquetSchema,getParquetFieldMetadata} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 for(const c of parquetKeyProjectionCases())test('Parquet authored Key: '+c.name,()=>{
  const before=JSON.stringify(c),r=projectKeysToParquet(c.source,c.authors,c.request);expect(JSON.stringify(c)).toBe(before);expect(r.status).toBe(c.expected);expect(r.mappings.length).toBe(c.authors.length);expect(r.residuals.filter(r=>r.path.includes('/keys/')).length).toBe(c.authors.length);expect(r.mappings.every(m=>m.enforcement==='not-expressible')).toBe(true);
@@ -32,7 +32,7 @@ test('forged residuals, edited original bytes and getters cannot recover authors
  let reads=0;expect(()=>projectKeysToParquet(c.source,c.authors,{...c.request,get mode(){reads++;return 'report' as const;}})).toThrow();expect(reads).toBe(0);
 });
 test('native-only reimport cannot reconstruct authored keys',async()=>{
- const {classifyParquetKeys,recoverParquetKeySource}=await import('../../src/core-ideals/key-parquet'),c=parquetKeyAuthors(),r=projectKeysToParquet(c.source,c.authors,c.request),bytes=exportParquetCapture(r.target!),native=importParquetSchema(bytes,{id:'native-only'}),observation=classifyParquetKeys(native,{mode:'report',profile:'file-schema'});
+ const {classifyParquetKeys,recoverParquetKeySource}=await import('../../src/index-node-v4'),c=parquetKeyAuthors(),r=projectKeysToParquet(c.source,c.authors,c.request),bytes=exportParquetCapture(r.target!),native=importParquetSchema(bytes,{id:'native-only'}),observation=classifyParquetKeys(native,{mode:'report',profile:'file-schema'});
  expect(observation.observations.every(o=>o.authorIntent==='unknown'&&o.enforcement==='not-expressible')).toBe(true);expect(observation.target!.modules.every(m=>m.elements.every(e=>e.keys===undefined))).toBe(true);expect(recoverParquetKeySource(observation,observation.target!)).toEqual(bytes);
 });
 test('native generated-schema proof verifies actual types, duplicate writing and retained file bytes',async()=>{

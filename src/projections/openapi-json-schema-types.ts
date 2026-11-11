@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../model/types';
-import type {ProjectionIssue} from './json-schema-protobuf';
+import type {ProjectionIssue} from './projection-types';
 
 export interface OpenapiJsonSchemaPolicy {
  id:string;schemaId:string;pointer:string;resourceUri?:string;schemaResources?:string[];usage:'schema-only';lossPolicy:'strict'|'allow-reported-loss';

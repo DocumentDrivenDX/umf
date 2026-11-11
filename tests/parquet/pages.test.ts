@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,inspectParquetPages,coreSchema,parquetPagesSchema} from '../../src';
+import {captureParquet,exportParquetCapture,inspectParquetPages,coreSchema,parquetPagesSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const validate=ajv.compile(parquetPagesSchema);
 test('US-019-AC13: page headers and declared budgets match native corpus evidence',async()=>{

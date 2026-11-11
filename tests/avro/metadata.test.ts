@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importAvroSchema,getAvroFieldMetadata,exportAvroSchema,editAvroNode,writeDocument,readDocument} from '../../src';
+import {importAvroSchema,getAvroFieldMetadata,exportAvroSchema,editAvroNode,writeDocument,readDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/avro/field-metadata.schema.json';
 const types:any[]=['boolean','int','long','float','double','string','bytes',['null','long'],['int','long'],['int','string'],{type:'array',items:'int'},{type:'map',values:'string'},{type:'int',logicalType:'date'},{type:'int',logicalType:'time-millis'},{type:'long',logicalType:'time-micros'},{type:'long',logicalType:'timestamp-nanos'},{type:'long',logicalType:'local-timestamp-micros'},{type:'bytes',logicalType:'decimal',precision:18,scale:4},{type:'fixed',name:'D',size:4,logicalType:'decimal',precision:9,scale:2},'D',{type:'fixed',name:'Raw',size:4},{type:'enum',name:'E',symbols:['A','B']},{type:'bytes',logicalType:'future'},{type:'bytes',logicalType:'decimal',precision:2,scale:3},{type:'fixed',name:'BadDecimal',size:1,logicalType:'decimal',precision:3},'null'];

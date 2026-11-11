@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importArrowSchema,exportArrowSchema,readDocument,writeDocument} from '../src';
+import {importArrowSchema,exportArrowSchema,readDocument,writeDocument} from '../src/index-node-v4';
 const base='fixtures/arrow/upstream/',manifest=await Bun.file(base+'schema-manifest.json').json(),results=[];
 for(const c of manifest.cases){let doc;
  try{doc=importArrowSchema(await Bun.file(base+c.schema).text(),{id:c.source});}catch(error){results.push({...c,status:'rejected',message:(error as Error).message});continue;}

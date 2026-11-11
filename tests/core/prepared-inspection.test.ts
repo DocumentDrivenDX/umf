@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {prepareCoreInspection,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,readDocument,validateDocument} from '../../src/index';
+import {prepareCoreInspection,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,readDocument,validateDocument} from '../../src/index-node-v4';
 import {request} from '../compilation/access-fixtures';
 const fixture=()=>readDocument(request().sources[0]!.text,'json');
 // @covers US-080-AC3 @covers US-080-AC4

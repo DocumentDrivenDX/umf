@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {semanticTypeReferenceSchema} from '../generated/core-model';
 import Ajv2020 from 'ajv/dist/2020';
+import type {Ajv2020 as Ajv2020Instance} from 'ajv/dist/2020.js';
 import {canonicalJson} from './json-equality';
 import {snapshotSchema} from './internal-schema';
 const semanticReference=snapshotSchema(semanticTypeReferenceSchema);
-export {checkCore,checkPackage} from '../generated/core-validators';
-export function installJsonEquality(validator:Pick<Ajv2020,'removeKeyword'|'addKeyword'>){
+export function installJsonEquality(validator:Pick<Ajv2020Instance,'removeKeyword'|'addKeyword'>){
  validator.removeKeyword('uniqueItems').addKeyword({keyword:'uniqueItems',type:'array',schemaType:'boolean',errors:false,validate:(unique:boolean,data:unknown[])=>!unique||new Set(data.map(canonicalJson)).size===data.length});
  validator.removeKeyword('const').addKeyword({keyword:'const',errors:false,validate:(expected:unknown,data:unknown)=>canonicalJson(expected)===canonicalJson(data)});
  validator.removeKeyword('enum').addKeyword({keyword:'enum',schemaType:'array',errors:false,validate:(expected:unknown[],data:unknown)=>expected.some(v=>canonicalJson(v)===canonicalJson(data))});
 }
-export function createValidator(strict=true){const validator=new Ajv2020({allErrors:true,strict,allowUnionTypes:true,ownProperties:true,validateFormats:false});installJsonEquality(validator);
+export function createValidator(strict=true):Ajv2020Instance{const validator=new Ajv2020({allErrors:true,strict,allowUnionTypes:true,ownProperties:true,validateFormats:false});installJsonEquality(validator);
  const original=validator.addSchema.bind(validator),compile=validator.compile.bind(validator),getSchema=validator.getSchema.bind(validator),resources=new Map<string,string>(),ownedResources=new Map<string,any>();
  validator.addSchema=((schema:any,key?:string)=>{
   if(Array.isArray(schema)){for(const resource of schema)validator.addSchema(resource);return validator;}

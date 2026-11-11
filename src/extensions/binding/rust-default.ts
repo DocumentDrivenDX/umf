@@ -5,10 +5,11 @@ import {UmfError} from '../../model/errors';
 import bindingManifest from '../../../spec/extensions/binding/package.json';
 import stableManifest from '../../../spec/extensions/binding-stable/package.json';
 import type {BindingIndexProjection,BindingMigrationResult,BindingPayload,BindingRollbackResult} from './index';
+import type {RawTableBindingTarget} from './raw-profiles-inspector';
 import type {Bit128DatasetRecord} from './model-dataset';
 
 type Operation=(input?:Record<string,unknown>)=>unknown;
-export type BindingRustEngine={['binding-public']:Record<'inspectBinding'|'getBinding'|'readBindingDocument'|'writeBindingDocument'|'projectBindingIndexes'|'migrateBindingRelationships'|'rollbackBindingRelationships'|'validateBindingSemantics'|'validateBit128Dataset',Operation>};
+export type BindingRustEngine={['binding-public']:Record<'inspectBinding'|'inspectRawTableBinding'|'getBinding'|'readBindingDocument'|'writeBindingDocument'|'projectBindingIndexes'|'migrateBindingRelationships'|'rollbackBindingRelationships'|'validateBindingSemantics'|'validateBit128Dataset',Operation>};
 const CONTROL=new Set(['RESOURCE_LIMIT','LIMIT','CAPACITY','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
 export function createBindingRustDefault(engine:BindingRustEngine,isNativeError:(error:unknown)=>boolean,createRegistry:()=>Registry){
  const call=<T>(operation:keyof BindingRustEngine['binding-public'],fields:Record<string,unknown>):T=>{
@@ -20,6 +21,7 @@ export function createBindingRustDefault(engine:BindingRustEngine,isNativeError:
  return Object.freeze({
   bindingRegistry:registry,
   inspectBinding(binding:Document,logical:Document):Validation{return call('inspectBinding',{binding,logical}) as Validation;},
+  inspectRawTableBinding(binding:Document,logical:Document,target:RawTableBindingTarget,module:string):Validation{return call('inspectRawTableBinding',{binding,logical,target,module}) as Validation;},
   getBinding(binding:Document,logical:Document):BindingPayload{return call('getBinding',{binding,logical}) as BindingPayload;},
   readBindingDocument(source:string,logical:Document,format:'json'|'yaml'='yaml'):Document{return call('readBindingDocument',{source,logical,format}) as Document;},
   writeBindingDocument(binding:Document,logical:Document,format:'json'|'yaml'='yaml'):string{return call('writeBindingDocument',{binding,logical,format}) as string;},

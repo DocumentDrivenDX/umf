@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const base='fixtures/parquet/transforms/',report=await Bun.file(base+'results.json').json(),cases=[];for(const c of report.results)cases.push({...c,bytes:Array.from(new Uint8Array(await Bun.file(c.path).arrayBuffer())),wire:Array.from(new Uint8Array(await Bun.file(base+'wire/'+c.id+'.compact').arrayBuffer()))});
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/parquet-transform-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/parquet-transform-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/parquet-transform-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Parquet transforms</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);const result=await page.evaluate(async({cases,additions})=>{
  const path='/umf.js',u=await import(path);let wireFiles=0,transformed=0,blocked=0;

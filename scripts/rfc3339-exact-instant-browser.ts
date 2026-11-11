@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 
-const build = await Bun.build({entrypoints: ['src/index.ts'], target: 'browser'});
+const build = await buildStandaloneBindingBrowserRuntime({entrypoints: ['src/index.ts'], target: 'browser'});
 if (!build.success) throw new Error('Exact instant browser build failed');
 const server = Bun.serve({port: 0, hostname: '127.0.0.1', fetch(request) {
  return new URL(request.url).pathname === '/instant.js'

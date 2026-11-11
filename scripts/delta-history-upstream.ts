@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureDeltaLog,reconcileDeltaCommits,exportDeltaLog} from '../src';
+import {captureDeltaLog,reconcileDeltaCommits,exportDeltaLog} from '../src/index-node-v4';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/upstream/',manifest=await Bun.file(base+'manifest.json').json(),groups=new Map<string,any[]>(),results:any[]=[];
 for(const f of manifest.files){const match=/^(.*\/_delta_log)\/(\d{20})\.json$/.exec(f.path);if(!match)continue;const raw=new Uint8Array(await Bun.file(base+f.path).arrayBuffer());if(new Bun.CryptoHasher('sha256').update(raw).digest('hex')!==f.sha256)throw Error('Source hash mismatch');const g=groups.get(match[1]!)??[];g.push({path:f.path,version:BigInt(match[2]!).toString(),source:captureDeltaLog(new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(raw),{id:f.path})});groups.set(match[1]!,g);}

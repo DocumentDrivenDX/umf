@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,classifyAvroRecordType,recoverAvroRecordTypeBundle,classifyParquetRecordType,recoverParquetRecordTypeBytes,type AvroCardinalityRequest} from '../../src/index-node-v4';
+import {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,classifyAvroRecordType,recoverAvroRecordTypeBundle,classifyParquetRecordType,recoverParquetRecordTypeBytes} from '../../src/index-node-v4';
+import type {AvroCardinalityRequest} from '../../src/core-ideals/avro-cardinality-types';
 import {avroAvailabilitySource} from '../../scripts/core-ideals/nullability-avro-cases';
 import {avroRecordTypeCases} from '../../scripts/core-ideals/avro-record-type-cases';
-import {importAvroSchema,getAvroFieldMetadata} from '../../src/adapters/avro';
-import {importParquetSchema,getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+import {importAvroSchema,getAvroFieldMetadata} from "../../src/index-node-v4";
+import {importParquetSchema,getParquetFieldMetadata} from "../../src/index-node-v4";
 
 test('Node V4 core-ideal defaults classify, verify, recover and refuse through Rust',async()=>{
  const schema=JSON.stringify({type:'record',name:'cardinality.Example',fields:[{name:'value',type:'long'}]});

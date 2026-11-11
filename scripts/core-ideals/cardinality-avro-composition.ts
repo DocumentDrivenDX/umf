@@ -4,8 +4,9 @@ import {copyJson} from '../../src/model/json';
 import type {Element} from '../../src/model/types';
 import {avroAvailabilitySource} from './nullability-avro-cases';
 
-import {classifyAvroCardinality, recoverAvroCardinalityBundle} from '../../src/core-ideals/cardinality-avro';
-import {recoverCardinalityFromAvro, type CardinalityAvroProjection} from '../../src/core-ideals/cardinality-avro-projection';
+import {classifyAvroCardinality,recoverAvroCardinalityBundle} from '../../src/index-node-v4';
+import {type CardinalityAvroProjection} from "../../src/core-ideals/cardinality-avro-projection";
+import {recoverCardinalityFromAvro} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 /** Fresh native import is independent of the retained author receipt. */
 export function verifyAvroCardinalityComposition(projection:CardinalityAvroProjection){

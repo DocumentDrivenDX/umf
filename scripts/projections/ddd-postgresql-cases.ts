@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {postgresqlLayoutCases} from '../relationship-postgresql-layout-cases';
 import proposal from '../../fixtures/projections/ddd-authored-relationships/postgresql-layout-proposal.json';
-import type {Document,DddPostgresqlPolicy} from '../../src';
+import type {Document} from '../../src/index-node-v4';
+import type {DddPostgresqlPolicy} from '../../src/projections/ddd-postgresql-types';
 export interface FullCase {id:string;valid:boolean;logical:Document;binding:Document;policy:DddPostgresqlPolicy}
 export function dddPostgresqlCases():FullCase[]{
  const cases:FullCase[]=postgresqlLayoutCases().filter(c=>c.id!=='unknown-policy').map(c=>({id:c.id,valid:c.valid,logical:c.logical,binding:c.binding,policy:{profile:'ddd-postgresql-1',version:'1.0.0',targetVersion:'17.4',mode:'report',objectCheckNaming:'ck-table-column-object-v1',layoutPolicy:c.policy,tablePolicy:{fieldTypes:c.policy.fieldLayouts.map(f=>({...f.boundField,sqlType:f.sqlType})),partitionFamilies:[]}}}));
@@ -17,4 +18,4 @@ export function dddPostgresqlCases():FullCase[]{
  for(const kind of ['key','index','carrier']){const c=structuredClone(cases.find(c=>c.id==='partition-eligible')!);c.id='partition-collision-'+kind;c.valid=false;const family=c.policy.tablePolicy.partitionFamilies[0]!;if(kind==='key')family.defaultTable='pk_orders';if(kind==='index')family.defaultTable=(c.binding.extensions!['umf.binding'] as any).indexes[0].name;if(kind==='carrier'){const l=c.policy.layoutPolicy.relationshipLayouts[1]!;delete l.associationRecord;delete l.associationKey;delete (c.logical.modules[0]!.relationships as any[])[1].associationRecord;l.carrierTable='sales.buckets_default';for(const x of [...l.sourceComponents!,...l.targetComponents])delete x.carrierField;}cases.push(c);}
  return cases;
 }
-if(import.meta.main){const {projectDddToPostgresql}=await import('../../src');const {backend}=await import('../../native/postgresql/runtime');for(const c of dddPostgresqlCases()){try{const r=await projectDddToPostgresql(c.logical,c.binding,c.policy,backend);console.log(c.id,c.valid,r.status,r.diagnostics.filter(d=>d.code==='DDD_POSTGRESQL_BLOCK').map(d=>d.message));if(c.id==='keyed-association-and-fk'&&r.nativeSource)await Bun.write('/tmp/pg-full-base.sql',r.nativeSource);}catch(e){console.log(c.id,'THREW',String(e));}}}
+if(import.meta.main){const {projectDddToPostgresql}=await import('../../src/index-node-v4');const {backend}=await import('../../native/postgresql/runtime');for(const c of dddPostgresqlCases()){try{const r=await projectDddToPostgresql(c.logical,c.binding,c.policy,backend);console.log(c.id,c.valid,r.status,r.diagnostics.filter(d=>d.code==='DDD_POSTGRESQL_BLOCK').map(d=>d.message));if(c.id==='keyed-association-and-fk'&&r.nativeSource)await Bun.write('/tmp/pg-full-base.sql',r.nativeSource);}catch(e){console.log(c.id,'THREW',String(e));}}}

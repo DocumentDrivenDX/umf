@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,proposeDbtArtifactNodeEdit,writeDocument,readDocument} from '../src';
+import {importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,proposeDbtArtifactNodeEdit,writeDocument,readDocument} from '../src/index-node-v4';
 const base='fixtures/dbt/freshness/',results=[];
 for(const [id,path] of [['sources','/results/0/adapter_response/_message'],['runner-results','/results/0/error']]){
  const raw=await Bun.file(base+id+'.json').text(),d=importDbtArtifact(raw,{id:id!}),value='Reviewed synthetic diagnostic.',candidate=proposeDbtArtifactNodeEdit(d,path!,JSON.stringify(value));

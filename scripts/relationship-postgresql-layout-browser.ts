@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {postgresqlLayoutCases} from './relationship-postgresql-layout-cases';
-import {validatePostgresqlRelationshipLayout} from '../src';
+import {validatePostgresqlRelationshipLayout} from '../src/index-node-v4';
+import {buildBindingBrowserRuntime} from './binding/browser-runtime';
 const cases=postgresqlLayoutCases().map(row=>({...row,report:validatePostgresqlRelationshipLayout(row.logical,row.binding,row.policy,'report'),strict:validatePostgresqlRelationshipLayout(row.logical,row.binding,row.policy,'strict')}));
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(cases);return new Response('<!doctype html><html>PostgreSQL endpoint policy</html>',{headers:{'content-type':'text/html'}});}});
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});if(path==='/cases')return Response.json(cases);return new Response('<!doctype html><html>PostgreSQL endpoint policy</html>',{headers:{'content-type':'text/html'}});}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});

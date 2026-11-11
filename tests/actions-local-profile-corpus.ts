@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
-import type * as API from '../src/index';
+import type * as API from '../src/index-node-v4';
 import type {Document} from '../src/model/types';
 import type {PortableActionPlan,ActionPlanInspectionContext} from '../src/extensions/actions/plan-types';
 import model from '../docs/helix/03-test/fixtures/bulk-update/local-products-model.json';

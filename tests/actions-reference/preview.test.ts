@@ -6,7 +6,7 @@ import {ReferenceActionIssuer} from '../../scripts/actions-reference/authenticat
 import {ReferenceActionPolicy} from '../../scripts/actions-reference/policy';
 import {ReferenceActionExecutor} from '../../scripts/actions-reference/executor';
 import {seedReferenceEntity} from '../../scripts/actions-reference/state';
-import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
+import {actionFieldValueKey} from '../../src/index-node-v4';
 import {withReferenceStore} from './native-harness';
 /** @covers US-901-AC1 */
 test('native preview is advisory, ordered and write-free under independent SQL write guards',async()=>{

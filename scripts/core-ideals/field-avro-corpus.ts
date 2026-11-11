@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {avroRecords} from '../../src/core-ideals/avro-records';
-import {classifyAvroRecord} from '../../src/core-ideals/avro-record';
-import {avroFieldCases} from './avro-field-cases';import {importAvroSchema, getAvroFieldMetadata} from '../../src/adapters/avro';import {classifyAvroField} from '../../src/core-ideals/avro-field';
+import {avroRecords} from './avro-record-inventory';
+import {classifyAvroRecord} from "../../src/index-node-v4";
+import {avroFieldCases} from './avro-field-cases';import {importAvroSchema,getAvroFieldMetadata} from "../../src/index-node-v4";import {classifyAvroField} from "../../src/index-node-v4";
 const rows=avroFieldCases.map(c=>{const source=importAvroSchema(c.schema,{id:c.id,dependencies:c.dependencies});return {...c,source,records:avroRecords(source).map(r=>{const request={recordModule:'records',recordId:'record',path:r.path,...(r.dependencyId!==undefined?{dependencyId:r.dependencyId}:{}),nativeSource:c.schema,dependencies:c.dependencies,mode:'strict' as const};return {fullname:r.fullname,request,result:classifyAvroRecord(source,request)};}),fields:getAvroFieldMetadata(source).map(f=>({record:f.record,name:f.element.name,request:{column:f.element.id,nativeSource:c.schema,dependencies:c.dependencies,mode:'strict' as const},result:classifyAvroField(source,{column:f.element.id,nativeSource:c.schema,dependencies:c.dependencies,mode:'strict'})}))};});await Bun.write('fixtures/validation/field-avro-corpus.json',JSON.stringify({rows},null,2)+'\n');

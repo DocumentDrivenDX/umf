@@ -2,7 +2,7 @@
 import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import modelFixture from '../docs/helix/03-test/fixtures/bulk-update/model.json';
 import {sha256Text} from '../src/extensions/actions/plan-artifacts';
-import type * as API from '../src/index';
+import type * as API from '../src/index-node-v4';
 import type {Document} from '../src/model/types';
 import type {ActionPlanArtifact,ActionPlanInspectionContext,PortableActionPlan,ActionPlanCapabilities} from '../src/extensions/actions/plan-types';
 const copy=<T>(value:T):T=>JSON.parse(JSON.stringify(value));

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {recordedRepositoryPath} from '../helpers/recorded-repository-path';
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 const proof=await Bun.file('fixtures/validation/facets-tablespec-profile-native.json').json();
 const rows=proof.declarations as {case:string;sourceText:string;normalizedText?:string;runtimeAccepted:boolean;checkedSchemaAccepted:boolean;raw:{jsonSchemaText:string;sparkSchema:{fields:{type:string}[]};ingestTarget:string};normalized?:{jsonSchemaText:string}}[];
 const named=(name:string)=>rows.find(r=>r.case===name)!;

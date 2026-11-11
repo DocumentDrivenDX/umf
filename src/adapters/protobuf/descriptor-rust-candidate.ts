@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import { UmfError } from '../../model/errors';
-import type { DescriptorNode } from './descriptor';
+import type { DescriptorNode } from './descriptor-types';
 
 /** Build the opt-in Rust-backed descriptor reader without changing the default adapter. */
 export function createReadDescriptorSetRustCandidate(

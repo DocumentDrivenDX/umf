@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlFacetSource,postgresqlFacetRequest} from '../../scripts/core-ideals/facets-postgresql-cases';
 const source=postgresqlFacetSource();

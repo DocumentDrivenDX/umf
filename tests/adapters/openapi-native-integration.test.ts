@@ -1,10 +1,11 @@
+import {Registry} from '../../src/registry/registry';
 import {expect,test} from 'bun:test';
 import {createNativeFamilyDispatcher,isNativeUmfCoreError} from '../../bindings/core/node/index.js';
 import {createOpenapiRustDefault} from '../../src/adapters/openapi/rust-default';
 import {UmfError} from '../../src/model/errors';
 
 test('OpenAPI public Rust facade imports, reads and exports native content and refuses malformed format',()=>{
- const api=createOpenapiRustDefault(createNativeFamilyDispatcher(),isNativeUmfCoreError);
+ const api=createOpenapiRustDefault(createNativeFamilyDispatcher(),isNativeUmfCoreError,()=>new Registry());
  const source='{"openapi":"3.1.0","info":{"title":"Wire 🚀","version":"1"},"paths":{}}';
  const document=api.importOpenapiDocument(source,{id:'openapi-native-integration',format:'json'});
  const title=api.getOpenapiNode(document,'/info/title');

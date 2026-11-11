@@ -3,8 +3,8 @@
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
-import {inspectPostgresqlFacetPredicate} from '../../src/adapters/postgresql/facet-predicate';
-const paths=['native/postgresql/catalog/image.json','native/postgresql/catalog/facet-constraints.sql','fixtures/postgresql/facets.sql','fixtures/postgresql/facet-predicate-lookalikes.sql','scripts/core-ideals/facets-postgresql-constraints-native.ts','src/adapters/postgresql/facet-predicate.ts','native/postgresql/catalog/snapshot.sql'];
+import {inspectPostgresqlFacetPredicate} from './postgresql-facet-predicate';
+const paths=['native/postgresql/catalog/image.json','native/postgresql/catalog/facet-constraints.sql','fixtures/postgresql/facets.sql','fixtures/postgresql/facet-predicate-lookalikes.sql','scripts/core-ideals/facets-postgresql-constraints-native.ts','scripts/core-ideals/postgresql-facet-predicate.ts','native/postgresql/catalog/snapshot.sql'];
 const manifest=await Bun.file(paths[0]!).json(),query=await Bun.file(paths[1]!).text();
 const name='umf-facet-checks-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,err||out);return out;}

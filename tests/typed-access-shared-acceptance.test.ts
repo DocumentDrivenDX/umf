@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {readFileSync} from 'node:fs';
-import {readDocument,validateDocument,inspectBinding,validateCoreDatasetValues,validateCoreFieldValue} from '../src/index';
+import {readDocument,validateDocument,inspectBinding,validateCoreFieldValue} from '../src/index-node-v4';
+import {validateCoreDatasetValues} from '../src/index-node-v4';
 const root='fixtures/umf-typed-access/';
 const models=JSON.parse(readFileSync(root+'models.json','utf8'));
 const corpus=JSON.parse(readFileSync(root+'corpus.json','utf8'));

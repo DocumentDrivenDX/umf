@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
-import {validateCoreRecordValues,readDocument,validateDocument} from '../src/index';
+import {readDocument,validateDocument} from '../src/index';
+import {validateCoreRecordValues} from '../src/index-node-v4';
 // Authored as a current .10 fixture while preserving the source's native Record and Field meanings.
 const source=readDocument(readFileSync(new URL('../fixtures/core/record-values-current.umf.json',import.meta.url),'utf8'),'json');
 const identity={module:'fixture',element:'item'},label={module:'fixture',element:'label'},caption={module:'fixture',element:'caption'};

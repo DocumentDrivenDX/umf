@@ -4,14 +4,15 @@ import {assertJsonDataEqual,assertNativeRepresentationEqual} from './json-data-a
 import {createHash} from 'node:crypto';
 import {relative,resolve,isAbsolute,sep} from 'node:path';
 import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
+import {classifyAvroNullability,recoverAvroNullabilityBundle,verifyAvroNullabilityClassification} from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {nullabilityTableSpecCases} from './nullability-tablespec-cases';
 import {postgresqlAvailabilitySource} from './nullability-postgresql-cases';
 import {sqlserverAvailabilitySource} from './nullability-sqlserver-cases';
 import {avroAvailabilitySource} from './nullability-avro-cases';
 import {parquetAvailabilitySource} from './nullability-parquet-cases';
-import type {Document, CoreNullabilityDeclaration, Nullability} from '../../src';
+import type {Document, CoreNullabilityDeclaration, Nullability} from '../../src/index-node-v4';
 export const nullabilitySystems=['tablespec','postgresql','sqlserver','avro','parquet'] as const;
 type System=typeof nullabilitySystems[number];
 type Reader=(path:string)=>Promise<Uint8Array>;
@@ -36,7 +37,7 @@ async function bindings():Promise<Record<System,Binding>>{
    rows.push({source,label,expected:native.nativeSource,classify:(input,mode,unknown)=>classify(input,{column,nativeSource:native.nativeSource,mode,scope:unknown?'unresolved':'stored-relation',carrier:'sql-null'}),recover:r=>recover(r,r.target)});
   }
   const schema=avro.cases.find((c:any)=>c.id===(label==='required'?'integer':'null-first')).schema,{source,column}=avroAvailabilitySource(schema);
-  avroNatives.push({source,label,expected:{schema,dependencies:[]},classify:(input,mode,unknown)=>u.classifyAvroNullability(input,{column,nativeSource:schema,mode,scope:unknown?'unresolved':'underlying-field-value',carrier:'avro-null'}),recover:r=>u.recoverAvroNullabilityBundle(r,r.target)});
+  avroNatives.push({source,label,expected:{schema,dependencies:[]},classify:(input,mode,unknown)=>classifyAvroNullability(input,{column,nativeSource:schema,mode,scope:unknown?'unresolved':'underlying-field-value',carrier:'avro-null'}),recover:r=>recoverAvroNullabilityBundle(r,r.target)});
   const bytes=new Uint8Array(await Bun.file(`fixtures/parquet/nullability/scalar-${label==='required'?'0-0-present-0':'1-0-present-1'}.parquet`).arrayBuffer());
   parquetNatives.push({source:parquetAvailabilitySource(bytes,1),label,expected:bytes,classify:(input,mode,unknown)=>u.classifyParquetNullability(input,{index:1,mode,scope:unknown?'unresolved':'row-leaf-value',carrier:'definition-level'}),recover:r=>u.recoverParquetNullabilityBytes(r,r.target)});
  }

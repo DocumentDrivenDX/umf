@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
-import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues} from '../../../../src/index';
+import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues} from '../../../../src/index-node-v4';
 import {commerceDataset} from '../../../../tests/helpers/commerce-dataset';
 
 const root='tests/rust-core/fixtures/r5-dataset-values';

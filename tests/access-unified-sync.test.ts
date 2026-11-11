@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient} from '../src/index-node-v4';
 
 // @covers US-092-AC1 US-092-AC3 US-092-AC4 US-092-AC5 US-092-AC6
  test('sync clients preserve the async wire and outcomes without event-loop adaptation',async()=>{

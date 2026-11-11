@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Cross-runtime cases for the shared TypeScript/Python row_scope authoring API. */
-import {normalizeRowScope} from '../src/table-authoring/row-scope';
-import {inspectTableLifecycle} from '../src/extensions/tables';
-import {compileTableDeployment} from '../src/table-deployment';
+import {normalizeRowScope,inspectTableLifecycle,compileTableDeployment} from '../src/index-node-v4';
 import {relatedSource} from '../tests/unified/table-related-fixture';
 const configuration={module:'demo',schema:'row_scope_demo',ownerRole:'row_scope_owner',personRole:'row_scope_person',batchRole:'row_scope_batch',groupRoles:{reviewers:'row_scope_reviewers'}};
 const source=relatedSource();

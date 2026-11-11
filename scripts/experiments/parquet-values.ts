@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {parquetMetadata,parquetSchema,parquetReadObjects} from 'hyparquet';
-import {captureParquet,inspectParquetContainers} from '../../src';
+import {captureParquet,inspectParquetContainers} from '../../src/index-node-v4';
 /** Experimental schema-driven value view. Not a bounded public decoder. */
 export async function readParquetValuesTrial(file:ArrayBuffer){
  const view=inspectParquetContainers(captureParquet(new Uint8Array(file),{id:'trial'}));if(view.status!=='checked')throw Error('Unsupported schema');

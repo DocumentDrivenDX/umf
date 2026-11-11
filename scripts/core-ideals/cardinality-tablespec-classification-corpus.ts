@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {cardinalityTableSpecCases} from './cardinality-tablespec-cases';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 const rows=cardinalityTableSpecCases().map(row=>{
  const result=u.classifyTableSpecCardinality(row.source,row.request);
  const recovered=result.target?(['json','yaml'] as const).map(format=>{

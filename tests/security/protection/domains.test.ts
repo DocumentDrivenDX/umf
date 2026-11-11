@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {resolveSecurityProtectionDomains} from '../../../src/extensions/security/protection/domains';
+import {resolveSecurityProtectionDomains} from '../../../src/index-node-v4';
 import {domainFixture,domainRef} from './domain-fixture';
 const resolve=(f:ReturnType<typeof domainFixture>)=>resolveSecurityProtectionDomains(f.policy,f.catalog,f.closure);
 test('qualified closure resolves every occurrence and preserves distinct complete domain definitions',()=>{

@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {relationshipCandidate} from '../../scripts/core-relationship-cases';
 import {relationshipOperationCases,relationshipRequest} from '../../scripts/core-relationship-operation-cases';
-import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,verifyCoreRelationshipOperation} from '../../src/model/relationships';
+import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,verifyCoreRelationshipOperation} from "../../src/index-node-v4";
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 test('current relationship inspection and lookup retain unknown lifecycle and endpoint qualifiers',()=>{
  const source:any=relationshipCandidate();

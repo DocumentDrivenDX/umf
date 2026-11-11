@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/postgresql/ddl-declarations.json').json(),source=await Bun.file('fixtures/postgresql/declarations.sql').text();
-const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/postgresql-declarations-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/postgresql-declarations-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const path=new URL(req.url).pathname;if(path==='/umf.js')return new Response(Bun.file('.cache/postgresql-declarations-browser/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/postgresql-runtime.js')return new Response(Bun.file('dist/postgresql/runtime.js'),{headers:{'content-type':'text/javascript'}});if(path==='/libpg-query.wasm')return new Response(Bun.file('dist/postgresql/libpg-query.wasm'),{headers:{'content-type':'application/wasm'}});return new Response('<!doctype html><title>PostgreSQL declarations</title>');}});
 let browser;
 try{

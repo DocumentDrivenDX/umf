@@ -14,7 +14,7 @@ import {ReferenceHandlerRegistry} from '../../scripts/actions-reference/handlers
 import {referenceHandlerBuild} from '../../scripts/actions-reference/sandbox';
 import {referencePreparedHandlers} from '../../scripts/actions-reference/preparation';
 import {freezeReferenceState,seedReferenceEntity} from '../../scripts/actions-reference/state';
-import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
+import {actionFieldValueKey} from '../../src/index-node-v4';
 import {decodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {withReferenceStore} from './native-harness';
 const field={module:'sales',element:'status'},input={key:{module:'sales',element:'order',key:'pk'},components:[{string:'o1'}]};

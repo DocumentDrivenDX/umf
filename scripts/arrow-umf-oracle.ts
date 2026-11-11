@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importArrowSchema,exportArrowSchema,readDocument,writeDocument} from '../src';
+import {importArrowSchema,exportArrowSchema,readDocument,writeDocument} from '../src/index-node-v4';
 import {probe} from '../native/arrow/schema-probe';
 const cases=await Bun.file('fixtures/arrow/schema-cases.json').json();
 const baseline=await Bun.file('fixtures/arrow/capability-results.json').json();

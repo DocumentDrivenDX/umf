@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureParquet,captureDeltaLog,reconcileDeltaMultipartCheckpoint} from '../src';
+import {captureParquet,captureDeltaLog,reconcileDeltaMultipartCheckpoint} from '../src/index-node-v4';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/multipart/',m=await Bun.file(base+'manifest.json').json(),parts=[],sources=[],results=[];
 for(const p of m.parts){const bytes=new Uint8Array(await Bun.file(p.path).arrayBuffer());if(new Bun.CryptoHasher('sha256').update(bytes).digest('hex')!==p.sha256)throw Error('Part hash mismatch');parts.push({name:p.name,source:captureParquet(bytes,{id:p.name})});}

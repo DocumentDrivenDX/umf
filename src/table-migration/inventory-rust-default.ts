@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../model/errors';
-import type * as Inventory from './inventory';
-type Api=Pick<typeof Inventory,'compileTableInventoryMigration'|'discoverTableInventoryMigrationChanges'|'verifyTableInventoryMigration'|'serializeTableInventoryMigration'|'irreversiblePurgeDisclosure'>;
+import type {TableDeploymentBundle} from '../table-deployment/types';
+import type {TableInventoryDiscoverySelector,TableInventoryMigrationPlan,TableInventoryMigrationRequest,TableInventoryMigrationResult,TableInventoryReviewedChangeCandidate,TableInventorySourceHistory} from './inventory-types';
+
+interface Api {
+ compileTableInventoryMigration(request:TableInventoryMigrationRequest):TableInventoryMigrationResult;
+ discoverTableInventoryMigrationChanges(previous:TableDeploymentBundle|null,next:TableDeploymentBundle,selector:TableInventoryDiscoverySelector,originalHistory:TableInventorySourceHistory):TableInventoryReviewedChangeCandidate[];
+ verifyTableInventoryMigration(plan:unknown,originalHistory:TableInventorySourceHistory):TableInventoryMigrationPlan;
+ serializeTableInventoryMigration(plan:unknown,originalHistory:TableInventorySourceHistory):string;
+ irreversiblePurgeDisclosure(candidate:TableInventoryReviewedChangeCandidate):{code:'IRREVERSIBLE_TABLE_PURGE';path:string;markerId:string;message:string};
+}
 type Native={ [K in keyof Api]:(...args:Parameters<Api[K]>)=>unknown };
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED','HOST_CONTROL']);
 /** Preserve public signatures while the shared Rust codegen engine owns inventory meaning. */

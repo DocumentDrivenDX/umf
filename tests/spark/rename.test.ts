@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSparkSchema,exportSparkSchema,renameSparkField,coreSchema,sparkRenameSchema} from '../../src';
+import {importSparkSchema,exportSparkSchema,renameSparkField,coreSchema,sparkRenameSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const validator=createValidator();validator.addSchema(coreSchema);const check=validator.compile(sparkRenameSchema);
 const field=(name:string,type:any,collations:Record<string,string>={})=>({name,type,nullable:true,metadata:{__COLLATIONS:collations,other:{nameReference:name}}});

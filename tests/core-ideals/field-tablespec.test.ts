@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {classifyTableSpecField, verifyTableSpecFieldClassification, importTableSpec, importTableSpecBundle, exportTableSpec, exportTableSpecBundle} from '../../src/index-node-v4';
 
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {declareCoreElementKind} from "../../src/index-node-v4";
 import {readDocument, writeDocument} from '../../src/model/document';
 import {copyJson} from '../../src/model/json';
 const text=' {"version":"1.0","table_name":"T","columns":[{"name":"x","data_type":"FUTURE","opaque":9007199254740993}]}\n';

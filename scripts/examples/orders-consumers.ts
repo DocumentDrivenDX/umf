@@ -3,10 +3,10 @@
 import sales from '../../fixtures/ddd/sales.json';
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
-import {selectCoreElements} from '../../src/model/selection';
-import {importTableSpec,exportTableSpec,getTableSpecColumn} from '../../src/adapters/tablespec';
-import {importOpenapiDocument,exportOpenapiDocument,getOpenapiNode} from '../../src/adapters/openapi';
-import {getDddDefinition,inspectDdd} from '../../src/extensions/ddd';
+import {selectCoreElements} from '../../src/index-node-v4';
+import {importTableSpec,exportTableSpec,getTableSpecColumn} from "../../src/index-node-v4";
+import {importOpenapiDocument,exportOpenapiDocument,getOpenapiNode} from "../../src/index-node-v4";
+import {getDddDefinition,inspectDdd} from "../../src/index-node-v4";
 import {renderTree} from '../../src/model/native-json';
 import {readJsonValue} from '../../src/model/serialization';
 import type {projectAvroToJsonSchema,projectTableSpecToAvro} from '../../src/index-node-v4';

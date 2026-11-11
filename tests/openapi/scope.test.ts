@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../src/validation/schema';
-import {openapiSchemaIndexSchema,openapiSchemaReferenceSchema} from '../../src';
+import {openapiSchemaIndexSchema,openapiSchemaReferenceSchema} from '../../src/index-node-v4';
 import {test,expect} from 'bun:test';
-import {importOpenapiDocument,indexOpenapiSchemas,resolveOpenapiSchemaReference} from '../../src';
+import {importOpenapiDocument,indexOpenapiSchemas,resolveOpenapiSchemaReference} from '../../src/index-node-v4';
 const base='https://example.test/retrieved/api.json';
 const standard='https://json-schema.org/draft/2020-12/schema';
 const native={openapi:'3.2.1',$self:'https://example.test/semantic/api.json',info:{title:'Scope',version:'1'},components:{schemas:{Root:{$id:'models/root',type:'object',$defs:{Child:{$id:'child',$anchor:'named',type:'string'},Local:{$anchor:'local',type:'integer'}},properties:{value:{$ref:'child#named'}},examples:[{$id:'not-a-schema',$anchor:'ignored'}]}}}};

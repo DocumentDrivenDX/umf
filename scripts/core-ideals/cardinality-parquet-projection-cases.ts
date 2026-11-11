@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreCardinality, type Document, type Element, type ScalarType} from '../../src';
+import {declareCoreCardinality, type Document, type Element, type ScalarType} from '../../src/index-node-v4';
 import type {CardinalityParquetRequest, ParquetCardinalityCarrier} from '../../src/core-ideals/cardinality-parquet-projection';
 import {parquetCardinalityCarrierCases} from './cardinality-parquet-carrier-cases';
 const families:Record<string,ScalarType>={boolean:'boolean',int32:'integer',int64:'integer',float32:'float',float64:'float',binary:'binary',string:'string',date:'date','time-millis':'time','time-micros':'time','timestamp-millis-utc':'timestamp','timestamp-micros-utc':'timestamp'};

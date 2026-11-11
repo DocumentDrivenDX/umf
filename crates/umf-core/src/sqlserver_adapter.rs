@@ -9,7 +9,7 @@ use crate::{
 };
 
 const PROFILE: &str = "sqlserver-catalog-v1";
-const EXTENSION: &str = "umf.sqlserver";
+pub(crate) const EXTENSION: &str = "umf.sqlserver";
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct SqlServerColumnMetadata {

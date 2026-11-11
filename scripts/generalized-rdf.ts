@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importJsonLdDocument,proposeJsonLdToRdf,exportGeneralizedRdfDataset,proposeGeneralizedRdfToJsonLd,exportJsonLdDocument,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit,readDocument,writeDocument} from '../src';
+import {importJsonLdDocument,proposeJsonLdToRdf,exportGeneralizedRdfDataset,proposeGeneralizedRdfToJsonLd,exportJsonLdDocument,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const cases=[];
 for(const c of (await Bun.file('fixtures/jsonld/to-rdf/results.json').json()).cases.filter((c:any)=>c.nativeOptions.produceGeneralizedRdf)){
  const source=importJsonLdDocument(await Bun.file(c.path).text(),c.inputs),options={...c.options,produceGeneralizedRdf:true},r=await proposeJsonLdToRdf(source,options),exports=[];if(!r.candidate)throw Error(c.id+JSON.stringify(r.diagnostics));

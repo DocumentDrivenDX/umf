@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {sqlserverKeyAuthors,sqlserverKeyProjectionCases} from '../../scripts/core-ideals/key-sqlserver-projection-cases';
-import {projectKeysToSqlServer, verifyKeysSqlServerProjection, recoverKeysSqlServerIdeal} from '../../src/core-ideals/key-sqlserver-projection';
+import {projectKeysToSqlServer,verifyKeysSqlServerProjection,recoverKeysSqlServerIdeal} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 for(const row of sqlserverKeyProjectionCases())test('SQL Server authored keys: '+row.name,()=>{
  const before=JSON.stringify(row),r=projectKeysToSqlServer(row.source,row.authors,row.request);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);expect(r.mappings.length).toBe(row.authors.length);expect(r.residuals.filter(x=>/\/keys\//.test(x.path)).length).toBeGreaterThanOrEqual(row.authors.length);if(row.expectedEquality)expect(r.mappings[0]!.equality).toBe(row.expectedEquality);
@@ -39,7 +39,7 @@ test('generated native evidence records actual enforcement and source fingerprin
  
 });
 test('expanded key column limit includes encoding helpers and preserves blocked source',async()=>{
- const {declareCoreKey,declareCoreRecordMembers}=await import('../../src/model/keys'),c=sqlserverKeyAuthors();
+ const {declareCoreKey,declareCoreRecordMembers}=await import('../../src/index-node-v4'),c=sqlserverKeyAuthors();
  for(const count of [32,33]){
   const d=structuredClone(c.authors[0]!.source),record=d.modules[0]!.elements[0]!;delete record.keys;delete record.members;d.modules[0]!.elements=[record];
   const refs=Array.from({length:count},(_,i)=>({module:'m',element:'c'+i}));for(const ref of refs)d.modules[0]!.elements.push({id:ref.element,kind:'field',scalarType:'integer',cardinality:'one',nullability:'required',extensions:{}});
@@ -54,7 +54,7 @@ test('missing and cross-record membership never establishes key ownership',()=>{
  const wrong=structuredClone(c.request);wrong.keyNames[0]!.keyId='missing-key';expect(()=>projectKeysToSqlServer(c.source,c.authors,wrong)).toThrow();
 });
 test('unknown component qualifiers block an exact equality claim independently of other keys',async()=>{
- const {declareCoreKey}=await import('../../src/model/keys'),c=sqlserverKeyAuthors(),d=structuredClone(c.source),key=(d.modules[0]!.elements[0]!.keys as any[])[0];key.fields[0].future={comparison:'uninterpreted'};
+ const {declareCoreKey}=await import('../../src/index-node-v4'),c=sqlserverKeyAuthors(),d=structuredClone(c.source),key=(d.modules[0]!.elements[0]!.keys as any[])[0];key.fields[0].future={comparison:'uninterpreted'};
  const a=declareCoreKey(d,c.request.record,{id:'stable-id',name:'Order identity',fields:[c.request.columns[0]!.field]}),b=declareCoreKey(a.target,c.request.record,{id:'stable-code',name:'External code',fields:[c.request.columns[1]!.field]});
  const r=projectKeysToSqlServer(b.target,[a,b],c.request);expect(r.mappings[0]!.equality).toBe('unknown');expect(r.mappings[1]!.equality).toBe('exact-on-representable-values');expect(recoverKeysSqlServerIdeal(r,r.target!)).toEqual(b.target);
 });

@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
-import type {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture,observeArrowIpcCapture,ArrowIpcObservationBackend} from './capture';
-import type {inspectArrowIpcLayout} from './ipc-layout';
-import type {inspectArrowIpcConsistency} from './ipc-consistency';
-import type {exportArrowSchemaIpc,ArrowSchemaIpcBackend} from './ipc';
-import type {ArrowFlatbufferEncodingBackend} from './flatbuffer-encode';
-import type {ArrowIpcRenameResult} from './ipc-rename';
+import type {ArrowIpcCaptureInspection,ArrowIpcConsistency,ArrowIpcLayout,ArrowIpcObservationBackend,ArrowIpcObservationResult,ArrowIpcRenameResult,ArrowSchemaIpcBackend} from './api-types';
+import type {ArrowFlatbufferEncodingBackend} from './api-types';
 import {copyJson} from '../../model/json';
 import type {Document} from '../../model/types';
 
@@ -58,22 +54,22 @@ export function bindArrowIpcRust(
   catch(error){return publicError(error,isNativeUmfCoreError,isBindingUmfError);}
  };
  return Object.freeze({
-  captureArrowIpc(bytes:Uint8Array,options:{id:string}):ReturnType<typeof captureArrowIpc>{
-   return call(()=>engine.captureArrowIpc(bytes,options)) as ReturnType<typeof captureArrowIpc>;
+  captureArrowIpc(bytes:Uint8Array,options:{id:string}):Document{
+   return call(()=>engine.captureArrowIpc(bytes,options)) as Document;
   },
-  exportArrowIpcCapture(document:unknown):ReturnType<typeof exportArrowIpcCapture>{
-   return call(()=>engine.exportArrowIpcCapture(document)) as ReturnType<typeof exportArrowIpcCapture>;
+  exportArrowIpcCapture(document:unknown):Uint8Array{
+   return call(()=>engine.exportArrowIpcCapture(document)) as Uint8Array;
   },
-  inspectArrowIpcCapture(document:unknown):ReturnType<typeof inspectArrowIpcCapture>{
-   return call(()=>engine.inspectArrowIpcCapture(document)) as ReturnType<typeof inspectArrowIpcCapture>;
+  inspectArrowIpcCapture(document:unknown):ArrowIpcCaptureInspection{
+   return call(()=>engine.inspectArrowIpcCapture(document)) as ArrowIpcCaptureInspection;
   },
-  inspectArrowIpcLayout(document:unknown):ReturnType<typeof inspectArrowIpcLayout>{
-   return call(()=>engine.inspectArrowIpcLayout(document)) as ReturnType<typeof inspectArrowIpcLayout>;
+  inspectArrowIpcLayout(document:unknown):ArrowIpcLayout{
+   return call(()=>engine.inspectArrowIpcLayout(document)) as ArrowIpcLayout;
   },
-  inspectArrowIpcConsistency(document:unknown):ReturnType<typeof inspectArrowIpcConsistency>{
-   return call(()=>engine.inspectArrowIpcConsistency(document)) as ReturnType<typeof inspectArrowIpcConsistency>;
+  inspectArrowIpcConsistency(document:unknown):ArrowIpcConsistency{
+   return call(()=>engine.inspectArrowIpcConsistency(document)) as ArrowIpcConsistency;
   },
-  observeArrowIpcCapture(document:Document,backend:ArrowIpcObservationBackend):ReturnType<typeof observeArrowIpcCapture>{
+  observeArrowIpcCapture(document:Document,backend:ArrowIpcObservationBackend):ArrowIpcObservationResult{
    if(backend?.identity!=='apache-arrow@21.2.0'||typeof backend.observe!=='function')throw new UmfError('ARROW_BACKEND','Expected explicit pinned IPC observation backend');
    const prepared=call(()=>engine.prepareArrowIpcObservation(document)) as {bytesHex:string};
    const bytes=bytesFromHex(prepared.bytesHex);
@@ -85,7 +81,7 @@ export function bindArrowIpcRust(
     if(isControlFailure(error))throw error;
     outcome={backend:backend.identity,status:'uninterpreted',message:observationMessage(error)};
    }
-   return call(()=>engine.completeArrowIpcObservation(prepared,outcome)) as ReturnType<typeof observeArrowIpcCapture>;
+   return call(()=>engine.completeArrowIpcObservation(prepared,outcome)) as ArrowIpcObservationResult;
   },
   renameArrowIpcField(document:Document,request:{fieldPath:number[];name:string;uninterpretedMetadata:'preserve-and-report'},backend?:ArrowFlatbufferEncodingBackend):ArrowIpcRenameResult{
    if(backend!==undefined&&(backend?.identity!=='flatbuffers@25.9.23'||typeof backend.encode!=='function'))throw new UmfError('ARROW_BACKEND','Expected explicit pinned FlatBuffers backend');
@@ -104,10 +100,10 @@ export function bindArrowIpcRust(
    if(footerModel!==null){const footerBytes=encodeModel(footerModel,`${document.id}/renamed-footer`);if(!(footerBytes instanceof Uint8Array)||!footerBytes.length||footerBytes.length>1_000_000)throw new UmfError('ARROW_FLATBUFFER_BYTES','Expected bounded metadata bytes');footerHex=Array.from(footerBytes,b=>b.toString(16).padStart(2,'0')).join('');}
    return call(()=>engine.completeArrowIpcRename(document,request,schemaHex,footerHex)) as ArrowIpcRenameResult;
   },
-  exportArrowSchemaIpc(document:Document,backend?:ArrowSchemaIpcBackend):ReturnType<typeof exportArrowSchemaIpc>{
+  exportArrowSchemaIpc(document:Document,backend?:ArrowSchemaIpcBackend):Uint8Array{
    if(backend!==undefined&&(backend?.identity!=='apache-arrow@21.2.0'||typeof backend.encode!=='function'))throw new UmfError('ARROW_BACKEND','Expected explicit pinned Arrow schema backend');
    if(backend===undefined){
-    return call(()=>engine.exportArrowSchemaIpcNative(document)) as ReturnType<typeof exportArrowSchemaIpc>;
+    return call(()=>engine.exportArrowSchemaIpcNative(document)) as Uint8Array;
    }
    const prepared=call(()=>engine.prepareArrowSchemaIpc(document)) as {schema:string};
    const input=copyJson(JSON.parse(prepared.schema));
@@ -127,7 +123,7 @@ export function bindArrowIpcRust(
    if(typeof returned!=='string'||returned.length%2!==0||!/^[0-9a-f]+$/.test(returned))throw new TypeError('Rust Arrow IPC export returned invalid lowercase hexadecimal bytes');
    const decodedBytes=new Uint8Array(returned.length/2);
    for(let index=0;index<bytes.length;index++)decodedBytes[index]=Number.parseInt(returned.slice(index*2,index*2+2),16);
-   return decodedBytes as ReturnType<typeof exportArrowSchemaIpc>;
+   return decodedBytes;
   },
  });
 }

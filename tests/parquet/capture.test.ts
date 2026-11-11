@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,inspectParquetFraming,readDocument,writeDocument,coreSchema,parquetFramingSchema} from '../../src';
+import {captureParquet,exportParquetCapture,inspectParquetFraming,readDocument,writeDocument,coreSchema,parquetFramingSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(parquetFramingSchema);
 test('US-019-AC1: bounded binary source copies exact bytes including malformed input and preserves unknown representation',()=>{

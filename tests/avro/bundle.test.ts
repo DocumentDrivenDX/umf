@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importAvroSchema,exportAvroSchema,exportAvroBundle,inspectAvro,editAvroNode,getAvroNode,readDocument,writeDocument} from '../../src';
+import {importAvroSchema,exportAvroSchema,exportAvroBundle,inspectAvro,editAvroNode,getAvroNode,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/avro/upstream/lang/java/avro/src/test/resources/multipleFile/';
 const schema=await Bun.file(base+'ApplicationEvent.avsc').text();
 const dependency=await Bun.file(base+'DocumentInfo.avsc').text();

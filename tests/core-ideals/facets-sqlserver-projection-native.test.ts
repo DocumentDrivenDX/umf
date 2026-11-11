@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {projectFacetsToSqlServer} from '../../src';
+import {projectFacetsToSqlServer} from '../../src/index-node-v4';
 import {facetsSqlServerProjectionCases} from '../../scripts/core-ideals/facets-sqlserver-projection-cases';
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-projection-native.json').json();
 test('pinned native execution matches current authored DDL and keeps exact value counterexamples',async()=>{

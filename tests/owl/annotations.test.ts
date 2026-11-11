@@ -2,7 +2,7 @@
 import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
-import {getOwlAxiomAnnotations,importOwlTurtle,exportOwlTurtle,getOwlQuads,proposeOwlQuadEdit,writeDocument,readDocument} from '../../src';
+import {getOwlAxiomAnnotations,importOwlTurtle,exportOwlTurtle,getOwlQuads,proposeOwlQuadEdit,writeDocument,readDocument} from '../../src/index-node-v4';
 const E='https://example.org/';
 test('US-029 nested axiom annotations preserve term identity and source edits',async()=>{
  const raw=await Bun.file('native/owl/annotations.ttl').text(),doc=importOwlTurtle(raw,{id:'annotations',baseIRI:E,blankNodeScope:'scope'}),ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/annotations-schema.json').json());

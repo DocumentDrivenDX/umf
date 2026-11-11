@@ -5,7 +5,7 @@ import create from '../../fixtures/actions/create-link.json';
 import ddd from '../../fixtures/actions/ddd-binding.json';
 import composite from '../../fixtures/actions/composite-key.json';
 import association from '../../fixtures/actions/association-record.json';
-import type * as Umf from '../../src/index';
+import type * as Umf from '../../src/index-node-v4';
 import type {Document} from '../../src/model/types';
 const fixtures:Record<string,unknown>={approve,'create-link':create,'ddd-binding':ddd,'composite-key':composite,'association-record':association};
 function canonical(value:unknown):string {if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';if(value&&typeof value==='object')return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical((value as Record<string,unknown>)[k])).join(',')+'}';return JSON.stringify(value);}
@@ -20,7 +20,7 @@ export function runActionCaseCorpus(api:typeof Umf) {
   }
   const before=canonical(source),expected=vector.expected as any;let result:any;
   try {
-   const registry=api.registerActions(api.dddRegistry());
+   const registry=api.createUmfRegistry();
    if(vector.operation==='select'){const action=(source.modules[0]!.extensions!['umf.actions'] as any).actions[0],selected=api.selectActionIdentity(source,action,action.writes[0],(vector as any).inputs);assert(canonical(selected.entity.components)===canonical(expected.components),vector.id+': selected component order/value differs');result={selected};}
    else {
     const inspection=api.inspectActions(source,registry);assert(inspection.validation.valid===expected.valid,vector.id+': validity differs');assert(inspection.validation.complete===expected.complete,vector.id+': completeness differs');

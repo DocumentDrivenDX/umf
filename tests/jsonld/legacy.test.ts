@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src';
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 test('US-026-AC6: legacy IRI mapping and prefixes respect the selected processing mode',async()=>{
  const cases=await Bun.file('native/jsonld/examples/legacy-cases.json').json(),evidence=(await Bun.file('fixtures/jsonld/legacy/results.json').json()).results;expect(cases).toHaveLength(8);expect(evidence).toHaveLength(15);
  for(const c of cases)for(const mode of ['10','11']){if(c.only11&&mode==='10')continue;const raw=JSON.stringify(c.source),d=importJsonLdDocument(raw,{id:c.id,baseIRI:'https://example.org/source',processingMode:mode==='10'?'json-ld-1.0':'json-ld-1.1'}),r=await proposeJsonLdExpansion(d,{lossPolicy:'report'}),saved=evidence.find((e:any)=>e.id===c.id&&e.mode===mode);expect(exportJsonLdDocument(r.source)).toBe(raw);expect(r.status).toBe(c['blocked'+mode]?'blocked':'candidate');if(c['blocked'+mode]){expect(r.candidate).toBeUndefined();continue;}expect(JSON.parse(exportJsonLdDocument(r.candidate!))).toEqual(c['expect'+mode]);

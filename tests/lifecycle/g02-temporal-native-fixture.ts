@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** G02 native carrier coverage, using a synthetic SD-007 Person adaptation. */
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
-import {compileTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/table-migration';
+import {compileTableDeployment} from '../../src/index-node-v4';
+import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/index-node-v4';
 
 const ref=(element:string)=>({module:'demo',element});
 const configuration={module:'demo',schema:'g02_temporal',ownerRole:'g02_temporal_owner',personRole:'g02_temporal_person',batchRole:'g02_temporal_batch',groupRoles:{}};

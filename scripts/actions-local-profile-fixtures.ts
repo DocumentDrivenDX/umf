@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import {createHash} from 'node:crypto';
-import {createUmfRegistry,prepareActionPlanModel} from '../src/index';
+import {createUmfRegistry,prepareActionPlanModel} from '../src/index-node-v4';
 const root='docs/helix/03-test/fixtures/bulk-update/',utf8=await Bun.file(root+'local-products-model.json').text(),sha256=createHash('sha256').update(utf8).digest('hex'),document=JSON.parse(utf8);
 const snapshot={mediaType:'application/json',utf8,sha256},pin={documentId:document.id,revision:sha256,umfVersion:CURRENT_CORE_VERSION,sha256},action={identity:{module:'sales',action:'set-name-local'},documentSha256:sha256,invocation:{id:'umf.actions.local-tx',version:'1'}};
 const preparation=prepareActionPlanModel(pin,action,{registry:createUmfRegistry(),models:[{pin,artifact:snapshot}],actions:[{pin:action,artifact:snapshot}],selections:[]});

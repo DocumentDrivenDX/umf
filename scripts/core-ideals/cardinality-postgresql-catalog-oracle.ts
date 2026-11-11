@@ -2,10 +2,10 @@
 import {assertJsonDataEqual} from './json-data-assert';
 /** Native discovery: array layout, domain and JSON boundaries; no binding claim. */
 import assert from 'node:assert/strict';
-import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
-import {classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource} from '../../src/core-ideals/cardinality-postgresql';
-import {getPostgresqlColumnMetadata} from '../../src';
-import {correlatePostgresqlCardinalityCatalog} from '../../src/adapters/postgresql/cardinality-catalog';
+import {importPostgresqlCatalogCapture} from "../../src/index-node-v4";
+import {classifyPostgresqlCardinality,recoverPostgresqlCardinalitySource} from "../../src/index-node-v4";
+import {getPostgresqlColumnMetadata} from '../../src/index-node-v4';
+import {correlatePostgresqlCardinalityCatalog} from "../../src/index-node-v4";
 import {createValidator} from '../../src/validation/schema';
 import supplementSchema from '../../spec/extensions/postgresql-catalog/cardinality-v1.schema.json';
 import {createHash,randomUUID} from 'node:crypto';

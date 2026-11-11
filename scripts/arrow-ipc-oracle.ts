@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {backend} from '../native/arrow/runtime';
-import {importArrowSchema,exportArrowSchemaIpc,proposeArrowNodeEdit} from '../src';
+import {importArrowSchema,exportArrowSchemaIpc,proposeArrowNodeEdit} from '../src/index-node-v4';
 const cases=await Bun.file('fixtures/arrow/schema-cases.json').json();const results=[];
 for(const c of cases){
  const doc=importArrowSchema(JSON.stringify(c.input),{id:c.id});

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/jsonld/from-rdf/results.json').json()).cases,authored=(await Bun.file('fixtures/jsonld/from-rdf/authored/results.json').json()).results;
 for(const c of [...cases,...authored]){c.raw=c.source??await Bun.file(c.path).text();for(const e of [...c.exports,...(c.edits??[])])e.output=await Bun.file(e.path).text();}
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/jsonld-from-rdf-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/jsonld-from-rdf-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/jsonld-from-rdf-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>RDF to JSON-LD</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',route=>{if(!route.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return route.abort();}return route.continue();});await page.goto('http://127.0.0.1:'+server.port);
  const result=await page.evaluate(async({cases,authored})=>{const path='/umf.js',u=await import(path);let candidates=0,blocked=0,sources=0,exports=0,editedExports=0;

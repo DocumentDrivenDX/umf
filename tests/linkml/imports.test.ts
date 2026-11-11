@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import reportSchema from '../../spec/extensions/linkml/import-report-schema.json';
-import {inspectLinkmlImportContext,exportLinkmlDocument,type LinkmlImportContext} from '../../src';
+import {inspectLinkmlImportContext,exportLinkmlDocument,type LinkmlImportContext} from '../../src/index-node-v4';
 const fixture=await Bun.file('fixtures/linkml/imports/results.json').json();
 const context=(id:string):LinkmlImportContext=>structuredClone(fixture.cases.find((c:any)=>c.id===id).context);
 test('US-024-AC5: report schema, exact supplied sources and native reachable sets',async()=>{

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {relationshipParquetCases} from './relationship-parquet-cases';
-import {projectRelationshipToParquet} from '../../src/core-ideals/relationship-parquet-projection';
+import {projectRelationshipToParquet} from '../../src/index-node-v4';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
@@ -27,7 +27,7 @@ try{
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals present');return {cases:cases.length,idealRecoveries,nativeRecoveries,classificationRecoveries,blocked,refusals,staleRefusals,getterReads};
  });
  assert.deepEqual(checks,{cases:48,idealRecoveries:32,nativeRecoveries:32,classificationRecoveries:32,blocked:32,refusals:16,staleRefusals:16,getterReads:0});assert.deepEqual(externalRequests,[]);
- const paths=['src/core-ideals/relationship-parquet-projection.ts','spec/core/relationship-parquet-projection.schema.json','src/index.ts','scripts/core-ideals/relationship-parquet-cases.ts','scripts/core-ideals/relationship-parquet-browser.ts','tests/core-ideals/relationship-parquet.test.ts','src/core-ideals/relationship-parquet-carrier.ts','src/core-ideals/relationship-parquet.ts','fixtures/validation/relationship-parquet-native.json','dist/umf.js'];
+ const paths=['src/core-ideals/relationship-parquet-projection-types.ts','spec/core/relationship-parquet-projection.schema.json','src/index-node-v4.ts','scripts/core-ideals/relationship-parquet-cases.ts','scripts/core-ideals/relationship-parquet-browser.ts','tests/core-ideals/relationship-parquet.test.ts','src/core-ideals/relationship-parquet-carrier.ts','src/core-ideals/relationship-parquet.ts','fixtures/validation/relationship-parquet-native.json','dist/umf.js'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/relationship-parquet-browser.json',JSON.stringify({scope:'Authored target-key-record projection and composed retained recovery; broader compatibility and full binding acceptance remain unfinished',browser:browser.version(),checks,externalRequests,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

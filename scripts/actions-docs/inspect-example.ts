@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {createUmfRegistry,readDocument,inspectActions} from '../../src/index';
+import {createUmfRegistry,readDocument,inspectActions} from '../../src/index-node-v4';
 import fixture from '../../fixtures/actions/approve.json';
 
 const registry=createUmfRegistry();

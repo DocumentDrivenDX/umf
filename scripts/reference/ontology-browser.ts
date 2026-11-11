@@ -3,7 +3,7 @@ import {chromium} from 'playwright';
 import {resolve,join} from 'node:path';
 import {mkdir} from 'node:fs/promises';
 import {canonical,selfModelGraph,type SelfModelCatalog} from '../../docs/helix/05-deploy/reference/model';
-import {readDocument} from '../../src/index';
+import {readDocument} from '../../src/index-node-v4';
 import {parse as parseYaml} from 'yaml';
 const site=resolve('docs/helix/05-deploy/microsite/dist'),live=process.env.UMF_SITE_URL;
 const evidence=resolve(process.env.UMF_ONTOLOGY_EVIDENCE_DIR??('out/generated-reference/ontology/'+(live?'live':'local')));await mkdir(evidence,{recursive:true});

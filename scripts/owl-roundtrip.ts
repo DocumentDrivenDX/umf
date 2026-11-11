@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importOwlTurtle,exportOwlTurtle,getOwlQuads,getOwlOntologyHeaders,proposeOwlQuadEdit,writeDocument,readDocument} from '../src';
+import {importOwlTurtle,exportOwlTurtle,getOwlQuads,getOwlOntologyHeaders,proposeOwlQuadEdit,writeDocument,readDocument} from '../src/index-node-v4';
 const results=[];
 for(const file of ['primer-corrected','authored']){const raw=await Bun.file('native/owl/'+file+'.ttl').text(),doc=importOwlTurtle(raw,{id:file,baseIRI:'https://example.org/',blankNodeScope:file});
  for(const format of ['json','yaml'] as const){const encoded=writeDocument(doc,format),restored=readDocument(encoded,format);if(exportOwlTurtle(restored)!==raw)throw Error('Source differs');await Bun.write('fixtures/owl/'+file+'.'+format,encoded);

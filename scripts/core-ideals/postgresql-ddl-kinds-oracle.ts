@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql} from '../../src/adapters/postgresql';
-import {getPostgresqlDdlDeclarations} from '../../src/adapters/postgresql/declarations';
+import {importPostgresqlSql} from "../../src/index-node-v4";
+import {getPostgresqlDdlDeclarations} from "../../src/index-node-v4";
 
-import {classifyPostgresqlDdlRecord, recoverPostgresqlDdlKinds} from '../../src/core-ideals/postgresql-ddl-kinds';
+import {classifyPostgresqlDdlRecord,recoverPostgresqlDdlKinds} from "../../src/index-node-v4";
 import {ddlKindCases} from './postgresql-ddl-kind-cases';
 const name='umf-ddl-kinds-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});if(input!==undefined){p.stdin!.write(input);p.stdin!.end();}const [stdout,stderr,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(stderr);return stdout;}

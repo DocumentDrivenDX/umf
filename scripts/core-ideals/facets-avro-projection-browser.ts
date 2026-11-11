@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {facetsAvroProjectionCases} from './facets-avro-projection-cases';
-import {projectFacetsToAvro} from '../../src/core-ideals/facets-avro-projection';
+import {projectFacetsToAvro} from "../../src/index-node-v4";
 const bundle='dist/umf.js';
 const rows=facetsAvroProjectionCases().map(row=>({...row,expected:projectFacetsToAvro(row.author,row.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(r){return new URL(r.url).pathname==='/projection.js'?new Response(Bun.file(bundle),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Avro facet projection</title>',{headers:{'content-type':'text/html'}});}});

@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/shacl/engine-report-schema.json';
-import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,getRdfQuads,exportShaclTurtle,exportRdfTurtle,exportRdfNQuads,readDocument,writeDocument} from '../../src';
+import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,getRdfQuads,exportShaclTurtle,exportRdfTurtle,exportRdfNQuads,readDocument,writeDocument} from '../../src/index-node-v4';
 const baseIRI='https://example.org/',prefix='@prefix ex: <https://example.org/> . @prefix sh: <http://www.w3.org/ns/shacl#> . ';
 const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(reference).addSchema(core).compile(schema);
 test('US-028 engine: all official Core booleans, qualified reports and retained inputs',async()=>{

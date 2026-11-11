@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
-import {inspectActions,registerActions} from '../../src/extensions/actions';
-import {Registry} from '../../src/registry/registry';
+import {createUmfRegistry,inspectActions} from '../../src/index-node-v4';
 import {admitReferenceRequest,type RevisionReference} from './protocol';
 import {encodeReferenceIdentity,encodeReferenceJson,decodeReferenceJson} from './codec';
 import {ReferenceActionStore,type ReferenceStoreControl} from './store';
@@ -14,7 +13,7 @@ export class ReferenceRevisionRepository {
  async retain(storeName:string,target:RevisionReference,sourceInput:Document,deployment:unknown=null):Promise<string>{
   target=admitReferenceRequest({protocol:'umf.actions.tx/1',target,inputs:{}},'preview').target;
   const source=copyJson(sourceInput) as unknown as Document;
-  const inspection=inspectActions(source,registerActions(new Registry()));
+  const inspection=inspectActions(source,createUmfRegistry());
   if(!inspection.validation.valid||!inspection.actions.some(a=>a.module===target.module&&a.action.id===target.action))throw Error('Invalid retained action revision');
   const identity=encodeReferenceIdentity(target),payload=encodeReferenceJson(source),binding=encodeReferenceJson(deployment);
   return this.store.transaction(storeName,async(tx,control)=>{const rows=await tx`insert into action_revision(store,identity,lifecycle,source,deployment) values (${control.id},${identity},'active',${payload},${binding}) returning id::text`;return rows[0]!.id;});

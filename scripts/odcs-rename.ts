@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importOdcsDocument,exportOdcsDocument,proposeOdcsElementRename,readDocument,writeDocument} from '../src';
+import {importOdcsDocument,exportOdcsDocument,proposeOdcsElementRename,readDocument,writeDocument} from '../src/index-node-v4';
 import {createHash} from 'node:crypto';
 const base='fixtures/odcs/rename/',obj=await Bun.file('fixtures/odcs/relationships/paired.json').json();
 obj.customProperties=[{property:'uninterpreted-expression',value:'orders.customer_id'}];

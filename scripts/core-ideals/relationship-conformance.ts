@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';
 import corpus from '../../fixtures/relationship/authored/corpus.json';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {relationshipCurrentBase} from './relationship-current-base';
 import {relationshipExtraCases} from './relationship-extras-cases';
 import {relationshipTests,digest} from './relationship-gate-inputs';

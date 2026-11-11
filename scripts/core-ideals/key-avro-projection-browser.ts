@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {avroKeyProjectionCases} from './key-avro-projection-cases';
-import {projectKeysToAvro} from '../../src/core-ideals/key-avro-projection';
+import {projectKeysToAvro} from "../../src/index-node-v4";
 const cases=avroKeyProjectionCases().map(c=>({...c,result:projectKeysToAvro(c.source,c.authors,c.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const p=new URL(req.url).pathname;if(p==='/cases')return Response.json(cases);if(p==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});return new Response('<!doctype html><title>Avro authored Key projection</title>',{headers:{'content-type':'text/html'}});}});
 let browser;

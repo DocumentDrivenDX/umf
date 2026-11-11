@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,projectPostgresqlToAvro,proposePostgresqlCatalogEdit,exportAvroSchema,coreSchema,writeDocument,readDocument,type PostgresqlAvroPolicy,type PostgresqlAvroRepresentation} from '../../src';
+import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,proposePostgresqlCatalogEdit,exportAvroSchema,coreSchema,writeDocument,readDocument} from '../../src/index-node-v4';
+import {projectPostgresqlToAvro,type PostgresqlAvroPolicy,type PostgresqlAvroRepresentation} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/projections/postgresql-avro.schema.json';
 const source=importPostgresqlCatalogCapture(await Bun.file('fixtures/postgresql/catalog-capture.json').text(),{id:'postgresql-avro'});

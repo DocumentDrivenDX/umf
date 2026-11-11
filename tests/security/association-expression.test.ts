@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
+import '../../src/index-node-v4';
 import {securityFixture} from './fixture';
 import {resolveCandidateAssociationChecks} from '../../src/extensions/security/association-checks';
 import {normalizeCandidateAssociationExpression,serializeCandidateAssociationExpression,inspectCandidateAssociationExpressionTransport} from '../../src/extensions/security/association-expression';

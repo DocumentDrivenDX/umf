@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectPostgresqlFacetType} from '../../src/adapters/postgresql/facet-typmod';
+import {inspectPostgresqlFacetType} from '../../scripts/core-ideals/postgresql-facet-typmod';
 import {parseNativeJson} from '../../src/model/native-json';
-import {importPostgresqlCatalogCapture, exportPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from "../../src/index-node-v4";
 import {copyJson, readJsonValue, writeJsonValue, type Document} from '../../src';
 import evidence from '../../fixtures/validation/facets-postgresql-discovery-native.json';
 const snapshot=JSON.parse(evidence.sourceText).snapshot;

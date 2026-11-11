@@ -1,15 +1,17 @@
+import type {CoreElementSelection} from '../../src/model/selection-types';
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {initializeWasm} from '../../bindings/core/wasm/index.js';
+import {createNativeFamilyDispatcher,initializeCoreModelRootKindNullabilityWasm} from '../../bindings/core/wasm/index.js';
 import {coreSchema,semanticTypeReferenceSchema,extensionPackageSchema,coreConstraints,domainPolicy} from '../../src/generated/core-model';
-import {importLakeviewDashboardBytes,exportLakeviewDashboardBytes,lakeviewRegistry,projectLakeviewToLegacyDashboard} from '../../src/adapters/lakeview';
+import {createLakeviewLegacyProjectionRustDefault} from '../../src/adapters/lakeview/project-rust-default';
+import {importLakeviewDashboardBytes,exportLakeviewDashboardBytes,lakeviewRegistry} from '../../src/adapters/lakeview';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {inspectExtensionKinds} from '../../src/model/extension-kinds';
-import {selectCoreElements} from '../../src/model/selection';
-import {elementKey} from '../../src/adapters/lakeview/project';
+import {elementKey} from '../../src/adapters/lakeview/projection-types';
 import {legacyIds,legacyFixture,legacyNumericFixture,legacyMixedDefaults,legacySelectionFixture,legacyUnknownWidgetTypes,legacyUnknownFormats,legacyUnknownChannels,legacyFormatFixture,legacyChannelFixture} from './legacy-fixture';
 export async function verify(){
   const url='/wasm/umf_core_wasm.js';
-  const runtime=await initializeWasm(()=>import(url),globalThis,{coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy});
+  const wasm=await import(url);const runtime=await initializeCoreModelRootKindNullabilityWasm({coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy},()=>Promise.resolve(wasm),globalThis);
+  const {projectLakeviewToLegacyDashboard}=createLakeviewLegacyProjectionRustDefault(createNativeFamilyDispatcher(wasm));
   const results=[];let generic:any;
   const hash=async(b:Uint8Array)=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new Uint8Array(b)))).map(x=>x.toString(16).padStart(2,'0')).join('');
   for(const name of ['marketing-campaign','lexical-quirks','empty-sections']){
@@ -25,7 +27,7 @@ export async function verify(){
     if(name==='marketing-campaign'){
       const registry=lakeviewRegistry(runtime),inspection=inspectExtensionKinds(document,registry);
       if(!inspection.sourceValidation.valid||inspection.entries[0]?.reference.kind!=='dashboard')throw Error('Generic Lakeview discovery failed');
-      const selected=selectCoreElements(document,{references:'transitive',identities:[{module:document.modules[0]!.id,element:'ds_metric'}]},registry);
+      const selected=runtime.selectCoreElements(document,{references:'transitive',identities:[{module:document.modules[0]!.id,element:'ds_metric'}]},registry.registrations()) as CoreElementSelection;
       if(!selected.selection.some(e=>e.element.kind==='field'&&e.element.name==='Metric Value'))throw Error('Core Record/Field selection failed');
       generic={kind:inspection.entries[0].reference,entries:inspection.entries.length,coreFields:selected.selection.filter(e=>e.element.kind==='field').map(e=>e.element.name)};
     }

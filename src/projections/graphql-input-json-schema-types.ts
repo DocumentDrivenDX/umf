@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../model/types';
-import type {ProjectionIssue} from './json-schema-protobuf';
+import type {ProjectionIssue} from './projection-types';
 
 export interface GraphqlInputBindings {
  id:string;schemaId:string;inputType:string;list:'array-only';idEncoding:'string-or-integer';lossPolicy:'strict'|'allow-reported-loss';

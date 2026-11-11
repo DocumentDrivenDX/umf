@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectCoreElementKind,declareCoreElementKind,verifyCoreKindDeclaration} from '../../src/model/field-kind';
+import {inspectCoreElementKind,declareCoreElementKind,verifyCoreKindDeclaration} from "../../src/index-node-v4";
 import {copyJson} from '../../src/model/json';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 import {type Document} from '../../src/model/types';

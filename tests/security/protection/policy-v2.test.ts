@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {evaluateSecurityPolicyV2LegacyAccess} from '../../../src/extensions/security/policy-v2-legacy-access';
+import {evaluateSecurityPolicyV2LegacyAccess,evaluateSecurityAccess,inspectSecurityPolicy,upgradeSecurityPolicySource,downgradeSecurityPolicySource,inspectSecurityPolicyV2Source,resolveSecurityProtectionSources} from '../../../src/index-node-v4';
 import {test,expect} from 'bun:test';
 import {securityFixture,ref} from '../fixture';
 import {evaluationFixture} from '../evaluation-fixture';
-import {evaluateSecurityAccess,type SecurityAccessResult} from '../../../src/extensions/security/evaluate';
-import {upgradeSecurityPolicySource,downgradeSecurityPolicySource,inspectSecurityPolicyV2Source} from '../../../src/extensions/security/policy-representation-v2';
-import {resolveSecurityProtectionSources} from '../../../src/extensions/security/protection/references';
-import {inspectSecurityPolicy} from '../../../src/extensions/security/policy';
+import type {SecurityAccessResult} from '../../../src/extensions/security/evaluate';
 const field={documentId:'d',moduleId:'m',elementId:'f'};
 const catalog=():any=>({vocabulary:'umf.security.protection',version:'0.1.0',id:'catalog',revision:'c1',transforms:[{id:'masked',version:'t1',kind:'mask',function:'constant',inputDomain:field,outputDomain:field,determinism:'deterministic',reversibility:'none',disclosureProfile:[],queryUse:{},parameters:[]}]});
 const referencePolicy=():any=>({vocabulary:'umf.security',version:'0.2.0',id:'p',revision:'p2',ontology:{documentId:'ontology',revision:'o1'},protection:{id:'catalog',revision:'c1'},rules:[{id:'r',effect:'permit',actions:['read'],target:[field],condition:{op:'literal',value:true},disclosure:[{field,disposition:{kind:'transformed',vocabulary:'umf.security.protection',transform:'masked',version:'t1',field}}]}]});

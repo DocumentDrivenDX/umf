@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {classifyPostgresqlComposite, recoverPostgresqlCompositeCapture} from '../../src/core-ideals/postgresql-composite';
-import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
+import {classifyPostgresqlComposite,recoverPostgresqlCompositeCapture} from "../../src/index-node-v4";
+import {importPostgresqlCatalogCapture} from "../../src/index-node-v4";
 
 import {copyJson} from '../../src/model/json';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';

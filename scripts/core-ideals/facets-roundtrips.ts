@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {assertJsonDataEqual, assertNativeRepresentationEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {facetSystems, type FacetSystem} from './facets-evidence';
 import {facetsTableSpecProjectionCases} from './facets-tablespec-projection-cases';

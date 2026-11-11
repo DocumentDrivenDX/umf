@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Dedicated tagged-wire API for the current monolithic TableSpec adapter.
-use umf_core::{tablespec_adapter as tablespec, Context, EngineError, Severity, Utf16, Value};
+use umf_core::{tablespec_adapter as tablespec, Context, EngineError, Limits, ResourceProfile, Severity, Utf16, Value};
+use std::sync::OnceLock;
 
 use crate::{decode, encode, field, result_envelope};
 
@@ -365,9 +366,34 @@ fn validation_value(
         ),
     ]))
 }
+fn trusted_runtime() -> Result<&'static tablespec::TableSpecRuntime, EngineError> {
+    static RUNTIME: OnceLock<Result<tablespec::TableSpecRuntime, EngineError>> = OnceLock::new();
+    RUNTIME
+        .get_or_init(|| {
+            // Only fixed schemas and the built-in TableSpec registration enter
+            // this process-wide cache. Request documents and caller context do not.
+            let mut bootstrap = Context::ordinary();
+            tablespec::TableSpecRuntime::new(&mut bootstrap)
+        })
+        .as_ref()
+        .map_err(Clone::clone)
+}
+
 fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let op = validate_request(request, ctx)?;
+    if ctx.profile() == ResourceProfile::Cooperative && ctx.limits() == Limits::ordinary() {
+        return execute_with_runtime(trusted_runtime()?, op, request, ctx);
+    }
     let runtime = tablespec::TableSpecRuntime::new(ctx)?;
+    execute_with_runtime(&runtime, op, request, ctx)
+}
+
+fn execute_with_runtime(
+    runtime: &tablespec::TableSpecRuntime,
+    op: &str,
+    request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     match op {
         "importTableSpec" => {
             let format = match required_string(request, "format")? {

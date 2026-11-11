@@ -1,8 +1,17 @@
-import {readJsonValue,writeJsonValue,readDocument,writeDocument,validateDocument,Registry,createUmfRegistry,dddRegistry,jsonSchemaRegistry,protobufRegistry,selectCoreElements,inspectCoreSchemaProperties,resolveCoreDefault,importJsonSchema,projectJsonSchemaToProtobuf,importProtobufSources,parseNativeJson} from '../../../../../src/index';
+import type {createWorkbenchSdk} from './wasm-sdk';
 import {structuralDiff} from '../model';
 import type {Request,Response} from './protocol';
-const profiles:Record<string,()=>Registry>={empty:()=>new Registry(),sdk:createUmfRegistry,ddd:dddRegistry,'json-schema':jsonSchemaRegistry,protobuf:protobufRegistry};
-export async function execute(request:Request,compiler?:any):Promise<Response>{
+type WorkbenchSdk=Awaited<ReturnType<typeof createWorkbenchSdk>>;
+type Compiler=Parameters<WorkbenchSdk['importProtobufSources']>[1];
+export async function execute(sdk:WorkbenchSdk,request:Request,compiler?:Compiler):Promise<Response>{
+ const {
+  readJsonValue,writeJsonValue,readDocument,writeDocument,validateDocument,Registry,createUmfRegistry,dddRegistry,
+  jsonSchemaRegistry,protobufRegistry,selectCoreElements,inspectCoreSchemaProperties,resolveCoreDefault,importJsonSchema,
+  projectJsonSchemaToProtobuf,importProtobufSources,parseNativeJson,
+ }=sdk;
+ const profiles:Record<string,()=>InstanceType<typeof Registry>>={
+  empty:()=>new Registry(),sdk:createUmfRegistry,ddd:dddRegistry,'json-schema':jsonSchemaRegistry,protobuf:protobufRegistry,
+ };
  const retainedSources=Object.entries(request.inputs??{}).map(([name,text])=>({name,mediaType:'text/plain',text}));
  const response:Response={protocol:1,requestId:request.requestId,state:'completed',outputs:[],diagnostics:[],retainedSources};
  const output=(name:string,value:unknown)=>response.outputs.push({name,mediaType:'application/json',text:JSON.stringify(value,null,2)});

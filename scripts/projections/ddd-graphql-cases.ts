@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {Document,DddGraphqlPolicy} from '../../src';
+import type {Document,DddGraphqlPolicy} from '../../src/index-node-v4';
 import fixture from '../../fixtures/projections/ddd-graphql/case.json';
 import shared from '../../fixtures/projections/ddd-authored-relationships/base.json';
-import {declareCoreRelationship} from '../../src';
+import {declareCoreRelationship} from '../../src/index-node-v4';
 export interface GraphqlCase {id:string;logical:Document;policy:DddGraphqlPolicy}
 export function graphqlCases():GraphqlCase[]{
   const base=()=>structuredClone(fixture) as unknown as {logical:Document;policy:DddGraphqlPolicy};

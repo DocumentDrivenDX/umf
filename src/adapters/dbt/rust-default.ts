@@ -3,14 +3,29 @@ import {UmfError} from '../../model/types';
 import type {Diagnostic,ExtensionPackage,Json} from '../../model/types';
 import type {Registry as BaseRegistry,SemanticValidator} from '../../registry/registry';
 import {composeOwnedSemanticValidator} from '../../registry/semantic-owner';
-import {dbtManifestPackage} from './index';
-import {dbtArtifactPackage} from './artifact';
-import {dbtSemanticManifestPackage} from './semantic';
-import type {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit} from './index';
-import type {importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit} from './artifact';
-import type {importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit} from './semantic';
-import type {inspectDbtManifestGraph} from './graph';
-import type {selectDbtManifestDependencies} from './selection';
+import {dbtManifestPackage,dbtArtifactPackage,dbtSemanticManifestPackage} from './package';
+import type {Document,Validation} from "../../model/types";
+import type {NativeJson} from "../../model/native-json";
+import type {DbtManifestGraph} from "./graph";
+import type {DbtDependencySelection} from "./selection";
+
+type ImportDbtManifest = (text: string, options: { id: string; }) => Document;
+type ExportDbtManifest = (document: Document) => string;
+type InspectDbtManifest = (document: Document) => Validation;
+type GetDbtManifestNode = (document: Document, path: string) => NativeJson;
+type ProposeDbtManifestNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+type ImportDbtArtifact = (text: string, options: { id: string; }) => Document;
+type ExportDbtArtifact = (document: Document) => string;
+type InspectDbtArtifact = (document: Document) => Validation;
+type GetDbtArtifactNode = (document: Document, path: string) => NativeJson;
+type ProposeDbtArtifactNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+type ImportDbtSemanticManifest = (text: string, options: { id: string; }) => Document;
+type ExportDbtSemanticManifest = (document: Document) => string;
+type InspectDbtSemanticManifest = (document: Document) => Validation;
+type GetDbtSemanticManifestNode = (document: Document, path: string) => NativeJson;
+type ProposeDbtSemanticManifestNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+type InspectDbtManifestGraph = (document: Document) => DbtManifestGraph;
+type SelectDbtManifestDependencies = (document: Document, options: { roots: string[]; includeMacros?: boolean; maxDepth?: number; maxNodes?: number; }) => DbtDependencySelection;
 
 export interface DbtRustEngine {
  inspectPayload:(token:1|2|3,payload:unknown)=>unknown;
@@ -42,23 +57,23 @@ function domainCode(error:unknown):string|undefined{
 }
 type DbtOperations={
  inspectPayload:(token:1|2|3,payload:unknown)=>Diagnostic[];
- importDbtManifest:(text:string,options:{id:string})=>ReturnType<typeof importDbtManifest>;
- exportDbtManifest:(document:Parameters<typeof exportDbtManifest>[0])=>ReturnType<typeof exportDbtManifest>;
- inspectDbtManifest:(document:Parameters<typeof inspectDbtManifest>[0])=>ReturnType<typeof inspectDbtManifest>;
- getDbtManifestNode:(document:Parameters<typeof getDbtManifestNode>[0],path:string)=>ReturnType<typeof getDbtManifestNode>;
- proposeDbtManifestNodeEdit:(document:Parameters<typeof proposeDbtManifestNodeEdit>[0],path:string,text:string)=>ReturnType<typeof proposeDbtManifestNodeEdit>;
- importDbtArtifact:(text:string,options:{id:string})=>ReturnType<typeof importDbtArtifact>;
- exportDbtArtifact:(document:Parameters<typeof exportDbtArtifact>[0])=>ReturnType<typeof exportDbtArtifact>;
- inspectDbtArtifact:(document:Parameters<typeof inspectDbtArtifact>[0])=>ReturnType<typeof inspectDbtArtifact>;
- getDbtArtifactNode:(document:Parameters<typeof getDbtArtifactNode>[0],path:string)=>ReturnType<typeof getDbtArtifactNode>;
- proposeDbtArtifactNodeEdit:(document:Parameters<typeof proposeDbtArtifactNodeEdit>[0],path:string,text:string)=>ReturnType<typeof proposeDbtArtifactNodeEdit>;
- importDbtSemanticManifest:(text:string,options:{id:string})=>ReturnType<typeof importDbtSemanticManifest>;
- exportDbtSemanticManifest:(document:Parameters<typeof exportDbtSemanticManifest>[0])=>ReturnType<typeof exportDbtSemanticManifest>;
- inspectDbtSemanticManifest:(document:Parameters<typeof inspectDbtSemanticManifest>[0])=>ReturnType<typeof inspectDbtSemanticManifest>;
- getDbtSemanticManifestNode:(document:Parameters<typeof getDbtSemanticManifestNode>[0],path:string)=>ReturnType<typeof getDbtSemanticManifestNode>;
- proposeDbtSemanticManifestNodeEdit:(document:Parameters<typeof proposeDbtSemanticManifestNodeEdit>[0],path:string,text:string)=>ReturnType<typeof proposeDbtSemanticManifestNodeEdit>;
- inspectDbtManifestGraph:(document:Parameters<typeof inspectDbtManifestGraph>[0])=>ReturnType<typeof inspectDbtManifestGraph>;
- selectDbtManifestDependencies:(document:Parameters<typeof selectDbtManifestDependencies>[0],options:Parameters<typeof selectDbtManifestDependencies>[1])=>ReturnType<typeof selectDbtManifestDependencies>;
+ importDbtManifest:(text:string,options:{id:string})=>ReturnType<ImportDbtManifest>;
+ exportDbtManifest:(document:Parameters<ExportDbtManifest>[0])=>ReturnType<ExportDbtManifest>;
+ inspectDbtManifest:(document:Parameters<InspectDbtManifest>[0])=>ReturnType<InspectDbtManifest>;
+ getDbtManifestNode:(document:Parameters<GetDbtManifestNode>[0],path:string)=>ReturnType<GetDbtManifestNode>;
+ proposeDbtManifestNodeEdit:(document:Parameters<ProposeDbtManifestNodeEdit>[0],path:string,text:string)=>ReturnType<ProposeDbtManifestNodeEdit>;
+ importDbtArtifact:(text:string,options:{id:string})=>ReturnType<ImportDbtArtifact>;
+ exportDbtArtifact:(document:Parameters<ExportDbtArtifact>[0])=>ReturnType<ExportDbtArtifact>;
+ inspectDbtArtifact:(document:Parameters<InspectDbtArtifact>[0])=>ReturnType<InspectDbtArtifact>;
+ getDbtArtifactNode:(document:Parameters<GetDbtArtifactNode>[0],path:string)=>ReturnType<GetDbtArtifactNode>;
+ proposeDbtArtifactNodeEdit:(document:Parameters<ProposeDbtArtifactNodeEdit>[0],path:string,text:string)=>ReturnType<ProposeDbtArtifactNodeEdit>;
+ importDbtSemanticManifest:(text:string,options:{id:string})=>ReturnType<ImportDbtSemanticManifest>;
+ exportDbtSemanticManifest:(document:Parameters<ExportDbtSemanticManifest>[0])=>ReturnType<ExportDbtSemanticManifest>;
+ inspectDbtSemanticManifest:(document:Parameters<InspectDbtSemanticManifest>[0])=>ReturnType<InspectDbtSemanticManifest>;
+ getDbtSemanticManifestNode:(document:Parameters<GetDbtSemanticManifestNode>[0],path:string)=>ReturnType<GetDbtSemanticManifestNode>;
+ proposeDbtSemanticManifestNodeEdit:(document:Parameters<ProposeDbtSemanticManifestNodeEdit>[0],path:string,text:string)=>ReturnType<ProposeDbtSemanticManifestNodeEdit>;
+ inspectDbtManifestGraph:(document:Parameters<InspectDbtManifestGraph>[0])=>ReturnType<InspectDbtManifestGraph>;
+ selectDbtManifestDependencies:(document:Parameters<SelectDbtManifestDependencies>[0],options:Parameters<SelectDbtManifestDependencies>[1])=>ReturnType<SelectDbtManifestDependencies>;
 };
 
 /** Bind the opt-in Rust DBT family while retaining the public UMF error identity. */
@@ -75,23 +90,23 @@ export function bindDbtRust(engine:DbtRustEngine,isNativeUmfCoreError:NativeCore
  };
  return Object.freeze({
   inspectPayload:(token,payload)=>call<Diagnostic[]>(()=>engine.inspectPayload(token,payload)),
-  importDbtManifest:(text,options)=>call<ReturnType<typeof importDbtManifest>>(()=>engine.importDbtManifest(text,options)),
-  exportDbtManifest:document=>call<ReturnType<typeof exportDbtManifest>>(()=>engine.exportDbtManifest(document)),
-  inspectDbtManifest:document=>call<ReturnType<typeof inspectDbtManifest>>(()=>engine.inspectDbtManifest(document)),
-  getDbtManifestNode:(document,path)=>call<ReturnType<typeof getDbtManifestNode>>(()=>engine.getDbtManifestNode(document,path)),
-  proposeDbtManifestNodeEdit:(document,path,text)=>call<ReturnType<typeof proposeDbtManifestNodeEdit>>(()=>engine.proposeDbtManifestNodeEdit(document,path,text)),
-  importDbtArtifact:(text,options)=>call<ReturnType<typeof importDbtArtifact>>(()=>engine.importDbtArtifact(text,options)),
-  exportDbtArtifact:document=>call<ReturnType<typeof exportDbtArtifact>>(()=>engine.exportDbtArtifact(document)),
-  inspectDbtArtifact:document=>call<ReturnType<typeof inspectDbtArtifact>>(()=>engine.inspectDbtArtifact(document)),
-  getDbtArtifactNode:(document,path)=>call<ReturnType<typeof getDbtArtifactNode>>(()=>engine.getDbtArtifactNode(document,path)),
-  proposeDbtArtifactNodeEdit:(document,path,text)=>call<ReturnType<typeof proposeDbtArtifactNodeEdit>>(()=>engine.proposeDbtArtifactNodeEdit(document,path,text)),
-  importDbtSemanticManifest:(text,options)=>call<ReturnType<typeof importDbtSemanticManifest>>(()=>engine.importDbtSemanticManifest(text,options)),
-  exportDbtSemanticManifest:document=>call<ReturnType<typeof exportDbtSemanticManifest>>(()=>engine.exportDbtSemanticManifest(document)),
-  inspectDbtSemanticManifest:document=>call<ReturnType<typeof inspectDbtSemanticManifest>>(()=>engine.inspectDbtSemanticManifest(document)),
-  getDbtSemanticManifestNode:(document,path)=>call<ReturnType<typeof getDbtSemanticManifestNode>>(()=>engine.getDbtSemanticManifestNode(document,path)),
-  proposeDbtSemanticManifestNodeEdit:(document,path,text)=>call<ReturnType<typeof proposeDbtSemanticManifestNodeEdit>>(()=>engine.proposeDbtSemanticManifestNodeEdit(document,path,text)),
-  inspectDbtManifestGraph:document=>call<ReturnType<typeof inspectDbtManifestGraph>>(()=>engine.inspectDbtManifestGraph(document)),
-  selectDbtManifestDependencies:(document,options)=>call<ReturnType<typeof selectDbtManifestDependencies>>(()=>engine.selectDbtManifestDependencies(document,options)),
+  importDbtManifest:(text,options)=>call<ReturnType<ImportDbtManifest>>(()=>engine.importDbtManifest(text,options)),
+  exportDbtManifest:document=>call<ReturnType<ExportDbtManifest>>(()=>engine.exportDbtManifest(document)),
+  inspectDbtManifest:document=>call<ReturnType<InspectDbtManifest>>(()=>engine.inspectDbtManifest(document)),
+  getDbtManifestNode:(document,path)=>call<ReturnType<GetDbtManifestNode>>(()=>engine.getDbtManifestNode(document,path)),
+  proposeDbtManifestNodeEdit:(document,path,text)=>call<ReturnType<ProposeDbtManifestNodeEdit>>(()=>engine.proposeDbtManifestNodeEdit(document,path,text)),
+  importDbtArtifact:(text,options)=>call<ReturnType<ImportDbtArtifact>>(()=>engine.importDbtArtifact(text,options)),
+  exportDbtArtifact:document=>call<ReturnType<ExportDbtArtifact>>(()=>engine.exportDbtArtifact(document)),
+  inspectDbtArtifact:document=>call<ReturnType<InspectDbtArtifact>>(()=>engine.inspectDbtArtifact(document)),
+  getDbtArtifactNode:(document,path)=>call<ReturnType<GetDbtArtifactNode>>(()=>engine.getDbtArtifactNode(document,path)),
+  proposeDbtArtifactNodeEdit:(document,path,text)=>call<ReturnType<ProposeDbtArtifactNodeEdit>>(()=>engine.proposeDbtArtifactNodeEdit(document,path,text)),
+  importDbtSemanticManifest:(text,options)=>call<ReturnType<ImportDbtSemanticManifest>>(()=>engine.importDbtSemanticManifest(text,options)),
+  exportDbtSemanticManifest:document=>call<ReturnType<ExportDbtSemanticManifest>>(()=>engine.exportDbtSemanticManifest(document)),
+  inspectDbtSemanticManifest:document=>call<ReturnType<InspectDbtSemanticManifest>>(()=>engine.inspectDbtSemanticManifest(document)),
+  getDbtSemanticManifestNode:(document,path)=>call<ReturnType<GetDbtSemanticManifestNode>>(()=>engine.getDbtSemanticManifestNode(document,path)),
+  proposeDbtSemanticManifestNodeEdit:(document,path,text)=>call<ReturnType<ProposeDbtSemanticManifestNodeEdit>>(()=>engine.proposeDbtSemanticManifestNodeEdit(document,path,text)),
+  inspectDbtManifestGraph:document=>call<ReturnType<InspectDbtManifestGraph>>(()=>engine.inspectDbtManifestGraph(document)),
+  selectDbtManifestDependencies:(document,options)=>call<ReturnType<SelectDbtManifestDependencies>>(()=>engine.selectDbtManifestDependencies(document,options)),
  });
 }
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {buildASTSchema,validateSchema} from 'graphql';
-import {exportGraphqlSchema,getGraphqlAst,importGraphqlSchema,readDocument,writeDocument} from '../../src';
+import {exportGraphqlSchema,getGraphqlAst,importGraphqlSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 
 const directory='fixtures/relationship/graphql-native';
 const source=await Bun.file(`${directory}/schema.graphql`).text();

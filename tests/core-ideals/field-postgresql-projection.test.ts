@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlProjectionCases} from '../../scripts/core-ideals/field-postgresql-projection-cases';
-import {projectFieldToPostgresql, recoverFieldFromPostgresql} from '../../src/core-ideals/field-postgresql-projection';
+import {projectFieldToPostgresql,recoverFieldFromPostgresql} from "../../src/index-node-v4";
 import {backend} from '../../native/postgresql/runtime';
-import {exportPostgresqlSql, getPostgresqlSource} from '../../src/adapters/postgresql';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {exportPostgresqlSql,getPostgresqlSource} from "../../src/index-node-v4";
+import {declareCoreElementKind} from "../../src/index-node-v4";
 import {copyJson} from '../../src/model/json';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {type Document} from '../../src/model/types';

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
-import {importOwlTurtle,exportOwlTurtle,getOwlQuads,getOwlOntologyHeaders,proposeOwlQuadEdit,inspectOwlDocument,writeDocument,readDocument} from '../../src';
+import {importOwlTurtle,exportOwlTurtle,getOwlQuads,getOwlOntologyHeaders,proposeOwlQuadEdit,inspectOwlDocument,writeDocument,readDocument} from '../../src/index-node-v4';
 test('US-029 OWL graph recovery, ontology headers and native graph oracle',async()=>{
  const ajv=new Ajv({strict:false}),check=ajv.compile(await Bun.file('spec/extensions/owl/headers-schema.json').json());
  const oracle=await Bun.file('fixtures/owl/oracle-results.json').json();expect(oracle.results).toHaveLength(4);expect(oracle.results.every((r:any)=>r.isomorphic)).toBe(true);

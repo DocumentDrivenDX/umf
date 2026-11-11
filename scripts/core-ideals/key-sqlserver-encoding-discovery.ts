@@ -2,7 +2,7 @@
 /** Host-only Key discovery; no authored identity or complete binding claim. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerIndexMetadata, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
+import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerIndexMetadata,getSqlServerColumnMetadata} from "../../src/index-node-v4";
 import {readDocument, writeDocument} from '../../src';
 import {sqlServerKeyEncodingCases} from './key-sqlserver-encoding-cases';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-key-encoding-'+randomUUID(),password='Umf!'+randomUUID()+'A9';

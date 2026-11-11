@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureDeltaLog,reconcileDeltaCommits} from '../../src';
+import {captureDeltaLog,reconcileDeltaCommits} from '../../src/index-node-v4';
 test('US-018-AC12: all pinned ordinary-commit prefixes preserve sources and reproduce state or explicit blocks',async()=>{
  const base='fixtures/delta/upstream/',manifest=await Bun.file(base+'manifest.json').json(),report=await Bun.file(base+'history-results.json').json(),hashes=new Map<string,string>(manifest.files.map((f:any)=>[f.path,f.sha256])),sources=new Map();
  expect(report.cases).toBe(303);expect(report.histories).toBe(59);

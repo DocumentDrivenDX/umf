@@ -1,16 +1,18 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Actual Chromium parity for the portable generator; host code stays here. */
 import {chromium} from 'playwright';
-import {generateAccessPackage} from '../src/compilation/index';
+import {resolve} from 'node:path';
+import {generateAccessPackage} from '../src/node-access-compilation';
 import {profile,request,mutateSource} from '../tests/compilation/access-fixtures';
 const out=process.argv[2];if(!out)throw new Error('temporary output directory required');
-const bundle=await Bun.build({entrypoints:[new URL('../src/compilation/index.ts',import.meta.url).pathname],target:'browser',format:'esm',outdir:out});
+const wasmGlue=resolve('bindings/core/wasm/pkg/umf_core_wasm.js'),wasmBytes=resolve('bindings/core/wasm/pkg/umf_core_wasm_bg.wasm');
+const bundle=await Bun.build({entrypoints:[new URL('../src/browser-access-compilation.ts',import.meta.url).pathname],target:'browser',format:'esm',outdir:out,plugins:[{name:'fresh-wasm',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>args.path.endsWith('/pkg/umf_core_wasm.js')?{path:wasmGlue}:undefined);}}]});
 if(!bundle.success)throw new Error(bundle.logs.join('\n'));
 const modulePath=bundle.outputs[0]!.path;
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const path=new URL(req.url).pathname;return path==='/bundle.js'?new Response(Bun.file(modulePath),{headers:{'content-type':'text/javascript'}}):new Response('<script type="module">import * as api from "/bundle.js";window.api=api;</script>',{headers:{'content-type':'text/html'}});}});
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const path=new URL(req.url).pathname;if(path==='/bundle.js')return new Response(Bun.file(modulePath),{headers:{'content-type':'text/javascript'}});if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});return new Response('<script type="module">import * as api from "/bundle.js";window.api=api;</script>',{headers:{'content-type':'text/html'}});}});
 const browser=await chromium.launch({headless:true});
 try{
- const page=await browser.newPage();await page.goto(`http://127.0.0.1:${server.port}`);await page.waitForFunction(()=>!!(window as any).api);
+ const page=await browser.newPage(),external:string[]=[],errors:string[]=[];let wasmRequested=false;page.on('request',r=>{if(!r.url().startsWith(`http://127.0.0.1:${server.port}/`))external.push(r.url());if(r.url().includes('umf_core_wasm_bg.wasm'))wasmRequested=true;});page.on('pageerror',e=>errors.push(String(e)));await page.goto(`http://127.0.0.1:${server.port}`);await page.waitForFunction(()=>!!(window as any).api);
  const joined=request();joined.records.push({module:'commerce',element:'Customer'});joined.projections=[{name:'orderCustomer',record:joined.records[0]!,fields:[{module:'commerce',element:'orderId'},{module:'commerce',element:'name'}]}];
  mutateSource(joined,d=>{for(const e of d.modules[0]!.elements)Object.assign(e,{name:e.id});Object.assign(d.modules[0]!,{relationships:[{id:'customer',name:'customer',source:[{module:'commerce',element:'Order'}],target:[{module:'commerce',element:'Customer',key:'Customer-key'}],sourceMultiplicity:{min:0,max:'*'},targetMultiplicity:{min:0,max:1},targetLifecycle:'independent',directed:true}]});});
  const unreachable=structuredClone(joined);mutateSource(unreachable,d=>Object.assign(d.modules[0]!,{relationships:[]}));
@@ -75,7 +77,8 @@ try{
  const sources:{path:string;sha256:string}[]=[];
  for(const pattern of ['src/**/*.ts','spec/**/*.json'])for(const path of new Bun.Glob(pattern).scanSync({cwd:process.cwd(),onlyFiles:true}))sources.push({path,sha256:sha(await Bun.file(path).arrayBuffer())});
  sources.sort((a,b)=>a.path<b.path?-1:a.path>b.path?1:0);
- const result={browser:browser.version(),bun:Bun.version,cases:cases.length,repeatedRunsPerHost:2,identityPerturbations:3,byteEquivalentPackages:true,observations,identities,sources,bundleSha256:sha(await Bun.file(modulePath).arrayBuffer()),harnessSha256:sha(await Bun.file(import.meta.path).arrayBuffer()),temporalQualification:'HELD'};
+ const nodeGlobals=await page.evaluate(()=>['process','Buffer','require','module'].filter(name=>name in globalThis));if(!wasmRequested||external.length||errors.length||nodeGlobals.length)throw new Error('Browser wasm boundary failure: '+JSON.stringify({wasmRequested,external,errors,nodeGlobals}));
+ const result={browser:browser.version(),bun:Bun.version,cases:cases.length,repeatedRunsPerHost:2,identityPerturbations:3,byteEquivalentPackages:true,wasmRequested,external,observations,identities,sources,bundleSha256:sha(await Bun.file(modulePath).arrayBuffer()),harnessSha256:sha(await Bun.file(import.meta.path).arrayBuffer()),temporalQualification:'HELD'};
  await Bun.write(`${out}/browser-receipt.json`,JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify({browser:result.browser,bun:result.bun,cases:result.cases,repeatedRunsPerHost:2,identityPerturbations:3,byteEquivalentPackages:true,receipt:`${out}/browser-receipt.json`}));
 }finally{await browser.close();server.stop(true);}

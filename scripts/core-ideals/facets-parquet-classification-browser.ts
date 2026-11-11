@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 const selections:{id:string;family:u.ScalarType;index?:number}[]=[
  ...[8,16,32,64].flatMap(bits=>['int','uint'].map(prefix=>({id:`${prefix}${bits}-min-plain`,family:'integer' as const}))),
  {id:'int8-min-embedded',family:'integer'},{id:'float32-narrow-plain',family:'float'},

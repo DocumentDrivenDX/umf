@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const base='fixtures/dbt/semantic-metrics/',raw=await Bun.file(base+'semantic-manifest.json').text(),source=await Bun.file(base+'source.json.json').text(),cases=[];
 for(const c of (await Bun.file(base+'results.json').json()).results)cases.push({...c,edited:await Bun.file(base+c.id+'.edited.json.json').text()});
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/dbt-semantic-metrics-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/dbt-semantic-metrics-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/dbt-semantic-metrics-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>dbt metric types</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);
  const result=await page.evaluate(async({raw,source,cases})=>{const path='/umf.js',u=await import(path),d=u.importDbtSemanticManifest(raw,{id:'metrics'});let formats=0,edits=0;

@@ -3,11 +3,11 @@
 import {createHash} from 'node:crypto';
 import {resolve,join} from 'node:path';
 import {readdirSync,readFileSync} from 'node:fs';
-import {generateAccessPackage} from '../src/compilation/index';
+import {generateAccessPackage} from '../src/node-access-compilation';
 import {profile,request} from '../tests/compilation/access-fixtures';
 const destination=process.argv[2];if(!destination)throw Error('Explicit temporary output directory required');
 const runtime=await Bun.file('python/umf_access/compatibility-profile.json').json();
-const p=profile();p.python.version=runtime.python;p.dependencies=[{distribution:'umf_access',version:runtime.runtimeAbi.version},{distribution:'pydantic',version:runtime.runtimeDependencies.pydantic}];p.importedNames=['datetime','decimal','typing','types','pydantic','umf_access'];p.codeSha256=createHash('sha256').update(await Bun.file(import.meta.filename).text()).digest('hex');const compilerSources=Object.fromEntries(readdirSync('src/compilation',{recursive:true}).map(String).filter(f=>f.endsWith('.ts')).sort().map(f=>[f,createHash('sha256').update(readFileSync(join('src/compilation',f))).digest('hex')]));p.compilerVersion='experimental-access-generator-'+createHash('sha256').update(JSON.stringify(compilerSources)).digest('hex');p.subset='actual source-runtime probe, not complete profile/native qualification';
+const p=profile();p.python.version=runtime.python;p.dependencies=[{distribution:'umf_access',version:runtime.runtimeAbi.version},{distribution:'pydantic',version:runtime.runtimeDependencies.pydantic}];p.importedNames=['datetime','decimal','typing','types','pydantic','umf_access'];p.codeSha256=createHash('sha256').update(await Bun.file(import.meta.filename).text()).digest('hex');const compilerSources=Object.fromEntries(readdirSync('crates/umf-codegen/src/access',{recursive:true}).map(String).filter(f=>f.endsWith('.rs')).sort().map(f=>[f,createHash('sha256').update(readFileSync(join('crates/umf-codegen/src/access',f))).digest('hex')]));p.compilerVersion='experimental-rust-access-generator-'+createHash('sha256').update(JSON.stringify(compilerSources)).digest('hex');p.subset='actual source-runtime probe, not complete profile/native qualification';
 const observations=[];
 for(const name of ['engine','containers','actions','relationships','projections','named','cross-module']){
  const q=request();

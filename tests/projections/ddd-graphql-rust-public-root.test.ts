@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {projectDddEntitiesToGraphql,projectDddToGraphql,verifyDddGraphqlProjection,recoverDddFromGraphql,recoverDddGraphqlNative,importGraphqlSchema,type Document} from '../../src/index-node-v4';
 import {graphqlCases} from '../../scripts/projections/ddd-graphql-cases';
 import entityFixture from '../../fixtures/projections/ddd-graphql-entities/case.json';
-import type {DddGraphqlEntityPolicy} from '../../src/projections/ddd-graphql/entities';
+import type {DddGraphqlEntityPolicy} from '../../src/projections/ddd-graphql-types';
 
 test('Node V4 DDD GraphQL public roots lower, verify, recover, and refuse through Rust',()=>{
  const f=graphqlCases()[0]!;

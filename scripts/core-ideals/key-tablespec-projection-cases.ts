@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreKey, declareCoreRecordMembers, type CoreKeyDeclaration} from '../../src/model/keys';
+import {type CoreKeyDeclaration} from "../../src/model/keys";
+import {declareCoreKey,declareCoreRecordMembers} from "../../src/index-node-v4";
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
 import type {KeyTableSpecRequest} from '../../src/core-ideals/key-tablespec-projection';

@@ -15,7 +15,7 @@ test('US-014-AC2: unknown native meaning survives; unknown representation blocks
  const doc=importSmithyJson('{"smithy":"2.0","future":true,"shapes":{"a.b#X":{"type":"futureShape","traits":{"a.b#unknown":{"n":9007199254740993}}}}}',{id:'unknown'});
  expect(exportSmithyJson(doc)).toContain('9007199254740993');expect(inspectSmithy(doc).diagnostics.some(d=>d.code==='SMITHY_SHAPE_TYPE')).toBe(true);
  const value=doc.modules[0]!.elements[0]!.extensions!['umf.smithy'] as any;value.future={meaning:1};
- const restored=readDocument(writeDocument(doc,'yaml'),'yaml');expect(restored).toEqual(doc);expect(()=>exportSmithyJson(restored)).toThrow('Unknown representation');
+ const restored=readDocument(writeDocument(doc,'yaml'),'yaml');expect(restored).toEqual(doc);expect(()=>exportSmithyJson(restored)).toThrow('Unknown payload fields cannot be assembled losslessly');
  expect(()=>importSmithyJson('{"smithy":"2.0","shapes":{"a#L":{"type":"list"}}}',{id:'invalid'})).toThrow();
 });
 test('US-014-AC3: every pinned upstream valid-loader JSON fixture round-trips',async()=>{

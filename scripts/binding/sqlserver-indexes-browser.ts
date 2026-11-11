@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {importSqlServerCatalog,projectBindingIndexesToSqlServer,type Document} from '../../src';
+import {importSqlServerCatalog,projectBindingIndexesToSqlServer,type Document} from '../../src/index-node-v4';
+import {buildBindingBrowserRuntime} from './browser-runtime';
 
 const fixture=await Bun.file('fixtures/binding/sqlserver-indexes/case.json').json();
 const nativeSource=await Bun.file(fixture.native).text();
 const native=importSqlServerCatalog(nativeSource,{id:'native-catalog'});
 const expected=projectBindingIndexesToSqlServer(fixture.logical as Document,fixture.binding as Document,native,nativeSource,'report');
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;
-  if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});
+  if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});
+  if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});
   if(path==='/case')return Response.json({logical:fixture.logical,binding:fixture.binding,native,nativeSource,expected});
   return new Response('<!doctype html><html>SQL Server index binding</html>',{headers:{'content-type':'text/html'}});
 }});

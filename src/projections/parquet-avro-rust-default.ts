@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../model/types';
-import type {ParquetAvroPolicy,ParquetAvroProjection} from './parquet-avro';
+import type {ParquetAvroPolicy,ParquetAvroProjection} from './parquet-avro-types';
 
 type Guard=(error:unknown)=>boolean;
 interface Engine {

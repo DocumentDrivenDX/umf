@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import engine from '../../fixtures/access/commerce/engine-only.json';
-import {inspectAccessViews} from '../../src/compilation/admission/access/index';
+import {inspectAccessViews} from '../../src/node-access-compilation';
 import type {Document} from '../../src/model/types';
 const selected=[{module:'commerce',element:'Order'}];
 function source(){return structuredClone(engine) as unknown as Document;}

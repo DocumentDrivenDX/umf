@@ -2,9 +2,8 @@
 /** @covers US-093-AC1 @covers US-093-AC2 @covers US-093-AC4 */
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
-import {mkdir} from 'node:fs/promises';
 const sha=(v:Uint8Array|string)=>createHash('sha256').update(v).digest('hex');
-const paths=['crates/umf-core/src/lakeview.rs','crates/umf-core/src/serialization.rs','crates/umf-core-wire/src/lib.rs','src/adapters/lakeview/index.ts','src/adapters/lakeview/project.ts','src/registry/registry.ts','src/registry/kind-runtime.ts','spec/extensions/lakeview/package.json','spec/extensions/lakeview/schema.json','spec/metamodel/generated/manifest.json','bindings/core/wasm/index.js','bindings/core/wasm/index.d.ts','tests/lakeview/browser-entry.ts','tests/lakeview/legacy-fixture.ts','tests/lakeview/legacy-projection.test.ts','tests/lakeview/interchange.test.ts','scripts/lakeview-browser.ts',...['marketing-campaign','lexical-quirks','empty-sections'].map(n=>'fixtures/lakeview/'+n+'.lvdash.json')];
+const paths=['crates/umf-core/src/lakeview.rs','crates/umf-core/src/lakeview_legacy_projection.rs','crates/umf-core/src/serialization.rs','crates/umf-core-wire/src/lib.rs','crates/umf-core-wire/src/lakeview_legacy_projection_binding.rs','src/adapters/lakeview/index.ts','src/adapters/lakeview/projection-types.ts','src/adapters/lakeview/project-rust-default.ts','src/registry/registry.ts','src/registry/kind-runtime.ts','spec/extensions/lakeview/package.json','spec/extensions/lakeview/schema.json','spec/metamodel/generated/manifest.json','bindings/core/wasm/index.js','bindings/core/wasm/index.d.ts','tests/lakeview/browser-entry.ts','tests/lakeview/legacy-fixture.ts','tests/lakeview/legacy-projection.test.ts','tests/lakeview/interchange.test.ts','scripts/lakeview-browser.ts',...['marketing-campaign','lexical-quirks','empty-sections'].map(n=>'fixtures/lakeview/'+n+'.lvdash.json')];
 const snapshot=async()=>Object.fromEntries(await Promise.all(paths.map(async p=>[p,sha(await Bun.file(p).bytes())])));
 const before=await snapshot();
 const build=await Bun.build({entrypoints:['tests/lakeview/browser-entry.ts'],target:'browser',format:'esm'});
@@ -29,4 +28,4 @@ if(errors.length||externalRequests.length)throw Error(JSON.stringify({errors,ext
 for(const row of result.results){const original=await Bun.file('fixtures/lakeview/'+row.name+'.lvdash.json').bytes();if(sha(original)!==row.original||row.recoveries.some((r:any)=>r.sha256!==row.original))throw Error('Browser hashes differ from original input '+row.name)}
 if(JSON.stringify(before)!==JSON.stringify(await snapshot()))throw Error('Source changed during Lakeview qualification');
 const receipt={profile:'umf.lakeview.original-bytes/1',core:'0.10.0',extension:'0.2.0',chromium:version,bun:Bun.version,...result,errors,externalRequests,sources:before,artifacts:{wasm:sha(await Bun.file('bindings/core/wasm/pkg/umf_core_wasm_bg.wasm').bytes()),bundle:sha(bundle)},limits:'Three committed files; direct and UMF JSON/YAML untouched UTF-8 reconstruction, generic composition and thirty legacy compatibility controls only. No live Databricks acceptance or edited-source rewrite.'};
-await mkdir('out/lakeview',{recursive:true});await Bun.write('out/lakeview/browser.json',JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify(receipt));
+console.log(JSON.stringify(receipt));

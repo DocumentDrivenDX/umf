@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcConsistency,renameArrowIpcField,readDocument,writeDocument} from '../src';
+import {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcConsistency,renameArrowIpcField,readDocument,writeDocument} from '../src/index-node-v4';
 import {flatbufferBackend} from '../native/arrow/flatbuffer-runtime';
 const base='fixtures/arrow/upstream/';const manifest=await Bun.file(base+'manifest.json').json();const results=[];
 if(manifest.commit!=='9ff285c88565f0f6abc855918c6a342e70e4909c'||manifest.files.length!==275)throw Error('Pinned corpus inventory changed');

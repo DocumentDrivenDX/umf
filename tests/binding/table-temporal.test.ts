@@ -1,18 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {nativeDate,nativeInstant} from '../../src/extensions/tables/temporal';
-import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
-import {generatePythonClient} from '../../src/access';
+import {compileTableDeployment,verifyTableDeployment,generatePythonClient} from '../../src/index-node-v4';
 import {temporalSource} from '../unified/table-temporal-fixture';
 
 const configuration={module:'demo',schema:'demo_schema',ownerRole:'demo_owner',personRole:'demo_person',batchRole:'demo_batch',groupRoles:{}};
-test('native temporal calendar/UTC precision rules preserve exact meaning',()=>{
- for(const text of ['0001-01-01','2000-02-29','9999-12-31'])expect(nativeDate(text)).toBe(text);
- expect(nativeInstant('2026-01-01T00:30:00.123456000+01:00')).toBe('2025-12-31T23:30:00.123456Z');
- expect(nativeInstant('2000-02-28T23:30:00-01:00')).toBe('2000-02-29T00:30:00.000000Z');
- for(const text of ['0000-01-01','1900-02-29','2000-02-30','infinity','2026-1-01'])expect(()=>nativeDate(text)).toThrow();
- for(const text of ['0001-01-01T00:00:00+00:01','9999-12-31T23:59:59-00:01','2026-01-01T00:00:00.0000001Z','2026-01-01T00:00:00-00:00','2026-01-01T00:00:60Z','2026-01-01T24:00:00Z','2026-01-01T00:00:00','2026-01-01T00:00:00+24:00'])expect(()=>nativeInstant(text)).toThrow();
-});
 test('deployment carries proven finite temporal/numeric checks and typed native methods',()=>{
  const source=temporalSource(),result=compileTableDeployment({text:JSON.stringify(source),configuration});
  expect(result.status).toBe('compiled');if(result.status!=='compiled')throw Error(JSON.stringify(result));

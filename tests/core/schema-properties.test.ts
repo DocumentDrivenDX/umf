@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,test,expect} from 'bun:test';
 import {schemaPropertiesFixture,schemaPropertiesCases} from '../../scripts/core-schema-properties-cases';
-import {selectCoreElements,validateDocument,readDocument,writeDocument,declareCoreSchemaProperties,inspectCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault} from '../../src/index';
+import {validateDocument,readDocument,writeDocument,declareCoreSchemaProperties,inspectCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault} from '../../src/index';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {type Document} from '../../src/model/types';
 const field=(element:string)=>({module:'m',element});
 describe('CONTRACT-049 schema properties',()=>{

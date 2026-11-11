@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {SQL} from 'bun';
 import {copyJson} from '../../src/model/json';
-import {admitAction} from '../../src/extensions/actions/structure';
-import type {Action} from '../../src/extensions/actions';
+import type {Action} from '../../src/index-node-v4';
 import {ReferenceActionIssuer,type TrustedActionSession} from './authentication';
 import {ReferenceActionStore,type ReferenceStoreControl} from './store';
 import {encodeReferenceIdentity,encodeReferenceJson,decodeReferenceJson} from './codec';
@@ -54,7 +53,7 @@ export class ReferenceActionPolicy {
   throw Error('AUTHORIZATION');
  }
  async authorize(tx:SQL,control:ReferenceStoreControl,session:TrustedActionSession,actionInput:Action):Promise<void>{
-  const action=admitAction(actionInput),auth=action.authorization;
+  const auth=actionInput.authorization;
   if(session.tenant!==control.tenant)throw Error('AUTHORIZATION');
   if(Object.keys(auth).some(key=>!['kind','profile','roles'].includes(key))||Object.keys(auth.profile).some(key=>!['id','version'].includes(key))||auth.kind!=='roles'||auth.profile.id!=='umf.actions.roles'||auth.profile.version!=='1')throw Error('UNSUPPORTED_AUTHORIZATION');
   if(auth.roles.some((role:unknown)=>typeof role!=='string'||!role||role.length>256))throw Error('UNSUPPORTED_AUTHORIZATION');
@@ -62,7 +61,7 @@ export class ReferenceActionPolicy {
   throw Error('AUTHORIZATION');
  }
  async protected<T>(storeName:string,credential:unknown,action:Action,operation:(tx:SQL,control:ReferenceStoreControl,session:TrustedActionSession)=>Promise<T>):Promise<T>{
-  const session=this.issuer.authenticate(credential),snapshot=admitAction(action);
+  const session=this.issuer.authenticate(credential),snapshot=copyJson(action) as unknown as Action;
   return this.store.transaction(storeName,async(tx,control)=>{await this.authorize(tx,control,session,snapshot);return operation(tx,control,session);});
  }
 }

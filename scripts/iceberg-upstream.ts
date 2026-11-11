@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importIcebergSchema,exportIcebergSchema,inspectIceberg,writeDocument,readDocument,proposeIcebergNodeEdit} from '../src';
+import {importIcebergSchema,exportIcebergSchema,inspectIceberg,writeDocument,readDocument,proposeIcebergNodeEdit} from '../src/index-node-v4';
 import {parseNativeJson,nativePointer,treeChild,renderTree} from '../src/model/native-json';
 const base='fixtures/iceberg/upstream/',m=await Bun.file(base+'manifest.json').json(),trees=new Map();
 for(const f of m.files){const bytes=new Uint8Array(await Bun.file(base+f.path).arrayBuffer());if(new Bun.CryptoHasher('sha256').update(bytes).digest('hex')!==f.sha256)throw Error('Pinned source changed: '+f.path);if(f.path.endsWith('.json'))trees.set(f.path,parseNativeJson(new TextDecoder('utf-8',{fatal:true}).decode(bytes)));}

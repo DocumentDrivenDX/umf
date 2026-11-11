@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
-import type {FacetsAvroRequest} from '../../src';
+import * as u from '../../src/index-node-v4';
+import type {FacetsAvroRequest} from '../../src/index-node-v4';
 const {projectFacetsToAvro:project,recoverFacetsFromAvro:recover}=u;
 const identity={module:'m',element:'value'};
 function ideal(scalarType:string):u.Document{return {umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]};}

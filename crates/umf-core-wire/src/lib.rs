@@ -5,6 +5,7 @@ pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod action_plan_binding;
+pub mod bulk_actions_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod arrow_flatbuffer_model_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -62,6 +63,8 @@ pub mod medical_projection_binding;
 pub mod native_contract_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_family_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod lakeview_legacy_projection_binding;
 #[cfg(feature = "codegen")]
 pub mod pack_tools_binding;
 #[cfg(feature = "embedded-adapters")]

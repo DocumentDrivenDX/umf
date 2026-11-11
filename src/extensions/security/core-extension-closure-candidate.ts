@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private, locally issued extension semantics. Neither provenance nor authority. */
 import {Registry} from '../../registry/registry';
-import {registerActions,actionsPackage} from '../actions';
+import {actionsPackage} from '../actions/package';
 import {copyJson} from '../../model/json';
 import {canonicalSchemaJson} from '../../model/schema-literals';
 const closures=new WeakSet<object>();
@@ -13,12 +13,12 @@ export function createCandidateCoreExtensionClosure(selection:readonly {id:strin
  const selected:any=copyJson(selection);
  if(!Array.isArray(selected)||selected.length!==1||Object.keys(selected[0]??{}).sort().join(',')!=='id,version'||selected[0]!.id!=='umf.actions'||selected[0]!.version!=='0.1.0')throw Error('SECURITY_CORE_EXTENSION_CLOSURE_UNSUPPORTED');
  requireOriginalPackage();
- const handle=freeze({kind:'candidate-core-extension-closure/0.1',complete:false,authority:false,packages:[originalPackage],semantics:[{id:'umf.actions',version:'0.1.0',implementation:'original-registerActions'}]});
+ const handle=freeze({kind:'candidate-core-extension-closure/0.1',complete:false,authority:false,packages:[originalPackage],semantics:[{id:'umf.actions',version:'0.1.0',implementation:'native-rust-v4'}]});
  closures.add(handle);return handle;
 }
-export function requireCandidateCoreExtensionRegistry(handle:unknown):Registry{
+export function requireCandidateCoreExtensionRegistry(handle:unknown,registry:Registry):Registry{
  if(!handle||typeof handle!=='object'||!closures.has(handle))throw Error('SECURITY_CORE_EXTENSION_CLOSURE_UNISSUED');
- requireOriginalPackage();const registry=registerActions(new Registry());
+ requireOriginalPackage();if(!(registry instanceof Registry))throw Error('SECURITY_CORE_EXTENSION_REGISTRY_REQUIRED');
  if(canonicalSchemaJson(registry.get('umf.actions','0.1.0')!.manifest)!==packageIdentity)throw Error('SECURITY_CORE_EXTENSION_PACKAGE_CHANGED');
  return registry;
 }

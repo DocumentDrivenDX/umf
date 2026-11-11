@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parquetNullabilityProjectionCases} from '../../scripts/core-ideals/nullability-parquet-projection-cases';
-import {projectNullabilityToParquet, recoverNullabilityFromParquet} from '../../src/core-ideals/nullability-parquet-projection';
-import {exportParquetCapture} from '../../src/adapters/parquet';
-import {getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+import {projectNullabilityToParquet,recoverNullabilityFromParquet} from "../../src/index-node-v4";
+import {exportParquetCapture} from "../../src/index-node-v4";
+import {getParquetFieldMetadata} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 test('authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals',()=>{
@@ -28,7 +28,7 @@ test('changed bytes, forged receipts, stale authors and invalid native names ref
 });
 test('document/module metadata and relationships survive report-mode ideal recovery',async()=>{
  const c=parquetNullabilityProjectionCases()[0]!,source=structuredClone(c.author.source);source.future={consumer:'forms'};source.vocabularies.future={version:'1.0.0'};source.modules[0]!.extensions={future:{meaning:'module context'}};source.modules.push({id:'other',namespace:'other',elements:[{id:'x',extensions:{}}]});source.modules[0]!.elements[0]!.extensions.future={nested:[null,true]};source.modules[0]!.elements[0]!.references=[{role:'future',module:'other',element:'x'}];
- const {declareCoreNullability}=await import('../../src/model/nullability');const author=declareCoreNullability(source,{module:'m',element:'e'},'required');expect(projectNullabilityToParquet(author,c.request).status).toBe('blocked');const report=projectNullabilityToParquet(author,{...c.request,mode:'report'});expect(report.status).toBe('projected');
+ const {declareCoreNullability}=await import('../../src/index-node-v4');const author=declareCoreNullability(source,{module:'m',element:'e'},'required');expect(projectNullabilityToParquet(author,c.request).status).toBe('blocked');const report=projectNullabilityToParquet(author,{...c.request,mode:'report'});expect(report.status).toBe('projected');
  for(const path of ['/future','/vocabularies','/modules/0/extensions','/modules/1','/modules/0/elements/0/extensions','/modules/0/elements/0/references'])expect(report.residuals.map(r=>r.path)).toContain(path);
  expect(recoverNullabilityFromParquet(report,exportParquetCapture(report.target!))).toEqual(author.target);
 });

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {runActionPlanCorpus} from '../tests/actions-plan-corpus';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {createHash} from 'node:crypto';
 const expected=runActionPlanCorpus(api);
 const bundle=await Bun.build({entrypoints:['tests/actions-plan-corpus.ts'],target:'browser',format:'esm'});

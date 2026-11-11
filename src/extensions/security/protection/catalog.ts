@@ -3,11 +3,10 @@
 import manifest from '../../../../spec/extensions/security-protection/package.json';
 import {copyJson} from '../../../model/json';
 import {canonicalSchemaJson} from '../../../model/schema-literals';
-import {UmfError,pointer,type Json,type Validation,type Diagnostic,type ExtensionPackage} from '../../../model/types';
+import {UmfError,pointer,type Json,type Validation,type Diagnostic} from '../../../model/types';
 import {createValidator} from '../../../validation/schema';
 
-// A caller editing package metadata cannot replace the private compiled schema.
-export const protectionPackage=copyJson(manifest) as unknown as ExtensionPackage;
+export {protectionPackage} from './package';
 const SOURCE_TEXT_LIMIT=4_000_000;
 const checkWire=createValidator().compile(copyJson(manifest.schema) as typeof manifest.schema);
 export interface ProtectionCatalogInspection extends Validation {source:Json}

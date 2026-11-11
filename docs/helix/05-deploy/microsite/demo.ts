@@ -1,9 +1,15 @@
 import {CURRENT_CORE_VERSION} from '../../../../src/model/types';
 import current from '../reference/examples/orders.json';
 import uuid from '../reference/examples/uuid.json';
-import {readDocument, writeDocument} from '../../../../src/model/document';
-import {writeJsonValue} from '../../../../src/model/serialization';
-import {validateDocument} from '../../../../src/validation/document';
+import * as wasm from '../../../../bindings/core/wasm/pkg/umf_core_wasm.js';
+import {initializeCoreModelRootKindNullabilityWasm,isNativeUmfCoreError} from '../../../../bindings/core/wasm/index.js';
+import {CORE_MODEL_RESOURCES} from '../../../../src/access/core-model-resources';
+import {createRegistryRustDefault} from '../../../../src/registry/rust-default';
+
+await wasm.default({module_or_path:new URL('./reference/assets/workbench-core.wasm',import.meta.url)});
+const model=await initializeCoreModelRootKindNullabilityWasm(CORE_MODEL_RESOURCES,async()=>wasm,globalThis);
+const {readDocument,writeDocument,validateDocument}=createRegistryRustDefault(model,isNativeUmfCoreError,registry=>registry);
+const {writeJsonValue}=model;
 
 const base = {umf:CURRENT_CORE_VERSION,id:'example:customer',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'customer',kind:'field',name:'Customer',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}}]}]};
 const unknown = {...base,vocabularies:{'example.policy':{version:'1.0.0'}},modules:[{...base.modules[0],elements:[{...base.modules[0]!.elements[0],extensions:{'example.policy':{owner:'sales',retentionDays:30,unfamiliar:{keepMe:true}}}}]}]};

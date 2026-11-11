@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importDeltaTable,exportDeltaTable,renameDeltaMappedField,readDocument,writeDocument} from '../../src';
+import {importDeltaTable,exportDeltaTable,renameDeltaMappedField,readDocument,writeDocument} from '../../src/index-node-v4';
 test('US-018-AC7: array and map-value field renames preserve mapping across both protocol families',async()=>{
  const base='fixtures/delta/mapped-nested/',report=await Bun.file(base+'native-results.json').json();expect(report.cases).toBe(4);
  for(const c of report.results){const text=await Bun.file(base+c.id+'/context.json').text(),source=importDeltaTable(text,{id:c.id});let doc=source;

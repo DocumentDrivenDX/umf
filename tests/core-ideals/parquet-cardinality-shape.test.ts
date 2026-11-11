@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet, exportParquetCapture} from '../../src';
-import {inspectParquetCardinalityShape} from '../../src/core-ideals/parquet-cardinality-shape';
+import {captureParquet, exportParquetCapture} from '../../src/index-node-v4';
+import {inspectParquetCardinalityShape} from "../../scripts/core-ideals/parquet-cardinality-shape";
 
 const read=async(path:string,id=path)=>captureParquet(new Uint8Array(await Bun.file(path).arrayBuffer()),{id});
 test('Parquet Cardinality shape keeps nested roles, member meaning and native bytes separate',async()=>{

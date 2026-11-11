@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importOpenapiDocument,exportOpenapiDocument,inspectOpenapi,readDocument,writeDocument,proposeOpenapiEdit} from '../../src';
+import {importOpenapiDocument,exportOpenapiDocument,inspectOpenapi,readDocument,writeDocument,proposeOpenapiEdit} from '../../src/index-node-v4';
 import {parseNativeJson,parseNativeYaml,renderTree} from '../../src/model/native-json';
 import manifest from '../../fixtures/openapi/upstream/manifest.json';
 test('US-011-AC6: all pinned official examples retain content; fragments stay distinct from full descriptions',async()=>{

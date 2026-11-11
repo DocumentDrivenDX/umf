@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../../src/generated/core-model';
-import {validateProtectionParameters,inspectProtectionQueryProperties} from '../../../src/index';
+import {validateProtectionParameters} from '../../../src/extensions/security/protection/parameters';
+import {inspectProtectionQueryProperties} from '../../../src/index-node-v4';
 export type OracleRow={id:string;expected:unknown;observed:unknown;passed:boolean};
 const clone=<T>(v:T):T=>JSON.parse(JSON.stringify(v));
 const ref=(id:string)=>({documentId:'independent-domains',moduleId:'types',elementId:id});

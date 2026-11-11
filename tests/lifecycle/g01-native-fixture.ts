@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Native G01 inputs: existing optional field, an exact NULL-only command and reviewed tightening. */
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
-import {compileTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration,discoverTableMigrationChanges} from '../../src/table-migration';
+import {compileTableDeployment} from '../../src/index-node-v4';
+import {compileTableMigration,discoverTableMigrationChanges} from '../../src/index-node-v4';
 
 const ref=(element:string)=>({module:'demo',element});
 const configuration={module:'demo',schema:'g01_native',ownerRole:'g01_owner',personRole:'g01_person',batchRole:'g01_batch',groupRoles:{}};

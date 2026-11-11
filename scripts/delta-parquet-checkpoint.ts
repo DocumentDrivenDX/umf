@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureParquet,captureDeltaLog,reconcileDeltaParquetCheckpoint} from '../src';
+import {captureParquet,captureDeltaLog,reconcileDeltaParquetCheckpoint} from '../src/index-node-v4';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/parquet-checkpoint/',results=[];
 for(const c of (await Bun.file(base+'manifest.json').json()).cases){const raw=new Uint8Array(await Bun.file(c.path).arrayBuffer());if(new Bun.CryptoHasher('sha256').update(raw).digest('hex')!==c.sha256)throw Error('Checkpoint hash mismatch');const checkpoint={version:c.version,source:captureParquet(raw,{id:c.id})},sidecars=[];for(const s of c.sidecars){const bytes=new Uint8Array(await Bun.file(s.file).arrayBuffer());if(new Bun.CryptoHasher('sha256').update(bytes).digest('hex')!==s.sha256)throw Error('Sidecar hash mismatch');sidecars.push({path:s.path,source:captureParquet(bytes,{id:s.path})});}const commits=[];

@@ -1,3 +1,4 @@
+import {Registry} from '../../src/registry/registry';
 import {describe,expect,test} from 'bun:test';
 import {createJsonLdRustDefault,type JsonLdNativeFamilyEngine} from '../../src/adapters/jsonld/rust-default';
 import type {Document} from '../../src/model/types';
@@ -16,7 +17,7 @@ describe('JSON-LD Rust default facade',()=>{
    editNode(){return {document,validation:{valid:true,complete:false,diagnostics:[]}};},
    expand(){calls.push('expand');return {source:document,status:'candidate',complete:false};},
   }} as unknown as JsonLdNativeFamilyEngine;
-  const api=createJsonLdRustDefault(engine);
+  const api=createJsonLdRustDefault(engine,undefined,()=>new Registry());
   const imported=api.importJsonLdDocument('{}',{id:'jsonld-public-root',baseIRI:'https://example.test/'});
   expect(imported).toBe(document);
   expect(api.inspectJsonLdDocument(document as never)).toMatchObject({valid:true,complete:false});

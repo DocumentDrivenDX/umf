@@ -6,7 +6,7 @@ import {ReferenceActionIssuer} from '../../scripts/actions-reference/authenticat
 import {ReferenceActionPolicy} from '../../scripts/actions-reference/policy';
 import {ReferenceActionExecutor} from '../../scripts/actions-reference/executor';
 import {seedReferenceEntity} from '../../scripts/actions-reference/state';
-import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
+import {actionFieldValueKey} from '../../src/index-node-v4';
 import {encodeReferenceIdentity,decodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {withReferenceStore} from './native-harness';
 test('native deletion is canonical, atomic and replayable; alias reuse and remaining-link constraints roll back',async()=>{

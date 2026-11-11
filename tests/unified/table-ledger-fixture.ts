@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {randomUUID} from 'node:crypto';
-import {compileTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration,type TableMigrationRequest} from '../../src/table-migration';
+import {compileTableDeployment} from '../../src/index-node-v4';
+import {compileTableMigration} from '../../src/index-node-v4';
+import type {TableMigrationRequest} from '../../src/index-v4-default';
 import {appendedTableSource,indexedTableSource} from './table-migration-fixture';
 import {tableOperationSource,tableOperationDeclarations} from './table-operation-fixture';
 import fixture from '../binding/fixtures/table-lifecycle-note.json';

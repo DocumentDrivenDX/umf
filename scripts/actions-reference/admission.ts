@@ -7,8 +7,7 @@ import {copyJson} from '../../src/model/json';
 import type {ReferenceStoreControl} from './store';
 import type {TrustedActionSession} from './authentication';
 import {UmfError} from '../../src/model/types';
-import {inspectActions,registerActions} from '../../src/extensions/actions';
-import {Registry} from '../../src/registry/registry';
+import {createUmfRegistry,inspectActions} from '../../src/index-node-v4';
 import {ReferenceActionPolicy} from './policy';
 import {ReferenceRevisionRepository} from './revisions';
 import {admitReferenceRequest,type RevisionReference} from './protocol';
@@ -27,7 +26,7 @@ export class ReferenceActionAdmission {
   const request=admitReferenceRequest(requestInput,'invoke'),session=copyJson(sessionInput) as unknown as TrustedActionSession;
    if(session.tenant!==control.tenant)throw new UmfError('AUTHORIZATION','Trusted tenant scope required');
    if(request.key){await this.policy.authorizeReplayDiscovery(tx,control,session,request.target.module,request.target.action);const identity=encodeReferenceIdentity([session.tenant,control.store,session.principal,request.target.module,request.target.action,request.key]);const existing=await tx`select id from action_outcome where store=${control.id} and lookup=action_identity_lookup(${identity}) and identity=${identity}`;if(existing.length)throw new UmfError('TOKEN_REUSE','Retained tokens must route to original replay');}
-   const revision=await this.revisions.readInTransaction(tx,control,request.target),inspection=inspectActions(revision.source,registerActions(new Registry())),selected=inspection.actions.find(item=>item.module===request.target.module&&item.action.id===request.target.action);
+   const revision=await this.revisions.readInTransaction(tx,control,request.target),inspection=inspectActions(revision.source,createUmfRegistry()),selected=inspection.actions.find(item=>item.module===request.target.module&&item.action.id===request.target.action);
    if(!inspection.validation.valid||!selected)throw new UmfError('REVISION','Invalid retained source');
    await this.policy.authorize(tx,control,session,selected.action);
    observe?.({revision:copyJson(revision.target) as unknown as RevisionReference,deployment:selected.action.binding.kind==='handler'?referenceObservedDeployment(revision.deployment):null});

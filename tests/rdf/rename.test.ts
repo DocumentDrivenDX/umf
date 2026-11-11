@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/rdf/rename-schema.json';
-import {importRdfNQuads,proposeRdfIriRename,exportRdfNQuads,getRdfQuads,readDocument,writeDocument} from '../../src';
+import {importRdfNQuads,proposeRdfIriRename,exportRdfNQuads,getRdfQuads,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/rdf/rename/';
 test('US-025-AC4: corpus IRI renames match native datasets through both UMF formats',async()=>{
  const cases=(await Bun.file(base+'results.json').json()).cases,native=(await Bun.file(base+'oracle-results.json').json()).results,check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);expect(cases).toHaveLength(53);expect(native).toHaveLength(106);

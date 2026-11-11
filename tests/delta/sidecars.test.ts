@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureDeltaLog,captureParquet,exportDeltaLog,exportParquetCapture,reconcileDeltaCheckpointSidecars,coreSchema} from '../../src';
+import {captureDeltaLog,captureParquet,exportDeltaLog,exportParquetCapture,reconcileDeltaCheckpointSidecars,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/delta-log/sidecar-reconciliation.schema.json';
 const ajv=createValidator(false);ajv.addSchema(coreSchema);const check=ajv.compile(schema),base='fixtures/delta/sidecars/',report=await Bun.file(base+'results.json').json(),first=report.results[0];

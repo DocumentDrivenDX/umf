@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {parseEntry,type Entry} from '../../docs/helix/05-deploy/microsite/explorer-model';
+import {parseEntry,type Entry} from '../../docs/helix/05-deploy/microsite/explorer-node';
 import {ontologyModel} from '../../docs/helix/05-deploy/microsite/ontology-view';
 
 test('ontology inspection separates records and fields without changing relationship meaning',async()=>{

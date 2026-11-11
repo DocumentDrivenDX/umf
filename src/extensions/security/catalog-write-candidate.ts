@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private logical transaction guard. Never a native permit or an effects receipt. */
 import {copyJson} from '../../model/json';
-import {encodeCoreKeyTupleBody,type CoreKeyTupleValue} from '../../model/key-tuple';
+import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../model/key-tuple';
 import {canonicalSchemaJson,type CoreLiteral} from '../../model/schema-literals';
 import {parseGregorianDate,GREGORIAN_DATE_PROFILE} from '../../adapters/gregorian-date';
 import {readCandidateCatalogProgram} from './catalog-program-candidate';
@@ -77,7 +77,7 @@ function run(handle:unknown,ownerInput:unknown,profileInput:unknown,requestInput
  const selectedKeys=new Map<string,any>();for(const e of entities.values()){step();selectedKeys.set(id(e.type),records.get(id(e.type)).keys.find((k:any)=>k.id===e.keyId));}
  const keyOf=(type:any,values:any)=>{step();const e=entities.get(ref(type))??fail(),key=selectedKeys.get(id(type));list(values,64);if(values.length!==key.fields.length)fail();
   for(const [i,k] of key.fields.entries()){const f=fields.get(id({documentId:type.documentId,moduleId:k.module,elementId:k.element}));literal.check(f.document,f.field,values[i]);}
-  const result=encodeCoreKeyTupleBody(documents.get(type.documentId),{module:type.moduleId,element:type.elementId,key:e.keyId},values as CoreKeyTupleValue[],{valid:true,complete:true,diagnostics:[]},(d,f,v)=>literal.check(d,f,v));return literal.retain(canonicalSchemaJson([id(type),e.keyId,result.bytesHex]));};
+  const result=encodeCoreKeyTuple(documents.get(type.documentId),{module:type.moduleId,element:type.elementId,key:e.keyId},values as CoreKeyTupleValue[]);return literal.retain(canonicalSchemaJson([id(type),e.keyId,result.bytesHex]));};
  const scalar=(r:any,value:any,cut:any)=>{step();const f=fields.get(ref(r))??fail();if(f.field.scalarType==='date'){if(!cut.valueProfiles.some((p:any)=>id(p.field)===id(r)&&p.profile===GREGORIAN_DATE_PROFILE))fail();literal.step();if(value===null)return 'null';parseGregorianDate(value.date);return literal.retain('date:'+value.date);}if(value===null){literal.check(f.document,f.field,null);return 'null';}return literal.identity(f.document,f.field,value as CoreLiteral);};
  function state(cut:any){const facts=new Map<string,any>(),types=new Map<string,any[]>(),graphs=new Map<string,any[]>();for(const row of cut.graphs){step();const key=relation(row.relationship),rows=graphs.get(key)??[];rows.push(row);graphs.set(key,rows);}
   for(const c of cut.coverage){const entity=entities.get(id(c.type)),names=new Set(c.fields.map(id));step(c.fields.length);if(!entity||c.complete!==true||names.size!==entity.fields.length||entity.fields.some((f:any)=>!names.has(id(f.ref))))fail();}if(cut.coverage.length!==entities.size)fail();

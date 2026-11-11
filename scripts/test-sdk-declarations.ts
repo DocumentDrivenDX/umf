@@ -26,6 +26,8 @@ try{
  const cases=[
   {name:'node',compilerOptions:{...common,module:'NodeNext',moduleResolution:'NodeNext',types:['node']},source:`
 import {createPostgresqlSqlEngine,generatePackTools,importPostgresqlSql,importIcebergTable} from '@umf/core';
+import {readJsonValue, createValidator} from '@umf/core/loader-contract';
+import {createPostgresqlSqlEngine as sourceEntryFactory} from './node_modules/@umf/core/dist/src/index.js';
 import type {PackToolsRequest,PackToolsResult} from '@umf/core';
 const generate: (request:PackToolsRequest)=>PackToolsResult=generatePackTools;
 void generate;
@@ -33,10 +35,14 @@ const engine=createPostgresqlSqlEngine();
 const sql:string=engine.exportSql(engine.importSql('SELECT 1','consumer'));
 const callbackImport:typeof importPostgresqlSql=importPostgresqlSql;
 const tableImport:typeof importIcebergTable=importIcebergTable;
-void [sql,callbackImport,tableImport];
+void [sql,callbackImport,tableImport,readJsonValue,createValidator,sourceEntryFactory];
 `},
   {name:'browser',compilerOptions:{...common,module:'ESNext',moduleResolution:'Bundler',customConditions:['browser'],lib:['ES2022','DOM'],types:[]},source:`
 import {generatePackTools,importIcebergTable,importAvroSchema} from '@umf/core';
+import {readJsonValue, createValidator} from '@umf/core/loader-contract';
+import {generatePackTools as sourceEntryGenerate} from './node_modules/@umf/core/dist/src/index.js';
+// @ts-expect-error The internal declaration alias also selects the browser surface.
+import {createPostgresqlSqlEngine as sourceEntryFactory} from './node_modules/@umf/core/dist/src/index.js';
 import type {PackToolsRequest,PackToolsResult} from '@umf/core';
 const generate: (request:PackToolsRequest)=>PackToolsResult=generatePackTools;
 void generate;
@@ -44,7 +50,7 @@ void generate;
 import {createPostgresqlSqlEngine} from '@umf/core';
 const tableImport:typeof importIcebergTable=importIcebergTable;
 const avroImport:typeof importAvroSchema=importAvroSchema;
-void [tableImport,avroImport];
+void [tableImport,avroImport,readJsonValue,createValidator,sourceEntryGenerate];
 `},
  ];
  for(const item of cases){

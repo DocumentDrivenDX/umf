@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureArrowIpc,inspectArrowIpcLayout,exportArrowIpcCapture,coreSchema,arrowIpcLayoutSchema} from '../../src';
+import {captureArrowIpc,inspectArrowIpcLayout,exportArrowIpcCapture,coreSchema,arrowIpcLayoutSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const validator=createValidator();validator.addSchema(coreSchema);const check=validator.compile(arrowIpcLayoutSchema);
 const base='fixtures/arrow/ipc-inputs/';const oracle=await Bun.file(base+'layout-oracle-results.json').json();

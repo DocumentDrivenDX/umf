@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,join} from 'node:path';
 import {readFile,mkdir,rm,cp} from 'node:fs/promises';
-import {generateDomainPackLoaderSchema} from '../src/domain-packs/loader';
-import {generateLoaderInventorySchema} from '../src/domain-packs/loader-inventory';
+import {generateDomainPackLoaderSchema,generateLoaderInventorySchema} from '../src/index-node-v4';
 import {hash,json} from './loaders/state';
 const repo=resolve(import.meta.dir,'..'),canonical=join(repo,'spec/loader-companion/1.0.0'),check=process.argv.includes('--check');
 if(Bun.version!=='1.3.14')throw Error('Build companions with pinned Bun 1.3.14');

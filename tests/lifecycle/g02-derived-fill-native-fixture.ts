@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Synthetic G02 PostgreSQL inputs with a hand-computed exact row oracle. */
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
-import {compileTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration} from '../../src/table-migration';
+import {compileTableDeployment} from '../../src/index-node-v4';
+import {compileTableMigration} from '../../src/index-node-v4';
 
 const ref=(element:string)=>({module:'demo',element});
 const configuration={module:'demo',schema:'g02_native',ownerRole:'g02_owner',personRole:'g02_person',batchRole:'g02_batch',groupRoles:{}};

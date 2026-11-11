@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {classifyTableSpecField,verifyTableSpecFieldClassification,importTableSpec} from '../../src/index-node-v4';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {declareCoreElementKind} from "../../src/index-node-v4";
 
 const sourceText='{"version":"1.0","table_name":"Orders","columns":[{"name":"id","data_type":"FUTURE","vendor":{"keep":true}}]}';
 

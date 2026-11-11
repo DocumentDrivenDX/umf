@@ -24,7 +24,7 @@ fields = {name: {field: str(value.type) for field, value in schema.get_type(name
           for name in ['Query', 'Order', 'Customer', 'Product', 'OrderProduct']}
 sha256 = {str(path): hashlib.sha256(path.read_bytes()).hexdigest()
           for path in [base / 'case.json', base / 'generated.graphql', base / 'report.json',
-                       Path('src/projections/ddd-graphql/entities.ts')]}
+                       Path('crates/umf-core/src/ddd_graphql_projection.rs')]}
 evidence = {'scope': 'Pinned GraphQL-core schema parse/build/validation of DDD entity-stage SDL; no resolver or query execution',
             'graphqlCore': version('graphql-core'), 'graphqlJs': '17.0.2',
             'fields': fields, 'residuals': len(report['residuals']), 'sha256': sha256}

@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 const commands=[['.venv/bin/python','scripts/core-ideals/cardinality-avro-native.py'],['bun','scripts/core-ideals/cardinality-avro-projection-oracle.ts']];
 const runs=[];
 for(const command of commands){const child=Bun.spawn(command,{stdout:'inherit',stderr:'inherit',env:process.env});const exitCode=await child.exited;runs.push({command,exitCode});assert.equal(exitCode,0,`Native check failed: ${command.join(' ')}`);}
-const paths=['scripts/core-ideals/cardinality-avro-oracle.ts','src/core-ideals/cardinality-avro.ts','src/core-ideals/cardinality-avro-projection.ts','spec/core/avro-cardinality-classification.schema.json','spec/core/cardinality-avro-projection.schema.json','spec/extensions/avro-cardinality/package.json','spec/extensions/avro-cardinality/schema.json'];
+const paths=['scripts/core-ideals/cardinality-avro-oracle.ts','src/core-ideals/avro-cardinality-types.ts','crates/umf-core/src/avro_cardinality.rs','crates/umf-core-wire/src/avro_cardinality_binding.rs','src/core-ideals/cardinality-avro-projection.ts','spec/core/avro-cardinality-classification.schema.json','spec/core/cardinality-avro-projection.schema.json','spec/extensions/avro-cardinality/package.json','spec/extensions/avro-cardinality/schema.json'];
 const proofs=[];
 for(const suffix of ['profile-native','projection-native','projection-oracle']){
  const path=`fixtures/validation/cardinality-avro-${suffix}.json`,proof=await Bun.file(path).json();

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {generateAccessPackage} from '../src/compilation/index';
+import {generateAccessPackage} from '../src/node-access-compilation';
 import {profile,request,mutateSource} from '../tests/compilation/access-fixtures';
 const output=process.argv[2];if(!output)throw Error('output directory required');
 const req=request();req.package='refinement_shop';

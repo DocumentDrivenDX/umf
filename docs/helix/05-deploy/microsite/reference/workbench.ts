@@ -21,20 +21,26 @@ export async function mountWorkbench(rows:Summary[],getEntry:(id:string)=>Promis
  $('cancel').onclick=()=>{generation++;clearWorker();$('output').replaceChildren();$('diagnostics').textContent='Cancelled; no partial result published.';$('run-status').textContent='Cancelled. Original input retained.';};
  const perform=async(operationId=operation.value,targetFormat?:'yaml'|'json')=>{
   reset();const current=++generation,requestId=String(current),needsCompiler=['json-schema-protobuf','protobuf-source'].includes(operationId);$('run').setAttribute('disabled','');for(const id of ['source-yaml','source-json'])$(id).setAttribute('disabled','');$('cancel').removeAttribute('disabled');$('run-status').textContent='Loading verified local tooling…';
-  timer=setTimeout(()=>{if(current!==generation)return;generation++;clearWorker();$('output').replaceChildren();$('diagnostics').textContent='REFERENCE_TIMEOUT: worker terminated after 10 seconds.';$('run-status').textContent='Timed out. Original input retained.';},10000);
   try{
    const bytes=await verified('assets/worker.js');if(current!==generation)return;workerUrl=URL.createObjectURL(new Blob([bytes],{type:'text/javascript'}));worker=new Worker(workerUrl,{type:'module'});
    const request:Request={protocol:1,requestId,operationId,coreProfile:'0.10.0',registryProfile:$<HTMLSelectElement>('registry').value,inputs:{source:source.value,format,outputFormat:targetFormat??$<HTMLSelectElement>('output-format').value,...(operation.value==='schema-diff'?{after:options.value}:operation.value==='core-select'?{query:options.value}:operation.value==='json-schema-protobuf'?{fields:options.value,policy:$<HTMLSelectElement>('policy').value}:{})}};
    worker.onerror=event=>{if(current!==generation)return;clearWorker();$('run-status').textContent='REFERENCE_UNAVAILABLE: worker could not start. Original input retained.';$('diagnostics').textContent=event.message;};
    const completed=new Promise<void>(resolve=>{finish=resolve;});
    worker.onmessage=({data})=>{
-    if(current!==generation)return;if(data.type==='compiler-ready'){worker!.postMessage(request);return;}if(data.type==='compiler-error'){clearWorker();$('run-status').textContent='REFERENCE_UNAVAILABLE: compiler permission or initialization failed.';$('diagnostics').textContent=data.message;return;}
+    if(current!==generation)return;if(data.type==='runtime-error'){clearWorker();$('run-status').textContent='REFERENCE_UNAVAILABLE: tooling initialization failed.';$('diagnostics').textContent=data.message;return;}
     const result=data as Response;if(result.protocol!==1||result.requestId!==requestId)return;clearWorker();$('run-status').textContent=result.state==='completed'?'Completed · inspect diagnostics and interpretation limits':'Refused · original input retained';
     if(targetFormat){if(result.state==='completed'){source.value=result.outputs[0]!.text;setFormat(targetFormat);$('run-status').textContent='Ready. Input format changed; values retained.';}else $('run-status').textContent='Format unchanged · original input retained';$('diagnostics').textContent=result.diagnostics.map(d=>d.code+': '+d.message).join('\n');return;}
     $('output').replaceChildren();for(const o of result.outputs){const structured=o.mediaType==='application/json',selected=$<HTMLSelectElement>('output-format').value as 'yaml'|'json',contents=structured&&selected==='yaml'?stringify(JSON.parse(o.text),{version:'1.2',aliasDuplicateObjects:false,lineWidth:0}):o.text,downloadName=structured?o.name+'.'+selected:o.name,group=document.createElement('section'),code=text('pre',contents),b=text('button','Download '+downloadName) as HTMLButtonElement;b.className='secondary';code.dataset.format=structured?selected:'source';b.onclick=()=>save(downloadName,contents);group.append(text('h3',o.name+(structured?' · '+selected.toUpperCase():'')),code,b);$('output').append(group);}
     $('diagnostics').replaceChildren(...result.diagnostics.map(d=>text('p',`${d.severity.toUpperCase()} ${d.code} ${d.path}: ${d.message}`)));if(!result.diagnostics.length)$('diagnostics').textContent='No diagnostics in this selected profile.';
    };
-   if(needsCompiler){$('run-status').textContent='Loading pinned Protobuf WASM compiler…';const wasm=await verified('assets/compiler.wasm');if(current!==generation)return;worker.postMessage({protocol:1,type:'compiler-assets',wasm},[wasm]);}else worker.postMessage(request);await completed;
+   const [coreWasm,compilerWasm]=await Promise.all([
+    verified('assets/workbench-core.wasm'),
+    needsCompiler?verified('assets/compiler.wasm'):undefined,
+   ]);
+   if(current!==generation)return;
+   timer=setTimeout(()=>{if(current!==generation)return;generation++;clearWorker();$('output').replaceChildren();$('diagnostics').textContent='REFERENCE_TIMEOUT: worker terminated after 10 seconds.';$('run-status').textContent='Timed out. Original input retained.';},10000);
+   worker.postMessage({protocol:1,type:'execute',request,coreWasm,compilerWasm},compilerWasm?[coreWasm,compilerWasm]:[coreWasm]);
+   await completed;
   }catch(error){if(current!==generation)return;clearWorker();$('run-status').textContent='Refused · original input retained';$('diagnostics').textContent=String(error);}
  };
  $('run').onclick=()=>void perform();

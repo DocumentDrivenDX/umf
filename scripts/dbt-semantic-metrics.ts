@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importDbtSemanticManifest,exportDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,writeDocument,readDocument} from '../src';
+import {importDbtSemanticManifest,exportDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,writeDocument,readDocument} from '../src/index-node-v4';
 const base='fixtures/dbt/semantic-metrics/',raw=await Bun.file(base+'semantic-manifest.json').text(),source=JSON.parse(raw),d=importDbtSemanticManifest(raw,{id:'metric-types'}),results=[];
 const metric=(name:string)=>{const i=source.metrics.findIndex((m:any)=>m.name===name);if(i<0)throw Error(name);return '/metrics/'+i;};
 const cases:[string,string,unknown,boolean,boolean,boolean][]=[

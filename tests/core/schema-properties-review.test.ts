@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {Registry,editExtension,validateDocument,selectCoreElements,validateCoreFieldValue,declareCoreSchemaProperties,resolveCoreDefault} from '../../src/index';
+import {Registry,editExtension,validateDocument,validateCoreFieldValue,declareCoreSchemaProperties,resolveCoreDefault} from '../../src/index';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {schemaPropertiesFixture} from '../../scripts/core-schema-properties-cases';
 import type {ExtensionPackage} from '../../src/model/types';
 import type {CoreLiteral} from '../../src/model/schema-literals';

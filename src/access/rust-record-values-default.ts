@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {CoreRecordValueCheck,CoreRecordValueIdentity,CoreRecordFieldValue} from '../model/record-values';
+import type {CoreRecordValueCheck,CoreRecordValueIdentity,CoreRecordFieldValue} from '../model/record-values-types';
 
 export type CoreRecordValuesHostEngineV4={
  validateCoreRecordValues(source:unknown,identity:unknown,values:unknown):unknown;

@@ -5,6 +5,8 @@ export const NATIVE_FAMILY_PROFILE='umf.native-family-dispatch/1';
 
 const FAMILIES=Object.freeze({
  'pack-tools':{profile:'umf.pack-tools-wire/1',operations:['generatePackTools']},
+ 'bulk-actions':{profile:'umf.bulk-actions-wire/1',operations:['applyBulkEvent','bulkDecisionOrder','nextBulkFence','bulkItemToken','parseBulkItemToken','isReservedBulkKey','checkBulkKeyUse']},
+ 'lakeview-legacy-projection':{profile:'umf.lakeview-legacy-projection-wire/1',operations:['projectLakeviewToLegacyDashboard']},
  'core-ideal-reports':{profile:'umf.core-ideal-reports-binding/1.0.0',operations:['inspectFieldClassification','verifyFieldClassificationInspection','inspectFieldProjection','verifyFieldProjectionInspection','inspectRecordProjection','verifyRecordProjectionInspection','inspectStructuredClassification','verifyStructuredClassificationInspection']},
  'field-record-parquet-projection':{profile:'umf.field-record-parquet-projection-binding/1.0.0',operations:['projectFieldToParquet','recoverFieldFromParquet','projectRecordToParquet','recoverRecordFromParquet']},
  'medical-projection':{profile:'umf.medical-projection-binding/1.0.0',operations:['projectMedicalFhir','projectCdcMortality','projectDicomMetadata','lookupMedicalTerminology']},
@@ -40,7 +42,7 @@ const FAMILIES=Object.freeze({
  'sqlserver-ddl-projection':{profile:'umf.sqlserver-ddl-projection-wire/1',operations:['projectSqlServerToDdl']},
  'binding-sqlserver-planned-index-projection':{profile:'umf.binding-sqlserver-planned-index-projection-wire/1',operations:['projectBindingIndexesAgainstSqlServerPlan']},
  'binding-index-projection':{profile:'umf.binding-index-projection-wire/1',operations:['projectBindingIndexesToSqlServer','prepareBindingIndexesToPostgresql','completeBindingIndexesToPostgresql']},
- 'binding-public':{profile:'umf.binding-public/1.0.0',operations:['inspectBinding','getBinding','readBindingDocument','writeBindingDocument','projectBindingIndexes','migrateBindingRelationships','rollbackBindingRelationships','validateBindingSemantics','validateBit128Dataset']},
+ 'binding-public':{profile:'umf.binding-public/1.0.0',operations:['inspectBinding','inspectRawTableBinding','getBinding','readBindingDocument','writeBindingDocument','projectBindingIndexes','migrateBindingRelationships','rollbackBindingRelationships','validateBindingSemantics','validateBit128Dataset']},
  'dashboard-public':{profile:'umf.dashboard-public/1.0.0',operations:['inspectDashboard','readDashboardDocument','writeDashboardDocument','getDashboardDefinition','validateDashboardSemantics']},
  'binding-parquet-projection':{profile:'umf.binding-parquet-projection-wire/1',operations:['projectBindingToParquet']},
  'binding-delta-projection':{profile:'umf.binding-delta-projection-wire/1',operations:['projectBindingToDelta']},

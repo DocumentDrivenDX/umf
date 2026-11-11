@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads} from '../src';
+import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads} from '../src/index-node-v4';
 const prefix='@prefix ex: <https://example.org/> . @prefix sh: <http://www.w3.org/ns/shacl#> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . ',cases:any[]=[];
 function add(id:string,constraint:string,object:string,expected:boolean,dataExtra=''){cases.push({id,expected,shapes:prefix+'ex:s sh:targetNode ex:a ; sh:property [sh:path ex:p ; '+constraint+'] .',data:prefix+'ex:a ex:p '+object+' . '+dataExtra});}
 for(const [id,term,count] of [['emoji',JSON.stringify('😀'),1],['combining',JSON.stringify('e\u0301'),2],['joined',JSON.stringify('👩‍💻'),3],['empty','""',0],['iri','<https://example.org/😀>',21],['typed','"001"^^xsd:integer',3],['blank','_:value',-1]] as const)for(const kind of ['minLength','maxLength'])for(const bound of [0,1,2,3])add(id+'-'+kind+'-'+bound,'sh:'+kind+' '+bound,term,count>=0&&(kind==='minLength'?count>=bound:count<=bound));

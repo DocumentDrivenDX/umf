@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {backend} from '../native/postgresql/runtime';
-import {importPostgresqlSql,exportPostgresqlSql,proposePostgresqlNodeEdit,readDocument,writeDocument} from '../src';
+import {importPostgresqlSql,exportPostgresqlSql,proposePostgresqlNodeEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const cases=[];
 for(const file of ['domain.sql','advanced.sql']){
  const source=await Bun.file('fixtures/postgresql/'+file).text();const doc=await importPostgresqlSql(source,backend,{id:file});

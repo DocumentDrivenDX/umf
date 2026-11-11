@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
-import {correlatePostgresqlKeyCatalog} from '../../src/adapters/postgresql/key-correlation';
-import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
+import {correlatePostgresqlKeyCatalog} from "../../src/index-node-v4";
+import {importPostgresqlCatalogCapture} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import type {Document} from '../../src/model/types';
 import proof from '../../fixtures/validation/key-postgresql-discovery-native.json';

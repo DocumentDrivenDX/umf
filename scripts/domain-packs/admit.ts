@@ -4,7 +4,7 @@ import {ontology} from './ontology';
 /** Host-only profile and ontology admission for the portable graph projector. */
 import {realpath} from 'node:fs/promises';
 import {dirname,resolve,relative,isAbsolute} from 'node:path';
-import {inspectDomainPack} from '../../src/domain-packs/profile';
+import {inspectDomainPack} from '../../src/index-node-v4';
 import {readDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
 const path=resolve(process.argv[2]!);const root=await realpath(dirname(path));

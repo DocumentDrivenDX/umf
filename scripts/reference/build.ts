@@ -10,8 +10,8 @@ import {evidence,aggregate} from './evidence';
 import {runtimeBuild} from './runtime-build';
 import {render,views} from './render';
 import {checkBoundaries} from './check-boundaries';
-import {validateDocument,createUmfRegistry,Registry,dddRegistry,jsonSchemaRegistry,protobufRegistry} from '../../src/index';
-import * as publicApi from '../../src/index';
+import {validateDocument,createUmfRegistry,Registry,dddRegistry,jsonSchemaRegistry,protobufRegistry} from '../../src/index-node-v4';
+import * as publicApi from '../../src/index-node-v4';
 import {thirdPartyNotices} from '../../docs/helix/05-deploy/schema-browser/notices';
 import {rendererArguments,rendererPackage,verifyRendererHost} from './renderer-package';
 import {referenceBuildStage} from './stage';
@@ -50,13 +50,13 @@ try{
  assertJoins(entries);
  for(const e of entries)await validate('entry',e);
  await buildReader(stage,entries,profiles,validate);
- console.log('Building fixed runtime, guides and evidence inventory…');
+ console.log('Building Rust WASM runtime, guides and evidence inventory…');
  const evidenceExclusions:{path:string;reason:string}[]=[];
  const inventory=[];const evidencePaths=new Set((await Promise.all(['fixtures/validation/**/*.json','fixtures/*/*results*.json','fixtures/*/*oracle*.json'].map(paths))).flat());
  const sortedEvidence=[...evidencePaths].sort();
  for(let offset=0;offset<sortedEvidence.length;offset+=32)inventory.push(...await Promise.all(sortedEvidence.slice(offset,offset+32).map(async path=>{const mapped=allocations.allocations.filter((a:any)=>a.recordPath===path);return {source:await source(path,false),allocationIds:mapped.map((a:any)=>a.id),assessment:mapped.length?'mapped':'unassessed'};})));
  await Bun.write(join(stage,'evidence-inventory.json'),json({profile:'umf.reference.evidence-inventory/1',items:inventory,exclusions:evidenceExclusions}));
- const runtimeInputs=await runtimeBuild(join(stage,'assets'),api);
+ const runtimeInputs=await runtimeBuild(join(stage,'assets'));
  await source('docs/helix/05-deploy/schema-browser/notices.ts',false);
  for(const path of [...await paths('spec/**/LICENSE*'),...await paths('spec/**/NOTICE*'),...await paths('LICENSE*')]){const s=await source(path,false);await Bun.write(join(stage,'licenses',s.sha256+'-'+path.split('/').at(-1)),await Bun.file(resolve(root,path)).bytes());}
  const ui=await Bun.build({entrypoints:[resolve(root,'docs/helix/05-deploy/microsite/reference/index.ts')],target:'browser',format:'esm',minify:true,metafile:true,plugins:[{name:'verified-renderer-package',setup(build){build.onResolve({filter:/^@documentdrivendx\/umf-schema-browser$/},()=>({path:resolve(root,renderer.path,'index.js')}));}}]});if(!ui.success)throw Error(ui.logs.join('\n'));const uiInputs=Object.keys((typeof ui.metafile==='string'?JSON.parse(ui.metafile):ui.metafile as any).inputs).map(path=>resolve(root,path));if(!uiInputs.includes(resolve(root,renderer.path,'index.js')))throw Error('REFERENCE_RENDERER canonical host did not compile the verified package entry');await Bun.write(join(stage,'assets/reference.js'),await ui.outputs[0]!.text());
@@ -76,7 +76,7 @@ try{
  for(const name of ['package.json','release-manifest.json','provenance.json','THIRD_PARTY_NOTICES.md'])await source(renderer.path+'/'+name,false);
  if(renderer.preview)await source('docs/helix/05-deploy/microsite/dist/schema-browser-release.json',false);
  for(const pattern of ['scripts/reference/**/*.ts',config+'/**/*','docs/helix/05-deploy/microsite/reference/**/*','src/**/*.ts','spec/**/*.json']){const discovered=await paths(pattern);for(let offset=0;offset<discovered.length;offset+=32)await Promise.all(discovered.slice(offset,offset+32).map(path=>source(path,false)));}
- for(const path of ['package.json','bun.lock','tsconfig.json','tsconfig.tools.json','scripts/build-protobuf.ts','scripts/build-postgresql.ts','scripts/protobuf-module-notices.ts',...await paths('native/protobuf/*.go'),...await paths('native/protobuf/go.*'),...await paths('docs/helix/02-design/contracts/CONTRACT-*.md')])await source(path,false);
+ for(const path of ['package.json','bun.lock','tsconfig.json','tsconfig.tools.json','scripts/build-protobuf.ts','scripts/build-postgresql.ts','scripts/build-reference-wasm.ts','scripts/protobuf-module-notices.ts',...await paths('native/protobuf/*.go'),...await paths('native/protobuf/go.*'),...await paths('docs/helix/02-design/contracts/CONTRACT-*.md')])await source(path,false);
  const inputList=[...inputs.values()].sort((a,b)=>a.path<b.path?-1:1),inputDigest=sha(canonical(inputList.map(s=>[s.path,s.sha256])));
  const index:ReferenceIndex={profile:'umf.reference/1',entries:[],inputDigest};
  index.entries.push(...await bounded(entries.sort((a,b)=>a.id<b.id?-1:1),async e=>{const bytes=json(e);if(new TextEncoder().encode(bytes).length>8*1024*1024)throw Error('REFERENCE_LIMIT shard '+e.id);const href='entries/'+sha(e.id)+'.json';await Bun.write(join(stage,href),bytes);return {id:e.id,kind:e.kind,title:e.title,summary:e.summary.slice(0,240),href,sha256:sha(bytes),bytes:new TextEncoder().encode(bytes).length};}));

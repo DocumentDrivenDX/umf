@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,renameParquetField,inspectParquetContainers,appendParquetKeyValueMetadata,parquetRenameSchema,coreSchema} from '../../src';
+import {captureParquet,exportParquetCapture,renameParquetField,inspectParquetContainers,appendParquetKeyValueMetadata,parquetRenameSchema,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const validate=ajv.compile(parquetRenameSchema);
 const load=async(path:string)=>captureParquet(new Uint8Array(await Bun.file(path).arrayBuffer()),{id:'test'});

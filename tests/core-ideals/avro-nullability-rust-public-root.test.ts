@@ -2,7 +2,7 @@
 import {expect,test} from 'bun:test';
 import {projectNullabilityToAvro,recoverNullabilityFromAvro} from '../../src/index-node-v4';
 import {avroNullabilityProjectionCases} from '../../scripts/core-ideals/nullability-avro-projection-cases';
-import {exportAvroSchema} from '../../src/adapters/avro';
+import {exportAvroSchema} from "../../src/index-node-v4";
 
 test('Node V4 authored Avro nullability projection and recovery run through Rust',()=>{
  const c=avroNullabilityProjectionCases().find(item=>item.nativeType==='int'&&item.label==='required')!;

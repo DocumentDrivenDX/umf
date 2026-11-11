@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importAvroSchema, getAvroFieldMetadata} from '../../src/adapters/avro';
+import {importAvroSchema,getAvroFieldMetadata} from "../../src/index-node-v4";
 
 
-import {classifyAvroField} from '../../src/core-ideals/avro-field';
-import type {AvroNullabilityRequest} from '../../src/core-ideals/nullability-avro';
+import {classifyAvroField} from "../../src/index-node-v4";
+import type {AvroNullabilityRequest} from '../../src/core-ideals/nullability-avro-types';
 export function avroAvailabilitySource(nativeSource:string,dependencies:{id:string;schema:string}[]=[],record='availability.Example',name='value'){
  const initial=importAvroSchema(nativeSource,{id:'availability',dependencies});
  const metadata=getAvroFieldMetadata(initial).find(f=>f.record===record&&f.element.name===name);if(!metadata)throw Error('Missing field');

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importDbtManifest,exportDbtManifest,inspectDbtManifestGraph,proposeDbtManifestNodeEdit} from '../../src';
+import {importDbtManifest,exportDbtManifest,inspectDbtManifestGraph,proposeDbtManifestNodeEdit} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/dbt-manifest/graph-schema.json';
 const valid=createValidator().compile(schema),raw=await Bun.file('fixtures/dbt/rich/manifest.json').text(),model='model.umf_fixture.order_totals',seed='seed.umf_fixture.orders';

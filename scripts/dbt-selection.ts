@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importDbtManifest,selectDbtManifestDependencies,readDocument,writeDocument} from '../src';
+import {importDbtManifest,selectDbtManifestDependencies,readDocument,writeDocument} from '../src/index-node-v4';
 const base='fixtures/dbt/rich/',raw=await Bun.file(base+'manifest.json').text(),d=importDbtManifest(raw,{id:'selection'}),test='test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434';
 const cases=[{id:'semantic-chain',options:{roots:['saved_query.umf_fixture.daily_totals']}},{id:'depth-bound',options:{roots:['saved_query.umf_fixture.daily_totals'],maxDepth:1}},{id:'node-bound',options:{roots:['model.umf_fixture.order_totals'],maxNodes:1}},{id:'resource-only',options:{roots:[test]}},{id:'with-macros',options:{roots:[test],includeMacros:true,maxDepth:128,maxNodes:10000}}],results=[];
 for(const c of cases){const result=selectDbtManifestDependencies(d,c.options);for(const f of ['json','yaml'] as const){if(JSON.stringify(selectDbtManifestDependencies(readDocument(writeDocument(d,f),f),c.options))!==JSON.stringify(result))throw Error('Selection changes across formats');}results.push({...c,selection:result.selection});}

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/types';
+import type {TableLifecycleInspection} from './types';
 const CONTROL_CODES=new Set(['LIMIT','CAPACITY','RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
-import type {TableLifecycleInspection} from './index';
 
 type TableLifecycleNativeEngine={inspectTableLifecycle(source:unknown):unknown};
 

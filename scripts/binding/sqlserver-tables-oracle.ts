@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {exportSqlServerCatalog,importSqlServerCatalog,projectBindingTablesToSqlServer,type Document} from '../../src';
+import {exportSqlServerCatalog,importSqlServerCatalog,projectBindingTablesToSqlServer,type Document} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/sqlserver-tables/case.json').json();
 const report=projectBindingTablesToSqlServer(fixture.logical as Document,fixture.binding as Document,fixture.policy,'report');
@@ -40,7 +40,7 @@ try{
   assert.equal(items.columns.find((c:any)=>c.name==='payload')?.max_length,-1);
   assert.equal(items.checks.some((c:any)=>c.name==='CK_Items_payload_json'&&/isjson/i.test(c.definition)&&c.is_disabled===false&&c.is_not_trusted===false),true,JSON.stringify(items.checks));
 }finally{if(created)await run(['docker','rm','-f','-v',name]);}
-const files=['fixtures/binding/sqlserver-tables/case.json','fixtures/binding/sqlserver-tables/generated.sql','fixtures/binding/sqlserver-tables/catalog.json','src/projections/binding-sqlserver/tables.ts','native/sqlserver/catalog-v2.sql'];
+const files=['fixtures/binding/sqlserver-tables/case.json','fixtures/binding/sqlserver-tables/generated.sql','fixtures/binding/sqlserver-tables/catalog.json','src/projections/binding-sqlserver-types.ts','crates/umf-core/src/binding_sqlserver_tables.rs','native/sqlserver/catalog-v2.sql'];
 const sha256=Object.fromEntries(await Promise.all(files.map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
 await Bun.write('fixtures/binding/sqlserver-tables/oracle.json',JSON.stringify({scope:'Isolated SQL Server 2022 execution of authored table, nullable columns, JSON text carrier and partition-scheme placement; document path semantics remain residual',image,serverVersion:capturedVersion,observed,nativeRecovery:{retainedCatalogBytes:true,adapterExport:'structurally equal JSON; escaped slash spelling is normalized'},residuals:report.residuals,sha256},null,2)+'\n');
 console.log(JSON.stringify({tables:(observed as any[]).length,residuals:report.residuals.length}));

@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createMedicalRustDefault} from './domain-packs/medical-rust-default';
 import {createPackToolsRustDefault} from './domain-packs/pack-tools-rust';
+import type {PackToolsRequest,PackToolsResult} from './domain-packs/pack-tools-types';
 import {createDashboardRustDefault} from './extensions/dashboard/rust-default';
 import type {Document,Diagnostic,Json} from './model/types';
+import {createBulkActionsRustDefault} from './extensions/actions/bulk-state';
+import {createLakeviewLegacyProjectionRustDefault} from './adapters/lakeview/project-rust-default';
 import {createCoreIdealReportsRustDefault} from './core-ideals/reports-rust-default';
 import {createSecurityAuthorityGuardRustDefault} from './extensions/security/authority-guard-rust-default';
 import {createPythonClientRustCandidateV4} from './browser-v4';
@@ -48,9 +51,7 @@ import {createSecProjectionRustOperations} from './domain-packs/sec-projection-r
 import {createReadDescriptorSetRustCandidate} from './adapters/protobuf/descriptor-rust-candidate';
 import {createProtobufDescriptorDocumentRustDefault,createProtobufRegistryRustDefault} from './adapters/protobuf/rust-default';
 import type {ProtobufDescriptorDocumentRustEngine} from './adapters/protobuf/rust-default';
-import {arrowPackage} from './adapters/arrow';
-import {arrowIpcPackage} from './adapters/arrow/capture';
-import {arrowFlatbufferPackage} from './adapters/arrow/flatbuffer-model';
+import {arrowPackage,arrowIpcPackage,arrowFlatbufferPackage} from './adapters/arrow/package';
 import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
 import {bindDbtRust,createDbtRegistriesRustDefault} from './adapters/dbt/rust-default';
@@ -125,7 +126,7 @@ import {bindParquetCaptureRust} from './adapters/parquet/rust-capture-default';
 import {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage} from './adapters/parquet/package';
 import {createIcebergSchemaRustDefault} from './adapters/iceberg/rust-default';
 import {createIcebergTableRustDefault} from './adapters/iceberg/table-rust-default';
-import {createDeltaRustDefault} from './adapters/delta/rust-default';
+import {createDeltaRustDefault,type DeltaNativeEngine} from './adapters/delta/rust-default';
 import {createTypeSpecRustDefault} from './adapters/typespec/rust-default';
 import {createSmithyRustDefault} from './adapters/smithy/rust-default';
 import {createSparkRustDefault} from './adapters/spark/rust-default';
@@ -155,11 +156,11 @@ const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createP
 const wasmModule=await import('../bindings/core/wasm/pkg/umf_core_wasm.js');
 const graphql=createGraphqlRustDefault(createGraphqlEngine(wasmModule),isNativeUmfCoreError,()=>new Registry());
 const actionPlanSession=createActionPlanSessionEngine(wasmModule);
-const actionPlan=createActionPlanRustDefault(actionPlanSession,isNativeUmfCoreError);
+const actionPlan=createActionPlanRustDefault(actionPlanSession,isNativeUmfCoreError,(document,registrations)=>validateRegistrations(document,registrations));
 const actionManifest=createActionManifestRustDefault(actionPlanSession,actionPlan,isNativeUmfCoreError);
 const {constructActionManifest,inspectActionManifest,assessActionManifest}=actionManifest;
 const {prepareActionPlanModel,inspectActionPlan,assessActionPlan}=actionPlan;
-const actionAuthoring=createActionAuthoringRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
+const actionAuthoring=createActionAuthoringRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error),(document,registrations)=>validateRegistrations(document,registrations));
 const actionRegistry=createActionRegistryRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),isNativeUmfCoreError);
 const {inspectActions,declareAction,editAction,assessAction}=actionAuthoring;
 const {registerActions}=actionRegistry;
@@ -169,8 +170,12 @@ const rdf=createRdfRustDefault(createRdfEngine(wasmModule),isNativeUmfCoreError,
 const {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit}=rdf;
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle,projectGraphqlInputToJsonSchema}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher(wasmModule);
+const {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse}=
+  createBulkActionsRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectLakeviewToLegacyDashboard}=createLakeviewLegacyProjectionRustDefault(nativeFamilyDispatcher);
+export {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse,projectLakeviewToLegacyDashboard};
 const packTools=createPackToolsRustDefault({generatePackTools:request=>nativeFamilyDispatcher['pack-tools'].generatePackTools({request})},isNativeUmfCoreError);
-const {generatePackTools}=packTools;
+const {generatePackTools}:{generatePackTools:(request:PackToolsRequest)=>PackToolsResult}=packTools;
 const medical=createMedicalRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,lookupMedicalTerminology}=medical;
 const spark=createSparkRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
@@ -207,13 +212,13 @@ const deltaParquetOperations=nativeFamilyDispatcher['delta-parquet'];
 const deltaEngine=Object.assign({},createDeltaSchemaTableEngine(wasmModule),createDeltaLogEngine(wasmModule),{
   inspectDefinitionPayload:(payload:Json)=>deltaDdlOperations.inspectPayload({payload}) as Diagnostic[],
   defineTable:(source:string,definition:import('./adapters/delta/ddl').DeltaDefinition,id:string)=>deltaDdlOperations.defineTable({source,definition,id}) as Document,
-  generateDdl:(document:Document)=>deltaDdlOperations.generate({document}) as ReturnType<typeof import('./adapters/delta/ddl').generateDeltaDDL>,
-  generateDdlBundle:(documents:readonly Document[])=>deltaDdlOperations.generateBundle({documents}) as ReturnType<typeof import('./adapters/delta/ddl').generateDeltaDDLBundle>,
-  realizeSparkDelta4:(document:Document,target:Parameters<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>[1])=>deltaDdlOperations.realizeSparkDelta4({document,target}) as ReturnType<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>,
-  projectParquetActions:(document:Document)=>deltaParquetOperations.projectActions({document}) as ReturnType<typeof import('./adapters/delta/parquet').projectDeltaParquetActions>,
-  reconcileCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2')=>nativeFamilyDispatcher['delta-log'].reconcileCheckpoint({checkpoint,commits,spec}) as ReturnType<typeof import('./adapters/delta/reconcile').reconcileDeltaCheckpoint>,
-  reconcileParquetCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2',sidecars:import('./adapters/delta/sidecars').DeltaSidecar[])=>deltaParquetOperations.reconcileCheckpoint({checkpoint,commits,spec,sidecars}) as ReturnType<typeof import('./adapters/delta/parquet-checkpoint').reconcileDeltaParquetCheckpoint>,
-  reconcileMultipart:(version:string,partCount:number,parts:import('./adapters/delta/multipart').DeltaCheckpointPart[],commits:import('./adapters/delta/reconcile').DeltaCommit[])=>deltaParquetOperations.reconcileMultipart({version,partCount,parts,commits}) as ReturnType<typeof import('./adapters/delta/multipart').reconcileDeltaMultipartCheckpoint>,
+  generateDdl:(document:Document)=>deltaDdlOperations.generate({document}) as ReturnType<DeltaNativeEngine['generateDdl']>,
+  generateDdlBundle:(documents:readonly Document[])=>deltaDdlOperations.generateBundle({documents}) as ReturnType<DeltaNativeEngine['generateDdlBundle']>,
+  realizeSparkDelta4:(document:Document,target:Parameters<DeltaNativeEngine['realizeSparkDelta4']>[1])=>deltaDdlOperations.realizeSparkDelta4({document,target}) as ReturnType<DeltaNativeEngine['realizeSparkDelta4']>,
+  projectParquetActions:(document:Document)=>deltaParquetOperations.projectActions({document}) as ReturnType<DeltaNativeEngine['projectParquetActions']>,
+  reconcileCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2')=>nativeFamilyDispatcher['delta-log'].reconcileCheckpoint({checkpoint,commits,spec}) as ReturnType<DeltaNativeEngine['reconcileCheckpoint']>,
+  reconcileParquetCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2',sidecars:import('./adapters/delta/sidecars').DeltaSidecar[])=>deltaParquetOperations.reconcileCheckpoint({checkpoint,commits,spec,sidecars}) as import('./adapters/delta/parquet-checkpoint').DeltaParquetCheckpointRecovery,
+  reconcileMultipart:(version:string,partCount:number,parts:import('./adapters/delta/multipart').DeltaCheckpointPart[],commits:import('./adapters/delta/reconcile').DeltaCommit[])=>deltaParquetOperations.reconcileMultipart({version,partCount,parts,commits}) as ReturnType<DeltaNativeEngine['reconcileMultipart']>,
 });
 const delta=createDeltaRustDefault(deltaEngine,error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,reconcileDeltaCheckpoint,reconcileDeltaCheckpointSidecars,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint,reconcileDeltaMultipartCheckpoint}=delta;
@@ -364,7 +369,7 @@ const {editExtension}=createEditExtensionRustDefault(model,isNativeUmfCoreError)
 const dashboardPublic=createDashboardRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry(),editExtension);
 const {dashboardRegistry,registerDashboard,inspectDashboard,readDashboardDocument,writeDashboardDocument,getDashboardDefinition,editDashboardDefinition}=dashboardPublic;
 const {declareCoreBit128Field}=bindCoreBit128FieldRust(await initializeCoreBit128FieldWasm(CORE_MODEL_RESOURCES,async()=>wasmModule),isCoreBit128FieldBindingError);
-const {Registry,validateDocument,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
+const {Registry,validateDocument,validateRegistrations,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
 const ownedExtensionRegistries=createExtensionRegistriesRustDefault(
  ()=>new Registry(),securityPolicySource,model,
  createCodegenEngine(wasmModule,CODEGEN_RESOURCES),
@@ -422,7 +427,7 @@ const temporal=await initializeTemporalWasm();
 const {parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant}=temporal;
 const {validateCsvBooleanLexical,verifyCsvBooleanLexical}=bindCsvBooleanLexicalRust(model,isWireAdmissionError,isNativeUmfCoreError);
 const {inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks}=bindCoreInspectorsRust(model,isWireAdmissionError,isNativeUmfCoreError);
-const inspectRawTableBinding=createRawTableBindingInspector(inspectCoreRecordMembers);
+const inspectRawTableBinding=createRawTableBindingInspector(bindingPublic);
 const {inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault}=bindCoreSchemaPropertiesRust(model);
 const cardinality=bindCoreCardinalityRust(createCoreCardinalityHostInputEngine(wasmModule,CORE_MODEL_RESOURCES),isHostJsonResponseError);
 const {inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration}=cardinality;
@@ -617,7 +622,7 @@ export {compileActionRule,compileActionSelector,admitActionInputs,selectActionId
 export {inspectSagas,declareSaga,editSaga,assessSaga};
 
 export {AVRO_FACETS_EXTENSION,avroFacetsPackage} from './core-ideals/avro-facets-package';
-export type {RelationshipAvroProjection,RelationshipAvroRequest} from './core-ideals/relationship-avro-projection-factory';
+export type {RelationshipAvroProjection,RelationshipAvroRequest} from './core-ideals/relationship-avro-projection-types';
 
 export type {DeltaCommit,DeltaReconciliation} from './adapters/delta/reconcile';
 

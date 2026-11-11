@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {copyJson,generatePythonClient,inspectTableLifecycle,readDocument,writeDocument,tableLifecycleRegistry,type Document} from '../../src';
+import {copyJson,generatePythonClient,inspectTableLifecycle,readDocument,writeDocument,tableLifecycleRegistry,type Document} from '../../src/index-node-v4';
 import schema from '../../spec/extensions/tables/schema.json';
 import manifest from '../../spec/extensions/tables/package.json';
 import noteFixture from './fixtures/table-lifecycle-note.json';
@@ -89,6 +89,33 @@ test('CONTRACT-081: malformed input, unknown revisions and bounded diagnostic ex
 
 test('CONTRACT-081: client generation refuses lifecycle source until its operation interpretation is qualified',()=>{
  expect(()=>generatePythonClient({text:JSON.stringify(source()),package:'notes'})).toThrow('Native table lifecycle client requires declared operations');
+});
+
+test('CONTRACT-081: an unselected table migration command does not qualify a client',()=>{
+ const input=source();
+ const module=input.modules[0]!;
+ module.elements.push(
+  {...module.elements[0]!,id:'otherId'},
+  {...module.elements[1]!,id:'otherOwner'},
+  {...module.elements[0]!,id:'otherSummary',nullability:'absent-allowed'},
+  {...module.elements[2]!,id:'Other',members:[ref('otherId'),ref('otherOwner'),ref('otherSummary')],
+   keys:[{id:'primary',name:'primary',primary:true,fields:[ref('otherId')]}]},
+ );
+ const tables=payload(input);
+ const other=structuredClone(tables.tables[0]);
+ other.id='other';other.name='other';other.record=ref('Other');
+ other.columns[0].field=ref('otherId');other.columns[1].field=ref('otherOwner');
+ other.columns.push({field:ref('otherSummary'),name:'summary',nativeType:{kind:'text'}});
+ for(const action of Object.values(other.policy.person) as {field:{module:string;element:string}}[])action.field=ref('otherOwner');
+ tables.tables.push(other);
+ tables.commands.push({
+  version:'umf.table-operation/0.2',id:'derive_summary',parameters:[],consistency:'transaction',replay:'caller-key-required',
+  body:{kind:'update',table:'other',where:{op:'isNull',field:ref('otherSummary')},
+   values:[{field:ref('otherSummary'),value:{kind:'rowExpression',expression:{op:'field',field:ref('otherId')}}}],returning:[],maxRows:100},
+ });
+ expect(inspectTableLifecycle(input).valid).toBe(true);
+ expect(()=>generatePythonClient({text:JSON.stringify(input),package:'notes',records:[ref('Note')]}))
+  .toThrow('Native table lifecycle client requires declared operations');
 });
 
 test('CONTRACT-081: an action cannot bypass pending table interpretation through an unselected module dependency',async()=>{

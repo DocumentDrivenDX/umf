@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../model/types';
-import type {CoreEvolutionPolicy} from '../model/evolution';
+import type {CoreEvolutionPolicy} from '../model/evolution-types';
 import {UmfError} from '../model/errors';
 
 /** Low-level shared Rust operations; this binder is opt-in until full R8 parity closes. */

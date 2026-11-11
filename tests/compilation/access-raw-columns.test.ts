@@ -2,7 +2,7 @@
 import {expect,test} from 'bun:test';
 import model from '../../fixtures/access/search/unity-catalog-model.json';
 import physical from '../../fixtures/access/search/unity-catalog-binding.json';
-import {inspectAccessViews} from '../../src/compilation/admission/access/index';
+import {inspectAccessViews} from '../../src/node-access-compilation';
 import {rawTableBindingProfiles} from '../../src/extensions/binding/raw-profiles';
 import type {Document} from '../../src/model/types';
 

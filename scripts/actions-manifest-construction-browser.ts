@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {runConstructionCorpus} from '../tests/actions-manifest-construction-corpus';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {createHash} from 'node:crypto';
 const expected=runConstructionCorpus(api),bundle=await Bun.build({entrypoints:['tests/actions-manifest-construction-corpus.ts'],target:'browser',format:'esm'});
 if(!bundle.success)throw Error(bundle.logs.join('\n'));

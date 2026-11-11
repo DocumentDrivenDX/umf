@@ -3,7 +3,7 @@
 import {createHash} from 'node:crypto';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {dirname,join} from 'node:path';
-import {generateAccessPackage} from '../src/compilation/index';
+import {generateAccessPackage} from '../src/node-access-compilation';
 import {profile,request,mutateSource} from '../tests/compilation/access-fixtures';
 
 const destination=process.argv[2],selectedPath=process.argv[3];
@@ -91,10 +91,10 @@ if(selected){
   {name:'ty',version:selected.checkers.ty,configuration:{pythonVersion:'3.11',environment:'selected Linux311 profile; checker execution excluded'}},
  ];
  const compilerSources=Object.fromEntries(await Promise.all(
-  [...new Bun.Glob('src/**/*.ts').scanSync({cwd:process.cwd(),onlyFiles:true})]
+  [...new Bun.Glob('crates/umf-codegen/src/access/**/*.rs').scanSync({cwd:process.cwd(),onlyFiles:true})]
    .sort().map(async path=>[path,createHash('sha256').update(await readFile(path)).digest('hex')]),
  ));
- pinned.compilerVersion='local-access-generator-'+createHash('sha256').update(JSON.stringify(compilerSources)).digest('hex');
+ pinned.compilerVersion='local-rust-access-generator-'+createHash('sha256').update(JSON.stringify(compilerSources)).digest('hex');
 }
 q.profileId=pinned.id;q.profileVersion=pinned.version;
 const result=generateAccessPackage(q,pinned);

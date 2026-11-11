@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,proposeLinkmlImportMerge,readDocument,writeDocument} from '../../src';
+import {importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,proposeLinkmlImportMerge,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/linkml/metamodel-merge/',sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 test('US-024-AC10: every pinned metamodel entry merges under both policies with complete native comparison',async()=>{
  const fixture=await Bun.file(base+'results.json').json(),oracle=await Bun.file(base+'oracle-results.json').json(),manifest=await Bun.file('native/linkml/sources/manifest.json').json(),sources=[];

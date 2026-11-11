@@ -2,7 +2,7 @@
 // @covers US-002-AC1 US-002-AC2 US-002-AC5
 import {test,expect,afterAll} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
-import {importJsonSchema,exportJsonSchema,exportJsonSchemaResources,readDocument,writeDocument,inspectJsonSchema,parseNativeJson} from '../../src';
+import {importJsonSchema,exportJsonSchema,exportJsonSchemaResources,readDocument,writeDocument,inspectJsonSchema,parseNativeJson} from '../../src/index-node-v4';
 import {renderTree,treeChild} from '../../src/adapters/json-schema/tree';
 const root='fixtures/json-schema/upstream';
 const files=[...new Bun.Glob('*.json').scanSync(root+'/draft2020-12')].sort();

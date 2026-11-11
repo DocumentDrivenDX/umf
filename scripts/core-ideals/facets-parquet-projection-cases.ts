@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreFacets, type CoreFacetPatch} from '../../src/model/facets';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {type CoreFacetPatch} from "../../src/model/facets";
+import {declareCoreFacets} from "../../src/index-node-v4";
+import {declareCoreElementKind} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
 import type {FacetsParquetRequest} from '../../src/core-ideals/facets-parquet-projection';
 const identity={module:'m',element:'value'};

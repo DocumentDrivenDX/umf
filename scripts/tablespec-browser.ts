@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/tablespec/roundtrip.json').json()).results;
 const splitCases=(await Bun.file('fixtures/tablespec/split.json').json()).results;
 const tableCases=(await Bun.file('fixtures/tablespec/table-edits.json').json()).cases;
 const metadataCases=(await Bun.file('fixtures/tablespec/table-metadata.json').json()).cases;
 const boundaries=await Bun.file('fixtures/tablespec/boundaries.json').json();
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/tablespec-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/tablespec-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/tablespec-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>TableSpec ingestion</title>');}});
 let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>{if(!r.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return r.abort();}return r.continue();});await page.goto('http://127.0.0.1:'+server.port);

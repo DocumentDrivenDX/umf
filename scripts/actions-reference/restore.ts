@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {inspectActions,registerActions} from '../../src/extensions/actions';
-import {Registry} from '../../src/registry/registry';
+import {createUmfRegistry,inspectActions} from '../../src/index-node-v4';
 import {knownActionModel} from '../../src/extensions/actions/known-model';
 import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../src/model/key-tuple';
-import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
+import {actionFieldValueKey} from '../../src/index-node-v4';
 import {referenceCreationRelationships} from './creation-relationships';
 import {copyJson} from '../../src/model/json';
 import {UmfError,type Document} from '../../src/model/types';
@@ -33,7 +32,7 @@ export class ReferenceActionRestore {
  }
  /** Explicit new identity accepts validated native content as genesis; no old decisions or authority migrate. */
  async newNamespace(original:string,label:string,sourceInput:Document):Promise<{store:string;epoch:string;version:string}>{
-  if(!name(label)||label.length>200||label===original)throw new UmfError('PARAMETER','Expected a distinct new store identity');const newStore=label+'/'+crypto.randomUUID(),copied=copyJson(sourceInput) as unknown as Document,inspection=inspectActions(copied,registerActions(new Registry()));if(!inspection.validation.valid)throw new UmfError('PARAMETER','Invalid genesis document');const source=inspection.source,epoch=crypto.randomUUID();
+  if(!name(label)||label.length>200||label===original)throw new UmfError('PARAMETER','Expected a distinct new store identity');const newStore=label+'/'+crypto.randomUUID(),copied=copyJson(sourceInput) as unknown as Document,inspection=inspectActions(copied,createUmfRegistry());if(!inspection.validation.valid)throw new UmfError('PARAMETER','Invalid genesis document');const source=inspection.source,epoch=crypto.randomUUID();
   return this.store.transaction(original,async(tx,old)=>{
    const [fence]=await tx`select restore_fenced from action_store where id=${old.id}`;if(!old.invocation_fenced||!fence!.restore_fenced)throw new UmfError('REVISION','Uncertain original namespace must remain fenced');
    const graph=await snapshotReferenceProjection(tx,old);

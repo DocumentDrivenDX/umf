@@ -57,7 +57,6 @@
       "kind": "Model",
       "label": "Sales.Order",
       "attributes": {
-        "doc": "Customer order — preserves Unicode and comments",
         "decorators": [
           {
             "name": "docFromCommentDecorator",
@@ -76,14 +75,15 @@
               {
                 "value": {
                   "kind": "StringValue",
-                  "value": "Customer order — preserves Unicode and comments",
                   "type": "type_3",
+                  "value": "Customer order — preserves Unicode and comments",
                   "scalar": "type_3"
                 }
               }
             ]
           }
-        ]
+        ],
+        "doc": "Customer order — preserves Unicode and comments"
       },
       "edges": [
         {
@@ -151,7 +151,6 @@
       "kind": "Scalar",
       "label": "string",
       "attributes": {
-        "doc": "A sequence of textual characters.",
         "decorators": [
           {
             "name": "docFromCommentDecorator",
@@ -164,7 +163,8 @@
               }
             ]
           }
-        ]
+        ],
+        "doc": "A sequence of textual characters."
       },
       "edges": [],
       "location": {
@@ -276,8 +276,8 @@
         "optional": false,
         "default": {
           "kind": "NumericValue",
-          "value": "42",
           "type": "type_11",
+          "value": "42",
           "scalar": "type_11"
         }
       },
@@ -298,7 +298,6 @@
       "kind": "Scalar",
       "label": "int32",
       "attributes": {
-        "doc": "A 32-bit integer. (`-2,147,483,648` to `2,147,483,647`)",
         "decorators": [
           {
             "name": "docFromCommentDecorator",
@@ -311,7 +310,8 @@
               }
             ]
           }
-        ]
+        ],
+        "doc": "A 32-bit integer. (`-2,147,483,648` to `2,147,483,647`)"
       },
       "edges": [
         {
@@ -342,7 +342,6 @@
       "kind": "Scalar",
       "label": "int64",
       "attributes": {
-        "doc": "A 64-bit integer. (`-9,223,372,036,854,775,808` to `9,223,372,036,854,775,807`)",
         "decorators": [
           {
             "name": "docFromCommentDecorator",
@@ -355,7 +354,8 @@
               }
             ]
           }
-        ]
+        ],
+        "doc": "A 64-bit integer. (`-9,223,372,036,854,775,808` to `9,223,372,036,854,775,807`)"
       },
       "edges": [
         {
@@ -386,7 +386,6 @@
       "kind": "Scalar",
       "label": "integer",
       "attributes": {
-        "doc": "A whole number. This represent any `integer` value possible.\nIt is commonly represented as `BigInteger` in some languages.",
         "decorators": [
           {
             "name": "docFromCommentDecorator",
@@ -399,7 +398,8 @@
               }
             ]
           }
-        ]
+        ],
+        "doc": "A whole number. This represent any `integer` value possible.\nIt is commonly represented as `BigInteger` in some languages."
       },
       "edges": [
         {
@@ -430,7 +430,6 @@
       "kind": "Scalar",
       "label": "numeric",
       "attributes": {
-        "doc": "A numeric type",
         "decorators": [
           {
             "name": "docFromCommentDecorator",
@@ -443,7 +442,8 @@
               }
             ]
           }
-        ]
+        ],
+        "doc": "A numeric type"
       },
       "edges": [],
       "location": {
@@ -530,7 +530,6 @@
       "kind": "Scalar",
       "label": "decimal",
       "attributes": {
-        "doc": "A decimal number with any length and precision. This represent any `decimal` value possible.\nIt is commonly represented as `BigDecimal` in some languages.",
         "decorators": [
           {
             "name": "docFromCommentDecorator",
@@ -543,7 +542,8 @@
               }
             ]
           }
-        ]
+        ],
+        "doc": "A decimal number with any length and precision. This represent any `decimal` value possible.\nIt is commonly represented as `BigDecimal` in some languages."
       },
       "edges": [
         {
@@ -600,8 +600,8 @@
               {
                 "value": {
                   "kind": "StringValue",
-                  "value": "^[A-Z]{3}$",
                   "type": "type_3",
+                  "value": "^[A-Z]{3}$",
                   "scalar": "type_3"
                 }
               }
@@ -1030,11 +1030,11 @@
       }
     }
   ],
+  "issues": [],
   "complete": false,
   "limitations": [
     "Selected compiled type graph only; compiler state maps, arbitrary decorator effects and reverse relationships are not fully serialized",
     "Node IDs are snapshot-local, not stable cross-version identities",
     "Source remains authoritative; snapshot editing and cross-system equivalence are not established"
-  ],
-  "issues": []
+  ]
 }

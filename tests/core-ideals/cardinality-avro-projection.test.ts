@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {declareCoreCardinality} from '../../src/model/cardinality';
+import {declareCoreCardinality} from "../../src/index-node-v4";
 import type {Document, Cardinality} from '../../src/model/types';
-import {projectCardinalityToAvro, recoverCardinalityFromAvro, type CardinalityAvroRequest} from '../../src/core-ideals/cardinality-avro-projection';
+import {type CardinalityAvroRequest} from "../../src/core-ideals/cardinality-avro-projection";
+import {projectCardinalityToAvro,recoverCardinalityFromAvro} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const base:CardinalityAvroRequest={id:'projection',recordName:'Example',namespace:'',fieldName:'value',nativeType:'"long"',dependencies:[],availability:'avro-null-value',requireExactValues:false,mode:'strict'};
 function doc():Document{return {umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]};}

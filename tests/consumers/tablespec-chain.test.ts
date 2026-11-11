@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {projectToTableSpecViaAvro,exportTableSpec,readDocument,writeDocument,type TableSpecViaAvroPolicy,type AvroTableSpecRepresentation,type Document} from '../../src';
+import {exportTableSpec,readDocument,writeDocument,type Document} from '../../src/index-node-v4';
+import {projectToTableSpecViaAvro,type TableSpecViaAvroPolicy,type AvroTableSpecRepresentation} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const bindings:Record<string,Record<string,AvroTableSpecRepresentation>>={
  postgresql:{flag:'boolean',small:'integer32',ordinary:'integer32',large:'json-text',exact:'decimal',single:'float32',wide:'float32',words:'string',bounded:'string',padded:'string',data:'hex-text',day:'date',clock:'json-text',zoned_clock:'string',local_stamp:'local-timestamp',instant:'timestamp',items:'string',domain_value:'string',document:'string',identifier:'string'},

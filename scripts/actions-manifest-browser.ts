@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {runManifestCorpus} from '../tests/actions-manifest-corpus';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {createHash} from 'node:crypto';
 const expected:any[]=runManifestCorpus(api);expected.push({id:'browser-items10000',eligible:true,overflowEligible:false},{id:'browser-bytes16MiB',eligible:true,overflowRefused:true});
 const bundle=await Bun.build({entrypoints:['tests/actions-manifest-corpus.ts'],target:'browser',format:'esm'});

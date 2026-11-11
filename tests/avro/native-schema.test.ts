@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {avroNativeSchema,importAvroSchema,exportAvroSchema,readDocument,writeDocument} from '../../src';
+import {avroNativeSchema,importAvroSchema,exportAvroSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const check=createValidator(false).compile(avroNativeSchema);
 test('CONTRACT-007 native syntax schema describes every schema constructor while retaining annotation limits',async()=>{

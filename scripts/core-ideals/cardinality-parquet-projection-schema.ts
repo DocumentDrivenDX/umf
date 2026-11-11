@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/cardinality-avro-projection.schema.json';
-import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';
+import {parquetCarriers} from './parquet-carriers';
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const native={$ref:'#/$defs/nativeType'},nullable={type:'boolean'},fieldId={type:'integer',minimum:-2147483648,maximum:2147483647};
 const primitive={enum:Object.keys(parquetCarriers)},text={type:'string',minLength:1};

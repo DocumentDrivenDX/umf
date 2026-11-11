@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const fixtures=await Bun.file('fixtures/avro/tablespec-projection.json').json(),simple=await Bun.file('fixtures/avro/tablespec-carrier-roundtrip.json').json();
-const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/avro-tablespec-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/avro-tablespec-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/avro-tablespec-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Avro to TableSpec</title>',{headers:{'content-type':'text/html'}});}});
 let browser;
 try{

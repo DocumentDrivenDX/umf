@@ -5,7 +5,7 @@ import {identity,latestProfile,schemaNode,treeValue,type Entry,type ReaderCatalo
 import {apiDocumentation} from './extract';
 import {concepts,propertyText,scalarMeanings,examples} from './reader-content';
 import {sha,json,config} from './io';
-import {validateDocument,writeDocument,readDocument,type Document} from '../../src/index';
+import {validateDocument,writeDocument,readDocument,type Document} from '../../src/index-node-v4';
 export async function buildReader(stage:string,entries:Entry[],profiles:any,validate:(name:string,value:unknown)=>Promise<void>){
  await buildSelfModel(stage);
  const latest=latestProfile<{version:string;schemaPath:string}>(profiles.coreProfiles),id=identity('schema',latest.schemaPath,''),source=entries.find(e=>e.id===id);

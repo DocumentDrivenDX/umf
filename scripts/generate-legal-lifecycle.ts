@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Development fixture materialization; schema libraries remain browser compatible. */
 import {legalSource,evolvedLegalSource,indexedLegalSource,ownerViaLegalSource,originals,moduleId} from '../tests/lifecycle/legal-fixture';
-import {compileTableDeployment} from '../src/table-deployment';
-import {compileTableMigration} from '../src/table-migration';
+import {compileTableDeployment} from '../src/index-node-v4';
+import {compileTableMigration} from '../src/index-node-v4';
 import {hashCanonical,sha256Text} from '../src/compilation/bundle/hash';
 const root=new URL('../fixtures/table-lifecycle/legal/',import.meta.url);
 const configuration={module:moduleId,schema:'legal_demo',ownerRole:'legal_owner',personRole:'legal_person',batchRole:'legal_batch',groupRoles:{billing_admin:'legal_billing_admin'}};

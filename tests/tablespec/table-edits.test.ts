@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importTableSpec,importTableSpecBundle,editTableSpecColumn,editTableSpecTable,exportTableSpec,exportTableSpecBundle,readDocument,writeDocument} from '../../src';
+import {importTableSpec,importTableSpecBundle,editTableSpecColumn,editTableSpecTable,exportTableSpec,exportTableSpecBundle,readDocument,writeDocument} from '../../src/index-node-v4';
 const string=(value:string)=>({kind:'string' as const,value});
 test('CONTRACT-030 table edits repair native references and preserve monolithic/split sources',async()=>{
  const text='{"version":"1.0","table_name":"orders","description":"Original","primary_key":["id"],"context_column":"context","future":{"exact":9007199254740993},"columns":[{"name":"id","data_type":"INTEGER","nullable":false},{"name":"context","data_type":"TEXT","nullable":false}]}';

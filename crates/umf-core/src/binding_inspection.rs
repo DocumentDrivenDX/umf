@@ -8,7 +8,7 @@ use crate::{
     error::{Diagnostic, EngineError, Severity, Validation},
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
-    serialization::{Format, read_json_value},
+    serialization::{read_json_value, Format},
     value::{Utf16, Value},
 };
 use std::collections::BTreeSet;
@@ -357,6 +357,315 @@ pub fn inspect_binding(
         }
     }
     Ok(from_diagnostics(diagnostics))
+}
+
+/// Inspect the direct-column subset used by raw-table bindings. This composes
+/// the registered binding validator with Rust Core Record membership meaning;
+/// it makes no SQL, native-type, or enforcement claim.
+pub fn inspect_raw_table_binding(
+    resources: &BindingInspectionResources,
+    binding_input: &Value,
+    logical_input: &Value,
+    target_input: &Value,
+    module_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Validation, EngineError> {
+    macro_rules! copy_input {
+        ($input:expr) => {
+            match copy_inspection_input($input, ctx) {
+                Ok(value) => value,
+                Err(error) if error.is_control_failure() => return Err(error),
+                Err(error) => return Ok(admission_validation(error)),
+            }
+        };
+    }
+    let binding = copy_input!(binding_input);
+    let logical = copy_input!(logical_input);
+    let target = copy_input!(target_input);
+    let module = match module_input {
+        Value::String(value) => Some(value.clone()),
+        _ => None,
+    };
+
+    let base = inspect_binding(resources, &binding, &logical, ctx)?;
+    if !base.valid {
+        return Ok(base);
+    }
+    let base_complete = base.complete;
+    let mut diagnostics = base.diagnostics;
+    let add =
+        |diagnostics: &mut Vec<Diagnostic>, ctx: &mut Context<'_>, suffix: &str, message: &str| {
+            push_diag(
+                diagnostics,
+                ctx,
+                "BINDING_RAW_PROFILE",
+                &child(&Utf16::from("/extensions/umf.binding"), suffix),
+                message,
+                Severity::Error,
+            )
+        };
+    if !base_complete {
+        add(
+            &mut diagnostics,
+            ctx,
+            "",
+            "Uninterpreted binding content blocks the declarative profile",
+        )?;
+    }
+    let payload = get(
+        get(&binding, "extensions").unwrap_or(&Value::Null),
+        "umf.binding",
+    )
+    .unwrap_or(&Value::Null);
+    let binding_version = get(&binding, "vocabularies")
+        .and_then(|v| get(v, "umf.binding"))
+        .and_then(|v| get(v, "version"));
+    if !eq_value_text(get(payload, "profile"), "umf-binding-2")
+        || !eq_value_text(binding_version, "0.2.0")
+    {
+        add(
+            &mut diagnostics,
+            ctx,
+            "/profile",
+            "Expected stable-ID binding 0.2.0",
+        )?;
+    }
+    if !eq_value_text(get(&logical, "umf"), "0.10.0") {
+        add(
+            &mut diagnostics,
+            ctx,
+            "/logical/coreVersion",
+            "Expected core 0.10.0 logical model",
+        )?;
+    }
+
+    let profile_target = get(payload, "target").unwrap_or(&Value::Null);
+    let system = get(profile_target, "system").and_then(text).cloned();
+    let supported = system.as_ref().is_some_and(|system| {
+        ["lakebase", "unity-catalog", "spark-delta"]
+            .iter()
+            .any(|candidate| system == &Utf16::from(*candidate))
+    });
+    if !supported || !eq_value_text(get(profile_target, "subset"), "typed-access-columns/0.1") {
+        add(
+            &mut diagnostics,
+            ctx,
+            "/target",
+            "Unsupported declarative target profile",
+        )?;
+    }
+    let target_matches = match &target {
+        Value::Object(fields) => {
+            let only_known = fields.iter().all(|(candidate, _)| {
+                candidate == &key("platform") || candidate == &key("majorVersion")
+            });
+            let platform = get(&target, "platform").and_then(text);
+            let major = get(&target, "majorVersion").and_then(text);
+            only_known
+                && platform.is_some()
+                && major.is_some_and(|value| !value.is_empty())
+                && platform == system.as_ref()
+                && major == get(profile_target, "version").and_then(text)
+        }
+        _ => false,
+    };
+    if !target_matches {
+        add(
+            &mut diagnostics,
+            ctx,
+            "/target",
+            "ColumnSet target must match the exact authored platform and version identity",
+        )?;
+    }
+    let module_exists = get(&logical, "modules")
+        .and_then(array)
+        .unwrap_or(&[])
+        .iter()
+        .any(|row| get(row, "id").and_then(text) == module.as_ref());
+    let bound_module = get(payload, "elements")
+        .and_then(array)
+        .unwrap_or(&[])
+        .iter()
+        .any(|row| get(row, "module").and_then(text) == module.as_ref());
+    if !module_exists || !bound_module {
+        add(
+            &mut diagnostics,
+            ctx,
+            "/elements",
+            "ColumnSet module must have an explicit bound Record",
+        )?;
+    }
+    let relationships = get(payload, "relationships").and_then(array).unwrap_or(&[]);
+    if !relationships.is_empty() {
+        add(
+            &mut diagnostics,
+            ctx,
+            "/relationships",
+            "Relationship layout is outside this declarative profile",
+        )?;
+    }
+    let indexes = get(payload, "indexes").and_then(array).unwrap_or(&[]);
+    if !indexes.is_empty() {
+        add(
+            &mut diagnostics,
+            ctx,
+            "/indexes",
+            "Index or clustering intent needs a separately qualified profile",
+        )?;
+    }
+
+    type Identity = (Utf16, Utf16);
+    let mut tables = std::collections::HashSet::<Utf16>::new();
+    let mut owners = std::collections::HashMap::<Identity, Vec<Identity>>::new();
+    let record_members_schema =
+        crate::record_members_inspection::prepare_record_members_inspection_schema(
+            &resources.engine,
+            ctx,
+        )?;
+    let mut no_extensions = NoExtensionCapabilities;
+    for (index, row) in get(payload, "elements")
+        .and_then(array)
+        .unwrap_or(&[])
+        .iter()
+        .enumerate()
+    {
+        let row_module = get(row, "module")
+            .and_then(text)
+            .cloned()
+            .unwrap_or_default();
+        let row_element = get(row, "element")
+            .and_then(text)
+            .cloned()
+            .unwrap_or_default();
+        let record = get(&logical, "modules")
+            .and_then(array)
+            .unwrap_or(&[])
+            .iter()
+            .find(|candidate| get(candidate, "id").and_then(text) == Some(&row_module))
+            .and_then(|candidate| get(candidate, "elements").and_then(array))
+            .and_then(|elements| {
+                elements
+                    .iter()
+                    .find(|candidate| get(candidate, "id").and_then(text) == Some(&row_element))
+            });
+        if !record.is_some_and(|record| eq_text(get(record, "kind"), "record"))
+            || !truthy(get(row, "table"))
+            || get(row, "partition").is_some()
+        {
+            add(
+                &mut diagnostics,
+                ctx,
+                &format!("/elements/{index}"),
+                "Expected explicit Record table without partition semantics",
+            )?;
+        }
+        if truthy(get(row, "table")) {
+            if let Some(table) = get(row, "table").and_then(text) {
+                if !tables.insert(table.clone()) {
+                    add(
+                        &mut diagnostics,
+                        ctx,
+                        &format!("/elements/{index}/table"),
+                        "Duplicate physical table identity",
+                    )?;
+                }
+            }
+        }
+        if record.is_some_and(|record| eq_text(get(record, "kind"), "record"))
+            && eq_value_text(get(&logical, "umf"), "0.10.0")
+        {
+            let identity = Value::Object(vec![
+                (key("module"), Value::String(row_module.clone())),
+                (key("element"), Value::String(row_element.clone())),
+            ]);
+            let inspected = crate::record_members_inspection::inspect_core_record_members_prepared(
+                &logical,
+                &identity,
+                &resources.engine,
+                &resources.registry,
+                &mut no_extensions,
+                ctx,
+                &record_members_schema,
+            )?;
+            let meaning = get(&inspected, "meaning").unwrap_or(&Value::Null);
+            if !eq_value_text(get(meaning, "state"), "known") {
+                add(
+                    &mut diagnostics,
+                    ctx,
+                    &format!("/elements/{index}"),
+                    "Explicit fully interpreted Record membership is required",
+                )?;
+            } else if let Some(members) = get(meaning, "members").and_then(array) {
+                for member in members {
+                    let id = (
+                        get(member, "module")
+                            .and_then(text)
+                            .cloned()
+                            .unwrap_or_default(),
+                        get(member, "element")
+                            .and_then(text)
+                            .cloned()
+                            .unwrap_or_default(),
+                    );
+                    owners
+                        .entry(id)
+                        .or_default()
+                        .push((row_module.clone(), row_element.clone()));
+                }
+            }
+        }
+    }
+    let mut columns = std::collections::HashSet::<(Identity, Utf16)>::new();
+    for (index, row) in get(payload, "fields")
+        .and_then(array)
+        .unwrap_or(&[])
+        .iter()
+        .enumerate()
+    {
+        let id = (
+            get(row, "module")
+                .and_then(text)
+                .cloned()
+                .unwrap_or_default(),
+            get(row, "element")
+                .and_then(text)
+                .cloned()
+                .unwrap_or_default(),
+        );
+        let owner = owners.get(&id).map(Vec::as_slice).unwrap_or(&[]);
+        if !eq_value_text(get(row, "storage"), "column")
+            || !truthy(get(row, "column"))
+            || get(row, "field").is_some()
+            || owner.len() != 1
+        {
+            add(
+                &mut diagnostics,
+                ctx,
+                &format!("/fields/{index}"),
+                "Expected direct core member Field with one bound Record owner and explicit column",
+            )?;
+        }
+        if truthy(get(row, "column")) && owner.len() == 1 {
+            if let Some(column) = get(row, "column").and_then(text) {
+                if !columns.insert((owner[0].clone(), column.clone())) {
+                    add(
+                        &mut diagnostics,
+                        ctx,
+                        &format!("/fields/{index}/column"),
+                        "Duplicate physical column identity in table",
+                    )?;
+                }
+            }
+        }
+    }
+    let valid = !diagnostics
+        .iter()
+        .any(|item| item.severity == Severity::Error);
+    Ok(Validation {
+        valid,
+        complete: diagnostics.is_empty(),
+        diagnostics,
+    })
 }
 
 struct BindingSemantics;

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {captureParquet,exportAvroSchema,exportParquetCapture,importAvroSchema,inspectParquetSchema,readDocument,writeDocument} from '../../src';
+import {captureParquet,exportAvroSchema,exportParquetCapture,importAvroSchema,inspectParquetSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 
 test('@covers US-045-AC4: native Avro and Parquet value/id carriers preserve sources without authored relationship inference',async()=>{
  const base='fixtures/relationship-native/';

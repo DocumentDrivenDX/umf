@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {assertPythonClientRustPlatformV4} from '../src/access/rust-default-v4';
-import {generatePythonClient as generateTypescript} from '../src/access';
+import {generatePythonClient as generateTypescript} from '../src/index-node-v4';
 import {generatePythonClient as generateNode} from '../src/index-node-v4';
 import {initializePythonClientRustDefaultV4} from '../src/access/rust-default-v4';
 

@@ -3,7 +3,6 @@
  * Private candidate source checks; no identity authentication or enforcement authority.
  */
 import {copyJson} from '../../model/json';
-import {checkSchemaLiteral} from '../../model/schema-literals';
 import {ProtectionLiteralBudget} from './protection/literals';
 import {createValidator} from '../../validation/schema';
 import documentSchema from '../../../spec/core/schema.json';
@@ -23,11 +22,11 @@ function scalar(field:any,identity=false):any{
  const facets=field.facets??{};if(field.scalarType==='decimal'&&(!Number.isSafeInteger(facets.precision)||!Number.isSafeInteger(facets.scale)))fail();
  return {scalarType:field.scalarType,cardinality:field.cardinality,nullability:field.nullability,facets,allowedValues:field.allowedValues??null};
 }
-export function createCandidateEntityTermScope(ontologyInput:unknown,documentsInput:unknown,targetInput:unknown):unknown{
- return createCandidateEntityTermScopeFromChecks(resolveCandidateSecurityOntology(ontologyInput,documentsInput),targetInput);
+export function createCandidateEntityTermScope(ontologyInput:unknown,documentsInput:unknown,targetInput:unknown,literalBudget=new ProtectionLiteralBudget()):unknown{
+ return createCandidateEntityTermScopeFromChecks(resolveCandidateSecurityOntology(ontologyInput,documentsInput),targetInput,literalBudget);
 }
 /** Private shared-program path: the root must be the original issued immutable check. */
-export function createCandidateEntityTermScopeFromChecks(checkedInput:unknown,targetInput:unknown):unknown{
+export function createCandidateEntityTermScopeFromChecks(checkedInput:unknown,targetInput:unknown,literalBudget=new ProtectionLiteralBudget()):unknown{
  requireIssuedCandidateSecurityOntology(checkedInput);const checked:any=checkedInput,ontology=checked.ontology,target:any=copyJson(targetInput);ref(target);
  let index=sourceIndexes.get(checked);if(!index){
   const entities=new Map<string,any>(ontology.entities.map((e:any)=>[id(e.type),e]));
@@ -38,12 +37,12 @@ export function createCandidateEntityTermScopeFromChecks(checkedInput:unknown,ta
  }
  if(!index.entities.has(id(target)))fail();
  const result=freeze({kind:'candidate-entity-term-scope/0.1',ontology,documents:checked.documents,target});
- scopes.set(result,{...index,target,checked});return result;
+ scopes.set(result,{...index,target,checked,literalBudget});return result;
 }
 /** One compiler-owned literal budget across every target scope; callers cannot inject a checker. */
 export function createCandidateEntityTermScopeSet(checkedInput:unknown):(target:unknown)=>unknown{
  requireIssuedCandidateSecurityOntology(checkedInput);const budget=new ProtectionLiteralBudget();
- return target=>{const result=createCandidateEntityTermScopeFromChecks(checkedInput,target);scopes.get(result as object).literalBudget=budget;return result;};
+ return target=>createCandidateEntityTermScopeFromChecks(checkedInput,target,budget);
 }
 /** Private original source root; never reconstructed from scope metadata or JSON copies. */
 export function readCandidateEntityTermScopeRoot(scope:unknown):unknown{
@@ -73,7 +72,7 @@ export function resolveCandidateEntityTerm(scopeInput:unknown,termInput:unknown)
   descriptor={kind:'context-attribute',field:value.field};domain='scalar:'+canonical(scalar(scope.fields.get(id(value.field)).field));
  }else if(value?.kind==='constant'){
   shape(value,['kind','field','value']);ref(value.field);if(!literalShape(value.value))fail();const source=scope.fields.get(id(value.field));if(!source)fail();
-  domain='scalar:'+canonical(scalar(source.field));if(scope.literalBudget)scope.literalBudget.check(source.document,source.field,value.value);else checkSchemaLiteral(source.document,source.field,value.value);
+  domain='scalar:'+canonical(scalar(source.field));scope.literalBudget.check(source.document,source.field,value.value);
   descriptor={kind:'constant',field:value.field,value:value.value};
  }else return fail();
  const result=freeze({kind:'candidate-entity-term/0.1',term:descriptor,domain});terms.set(result,{scope:scopeInput,domain});return result;

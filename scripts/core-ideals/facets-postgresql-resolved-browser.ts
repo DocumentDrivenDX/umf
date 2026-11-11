@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {inspectResolvedFacetPredicate} from '../../src/adapters/postgresql/facet-resolved-predicate';
+import {inspectResolvedFacetPredicate} from './postgresql-facet-resolved-predicate';
 const constraints=await Bun.file('fixtures/validation/facets-postgresql-constraints-native.json').json(),datums=await Bun.file('fixtures/validation/facets-postgresql-resolved-native.json').json();
 const projection=await Bun.file('fixtures/validation/facets-postgresql-projection-native.json').json();
 for(const proof of [constraints,datums,projection])for(const [path,sha] of Object.entries(proof.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),sha);
@@ -30,7 +30,7 @@ try{
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {predicates:data.rows.length,verified,unsupported,datums:data.datums.length,decoded,refused,getterCalls:calls};
  });
  assert.deepEqual(checks,{predicates:20,verified:10,unsupported:10,datums:13,decoded:10,refused:3,getterCalls:0});assert.deepEqual(externalRequests,[]);
- const paths=['fixtures/validation/facets-postgresql-projection-native.json','src/adapters/postgresql/facet-resolved-predicate.ts','src/adapters/postgresql/facet-node-tree.ts','scripts/core-ideals/facets-postgresql-resolved-browser.ts','fixtures/validation/facets-postgresql-constraints-native.json','fixtures/validation/facets-postgresql-resolved-native.json','dist/facet-resolved-predicate.js','dist/facet-node-tree.js'];
+ const paths=['fixtures/validation/facets-postgresql-projection-native.json','scripts/core-ideals/postgresql-facet-resolved-predicate.ts','scripts/core-ideals/postgresql-facet-node-tree.ts','scripts/core-ideals/facets-postgresql-resolved-browser.ts','fixtures/validation/facets-postgresql-constraints-native.json','fixtures/validation/facets-postgresql-resolved-native.json','dist/facet-resolved-predicate.js','dist/facet-node-tree.js'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async path=>[path,createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/facets-postgresql-resolved-browser.json',JSON.stringify({scope:'Internal pinned analyzed-expression verification and exact Datum decoding; no public core classification or capture-correspondence claim',browser:browser.version(),checks,externalRequests,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

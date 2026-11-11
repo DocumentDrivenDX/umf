@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {readDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
-import {generatePythonClient} from '../../src/access';
+import {generatePythonClient} from '../../src/index-node-v4';
 
 export function utf16Units(text: string): number[] {
   const units: number[] = [];

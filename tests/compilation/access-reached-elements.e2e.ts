@@ -8,7 +8,7 @@ import {profile,request} from './access-fixtures';
 // A relevance path is not an element: dependency id/kind/Key paths share one root.
 test('valid owned-Key dependencies count unique reached elements rather than census paths',async()=>{
  const {readDocument,validateDocument}=await import('../../src/index');
- const {admitAccessRequest}=await import('../../src/compilation/admission/index');
+ const {generateAccessPackage}=await import('../../src/node-access-compilation');
  const req=request();const doc=JSON.parse(req.sources[0]!.text);
  const module=doc.modules[0];
  const dependencyCount=2000;
@@ -35,7 +35,7 @@ test('valid owned-Key dependencies count unique reached elements rather than cen
  // The previous relevance inventory adds id/kind/keys/0 + Record for each
  // dependency plus its own Field, exceeding10000paths with only4006elements.
  expect(6+dependencyCount*5).toBe(10006);
- const admitted=admitAccessRequest(req,profile());
+ const admitted=generateAccessPackage(req,profile());
  expect(admitted.diagnostics).toEqual([]);
  const actualRoots=[...new Set(admitted.dispositions.filter(d=>d.relevance!=='unselected').flatMap(d=>{
   const match=d.pointer.match(/^\/modules\/\d+\/elements\/\d+(?:\/|$)/);return match?[match[0].replace(/\/$/,'')]:[];

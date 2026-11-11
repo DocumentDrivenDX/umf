@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document,type Diagnostic} from '../model/types';
-import type {ProtobufProjection,ProtobufProjectionOptions} from './json-schema-protobuf';
-import type {ProtobufSourceCompiler} from '../adapters/protobuf/source';
+import type {ProtobufProjection,ProtobufProjectionOptions} from './json-schema-protobuf-types';
+import type {ProtobufSourceCompiler} from '../adapters/protobuf/source-types';
 
 type Guard=(error:unknown)=>boolean;
 type NativeEngine={['json-schema-protobuf-projection']:{projectJsonSchemaToProtobuf(fields:{source:Document;policy:ProtobufProjectionOptions}):unknown}};

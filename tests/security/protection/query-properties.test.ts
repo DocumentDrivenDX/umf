@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {domainFixture,domainRef} from './domain-fixture';
 import {validateProtectionParameters} from '../../../src/extensions/security/protection/parameters';
-import {inspectProtectionQueryProperties} from '../../../src/extensions/security/protection/queries';
+import {inspectProtectionQueryProperties} from '../../../src/index-node-v4';
 import {LIMITS} from '../../../src/model/json';
 const check=(f:ReturnType<typeof domainFixture>,operator:string,required:any[]= ['equality'])=>inspectProtectionQueryProperties(f.policy,f.catalog,f.closure,{ruleIndex:0,disclosureIndex:0,operator,required});
 test('conditional properties exercise all five operators and never attest actual query lineage',()=>{

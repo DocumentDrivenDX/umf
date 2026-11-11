@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';
-import type {ParquetCardinalityCarrier} from '../../src/core-ideals/parquet-cardinality-carrier';
+import {parquetCarriers} from './parquet-carriers';
+import type {ParquetCardinalityCarrier} from './parquet-cardinality-carrier';
 export function parquetCardinalityCarrierCases(){
  const cases:{id:string;carrier:ParquetCardinalityCarrier}[]=[];
  for(const nativeType of Object.keys(parquetCarriers) as (keyof typeof parquetCarriers)[]){

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {SmithyAssemblyBackend,SmithyAssemblyResult} from '../adapters/smithy/assembly';
 import type {Document} from '../model/types';
-import type {ProjectionIssue} from './json-schema-protobuf';
+import type {ProjectionIssue} from './projection-types';
 
 export interface SmithyJsonSchemaBackend extends SmithyAssemblyBackend {
  converterIdentity:string;

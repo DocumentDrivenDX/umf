@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../model/types';
-import type {SqlServerAvroPolicy,SqlServerAvroProjection} from './sqlserver-avro';
+import type {SqlServerAvroPolicy,SqlServerAvroProjection} from './sqlserver-avro-types';
 type Guard=(error:unknown)=>boolean;
 interface Engine{['sqlserver-avro-projection']:{projectSqlServerToAvro(fields:{source:Document;policy:SqlServerAvroPolicy}):unknown}}
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);

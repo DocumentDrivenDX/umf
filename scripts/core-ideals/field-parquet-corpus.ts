@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {classifyParquetRecordType, recoverParquetRecordTypeBytes} from '../../src/core-ideals/parquet-record-type';
-import {classifyParquetRecord, recoverParquetRecordBytes} from '../../src/core-ideals/parquet-record';
+import {classifyParquetRecordType,recoverParquetRecordTypeBytes} from "../../src/index-node-v4";
+import {classifyParquetRecord,recoverParquetRecordBytes} from "../../src/index-node-v4";
 import {parquetFieldPaths} from './parquet-field-cases';
-import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+import {importParquetSchema,getParquetFieldMetadata} from "../../src/index-node-v4";
 
-import {classifyParquetField, recoverParquetFieldBytes} from '../../src/core-ideals/parquet-field';
+import {classifyParquetField,recoverParquetFieldBytes} from "../../src/index-node-v4";
 const rows=[];
 for(const path of parquetFieldPaths){const bytes=new Uint8Array(await Bun.file(path).arrayBuffer()),source=importParquetSchema(bytes,{id:path});
  const fields=getParquetFieldMetadata(source).fields.map(f=>{const request={index:f.index,mode:'strict' as const},result=classifyParquetField(source,request);return {index:f.index,path:f.path,name:f.element.name,definitionLevel:f.definitionLevel,repetitionLevel:f.repetitionLevel,request,result};});

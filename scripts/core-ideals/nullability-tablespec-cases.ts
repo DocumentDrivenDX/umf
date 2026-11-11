@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import native from '../../fixtures/validation/nullability-tablespec-profile-native.json';
-import {importTableSpec, classifyTableSpecField, writeJsonValue, copyJson} from '../../src';
-import type {Document, TableSpecNullabilityRequest} from '../../src';
+import {importTableSpec, classifyTableSpecField, writeJsonValue, copyJson} from '../../src/index-node-v4';
+import type {Document, TableSpecNullabilityRequest} from '../../src/index-node-v4';
 export function tableSpecAvailabilitySource(text:string,format:'json'|'yaml'='json'):Document{
  const imported=importTableSpec(text,{id:'availability',format}),fields=classifyTableSpecField(imported,{column:0,mode:'strict'});
  return fields.target!;

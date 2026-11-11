@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../src/model/types';
-import {evaluateActionRule,type ActionBusinessState} from '../../src/extensions/actions/evaluation';
+import {evaluateActionRule,type ActionBusinessState} from '../../src/index-node-v4';
 import type {PreparedReferenceAction} from './preparation';
 import type {FrozenReferenceState} from './state';
 import {ReferenceMutationGateway} from './gateway';
