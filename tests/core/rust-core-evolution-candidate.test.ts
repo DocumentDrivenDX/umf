@@ -4,7 +4,6 @@ import {createCoreModelEngine,isNativeUmfCoreError} from '../../bindings/core/no
 import frozen from '../../tests/rust-core/fixtures/r5-core-evolution/frozen-typescript-0.10.json';
 import {CORE_MODEL_RESOURCES} from '../../src/access/core-model-resources';
 import {bindCoreEvolutionRustCandidate} from '../../src/access/rust-core-evolution-candidate';
-import {ValueWork} from '../../src/model/internal/value-context';
 import {UmfError} from '../../src/model/errors';
 import type {Document} from '../../src/model/types';
 import type {CoreEvolutionPolicy} from '../../src/model/evolution-types';
@@ -83,10 +82,3 @@ test('Rust retained-output byte edge is exact',()=>{
   if(rustOver.ok)throw new Error('Rust accepted aggregate receipt bytes above the limit');
   expect(rustOver.error.code).toBe('LIMIT');
 },60_000);
-
-test('both source work counters accept 1,000,000 units and reject the next unit',()=>{
-  const work=new ValueWork();
-  work.charge('boundary',1_000_000);
-  expect(work.used).toBe(1_000_000);
-  expect(()=>work.charge('boundary',1)).toThrow('budget exceeded');
-});

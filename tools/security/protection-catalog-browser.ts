@@ -1,11 +1,12 @@
 /** Component replay only: no S13-S25 acceptance promotion. */
+import {buildStandaloneBindingBrowserRuntime} from '../../scripts/binding/browser-runtime';
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
 const files=['src/index.ts','src/extensions/security/protection/catalog.ts','src/extensions/security/protection/source.ts','spec/extensions/security-protection/schema.json','spec/extensions/security-protection/package.json','tests/security/protection/catalog.test.ts','tests/security/protection/source.test.ts','tools/security/protection-catalog-browser.ts','tools/security/protection-boundary.ts','src/model/json.ts','src/model/types.ts','src/validation/schema.ts','src/model/schema-literals.ts','scripts/security-protection-schema.py','tests/security/protection/wire.test.ts','bun.lock'];
 const hash=(v:Uint8Array|string)=>createHash('sha256').update(v).digest('hex');
 const pins=async()=>Object.fromEntries(await Promise.all(files.map(async p=>[p,hash(new Uint8Array(await Bun.file(p).arrayBuffer()))])));
 const before=await pins();
-const build=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm'});
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm'});
 if(!build.success||build.outputs.length!==1)throw Error('Catalog browser build failed');
 const js=await build.outputs[0]!.text();if(js.length>16_000_000)throw Error('Catalog browser bundle bound');
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch:r=>new URL(r.url).pathname==='/catalog.js'?new Response(js,{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Catalog envelope</title>')});

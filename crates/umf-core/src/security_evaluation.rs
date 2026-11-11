@@ -161,6 +161,11 @@ fn literal_id(
     ctx: &mut Context<'_>,
 ) -> Result<String, EngineError> {
     engine.check_schema_literal_public(document, field, value, ctx)?;
+    // Security comparison admits a typed null as a real value. Keep this
+    // identity outside the hexadecimal literal-identity namespace.
+    if value == &Value::Null {
+        return Ok("null:security-value".to_owned());
+    }
     crate::literal::literal_identity(field, value, engine.policy(), ctx)?
         .map(|value| {
             let mut exact = String::with_capacity(value.units().len().saturating_mul(4));
@@ -797,7 +802,7 @@ fn access_inner(
     resolution_input: &Value,
     cut_input: &Value,
     request_input: &Value,
-    resource_input: &Value,
+    resource_input: Option<&Value>,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let inspected = crate::security_policy::require_security_interpretation(
@@ -809,13 +814,17 @@ fn access_inner(
     let resolution = get(&inspected, "resolution").cloned().ok_or_else(fail)?;
     let cut = copy_json(cut_input, ctx)?;
     let mut request = copy_json(request_input, ctx)?;
-    let resource = copy_json(resource_input, ctx)?;
+    let resource = resource_input
+        .map(|value| copy_json(value, ctx))
+        .transpose()?;
     if let Value::Object(fields) = &mut request {
         fields.retain(|(key, _)| key != &Utf16::from("resources"));
-        fields.push((
-            Utf16::from("resources"),
-            Value::Array(vec![resource.clone()]),
-        ));
+        if let Some(resource) = &resource {
+            fields.push((
+                Utf16::from("resources"),
+                Value::Array(vec![resource.clone()]),
+            ));
+        }
     }
     members(
         &cut,
@@ -839,7 +848,9 @@ fn access_inner(
         &request,
         &["action", "resources", "output", "queryUses", "targets"],
     )?;
-    members(&resource, &["type", "key", "fields", "absent"])?;
+    if let Some(resource) = &resource {
+        members(resource, &["type", "key", "fields", "absent"])?;
+    }
     let ontology = get(&resolution, "ontology").cloned().ok_or_else(fail)?;
     let docs = list(get(&resolution, "documents"), 256)?.to_vec();
     let action = text(get(&request, "action"))
@@ -879,7 +890,7 @@ fn access_inner(
         return Err(fail());
     }
     let fact_values = list(get(&cut, "facts"), max_facts)?.to_vec();
-    let resources = vec![resource.clone()];
+    let resources = resource.iter().cloned().collect::<Vec<_>>();
     if 1 + fact_values.len() + resources.len() > max_facts {
         return Err(fail());
     }
@@ -1010,7 +1021,7 @@ fn access_inner(
         }
         for reference in list(get(fact, "absent"), 4096)? {
             let field_id = ref_key(reference)?;
-            if projection.contains_key(&field_id) {
+            if projection.get(&field_id).is_some_and(Option::is_some) {
                 return Err(fail());
             }
             projection.insert(field_id, None);
@@ -1066,7 +1077,6 @@ fn access_inner(
             return Err(fail());
         }
     }
-    let mut query_actions = HashSet::from([action.clone()]);
     for q in query_uses {
         members(q, &["field", "operator", "originalAction"])?;
         let r = get(q, "field").ok_or_else(fail)?;
@@ -1115,6 +1125,7 @@ fn access_inner(
         return Err(fail());
     }
     for target in &target_values {
+        let mut query_actions = HashSet::from([action.clone()]);
         let ty = state
             .types
             .get(&identity(target))
@@ -1176,6 +1187,12 @@ fn access_inner(
             }
         }
     }
+    let Some(resource) = resource else {
+        // Empty collections still pass scope, completeness, dependency,
+        // query and expression admission above. Per-row authorization runs
+        // only when a concrete resource exists.
+        return Ok(public_access_result("permit", Vec::new()));
+    };
     let (decision, evaluated) = state.evaluate_action(&action, &resource)?;
     if decision != "permit" {
         return Ok(public_access_result(&decision, Vec::new()));
@@ -1238,6 +1255,11 @@ fn access_inner(
             .get(&identity(reference))
             .cloned()
             .unwrap_or_default();
+        if dispositions.is_empty()
+            && text(get(classification, "protection")).as_deref() == Some("protected")
+        {
+            return Err(fail());
+        }
         if dispositions
             .iter()
             .any(|value| text(get(value, "kind")).as_deref() == Some("withheld"))
@@ -1248,6 +1270,30 @@ fn access_inner(
             .iter()
             .filter(|value| text(get(value, "kind")).as_deref() == Some("transformed"))
             .collect::<Vec<_>>();
+        if let Some(first) = transforms.first() {
+            let first_field = get(first, "field").ok_or_else(fail)?;
+            let first_value = get(first, "value").ok_or_else(fail)?;
+            let signature = (
+                text(get(first, "transform")).unwrap_or_default(),
+                text(get(first, "version")).unwrap_or_default(),
+                identity(first_field),
+                state.literal(first_field, first_value)?,
+            );
+            for transform in transforms.iter().skip(1) {
+                let field = get(transform, "field").ok_or_else(fail)?;
+                let value = get(transform, "value").ok_or_else(fail)?;
+                if signature
+                    != (
+                        text(get(transform, "transform")).unwrap_or_default(),
+                        text(get(transform, "version")).unwrap_or_default(),
+                        identity(field),
+                        state.literal(field, value)?,
+                    )
+                {
+                    return Ok(public_access_result("conflict", Vec::new()));
+                }
+            }
+        }
         if transforms.is_empty()
             && (!state.covered(target, reference)
                 || (field_value(&resource, reference).is_none()
@@ -1348,7 +1394,7 @@ pub fn evaluate_security_access(
     resource: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    match access_inner(policy, resolution, cut, request, resource, ctx) {
+    match access_inner(policy, resolution, cut, request, Some(resource), ctx) {
         Ok(value) => Ok(value),
         Err(error) if error.is_control_failure() => Err(error),
         Err(error) if error.code == "SECURITY_MASK_CONFLICT" => {
@@ -1382,6 +1428,68 @@ pub fn evaluate_security_collection(
             ]))
         }
     };
+    let max_facts = match get(cut, "maxFacts") {
+        Some(Value::Number(n))
+            if n.is_finite() && n.fract() == 0.0 && *n >= 1.0 && *n <= 10000.0 =>
+        {
+            *n as usize
+        }
+        _ => {
+            return Ok(object(vec![
+                ("status", string("refused")),
+                ("rows", Value::Array(Vec::new())),
+            ]))
+        }
+    };
+    let fact_count = match get(cut, "facts") {
+        Some(Value::Array(values)) => values.len(),
+        _ => {
+            return Ok(object(vec![
+                ("status", string("refused")),
+                ("rows", Value::Array(Vec::new())),
+            ]))
+        }
+    };
+    if 1usize
+        .saturating_add(fact_count)
+        .saturating_add(resources.len())
+        > max_facts
+    {
+        return Ok(object(vec![
+            ("status", string("refused")),
+            ("rows", Value::Array(Vec::new())),
+        ]));
+    }
+    if resources.is_empty() {
+        let Value::Object(fields) = request else {
+            return Ok(object(vec![
+                ("status", string("refused")),
+                ("rows", Value::Array(Vec::new())),
+            ]));
+        };
+        let mut copied = fields.clone();
+        copied.retain(|(key, _)| key != &Utf16::from("resources"));
+        match access_inner(policy, resolution, cut, &Value::Object(copied), None, ctx) {
+            Ok(result) if text(get(&result, "decision")).as_deref() == Some("permit") => {}
+            Ok(_) => {
+                return Ok(object(vec![
+                    ("status", string("refused")),
+                    ("rows", Value::Array(Vec::new())),
+                ]))
+            }
+            Err(error) if error.is_control_failure() => return Err(error),
+            Err(_) => {
+                return Ok(object(vec![
+                    ("status", string("refused")),
+                    ("rows", Value::Array(Vec::new())),
+                ]))
+            }
+        }
+        return Ok(object(vec![
+            ("status", string("evaluated")),
+            ("rows", Value::Array(Vec::new())),
+        ]));
+    }
     let mut rows = Vec::new();
     for resource in resources {
         let Value::Object(fields) = request else {
@@ -1436,7 +1544,12 @@ pub fn evaluate_security_original_read(
     let originals = if decision == "permit" {
         array(get(&result, "output"))
             .iter()
-            .filter(|entry| text(get(entry, "disposition")).as_deref() == Some("original"))
+            .filter(|entry| {
+                matches!(
+                    text(get(entry, "disposition")).as_deref(),
+                    Some("original" | "absent")
+                )
+            })
             .filter_map(|entry| get(entry, "field").cloned())
             .collect::<Vec<_>>()
     } else {

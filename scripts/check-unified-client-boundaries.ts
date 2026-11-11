@@ -9,7 +9,7 @@ const allowedImports:Record<string,readonly string[]>={
  'core-model-resources.ts':['../../spec/core/schema.json','../../spec/core/semantic-type-reference.schema.json','../../spec/core/extension-package.schema.json','../../spec/metamodel/generated/core-constraints.json','../../spec/metamodel/generated/domain-policy.json'],
  'index.ts':['./rust-candidate'],
  'read-json-value-ordinary.ts':['../model/errors','../model/types'],
- 'rust-bit128-default.ts':['../model/bit128','../model/uuid','../model/errors','../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
+ 'rust-bit128-default.ts':['../model/bit128-types','../model/uuid','../model/errors','../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
  'rust-candidate.ts':[],
  'rust-cardinality-default.ts':['../model/cardinality','../model/types','../model/errors'],
  'rust-kind-nullability-default.ts':['../model/field-kind','../model/nullability','../model/types','../model/errors'],
@@ -49,7 +49,7 @@ const typeOnlyImports:Record<string,readonly string[]>={
  'rust-selection-default.ts':['../model/selection-types','../model/types','../registry/registry'],
  'rust-semantic-types-default.ts':['../model/semantic-types','../model/types','../extensions/semantic-types'],
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric'],
- 'rust-bit128-default.ts':['../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
+ 'rust-bit128-default.ts':['../model/uuid','../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
  'rust-core-bit128-field-default.ts':['../model/types'],
  'rust-key-tuple-default.ts':['../model/key-tuple','../model/types'],
 };

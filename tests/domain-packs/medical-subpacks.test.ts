@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {mkdtemp,cp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,lookupMedicalTerminology} from '../../src/domain-packs/medical';
+import {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,lookupMedicalTerminology} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import {generateDomainPackSchema} from '../../src/domain-packs/schema';
 import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";

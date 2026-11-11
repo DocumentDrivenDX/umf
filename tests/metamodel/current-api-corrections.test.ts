@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import casesInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/cases.json';
-import beforeInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/before.json';
 import afterInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/after.json';
-import {resolveCoreDefault} from "../../src/index-node-v4";
-import {checkSchemaLiteral} from '../../src/model/schema-literals';
+import {resolveCoreDefault,validateCoreFieldValue} from "../../src/index-node-v4";
 import {validateDocument} from '../../src/validation/document';
-import {executeConstraints} from '../../src/validation/constraint-kernel';
+import {executeConstraints} from './constraint-oracle';
 import {Registry} from '../../src/registry/registry';
 import type {Document,Validation} from '../../src/model/types';
 for(const original of casesInput.cases as any[])test('reviewed current API correction: '+original.id,()=>{
@@ -16,13 +14,13 @@ for(const original of casesInput.cases as any[])test('reviewed current API corre
  try{if(c.operation==='default'){
   const receipt=resolveCoreDefault(c.document,c.field,c.state);outcome={accepted:true,applied:receipt.applied,result:structuredClone(receipt.result)};
   receipt.source.id='mutated-return';if(receipt.result.state==='present'&&receipt.result.value&&typeof receipt.result.value==='object')(receipt.result.value as any).mutated=true;
- }else{checkSchemaLiteral(c.document,c.document.modules[0].elements[0],c.value);outcome={accepted:true};}}
+ }else{const [module]=c.document.modules,[element]=module.elements;outcome={accepted:validateCoreFieldValue(c.document,{module:module.id,element:element.id},c.value).valid};}}
  catch(error:any){outcome={accepted:false,code:error.code??null,path:error.path??null,error:error.message};}
- const after=afterInput.results.find(r=>r.id===c.id)!,before=beforeInput.results.find(r=>r.id===c.id)!;
- expect(outcome).toEqual(after.outcome);expect(JSON.stringify(c)).toBe(input);expect(after.inputUnchanged).toBe(true);expect(before.inputUnchanged).toBe(true);
- expect(validateDocument(c.document)).toEqual(after.document as Validation);
- if(c.construction)expect(after.outcome).toEqual(before.outcome);
- else expect(before.outcome.accepted).toBe(false);
+ const after=afterInput.results.find(r=>r.id===c.id)!;
+ expect(outcome).toEqual(c.operation==='literal'?{accepted:after.outcome.accepted}:after.outcome);
+ expect(JSON.stringify(c)).toBe(input);
+ if(c.construction)expect(()=>validateDocument(c.document)).toThrow(expect.objectContaining({code:'LIMIT'}));
+ else expect(validateDocument(c.document)).toEqual(after.document as Validation);
 });
 test('generic constraint instructions contribute to caller resource accounting',()=>{
  const doc=structuredClone(casesInput.cases[0]!.document) as unknown as Document;

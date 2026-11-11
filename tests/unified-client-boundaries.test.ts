@@ -67,18 +67,18 @@ test('the Record Type facade cannot restore a predecessor value import', () => {
 		.toContain('rust-record-type-default.ts: value re-export from type-only module ../model/record-type-types');
 });
 
-test('the Record Values facade keeps its predecessor import type-only and isolated', () => {
-	const source = "import type {CoreRecordValueCheck} from '../model/record-values';\n";
+test('the Record Values facade keeps its model import type-only and isolated', () => {
+	const source = "import type {CoreRecordValueCheck} from '../model/record-values-types';\n";
 	expect(checkAccessSource('rust-record-values-default.ts', source)).toEqual([]);
 	expect(checkAccessSource('rust-record-type-default.ts', source)).toContain(
-		'rust-record-type-default.ts: unapproved import ../model/record-values',
+		'rust-record-type-default.ts: unapproved import ../model/record-values-types',
 	);
 	expect(checkAccessSource('rust-record-values-default.ts',
-		"import {validateCoreRecordValues} from '../model/record-values';\n"))
-		.toContain('rust-record-values-default.ts: value import from type-only module ../model/record-values');
+		"import {validateCoreRecordValues} from '../model/record-values-types';\n"))
+		.toContain('rust-record-values-default.ts: value import from type-only module ../model/record-values-types');
 	expect(checkAccessSource('rust-record-values-default.ts',
-		"export * from '../model/record-values';\n"))
-		.toContain('rust-record-values-default.ts: value re-export from type-only module ../model/record-values');
+		"export * from '../model/record-values-types';\n"))
+		.toContain('rust-record-values-default.ts: value re-export from type-only module ../model/record-values-types');
 });
 
 test('the Core Semantic Types Rust facade grants exact type-only predecessor imports', () => {
@@ -345,7 +345,7 @@ test('ordinary Rust JSON facade allows only its audited error and type imports',
 
 test('the Bit128 Rust facades admit only their audited type-only imports', () => {
  const bit128Allowed=checkAccessSource('rust-bit128-default.ts',[
-  "import {BIT128_PROFILE} from '../model/bit128';",
+  "import {BIT128_PROFILE} from '../model/bit128-types';",
   "import type {Bit128NativeTypeInput} from '../projections/bit128';",
   "import type {Bit128ModelProjection} from '../projections/bit128-model';",
   "import type {Bit128RecordValue} from '../extensions/binding/bit128-record';",

@@ -1,3 +1,4 @@
+import '../../src/index-node-v4';
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 /** Private catalog projection compiler. Row eligibility remains a separately
  * installed native profile; this does not compile policy permission or mint it. */

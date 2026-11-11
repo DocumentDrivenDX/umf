@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {LIMITS,copyJson} from '../model/json';
-import {UmfError,type Diagnostic,type Document,type Element} from '../model/types';
-import {parseBits128} from '../model/bit128';
-import {parseUuid} from '../model/uuid';
-import {assertLiteralPolicy} from './literal-policy';
+import {LIMITS,copyJson} from '../../src/model/json';
+import {UmfError,type Diagnostic,type Document,type Element} from '../../src/model/types';
+import {parseBits128} from '../../src/model/bit128';
+import {parseUuid} from '../../src/model/uuid';
+import {assertLiteralPolicy} from '../../src/validation/literal-policy';
 // Only explicit immutable copies receive admission reuse. Mutable caller policy
 // objects are checked on every invocation, including after a previous success.
 const admittedPolicies=new WeakSet<object>();

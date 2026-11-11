@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {readFile,realpath} from 'node:fs/promises';
 import {resolve,relative,isAbsolute,dirname} from 'node:path';
-import {inspectDomainPackLoader} from '../../src/domain-packs/loader';
+import {inspectDomainPackLoader} from '../../src/index-node-v4';
 import {hash} from './state';
 import {readBounded,type ByteBudget} from './bytes';
 export const companionRoot=resolve(import.meta.dir,'../../spec/loader-companion/1.0.0');

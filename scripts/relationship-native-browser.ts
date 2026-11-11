@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
 
@@ -12,7 +13,7 @@ const sources={
 const oracle=await Bun.file(base+'oracle-results.json').json();
 for(const [name,raw] of Object.entries(sources))
  if(createHash('sha256').update(raw).digest('hex')!==oracle.sourceSha256[name])throw Error('Stale '+name+' fixture');
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/relationship-native-browser',naming:'umf.js',target:'browser',format:'esm'});
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/relationship-native-browser',naming:'umf.js',target:'browser',format:'esm'});
 if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/relationship-native-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Native relationship observations</title>');}});
 let browser;

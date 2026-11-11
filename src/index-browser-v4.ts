@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createMedicalRustDefault} from './domain-packs/medical-rust-default';
 import {createPackToolsRustDefault} from './domain-packs/pack-tools-rust';
+import type {PackToolsRequest,PackToolsResult} from './domain-packs/pack-tools-types';
 import {createDashboardRustDefault} from './extensions/dashboard/rust-default';
 import type {Document,Diagnostic,Json} from './model/types';
 import {createBulkActionsRustDefault} from './extensions/actions/bulk-state';
@@ -174,7 +175,7 @@ const {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkIte
 const {projectLakeviewToLegacyDashboard}=createLakeviewLegacyProjectionRustDefault(nativeFamilyDispatcher);
 export {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse,projectLakeviewToLegacyDashboard};
 const packTools=createPackToolsRustDefault({generatePackTools:request=>nativeFamilyDispatcher['pack-tools'].generatePackTools({request})},isNativeUmfCoreError);
-const {generatePackTools}=packTools;
+const {generatePackTools}:{generatePackTools:(request:PackToolsRequest)=>PackToolsResult}=packTools;
 const medical=createMedicalRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,lookupMedicalTerminology}=medical;
 const spark=createSparkRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());

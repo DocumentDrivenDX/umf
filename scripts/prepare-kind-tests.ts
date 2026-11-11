@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Build-host prerequisite for the public shared-runtime composition tests. */
-import {copyFile,mkdir} from 'node:fs/promises';
+import {copyFile,mkdir,mkdtemp,rename,rm} from 'node:fs/promises';
 import {existsSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
 
@@ -20,4 +20,9 @@ const target=resolve(root,process.env.CARGO_TARGET_DIR??'target','release');
 const library=process.platform==='darwin'?'libumf_core_node.dylib':process.platform==='win32'?'umf_core_node.dll':'libumf_core_node.so';
 const destination=resolve(root,'bindings/core/node/umf_core_node.node');
 await mkdir(dirname(destination),{recursive:true});
-await copyFile(resolve(target,library),destination);
+const staging=await mkdtemp(resolve(dirname(destination),'.node-'));
+try{
+ const candidate=resolve(staging,'umf_core_node.node');
+ await copyFile(resolve(target,library),candidate);
+ await rename(candidate,destination);
+}finally{await rm(staging,{recursive:true,force:true});}

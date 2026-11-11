@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 import {parseNativeJson,renderTree} from '../src/model/native-json';
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/spark-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/spark-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const tree=parseNativeJson(await Bun.file('fixtures/spark/schema-cases.json').text());if(tree.kind!=='array')throw Error('Expected cases');const cases=tree.items.map(n=>{if(n.kind!=='object'||n.members.id?.kind!=='string')throw Error('Expected case');return {id:n.members.id.value,text:renderTree(n.members.input!)};});
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('.cache/spark-browser/umf.js'),{headers:{'content-type':'text/javascript'}});return new Response('<!doctype html><title>UMF Spark schema evidence</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);

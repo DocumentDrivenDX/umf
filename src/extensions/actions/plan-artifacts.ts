@@ -1,18 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {scanJsonFrame} from '../../model/internal/scan-json-frame';
-import {boundedJsonBytes} from '../../model/internal/json-byte-budget';
-import {copyJson} from '../../model/json';
-import {readJsonValue,assertExactJsonNumber} from '../../model/serialization';
+import {readJsonValue} from '../../model/serialization';
 import {UmfError,type Json} from '../../model/types';
-import {canonicalSchemaJson} from '../../model/schema-literals';
-import type {ActionPlanArtifact} from './plan-types';
 export const PLAN_BYTES=1048576;
 export const planError=(code:string,message:string,path=''):never=>{throw new UmfError(code,message,path);};
 export function validUnicode(text:string):void {
  for(let i=0;i<text.length;i++){const c=text.charCodeAt(i);if(c>=0xd800&&c<=0xdbff){const n=text.charCodeAt(++i);if(!(n>=0xdc00&&n<=0xdfff))planError('PAP_INVALID','Unpaired Unicode surrogate');}else if(c>=0xdc00&&c<=0xdfff)planError('PAP_INVALID','Unpaired Unicode surrogate');}
-}
-export function validatePlanStrings(value:unknown,depth=0):void {
- if(typeof value==='string')validUnicode(value);else if(value&&typeof value==='object')for(const [key,child] of Object.entries(value)){validUnicode(key);validatePlanStrings(child,depth+1);}
 }
 export function utf8Size(text:string,maximum=PLAN_BYTES):number {
  let bytes=0;for(let i=0;i<text.length;i++){const c=text.charCodeAt(i);if(c>=0xd800&&c<=0xdbff){const n=text.charCodeAt(++i);if(!(n>=0xdc00&&n<=0xdfff))planError('PAP_INVALID','Unpaired Unicode surrogate');bytes+=4;}else if(c>=0xdc00&&c<=0xdfff)planError('PAP_INVALID','Unpaired Unicode surrogate');else bytes+=c<128?1:c<2048?2:3;if(bytes>maximum)planError('PAP_LIMIT','Artifact byte bound exceeded');}return bytes;
@@ -36,12 +29,3 @@ export function scanPlanJson(text:string,maximum=PLAN_BYTES,maxNodes=100000,maxD
 export function parsePlanJson(text:string,maximum=PLAN_BYTES):Json {
  scanPlanJson(text,maximum);try{return readJsonValue(text,'json');}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')planError('PAP_LIMIT','Core JSON limit');return planError('PAP_INVALID','Noninteroperable JSON');}
 }
-export function readPlanArtifact(input:ActionPlanArtifact,maximum=PLAN_BYTES):ActionPlanArtifact {
- let a:ActionPlanArtifact;try{a=copyJson(input) as unknown as ActionPlanArtifact;}catch(error){return planError(error instanceof UmfError&&error.code==='LIMIT'?'PAP_LIMIT':'PAP_INVALID','Artifact JSON admission refused','/artifact');}
- const envelope=(value:unknown,depth=0):void=>{if(depth>64)planError('PAP_LIMIT','Artifact metadata nesting bound exceeded');if(typeof value==='string'){validUnicode(value);return;}if(value&&typeof value==='object'){for(const [key,child] of Object.entries(value)){validUnicode(key);envelope(child,depth+1);}}};
- envelope(a);try{boundedJsonBytes(a as unknown as Json,maximum===PLAN_BYTES?4194304:maximum*6+4194304);}catch{planError('PAP_LIMIT','Artifact envelope byte bound exceeded');}
-if(!a||typeof a!=='object'||Array.isArray(a)||typeof a.mediaType!=='string'||!a.mediaType||a.mediaType.length>256||typeof a.utf8!=='string'||typeof a.sha256!=='string'||!/^[0-9a-f]{64}$/.test(a.sha256))planError('PAP_INVALID','Malformed original artifact');validUnicode(a.mediaType);utf8Size(a.utf8,maximum);return a;
-}
-export function verifyPlanArtifact(a:ActionPlanArtifact,maximum=PLAN_BYTES):void {if(sha256Text(a.utf8,maximum)!==a.sha256)planError('PAP_INTEGRITY','Original artifact digest mismatch');}
-export const jsonEqual=(a:unknown,b:unknown)=>canonicalSchemaJson(a)===canonicalSchemaJson(b);
-export function preparedArtifact(value:unknown):ActionPlanArtifact {const safe=copyJson(value);validatePlanStrings(safe);const utf8=canonicalSchemaJson(safe);utf8Size(utf8);return {mediaType:'application/json',utf8,sha256:sha256Text(utf8)};}

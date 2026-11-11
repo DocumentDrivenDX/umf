@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {currentConstraints,currentDomainPolicy} from './current-policy';
-import {canonicalJson} from './json-equality';
-import {copyJson,copyJsonCharged,LIMITS} from '../model/json';
-import {type Document,type Diagnostic,type Json,pointer,UmfError} from '../model/types';
-import {Registry} from '../registry/registry';
-import {literalErrors,literalIdentity,numericInterval} from './literal-kernel';
-import {assertLiteralPolicy} from './literal-policy';
+import {canonicalJson} from '../../src/validation/json-equality';
+import {copyJson,copyJsonCharged,LIMITS} from '../../src/model/json';
+import {type Document,type Diagnostic,type Json,pointer,UmfError} from '../../src/model/types';
+import {Registry} from '../../src/registry/registry';
+import {literalErrors,literalIdentity,numericInterval} from './literal-oracle';
+import {assertLiteralPolicy} from '../../src/validation/literal-policy';
 type Env=Record<string,any>;
 const scope=(env:Env,bindings:Env={})=>Object.assign(Object.create(null),env,bindings);
 export function checkConstraintProgram(program:unknown):void{assertConstraintProgram(copyJson(program));}
-import {assertConstraintProgram} from './constraint-language';
+import {assertConstraintProgram} from '../../src/validation/constraint-language';
 export type ConstraintMeter=(category:string,visits:number)=>void;
 export function executeConstraints(document:Document,program:any,policy:any,registry=new Registry(),meter?:ConstraintMeter):Diagnostic[] {
  const copy=(v:unknown)=>copyJsonCharged(v,n=>meter?.('constraint-copy',n));
@@ -66,11 +65,4 @@ function interpretConstraints(document:Document,program:any,policy:any,registry:
  const emit=(data:any,env:Env)=>{const diagnostic=evaluate(data,env);if(!['error','warning'].includes(diagnostic.severity)||typeof diagnostic.path!=='string'||typeof diagnostic.code!=='string'||typeof diagnostic.message!=='string')throw new UmfError('CONSTRAINT_DIAGNOSTIC','Malformed diagnostic');diagnostics.push(diagnostic);};
  const execute=(body:any[],env:Env):void=>{for(const step of body){charge();switch(step.op){case 'let':env[step.name]=evaluate(step.value,env);break;case 'for':{const values=evaluate(step.each,env)??[];values.forEach((value:any,index:number)=>execute(step.body,scope(env,{[step.as]:value,...(step.index?{[step.index]:index}:{})})));break;}case 'if':execute(evaluate(step.test,env)?step.then:step.else??[],scope(env));break;case 'emit':if(step.when===undefined||evaluate(step.when,env))emit(step.diagnostic,env);break;case 'remember':{const set=evaluate(step.set,env) as Map<string,any>,key=canonical(evaluate(step.key,env));if(set.has(key)){if(step.diagnostic)emit(step.diagnostic,env);}else set.set(key,step.value===undefined?true:evaluate(step.value,env));break;}}}};
  execute(program.steps,Object.assign(Object.create(null),{doc:document,policy}));return diagnostics;
-}
-// Current data is a private immutable snapshot. Admit its closed language once;
-// arbitrary public programs still take the defensive admission path above.
-assertConstraintProgram(currentConstraints);assertLiteralPolicy(currentDomainPolicy.literal);
-export function runCoreConstraints(document:Document,registry=new Registry(),meter?:ConstraintMeter):Diagnostic[]{
- const owned=copyJsonCharged(document,n=>meter?.('constraint-copy',n)) as unknown as Document;
- return interpretConstraints(owned,currentConstraints,currentDomainPolicy,registry,meter);
 }

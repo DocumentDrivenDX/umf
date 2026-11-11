@@ -2,9 +2,10 @@
 import {RegistryBase as BaseRegistry} from './base';
 import type {ExtensionKindRuntime} from './kind-runtime';
 import {UmfError} from '../model/errors';
-import type {validateDocument as ValidateDocument} from '../validation/document';
 import type {KindRegistration} from './kind-runtime';
-import type {readDocument as ReadDocument,writeDocument as WriteDocument} from '../model/document';
+import type {Document,Validation} from '../model/types';
+
+type ConstraintMeter=(category:string,visits:number)=>void;
 
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','LIMIT','CAPACITY','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
 
@@ -36,12 +37,12 @@ export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfC
  const Registry:new (kindRuntime?:ExtensionKindRuntime)=>BaseRegistry=class Registry extends BaseRegistry {
   constructor(kindRuntime:ExtensionKindRuntime=runtime){super(kindRuntime);}
  };
- const validateDocument:typeof ValidateDocument=(input,registry=new Registry(),meter)=>{
+ const validateDocument=(input:unknown,registry:BaseRegistry=new Registry(),meter?:ConstraintMeter):Validation=>{
   if(meter)throw new UmfError('EXTENSION_KIND_RUNTIME_CONTROLS','Use the shared engine controls for native work metering');
   return invoke(()=>engine.validateDocument(input,registry.registrations()));
  };
- const validateRegistrations=(input:Parameters<typeof ValidateDocument>[0],registrations:KindRegistration[])=>invoke(()=>engine.validateDocument(input,registrations));
- const readDocument:typeof ReadDocument=(source,format='yaml')=>invoke(()=>engine.readDocument(source,format)) as ReturnType<typeof ReadDocument>;
- const writeDocument:typeof WriteDocument=(document,format='yaml')=>invoke(()=>engine.writeDocument(document,format));
+ const validateRegistrations=(input:unknown,registrations:KindRegistration[])=>invoke(()=>engine.validateDocument(input,registrations));
+ const readDocument=(source:string,format:'json'|'yaml'='yaml'):Document=>invoke(()=>engine.readDocument(source,format)) as Document;
+ const writeDocument=(document:Document,format:'json'|'yaml'='yaml'):string=>invoke(()=>engine.writeDocument(document,format));
  return Object.freeze({Registry,validateDocument,validateRegistrations,readDocument,writeDocument,createUmfRegistry:()=>registerActionsNative(new Registry())});
 }

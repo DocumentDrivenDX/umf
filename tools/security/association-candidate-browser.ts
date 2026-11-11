@@ -1,6 +1,6 @@
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
-import {buildBindingBrowserRuntime} from '../../scripts/binding/browser-runtime';
+import {buildBindingBrowserRuntime,buildStandaloneBindingBrowserRuntime} from '../../scripts/binding/browser-runtime';
 import {securityFixture} from '../../tests/security/fixture';
 import {resolveCandidateRecordAssociation} from '../../src/extensions/security/association-candidate';
 const paths=['src/extensions/security/association-candidate.ts','src/model/json.ts','src/model/types.ts','src/extensions/security/types.ts','tests/security/fixture.ts','tools/security/association-candidate-browser.ts'];
@@ -16,7 +16,7 @@ const selector={kind:'record-members',type:a.type,keyId:a.keyId,endpoints:a.endp
 const classifications=[...resolution.ontology.entities.filter(e=>['Staff','Project'].includes(e.type.elementId)),a].map(e=>({type:e.type,fields:e.fields}));
 const expressionPacket={policy,ontology:resolution.ontology,expression:policy.rules[1]!.condition,selectors:resolution.ontology.associations.map(a=>({kind:'record-members',type:a.type,keyId:a.keyId,endpoints:a.endpoints})),views:[...resolution.ontology.entities,...resolution.ontology.associations].map(e=>({type:e.type,fields:e.fields}))};
 const build=await Bun.build({entrypoints:[paths[0]!],target:'browser',format:'esm'});if(!build.success)throw Error('Build failed');const js=await build.outputs[0]!.text();
-const checksBuild=await Bun.build({entrypoints:['tools/security/association-browser-entry.ts'],target:'browser',format:'esm'});if(!checksBuild.success)throw Error('Checks build failed');const checksJs=await checksBuild.outputs[0]!.text();
+const checksBuild=await buildStandaloneBindingBrowserRuntime({entrypoints:['tools/security/association-browser-entry.ts'],target:'browser',format:'esm'});if(!checksBuild.success)throw Error('Checks build failed');const checksJs=await checksBuild.outputs[0]!.text();
 const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch:r=>{const path=new URL(r.url).pathname;if(path==='/checks.js')return new Response(checksJs,{headers:{'content-type':'text/javascript'}});if(path==='/candidate.js')return new Response(js,{headers:{'content-type':'text/javascript'}});if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});return new Response('<!doctype html>');}});let browser;
 try{

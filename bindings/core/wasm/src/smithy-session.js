@@ -31,7 +31,12 @@ export function createSmithySessionOperations(executeSessionWire, hostWork, nati
     try {
       response = await runHost(prepared.request, signal);
     } catch (error) {
-      const code = error?.name === 'AbortError' ? (fail === 'failAssembly' ? 'SMITHY_ASSEMBLY_CANCELLED' : 'SMITHY_SELECTION_CANCELLED') : undefined;
+      const allowed = fail === 'failAssembly'
+        ? ['SMITHY_ASSEMBLY_FAILED','SMITHY_ASSEMBLY_CANCELLED','SMITHY_ASSEMBLY_TIMEOUT']
+        : ['SMITHY_SELECTION_FAILED','SMITHY_SELECTION_CANCELLED','SMITHY_SELECTION_TIMEOUT'];
+      const code = error?.name === 'AbortError'
+        ? (fail === 'failAssembly' ? 'SMITHY_ASSEMBLY_CANCELLED' : 'SMITHY_SELECTION_CANCELLED')
+        : allowed.includes(error?.code) ? error.code : undefined;
       try { return run(fail, {token, ...(code ? {code} : {}), message: String(error)}); }
       catch { try { run('cancel', {token}); } catch {} throw error; }
     }

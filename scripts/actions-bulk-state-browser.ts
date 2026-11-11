@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // US-907-AC8: the current Browser V4 Rust root in actual Chromium must satisfy the owner fixture.
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
@@ -12,7 +13,7 @@ if(!bundle.success)throw Error(bundle.logs.join('\n'));
 const corpus=await bundle.outputs[0]!.text();
 const wasmGlue=resolve('bindings/core/wasm/pkg/umf_core_wasm.js');
 const wasmBytes=resolve('bindings/core/wasm/pkg/umf_core_wasm_bg.wasm');
-const browserRoot=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',plugins:[{name:'fresh-v4-wasm',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>{
+const browserRoot=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm',plugins:[{name:'fresh-v4-wasm',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>{
  if(args.importer.endsWith('src/index-browser-v4.ts')&&args.path==='../bindings/core/wasm/pkg/umf_core_wasm.js')return {path:wasmGlue};
  if(args.importer.endsWith('bindings/core/wasm/loader.js')&&args.path==='./pkg/umf_core_wasm.js')return {path:wasmGlue};
  return undefined;

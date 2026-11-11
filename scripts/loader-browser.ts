@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
-const build=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
 const bundle=await build.outputs[0]!.text();
 const sample=await Bun.file('spec/domain-packs/court-documents-loader-demo/pack.json').json();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch:r=>new URL(r.url).pathname==='/umf.js'?new Response(bundle,{headers:{'content-type':'application/javascript'}}):new Response('<!doctype html><title>Loader checks</title>')});

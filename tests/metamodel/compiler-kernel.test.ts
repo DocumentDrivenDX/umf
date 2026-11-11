@@ -8,14 +8,14 @@ import {tmpdir} from 'node:os';
 import {createHash} from 'node:crypto';
 import {compileModel,parseModel} from '../../scripts/metamodel/compile';
 import {checkShape,emitShape} from '../../scripts/metamodel/grammar';
-import {checkConstraintProgram,executeConstraints} from '../../src/validation/constraint-kernel';
+import {checkConstraintProgram,executeConstraints} from './constraint-oracle';
 import Ajv from 'ajv/dist/2020';
 import coreInput from '../../spec/core/schema.json';
 import referenceInput from '../../spec/core/semantic-type-reference.schema.json';
 import {createValidator,installJsonEquality} from '../../src/validation/schema';
 import {validateDocument} from '../../src/validation/document';
 import {domainPolicy} from '../../src/generated/core-model';
-import {literalErrors,prepareLiteralPolicy} from '../../src/validation/literal-kernel';
+import {literalErrors,prepareLiteralPolicy} from './literal-oracle';
 import {Registry} from '../../src/registry/registry';
 import {rustCompilePackages,rustCompileResources} from '../../scripts/metamodel/source-closure';
 const root=resolve(import.meta.dir,'../..'),authored=await Bun.file(join(root,'spec/metamodel/umf.yaml')).text(),model=()=>parseModel(authored);
@@ -99,7 +99,7 @@ describe('clean source generation',()=>{
  beforeAll(async()=>{
   dir=await mkdtemp(join(tmpdir(),'umf-metamodel-clean-'));
   manifest=await Bun.file(join(root,'spec/metamodel/generated/manifest.json')).json();
-  const outputPaths=[...Object.keys(manifest.outputs),'src/generated/core-validators-accounted.ts','spec/metamodel/generated/manifest.json'];
+  const outputPaths=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
   const packageFiles=(await Promise.all(rustCompilePackages.map(packageSources))).flat();
   // A previously generated manifest can still list an output as a source.
   // Never copy such overlap into the clean fixture: generated outputs must be
@@ -136,11 +136,6 @@ describe('clean source generation',()=>{
   await writeFile(join(dir,first.path),first.text);
   await rm(join(dir,first.path));expect((await run(true)).status).toBe(1);
   await writeFile(join(dir,first.path),first.text);
-  const accountedPath='src/generated/core-validators-accounted.ts';
-  const accountedBytes=await readFile(join(dir,accountedPath));
-  await writeFile(join(dir,accountedPath),Buffer.concat([accountedBytes,Buffer.from('\n')]));
-  expect((await run(true)).status).toBe(1);
-  await writeFile(join(dir,accountedPath),accountedBytes);
   expect((await run(true)).status).toBe(0);
   await writeFile(join(dir,'src/generated/unexpected.ts'),'export const surprise=true;');expect((await run(true)).status).toBe(1);
  },120_000);

@@ -8,6 +8,18 @@
     "spec/"
   ],
   "packageManager": "bun@1.4.2",
+  "imports": {
+    "#umf-source": {
+      "types": {
+        "browser": "./src/index-browser-v4.ts",
+        "default": "./src/index-node-v4.ts"
+      },
+      "browser": "./src/index-browser-v4.ts",
+      "bun": "./src/index-node-v4.ts",
+      "node": "./src/index-node-v4.ts",
+      "default": "./src/index-browser-v4.ts"
+    }
+  },
   "exports": {
     ".": {
       "types": {

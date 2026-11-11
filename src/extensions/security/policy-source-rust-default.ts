@@ -3,6 +3,13 @@ import {UmfError} from '../../model/errors';
 import type {SecurityPolicy,SecurityResolution} from './types';
 import type {SecurityDisclosureBatch} from './disclosure';
 import type {SecurityDisclosureBatchV2,SecurityDisclosureInspectionV2} from './protection/disclosure';
+import type {SecurityAccessResult,SecurityCollectionResult} from './evaluate';
+import type {SecurityWriteResult} from './write';
+import type {SecurityPolicyV2LegacyAccess} from './policy-v2-legacy-access';
+import type {SecurityPolicyV2Inspection,SecurityPolicySourceMigration} from './policy-representation-v2';
+import type {SecurityInspection} from './policy';
+import type {SecurityDependencies,SecurityIdentityTransportDependencies} from './dependencies';
+import type {Json} from '../../model/types';
 
 export interface SecurityPolicySourceEngine {
   inspectSecurityActionPurposes(ontology: unknown, documents: unknown): unknown;
@@ -58,19 +65,19 @@ export function createSecurityPolicySourceRustDefault(engine: SecurityPolicySour
     inspectSecurityDisclosureV2(source: unknown, policy: unknown, catalog: unknown, closure: unknown): SecurityDisclosureInspectionV2 { return call(() => engine.inspectSecurityDisclosureV2(source,policy,catalog,closure)); },
     encodeSecurityDisclosureV2(source: unknown, policy: unknown, catalog: unknown, closure: unknown, format: 'json'|'yaml' = 'json'): string { return call(() => engine.encodeSecurityDisclosureV2(source,policy,catalog,closure,format)) as string; },
     decodeSecurityDisclosureV2(source: string, policy: unknown, catalog: unknown, closure: unknown, format: 'json'|'yaml' = 'json'): SecurityDisclosureBatchV2 { return call(() => engine.decodeSecurityDisclosureV2(source,policy,catalog,closure,format)); },
-    evaluateSecurityAccess(policy: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): unknown { return call(() => engine.evaluateSecurityAccess(policy,resolution,cut,request,resource)); },
-    evaluateSecurityCollection(policy: unknown, resolution: unknown, cut: unknown, request: unknown): unknown { return call(() => engine.evaluateSecurityCollection(policy,resolution,cut,request)); },
-    evaluateSecurityWrite(policy: unknown, resolution: unknown, writeProfile: unknown, request: unknown): unknown { return call(() => engine.evaluateSecurityWrite(policy,resolution,writeProfile,request)); },
-    evaluateSecurityPolicyV2LegacyAccess(source: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): unknown { return call(() => engine.evaluateSecurityPolicyV2LegacyAccess(source,resolution,cut,request,resource)); },
-    inspectSecurityPolicyV2Source(source: unknown): unknown { return call(() => engine.inspectSecurityPolicyV2Source(source)); },
-    inspectSecurityPolicy(source: unknown, resolution?: unknown): unknown { return call(() => engine.inspectSecurityPolicy(source,resolution)); },
+    evaluateSecurityAccess(policy: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): SecurityAccessResult { return call<SecurityAccessResult>(() => engine.evaluateSecurityAccess(policy,resolution,cut,request,resource)); },
+    evaluateSecurityCollection(policy: unknown, resolution: unknown, cut: unknown, request: unknown): SecurityCollectionResult { return call<SecurityCollectionResult>(() => engine.evaluateSecurityCollection(policy,resolution,cut,request)); },
+    evaluateSecurityWrite(policy: unknown, resolution: unknown, writeProfile: unknown, request: unknown): SecurityWriteResult { return call<SecurityWriteResult>(() => engine.evaluateSecurityWrite(policy,resolution,writeProfile,request)); },
+    evaluateSecurityPolicyV2LegacyAccess(source: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): SecurityPolicyV2LegacyAccess { return call<SecurityPolicyV2LegacyAccess>(() => engine.evaluateSecurityPolicyV2LegacyAccess(source,resolution,cut,request,resource)); },
+    inspectSecurityPolicyV2Source(source: unknown): SecurityPolicyV2Inspection { return call<SecurityPolicyV2Inspection>(() => engine.inspectSecurityPolicyV2Source(source)); },
+    inspectSecurityPolicy(source: unknown, resolution?: unknown): SecurityInspection { return call<SecurityInspection>(() => engine.inspectSecurityPolicy(source,resolution)); },
     inspectSecurityPolicyPayload(payload: unknown, path: string): unknown { return call(() => engine.inspectSecurityPolicyPayload(payload,path)); },
-    requireSecurityInterpretation(source: unknown, resolution: unknown): unknown { return call(() => engine.requireSecurityInterpretation(source,resolution)); },
-    securityPolicyDependencies(source: unknown, resolution: unknown): unknown { return call(() => engine.securityPolicyDependencies(source,resolution)); },
-    securityIdentityTransportDependencies(source: unknown, resolution: unknown): unknown { return call(() => engine.securityIdentityTransportDependencies(source,resolution)); },
-    upgradeSecurityPolicySource(source: unknown, revision: unknown): unknown { return call(() => engine.upgradeSecurityPolicySource(source, revision)); },
-    downgradeSecurityPolicySource(source: unknown, revision: unknown): unknown { return call(() => engine.downgradeSecurityPolicySource(source, revision)); },
-    readSecuritySource(source: string, format: 'json'|'yaml' = 'json'): unknown { return call(() => engine.readSecuritySource(source, format)); },
+    requireSecurityInterpretation(source: unknown, resolution: unknown): SecurityInspection { return call<SecurityInspection>(() => engine.requireSecurityInterpretation(source,resolution)); },
+    securityPolicyDependencies(source: unknown, resolution: unknown): SecurityDependencies { return call<SecurityDependencies>(() => engine.securityPolicyDependencies(source,resolution)); },
+    securityIdentityTransportDependencies(source: unknown, resolution: unknown): SecurityIdentityTransportDependencies { return call<SecurityIdentityTransportDependencies>(() => engine.securityIdentityTransportDependencies(source,resolution)); },
+    upgradeSecurityPolicySource(source: unknown, revision: unknown): SecurityPolicySourceMigration { return call<SecurityPolicySourceMigration>(() => engine.upgradeSecurityPolicySource(source, revision)); },
+    downgradeSecurityPolicySource(source: unknown, revision: unknown): SecurityPolicySourceMigration { return call<SecurityPolicySourceMigration>(() => engine.downgradeSecurityPolicySource(source, revision)); },
+    readSecuritySource(source: string, format: 'json'|'yaml' = 'json'): Json { return call<Json>(() => engine.readSecuritySource(source, format)); },
     writeSecuritySource(value: unknown, format: 'json'|'yaml' = 'json'): string { return call(() => engine.writeSecuritySource(value, format)); },
   });
 }

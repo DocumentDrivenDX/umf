@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // Write authorization semantics are owned by the Rust V4 roots.
 import type {SecurityFact,SecurityFactCut} from './evaluate';
-import type {SecurityDecision,SecurityRef} from './types';
+import type {SecurityDecision} from './logic';
+import type {SecurityRef} from './types';
 
 export interface SecurityWriteProfile {
  readProtection:{version:'umf.security.write-read/0.1.0';readAction:string;blindWriteActions:{field:SecurityRef;action:string}[]};

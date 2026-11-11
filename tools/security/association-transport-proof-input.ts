@@ -1,3 +1,4 @@
+import '../../src/index-node-v4';
 import {securityFixture} from '../../tests/security/fixture';
 import {resolveCandidateAssociationChecks} from '../../src/extensions/security/association-checks';
 import {normalizeCandidateAssociationExpression,serializeCandidateAssociationExpression,inspectCandidateAssociationExpressionTransport} from '../../src/extensions/security/association-expression';
@@ -23,3 +24,4 @@ const standalone=structuredClone(ontology);standalone.associations=[];const sala
 const standaloneSource={op:'and',args:[{op:'eq',left:{kind:'resource',field:salary},right:{kind:'constant',field:salary,value:{integerToken:'9007199254740993'}}},{op:'eq',left:{kind:'context',field:active},right:{kind:'constant',field:active,value:{boolean:true}}}]};
 const standaloneWire=serializeCandidateAssociationExpression(normalizeCandidateAssociationExpression(standaloneSource,[],undefined,createCandidateEntityTermScope(standalone,f.resolution.documents,target)));
 console.log(JSON.stringify({profiles:[{profile:'record-members',source:f.policy.rules[1]!.condition,wire:inspectCandidateAssociationExpressionTransport(wire)},{profile:'authored-core-relationship',source:graphSource,wire:inspectCandidateAssociationExpressionTransport(graphWire)},{profile:'intrinsic-record-members',source:f.policy.rules[1]!.condition,wire:inspectCandidateAssociationExpressionTransport(intrinsic)},{profile:'intrinsic-core-relationship',source:graphSource,wire:inspectCandidateAssociationExpressionTransport(intrinsicGraph)},{profile:'intrinsic-standalone',source:standaloneSource,wire:inspectCandidateAssociationExpressionTransport(standaloneWire)}]}));
+import '../../src/index-node-v4';

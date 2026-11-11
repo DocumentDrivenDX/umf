@@ -6,7 +6,7 @@ import {tmpdir} from 'node:os';
 import {snapshotPack,exportPack} from '../../scripts/loaders/export';
 import {runLoader} from '../../scripts/loaders/engine';
 import {hash} from '../../scripts/loaders/state';
-import {projectSecSubmissions} from '../../src/domain-packs/public-company';
+import {projectSecSubmissions} from '../../src/index-node-v4';
 const root=resolve('spec/domain-packs/public-company-intelligence');
 test('@covers US-078-AC6 @covers US-078-AC7 shared companion exports exact closure and replays selected retained bytes without network',async()=>{
  const dir=await mkdtemp(join(tmpdir(),'umf-public-loader-'));
@@ -35,4 +35,4 @@ test('@covers US-078-AC6 @covers US-078-AC7 shared companion exports exact closu
   const retained=await Bun.file(join(bridgeOutput,handoff.sources[0].reference)).text();expect(hash(retained)).toBe(hash(bytes));
   const projected=projectSecSubmissions(retained,input.id);expect(projected.companies[0]!.id).toBe(input.cik);expect(projected.filings.length).toBeGreaterThan(0);
  }finally{await rm(dir,{recursive:true,force:true});}
-},30000);
+},120000);

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const base=(process.argv[2]??'fixtures/parquet/arrow-rename').replace(/\/$/,'')+'/',fixture=await Bun.file(base+'results.json').json();
-const built=await Bun.build({entrypoints:['src/index.ts','native/arrow/flatbuffer-runtime.ts'],outdir:'.cache/parquet-arrow-rename-browser',naming:'[name].js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts','native/arrow/flatbuffer-runtime.ts'],outdir:'.cache/parquet-arrow-rename-browser',naming:'[name].js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const name=new URL(req.url).pathname.slice(1);return ['index.js','flatbuffer-runtime.js'].includes(name)?new Response(Bun.file('.cache/parquet-arrow-rename-browser/'+name),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Coordinated Parquet rename</title>');}});let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>{if(!r.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return r.abort();}return r.continue();});await page.goto('http://127.0.0.1:'+server.port);

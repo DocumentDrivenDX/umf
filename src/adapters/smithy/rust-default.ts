@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,Diagnostic,ExtensionPackage,Validation} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
+import {LIMITS} from '../../model/json';
 import type {SmithyAssemblyBackend,SmithyAssemblyResult} from './assembly';
 import type {SmithySelectionBackend,SmithySelectionResult} from './selection';
 import {UmfError} from '../../model/errors';
@@ -21,6 +22,8 @@ export interface SmithyNativeOperations {
   assembleSmithyDocument(document:Document,backend:SmithyAssemblyBackend,options:{id:string;signal?:AbortSignal}):Promise<SmithyAssemblyResult>;
   selectSmithyShapes(document:Document,backend:SmithySelectionBackend,selector:string,options:{id:string;signal?:AbortSignal}):Promise<SmithySelectionResult>;
 }
+export type SmithyBundleExport={schema:string;dependencies:{id:string;schema:string}[];source:Document;diagnostics:Diagnostic[]};
+export type SmithyEditResult={document:Document;validation:Validation};
 type NativeGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
@@ -55,11 +58,11 @@ export function createSmithyRustDefault(engine:SmithyNativeOperations,isNativeUm
     importSmithySources(input:{files:Record<string,string>},options:{id:string}):Document{return call(()=>engine.importSources({files:input.files,id:options.id}));},
     exportSmithyJson(document:Document):string{return call(()=>engine.exportJson({document}));},
     exportSmithySources(document:Document):{files:Record<string,string>}{return call(()=>engine.exportSources({document}));},
-    exportSmithyBundle(document:Document):ReturnType<typeof import('./index').exportSmithyBundle>{return call(()=>engine.exportBundle({document}));},
+    exportSmithyBundle(document:Document):SmithyBundleExport{return call(()=>engine.exportBundle({document}));},
     getSmithyNode(document:Document,path:string,dependencyId?:string):NativeJson{return call(()=>engine.getNode({document,path,...(dependencyId===undefined?{}:{dependencyId})}));},
-    proposeSmithyNodeEdit(document:Document,path:string,text:string,dependencyId?:string):ReturnType<typeof import('./index').proposeSmithyNodeEdit>{return call(()=>engine.editNode({document,path,replacement:text,...(dependencyId===undefined?{}:{dependencyId})}));},
-    proposeSmithySourceEdit(document:Document,path:string,text:string):ReturnType<typeof import('./sources').proposeSmithySourceEdit>{return call(()=>engine.editSource({document,path,source:text}));},
+    proposeSmithyNodeEdit(document:Document,path:string,text:string,dependencyId?:string):SmithyEditResult{return call(()=>engine.editNode({document,path,replacement:text,...(dependencyId===undefined?{}:{dependencyId})}));},
+    proposeSmithySourceEdit(document:Document,path:string,text:string):SmithyEditResult{return call(()=>engine.editSource({document,path,source:text}));},
     assembleSmithyDocument(document:Document,backend:SmithyAssemblyBackend,options:{id:string;signal?:AbortSignal}):Promise<SmithyAssemblyResult>{return callAsync(()=>{checkAssemblyArgs(backend,options);return engine.assembleSmithyDocument(document,backend,options);});},
-    selectSmithyShapes(document:Document,backend:SmithySelectionBackend,selector:string,options:{id:string;signal?:AbortSignal}):Promise<SmithySelectionResult>{return callAsync(()=>{checkAssemblyArgs(backend,options);if(typeof selector!=='string'||!selector.trim()||typeof backend.select!=='function')throw new UmfError('SMITHY_SELECTION_OPTIONS','A nonempty selector and trusted Smithy selection backend are required');return engine.selectSmithyShapes(document,backend,selector,options);});},
+    selectSmithyShapes(document:Document,backend:SmithySelectionBackend,selector:string,options:{id:string;signal?:AbortSignal}):Promise<SmithySelectionResult>{return callAsync(()=>{if(typeof selector!=='string'||!selector.trim()||selector.length>LIMITS.maxTextLength||typeof backend?.select!=='function')throw new UmfError('SMITHY_SELECTION_OPTIONS','A nonempty bounded selector and trusted Smithy selection backend are required');checkAssemblyArgs(backend,options);return engine.selectSmithyShapes(document,backend,selector,options);});},
   });
 }

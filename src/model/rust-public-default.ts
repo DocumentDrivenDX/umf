@@ -8,6 +8,7 @@ import type {CoreRelationshipQuery,CoreRelationshipSelection} from './relationsh
 import type {CoreEvolutionPolicy} from './evolution-types';
 
 import type {CoreDatasetInput,CoreDatasetValueCheck} from './dataset-values-types';
+import type {CoreKeyIdentity,CoreKeyTupleReceipt,CoreKeyTupleValue} from './key-tuple';
 type DatasetMethods={
  validateCoreDatasetValues(source:Document,input:CoreDatasetInput):CoreDatasetValueCheck;
  verifyCoreDatasetValues(receipt:CoreDatasetValueCheck,current:Document,expectedInput:CoreDatasetInput):CoreDatasetValueCheck;
@@ -16,7 +17,10 @@ type EvolutionMethods={
  inspectCoreEvolution(before:Document,after:Document,policy:CoreEvolutionPolicy):unknown;
  verifyCoreEvolution(receipt:unknown,before:Document,after:Document,policy:CoreEvolutionPolicy):unknown;
 };
-type KeyMethods=Pick<typeof import('./key-tuple'),'encodeCoreKeyTuple'|'verifyCoreKeyTuple'>;
+type KeyMethods={
+ encodeCoreKeyTuple(input:unknown,identity:CoreKeyIdentity,values:CoreKeyTupleValue[],options?:{profile:CoreKeyTupleReceipt['profile']}):CoreKeyTupleReceipt;
+ verifyCoreKeyTuple(input:CoreKeyTupleReceipt,current:unknown):CoreKeyTupleReceipt;
+};
 type Direct=DatasetMethods & EvolutionMethods;
 type EngineMethods<T>={[K in keyof T]:T[K] extends (...args:infer A)=>unknown ? (...args:A)=>unknown : never};
 type Registrations=Parameters<ExtensionKindRuntime['listKinds']>[0];

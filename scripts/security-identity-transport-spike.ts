@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Source-qualified pure owner identity transport spike; no backend admission. */
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 import {securityFixture} from '../tests/security/fixture';
 const out='docs/helix/04-build/evidence/security/identity-transport/'+crypto.randomUUID();
@@ -10,7 +11,7 @@ const run=async(name:string,args:string[])=>{const p=Bun.spawn(args,{stdout:'pip
 await run('unit',['bun','test','tests/security/identity-transport.test.ts','tests/security/dependencies.test.ts']);
 await run('typecheck',['bun','node_modules/typescript/bin/tsc','--noEmit']);
 await run('tools-typecheck',['bun','node_modules/typescript/bin/tsc','-p','tsconfig.tools.json']);
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:out+'/bundle',target:'browser',format:'esm'});if(!built.success)throw Error('Browser bundle failed');
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:out+'/bundle',target:'browser',format:'esm'});if(!built.success)throw Error('Browser bundle failed');
 const bundle=built.outputs.find(a=>a.kind==='entry-point')!;const bundleBytes=new Uint8Array(await bundle.arrayBuffer());
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(bundleBytes,{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Identity transport verification</title>');}});
 let browser;let observed:unknown;let browserVersion='';

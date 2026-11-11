@@ -24,7 +24,9 @@ type PublicMethods = {
   walkJsonSchema: WalkJsonSchema;
   editJsonSchemaNode: EditJsonSchemaNode;
   exportJsonSchemaBundle: ExportJsonSchemaBundle;
-} & Pick<typeof import('../../model/native-json'),'parseNativeJson'|'parseNativeYaml'>;
+  parseNativeJson(text:string):NativeJson;
+  parseNativeYaml(text:string,options?:{version?:'1.1'|'1.2';dateOnly?:'string';booleanLexicon?:'pyyaml'}):NativeJson;
+};
 type NativeMethods={[K in keyof PublicMethods]:(...args:Parameters<PublicMethods[K]>)=>unknown};
 export interface JsonSchemaRustEngine extends NativeMethods {inspectJsonSchemaPayload(payload:unknown,path:string):Diagnostic[]}
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);

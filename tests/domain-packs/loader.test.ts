@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectDomainPackLoader,generateDomainPackLoaderSchema} from '../../src/domain-packs/loader';
-import {inspectDomainPack} from '../../src/domain-packs/profile';
+import {inspectDomainPackLoader,generateDomainPackLoaderSchema,inspectDomainPack} from '../../src/index-node-v4';
 const loader={version:'1.0.0',id:'umf.document-loader',implementation_version:'1.0.0',profile:'court-documents',runtime:'bun',entrypoint:'run.ts',configuration_schema:'inventory.schema.json',qualification:'Finite explicit inventory only',artifacts:[{reference:'run.ts',sha256:'a'.repeat(64)},{reference:'inventory.schema.json',sha256:'b'.repeat(64)}]};
 test('loader metadata retains annotations and refuses unsupported versions @covers US-060-AC8',()=>{
  const input={...loader,future:{meaning:'retained'}};

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Explicit finite lexical profile browser proof; no archive or native conversion. */
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 import {mkdir} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
@@ -8,7 +9,7 @@ import {readDocument} from '../src/model/document';
 import {type CsvBooleanLexicalRequest} from "../src/model/csv-boolean-lexical";
 import {validateCsvBooleanLexical,verifyCsvBooleanLexical} from "../src/index-node-v4";
 const directory=resolve(process.argv[2]??'');if(!process.argv[2])throw Error('Explicit fresh output required');await mkdir(directory);
-const build=await Bun.build({entrypoints:['src/index.ts'],outdir:directory,naming:'umf.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:directory,naming:'umf.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
 const sourceText=await Bun.file('spec/domain-packs/medical/ontology.json').text(),source=readDocument(sourceText,'json');
 const requests:CsvBooleanLexicalRequest[]=(['true','false','True','False']as const).map(token=>({profile:'umf.csv-boolean-lexical/1.0.0',field:{module:'domain',element:'patients.active'},token,sourceContext:{file:'separately-retained-original.csv',row:1,column:'active',future:{retained:['雪',null]}}}));
 const server=Bun.serve({port:0,hostname:'127.0.0.1',fetch(request){const path=new URL(request.url).pathname;if(path==='/')return new Response('<!doctype html><title>UMF explicit Boolean lexical profile</title>');if(path==='/input.json')return Response.json({sourceText,requests});if(path==='/umf.js')return new Response(Bun.file(join(directory,'umf.js')),{headers:{'content-type':'text/javascript'}});return new Response('Unknown',{status:404});}});

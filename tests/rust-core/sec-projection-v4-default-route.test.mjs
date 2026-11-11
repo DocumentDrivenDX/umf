@@ -21,12 +21,14 @@ for(const [host,path] of [['Node','../../src/index-node-v4.ts'],['browser','../.
   });
 }
 
-test('V4 SEC default selection leaves the TypeScript reference exports intact',async()=>{
-  const [v4Default,reference]=await Promise.all([
-    source('../../src/index-v4-default.ts'),source('../../src/index.ts'),
+test('workspace SEC selection follows the host-selected Rust root',async()=>{
+  const [workspaceRoot,packageMetadata,nodeRoot,browserRoot]=await Promise.all([
+    source('../../src/index.ts'),readFile(new URL('../../package.json',import.meta.url),'utf8').then(JSON.parse),
+    source('../../src/index-node-v4.ts'),source('../../src/index-browser-v4.ts'),
   ]);
-  for(const operation of operations){
-    expect(v4Default).not.toContain(`export { ${operation} } from './domain-packs/public-company';`);
-    expect(reference).toContain("export * from './domain-packs/public-company';");
-  }
+  expect(workspaceRoot).toContain("export * from '#umf-source';");
+  expect(packageMetadata.imports['#umf-source']).toMatchObject({
+    node:'./src/index-node-v4.ts',browser:'./src/index-browser-v4.ts',
+  });
+  for(const root of [nodeRoot,browserRoot])for(const operation of operations)expect(root).toContain(operation);
 });

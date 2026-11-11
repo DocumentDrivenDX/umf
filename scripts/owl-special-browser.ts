@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const raw=await Bun.file('native/owl/special-axioms.ttl').text();
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/owl-special-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/owl-special-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/owl-special-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>OWL</title>');}});
 let browser;
 try{

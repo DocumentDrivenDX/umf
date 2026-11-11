@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 import {readFile} from 'node:fs/promises';
 import {readDocument} from '../src/model/document';
 import {commerceDataset} from '../tests/helpers/commerce-dataset';
 const sourceText=await readFile('spec/domain-packs/commerce/ontology.json','utf8'),graph=JSON.parse(await readFile('spec/domain-packs/commerce/graph/fixture.json','utf8'));
 const input=commerceDataset(readDocument(sourceText,'json'),graph);
-const build=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/dataset-values-browser',naming:'umf.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/dataset-values-browser',naming:'umf.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){return new URL(request.url).pathname==='/umf.js'?new Response(Bun.file('.cache/dataset-values-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Supplied dataset checks</title>');}});
 let browser;
 try{

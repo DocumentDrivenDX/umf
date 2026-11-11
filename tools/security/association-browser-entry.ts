@@ -1,4 +1,5 @@
 /** Single browser module instance for checked-result and lexical custody guards. */
+import '../../src/index-browser-v4';
 import type * as Umf from '../../src/index-browser-v4';
 let rustSecurity:Pick<typeof Umf,'inspectSecurityPolicy'>|undefined;
 export function configureSecurityRuntime(runtime:Pick<typeof Umf,'inspectSecurityPolicy'>){rustSecurity=runtime;}

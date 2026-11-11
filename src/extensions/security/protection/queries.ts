@@ -10,6 +10,7 @@ export interface ProtectionQueryPropertyInspection extends Omit<ProtectionParame
  requiredProperties:readonly Json[];missingProperties:readonly Json[];
 }
 export type ProtectionQueryPropertyInspector=(policy:unknown,catalog:unknown,closure:unknown,use:unknown)=>ProtectionQueryPropertyInspection;
+function freeze<T>(value:T):T{if(value!==null&&typeof value==='object'){for(const item of Object.values(value as Record<string,unknown>))freeze(item);Object.freeze(value);}return value;}
 /** Internal conditional kernel. Selection must be resolved by its source owner; no admission. */
 export function compareSelectedProtectionQueryProperties(parameters:ProtectionParameterValidation,use:Json,transform:any,budget:ProtectionLiteralBudget,diagnostics:Diagnostic[]):ProtectionQueryPropertyInspection {
  const u=use as any,authoredProperties:Json[]=[],impliedProperties:Json[]=[],effectiveProperties:Json[]=[],requiredProperties:Json[]=[],missingProperties:Json[]=[];

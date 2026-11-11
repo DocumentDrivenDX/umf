@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const fixtures={...await Bun.file('fixtures/sqlserver/ddl-projections.json').json(),nativeCases:(await Bun.file('fixtures/sqlserver/ddl-oracle.json').json()).cases};
-const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm'});
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm'});
 if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){
  const path=new URL(req.url).pathname;

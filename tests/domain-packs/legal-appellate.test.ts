@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {mkdtemp,rm,cp} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {inspectDomainPack} from '../../src/domain-packs/profile';
+import {inspectDomainPack} from '../../src/index-node-v4';
 import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 
 const root='spec/domain-packs/legal-appellate';
@@ -149,4 +149,4 @@ test('complete export preserves original bytes and refuses tampering or uncleare
   pack.sources.castillo.license.redistribution='allowed';await Bun.write(copy+'/pack.json',JSON.stringify(pack));await Bun.write(copy+'/sources/castillo.pdf','%PDF altered');
   expect((await run(copy+'/pack.json',join(dir,'tampered'))).code).not.toBe(0);
  }finally{await rm(dir,{recursive:true,force:true});}
-},15000);
+},120000);

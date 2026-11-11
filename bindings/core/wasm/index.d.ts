@@ -162,6 +162,10 @@ export interface SecurityProtectionFunctionResult {
 export interface UmfSecurityFunctionsEngine {
   inspectProtectionFunction(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
   evaluateProtectionValue(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
+  /** Internal candidate support; not re-exported by either UMF SDK root. */
+  inspectCandidateLiteral(source: unknown, field: {documentId:string;moduleId:string;elementId:string}, value: unknown, limits: {includeIdentity:boolean;workLimit:number;textLimit:number}): {identity:string|null;identityUnits:number;textUnits:number;workUnits:number};
+  /** Private actions-reference comparison under ordinary core value limits. */
+  inspectCoreCandidateLiteral(source: unknown, field: {documentId:string;moduleId:string;elementId:string}, value: unknown, limits: {includeIdentity:boolean;workLimit:number;textLimit:number}): {identity:string|null;identityUnits:number;textUnits:number;workUnits:number};
 }
 export declare function createSecurityFunctionsEngine(module: any): UmfSecurityFunctionsEngine;
 export interface SecurityProtectionSourceResult {

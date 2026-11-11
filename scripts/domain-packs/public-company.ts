@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Offline build from reviewed, pinned SEC inputs. Network collection is caller-owned. */
 import {join,resolve} from 'node:path';
-import {projectSecSubmissions,projectSecCompanyFacts,type PublicCompanyRow} from '../../src/domain-packs/public-company';
+import {projectSecSubmissions,projectSecCompanyFacts,type PublicCompanyRow} from '../../src/index-node-v4';
 import {ontology} from './ontology';
 const root=resolve('spec/domain-packs/public-company-intelligence'),check=process.argv.includes('--check');
 const encode=(x:unknown)=>JSON.stringify(x,null,2)+'\n';

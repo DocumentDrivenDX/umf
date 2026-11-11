@@ -2,8 +2,8 @@ import {expect, test} from 'bun:test';
 import {generateDatasetSourceSchema as referenceDatasetSource} from '../../src/domain-packs/source-schema';
 import {generateDomainPackSchema as referenceDomainPack} from '../../src/domain-packs/schema';
 import {generateArtifactCollectionSchema as referenceArtifactCollection} from '../../src/domain-packs/artifacts';
-import {generateDomainPackLoaderSchema as referenceDomainPackLoader} from '../../src/domain-packs/loader';
-import {generateLoaderInventorySchema as referenceLoaderInventory} from '../../src/domain-packs/loader-inventory';
+import {DOMAIN_PACK_LOADER_SCHEMA as referenceDomainPackLoader} from '../../src/domain-packs/loader';
+import {LOADER_INVENTORY_SCHEMA as referenceLoaderInventory} from '../../src/domain-packs/loader-inventory';
 import {generateArtifactCollectionSchema as defaultArtifactCollection, generateDatasetSourceSchema as defaultDatasetSource, generateDomainPackSchema as defaultDomainPack, generateDomainPackLoaderSchema as defaultDomainPackLoader, generateLoaderInventorySchema as defaultLoaderInventory} from '../../src/index-node-v4';
 import {artifactCollectionSchemaGraphJson, datasetSourceSchemaGraphJson, domainPackSchemaGraphJson, domainPackLoaderSchemaGraphJson, loaderInventorySchemaGraphJson} from '../../bindings/core/node/index.js';
 import {createGeneratedSchemaGraphOperation} from '../../src/domain-packs/generated-schema-graph';
@@ -60,8 +60,8 @@ test('Rust-owned schema graph metadata exhaustively matches the TS predecessor a
     {reference: referenceDomainPack(), actual: defaultDomainPack(), wire: domainPackSchemaGraphJson(), create: defaultDomainPack},
     {reference: referenceDatasetSource(), actual: defaultDatasetSource(), wire: datasetSourceSchemaGraphJson(), create: defaultDatasetSource},
     {reference: referenceArtifactCollection(), actual: defaultArtifactCollection(), wire: artifactCollectionSchemaGraphJson(), create: defaultArtifactCollection},
-    {reference: referenceDomainPackLoader(), actual: defaultDomainPackLoader(), wire: domainPackLoaderSchemaGraphJson(), create: defaultDomainPackLoader},
-    {reference: referenceLoaderInventory(), actual: defaultLoaderInventory(), wire: loaderInventorySchemaGraphJson(), create: defaultLoaderInventory},
+    {reference: referenceDomainPackLoader, actual: defaultDomainPackLoader(), wire: domainPackLoaderSchemaGraphJson(), create: defaultDomainPackLoader},
+    {reference: referenceLoaderInventory, actual: defaultLoaderInventory(), wire: loaderInventorySchemaGraphJson(), create: defaultLoaderInventory},
   ];
   for (const item of cases) {
     const expectedAliases = aliasClasses(item.reference);

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../src/validation/schema';
-import {generateLoaderInventorySchema} from '../../src/domain-packs/loader-inventory';
+import {generateLoaderInventorySchema} from '../../src/index-node-v4';
 import {readJsonValue} from '../../src/model/serialization';
 export type Profile='documents'|'court-documents'|'sec-filings';
 export type Rights='local-use'|'redistribute';

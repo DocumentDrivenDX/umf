@@ -36,8 +36,8 @@ implementation. Wrappers admit host values, transport explicit capabilities and
 present results. ADR-006, the PRD, cross-cutting requirements, architecture, TP-001
 and the affected contracts govern behavior.
 
-Core documents remain at 0.10.0. Rust/CLI 0.1.0, SDK 0.10.2 and Python 0.10.6 ship
-together under `umf-rust-v0.1.0`. Preserve native values, unknown content, receipts,
+Core documents remain at 0.10.0. Release versions are shared across Rust, CLI,
+SDK and Python artifacts. Preserve native values, unknown content, receipts,
 resource controls and caller capabilities required by the current APIs.
 
 ## Implementation
@@ -196,8 +196,8 @@ TypeSpec and Smithy interop.
   canonical Protobuf descriptors, and the exact OWL and SHACL source bytes.
 - Neither public SDK bundle emits UMF's legacy TypeScript document validator,
   constraint interpreter, literal kernel, or registry admission. The TypeSpec
-  compiler retains its third-party AJV dependency. Source-only engines remain
-  until their own consumers have moved.
+  compiler and the explicit SDK loader validator retain their third-party
+  dependencies for interoperability.
 - The SHACL engine deletion exposed native gaps in mixed numeric promotion,
   conversion limits, embedded reports, and untyped or recursive shapes. Mixed
   float/double and decimal/float promotion, binary32 conversion refusal,
@@ -222,7 +222,7 @@ caller controls at the affected public entry points. Use local Chromium for
 changed browser workflows. Reuse passing results whose inputs and
 dependencies are unchanged.
 
-### Remaining source closure
+### Source closure
 
 - The old row-scope, deployment, migration, inventory, table lifecycle and
   Python client generation engines have been removed. Their public contracts
@@ -239,78 +239,54 @@ dependencies are unchanged.
   The two current generalized RDF cases exercise forward quad deduplication
   and reverse projection with retained blank predicates in JSON-LD 1.0
   report mode.
-- Finish the Actions and Security source closure, including private callers
-  of superseded entry points. Keep explicit host callbacks, public types and
-  independent executable examples. Replace any current semantic operation
-  still missing a Rust owner.
-- Retire the source-only registry admission, document constraint and literal
-  engines after moving their last model and tooling consumers. Audit remaining
-  private source barrel consumers and browser tools for obsolete engine
-  imports. Keep package and schema data, explicit compiler interop and
-  independent native oracles.
-
-## Completed verification
-
-Focused Rust capability baselines and the affected public integration workflows
-pass. Source checks pass for generated resources, TypeScript, compile and import
-boundaries, strict whole-source access policy with negative controls, Rust core
-authority, coupled release versions and SDK packaging.
-
-An independent Cargo consumer builds from the source archive with locked offline
-dependencies and executes RDF and GraphQL exact round trips plus native PostgreSQL
-import/export/reparse. The macOS CLI parses an ordinary YAML document with an
-empty PATH and returns the expected tagged document.
-
-The macOS SDK archive SHA-256 is
-`785de2c4db18b030c9462c7f55f52d012db50a4d4b3c608a4dc3aa6f5fa0d39b`.
-Its fixed-point source closure is
-`f7261a691247692a1ac18b7a2072ae879e99d9216c7f5661dd422ef18984b68c`.
-The installed archive passes ordinary document validation/read/write/refusal,
-OpenAPI round trip and Avro projection/recovery workflows in Node 26.12.1,
-Bun 1.4.3 and Chromium 153. The browser runs without Node globals.
-
-Python 0.10.6 current wheel and sdist exact-source integrity checks pass. The
-installed macOS ABI3 wheel passes its public consumer on CPython 3.14.8 with
-JavaScript absent from PATH, including PostgreSQL edit/export/reparse and refusal.
-The completed source-distribution native rebuild and installed rebuilt-wheel
-consumer also pass; the final archive retains the verified native build inputs.
-macOS native builds consistently target macOS 11.0 on arm64.
-
-The Linux x86_64 ABI3 wheel passes exact installed-file verification and the
-ordinary public/native PostgreSQL consumer on CPython 3.11.17, 3.12.15 and 3.13.16,
-with JavaScript absent from PATH. Its SHA-256 is
-`9a4fc6e739fb9c0c80e22916490484fb41b6f00985afc53fb81dcca2d72029b9`.
-The Linux CLI passes the same empty-PATH YAML workflow as macOS.
-
-The Linux SDK archive SHA-256 is
-`0e210969dc6d585d73b0e70d35660421b40c141746389118f7181c54bfcff943`.
-Assembly retains the same fixed-point source closure and 2,063 unchanged common
-assets, with the Linux native addon and recorded build provenance. The installed
-archive passes the document, OpenAPI and Avro workflows on Node 26.12.1 and
-Bun 1.4.3 in the cached Linux x86_64 runtime.
-
-Sol has reviewed the implementation, host routing, source/resource closure and
-release preparation and the completed Linux artifact results.
+- The workspace source barrel selects the same Rust-backed host as the SDK.
+  The Node public surface still has 2,018 names and 1,163 runtime exports.
+  The browser surface still has 2,017 names and 1,162 runtime exports. The
+  type and value facets match the pre-removal surface on both hosts.
+- The Rust metamodel compiler emits the 15 portable outputs. The TypeScript
+  generated validators and runtime Registry, document and literal engines
+  have been removed. The reference self-model check runs through the native
+  Rust CLI. Independent metamodel oracles remain under `tests/metamodel/`.
+- The action reference tools and private protection experiments use the
+  same Rust literal validation and identity code as the library. Public
+  security regression checks distinguish explicit null from absence and
+  verify that an empty result cannot skip admission or authorization.
+- Smithy and TypeSpec retain their explicit compiler host adapters. The
+  TypeSpec smoke cases passed exact JSON/YAML recovery, compilation, semantic
+  graph extraction and pinned JSON Schema emission. The medical and SEC
+  projection engines also use Rust.
+- Python ABI3 and the Rust CLI agreed on Smithy bundle import and export,
+  inspection of an unknown dependency descriptor, and export refusal. The
+  round trip preserved `1.7976931348623157E+309` exactly with an empty PATH.
+  Bun and Chromium verified that unknown dependency descriptors also refuse
+  assembly before invoking the compiler callback.
+- The public-company source export passed after the Rust TableSpec binding
+  began reusing its compiled built-in schemas. The runtime keeps each
+  request's admission, cancellation and work accounting in its own context.
+  Medical family export shares the runtime across its five members. Its
+  byte recovery and version, checksum and redistribution refusal tests passed.
+- The local SDK archive verified all 1,988 hashed members. The extracted SDK
+  passed the current document, OpenAPI and Avro checks on Node, Bun and
+  Chromium. The pack tooling produced DDL, ORM, CRUD and a source companion
+  for a keyed table and reported the key requirement for a keyless table.
+  NodeNext and browser TypeScript declarations passed with `skipLibCheck`
+  disabled. The rebuilt archive's runtime modules matched the tested modules
+  after accounting for temporary build paths and native link metadata.
 
 ## Integration and release
 
-Refresh main before integrating PR61. Preserve tested artifact inputs; account for
-actual incoming source changes without reopening unrelated passing capabilities.
-Publish one [umf-rust-v0.1.0 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-rust-v0.1.0)
-containing the Rust source library, macOS arm64 and Linux x86_64 CLI archives,
-matching SDK archives, two Python ABI3 wheels, the Python sdist and SHA256SUMS.
-Bind the Rust source archive and tag to the merged revision. Retain native build
-provenance and the SDK archive verifier's source and member integrity checks.
-
-Use the Rust-tag dispatcher exclusions; do not run GitHub Actions. Verify the
-published revision, exact asset roster and downloaded checksums. The distributed
-Rust crates retain `publish = false`.
+Refresh main before integrating. Keep the local source and artifact verification
+receipts tied to the tested revision. Build release artifacts locally and verify
+the published tag, exact asset roster and downloaded checksums. The Rust source
+archive, native CLI, SDK and Python artifacts share the release version. The
+microsite uses the same Rust WASM implementation for its browser workflows.
 
 ## Acceptance
 
-Every UMF-owned executable operation exposed by the current public interfaces has
-a Rust owner and passes its capability baseline. Library, CLI, Python, Node/Bun and
-browser entry points execute that owner while preserving current meaning, unknown
-content, caller callbacks and controls. Installed artifact checks pass, review is
-resolved, main is integrated, and the published artifacts contain the completed
-port. Publication and verification close the goal.
+Every UMF-owned executable operation exposed by the current public interfaces
+has a Rust owner and passes its capability baseline. Library, CLI, Python,
+Node/Bun and browser entry points execute that owner while preserving current
+meaning, unknown content, caller callbacks and controls. Installed SDK checks
+cover native Node and Bun, the Chromium WASM path and TypeScript declaration
+resolution. Each release records the merged source revision and verification of
+its published artifacts.

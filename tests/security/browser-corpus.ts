@@ -2,7 +2,7 @@
 import type * as Umf from '../../src/index-browser-v4';
 import type {SecurityDisclosureBatch} from '../../src/extensions/security/disclosure';
 import type {SecurityTruth,SecurityDisposition} from '../../src/extensions/security/logic';
-type SecurityRuntime=Pick<typeof Umf,'encodeSecurityDisclosure'|'decodeSecurityDisclosure'|'composeSecurityRules'|'inspectSecurityPolicy'|'readSecuritySource'|'writeSecuritySource'|'securityPolicyDependencies'|'evaluateSecurityWrite'|'SecurityReadRegistration'|'evaluateSecurityAccess'|'evaluateSecurityCollection'>;
+type SecurityRuntime=Pick<typeof Umf,'encodeSecurityDisclosure'|'decodeSecurityDisclosure'|'composeSecurityRules'|'inspectSecurityPolicy'|'readSecuritySource'|'writeSecuritySource'|'securityPolicyDependencies'|'evaluateSecurityWrite'|'SecurityReadRegistration'|'SecurityAuthorityGuard'|'evaluateSecurityAccess'|'evaluateSecurityCollection'>;
 let securityRuntime:SecurityRuntime|undefined;
 export function configureSecurityRuntime(runtime:SecurityRuntime):void{securityRuntime=runtime;}
 function runtime():SecurityRuntime{if(!securityRuntime)throw Error('Security V4 runtime was not injected');return securityRuntime;}
@@ -19,8 +19,6 @@ const evaluateSecurityCollection:SecurityRuntime['evaluateSecurityCollection']=(
 import {securityFixture,ref} from './fixture';
 import {canonicalSchemaJson} from '../../src/model/schema-literals';
 import {writeFixture} from './write-fixture';
-import {SecurityAuthorityGuard} from '../../src/extensions/security/authority-guard';
-const SecurityReadRegistration=function(this:unknown){return new runtime().SecurityReadRegistration();} as unknown as SecurityRuntime['SecurityReadRegistration'];
 import {evaluationFixture} from './evaluation-fixture';
 
 /** Independent explicit expectations; no native/backend admission is inferred. */
@@ -102,16 +100,16 @@ export function securityEvaluationCorpus(){
 }
 
 export function securityRegistrationCorpus(){
-  const f=evaluationFixture(),r=new SecurityReadRegistration(),handle=r.register(f.policy,f.resolution);
+  const f=evaluationFixture(),r=new (runtime().SecurityReadRegistration)(),handle=r.register(f.policy,f.resolution);
   const request={action:'read',output:[ref('salary')],resources:[f.resource]};
   const outcomes:{id:string;expected:string;observed:string}[]=[{id:'registered',expected:'withheld',observed:r.evaluate(handle,f.cut,request).rows[0]![0]!.disposition},
     {id:'fabricated',expected:'refused',observed:r.evaluate({kind:'registered-security-read'},f.cut,request).status},
-    {id:'foreign',expected:'refused',observed:new SecurityReadRegistration().evaluate(handle,f.cut,request).status}];
+    {id:'foreign',expected:'refused',observed:new (runtime().SecurityReadRegistration)().evaluate(handle,f.cut,request).status}];
   f.resolution.ontology.entities[2]!.fields.find(x=>x.ref.elementId==='salary')!.protection='unprotected';
   let reused=false;try{r.register(f.policy,f.resolution);}catch(error){reused=(error as {code?:string})?.code==='SECURITY_REVISION_REUSE';}
   outcomes.push({id:'revision-reuse',expected:'true',observed:String(reused)},
     {id:'immutable',expected:'withheld',observed:r.evaluate(handle,f.cut,request).rows[0]![0]!.disposition});
-  const stable=evaluationFixture(),atomic=new SecurityReadRegistration();atomic.register(stable.policy,stable.resolution);
+  const stable=evaluationFixture(),atomic=new (runtime().SecurityReadRegistration)();atomic.register(stable.policy,stable.resolution);
   const bad=evaluationFixture();bad.policy.revision='policy-2';
   bad.policy.rules[0]!.disclosure![0]!.disposition={kind:'original'};
   bad.resolution.ontology.entities[2]!.fields.find(x=>x.ref.elementId==='salary')!.protection='unprotected';
@@ -120,7 +118,7 @@ export function securityRegistrationCorpus(){
   const replacement=evaluationFixture();replacement.policy.revision='policy-2';replacement.cut.policyRevision='policy-2';
   const repaired=atomic.register(replacement.policy,replacement.resolution);
   outcomes.push({id:'failed-candidate-not-pinned',expected:'withheld',observed:atomic.evaluate(repaired,replacement.cut,request).rows[0]![0]!.disposition});
-  const bounded=new SecurityReadRegistration(),unsupported=structuredClone(stable.policy);
+  const bounded=new (runtime().SecurityReadRegistration)(),unsupported=structuredClone(stable.policy);
   unsupported.rules[0]!.condition={op:'future'} as never;
   let unsupportedRefusals=0;
   for(let i=0;i<40;i++)try{bounded.register(unsupported,stable.resolution);}catch(error){if((error as {code?:string})?.code==='SECURITY_INTERPRETATION')unsupportedRefusals++;}
@@ -135,7 +133,7 @@ export function securityRegistrationCorpus(){
 export async function securityGuardCorpus(){
   const barrier=()=>{let release!:()=>void;const wait=new Promise<void>(resolve=>release=resolve);return {wait,release};};
   const outcomes:{id:string;expected:unknown;observed:unknown}[]=[];
-  const guard=new SecurityAuthorityGuard('g1'),entered=barrier(),release=barrier(),changeEntered=barrier(),commit=barrier();
+  const guard=new (runtime().SecurityAuthorityGuard)('g1'),entered=barrier(),release=barrier(),changeEntered=barrier(),commit=barrier();
   let changed=false;const generations:string[]=[];
   const reader=guard.read(async generation=>{generations.push(generation);entered.release();await release.wait;});await entered.wait;
   const change=guard.change('g2',async()=>{changed=true;changeEntered.release();await commit.wait;});
@@ -145,7 +143,7 @@ export async function securityGuardCorpus(){
   outcomes.push({id:'fresh-generation',expected:['g1','g2'],observed:generations});
   let called=false;const reuse=await guard.change('g1',async()=>{called=true;}).catch(error=>error.code);
   outcomes.push({id:'reuse',expected:'SECURITY_GUARD_REFUSED',observed:reuse},{id:'no-reuse-effect',expected:false,observed:called});
-  const uncertain=new SecurityAuthorityGuard('old');
+  const uncertain=new (runtime().SecurityAuthorityGuard)('old');
   outcomes.push({id:'unknown-transition',expected:'SECURITY_TRANSITION_UNKNOWN',observed:await uncertain.change('new',async()=>{throw new Error('unknown');}).catch(error=>error.code)},
     {id:'closed',expected:'SECURITY_GUARD_REFUSED',observed:await uncertain.read(async()=>true).catch(error=>error.code)});
   return {cases:outcomes.length,mismatches:outcomes.filter(x=>JSON.stringify(x.expected)!==JSON.stringify(x.observed)).length,outcomes};

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {domains} from '../../scripts/domain-packs/catalog';
-import {inspectDomainPack} from '../../src/domain-packs/profile';
+import {inspectDomainPack} from '../../src/index-node-v4';
 import {readDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
 import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";

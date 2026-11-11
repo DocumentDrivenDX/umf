@@ -1,8 +1,9 @@
 import {chromium} from 'playwright';
+import {buildStandaloneBindingBrowserRuntime} from '../../scripts/binding/browser-runtime';
 import {createHash} from 'node:crypto';
-const files=['src/extensions/actions/structure.ts','src/extensions/security/core-extension-closure-candidate.ts','src/extensions/security/core-source-candidate.ts','src/extensions/security/ontology-checks-candidate.ts','src/extensions/security/catalog-program-candidate.ts','tests/security/core-extension-closure-fixture.ts','tests/security/original-products-action-packet.json','tools/security/protection-core-extension-controls.ts','tools/security/protection-core-extension-browser.ts'];
+const files=['crates/umf-codegen/src/actions/mod.rs','src/extensions/security/core-extension-closure-candidate.ts','src/extensions/security/core-source-candidate.ts','src/extensions/security/ontology-checks-candidate.ts','src/extensions/security/catalog-program-candidate.ts','tests/security/core-extension-closure-fixture.ts','tests/security/original-products-action-packet.json','tools/security/protection-core-extension-controls.ts','tools/security/protection-core-extension-browser.ts'];
 const hash=(x:Uint8Array|string)=>createHash('sha256').update(x).digest('hex'),pins=async()=>Object.fromEntries(await Promise.all(files.map(async p=>[p,hash(new Uint8Array(await Bun.file(p).arrayBuffer()))]))),before=await pins();
-const build=await Bun.build({entrypoints:['tools/security/protection-core-extension-controls.ts'],target:'browser',format:'esm'});if(!build.success)throw Error(JSON.stringify(build.logs));
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['tools/security/protection-core-extension-controls.ts'],target:'browser',format:'esm'});if(!build.success)throw Error(JSON.stringify(build.logs));
 const js=await build.outputs[0]!.text();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch:r=>new URL(r.url).pathname==='/test.js'?new Response(js,{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Original source closure</title>')});
 let browser;try{

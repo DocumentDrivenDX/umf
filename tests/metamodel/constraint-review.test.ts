@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,expect,test} from 'bun:test';
-import {checkConstraintProgram,executeConstraints} from '../../src/validation/constraint-kernel';
+import {checkConstraintProgram,executeConstraints} from './constraint-oracle';
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import type {Diagnostic,Document} from '../../src/model/types';
 const document:Document={umf:CURRENT_CORE_VERSION,id:'kernel-review',vocabularies:{},modules:[]};

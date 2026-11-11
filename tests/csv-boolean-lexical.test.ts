@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {boundedJsonBytes} from '../src/model/internal/json-byte-budget';
 import {readDocument} from '../src/model/document';
-import {csvBooleanLexicalOperationSchema,type CsvBooleanLexicalRequest} from "../src/model/csv-boolean-lexical";
+import {csvBooleanLexicalOperationSchema, type CsvBooleanLexicalRequest} from "../src/model/csv-boolean-lexical";
 import {validateCsvBooleanLexical,verifyCsvBooleanLexical} from "../src/index-node-v4";
 import {validateCoreFieldValue} from "../src/index-node-v4";
 import {validateCoreRecordValues} from '../src/index-node-v4';

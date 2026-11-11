@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectDomainPack} from '../../src/domain-packs/profile';
+import {inspectDomainPack} from '../../src/index-node-v4';
 import {parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-node';
 const source={kind:'external',data_kind:'unknown',reference:'https://example.org/file',format:'dicom-part10',license:{redistribution:'unknown'}};
 const collection={version:'1.0.0',id:'originals',title:'Originals',view:'imaging',semantic_kinds:['DICOM_instance'],source_ids:['original'],metadata_schema_ids:['instances'],future:{opaque:true}};

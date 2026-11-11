@@ -52,6 +52,6 @@ for row in rows:
         writes+=1
         result.update({'arrowType':str(t),'physical':col.physical_type,'logical':json.loads(col.logical_type.to_json()),'sample':repr(value),'decoded':repr(decoded)})
     results.append({'path':row['path'],**result})
-paths=[corpus,__file__,'scripts/core-ideals/facets-parquet-projection-oracle.ts','src/core-ideals/facets-parquet-projection.ts','src/core-ideals/parquet-facet-carrier.ts','scripts/core-ideals/facets-parquet-projection-cases.ts','spec/core/facets-parquet-projection.schema.json','src/adapters/parquet/encode.ts',*[r['path'] for r in rows]]
+paths=[corpus,__file__,'scripts/core-ideals/facets-parquet-projection-oracle.ts','src/core-ideals/facets-parquet-projection.ts','src/core-ideals/parquet-facet-carrier.ts','scripts/core-ideals/facets-parquet-projection-cases.ts','spec/core/facets-parquet-projection.schema.json','crates/umf-core/src/parquet_wire_encode.rs',*[r['path'] for r in rows]]
 out={'scope':'Independent empty-file parse and Arrow value write/read using emitted schema; rewritten file physical encodings are not claimed identical','runtime':'PyArrow 21.0.0','cases':len(rows),'accepted':sum(r['accepted'] for r in results),'valueWrites':writes,'bindingAccepted':False,'results':results,'sha256':{p:sha(p) for p in sorted(set(paths))}}
 Path('fixtures/validation/facets-parquet-projection-native.json').write_text(json.dumps(out,indent=2)+'\n');print(json.dumps({k:out[k] for k in ['cases','accepted','valueWrites']}))

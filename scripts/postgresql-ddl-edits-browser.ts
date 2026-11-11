@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const base='fixtures/postgresql/edits/',fixture=await Bun.file(base+'candidates.json').json(),oracle=await Bun.file(base+'oracle.json').json();
-const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/postgresql-ddl-edits-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/postgresql-ddl-edits-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const path=new URL(req.url).pathname;if(path==='/umf.js')return new Response(Bun.file('.cache/postgresql-ddl-edits-browser/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/runtime.js')return new Response(Bun.file('dist/postgresql/runtime.js'),{headers:{'content-type':'text/javascript'}});if(path==='/libpg-query.wasm')return new Response(Bun.file('dist/postgresql/libpg-query.wasm'),{headers:{'content-type':'application/wasm'}});return new Response('<!doctype html><title>PostgreSQL edited DDL</title>');}});let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>{if(!r.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return r.abort();}return r.continue();});await page.goto('http://127.0.0.1:'+server.port);

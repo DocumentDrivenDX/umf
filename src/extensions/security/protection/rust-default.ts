@@ -2,11 +2,14 @@
 import {UmfError} from '../../../model/errors';
 import type {ProtectionFunctionInspector,ProtectionValueEvaluator} from './functions';
 import type {ProtectionQueryPropertyInspector} from './queries';
+import {configureCandidateLiteralOperation,configureCoreCandidateLiteralOperation,type CandidateLiteralOperation} from '../candidate-literal-runtime';
 
 export interface ProtectionNativeEngine {
  inspectProtectionFunction(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):unknown;
  evaluateProtectionValue(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):unknown;
  inspectProtectionQueryProperties(policy:unknown,catalog:unknown,closure:unknown,use:unknown):unknown;
+ inspectCandidateLiteral?:CandidateLiteralOperation;
+ inspectCoreCandidateLiteral?:CandidateLiteralOperation;
 }
 
 function freezeReport(value:unknown):unknown{
@@ -19,6 +22,8 @@ function freezeReport(value:unknown):unknown{
 
 /** Present Rust's protection reports through the existing public API. */
 export function createProtectionRustDefault(engine:ProtectionNativeEngine,isNativeError:(error:unknown)=>boolean){
+ if(engine.inspectCandidateLiteral)configureCandidateLiteralOperation(engine.inspectCandidateLiteral);
+ if(engine.inspectCoreCandidateLiteral)configureCoreCandidateLiteralOperation(engine.inspectCoreCandidateLiteral);
  const call=<T>(operation:()=>unknown):T=>{
   try{return freezeReport(operation()) as T;}
   catch(error){

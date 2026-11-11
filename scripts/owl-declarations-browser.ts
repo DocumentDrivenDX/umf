@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/owl/declarations.json').json()).cases;
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/owl-declarations-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/owl-declarations-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/owl-declarations-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>OWL declarations</title>');}});
 let browser;
 try{

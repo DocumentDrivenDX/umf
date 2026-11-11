@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {ReferenceHandlerRegistry} from './handlers';
 import type {CoreRelationship} from '../../src/validation/relationships';
-import {isCoreLiteralShape} from './literal';
+import {isCoreLiteralShape,referenceLiteral} from './literal';
 import type {SQL} from 'bun';
 import {copyJson} from '../../src/model/json';
 import {UmfError,type Document} from '../../src/model/types';
 import {knownActionModel,knownActionRelationship} from '../../src/extensions/actions/known-model';
 import {actionFieldValueKey,selectActionIdentity,type ActionEntityInput} from '../../src/index-node-v4';
 import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../src/model/key-tuple';
-import {checkSchemaLiteral,canonicalSchemaJson,type CoreLiteral} from '../../src/model/schema-literals';
+import {canonicalSchemaJson,type CoreLiteral} from '../../src/model/schema-literals';
 import {readReferenceRevision} from './revisions';
 import {referencePreparedHandlers,prepareReferenceAction,type PreparedReferenceAction} from './preparation';
 import type {ReferenceStoreControl} from './store';
@@ -23,7 +23,7 @@ export function validateReferenceFields(sourceInput:Document,recordInput:{module
  const fields=copyJson(fieldsInput) as unknown as Record<string,CoreLiteral>,definition=knownActionModel(source,record,'record'),members=(definition.members??[]) as {module:string;element:string}[];
  if(!fields||typeof fields!=='object'||Array.isArray(fields))throw new UmfError('PARAMETER','Expected native Field map');
  if(Object.keys(fields).some(key=>!members.some(member=>actionFieldValueKey(member)===key)))throw new UmfError('PARAMETER','Unknown native member');
- for(const member of members){const field=knownActionModel(source,member,'field'),key=actionFieldValueKey(member);if(!Object.hasOwn(fields,key)){if(field.nullability==='required')throw new UmfError('PARAMETER','Required native member absent');}else {if(!isCoreLiteralShape(fields[key]))throw new UmfError('PARAMETER','Expected exact native typed literal');checkSchemaLiteral(source,field,fields[key]!);}}
+ for(const member of members){const field=knownActionModel(source,member,'field'),key=actionFieldValueKey(member);if(!Object.hasOwn(fields,key)){if(field.nullability==='required')throw new UmfError('PARAMETER','Required native member absent');}else {if(!isCoreLiteralShape(fields[key]))throw new UmfError('PARAMETER','Expected exact native typed literal');referenceLiteral(source,member,fields[key]!,false);}}
  return fields;
 }
 /** Trusted qualified seed writer: all native aliases are established from actual core Key tuples. */

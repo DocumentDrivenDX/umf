@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import test from 'node:test';
+import {test} from 'bun:test';
 import ts from 'typescript-api';
 import { generateFacade } from './v4-default-facade.mjs';
 
@@ -63,23 +63,16 @@ function exportFacets(program, entry) {
   }));
 }
 
-test('V4 facade preserves the reference API and exposes ported operations on both hosts', () => {
+test('V4 facade exposes the same common API on both hosts', () => {
   const program = programForEntries();
-  const reference = exportFacets(program, 'src/index.ts');
-  for (const name of portedOperations) {
-    assert.ok(!reference.has(name), `${name} still has a reference barrel export`);
-    reference.set(name, { type: false, value: true });
-  }
-  // The source-only reference class and the runtime-bound constructor differ
-  // in their type facet. Both public roots expose the same constructor value.
-  reference.set('SecurityAuthorityGuard', { type: false, value: true });
   const node = exportFacets(program, entries[1]);
   const browser = exportFacets(program, entries[2]);
+  assert.deepEqual(exportFacets(program, 'src/index.ts'), node);
   assert.deepEqual(node.get('createPostgresqlSqlEngine'), { type: false, value: true });
   node.delete('createPostgresqlSqlEngine');
   assert.deepEqual(node, browser, 'public roots differ in common name/type/value facets');
-  for (const [name, facet] of reference) {
-    assert.deepEqual(browser.get(name), facet, `public roots differ from reference at ${name}`);
+  for (const name of portedOperations) {
+    assert.deepEqual(browser.get(name), { type: false, value: true }, `missing runtime operation ${name}`);
   }
 });
 
@@ -112,9 +105,10 @@ test('generated facade is deterministic, excludes local overrides, and has no br
     assert.ok(!forbiddenRuntimeSources.has(`src/${binding.specifier.replace(/^\.\//, '')}.ts`), `${binding.name} points to a shadowed TS body`);
   }
   for (const facet of generated.facets.filter(item => item.type && item.value)) {
+    if (generated.localOverrides.includes(facet.name)) continue;
     const reference = exportFacets(program, 'src/index.ts').get(facet.name);
     assert.deepEqual(reference, { type: true, value: true }, `${facet.name} merged type/value facet was not retained`);
-    assert.ok(generated.localOverrides.includes(facet.name) || generated.bindings.some(binding => binding.name === facet.name && binding.kind === 'value'), `${facet.name} merged type/value export is missing its runtime binding`);
+    assert.ok(generated.bindings.some(binding => binding.name === facet.name && binding.kind === 'value'), `${facet.name} merged type/value export is missing its runtime binding`);
   }
 });
 

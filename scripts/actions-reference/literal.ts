@@ -1,4 +1,19 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {inspectCoreCandidateLiteral} from '../../src/extensions/security/candidate-literal-runtime';
+import {UmfError,type Document} from '../../src/model/types';
+import type {CoreLiteral} from '../../src/model/schema-literals';
+
+export function referenceLiteral(source:Document,field:{module:string;element:string},value:CoreLiteral,includeIdentity:boolean):string|null {
+ try{
+  return inspectCoreCandidateLiteral(source,{documentId:source.id,moduleId:field.module,elementId:field.element},value,includeIdentity).identity;
+ }catch(error){
+  const code=error&&typeof error==='object'?'code'in error?(error as {code?:unknown}).code:undefined:undefined;
+  if(typeof code==='string'&&['LIMIT','CAPACITY','RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED'].includes(code))throw error;
+  if(error instanceof Error)throw new UmfError('CORE_SCHEMA_PROPERTIES',error.message);
+  throw error;
+ }
+}
+
 /** Structural check for detached literal values at the host boundary. */
 export function isCoreLiteralShape(input:unknown):boolean {
  const pending=[input],number=/^-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?$/;
