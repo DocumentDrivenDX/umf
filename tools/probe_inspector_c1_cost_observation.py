@@ -11,7 +11,7 @@ def load(path,name):
 def original_baseline(failure):
     returned=failure['returnedWork'];attempted=failure['attemptedWork']
     refused=attempted-returned
-    if (returned,attempted,refused)!=(999990,1000013,23):raise ValueError('C1 derived original callback baseline')
+    if (returned,attempted,refused)!=(999955,1000024,69):raise ValueError('C1 derived original callback baseline')
     return {'acceptedHostWork':returned,'attemptedHostWork':attempted,'refusedCharge':refused}
 
 def run(args):
@@ -29,7 +29,7 @@ def run(args):
         try:stack=observer.StackSnapshot.prepare(Path(native.__file__),observer_pins);setup={'status':'ready','elfSymbolParsing':'authenticated installed wheel bytes; no ELF execution'}
         except Exception as error:setup={'status':'unavailable','errorType':type(error).__name__}
         report=observer.observe_once(compiler,native,observer_pins,stack)
-        report['baselineComparison']['refusalAmountComparison']='23 derived from the retained single-refusal prefix (1000013-999990); not a separately recorded denial counter'
+        report['baselineComparison']['refusalAmountComparison']='69 derived from the retained single-refusal prefix (1000024-999955); not a separately recorded denial counter'
         report.update(profile='umf.private-c1-cost-observation/1',runtimeSource=pins['runtimeSource'],runtimeTree=pins['runtimeTree'],
           observerController=args.controller_sha,observerRun=args.observer_run,observerAttempt=args.observer_attempt,
           parentRun=pins['parent']['id'],parentAttempt=pins['parent']['attempt'],parentJob=pins['parent']['jobID'],

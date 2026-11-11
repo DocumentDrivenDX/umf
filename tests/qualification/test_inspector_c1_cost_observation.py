@@ -21,11 +21,11 @@ def load_module():
 class CandidatePins(unittest.TestCase):
     def test_exact_retained_failure_and_static_symtab_pins(self):
         m=load_module();pins=m.fixture(ROOT)
-        self.assertEqual((pins['failure']['returnedWork'],pins['failure']['attemptedWork']),(999990,1000013))
+        self.assertEqual((pins['failure']['returnedWork'],pins['failure']['attemptedWork']),(999955,1000024))
         self.assertEqual(pins['failure']['maximumWork'],1000000)
-        self.assertEqual(pins['stack']['nativeBytes'],58468352)
-        self.assertEqual(pins['stack']['nativeSHA256'],'6c4dc4913fb3b59f301e208970fcbd04beeb5c9f73b82ffb1a5917fd19518db6')
-        self.assertEqual((pins['stack']['sectionHeaders'],pins['stack']['symtabEntries'],pins['stack']['symtabBytes']),(33,63604,1526496))
+        self.assertEqual(pins['stack']['nativeBytes'],58583808)
+        self.assertEqual(pins['stack']['nativeSHA256'],'06a72e1896ab0f2aa1cb04c7d6e4349326c709b242ba2cc08233883cc0941550')
+        self.assertEqual((pins['stack']['sectionHeaders'],pins['stack']['symtabEntries'],pins['stack']['symtabBytes']),(33,63457,1522968))
         self.assertFalse(pins['failure']['requestCustodyPreserved'])
         self.assertFalse(pins['failure']['installedFilesUnchanged'])
 
@@ -45,14 +45,14 @@ class CandidatePins(unittest.TestCase):
     def test_original_actions_artifact_identities_are_closed(self):
         pins=load_module().fixture(ROOT)
         expected={
-            'early':(13834443887,35576977,'e34ad5a553b08ae81fbfdc6d70535f920a4822157ad582cef8c74cf90bcee32b'),
-            'result':(13835082083,35640804,'be4ebb3f941741efd4945aad988c938e46c15230ca2c743d2ade78196a8412f4'),
-            'cleanup':(13834633369,303,'64f2c25337100f75cc146dec656a083687eb973ff4aa0f042abfe257dd25b744'),
+            'early':(13870957456,35990760,'1ff5d68ea5a5030bd220a4d622f002eae6f6d23cf522c7a92a39bd42e3513a4b'),
+            'result':(13871501564,36056086,'ea1eec909925266f0f3a2817192039903c250662116ee504b27d8089270bdd80'),
+            'cleanup':(13870288710,303,'5c2c80649dc2289338cc31c87049bff207a04bec8bc272ac8c446c9eca512948'),
         }
         for key,(artifact_id,size,digest) in expected.items():
             row=pins['artifacts'][key]
             self.assertEqual((row['id'],row['bytes'],row['sha256']),(artifact_id,size,digest))
-        self.assertEqual(pins['parent']['jobID'],130367654293)
+        self.assertEqual(pins['parent']['jobID'],130634842231)
         self.assertEqual(pins['parent']['attempt'],1)
 
     def test_original_failure_crossjoins_remain_exact(self):
@@ -93,7 +93,7 @@ class CandidatePins(unittest.TestCase):
         self.assertIn('admitted:',text)
         self.assertIn('controller_sha:',text)
         self.assertIn('default: false',text)
-        self.assertIn("ORIGINAL_OWNER: ${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && '7cafb8d28b83a7a949f73f362b43253fb08cbce1' || '67b6dbae9d969f8c7e5eb955e97a312be5f45787' }}",text)
+        self.assertIn("ORIGINAL_OWNER: ${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && '7d17f1c50ff79006b1e1a8f5138c5d552c7fc94f' || '67b6dbae9d969f8c7e5eb955e97a312be5f45787' }}",text)
         self.assertIn("if: github.event_name == 'workflow_dispatch' && inputs.admitted == true",text)
         self.assertIn('probe_inspector_installed_constructor_observation.py',text)
         self.assertIn('probe_inspector_c1_cost_observation.py',text)
@@ -111,13 +111,13 @@ class CandidatePins(unittest.TestCase):
         self.assertEqual(source.count('observer.observe_once('),1)
         self.assertIn("strictMaximumWork=1000000",source)
         self.assertIn("refs/heads/codex/c1-01011-cost-observation",(ROOT/'tools/intake_inspector_c1_cost_observation.py').read_text())
-        self.assertIn('23 derived from the retained single-refusal prefix',source)
+        self.assertIn('69 derived from the retained single-refusal prefix',source)
 
     def test_original_baseline_refusal_is_explicitly_derived_and_exact(self):
         spec=importlib.util.spec_from_file_location('c1_probe_baseline',ROOT/'tools/probe_inspector_c1_cost_observation.py')
         probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
         self.assertEqual(probe.original_baseline(load_module().fixture(ROOT)['failure']),
-                         {'acceptedHostWork':999990,'attemptedHostWork':1000013,'refusedCharge':23})
+                         {'acceptedHostWork':999955,'attemptedHostWork':1000024,'refusedCharge':69})
         changed=dict(load_module().fixture(ROOT)['failure']);changed['attemptedWork']+=1
         with self.assertRaises(ValueError):probe.original_baseline(changed)
 

@@ -23,7 +23,7 @@ jobs:
     env:
       PYTHONDONTWRITEBYTECODE: '1'
       EXPECTED_CONTROLLER: ${{ inputs.controller_sha }}
-      ORIGINAL_OWNER: ${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && '7cafb8d28b83a7a949f73f362b43253fb08cbce1' || '67b6dbae9d969f8c7e5eb955e97a312be5f45787' }}
+      ORIGINAL_OWNER: ${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && '7d17f1c50ff79006b1e1a8f5138c5d552c7fc94f' || '67b6dbae9d969f8c7e5eb955e97a312be5f45787' }}
       CANDIDATE_01011: ${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' }}
       INSPECTOR_INPUT_PROFILE: installed-canonical/1
     steps:

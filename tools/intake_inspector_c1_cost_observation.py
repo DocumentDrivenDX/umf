@@ -31,11 +31,15 @@ def load(path,name):
 def fixture(root):
     v=json.loads((Path(root)/FIXTURE).read_text())
     require(v.get('profile')=='umf.private-c1-cost-observation-inputs/1','C1 route fixture profile')
-    require(v['parent']=={'id':42973659060,'attempt':1,'jobID':130367654293,'jobName':'feasibility','runConclusion':'failure','jobConclusion':'failure','event':'workflow_dispatch','repository':'DocumentDrivenDX/umf','repositoryId':1382276802,'repositoryOwnerId':273466046,'jobLabel':'ubuntu-24.04','runUrl':'https://github.com/DocumentDrivenDX/umf/actions/runs/42973659060'},'C1 parent identity fixture')
-    require(v['runtimeSource']=='7cafb8d28b83a7a949f73f362b43253fb08cbce1' and v['runtimeTree']=='768e41e87105b886423f768d06b9d8b04fc69e73','C1 source identity fixture')
-    require(v['wheel']['filename']==WHEEL and v['wheel']['bytes']==34650431 and v['wheel']['sha256']=='91b7d28a548ea1d2893c0756e47d27ca50787b031e5d0e24e2f020849312327f','Exact retained candidate wheel')
-    require(v['wheel']['nativeMember']=={'path':'umf/_rust_core.abi3.so','sha256':'6c4dc4913fb3b59f301e208970fcbd04beeb5c9f73b82ffb1a5917fd19518db6'},'Candidate native binding')
-    require(v['stack']=={'enabled':True,'nativeBytes':58468352,'nativeSHA256':'6c4dc4913fb3b59f301e208970fcbd04beeb5c9f73b82ffb1a5917fd19518db6','ELFtype':3,'ELFmachine':62,'sectionHeaders':33,'symtabEntries':63604,'symtabBytes':1526496},'Static ELF symbol-table pins')
+    require(v['parent']=={'id':43052981583,'attempt':1,'jobID':130634842231,'jobName':'feasibility','runConclusion':'failure','jobConclusion':'failure','event':'workflow_dispatch','repository':'DocumentDrivenDX/umf','repositoryId':1382276802,'repositoryOwnerId':273466046,'jobLabel':'ubuntu-24.04','runUrl':'https://github.com/DocumentDrivenDX/umf/actions/runs/43052981583'},'C1 parent identity fixture')
+    require(v['runtimeSource']=='7d17f1c50ff79006b1e1a8f5138c5d552c7fc94f' and v['runtimeTree']=='f652d608a817e9befec3df020644a16ba3fdf984','C1 source identity fixture')
+    require(v['runtimeBranch']=='codex/core-cold-constructor-01011' and v['runtimeWorkflowId']==406353585
+      and v['runtimeWorkflowPath']=='.github/workflows/inspector-retained-attribution.yml','C1 workflow/source route')
+    require(v['wheel']['filename']==WHEEL and v['wheel']['bytes']==34700233 and v['wheel']['sha256']=='56fec6a870cd541942b4aa6d001c390a3939a4660f8f14a7815c6a43b3a7c08a','Exact retained candidate wheel')
+    require(v['wheel']['nativeMember']=={'path':'umf/_rust_core.abi3.so','sha256':'06a72e1896ab0f2aa1cb04c7d6e4349326c709b242ba2cc08233883cc0941550'},'Candidate native binding')
+    require(v['stack']=={'enabled':True,'nativeBytes':58583808,'nativeSHA256':'06a72e1896ab0f2aa1cb04c7d6e4349326c709b242ba2cc08233883cc0941550','ELFtype':3,'ELFmachine':62,'sectionHeaders':33,'symtabEntries':63457,'symtabBytes':1522968},'Static ELF symbol-table pins')
+    terminal={'run':v['parent'],'artifacts':{k:{x:y for x,y in row.items() if x!='members'} for k,row in v['artifacts'].items()},'cleanupSHA256':v['cleanupSHA256']}
+    require(digest(json.dumps(terminal,sort_keys=True,separators=(',',':')).encode())==v['terminalCustodySHA256'],'Original terminal custody digest')
     return v
 
 def elf_static_symtab(data):
@@ -50,7 +54,7 @@ def elf_static_symtab(data):
     t=tabs[0];require(t[9]==24 and t[5]%24==0 and t[6]<shnum and t[4]+t[5]<=len(data),'ELF symtab bounds')
     return {'ELFtype':typ,'ELFmachine':machine,'sectionHeaders':shnum,'symtabEntries':t[5]//24,'symtabBytes':t[5]}
 
-def verify_failure(pins,measurement,cost,producer,source_payload):
+def verify_failure(pins,measurement,cost,producer,source_payload,phase_failure=None,phase_failure_raw=None):
     f=pins['failure'];w=pins['wheel'];idn=pins['producer']['currentInputIdentity'];s=pins['runtimeSource']
     require(producer.get('profile')=='umf.private-construction-batch-producer/1' and producer.get('source')==s
         and producer.get('inputProfile')=='installed-canonical/1' and producer.get('wheel')=={'path':'/home/runner/work/_temp/inspector-feasibility/wheels/'+WHEEL,'bytes':w['bytes'],'sha256':w['sha256']}
@@ -68,6 +72,23 @@ def verify_failure(pins,measurement,cost,producer,source_payload):
         and ctor.get('returnedWork')==f['returnedWork'] and ctor.get('attemptedWork')==f['attemptedWork']
         and ctor.get('completed') is False and measurement.get('requestCustodyPreserved') is False
         and measurement.get('installedFilesUnchanged') is False,'Original failed prefix changed')
+    if phase_failure is not None:
+        require(type(phase_failure_raw) is bytes and digest(phase_failure_raw)==f['constructorPhaseFailureSHA256'],
+                'Original constructor phase receipt bytes changed')
+        require(phase_failure.get('profile')=='umf.private-installed-constructor-phase-failure/1'
+            and phase_failure.get('actualCandidateSource')==s and phase_failure.get('wheelSHA256')==w['sha256']
+            and phase_failure.get('nativeSHA256')==w['nativeMember']['sha256']
+            and phase_failure.get('currentInputIdentity')==idn and phase_failure.get('case')==f['firstCase']
+            and phase_failure.get('carrier')==f['carrier'] and phase_failure.get('maximumWork')==1000000
+            and phase_failure.get('constructorAttemptedWork')==ctor.get('attemptedWork')
+            and phase_failure.get('constructorReturnedWork')==ctor.get('returnedWork')
+            and phase_failure.get('nativeObservationIncomplete') is False
+            and phase_failure.get('firstNativeRefusal')=={'phase':'native-resource-compilation','amount':69,'nativeCallback':143098},
+            'Original exact resource-compilation refusal differs')
+        phases=phase_failure.get('nativePhases',[])
+        require([p.get('phase') for p in phases]==['native-installed-materialization','native-installed-full-admission','native-core-copy','native-resource-compilation']
+            and phases[-1].get('attemptedWork')-phases[-1].get('returnedWork')==69,
+            'Original phase-work custody differs')
     require(cost.get('profile')=='umf.private-retained-cost-gate/1' and cost.get('artifactSource')==s and cost.get('controllerSource')==s
         and cost.get('wheelSHA256')==w['sha256'] and cost.get('nativeSHA256')==w['nativeMember']['sha256']
         and cost.get('run')==str(pins['parent']['id']) and cost.get('attempt')=='1' and cost.get('status')=='failed'
@@ -168,10 +189,11 @@ def intake(args):
     selected=helper.selection(owner,json.loads((owner/helper.CENSUS).read_text()));resources,current=helper.current_inputs(owner,selected)
     require(current==pins['producer']['currentInputIdentity'],'Exact source-derived current input binding')
     verify_source_tar(extracted['early']['source-inputs.tar'],owner,selected,pins)
-    result={n:json.loads(extracted['result'][n]) for n in ('producer.json','source-and-payload.json','measurement.json','cost-gate.json','identity-cost-before.json','identity-cost-after.json','installed-record-cost-before.json','installed-record-cost-after.json')}
+    result={n:json.loads(extracted['result'][n]) for n in ('producer.json','source-and-payload.json','measurement.json','constructor-phase-failure.json','cost-gate.json','identity-cost-before.json','identity-cost-after.json','installed-record-cost-before.json','installed-record-cost-after.json')}
     require(extracted['result']['producer.json']==extracted['early']['producer.json']
       and extracted['result']['source-and-payload.json']==extracted['early']['source-and-payload.json'],'Producer/source receipt changed across parent artifacts')
-    verify_failure(pins,result['measurement.json'],result['cost-gate.json'],producer,payload)
+    verify_failure(pins,result['measurement.json'],result['cost-gate.json'],producer,payload,
+      result['constructor-phase-failure.json'],extracted['result']['constructor-phase-failure.json'])
     identity0=result['identity-cost-before.json'];identity1=result['identity-cost-after.json'];rec0=result['installed-record-cost-before.json'];rec1=result['installed-record-cost-after.json']
     for identity in (identity0,identity1):
         require(identity.get('artifactSource')==pins['runtimeSource'] and identity.get('controllerSource')==pins['runtimeSource']
@@ -184,7 +206,9 @@ def intake(args):
       and digest(extracted['result']['installed-record-cost-before.json'])==pins['parentIdentity']['recordBeforeSHA256'],'Original owner/RECORD unchanged')
     cleanup=json.loads(extracted['cleanup']['cleanup.json']);require(digest(extracted['cleanup']['cleanup.json'])==pins['cleanupSHA256']
       and cleanup.get('source')==pins['runtimeSource'] and cleanup.get('run')==str(p['id']) and cleanup.get('attempt')=='1'
-      and cleanup.get('ownedTargetAbsent') is True and cleanup.get('ownedConsumerAbsent') is True,'Original cleanup receipt')
+      and cleanup.get('ownedTargetAbsent') is True and cleanup.get('ownedConsumerAbsent') is True
+      and cleanup.get('localSharedAdmissionUsed') is False and cleanup.get('ledgerChanged') is False and cleanup.get('signalsSent') is False,
+      'Original cleanup receipt')
     wh=pins['wheel'];wheel_bytes=extracted['early']['wheels/'+WHEEL];require(len(wheel_bytes)==wh['bytes'] and digest(wheel_bytes)==wh['sha256'],'Original candidate wheel')
     wheelpath=out/'wheels'/WHEEL;wheelpath.parent.mkdir();wheelpath.write_bytes(wheel_bytes)
     retained=mats/'early';retained.mkdir();(retained/'producer.json').write_bytes(extracted['early']['producer.json'])
@@ -201,7 +225,7 @@ def intake(args):
       'staticELF':layout,'sourceArchiveSHA256':pins['producer']['sourceInputsTarSHA256'],
       'noRebuild':True,'publishable':False,'readyForEnrollment':False}
     write(out/'intake.json',receipt)
-    write(out/'parent-failure-measurement.json',result['measurement.json']);write(out/'parent-cost-gate.json',result['cost-gate.json'])
+    write(out/'parent-failure-measurement.json',result['measurement.json']);write(out/'parent-constructor-phase-failure.json',result['constructor-phase-failure.json']);write(out/'parent-cost-gate.json',result['cost-gate.json'])
     (out/'dependency-constraints.txt').write_text(''.join(k+'=='+v+'\n' for k,v in sorted(pins['producer']['dependencies'].items())))
     return receipt
 
