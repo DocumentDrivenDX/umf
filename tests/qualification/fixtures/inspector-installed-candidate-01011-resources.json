@@ -18,27 +18,27 @@
     "coreSchema": {
       "path": "spec/core/schema.json",
       "bytes": 45342,
-      "sha256": "cd00d34cf71d87f484959209d62cbe7d8bcf645706de1c4711d30c3d29a4690f"
+      "sha256": "4896436c8bbdec96377c8e16212de2600dc768c703b5162fbeab8ba9ea6c36f4"
     },
     "referenceSchema": {
       "path": "spec/core/semantic-type-reference.schema.json",
       "bytes": 45463,
-      "sha256": "2bd943610040ad02d975fc1590e4cfefc6994152dc0b1000cd24cd5632fa183b"
+      "sha256": "c63d795353893bcaa0ac16536bb9f827905a25f12cf640bcab8ba7cbcba63a6d"
     },
     "packageSchema": {
       "path": "spec/core/extension-package.schema.json",
       "bytes": 45001,
-      "sha256": "5098c762ac6dc0b0094ab52daf224cdf51d521d201a5e9e6a869c26dc83543a8"
+      "sha256": "72f9de84c111a403d57af7da48b7f09bee84274d47b40c559fc2e2a9ae60dd08"
     },
     "constraints": {
       "path": "spec/metamodel/generated/core-constraints.json",
       "bytes": 190431,
-      "sha256": "f32e8763cb7d4ec8cb70ac6134cc9c9db7fa26bf091f42a283d88f90438423f6"
+      "sha256": "cd62a0fc19f0d870b7ff26991597688bb4e9bf295cd0376c56a2d4c2698300b7"
     },
     "domainPolicy": {
       "path": "spec/metamodel/generated/domain-policy.json",
       "bytes": 14827,
-      "sha256": "19e3e1ddd37ec45dd399a391f567cb43f0b1598631e97b0224c786d70a84fb79"
+      "sha256": "7c81aaa6bb61c778782b44c65fcd8279ddb4f6b16ac1f139355b726178eda355"
     },
     "tablesPackage": {
       "path": "spec/extensions/tables/package.json",
@@ -67,26 +67,26 @@
   },
   "literalData": {
     "path": "crates/umf-core/src/canonical_codegen_literals.rs",
-    "sha256": "2ff86ac2beb6a11a7a72b871a6539aa8aa58fe19e11045198bc1d9a049aa39d9"
+    "sha256": "b753b75fc5ba49490c78fab991b2544102ab2ab53e1745ca46d38a1af66d5920"
   },
   "acceptance": "Provenance/source binding only. All9 full runtime JSON/schema/metaschema/reference/package/Registry checks remain in same constructorContext; no generated admission proof. Actual candidate commit binds separately at future controller/run, never self-hashed into this fixture.",
   "candidateArtifactVersion": "0.10.11",
   "bindingStatus": "source-bound",
   "candidateModelSHA256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
   "generation": {
-    "sourceCommit": "6170ef4741850eae786f534dfedcbcf5dd6302de",
-    "sourceTree": "9355c657e117eb9ebde2198b13868547e1868944",
+    "sourceCommit": "2fa8290ef73ce80a3419714f70966770515d7fa5",
+    "sourceTree": "eddda4d6a93ac0ba4e93ec3c235d5667c0908162",
     "workflowPath": ".github/workflows/merged-source-generation.yml",
     "workflowSHA256": "b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f",
-    "runId": "42965210898",
+    "runId": "42990548950",
     "attempt": "1",
-    "jobId": "130340727857",
-    "artifactId": "13830972727",
-    "artifactDigest": "3461e86bd3b1d9f7456692c6d0cd63e37204222ccf937af8bd08ea6a07760fe5",
-    "outputManifestSHA256": "4266dad58b6833761ed1da7ade2826a96ce0e6e40482311bcdf82163d098a481",
-    "correspondenceReceiptSHA256": "fbc7134e4dabffe602b9b5eebf76c1d1c3deb0a9b4642c725cbeba8c87049c67",
-    "finalAttestationSHA256": "85af5a98f04b20a1998948cd7f6466fb3134b8062a9e5a30c3a3b48dcc3942b7",
-    "compilerSHA256": "6de6efd6bc442e5a5e670ae5dcce5716d5737ffdc3b916c7a052d05a83a8a989",
-    "compilerBinarySHA256": "983626c8c89b908501975061d9172b6c40a9afd8c08e8b2811cdeac57abd53bd"
+    "jobId": "130422101621",
+    "artifactId": "13840858429",
+    "artifactDigest": "43e4565d9dacb1b94880e9dc0da5a5bc3516cc6b019ab0369a7140f4a253af4d",
+    "outputManifestSHA256": "ba8ad73323bd5752a50546d7c33db5f2ab1e7f4d101f7eb8e62abc907806e1bd",
+    "correspondenceReceiptSHA256": "cfea75db4faa58f5d9ce3aec9c13a19d1209e79991e0d54a36c78fa8261fc177",
+    "finalAttestationSHA256": "5e2df00ed960161e3499d5741ba4f1ee31df22d8a124aa85272c5273f81184f5",
+    "compilerSHA256": "bb76e81d148381e9d21da69db98a6723f656269dfedb3ef48fb5daa4847795c9",
+    "compilerBinarySHA256": "e4fcd0dca64be724fcd95fdec10f0d6c5bdc6e53e431b29a1685012a8f38075d"
   }
 }

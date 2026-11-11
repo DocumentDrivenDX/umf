@@ -163,7 +163,21 @@ GEN1_FIELDS=('sourceCommit','sourceTree','workflowPath','workflowSHA256',
              'finalAttestationSHA256','compilerSHA256','compilerBinarySHA256')
 
 # Populated only after independent custody review of an actual selected GEN1.
-CANDIDATE_ADMISSION={'fixtureSHA256': 'fbb7736c75ea046cf189b03324316137157d589407f5d60252fda2b7c26dd1b7', 'generation': {'sourceCommit': '6170ef4741850eae786f534dfedcbcf5dd6302de', 'sourceTree': '9355c657e117eb9ebde2198b13868547e1868944', 'workflowPath': '.github/workflows/merged-source-generation.yml', 'workflowSHA256': 'b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f', 'runId': '42965210898', 'attempt': '1', 'jobId': '130340727857', 'artifactId': '13830972727', 'artifactDigest': '3461e86bd3b1d9f7456692c6d0cd63e37204222ccf937af8bd08ea6a07760fe5', 'outputManifestSHA256': '4266dad58b6833761ed1da7ade2826a96ce0e6e40482311bcdf82163d098a481', 'correspondenceReceiptSHA256': 'fbc7134e4dabffe602b9b5eebf76c1d1c3deb0a9b4642c725cbeba8c87049c67', 'finalAttestationSHA256': '85af5a98f04b20a1998948cd7f6466fb3134b8062a9e5a30c3a3b48dcc3942b7', 'compilerSHA256': '6de6efd6bc442e5a5e670ae5dcce5716d5737ffdc3b916c7a052d05a83a8a989', 'compilerBinarySHA256': '983626c8c89b908501975061d9172b6c40a9afd8c08e8b2811cdeac57abd53bd'}}
+CANDIDATE_ADMISSION={'fixtureSHA256': '7a9bf968200e07d0a41c2cab20a7717e4e61110394acda0863865a1d73180d18',
+ 'generation': {'sourceCommit': '2fa8290ef73ce80a3419714f70966770515d7fa5',
+                'sourceTree': 'eddda4d6a93ac0ba4e93ec3c235d5667c0908162',
+                'workflowPath': '.github/workflows/merged-source-generation.yml',
+                'workflowSHA256': 'b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f',
+                'runId': '42990548950',
+                'attempt': '1',
+                'jobId': '130422101621',
+                'artifactId': '13840858429',
+                'artifactDigest': '43e4565d9dacb1b94880e9dc0da5a5bc3516cc6b019ab0369a7140f4a253af4d',
+                'outputManifestSHA256': 'ba8ad73323bd5752a50546d7c33db5f2ab1e7f4d101f7eb8e62abc907806e1bd',
+                'correspondenceReceiptSHA256': 'cfea75db4faa58f5d9ce3aec9c13a19d1209e79991e0d54a36c78fa8261fc177',
+                'finalAttestationSHA256': '5e2df00ed960161e3499d5741ba4f1ee31df22d8a124aa85272c5273f81184f5',
+                'compilerSHA256': 'bb76e81d148381e9d21da69db98a6723f656269dfedb3ef48fb5daa4847795c9',
+                'compilerBinarySHA256': 'e4fcd0dca64be724fcd95fdec10f0d6c5bdc6e53e431b29a1685012a8f38075d'}}
 
 def candidate_generation(root,selected,binding,value):
     admission=CANDIDATE_ADMISSION
@@ -363,9 +377,107 @@ def manifest(value,expected):
         hexsha(row['sha256']);require(row==want,'Paid handle manifest source/order differs')
     return digest(canonical(value))
 
+class _ConstructorPhaseObservation:
+    """Fixed native phase buckets for one constructor; no event or stack log."""
+    PHASES=('native-installed-materialization','native-installed-full-admission',
+            'native-core-copy','native-resource-compilation','native-schema-compilation',
+            'native-schema-validation','native-result-envelope')
+    MAX_CALLS=(1<<32)-1
+    MAX_AMOUNT=2*sys.maxsize+1
+
+    def __init__(self):
+        self.totals={phase:[0,0,0] for phase in (*self.PHASES,None)}
+        self.calls=0
+        self.incomplete=False
+        self.denied=None
+
+    def record(self,args,kwargs,returned):
+        amount=args[0] if args else kwargs.get('amount')
+        phase=args[1] if len(args)>1 else kwargs.get('phase')
+        phase=phase if type(phase) is str and phase in self.PHASES else None
+        if (type(amount) is not int or not 0<=amount<=self.MAX_AMOUNT
+                or self.calls>=self.MAX_CALLS):
+            self.incomplete=True
+            return
+        self.calls+=1
+        bucket=self.totals[phase]
+        bucket[0]+=1;bucket[1]+=amount
+        if returned:
+            bucket[2]+=amount
+        elif self.denied is None:
+            self.denied={'phase':phase,'amount':amount,'nativeCallback':self.calls}
+
+    def retain_failure(self,output,identity,case,carrier,row):
+        phases=[{'phase':phase,'calls':n,'attemptedWork':a,'returnedWork':r}
+                for phase,(n,a,r) in self.totals.items() if n]
+        receipt={'profile':'umf.private-installed-constructor-phase-failure/1',
+                 **identity,'case':case,'carrier':carrier,'maximumWork':LIMIT,
+                 'constructorAttemptedWork':row['attemptedWork'],
+                 'constructorReturnedWork':row['returnedWork'],
+                 'nativeObservationIncomplete':self.incomplete,
+                 'nativePhases':phases,'firstNativeRefusal':self.denied}
+        body=json.dumps(receipt,indent=2)+'\n'
+        with output.with_name('constructor-phase-failure.json').open('x') as f:
+            f.write(body)
+
+
+class _ObservedConstructorControl:
+    def __init__(self,delegate,observation):
+        self.delegate=delegate
+        self.observation=observation
+
+    @property
+    def failure(self):
+        # The native bridge reads this exact original exception on denial.
+        return self.delegate.failure
+
+    def _observe(self,args,kwargs,returned):
+        try:self.observation.record(args,kwargs,returned)
+        except BaseException:self.observation.incomplete=True
+
+    def __call__(self,*args,**kwargs):
+        try:result=self.delegate(*args,**kwargs)
+        except BaseException:
+            self._observe(args,kwargs,False)
+            raise
+        self._observe(args,kwargs,result is None)
+        return result
+
+
 class WorkObserver:
     """Pass-through actual _host_work; no patched allowance/native return value."""
-    def __init__(self,compiler):self.compiler=compiler;self.current=None
+    def __init__(self,compiler,*,observe_constructor_phase=False):
+        self.compiler=compiler;self.current=None
+        self.observe_constructor_phase=observe_constructor_phase
+
+    def construct(self,factory,output,identity,case,carrier):
+        if not self.observe_constructor_phase:
+            return factory(max_work=LIMIT)
+        try:
+            original=self.compiler._native_control
+            observation=_ConstructorPhaseObservation()
+        except BaseException:
+            return factory(max_work=LIMIT)
+        if not callable(original):
+            return factory(max_work=LIMIT)
+
+        def native_control(*args,**kwargs):
+            delegate=original(*args,**kwargs)
+            try:return _ObservedConstructorControl(delegate,observation)
+            except BaseException:
+                observation.incomplete=True
+                return delegate
+
+        self.compiler._native_control=native_control
+        try:
+            return factory(max_work=LIMIT)
+        except BaseException:
+            try:observation.retain_failure(output,identity,case,carrier,self.current)
+            except BaseException:pass
+            raise
+        finally:
+            self.compiler._native_control=original
+
     def __enter__(self):
         self.original=self.compiler._host_work
         def host_work(maximum,*controls):
@@ -392,7 +504,7 @@ def probe(engine_type,cases,expected,output,identity,observer):
         for case in cases:
             for carrier in ('dispatcher','list','tuple'):
                 row={'case':case['id'],'carrier':carrier,'constructor':observer.begin()};value['pairs'].append(row);save()
-                engine=engine_type.from_installed(max_work=LIMIT)
+                engine=observer.construct(engine_type.from_installed,output,identity,case['id'],carrier)
                 require(previous is None or previous() is not engine,'Warm engine substituted for fresh factory');previous=weakref.ref(engine)
                 observer.complete();request=json.loads(json.dumps(case['request'],ensure_ascii=True));before=canonical(request)
                 row['call']=observer.begin();save()
@@ -462,7 +574,7 @@ def run(args):
     for n,row in pins['resources'].items():
         raw=package/'action_runtime_resources'/(n+'.json');require(raw.is_file() and not raw.is_symlink() and raw.stat().st_size==row['bytes'] and sha(raw)==row['sha256'],'Installed raw9 differs')
     before={p.relative_to(package).as_posix():sha(p) for p in package.rglob('*') if p.is_file()}
-    with WorkObserver(compiler) as observer:
+    with WorkObserver(compiler,observe_constructor_phase=version==CANDIDATE_VERSION) as observer:
         value=probe(compiler.CodegenEngine,json.loads((root/CORPUS).read_text())['cases'],expected_manifest(pins),args.output,
           {'actualCandidateSource':args.source_sha,'wheelSHA256':sha(args.wheel),'nativeSHA256':sha(Path(native.__file__)),'closureSHA256':selected['closureSHA256'],'currentInputIdentity':input_identity},observer)
     installed_wheel(args.wheel,dist,version)
