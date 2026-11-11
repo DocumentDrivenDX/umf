@@ -67,3 +67,12 @@ tests/rust-migration/r5-record-values-default.test.ts
 tests/security/query-value-three-valued.test.ts
 tests/shacl/numeric.test.ts
 tests/shacl/strings.test.ts
+
+# Timed out in at least one of the later Linux runs (borderline against 30-120 s in-test timeouts).
+tests/shacl/paths.test.ts
+tests/shacl/engine.test.ts
+tests/parquet/values.test.ts
+tests/parquet/physical.test.ts
+tests/projections/ddd-graphql.test.ts
+tests/arrow/flatbuffer-encode.test.ts
+tests/delta/parquet-actions.test.ts

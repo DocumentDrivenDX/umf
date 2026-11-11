@@ -39,6 +39,7 @@ NEEDS_LOCAL_POSTGRES_OR_BUN = [
     "test_owner_ledger_birth_recovery.py",
     "test_ingress_local_postgres_authority_bridge.py",
     "test_join_refinement.py",
+    "test_generation_authority_physical_binding.py",
 ]
 
 collect_ignore = NEEDS_GENERATED_CLIENT_OR_WEFT + NEEDS_LOCAL_POSTGRES_OR_BUN
