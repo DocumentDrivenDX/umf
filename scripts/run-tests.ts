@@ -13,6 +13,7 @@ import {availableParallelism} from 'node:os';
 //   --exclude-file PATH  skip test files matching any glob listed in PATH (one per line, # comments); repeatable
 //   --only-file PATH     run only the test files matching a glob listed in PATH
 //   --shard I/N          run only the I-th of N deterministic shards of the selected files
+// A test file that runs longer than UMF_FILE_TIMEOUT_MS (default 600000) is killed and reported as failed.
 // Per-test default timeout: UMF_TEST_TIMEOUT_MS (default 120000); tests that set their own timeout keep it.
 const args=Bun.argv.slice(2),selections:string[]=[];
 let jobs=availableParallelism(),keepGoing=false,excludeFiles:string[]=[],onlyFile:string|undefined,shard:[number,number]|undefined;
@@ -61,7 +62,15 @@ let passed=0,failed=0,skipped=0,assertions=0,completed=0,next=0,stop=false;
 const failures:string[]=[],started=performance.now();
 async function runOne(file:string){
  const child=Bun.spawn([process.execPath,'test','--timeout',process.env.UMF_TEST_TIMEOUT_MS??'120000','./'+file],{stdout:'pipe',stderr:'pipe',stdin:'ignore',env:{...process.env}});
- const [stdout,stderr,exitCode]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
+ // A file that hangs (a stuck fixture or a child process that keeps the pipes open) is killed after
+ // UMF_FILE_TIMEOUT_MS (default 10 minutes) and counted as a failure instead of stalling the whole run.
+ const limit=Number(process.env.UMF_FILE_TIMEOUT_MS??'600000');
+ const timer=setTimeout(()=>child.kill(9),limit);
+ const finished=Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
+ const gaveUp=Symbol(),result=await Promise.race([finished,new Promise<typeof gaveUp>(resolve=>setTimeout(()=>resolve(gaveUp),limit+5000))]);
+ clearTimeout(timer);
+ if(result===gaveUp){child.kill(9);failed++;completed++;failures.push(file);console.log(`FAIL ${file} (exit -1, hung: killed after ${limit/1000}s)\n`);if(!keepGoing)stop=true;return;}
+ const [stdout,stderr,exitCode]=result;
  const text=stdout+'\n'+stderr,summary=text.match(/Ran (\d+) tests? across (\d+) files?\./);
  const count=(label:string)=>Number(text.match(new RegExp(`(?:^|\\n)\\s*(\\d+) ${label}(?:\\r?\\n|$)`))?.[1]??0);
  const pass=count('pass'),fail=count('fail'),skip=count('skip'),todo=count('todo'),checks=count('expect\\(\\) calls');
