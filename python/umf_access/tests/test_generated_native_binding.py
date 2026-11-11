@@ -17,7 +17,7 @@ from umf_access.unified import (
     SessionIdentity,
     SessionPolicy,
 )
-from umf_access_generated_executor import ExecutionScope, GeneratedOrdinaryPageCall, prepare_generated
+from umf_access_generated_executor import ExecutionScope, prepare_generated
 
 # Share the verifier's canonical artifact builder rather than a second local
 # implementation of manifest digests and external receipt pins.
@@ -101,7 +101,7 @@ class GeneratedNativeBindingTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_export_only_refuses_before_head_probe_or_native_lease(self):
         with patch(
-            "umf_access.generated_native_port.GeneratedNativeExecutionPort.prepare_probe",
+            "umf_access.unified._generated_native_port.GeneratedNativeExecutionPort.prepare_probe",
             return_value=object(),
         ):
             response = await self.binding.execute(
@@ -112,7 +112,7 @@ class GeneratedNativeBindingTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_invalid_request_and_expired_scope_refuse_before_admission(self):
         with patch(
-            "umf_access.generated_native_port.GeneratedNativeExecutionPort.prepare_probe",
+            "umf_access.unified._generated_native_port.GeneratedNativeExecutionPort.prepare_probe",
             side_effect=AssertionError("invalid request reached lifecycle preparation"),
         ):
             invalid = await self.binding.execute(

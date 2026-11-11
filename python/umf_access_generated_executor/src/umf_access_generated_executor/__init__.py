@@ -9,6 +9,7 @@ from umf_access_generated_executor._canonical import (
     freeze_json,
     parse_json,
 )
+from umf_access_generated_executor._codec import run_issued_codec
 from umf_access_generated_executor._errors import (
     GeneratedExecutionError,
     GeneratedExecutionErrorCode,
@@ -23,6 +24,7 @@ from umf_access_generated_executor._ordinary_page import (
     GeneratedOrdinaryPagePosition,
     GeneratedOrdinaryPageRoot,
     PreparedOrdinaryPage,
+    _bounded_canonical_json_size as bounded_canonical_json_size,
 )
 from umf_access_generated_executor._result_values import (
     decode_result_literal,
@@ -62,6 +64,7 @@ from umf_access_generated_executor._values import (
     GeneratedReadWhere,
     TargetBinding,
     TrustedArtifactRef,
+    normalized_path,
 )
 
 __version__ = "0.1.0a11"
@@ -112,6 +115,9 @@ __all__ = [
     "freeze_json",
     "decode_result_literal",
     "fits_native_type",
+    "bounded_canonical_json_size",
+    "normalized_path",
+    "run_issued_codec",
     "is_verified_executor_for",
     "parse_json",
     "prepare_generated",

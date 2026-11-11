@@ -7,8 +7,8 @@ import hashlib
 from typing import Any, cast
 
 from umf_access.dsl import Continuation, Page
-from .generated_client import _decode_literal, _field_id, _GeneratedRowFacade
-from . import SessionError
+from ._generated_columns import _decode_literal, _field_id
+from .session_policy import SessionError
 from umf_access_generated_executor import fits_native_type as _fits_native_type
 
 
@@ -21,8 +21,7 @@ def valid_ordinary_page_result(result: object, call: object, executor: object) -
             is_verified_executor_for,
             parse_json,
         )
-        from umf_access_generated_executor._codec import run_issued_codec
-        from umf_access_generated_executor._ordinary_page import _bounded_canonical_json_size
+        from umf_access_generated_executor import bounded_canonical_json_size, run_issued_codec
 
         if type(call) is not GeneratedOrdinaryPageCall:
             return False
@@ -37,7 +36,7 @@ def valid_ordinary_page_result(result: object, call: object, executor: object) -
         frame = result["table"]
         if not isinstance(frame, Mapping):
             return False
-        _bounded_canonical_json_size(frame, 8 * 1024 * 1024)
+        bounded_canonical_json_size(frame, 8 * 1024 * 1024)
         algebra_raw = executor.read_algebra_json
         algebra = parse_json(algebra_raw)
         if type(algebra) is not dict:
@@ -120,7 +119,7 @@ def _ordered_fields_match(actual: object, expected: list[dict[str, object]]) -> 
 
 def decode_page_result(
     response: object,
-    record: _GeneratedRowFacade[Any],
+    record: Any,
     selection,
     call,
     expected_identity: bytes,
@@ -144,7 +143,7 @@ def decode_page_result(
             from umf_access.pages import StaleContinuation
             raise StaleContinuation("stale or incompatible generated Page continuation")
         if isinstance(error, Mapping) and set(error) == {"code"} and type(error.get("code")) is str:
-            from . import GeneratedNativeError
+            from .session_policy import GeneratedNativeError
             code = cast(str, error["code"])
             if code in {"DENIED", "INVALID", "INVALID_CURSOR", "UNSUPPORTED", "LIMIT_EXCEEDED", "SCHEMA_MISMATCH", "PRECONDITION_FAILED", "BUSY"}:
                 raise GeneratedNativeError(code)
@@ -265,7 +264,7 @@ def decode_page_result(
         except Exception as error:  # noqa: BLE001 -- fixed native bounds only
             from umf_access_generated_executor import GeneratedExecutionError
             if isinstance(error, GeneratedExecutionError) and error.code == "LIMIT_EXCEEDED":
-                from . import GeneratedNativeError
+                from .session_policy import GeneratedNativeError
                 raise GeneratedNativeError("LIMIT_EXCEEDED") from None
             raise SessionError("generated Page continuation position differs") from None
         key = key_type(**{key_attribute: key_value})

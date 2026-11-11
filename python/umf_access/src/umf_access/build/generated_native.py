@@ -131,8 +131,7 @@ class FinalGeneratedArtifact:
 def _executor_primitives():
     # Keep the generated runtime package out of ordinary umf_access imports.
     try:
-        from umf_access_generated_executor._canonical import canonical_json, parse_json
-        from umf_access_generated_executor._values import normalized_path
+        from umf_access_generated_executor import canonical_json, normalized_path, parse_json
     except ImportError as error:
         raise RuntimeError(
             "install umf-access-generated-executor in the build environment"

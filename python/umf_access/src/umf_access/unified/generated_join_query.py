@@ -21,7 +21,7 @@ from umf_access_generated_executor import (
 )
 
 if TYPE_CHECKING:
-    from .generated_client import GeneratedReadColumn
+    from ._generated_columns import GeneratedReadColumn
 
 R = TypeVar("R")
 J = TypeVar("J")
@@ -237,7 +237,7 @@ class GeneratedJoinedReadQuery(Generic[R, J, ResultT]):
         raise TypeError("generated queries have no truth value")
 
     def _owner(self, column: object) -> tuple[str, str, str]:
-        from .generated_client import GeneratedReadColumn
+        from ._generated_columns import GeneratedReadColumn
 
         if type(column) is not GeneratedReadColumn or column._client_token is not self._client._token:
             raise TypeError("joined query accepts Columns from this client only")
@@ -338,7 +338,7 @@ class GeneratedJoinedReadQuery(Generic[R, J, ResultT]):
         return replace(self, _limit=rows)
 
     def join(self, *_args: object, **_kwargs: object) -> Any:
-        from . import SessionError
+        from .session_policy import SessionError
 
         raise SessionError("UNSUPPORTED")
 
@@ -347,16 +347,15 @@ class GeneratedJoinedReadQuery(Generic[R, J, ResultT]):
         return Terminal(Node("generated.read.joined/3", (self._client._token, call, self)))
 
 
-def make_joined_query(root_query: Any, binding: RequiredJoinBinding) -> GeneratedJoinedReadQuery[Any, Any, Any]:
-    from . import SessionError
-    from .generated_client import _GeneratedRowFacade
+def make_joined_query(root_query: Any, binding: RequiredJoinBinding, row_facade_type: type) -> GeneratedJoinedReadQuery[Any, Any, Any]:
+    from .session_policy import SessionError
 
     if binding.status != "eligible":
         raise SessionError("UNSUPPORTED")
     if binding.client_token is not root_query._client._token:
         raise TypeError("generated RequiredJoin belongs to another client")
     target = root_query._client._record_facades.get((binding.target_module, binding.target_record))
-    if type(target) is not _GeneratedRowFacade:
+    if type(target) is not row_facade_type:
         raise SessionError("UNSUPPORTED")
     descriptor = binding.descriptor
     logical = cast(Mapping[str, object], descriptor["relationship"])

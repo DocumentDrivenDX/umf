@@ -11,12 +11,12 @@ from __future__ import annotations
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from .unified.head_session import (
+from .head_session import (
     _check_principal,
     _drive_async,
     _prepare_generated,
 )
-from .unified.operation_values import (
+from .operation_values import (
     bounded_size,
     digest,
     generated_read_value_from_native,
@@ -25,13 +25,13 @@ from .unified.operation_values import (
     reason_code,
     result_frame,
 )
-from .unified.session_policy import (
+from .session_policy import (
     ROLE_SETTINGS_CHECK,
     SessionError,
     SessionIdentity,
     _effective_settings,
 )
-from .unified.table_reads import _supported_obligations, _TableReader
+from .table_reads import _supported_obligations, _TableReader
 
 
 class GeneratedNativeExecutionPort:

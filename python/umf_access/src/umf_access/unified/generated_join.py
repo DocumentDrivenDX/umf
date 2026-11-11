@@ -17,8 +17,8 @@ from umf_access_generated_executor import (
     GeneratedJoinedReadResult,
 )
 
-from .generated_binding import (
-    _NativePort,
+from ._generated_native_port import GeneratedNativeExecutionPort as _NativePort
+from ._generated_read_checks import (
     _check_native_description,
     _request_settings,
     _same_request_authority,

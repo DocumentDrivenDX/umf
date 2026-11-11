@@ -82,6 +82,7 @@ def check(root: Path) -> int:
     helpers = {"canonical": "foundation", "types": "foundation", "_version": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
                "related_keys": "runtime", "rust_related_keys": "runtime", "rust_catalog_custody": "runtime", "rust_catalog_render": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "capture_types": "dsl", "rust_capture_observe": "dsl", "rust_catalog_render_v2": "runtime", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
     helpers["catalog_errors"] = "runtime"
+    helpers["generated"] = "targets"
     # Keep the administrative host, approval and optional parser adapters
     # explicit in the module map. They remain within the lifecycle owner.
     helpers.update({"host": "lifecycle", "approval": "lifecycle",
@@ -206,8 +207,14 @@ def check(root: Path) -> int:
             target_owner = owner(target)
             if source_owner != target_owner:
                 head_probe = (name == 'umf_access.unified.head_session' and target == 'umf_access.lifecycle'
-                              and member in {'CatalogError','prepare_table_head','prepare_table_correspondence'})
-                if target_owner not in allowed.get(source_owner, set()) and not head_probe:
+                              and member in {'CatalogError','prepare_table_head','prepare_table_correspondence',
+                                             'prepare_generated_table_head','prepare_generated_table_correspondence'}
+                              or name == 'umf_access.unified.generated_binding'
+                              and target == 'umf_access.lifecycle' and member == 'CatalogError')
+                write_codec = (name == 'umf_access.build.postgres_writes'
+                               and target == 'umf_access.unified.operation_values'
+                               and member in {'canonical', 'loads'})
+                if target_owner not in allowed.get(source_owner, set()) and not head_probe and not write_codec:
                     fail(path, "DEPENDENCY", f"{source_owner} -> {target_owner}")
                 private_capture_candidate = (
                     name == "umf_access.rust_catalog_render"
@@ -216,7 +223,7 @@ def check(root: Path) -> int:
                     and member in {"_canonical", "_invoke", "_parameters", "_validate_node"}
                 )
                 private_rrf_predecessor = rrf_facade and target == "umf_access.postgres_search" and member == "_finish"
-                if (target.count(".") != 1 or member.startswith("_")) and not private_capture_candidate and not private_rrf_predecessor:
+                if (target.count(".") != 1 or member.startswith("_")) and not private_capture_candidate and not private_rrf_predecessor and not write_codec:
                     fail(path, "PRIVATE", f"use public boundary of {target_owner}")
             return
         package = target.split(".")[0]
@@ -235,6 +242,22 @@ def check(root: Path) -> int:
                 fail(path, "PRIVATE", "administration uses only the original public verifier and native exception boundary")
                 return
         permitted = stdlib | {"pydantic"} | extras.get(source_owner, set())
+        generated_executor = (
+            target == "umf_access_generated_executor"
+            and name in {
+                "umf_access.build.generated_native",
+                "umf_access.lifecycle.generated_native",
+                "umf_access.unified._generated_columns",
+                "umf_access.unified.generated_binding",
+                "umf_access.unified.generated_client",
+                "umf_access.unified.generated_connection",
+                "umf_access.unified.generated_join",
+                "umf_access.unified.generated_join_query",
+                "umf_access.unified.generated_page",
+            }
+        )
+        generated_issuer = (target == "umf_codegen" and member == "verify_table_deployment"
+                            and name in {"umf_access.build.generated_native", "umf_access.build.postgres_writes"})
         if name == "umf_access.runtime.bulk":
             permitted.add("weft")
         # The optional Spark target needs the real driver exception classes to
@@ -269,7 +292,7 @@ def check(root: Path) -> int:
         # the pure checker module must not import the parser or its dependencies.
         containment_parser = (name == 'umf_access.lifecycle.sql_containment_parser'
                               and target == 'pglast.parser' and member == 'parse_sql_json')
-        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser and not private_capture_core and not private_rrf_core and not strict_rust_core and not approved_lifecycle_external_import(
+        if package not in permitted and not generated_executor and not generated_issuer and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser and not private_capture_core and not private_rrf_core and not strict_rust_core and not approved_lifecycle_external_import(
                 name, target, member, verifier_scope=verifier_scope,
                 native_wait_scope=native_wait_scope,
                 native_connection_scope=native_connection_scope,

@@ -32,7 +32,7 @@ jobs:
         run: |
           uv build --python 3.11 --wheel --sdist --out-dir "$RUNNER_TEMP/access-dist" python/umf_access
           uv venv --python 3.11 "$RUNNER_TEMP/access-consumer"
-          uv pip install --python "$RUNNER_TEMP/access-consumer/bin/python" "$RUNNER_TEMP/access-dist/"*.whl pydantic==2.14.2 pytest==8.4.2 packaging==26.3 umf-weft==0.4.56
+          uv pip install --python "$RUNNER_TEMP/access-consumer/bin/python" --find-links https://github.com/DocumentDrivenDX/umf/releases/expanded_assets/umf-v0.10.10 "$RUNNER_TEMP/access-dist/"*.whl pydantic==2.14.2 pytest==8.4.2 packaging==26.3 umf-weft==0.4.56
       - name: Verify exact installed bytes and source-selected runtime identity
         run: |
           "$RUNNER_TEMP/access-consumer/bin/python" -I -B - <<'PYTHON'
@@ -62,6 +62,9 @@ jobs:
       - name: Installed packaging and read-admission controls
         run: |
           "$RUNNER_TEMP/access-consumer/bin/python" -I -B -c 'import umf_access,pytest; raise SystemExit(pytest.main(["-p","no:cacheprovider","-c","/dev/null","--noconftest","--import-mode=importlib","python/umf_access/tests/test_wheel_contract.py","python/umf_access/tests/test_reviewed_reads.py","-q"]))'
+      - name: Verify receipt recovery with installed Access
+        run: |
+          "$RUNNER_TEMP/access-consumer/bin/python" -I -B -m pytest -q -p no:cacheprovider -c /dev/null --noconftest python/umf_access/tests/test_table_outcomes.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

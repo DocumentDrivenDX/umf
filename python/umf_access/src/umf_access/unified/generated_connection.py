@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from types import MappingProxyType
 from typing import cast
 
-from umf_access.unified import GeneratedNativeError, SessionIdentity
+from .session_policy import GeneratedNativeError, SessionIdentity
 
 _PROFILE_ISSUER = object()
 _PREPARED_ISSUER = object()
