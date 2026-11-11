@@ -2844,6 +2844,9 @@ impl CompiledSchema {
         if get_metered(schema, "$schema", ctx, schema_path)?.is_some() {
             return self.explicit_keyword_policy(schema, inherited, ctx);
         }
+        self.keyword_policy_unindexed_origin_tail(schema_path,inherited,ctx)
+    }
+    fn keyword_policy_unindexed_origin_tail(&self,schema_path:&Utf16,inherited:KeywordPolicy,ctx:&mut Context<'_>)->Result<KeywordPolicy,EngineError>{
         ctx.charge_work(schema_path.len(), schema_path.clone())?;
         let origin = schema_path
             .to_utf8()
@@ -2890,11 +2893,12 @@ impl CompiledSchema {
         self.keyword_policy_unindexed(schema,path.text(),inherited,ctx)
     }
     fn keyword_policy_scoped(&self,schema:&Value,path:&mut construction_index::ScopedPreflightPath,inherited:KeywordPolicy,ctx:&mut Context<'_>)->Result<KeywordPolicy,EngineError>{
-        if construction_index::get_ascii_metered(schema,"$schema",ctx,path.text())?.is_some(){return self.explicit_keyword_policy(schema,inherited,ctx);}
+        let declaration=path.get_ascii_scoped(schema,"$schema",ctx)?;
+        if let Some(declaration)=declaration{return self.explicit_keyword_policy_value(Some(declaration),inherited,ctx);}
         if path.units().first()==Some(&35){return Ok(inherited);}
         if let Some(index)=&self.cold_resource_index {if let Some(root)=index.select_scoped(self,path,construction_index::PathSelector::Policy,ctx)?{return index.policy(self,root,inherited,ctx);}}
         let snapshot=path.diagnostic_snapshot(ctx)?;
-        self.keyword_policy_unindexed(schema,&snapshot,inherited,ctx)
+        self.keyword_policy_unindexed_origin_tail(&snapshot,inherited,ctx)
     }
 
     fn explicit_keyword_policy(
@@ -2903,7 +2907,17 @@ impl CompiledSchema {
         inherited: KeywordPolicy,
         ctx: &mut Context<'_>,
     ) -> Result<KeywordPolicy, EngineError> {
-        let Some(uri_value) = get_metered(schema, "$schema", ctx, &Utf16::default())? else {
+        let uri_value=get_metered(schema,"$schema",ctx,&Utf16::default())?;
+        self.explicit_keyword_policy_value(uri_value,inherited,ctx)
+    }
+
+    fn explicit_keyword_policy_value(
+        &self,
+        uri_value:Option<&Value>,
+        inherited:KeywordPolicy,
+        ctx:&mut Context<'_>,
+    )->Result<KeywordPolicy,EngineError>{
+        let Some(uri_value)=uri_value else {
             return Ok(inherited);
         };
         let Value::String(uri_text) = uri_value else {
@@ -3474,6 +3488,14 @@ impl CompiledSchema {
                 path.text()
             }}; }
             macro_rules! child_schema_error { ($message:expr) => {{ child_path!(); let diagnostic=path.diagnostic_snapshot(ctx)?; schema_error(&diagnostic,$message) }}; }
+            macro_rules! check_keyword_declaration { ($check:expr) => {{
+                // Pre-admit the path-free result carrier and its branch.
+                ctx.charge_work(
+                    std::mem::size_of::<Result<(), &'static str>>().div_ceil(std::mem::size_of::<usize>())+1,
+                    Utf16::default(),
+                )?;
+                if let Err(reason)=$check { return Err(child_schema_error!(reason)); }
+            }}; }
             macro_rules! start_keyword_owner {
                 ($cursor:ident,$checked:ident,$borrowed:ident,$extra:expr) => {
                     const OWNER_WORD:usize=std::mem::size_of::<usize>();
@@ -3555,9 +3577,7 @@ impl CompiledSchema {
                     // type names (and delegates their meaning to its type
                     // checker). Later drafts enumerate the primitive names.
                     if self.dialect != SchemaDialect::Draft3 {
-                        child_path!();
-                        let diagnostic=path.diagnostic_snapshot(ctx)?;
-                        validate_type_declaration(val,&diagnostic,self.dialect)?;
+                        check_keyword_declaration!(check_type_declaration(val,self.dialect,|reason|reason));
                     }
                     if self.dialect == SchemaDialect::Draft3 {
                         match val {
@@ -3583,9 +3603,7 @@ impl CompiledSchema {
                     if self.dialect == SchemaDialect::Draft3 && matches!(val, Value::Bool(_)) {
                         // Draft 3 expresses a required property on the property schema itself.
                     } else {
-                        child_path!();
-                        let diagnostic=path.diagnostic_snapshot(ctx)?;
-                        validate_string_array(val,&diagnostic,true)?;
+                        check_keyword_declaration!(check_string_array(val,true,|reason|reason));
                     }
                 }
                 "enum" => {
@@ -9997,16 +10015,19 @@ fn as_usize(v: &Value) -> Option<usize> {
     }
 }
 fn validate_string_array(v: &Value, path: &Utf16, unique: bool) -> Result<(), EngineError> {
+    check_string_array(v, unique, |reason| schema_error(path, reason))
+}
+fn check_string_array<E>(v: &Value, unique: bool, error: impl Fn(&'static str) -> E) -> Result<(), E> {
     let Value::Array(a) = v else {
-        return Err(schema_error(path, "Expected an array of strings"));
+        return Err(error("Expected an array of strings"));
     };
     let mut seen = BTreeSet::new();
     for x in a {
         let Value::String(s) = x else {
-            return Err(schema_error(path, "Expected an array of strings"));
+            return Err(error("Expected an array of strings"));
         };
         if unique && !seen.insert(s.units().to_vec()) {
-            return Err(schema_error(path, "Array values must be unique"));
+            return Err(error("Array values must be unique"));
         }
     }
     Ok(())
@@ -10016,11 +10037,14 @@ fn validate_type_declaration(
     path: &Utf16,
     dialect: SchemaDialect,
 ) -> Result<(), EngineError> {
+    check_type_declaration(v, dialect, |reason| schema_error(path, reason))
+}
+fn check_type_declaration<E>(v: &Value, dialect: SchemaDialect, error: impl Fn(&'static str) -> E) -> Result<(), E> {
     let branches: Vec<&Value> = match v {
         Value::String(_) => vec![v],
         Value::Object(_) if dialect == SchemaDialect::Draft3 => vec![v],
         Value::Array(items) => items.iter().collect(),
-        _ => return Err(schema_error(path, "type must be a string or array")),
+        _ => return Err(error("type must be a string or array")),
     };
     let mut seen = BTreeSet::new();
     for branch in branches {
@@ -10028,18 +10052,18 @@ fn validate_type_declaration(
             continue;
         }
         let Value::String(name) = branch else {
-            return Err(schema_error(path, "type array values must be strings"));
+            return Err(error("type array values must be strings"));
         };
         let name = name
             .to_utf8()
-            .map_err(|_| schema_error(path, "Invalid type name"))?;
+            .map_err(|_| error("Invalid type name"))?;
         if ![
             "null", "boolean", "object", "array", "number", "integer", "string",
         ]
         .contains(&name.as_str())
             || !seen.insert(name)
         {
-            return Err(schema_error(path, "Invalid or duplicate type name"));
+            return Err(error("Invalid or duplicate type name"));
         }
     }
     Ok(())

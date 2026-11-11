@@ -155,6 +155,22 @@ impl ScopedPreflightPath {
             Ok(Ok(()))=>Ok(()),Ok(Err(error))=>{self.poisoned=true;Err(error)},Err(payload)=>{self.poisoned=true;std::panic::resume_unwind(payload)}
         }
     }
+    pub(super) fn get_ascii_scoped<'a>(&mut self,value:&'a Value,name:&str,ctx:&mut Context<'_>)->Result<Option<&'a Value>,EngineError>{
+        if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
+        let Value::Object(members)=value else{return Ok(None);};
+        if members.is_empty(){return Ok(None);}
+        let guard=path_words::<ScopedPreflightPath>()+2;
+        match std::panic::catch_unwind(std::panic::AssertUnwindSafe(||{
+            ctx.charge_work(guard,Utf16::default())?;
+            for (key,member) in members {
+                ctx.charge_work_with_path(key.len().min(name.len()).saturating_add(1),&mut self.text)?;
+                if ascii_key(key,name){return Ok(Some(member));}
+            }
+            Ok(None)
+        })){
+            Ok(Ok(value))=>Ok(value),Ok(Err(error))=>{self.poisoned=true;Err(error)},Err(payload)=>{self.poisoned=true;std::panic::resume_unwind(payload)}
+        }
+    }
     pub(super) fn diagnostic_snapshot(&mut self,ctx:&mut Context<'_>)->Result<Utf16,EngineError>{
         if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
         let length=self.text.len();

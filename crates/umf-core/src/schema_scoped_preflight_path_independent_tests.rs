@@ -852,14 +852,14 @@ fn sp02_pattern_path_reuse_and_regex_error_order() {
     });
     result.unwrap();
     assert!(!work.borrow().is_empty());
-    // Authored operations: patternProperties keyword, its name, nested type,
-    // root type. A second name append would cause a fifth completed write.
+    // Only the patternProperties keyword and its name need text. The two
+    // valid type declarations never prepare a diagnostic path.
     assert_eq!(
         effects
             .iter()
             .filter(|e| **e == "sp1-effect-suffix-written")
             .count(),
-        4
+        2
     );
     assert_eq!(
         effects
@@ -874,6 +874,142 @@ fn sp02_pattern_path_reuse_and_regex_error_order() {
             .any(|e| *e == "sp1-before-restoration-admission"),
         "caller stream deliberately does not forward restoration observations"
     );
+    sp_lazy_declaration_diagnostics();
+}
+
+fn sp_lazy_declaration_diagnostics() {
+    let owner = sp_owner();
+    let base = Utf16::from("#");
+    let run = |schema: &Value, indexed: bool, ctx: &mut Context<'_>| {
+        if indexed {
+            owner.preflight_located(
+                schema, &base, "", 0, owner.root_keyword_policy, ctx, &mut BTreeSet::new(), None,
+            )
+        } else {
+            owner.preflight_original_located(
+                schema, &base, "", 0, owner.root_keyword_policy, ctx, &mut BTreeSet::new(), None,
+            )
+        }
+    };
+
+    let valid = sp_json(r#"{"type":["object","string"],"required":["a","b"]}"#);
+    let (result, effects) = sp_effects(|| run(&valid, true, &mut Context::catalog()));
+    result.unwrap();
+    assert!(!effects.contains(&"sp1-effect-suffix-written"));
+    for (raw, expected_path, expected_message) in [
+        (r#"{"type":7,"required":false}"#, "#/type", "type must be a string or array"),
+        (r#"{"type":[7,"bogus"]}"#, "#/type", "type array values must be strings"),
+        (r#"{"type":["string","string",7]}"#, "#/type", "Invalid or duplicate type name"),
+        (r#"{"required":["x","x",7],"type":7}"#, "#/required", "Array values must be unique"),
+        (r#"{"properties":{"a/~":{"required":[7,"x","x"]}}}"#,
+            "#/properties/a~1~0/required", "Expected an array of strings"),
+    ] {
+        let schema = sp_json(raw);
+        let indexed = run(&schema, true, &mut Context::catalog()).unwrap_err();
+        assert_eq!(indexed, run(&schema, false, &mut Context::catalog()).unwrap_err());
+        assert_eq!(indexed.path, Utf16::from(expected_path));
+        assert_eq!(indexed.message, Utf16::from(expected_message));
+    }
+
+    // UTF-16 remains exact: type checks decode names, while required checks
+    // compare the original units and permit a single lone-surrogate name.
+    let surrogate = Value::String(Utf16::new(vec![0xd800]));
+    assert_eq!(check_type_declaration(&surrogate, SchemaDialect::Draft2020_12, |reason| reason), Err("Invalid type name"));
+    assert!(check_string_array(&Value::Array(vec![surrogate.clone()]), true, |reason| reason).is_ok());
+    assert_eq!(check_string_array(&Value::Array(vec![surrogate.clone(), surrogate]), true, |reason| reason),
+               Err("Array values must be unique"));
+
+    let draft3 = sp_json(r#"{"$schema":"http://json-schema.org/draft-03/schema#"}"#);
+    let legacy = sp_original_compile(&draft3, &SchemaResources::default()).unwrap();
+    assert!(matches!(legacy.dialect, SchemaDialect::Draft3));
+    let draft3_keywords = sp_json(
+        r#"{"type":["extension-name",{"required":true}],"disallow":"extension-name","required":false}"#,
+    );
+    let mut ctx = Context::catalog();
+    let mut scoped = ScopedPreflightPath::new(&base, &mut ctx).unwrap();
+    legacy.preflight_carried_checked(
+        &draft3_keywords, &mut scoped, "", 0, legacy.root_keyword_policy, &mut ctx,
+        &mut BTreeSet::new(), None, None, None,
+    ).unwrap();
+    legacy.preflight_original_located(
+        &draft3_keywords, &base, "", 0, legacy.root_keyword_policy, &mut ctx,
+        &mut BTreeSet::new(), None,
+    ).unwrap();
+
+    // The next charge after the completed keyword append is the snapshot.
+    // Denial or unwind there must win over the already-known semantic error.
+    let bad = sp_json(r#"{"required":false}"#);
+    let word = std::mem::size_of::<usize>();
+    let carrier_fee = std::mem::size_of::<Result<(), &'static str>>().div_ceil(word) + 1;
+    let length = "#/required".len();
+    let snapshot_fee = length
+        + (length * std::mem::size_of::<u16>()).div_ceil(word)
+        + std::mem::size_of::<Vec<u16>>().div_ceil(word)
+        + std::mem::size_of::<std::sync::Arc<Vec<u16>>>().div_ceil(word)
+        + std::mem::size_of::<Utf16>().div_ceil(word) + 6;
+
+    // Calibrate each terminal charge from this exact input, then leave its
+    // prefix one unit short. The replay has no meter or host control.
+    let good = sp_json(r#"{"required":["x"]}"#);
+    for (schema, fee, writes_path) in [(&good, carrier_fee, false), (&bad, snapshot_fee, true)] {
+        let mut charges = Vec::new();
+        let mut meter = |amount| { charges.push(amount); Ok(()) };
+        let mut calibration = Context::catalog().with_meter(&mut meter);
+        assert_eq!(run(schema, true, &mut calibration).is_err(), writes_path);
+        let total = calibration.charged_work();
+        assert_eq!(charges.last().copied(), Some(fee));
+        let prefix = total - fee as u64;
+        assert_eq!(charges[..charges.len()-1].iter().map(|&amount| amount as u64).sum::<u64>(), prefix);
+
+        let mut capped = Context::catalog();
+        let seed = u64::MAX - total + 1;
+        capped.carry_transport_usage(seed, 0);
+        let (result, effects) = sp_effects(|| run(schema, true, &mut capped));
+        let error = result.unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(error.message, Utf16::from("Work counter overflow"));
+        assert_eq!(capped.charged_work(), seed + prefix);
+        assert_eq!(effects.contains(&"sp1-effect-suffix-written"), writes_path);
+
+        let mut exact = Context::catalog();
+        exact.carry_transport_usage(u64::MAX - total, 0);
+        let result = run(schema, true, &mut exact);
+        assert_eq!(exact.charged_work(), u64::MAX);
+        if writes_path {
+            assert_eq!(result.unwrap_err(), run(schema, false, &mut Context::catalog()).unwrap_err());
+        } else {
+            result.unwrap();
+        }
+    }
+
+    for unwind in [false, true] {
+        let appended = Rc::new(Cell::new(false));
+        let sink = appended.clone();
+        let calls = Cell::new(0);
+        let original = sp_host_error();
+        let mut meter = |_| {
+            if appended.get() {
+                calls.set(calls.get() + 1);
+                if unwind { std::panic::panic_any(73_u32); }
+                return Err(original.clone());
+            }
+            Ok(())
+        };
+        let result = catch_unwind(AssertUnwindSafe(|| {
+            construction_index::observe_paths(
+                Box::new(move |e| {
+                    if e == "sp1-buffer-after-append" { sink.set(true); }
+                }),
+                || run(&bad, true, &mut Context::catalog().with_host_control(&mut meter)),
+            )
+        }));
+        assert_eq!(calls.get(), 1);
+        if unwind {
+            assert_eq!(result.unwrap_err().downcast_ref::<u32>(), Some(&73));
+        } else {
+            assert_eq!(result.unwrap().unwrap_err(), original.from_host());
+        }
+    }
 }
 
 #[test]
@@ -937,14 +1073,14 @@ fn sp03_demand_only_preparation_and_displaced_ordered_skips() {
     let (result, effects) =
         sp_effects(|| sp_root_preflight(&owner, false, &mut Context::catalog()));
     result.unwrap();
-    // Only properties/name/type and allOf/index/type construct text. Merely
-    // known default/title/description/comment/id do not prepare child paths.
+    // Only properties/name and allOf/index construct text. Successful type
+    // checks and the known annotations do not prepare diagnostic paths.
     assert_eq!(
         effects
             .iter()
             .filter(|e| **e == "sp1-effect-suffix-written")
             .count(),
-        6
+        4
     );
     // Two real keyword selections plus one property and one applicator child.
     assert_eq!(
@@ -966,6 +1102,41 @@ fn sp03_demand_only_preparation_and_displaced_ordered_skips() {
 
 #[test]
 fn sp07_node_current_path_and_retaining_ref_uri_consumers() {
+    let ordered = Value::Object(vec![
+        (Utf16::from("before"), Value::Bool(false)),
+        (Utf16::from("$schema"), Value::String(Utf16::from("first"))),
+        (Utf16::from("after"), Value::String(Utf16::from("unread"))),
+    ]);
+    let Value::Object(ordered_members)=&ordered else{unreachable!()};
+    let mut path = ScopedPreflightPath::new(&Utf16::from("https://sp.test/root#/child"), &mut Context::catalog()).unwrap();
+    let charges=RefCell::new(Vec::new());
+    let sink=&charges;
+    let mut meter=move |amount|{sink.borrow_mut().push(amount);Ok(())};
+    assert_eq!(
+        path.get_ascii_scoped(&ordered, "$schema", &mut Context::catalog().with_meter(&mut meter))
+            .unwrap(),
+        Some(&ordered_members[1].1),
+        "ordered lookup returns the first matching declaration"
+    );
+    assert_eq!(charges.borrow().len(),3,"guard and ordered prefix are charged; later keys are not read");
+    let miss = Value::Object(vec![(Utf16::from("other"), Value::Bool(true))]);
+    assert!(path.get_ascii_scoped(&miss, "$schema", &mut Context::catalog()).unwrap().is_none());
+    assert!(!path.observe().poisoned, "an ordered miss completes without poisoning");
+
+    let cancelled_path=Utf16::from("https://sp.test/root#/properties/a~1b~0");
+    let mut path=ScopedPreflightPath::new(&cancelled_path,&mut Context::catalog()).unwrap();
+    let calls=Cell::new(0);
+    let mut cancel=||{calls.set(calls.get()+1);calls.get()>=2};
+    let error=path.get_ascii_scoped(
+        &ordered,
+        "$schema",
+        &mut Context::catalog().with_cancellation(&mut cancel),
+    ).unwrap_err();
+    assert_eq!(error.code,"CANCELLED");
+    assert_eq!(error.path,cancelled_path,"key-scan cancellation retains the live escaped path");
+    assert!(path.observe().poisoned,"cancellation poisons the live scoped path");
+    assert!(path.get_ascii_scoped(&ordered,"$schema",&mut Context::catalog()).is_err());
+
     let expected = Utf16::from("nonempty#/child");
     let mut path =
         ScopedPreflightPath::new(&Utf16::from("nonempty#"), &mut Context::catalog()).unwrap();
