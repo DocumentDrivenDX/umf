@@ -177,6 +177,8 @@ jobs:
         with:
           shared-key: nightly
       - run: cargo install wasm-bindgen-cli --locked --version 0.2.100
+      # The SDK packaging script builds a source snapshot with `cargo --offline`.
+      - run: cargo fetch --locked
       - name: protoc 36.2 (pinned by the protobuf tests)
         run: |
           curl -fsSL -o "$RUNNER_TEMP/protoc.zip" https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-x86_64.zip
