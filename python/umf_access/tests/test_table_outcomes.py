@@ -9,12 +9,12 @@ from unittest.mock import patch
 
 from umf_access.unified import SessionError, SessionIdentity, outcome_values
 from umf_access.unified.outcome_values import (
-    digest,
     outcome_from_record,
     outcome_invocation,
     outcome_record,
     outcome_slot,
 )
+from umf_access.unified.operation_values import digest
 from umf_access.unified.table_reads import _operation_scope
 from umf_access.unified.table_writes import SyncTableWriter
 
