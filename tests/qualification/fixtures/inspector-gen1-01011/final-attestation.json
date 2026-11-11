@@ -1,7 +1,7 @@
 {
   "profile": "umf.metamodel.compile/1",
   "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-  "compilerSha256": "bb76e81d148381e9d21da69db98a6723f656269dfedb3ef48fb5daa4847795c9",
+  "compilerSha256": "e6c901c448fff3dbac8e716bfea19b88618a2e50c2c827d82eb8128a1ef99d22",
   "sourceAttestation": {
     "sources": {
       ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
@@ -66,7 +66,7 @@
       "crates/umf-core/src/bit128.rs": "68e9548b89450d56299358b1f60b0898253b9140a52640df90da157184446ce2",
       "crates/umf-core/src/bit128_binding.rs": "0dca89e2fa547c00c89e50e371a8fbfe42b04b3ae66314835394681a12e362fe",
       "crates/umf-core/src/bit128_dataset.rs": "4fc7f58a9ef72fd403721307380a577b6a8da41139b8bce337fcf64bde88e548",
-      "crates/umf-core/src/canonical_codegen_literals.rs": "b753b75fc5ba49490c78fab991b2544102ab2ab53e1745ca46d38a1af66d5920",
+      "crates/umf-core/src/canonical_codegen_literals.rs": "74022667f60018a2bae8ef07dcc57bed5946c5675bc995fe8a7f50fcced9e657",
       "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "d528ef296f9cd6d433146c9f8421cd01d0205272e1d6e3cc539b91c91168aac3",
       "crates/umf-core/src/canonical_codegen_resources.rs": "9db20de06daee9b642e4c994a3ac5e4d9d7d520bde6f87c73e4b32e807019eec",
       "crates/umf-core/src/canonical_static_text_independent_tests.rs": "9b619dca3aae22919a59988093004b8eac23cb1395e6ecfc16df78add51caf43",
@@ -232,7 +232,7 @@
       "crates/umf-core/src/reviewed_parameters.rs": "074ee122216855ea5ee39d7b0709435458eb4f921f28b5d34cd161f883ded6da",
       "crates/umf-core/src/rfc3339_exact_instant.rs": "822debe5dbcf9dceec7dd0ffb73b89d9c090265128879c629e52601ac0b046f7",
       "crates/umf-core/src/scalar_type_inspection.rs": "9078192e60c3031a793beb6151002ed3a3f1a990a8d98b667b128026621ba57e",
-      "crates/umf-core/src/schema.rs": "1297adece7a53cbde741e5abdacc11253211805963dc0aaeec638be01ec6c159",
+      "crates/umf-core/src/schema.rs": "5833e512f0a66764a577fc2f69c15ba3a88ab316f8029d3cdd87f6111da898fe",
       "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -243,7 +243,7 @@
       "crates/umf-core/src/schema_closed_container_independent_tests.rs": "2964bcb2484bd433b6576dd759f4003e4d8a27901c3b15821abc5f586304733a",
       "crates/umf-core/src/schema_closed_structure.rs": "b21fe576ee04683714634f3bcfe21c53a4632df960bf69618624c05aba8f0271",
       "crates/umf-core/src/schema_codegen_catalogue_independent_tests.rs": "b0dfa42c590c180ffcb50050487258c1b80c3b7eeaa34fe9eab617b8dad1042f",
-      "crates/umf-core/src/schema_construction_index.rs": "4a3cb63a2ce135f07e03f783c0e54e5b3a90c72f4d618c0e0be10c02251ef4c3",
+      "crates/umf-core/src/schema_construction_index.rs": "653f565e0e62716d8297a52d0b13e591e84313d3982bde8475be679b354512d3",
       "crates/umf-core/src/schema_construction_tests.rs": "b6bae4b8d8927eee3b5b64112bdaebe144602966c602ee01ca545657852161e6",
       "crates/umf-core/src/schema_encoded_source_independent_tests.rs": "0460c457349a0cdbdbcba0214275be6d8a79a00fe002065ed2aeefe62ee2079f",
       "crates/umf-core/src/schema_evaluation_path_pair_independent_tests.rs": "1006fbf5b145ed2b13f2e3349a5b71882d791d125905fdf45b4a210c48ccb235",
@@ -267,7 +267,7 @@
       "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
       "crates/umf-core/src/schema_properties.rs": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14",
       "crates/umf-core/src/schema_properties_host_json.rs": "62337c99c22b5e2e6322deae761008f2504fc0ca3c11fa3ce1ef86d8a6628257",
-      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "50c966bdaf9dc5071734e6df6160d6805573d57bd3bf39ea8cc8ece092fb5a93",
+      "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "b90a9e8cb705ac812e31dc707902512c5e9c85ce8955126a052bfaa3988a17c7",
       "crates/umf-core/src/security_authority_guard.rs": "6723ea873cc88dc864517f6bba51d360b456c52d1e21e2332a3952459b2b0488",
       "crates/umf-core/src/security_disclosure.rs": "1880655015199091d68b06d06cb3c8b1aae34f0b20a29812212bf6a5121c6c0c",
       "crates/umf-core/src/security_disclosure_v2.rs": "8e5507241894563b49922dda9f735309dad4c53dc3a35ae26cee527674fa1631",
@@ -1094,28 +1094,28 @@
       "spec/core/nullability-operation-v7.schema.json": "6f0d20390165d2da79f22a69b3fec0126512c9f870a49445a5c33e55d68ff2d9",
       "spec/extensions/tables/operation.schema.json": "af217abc87d2f4a5205d82c2146040ef986d29252c78a4ec76d59787828578cc"
     },
-    "binarySha256": "e4fcd0dca64be724fcd95fdec10f0d6c5bdc6e53e431b29a1685012a8f38075d"
+    "binarySha256": "00f4ffe03f5e29e6f5c28492495c404c26f179229ee34a90948b78e7eabf8ae8"
   },
   "executable": {
-    "path": "/home/runner/work/umf/umf/target/metamodel-compiler/executable-16sSB8/umf",
-    "bytes": 42818288,
-    "sha256": "e4fcd0dca64be724fcd95fdec10f0d6c5bdc6e53e431b29a1685012a8f38075d"
+    "path": "/home/runner/work/umf/umf/target/metamodel-compiler/executable-ZHPnTb/umf",
+    "bytes": 42808832,
+    "sha256": "00f4ffe03f5e29e6f5c28492495c404c26f179229ee34a90948b78e7eabf8ae8"
   },
   "compilerArtifact": {
     "path": "compiler-evidence/umf-metamodel-cli",
-    "bytes": 42818288,
-    "sha256": "e4fcd0dca64be724fcd95fdec10f0d6c5bdc6e53e431b29a1685012a8f38075d"
+    "bytes": 42808832,
+    "sha256": "00f4ffe03f5e29e6f5c28492495c404c26f179229ee34a90948b78e7eabf8ae8"
   },
   "portableOutputs": {
-    "spec/core/schema.json": "4896436c8bbdec96377c8e16212de2600dc768c703b5162fbeab8ba9ea6c36f4",
-    "spec/core/semantic-type-reference.schema.json": "c63d795353893bcaa0ac16536bb9f827905a25f12cf640bcab8ba7cbcba63a6d",
-    "spec/core/extension-package.schema.json": "72f9de84c111a403d57af7da48b7f09bee84274d47b40c559fc2e2a9ae60dd08",
+    "spec/core/schema.json": "8391a9a4b83277e3f51d97cde9f68c24f815356f873cc4ab7cfe3625022ae601",
+    "spec/core/semantic-type-reference.schema.json": "e267005dff23f9f236f5d84482b42c55be413df547250f2cf3bfd9859a702400",
+    "spec/core/extension-package.schema.json": "4f2ee3adae92e67502fd26322a2100c3ef9029fab62fbfbfed3f33423148f263",
     "spec/metamodel/package.json": "8c193403146173a328611bee864392777b798a13c491ef8bed0bcc4e43b2d16f",
-    "spec/metamodel/generated/core-constraints.json": "cd62a0fc19f0d870b7ff26991597688bb4e9bf295cd0376c56a2d4c2698300b7",
-    "spec/metamodel/generated/domain-policy.json": "7c81aaa6bb61c778782b44c65fcd8279ddb4f6b16ac1f139355b726178eda355",
-    "spec/metamodel/generated/python-shapes.json": "88a5059faed92cf628d53c0e250042f4aa0fbb93e841ea78cc879b0dc6bd80fe",
-    "python/umf_access/src/umf_access/generated_core.py": "ad7d393ed5418ea8de982a8cd3fef4fa56b85b3f6ace15a51d28d7f8e5773604",
-    "src/generated/core-model.ts": "2cccdcddce1ce01ef2833e2a7c0c911acf46e59dad4aa93995edec91063475fc",
+    "spec/metamodel/generated/core-constraints.json": "8a9f62bbb2166df48b0c62b3028cf539eb74ad8bbf2de0550ae9d4c89396fd05",
+    "spec/metamodel/generated/domain-policy.json": "a7cf58d5a52b225e64896aaf8375934212dc3264767ba0da053e0be7c808b40f",
+    "spec/metamodel/generated/python-shapes.json": "aed492ffaa898de7e65286f404bcdc1cbc191bc9f34bbc85bf1b178cb509aaa9",
+    "python/umf_access/src/umf_access/generated_core.py": "356a523b612e554396f825b889a2454b85da946f4beddf41b66007929909ba74",
+    "src/generated/core-model.ts": "30c16ba08f0dcd3c28399193d1214c1f5b561d9e96bb3c4a847f2d0d8863f999",
     "spec/core/facet-operation-v3.schema.json": "74c1ca75e2bac44afd0010292b82741618e9cb031cc37159667fa4f4ff95fd9f",
     "spec/core/cardinality-operation-v4.schema.json": "c2562ad726b58306c18332512f2b5388ddc625abb7494c532794682492300d45",
     "spec/core/kind-operation-v6.schema.json": "e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8",
