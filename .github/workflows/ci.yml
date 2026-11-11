@@ -120,8 +120,11 @@ jobs:
       # nextest runs each test in its own process and spreads them over the cores.
       # Known failure, tracked in the reset PR: rdf_parity's turtle.import-nested-list case sees blank
       # node g_2 where the frozen outcome has g_1 (a global blank-node counter, not reset per case).
+      # umf-cli's tests bake the path of target/debug/umf in at compile time, so the archive is
+      # extracted into ./target of the same checkout path the build job used (--extract-to .).
       - run: >-
-          cargo nextest run --archive-file rust-tests.tar.zst --workspace-remap .
+          cargo nextest run --archive-file rust-tests.tar.zst --extract-to . --extract-overwrite
+          --workspace-remap .
           --no-fail-fast --partition count:${{ matrix.partition }}/8
           -E 'not test(production_rdf_wire_matches_frozen_predecessor_outcomes)'
 
