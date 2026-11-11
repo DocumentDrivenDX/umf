@@ -5,7 +5,7 @@ import {mkdir} from 'node:fs/promises';
 import {resolve,sep} from 'node:path';
 import {capturePortableProducerSnapshot,verifyPortableProducerSnapshot} from './custody';
 const root=resolve('.');
-const artifactPaths={'dist/runtime/wasm/index.js':'dist/runtime/wasm/index.js','dist/runtime/wasm/pkg/umf_core_wasm.js':'dist/runtime/wasm/pkg/umf_core_wasm.js','dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm':'dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm'};
+const artifactPaths={'dist/runtime/wasm/index.js':'dist/runtime/wasm/index.js','dist/runtime/wasm/loader.js':'dist/runtime/wasm/loader.js','dist/runtime/wasm/pkg/umf_core_wasm.js':'dist/runtime/wasm/pkg/umf_core_wasm.js','dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm':'dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm'};
 const snapshot=await capturePortableProducerSnapshot(root,artifactPaths);
 const bundle=await Bun.build({entrypoints:['scripts/saga-portable/verify.ts'],target:'browser',format:'esm'});if(!bundle.success)throw Error(bundle.logs.join('\n'));
 const corpus=await Bun.file('fixtures/saga/portable.json').json();

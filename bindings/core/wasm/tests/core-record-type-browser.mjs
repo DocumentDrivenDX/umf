@@ -12,6 +12,7 @@ const host = '/private/tmp/umf-record-type-retained-chromium';
 await mkdir(join(host, 'wasm/src'), {recursive: true});
 await mkdir(join(host, 'wasm/pkg'), {recursive: true});
 await writeFile(join(host, 'wasm/index.js'), await readFile(join(root, 'bindings/core/wasm/index.js')));
+await writeFile(join(host, 'wasm/loader.js'), await readFile(join(root, 'bindings/core/wasm/loader.js')));
 for (const file of await readdir(join(root, 'bindings/core/wasm/src'))) {
   if (file.endsWith('.js')) await writeFile(join(host, 'wasm/src', file), await readFile(join(root, 'bindings/core/wasm/src', file)));
 }
