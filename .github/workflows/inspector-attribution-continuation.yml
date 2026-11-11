@@ -1,4 +1,4 @@
-name: Private C8 installed constructor observation only
+name: Private C8/C1 installed constructor observation only
 on:
   workflow_dispatch:
     inputs:
@@ -23,7 +23,8 @@ jobs:
     env:
       PYTHONDONTWRITEBYTECODE: '1'
       EXPECTED_CONTROLLER: ${{ inputs.controller_sha }}
-      ORIGINAL_OWNER: 67b6dbae9d969f8c7e5eb955e97a312be5f45787
+      ORIGINAL_OWNER: ${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && '7cafb8d28b83a7a949f73f362b43253fb08cbce1' || '67b6dbae9d969f8c7e5eb955e97a312be5f45787' }}
+      CANDIDATE_01011: ${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' }}
       INSPECTOR_INPUT_PROFILE: installed-canonical/1
     steps:
       - uses: actions/checkout@v6
@@ -48,16 +49,19 @@ jobs:
           test "$GITHUB_REF_TYPE" = branch
           test "$EXPECTED_CONTROLLER" = "$GITHUB_SHA"
           test "$(git rev-parse HEAD)" = "$EXPECTED_CONTROLLER"
-          out="$RUNNER_TEMP/c8-installed-observation"
-          owner="$RUNNER_TEMP/c8-installed-runtime"
+          if [[ "$CANDIDATE_01011" == true ]]; then route=c1-cost-observation; owner_name=c1-cost-owner; else route=c8-installed-observation; owner_name=c8-installed-runtime; fi
+          out="$RUNNER_TEMP/$route"
+          owner="$RUNNER_TEMP/$owner_name"
           test ! -e "$out"
           test ! -e "$owner"
           mkdir "$out"
           printf 'OBS_OUT=%s\nOWNER_CHECKOUT=%s\n' "$out" "$owner" >> "$GITHUB_ENV"
           git worktree add --detach "$owner" "$ORIGINAL_OWNER"
-          python -I -B tools/intake_inspector_installed_observation.py intake \
+          if [[ "$CANDIDATE_01011" == true ]]; then intake=tools/intake_inspector_c1_cost_observation.py; else intake=tools/intake_inspector_installed_observation.py; fi
+          python -I -B "$intake" intake \
             --controller "$GITHUB_WORKSPACE" --owner "$owner" --out "$out" \
             --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
+          printf 'OBS_ROUTE=%s\nOWNER_CHECKOUT=%s\n' "$route" "$owner" >> "$GITHUB_ENV"
           printf 'RETAINED_WHEEL=%s\n' "$(python -I -B -c 'import json,sys; print(json.load(open(sys.argv[1]))["wheelPath"])' "$out/intake.json")" >> "$GITHUB_ENV"
       - name: Fresh normal resolver install without bytecode or dependency suppression
         shell: bash
@@ -76,8 +80,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "$CANDIDATE_01011" == true ]]; then probe=tools/probe_inspector_c1_cost_observation.py; else probe=tools/probe_inspector_installed_constructor_observation.py; fi
           env -u GH_TOKEN -u GITHUB_TOKEN -u ACTIONS_RUNTIME_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_URL \
-            "$OBS_OUT/consumer/bin/python" -I -B tools/probe_inspector_installed_constructor_observation.py \
+            "$OBS_OUT/consumer/bin/python" -I -B "$probe" \
             --controller "$GITHUB_WORKSPACE" --owner "$OWNER_CHECKOUT" --wheel "$RETAINED_WHEEL" --out "$OBS_OUT" \
             --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT" \
             2>&1 | tee "$OBS_OUT/observation.log"
@@ -87,19 +92,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -I -B tools/intake_inspector_installed_observation.py seal --controller "$GITHUB_WORKSPACE" \
-            --owner "$RUNNER_TEMP/c8-installed-runtime" --out "$RUNNER_TEMP/c8-installed-observation" \
+          if [[ "$CANDIDATE_01011" == true ]]; then intake=tools/intake_inspector_c1_cost_observation.py; owner_name=c1-cost-owner; out_name=c1-cost-observation; else intake=tools/intake_inspector_installed_observation.py; owner_name=c8-installed-runtime; out_name=c8-installed-observation; fi
+          python -I -B "$intake" seal --controller "$GITHUB_WORKSPACE" \
+            --owner "$RUNNER_TEMP/$owner_name" --out "$RUNNER_TEMP/$out_name" \
             --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
       - name: Retain only bounded new observation outputs without relabelling original archives
         if: always() && steps.retention.outputs.bounded == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: private-c8-installed-observation-${{ github.run_id }}-${{ github.run_attempt }}
+          name: private-${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/c8-installed-observation/*.json
-            ${{ runner.temp }}/c8-installed-observation/*.log
-            ${{ runner.temp }}/c8-installed-observation/*.txt
-            ${{ runner.temp }}/c8-installed-observation/materials/*.json
+            ${{ runner.temp }}/${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}/*.json
+            ${{ runner.temp }}/${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}/*.log
+            ${{ runner.temp }}/${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}/*.txt
+            ${{ runner.temp }}/${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}/materials/*.json
           if-no-files-found: error
           retention-days: 90
       - name: Dispose only the new consumer and detached C8 runtime checkout
@@ -107,14 +113,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -I -B tools/intake_inspector_installed_observation.py cleanup --controller "$GITHUB_WORKSPACE" \
-            --owner "$RUNNER_TEMP/c8-installed-runtime" --out "$RUNNER_TEMP/c8-installed-observation" \
+          if [[ "$CANDIDATE_01011" == true ]]; then intake=tools/intake_inspector_c1_cost_observation.py; owner_name=c1-cost-owner; out_name=c1-cost-observation; else intake=tools/intake_inspector_installed_observation.py; owner_name=c8-installed-runtime; out_name=c8-installed-observation; fi
+          python -I -B "$intake" cleanup --controller "$GITHUB_WORKSPACE" \
+            --owner "$RUNNER_TEMP/$owner_name" --out "$RUNNER_TEMP/$out_name" \
             --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
       - name: Retain owned cleanup observation
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: private-c8-installed-observation-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/c8-installed-observation/cleanup.json
+          name: private-${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}/cleanup.json
           if-no-files-found: error
           retention-days: 90

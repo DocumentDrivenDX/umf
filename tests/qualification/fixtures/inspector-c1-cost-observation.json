@@ -1,0 +1,515 @@
+{
+  "artifacts": {
+    "cleanup": {
+      "bytes": 303,
+      "id": 13834633369,
+      "memberCount": 1,
+      "members": [
+        "cleanup.json"
+      ],
+      "name": "private-inspector-construction-batch-cleanup-42973659060-1",
+      "sha256": "64f2c25337100f75cc146dec656a083687eb973ff4aa0f042abfe257dd25b744"
+    },
+    "early": {
+      "bytes": 35576977,
+      "id": 13834443887,
+      "memberCount": 9,
+      "members": [
+        "producer.json",
+        "source-inputs.tar",
+        "wheels/umf_core-0.10.11-cp311-abi3-linux_x86_64.whl",
+        "source-and-payload.json",
+        "build.log",
+        "rustc.txt",
+        "cargo.txt",
+        "cargo-metadata.json",
+        "producer-cargo-features.txt"
+      ],
+      "name": "private-inspector-early-producer-42973659060-1",
+      "sha256": "e34ad5a553b08ae81fbfdc6d70535f920a4822157ad582cef8c74cf90bcee32b"
+    },
+    "result": {
+      "bytes": 35640804,
+      "id": 13835082083,
+      "memberCount": 44,
+      "members": [
+        "admission-precharge-pure.log",
+        "build.log",
+        "build-tools.log",
+        "candidate-binding-pure.log",
+        "cargo-metadata.json",
+        "cargo.txt",
+        "census-pure.log",
+        "combined-pure.log",
+        "control-pure.log",
+        "cost-driver.log",
+        "cost-census-pure.log",
+        "cost-gate.json",
+        "dependency-constraints.txt",
+        "factory-boundary-pure.log",
+        "factory-controller-pure.log",
+        "factory-data-pure.log",
+        "factory-facade-pure.log",
+        "freeze.txt",
+        "identity-cost-after.json",
+        "identity-cost-before.json",
+        "identity-producer-before-rust.json",
+        "install-report.json",
+        "install.log",
+        "installed-record-cost-after.json",
+        "installed-record-cost-before.json",
+        "installed-record-producer-before-rust.json",
+        "lanes-pure.log",
+        "measurement.json",
+        "metaschema-data-pure.log",
+        "operation-data-pure.log",
+        "owned-plan-pure.log",
+        "owner-cursors-pure.log",
+        "pip-check.log",
+        "producer-cargo-features.txt",
+        "producer.json",
+        "public-probe.log",
+        "rustc.txt",
+        "source-and-payload.json",
+        "stage-budget-cost.json",
+        "source-inputs.tar",
+        "stage-budget-install.json",
+        "stage-budget-producer.json",
+        "wheel-bounds-pure.log",
+        "wheels/umf_core-0.10.11-cp311-abi3-linux_x86_64.whl"
+      ],
+      "name": "private-inspector-construction-batch-42973659060-1",
+      "sha256": "be4ebb3f941741efd4945aad988c938e46c15230ca2c743d2ade78196a8412f4"
+    }
+  },
+  "bounds": {
+    "events": 1100000,
+    "partialBytes": 16777216,
+    "partialMembers": 100,
+    "receiptBytes": 1048576,
+    "seconds": 180,
+    "stackPCs": 64,
+    "tail": 64
+  },
+  "cleanupSHA256": "349488bd869dd2e6a698637481366305fa4e8850a60076190ac8ffaae471e088",
+  "failure": {
+    "attemptedWork": 1000013,
+    "carrier": "dispatcher",
+    "completed": false,
+    "costGateSHA256": "1230b5951a22634285dffde4985be9ed5621f265e9eb35344d8a7dee27accd96",
+    "firstCase": "default-instant",
+    "installedFilesUnchanged": false,
+    "interpretation": "Incomplete failure measurement flags are preserved as recorded; they do not override independently identical pre/post owner and RECORD identity.",
+    "maximumWork": 1000000,
+    "measurementSHA256": "4dbed2dcb249b00000868ef85dba62781c900146d9e13bf0eb2f90c825af8c56",
+    "requestCustodyPreserved": false,
+    "returnedWork": 999990,
+    "status": "resource-limited"
+  },
+  "parent": {
+    "attempt": 1,
+    "event": "workflow_dispatch",
+    "id": 42973659060,
+    "jobConclusion": "failure",
+    "jobID": 130367654293,
+    "jobLabel": "ubuntu-24.04",
+    "jobName": "feasibility",
+    "repository": "DocumentDrivenDX/umf",
+    "repositoryId": 1382276802,
+    "repositoryOwnerId": 273466046,
+    "runConclusion": "failure",
+    "runUrl": "https://github.com/DocumentDrivenDX/umf/actions/runs/42973659060"
+  },
+  "parentIdentity": {
+    "afterSHA256": "fc7fe8f54189a420320d8ca07aa6b47b66fca9833f4d5f2282d4aa58475eb6d0",
+    "beforeSHA256": "fc7fe8f54189a420320d8ca07aa6b47b66fca9833f4d5f2282d4aa58475eb6d0",
+    "identical": true,
+    "recordAfterSHA256": "62fa5fef659d4a0f879b540de881ff062945aca93c01da463fdea24753942f81",
+    "recordBeforeSHA256": "62fa5fef659d4a0f879b540de881ff062945aca93c01da463fdea24753942f81"
+  },
+  "phaseObservation": "Coarse native callback (amount, phase); preserve raw phase string when bounded. No root/site inference.",
+  "producer": {
+    "cargoLockSHA256": "3db26195900ae4c32550174037c569b5b58b51092b654718327a758a8f33f1ad",
+    "censusSHA256": "e0367e49ae18ded27877a98b46a59a8d2f312c77c6990065d019db4d730443a0",
+    "currentInputIdentity": {
+      "candidateArtifactVersion": "0.10.11",
+      "generation": {
+        "artifactDigest": "3461e86bd3b1d9f7456692c6d0cd63e37204222ccf937af8bd08ea6a07760fe5",
+        "artifactId": "13830972727",
+        "attempt": "1",
+        "compilerBinarySHA256": "983626c8c89b908501975061d9172b6c40a9afd8c08e8b2811cdeac57abd53bd",
+        "compilerSHA256": "6de6efd6bc442e5a5e670ae5dcce5716d5737ffdc3b916c7a052d05a83a8a989",
+        "correspondenceReceiptSHA256": "fbc7134e4dabffe602b9b5eebf76c1d1c3deb0a9b4642c725cbeba8c87049c67",
+        "finalAttestationSHA256": "85af5a98f04b20a1998948cd7f6466fb3134b8062a9e5a30c3a3b48dcc3942b7",
+        "jobId": "130340727857",
+        "outputManifestSHA256": "4266dad58b6833761ed1da7ade2826a96ce0e6e40482311bcdf82163d098a481",
+        "runId": "42965210898",
+        "sourceCommit": "6170ef4741850eae786f534dfedcbcf5dd6302de",
+        "sourceTree": "9355c657e117eb9ebde2198b13868547e1868944",
+        "workflowPath": ".github/workflows/merged-source-generation.yml",
+        "workflowSHA256": "b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f"
+      },
+      "literalDataSHA256": "2ff86ac2beb6a11a7a72b871a6539aa8aa58fe19e11045198bc1d9a049aa39d9",
+      "resourceFixture": "tests/qualification/fixtures/inspector-installed-candidate-01011-resources.json",
+      "resourceFixtureSHA256": "fbb7736c75ea046cf189b03324316137157d589407f5d60252fda2b7c26dd1b7",
+      "scope": "private-candidate-component-only-not-release-proof"
+    },
+    "dependencies": {
+      "Pygments": "2.21.0",
+      "annotated-types": "0.8.0",
+      "iniconfig": "2.3.1",
+      "packaging": "26.3",
+      "pluggy": "1.7.0",
+      "pydantic": "2.14.2",
+      "pydantic_core": "2.50.2",
+      "pytest": "8.4.2",
+      "typing-inspection": "0.4.4",
+      "typing_extensions": "4.16.0"
+    },
+    "sha256": "791627962f81b51106f7e1468a077fcd4641d2c25d9f68260dd6c2de64137783",
+    "sourceInputsTarBytes": 9349120,
+    "sourceInputsTarSHA256": "55332bb373bfbdb623a08bc8f6a1c2fbddb55d805221da3ea6f0144790da890d",
+    "sourcePayloadSHA256": "54b099e5ea2cd8a28764874241a8df5c99857b1f0c59a683e05ea7b39bc42482"
+  },
+  "profile": "umf.private-c1-cost-observation-inputs/1",
+  "runtimeBranch": "codex/core-cold-constructor-01011",
+  "runtimeSource": "7cafb8d28b83a7a949f73f362b43253fb08cbce1",
+  "runtimeTree": "768e41e87105b886423f768d06b9d8b04fc69e73",
+  "runtimeWorkflowId": 406353585,
+  "runtimeWorkflowPath": ".github/workflows/inspector-retained-attribution.yml",
+  "stack": {
+    "ELFmachine": 62,
+    "ELFtype": 3,
+    "enabled": true,
+    "nativeBytes": 58468352,
+    "nativeSHA256": "6c4dc4913fb3b59f301e208970fcbd04beeb5c9f73b82ffb1a5917fd19518db6",
+    "sectionHeaders": 33,
+    "symtabBytes": 1526496,
+    "symtabEntries": 63604
+  },
+  "terminalCustodySHA256": "4a8dbcc20d1db2a4b4ef063c0b26f764396baf9b132f7b72d9e7a5a3251392cf",
+  "wheel": {
+    "bytes": 34650431,
+    "filename": "umf_core-0.10.11-cp311-abi3-linux_x86_64.whl",
+    "memberCount": 78,
+    "members": {
+      "umf/__init__.py": {
+        "bytes": 2871,
+        "sha256": "dbafd6899d9b53feff60104c875213da0751cc4a595d2888e9bcbc511c63a080"
+      },
+      "umf/_action_runtime_manifest.py": {
+        "bytes": 3724,
+        "sha256": "4d7edf709e6b92b71bb15735c478aa488f9d21446649105b0861968c7155a688"
+      },
+      "umf/_bin/umf": {
+        "bytes": 57130840,
+        "sha256": "acabdfc8ac8fd1f23c65676f647d7bb94592068c89e0e92c58c18e9bc30f7ada"
+      },
+      "umf/_rust.py": {
+        "bytes": 13793,
+        "sha256": "f3b573f016fe6c89ac0d45da62cc49f145ea08622d9244490411248dfbb9fddf"
+      },
+      "umf/_rust_core.abi3.so": {
+        "bytes": 58468352,
+        "sha256": "6c4dc4913fb3b59f301e208970fcbd04beeb5c9f73b82ffb1a5917fd19518db6"
+      },
+      "umf/action_plan.py": {
+        "bytes": 6900,
+        "sha256": "133299cfd6e34256720be4ab0b6fc10f4c994cbded8ac4c76fc26f8df89807db"
+      },
+      "umf/action_runtime.py": {
+        "bytes": 10396,
+        "sha256": "cb2ca951650a53274abbec225c0529c8ba7914747d5c42cfb19ad4516e085513"
+      },
+      "umf/action_runtime_resource_manifest.json": {
+        "bytes": 2143,
+        "sha256": "c60a05966949f11fcee5fa44c3beded16e75c3550eb17ac3f47315272f0bc6bd"
+      },
+      "umf/action_runtime_resources/actionsPackage.json": {
+        "bytes": 11497,
+        "sha256": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181"
+      },
+      "umf/action_runtime_resources/bindingPackage.json": {
+        "bytes": 8840,
+        "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f"
+      },
+      "umf/action_runtime_resources/constraints.json": {
+        "bytes": 190431,
+        "sha256": "f32e8763cb7d4ec8cb70ac6134cc9c9db7fa26bf091f42a283d88f90438423f6"
+      },
+      "umf/action_runtime_resources/coreSchema.json": {
+        "bytes": 45342,
+        "sha256": "cd00d34cf71d87f484959209d62cbe7d8bcf645706de1c4711d30c3d29a4690f"
+      },
+      "umf/action_runtime_resources/domainPolicy.json": {
+        "bytes": 14827,
+        "sha256": "19e3e1ddd37ec45dd399a391f567cb43f0b1598631e97b0224c786d70a84fb79"
+      },
+      "umf/action_runtime_resources/packageSchema.json": {
+        "bytes": 45001,
+        "sha256": "5098c762ac6dc0b0094ab52daf224cdf51d521d201a5e9e6a869c26dc83543a8"
+      },
+      "umf/action_runtime_resources/referenceSchema.json": {
+        "bytes": 45463,
+        "sha256": "2bd943610040ad02d975fc1590e4cfefc6994152dc0b1000cd24cd5632fa183b"
+      },
+      "umf/action_runtime_resources/sagaPackage.json": {
+        "bytes": 14864,
+        "sha256": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940"
+      },
+      "umf/action_runtime_resources/stableBindingPackage.json": {
+        "bytes": 8885,
+        "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e"
+      },
+      "umf/action_runtime_resources/tablesPackage.json": {
+        "bytes": 23817,
+        "sha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+      },
+      "umf/adapters.py": {
+        "bytes": 3547,
+        "sha256": "a60cefbd0eb7c248744241659c2debfc2c01a80b5733ce5b40f93343227c9f82"
+      },
+      "umf/constraint_kernel.py": {
+        "bytes": 272,
+        "sha256": "4e93b3f9ef520cd6a1e3778fc41ad6e5494713313c420e017188632a4ee20598"
+      },
+      "umf/generated_resources.py": {
+        "bytes": 1721,
+        "sha256": "9b473cf89f7d9ff5486d741282d590f5cc115e83b831d5b9090464e127e8e7f8"
+      },
+      "umf/json.py": {
+        "bytes": 340,
+        "sha256": "14e7a4916c581655cca993500cdf76b7372213eab3e421fc2d9892d951b98aec"
+      },
+      "umf/literal_kernel.py": {
+        "bytes": 848,
+        "sha256": "908eaa7d47ab6de89ca3493f0637ba19606936f3db756d984c5e3c6aaae0076f"
+      },
+      "umf/models.py": {
+        "bytes": 4150,
+        "sha256": "c625c5f187268ce66c60a396a7cad14d2b5e3d9ddb976719e0cc6209fcfc08e1"
+      },
+      "umf/pack_tools.py": {
+        "bytes": 1389,
+        "sha256": "74b926b6fa59c6ea44914f26ba051c7522471ba87563f33135647a18057c2872"
+      },
+      "umf/postgresql_sql.py": {
+        "bytes": 2961,
+        "sha256": "3fbf6def4094ed73e76e24e1388a452fc7a36db1dfebe2098d1c51fa8330b520"
+      },
+      "umf/py.typed": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "umf/registry.py": {
+        "bytes": 4099,
+        "sha256": "693994df551ec2d6226db84973e05346dfaa7fb22556df13bd5b005f308d03dc"
+      },
+      "umf/rust_access_catalog.py": {
+        "bytes": 1317,
+        "sha256": "485d30aec4c517c68cb381ef43fb53187ec6122a9323286e129acc02788a9aeb"
+      },
+      "umf/rust_arrow_ipc.py": {
+        "bytes": 3326,
+        "sha256": "25397a7733d2ab97e966b9f9efe02574b0a44c2f5a7716b6947431fef95ae849"
+      },
+      "umf/rust_arrow_schema.py": {
+        "bytes": 3768,
+        "sha256": "c6655d5173d049879a2076240a36d187650355b31cc5647a589c142fcbe05cf4"
+      },
+      "umf/rust_avro_candidate.py": {
+        "bytes": 3441,
+        "sha256": "35205131704509656a3b4f786e0f88287c319e282f06d5897c2894ec7ddc244d"
+      },
+      "umf/rust_avro_cardinality.py": {
+        "bytes": 2409,
+        "sha256": "68b008544c727c66de12792a417f1f72efad05fafa207328d59430774a2137f5"
+      },
+      "umf/rust_avro_document_inspect.py": {
+        "bytes": 2303,
+        "sha256": "a3b08b05f23dd6832b7b5d9008390fdbf41c59f064834f19d5bb752a5ce0a09e"
+      },
+      "umf/rust_avro_fields.py": {
+        "bytes": 1755,
+        "sha256": "f580d8de5b22d1784841eaae8bc4ca85e5462da685f65bd3c4032cfdbb4a5dcf"
+      },
+      "umf/rust_avro_inspect.py": {
+        "bytes": 3024,
+        "sha256": "56af4813c25f9195c9eeab9ffbea8ca468d46c9b12b2d7b159d24327aaba6c56"
+      },
+      "umf/rust_cardinality.py": {
+        "bytes": 3789,
+        "sha256": "731ed631ff12cef384bd38862fae24d1fcc4a09c8da6c67d69eaa3451e270a17"
+      },
+      "umf/rust_codegen.py": {
+        "bytes": 22503,
+        "sha256": "3c165bd4c6f51bb4ba62f98583cc61b5efe672a01eb895c5b07143f0abf6719a"
+      },
+      "umf/rust_csv_boolean_lexical.py": {
+        "bytes": 2813,
+        "sha256": "688ded52e10ecb6485fe3d72101b94421f502f4d78563356d9295fdc6228e676"
+      },
+      "umf/rust_dbt.py": {
+        "bytes": 5291,
+        "sha256": "3a5517618f7170af7567b718fbea8b3e0ca06e6955225a83819afc3306e3a889"
+      },
+      "umf/rust_facets.py": {
+        "bytes": 3892,
+        "sha256": "90dc87073bf2a16f6c9a370c072f965c6be4fdeb631e7070bc08feb88cb3fb98"
+      },
+      "umf/rust_iceberg_schema.py": {
+        "bytes": 5033,
+        "sha256": "96dbb157dcfe94a93f9a6f00c1e572d3d27c964af6f9cd293a995b1453bd9d47"
+      },
+      "umf/rust_json_schema.py": {
+        "bytes": 9687,
+        "sha256": "3ee08a9d7e9c130dfacbc68aa38ad1895f33e1f0fd7b8f5ca7db244824aec724"
+      },
+      "umf/rust_operation_values.py": {
+        "bytes": 2346,
+        "sha256": "f73697e9de249e983acba6ffeea30504838a39ad6e85a82933f10fe3300daf5d"
+      },
+      "umf/rust_outcome_values.py": {
+        "bytes": 1517,
+        "sha256": "f69832869a7c962aef553dc484290968798cd82c93bc16ce40ec117febd3ac6f"
+      },
+      "umf/rust_parquet_capture.py": {
+        "bytes": 5973,
+        "sha256": "61ebfb2f9d10ec01c68632b59449beb00c94964ec2be8b4f594553013af795ca"
+      },
+      "umf/rust_protobuf_descriptor.py": {
+        "bytes": 1096,
+        "sha256": "025ba9456f29df498a4610ec28947b1b6f567084cb81dba875846f3875554d99"
+      },
+      "umf/rust_protobuf_inspect.py": {
+        "bytes": 2010,
+        "sha256": "05b4e0c68e8ef7b3fa77abacf5f326d4486b2c00547f14ec12978a2bcd984dae"
+      },
+      "umf/rust_rdf.py": {
+        "bytes": 4824,
+        "sha256": "40de3dbe775498390885e1864ea9547781943a86ac1b90ea4e23c64fc3e85fb5"
+      },
+      "umf/rust_related_keys.py": {
+        "bytes": 587,
+        "sha256": "832d3a870981b16416a7936c843d7d2b555784800f91a5866e06bd9f5cee98fa"
+      },
+      "umf/rust_reviewed_parameters.py": {
+        "bytes": 446,
+        "sha256": "98091c362b22c9b9328f66d27ce3bcf731a7574facef3d9c79f4a9a0da3f11de"
+      },
+      "umf/rust_schema_properties.py": {
+        "bytes": 3205,
+        "sha256": "a2bd508daeb4deb355aa23d108f4a13e6e631dc900492d2f632db11b0b1017d4"
+      },
+      "umf/rust_sec_projection.py": {
+        "bytes": 1511,
+        "sha256": "e22dd7b8afb7c448eda4c697626e5446b56c0b7d1f3c52d286896a8496f69f51"
+      },
+      "umf/rust_streams.py": {
+        "bytes": 2916,
+        "sha256": "a69f0eb386a7744d4b7a1cef347a9b19223ebaaa271b1f7781b314aa0634f7ef"
+      },
+      "umf/rust_temporal.py": {
+        "bytes": 688,
+        "sha256": "973d95a4d81e093a0eac6a1e01f19071b54cd92c44c1aeb0ef8c492295c8cfae"
+      },
+      "umf/rust_values.py": {
+        "bytes": 3537,
+        "sha256": "bf277688876f2fcd43a3a80202f74d340778d4f70db4f587a97db3a4602dbab1"
+      },
+      "umf/saga.py": {
+        "bytes": 1198,
+        "sha256": "38478b87e62afc1f2ca6f3c4f5d294f31842f3faf922982cd2a64d167bd53df4"
+      },
+      "umf/schemas.py": {
+        "bytes": 9924,
+        "sha256": "4729344e8aa9846281b6af82d0398e3aad41d778b59cf5895f5e7a3d219f642d"
+      },
+      "umf/semantic_types.py": {
+        "bytes": 12480,
+        "sha256": "92595747d8bd4aaab138f5d9730d18f85e62e445dbefb62ca3eb8789460a6e58"
+      },
+      "umf/serialization.py": {
+        "bytes": 657,
+        "sha256": "d77a9afc1bd7d500d341fa00f3c8af73ed89694a0a5cd3f2382f577e6fdb947a"
+      },
+      "umf/smithy.py": {
+        "bytes": 2120,
+        "sha256": "4e6344dc0b3ba5de2f27c13f72bba05f9c8b4616d696cd1726480dbac4c9c2f7"
+      },
+      "umf/spec/core/extension-package.schema.json": {
+        "bytes": 45001,
+        "sha256": "5098c762ac6dc0b0094ab52daf224cdf51d521d201a5e9e6a869c26dc83543a8"
+      },
+      "umf/spec/core/schema.json": {
+        "bytes": 45342,
+        "sha256": "cd00d34cf71d87f484959209d62cbe7d8bcf645706de1c4711d30c3d29a4690f"
+      },
+      "umf/spec/core/semantic-type-reference.schema.json": {
+        "bytes": 45463,
+        "sha256": "2bd943610040ad02d975fc1590e4cfefc6994152dc0b1000cd24cd5632fa183b"
+      },
+      "umf/spec/extensions/dataset-source/schema.json": {
+        "bytes": 3227,
+        "sha256": "385f12f3b643f86838cb2b9baec60d85cbac1e3e543ffd015105465fa1ccbc95"
+      },
+      "umf/spec/extensions/domain-pack/schema.json": {
+        "bytes": 16109,
+        "sha256": "e34054015eae699987d7fd0640bdbc17906b129fa46b2c5770753ebf0723931e"
+      },
+      "umf/spec/metamodel/generated/core-constraints.json": {
+        "bytes": 190431,
+        "sha256": "f32e8763cb7d4ec8cb70ac6134cc9c9db7fa26bf091f42a283d88f90438423f6"
+      },
+      "umf/spec/metamodel/generated/domain-policy.json": {
+        "bytes": 14827,
+        "sha256": "19e3e1ddd37ec45dd399a391f567cb43f0b1598631e97b0224c786d70a84fb79"
+      },
+      "umf/spec/metamodel/generated/manifest.json": {
+        "bytes": 669875,
+        "sha256": "4266dad58b6833761ed1da7ade2826a96ce0e6e40482311bcdf82163d098a481"
+      },
+      "umf/spec/metamodel/generated/python-shapes.json": {
+        "bytes": 98734,
+        "sha256": "df69257a7a4cab5138ff2d896ad6a410da5abc9b9b0a145615f3d58049dfd531"
+      },
+      "umf/typespec.py": {
+        "bytes": 2127,
+        "sha256": "b99b7172c11833eca1a0e9ca69f29602d5230ea1ae640996e89e8ca5b9fe9aee"
+      },
+      "umf/validation.py": {
+        "bytes": 1363,
+        "sha256": "4860946222fa5d25f2076766e52cb71dd18b82449451f26adab1b371e2896142"
+      },
+      "umf_core-0.10.11.dist-info/METADATA": {
+        "bytes": 5110,
+        "sha256": "b6068e79b5e0d31e268172521f28fc265dcf304490eaec87761fbf22eabc79b7"
+      },
+      "umf_core-0.10.11.dist-info/RECORD": {
+        "bytes": 6661,
+        "sha256": "27659694758dcb3a84bce778c8c719ffa417d3b4f478cfa5b5d31c952de764cd"
+      },
+      "umf_core-0.10.11.dist-info/WHEEL": {
+        "bytes": 99,
+        "sha256": "60ba44f2d56a618595b52898c009092edff06493843ff0ef53d86c33861c262b"
+      },
+      "umf_core-0.10.11.dist-info/licenses/LICENSE-APACHE": {
+        "bytes": 11359,
+        "sha256": "a7f097f28b47176d49dddc086575d24d94149493f5b8e9bb829a0eee3eba74ee"
+      },
+      "umf_core-0.10.11.dist-info/licenses/LICENSE-MIT": {
+        "bytes": 1086,
+        "sha256": "f1409ffd0dff471f9f5078c8f2cc2c070147daae3197812234b5919c1f820702"
+      },
+      "umf_core-0.10.11.dist-info/licenses/LICENSE.md": {
+        "bytes": 13013,
+        "sha256": "76dfb87aed22180562cee6180096117e659e66d130285c56a67d5f09a788e0e5"
+      }
+    },
+    "nativeMember": {
+      "path": "umf/_rust_core.abi3.so",
+      "sha256": "6c4dc4913fb3b59f301e208970fcbd04beeb5c9f73b82ffb1a5917fd19518db6"
+    },
+    "sha256": "91b7d28a548ea1d2893c0756e47d27ca50787b031e5d0e24e2f020849312327f"
+  }
+}
