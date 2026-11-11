@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
+import {expectAccessorRefusal} from './admission-refusal';
 import {validateDocument} from '../../src/validation/document';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {NULLABILITIES,type Document} from '../../src/model/types';
@@ -27,5 +28,5 @@ test('unknown availability is retained, but malformed values and non-Field use f
 });
 test('unsafe getters and unsupported future versions cannot be interpreted',()=>{
  const doc=model('0.10.0',{kind:'field'});let calls=0;Object.defineProperty(doc.modules[0]!.elements[0]!,'nullability',{enumerable:true,get(){calls++;return 'required';}});
- expect(validateDocument(doc).valid).toBe(false);expect(calls).toBe(0);expect(validateDocument({...model('0.10.0',{}),umf:'0.11.0'} as any).valid).toBe(false);
+ expectAccessorRefusal(()=>validateDocument(doc));expect(calls).toBe(0);expect(validateDocument({...model('0.10.0',{}),umf:'0.11.0'} as any).valid).toBe(false);
 });

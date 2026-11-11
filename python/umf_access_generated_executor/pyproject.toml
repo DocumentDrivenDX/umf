@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling==1.33.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "umf-access-generated-executor"
+version = "0.1.0a11"
+description = "Standard-library verifier and binder for UMF generated execution artifacts"
+requires-python = ">=3.11"
+license = "MIT OR Apache-2.0"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/umf_access_generated_executor"]
