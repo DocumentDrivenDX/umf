@@ -68,6 +68,9 @@ SDIST_SOURCE_FILES = (
     # from an extracted source archive.
     "spec/extensions/arrow/package.json",
     "spec/extensions/arrow/integration-schema.json",
+    "spec/extensions/arrow/flatbuffer-inventory.json",
+    "spec/extensions/arrow-flatbuffer/package.json",
+    "spec/extensions/parquet-relationships/package.json",
     "spec/extensions/ddd/package.json",
     "spec/extensions/dashboard/package.json",
     "spec/extensions/binding-128/package.json",

@@ -24,7 +24,7 @@ NAMES = ('coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domai
 
 
 def pins_and_resources():
-    raw = (ROOT / 'tests/qualification/fixtures/inspector-installed-current-resources.json').read_bytes()
+    raw = (ROOT / 'python/tests/fixtures/inspector-installed-current-resources.json').read_bytes()
     if sha256(raw).hexdigest() != PIN_SHA:
         raise AssertionError('Mandatory repository nine-resource fixture differs')
     pins = json.loads(raw)

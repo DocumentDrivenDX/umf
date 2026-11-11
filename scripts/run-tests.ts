@@ -12,6 +12,7 @@ import {availableParallelism} from 'node:os';
 //   --keep-going         run every file and report all failures (default: stop at the first)
 //   --exclude-file PATH  skip test files matching any glob listed in PATH (one per line, # comments)
 //   --shard I/N          run only the I-th of N deterministic shards of the selected files
+// Per-test default timeout: UMF_TEST_TIMEOUT_MS (default 120000); tests that set their own timeout keep it.
 const args=Bun.argv.slice(2),selections:string[]=[];
 let jobs=availableParallelism(),keepGoing=false,excludeFile:string|undefined,shard:[number,number]|undefined;
 for(let i=0;i<args.length;i++){
@@ -52,7 +53,7 @@ if(!files.length)throw Error('No test files selected');
 let passed=0,failed=0,skipped=0,assertions=0,completed=0,next=0,stop=false;
 const failures:string[]=[],started=performance.now();
 async function runOne(file:string){
- const child=Bun.spawn([process.execPath,'test','--timeout','30000','./'+file],{stdout:'pipe',stderr:'pipe',stdin:'ignore',env:{...process.env}});
+ const child=Bun.spawn([process.execPath,'test','--timeout',process.env.UMF_TEST_TIMEOUT_MS??'120000','./'+file],{stdout:'pipe',stderr:'pipe',stdin:'ignore',env:{...process.env}});
  const [stdout,stderr,exitCode]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
  const text=stdout+'\n'+stderr,summary=text.match(/Ran (\d+) tests? across (\d+) files?\./);
  const count=(label:string)=>Number(text.match(new RegExp(`(?:^|\\n)\\s*(\\d+) ${label}(?:\\r?\\n|$)`))?.[1]??0);

@@ -36,7 +36,7 @@ ENVELOPE = 'native-result-envelope'
 
 
 def _pins():
-    path = ROOT / 'tests/qualification/fixtures/inspector-retained-resources.json'
+    path = ROOT / 'python/tests/fixtures/inspector-retained-resources.json'
     # Repository input is mandatory: missing fixture raises FileNotFoundError.
     raw = path.read_bytes()
     if sha256(raw).hexdigest() != PINNED_FIXTURE_SHA:

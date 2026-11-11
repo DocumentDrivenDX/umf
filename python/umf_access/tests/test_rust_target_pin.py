@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 import importlib.machinery
 import importlib.util
 import json
@@ -546,7 +547,9 @@ class RustTargetPinTests(unittest.TestCase):
             try:
                 result = matcher(pin, identity)
             except (RuntimeError, TypeError, ValueError) as exc:
-                result = (type(exc).__name__, str(exc))
+                # Python 3.14 appends ", got N" to "too many values to unpack (expected 2)".
+                message = re.sub(r"(too many values to unpack \(expected \d+), got \d+\)", r"\1)", str(exc))
+                result = (type(exc).__name__, message)
             return result, trace
 
         # Pin-name iteration is the first platform traversal and faults first.

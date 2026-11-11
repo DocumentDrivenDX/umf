@@ -16,3 +16,19 @@ tests/actions-reference/launch-owner.test.ts
 tests/rust-inventory/**
 tests/core-ideals/*-conformance.test.ts
 tests/core-ideals/nullability-parquet.test.ts
+
+# Need build output or services the fast job does not have.
+tests/security/policy.test.ts
+tests/metamodel/compiler-kernel.test.ts
+tests/adapters/smithy-native-public-root.test.ts
+tests/saga/protocol.test.ts
+tests/actions-reference/native-refinement.test.ts
+
+# Single files that run for several minutes (explicit test timeouts of 2-5 minutes).
+tests/jsonld/jsonld.test.ts
+tests/jsonld/to-rdf.test.ts
+tests/jsonld/compaction.test.ts
+tests/lifecycle/table-inventory-api.test.ts
+tests/core-ideals/facets-tablespec.test.ts
+tests/core-ideals/key-authored-roundtrips.test.ts
+tests/core-ideals/nullability-*.test.ts

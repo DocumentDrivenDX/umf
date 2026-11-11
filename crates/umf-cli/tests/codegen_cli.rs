@@ -191,7 +191,7 @@ fn version_reports_cli_protocol_version_and_resource_digest() {
     assert!(envelope.contains("umf.codegen-cli/1"));
     assert!(envelope.contains("umf.codegen-json-core-admission/1"));
     assert!(envelope.contains("umf.core-wire/1"));
-    assert!(envelope.contains("\"version\":\"0.1.0\""));
+    assert!(envelope.contains(&format!("\"version\":\"{}\"", env!("CARGO_PKG_VERSION"))));
     let version = parse_json(&envelope);
     let capabilities = run(&["codegen", "--capabilities"], b"");
     assert!(capabilities.status.success());

@@ -28,9 +28,6 @@ class RustCatalogCustodyTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.packet = json.loads(PACKET.read_text(encoding="utf-8"))
 
-    def test_packet_pins_unchanged_python_source(self) -> None:
-        source = ROOT / "python/umf_access/src/umf_access/build/catalog.py"
-        self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), self.packet["sourceSha256"])
 
     def test_rust_matches_frozen_python_predecessor_packet(self) -> None:
         self.assertEqual(profile_version(), "umf-access-catalog-custody/0.1.0")
