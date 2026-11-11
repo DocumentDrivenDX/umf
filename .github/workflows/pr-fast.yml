@@ -56,6 +56,8 @@ jobs:
             /bindings/core/node/*.js
             /bindings/core/node/src/
             /bindings/core/node/package.json
+            /bindings/core/wasm/*.js
+            /bindings/core/wasm/src/
             /bindings/core/wasm/package.json
             /package.json
             /bun.lock
@@ -75,7 +77,7 @@ jobs:
         run: |
           python3 scripts/check-release-versions.py
           python3 -m unittest discover -s tests/release -v
-      - name: Install the pinned Linux Node addon
+      - name: Install the pinned Node and browser bindings
         run: |
           archive="$RUNNER_TEMP/umf-sdk-0.10.11-linux-x86_64.tgz"
           curl --fail --silent --show-error --location \
@@ -83,6 +85,10 @@ jobs:
             --output "$archive"
           printf '%s  %s\n' 52145cff0ebf9323d5c29defd7da31cfe30445e74e6b60c7c099b9a17832d7c2 "$archive" | sha256sum --check
           tar -xOzf "$archive" package/dist/umf_core_node.node > bindings/core/node/umf_core_node.node
+          mkdir -p bindings/core/wasm/pkg
+          for member in umf_core_wasm.js umf_core_wasm_bg.wasm; do
+            tar -xOzf "$archive" "package/dist/$member" > "bindings/core/wasm/pkg/$member"
+          done
       - name: Portable core unit tests
         run: >-
           bun test
