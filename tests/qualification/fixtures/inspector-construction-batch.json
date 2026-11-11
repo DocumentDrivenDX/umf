@@ -1786,7 +1786,7 @@
     "inputProfile": "installed-canonical/1",
     "sourceFiles": {
       ".github/workflows/inspector-attribution-continuation.yml": "da8452d19f11e4b1c46e823370bdda5e90d106d3a1f8b401fe55d28d143f5454",
-      ".github/workflows/inspector-retained-attribution.yml": "c8bfd005397b5dd91da218497dc06b0cea470bf0a9795b674ad633c492ca679a",
+      ".github/workflows/inspector-retained-attribution.yml": "289d5f240d9454ee1168f65f14b813dfd07d5b7cd36657817ca712e6cd76eb01",
       "Cargo.lock": "c7777063f16762bea888aacefdf74fe6628ae65fbeae9db9cd907e0fd412145f",
       "Cargo.toml": "2732f746532ffa1767f0c8e4cdc2851a5354fe07f72b1cacf372a8c9d3cf4217",
       "bindings/core/python/Cargo.toml": "c6e2691e6fe8e2cd3f61929ae3d8269a6fa9166779984e216054856de0e3b367",
@@ -1802,37 +1802,37 @@
       "crates/umf-codegen/src/actions/saga/tests.rs": "00dab59336655e9f4e04bd676adb5cf71f2682450926729de2e0f3076ca94fee",
       "crates/umf-codegen/src/lib.rs": "44470f0a1de5f27ac21662e665dd8c05fc684302c11a56eef6437866cfb42e4a",
       "crates/umf-codegen/src/operation_schemas_utf16.rs": "876bc6ea0c831f569fc8130b938600e561937bca3b642cc58cc8db9eccaeec4b",
-      "crates/umf-codegen/src/resources.rs": "eeda0c5ecd8eed779354f4c31059429d3c7a6872c136da57f085fabcef1c1a17",
+      "crates/umf-codegen/src/resources.rs": "6185a6bcaa050436aca04cea56f15836ead043b28aa2b9f140193c0152dec1bd",
       "crates/umf-codegen/src/resources_codegen_catalogue_independent_tests.rs": "6533f7b08b4ff399d5351474734833a3c307a29e36f5a1692ccd6c13411225be",
       "crates/umf-codegen/src/tables/mod.rs": "525ea11d61432b2b17d23d715d582ff059d6f34ea735c7c1aae461955a423cd8",
       "crates/umf-codegen/src/value.rs": "5f9b9b2f8b238628e5f8464dc925fc68ce4c8b5172ce9b7ab86ca33d0289c994",
       "crates/umf-codegen/tests/access_binding_schema_override.rs": "b2694c35ca58b2d3d0230b93720ed32a53e673a80d371507f24014d5c896e2af",
       "crates/umf-codegen/tests/single_set.rs": "21ad82a5ec1b3463579ae462e1e445ca592f9d7e3b502610a510e9ff661e9087",
       "crates/umf-core-wire/Cargo.toml": "e1171263903df13fa11c1a7470c6cde5fc94f67a2f18dc06ab88e836943abf0f",
-      "crates/umf-core-wire/src/codegen.rs": "b970430499ae0135fff68248b544ed1cb9e308d0f60c79a3a437612c1ac46a16",
+      "crates/umf-core-wire/src/codegen.rs": "dbd036a2ceb42f421bea8c992365e6285d0cbe8f0ea1b568566d9d0d5cc53887",
       "crates/umf-core-wire/src/controlled_envelope.rs": "88b50c424842e1a56f8f3f7d7f9c23a47b341fa4d6eb76a29b411b3f5c728cad",
-      "crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs": "bb66a321eaf015adb04108c7d5953931b7de574e92ca223eb44795cdf228dda9",
-      "crates/umf-core-wire/src/lib.rs": "991e9be4abbfb2ffc5baee3c02d78621eda0c9cfa41b70c246816926dacfa13e",
+      "crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs": "0987d66aff572e78e1eb0177d13837d48f02577137c8e1921e1a3fc381b3d25d",
+      "crates/umf-core-wire/src/lib.rs": "cc551dd17707556af445e709e077a9db2a617ef12769ecd5914ebe7055859116",
       "crates/umf-core-wire/tests/access_inspection_public.rs": "168400ad197a8c1ce94a85113c919a449ac3d3ef38345b4005bb46f93c0be23c",
       "crates/umf-core-wire/tests/codegen_context.rs": "5afd8223d9eb160963a7feac50980ef455fe3dab2c827a1d96d52726901a34fc",
       "crates/umf-core/Cargo.toml": "b84949f42da22ae01277d1b8fe38391ee1dfb98e372a5a0ad785195b75e9d7c5",
-      "crates/umf-core/src/canonical_codegen_literals.rs": "d7e2e3be1903aeab9da0aff0f8d4572c5310846c0c9b8f5a5099abd55d04cc02",
+      "crates/umf-core/src/canonical_codegen_literals.rs": "b8f58caf66d2f1f37384402e57d0a0674b57613ff0dacc486304737fb6e42690",
       "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "40ed9a68e50d1da28c67432c852348c78eae1b7a87bbb622cdb8faaf55d7dafa",
-      "crates/umf-core/src/canonical_codegen_resources.rs": "ec6eb4226ec45fa2fbb6dd9e07c6a0f2e8f8c2beca789dbd372f31521ce683c7",
+      "crates/umf-core/src/canonical_codegen_resources.rs": "285337fae52121694b3f77cceb8b39c6e57239b62b0fb7cdbc8ac1ab77dd0fde",
       "crates/umf-core/src/canonical_static_text_independent_tests.rs": "9b619dca3aae22919a59988093004b8eac23cb1395e6ecfc16df78add51caf43",
       "crates/umf-core/src/canonical_text_cache_independent_tests.rs": "e6cf917f3bd2ad86f8aa3e13d6f4f81041b7acd181d2cb143126948dac36c9f7",
       "crates/umf-core/src/context.rs": "f1575a41a9fcf781c324f054900babb3c987d504265a9e6cb3a6e984217d026b",
       "crates/umf-core/src/context_construction_tests.rs": "a7081434d41db02a5b785ab172374e124e8ffa4539e367d0ab46da4200dc82fc",
       "crates/umf-core/src/context_path_tests.rs": "5f063d4561e9d70d64e04e0b14c7d6bc520905badf88424855c0e597c0124f2f",
-      "crates/umf-core/src/engine.rs": "5369bc570855e364b3b8c3c8e37ea49d5368435fbd89d2647163f13ac8372bcd",
+      "crates/umf-core/src/engine.rs": "e3ea4ae4d0705c5d644fe8e0385fe56756b5de9d232d1b426d733870eaaafb6f",
       "crates/umf-core/src/full_modules.rs": "f011690138a0933897c2e681b35a844199c4b57c6711357ef3b45599594434a0",
       "crates/umf-core/src/lib.rs": "ae6eef2068889cdba3b34198bd37030567f1dc20909f398c12054d194028ffe0",
       "crates/umf-core/src/python_value.rs": "ac9aadb0980520e8343b29a57ef2e44583ef5f84f59c52f68e44ce1dbe57dfd7",
       "crates/umf-core/src/registry.rs": "3ccfcd74626f07665e088b16a4aad1be86866c3c5113ee941134bfe6ee7a132d",
       "crates/umf-core/src/registry_construction_tests.rs": "f8e98b8b75ca3fc09cb19c0da052a4f83062edf29e1d0e7139197c2045f3683d",
       "crates/umf-core/src/resource_cache.rs": "2995b3720557b1485e96669941bd128823e8937494f77093d6f7855d1c8f4cda",
-      "crates/umf-core/src/schema.rs": "60b2dcbca118aa13399e409761b0fdb835dcc4276baf4a52694fed39f5d1cc36",
-      "crates/umf-core/src/schema_admitted_bank.rs": "92591cb73c54411b5cb930bc2af4c9471e5c7fbb150a38b8dec0ca56976aec42",
+      "crates/umf-core/src/schema.rs": "6b19343bbc17c73c47dc7e21aef7ceae934348ac5a2574fee0f1a64752fd2933",
+      "crates/umf-core/src/schema_admitted_bank.rs": "009c842d597578cc437a6fc0b2d1f37cea662f505dcae6e5ae33091e20756247",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
       "crates/umf-core/src/schema_admitted_structure_independent_tests.rs": "874a89a8fdc77ca6f5959fe9c11f5bc5423a872731ac73ef638a0ac418573ea6",
@@ -1862,14 +1862,14 @@
       "crates/umf-core/src/schema_owner_locations_independent_tests.rs": "4a111930d8e62c2cffae681c2d681c0945dccad30ea1d5e9c15feb273313766e",
       "crates/umf-core/src/schema_owner_traversal_independent_tests.rs": "c760175d90c25c6f27f8f959d436ba4a3c7a72f80b7535c5c1ddbd0285e9415c",
       "crates/umf-core/src/schema_path_facts_independent_tests.rs": "967c29da3d7268100d52d74f9fa20c3bad7df32494cfa09a581178ec4497415e",
-      "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
+      "crates/umf-core/src/schema_preflight_reference_independent_tests.rs": "8ad286496d348c0b36b2110446888b28473a528bb765949954d214c57bb081cb",
       "crates/umf-core/src/schema_preflight_route_storage_independent_tests.rs": "f63e7f8a3b1b3d65f6987f6186dd6c6718d3b594e414860bb22c2c557d0db180",
       "crates/umf-core/src/schema_scoped_preflight_path_independent_tests.rs": "f5d673d973c1011a122d9e1cfcc0f74c7c4e8f1ac9b3f108271570c4bcfb0b81",
       "crates/umf-core/src/serialization.rs": "0ee58f6dc49c140b8bdeec1c427462a5b9e884d4153bc41953f9851c6fd184d0",
       "crates/umf-core/src/serialization_closed_metadata.rs": "a704ef592e96970e724d24b36e679f7a5bf16c64918992ae9d92b3420b2cae8f",
       "crates/umf-core/src/serialization_construction_owned_independent_tests.rs": "db3bd9625d1fb4bb04ee0a510beb5862d03a65b39440ddc6190b69a2432efd41",
       "crates/umf-core/src/serialization_owned_decode_stack_independent_tests.rs": "c76df4a8e248c0ce147806b864004290125c7d39e45f27c48994f7f0b7a5d691",
-      "crates/umf-core/src/value.rs": "f46547766ad7d2e6be7ef34aeace087b5b0ae7a64f5f31363ebb77e55b7fc69e",
+      "crates/umf-core/src/value.rs": "f0eab222652b0f735c05d347325a50227b1c0867971d995c1ba798a2af04e228",
       "crates/umf-core/src/value_closed_metadata_independent_tests.rs": "7e5c714688bf81fafdda16ad586000dbd48183c39e6364968988a79f6cc130fc",
       "crates/umf-core/src/value_decimal_path.rs": "477f37b08fe97e82f857100be653abf81fb997d69fc0baca868ad944ebba7109",
       "crates/umf-core/src/value_fused_admission_independent_tests.rs": "62a3d88fd1dd9331eb2a7bb683a98d1ec884b159e0a5c032fdd57b0880948f41",
@@ -1910,9 +1910,9 @@
       "scripts/saga-portable/other-hosts.ts": "b96a7919ad992ee11702d63f947a1e4f1155883cc6461efbf14a65abf0ba3536",
       "scripts/saga-portable/python-probe.py": "82a5f20917cd7ffca700be90ddeaf5426841a4375ab0a7d7c2056c653e49f083",
       "scripts/saga-portable/verify.ts": "09bf569611574c28e6728dead6ad10137271bf26366f99faec6803ccf5fca9e5",
-      "spec/core/extension-package.schema.json": "642ace1cb88a1f6116157a653cb2c5cda362fcca976b7bdfabc92a9efb92cbc5",
-      "spec/core/schema.json": "1bd18f8e5542bf05986bfea58dcf5e9739a2c091c7969854f178d07cd97ecb34",
-      "spec/core/semantic-type-reference.schema.json": "96755a6e124ecc0a1c6533688582c2569d3c46962b90047f1101f479f237eaf6",
+      "spec/core/extension-package.schema.json": "841d77a957f8cf33f0e21bc9a3a997dcb7c1e4859d39aa97bda0f11dcf34e48d",
+      "spec/core/schema.json": "1c2caca8b2cbca8ecc020c05da319c54bf8cf4d30f9b40f74b3fb9cb4b9c0af5",
+      "spec/core/semantic-type-reference.schema.json": "9fca54344bf5ec15d44f88f8d8818555b9367458fb1fadfdfafbaf471fccb57f",
       "spec/extensions/actions/package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
       "spec/extensions/binding-stable/package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
       "spec/extensions/binding/package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
@@ -1920,26 +1920,26 @@
       "spec/extensions/tables/operation-0.2.schema.json": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e",
       "spec/extensions/tables/operation.schema.json": "af217abc87d2f4a5205d82c2146040ef986d29252c78a4ec76d59787828578cc",
       "spec/extensions/tables/package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
-      "spec/metamodel/generated/core-constraints.json": "e9cf607d23b39f7faa200532d0e016c95461013addfcb22f0316c856c04bd0dd",
-      "spec/metamodel/generated/domain-policy.json": "6d5acacb252a622df4f644f7266dc49ffe551833dd8812d0b87c64847d3f8234",
+      "spec/metamodel/generated/core-constraints.json": "9454507b2cb8908aa91665ba7f07b251393b34da025604c6b50dbd907b0cbd80",
+      "spec/metamodel/generated/domain-policy.json": "c29eb2616aa9ca29f66a5905bcef50dbfe722ed29f77f94e246befabdbec117f",
       "tests/qualification/constructor_observation_pure_test.py": "e677919eba2ad1d544f75dab3d844a48a05df081505ee59542a6f8326459390c",
       "tests/qualification/fixtures/inspector-admission-precharge-baseline.json": "068ebe51004e7e03d6ef26aca7774209f5ef3beceb9fa0e40d0e274cb52bdc18",
       "tests/qualification/fixtures/inspector-attribution-continuation.json": "c106669101a3af73804fe0df3296e0ef9a0e4a7604c428daf0f92b13714ce7ee",
       "tests/qualification/fixtures/inspector-constructor-observation.json": "fef5bda142d304f1eadfa2c1c56e26b3e528c97895c3a224754bdd13868db6ae",
-      "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json": "e6ef223861744d2e5c077e7c9bfc17ad912dd00c023c68c0341cbb76b15315a0",
+      "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json": "16ca1041d0e6a5dd0aa90f442c3a52801d6b3436be470b62b7a0ebbfad8b1e53",
       "tests/qualification/fixtures/inspector-installed-current-resources.json": "251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363",
       "tests/qualification/fixtures/inspector-retained-continuation.json": "7e40212a4554570aae34b17f29104c1c97cfe26471efd58b6ab95a72e97e3036",
       "tests/qualification/fixtures/inspector-retained-resources.json": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
       "tests/qualification/test_inspector_admission_precharge.py": "79546279ad81343a925b3ca102b77e2cb3081f0e49d21e58c0e3937f2f7e07b3",
       "tests/qualification/test_inspector_attribution_controls.py": "db35b1fa562575929504a3806a12a31a696631b5ec16d9a904ddcf641e79a97c",
       "tests/qualification/test_inspector_attribution_lanes.py": "92b9e821613d82591d5dd827bb8624a7b03fa1a52989d5bbeeb59aa28a8c2dd4",
-      "tests/qualification/test_inspector_c1_binding_closure.py": "5d039b177383cf111142fbd3d97725d8fb949a4db6d6e1aab0f521ac00ddbc9c",
-      "tests/qualification/test_inspector_combined_budget.py": "43810b7edac2b552c49a41d7909470c6bb08e96241b76d77b139495f52206196",
-      "tests/qualification/test_inspector_construction_batch.py": "04ed3c6a8481236f9dfce5893fdfdc4bc53426801723162131d429c3b4d568d8",
+      "tests/qualification/test_inspector_c1_binding_closure.py": "92846ab2a66a9864cfa5f58a732f7f5716c0e48132166c86833f44fbeb28058d",
+      "tests/qualification/test_inspector_combined_budget.py": "b36d9fafb1a339d1a862b55285fc6edb1e61ccaed9ed1db419565ee02bcb6295",
+      "tests/qualification/test_inspector_construction_batch.py": "d41805836dcbd88d1c980905517584bc92d9a939a4ac238187f7f8d89320487f",
       "tests/qualification/test_inspector_cost_gate.py": "77c63dbe64e81337278bc311a314a91e95d9979d6368e48bc50f07b9469b9dd5",
-      "tests/qualification/test_inspector_installed_factory.py": "9f24432dd3dbc2d9b1a318bdc77efcf0427d6084d78a3d0ba251644ec6ed12d5",
+      "tests/qualification/test_inspector_installed_factory.py": "0ba08d7ec35f3b03637c59e818a7113f6930d0731eda88c512cdcd3fb24d1fae",
       "tests/qualification/test_inspector_owned_plan_controller.py": "d9a8c41fb3c631709cd347ee46e9fc389a373efd66304ca36df89b8cc36d76bd",
-      "tests/qualification/test_inspector_owner_cursors.py": "3251d594419079004506a1b416313ecb8acfccfbb37448ddb9df231eabb86a6a",
+      "tests/qualification/test_inspector_owner_cursors.py": "593b75d59d21e979fef2dbc67d33a12c37e5e0a4cb854f841840712a41330194",
       "tests/qualification/test_inspector_retained_continuation.py": "baf7f8d74433fc297597b2571a6aef066afcd7427d5e3673054e53e3a465d617",
       "tests/qualification/test_inspector_retained_controls.py": "017b5b095e6049ff632ba5ecf7f54e8506b21305c88aa87231c2c2da06d821b4",
       "tests/qualification/test_inspector_retained_diagnostic.py": "809a8ff4c78c260a0f54f0774ba70c432460cd06b01618b2579ec4488d244d47",
@@ -1952,7 +1952,7 @@
       "tools/intake_inspector_attribution_continuation.py": "f554597f8395458e495f20f8115bf118a1b48f15ca5cf5d1de94ee8592f6b39c",
       "tools/intake_inspector_retained_continuation.py": "25692b0f877b81cfd5e45e8b007b001064ea6d25384465f957203f5f25e0e33d",
       "tools/probe_inspector_constructor_prefix.py": "bb308ddbe9eeb9c21c4d1f25264d6ab07fd414e0764e7d2cd653dec2019c768f",
-      "tools/probe_inspector_installed_factory.py": "443667cf3c5d439e89aaeed4ae30edd79b71cc91e23046fd1a27d4739eb972ac",
+      "tools/probe_inspector_installed_factory.py": "dfc78580400eb02c24c2e560bcd620986f2e81c8474cbe954c6482a863c90cc7",
       "tools/probe_inspector_retained_attribution.py": "2e872326ad62c7fb5f5f4fdecec2322db5159a190fb7fd4495ec6b9919a67625",
       "tools/probe_inspector_retained_feasibility.py": "e33e1d352c9861970a7aeb192dc1803e11e6455b086a1cc6c9391ce283c9d49d",
       "tools/qualify_inspector_combined_budget.py": "895fd9e0d3264519570a38fdbda33d4511810f884dcce9d8695d9204ed70ac9a",
@@ -1960,7 +1960,7 @@
       "tools/qualify_inspector_constructor_observation.py": "e8874d1dd074ea2c7089c5f526426e22a7dd91114b65126caed12c37e65d3385",
       "tools/run_inspector_attribution_lanes.py": "3ea17a8c8e71d04a090bde9fa94498dfa821991dc3332f283785b17d21bf8129",
       "tools/run_inspector_cost_gate.py": "752c1014b36c83d2a20b415a46a1e74c52971f043b987786fe5de702fc0332a4",
-      "tools/tests/test_codegen_resource_literals.py": "e92ef0d6bc64b0f757ae213732cff82f31b30428e503848b235833a9a7d1f9eb",
+      "tools/tests/test_codegen_resource_literals.py": "3f9cec5053cb750cad7d11103e52a43e4ade6f39ff9cc11861ba08e107d1cead",
       "tools/tests/test_operation_schema_utf16_encoding.py": "129eff6a26986a41f9c5fc8f06ca88c673494c3442bcaf2a6fcda69f170be319",
       "tools/tests/test_schema_metas_utf16_encoding.py": "577f088d62abb65864dab66a93c53fc46092b5abd625f63e2e5ddcdd66df02eb",
       "tools/verify_python_artifacts.py": "0ce62ccf70e89e14f95e7679473c9d58c1662042081f4b9c5b0eb7809854b355"
@@ -3252,11 +3252,11 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/engine.rs",
-        "sourceSHA256": "5369bc570855e364b3b8c3c8e37ea49d5368435fbd89d2647163f13ac8372bcd",
+        "sourceSHA256": "e3ea4ae4d0705c5d644fe8e0385fe56756b5de9d232d1b426d733870eaaafb6f",
         "cases": [
           {
             "name": "engine::registration_provider_tests::admitted_validation_keeps_structural_refusal_before_provider_access",
-            "line": 1566,
+            "line": 1577,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4817,11 +4817,11 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema.rs",
-        "sourceSHA256": "aa7f6d0a25166b80b51a5663d5e9192832b92da61690db622ccce1d18e912e34",
+        "sourceSHA256": "6b19343bbc17c73c47dc7e21aef7ceae934348ac5a2574fee0f1a64752fd2933",
         "cases": [
           {
             "name": "schema::finite_binary64_schema_admission_tests::schema_and_instance_accept_finite_binary64_outside_core_profile",
-            "line": 10692,
+            "line": 11986,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4830,7 +4830,7 @@
           },
           {
             "name": "schema::finite_binary64_schema_admission_tests::schema_instance_rejects_nonfinite_and_preserves_multiple_of_overflow_result",
-            "line": 10728,
+            "line": 12022,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4839,7 +4839,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::absent_validation_vocabulary_keeps_applicators_and_ignores_inactive_malformed_keywords",
-            "line": 10835,
+            "line": 12129,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4848,7 +4848,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::referenced_standard_resource_reactivates_validation_vocabulary",
-            "line": 10853,
+            "line": 12147,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4857,7 +4857,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::referenced_custom_resource_disables_validation_for_its_nested_schemas",
-            "line": 10875,
+            "line": 12169,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4866,7 +4866,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::fragment_reference_uses_standard_enclosing_resource_policy",
-            "line": 10893,
+            "line": 12187,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4875,7 +4875,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::fragment_reference_uses_custom_enclosing_resource_policy",
-            "line": 10911,
+            "line": 12205,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4884,7 +4884,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::omitted_applicator_and_unevaluated_vocabularies_leave_keywords_inert",
-            "line": 10929,
+            "line": 12223,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4893,7 +4893,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::custom_dialect_requires_explicit_well_formed_supported_vocabulary_declaration",
-            "line": 10947,
+            "line": 12241,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4902,7 +4902,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::nested_custom_dialect_declarations_must_resolve_and_be_supported",
-            "line": 10993,
+            "line": 12287,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4911,7 +4911,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::optional_vocabulary_uri_conversion_is_charged_on_each_validation",
-            "line": 11026,
+            "line": 12320,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4920,7 +4920,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::unrelated_resource_lookup_conversion_is_charged_on_each_validation",
-            "line": 11058,
+            "line": 12352,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4929,7 +4929,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::custom_metaschema_member_search_is_charged_on_each_validation",
-            "line": 11103,
+            "line": 12397,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4938,7 +4938,7 @@
           },
           {
             "name": "schema::custom_vocabulary_policy_tests::root_dialect_member_search_is_charged_on_each_validation",
-            "line": 11138,
+            "line": 12432,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4947,7 +4947,7 @@
           },
           {
             "name": "schema::python_resource_work_tests::native_uri_operation_families_match_frozen_cpython_profiles",
-            "line": 11173,
+            "line": 12467,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4956,7 +4956,7 @@
           },
           {
             "name": "schema::python_resource_work_tests::native_uri_common_prefix_work_is_admitted_before_comparison",
-            "line": 11201,
+            "line": 12495,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4965,7 +4965,7 @@
           },
           {
             "name": "schema::python_resource_work_tests::native_uri_join_admits_all_input_work_before_owned_buffers",
-            "line": 11228,
+            "line": 12522,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4974,7 +4974,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::nested_ids_set_reference_scope_and_annotations_do_not",
-            "line": 11282,
+            "line": 12576,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4983,7 +4983,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::retrieved_relative_root_id_is_resolved_once_and_keeps_its_directory",
-            "line": 11297,
+            "line": 12591,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -4992,7 +4992,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::legacy_absolute_root_and_nested_ids_are_not_joined_as_relative_paths",
-            "line": 11312,
+            "line": 12606,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5001,7 +5001,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::reference_resolution_handles_directory_bases_and_urn_local_pointers",
-            "line": 11341,
+            "line": 12635,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5010,7 +5010,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::then_else_are_schema_positions_and_cycles_are_bounded",
-            "line": 11358,
+            "line": 12652,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5019,7 +5019,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::conflicting_resource_uris_remain_explicit_errors",
-            "line": 11378,
+            "line": 12672,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5028,7 +5028,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::static_and_dynamic_refs_resolve_anchors_in_schema_positions",
-            "line": 11391,
+            "line": 12685,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5037,7 +5037,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::then_and_else_resources_are_available_to_sibling_refs",
-            "line": 11408,
+            "line": 12702,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5046,7 +5046,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::anchor_resolution_skips_nested_resources_with_the_same_anchor",
-            "line": 11426,
+            "line": 12720,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5055,7 +5055,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::referenced_relative_id_resource_is_not_rebased_a_second_time",
-            "line": 11440,
+            "line": 12734,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5064,7 +5064,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::parent_uri_suffix_is_not_mistaken_for_a_resolved_child_id",
-            "line": 11472,
+            "line": 12766,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5073,7 +5073,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::repeated_relative_ids_are_applied_for_direct_nested_evaluation",
-            "line": 11495,
+            "line": 12789,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5082,7 +5082,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::anchored_resource_root_does_not_reapply_its_identifier",
-            "line": 11515,
+            "line": 12809,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5091,7 +5091,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::anchored_root_in_external_document_keeps_resource_identity",
-            "line": 11529,
+            "line": 12823,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5100,7 +5100,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::pointer_target_identifier_scopes_following_references_once",
-            "line": 11548,
+            "line": 12842,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5109,7 +5109,7 @@
           },
           {
             "name": "schema::static_reference_resolution_tests::pointer_entered_dynamic_resource_resets_pointer_scope_at_resource_root",
-            "line": 11572,
+            "line": 12866,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5118,7 +5118,7 @@
           },
           {
             "name": "schema::draft2020_dynamic_annotation_regressions::draft2020_dynamic_scope_uses_active_resource_anchors",
-            "line": 11638,
+            "line": 12932,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5127,7 +5127,7 @@
           },
           {
             "name": "schema::draft2020_dynamic_annotation_regressions::draft2020_unevaluated_keywords_receive_dynamic_reference_annotations",
-            "line": 11652,
+            "line": 12946,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5136,7 +5136,7 @@
           },
           {
             "name": "schema::draft2020_dynamic_annotation_regressions::python_draft2020_keeps_its_per_node_dynamic_anchor_scope",
-            "line": 11670,
+            "line": 12964,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5145,7 +5145,7 @@
           },
           {
             "name": "schema::draft2020_dynamic_annotation_regressions::resource_scope_discovers_dynamic_anchor_under_prefix_items",
-            "line": 11693,
+            "line": 12987,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5154,7 +5154,7 @@
           },
           {
             "name": "schema::draft2020_dynamic_annotation_regressions::dynamic_resource_root_keeps_normalized_relative_id_provenance",
-            "line": 11714,
+            "line": 13008,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5163,7 +5163,7 @@
           },
           {
             "name": "schema::draft2020_dynamic_annotation_regressions::repeated_anchor_free_resource_evaluation_uses_cached_discovery",
-            "line": 11732,
+            "line": 13026,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5172,7 +5172,7 @@
           },
           {
             "name": "schema::draft2020_dynamic_annotation_regressions::dynamic_anchor_cache_does_not_hold_lock_during_host_callbacks",
-            "line": 11807,
+            "line": 13101,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5181,7 +5181,7 @@
           },
           {
             "name": "schema::construction_owner_tests::completed_compile_and_metaschema_sharing_are_local_to_actual_success",
-            "line": 11876,
+            "line": 13170,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5190,7 +5190,7 @@
           },
           {
             "name": "schema::construction_owner_tests::invalid_schema_publishes_no_catalogue_or_completed_proof",
-            "line": 11900,
+            "line": 13194,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5199,7 +5199,7 @@
           },
           {
             "name": "schema::construction_owner_tests::metaschema_conversion_precharge_precedes_materializer_and_parser",
-            "line": 11913,
+            "line": 13207,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5208,7 +5208,7 @@
           },
           {
             "name": "schema::construction_owner_tests::terminal_construction_denial_stops_before_reusable_proof",
-            "line": 11977,
+            "line": 13271,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5803,11 +5803,11 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/value.rs",
-        "sourceSHA256": "f46547766ad7d2e6be7ef34aeace087b5b0ae7a64f5f31363ebb77e55b7fc69e",
+        "sourceSHA256": "f0eab222652b0f735c05d347325a50227b1c0867971d995c1ba798a2af04e228",
         "cases": [
           {
             "name": "value::completed_result_copy_tests::follows_typescript_nodewise_limit_path_and_charges_copy_work",
-            "line": 185,
+            "line": 247,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5816,7 +5816,7 @@
           },
           {
             "name": "value::completed_result_copy_tests::meter_failure_stops_copy_and_text_is_not_clamped_by_text_limit",
-            "line": 212,
+            "line": 274,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5825,7 +5825,7 @@
           },
           {
             "name": "value::completed_result_copy_tests::rejects_duplicate_keys_and_invalid_numbers_preserving_raw_utf16_paths",
-            "line": 261,
+            "line": 323,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5834,7 +5834,7 @@
           },
           {
             "name": "value::borrowed_validation_tests::borrowed_validation_matches_copy_errors_and_metering",
-            "line": 957,
+            "line": 1022,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5843,7 +5843,7 @@
           },
           {
             "name": "value::owned_admission_owner_tests::owned_admission_retains_allocation_and_identical_ordinary_admission_charges",
-            "line": 992,
+            "line": 1057,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -5852,7 +5852,7 @@
           },
           {
             "name": "value::owned_admission_owner_tests::owned_admission_keeps_duplicate_and_first_denial_refusals",
-            "line": 1007,
+            "line": 1072,
             "cfg": [
               "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
               "#[cfg(test)]",
@@ -6640,7 +6640,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core-wire/src/installed_codegen_factory_independent_tests.rs",
-        "sourceSHA256": "bb66a321eaf015adb04108c7d5953931b7de574e92ca223eb44795cdf228dda9",
+        "sourceSHA256": "0987d66aff572e78e1eb0177d13837d48f02577137c8e1921e1a3fc381b3d25d",
         "cases": [
           {
             "name": "installed_codegen_factory_independent_tests::fw01_real_fixed_factory_manifest_copy_and_original_inspection_golden",
@@ -6695,9 +6695,18 @@
               "#[path = \"installed_codegen_factory_independent_tests.rs\"]",
               "#[test]"
             ]
+          },
+          {
+            "name": "installed_codegen_factory_independent_tests::counted_prepare_refusal_cannot_release_core_before_companions",
+            "line": 520,
+            "cfg": [
+              "#[cfg(all(test, feature = \"codegen\"))]",
+              "#[path = \"installed_codegen_factory_independent_tests.rs\"]",
+              "#[test]"
+            ]
           }
         ],
-        "caseCount": 6
+        "caseCount": 7
       },
       {
         "package": "umf-codegen",
@@ -7005,11 +7014,11 @@
         "target": "lib",
         "features": "umf-core/native-postgresql",
         "source": "crates/umf-codegen/src/resources.rs",
-        "sourceSHA256": "eeda0c5ecd8eed779354f4c31059429d3c7a6872c136da57f085fabcef1c1a17",
+        "sourceSHA256": "6185a6bcaa050436aca04cea56f15836ead043b28aa2b9f140193c0152dec1bd",
         "cases": [
           {
             "name": "resources::resource_controls::explicit_binding_packages_share_registry_and_compile_the_supplied_schema",
-            "line": 789,
+            "line": 918,
             "cfg": [
               "#[cfg(test)]",
               "#[test]"
@@ -7017,7 +7026,7 @@
           },
           {
             "name": "resources::resource_controls::compiler_pattern_projection_preserves_raw_utf16_and_core_formatter_scope",
-            "line": 832,
+            "line": 961,
             "cfg": [
               "#[cfg(test)]",
               "#[test]"
@@ -7025,7 +7034,7 @@
           },
           {
             "name": "resources::resource_controls::source_document_text_retains_ordinary_and_stricter_caller_bounds",
-            "line": 850,
+            "line": 979,
             "cfg": [
               "#[cfg(test)]",
               "#[test]"
@@ -7033,7 +7042,7 @@
           },
           {
             "name": "resources::resource_controls::action_literal_validation_uses_the_explicit_schema_definition",
-            "line": 895,
+            "line": 1024,
             "cfg": [
               "#[cfg(test)]",
               "#[test]"
@@ -7041,7 +7050,7 @@
           },
           {
             "name": "resources::resource_controls::diagnostic_serialization_precharges_cloned_text_and_preserves_control_origin",
-            "line": 919,
+            "line": 1048,
             "cfg": [
               "#[cfg(test)]",
               "#[test]"
@@ -7474,7 +7483,7 @@
         "target": "lib",
         "features": "native-postgresql",
         "source": "crates/umf-core/src/schema_preflight_reference_independent_tests.rs",
-        "sourceSHA256": "0d98e089fbef164b5fad98c7619d15037be23e944b9f0d2996da26b0530b9a3b",
+        "sourceSHA256": "8ad286496d348c0b36b2110446888b28473a528bb765949954d214c57bb081cb",
         "cases": [
           {
             "name": "schema::owned_plans::preflight_reference_independent_tests::pre01_real_preflight_records_genuine_reference_target_location_and_full_origin",
@@ -7563,9 +7572,21 @@
               "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
               "#[test]"
             ]
+          },
+          {
+            "name": "schema::owned_plans::preflight_reference_independent_tests::counted_pointer_path_matches_original_target_and_utf16_with_paid_move",
+            "line": 766,
+            "cfg": [
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[path = \"schema_owned_plans.rs\"]",
+              "#[cfg(test)]",
+              "#[path = \"schema_preflight_reference_independent_tests.rs\"]",
+              "#[cfg(not(all(feature = \"metamodel-compiler\", not(feature = \"full-core\"))))]",
+              "#[test]"
+            ]
           }
         ],
-        "caseCount": 8
+        "caseCount": 9
       },
       {
         "package": "umf-core",
@@ -8403,10 +8424,10 @@
     },
     "currentInputs": {
       "fixturePath": "tests/qualification/fixtures/inspector-installed-candidate-01010-resources.json",
-      "fixtureSHA256": "e6ef223861744d2e5c077e7c9bfc17ad912dd00c023c68c0341cbb76b15315a0",
+      "fixtureSHA256": "16ca1041d0e6a5dd0aa90f442c3a52801d6b3436be470b62b7a0ebbfad8b1e53",
       "metadataVersion": "0.10.10"
     },
-    "closureSHA256": "616ee280b949c9ebe0649662bf21918dc73e8f0806155ec894bdfc2bc5e80ed0"
+    "closureSHA256": "fd2f67b8fb18270a93c63b67d6bb463204ca4d1d61f4734667e0402d59f04b65"
   },
   "modelReferences": {
     "baseModel": {

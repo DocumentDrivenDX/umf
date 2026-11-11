@@ -107,14 +107,14 @@ def candidate_fixture(root,status='source-bound'):
     v['sourceFiles']['python/pyproject.toml']=m.sha(root/'python/pyproject.toml')
     v['sourceFiles']['python/src/umf/__init__.py']=m.sha(root/'python/src/umf/__init__.py')
     prior=json.loads((root/m.CURRENT_FIXTURE).read_text())
-    generation={'sourceCommit':'3fcf4b80d017793e1d5da059a206d0fe5ca834a0','sourceTree':'d9135287312d7b1f4304bb72de1dab68301b7abf',
+    generation={'sourceCommit':'f70985da9b14d8d4e999475557a4b24c911f5b62','sourceTree':'06255fe7b1e2181cc9da8fd0bc7258fb30429f89',
       'runId':'SYNTHETIC-NOT-A-G0-RUN','attempt':'1','jobId':'SYNTHETIC-JOB','artifactId':'SYNTHETIC-ARTIFACT','artifactDigest':'a'*64,
       'outputManifestSHA256':'b'*64,'finalAttestationSHA256':'c'*64,'correspondenceReceiptSHA256':'d'*64,'compilerSHA256':'e'*64,'compilerBinarySHA256':'f'*64}
     candidate={'profile':m.CANDIDATE_PROFILE,'inputProfile':m.INPUT,'maximumWork':m.LIMIT,'candidateArtifactVersion':'0.10.10',
       'baseline':{'mainCommit':'ed09f345e38e70fd8c718cb904ffd9185f0ca392','mainTree':'ad4d87ffcf2ce2a5aff15fc26e60e5a0e82021c3','inheritedCoreDistributionVersion':'0.10.9','scope':'SYNTHETIC BASELINE ONLY'},
       'historicalFixture':prior['historicalFixture'],'bindingStatus':status,'generation':generation,'resources':prior['resources'],
       'encodingOnlyProducer':prior['encodingOnlyProducer'],'literalData':prior['literalData'],'candidateModelSHA256':'e'*64,
-      'acceptance':'GEN1 source correspondence is independently joined to run 42881309374; this source binding is not native admission and candidate execution/fit remains unknown.'}
+      'acceptance':'GEN1 source correspondence is independently joined to run 42924533264; this source binding is not native admission and candidate execution/fit remains unknown.'}
     path=root/m.CANDIDATE_FIXTURE;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(candidate))
     v['sourceFiles'][m.CANDIDATE_FIXTURE]=m.sha(path)
     v['modelSHA256']=candidate['candidateModelSHA256']
@@ -786,7 +786,7 @@ class Lifecycle2Controls(unittest.TestCase):
         self.assertEqual(calls,['lifecycle2-before','pytest','lifecycle2-after'])
         census=json.loads((ROOT/'tests/qualification/fixtures/inspector-construction-batch.json').read_text());factory=census['installedFactory']
         self.assertEqual(len(factory['publicControls']),18);self.assertEqual(sum(len(group['cases']) for group in factory['python']),31)
-        self.assertEqual(sum(len(target['cases']) for target in factory['rust']),493)
+        self.assertEqual(sum(len(target['cases']) for target in factory['rust']),495)
         source=(SCRATCH_ROOT/'tools/run_inspector_attribution_lanes.py').read_text();tree=ast.parse(source)
         run=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='run_installed')
 
@@ -839,13 +839,13 @@ class FinalSourceCensusControls(unittest.TestCase):
     def test_frozen_actual_named_roster_and_required_18_public_controls(self):
         m=load();c=json.loads((ROOT/m.CENSUS).read_text());v=c['installedFactory']
         selected=m.selection(ROOT,c);candidate,identity=m.current_inputs(ROOT,selected)
-        self.assertEqual(candidate['generation']['sourceCommit'],'3fcf4b80d017793e1d5da059a206d0fe5ca834a0')
+        self.assertEqual(candidate['generation']['sourceCommit'],'f70985da9b14d8d4e999475557a4b24c911f5b62')
         self.assertEqual(identity['candidateArtifactVersion'],'0.10.10')
         self.assertFalse(c['candidateInputBindingPending']['candidateAdmission'])
         early=v['publicControls'];late=[x for g in v['python'] for x in g['cases']]
         self.assertEqual(len(early),18);self.assertEqual(len(late),31)
         self.assertFalse(set(early)&set(late))
-        self.assertEqual(sum(len(r['cases']) for r in v['rust']),493)
+        self.assertEqual(sum(len(r['cases']) for r in v['rust']),495)
         additions=[case for row in v['rust'] for case in row['cases'] if 'preflight_route_storage_independent_tests::ps0' in case['name']]
         self.assertEqual(len(additions),8)
         self.assertEqual({case['name'].rsplit('::',1)[-1] for case in additions},{

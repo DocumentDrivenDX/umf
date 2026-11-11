@@ -37,7 +37,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         self.assertEqual(selected['currentInputs']['fixturePath'],helper.CANDIDATE_FIXTURE)
         self.assertEqual(selected['currentInputs']['metadataVersion'],'0.10.10')
         self.assertEqual(candidate['candidateArtifactVersion'],'0.10.10')
-        self.assertEqual((candidate['generation']['sourceCommit'],candidate['generation']['sourceTree']),('3fcf4b80d017793e1d5da059a206d0fe5ca834a0','d9135287312d7b1f4304bb72de1dab68301b7abf'))
+        self.assertEqual((candidate['generation']['sourceCommit'],candidate['generation']['sourceTree']),('f70985da9b14d8d4e999475557a4b24c911f5b62','06255fe7b1e2181cc9da8fd0bc7258fb30429f89'))
         self.assertEqual(helper.input_metadata_version(identity),'0.10.10')
         wrong_metadata=copy.deepcopy(selected)
         wrong_metadata['currentInputs']['metadataVersion']='0.10.9'
@@ -78,12 +78,12 @@ class ConstructionBatchSourceControls(unittest.TestCase):
 
 
 
-    def test_current493_expected_targets_and_compiled_lists_are_exact(self):
+    def test_current495_expected_targets_and_compiled_lists_are_exact(self):
         helper=batch.load(ROOT/'tools/probe_inspector_installed_factory.py','frozen_list_controls')
         v=self.census['installedFactory'];current={**self.census,'rust':v['rust'],'rustCaseCount':sum(len(g['cases']) for g in v['rust'])}
         listings={key:[] for key in self.keys}
         for row in current['rust']:listings[row['package'],row['target']]+=[x['name'] for x in row['cases']]
-        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),493)
+        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),495)
         self.assertEqual({(g['package'],g['target']) for g in current['rust']},self.keys)
         for row in current['rust']:
             if row['package']=='umf-core-python':self.assertEqual(row['manifest'],'bindings/core/python/Cargo.toml')
@@ -95,10 +95,16 @@ class ConstructionBatchSourceControls(unittest.TestCase):
             'resources::codegen_catalogue_independent_tests::paid_storage_copy_is_not_current_limit_readmission_and_stops_at_each_denial',
             'resources::codegen_catalogue_independent_tests::snapshot_insert_unique_shared_denial_and_public_deep_clone_are_isolated',
             'resources::codegen_catalogue_independent_tests::saga_two_insertions_are_isolated_and_old_core_limits_still_refuse_in_compiler',
-            'actions::saga::tests::cloned_saga_resources_keep_original_snapshot_and_noop_or_invalid_installation'}
+            'actions::saga::tests::cloned_saga_resources_keep_original_snapshot_and_noop_or_invalid_installation',
+            'schema::owned_plans::preflight_reference_independent_tests::counted_pointer_path_matches_original_target_and_utf16_with_paid_move',
+            'installed_codegen_factory_independent_tests::counted_prepare_refusal_cannot_release_core_before_companions'}
         added=[(row['package'],row['target'],row['features'],case['name']) for row in v['rust'] for case in row['cases'] if case['name'] in expected_added]
         self.assertEqual({name for _,_,_,name in added},expected_added)
-        self.assertEqual(len(added),8)
+        self.assertEqual(len(added),10)
+        current_additions={name:(package,target,features) for package,target,features,name in added if name in {'installed_codegen_factory_independent_tests::counted_prepare_refusal_cannot_release_core_before_companions', 'schema::owned_plans::preflight_reference_independent_tests::counted_pointer_path_matches_original_target_and_utf16_with_paid_move'}}
+        self.assertEqual(current_additions,{
+            'schema::owned_plans::preflight_reference_independent_tests::counted_pointer_path_matches_original_target_and_utf16_with_paid_move':('umf-core','lib','native-postgresql'),
+            'installed_codegen_factory_independent_tests::counted_prepare_refusal_cannot_release_core_before_companions':('umf-core-wire','lib','native-postgresql')})
         all_cases=[case for row in v['rust'] for case in row['cases']]
         expected_r3={
             'schema::preflight_route_storage_independent_tests::ps_r3_actual_nonchild_callers_omit_full_keyword_state_in_both_routes',
@@ -116,7 +122,7 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         import hashlib,json
         digest=lambda values:hashlib.sha256(json.dumps(values,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
         self.assertEqual(len(original),477)
-        self.assertEqual(digest(original),'d67154ed194c734a2fc7b3101fe9a4c65fa550a1f2b5d854cd74a022542b33ad')
+        self.assertEqual(digest(original),'96b49d87e354f79ab8c8bd651ea45857cdbae071d79597ad76850d0526a74b43')
         selected=helper.selection(ROOT,self.census)
         candidate,identity=helper.current_inputs(ROOT,selected)
         self.assertEqual(helper.input_metadata_version(identity),'0.10.10')

@@ -23,9 +23,9 @@ HISTORICAL_V2 = {
 }
 CURRENT_01010 = {
     "profile": "authenticated-g0-candidate-01010",
-    "fixtureSHA256": "e6ef223861744d2e5c077e7c9bfc17ad912dd00c023c68c0341cbb76b15315a0",
-    "dataSHA256": "d7e2e3be1903aeab9da0aff0f8d4572c5310846c0c9b8f5a5099abd55d04cc02",
-    "sourceCommit": "3fcf4b80d017793e1d5da059a206d0fe5ca834a0",
+    "fixtureSHA256": "16ca1041d0e6a5dd0aa90f442c3a52801d6b3436be470b62b7a0ebbfad8b1e53",
+    "dataSHA256": "b8f58caf66d2f1f37384402e57d0a0674b57613ff0dacc486304737fb6e42690",
+    "sourceCommit": "f70985da9b14d8d4e999475557a4b24c911f5b62",
 }
 INPUTS = (
     ("coreSchema", "spec/core/schema.json"),

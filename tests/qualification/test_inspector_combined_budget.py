@@ -135,7 +135,7 @@ class ConsolidatedFindingSourceControls(unittest.TestCase):
         a=scope.index(loop);b=scope.index(charge);c=scope.index(allocation)
         if not a<b<c:raise ValueError('catalogue path allocation precedes admission')
         tail=G.compact(scope[c:])
-        ordered=['root_path.push(0x23);','letretrieval=id.to_utf8().unwrap_or_default();','letresource_cursor=compiled.location_root(ordinal+1,true,ctx)?;','compiled.preflight_located(']
+        ordered=['root_path.push(0x23);','letretrieval=id.to_utf8().unwrap_or_default();','letresource_cursor=compiled.location_root(ordinal+1,true,ctx)?;','compiled.preflight_located_for::<COUNTED>(']
         positions=[tail.index(term) for term in ordered]
         if positions!=sorted(positions):raise ValueError('catalogue path/cursor/preflight order differs')
         if 'resource_cursor,' not in tail[positions[-1]:]:raise ValueError('catalogue preflight lost its ordinal cursor')

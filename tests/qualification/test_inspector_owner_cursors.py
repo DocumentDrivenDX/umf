@@ -108,10 +108,10 @@ def validate_coordinate_storage(source):
 
 def validate_root_selection(source):
     wrapper=compact(raw_body(source,'compile_inner'))
-    expected='{Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None)}'
+    expected='{Self::compile_inner_with_bank::<false>(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None)}'
     if wrapper!=expected:raise ValueError('ordinary compiler does not forward same context/None/false/finalNone')
     shared=compact(raw_body(source,'compile_with_dialect_catalogue'))
-    mode='{Self::compile_inner_with_bank(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)}'
+    mode='{Self::compile_inner_with_bank::<false>(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)}'
     if shared!=mode:raise ValueError('shared dialect compiler changed closed mode/Context/catalogue')
     public=compact(raw_body(source,'compile_with_dialect'))
     if public!='{Self::compile_with_dialect_catalogue(schema,resources,dialect,strict,ctx,None)}':
@@ -140,6 +140,123 @@ def validate_root_selection(source):
     ordered='for(limits,candidate)incandidates{iflimits!=ctx.limits()||candidate.entries.len()!=resources.len_with_context(ctx)?{continue;}letmutequal=true;for(index,(aid,av))incandidate.entries.iter().enumerate(){let(bid,bv)=resources.get_with_context(index,ctx)?.expect();ctx.charge_work(aid.len().min(bid.len()),Utf16::default())?;ifaid!=bid||!construction_equal(av,bv,ctx)?{equal=false;break;}}ifequal{ctx.charge_work(1,Utf16::default())?;returnOk(Some(candidate));}}'
     if catalogue.count(paid)!=1 or catalogue.count(ordered)!=1 or catalogue.index(paid)>catalogue.index(ordered):
         raise ValueError('complete paid ordered same-context catalogue equality missing')
+
+
+def validate_counted_constructor_routing(source, extra_sources=None):
+    raw=lambda name:re.sub(r'\s+','',raw_body(source,name))
+    validate_root_selection(source)
+    ordinary=raw('compile_inner')
+    if ordinary.count('compile_inner_with_bank::<false>(')!=1 or 'compile_inner_with_bank::<true>' in ordinary:
+        raise ValueError('ordinary compile_inner must use only the same-context uncounted route')
+    if 'ctx,None,false,None' not in ordinary:raise ValueError('ordinary compile_inner bank/cursor handoff changed')
+    bank_wrapper=raw('compile_input_bank')
+    if bank_wrapper!='{Self::compile_input_bank_for::<false>(bank,role,ctx)}':
+        raise ValueError('default bank wrapper is not explicitly uncounted')
+    bank=raw('compile_input_bank_for')
+    true_call='Self::compile_inner_with_bank::<true>(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None)'
+    false_call='Self::compile_inner_with_bank::<false>(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None)'
+    route='ifCOUNTED{ctx.charge_work(16,Utf16::default())?;ifadmitted&&bank.is_counted_core(){return'+true_call+';}}'+false_call
+    if bank.count(route)!=1 or bank.count('compile_inner_with_bank::<true>(')!=1 or bank.count('compile_inner_with_bank::<false>(')!=1:
+        raise ValueError('counted bank gate/precharge/explicit fallback tuple differs')
+    if bank.index('ctx.charge_work(16,Utf16::default())?')>bank.index('ifadmitted&&bank.is_counted_core()'):
+        raise ValueError('counted bank reservation must precede the identity guard')
+    inner=raw('compile_inner_with_bank')
+    root_call='compiled.preflight_located_for::<COUNTED>(&*compiled.schema,&root_origin,&root_scope,0,compiled.root_keyword_policy,ctx,&mutBTreeSet::new(),root_cursor,)'
+    catalogue_call='compiled.preflight_located_for::<COUNTED>(resource,&Utf16::new(root_path),&retrieval,0,compiled.root_keyword_policy,ctx,&mutBTreeSet::new(),resource_cursor,)'
+    if inner.count(root_call)!=1 or inner.count(catalogue_call)!=1:
+        raise ValueError('generic route must reach root and catalogue preflight with original context/cursor')
+    preflight=raw('preflight_located_for')
+    if 'self.preflight_carried::<COUNTED>(schema,&mutowned,scope,depth,inherited_policy,ctx,seen,cursor)' not in preflight:
+        raise ValueError('COUNTED is not forwarded unchanged into owned preflight')
+    semantic=raw('preflight_semantic')
+    counted_call='self.resolve_ref_location_impl::<true>(val,&reference_path,Some(scope.as_str()),false,ctx).map(|(target,path,_)|(target,path))'
+    branch='letresolved=ifR::COUNTED{ctx.charge_work(12,Utf16::default())?;iftext=="$ref"{'+counted_call+'}else{self.resolve_ref_unplanned(val,&reference_path,Some(scope.as_str()),ctx)}}else{self.resolve_ref_unplanned(val,&reference_path,Some(scope.as_str()),ctx)}'
+    if semantic.count(branch)!=1:
+        raise ValueError('counted resolver is restricted to the paid static $ref route with exact scope/tracked/context/arity')
+    expected_calls=[
+      ('crates/umf-core/src/schema.rs','preflight_semantic','true','val,&reference_path,Some(scope.as_str()),false,ctx'),
+      ('crates/umf-core/src/schema.rs','resolve_ref_unplanned','false','reference,path,scope_override,false,ctx'),
+      ('crates/umf-core/src/schema.rs','resolve_ref_unplanned_located','false','reference,path,scope_override,true,ctx'),
+      ('crates/umf-core/src/schema_preflight_reference_independent_tests.rs','counted_pointer_path_matches_original_target_and_utf16_with_paid_move','false','&reference,&path,Some(base),false,ctx'),
+      ('crates/umf-core/src/schema_preflight_reference_independent_tests.rs','counted_pointer_path_matches_original_target_and_utf16_with_paid_move','true','&reference,&path,Some(base),false,ctx'),
+      ('crates/umf-core/src/schema_preflight_reference_independent_tests.rs','counted_pointer_path_matches_original_target_and_utf16_with_paid_move','false','&reference,&path,Some(base),true,ctx'),
+      ('crates/umf-core/src/schema_preflight_reference_independent_tests.rs','counted_pointer_path_matches_original_target_and_utf16_with_paid_move','true','&reference,&path,Some(base),true,ctx'),
+      ('crates/umf-core/src/schema_preflight_reference_independent_tests.rs','counted_pointer_path_matches_original_target_and_utf16_with_paid_move','true','&reference,&path,Some(base),false,ctx'),
+    ]
+    actual_calls=[]
+    declarations=0
+    rust_root=ROOT/'crates/umf-core/src'
+    for rust_file in sorted(rust_root.glob('*.rs')):
+        relative=rust_file.relative_to(ROOT)
+        raw_text=source if relative.as_posix()=='crates/umf-core/src/schema.rs' else (extra_sources or {}).get(relative.as_posix(),rust_file.read_text());masked=code_only(raw_text)
+        declaration=list(re.finditer(r'\bfn\s+resolve_ref_location_impl\b',masked))
+        for hit in re.finditer(r'\bresolve_ref_location_impl\b',masked):
+            declaration_name=next((d for d in declaration if hit.start()==d.end()-len('resolve_ref_location_impl')),None)
+            if declaration_name:
+                declarations+=1
+                if relative.as_posix()!='crates/umf-core/src/schema.rs':raise ValueError('resolver declaration moved outside its reviewed module')
+                signature="fnresolve_ref_location_impl<'a,constCOUNTED:bool>(&'aself,reference:&Value,path:&Utf16,scope_override:Option<&str>,tracked:bool,ctx:&mutContext<'_>)->Result<(&'aValue,Utf16,Option<OwnerCursor>),EngineError>{"
+                if compact(raw_text).count(signature)!=1:raise ValueError('resolver exact const-generic declaration signature differs')
+                continue
+            raw_tail=raw_text[hit.start():]
+            call=re.match(r'resolve_ref_location_impl::<(true|false)>\(',raw_tail)
+            if not call:raise ValueError('resolver occurrence is not a canonical exact specialized call')
+            generic=call.group(1)
+            fn_hits=list(re.finditer(r'\bfn\s+(\w+)',masked[:hit.start()]))
+            if not fn_hits:raise ValueError('resolver call has no enclosing function')
+            caller=fn_hits[-1].group(1);end=hit.end();depth=1
+            paren=masked.find('(',hit.end())
+            if paren<0:raise ValueError('resolver call lacks argument list')
+            end=paren+1;depth=1
+            while depth:
+                depth+=(masked[end]=='(')-(masked[end]==')');end+=1
+            args=compact(masked[paren+1:end-1])
+            actual_calls.append((relative.as_posix(),caller,generic,args))
+    if declarations!=1:raise ValueError('resolver declaration census differs')
+    if sorted(actual_calls)!=sorted(expected_calls):raise ValueError('resolver exact caller/specialization/argument inventory differs')
+    sidecar_path='crates/umf-core/src/schema_preflight_reference_independent_tests.rs'
+    sidecar=(extra_sources or {}).get(sidecar_path,(ROOT/sidecar_path).read_text())
+    validate_reference_test_protocol(sidecar)
+    if raw('resolve_ref_unplanned')!='{let(value,path,_)=self.resolve_ref_location_impl::<false>(reference,path,scope_override,false,ctx)?;Ok((value,path))}':
+        raise ValueError('ordinary reference path must preserve untracked false specialization and tuple')
+    if raw('resolve_ref_unplanned_located')!='{self.resolve_ref_location_impl::<false>(reference,path,scope_override,true,ctx)}':
+        raise ValueError('located reference path must preserve tracked false specialization and tuple')
+    resolver=compact(raw_body(source,'resolve_ref_location_impl'))
+    paid_move='ifCOUNTED{ctx.charge_work(16,Utf16::default())?;ifidentity_path&&!std::ptr::eq(current,root)&&!std::ptr::eq(current,&*self.schema){sp=next_path;continue;}}if!matches!(self.regex_profile,RegexProfile::Python(_)){letnormalized=self.effective_schema_path(current,&next_path,ctx)?;letentered_resource=schema_id(current).is_some();sp=preserve_schema_fragment(&normalized,&next_path,entered_resource,ctx,)?;'
+    if resolver.count(paid_move)!=1:raise ValueError('paid identity move must precede original resource normalization/fragment fallback exactly')
+    identity='letidentity_path=ifCOUNTED{ctx.charge_work(49,Utf16::default())?;!tracked&&!effective_base.is_empty()&&self.counted_pointer_root(indexed_root,ctx)?}else{false};'
+    if resolver.count(identity)!=1:
+        raise ValueError('resolver counted selector must precharge then retain tracked/base/context refusal')
+    root=raw('counted_pointer_root')
+    guards=('!bank.is_counted_core()','!Arc::ptr_eq(bank,root_bank)','ctx.profile()!=crate::context::ResourceProfile::Cooperative',
+      '!self.strict','self.dialect!=SchemaDialect::Draft2020_12','!matches!(self.regex_profile,RegexProfile::Ecma262Unicode)',
+      '!self.resolve_references_at_compile','self.root_keyword_policy!=KeywordPolicy::DRAFT2020','!bank.input_compatible(ctx)?',
+      'SchemaRoot::Bank(root_bank,admitted_bank::BankRoot::Core(primary))',
+      'bank.root_checked(admitted_bank::BankRoot::Core(*primary))','bank.get(role-1).map(|(_,value)|value)',
+      'std::ptr::eq(actual,expected)')
+    condition='if!bank.is_counted_core()||!Arc::ptr_eq(bank,root_bank)||ctx.profile()!=crate::context::ResourceProfile::Cooperative||!self.strict||self.dialect!=SchemaDialect::Draft2020_12||!matches!(self.regex_profile,RegexProfile::Ecma262Unicode)||!self.resolve_references_at_compile||self.root_keyword_policy!=KeywordPolicy::DRAFT2020||!bank.input_compatible(ctx)?{returnOk(false);}'
+    if compact(root).count(condition)!=1 or any(g not in root for g in guards):raise ValueError('counted pointer selector exact combined guards differ')
+
+def validate_reference_test_protocol(sidecar):
+    test=re.sub(r'\s+','',raw_body(sidecar,'counted_pointer_path_matches_original_target_and_utf16_with_paid_move'))
+    ordered=(
+      'fortextin["#/$defs/id","#/%24defs/id","#/$defs/scalarType/anyOf/0"]{',
+      'let(old_node,old_path,_)=owner.resolve_ref_location_impl::<false>(&reference,&path,Some(base),false,ctx)?;',
+      'letold_work=ctx.charged_work()-before;',
+      'let(new_node,new_path,cursor)=owner.resolve_ref_location_impl::<true>(&reference,&path,Some(base),false,ctx)?;',
+      'assert!(std::ptr::eq(old_node,new_node));assert_eq!(old_path.units(),new_path.units());assert!(cursor.is_none());assert!(ctx.charged_work()-before<old_work);',
+      'let(old,old_path,_)=owner.resolve_ref_location_impl::<false>(&reference,&path,Some(base),true,ctx)?;',
+      'let(tracked,tracked_path,cursor)=owner.resolve_ref_location_impl::<true>(&reference,&path,Some(base),true,ctx)?;',
+      'assert!(std::ptr::eq(old,tracked));assert_eq!(old_path,tracked_path);ifletSome(cursor)=cursor{assert!(std::ptr::eq(cursor.get(&owner,ctx)?,tracked));}',
+      'denied_amount.set(Some(16));',
+      'leterror=matchowner.resolve_ref_location_impl::<true>(&reference,&path,Some(base),false,ctx){Ok(_)=>panic!("deniedidentity-pathmovemustnotresolve"),Err(error)=>error,};',
+      'assert!(refused.get());assert_eq!(error.code,"COUNTED_HOST");assert_eq!(error.path,Utf16::from("#/host"));')
+    positions=[]
+    for needle in ordered:
+        if test.count(needle)!=1:raise ValueError('paid edge/move/legacy fallback test assertion differs')
+        positions.append(test.index(needle))
+    if positions!=sorted(positions):raise ValueError('paid edge/move/refusal test ordering differs')
+
 
 def ok_tuple_arities(source,name):
     text=body(source,name);rows=[]
@@ -232,7 +349,7 @@ class OwnerCursorSourceControls(unittest.TestCase):
         self.assertIn('return Ok((target,target_path,id_applied,cursor));',schema)
     def test_every_new_reference_frame_node_and_preflight_call_keeps_its_argument_protocol(self):
         expected={'resolve_ref_unplanned_located':4,'resolve_eval_ref_unplanned_located':3,
-          'resolve_eval_ref_located':3,'resolve_ref_location_impl':5,'resolve_eval_location_impl':4,
+          'resolve_eval_ref_located':3,'resolve_eval_location_impl':4,
           'resolve_located':5,'resolve_eval_located':4,'frame_at':6,'node_at':6,
           'frame_inner':6,'node_inner':7,'preflight_located':8,'location_root':3,
           'location_for_root_value':2,'member_cursor':4,'build_with_events':3}
@@ -335,6 +452,68 @@ class OwnerCursorSourceControls(unittest.TestCase):
             with self.subTest(mutation=i):
                 self.assertNotEqual(mutant,source)
                 with self.assertRaises(ValueError):validate_coordinate_storage(mutant)
+    def test_counted_route_has_exact_source_calls_guards_and_refusal_mutants(self):
+        source=(ROOT/'crates/umf-core/src/schema.rs').read_text()
+        validate_counted_constructor_routing(source)
+        true_call='Self::compile_inner_with_bank::<true>(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None)'
+        false_call='Self::compile_inner_with_bank::<false>(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None)'
+        counted='self.resolve_ref_location_impl::<true>(val, &reference_path, Some(scope.as_str()), false, ctx)\n                                    .map(|(target, path, _)| (target, path))'
+        mutations=[
+            ('compile_inner_with_bank::<false>(schema,resources,dialect,strict,regex_profile','compile_inner_with_bank::<true>(schema,resources,dialect,strict,regex_profile'),
+            ('root_keyword_policy,ctx,None,false,None)','root_keyword_policy,other,None,false,None)'),
+            ('root_keyword_policy,ctx,None,false,None)','root_keyword_policy,ctx,Some((bank,selected)),true,None)'),
+            ('if COUNTED {\n            ctx.charge_work(16, Utf16::default())?;','if COUNTED {'),
+            ('if COUNTED {\n            ctx.charge_work(16, Utf16::default())?;','ctx.charge_work(16, Utf16::default())?;'),
+            ('compiled.preflight_located_for::<COUNTED>(\n            &*compiled.schema','compiled.preflight_located_for::<false>(\n            &*compiled.schema'),
+            ('let resolved = if R::COUNTED {','let resolved = {'),
+            ('if admitted && bank.is_counted_core() {','if admitted {'),
+            (true_call,true_call.replace('::<true>','::<false>')),
+            (false_call,false_call.replace('::<false>','::<true>')),
+            (counted,counted.replace('Some(scope.as_str())','None')),
+            (counted,counted.replace(', false, ctx)',', true, ctx)')),
+            (counted,counted.replace(', false, ctx)',', false, other)')),
+            (counted,counted.replace('Some(scope.as_str()), false, ctx','Some(scope.as_str()), false')),
+            ('ctx.charge_work(12, Utf16::default())?;','other.charge_work(12, Utf16::default())?;'),
+            ('ctx.charge_work(12, Utf16::default())?;\n                            if text == "$ref"','if text == "$ref"'),
+            ('ctx.charge_work(49, Utf16::default())?;','other.charge_work(49, Utf16::default())?;'),
+            ('!tracked && !effective_base.is_empty() && self.counted_pointer_root(indexed_root, ctx)?','!effective_base.is_empty() && self.counted_pointer_root(indexed_root, ctx)?'),
+            ('!Arc::ptr_eq(bank, root_bank)','true'),
+            ('|| !Arc::ptr_eq(bank, root_bank)','&& !Arc::ptr_eq(bank, root_bank)'),
+            ('|| ctx.profile() != crate::context::ResourceProfile::Cooperative','|| true'),
+        ]
+        for i,(old,new) in enumerate(mutations):
+            with self.subTest(mutation=i):
+                mutant=changed_mutant(source,old,new)
+                with self.assertRaises(ValueError):validate_counted_constructor_routing(mutant)
+        resolver_body=raw_body(source,'resolve_ref_location_impl')
+        for i,(old,new) in enumerate((
+            ('ctx.charge_work(16, Utf16::default())?;',''),
+            ('if identity_path && !std::ptr::eq(current, root) && !std::ptr::eq(current, &*self.schema) {','if identity_path {'),
+            ('sp = next_path;\n                            continue;','sp = normalized;'),
+        )):
+            mutated_body=changed_mutant(resolver_body,old,new)
+            mutant=source.replace(resolver_body,mutated_body,1)
+            with self.subTest(production_move_mutation=i):
+                with self.assertRaises(ValueError):validate_counted_constructor_routing(mutant)
+        injected=source.replace('let resolved = if R::COUNTED {','self.resolve_ref_location_impl::<true>(val, &reference_path, Some(scope.as_str()), false, ctx);\n                        let resolved = if R::COUNTED {',1)
+        self.assertNotEqual(injected,source)
+        with self.assertRaises(ValueError):validate_counted_constructor_routing(injected)
+        foreign='fn injected_caller() { let _ = owner.resolve_ref_location_impl::<true>(&reference, &path, Some(base), false, ctx); }'
+        with self.assertRaises(ValueError):validate_counted_constructor_routing(source,{'crates/umf-core/src/schema_path_facts_independent_tests.rs':foreign})
+        spaced='fn injected_caller() { let _ = owner.resolve_ref_location_impl ::<true>(&reference, &path, Some(base), false, ctx); }'
+        with self.assertRaises(ValueError):validate_counted_constructor_routing(source,{'crates/umf-core/src/schema_path_facts_independent_tests.rs':spaced})
+        sidecar_path='crates/umf-core/src/schema_preflight_reference_independent_tests.rs'
+        sidecar=(ROOT/sidecar_path).read_text()
+        for old,new in (('assert!(ctx.charged_work() - before < old_work);','assert!(ctx.charged_work() <= old_work);'),
+                        ('denied_amount.set(Some(16));','denied_amount.set(Some(15));')):
+            mutant=changed_mutant(sidecar,old,new)
+            with self.assertRaises(ValueError):validate_reference_test_protocol(mutant)
+        for spelling in ('::< true>','::<false >'):
+            malformed=source.replace('resolve_ref_location_impl::<true>(val, &reference_path',
+                                      'resolve_ref_location_impl'+spelling+'(val, &reference_path',1)
+            self.assertNotEqual(malformed,source)
+            with self.assertRaises(ValueError):validate_counted_constructor_routing(malformed)
+
     def test_root_dedup_ordinal_context_and_repeated_selection_mutations_refuse(self):
         source=(ROOT/'crates/umf-core/src/schema.rs').read_text()
         rows=[
