@@ -7,6 +7,7 @@ import {join,relative,resolve} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {tmpdir} from 'node:os';
 import type {BunPlugin} from 'bun';
+import {buildNodeWasmRuntime} from '../bindings/core/wasm/node-package-build';
 import {checkCoreDistribution} from './check-core-authority';
 import {rustCompileResources} from './metamodel/source-closure';
 import {assertSameSourceInventory} from './rust-migration/r8/source-inventory.mjs';
@@ -136,6 +137,8 @@ try{
   ...await filesUnder(join(root,'bindings/core/wasm/tests')),
   join(root,'bindings/core/node/index.js'),
   join(root,'bindings/core/wasm/index.js'),
+  join(root,'bindings/core/wasm/loader.js'),
+  join(root,'bindings/core/wasm/loader-node.js'),
  ];
  const metamodelManifest=JSON.parse(await readFile(join(root,'spec/metamodel/generated/manifest.json'),'utf8'));
  // Capture the complete canonical metamodel source attestation as well as the
@@ -161,6 +164,7 @@ try{
   join(root,'Cargo.lock'),join(root,'Cargo.toml'),join(root,'rust-toolchain.toml'),join(root,'package.json'),join(root,'bun.lock'),join(root,'tsconfig.json'),
   join(root,'bindings/core/node/index.js'),join(root,'bindings/core/wasm/index.js'),
   join(root,'bindings/core/node/index.d.ts'),join(root,'bindings/core/wasm/index.d.ts'),
+  join(root,'bindings/core/wasm/loader.js'),join(root,'bindings/core/wasm/loader-node.js'),
   join(root,'bindings/core/node/package.json'),join(root,'bindings/core/wasm/package.json'),
   join(root,'.cargo/config.toml'),
   join(root,'scripts/package-sdk-rust-default.ts'),
@@ -284,6 +288,7 @@ try{
  const sagaWasm=join(dist,'runtime/wasm');
  await mkdir(join(sagaWasm,'pkg'),{recursive:true});
  await cp(join(root,'bindings/core/wasm/index.js'),join(sagaWasm,'index.js'));
+ await cp(join(root,'bindings/core/wasm/loader.js'),join(sagaWasm,'loader.js'));
  await cp(join(root,'bindings/core/wasm/index.d.ts'),join(sagaWasm,'index.d.ts'));
  for(const source of await filesUnder(join(root,'bindings/core/wasm/src'))){
   if(!/\.(?:js|d\.ts)$/.test(source)&&!source.endsWith('/shared-sources.json'))continue;
@@ -341,7 +346,7 @@ try{
  await cp(join(wasmOut,'umf_core_wasm_bg.wasm'),join(dist,'umf_core_wasm_bg.wasm'));
  const freshWasmImports=new Set<string>();
  const wasmPlugin:BunPlugin={name:'fresh-built-wasm-glue',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>{
-  if(args.importer.endsWith('bindings/core/wasm/index.js')&&args.path==='./pkg/umf_core_wasm.js'){
+  if(args.importer.endsWith('bindings/core/wasm/loader.js')&&args.path==='./pkg/umf_core_wasm.js'){
    freshWasmImports.add('wasm-index');return {path:join(wasmOut,'umf_core_wasm.js')};
   }
   if(args.importer.endsWith('src/index-browser-v4.ts')&&args.path==='../bindings/core/wasm/pkg/umf_core_wasm.js'){
@@ -349,6 +354,7 @@ try{
   }
   return undefined;
  })}};
+ await buildNodeWasmRuntime(root,sagaWasm);
  const builds=[
   await Bun.build({entrypoints:['src/index-node-v4.ts'],outdir:dist,naming:'umf-node.js',target:'node',format:'esm'}),
   await Bun.build({entrypoints:['src/index-browser-v4.ts'],outdir:dist,naming:'umf-browser.js',target:'browser',format:'esm',plugins:[wasmPlugin]}),

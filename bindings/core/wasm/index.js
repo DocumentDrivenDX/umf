@@ -1,4 +1,5 @@
 import {createDbtOperations, DBT_PROFILE, isDbtHostError} from './src/dbt.js';
+import {loadDefaultWasmModule} from './loader.js';
 import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
 import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
@@ -159,7 +160,7 @@ export function createDefaultSemanticTypeRegistry(module, options = {}) {
 }
 
 /** Initialize the opt-in browser semantic value registry over the Rust/WASM module. */
-export async function initializeSemanticValueWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeSemanticValueWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   const {controls} = codegenOptions(options);
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
@@ -168,7 +169,7 @@ export async function initializeSemanticValueWasm(loader = () => import('./pkg/u
 }
 
 /** Initialize the default-root semantic registry with the TypeScript callback contract. */
-export async function initializeDefaultSemanticValueWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeDefaultSemanticValueWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   const {controls} = codegenOptions(options);
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
@@ -206,7 +207,7 @@ export function createTemporalEngine(module) {
 }
 
 /** Initialize the standalone temporal adapters without requiring engine resources. */
-export async function initializeTemporalWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis) {
+export async function initializeTemporalWasm(loader = loadDefaultWasmModule, host = globalThis) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -236,7 +237,7 @@ export function createAccessTemporalEngine(module) {
 }
 
 /** Initialize only the explicitly selected access-temporal WASM operation. */
-export async function initializeAccessTemporalWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis) {
+export async function initializeAccessTemporalWasm(loader = loadDefaultWasmModule, host = globalThis) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -255,7 +256,7 @@ export function createJsonNumberEngine(module, options = {}) {
   return createJsonNumberEngineWithWire((wire, control) => module.executeJsonNumberWire(wire, control), options, NativeCoreErrorType);
 }
 /** Initialize the opt-in exact JSON number operation in a browser. */
-export async function initializeJsonNumberWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeJsonNumberWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -263,7 +264,7 @@ export async function initializeJsonNumberWasm(loader = () => import('./pkg/umf_
 }
 
 /** Initialize the standalone `umf-128/1` Rust/WASM codec. */
-export async function initializeBit128Wasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeBit128Wasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -271,7 +272,7 @@ export async function initializeBit128Wasm(loader = () => import('./pkg/umf_core
 }
 
 /** Initialize the distributed Rust/WASM module asynchronously; returned operations are synchronous. */
-export async function initializeWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, resources, options) {
+export async function initializeWasm(loader = loadDefaultWasmModule, host = globalThis, resources, options) {
   if (descriptor(options ?? Object.create(null), 'profile', false) === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
@@ -281,7 +282,7 @@ export async function initializeWasm(loader = () => import('./pkg/umf_core_wasm.
 }
 
 /** Initialize WASM and expose the additive core-model operation surface. */
-export async function initializeCoreModelWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options) {
+export async function initializeCoreModelWasm(resources, loader = loadDefaultWasmModule, host = globalThis, options) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -290,7 +291,7 @@ export async function initializeCoreModelWasm(resources, loader = () => import('
 }
 
 /** @internal Initialize the default-root model facade without tuple admission while tuple exports remain TypeScript. */
-export async function initializeCoreModelRootWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options) {
+export async function initializeCoreModelRootWasm(resources, loader = loadDefaultWasmModule, host = globalThis, options) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -299,7 +300,7 @@ export async function initializeCoreModelRootWasm(resources, loader = () => impo
 }
 
 /** Initialize the opt-in Rust-owned umf.host-json/1 record-values input route. */
-export async function initializeCoreRecordValuesHostInputWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeCoreRecordValuesHostInputWasm(resources, loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -316,7 +317,7 @@ export async function initializeCoreRecordValuesHostInputWasm(resources, loader 
 }
 
 /** Initialize Rust-owned staged host admission for the core kind/nullability operations. */
-export async function initializeCoreKindNullabilityHostInputWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeCoreKindNullabilityHostInputWasm(resources, loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -368,7 +369,7 @@ export async function initializeCoreKindNullabilityHostInputWasm(resources, load
 }
 
 /** Initialize the opt-in Rust-owned source/input/receipt admission route for full Dataset values. */
-export async function initializeCoreDatasetValuesHostInputWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeCoreDatasetValuesHostInputWasm(resources, loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -408,7 +409,7 @@ export async function initializeCoreDatasetValuesHostInputWasm(resources, loader
 }
 
 /** Initialize the standalone Iceberg schema JSON engine using pinned WASM resources. */
-export async function initializeIcebergSchemaWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeIcebergSchemaWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -416,7 +417,7 @@ export async function initializeIcebergSchemaWasm(loader = () => import('./pkg/u
 }
 
 /** Initialize the opt-in CONTRACT-002 adapter in a browser-compatible WASM host. */
-export async function initializeJsonSchemaWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeJsonSchemaWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   codegenOptions(options);
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
@@ -425,7 +426,7 @@ export async function initializeJsonSchemaWasm(loader = () => import('./pkg/umf_
 }
 
 /** Initialize the opt-in Protobuf descriptor inspector in a browser. */
-export async function initializeProtobufInspectWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeProtobufInspectWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -863,7 +864,7 @@ export function createCoreModelRootKeyTupleEngine(module, resources, options = {
 }
 
 /** Private opt-in retained model and Kind/Nullability dispatcher. */
-export async function initializeCoreModelRootKindNullabilityWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeCoreModelRootKindNullabilityWasm(resources, loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -915,7 +916,7 @@ export function createCoreBit128FieldEngine(module, resources, options = {}) {
 }
 
 /** Initialize the opt-in browser current-core Bit128/UUID Field authoring route. */
-export async function initializeCoreBit128FieldWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeCoreBit128FieldWasm(resources, loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -1096,7 +1097,7 @@ export function createCoreKeyTupleEngine(module, resources, options = {}) {
 }
 
 /** Initialize WASM and create the opt-in retained Rust Core Key tuple engine. */
-export async function initializeCoreKeyTupleWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeCoreKeyTupleWasm(resources, loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -1555,7 +1556,7 @@ export function createProtobufDescriptorDocumentEngine(module, options = {}) {
 }
 
 /** Initialize the opt-in descriptor/document packet. */
-export async function initializeProtobufDescriptorDocumentWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeProtobufDescriptorDocumentWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   codegenOptions(options);
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
@@ -1626,7 +1627,7 @@ export function createProtobufSourceExportEngine(module, options = {}) {
   });
 }
 
-export async function initializeProtobufSourceImportWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeProtobufSourceImportWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   codegenOptions(options);
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
@@ -1634,7 +1635,7 @@ export async function initializeProtobufSourceImportWasm(loader = () => import('
   return createProtobufSourceImportEngine(module, options);
 }
 
-export async function initializeProtobufSourceExportWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeProtobufSourceExportWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   codegenOptions(options);
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
@@ -1827,7 +1828,7 @@ export function createAvroDocumentInspector(module, options = {}) {
 }
 
 /** Initialize the opt-in Avro whole-document inspector in a browser. */
-export async function initializeAvroDocumentInspectorWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeAvroDocumentInspectorWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -1841,7 +1842,7 @@ export function createAvroCandidateEditor(module, options = {}) {
 }
 
 /** Initialize the opt-in Avro structural inspector in a browser. */
-export async function initializeAvroInspectorWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeAvroInspectorWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -1849,7 +1850,7 @@ export async function initializeAvroInspectorWasm(loader = () => import('./pkg/u
 }
 
 /** Initialize the opt-in Avro candidate editor in a browser. */
-export async function initializeAvroCandidateEditorWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeAvroCandidateEditorWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -1857,7 +1858,7 @@ export async function initializeAvroCandidateEditorWasm(loader = () => import('.
 }
 
 /** Initialize the opt-in Avro field-metadata projection in a browser. */
-export async function initializeAvroFieldsWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+export async function initializeAvroFieldsWasm(loader = loadDefaultWasmModule, host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
@@ -2260,7 +2261,7 @@ export function createSecurityReadRegistrationEngine(module) {
   }, NativeCoreErrorType);
 }
 
-export async function initializeCodegenWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, resources, options = {}) {
+export async function initializeCodegenWasm(loader = loadDefaultWasmModule, host = globalThis, resources, options = {}) {
   codegenOptions(options);
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
   const module = await loader();

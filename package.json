@@ -21,6 +21,7 @@
     },
     "./runtime/wasm": {
       "types": "./dist/runtime/wasm/index.d.ts",
+      "node": "./dist/runtime/wasm/index-node.js",
       "import": "./dist/runtime/wasm/index.js"
     },
     "./loader-contract": {
