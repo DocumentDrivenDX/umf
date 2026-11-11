@@ -58,6 +58,29 @@ class TableCorrespondenceProbe:
         head = self._head
         return _operation_steps(head._source,head._expected,self._principal,self._audience)
 
+    def snapshot_operation_steps(self):
+        """Observe operation authority inside an already-open read snapshot."""
+        head = self._head
+        return _operation_steps(
+            head._source, head._expected, self._principal, self._audience,
+            isolation="repeatable read",
+        )
+
+    @property
+    def operation_context(self) -> dict[str, Any]:
+        """Source and installation pins shared by prepared native operations."""
+        source, expected = self._head._source, self._head._expected
+        return {
+            "module": source["configuration"]["module"],
+            "schema": self.schema,
+            "sourceDigest": source["sourceDigest"],
+            "configurationDigest": source["configurationDigest"],
+            "bundleDigest": source["bundleDigest"],
+            "headDigest": expected["headDigest"],
+            "referenceDigest": expected["referenceDigest"],
+        }
+
+
     def outcome_steps(self, action, principal_oid, key_digest, row=None):
         """Fixed receipt IO; callers keep verified principal/admission in one lease."""
         if 'outcomeShape' not in self._head._expected:
@@ -150,8 +173,8 @@ def _correspondence_steps(source, expected, principal, audience, statement_timeo
     return observed
 
 
-def _operation_steps(source, expected, principal, audience):
-    observed = yield from _operation_head_steps(source,expected,principal)
+def _operation_steps(source, expected, principal, audience, isolation="read committed"):
+    observed = yield from _operation_head_steps(source,expected,principal,isolation)
     cfg = source['configuration']
     owner, person, batch = (cfg[key] for key in ('ownerRole','personRole','batchRole'))
     groups = sorted(cfg['groupRoles'].items())

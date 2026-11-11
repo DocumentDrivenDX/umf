@@ -9,10 +9,18 @@ from datetime import UTC, date, datetime, timedelta, timezone
 from decimal import Decimal
 from typing import Any, Literal, TypeVar, cast
 
+from uuid import UUID
+
 from .types import ValueRuleError, Vector
 
 T = TypeVar("T")
 N = TypeVar("N", int, Decimal)
+
+
+def validate_uuid(value: object) -> UUID:
+    if type(value) is not UUID:
+        raise ValueRuleError("UUID carrier required")
+    return value
 
 
 def validate_boolean(value: object) -> bool:
@@ -534,7 +542,8 @@ class FieldValidator:
         else:
             validators = {"boolean": validate_boolean, "binary": validate_binary,
                           "string": validate_string, "date": validate_date,
-                          "instant": validate_instant, "local": validate_local}
+                          "instant": validate_instant, "local": validate_local,
+                          "uuid": validate_uuid}
             validator = validators.get(self.kind)
             if validator is None:
                 raise ValueRuleError("unsupported generated carrier metadata")

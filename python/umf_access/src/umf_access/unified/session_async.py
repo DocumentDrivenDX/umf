@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Psycopg 3 async leases with cancellation-safe transaction and pool cleanup."""
+
 from __future__ import annotations
 
 import asyncio
@@ -45,8 +46,14 @@ async def _finish(operation: Awaitable[None]) -> None:
 
 class AsyncSession:
     """Per-call factory counterpart to SyncSession; no global pool or event loop."""
-    def __init__(self, factory: Callable[[SessionIdentity], AbstractAsyncContextManager[Any]], policy: SessionPolicy,
-                 *, transaction_owner: Literal["adapter", "caller"] = "adapter"):
+
+    def __init__(
+        self,
+        factory: Callable[[SessionIdentity], AbstractAsyncContextManager[Any]],
+        policy: SessionPolicy,
+        *,
+        transaction_owner: Literal["adapter", "caller"] = "adapter",
+    ):
         if transaction_owner not in ("adapter", "caller"):
             raise ValueError("transaction_owner must be adapter or caller")
         self.transaction_owner = transaction_owner
@@ -66,11 +73,27 @@ class AsyncSession:
         return self._control_cursor(self._prepare_connection(native))
 
     @asynccontextmanager
-    async def open(self, identity: SessionIdentity, *, read_only: bool = True) -> AsyncIterator[Any]:
+    async def open(
+        self,
+        identity: SessionIdentity,
+        *,
+        read_only: bool = True,
+        _isolation: Literal["read committed", "repeatable read"] = "read committed",
+    ) -> AsyncIterator[Any]:
         if os.getpid() != self._pid:
-            raise SessionError("create session factories and pools after process creation")
+            raise SessionError(
+                "create session factories and pools after process creation"
+            )
         if type(read_only) is not bool:
             raise ValueError("read_only must be bool")
+        if _isolation not in ("read committed", "repeatable read"):
+            raise ValueError("unsupported transaction isolation")
+        if _isolation == "repeatable read" and (
+            not read_only or self.transaction_owner != "adapter"
+        ):
+            raise SessionError(
+                "repeatable-read snapshot requires an adapter-owned read-only lease"
+            )
         settings = self.policy.settings(identity)
         lease = self.factory(identity)
         connection = await lease.__aenter__()
@@ -90,10 +113,14 @@ class AsyncSession:
             connection = self._prepare_connection(native)
             status = int(connection.info.transaction_status)
             if status not in (0, 2):
-                raise SessionError("connection is not idle or in a healthy caller transaction")
+                raise SessionError(
+                    "connection is not idle or in a healthy caller transaction"
+                )
             owned = self.transaction_owner == "adapter"
             if status != (0 if owned else 2):
-                raise SessionError("connection state differs from explicit transaction ownership")
+                raise SessionError(
+                    "connection state differs from explicit transaction ownership"
+                )
             transaction = connection.transaction()
             try:
                 await transaction.__aenter__()
@@ -104,17 +131,28 @@ class AsyncSession:
             async with self._control_cursor(connection) as cursor:
                 if owned:
                     if read_only:
-                        await cursor.execute("SET TRANSACTION READ ONLY")
+                        if _isolation == "repeatable read":
+                            await cursor.execute(
+                                "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY"
+                            )
+                        else:
+                            await cursor.execute("SET TRANSACTION READ ONLY")
                 elif read_only:
                     await cursor.execute(GET_SETTING, ("transaction_read_only",))
                     if await cursor.fetchone() != ("on",):
-                        raise SessionError("caller transaction must already be read-only")
+                        raise SessionError(
+                            "caller transaction must already be read-only"
+                        )
                 if not owned:
                     await cursor.execute(GET_SETTINGS)
-                    previous = dict(zip(SETTING_NAMES,await cursor.fetchone(),strict=True))
+                    previous = dict(
+                        zip(SETTING_NAMES, await cursor.fetchone(), strict=True)
+                    )
                 await cursor.execute(SET_SETTINGS, _setting_values(settings))
                 await cursor.execute(ROLE_SETTINGS_CHECK)
-                session_user,effective = _effective_settings(await cursor.fetchone(),settings["role"])
+                session_user, effective = _effective_settings(
+                    await cursor.fetchone(), settings["role"]
+                )
             yield native
         except BaseException:
             failure = sys.exc_info()
@@ -130,11 +168,19 @@ class AsyncSession:
                             try:
                                 async with self._control_cursor(connection) as cursor:
                                     await cursor.execute(ROLE_SETTINGS_CHECK)
-                                    _,observed = _effective_settings(await cursor.fetchone(),settings["role"],session_user)
+                                    _, observed = _effective_settings(
+                                        await cursor.fetchone(),
+                                        settings["role"],
+                                        session_user,
+                                    )
                                     if observed != effective:
-                                        raise SessionError("session settings changed during execution")
+                                        raise SessionError(
+                                            "session settings changed during execution"
+                                        )
                                     if not owned:
-                                        await cursor.execute(SET_SETTINGS, _setting_values(previous))
+                                        await cursor.execute(
+                                            SET_SETTINGS, _setting_values(previous)
+                                        )
                             except BaseException:  # noqa: BLE001 -- cleanup must roll back even cancellation
                                 failure = sys.exc_info()
                         try:
@@ -158,4 +204,18 @@ class AsyncSession:
                     finally:
                         if registered:
                             self._active.remove(key)
+
             await _finish(cleanup())
+
+    @asynccontextmanager
+    async def _open_snapshot(self, identity: SessionIdentity) -> AsyncIterator[Any]:
+        """Open an adapter-owned read-only repeatable-read lease.
+
+        This is a private lifecycle seam for generated request contexts. It is
+        deliberately unavailable to caller-owned transactions and leaves the
+        ordinary ``open`` contract at read committed.
+        """
+        async with self.open(
+            identity, read_only=True, _isolation="repeatable read"
+        ) as native:
+            yield native

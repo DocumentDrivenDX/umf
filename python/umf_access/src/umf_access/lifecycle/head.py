@@ -212,7 +212,7 @@ def _head_steps(source, expected, statement_timeout_ms, lock_timeout_ms):
     return {'bundleDigest': source['bundleDigest'], 'headDigest': expected['headDigest'], 'generation': expected['generation'], 'referenceDigest': expected['referenceDigest'], 'observedPrincipal': state[0], 'lifecycleAdmission': False}
 
 
-def _operation_head_steps(source, expected, principal):
+def _operation_head_steps(source, expected, principal, isolation="read committed"):
     """Take the short operation observation under the shared lifecycle lock.
 
     The install reference is already verified and owned by this prepared probe.
@@ -237,7 +237,7 @@ WHERE d.datname=pg_catalog.current_database()""", (schema, HEAD))
     if row is None:
         raise CatalogError('installed-generation-mismatch')
     if (row[0] != principal or row[1] != ['pg_catalog'] or row[2] // 10000 != 18
-            or tuple(row[3:7]) != ('on', 'origin', 'UTF8', 'read committed')):
+            or tuple(row[3:7]) != ('on', 'origin', 'UTF8', isolation)):
         raise CatalogError('head-context-mismatch' if row[0] == principal else 'principal-mismatch')
     witness = expected['nativeWitness']
     if (list(row[7:9]) != witness.get('database') or list(row[9:11]) != witness.get('schema')

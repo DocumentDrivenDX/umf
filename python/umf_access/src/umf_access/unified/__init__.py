@@ -14,12 +14,19 @@ from .head_session import (
 )
 from .native_binding import NativeTableBinding, SyncNativeTableBinding
 from .session_async import AsyncSession
-from .session_policy import SessionError, SessionIdentity, SessionPolicy
+from .session_policy import GeneratedNativeError, SessionError, SessionIdentity, SessionPolicy
 from .session_psycopg2 import Psycopg2Session
 from .session_sqlalchemy import AsyncSQLAlchemySession, SQLAlchemySession
 from .session_sync import SyncSession
 from .table_reads import AsyncTableReader, SyncTableReader
 from .table_writes import AsyncTableWriter, SyncTableWriter, WriteOutcomeUnknown
+
+
+def valid_ordinary_page_result(result: object, call: object, executor: object) -> bool:
+    """Validate an ordinary Page result using the optional generated executor."""
+    from .generated_page import valid_ordinary_page_result as validate
+
+    return validate(result, call, executor)
 
 
 class WeftTableBinding(_TableBinding):
@@ -166,6 +173,7 @@ __all__ = [
     "AsyncSession",
     "AsyncTableReader",
     "AsyncTableWriter",
+    "GeneratedNativeError",
     "NativeTableBinding",
     "Psycopg2Session",
     "SQLAlchemySession",
@@ -182,6 +190,7 @@ __all__ = [
     "WriteOutcomeUnknown",
     "observe_table_head",
     "observe_table_head_async",
+    "valid_ordinary_page_result",
     "verify_table_correspondence",
     "verify_table_correspondence_async",
 ]

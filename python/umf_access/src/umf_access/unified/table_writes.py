@@ -28,6 +28,8 @@ from .table_reads import _TableReader
 
 class WriteOutcomeUnknown(SessionError):
     """Commit/lease completion failed after execution; observe this key afresh."""
+    public_code = "WRITE_OUTCOME_UNKNOWN"
+
     def __init__(self, key):
         super().__init__('native write outcome is unknown; observe its outcome key')
         self.key=key

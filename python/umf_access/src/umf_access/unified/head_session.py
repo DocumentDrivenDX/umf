@@ -142,3 +142,25 @@ async def verify_table_correspondence_async(session: AsyncSession, identity: Ses
         raise
     except Exception:  # noqa: BLE001 -- sanitize optional native-driver/verifier errors at the SDK boundary
         raise SessionError('native table correspondence failed') from None
+
+
+def _prepare_generated(session, identity, admitted, reference, correspondence=True):
+    """Prepare compiler-free source checks from an issued native projection."""
+    session.policy.role(identity)
+    if not session.policy.catalog_only:
+        raise SessionError('head observation requires catalog-only session resolution')
+    options = {'statement_timeout_ms':session.policy.statement_timeout_ms,
+               'lock_timeout_ms':session.policy.lock_timeout_ms}
+    from umf_access.lifecycle import (
+        prepare_generated_table_correspondence,
+        prepare_generated_table_head,
+    )
+    if correspondence:
+        probe = prepare_generated_table_correspondence(
+            admitted, reference, principal_role=session.policy.role(identity),
+            audience=identity.kind, **options)
+    else:
+        probe = prepare_generated_table_head(admitted, reference, **options)
+    if probe.schema != session.policy.schema:
+        raise SessionError('head source differs from the isolated session schema')
+    return probe
