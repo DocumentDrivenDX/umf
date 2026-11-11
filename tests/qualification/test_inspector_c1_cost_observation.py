@@ -1,8 +1,12 @@
 """Pure source controls for the gated retained-wheel diagnostic route."""
 import importlib.util
+import hashlib
+import io
 import json
 from pathlib import Path
 import struct
+import subprocess
+import tarfile
 import tempfile
 import unittest
 
@@ -129,5 +133,53 @@ class CandidatePins(unittest.TestCase):
         result=m.elf_static_symtab(bytes(blob))
         self.assertEqual((result['ELFtype'],result['ELFmachine'],result['sectionHeaders'],result['symtabEntries']),(3,62,4,1))
         with self.assertRaises(ValueError):m.elf_static_symtab(bytes(blob[:120+4*64]))
+
+
+class SourceArchiveModeSemantics(unittest.TestCase):
+    @staticmethod
+    def prepare(root, tracked_mode=0o644, checkout_mode=0o644):
+        m=load_module()
+        payloads={'src/module.py':b'value = 17\n',m.CENSUS:b'{"profile":"test"}\n'}
+        for name,raw in payloads.items():
+            path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw);path.chmod(tracked_mode)
+        subprocess.run(['git','init','-q',str(root)],check=True)
+        subprocess.run(['git','-C',str(root),'config','user.name','Qualification Test'],check=True)
+        subprocess.run(['git','-C',str(root),'config','user.email','qualification@example.invalid'],check=True)
+        subprocess.run(['git','-C',str(root),'add','--','src/module.py',m.CENSUS],check=True)
+        subprocess.run(['git','-C',str(root),'commit','-q','-m','fixture'],check=True)
+        for name in payloads:(root/name).chmod(checkout_mode)
+        selected={'sourceFiles':{'src/module.py':hashlib.sha256(payloads['src/module.py']).hexdigest()}}
+        pins={'producer':{'censusSHA256':hashlib.sha256(payloads[m.CENSUS]).hexdigest()}}
+        return m,payloads,selected,pins
+
+    @staticmethod
+    def archive(payloads, mode=0o664):
+        data=io.BytesIO()
+        with tarfile.open(fileobj=data,mode='w:') as tar:
+            for name,raw in payloads.items():
+                row=tarfile.TarInfo(name);row.size=len(raw);row.mode=mode;tar.addfile(row,io.BytesIO(raw))
+        return data.getvalue()
+
+    def test_original_0664_archive_matches_git_100644_and_checkout_0644(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);m,payloads,selected,pins=self.prepare(root)
+            self.assertEqual((root/'src/module.py').stat().st_mode & 0o777,0o644)
+            tree=subprocess.check_output(['git','-C',str(root),'ls-tree','HEAD','--','src/module.py'],text=True)
+            self.assertIn('100644 blob ',tree)
+            m.verify_source_tar(self.archive(payloads,0o664),root,selected,pins)
+
+    def test_swapped_archive_and_executable_source_modes_are_refused(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);m,payloads,selected,pins=self.prepare(root)
+            with self.assertRaisesRegex(ValueError,'Source archive bytes/mode differ'):
+                m.verify_source_tar(self.archive(payloads,0o644),root,selected,pins)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);m,payloads,selected,pins=self.prepare(root,tracked_mode=0o755)
+            with self.assertRaisesRegex(ValueError,'Git mode/type differs'):
+                m.verify_source_tar(self.archive(payloads,0o664),root,selected,pins)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);m,payloads,selected,pins=self.prepare(root,checkout_mode=0o755)
+            with self.assertRaisesRegex(ValueError,'regular and non-executable'):
+                m.verify_source_tar(self.archive(payloads,0o664),root,selected,pins)
 
 if __name__=='__main__':unittest.main()

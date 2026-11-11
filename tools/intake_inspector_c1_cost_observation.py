@@ -109,19 +109,32 @@ def safe_members(archive,expected_names,max_total=134217728):
         names.append(info.filename);total+=info.file_size;require(total<=max_total,'Artifact uncompressed size cap')
     require(set(names)==set(expected_names) and len(names)==len(expected_names),'Artifact member roster')
 
+SOURCE_ARCHIVE_MODE=0o664
+
 def verify_source_tar(data,owner,selected,pins):
     expected=dict(selected['sourceFiles']);expected[CENSUS]=pins['producer']['censusSHA256'];seen=set();root=Path(owner).resolve()
-    with tarfile.open(fileobj=__import__('io').BytesIO(data),mode='r:') as tar:
-        for row in tar:
+    with tarfile.open(fileobj=__import__('io').BytesIO(data),mode='r:') as archive:
+        for row in archive:
             name=PurePosixPath(row.name)
             require(not name.is_absolute() and '..' not in name.parts and '\\' not in row.name,'Source archive path')
             if row.isdir():continue
             require(row.isfile() and row.name in expected and row.name not in seen,'Source archive closed roster/type')
-            target=root/row.name;require(target.is_file() and not target.is_symlink(),'Source owner file absent/unsafe')
-            mode=stat.S_IMODE(target.stat().st_mode)
-            raw=tar.extractfile(row).read(row.size+1)
-            require(row.mode==mode and len(raw)==row.size and digest(raw)==expected[row.name]
-              and raw==target.read_bytes(),'Source archive bytes/mode differ: '+row.name)
+            target=root/row.name
+            require(target.is_file() and not target.is_symlink(),'Source owner file absent/unsafe')
+            archived=archive.extractfile(row).read(row.size+1)
+            info=subprocess.run(['git','-C',str(root),'ls-tree','-z','HEAD','--',row.name],check=True,capture_output=True).stdout
+            entries=[entry for entry in info.split(b'\0') if entry]
+            require(len(entries)==1,'Source owner Git tree entry missing/duplicate: '+row.name)
+            metadata,tracked_path=entries[0].split(b'\t',1)
+            fields=metadata.split()
+            require(len(fields)==3 and tracked_path.decode()==row.name and fields[0]==b'100644' and fields[1]==b'blob',
+                    'Source owner Git mode/type differs: '+row.name)
+            checkout=target.stat()
+            require(stat.S_ISREG(checkout.st_mode) and not checkout.st_mode & 0o111,
+                    'Source owner checkout must be regular and non-executable: '+row.name)
+            require(row.mode==SOURCE_ARCHIVE_MODE and len(archived)==row.size
+                    and digest(archived)==expected[row.name] and archived==target.read_bytes(),
+                    'Source archive bytes/mode differ: '+row.name)
             seen.add(row.name)
     require(seen==set(expected),'Source archive incomplete')
 
