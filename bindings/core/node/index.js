@@ -1819,7 +1819,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
       registry.push({id, version, scopes, schema, semantic: Boolean(semantics)});
     }
     hostWork?.(1);
-    const requiresResourceWitness = ['model/inspectCoreRecordMembers', 'model/declareCoreRecordType', 'model/verifyCoreRecordTypeDeclaration'].includes(op);
+    const requiresResourceWitness = ['model/scalarTypesForVersion', 'model/inspectCoreRecordMembers', 'model/declareCoreRecordType', 'model/verifyCoreRecordTypeDeclaration'].includes(op);
     const request = retainedRuntime && !requiresResourceWitness ? {op, registry, ...args} : {op, resources: fixedResources, registry, ...args};
     return runRequest(request, callbackMap, profile, controls, withModel, controlBridge, hostWork, retainedRuntime, editor);
   }

@@ -5,11 +5,11 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 841,
+  "total": 894,
   "counts": {
-    "SATISFIED": 184,
-    "UNTESTED": 407,
-    "UNCITED_COVERAGE": 233,
+    "SATISFIED": 193,
+    "UNTESTED": 465,
+    "UNCITED_COVERAGE": 219,
     "ASSERTED_UNBACKED": 0,
     "REVIEWED_EXCEPTION": 17
   },
@@ -423,20 +423,16 @@
     {
       "id": "US-008-AC1",
       "story": "docs/helix/01-frame/user-stories/US-008-avro-document-projection.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/avro/projection.test.ts:7"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-008-AC2",
       "story": "docs/helix/01-frame/user-stories/US-008-avro-document-projection.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/avro/projection.test.ts:25"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-008-AC3",
@@ -455,11 +451,9 @@
     {
       "id": "US-008-AC5",
       "story": "docs/helix/01-frame/user-stories/US-008-avro-document-projection.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/avro/projection.test.ts:38"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-009-AC1",
@@ -532,20 +526,16 @@
     {
       "id": "US-010-AC1",
       "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/graphql/projection.test.ts:8"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-010-AC2",
       "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/graphql/projection.test.ts:22"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-010-AC3",
@@ -564,11 +554,9 @@
     {
       "id": "US-010-AC5",
       "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/graphql/projection.test.ts:34"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-011-AC1",
@@ -751,30 +739,23 @@
     {
       "id": "US-012-AC1",
       "story": "docs/helix/01-frame/user-stories/US-012-openapi-json-schema.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/openapi/projection.test.ts:10"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-012-AC2",
       "story": "docs/helix/01-frame/user-stories/US-012-openapi-json-schema.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/openapi/projection.test.ts:20",
-        "tests/openapi/projection.test.ts:42"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-012-AC3",
       "story": "docs/helix/01-frame/user-stories/US-012-openapi-json-schema.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/openapi/projection.test.ts:27"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-012-AC4",
@@ -910,20 +891,16 @@
     {
       "id": "US-013-AC15",
       "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/typespec/projection.test.ts:7"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-013-AC16",
       "story": "docs/helix/01-frame/user-stories/US-013-typespec.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/typespec/projection.test.ts:18"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-014-AC1",
@@ -1066,30 +1043,23 @@
     {
       "id": "US-014-AC16",
       "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/smithy/projection.test.ts:13",
-        "tests/smithy/projection.test.ts:8"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-014-AC17",
       "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/smithy/projection.test.ts:19"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-014-AC18",
       "story": "docs/helix/01-frame/user-stories/US-014-smithy.md",
-      "status": "UNCITED_COVERAGE",
-      "evidence": [
-        "tests/smithy/projection.test.ts:28"
-      ],
-      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-015-AC1",
@@ -3156,7 +3126,7 @@
         "tests/core-ideals/relationship-extras.test.ts:7",
         "tests/core-ideals/relationship-parquet.test.ts:21",
         "tests/core-ideals/relationship-postgresql.test.ts:23",
-        "tests/core-ideals/relationship-sqlserver.test.ts:21",
+        "tests/core-ideals/relationship-sqlserver.test.ts:33",
         "tests/core-ideals/relationship-tablespec-discovery.test.ts:9",
         "tests/core-ideals/relationship-tablespec.test.ts:14",
         "tests/core/relationship-ideal.test.ts:18",
@@ -3169,13 +3139,13 @@
       "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/core-ideals/relationship-avro-projection.test.ts:8",
+        "tests/core-ideals/relationship-avro-projection.test.ts:10",
         "tests/core-ideals/relationship-conformance.test.ts:6",
         "tests/core-ideals/relationship-extras.test.ts:6",
         "tests/core-ideals/relationship-parquet.test.ts:9",
         "tests/core-ideals/relationship-postgresql.test.ts:7",
-        "tests/core-ideals/relationship-sqlserver.test.ts:8",
-        "tests/core-ideals/relationship-tablespec-projection.test.ts:9",
+        "tests/core-ideals/relationship-sqlserver.test.ts:10",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:11",
         "tests/core-ideals/relationship-tablespec.test.ts:15",
         "tests/relationship/native-avro-parquet.test.ts:6"
       ],
@@ -3186,11 +3156,11 @@
       "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/core-ideals/relationship-avro-projection.test.ts:8",
+        "tests/core-ideals/relationship-avro-projection.test.ts:10",
         "tests/core-ideals/relationship-conformance.test.ts:6",
         "tests/core-ideals/relationship-extras.test.ts:7",
-        "tests/core-ideals/relationship-tablespec-projection.test.ts:10",
-        "tests/core-ideals/relationship-tablespec-projection.test.ts:39",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:12",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:51",
         "tests/core-ideals/relationship-tablespec.test.ts:16",
         "tests/relationship/graphql-native.test.ts:10",
         "tests/relationship/graphql-native.test.ts:19",
@@ -3204,13 +3174,13 @@
       "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/core-ideals/relationship-avro-projection.test.ts:8",
+        "tests/core-ideals/relationship-avro-projection.test.ts:10",
         "tests/core-ideals/relationship-conformance.test.ts:6",
         "tests/core-ideals/relationship-extras.test.ts:6",
         "tests/core-ideals/relationship-parquet.test.ts:9",
         "tests/core-ideals/relationship-postgresql.test.ts:7",
-        "tests/core-ideals/relationship-sqlserver.test.ts:8",
-        "tests/core-ideals/relationship-tablespec-projection.test.ts:11"
+        "tests/core-ideals/relationship-sqlserver.test.ts:10",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:13"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -3221,7 +3191,7 @@
       "evidence": [
         "tests/core-ideals/relationship-avro-carrier.test.ts:20",
         "tests/core-ideals/relationship-avro-discovery.test.ts:11",
-        "tests/core-ideals/relationship-avro-projection.test.ts:8",
+        "tests/core-ideals/relationship-avro-projection.test.ts:10",
         "tests/core-ideals/relationship-avro.test.ts:30",
         "tests/core-ideals/relationship-conformance.test.ts:6",
         "tests/core-ideals/relationship-extras.test.ts:28",
@@ -3230,11 +3200,11 @@
         "tests/core-ideals/relationship-parquet.test.ts:9",
         "tests/core-ideals/relationship-postgresql.test.ts:23",
         "tests/core-ideals/relationship-postgresql.test.ts:7",
-        "tests/core-ideals/relationship-sqlserver.test.ts:21",
-        "tests/core-ideals/relationship-sqlserver.test.ts:8",
+        "tests/core-ideals/relationship-sqlserver.test.ts:10",
+        "tests/core-ideals/relationship-sqlserver.test.ts:33",
         "tests/core-ideals/relationship-tablespec-discovery.test.ts:10",
         "tests/core-ideals/relationship-tablespec-discovery.test.ts:28",
-        "tests/core-ideals/relationship-tablespec-projection.test.ts:12",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:14",
         "tests/core-ideals/relationship-tablespec.test.ts:17",
         "tests/relationship/graphql-native.test.ts:10",
         "tests/relationship/postgresql-native.test.ts:10"
@@ -3246,13 +3216,13 @@
       "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/core-ideals/relationship-avro-projection.test.ts:8",
+        "tests/core-ideals/relationship-avro-projection.test.ts:10",
         "tests/core-ideals/relationship-conformance.test.ts:6",
         "tests/core-ideals/relationship-extras.test.ts:6",
         "tests/core-ideals/relationship-parquet.test.ts:9",
         "tests/core-ideals/relationship-postgresql.test.ts:7",
-        "tests/core-ideals/relationship-sqlserver.test.ts:8",
-        "tests/core-ideals/relationship-tablespec-projection.test.ts:13"
+        "tests/core-ideals/relationship-sqlserver.test.ts:10",
+        "tests/core-ideals/relationship-tablespec-projection.test.ts:15"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6794,7 +6764,7 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "REVIEWED_EXCEPTION",
       "evidence": [
-        "scripts/reference/ontology-browser.ts:58"
+        "scripts/reference/ontology-browser.ts:152"
       ],
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
     },
@@ -6803,7 +6773,7 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "REVIEWED_EXCEPTION",
       "evidence": [
-        "scripts/reference/ontology-browser.ts:58"
+        "scripts/reference/ontology-browser.ts:152"
       ],
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
     },
@@ -7004,7 +6974,7 @@
       "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/access-adoption.test.ts:16"
+        "tests/access-adoption.test.ts:17"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7013,7 +6983,7 @@
       "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/access-adoption.test.ts:70"
+        "tests/access-adoption.test.ts:115"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7022,8 +6992,8 @@
       "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/access-adoption.test.ts:16",
-        "tests/access-adoption.test.ts:70"
+        "tests/access-adoption.test.ts:115",
+        "tests/access-adoption.test.ts:17"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -7132,7 +7102,7 @@
       "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/access-adoption.test.ts:107"
+        "tests/access-adoption.test.ts:152"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7141,7 +7111,7 @@
       "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/access-adoption.test.ts:107"
+        "tests/access-adoption.test.ts:152"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -7150,7 +7120,7 @@
       "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/access-adoption.test.ts:107"
+        "tests/access-adoption.test.ts:152"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -7243,10 +7213,10 @@
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions/assessment.test.ts:13",
-        "tests/actions/assessment.test.ts:20",
-        "tests/actions/assessment.test.ts:25",
-        "tests/actions/assessment.test.ts:30",
+        "tests/actions/assessment.test.ts:24",
+        "tests/actions/assessment.test.ts:33",
+        "tests/actions/assessment.test.ts:38",
+        "tests/actions/assessment.test.ts:43",
         "tests/actions/contracts.test.ts:67",
         "tests/actions/contracts.test.ts:73",
         "tests/actions/reports.test.ts:16"
@@ -7363,8 +7333,8 @@
       "status": "SATISFIED",
       "evidence": [
         "tests/actions-reference/evolution.test.ts:35",
-        "tests/actions-reference/handler-executor.test.ts:86",
-        "tests/actions-reference/handler-executor.test.ts:98",
+        "tests/actions-reference/handler-executor.test.ts:102",
+        "tests/actions-reference/handler-executor.test.ts:90",
         "tests/actions-reference/native-refinement.test.ts:45"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -7374,8 +7344,8 @@
       "story": "docs/helix/01-frame/user-stories/US-901-transactional-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions-reference/handler-executor.test.ts:86",
-        "tests/actions-reference/handler-executor.test.ts:98",
+        "tests/actions-reference/handler-executor.test.ts:102",
+        "tests/actions-reference/handler-executor.test.ts:90",
         "tests/actions-reference/launch-owner.test.ts:10",
         "tests/actions-reference/launch-owner.test.ts:24",
         "tests/actions-reference/launch-owner.test.ts:31",
@@ -7730,6 +7700,400 @@
       "status": "SATISFIED",
       "evidence": [
         "tests/extension-kinds/composition.test.ts:61"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-905-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC17",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC18",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC19",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC20",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC21",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC22",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC23",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC24",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC25",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC26",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC27",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC28",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-905-AC29",
+      "story": "docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/saga/protocol.test.ts:292",
+        "tests/saga/protocol.test.ts:355"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-906-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-906-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-907-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-907-bulk-action-coordination.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-bulk-state.test.ts:23",
+        "tests/actions-bulk-state.test.ts:26"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-907-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-907-bulk-action-coordination.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-bulk-state.test.ts:35",
+        "tests/actions-bulk-state.test.ts:40"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-907-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-907-bulk-action-coordination.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-bulk-state.test.ts:43"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-907-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-907-bulk-action-coordination.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-bulk-state.test.ts:46"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-907-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-907-bulk-action-coordination.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-bulk-state.test.ts:50"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-907-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-907-bulk-action-coordination.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-bulk-state.test.ts:54",
+        "tests/actions-bulk-state.test.ts:61"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-907-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-907-bulk-action-coordination.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-bulk-state.test.ts:66",
+        "tests/actions-bulk-state.test.ts:77"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-907-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-907-bulk-action-coordination.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/actions-bulk-state.test.ts:78"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     }

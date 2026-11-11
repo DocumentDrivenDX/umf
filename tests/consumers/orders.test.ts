@@ -24,7 +24,11 @@ test('CONTRACT-036 seven authored consumers retain mixed native context across b
   const {run}=compileOrdersTransform(source,projectors),rows=[{order_id:'A-雪',quantity:0,active:false},{order_id:'B',quantity:2147483647,active:true},{order_id:'C',quantity:-2147483648,active:false}].map(run);
   expect(rows.every(r=>r.status==='accepted')).toBe(true);cases.push({unknown,source,bundle,rows});
  }
- await Bun.write('fixtures/validation/orders-consumers.json',JSON.stringify({scope:'Authored mixed-model demonstrator; no general merge, domain enforcement, or delivery',cases},null,2)+'\n');
+ // Tests must not rewrite tracked evidence. The oracle scripts read the committed fixture, so the generated output must equal it.
+ // Refresh it deliberately with UMF_ORDERS_CONSUMERS_FIXTURE=fixtures/validation/orders-consumers.json.
+ const generated=JSON.stringify({scope:'Authored mixed-model demonstrator; no general merge, domain enforcement, or delivery',cases},null,2)+'\n',refresh=process.env.UMF_ORDERS_CONSUMERS_FIXTURE;
+ if(refresh)await Bun.write(refresh,generated);
+ else expect(generated).toBe(await Bun.file('fixtures/validation/orders-consumers.json').text());
 },30_000);
 
 test('CONTRACT-036 executable row transform rejects loss, coercion and overflow; snapshots remain isolated',()=>{

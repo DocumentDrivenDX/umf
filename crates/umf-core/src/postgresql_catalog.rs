@@ -156,12 +156,17 @@ fn validate_root(root: &NativeJsonTree, ctx: &mut Context<'_>) -> Result<Utf16, 
                 "Duplicate qualified relation",
             ));
         }
-        let columns = as_array(field(relation, "columns")).ok_or_else(|| {
-            fail(
-                "POSTGRESQL_CATALOG_CAPTURE",
-                "Relation columns must be an array",
-            )
-        })?;
+        // The capture schema allows null for a relation with no columns because
+        // the capture query's jsonb_agg yields null over an empty set.
+        let columns = match field(relation, "columns") {
+            Some(NativeJsonNode::Null) => &[][..],
+            other => as_array(other).ok_or_else(|| {
+                fail(
+                    "POSTGRESQL_CATALOG_CAPTURE",
+                    "Relation columns must be an array or null",
+                )
+            })?,
+        };
         let mut column_names = BTreeSet::new();
         for column in columns {
             let name = as_text(field(column, "name")).ok_or_else(|| {
@@ -2034,7 +2039,7 @@ impl PostgresqlCatalogCapture {
                 .cloned()
                 .unwrap_or_default();
             for (ci, column) in as_array(field(relation, "columns"))
-                .expect("validated columns")
+                .unwrap_or(&[])
                 .iter()
                 .enumerate()
             {
