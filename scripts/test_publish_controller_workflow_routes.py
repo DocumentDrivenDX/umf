@@ -44,7 +44,8 @@ class PublicationControllerWorkflowRouteTests(unittest.TestCase):
         self.assertIn("('umf-access', '0.1.0.dev10'", workflow)
         self.assertIn('default: false', workflow)
 
-    def test_access_source_dependency_in_s_is_not_rewritten_as_part_of_core_controller_work(self):
+    def test_access_source_dependency_in_s_pins_core_01010(self):
+        # The 0.10.10 source bump sets this pin; controller work must not rewrite it again.
         access = ROOT / 'python' / 'umf_access' / 'pyproject.toml'
         self.assertIn('umf-core==0.10.10', access.read_text(encoding='utf-8'))
 

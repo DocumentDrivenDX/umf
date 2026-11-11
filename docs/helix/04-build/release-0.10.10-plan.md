@@ -54,7 +54,17 @@ release; no 0.10.10 artifact has been verified to exist.
   recorded in the pull request were run.
 - The reviewed validators, admissions and publication route for 0.10.10: not yet
   authored.
-- Hosted CI result for this change: not run; the Actions budget is exhausted.
+- Hosted CI at head `558e4f23ef`: the heavy Saga and Lakeview suites were not run
+  (no `ci:full` label; the Actions budget is exhausted). `evidence-gate` failed
+  because there is no `.ci/evidence/full-suite.json` and no `ci:full` label.
+  `installed-identity` failed because `umf-core==0.10.10` is not on PyPI; that
+  check, and any pull request touching `python/umf_access/**`, stays red on
+  main until Core 0.10.10 is published. Access has not been tested against Core
+  0.10.10.
+- The compiler digest changed for two reasons: the bumped manifests and
+  `crates/README.md` are compiler inputs, and the regenerated compiler-input
+  manifest now lists the WASM loader files added by `1d40be0577`, which the
+  manifest on main had not yet picked up.
 
 ## Exit criteria for this change
 
