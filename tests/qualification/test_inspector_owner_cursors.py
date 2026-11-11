@@ -1,8 +1,10 @@
 """Pure tuple/custody integration guards, not Rust typechecking or native tests."""
+import json
 import re
 from pathlib import Path
 import unittest
 ROOT=Path(__file__).resolve().parents[2]
+REGISTRY_PROFILE=json.loads((ROOT/'spec/release.json').read_text())['rustVersion']=='0.10.11'
 
 def code_only(source):
     # Mask comments and strings before balancing delimiters. Retain source
@@ -93,21 +95,44 @@ def validate_coordinate_storage(source):
     for needle in ('checked_add(count)','if id>=ctx.limits().max_values'):
         if needle not in source:raise ValueError('original structural bound missing')
 
-def validate_root_selection(source):
+def validate_registry_catalogue_selection(source, text, root_copy):
+    ordinary=compact(raw_body(source,'compile'))
+    expected='{ctx.with_work_phase(,|ctx|{letdialect=matchselect_dialect(schema){Ok(dialect)=>dialect,Err(error)=>{clear_registry_catalogue_proof(ctx);returnErr(error);}};Self::compile_with_dialect_catalogue(schema,resources,dialect,true,ctx,None,true)})}'
+    if ordinary!=expected:
+        raise ValueError('only the ordinary compile entry opts in; dialect refusal clears proof')
+    eligibility='letregistry_attempt_path=registry_scope_entry&&eligible&&codegen_catalogue.is_none()&&supplied_bank.is_none()&&!input_admitted;'
+    stamp='letmutregistry_attempt=ifregistry_attempt_path{'
+    admission='registry_catalogue_attempt(resources,dialect,eligibility,ctx)?}else{None};'
+    codegen='let(epoch,prior)=catalogue.completed(dialect,ctx)?;'
+    first=('ifprior.is_some(){prior}elseifletSome(attempt)=registry_attempt.take(){'
+           'ifletSome(cached)=attempt.cached{Some(cached)}elseifattempt.first{'
+           'letbefore=ctx.charged_work();letmatched=construction_catalogue_view(resources_view,ctx)?;'
+           'letcomparison_work=ctx.charged_work().saturating_sub(before);')
+    remaining=('matched}else{construction_catalogue_view(resources_view,ctx)?}}else{'
+               'letbefore=ctx.charged_work();letmatched=construction_catalogue_view(resources_view,ctx)?;')
+    for needle in (eligibility,stamp,admission,codegen,first,remaining):
+        if text.count(needle)!=1:
+            raise ValueError('Registry attempt or exclusive paid catalogue fallback differs: '+needle)
+    positions=[text.index(n) for n in (eligibility,root_copy,stamp,admission,codegen,first,remaining)]
+    if positions!=sorted(positions):
+        raise ValueError('Registry and Codegen reuse must follow first root validation')
+
+
+def validate_root_selection(source, registry=REGISTRY_PROFILE):
     wrapper=compact(raw_body(source,'compile_inner'))
-    expected='{Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None)}'
+    expected='{Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None'+(',false' if registry else '')+')}'
     if wrapper!=expected:raise ValueError('ordinary compiler does not forward same context/None/false/finalNone')
     shared=compact(raw_body(source,'compile_with_dialect_catalogue'))
-    mode='{Self::compile_inner_with_bank(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)}'
+    mode='{Self::compile_inner_with_bank(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue'+(',registry_scope_entry' if registry else '')+')}'
     if shared!=mode:raise ValueError('shared dialect compiler changed closed mode/Context/catalogue')
     public=compact(raw_body(source,'compile_with_dialect'))
-    if public!='{Self::compile_with_dialect_catalogue(schema,resources,dialect,strict,ctx,None)}':
+    if public!='{Self::compile_with_dialect_catalogue(schema,resources,dialect,strict,ctx,None'+(',false' if registry else '')+')}':
         raise ValueError('ordinary dialect entry received a catalogue')
     entry=compact(raw_body(source,'compile_with_codegen_catalogue'))
-    if entry!='{ctx.with_work_phase(,|ctx|{letdialect=select_dialect(schema)?;Self::compile_with_dialect_catalogue(schema,&SchemaResources::default(),dialect,true,ctx,Some(catalogue))})}':
+    if entry!='{ctx.with_work_phase(,|ctx|{letdialect=select_dialect(schema)?;Self::compile_with_dialect_catalogue(schema,&SchemaResources::default(),dialect,true,ctx,Some(catalogue)'+(',false' if registry else '')+')})}':
         raise ValueError('Codegen entry lost original dialect/root/strict/same-context forwarding')
     text=compact(raw_body(source,'compile_inner_with_bank'))
-    if text.count('SchemaRoot::same_anchor_free_role')!=1 or text.count('construction_catalogue_view(resources_view,ctx)?')!=1:
+    if text.count('SchemaRoot::same_anchor_free_role')!=1 or text.count('construction_catalogue_view(resources_view,ctx)?')!=(3 if registry else 1):
         raise ValueError('root selection/admission census differs')
     count='letresources_count=resources_view.len_with_context(ctx)?;'
     row='let(retrieval,candidate)=resources_view.get_with_context(ordinal,ctx)?.expect();'
@@ -117,6 +142,8 @@ def validate_root_selection(source):
         raise ValueError('paid root extent/ordered lookup/original first root validation differs')
     positions=[text.index(count),text.index(root_loop),text.index(root_copy),text.index('catalogue.completed(dialect,ctx)?'),text.index('construction_catalogue_view(resources_view,ctx)?')]
     if positions!=sorted(positions):raise ValueError('root selection/validation must precede catalogue checks')
+    if registry:
+        validate_registry_catalogue_selection(source,text,root_copy)
     for needle in ('ifcatalogue.entries.len()==resources_count{root=Some(SchemaRoot::Catalogue(Arc::clone(catalogue),ordinal));}',
                    'letbank_input=ifinput_admitted{supplied_bank.as_ref()}else{None};','SchemaRoot::Bank(Arc::clone(bank),*role)',
                    'letresources_view=matchcodegen_catalogue{Some(catalogue)=>admitted_bank::Catalogue::Codegen(catalogue),None=>matchsupplied_bank.as_ref(){Some((bank,_))=>admitted_bank::Catalogue::Bank(bank),None=>admitted_bank::Catalogue::Borrowed(&resources.entries)}};'):
@@ -346,6 +373,26 @@ class OwnerCursorSourceControls(unittest.TestCase):
             ('schema,resources,dialect,strict,ctx,None)','schema,resources,dialect,strict,ctx,Some(unreviewed))'),
             ('dialect,true,ctx,Some(catalogue))','dialect,false,ctx,Some(catalogue))'),
         ]
+        if REGISTRY_PROFILE:
+            # Keep the original mutation intents and target the reviewed .11
+            # forwarding suffixes and an exact first-attempt fallback site.
+            for index, suffix in ((2,',false'),(4,',false'),(17,',registry_scope_entry'),(18,',false'),(19,',false')):
+                rows[index]=tuple(value[:-1]+suffix+')' for value in rows[index])
+            old,new=rows[3]
+            prefix='else if attempt.first {\n                    let before = ctx.charged_work();\n                    let matched = '
+            rows[3]=(prefix+old,prefix+new)
+            rows.extend([
+                ('dialect, true, ctx, None, true)', 'dialect, true, ctx, None, false)'),
+                ('dialect,true,ctx,Some(catalogue),false)', 'dialect,true,ctx,Some(catalogue),true)'),
+                ('registry_scope_entry && eligible && codegen_catalogue.is_none()', 'registry_scope_entry && eligible'),
+                ('&& supplied_bank.is_none() && !input_admitted;', '&& !input_admitted;'),
+                ('if let Some(cached) = attempt.cached { Some(cached) }',
+                 'if let Some(cached) = attempt.cached { None }'),
+                ('registry_catalogue_attempt(resources, dialect, eligibility, ctx)?',
+                 'registry_catalogue_attempt(resources, dialect, eligibility, other)?'),
+                ('clear_registry_catalogue_proof(ctx);\n                return Err(error);',
+                 'return Err(error);'),
+            ])
         for i,(old,new) in enumerate(rows):
             with self.subTest(mutation=i):
                 mutant=changed_mutant(source,old,new)

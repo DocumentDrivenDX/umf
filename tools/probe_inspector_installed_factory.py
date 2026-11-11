@@ -163,7 +163,7 @@ GEN1_FIELDS=('sourceCommit','sourceTree','workflowPath','workflowSHA256',
              'finalAttestationSHA256','compilerSHA256','compilerBinarySHA256')
 
 # Populated only after independent custody review of an actual selected GEN1.
-CANDIDATE_ADMISSION=None
+CANDIDATE_ADMISSION={'fixtureSHA256': 'fbb7736c75ea046cf189b03324316137157d589407f5d60252fda2b7c26dd1b7', 'generation': {'sourceCommit': '6170ef4741850eae786f534dfedcbcf5dd6302de', 'sourceTree': '9355c657e117eb9ebde2198b13868547e1868944', 'workflowPath': '.github/workflows/merged-source-generation.yml', 'workflowSHA256': 'b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f', 'runId': '42965210898', 'attempt': '1', 'jobId': '130340727857', 'artifactId': '13830972727', 'artifactDigest': '3461e86bd3b1d9f7456692c6d0cd63e37204222ccf937af8bd08ea6a07760fe5', 'outputManifestSHA256': '4266dad58b6833761ed1da7ade2826a96ce0e6e40482311bcdf82163d098a481', 'correspondenceReceiptSHA256': 'fbc7134e4dabffe602b9b5eebf76c1d1c3deb0a9b4642c725cbeba8c87049c67', 'finalAttestationSHA256': '85af5a98f04b20a1998948cd7f6466fb3134b8062a9e5a30c3a3b48dcc3942b7', 'compilerSHA256': '6de6efd6bc442e5a5e670ae5dcce5716d5737ffdc3b916c7a052d05a83a8a989', 'compilerBinarySHA256': '983626c8c89b908501975061d9172b6c40a9afd8c08e8b2811cdeac57abd53bd'}}
 
 def candidate_generation(root,selected,binding,value):
     admission=CANDIDATE_ADMISSION

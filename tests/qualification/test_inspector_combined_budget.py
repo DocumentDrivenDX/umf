@@ -151,7 +151,15 @@ class ConsolidatedFindingSourceControls(unittest.TestCase):
         regression=original.replace(loop,loop+'            if eligible { ctx.charge_work(id.len().saturating_mul(3).saturating_add(1),Utf16::default())?; }\n',1)
         self.assertEqual(hashlib.sha256(regression.encode()).hexdigest(),'3b4710cad3ce6af6abc71c103dbe8adec34bde8500fbd3afeb7e2b6060ed9a8b')
         self.assertNotEqual(hashlib.sha256(regression.encode()).hexdigest(),'5ddde1045927ec137b0ece625036c893cb4e6739c407a611bc9b8fbdf5e2c74d')
-        for old,new,count in [('root_keyword_policy,ctx,None,false,None)','root_keyword_policy,ctx,Some(unreviewed),true,None)',1),('root_keyword_policy,ctx,None,false,None)','root_keyword_policy,ctx,None,false,Some(unreviewed))',1),('Catalogue::Borrowed(&self.resources.entries)','Catalogue::Bank(bank)',1),('let retrieval = id.to_utf8().unwrap_or_default();','let retrieval = unreviewed();',2)]:
+        registry_suffix = ',false' if G.REGISTRY_PROFILE else ''
+        ordinary = f'root_keyword_policy,ctx,None,false,None{registry_suffix})'
+        mutations = [
+            (ordinary, f'root_keyword_policy,ctx,Some(unreviewed),true,None{registry_suffix})', 1),
+            (ordinary, f'root_keyword_policy,ctx,None,false,Some(unreviewed){registry_suffix})', 1),
+            ('Catalogue::Borrowed(&self.resources.entries)', 'Catalogue::Bank(bank)', 1),
+            ('let retrieval = id.to_utf8().unwrap_or_default();', 'let retrieval = unreviewed();', 2),
+        ]
+        for old,new,count in mutations:
             with self.subTest(mutation=old):
                 mutant=G.changed_mutant(source,old,new,count);self.assertNotEqual(mutant,source)
                 with self.assertRaises(ValueError):self.python_route(mutant)

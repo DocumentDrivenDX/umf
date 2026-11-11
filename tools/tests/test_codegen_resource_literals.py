@@ -17,6 +17,11 @@ from unittest import mock
 REPO = Path(os.environ.get("UMF_LITERAL_TEST_REPO", Path(__file__).resolve().parents[2]))
 GENERATOR_SHA = "23b788c916e8a57ca102bb714b17edd87e3749062f4beddc656953afdc67dbb9"
 DATA_SHA = "586c67c832f86ae27b2dc5d83c9d7e73c8aa9f4437b2e7fe296e367737599e76"
+# Full GEN1 run 42965210898, original artifact 13830972727. The DATA digest
+# joins output-receipt.json to stages/C.oracle.json. The ordered raw roster
+# digest is over that oracle's roots, as compact JSON with sorted object keys.
+CANDIDATE_01011_DATA_SHA = "2ff86ac2beb6a11a7a72b871a6539aa8aa58fe19e11045198bc1d9a049aa39d9"
+CANDIDATE_01011_RAW_ROSTER_SHA = "6006c020c73d0984391f7053232bf7f1730d94517f4712ecb4fdaeb555f0cf8b"
 INPUTS = (
     ("coreSchema", "spec/core/schema.json"),
     ("referenceSchema", "spec/core/semantic-type-reference.schema.json"),
@@ -223,7 +228,10 @@ class CodegenLiteralCorrespondenceTests(unittest.TestCase):
         data = REPO / "crates/umf-core/src/canonical_codegen_literals.rs"
         if hashlib.sha256(generator.read_bytes()).hexdigest() != GENERATOR_SHA:
             raise AssertionError("v2 generator changed: review/rebind required")
-        if hashlib.sha256(data.read_bytes()).hexdigest() != DATA_SHA:
+        release = json.loads((REPO / "spec/release.json").read_bytes())
+        cls.candidate_01011 = release["rustVersion"] == "0.10.11"
+        expected_data = CANDIDATE_01011_DATA_SHA if cls.candidate_01011 else DATA_SHA
+        if hashlib.sha256(data.read_bytes()).hexdigest() != expected_data:
             raise AssertionError("v2 DATA changed: review/rebind required")
         spec = importlib.util.spec_from_file_location("actual_codegen_literal_generator_v2", generator)
         cls.gen = importlib.util.module_from_spec(spec); spec.loader.exec_module(cls.gen)
@@ -250,19 +258,28 @@ class CodegenLiteralCorrespondenceTests(unittest.TestCase):
             return self.gen.main()
 
     def test_all_nine_raw_values_order_metadata_and_unknown_content_correspond(self):
-        pins_path = REPO / "tests/qualification/fixtures/inspector-installed-current-resources.json"
-        self.assertEqual(hashlib.sha256(pins_path.read_bytes()).hexdigest(),"251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363")
-        pins = json.loads(pins_path.read_bytes())["resources"]
+        if not self.candidate_01011:
+            pins_path = REPO / "tests/qualification/fixtures/inspector-installed-current-resources.json"
+            self.assertEqual(hashlib.sha256(pins_path.read_bytes()).hexdigest(),"251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363")
+            pins = json.loads(pins_path.read_bytes())["resources"]
         self.assertEqual(self.gen.INPUTS,INPUTS)
         self.assertEqual([(r["name"],r["path"]) for r in self.rows],list(INPUTS))
         total=0
+        raw_roster = []
         for row, (name,relative) in zip(self.rows,INPUTS):
             raw=(REPO/relative).read_bytes();total+=len(raw)
-            self.assertEqual(pins[name]["path"],relative)
-            self.assertEqual(hashlib.sha256(raw).hexdigest(),pins[name]["sha256"])
-            self.assertEqual(row["sha256"],pins[name]["sha256"])
+            raw_sha = hashlib.sha256(raw).hexdigest()
+            if self.candidate_01011:
+                raw_roster.append({"role": name, "path": relative, "bytes": len(raw), "sha256": raw_sha})
+            else:
+                self.assertEqual(pins[name]["path"],relative)
+                self.assertEqual(raw_sha,pins[name]["sha256"])
+            self.assertEqual(row["sha256"],raw_sha)
             self.assertEqual(row["bytes"],len(raw))
             self.assertEqual(row["value"],oracle(raw),name)
+        if self.candidate_01011:
+            canonical_roster = json.dumps(raw_roster, sort_keys=True, separators=(",", ":")).encode()
+            self.assertEqual(hashlib.sha256(canonical_roster).hexdigest(), CANDIDATE_01011_RAW_ROSTER_SHA)
         self.assertEqual(total,394103)
         # Independent RAW parser traversal, keys before children, across all9.
         expected_pool = []; seen = set()

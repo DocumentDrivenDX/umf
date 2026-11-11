@@ -115,9 +115,10 @@ class CandidateBindingControls(unittest.TestCase):
 
     def test_pending_production_refuses_even_with_complete_fixture(self):
         selected, _ = self.candidate()
-        self.assertIsNone(PROBE.CANDIDATE_ADMISSION)
-        with self.assertRaisesRegex(ValueError, 'GEN1 admission pending'):
-            PROBE.current_inputs(self.root, selected)
+        with patch.object(PROBE, 'CANDIDATE_ADMISSION', None):
+            self.assertIsNone(PROBE.CANDIDATE_ADMISSION)
+            with self.assertRaisesRegex(ValueError, 'GEN1 admission pending'):
+                PROBE.current_inputs(self.root, selected)
 
     def test_closed_candidate_binds_raw_receipt_and_exact_version(self):
         selected, admission = self.candidate()
@@ -175,7 +176,8 @@ class CandidateBindingControls(unittest.TestCase):
         spec.loader.exec_module(batch)
         args = SimpleNamespace(root=self.root, out=self.root / 'out',
                                source=self.generation['sourceCommit'])
-        with patch.object(batch, 'load', return_value=PROBE) as loader:
+        with patch.object(batch, 'load', return_value=PROBE) as loader, \
+             patch.object(PROBE, 'CANDIDATE_ADMISSION', None):
             with self.assertRaisesRegex(ValueError, 'GEN1 admission pending'):
                 batch.producer(args)
         loader.assert_called_once_with(self.root / 'tools/probe_inspector_installed_factory.py',

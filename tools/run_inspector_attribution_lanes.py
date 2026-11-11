@@ -107,6 +107,73 @@ def final_success(state):
     return all(state.get(k)is True for k in ('identityPassed','legacyPassed','boundaryPassed','diagnosticPassed','publicProbePassed','publicControlsPassed','finalIdentityPassed')) and (not state.get('costFirst') or all(state.get(k)is True for k in ('costGateAuthenticated','rustPassed','sagaPassed')))
 
 
+LIFECYCLE2_CASES=(
+ 'python/tests/test_saga_lifecycle.py::InstalledSagaLifecycle::test_author_declare_edit_exchange_and_assess',
+ 'python/tests/test_saga_lifecycle.py::InstalledSagaLifecycle::test_unknown_recovery_meaning_refuses_edit')
+LIFECYCLE2_PROFILE='umf.private-installed-saga-lifecycle2/1'
+LIFECYCLE2_MAX_LOG=1024*1024
+
+
+def run_lifecycle2(args, pins, current_input_identity, identity_fn=None, process_run=None):
+    """Run the exact original Lifecycle2 selectors on the already-installed wheel."""
+    import hashlib
+    import os
+    import re
+    identity_fn=identity if identity_fn is None else identity_fn
+    process_run=subprocess.run if process_run is None else process_run
+    run_id=os.environ.get('GITHUB_RUN_ID');attempt=os.environ.get('GITHUB_RUN_ATTEMPT')
+    require(type(run_id)is str and re.fullmatch(r'[1-9][0-9]*',run_id) is not None
+            and attempt=='1','Original one-attempt C1 run identity required')
+    before_name='identity-lifecycle2-before.json';after_name='identity-lifecycle2-after.json'
+    before_record='installed-record-lifecycle2-before.json';after_record='installed-record-lifecycle2-after.json'
+    xml=args.out/'saga-lifecycle2.xml';log=args.out/'saga-lifecycle2.log'
+    identity_fn(args,'lifecycle2-before')
+    result=None
+    try:
+        argv=[sys.executable,'-I','-B','-m','pytest','--rootdir='+str(args.controller.resolve()),
+              '--maxfail=0','-q','-s','--junitxml='+str(xml),
+              *[str(args.controller/case) for case in LIFECYCLE2_CASES]]
+        with log.open('xb') as stream:
+            result=process_run(argv,stdout=stream,stderr=subprocess.STDOUT,timeout=360)
+        require(result.returncode==0 and xml.is_file() and xml.stat().st_size<=131072
+                and log.stat().st_size<=LIFECYCLE2_MAX_LOG,
+                'Original same-wheel Lifecycle2 execution failed or exceeded bounds')
+        helper=load(args.controller/'tools/probe_inspector_installed_factory.py','lifecycle2_junit_validator')
+        require(helper.junit(xml,list(LIFECYCLE2_CASES)),
+                'Original same-wheel Lifecycle2 named tests differ')
+    finally:
+        identity_fn(args,'lifecycle2-after')
+    before=json.loads((args.out/before_name).read_text())
+    after=json.loads((args.out/after_name).read_text())
+    for name in (before_record,after_record):
+        path=args.out/name
+        require(path.is_file() and not path.is_symlink(),'Lifecycle2 installed RECORD companion missing')
+    require(before.get('profile')==after.get('profile')=='umf.private-retained-installed-identity/1'
+            and before.get('artifactSource')==after.get('artifactSource')==pins.get('source')
+            and before.get('controllerSource')==after.get('controllerSource')==args.controller_sha
+            and before.get('wheelSHA256')==after.get('wheelSHA256')==pins.get('wheel',{}).get('sha256')
+            and before.get('currentInputIdentity')==after.get('currentInputIdentity')==current_input_identity
+            and before.get('distributionOwnershipVerified') is True
+            and after.get('distributionOwnershipVerified') is True
+            and before.get('completeWheelAndInstalledRecordVerified') is True
+            and after.get('completeWheelAndInstalledRecordVerified') is True
+            and before.get('loadedModules')==after.get('loadedModules')
+            and before.get('loadedModules',{}).get('umf/_rust_core.abi3.so',{}).get('sha256')
+                ==pins.get('nativeMember',{}).get('sha256'),
+            'Lifecycle2 pre/post installed identity differs')
+    return {
+        'profile':LIFECYCLE2_PROFILE,'status':'passed','passed':True,
+        'source':pins['source'],'run':run_id,'attempt':attempt,
+        'currentInputIdentity':current_input_identity,'wheel':pins['wheel'],
+        'nativeMember':pins['nativeMember'],'cases':list(LIFECYCLE2_CASES),
+        'processExitCode':result.returncode,
+        'execution':'same-job-after-cost-and-required-semantics',
+        'log':{'path':'saga-lifecycle2.log','sha256':hashlib.sha256(log.read_bytes()).hexdigest()},
+        'junit':{'path':'saga-lifecycle2.xml','sha256':hashlib.sha256(xml.read_bytes()).hexdigest()},
+        'identityBefore':{'path':before_name,'sha256':hashlib.sha256((args.out/before_name).read_bytes()).hexdigest()},
+        'identityAfter':{'path':after_name,'sha256':hashlib.sha256((args.out/after_name).read_bytes()).hexdigest()}}
+
+
 def pip_generated_metadata(platlib, wheel, expected_sha, version='0.10.8'):
     import stat
     require(type(version)is str and len(version.split('.'))==3 and all(p.isdigit() for p in version.split('.')),'Exact dist-info version required')
@@ -370,7 +437,7 @@ def run_installed(args):
        'run':os.environ.get('GITHUB_RUN_ID'),'attempt':os.environ.get('GITHUB_RUN_ATTEMPT'),
        'currentInputIdentity':helper.current_inputs(args.controller,selected)[1],
        'costGateAuthenticated':False,'rustPassed':False,'sagaPassed':False,'pythonGroups':[],
-       'finalIdentityPassed':False,'requiredQualificationPassed':False,'publishable':False,'readyForEnrollment':False,
+       'lifecycle2Passed':False,'finalIdentityPassed':False,'requiredQualificationPassed':False,'publishable':False,'readyForEnrollment':False,
        'diagnosticPassed':False,'diagnosticDisposition':'not-selected-explicit-route-only'}
     def save():write(args.out/'aggregate.json',state)
     save()
@@ -395,7 +462,11 @@ def run_installed(args):
                 require(result.returncode==0 and helper.junit(xml,group['cases']),'Required named factory/legacy semantics failed')
                 state['pythonGroups'].append({'group':group['group'],'cases':group['cases'],'passed':True,'xmlSHA256':hashlib.sha256(xml.read_bytes()).hexdigest()});save()
             finally:identity(args,after)
-        state['requiredQualificationPassed']=bool(state['costGateAuthenticated'] and state['rustPassed'] and state['sagaPassed'] and len(state['pythonGroups'])==len(selected['python']))
+        if state['costGateAuthenticated'] and state['rustPassed'] and state['sagaPassed'] and len(state['pythonGroups'])==len(selected['python']):
+            lifecycle=run_lifecycle2(args,json.loads(args.producer_pins.read_text()),state['currentInputIdentity'])
+            write(args.out/'saga-lifecycle2-result.json',lifecycle)
+            state['lifecycle2Passed']=True
+        state['requiredQualificationPassed']=bool(state['costGateAuthenticated'] and state['rustPassed'] and state['sagaPassed'] and len(state['pythonGroups'])==len(selected['python']) and state['lifecycle2Passed'])
     except BaseException as error:
         state['fatal']={'type':type(error).__name__,'message':str(error)[:1024]};traceback.print_exc()
     finally:

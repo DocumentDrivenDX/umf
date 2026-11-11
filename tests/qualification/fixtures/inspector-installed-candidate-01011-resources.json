@@ -1,0 +1,92 @@
+{
+  "profile": "umf.inspector-installed-canonical-candidate-resources/1",
+  "inputProfile": "installed-canonical/1",
+  "maximumWork": 1000000,
+  "baseline": {
+    "mainCommit": "97ac05f17bc159d67c8eab931d3e0d66c85ee8f0",
+    "mainTree": "ad128d5c2c910464befbee820739f6e97a5d64b7",
+    "inheritedCoreDistributionVersion": "0.10.9",
+    "scope": "private source-bound component only; inherited owner metadata is not our release identity or final qualification"
+  },
+  "historicalFixture": {
+    "path": "tests/qualification/fixtures/inspector-retained-resources.json",
+    "sha256": "72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290",
+    "sourceS": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+    "scope": "unchanged original explicit/retained input and evidence; never relabeled current"
+  },
+  "resources": {
+    "coreSchema": {
+      "path": "spec/core/schema.json",
+      "bytes": 45342,
+      "sha256": "cd00d34cf71d87f484959209d62cbe7d8bcf645706de1c4711d30c3d29a4690f"
+    },
+    "referenceSchema": {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "bytes": 45463,
+      "sha256": "2bd943610040ad02d975fc1590e4cfefc6994152dc0b1000cd24cd5632fa183b"
+    },
+    "packageSchema": {
+      "path": "spec/core/extension-package.schema.json",
+      "bytes": 45001,
+      "sha256": "5098c762ac6dc0b0094ab52daf224cdf51d521d201a5e9e6a869c26dc83543a8"
+    },
+    "constraints": {
+      "path": "spec/metamodel/generated/core-constraints.json",
+      "bytes": 190431,
+      "sha256": "f32e8763cb7d4ec8cb70ac6134cc9c9db7fa26bf091f42a283d88f90438423f6"
+    },
+    "domainPolicy": {
+      "path": "spec/metamodel/generated/domain-policy.json",
+      "bytes": 14827,
+      "sha256": "19e3e1ddd37ec45dd399a391f567cb43f0b1598631e97b0224c786d70a84fb79"
+    },
+    "tablesPackage": {
+      "path": "spec/extensions/tables/package.json",
+      "bytes": 23817,
+      "sha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+    },
+    "actionsPackage": {
+      "path": "spec/extensions/actions/package.json",
+      "bytes": 11497,
+      "sha256": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181"
+    },
+    "bindingPackage": {
+      "path": "spec/extensions/binding/package.json",
+      "bytes": 8840,
+      "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f"
+    },
+    "stableBindingPackage": {
+      "path": "spec/extensions/binding-stable/package.json",
+      "bytes": 8885,
+      "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e"
+    }
+  },
+  "encodingOnlyProducer": {
+    "path": "tools/generate_codegen_resource_literals.py",
+    "sha256": "23b788c916e8a57ca102bb714b17edd87e3749062f4beddc656953afdc67dbb9"
+  },
+  "literalData": {
+    "path": "crates/umf-core/src/canonical_codegen_literals.rs",
+    "sha256": "2ff86ac2beb6a11a7a72b871a6539aa8aa58fe19e11045198bc1d9a049aa39d9"
+  },
+  "acceptance": "Provenance/source binding only. All9 full runtime JSON/schema/metaschema/reference/package/Registry checks remain in same constructorContext; no generated admission proof. Actual candidate commit binds separately at future controller/run, never self-hashed into this fixture.",
+  "candidateArtifactVersion": "0.10.11",
+  "bindingStatus": "source-bound",
+  "candidateModelSHA256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
+  "generation": {
+    "sourceCommit": "6170ef4741850eae786f534dfedcbcf5dd6302de",
+    "sourceTree": "9355c657e117eb9ebde2198b13868547e1868944",
+    "workflowPath": ".github/workflows/merged-source-generation.yml",
+    "workflowSHA256": "b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f",
+    "runId": "42965210898",
+    "attempt": "1",
+    "jobId": "130340727857",
+    "artifactId": "13830972727",
+    "artifactDigest": "3461e86bd3b1d9f7456692c6d0cd63e37204222ccf937af8bd08ea6a07760fe5",
+    "outputManifestSHA256": "4266dad58b6833761ed1da7ade2826a96ce0e6e40482311bcdf82163d098a481",
+    "correspondenceReceiptSHA256": "fbc7134e4dabffe602b9b5eebf76c1d1c3deb0a9b4642c725cbeba8c87049c67",
+    "finalAttestationSHA256": "85af5a98f04b20a1998948cd7f6466fb3134b8062a9e5a30c3a3b48dcc3942b7",
+    "compilerSHA256": "6de6efd6bc442e5a5e670ae5dcce5716d5737ffdc3b916c7a052d05a83a8a989",
+    "compilerBinarySHA256": "983626c8c89b908501975061d9172b6c40a9afd8c08e8b2811cdeac57abd53bd"
+  }
+}

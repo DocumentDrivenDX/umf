@@ -18,6 +18,15 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         for row in self.census['rust']:
             self.listings[(row['package'],row['target'])] += [c['name'] for c in row['cases']]
 
+    def test_exact_linux_raw_candidate_wheel_identity(self):
+        batch.require_candidate_wheel_name('umf_core-0.10.11-cp311-abi3-linux_x86_64.whl','0.10.11')
+        for name in ('umf_core-0.10.11-cp311-abi3-manylinux_2_17_x86_64.whl',
+                     'umf_core-0.10.11-cp311-abi3-linux_aarch64.whl',
+                     'umf_core-0.10.10-cp311-abi3-linux_x86_64.whl',
+                     'umf_core-0.10.11-cp311-none-any.whl'):
+            with self.subTest(name=name),self.assertRaisesRegex(ValueError,'Exact raw Linux candidate wheel identity differs'):
+                batch.require_candidate_wheel_name(name,'0.10.11')
+
     def test_exact229_and47_sources_and_kepler_hashes_are_closed(self):
         selected=batch.authenticate_lists(self.census,self.executables,self.listings)
         self.assertEqual(len(selected),229);self.assertEqual(len(set(selected)),229)
@@ -70,7 +79,11 @@ class ConstructionBatchSourceControls(unittest.TestCase):
         v=helper.selection(ROOT,self.census);current={**self.census,'rust':v['rust'],'rustCaseCount':sum(len(g['cases']) for g in v['rust'])}
         listings={key:[] for key in self.keys}
         for row in current['rust']:listings[row['package'],row['target']]+=[x['name'] for x in row['cases']]
-        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),469)
+        selected_current,identity=helper.current_inputs(ROOT,v)
+        version=helper.input_metadata_version(identity)
+        expected={'0.10.9':469,'0.10.11':481}.get(version)
+        self.assertIsNotNone(expected)
+        self.assertEqual(len(batch.authenticate_lists(current,self.executables,listings)),expected)
         self.assertEqual({(g['package'],g['target']) for g in current['rust']},self.keys)
         for row in current['rust']:
             if row['package']=='umf-core-python':self.assertEqual(row['manifest'],'bindings/core/python/Cargo.toml')

@@ -67,10 +67,11 @@ def fixture(root):
     (root/'crates/umf-core/src/lib.rs').write_text(declaration+'\n')
     (root/'crates/umf-core/src/fixture_controls.rs').write_text('#[test]\nfn original_native_control() {}\n')
     (root/'python/tests/factory_fixture.py').write_text('class Controls:\n    def test_original(self):\n        pass\n    def test_early(self):\n        pass\n')
-    # New-route source-only fixture: deliberately synthetic raw9/metadata,
-    # never the historical721 input relabeled as a qualified current package.
-    (root/'python/pyproject.toml').write_text('[project]\nname="umf-core"\nversion="7.8.6"\n')
-    (root/'python/src/umf/__init__.py').write_text('__version__ = "7.8.6"\n')
+    # Synthetic raw9 on the inherited private route, using its exact metadata
+    # version without reusing the historical721 resource bytes.
+    inherited_version='0.10.9'
+    (root/'python/pyproject.toml').write_text(f'[project]\nname="umf-core"\nversion="{inherited_version}"\n')
+    (root/'python/src/umf/__init__.py').write_text(f'__version__ = "{inherited_version}"\n')
     old=root/'tests/qualification/fixtures/inspector-retained-resources.json'
     old.write_bytes((ROOT/'tests/qualification/fixtures/inspector-retained-resources.json').read_bytes())
     resources={}
@@ -78,7 +79,7 @@ def fixture(root):
         p=root/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps({'synthetic-resource':name})+'\n')
         resources[name]={'path':path,'bytes':len(p.read_bytes()),'sha256':m.sha(p)}
     current={'profile':m.CURRENT_PROFILE,'inputProfile':m.INPUT,'maximumWork':m.LIMIT,
-      'baseline':{'mainCommit':'1'*40,'mainTree':'2'*40,'inheritedCoreDistributionVersion':'7.8.6','scope':'SYNTHETIC private fixture only'},
+      'baseline':{'mainCommit':'1'*40,'mainTree':'2'*40,'inheritedCoreDistributionVersion':inherited_version,'scope':'SYNTHETIC private fixture only'},
       'historicalFixture':{'path':'tests/qualification/fixtures/inspector-retained-resources.json','sha256':m.PINS_SHA,'sourceS':'e3f38ef6f05ae636d2837f9d69f8d6805222664b','scope':'Original unchanged'},
       'resources':resources,'encodingOnlyProducer':{'path':'tools/generate_codegen_resource_literals.py','sha256':m.sha(root/'tools/generate_codegen_resource_literals.py')},
       'literalData':{'path':'crates/umf-core/src/canonical_codegen_literals.rs','sha256':m.sha(root/'crates/umf-core/src/canonical_codegen_literals.rs')},'acceptance':'Provenance only; synthetic not native proof'}
@@ -89,7 +90,7 @@ def fixture(root):
        'moduleGraph':[{'parent':'crates/umf-core/src/lib.rs','child':row['source'],'module':'fixture_controls','declaration':declaration,'cfg':['#[cfg(test)]']}],
        'rust':[row],'python':[{'group':'fixture-only','cases':[selector]}],'publicControls':['python/tests/factory_fixture.py::Controls::test_early'],
        'coverage':{name:['rust:umf-core:lib:fixture_controls::original_native_control'] for name in m.COVERAGE},
-       'currentInputs':{'fixturePath':m.CURRENT_FIXTURE,'fixtureSHA256':m.sha(root/m.CURRENT_FIXTURE),'metadataVersion':'7.8.6'},
+       'currentInputs':{'fixturePath':m.CURRENT_FIXTURE,'fixtureSHA256':m.sha(root/m.CURRENT_FIXTURE),'metadataVersion':inherited_version},
        'modelSHA256':'a'*64,'legacyDisposition':{'oldProbeUnchanged':True,'warmed51IsFactoryEvidence':False,'separateExplicitHistory':'Fixture-only history','historicalOnly':[],'newPythonCases':[]},'closureSHA256':None}
     resign(m,v)
     c={'profile':'umf.private-construction-batch-census/1','python':[{'group':'toy-source','cases':[selector,'python/tests/factory_fixture.py::Controls::test_early']}],'rust':[row],'fileHashes':{},'installedFactory':v}
@@ -270,7 +271,7 @@ class CurrentInputBindingControls(unittest.TestCase):
     def test_exact_current_fixture_metadata_and_raw9_are_bound_without_legacy_relabel(self):
         with tempfile.TemporaryDirectory() as raw:
             root=Path(raw);m,c=fixture(root);pins,identity=m.current_inputs(root,c['installedFactory'])
-            self.assertEqual(identity['inheritedPrivateMetadataVersion'],'7.8.6');self.assertEqual(identity['scope'],'private-component-only-not-release-proof');self.assertEqual(pins['profile'],m.CURRENT_PROFILE);self.assertNotEqual(identity['resourceFixtureSHA256'],m.PINS_SHA)
+            self.assertEqual(identity['inheritedPrivateMetadataVersion'],'0.10.9');self.assertEqual(identity['scope'],'private-component-only-not-release-proof');self.assertEqual(pins['profile'],m.CURRENT_PROFILE);self.assertNotEqual(identity['resourceFixtureSHA256'],m.PINS_SHA)
             original=json.loads((ROOT/'tests/qualification/fixtures/inspector-retained-resources.json').read_text());self.assertNotEqual(pins['resources']['coreSchema']['sha256'],original['resources']['coreSchema']['sha256'])
     def test_resigned_wrong_current_profile_counts_paths_metadata_or_data_refuse(self):
         for mode in ('profile','count-bool','raw-path','metadata','data','old-alias'):
@@ -332,7 +333,9 @@ class FinalSourceCensusControls(unittest.TestCase):
         early=v['publicControls'];late=[x for g in v['python'] for x in g['cases']]
         self.assertEqual(len(early),18);self.assertEqual(len(late),31)
         self.assertFalse(set(early)&set(late))
-        self.assertEqual(sum(len(r['cases']) for r in v['rust']),469)
+        expected_rust={'0.10.9':469,'0.10.11':481}.get(v['currentInputs']['metadataVersion'])
+        self.assertIsNotNone(expected_rust)
+        self.assertEqual(sum(len(r['cases']) for r in v['rust']),expected_rust)
         old=[x for g in c['python'] for x in g['cases']]
         history=v['legacyDisposition']['historicalOnly']
         self.assertEqual(len(history),1);self.assertIn('test_cold_constructor_and_each_17_vector_dispatch_list_tuple_call_fit_strict_1m',history[0])

@@ -11,7 +11,7 @@ on:
         type: string
         required: true
       resource_pins_sha256:
-        description: Exact original nine-resource payload digest
+        description: Exact source-selected nine-resource fixture digest
         type: string
         required: true
 permissions:
@@ -53,12 +53,11 @@ jobs:
           test "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf
           test "$GITHUB_REF_TYPE" = branch
           test "$EXPECTED_SOURCE" = "$GITHUB_SHA"
-          test "$EXPECTED_RESOURCE_PINS" = 251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363
           out="$RUNNER_TEMP/inspector-feasibility"
           printf 'BATCH_OUT=%s\n' "$out" >> "$GITHUB_ENV"
           printf 'CARGO_TARGET_DIR=%s/inspector-feasibility-target\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
           printf 'PYO3_PYTHON=%s\n' "$(command -v python)" >> "$GITHUB_ENV"
-          python -I -B tools/qualify_inspector_construction_batch.py --root "$GITHUB_WORKSPACE" --out "$out" --source "$EXPECTED_SOURCE" bind
+          python -I -B tools/qualify_inspector_construction_batch.py --root "$GITHUB_WORKSPACE" --out "$out" --source "$EXPECTED_SOURCE" --resource-pins-sha256 "$EXPECTED_RESOURCE_PINS" bind
           python -I -B tests/qualification/test_inspector_construction_batch.py 2>&1 | tee "$out/census-pure.log"
           python -I -B tests/qualification/test_inspector_admission_precharge.py 2>&1 | tee "$out/admission-precharge-pure.log"
           python -I -B tests/qualification/test_inspector_owner_cursors.py 2>&1 | tee "$out/owner-cursors-pure.log"
@@ -66,6 +65,8 @@ jobs:
           python -I -B tests/qualification/test_inspector_combined_budget.py 2>&1 | tee "$out/combined-pure.log"
           python -I -B tests/qualification/test_inspector_attribution_lanes.py 2>&1 | tee "$out/lanes-pure.log"
           python -I -B tests/qualification/test_inspector_installed_factory.py 2>&1 | tee "$out/factory-controller-pure.log"
+          python -I -B tests/qualification/test_inspector_candidate_binding.py 2>&1 | tee "$out/candidate-binding-pure.log"
+          python -I -B tests/qualification/test_core_01011_wheel_bounds.py 2>&1 | tee "$out/wheel-bounds-pure.log"
           python -I -B tools/tests/test_codegen_resource_literals.py 2>&1 | tee "$out/factory-data-pure.log"
           python -I -B tools/tests/test_operation_schema_utf16_encoding.py 2>&1 | tee "$out/operation-data-pure.log"
           python -I -B tools/tests/test_schema_metas_utf16_encoding.py 2>&1 | tee "$out/metaschema-data-pure.log"

@@ -24,7 +24,8 @@ class FakeDriver:
     def identity(self,args,suffix):
         self.events.append(suffix)
         if suffix==self.identity_failure:raise ValueError('fake mandatory identity refusal')
-        self.write(args.out/('identity-'+suffix+'.json'),{'profile':'umf.private-retained-installed-identity/1','artifactSource':self.OWNER,'controllerSource':args.controller_sha,'wheelSHA256':self.WHEEL_SHA,'distributionOwnershipVerified':True,'completeWheelAndInstalledRecordVerified':True,'loadedModules':{name:{'path':'/NOT_LOADED/'+name,'sha256':'NOT_NATIVE'} for name in ('umf/__init__.py','umf/_rust.py','umf/rust_codegen.py','umf/_rust_core.abi3.so')}})
+        producer=json.loads(args.producer_pins.read_text())
+        self.write(args.out/('identity-'+suffix+'.json'),{'profile':'umf.private-retained-installed-identity/1','artifactSource':self.OWNER,'controllerSource':args.controller_sha,'wheelSHA256':self.WHEEL_SHA,'currentInputIdentity':producer.get('currentInputIdentity'),'distributionOwnershipVerified':True,'completeWheelAndInstalledRecordVerified':True,'loadedModules':{name:{'path':'/NOT_LOADED/'+name,'sha256':'NOT_NATIVE'} for name in ('umf/__init__.py','umf/_rust.py','umf/rust_codegen.py','umf/_rust_core.abi3.so')}})
         self.write(args.out/('installed-record-'+suffix+'.json'),{'status':'passed','wheel_sha256':self.WHEEL_SHA,'native_sha256':'NOT_NATIVE'})
 
 def measured():
@@ -298,9 +299,9 @@ class InstalledCostProcessControls(unittest.TestCase):
                 census=json.loads((root/m.CENSUS).read_text());selected=census['installedFactory']
                 cases=selected['rust'][0]['cases'];names=[c['name'] for c in cases]
                 source=driver.OWNER;h=C.sha(root/m.CENSUS)
-                compiled={'source':source,'status':'authenticated-before-test-execution','selectedCases':1,'censusSHA256':h,'targets':[{'package':'umf-core','target':'lib','caseNames':names}]}
+                compiled={'source':source,'status':'authenticated-before-test-execution','selectedCases':len(names),'censusSHA256':h,'targets':[{'package':'umf-core','target':'lib','caseNames':names}]}
                 path=args.out/'compiled-census.json';path.write_text(json.dumps(compiled))
-                rust={'source':source,'status':'passed','cases':1,'passed':1,'censusSHA256':h,'compiledCensusSHA256':C.sha(path),'results':[{'package':'umf-core','target':'lib','name':names[0],'passed':True,'exit':0}]}
+                rust={'source':source,'status':'passed','cases':len(names),'passed':len(names),'censusSHA256':h,'compiledCensusSHA256':C.sha(path),'results':[{'package':'umf-core','target':'lib','name':name,'passed':True,'exit':0} for name in names]}
                 (args.out/'rust-census-result.json').write_text(json.dumps(rust))
                 if mode=='missing-compiled':path.unlink()
                 # Exercise the original Saga receipt validator against actual
@@ -321,12 +322,17 @@ class InstalledCostProcessControls(unittest.TestCase):
                 def process(argv,**kwargs):
                     self.assertEqual(argv[1:5],['-I','-B','-m','pytest']);self.assertIn('--rootdir='+str(root.resolve()),argv);calls.append(argv)
                     xml=Path(next(x.split('=',1)[1] for x in argv if x.startswith('--junitxml=')))
-                    xml.write_text('<testsuites><testsuite><testcase classname="python.tests.factory_fixture.Controls" name="test_original">'+('<failure/>' if mode=='semantic-failure' else '')+'</testcase></testsuite></testsuites>')
+                    if 'saga-lifecycle2.xml' in str(xml):
+                        cases=L.LIFECYCLE2_CASES
+                        body=''.join('<testcase classname="'+case.split('::')[0].removesuffix('.py').replace('/', '.')+'.'+case.split('::')[1]+'" name="'+case.split('::')[-1]+'"/>' for case in cases)
+                    else:
+                        body='<testcase classname="python.tests.factory_fixture.Controls" name="test_original">'+('<failure/>' if mode=='semantic-failure' else '')+'</testcase>'
+                    xml.write_text('<testsuites><testsuite>'+body+'</testsuite></testsuites>')
                     return types.SimpleNamespace(returncode=1 if mode=='semantic-failure' else 0)
                 import contextlib,io
                 with patch.dict(os.environ,{'INSPECTOR_INPUT_PROFILE':m.INPUT,'GITHUB_RUN_ID':'100','GITHUB_RUN_ATTEMPT':'1'}),patch.object(L,'OWNER',driver.OWNER),patch.object(L,'WHEEL_SHA',driver.WHEEL_SHA),patch.object(L,'identity',driver.identity),patch.object(L.subprocess,'run',side_effect=process),contextlib.redirect_stderr(io.StringIO()):rc=L.run_installed(args)
                 state=json.loads((args.out/'aggregate.json').read_text())
-                self.assertEqual(rc,0 if mode=='pass' else 1);self.assertEqual(state['requiredQualificationPassed'],mode=='pass');self.assertFalse(state['diagnosticPassed']);self.assertEqual(state['diagnosticDisposition'],'not-selected-explicit-route-only');self.assertEqual(len(calls),0 if mode=='missing-compiled' else 1)
+                self.assertEqual(rc,0 if mode=='pass' else 1,state);self.assertEqual(state['requiredQualificationPassed'],mode=='pass');self.assertFalse(state['diagnosticPassed']);self.assertEqual(state['diagnosticDisposition'],'not-selected-explicit-route-only');self.assertEqual(len(calls),{'pass':2,'missing-compiled':0,'semantic-failure':1}[mode])
                 for argv in calls:
                     self.assertFalse(set(str(root/x) for x in selected['publicControls'])&set(argv))
                 if mode=='pass':self.assertEqual(state['earlyPublicControls']['cases'],selected['publicControls']);self.assertEqual(state['earlyPublicControls']['execution'],'same-job-cost-stage-consumed-once')

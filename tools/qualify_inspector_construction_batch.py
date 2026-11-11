@@ -30,6 +30,19 @@ def sha(path):
 def write(path,record):path.write_text(json.dumps(record,indent=2)+'\n')
 
 
+def require_resource_pin(expected, selected):
+    require(type(expected)is str and len(expected)==64
+            and all(c in '0123456789abcdef' for c in expected)
+            and expected==selected,
+            'Selected source fixture/resource pin differs')
+
+
+def require_candidate_wheel_name(filename, version):
+    expected='umf_core-'+version+'-cp311-abi3-linux_x86_64.whl'
+    require(type(filename)is str and filename==expected,
+            'Exact raw Linux candidate wheel identity differs')
+
+
 def load(path,name):
     spec=importlib.util.spec_from_file_location(name,path);module=importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module);return module
@@ -67,6 +80,7 @@ def bind(args):
         probe=load(root/'tools/probe_inspector_retained_feasibility.py','source_resources')
         _,pins=probe.resources(root,PINS_SHA);input_identity=None
     resource_pins_sha=input_identity['resourceFixtureSHA256'] if factory else PINS_SHA
+    require_resource_pin(args.resource_pins_sha256,resource_pins_sha)
     args.out.mkdir(parents=True,exist_ok=True)
     with (args.out/'source-inputs.tar').open('xb') as archive:
         subprocess.run(['git','archive','--format=tar',source,CENSUS,*sorted(census['fileHashes'])],cwd=root,stdout=archive,check=True)
@@ -94,6 +108,7 @@ def producer(args):
                 and source.get('resourcePinsSHA256')==identity['resourceFixtureSHA256'],
                 'Producer current input binding differs')
         version=helper.input_metadata_version(identity)
+        require_candidate_wheel_name(wheel.name,version)
     verifier=load(args.root/'tools/verify_python_artifacts.py','strict_built_wheel')
     # The unchanged verifier applies all wheel/RECORD/member/profile bounds.
     subprocess.run([sys.executable,'-I','-B',str(args.root/'tools/verify_python_artifacts.py'),
@@ -202,5 +217,6 @@ def rust(args):
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
     for name in ('root','out'):parser.add_argument('--'+name,type=Path,required=True)
+    parser.add_argument('--resource-pins-sha256')
     parser.add_argument('--source',required=True);parser.add_argument('mode',choices=('bind','producer','rust'))
     args=parser.parse_args();{'bind':bind,'producer':producer,'rust':rust}[args.mode](args)

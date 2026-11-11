@@ -22,6 +22,7 @@ def load(name,path):
     spec=importlib.util.spec_from_file_location(name,path);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 lanes=load('lanes',ROOT/'tools/run_inspector_attribution_lanes.py')
 verifier=load('strict_record_verifier',ROOT/'tools/verify_python_artifacts.py')
+batch=load('c1_batch_binding',ROOT/'tools/qualify_inspector_construction_batch.py')
 
 
 def envelope(message="Unknown schema keyword 'default'",code='SCHEMA_UNKNOWN_KEYWORD'):
@@ -89,6 +90,8 @@ class LaneControls(unittest.TestCase):
         with self.assertRaises(ValueError):lanes.boundary_admission(report(),1)
         r=report(fixture=True);row=next(x for x in r['cases'] if x['outcome']=='failed');row['case']='PrivateNativeControlTests.test_private_native_envelope_first_denial_object_survives_without_error_serialization'
         with self.assertRaises(ValueError):lanes.boundary_admission(r,1)
+
+
 
     def test_budget_class_and_aggregation_cannot_fake_qualification(self):
         self.assertTrue(lanes.resource_limit_measurement(budget_report()))
@@ -244,6 +247,96 @@ class LaneControls(unittest.TestCase):
             with self.assertRaises(ValueError):lanes.loaded_owner(verifier.NATIVE_MEMBER,path,f.site,wrong,set(f.installed),expected)
             with self.assertRaises(ValueError):lanes.loaded_owner(verifier.NATIVE_MEMBER,path,f.site,owner,set(),expected)
             with self.assertRaises(ValueError):lanes.loaded_owner(verifier.NATIVE_MEMBER,path,f.site,owner,set(f.installed),'0'*64)
+
+
+class C1CandidateAndLifecycle2Controls(unittest.TestCase):
+    def test_resource_pin_is_selected_source_fixture_and_historical_stays_pinned(self):
+        old='251c5e64ede46b686e4b207a020e8da4e78aca7aed236f8e6ce25d193edd2363'
+        candidate='a'*64
+        batch.require_resource_pin(old,old)
+        batch.require_resource_pin(candidate,candidate)
+        for expected,selected in ((old,candidate),('A'*64,candidate),('0'*63,candidate),(None,candidate)):
+            with self.subTest(expected=expected):
+                with self.assertRaisesRegex(ValueError,'Selected source fixture/resource pin differs'):
+                    batch.require_resource_pin(expected,selected)
+        probe=(ROOT/'tools/probe_inspector_installed_factory.py').read_text()
+        self.assertIn("PINS_SHA='72102654e5b8daf70d713abe986e0ecdc046f984094fa7fd36923d5cd6ceb290'",probe)
+        workflow=(ROOT/'.github/workflows/inspector-retained-attribution.yml').read_text()
+        self.assertIn('default: false',workflow)
+        self.assertIn('--resource-pins-sha256 "$EXPECTED_RESOURCE_PINS" bind',workflow)
+        self.assertNotIn('test "$EXPECTED_RESOURCE_PINS" = 251c5e64',workflow)
+        self.assertIn('tests/qualification/test_inspector_candidate_binding.py',workflow)
+        self.assertIn('tests/qualification/test_core_01011_wheel_bounds.py',workflow)
+        self.assertLess(workflow.index('test_inspector_owner_cursors.py'),
+                        workflow.index('One genuine changed-source wheel producer'))
+
+    def lifecycle_fixture(self, directory, *, exit_code=0, skipped=False, drift=False):
+        root=Path(directory);out=root/'out';out.mkdir()
+        args=types.SimpleNamespace(controller=ROOT,owner=ROOT,out=out,controller_sha='4'*40)
+        identity_data={'profile':'umf.private-retained-installed-identity/1','artifactSource':'1'*40,
+            'controllerSource':args.controller_sha,'wheelSHA256':'2'*64,
+            'currentInputIdentity':{'resourceFixture':'candidate','resourceFixtureSHA256':'3'*64},
+            'distributionOwnershipVerified':True,'completeWheelAndInstalledRecordVerified':True,
+            'loadedModules':{'umf/_rust_core.abi3.so':{'sha256':'5'*64}}}
+        pins={'source':'1'*40,'wheel':{'sha256':'2'*64,'bytes':123,'path':'raw/original.whl'},
+              'nativeMember':{'path':'umf/_rust_core.abi3.so','sha256':'5'*64}}
+        current=identity_data['currentInputIdentity'];calls=[];timeouts=[]
+        def identity_fn(_,suffix):
+            calls.append(suffix)
+            value=copy.deepcopy(identity_data)
+            if drift and suffix=='lifecycle2-after':value['loadedModules']['umf/_rust_core.abi3.so']['sha256']='6'*64
+            lanes.write(out/('identity-'+suffix+'.json'),value)
+            lanes.write(out/('installed-record-'+suffix+'.json'),{'status':'passed','wheel_sha256':'2'*64,'native_sha256':value['loadedModules']['umf/_rust_core.abi3.so']['sha256']})
+        def process_run(argv,**kwargs):
+            calls.append('execute')
+            timeouts.append(kwargs['timeout'])
+            xml=next(Path(value.split('=',1)[1]) for value in argv if value.startswith('--junitxml='))
+            cases=[]
+            for selector in lanes.LIFECYCLE2_CASES:
+                file,klass,test=selector.split('::')
+                testcase=f'<testcase classname="{file[:-3].replace("/", ".")}.{klass}" name="{test}"'
+                cases.append(testcase+('><skipped/></testcase>' if skipped and test.endswith('assess') else '/>'))
+            xml.write_text('<testsuites><testsuite>'+''.join(cases)+'</testsuite></testsuites>')
+            kwargs['stdout'].write(b'2 passed\n')
+            return types.SimpleNamespace(returncode=exit_code)
+        return args,pins,current,calls,timeouts,identity_fn,process_run
+
+    def test_lifecycle2_runs_exact_cases_on_same_source_wheel_and_binds_receipts(self):
+        with tempfile.TemporaryDirectory() as directory,patch.dict(os.environ,{'GITHUB_RUN_ID':'42963994190','GITHUB_RUN_ATTEMPT':'1'}):
+            args,pins,current,calls,timeouts,identity_fn,process_run=self.lifecycle_fixture(directory)
+            receipt=lanes.run_lifecycle2(args,pins,current,identity_fn,process_run)
+            self.assertEqual(calls,['lifecycle2-before','execute','lifecycle2-after'])
+            self.assertEqual(receipt['profile'],lanes.LIFECYCLE2_PROFILE)
+            self.assertEqual(receipt['cases'],list(lanes.LIFECYCLE2_CASES))
+            self.assertEqual(receipt['wheel'],pins['wheel'])
+            self.assertEqual(receipt['nativeMember'],pins['nativeMember'])
+            self.assertEqual(receipt['currentInputIdentity'],current)
+            self.assertEqual(receipt['processExitCode'],0)
+            self.assertEqual(timeouts,[360])
+            for field in ('log','junit','identityBefore','identityAfter'):
+                ref=receipt[field];raw=(args.out/ref['path']).read_bytes()
+                self.assertEqual(hashlib.sha256(raw).hexdigest(),ref['sha256'])
+
+    def test_lifecycle2_failure_skip_and_identity_drift_refuse(self):
+        for exit_code,skipped,drift in ((1,False,False),(0,True,False),(0,False,True)):
+            with self.subTest(exit_code=exit_code,skipped=skipped,drift=drift),\
+                 tempfile.TemporaryDirectory() as directory,\
+                 patch.dict(os.environ,{'GITHUB_RUN_ID':'42963994190','GITHUB_RUN_ATTEMPT':'1'}):
+                args,pins,current,calls,timeouts,identity_fn,process_run=self.lifecycle_fixture(
+                    directory,exit_code=exit_code,skipped=skipped,drift=drift)
+                with self.assertRaises(ValueError):
+                    lanes.run_lifecycle2(args,pins,current,identity_fn,process_run)
+                self.assertEqual(calls,['lifecycle2-before','execute','lifecycle2-after'])
+                self.assertTrue((args.out/'saga-lifecycle2.log').is_file())
+                self.assertFalse((args.out/'saga-lifecycle2-result.json').exists())
+
+    def test_full_c1_lane_orders_lifecycle2_after_cost_rust_saga_and_python(self):
+        source=inspect.getsource(lanes.run_installed)
+        positions=[source.index('cost_module.intake'),source.index('authenticate_producer_results'),
+                   source.index('state[\'sagaPassed\']'),source.index('for index,group in enumerate(selected[\'python\'])'),
+                   source.index('run_lifecycle2(args'),source.index('state[\'requiredQualificationPassed\']')]
+        self.assertEqual(positions,sorted(positions))
+        self.assertIn("and state['lifecycle2Passed']",source)
 
 
 class FunctionalAttributionProbeControls(unittest.TestCase):
