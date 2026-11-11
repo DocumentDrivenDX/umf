@@ -3341,11 +3341,23 @@ impl CompiledSchema {
     }
     // Each real same-parent loop lazily initializes its own local ordered walk.
     // No future member's semantics run here; filtered/skipped members remain so.
-    fn preflight_ordered_child<'a,'binding>(&'a self,cursor:Option<&OwnerCursor>,checked:&mut Option<owner_locations::CheckedLocation<'a>>,walk:&mut Option<owner_locations::OrderedOwnerChildren<'a>>,borrowed:Option<&owner_locations::BorrowedChild<'binding,'a>>,fused_walk:&mut Option<Option<owner_locations::FusedChildren<'binding,'a>>>,edge:usize,ctx:&mut Context<'_>)->Result<(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>,Option<owner_locations::BorrowedChild<'binding,'a>>),EngineError> where 'a:'binding {
+    fn preflight_ordered_child<'a,'binding>(&'a self,cursor:Option<&OwnerCursor>,checked:&mut Option<owner_locations::CheckedLocation<'a>>,walk:&mut Option<Box<owner_locations::OrderedOwnerChildren<'a>>>,borrowed:Option<&owner_locations::BorrowedChild<'binding,'a>>,fused_walk:&mut Option<Option<Box<owner_locations::FusedChildren<'binding,'a>>>>,edge:usize,ctx:&mut Context<'_>)->Result<(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>,Option<owner_locations::BorrowedChild<'binding,'a>>),EngineError> where 'a:'binding {
         type Child<'a,'binding>=(Option<OwnerCursor>,Option<owner_locations::CheckedLocation<'a>>,Option<owner_locations::BorrowedChild<'binding,'a>>);
         ctx.charge_work(std::mem::size_of::<Child<'a,'binding>>().div_ceil(std::mem::size_of::<usize>())+7,Utf16::default())?;
         if let Some(parent)=borrowed {
-            if fused_walk.is_none(){*fused_walk=Some(parent.children(ctx)?);}
+            if fused_walk.is_none(){
+                let children=parent.children(ctx)?;
+                *fused_walk=Some(match children {
+                    Some(children)=>{
+                        let payload_words=std::mem::size_of_val(&children).div_ceil(std::mem::size_of::<usize>());
+                        // Pay boxed storage, payload write, and allocator bookkeeping
+                        // before the allocation; children() separately pays construction.
+                        ctx.charge_work(payload_words.saturating_mul(2).saturating_add(3),Utf16::default())?;
+                        Some(Box::new(children))
+                    },
+                    None=>None,
+                });
+            }
             if let Some(Some(walk))=fused_walk {
                 let selected=walk.select(edge,ctx)?;
                 #[cfg(test)] construction_index::scoped_effect_event("sp1-ordered-selection-performed");
@@ -3365,7 +3377,14 @@ impl CompiledSchema {
             #[cfg(test)] construction_index::scoped_effect_event("sp1-ordered-selection-performed");
             return Ok((selected,None,None));
         }
-        if let Some(location)=checked.take(){*walk=Some(location.children(ctx)?);}
+        if let Some(location)=checked.take(){
+            let children=location.children(ctx)?;
+            let payload_words=std::mem::size_of_val(&children).div_ceil(std::mem::size_of::<usize>());
+            // Pay boxed storage, payload write, and allocator bookkeeping
+            // before the allocation; children() separately pays construction.
+            ctx.charge_work(payload_words.saturating_mul(2).saturating_add(3),Utf16::default())?;
+            *walk=Some(Box::new(children));
+        }
         if let Some(walk)=walk {
             let child=walk.child(edge,ctx)?;
             // The checked child already owns the exact fallback identity. Pass
@@ -3422,9 +3441,11 @@ impl CompiledSchema {
                 borrowed=None;
             }
         }
-        ctx.charge_work((std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>()+std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>()+std::mem::size_of::<Option<Option<owner_locations::FusedChildren<'binding,'a>>>>()).div_ceil(std::mem::size_of::<usize>())+3,Utf16::default())?;
-        let mut ordered=None;
-        let mut fused_ordered:Option<Option<owner_locations::FusedChildren<'binding,'a>>>=None;
+        // Precharge the compact per-node handles before initializing them.
+        // The large route-specific walkers are boxed only on first selection.
+        ctx.charge_work((std::mem::size_of::<Option<Box<owner_locations::OrderedOwnerChildren<'a>>>>()+std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>()+std::mem::size_of::<Option<Option<Box<owner_locations::FusedChildren<'binding,'a>>>>>() ).div_ceil(std::mem::size_of::<usize>())+3,Utf16::default())?;
+        let mut ordered:Option<Box<owner_locations::OrderedOwnerChildren<'a>>>=None;
+        let mut fused_ordered:Option<Option<Box<owner_locations::FusedChildren<'binding,'a>>>>=None;
 
         path.charge_current_path(1,ctx)?;
         if depth > ctx.limits().max_depth {
@@ -3528,11 +3549,11 @@ impl CompiledSchema {
                         // loop and leaving the search after it finishes.
                         const WORD:usize=std::mem::size_of::<usize>();
                         start_keyword_owner!(keyword_cursor,keyword_checked,keyword_borrowed,
-                            std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>().div_ceil(WORD)
-                                +std::mem::size_of::<Option<Option<owner_locations::FusedChildren<'binding,'a>>>>().div_ceil(WORD)
+                            std::mem::size_of::<Option<Box<owner_locations::OrderedOwnerChildren<'a>>>>().div_ceil(WORD)
+                                +std::mem::size_of::<Option<Option<Box<owner_locations::FusedChildren<'binding,'a>>>>>().div_ceil(WORD)
                                 +4);
-                        let mut keyword_ordered=None;
-                        let mut keyword_fused_ordered=None;
+                        let mut keyword_ordered:Option<Box<owner_locations::OrderedOwnerChildren<'a>>>=None;
+                        let mut keyword_fused_ordered:Option<Option<Box<owner_locations::FusedChildren<'binding,'a>>>>=None;
                         ordered_keyword_child!($edge,keyword_cursor,keyword_checked,keyword_borrowed,keyword_ordered,keyword_fused_ordered,
                             ($selected,$selected_checked,$selected_borrowed),$visit);
                         while let Some(($edge,$child))=remaining.next() {
