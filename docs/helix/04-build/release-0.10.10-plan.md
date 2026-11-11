@@ -98,4 +98,15 @@ The refreshed Mac wheel contains byte-identical native members. The final
 [sdist source join](evidence/release-0.10.10/native-s4-source-join.json) records
 the exact common native input archive and the action identity path outside it.
 
-Publication and the public registry installation receipts remain pending.
+[Public verification](evidence/release-0.10.10/public-publication.json)
+closes B-007 and B-008. GitHub serves the immutable 12-asset release at the
+frozen source tag and identifies it as latest. The public asset roster and
+downloaded checksum manifest match the locally qualified products.
+
+The Core admission merged in PR138 and the Codegen admission merged in PR139.
+The existing trusted publishers uploaded and verified the exact three Core and
+two Codegen archives in runs `42944416034` and `42945408207`. A clean local
+CPython 3.11 environment installed the published pair from PyPI. Its Core wheel,
+native CLI, ten resources and Codegen wheel match the qualified products.
+Codegen pins the exact matching Core version. Behavioral qualification ran
+locally, with GitHub Actions used for publishing and registry byte verification.
