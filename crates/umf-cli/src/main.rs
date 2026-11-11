@@ -269,54 +269,11 @@ fn sec_error_json(name: &str, code: Option<&str>, path: Option<&str>, message: &
 }
 
 #[cfg(feature = "codegen")]
-const RESOURCE_PROFILE: &str = "umf.codegen-resources/1";
+const RESOURCE_PROFILE: &str = umf_codegen::release_resources::RESOURCE_PROFILE;
 #[cfg(feature = "codegen")]
 const CLI_PROTOCOL: &str = "umf.codegen-cli/1";
 #[cfg(feature = "codegen")]
 const MAX_REQUEST_BYTES: usize = 32 * 1024 * 1024;
-#[cfg(feature = "codegen")]
-const RESOURCE_FILES: &[(&str, &[u8])] = &[
-    (
-        "actions.package.json",
-        include_bytes!("../../../spec/extensions/actions/package.json"),
-    ),
-    (
-        "binding.package.json",
-        include_bytes!("../../../spec/extensions/binding/package.json"),
-    ),
-    (
-        "core.constraints.json",
-        include_bytes!("../../../spec/metamodel/generated/core-constraints.json"),
-    ),
-    (
-        "core.domain-policy.json",
-        include_bytes!("../../../spec/metamodel/generated/domain-policy.json"),
-    ),
-    (
-        "core.package-schema.json",
-        include_bytes!("../../../spec/core/extension-package.schema.json"),
-    ),
-    (
-        "core.reference-schema.json",
-        include_bytes!("../../../spec/core/semantic-type-reference.schema.json"),
-    ),
-    (
-        "core.schema.json",
-        include_bytes!("../../../spec/core/schema.json"),
-    ),
-    (
-        "saga.package.json",
-        include_bytes!("../../../spec/extensions/saga/package.json"),
-    ),
-    (
-        "stable-binding.package.json",
-        include_bytes!("../../../spec/extensions/binding-stable/package.json"),
-    ),
-    (
-        "tables.package.json",
-        include_bytes!("../../../spec/extensions/tables/package.json"),
-    ),
-];
 
 #[cfg(feature = "codegen")]
 fn codegen_run(args: Vec<String>) -> Result<String, (i32, String)> {
@@ -408,9 +365,9 @@ fn codegen_run(args: Vec<String>) -> Result<String, (i32, String)> {
 
 #[cfg(feature = "codegen")]
 fn resource_manifest() -> Value {
-    let files = RESOURCE_FILES
-        .iter()
-        .map(|(name, bytes)| (Utf16::from(*name), Value::string_utf8(sha256(bytes))))
+    let files = umf_codegen::release_resource_digests()
+        .into_iter()
+        .map(|(name, digest)| (Utf16::from(name), Value::string_utf8(digest)))
         .collect();
     object(vec![
         ("files", Value::Object(files)),
@@ -420,16 +377,7 @@ fn resource_manifest() -> Value {
 
 #[cfg(feature = "codegen")]
 fn resource_manifest_sha256() -> String {
-    use std::fmt::Write;
-    let mut canonical = String::from("{\"files\":{");
-    for (index, (name, bytes)) in RESOURCE_FILES.iter().enumerate() {
-        if index > 0 {
-            canonical.push(',');
-        }
-        let _ = write!(canonical, "\"{name}\":\"{}\"", sha256(bytes));
-    }
-    canonical.push_str("},\"profile\":\"umf.codegen-resources/1\"}\n");
-    sha256(canonical.as_bytes())
+    umf_codegen::release_manifest_sha256()
 }
 
 #[cfg(feature = "codegen")]
@@ -523,67 +471,7 @@ fn codegen_operation(
         return umf_codegen::pack_tools::generate_pack_tools(request, ctx);
     }
     let mut resource_ctx = Context::catalog();
-    let tables = embedded_json(
-        include_str!("../../../spec/extensions/tables/package.json"),
-        &mut resource_ctx,
-    )?;
-    let actions = embedded_json(
-        include_str!("../../../spec/extensions/actions/package.json"),
-        &mut resource_ctx,
-    )?;
-    let binding = embedded_json(
-        include_str!("../../../spec/extensions/binding/package.json"),
-        &mut resource_ctx,
-    )?;
-    let stable_binding = embedded_json(
-        include_str!("../../../spec/extensions/binding-stable/package.json"),
-        &mut resource_ctx,
-    )?;
-    let tables_schema = field(&tables, "schema")
-        .cloned()
-        .ok_or_else(resource_error)?;
-    let actions_schema = field(&actions, "schema")
-        .cloned()
-        .ok_or_else(resource_error)?;
-    let resources = umf_codegen::CodegenResources::new(
-        umf_core::ResourceSet::new(
-            embedded_json(
-                include_str!("../../../spec/core/schema.json"),
-                &mut resource_ctx,
-            )?,
-            embedded_json(
-                include_str!("../../../spec/core/semantic-type-reference.schema.json"),
-                &mut resource_ctx,
-            )?,
-            embedded_json(
-                include_str!("../../../spec/core/extension-package.schema.json"),
-                &mut resource_ctx,
-            )?,
-            embedded_json(
-                include_str!("../../../spec/metamodel/generated/core-constraints.json"),
-                &mut resource_ctx,
-            )?,
-            embedded_json(
-                include_str!("../../../spec/metamodel/generated/domain-policy.json"),
-                &mut resource_ctx,
-            )?,
-        ),
-        tables,
-        tables_schema,
-        actions,
-        actions_schema,
-        binding,
-        stable_binding,
-        &mut resource_ctx,
-    )?;
-    let saga_package = embedded_json(
-        include_str!("../../../spec/extensions/saga/package.json"),
-        &mut resource_ctx,
-    )?;
-    let saga_schema = field(&saga_package, "schema")
-        .cloned()
-        .ok_or_else(resource_error)?;
-    let resources = resources.with_sagas(saga_package, saga_schema, &mut resource_ctx)?;
+    let resources = umf_codegen::CodegenResources::release(&mut resource_ctx)?;
     let engine = umf_codegen::CodegenEngine::new(&resources);
     match operation {
         "generate" => engine.generate_python_client(request, ctx),
@@ -647,22 +535,6 @@ fn codegen_operation(
     }
 }
 
-#[cfg(feature = "codegen")]
-fn embedded_json(source: &str, ctx: &mut Context<'_>) -> Result<Value, umf_core::EngineError> {
-    umf_core::serialization::read_json_value(
-        &source.encode_utf16().collect::<Vec<_>>(),
-        Format::Json,
-        ctx,
-    )
-}
-#[cfg(feature = "codegen")]
-fn resource_error() -> umf_core::EngineError {
-    umf_core::EngineError::new(
-        "CODEGEN_RESOURCE_INVALID",
-        Utf16::default(),
-        "Embedded codegen resource is invalid",
-    )
-}
 #[cfg(feature = "codegen")]
 fn request_error(message: &str) -> umf_core::EngineError {
     umf_core::EngineError::new("REQUEST", Utf16::default(), message)
@@ -4028,7 +3900,7 @@ mod tests {
     #[test]
     #[cfg(feature = "codegen")]
     fn codegen_cli_reports_the_ten_source_resource_manifest() {
-        assert_eq!(RESOURCE_FILES.len(), 10);
+        assert_eq!(umf_codegen::release_resources().len(), 10);
         let digest = resource_manifest_sha256();
         assert_eq!(digest.len(), 64);
         assert!(digest.bytes().all(|byte| byte.is_ascii_hexdigit()));
