@@ -88,14 +88,14 @@ UMF builds against patched copies of `hashbrown` 0.12 and 0.13, `json-ld-core`, 
 
 ```toml
 [patch.crates-io]
-hashbrown-012 = { package = "hashbrown", git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
-hashbrown-013 = { package = "hashbrown", git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+hashbrown-012 = { package = "hashbrown", version = "=0.12.3", git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+hashbrown-013 = { package = "hashbrown", version = "=0.13.2", git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
 json-ld-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
 json-ld-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
 json-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
 xsd-types = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
 ```
 
-The two `hashbrown` entries must resolve to the 0.12.3 and 0.13.2 copies respectively. A git source with a single `package` name cannot distinguish two versions of one repository path, so if Cargo reports an ambiguity, vendor those two directories or use a `path` patch pointing at a checkout of the same tag.
+The two `hashbrown` entries need their exact `version` pins: the UMF repository holds both 0.12.3 and 0.13.2, and Cargo rejects a git patch that matches more than one version. (Checked by resolving a scratch crate with these dependencies and this patch table against a UMF commit.)
 
 The public support boundary is expressed by each operation's API and capability checks. Callers provide explicit external parser/compiler callbacks where required; Rust owns UMF validation, admission, projection, receipt and recovery decisions. See the [host binding guide](../bindings/core/README.md) for Python, Node/Bun, WASM and CLI entry points.
