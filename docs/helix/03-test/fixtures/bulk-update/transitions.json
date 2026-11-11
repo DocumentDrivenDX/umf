@@ -46,7 +46,7 @@
    "01",
    "-1",
    "1.0",
-   "١",
+   "\u0661",
    "+1",
    " 1"
   ]
@@ -1491,6 +1491,69 @@
     },
     "basis": "terminal-noop"
    }
+  },
+  {
+   "id": "cancel-final-batch-commit",
+   "covers": "US-907-AC4",
+   "row": "T10",
+   "state": {
+    "status": "running",
+    "batchCount": 1,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": true
+    },
+    "cancelRequested": true,
+    "stop": null
+   },
+   "event": {
+    "kind": "commit"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "completed",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "claim": null
+    }
+   }
+  },
+  {
+   "id": "cancel-final-batch-reconcile",
+   "covers": "US-907-AC3",
+   "row": "T7",
+   "state": {
+    "status": "reconciling",
+    "batchCount": 1,
+    "nextBatch": 0,
+    "committedBatches": 0,
+    "fence": "1",
+    "claim": {
+     "batch": 0,
+     "fence": "1",
+     "effectAdmitted": true
+    },
+    "cancelRequested": true,
+    "stop": null
+   },
+   "event": {
+    "kind": "reconcile",
+    "evidence": "committed"
+   },
+   "expect": {
+    "ok": true,
+    "state": {
+     "status": "completed",
+     "nextBatch": 1,
+     "committedBatches": 1,
+     "claim": null
+    }
+   }
   }
  ],
  "decisionOrder": [
@@ -1746,13 +1809,13 @@
     "item": 0
    },
    {
-    "ns": "é",
+    "ns": "\u00e9",
     "id": "j",
     "batch": 0,
     "item": 0
    },
    {
-    "ns": "😀",
+    "ns": "\ud83d\ude00",
     "id": "j",
     "batch": 0,
     "item": 0
@@ -1819,7 +1882,7 @@
    "pap1/a//0/0",
    "pap1/a/b/-1/0",
    "pap1/a/b/x/0",
-   "pap1/é/b/0/0"
+   "pap1/\u00e9/b/0/0"
   ],
   "reserved": [
    "pap1/a/b/0/0",

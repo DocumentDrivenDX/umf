@@ -30,7 +30,7 @@ export function nextBulkFence(fence:string):string {
 function advance(s:BulkJobState):BulkJobState {
  const next=s.nextBatch+1;
  s.nextBatch=next;s.committedBatches+=1;s.claim=null;
- s.status=s.cancelRequested?'cancelled':next===s.batchCount?'completed':'queued';
+ s.status=next===s.batchCount?'completed':s.cancelRequested?'cancelled':'queued';
  return s;
 }
 /** Applies one event to a job state (null before submit). Never mutates its inputs. */
