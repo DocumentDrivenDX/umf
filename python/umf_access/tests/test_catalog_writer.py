@@ -64,7 +64,7 @@ class CatalogWriterTests(unittest.TestCase):
         return outputs
 
     def test_double_rename_failure_retains_original_and_staging(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             outputs = self.fixture(root)
             old = {
@@ -105,7 +105,7 @@ class CatalogWriterTests(unittest.TestCase):
             self.assertTrue((Path(error.metadata["staging"]) / "shop").is_dir())
 
     def test_install_failure_restores_original_and_releases_guard(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             outputs = self.fixture(root)
             replace = os.replace
@@ -130,7 +130,7 @@ class CatalogWriterTests(unittest.TestCase):
             catalog.publish_catalog(root, "shop", outputs, check=True)
 
     def test_cooperating_write_check_compile_and_cli_refuse_while_staging(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             outputs = self.fixture(root)
             config = {"package": "shop", "modules": ["declarations"], "targets": []}
@@ -197,7 +197,7 @@ class CatalogWriterTests(unittest.TestCase):
             catalog.publish_catalog(root, "shop", outputs, check=True)
 
     def test_cli_preserves_unresolved_metadata(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             (root / "config.json").write_text('{"package":"shop"}')
             failure = catalog.CatalogBuildError(
@@ -233,7 +233,7 @@ class CatalogWriterTests(unittest.TestCase):
             self.assertIs(result["unresolved"], True)
 
     def test_truncated_inventory_and_package_symlink_refuse_without_write(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             outputs = self.fixture(root)
             (root / "shop/_umf/catalog-manifest.json").write_text('{"inventory":[]}')
@@ -248,7 +248,7 @@ class CatalogWriterTests(unittest.TestCase):
                 catalog.publish_catalog(root, "other", outputs)
 
     def test_external_change_while_staging_refuses_before_swap(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             outputs = self.fixture(root)
             copytree = catalog.shutil.copytree
@@ -272,7 +272,7 @@ class CatalogWriterTests(unittest.TestCase):
             self.assertFalse(list(root.glob(".umf-catalog-*")))
 
     def test_old_catalog_outputs_refuse_after_stage_one_generation_changes(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             outputs = self.fixture(root)
             path = root / "shop/_umf/manifest.json"
@@ -299,7 +299,7 @@ class CatalogWriterTests(unittest.TestCase):
             self.assertFalse(list(root.glob(".umf-catalog-*")))
 
     def test_stage_one_source_drift_refuses_even_when_digest_is_unchanged(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as temporary:
+        with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             outputs = self.fixture(root)
             (root / "shop/source.py").write_bytes(

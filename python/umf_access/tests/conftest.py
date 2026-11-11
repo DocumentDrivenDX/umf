@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Skip tests that need an environment the plain CI install does not have.
 
+Some tests need the pgserver local PostgreSQL profile or `bun`; they are listed too.
 These tests import generated client packages (``commerce``, ``search_docs``; produced by
 ``bun scripts/umf-client-generate.ts``) or the downstream ``weft`` package. They are not run in
 the fast CI job; each is listed here so the gap is visible. Fix = generate the packages in a
@@ -31,7 +32,16 @@ NEEDS_GENERATED_CLIENT_OR_WEFT = [
     "test_truss_related_metadata.py",
 ]
 
-collect_ignore = NEEDS_GENERATED_CLIENT_OR_WEFT
+# These need the pgserver local PostgreSQL profile (a pgserver-pgNN wheel) or `bun`.
+NEEDS_LOCAL_POSTGRES_OR_BUN = [
+    "test_owner_authority.py",
+    "test_original_control_lease.py",
+    "test_owner_ledger_birth_recovery.py",
+    "test_ingress_local_postgres_authority_bridge.py",
+    "test_join_refinement.py",
+]
+
+collect_ignore = NEEDS_GENERATED_CLIENT_OR_WEFT + NEEDS_LOCAL_POSTGRES_OR_BUN
 
 # Collected, but one case each imports the generated ``commerce`` package.
 NEEDS_GENERATED_CASES = {
