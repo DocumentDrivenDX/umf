@@ -135,7 +135,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -162,8 +162,8 @@ jobs:
           python3 -m unittest discover -s tests/release -v
       # scripts/slow-tests.txt lists the files that only the nightly job runs; scripts/known-failures.txt
       # the ones that currently fail and are quarantined (see the PR description).
-      - name: Tests (shard ${{ matrix.shard }} of 16)
-        run: bun scripts/run-tests.ts --jobs 2 --keep-going --exclude-file scripts/slow-tests.txt --exclude-file scripts/known-failures.txt --shard ${{ matrix.shard }}/16
+      - name: Tests (shard ${{ matrix.shard }} of 24)
+        run: bun scripts/run-tests.ts --jobs 2 --keep-going --exclude-file scripts/slow-tests.txt --exclude-file scripts/known-failures.txt --shard ${{ matrix.shard }}/24
 
   python:
     runs-on: ubuntu-24.04

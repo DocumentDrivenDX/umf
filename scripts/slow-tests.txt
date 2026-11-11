@@ -197,3 +197,7 @@ tests/security/nested-graph-conditions.test.ts
 tests/security/query-value-route-evaluation.test.ts
 tests/security/write-read-protection.test.ts
 tests/spark/upstream.test.ts
+
+# Timed out at 60 s in the fourth CI run (they pass in 5 s to 1 min depending on runner load).
+tests/actions-reference/graph.test.ts
+tests/table-authoring/row-scope.test.ts
