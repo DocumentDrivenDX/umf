@@ -61,6 +61,7 @@ if(!files.length)throw Error('No test files selected');
 let passed=0,failed=0,skipped=0,assertions=0,completed=0,next=0,stop=false;
 const failures:string[]=[],started=performance.now();
 async function runOne(file:string){
+ const fileStart=performance.now();
  const child=Bun.spawn([process.execPath,'test','--timeout',process.env.UMF_TEST_TIMEOUT_MS??'120000','./'+file],{stdout:'pipe',stderr:'pipe',stdin:'ignore',env:{...process.env}});
  // A file that hangs (a stuck fixture or a child process that keeps the pipes open) is killed after
  // UMF_FILE_TIMEOUT_MS (default 10 minutes) and counted as a failure instead of stalling the whole run.
@@ -78,7 +79,7 @@ async function runOne(file:string){
  passed+=pass;failed+=fail;skipped+=skip;assertions+=checks;completed++;
  const bad=exitCode!==0||!valid||fail>0;
  if(bad){failures.push(file);console.log(`FAIL ${file} (exit ${exitCode}, ${pass} pass, ${fail} fail)\n${text.trim().split('\n').slice(-60).join('\n')}\n`);if(!keepGoing)stop=true;}
- else console.log(`ok   ${file} (${pass} pass${skip?`, ${skip} skip`:''})`);
+ else console.log(`ok   ${file} (${pass} pass${skip?`, ${skip} skip`:''}) [${((performance.now()-fileStart)/1000).toFixed(1)}s]`);
 }
 await Promise.all(Array.from({length:Math.min(jobs,files.length)},async()=>{
  while(!stop&&next<files.length)await runOne(files[next++]!);
