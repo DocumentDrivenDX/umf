@@ -820,13 +820,14 @@ fn admit_owned_json_private(
     let structure=structure.complete(ctx)?;
     Ok((value,structure))
 }
+fn factory_json_no_observer(_:usize,_:&Utf16,_:&Value,_:usize,_:&mut Context<'_>)->Result<(),EngineError>{Ok(())}
 fn admit_factory_json(value:Value,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<(Value,Option<std::sync::Arc<crate::schema::admitted_structure::Structure>>),EngineError>{
     crate::schema::admitted_structure::closed::with_root(|root|{
         let mut collector=PaidJsonAdmissionCollector{root,event};
         let mut tree_values=0;
         // Real original checked counter and original root buffer; metadata's
         // root/child brand cannot escape this closed complete invocation.
-        ctx.with_work_phase("native-core-copy",|ctx|visit_json_with_collector(&value,ctx,JsonAdmissionPath::Owned(Utf16::from("#")),0,&mut tree_values,&mut |_,_,_,_,_|Ok(()),&mut collector,None))?;
+        ctx.with_work_phase("native-core-copy",|ctx|visit_json_with_collector(&value,ctx,JsonAdmissionPath::Owned(Utf16::from("#")),0,&mut tree_values,&mut factory_json_no_observer,&mut collector,None))?;
         let structure=collector.root.complete(tree_values,ctx,collector.event)?;
         Ok((value,structure))
     })
@@ -1064,3 +1065,173 @@ mod closed_metadata_independent_tests;
 
 #[path="value_decimal_path.rs"]
 pub(crate) mod decimal_path;
+
+// Private same-operation sizing DATA; no public count constructor or proof flag.
+#[derive(Debug)]
+pub(crate) struct FactoryCountCustody {
+    operation:std::sync::Arc<()>, limits:crate::context::Limits,
+    profile:crate::context::ResourceProfile,
+}
+#[derive(Debug)]
+pub(crate) struct FactoryRowHint {pub(crate) nodes:usize,custody:FactoryCountCustody}
+impl FactoryCountCustody {
+    // The caller prepays the complete current-state readback.
+    pub(crate) fn matches_operation(&self, operation: &OwnedCoreOperation, ctx: &Context<'_>) -> bool {
+        // The original custody mint already checked the immutable operation's
+        // profile before capturing this exact identity.
+        self.limits == ctx.limits()
+            && self.profile == ctx.profile()
+            && ctx.owned_core_operation.as_ref().is_some_and(|active| {
+                std::sync::Arc::ptr_eq(active, &self.operation)
+                    && std::sync::Arc::ptr_eq(active, &operation.identity)
+            })
+    }
+}
+impl OwnedCoreOperation {
+    pub(crate) fn count_custody(&self,ctx:&mut Context<'_>)->Result<Option<FactoryCountCustody>,EngineError>{
+        let w=|n:usize|n.div_ceil(std::mem::size_of::<usize>());
+        ctx.charge_work(2*w(std::mem::size_of::<Option<FactoryCountCustody>>())
+            +w(std::mem::size_of::<FactoryCountCustody>())+w(std::mem::size_of::<std::sync::Arc<()>>())
+            +w(std::mem::size_of::<crate::context::Limits>())+8,Utf16::default())?;
+        if self.resource_profile!=ctx.profile()||!ctx.owned_core_operation.as_ref().is_some_and(|a|std::sync::Arc::ptr_eq(a,&self.identity)){return Ok(None);}
+        Ok(Some(FactoryCountCustody{operation:std::sync::Arc::clone(&self.identity),limits:ctx.limits(),profile:ctx.profile()}))
+    }
+}
+impl FactoryRowHint {
+    // Only the sealed counted materializer consumes this crate-private mint.
+    pub(crate) fn from_count(nodes:usize,custody:Option<&FactoryCountCustody>,ctx:&mut Context<'_>)->Result<Option<Self>,EngineError>{
+        let w=|n:usize|n.div_ceil(std::mem::size_of::<usize>());
+        ctx.charge_work(2*w(std::mem::size_of::<Self>())+w(std::mem::size_of::<std::sync::Arc<()>>())
+            +2*w(std::mem::size_of::<crate::context::Limits>())+12,Utf16::default())?;
+        Ok(custody.map(|c|Self{nodes,custody:FactoryCountCustody{operation:std::sync::Arc::clone(&c.operation),limits:c.limits,profile:c.profile}}))
+    }
+    // Pure post-callback guard; all reads/comparisons prepaid by the caller.
+    pub(crate) fn current(&self,ctx:&Context<'_>)->bool {
+        self.custody.limits==ctx.limits()&&self.custody.profile==ctx.profile()
+            &&ctx.owned_core_operation.as_ref().is_some_and(|a|std::sync::Arc::ptr_eq(a,&self.custody.operation))
+    }
+}
+impl OwnedCoreJson {
+    pub(crate) fn admit_factory_resource_sized(value:Value,name:&Utf16,operation:&OwnedCoreOperation,hint:Option<FactoryRowHint>,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+        let Some(hint)=hint else{return Self::admit_factory_resource(value,name,operation,ctx);};
+        ctx.charge_work(2*std::mem::size_of::<crate::context::Limits>().div_ceil(std::mem::size_of::<usize>())+12,Utf16::default())?;
+        if !std::sync::Arc::ptr_eq(&hint.custody.operation,&operation.identity)||operation.resource_profile!=ctx.profile()||!hint.current(ctx){return Self::admit_factory_resource(value,name,operation,ctx);}
+        // Original first-three classification and tariffs, no admission bypass.
+        let mut collect=false;
+        for role in ["coreSchema","referenceSchema","packageSchema"] {
+            ctx.charge_work(name.len().saturating_add(role.len()).saturating_add(1),Utf16::default())?;
+            if name.units().iter().copied().eq(role.encode_utf16()){collect=true;break;}
+        }
+        if !collect{return Self::admit_native_resource(value,operation,ctx);}
+        let(value,structure)=admit_factory_json_sized::<true>(value,hint,ctx,&mut |_|{})?;
+        Self::mint_with_structure(value,CoreJsonOrigin::NativeResourceHash,operation,structure,ctx,&mut |_|{})
+    }
+}
+// Root-only replacement work, prepaid BEFORE kind inspection/initialization.
+// No new State/Context/Value field or per-node hook is introduced.
+const fn factory_root_kind_work()->usize {
+    const fn w<T>()->usize{std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>())}
+    2*w::<Value>()+w::<FactoryRowHint>()+4
+}
+const fn factory_root_front_work()->usize {
+    const fn w<T>()->usize{std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>())}
+    2*w::<PaidJsonAdmissionCollector<'static,'static>>()
+        +2*w::<FactoryRowHint>()+3*w::<Option<usize>>()
+        +2*w::<Value>()+2*w::<Vec<(Utf16,Value)>>()
+        +2*w::<JsonAdmissionPath<'static>>()+2*w::<usize>()
+        +w::<Option<(&'static crate::schema::admitted_structure::closed::Container<'static>,usize)>>()
+        +w::<&'static [(Utf16,Value)]>()+w::<&'static mut Context<'static>>()
+        +w::<&'static mut usize>()+w::<&'static mut PaidJsonAdmissionCollector<'static,'static>>()
+        +w::<&'static mut ()>()+32
+}
+// NONRECURSIVE Object root only. Header/Object statements are copied from the
+// original visitor; children call that ORIGINAL visitor with the same F/C.
+fn visit_factory_object_root_with_hint<'r, const ROOT_ONLY: bool>(members:&[(Utf16,Value)],hint:FactoryRowHint,ctx:&mut Context<'_>,mut path:JsonAdmissionPath<'_>,tree_values:&mut usize,collector:&mut PaidJsonAdmissionCollector<'r,'_>)->Result<Option<usize>,EngineError>{
+    let depth=0usize;let parent=None;let observer=&mut factory_json_no_observer;
+        ctx.charge_work(1, path.original().clone())?;
+        *tree_values = tree_values
+            .checked_add(1)
+            .ok_or_else(|| EngineError::new("LIMIT", path.original().clone(), "JSON value count overflow"))?;
+        ctx.check_tree_value_count(*tree_values, path.original().clone())?;
+        if depth > ctx.limits().max_depth {
+            return Err(EngineError::new(
+                "LIMIT",
+                path.original().clone(),
+                "JSON nesting depth exceeded",
+            ));
+        }
+                if members.len() > ctx.limits().max_values.saturating_sub(*tree_values) {
+                    return Err(EngineError::new(
+                        "LIMIT",
+                        path.original().clone(),
+                        "JSON structural value limit exceeded",
+                    ));
+                }
+                ctx.charge_work(members.len(), path.original().clone())?;
+                let expected=collector.root.reserve_initial_rows::<ROOT_ONLY>(hint,ctx,path.for_collector(),collector.event)?;
+                let mut node=collector.container(*tree_values,depth,parent,&mut path,ctx)?;
+                let mut seen = BTreeSet::new();
+                for (member,(key, item)) in members.iter().enumerate() {
+                    ctx.charge_work(key.len(), path.original().clone())?;
+                    if !seen.insert(key.units().to_vec()) {
+                        return Err(EngineError::new(
+                            "DUPLICATE_KEY",
+                            path.original().clone(),
+                            "Duplicate object key",
+                        ));
+                    }
+                    observer(member,key,item,depth,ctx)?;
+                    collector.member(&mut node,member,key,matches!(item,Value::String(_)),&mut path,ctx)?;
+                    let child_path=append_path(path.original(), key);
+                    let child=visit_json_with_collector(item, ctx, JsonAdmissionPath::Owned(child_path), depth + 1, tree_values,observer,collector,Some((&node,member)))?;
+                    collector.merge(&mut node,child,&mut path,ctx)?;
+                }
+                collector.finish(node,members.len(),*tree_values,&mut path,ctx)?;
+                Ok(expected)
+}
+fn admit_factory_json_sized<const ROOT_ONLY: bool>(value:Value,hint:FactoryRowHint,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<(Value,Option<std::sync::Arc<crate::schema::admitted_structure::Structure>>),EngineError>{
+    ctx.charge_work(factory_root_kind_work(),Utf16::default())?;
+    // Kind is sizing eligibility only. Nonobjects retain full original
+    // admission after the separately paid kind/owned-argument routing.
+    let members=match value{Value::Object(members)=>members,other=>return admit_factory_json(other,ctx,event)};
+    // Only Object pays Object-front storage/moves. Nonobject fallback pays
+    // just the actual kind/owned-argument routing, not hypothetical setup.
+    ctx.charge_work(factory_root_front_work()-factory_root_kind_work(),Utf16::default())?;
+    crate::schema::admitted_structure::closed::with_root(|root|{
+        let mut collector=PaidJsonAdmissionCollector{root,event};let mut tree_values=0;
+        let expected=ctx.with_work_phase("native-core-copy",|ctx|visit_factory_object_root_with_hint::<ROOT_ONLY>(&members,hint,ctx,JsonAdmissionPath::Owned(Utf16::from("#")),&mut tree_values,&mut collector))?;
+        ctx.charge_work(std::mem::size_of::<Option<usize>>().div_ceil(std::mem::size_of::<usize>())+5,Utf16::default())?;
+        // The sizing observation is not a receipt. Do not allocate or
+        // publish a Structure unless the independent full admission agrees.
+        if expected.is_some_and(|count| count != tree_values) {
+            return Ok((Value::Object(members), None));
+        }
+        let structure = collector.root.complete(tree_values, ctx, collector.event)?;
+        Ok((Value::Object(members), structure))
+    })
+}
+
+// Source-model bound ONLY: current independent fixtures authenticate first3
+// cardinalities 1318/1317/1317 and requested-capacity growth coefficient14474.
+// The target compiler checks actual representation sizes, not a guessed layout.
+// It proves neither allocator capacity behavior nor whole-constructor 1M fit.
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+pub(crate) const fn counted_hint_model_overhead()->usize {
+    const fn w<T>()->usize{std::mem::size_of::<T>().div_ceil(std::mem::size_of::<usize>())}
+    use crate::canonical_codegen_resources::{CountedInstalledBundle as B,CountedInstalledFields as I,CountedInstalledField as F};
+    let r=2*w::<(Value,usize)>()+w::<usize>()+4;
+    let b=5*w::<B>()+2*w::<[usize;9]>()+48;
+    let c=2*w::<Option<FactoryCountCustody>>()+w::<FactoryCountCustody>()+w::<std::sync::Arc<()>>()+w::<crate::context::Limits>()+8;
+    let i=2*w::<I>()+w::<[usize;9]>()+w::<Option<FactoryCountCustody>>()+12;
+    let f=2*w::<Option<F>>()+w::<F>()+w::<Option<FactoryRowHint>>()+10;
+    let h=2*w::<FactoryRowHint>()+w::<std::sync::Arc<()>>()+2*w::<crate::context::Limits>()+12;
+    let d=w::<F>()+w::<Option<FactoryRowHint>>()+2*w::<(Utf16,OwnedCoreJson)>()+6;
+    let g=2*w::<crate::context::Limits>()+12;
+    let j=factory_root_front_work();
+    let q=2*w::<Option<FactoryRowHint>>()+w::<FactoryRowHint>()+w::<Option<usize>>()+2*w::<crate::context::Limits>()+48;
+    let e=w::<Option<usize>>()+5;
+    9*(r+f+d)+b+c+i+3*(h+g+j+q+e)
+}
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+const _:()=assert!(3*factory_root_front_work()<23712
+    &&counted_hint_model_overhead()<14474*std::mem::size_of::<Option<crate::schema::admitted_structure::Node>>().div_ceil(std::mem::size_of::<usize>()));

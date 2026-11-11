@@ -352,6 +352,349 @@ pub(crate) struct ConstructionState {
     parsed_metas:Option<Arc<crate::serialization::CompletedOwnedJson>>,
     meta_validators: Vec<(crate::context::Limits, SchemaDialect, Arc<CompiledSchema>)>,
     lifetime: Option<Arc<()>>,
+    // Keep the ordinary ConstructionState footprint to one pointer; the
+    // bounded scope record is allocated only when the Registry tail opens.
+    registry_catalogue_scope: Option<Box<RegistryCatalogueScope>>,
+}
+
+pub(crate) const fn registry_catalogue_scope_slot_work() -> usize {
+    (std::mem::size_of::<Option<Box<RegistryCatalogueScope>>>() + std::mem::size_of::<usize>() - 1)
+        / std::mem::size_of::<usize>()
+}
+
+const REGISTRY_CATALOGUE_SCOPE_OPEN_WORK: usize =
+    (std::mem::size_of::<RegistryCatalogueScope>() + std::mem::size_of::<usize>() - 1)
+        / std::mem::size_of::<usize>()
+        // Plus Box allocation, identity Arc control block, retained-state and
+        // lifetime refcounts, and identity-check/clear/drop cleanup.
+        + 8;
+const REGISTRY_CATALOGUE_SCOPE_ENTRY_WORK: usize = 8;
+const REGISTRY_CATALOGUE_SCOPE_LOOKUP_WORK: usize = 3;
+// Probe work after the separately metered early guard reservation: pointer/
+// lifetime comparisons, Limits and policy stamps, counter/branch work, and
+// cached Arc retain/release. Guard retention is charged before root checks.
+const REGISTRY_CATALOGUE_SCOPE_ATTEMPT_WORK: usize = 24;
+// Every eligible Registry compile arms cleanup before any fallible root,
+// lookup, or debit boundary; this prices the guard setup and cleanup path.
+const REGISTRY_CATALOGUE_SCOPE_GUARD_WORK: usize = 4;
+// Publication: Rc/RefCell, owner/context/lifetime checks, Limits/profile and
+// policy stamps, cache Arc retention, proof assignment and cleanup.
+const REGISTRY_CATALOGUE_SCOPE_PUBLISH_WORK: usize = 18;
+const REGISTRY_CATALOGUE_SCOPE_PROBES: u8 = 4;
+const REGISTRY_CATALOGUE_SCOPE_TOTAL_WORK: u64 = (REGISTRY_CATALOGUE_SCOPE_ENTRY_WORK
+    + REGISTRY_CATALOGUE_SCOPE_OPEN_WORK
+    + 4 * (REGISTRY_CATALOGUE_SCOPE_LOOKUP_WORK + REGISTRY_CATALOGUE_SCOPE_ATTEMPT_WORK
+        + REGISTRY_CATALOGUE_SCOPE_GUARD_WORK)
+    + REGISTRY_CATALOGUE_SCOPE_PUBLISH_WORK) as u64;
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+struct RegistryCatalogueEligibility {
+    strict: bool,
+    ecma_regex: bool,
+    resolve_references: bool,
+    local_reference_gate: bool,
+    duplicate_schema_keys: bool,
+    finite_binary64: bool,
+    draft2020_keywords: bool,
+}
+
+struct RegistryCatalogueProof {
+    dialect: SchemaDialect,
+    eligibility: RegistryCatalogueEligibility,
+    comparison_work: u64,
+    catalogue: Arc<SchemaResources>,
+}
+
+struct RegistryCatalogueScope {
+    identity: Arc<()>,
+    owner_address: usize,
+    context_address: usize,
+    lifetime: Arc<()>,
+    limits: crate::context::Limits,
+    profile: crate::context::ResourceProfile,
+    remaining: u8,
+    first_attempted: bool,
+    suspended: bool,
+    proof: Option<RegistryCatalogueProof>,
+}
+
+struct RegistryCatalogueScopeGuard {
+    state: std::rc::Rc<std::cell::RefCell<ConstructionState>>,
+    identity: usize,
+}
+
+impl Drop for RegistryCatalogueScopeGuard {
+    fn drop(&mut self) {
+        let mut state = self.state.borrow_mut();
+        let clear = state.registry_catalogue_scope.as_ref().is_some_and(|scope| {
+            Arc::as_ptr(&scope.identity) as usize == self.identity
+        });
+        if clear { state.registry_catalogue_scope = None; }
+    }
+}
+
+struct RegistryCatalogueSuspensionGuard {
+    state: std::rc::Rc<std::cell::RefCell<ConstructionState>>,
+    identity: usize,
+}
+
+impl Drop for RegistryCatalogueSuspensionGuard {
+    fn drop(&mut self) {
+        let mut state = self.state.borrow_mut();
+        if let Some(scope) = state.registry_catalogue_scope.as_mut() {
+            if Arc::as_ptr(&scope.identity) as usize == self.identity {
+                scope.suspended = false;
+            }
+        }
+    }
+}
+
+/// Limit the private same-owner catalogue reuse proof to one lexical group of
+/// constructor Registry registrations. The borrowed owner and Context stay
+/// fixed for the closure; scope state is removed on return, error, or unwind.
+#[doc(hidden)]
+pub fn with_registry_catalogue_reuse<T>(
+    resources: &SchemaResources,
+    ctx: &mut Context<'_>,
+    operation: impl FnOnce(&mut Context<'_>) -> Result<T, EngineError>,
+) -> Result<T, EngineError> {
+    // Price the entry read before inspecting ConstructionState or its scope.
+    ctx.charge_work(REGISTRY_CATALOGUE_SCOPE_ENTRY_WORK, Utf16::default())?;
+    let Some(existing) = ctx.schema_construction.as_ref() else { return operation(ctx); };
+    let (active, ready, identity, suspended) = {
+        let state = existing.borrow();
+        let scope = state.registry_catalogue_scope.as_ref();
+        (scope.is_some(), state.lifetime.is_some(),
+            scope.map(|s| Arc::as_ptr(&s.identity) as usize),
+            scope.is_some_and(|s| s.suspended))
+    };
+    if active {
+        if suspended { return operation(ctx); }
+        if let Some(identity) = identity {
+            // Rc clone, mutable borrow, suspension mutation, and guard setup.
+            ctx.charge_work(4, Utf16::default())?;
+            let state = std::rc::Rc::clone(ctx.schema_construction.as_ref().expect("construction scope"));
+            {
+                let mut borrowed = state.borrow_mut();
+                if let Some(scope) = borrowed.registry_catalogue_scope.as_mut() {
+                    if Arc::as_ptr(&scope.identity) as usize == identity {
+                        scope.suspended = true;
+                    }
+                }
+            }
+            let guard = RegistryCatalogueSuspensionGuard { state, identity };
+            let result = operation(ctx);
+            drop(guard);
+            return result;
+        }
+        return operation(ctx);
+    }
+    if !ready { return operation(ctx); }
+
+    // This prepaid amount covers the scope header, owner/context/lifetime
+    // stamps, the identity Arc and its unconditional cleanup path.
+    ctx.charge_work(REGISTRY_CATALOGUE_SCOPE_OPEN_WORK, Utf16::default())?;
+    let state = std::rc::Rc::clone(ctx.schema_construction.as_ref().expect("construction scope"));
+    let lifetime = state.borrow().lifetime.clone().expect("ready construction lifetime");
+    let identity = Arc::new(());
+    let identity_address = Arc::as_ptr(&identity) as usize;
+    state.borrow_mut().registry_catalogue_scope = Some(Box::new(RegistryCatalogueScope {
+        identity,
+        owner_address: resources as *const SchemaResources as usize,
+        context_address: ctx as *mut Context<'_> as usize,
+        lifetime,
+        limits: ctx.limits(),
+        profile: ctx.profile(),
+        remaining: REGISTRY_CATALOGUE_SCOPE_PROBES,
+        first_attempted: false,
+        suspended: false,
+        proof: None,
+    }));
+    let guard = RegistryCatalogueScopeGuard { state, identity: identity_address };
+    let result = operation(ctx);
+    drop(guard);
+    result
+}
+
+struct RegistryCatalogueAttempt {
+    identity: usize,
+    first: bool,
+    cached: Option<Arc<SchemaResources>>,
+    comparison_work: Option<u64>,
+    publish_possible: bool,
+}
+
+struct RegistryCatalogueAttemptGuard {
+    state: std::rc::Rc<std::cell::RefCell<ConstructionState>>,
+    completed: bool,
+}
+
+impl RegistryCatalogueAttemptGuard {
+    // Arm cleanup before inspecting scope state. If a later root check, lookup,
+    // metered debit, host callback, or unwind fails, the caller cannot catch
+    // the outcome and reuse a proof from this partially completed compile.
+    fn new(ctx: &Context<'_>) -> Option<Self> {
+        Some(Self {
+            state: std::rc::Rc::clone(ctx.schema_construction.as_ref()?),
+            completed: false,
+        })
+    }
+    fn mark_completed(&mut self) { self.completed = true; }
+}
+
+fn clear_registry_catalogue_proof(ctx: &Context<'_>) {
+    if let Some(state) = ctx.schema_construction.as_ref() {
+        if let Some(scope) = state.borrow_mut().registry_catalogue_scope.as_mut() {
+            scope.proof = None;
+        }
+    }
+}
+
+impl Drop for RegistryCatalogueAttemptGuard {
+    fn drop(&mut self) {
+        if self.completed { return; }
+        let mut state = self.state.borrow_mut();
+        if let Some(scope) = state.registry_catalogue_scope.as_mut() {
+            // The caller may catch the compile error or unwind and keep
+            // the lexical scope alive. A failed cache-use cannot leave a
+            // proof available to the next Registry operation.
+            scope.proof = None;
+        }
+    }
+}
+
+fn registry_catalogue_attempt(
+    resources: &SchemaResources,
+    dialect: SchemaDialect,
+    eligibility: RegistryCatalogueEligibility,
+    ctx: &mut Context<'_>,
+) -> Result<Option<RegistryCatalogueAttempt>, EngineError> {
+    // The caller has already restricted this to ordinary eligible compiles
+    // inside a construction lifetime. Price the optional scope lookup first.
+    ctx.charge_work(REGISTRY_CATALOGUE_SCOPE_LOOKUP_WORK, Utf16::default())?;
+    let Some(initial) = ctx.schema_construction.as_ref() else { return Ok(None); };
+    if initial.borrow().registry_catalogue_scope.is_none() { return Ok(None); }
+    // Prepay the bounded probe, its counter mutation, and any cache/guard
+    // retention before entering mutable construction state.
+    ctx.charge_work(REGISTRY_CATALOGUE_SCOPE_ATTEMPT_WORK, Utf16::default())?;
+    let state = std::rc::Rc::clone(ctx.schema_construction.as_ref().expect("active construction scope"));
+    let owner_address = resources as *const SchemaResources as usize;
+    let context_address = ctx as *mut Context<'_> as usize;
+    let limits = ctx.limits();
+    let profile = ctx.profile();
+    let lifetime_address = state.borrow().lifetime.as_ref().map(|token| Arc::as_ptr(token) as usize);
+    let mut borrowed = state.borrow_mut();
+    let Some(scope) = borrowed.registry_catalogue_scope.as_mut() else { return Ok(None); };
+    let identity = Arc::as_ptr(&scope.identity) as usize;
+    let mut event = None;
+    let attempt = if scope.remaining == 0 {
+        event = Some("registry-tail-decline-exhausted");
+        None
+    } else {
+        // Every probe consumes one of the four slots before any decline
+        // predicate. Wrong owner, changed stamp, nested operation, and refusal
+        // cannot leave an unbounded stream of charged tail probes.
+        scope.remaining -= 1;
+        let reason = if scope.suspended { Some("registry-tail-decline-suspended") }
+            else if scope.owner_address != owner_address { Some("registry-tail-decline-owner") }
+            else if scope.limits != limits { Some("registry-tail-decline-limits") }
+            else if scope.profile != profile { Some("registry-tail-decline-profile") }
+            else if scope.context_address != context_address { Some("registry-tail-decline-context") }
+            else if lifetime_address != Some(Arc::as_ptr(&scope.lifetime) as usize) {
+                Some("registry-tail-decline-lifetime")
+            } else { None };
+        if let Some(reason) = reason {
+            event = Some(reason);
+            None
+        } else if let Some(proof) = scope.proof.as_ref() {
+            if proof.dialect != dialect || proof.eligibility != eligibility {
+                event = Some("registry-tail-decline-compile-stamp");
+                None
+            } else {
+                let cached = Arc::clone(&proof.catalogue);
+                Some(RegistryCatalogueAttempt {
+                    identity,
+                    first: false,
+                    cached: Some(cached),
+                    comparison_work: Some(proof.comparison_work),
+                    publish_possible: false,
+                })
+            }
+        } else if scope.first_attempted {
+            event = Some("registry-tail-decline-first-attempt-used");
+            None
+        } else if !eligibility.strict || !eligibility.ecma_regex || !eligibility.resolve_references
+            || eligibility.local_reference_gate || eligibility.duplicate_schema_keys
+            || !eligibility.finite_binary64 || !eligibility.draft2020_keywords
+        {
+            event = Some("registry-tail-decline-eligibility");
+            None
+        } else {
+            scope.first_attempted = true;
+            Some(RegistryCatalogueAttempt {
+                identity,
+                first: true,
+                cached: None,
+                comparison_work: None,
+                // The full ordered comparison must leave every later hit
+                // slot available before its cost can amortize publication.
+                publish_possible: scope.remaining == REGISTRY_CATALOGUE_SCOPE_PROBES - 1,
+            })
+        }
+    };
+    let exhausted = scope.remaining == 0;
+    drop(borrowed);
+    if exhausted {
+        // A fourth declined probe or final cache hit ends the private scope.
+        // Any Arc already cloned for that final hit remains locally owned.
+        state.borrow_mut().registry_catalogue_scope = None;
+    }
+    if let Some(event) = event {
+        #[cfg(test)] codegen_catalogue_event(event, 1);
+        #[cfg(not(test))] let _ = event;
+    }
+    Ok(attempt)
+}
+
+fn publish_registry_catalogue_proof(
+    ctx: &mut Context<'_>,
+    identity: usize,
+    dialect: SchemaDialect,
+    eligibility: RegistryCatalogueEligibility,
+    comparison_work: u64,
+    resources: &SchemaBacking,
+) -> Result<(), EngineError> {
+    // Three later Registry traversals must repay the complete bounded scope
+    // overhead. The first ordered comparison is never retired.
+    if comparison_work.saturating_mul(3) <= REGISTRY_CATALOGUE_SCOPE_TOTAL_WORK {
+        #[cfg(test)] codegen_catalogue_event("registry-tail-decline-unprofitable", comparison_work as usize);
+        return Ok(());
+    }
+    ctx.charge_work(REGISTRY_CATALOGUE_SCOPE_PUBLISH_WORK, Utf16::default())?;
+    let Some(state) = ctx.schema_construction.as_ref() else { return Ok(()); };
+    let state = std::rc::Rc::clone(state);
+    let lifetime_address = state.borrow().lifetime.as_ref().map(|token| Arc::as_ptr(token) as usize);
+    let mut state = state.borrow_mut();
+    let Some(scope) = state.registry_catalogue_scope.as_mut() else { return Ok(()); };
+    if Arc::as_ptr(&scope.identity) as usize != identity
+        || scope.suspended
+        || scope.remaining == 0
+        || scope.owner_address == 0
+        || scope.context_address != ctx as *mut Context<'_> as usize
+        || scope.limits != ctx.limits()
+        || scope.profile != ctx.profile()
+        || lifetime_address != Some(Arc::as_ptr(&scope.lifetime) as usize)
+    { return Ok(()); }
+    let SchemaBacking::Shared(catalogue) = resources else { return Ok(()); };
+    scope.proof = Some(RegistryCatalogueProof {
+        dialect,
+        eligibility,
+        comparison_work,
+        catalogue: Arc::clone(catalogue),
+    });
+    drop(state);
+    #[cfg(test)] codegen_catalogue_event("registry-tail-proof-published", comparison_work as usize);
+    Ok(())
 }
 
 impl ConstructionState {
@@ -1513,8 +1856,16 @@ impl CompiledSchema {
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
     ctx.with_work_phase("native-schema-compilation", |ctx| {
-        let dialect = select_dialect(schema)?;
-        Self::compile_with_dialect(schema, resources, dialect, true, ctx)
+        let dialect = match select_dialect(schema) {
+            Ok(dialect) => dialect,
+            Err(error) => {
+                // Dialect selection precedes the inner Registry guard. Refusal
+                // must retire any live proof before a caller catches the error.
+                clear_registry_catalogue_proof(ctx);
+                return Err(error);
+            }
+        };
+        Self::compile_with_dialect_catalogue(schema, resources, dialect, true, ctx, None, true)
 
     })
 }
@@ -1524,7 +1875,7 @@ impl CompiledSchema {
             let dialect=select_dialect(schema)?;
             // Exact same closed mode as compile -> compile_with_dialect(true).
             // Borrowed-root SchemaJSON/copy still runs in the shared body first.
-            Self::compile_with_dialect_catalogue(schema,&SchemaResources::default(),dialect,true,ctx,Some(catalogue))
+            Self::compile_with_dialect_catalogue(schema,&SchemaResources::default(),dialect,true,ctx,Some(catalogue),false)
         })
     }
     /// Consumer entry: honor a declared Draft 7 or Draft 2020-12 dialect and
@@ -1954,11 +2305,11 @@ impl CompiledSchema {
         strict: bool,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        Self::compile_with_dialect_catalogue(schema,resources,dialect,strict,ctx,None)
+        Self::compile_with_dialect_catalogue(schema,resources,dialect,strict,ctx,None,false)
     }
     // One actual governing mode body for original and OC1 borrowed roots.
-    fn compile_with_dialect_catalogue(schema:&Value,resources:&SchemaResources,dialect:SchemaDialect,strict:bool,ctx:&mut Context<'_>,catalogue:Option<&CodegenCatalogue>)->Result<Self,EngineError>{
-        Self::compile_inner_with_bank(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue)
+    fn compile_with_dialect_catalogue(schema:&Value,resources:&SchemaResources,dialect:SchemaDialect,strict:bool,ctx:&mut Context<'_>,catalogue:Option<&CodegenCatalogue>,registry_scope_entry:bool)->Result<Self,EngineError>{
+        Self::compile_inner_with_bank(schema,resources,dialect,strict,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,None,false,catalogue,registry_scope_entry)
     }
     pub(crate) fn compile_input_bank(bank:Arc<admitted_bank::SchemaBank>,role:usize,ctx:&mut Context<'_>)->Result<Self,EngineError> {
         if role>=3 {return Err(schema_error(&Utf16::default(),"Private core bank role out of range"));}
@@ -1967,7 +2318,7 @@ impl CompiledSchema {
         let admitted=bank.input_compatible(ctx)? && bank.anchor_free_core_role(role,ctx)? && bank.unique_retrievals(ctx)?;
         ctx.charge_work(1,Utf16::default())?;
         let retained=Arc::clone(&bank);
-        Self::compile_inner_with_bank(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None)
+        Self::compile_inner_with_bank(bank.root(selected),&SchemaResources::default(),dialect,true,RegexProfile::Ecma262Unicode,true,false,false,true,KeywordPolicy::DRAFT2020,ctx,Some((retained,selected)),admitted,None,false)
     }
     fn compile_inner(
         schema: &Value,
@@ -1982,7 +2333,7 @@ impl CompiledSchema {
         root_keyword_policy: KeywordPolicy,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None)
+        Self::compile_inner_with_bank(schema,resources,dialect,strict,regex_profile,resolve_references_at_compile,apply_local_reference_gate,allow_duplicate_schema_keys,finite_binary64_admission,root_keyword_policy,ctx,None,false,None,false)
     }
     fn compile_inner_with_bank(
         schema: &Value,
@@ -1999,20 +2350,49 @@ impl CompiledSchema {
         supplied_bank: Option<(Arc<admitted_bank::SchemaBank>,admitted_bank::BankRoot)>,
         input_admitted:bool,
         codegen_catalogue:Option<&CodegenCatalogue>,
+        registry_scope_entry:bool,
     ) -> Result<Self, EngineError> {
         ctx.with_constructor_site("ctor.other", |ctx| {
-        if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
-            return Err(unavailable());
-        }
         let eligible = ctx.schema_construction.is_some() && strict
             && matches!(regex_profile, RegexProfile::Ecma262Unicode)
             && resolve_references_at_compile && !apply_local_reference_gate
             && !allow_duplicate_schema_keys && finite_binary64_admission
             && root_keyword_policy == KeywordPolicy::DRAFT2020;
+        let registry_attempt_path = registry_scope_entry && eligible && codegen_catalogue.is_none()
+            && supplied_bank.is_none() && !input_admitted;
+        // Keep HardIsolated refusal ahead of the new fee. On the ordinary
+        // path, reserve guard work before cloning; a refused or panicking host
+        // debit clears the live proof through the Context-owned Rc.
+        if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
+            return Err(unavailable());
+        }
+        let mut registry_attempt_guard = if registry_attempt_path {
+            // Pay before retaining the Rc-backed guard. If the host refuses,
+            // clear proof through the already-owned Context state without a
+            // clone, then preserve the original refusal.
+            let charged = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                ctx.charge_work(REGISTRY_CATALOGUE_SCOPE_GUARD_WORK, Utf16::default())
+            }));
+            match charged {
+                Ok(Ok(())) => RegistryCatalogueAttemptGuard::new(ctx),
+                Ok(Err(error)) => {
+                    clear_registry_catalogue_proof(ctx);
+                    return Err(error);
+                }
+                Err(payload) => {
+                    clear_registry_catalogue_proof(ctx);
+                    std::panic::resume_unwind(payload)
+                }
+            }
+        } else { None };
         if codegen_catalogue.is_some(){ctx.charge_work(catalogue_words::<admitted_bank::Catalogue<'_>>()+catalogue_words::<Option<&CodegenCatalogue>>()+4,Utf16::default())?;}
         let resources_view=match codegen_catalogue{Some(catalogue)=>admitted_bank::Catalogue::Codegen(catalogue),None=>match supplied_bank.as_ref(){Some((bank,_))=>admitted_bank::Catalogue::Bank(bank),None=>admitted_bank::Catalogue::Borrowed(&resources.entries)}};
         let mut codegen_epoch=None;
         let bank_input=if input_admitted{supplied_bank.as_ref()}else{None};
+        // Registry proof outcomes are consumed after this branch, so keep
+        // their state in the enclosing compile body for every backing mode.
+        let mut registry_eligibility = None;
+        let mut registry_catalogue_compare = None;
         let (schema,shared_resources,new_catalogue)=if let Some((bank,role))=bank_input {
             ctx.charge_work(2,Utf16::default())?;
             (SchemaRoot::Bank(Arc::clone(bank),*role),SchemaBacking::Owned(SchemaResources::default()),false)
@@ -2033,11 +2413,65 @@ impl CompiledSchema {
                 else {copy_json(schema,ctx)?})
         };
         #[cfg(test)] if codegen_catalogue.is_some(){codegen_catalogue_event("oc1-root-profile-complete",resources_count);}
+        let mut registry_attempt = if registry_attempt_path {
+            // Construct the private stamp only on the ordinary borrowed
+            // Registry path; Codegen/bank/input-admitted compiles avoid it.
+            let eligibility = RegistryCatalogueEligibility {
+                strict,
+                ecma_regex: matches!(regex_profile, RegexProfile::Ecma262Unicode),
+                resolve_references: resolve_references_at_compile,
+                local_reference_gate: apply_local_reference_gate,
+                duplicate_schema_keys: allow_duplicate_schema_keys,
+                finite_binary64: finite_binary64_admission,
+                draft2020_keywords: root_keyword_policy == KeywordPolicy::DRAFT2020,
+            };
+            registry_eligibility = Some(eligibility);
+            registry_catalogue_attempt(resources, dialect, eligibility, ctx)?
+        } else { None };
+        if let Some(attempt) = registry_attempt.as_ref() {
+            if attempt.first {
+                #[cfg(test)] codegen_catalogue_event("registry-tail-first-attempt", 1);
+            } else if let Some(work) = attempt.comparison_work {
+                #[cfg(test)] codegen_catalogue_event(
+                    "registry-tail-reuse",
+                    work.min(usize::MAX as u64) as usize,
+                );
+            }
+        }
         let shared = if eligible {
             let prior=if let Some(catalogue)=codegen_catalogue {
                 let(epoch,prior)=catalogue.completed(dialect,ctx)?;codegen_epoch=Some(epoch);prior
             }else{None};
-            if prior.is_some(){prior}else{construction_catalogue_view(resources_view,ctx)?}
+            if prior.is_some() { prior }
+            else if let Some(attempt) = registry_attempt.take() {
+                if let Some(cached) = attempt.cached { Some(cached) }
+                else if attempt.first {
+                    let before = ctx.charged_work();
+                    let matched = construction_catalogue_view(resources_view,ctx)?;
+                    let comparison_work = ctx.charged_work().saturating_sub(before);
+                    if matched.is_some() {
+                        // Report the actual full comparison even when earlier
+                        // declines leave too few slots to publish profitably.
+                        #[cfg(test)] codegen_catalogue_event("registry-tail-first-equality", comparison_work.min(usize::MAX as u64) as usize);
+                        if attempt.publish_possible {
+                            registry_catalogue_compare = Some((attempt.identity, comparison_work));
+                        }
+                    }
+                    matched
+                } else { construction_catalogue_view(resources_view,ctx)? }
+            } else {
+                let before = ctx.charged_work();
+                let matched = construction_catalogue_view(resources_view,ctx)?;
+                #[cfg(test)] if registry_attempt_path
+                    && ctx.schema_construction.as_ref().is_some_and(|state| {
+                        state.borrow().registry_catalogue_scope.is_some()
+                    })
+                {
+                    codegen_catalogue_event("registry-tail-fallback-equality",
+                        ctx.charged_work().saturating_sub(before).min(usize::MAX as u64) as usize);
+                }
+                matched
+            }
         } else { None };
         let new_catalogue = shared.is_none();
         let shared_resources = if let Some(shared) = shared { SchemaBacking::Shared(shared) } else {
@@ -2106,7 +2540,12 @@ impl CompiledSchema {
                         && matches!(&shared_resources, SchemaBacking::Shared(catalogue) if prior.resources.shares(catalogue))
                         && construction_equal(&*prior.schema, &schema, ctx)? {
                         let completed=prior.construction_copy(schema, ctx)?;
+                        if let Some((identity, comparison_work)) = registry_catalogue_compare {
+                            publish_registry_catalogue_proof(ctx, identity, dialect, registry_eligibility.expect("registry attempt stamp"),
+                                comparison_work, &completed.resources)?;
+                        }
                         if let(Some(catalogue),Some(epoch))=(codegen_catalogue,codegen_epoch){catalogue.publish_completed(epoch,dialect,&completed.resources,ctx)?;}
+                        if let Some(guard) = registry_attempt_guard.as_mut() { guard.mark_completed(); }
                         return Ok(completed);
                     }
                 }
@@ -2209,6 +2648,11 @@ impl CompiledSchema {
             }
         }
         if let(Some(catalogue),Some(epoch))=(codegen_catalogue,codegen_epoch){catalogue.publish_completed(epoch,dialect,&compiled.resources,ctx)?;}
+        if let Some((identity, comparison_work)) = registry_catalogue_compare {
+            publish_registry_catalogue_proof(ctx, identity, dialect, registry_eligibility.expect("registry attempt stamp"),
+                comparison_work, &compiled.resources)?;
+        }
+        if let Some(guard) = registry_attempt_guard.as_mut() { guard.mark_completed(); }
         Ok(compiled)
 
         })

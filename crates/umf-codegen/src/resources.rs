@@ -177,41 +177,53 @@ impl CodegenResources {
         ]);
         let actions_action_compiled =
             ctx.with_constructor_root("actions-action", |ctx| compile_codegen_schema(&action_schema, &schema_resources, catalogue.as_ref(), ctx))?;
-        let tables_registry = ctx.with_constructor_root("registration-tables", |ctx| package_registry(
-            &engine,
-            &schema_resources,
-            &tables_package,
-            &tables_schema,
-            1,
-            ctx,
-        ))?;
-        let actions_registry = ctx.with_constructor_root("registration-actions", |ctx| package_registry(
-            &engine,
-            &schema_resources,
-            &actions_package,
-            &actions_schema,
-            2,
-            ctx,
-        ))?;
-        let mut binding_registry = Registry::new();
-        ctx.with_constructor_root("registration-binding", |ctx| register_package(
-            &mut binding_registry,
-            &engine,
-            &schema_resources,
-            &binding_package,
-            binding_schema,
-            3,
-            ctx,
-        ))?;
-        ctx.with_constructor_root("registration-stable", |ctx| register_package(
-            &mut binding_registry,
-            &engine,
-            &schema_resources,
-            &stable_binding_package,
-            stable_binding_schema,
-            4,
-            ctx,
-        ))?;
+        let register_constructor_packages = |ctx: &mut Context<'_>| {
+            let tables_registry = ctx.with_constructor_root("registration-tables", |ctx| package_registry(
+                &engine,
+                &schema_resources,
+                &tables_package,
+                &tables_schema,
+                1,
+                ctx,
+            ))?;
+            let actions_registry = ctx.with_constructor_root("registration-actions", |ctx| package_registry(
+                &engine,
+                &schema_resources,
+                &actions_package,
+                &actions_schema,
+                2,
+                ctx,
+            ))?;
+            let mut binding_registry = Registry::new();
+            ctx.with_constructor_root("registration-binding", |ctx| register_package(
+                &mut binding_registry,
+                &engine,
+                &schema_resources,
+                &binding_package,
+                binding_schema,
+                3,
+                ctx,
+            ))?;
+            ctx.with_constructor_root("registration-stable", |ctx| register_package(
+                &mut binding_registry,
+                &engine,
+                &schema_resources,
+                &stable_binding_package,
+                stable_binding_schema,
+                4,
+                ctx,
+            ))?;
+            Ok((tables_registry, actions_registry, binding_registry))
+        };
+        let (tables_registry, actions_registry, binding_registry) = if ctx.in_codegen_construction() {
+            umf_core::schema::with_registry_catalogue_reuse(
+                &schema_resources,
+                ctx,
+                register_constructor_packages,
+            )?
+        } else {
+            register_constructor_packages(ctx)?
+        };
         Ok(Self {
             engine,
             binding_registry,

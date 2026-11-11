@@ -152,7 +152,7 @@ def identity(args,suffix):
         selected=helper.selection(root,json.loads((root/helper.CENSUS).read_text()))
         resources,input_identity=helper.current_inputs(root,selected)
         require(pins.get('currentInputIdentity')==input_identity and pins.get('resourcePinsSHA256')==input_identity['resourceFixtureSHA256'],'Identity producer/current input differs')
-        version=input_identity['inheritedPrivateMetadataVersion']
+        version=helper.input_metadata_version(input_identity)
         require(digest(owner/'tools/verify_python_artifacts.py')==selected['sourceFiles']['tools/verify_python_artifacts.py'],'Current strict verifier source differs')
     else:
         version='0.10.8';input_identity=None
@@ -168,7 +168,7 @@ def identity(args,suffix):
     dist=importlib.metadata.distribution('umf-core');require(dist.version==version,'Inherited private distribution differs')
     require(umf.__version__==version and native.engine_version()=='umf-core-r2' and native.codegen_protocol_version()=='umf-codegen-r3-seven-ops-nine-resources/1','Loaded owner version/protocol differs')
     for name,version in pins['dependencies'].items():require(importlib.metadata.version(name)==version,'Dependency differs: '+name)
-    members=helper.installed_wheel(args.wheel,dist,input_identity['inheritedPrivateMetadataVersion']) if installed else probe.installed_wheel(args.wheel,dist)
+    members=helper.installed_wheel(args.wheel,dist,helper.input_metadata_version(input_identity)) if installed else probe.installed_wheel(args.wheel,dist)
     base=Path(sysconfig.get_path('platlib')).resolve();package=base/'umf';owned={str(f) for f in dist.files}
     files={'umf/__init__.py':Path(umf.__file__),'umf/rust_codegen.py':Path(compiler.__file__),
        'umf/_rust.py':Path(rust.__file__),'umf/_rust_core.abi3.so':Path(native.__file__)}

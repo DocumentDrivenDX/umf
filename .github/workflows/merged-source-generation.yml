@@ -22,7 +22,7 @@ jobs:
           set -euo pipefail
           ARTIFACT_DIR="$RUNNER_TEMP/umf-current-source-artifacts"
           test ! -e "$ARTIFACT_DIR"
-          mkdir -p "$ARTIFACT_DIR"
+          mkdir -p "$ARTIFACT_DIR/stages"
           printf 'ARTIFACT_DIR=%s\n' "$ARTIFACT_DIR" >> "$GITHUB_ENV"
 
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # immutable checkout action
@@ -48,7 +48,7 @@ jobs:
           components: rustfmt
           targets: wasm32-unknown-unknown
 
-      - name: Verify pinned toolchain
+      - name: Verify pinned toolchain and candidate identity
         timeout-minutes: 1
         shell: bash
         run: |
@@ -59,6 +59,301 @@ jobs:
           test "$(bun --version)" = 1.4.3
           test "$(python --version)" = 'Python 3.11.17'
           test "$(rustc --version)" = 'rustc 1.90.0 (1159e78c4 2025-09-14)'
+          test -z "$(git status --porcelain --untracked-files=all)"
+
+      - name: Initialize full-route custody controller (part 1)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/merged_source_generation.py" <<'PYTHON'
+          import hashlib, importlib.util, json, os, pathlib, re, shutil, subprocess, sys
+          ROOT = pathlib.Path.cwd()
+          OUTPUTS = {
+              'spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','spec/core/facet-operation-v3.schema.json','spec/core/cardinality-operation-v4.schema.json','spec/core/kind-operation-v6.schema.json','spec/core/nullability-operation-v5.schema.json','spec/core/key-operation-v2.schema.json','spec/core/record-type-operation-v6.schema.json','spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json','spec/metamodel/generated/python-shapes.json','python/umf_access/src/umf_access/generated_core.py','src/generated/core-model.ts','src/generated/core-validators.ts','src/generated/core-validators-accounted.ts','spec/metamodel/generated/manifest.json','crates/umf-core/src/canonical_codegen_literals.rs','src/extensions/actions/plan-identity.ts',
+              *('python/umf_codegen/src/umf_codegen/_resources/'+n for n in ('actions.package.json','binding.package.json','core.constraints.json','core.domain-policy.json','core.package-schema.json','core.reference-schema.json','core.schema.json','saga.package.json','stable-binding.package.json','tables.package.json','manifest.json')),
+              'python/umf_codegen/src/umf_codegen/_release.py','python/src/umf/action_runtime_resource_manifest.json','python/src/umf/action_runtime.py'}
+          assert len(OUTPUTS) == 34
+          RUST_PORTABLE_OUTPUTS = {
+              'spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json',
+              'spec/core/facet-operation-v3.schema.json','spec/core/cardinality-operation-v4.schema.json','spec/core/kind-operation-v6.schema.json',
+              'spec/core/nullability-operation-v5.schema.json','spec/core/key-operation-v2.schema.json','spec/core/record-type-operation-v6.schema.json',
+              'spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json',
+              'spec/metamodel/generated/python-shapes.json','python/umf_access/src/umf_access/generated_core.py','src/generated/core-model.ts',
+          }
+          BACKEND_OUTPUTS = {'src/generated/core-validators.ts','src/generated/core-validators-accounted.ts'}
+          DATA='crates/umf-core/src/canonical_codegen_literals.rs'
+          RELEASE='python/umf_codegen/src/umf_codegen/_release.py'
+          ACTION_RUNTIME='python/src/umf/action_runtime.py'
+          RESOURCE_MANIFEST='python/umf_codegen/src/umf_codegen/_resources/manifest.json'
+          ACTION_MANIFEST='python/src/umf/action_runtime_resource_manifest.json'
+          PIN_PATTERNS={RELEASE:re.compile(rb'(?m)^(RESOURCE_MANIFEST_SHA256 = ")[0-9a-f]{64}("\s*)$'),ACTION_RUNTIME:re.compile(rb'(?m)^(_MANIFEST_SHA256 = ")[0-9a-f]{64}("\s*)$')}
+          def safe_regular(name,root=None):
+              if root is None: root=ROOT
+              rel=pathlib.PurePosixPath(name)
+              if rel.is_absolute() or '..' in rel.parts: raise ValueError('path escapes closed root: '+name)
+              p=root
+              for part in rel.parts:
+                  p=p/part
+                  if p.is_symlink(): raise ValueError('symlink in closed path: '+name)
+              try: resolved=p.resolve(strict=True); resolved.relative_to(root.resolve(strict=True))
+              except (OSError,ValueError): raise ValueError('missing or path-escaping output: '+name)
+              if not resolved.is_file(): raise ValueError('non-regular output: '+name)
+              return resolved
+          def filemap(paths):
+              out={}
+              for name in sorted(paths):
+                  p=safe_regular(name)
+                  b=p.read_bytes(); out[name]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+              return out
+          def roster():
+              tracked=set(subprocess.check_output(['git','ls-files','-z'],cwd=ROOT).decode().split('\0'))-{''}
+              tracked.update(set(subprocess.check_output(['git','ls-files','--others','--exclude-standard','-z'],cwd=ROOT).decode().split('\0'))-{''})
+              outputs=filemap(OUTPUTS)
+              sources=filemap(tracked-OUTPUTS)
+              identity=(ROOT/'src/extensions/actions/plan-identity.ts').read_bytes()
+              return {'outputs':outputs,'sources':sources,'metamodelManifest':json.loads((ROOT/'spec/metamodel/generated/manifest.json').read_text()),'actionIdentityNonProducerSha256':hashlib.sha256(identity_without_producer(identity)).hexdigest()}
+          def save(path): pathlib.Path(path).write_text(json.dumps(roster(),sort_keys=True,indent=2)+'\n')
+          def pin_parts(name,raw):
+              matches=list(PIN_PATTERNS[name].finditer(raw))
+              if len(matches)!=1: raise ValueError('expected exactly one derived pin: '+name)
+              match=matches[0]
+              normalized=raw[:match.start()]+match.group(1)+b'<DERIVED-SHA256>'+match.group(2)+raw[match.end():]
+              return match.group(0),normalized
+          def save_inputs(path):
+              value=roster(); value['derivedPinBaselines']={}
+              for name in (RELEASE,ACTION_RUNTIME):
+                  raw=safe_regular(name).read_bytes(); _,normalized=pin_parts(name,raw)
+                  value['derivedPinBaselines'][name]={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'normalizedSha256':hashlib.sha256(normalized).hexdigest()}
+              pathlib.Path(path).write_text(json.dumps(value,sort_keys=True,indent=2)+'\n')
+          def verify_pins(initial):
+              baseline=load(initial)
+              expected={RELEASE:hashlib.sha256(safe_regular(RESOURCE_MANIFEST).read_bytes()).hexdigest(),ACTION_RUNTIME:hashlib.sha256(safe_regular(ACTION_MANIFEST).read_bytes()).hexdigest()}
+              for name,digest in expected.items():
+                  base=baseline['derivedPinBaselines'][name]
+                  if baseline['outputs'][name]['sha256']!=base['sha256'] or baseline['outputs'][name]['bytes']!=base['bytes']: raise ValueError('pre-A derived pin baseline is not source-bound: '+name)
+                  raw=safe_regular(name).read_bytes(); pin,normalized=pin_parts(name,raw)
+                  if pin.split(b'"')[1].decode()!=digest: raise ValueError('derived pin does not match final resource manifest: '+name)
+                  if hashlib.sha256(normalized).hexdigest()!=base['normalizedSha256']: raise ValueError('non-pin source drift in derived file: '+name)
+          def manifest_delta(initial,before,after):
+              old=before['metamodelManifest']; new=after['metamodelManifest']; initial_data=initial['outputs'][DATA]['sha256']; final_data=after['outputs'][DATA]['sha256']
+              changed_data=False
+              for key in set(old)|set(new):
+                  if key not in ('sources','workspaceInputs','compilerInputs'):
+                      if old.get(key)!=new.get(key): raise ValueError('non-DATA manifest drift: '+key)
+                      continue
+                  left=old.get(key,{}); right=new.get(key,{})
+                  if not isinstance(left,dict) or not isinstance(right,dict): raise ValueError('invalid manifest identity map: '+key)
+                  if (DATA in left)!=(DATA in right): raise ValueError('DATA manifest key appeared/disappeared: '+key)
+                  if DATA in left:
+                      if left[DATA]!=initial_data or right[DATA]!=final_data: raise ValueError('manifest DATA identity does not match observed pre-A/final bytes: '+key)
+                      changed_data |= left[DATA]!=right[DATA]
+                  if {p:v for p,v in left.items() if p!=DATA}!={p:v for p,v in right.items() if p!=DATA}: raise ValueError('unrelated manifest identity drift: '+key)
+              if not any(DATA in before['metamodelManifest'].get(section,{}) for section in ('sources','workspaceInputs','compilerInputs')): raise ValueError('manifest omitted DATA identity binding')
+              if changed_data!=(initial_data!=final_data): raise ValueError('manifest DATA transition differs from observed bytes')
+          def identity_without_producer(raw):
+              pattern=re.compile(rb'(?m)^(export const actionPlanProducerBuild = )"sha256:[0-9a-f]{64}";$')
+              matches=list(pattern.finditer(raw))
+              if len(matches)!=1: raise ValueError('action producer identity must have exactly one generated field')
+              m=matches[0]
+              return raw[:m.start()]+m.group(1)+b'"<DERIVED-PRODUCER>";'+raw[m.end():]
+          def validate_oracle_receipt(snapshot,oracle):
+              roots=oracle.get('roots',[])
+              spec=importlib.util.spec_from_file_location('literal_inputs',ROOT/'tools/tests/test_codegen_resource_literals.py'); module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+              if oracle.get('profile')!='umf.gen1.g0-raw9-oracle/1' or len(roots)!=9: raise ValueError('missing raw nine-root oracle receipt')
+              data_row=snapshot['outputs'][DATA]
+              if oracle.get('data')!={'bytes':data_row['bytes'],'sha256':data_row['sha256']}: raise ValueError('oracle receipt does not bind immutable C DATA')
+              if [(r.get('role'),r.get('path')) for r in roots]!=list(module.INPUTS): raise ValueError('oracle root ordering mismatch')
+              source_bytes=safe_regular(DATA).read_bytes()
+              if len(source_bytes)!=data_row['bytes'] or hashlib.sha256(source_bytes).hexdigest()!=data_row['sha256']: raise ValueError('oracle DATA differs from captured C roster')
+              decoded,_=module.decode_module(source_bytes.decode('utf-8','strict'))
+              if [(r.get('name'),r.get('path')) for r in decoded]!=list(module.INPUTS): raise ValueError('DATA literal correspondence roster mismatch')
+              expected=[]
+              for row,(role,path) in zip(roots,module.INPUTS):
+                  raw=safe_regular(path).read_bytes()
+                  value=module.oracle(raw)
+                  check_literal_row(decoded[len(expected)],role,path,raw,value)
+                  actual={'role':role,'path':path,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+                  if row!=actual: raise ValueError('raw oracle receipt does not bind current bytes: '+role)
+                  expected.append(actual)
+          PYTHON
+      - name: Append full-route custody controller (part 2)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat >> "$RUNNER_TEMP/merged_source_generation.py" <<'PYTHON'
+          def load(path): return json.loads(pathlib.Path(path).read_text())
+          def finalize(initial_path,a,b):
+              initial,before,after=load(initial_path),load(a),roster()
+              if set(before['outputs'])!=OUTPUTS or set(after['outputs'])!=OUTPUTS: raise ValueError('closed output roster mismatch')
+              if initial['sources']!=before['sources'] or before['sources']!=after['sources']: raise ValueError('unlisted source mutation during bootstrap/finalize')
+              if initial['actionIdentityNonProducerSha256']!=before['actionIdentityNonProducerSha256']: raise ValueError('non-producer action identity changed during bootstrap')
+              changed={p for p in OUTPUTS if before['outputs'][p]!=after['outputs'][p]}
+              allowed={'spec/metamodel/generated/manifest.json','src/extensions/actions/plan-identity.ts'}
+              if changed-allowed: raise ValueError('non-manifest/Data bootstrap drift: '+','.join(sorted(changed-allowed)))
+              if before['outputs']['crates/umf-core/src/canonical_codegen_literals.rs']!=after['outputs']['crates/umf-core/src/canonical_codegen_literals.rs']: raise ValueError('DATA changed on finalize pass')
+              manifest_delta(initial,before,after)
+              if before['actionIdentityNonProducerSha256']!=after['actionIdentityNonProducerSha256']: raise ValueError('non-producer action identity drift')
+              pathlib.Path(b).write_text(json.dumps(after,sort_keys=True,indent=2)+'\n')
+          def check_literal_row(row,role,path,data,expected):
+              if row.get('name')!=role or row.get('path')!=path: raise ValueError('literal role/path mismatch: '+role)
+              if type(row.get('bytes')) is not int or row['bytes']!=len(data): raise ValueError('literal raw byte count mismatch: '+role)
+              if row.get('sha256')!=hashlib.sha256(data).hexdigest(): raise ValueError('literal raw SHA-256 mismatch: '+role)
+              if row.get('value')!=expected: raise ValueError('raw nine-root oracle mismatch: '+role)
+          def pure_oracle(out,anchor):
+              out_path=pathlib.Path(out); anchor_path=pathlib.Path(anchor)
+              if out_path.resolve()==anchor_path.resolve(): raise ValueError('oracle must use a separate sidecar from immutable C roster')
+              anchor_bytes=anchor_path.read_bytes()
+              helper=ROOT/'tools/tests/test_codegen_resource_literals.py'
+              modspec=importlib.util.spec_from_file_location('literal_oracle',helper); mod=importlib.util.module_from_spec(modspec); modspec.loader.exec_module(mod)
+              raw_bytes=safe_regular(DATA).read_bytes(); raw=raw_bytes.decode('utf-8')
+              rows,dictionary=mod.decode_module(raw)
+              if [(r['name'],r['path']) for r in rows]!=list(mod.INPUTS): raise ValueError('literal ordered roster mismatch')
+              result=[]
+              for row,(role,path) in zip(rows,mod.INPUTS):
+                  data=(ROOT/path).read_bytes(); value=mod.oracle(data)
+                  check_literal_row(row,role,path,data,value)
+                  result.append({'role':role,'path':path,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+              out_path.write_text(json.dumps({'profile':'umf.gen1.g0-raw9-oracle/1','decoderSha256':hashlib.sha256(helper.read_bytes()).hexdigest(),'data':{'bytes':len(raw_bytes),'sha256':hashlib.sha256(raw_bytes).hexdigest()},'roots':result},sort_keys=True,indent=2)+'\n')
+              if anchor_path.read_bytes()!=anchor_bytes: raise ValueError('oracle changed immutable C roster')
+          def attest(before,oracle_path,attestation,initial,directory,source_anchor=None,pin_baseline=None):
+              snapshot=load(before); initial_roster=load(initial)
+              if pathlib.Path(oracle_path).resolve()==pathlib.Path(before).resolve(): raise ValueError('oracle must not overwrite immutable C roster')
+              if roster()!=snapshot: raise ValueError('source write during C/D or final roster mismatch')
+              source_roster=load(source_anchor) if source_anchor else initial_roster
+              if snapshot['sources']!=source_roster['sources']: raise ValueError('unlisted source mutation since source anchor')
+              a=json.loads(pathlib.Path(attestation).read_text())
+              attested=a.get('sourceAttestation',{}).get('sources'); executable=a.get('executable',{}); artifact=a.get('compilerArtifact',{})
+              if not attested or not executable.get('sha256') or not artifact.get('path'): raise ValueError('missing final source/binary attestation')
+              validate_compiler_attestation(snapshot,a)
+              verify_source_attestation(attested)
+              verify_compiler_artifact(artifact,executable,directory)
+              oracle=json.loads(pathlib.Path(oracle_path).read_text()); validate_oracle_receipt(snapshot,oracle)
+              verify_pins(pin_baseline or initial)
+          def validate_compiler_attestation(snapshot,attestation):
+              manifest=snapshot.get('metamodelManifest',{})
+              provenance=manifest.get('provenance',{})
+              if manifest.get('profile')!='umf.metamodel.outputs/1' or attestation.get('profile')!='umf.metamodel.compile/1': raise ValueError('final compiler profile mismatch')
+              if attestation.get('modelSha256')!=provenance.get('modelSha256') or attestation.get('compilerSha256')!=provenance.get('compilerSha256'): raise ValueError('final model/compiler provenance mismatch')
+              outputs=manifest.get('outputs')
+              if not isinstance(outputs,dict) or not outputs: raise ValueError('final generated manifest output roster missing')
+              if set(outputs)!=RUST_PORTABLE_OUTPUTS|BACKEND_OUTPUTS: raise ValueError('final generated manifest roster differs from closed Rust/backend outputs')
+              if any(not isinstance(row,dict) for row in outputs.values()): raise ValueError('invalid generated manifest output row')
+              expected={path:outputs[path].get('sha256') for path in RUST_PORTABLE_OUTPUTS}
+              if attestation.get('portableOutputs')!=expected: raise ValueError('final Rust compiler output receipt differs from current manifest')
+              for path,row in outputs.items():
+                  if snapshot['outputs'].get(path)!=row: raise ValueError('final compiler output differs from captured C roster: '+path)
+          def verify_source_attestation(attested):
+              if not isinstance(attested,dict) or not attested: raise ValueError('missing final source attestation')
+              for name,digest in attested.items():
+                  if not re.fullmatch(r'[0-9a-f]{64}',digest) or hashlib.sha256(safe_regular(name).read_bytes()).hexdigest()!=digest: raise ValueError('final source attestation mismatch: '+name)
+          def verify_compiler_artifact(artifact,executable,directory):
+              if not isinstance(artifact,dict) or not isinstance(executable,dict): raise ValueError('missing staged compiler executable identity')
+              binary=safe_regular(artifact.get('path',''),pathlib.Path(directory)); raw=binary.read_bytes(); digest=hashlib.sha256(raw).hexdigest()
+              if len(raw)!=artifact.get('bytes') or digest!=artifact.get('sha256') or digest!=executable.get('sha256') or len(raw)!=executable.get('bytes'): raise ValueError('staged compiler executable identity mismatch')
+              if len(raw)<20 or raw[:4]!=b'\x7fELF' or raw[4]!=2 or raw[5]!=1 or int.from_bytes(raw[18:20],'little')!=62: raise ValueError('staged compiler artifact is not ELF64 little-endian x86_64')
+          def package(directory,receipt,patch,initial):
+              base=pathlib.Path(directory).resolve(strict=True)
+              dest=base/'source-output'
+              if dest.exists() or dest.is_symlink(): raise ValueError('staging destination already exists')
+              rows=filemap(OUTPUTS)
+              verify_pins(initial)
+              dest.mkdir()
+              for name in sorted(OUTPUTS):
+                  source=safe_regular(name); target=dest/name
+                  target.parent.mkdir(parents=True,exist_ok=True)
+                  shutil.copyfile(source,target)
+                  copied=target.read_bytes()
+                  if len(copied)!=rows[name]['bytes'] or hashlib.sha256(copied).hexdigest()!=rows[name]['sha256']: raise ValueError('staged output hash/size mismatch: '+name)
+              members={p.relative_to(dest).as_posix() for p in dest.rglob('*') if p.is_file()}
+              if members!=OUTPUTS: raise ValueError('staged output roster mismatch')
+              pathlib.Path(receipt).write_text(json.dumps({'profile':'umf.gen1.g0-source-output/1','outputs':rows},sort_keys=True,indent=2)+'\n')
+              result=subprocess.run(['git','diff','--binary','--',*sorted(OUTPUTS)],cwd=ROOT,check=True,stdout=subprocess.PIPE).stdout
+              pathlib.Path(patch).write_bytes(result)
+
+          CONTROLLER_PATHS = [
+              'scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/source-closure.ts',
+              'tools/tests/test_codegen_resource_literals.py','tools/generate_codegen_resource_literals.py',
+              'scripts/sync-python-resources.py','scripts/rust-migration/r4/sync_codegen_resources.py',
+              'scripts/actions-plan-identity.ts','tools/generate_schema_metas_utf16.py',
+              'tools/generate_operation_schema_utf16.py','scripts/check-release-versions.py',
+              'tests/qualification/test_merged_source_generation.py',
+              'scripts/check-rust-boundaries.py',
+          ]
+          STAGES = [*(f'A{i}' for i in range(1,5)), *(f'B{i}' for i in range(1,5)), *(f'C{i}' for i in range(1,9))]
+          def source_patch_paths(raw):
+              paths=[]
+              for line in raw.decode('utf-8').splitlines():
+                  if line.startswith('diff --git a/'):
+                      pair=line[len('diff --git a/'):].split(' b/',1)
+                      if len(pair)!=2 or pair[0]!=pair[1]: raise ValueError('rename or malformed output patch')
+                      paths.append(pair[0])
+                  elif line.startswith(('old mode ','new mode ','new file mode ','deleted file mode ','rename from ','rename to ','copy from ','copy to ')):
+                      raise ValueError('output patch changes mode/type or renames')
+              if len(paths)!=len(set(paths)) or not set(paths)<=OUTPUTS: raise ValueError('source patch escapes closed 34-output roster')
+              return set(paths)
+          def source_identity(path):
+              commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+              tree=subprocess.check_output(['git','rev-parse','HEAD^{tree}'],cwd=ROOT,text=True).strip()
+              workflow=' .github/workflows/merged-source-generation.yml'.strip()
+              hashes={name:hashlib.sha256(safe_regular(name).read_bytes()).hexdigest() for name in [workflow,*CONTROLLER_PATHS]}
+              row={'profile':'umf.gen1.source-controller/1','repository':os.environ.get('GITHUB_REPOSITORY'),'event':os.environ.get('GITHUB_EVENT_NAME'),'ref':os.environ.get('GITHUB_REF'),'sourceSha':commit,'treeSha':tree,'githubSha':os.environ.get('GITHUB_SHA'),'runId':os.environ.get('GITHUB_RUN_ID'),'runAttempt':os.environ.get('GITHUB_RUN_ATTEMPT'),'job':os.environ.get('GITHUB_JOB'),'workflowPath':workflow,'workflowSha256':hashes[workflow],'controllerSources':{p:hashes[p] for p in CONTROLLER_PATHS}}
+              if row['repository']!='DocumentDrivenDX/umf' or row['event']!='workflow_dispatch' or row['githubSha']!=commit or not row['runId'] or not row['runAttempt'] or row['job']!='generate': raise ValueError('candidate workflow/run/job binding mismatch')
+              pathlib.Path(path).write_text(json.dumps(row,sort_keys=True,indent=2)+'\n')
+          def validate_status(path):
+              rows={}
+              for line in pathlib.Path(path).read_text().splitlines():
+                  parts=line.split()
+                  if len(parts)!=2 or parts[0] in rows: raise ValueError('invalid/duplicate full-route stage status')
+                  rows[parts[0]]=int(parts[1])
+              if list(rows)!=STAGES or any(code!=0 for code in rows.values()): raise ValueError('full A/B/C route did not pass every required stage')
+          def complete(directory,initial_path,final_path,attestation_path):
+              d=pathlib.Path(directory); validate_status(d/'stages/status.txt')
+              initial=load(initial_path); final=load(final_path); att=load(attestation_path)
+              if set(final['outputs'])!=OUTPUTS or set(initial['outputs'])!=OUTPUTS: raise ValueError('final closed output roster mismatch')
+              validate_compiler_attestation(final,att)
+              verify_source_attestation(att.get('sourceAttestation',{}).get('sources'))
+              verify_compiler_artifact(att.get('compilerArtifact',{}),att.get('executable',{}),d)
+              verify_pins(initial)
+              oracle=load(d/'stages/C.oracle.json'); validate_oracle_receipt(final,oracle)
+              receipt=load(d/'output-receipt.json')
+              if receipt.get('profile')!='umf.gen1.g0-source-output/1' or receipt.get('outputs')!=final['outputs']: raise ValueError('source output receipt does not match final C roster')
+              patch=pathlib.Path(d/'final-source.patch').read_bytes()
+              changed={path for path in OUTPUTS if initial['outputs'][path]!=final['outputs'][path]}
+              if source_patch_paths(patch)!=changed: raise ValueError('final source patch differs from exact initial-to-final output delta')
+              identity=load(d/'source-controller.json')
+              evidence={'profile':'umf.gen1.full-source-generation/1','success':True,'identity':identity,'stages':{name:hashlib.sha256((d/'stages'/(name+'.log')).read_bytes()).hexdigest() for name in STAGES},'initialRosterSha256':hashlib.sha256(pathlib.Path(initial_path).read_bytes()).hexdigest(),'finalRosterSha256':hashlib.sha256(pathlib.Path(final_path).read_bytes()).hexdigest(),'rawNineOracleSha256':hashlib.sha256((d/'stages/C.oracle.json').read_bytes()).hexdigest(),'finalAttestationSha256':hashlib.sha256(pathlib.Path(attestation_path).read_bytes()).hexdigest(),'outputReceiptSha256':hashlib.sha256((d/'output-receipt.json').read_bytes()).hexdigest(),'sourcePatchSha256':hashlib.sha256(patch).hexdigest(),'outputCount':len(receipt['outputs'])}
+              (d/'success-receipt.json').write_text(json.dumps(evidence,sort_keys=True,indent=2)+'\n')
+          def failure(directory):
+              d=pathlib.Path(directory)
+              try: observed=roster()
+              except Exception as error: observed={'error':str(error),'validOutputHashes':{}}
+              if 'validOutputHashes' in observed:
+                  for name in sorted(OUTPUTS):
+                      try: observed['validOutputHashes'][name]=filemap({name})[name]
+                      except Exception as error: observed['validOutputHashes'][name]={'error':str(error)}
+              (d/'observed-files.json').write_text(json.dumps(observed,sort_keys=True,indent=2)+'\n')
+              diff=subprocess.run(['git','diff','--binary','--',*sorted(OUTPUTS)],cwd=ROOT,check=False,stdout=subprocess.PIPE).stdout
+              (d/'failure-source.patch').write_bytes(diff)
+              status=(d/'stages/status.txt').read_text() if (d/'stages/status.txt').exists() else ''
+              (d/'failure-summary.json').write_text(json.dumps({'profile':'umf.gen1.failure/1','success':False,'status':status},sort_keys=True,indent=2)+'\n')
+          def main():
+              op,*args=sys.argv[1:]
+              if op=='identity': source_identity(args[0])
+              elif op=='snapshot': save(args[0])
+              elif op=='inputs': save_inputs(args[0])
+              elif op=='finalize': finalize(*args)
+              elif op=='oracle': pure_oracle(*args)
+              elif op=='attest': attest(*args)
+              elif op=='package': package(*args)
+              elif op=='complete': complete(*args)
+              elif op=='failure': failure(*args)
+              else: raise ValueError('unknown full route operation: '+op)
+          if __name__=='__main__': main()
+          PYTHON
+          python -I "$RUNNER_TEMP/merged_source_generation.py" identity "$ARTIFACT_DIR/source-controller.json"
+          bun --version > "$ARTIFACT_DIR/bun-version.txt"
+          python --version > "$ARTIFACT_DIR/python-version.txt"
+          rustc --version > "$ARTIFACT_DIR/rust-version.txt"
 
       - name: Install locked JavaScript build inputs
         timeout-minutes: 12
@@ -71,53 +366,61 @@ jobs:
         timeout-minutes: 10
         run: cargo fetch --locked
 
-      - name: Generate and check current source artifacts
+      - name: Run full A/B/C source generation and custody checks
         timeout-minutes: 25
         shell: bash
         run: |
           set -euo pipefail
-          bun scripts/metamodel/build.ts
-          bun scripts/actions-plan-identity.ts
-          bun scripts/actions-plan-identity.ts --check
-          python3 scripts/check-rust-boundaries.py
+          python -I "$RUNNER_TEMP/merged_source_generation.py" inputs "$ARTIFACT_DIR/source-inputs.json"
+          run_stage() {
+            name="$1"; shift
+            set +e
+            "$@" > "$ARTIFACT_DIR/stages/$name.log" 2>&1
+            result=$?
+            set -e
+            printf '%s %s\n' "$name" "$result" | tee -a "$ARTIFACT_DIR/stages/status.txt"
+            cat "$ARTIFACT_DIR/stages/$name.log"
+            test "$result" -eq 0
+          }
+          run_stage A1 bun scripts/metamodel/build.ts
+          run_stage A2 python -I tools/generate_codegen_resource_literals.py
+          run_stage A3 python -I scripts/sync-python-resources.py --write
+          run_stage A4 bun scripts/actions-plan-identity.ts
+          python -I "$RUNNER_TEMP/merged_source_generation.py" snapshot "$ARTIFACT_DIR/stages/A.roster.json"
+          run_stage B1 bun scripts/metamodel/build.ts
+          run_stage B2 python -I tools/generate_codegen_resource_literals.py
+          run_stage B3 python -I scripts/sync-python-resources.py --write
+          run_stage B4 bun scripts/actions-plan-identity.ts
+          python -I "$RUNNER_TEMP/merged_source_generation.py" finalize "$ARTIFACT_DIR/source-inputs.json" "$ARTIFACT_DIR/stages/A.roster.json" "$ARTIFACT_DIR/stages/B.roster.json"
+          python -I "$RUNNER_TEMP/merged_source_generation.py" snapshot "$ARTIFACT_DIR/stages/C.roster.json"
+          run_stage C1 bun scripts/metamodel/build.ts --check
+          run_stage C2 python -I tools/generate_codegen_resource_literals.py --check
+          run_stage C3 python -I scripts/sync-python-resources.py --check
+          run_stage C4 bun scripts/actions-plan-identity.ts --check
+          run_stage C5 python -I tools/generate_schema_metas_utf16.py --check
+          run_stage C6 python -I tools/generate_operation_schema_utf16.py --check
+          run_stage C7 python -I scripts/check-release-versions.py
+          run_stage C8 python -I scripts/check-rust-boundaries.py
+          python -I "$RUNNER_TEMP/merged_source_generation.py" oracle "$ARTIFACT_DIR/stages/C.oracle.json" "$ARTIFACT_DIR/stages/C.roster.json"
+          bun -e "import {readFile} from 'node:fs/promises'; import {rustMetamodel,nativeMetamodelExecutable} from './scripts/metamodel/rust.ts'; const m=JSON.parse(await readFile('spec/metamodel/generated/manifest.json','utf8')); const r=rustMetamodel(['outputs','--input','spec/metamodel/umf.yaml','--compiler-sha256',m.provenance.compilerSha256],undefined,{sourceBound:true}); const exe=nativeMetamodelExecutable(); const fs=await import('node:fs'); const h=await import('node:crypto'); const sha=b=>h.createHash('sha256').update(b).digest('hex'); const outputs=Object.fromEntries(r.outputs.map(x=>[x.path,sha(x.contents)])); if(r.profile!=='umf.metamodel.compile/1'||r.modelSha256!==m.provenance.modelSha256||r.compilerSha256!==m.provenance.compilerSha256) throw Error('final model/compiler identity mismatch'); const rustExpected=['spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','spec/core/facet-operation-v3.schema.json','spec/core/cardinality-operation-v4.schema.json','spec/core/kind-operation-v6.schema.json','spec/core/nullability-operation-v5.schema.json','spec/core/key-operation-v2.schema.json','spec/core/record-type-operation-v6.schema.json','spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json','spec/metamodel/generated/python-shapes.json','python/umf_access/src/umf_access/generated_core.py','src/generated/core-model.ts']; const backendOnly=['src/generated/core-validators.ts','src/generated/core-validators-accounted.ts']; const rustKeys=Object.keys(outputs); if(rustKeys.length!==rustExpected.length||rustExpected.some(p=>!Object.hasOwn(outputs,p))) throw Error('final Rust portable output roster mismatch'); const expectedManifest=[...rustExpected,...backendOnly].sort(); const manifestKeys=Object.keys(m.outputs).sort(); if(JSON.stringify(manifestKeys)!==JSON.stringify(expectedManifest)) throw Error('final generated manifest roster mismatch'); for(const [p,row] of Object.entries(m.outputs)){const bytes=fs.readFileSync(p); if(bytes.length!==row.bytes||sha(bytes)!==row.sha256) throw Error('final generated output mismatch '+p); if(Object.hasOwn(outputs,p)&&outputs[p]!==row.sha256) throw Error('final Rust output mismatch '+p);} const a=r.sourceAttestation; if(!a?.binarySha256||!a.sources||!Object.keys(a.sources).length) throw Error('missing final source attestation'); for(const [p,d] of Object.entries(a.sources)) if(sha(fs.readFileSync(p))!==d) throw Error('source attestation mismatch '+p); const stat=fs.lstatSync(exe); if(!stat.isFile()||stat.isSymbolicLink()) throw Error('native executable is not a regular file'); const bytes=fs.readFileSync(exe); if(sha(bytes)!==a.binarySha256) throw Error('native executable mismatch'); if(bytes.length<20||bytes[0]!==0x7f||bytes[1]!==0x45||bytes[2]!==0x4c||bytes[3]!==0x46||bytes[4]!==2||bytes[5]!==1||bytes.readUInt16LE(18)!==62) throw Error('compiler is not ELF64 little-endian x86_64'); const rel='compiler-evidence/umf-metamodel-cli'; fs.mkdirSync(process.env.ARTIFACT_DIR+'/'+rel.slice(0,rel.lastIndexOf('/'))); fs.writeFileSync(process.env.ARTIFACT_DIR+'/'+rel,bytes,{flag:'wx',mode:0o444}); const staged=fs.readFileSync(process.env.ARTIFACT_DIR+'/'+rel); if(sha(staged)!==a.binarySha256||staged.length!==bytes.length) throw Error('staged compiler executable mismatch'); fs.writeFileSync(process.env.ARTIFACT_DIR+'/final-attestation.json',JSON.stringify({profile:r.profile,modelSha256:r.modelSha256,compilerSha256:r.compilerSha256,sourceAttestation:{sources:a.sources,binarySha256:a.binarySha256},executable:{path:exe,bytes:bytes.length,sha256:a.binarySha256},compilerArtifact:{path:rel,bytes:staged.length,sha256:sha(staged)},portableOutputs:outputs},null,2)+'\n');"
+          python -I "$RUNNER_TEMP/merged_source_generation.py" attest "$ARTIFACT_DIR/stages/C.roster.json" "$ARTIFACT_DIR/stages/C.oracle.json" "$ARTIFACT_DIR/final-attestation.json" "$ARTIFACT_DIR/source-inputs.json" "$ARTIFACT_DIR"
+          python -I "$RUNNER_TEMP/merged_source_generation.py" package "$ARTIFACT_DIR" "$ARTIFACT_DIR/output-receipt.json" "$ARTIFACT_DIR/final-source.patch" "$ARTIFACT_DIR/source-inputs.json"
+          python -I "$RUNNER_TEMP/merged_source_generation.py" complete "$ARTIFACT_DIR" "$ARTIFACT_DIR/source-inputs.json" "$ARTIFACT_DIR/stages/C.roster.json" "$ARTIFACT_DIR/final-attestation.json"
 
-      - name: Verify and stage generated output files
-        timeout-minutes: 1
+      - name: Retain failure evidence
+        if: failure() || cancelled()
         shell: bash
         run: |
-          set -euo pipefail
-          python -I - <<'PYTHON'
-          import hashlib, json, os, pathlib, shutil
-          root = pathlib.Path.cwd()
-          destination = pathlib.Path(os.environ['ARTIFACT_DIR'])
-          manifest_path = 'spec/metamodel/generated/manifest.json'
-          manifest = json.loads((root / manifest_path).read_text())
-          outputs = manifest['outputs']
-          if not isinstance(outputs, dict) or not outputs:
-              raise SystemExit('Generated output manifest is empty')
-          paths = set(outputs) | {manifest_path, 'src/extensions/actions/plan-identity.ts'}
-          for relative in sorted(paths):
-              path = pathlib.PurePosixPath(relative)
-              if path.is_absolute() or '..' in path.parts:
-                  raise SystemExit('Invalid generated output path: ' + relative)
-              source = root / relative
-              if source.is_symlink() or not source.is_file():
-                  raise SystemExit('Generated output is not a regular file: ' + relative)
-              data = source.read_bytes()
-              if relative in outputs:
-                  row = outputs[relative]
-                  if row['bytes'] != len(data) or row['sha256'] != hashlib.sha256(data).hexdigest():
-                      raise SystemExit('Generated output differs from its current manifest: ' + relative)
-              target = destination / relative
-              target.parent.mkdir(parents=True, exist_ok=True)
-              shutil.copyfile(source, target)
-          PYTHON
+          set +e
+          git status --porcelain=v1 > "$ARTIFACT_DIR/failure-status.txt"
+          python -I "$RUNNER_TEMP/merged_source_generation.py" failure "$ARTIFACT_DIR"
 
-      - name: Upload current generated outputs
+      - name: Upload full source generation evidence
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # immutable upload-artifact action
         timeout-minutes: 1
         with:
           name: umf-merged-source-generated-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ env.ARTIFACT_DIR }}/**
+          path: ${{ env.ARTIFACT_DIR }}
           if-no-files-found: error
           retention-days: 14

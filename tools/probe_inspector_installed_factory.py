@@ -147,21 +147,133 @@ RAW_PATHS=('spec/core/schema.json','spec/core/semantic-type-reference.schema.jso
 
 REQUIRED_SOURCE+=RAW_PATHS+(CURRENT_FIXTURE,'tests/qualification/fixtures/inspector-retained-resources.json','python/pyproject.toml','python/src/umf/__init__.py','tools/verify_python_artifacts.py')
 
+CANDIDATE_VERSION='0.10.11'
+CANDIDATE_FIXTURE='tests/qualification/fixtures/inspector-installed-candidate-01011-resources.json'
+CANDIDATE_PROFILE='umf.inspector-installed-canonical-candidate-resources/1'
+GEN1_WORKFLOW='.github/workflows/merged-source-generation.yml'
+GEN1_MANIFEST='spec/metamodel/generated/manifest.json'
+GEN1_OUTPUT_RECEIPT='tests/qualification/fixtures/inspector-gen1-01011/output-receipt.json'
+GEN1_ATTESTATION='tests/qualification/fixtures/inspector-gen1-01011/final-attestation.json'
+GEN1_MEMBER_PINS=((GEN1_MANIFEST,'outputManifestSHA256'),
+                  (GEN1_OUTPUT_RECEIPT,'correspondenceReceiptSHA256'),
+                  (GEN1_ATTESTATION,'finalAttestationSHA256'))
+GEN1_FIELDS=('sourceCommit','sourceTree','workflowPath','workflowSHA256',
+             'runId','attempt','jobId','artifactId','artifactDigest',
+             'outputManifestSHA256','correspondenceReceiptSHA256',
+             'finalAttestationSHA256','compilerSHA256','compilerBinarySHA256')
+
+# Populated only after independent custody review of an actual selected GEN1.
+CANDIDATE_ADMISSION=None
+
+def candidate_generation(root,selected,binding,value):
+    admission=CANDIDATE_ADMISSION
+    closed(admission,('fixtureSHA256','generation'))
+    generation=value['generation']
+    closed(generation,GEN1_FIELDS)
+    require(admission['fixtureSHA256']==binding['fixtureSHA256']
+            and admission['generation']==generation,'Selected GEN1 admission differs')
+    for key in ('sourceCommit','sourceTree'):
+        require(type(generation[key])is str and re.fullmatch('[a-f0-9]{40}',generation[key]),
+                'GEN1 source commit/tree differs')
+    for key in ('runId','attempt','jobId','artifactId'):
+        require(type(generation[key])is str and re.fullmatch('[1-9][0-9]*',generation[key]),
+                'GEN1 Actions identity differs: '+key)
+    require(generation['workflowPath']==GEN1_WORKFLOW,'Selected GEN1 workflow differs')
+    for key in ('workflowSHA256','artifactDigest','compilerSHA256','compilerBinarySHA256',
+                *(key for _,key in GEN1_MEMBER_PINS)):
+        hexsha(generation[key])
+    require(sha(safe(root,GEN1_WORKFLOW))==generation['workflowSHA256']
+            and selected['sourceFiles'].get(GEN1_WORKFLOW)==generation['workflowSHA256'],
+            'Selected GEN1 workflow source custody differs')
+    require(len({generation[key] for _,key in GEN1_MEMBER_PINS})==3,
+            'GEN1 producer artifact roles must be distinct')
+    members=[]
+    for path,key in GEN1_MEMBER_PINS:
+        raw=safe(root,path).read_bytes()
+        require(digest(raw)==generation[key] and selected['sourceFiles'].get(path)==generation[key],
+                'GEN1 producer member custody differs: '+path)
+        members.append((raw,json.loads(raw)))
+    (manifest_bytes,manifest),(_,receipt),(_,attestation)=members
+    closed(receipt,('profile','outputs'))
+    require(receipt['profile']=='umf.gen1.g0-source-output/1' and type(receipt['outputs'])is dict,
+            'Raw GEN1 output receipt required')
+    literal=value['literalData']
+    for path,length,expected in (
+            (GEN1_MANIFEST,len(manifest_bytes),generation['outputManifestSHA256']),
+            (literal['path'],safe(root,literal['path']).stat().st_size,literal['sha256'])):
+        require(receipt['outputs'].get(path)=={'bytes':length,'sha256':expected},
+                'Raw GEN1 output receipt source correspondence differs: '+path)
+    model=value['candidateModelSHA256']
+    hexsha(model)
+    require(selected.get('modelSHA256')==model,'Candidate reviewed model binding differs')
+    require(type(manifest)is dict and manifest.get('profile')=='umf.metamodel.outputs/1'
+            and manifest.get('provenance')=={'modelSha256':model,'compilerSha256':generation['compilerSHA256']},
+            'Final GEN1 manifest identity differs')
+    closed(attestation,('profile','modelSha256','compilerSha256','sourceAttestation',
+                        'executable','compilerArtifact','portableOutputs'))
+    require(attestation['profile']=='umf.metamodel.compile/1' and attestation['modelSha256']==model
+            and attestation['compilerSha256']==generation['compilerSHA256'],
+            'Final GEN1 attestation identity differs')
+    source=attestation['sourceAttestation']
+    closed(source,('sources','binarySha256'))
+    require(type(source['sources'])is dict and bool(source['sources'])
+            and source['binarySha256']==generation['compilerBinarySHA256'],
+            'Final GEN1 attested compiler differs')
+    executable=attestation['compilerArtifact']
+    closed(executable,('path','bytes','sha256'))
+    require(executable['path']=='compiler-evidence/umf-metamodel-cli'
+            and type(executable['bytes'])is int and executable['bytes']>0
+            and executable['sha256']==generation['compilerBinarySHA256'],
+            'Final GEN1 staged compiler differs')
+    runner_executable=attestation['executable']
+    closed(runner_executable,('path','bytes','sha256'))
+    require(type(runner_executable['path'])is str and Path(runner_executable['path']).is_absolute()
+            and runner_executable['bytes']==executable['bytes']
+            and runner_executable['sha256']==executable['sha256'],
+            'Final GEN1 runner/staged compiler identity differs')
+    portable=attestation['portableOutputs']
+    require(type(portable)is dict and bool(portable) and type(manifest.get('outputs'))is dict
+            and all(type(manifest['outputs'].get(path))is dict
+                    and manifest['outputs'][path].get('sha256')==expected
+                    for path,expected in portable.items()),'Final GEN1 portable outputs differ')
+    return generation
+
 def current_inputs(root,selected):
     """Authenticated PRIVATE assembly inputs. No caller version or legacy alias."""
     binding=selected.get('currentInputs')
     require(type(binding)is dict,'Current input bindings pending')
     closed(binding,('fixturePath','fixtureSHA256','metadataVersion'))
-    require(binding['fixturePath']==CURRENT_FIXTURE,'Wrong current fixture path')
+    fixture=binding['fixturePath']
+    candidate=fixture==CANDIDATE_FIXTURE
+    require(candidate or fixture==CURRENT_FIXTURE,'Unknown fixed current-input fixture')
+    if candidate:
+        require(CANDIDATE_ADMISSION is not None,'Candidate GEN1 admission pending')
     hexsha(binding['fixtureSHA256'])
-    require(selected['sourceFiles'].get(CURRENT_FIXTURE)==binding['fixtureSHA256'] and sha(safe(root,CURRENT_FIXTURE))==binding['fixtureSHA256'],'Current fixture source custody differs')
-    value=json.loads(safe(root,CURRENT_FIXTURE).read_text())
-    closed(value,('profile','inputProfile','maximumWork','baseline','historicalFixture','resources','encodingOnlyProducer','literalData','acceptance'))
-    require(value['profile']==CURRENT_PROFILE and value['inputProfile']==INPUT and type(value['maximumWork'])is int and value['maximumWork']==LIMIT,'Current fixture profile/allowance differs')
-    closed(value['baseline'],('mainCommit','mainTree','inheritedCoreDistributionVersion','scope'))
-    for key in ('mainCommit','mainTree'):require(type(value['baseline'][key])is str and re.fullmatch('[a-f0-9]{40}',value['baseline'][key])is not None,'Current baseline identity missing')
+    require(selected['sourceFiles'].get(fixture)==binding['fixtureSHA256']
+            and sha(safe(root,fixture))==binding['fixtureSHA256'],'Current fixture source custody differs')
+    value=json.loads(safe(root,fixture).read_text())
+    fields=('profile','inputProfile','maximumWork','baseline','historicalFixture','resources',
+            'encodingOnlyProducer','literalData','acceptance')
     version=binding['metadataVersion']
-    require(type(version)is str and re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+',version)is not None and version==value['baseline']['inheritedCoreDistributionVersion'],'Exact inherited private metadata differs')
+    if candidate:
+        closed(value,fields+('candidateArtifactVersion','bindingStatus','generation','candidateModelSHA256'))
+        require(value['profile']==CANDIDATE_PROFILE and value['bindingStatus']=='source-bound'
+                and version==value['candidateArtifactVersion']==CANDIDATE_VERSION,'Candidate fixture/version differs')
+    else:
+        closed(value,fields)
+        require(value['profile']==CURRENT_PROFILE and version=='0.10.9','Inherited fixture/version differs')
+    require(value['inputProfile']==INPUT and type(value['maximumWork'])is int
+            and value['maximumWork']==LIMIT,'Current fixture profile/allowance differs')
+    baseline=value['baseline']
+    closed(baseline,('mainCommit','mainTree','inheritedCoreDistributionVersion','scope'))
+    for key in ('mainCommit','mainTree'):
+        require(type(baseline[key])is str and re.fullmatch('[a-f0-9]{40}',baseline[key]) is not None,
+                'Current baseline identity missing')
+    require(baseline['inheritedCoreDistributionVersion']=='0.10.9','Exact inherited private metadata differs')
+    if candidate:
+        require(baseline['mainCommit']=='97ac05f17bc159d67c8eab931d3e0d66c85ee8f0'
+                and baseline['mainTree']=='ad128d5c2c910464befbee820739f6e97a5d64b7',
+                'Candidate baseline identity differs')
     import tomllib
     for name in ('python/pyproject.toml','python/src/umf/__init__.py'):
         require(name in selected['sourceFiles'] and sha(safe(root,name))==selected['sourceFiles'][name],'Metadata source pin differs')
@@ -180,7 +292,29 @@ def current_inputs(root,selected):
     for key,path in (('encodingOnlyProducer','tools/generate_codegen_resource_literals.py'),('literalData','crates/umf-core/src/canonical_codegen_literals.rs')):
         row=value[key];closed(row,('path','sha256'));hexsha(row['sha256'])
         require(row['path']==path and sha(safe(root,path))==row['sha256'] and selected['sourceFiles'].get(path)==row['sha256'],'Current DATA/producer source differs')
+    if candidate:
+        generation=candidate_generation(root,selected,binding,value)
+        return value,{'resourceFixture':fixture,'resourceFixtureSHA256':binding['fixtureSHA256'],
+                      'candidateArtifactVersion':version,'literalDataSHA256':value['literalData']['sha256'],
+                      'generation':generation,'scope':'private-candidate-component-only-not-release-proof'}
     return value,{'resourceFixture':CURRENT_FIXTURE,'resourceFixtureSHA256':binding['fixtureSHA256'],'inheritedPrivateMetadataVersion':version,'literalDataSHA256':value['literalData']['sha256'],'scope':'private-component-only-not-release-proof'}
+
+def input_metadata_version(identity):
+    require(type(identity)is dict,'Current input identity missing')
+    common={'resourceFixture','resourceFixtureSHA256','literalDataSHA256','scope'}
+    if set(identity)==common|{'inheritedPrivateMetadataVersion'}:
+        require(identity['resourceFixture']==CURRENT_FIXTURE
+                and identity['inheritedPrivateMetadataVersion']=='0.10.9'
+                and identity['scope']=='private-component-only-not-release-proof','Inherited metadata authority differs')
+        return identity['inheritedPrivateMetadataVersion']
+    closed(identity,common|{'candidateArtifactVersion','generation'})
+    require(identity['resourceFixture']==CANDIDATE_FIXTURE
+            and identity['candidateArtifactVersion']==CANDIDATE_VERSION
+            and identity['scope']=='private-candidate-component-only-not-release-proof'
+            and CANDIDATE_ADMISSION is not None
+            and identity['resourceFixtureSHA256']==CANDIDATE_ADMISSION['fixtureSHA256']
+            and identity['generation']==CANDIDATE_ADMISSION['generation'],'Candidate metadata authority differs')
+    return identity['candidateArtifactVersion']
 
 def installed_wheel(wheel,dist,version):
     """Version-aware archive/full RECORD/installed bytes; strict verifier remains.
@@ -318,7 +452,7 @@ def run(args):
     import umf._rust as wire
     import umf.rust_codegen as compiler
     import umf._rust_core as native
-    dist=metadata.distribution('umf-core');version=input_identity['inheritedPrivateMetadataVersion'];installed_wheel(args.wheel,dist,version)
+    dist=metadata.distribution('umf-core');version=input_metadata_version(input_identity);installed_wheel(args.wheel,dist,version)
     package=Path(compiler.__file__).resolve().parent
     require(dist.version==version and umf.__version__==version and native.engine_version()=='umf-core-r2' and native.codegen_protocol_version()=='umf-codegen-r3-seven-ops-nine-resources/1','Inherited private wheel version/protocol differs')
     base=Path(sysconfig.get_path('platlib')).resolve()

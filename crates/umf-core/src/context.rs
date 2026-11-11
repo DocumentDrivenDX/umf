@@ -220,7 +220,10 @@ impl<'a> Context<'a> {
     pub fn with_codegen_construction<T>(&mut self, operation: impl FnOnce(&mut Self) -> Result<T, EngineError>) -> Result<T, EngineError> {
         struct Scope<'c, 'a> { ctx: &'c mut Context<'a>, prior: Option<std::rc::Rc<std::cell::RefCell<crate::schema::ConstructionState>>> }
         impl Drop for Scope<'_, '_> { fn drop(&mut self) { self.ctx.schema_construction = self.prior.take(); } }
-        self.charge_work(1, Utf16::default())?;
+        // The first unit prices opening the cold construction state. Price
+        // the actual optional scope-slot layout on every initialization,
+        // including lifetimes that never open the Registry tail.
+        self.charge_work(1 + crate::schema::registry_catalogue_scope_slot_work(), Utf16::default())?;
         let prior = self.schema_construction.take();
         self.schema_construction = Some(std::rc::Rc::new(std::cell::RefCell::new(crate::schema::ConstructionState::default())));
         let mut scope = Scope { ctx: self, prior };

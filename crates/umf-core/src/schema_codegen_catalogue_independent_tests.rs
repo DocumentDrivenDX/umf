@@ -111,6 +111,158 @@ fn table_value() -> Value {
 }
 
 #[test]
+fn oc00_registry_scope_slot_is_priced_even_when_scope_never_opens() {
+    let charges = Rc::new(RefCell::new(Vec::new()));
+    let sink = charges.clone();
+    let mut meter = move |amount| {
+        sink.borrow_mut().push(amount);
+        Ok(())
+    };
+    let mut ctx = Context::catalog().with_host_control(&mut meter);
+    let before = ctx.charged_work();
+    ctx.with_codegen_construction(|_| Ok(())).unwrap();
+    let initialization_work = 1 + registry_catalogue_scope_slot_work();
+    assert_eq!(ctx.charged_work() - before, initialization_work as u64);
+    assert_eq!(*charges.borrow(), vec![initialization_work]);
+    assert_eq!(REGISTRY_CATALOGUE_SCOPE_PROBES, 4);
+    assert_eq!(REGISTRY_CATALOGUE_SCOPE_TOTAL_WORK, (REGISTRY_CATALOGUE_SCOPE_ENTRY_WORK
+        + REGISTRY_CATALOGUE_SCOPE_OPEN_WORK
+        + 4 * (REGISTRY_CATALOGUE_SCOPE_LOOKUP_WORK + REGISTRY_CATALOGUE_SCOPE_ATTEMPT_WORK
+            + REGISTRY_CATALOGUE_SCOPE_GUARD_WORK)
+        + REGISTRY_CATALOGUE_SCOPE_PUBLISH_WORK) as u64);
+}
+
+#[test]
+fn oc09_registry_tail_reuses_only_after_full_same_owner_comparison() {
+    with_catalogue(|_, catalogue, export, ctx| {
+        // Seed the genuine construction-owned catalogue through the existing
+        // Codegen handoff, then exercise the ordinary Registry compile path.
+        let root = Value::Bool(true);
+        CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+        let (results, events) = observed(|| {
+            with_registry_catalogue_reuse(export, ctx, |ctx| {
+                (0..4)
+                    .map(|_| CompiledSchema::compile(&root, export, ctx))
+                    .collect::<Result<Vec<_>, _>>()
+            })
+        });
+        let results = results?;
+        assert_eq!(results.len(), 4);
+        let first = events.iter().filter(|r| r.0 == "registry-tail-first-equality").collect::<Vec<_>>();
+        let reuses = events.iter().filter(|r| r.0 == "registry-tail-reuse").collect::<Vec<_>>();
+        assert_eq!(first.len(), 1, "the original ordered equality runs once before reuse");
+        assert!(first[0].1 > 20, "comparison includes the full admitted catalogue traversal");
+        assert_eq!(reuses.len(), 3, "only later same-owner Registry compiles may retire work");
+        assert!(reuses.iter().all(|r| r.1 == first[0].1));
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-proof-published").count(), 1);
+        Ok(())
+    });
+}
+
+#[test]
+fn oc10_registry_tail_declines_foreign_owner_and_scope_cleans_up_on_refusal() {
+    with_catalogue(|_, catalogue, export, ctx| {
+        let root = Value::Bool(true);
+        CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+        let foreign_owner = export.clone();
+        let (_, foreign_events) = observed(|| {
+            with_registry_catalogue_reuse(export, ctx, |ctx| {
+                CompiledSchema::compile(&root, &foreign_owner, ctx)?;
+                Ok(())
+            })
+        });
+        assert!(foreign_events.iter().any(|r| r.0 == "registry-tail-decline-owner"));
+        assert!(!foreign_events.iter().any(|r| r.0 == "registry-tail-reuse"));
+
+        let refusal: Result<(), EngineError> = with_registry_catalogue_reuse(export, ctx, |_ctx| {
+            Err(EngineError::new("OC_REFUSAL", Utf16::default(), "scope refusal"))
+        });
+        assert_eq!(refusal.unwrap_err().code, "OC_REFUSAL");
+        let (_, after_refusal) = observed(|| CompiledSchema::compile(&root, export, ctx));
+        assert!(!after_refusal.iter().any(|r| r.0.starts_with("registry-tail-")));
+        Ok(())
+    });
+}
+
+#[test]
+fn oc11_registry_tail_counts_every_declined_probe_and_stops_at_four() {
+    with_catalogue(|_, catalogue, export, ctx| {
+        let root = Value::Bool(true);
+        CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+        let foreign_owner = export.clone();
+        let (_, events) = observed(|| {
+            with_registry_catalogue_reuse(export, ctx, |ctx| {
+                for _ in 0..5 {
+                    CompiledSchema::compile(&root, &foreign_owner, ctx)?;
+                }
+                Ok(())
+            })
+        });
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-decline-owner").count(), 4);
+        assert!(!events.iter().any(|r| r.0 == "registry-tail-reuse"));
+        assert!(!events.iter().any(|r| r.0 == "registry-tail-decline-exhausted"));
+        Ok(())
+    });
+}
+
+#[test]
+fn oc12_registry_tail_invalidates_proof_after_caught_compile_error() {
+    with_catalogue(|_, catalogue, export, ctx| {
+        let root = Value::Bool(true);
+        let invalid = json(r#"{"type":7}"#);
+        CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+        let (_, events) = observed(|| {
+            with_registry_catalogue_reuse(export, ctx, |ctx| {
+                CompiledSchema::compile(&root, export, ctx)?;
+                assert!(CompiledSchema::compile(&invalid, export, ctx).is_err());
+                // The caller catches the error and proceeds. This must use
+                // the original full comparison because the proof was cleared.
+                CompiledSchema::compile(&root, export, ctx)?;
+                Ok(())
+            })
+        });
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-reuse").count(), 1);
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-decline-first-attempt-used").count(), 1);
+        Ok(())
+    });
+}
+
+#[test]
+fn oc13_registry_tail_invalidates_proof_after_caught_unwind() {
+    with_catalogue(|_, catalogue, export, ctx| {
+        let root = Value::Bool(true);
+        CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+        let events = Rc::new(RefCell::new(Vec::new()));
+        let sink = events.clone();
+        let panic_once = Rc::new(Cell::new(false));
+        let panic_flag = panic_once.clone();
+        observe_codegen_catalogue(
+            Box::new(move |event, amount| {
+                sink.borrow_mut().push((event, amount));
+                if event == "registry-tail-reuse" && !panic_flag.replace(true) {
+                    panic!("test unwind after same-owner Arc reuse");
+                }
+            }),
+            || {
+                with_registry_catalogue_reuse(export, ctx, |ctx| {
+                    CompiledSchema::compile(&root, export, ctx)?;
+                    let failed = catch_unwind(AssertUnwindSafe(|| {
+                        CompiledSchema::compile(&root, export, ctx)
+                    }));
+                    assert!(failed.is_err());
+                    CompiledSchema::compile(&root, export, ctx)?;
+                    Ok(())
+                })
+            },
+        )?;
+        assert!(panic_once.get());
+        assert_eq!(events.borrow().iter().filter(|r| r.0 == "registry-tail-reuse").count(), 1);
+        assert_eq!(events.borrow().iter().filter(|r| r.0 == "registry-tail-decline-first-attempt-used").count(), 1);
+        Ok(())
+    });
+}
+
+#[test]
 fn oc01_original_borrowed_root_first_mode_and_error_order() {
     with_catalogue(|_, c, export, ctx| {
         for root in [
@@ -538,6 +690,143 @@ fn oc08_reentry_unwind_and_independent_catalogue_isolation() {
         assert_eq!(after_epoch, current_epoch);
         let after_backing = after_backing.expect("later real dialect survives stale publication");
         assert!(Arc::ptr_eq(&current_backing, &after_backing));
+        Ok(())
+    });
+}
+
+
+#[test]
+fn oc14_live_proof_is_cleared_by_caught_early_host_refusal() {
+    let refuse_guard = Rc::new(Cell::new(false));
+    let meter_flag = refuse_guard.clone();
+    let mut meter = move |amount| {
+        if meter_flag.get() && amount == REGISTRY_CATALOGUE_SCOPE_GUARD_WORK {
+            Err(EngineError::new("OC_GUARD_REFUSAL", Utf16::default(), "early proof guard refusal"))
+        } else {
+            Ok(())
+        }
+    };
+    let mut ctx = Context::catalog().with_host_control(&mut meter);
+    let root = Value::Bool(true);
+    let (result, events) = observed(|| {
+        in_engine(&mut ctx, |engine, ctx| {
+            let export = engine.schema_resources_with_context(ctx)?;
+            let catalogue = engine.codegen_catalogue_with_context(ctx)?
+                .expect("actual completed admitted Engine");
+            CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+            with_registry_catalogue_reuse(&export, ctx, |ctx| {
+                CompiledSchema::compile(&root, &export, ctx)?;
+                refuse_guard.set(true);
+                let refused = CompiledSchema::compile(&root, &export, ctx).unwrap_err();
+                assert_eq!(refused.code, "OC_GUARD_REFUSAL");
+                refuse_guard.set(false);
+                CompiledSchema::compile(&root, &export, ctx)?;
+                Ok(())
+            })
+        })
+    });
+    result.unwrap();
+    assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-proof-published").count(), 1);
+    assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-first-attempt-used").count(), 1);
+    assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-reuse").count(), 0);
+    assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-fallback-equality").count(), 1,
+        "after the caught early refusal the valid call must traverse the full catalogue again");
+}
+
+#[test]
+fn oc15_prior_decline_then_match_cannot_publish_without_three_remaining_slots() {
+    with_catalogue(|_, catalogue, export, ctx| {
+        let root = Value::Bool(true);
+        CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+        let foreign_owner = export.clone();
+        let (_, events) = observed(|| {
+            with_registry_catalogue_reuse(export, ctx, |ctx| {
+                CompiledSchema::compile(&root, &foreign_owner, ctx)?;
+                CompiledSchema::compile(&root, export, ctx)?;
+                CompiledSchema::compile(&root, export, ctx)?;
+                CompiledSchema::compile(&root, export, ctx)?;
+                Ok(())
+            })
+        });
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-decline-owner").count(), 1);
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-first-equality").count(), 1,
+            "the post-decline match still performs and reports a full ordered comparison");
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-proof-published").count(), 0,
+            "two remaining hit slots cannot repay publication");
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-reuse").count(), 0);
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-decline-first-attempt-used").count(), 2);
+        Ok(())
+    });
+}
+
+
+#[test]
+fn oc16_live_proof_is_cleared_by_caught_early_guard_unwind() {
+    let panic_guard = Rc::new(Cell::new(false));
+    let meter_flag = panic_guard.clone();
+    let mut meter = move |amount| {
+        if meter_flag.get() && amount == REGISTRY_CATALOGUE_SCOPE_GUARD_WORK {
+            panic!("early guard host-control unwind");
+        }
+        Ok(())
+    };
+    let mut ctx = Context::catalog().with_host_control(&mut meter);
+    let root = Value::Bool(true);
+    let (result, events) = observed(|| {
+        in_engine(&mut ctx, |engine, ctx| {
+            let export = engine.schema_resources_with_context(ctx)?;
+            let catalogue = engine.codegen_catalogue_with_context(ctx)?
+                .expect("actual completed admitted Engine");
+            CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+            with_registry_catalogue_reuse(&export, ctx, |ctx| {
+                CompiledSchema::compile(&root, &export, ctx)?;
+                panic_guard.set(true);
+                let unwind = catch_unwind(AssertUnwindSafe(|| {
+                    CompiledSchema::compile(&root, &export, ctx)
+                }));
+                assert!(unwind.is_err());
+                panic_guard.set(false);
+                CompiledSchema::compile(&root, &export, ctx)?;
+                Ok(())
+            })
+        })
+    });
+    result.unwrap();
+    assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-proof-published").count(), 1);
+    assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-first-attempt-used").count(), 1);
+    assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-reuse").count(), 0);
+    assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-fallback-equality").count(), 1);
+}
+
+
+#[test]
+fn oc17_bad_registry_entry_dialect_clears_proof_and_preserves_error() {
+    with_catalogue(|_, catalogue, export, ctx| {
+        let root = Value::Bool(true);
+        let bad_dialect = Value::Object(vec![(
+            Utf16::from("$schema"),
+            Value::string_utf8("https://schemas.example.invalid/unknown"),
+        )]);
+        CompiledSchema::compile_with_codegen_catalogue(&root, &catalogue, ctx)?;
+        let (result, events) = observed(|| {
+            with_registry_catalogue_reuse(export, ctx, |ctx| {
+                CompiledSchema::compile(&root, export, ctx)?;
+                let error = CompiledSchema::compile(&bad_dialect, export, ctx).unwrap_err();
+                assert_eq!(error, EngineError::new(
+                    "SCHEMA_DIALECT",
+                    Utf16::default(),
+                    "Unsupported JSON Schema dialect",
+                ));
+                CompiledSchema::compile(&root, export, ctx)?;
+                Ok(())
+            })
+        });
+        result?;
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-proof-published").count(), 1);
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-reuse").count(), 0);
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-decline-first-attempt-used").count(), 1);
+        assert_eq!(events.iter().filter(|r| r.0 == "registry-tail-fallback-equality").count(), 1,
+            "after dialect refusal, the next eligible Registry call must perform ordered comparison");
         Ok(())
     });
 }

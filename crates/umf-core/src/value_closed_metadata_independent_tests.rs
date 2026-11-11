@@ -803,3 +803,124 @@ fn nested_reentry_unwind_and_host_recovery_never_return_partial_metadata() {
     admit(fixture(), "coreSchema", &mut recovered, &mut |_| {}).unwrap();
     assert!(recovered.charged_work() > before);
 }
+
+// Synthetic private corrupt hints below are adversarial controls, not factory
+// qualification or a production count source. Counts used by real production
+// are sealed materializer results; this recursion is an independent test oracle.
+fn sizing_count(v:&Value)->usize{1+match v{Value::Array(a)=>a.iter().map(sizing_count).sum(),Value::Object(o)=>o.iter().map(|(_,v)|sizing_count(v)).sum(),_=>0}}
+fn sizing_hint(n:usize,op:&OwnedCoreOperation,ctx:&mut Context<'_>)->FactoryRowHint{
+    FactoryRowHint::from_count(n,op.count_custody(ctx).unwrap().as_ref(),ctx).unwrap().unwrap()
+}
+fn once_root_fallback_and_frontier_controls(){
+    // Nonobjects use the original Paid visitor. Aside from the ONE root-kind
+    // predebit, its exact callbacks/events/rows must be unchanged.
+    for value in [Value::Null,Value::Bool(true),Value::Number(1.0),Value::String(Utf16::new(vec![0xd800])),Value::Array(vec![Value::Null,fixture()])] {
+        let old_work=RefCell::new(Vec::new());let new_work=RefCell::new(Vec::new());
+        let old_events=RefCell::new(Vec::new());let new_events=RefCell::new(Vec::new());
+        let mut old_meter=|n|{old_work.borrow_mut().push(n);Ok(())};
+        let mut new_meter=|n|{new_work.borrow_mut().push(n);Ok(())};
+        let old=admit_factory_json(value.clone(),&mut Context::catalog().with_meter(&mut old_meter),&mut |e|old_events.borrow_mut().push(e)).unwrap();
+        let mut ctx=Context::catalog().with_meter(&mut new_meter);
+        OwnedCoreOperation::with_context(&mut ctx,|ctx,op|{
+            let hint=sizing_hint(sizing_count(&value),op,ctx);new_work.borrow_mut().clear();
+            let actual=admit_factory_json_sized::<false>(value.clone(),hint,ctx,&mut |e|new_events.borrow_mut().push(e))?;
+            assert_eq!(actual.0,old.0);assert_eq!(rows(&actual.1.unwrap()),rows(&old.1.as_ref().unwrap()));
+            assert_eq!(new_work.borrow()[0],factory_root_kind_work());
+            assert_eq!(&new_work.borrow()[1..],old_work.borrow().as_slice());
+            assert_eq!(*new_events.borrow(),*old_events.borrow());Ok(())
+        }).unwrap();
+    }
+    // Root frontier is refused before existing reserve/start/row events.
+    // Descendant depth failure remains on the ORIGINAL recursive walker.
+    for (value,limits) in [
+        (Value::Object(vec![(Utf16::from("a"),Value::Null),(Utf16::from("b"),Value::Null)]),{let mut l=Context::catalog().limits();l.max_values=2;l}),
+        (Value::Object(vec![(Utf16::from("q/~"),Value::Array(vec![Value::Null]))]),{let mut l=Context::catalog().limits();l.max_depth=0;l}),
+    ] {
+        let expected=original(value.clone(),"#",limits).unwrap_err();
+        OwnedCoreOperation::with_context(&mut context(limits),|ctx,op|{
+            let hint=sizing_hint(sizing_count(&value),op,ctx);let mut events=Vec::new();
+            let error=admit_factory_json_sized::<false>(value.clone(),hint,ctx,&mut |e|events.push(e)).unwrap_err();
+            assert_eq!(error.code,expected.code);assert_eq!(error.path,expected.path);assert_eq!(error.message,expected.message);
+            if limits.max_values==2{assert!(events.is_empty());}
+            assert!(!events.contains(&"closed-structure-publication"));Ok(())
+        }).unwrap();
+    }
+}
+fn sizing_ordering_a_control(){
+    let invalid=Value::Object(vec![(Utf16::from("x"),Value::Null),(Utf16::from("x"),Value::Number(f64::NAN))]);
+    let n=sizing_count(&invalid);let enabled=Cell::new(false);let calls=Cell::new(0usize);let target=Cell::new(None);
+    let mut meter=|_|{if enabled.get(){calls.set(calls.get()+1);}Ok(())};
+    OwnedCoreOperation::with_context(&mut Context::catalog().with_host_control(&mut meter),|ctx,op|{
+        let hint=sizing_hint(n,op,ctx);enabled.set(true);
+        let error=admit_factory_json_sized::<false>(invalid.clone(),hint,ctx,&mut |e|{if e=="closed-row-growth"{target.set(Some(calls.get()));}}).unwrap_err();
+        enabled.set(false);assert_eq!(error.code,"DUPLICATE_KEY");assert_eq!(error.path,Utf16::from("#"));Ok(())
+    }).unwrap();
+    let target=target.get().unwrap();let enabled=Cell::new(false);let seen=Cell::new(0usize);let refused=Cell::new(false);let late=Cell::new(0usize);
+    let mut control=|_|{if refused.get(){late.set(late.get()+1);}if enabled.get(){let at=seen.get()+1;seen.set(at);if at==target{refused.set(true);return Err(EngineError::new("RESOURCE_LIMIT",Utf16::from("#"),"actual allocation control refusal"));}}Ok(())};
+    OwnedCoreOperation::with_context(&mut Context::catalog().with_host_control(&mut control),|ctx,op|{
+        let hint=sizing_hint(n,op,ctx);enabled.set(true);
+        let error=admit_factory_json_sized::<false>(invalid,hint,ctx,&mut |_|{}).unwrap_err();enabled.set(false);
+        assert_eq!(error.code,"RESOURCE_LIMIT");assert_eq!(error.message,Utf16::from("actual allocation control refusal"));assert_eq!(error.path,Utf16::from("#"));assert_eq!(late.get(),0);Ok(())
+    }).unwrap();
+}
+
+#[test]
+fn installed_exact_reserve_preserves_original_root_errors_and_declines_wrong_count() {
+    once_root_fallback_and_frontier_controls();
+    sizing_ordering_a_control();
+    let value = fixture();
+    for count in [sizing_count(&value) - 1, sizing_count(&value), sizing_count(&value) + 1] {
+        OwnedCoreOperation::with_context(&mut Context::catalog(), |ctx, operation| {
+            let hint = sizing_hint(count, operation, ctx);
+            let mut events = Vec::new();
+            let (actual, structure) = admit_factory_json_sized::<false>(value.clone(), hint, ctx, &mut |event| events.push(event))?;
+            assert_eq!(actual, value);
+            let exact = count == sizing_count(&value);
+            assert_eq!(structure.is_some(), exact);
+            assert_eq!(events.contains(&"closed-structure-publication"), exact);
+            if let Some(structure) = structure {
+                assert_eq!(rows(&structure), rows(&generic(value.clone(), ctx.limits())));
+                assert_eq!(events.iter().filter(|&&event| event == "closed-row-growth").count(), 1);
+            }
+            Ok(())
+        }).unwrap();
+    }
+}
+
+#[test]
+fn installed_root_only_facts_match_original_coordinates_and_distinct_anchor_meanings() {
+    let nested_nonstring = Value::Object(vec![
+        (Utf16::from("$dynamicAnchor"), Value::Null),
+        (Utf16::from("$recursiveAnchor"), Value::Bool(true)),
+        (Utf16::from("id"), Value::Array(vec![Value::Object(vec![])])),
+    ]);
+    let empty_leaf = Value::Object(vec![
+        (Utf16::from("nested"), Value::Array(vec![Value::Array(vec![Value::Object(vec![])])])),
+    ]);
+    for value in [fixture(), Value::Object(vec![(Utf16::from("child"), nested_nonstring)]),
+                  empty_leaf, Value::Object(vec![])] {
+        OwnedCoreOperation::with_context(&mut Context::catalog(), |ctx, operation| {
+            let expected = admit_factory_json(value.clone(), ctx, &mut |_| {})?.1.unwrap();
+            let hint = sizing_hint(sizing_count(&value), operation, ctx);
+            let mut events = Vec::new();
+            let (actual, structure) = admit_factory_json_sized::<true>(value.clone(), hint, ctx, &mut |e| events.push(e))?;
+            assert_eq!(actual, value);
+            let structure = structure.unwrap();
+            assert_eq!(row(&structure, 0), row(&expected, 0));
+            assert_eq!(structure.extent(), expected.extent());
+            for i in 1..structure.extent() {
+                let actual = row(&structure, i);
+                let expected = row(&expected, i);
+                assert_eq!((actual.0, actual.1, actual.2, actual.3, actual.4, actual.5, actual.6 & 3),
+                           (expected.0, expected.1, expected.2, expected.3, expected.4, expected.5, expected.6 & 3));
+            }
+            let facts = structure.core_role_facts().unwrap();
+            let expected_facts = expected.core_role_facts().unwrap();
+            assert_eq!((facts.root_id, facts.nested_id, facts.anchors),
+                       (expected_facts.root_id, expected_facts.nested_id, expected_facts.anchors));
+            assert!(events.contains(&"closed-core-root-only"));
+            assert!(!events.contains(&"closed-child-summary"));
+            Ok(())
+        }).unwrap();
+    }
+}

@@ -4,8 +4,18 @@
 use super::*;
 use std::marker::PhantomData;
 type Brand<'r> = PhantomData<&'r mut &'r ()>;
-#[derive(Default)]
-enum Mode {#[default] Fresh, Compact, Checked(Traversal), Unavailable}
+enum Mode {
+    CoreRootOnly { max_depth: u32, nested_dynamic: bool },
+    Compact,
+    Checked(Traversal),
+    Unavailable,
+}
+// Keep the original owning collector header and word-based fees. The
+// root-only payload fits the existing checked-traversal storage.
+#[allow(dead_code)]
+enum OriginalModeLayout { Fresh, Compact, Checked(Traversal), Unavailable }
+const _: () = assert!(std::mem::size_of::<Mode>() == std::mem::size_of::<OriginalModeLayout>()
+    && std::mem::align_of::<Mode>() == std::mem::align_of::<OriginalModeLayout>());
 pub(crate) struct ClosedRoot<'r> {state:Option<State>,brand:Brand<'r>}
 struct State {
     mode:Mode,rows:Vec<Option<Node>>,written:usize,
@@ -52,7 +62,13 @@ impl<'r> ClosedRoot<'r> {
             match &mut root.mode {
                 Mode::Checked(state)=>{state.enter_with_observer(ctx,path,event)?;state.leave_with_observer(ctx,path,event)?;ctx.charge_work_with_path(1,path)?;event("closed-checked-token");return Ok(Summary{state:SummaryState::Checked,brand:PhantomData});},
                 Mode::Unavailable=>return Ok(Summary{state:SummaryState::Unavailable,brand:PhantomData}),
-                Mode::Compact=>{},Mode::Fresh=>unreachable!(),
+                Mode::CoreRootOnly { max_depth, .. } => {
+                    // A scalar is a leaf. Nonempty containers contribute
+                    // their depth through a deeper leaf in the same root.
+                    ctx.charge_work_with_path(4, path)?;
+                    *max_depth = (*max_depth).max(depth as u32);
+                }
+                Mode::Compact => {}
             }
             // Entry subtraction +3 casts +parent read +end addition.
             ctx.charge_work_with_path(6,path)?;
@@ -76,7 +92,7 @@ impl<'r> ClosedRoot<'r> {
             match &mut root.mode {
                 Mode::Checked(state)=>{state.enter_with_observer(ctx,path,event)?;ctx.charge_work_with_path(1,path)?;event("closed-checked-token");return Ok(Container{state:ContainerState::Checked,brand:PhantomData});},
                 Mode::Unavailable=>return Ok(Container{state:ContainerState::Unavailable,brand:PhantomData}),
-                Mode::Compact=>{},Mode::Fresh=>unreachable!(),
+                Mode::Compact | Mode::CoreRootOnly { .. } => {}
             }
             // Entry subtraction, ordinal/depth/edge casts and actual parent read.
             ctx.charge_work_with_path(5,path)?;
@@ -93,7 +109,7 @@ impl<'r> ClosedRoot<'r> {
         self.guarded(|root|{
             let Some(root)=root.state.as_mut() else{return Ok(());};
             if let Mode::Checked(state)=&mut root.mode{return state.member_with_observer(ordinal,key,is_string,ctx,path,event);}
-            if !matches!(root.mode,Mode::Compact){return Ok(());}
+            if !matches!(root.mode,Mode::Compact | Mode::CoreRootOnly { .. }){return Ok(());}
             ctx.charge_work_with_path(1,path)?;
             let word=match key.len(){2=>"id",3=>"$id",14=>"$dynamicAnchor",16=>"$recursiveAnchor",_=>return Ok(())};
             for(i,b)in word.bytes().enumerate(){ctx.charge_work_with_path(2,path)?;if key.units()[i]!=u16::from(b){return Ok(());}}
@@ -118,23 +134,68 @@ impl<'r> ClosedRoot<'r> {
     pub(crate) fn finish(&mut self,local:Container<'r>,accepted_count:usize,end_count:usize,ctx:&mut Context<'_>,path:&mut Utf16,event:&mut dyn FnMut(&'static str))->Result<Summary<'r>,EngineError>{
         self.guarded(|root|{
             let Some(root)=root.state.as_mut() else{return Ok(Summary{state:SummaryState::Unavailable,brand:PhantomData});};
-            if let Mode::Checked(state)=&mut root.mode{state.leave_with_observer(ctx,path,event)?;ctx.charge_work_with_path(1,path)?;event("closed-checked-token");return Ok(Summary{state:SummaryState::Checked,brand:PhantomData});}
-            if !matches!(root.mode,Mode::Compact){return Ok(Summary{state:SummaryState::Unavailable,brand:PhantomData});}
-            // End/count casts and real first-child arithmetic. Parent/count/depth
-            // have not been reconstructed by reading any row or heap stack.
-            ctx.charge_work_with_path(3,path)?;
-            let ContainerState::Compact(local)=local.state else{root.mode=Mode::Unavailable;return Ok(Summary{state:SummaryState::Unavailable,brand:PhantomData});};
-            let count=accepted_count as u32;let end=end_count as u32;let first=if count==0{0}else{local.id+1};
-            ctx.charge_work_with_path(std::mem::size_of::<Node>().div_ceil(std::mem::size_of::<usize>()).saturating_add(3),path)?;
-            event("closed-container-record");
-            root.rows[local.id as usize]=Some(Node{parent:local.parent,edge:local.edge,first,count,depth:local.depth,end,flags:local.flags,max_depth:local.max_depth});root.written+=1;
-            ctx.charge_work_with_path(std::mem::size_of::<SummaryState>().div_ceil(std::mem::size_of::<usize>()),path)?;
-            Ok(Summary{state:SummaryState::Compact{max_depth:local.max_depth,flags:local.flags},brand:PhantomData})
+            // One source body, with the extra root operations selected by
+            // the existing mode dispatch rather than tested on ordinary rows.
+            macro_rules! finish_compact {
+                ($($max_depth:ident, $nested_dynamic:ident)?) => {{
+                    ctx.charge_work_with_path(3, path)?;
+                    let ContainerState::Compact(local) = local.state else {
+                        root.mode = Mode::Unavailable;
+                        return Ok(Summary { state: SummaryState::Unavailable, brand: PhantomData });
+                    };
+                    let count = accepted_count as u32;
+                    let end = end_count as u32;
+                    let first = if count == 0 { 0 } else { local.id + 1 };
+                    $(
+                        let mut local = local;
+                        ctx.charge_work_with_path(5, path)?;
+                        if count == 0 {
+                            ctx.charge_work_with_path(3, path)?;
+                            *$max_depth = (*$max_depth).max(local.depth);
+                        }
+                        if local.id == 0 {
+                            ctx.charge_work_with_path(8, path)?;
+                            local.max_depth = *$max_depth;
+                            local.flags |= if root.roles.nested_id { 4 } else { 0 };
+                            local.flags |= if *$nested_dynamic { 8 } else { 0 };
+                        } else if local.flags & 2 != 0 {
+                            ctx.charge_work_with_path(1, path)?;
+                            *$nested_dynamic = true;
+                        }
+                    )?
+                    ctx.charge_work_with_path(std::mem::size_of::<Node>()
+                        .div_ceil(std::mem::size_of::<usize>()).saturating_add(3), path)?;
+                    event("closed-container-record");
+                    root.rows[local.id as usize] = Some(Node {
+                        parent: local.parent, edge: local.edge, first, count,
+                        depth: local.depth, end, flags: local.flags, max_depth: local.max_depth,
+                    });
+                    root.written += 1;
+                    ctx.charge_work_with_path(std::mem::size_of::<SummaryState>()
+                        .div_ceil(std::mem::size_of::<usize>()), path)?;
+                    Ok(Summary { state: SummaryState::Compact {
+                        max_depth: local.max_depth, flags: local.flags,
+                    }, brand: PhantomData })
+                }};
+            }
+            match &mut root.mode {
+                Mode::Checked(state) => {
+                    state.leave_with_observer(ctx, path, event)?;
+                    ctx.charge_work_with_path(1, path)?;
+                    event("closed-checked-token");
+                    Ok(Summary { state: SummaryState::Checked, brand: PhantomData })
+                }
+                Mode::Compact => finish_compact!(),
+                Mode::CoreRootOnly { max_depth, nested_dynamic } => {
+                    finish_compact!(max_depth, nested_dynamic)
+                }
+                Mode::Unavailable => Ok(Summary { state: SummaryState::Unavailable, brand: PhantomData }),
+            }
         })
     }
     pub(crate) fn complete(mut self,final_count:usize,ctx:&mut Context<'_>,event:&mut dyn FnMut(&'static str))->Result<Option<Arc<Structure>>,EngineError>{
         let Some(mut state)=self.state.take()else{return Ok(None);};
-        match std::mem::replace(&mut state.mode,Mode::Unavailable){Mode::Checked(checked)=>return checked.complete_with_observer(ctx,event),Mode::Compact=>{},Mode::Fresh|Mode::Unavailable=>return Ok(None)}
+        match std::mem::replace(&mut state.mode,Mode::Unavailable){Mode::Checked(checked)=>return checked.complete_with_observer(ctx,event),Mode::Compact | Mode::CoreRootOnly { .. } => {},Mode::Unavailable=>return Ok(None)}
         // Counter-slot correspondence and all completed stores checked once;
         // full effective limits/profile retained, never clamp custom bounds.
         ctx.charge_work(std::mem::size_of::<crate::context::Limits>().div_ceil(std::mem::size_of::<usize>()).saturating_add(5),Utf16::default())?;
@@ -148,3 +209,44 @@ impl<'r> ClosedRoot<'r> {
 #[cfg(test)]
 #[path="schema_closed_container_independent_tests.rs"]
 mod closed_container_independent_tests;
+
+impl<'r> ClosedRoot<'r> {
+    // Only the sized factory collector calls this at original entry_count==1.
+    // No ordinary State/Context/parser field or shared growth tariff changes.
+    pub(crate) fn reserve_initial_rows<const ROOT_ONLY: bool>(&mut self,hint:crate::value::FactoryRowHint,ctx:&mut Context<'_>,path:&mut Utf16,event:&mut dyn FnMut(&'static str))->Result<Option<usize>,EngineError>{
+        self.guarded(|root|{
+            let w=|n:usize|n.div_ceil(std::mem::size_of::<usize>());
+            // Hint movement/drop, optional result, extra start/empty/mode
+            // checks, all size/cap arithmetic and both current-custody guards.
+            ctx.charge_work_with_path(2*w(std::mem::size_of::<Option<crate::value::FactoryRowHint>>())
+                +w(std::mem::size_of::<crate::value::FactoryRowHint>())+w(std::mem::size_of::<Option<usize>>())
+                +2*w(std::mem::size_of::<crate::context::Limits>())+48,path)?;
+            root.start(ctx,path,event)?;
+            let state=root.state.as_mut().expect("original root state initialized");
+            if !matches!(state.mode,Mode::Compact)||!state.rows.is_empty()||state.rows.capacity()!=0{return Ok(None);}
+            let n=hint.nodes;
+            if !hint.current(ctx)||n==0||n>ctx.limits().max_values||n>=NONE as usize{return Ok(None);}
+            if n.checked_mul(std::mem::size_of::<Option<Node>>()).is_none(){return Ok(None);}
+            let Some(fee)=n.checked_mul(w(std::mem::size_of::<Option<Node>>()))else{return Ok(None);};
+            // Genuine N-slot allocation, same per-slot word tariff as reserve.
+            // Guard work after this callback was prepaid above. No borrow of
+            // Context construction state or Vec storage crosses a callback.
+            ctx.charge_work_with_path(fee,path)?;
+            if !hint.current(ctx){return Ok(None);}
+            event("closed-row-growth");
+            // Additional is relative to len, which is exactly zero here; no
+            // resize, synthetic initialized None rows, clamping or count trust.
+            if state.rows.try_reserve_exact(n).is_err(){state.mode=Mode::Unavailable;return Ok(None);}
+            if ROOT_ONLY {
+                ctx.charge_work_with_path(2*w(std::mem::size_of::<crate::context::Limits>())+16,path)?;
+                if !hint.current(ctx) {
+                    state.mode = Mode::Unavailable;
+                    return Ok(None);
+                }
+                event("closed-core-root-only");
+                state.mode = Mode::CoreRootOnly { max_depth: 0, nested_dynamic: false };
+            }
+            Ok(Some(n))
+        })
+    }
+}
