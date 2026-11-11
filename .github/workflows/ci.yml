@@ -120,6 +120,7 @@ jobs:
         run: |
           python3 scripts/check-release-versions.py
           python3 -m unittest discover -s tests/release -v
+      # scripts/slow-tests.txt lists the files that only the nightly job runs.
       - name: Tests (shard ${{ matrix.shard }} of 16)
         run: bun scripts/run-tests.ts --jobs 2 --keep-going --exclude-file scripts/slow-tests.txt --shard ${{ matrix.shard }}/16
 
