@@ -14,7 +14,7 @@ parser.add_argument('--check', action='store_true')
 args = parser.parse_args()
 if args.write and args.check:
     parser.error('Choose --write or --check')
-subprocess.run([sys.executable, str(root / 'scripts/rust-migration/r4/sync_codegen_resources.py'), '--write' if args.write else '--check'], cwd=root, check=True)
+subprocess.run([sys.executable, str(root / 'scripts/sync-codegen-resources.py'), '--write' if args.write else '--check'], cwd=root, check=True)
 path = root / 'python/src/umf/_action_runtime_manifest.py'
 spec = importlib.util.spec_from_file_location('umf_resource_inventory', path)
 module = importlib.util.module_from_spec(spec)

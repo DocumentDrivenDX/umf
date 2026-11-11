@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "python/umf_codegen/src/umf_codegen"
 ASSETS = PACKAGE / "_resources"
 RELEASE = PACKAGE / "_release.py"

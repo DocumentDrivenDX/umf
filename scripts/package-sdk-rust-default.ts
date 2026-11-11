@@ -181,8 +181,6 @@ try{
   join(root,'scripts/build-saga-runtime.ts'),
   join(root,'scripts/check-core-authority.ts'),
   join(root,'scripts/core-authority-policy.json'),
-  join(root,'scripts/check-unified-client-boundaries.ts'),
-  join(root,'tests/unified-client-boundaries.test.ts'),
   join(root,'scripts/rust-migration/r8/copy-source-snapshot.ts'),
   join(root,'scripts/rust-migration/r8/copy-source-snapshot.test.ts'),
   join(root,'scripts/rust-migration/r8/source-inventory.mjs'),
