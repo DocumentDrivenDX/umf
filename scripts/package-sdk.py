@@ -25,7 +25,8 @@ REQUIRED = [
     'dist/spec/extensions/actions/schema.json', 'dist/loader-contract.js',
     'dist/spec/extensions/saga/package.json', 'dist/spec/extensions/saga/schema.json',
     'dist/spec/extensions/saga/runtime.schema.json',
-    'dist/runtime/wasm/index.js', 'dist/runtime/wasm/index.d.ts',
+    'dist/runtime/wasm/index.js', 'dist/runtime/wasm/index-node.js',
+    'dist/runtime/wasm/loader.js', 'dist/runtime/wasm/index.d.ts',
     'dist/runtime/wasm/pkg/umf_core_wasm.js',
     'dist/runtime/wasm/pkg/umf_core_wasm.d.ts',
     'dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm',
@@ -134,6 +135,7 @@ def verify(root):
             or root_types.get('node') != './dist/src/index-node-v4.d.ts'
             or root_types.get('default') != './dist/src/index-browser-v4.d.ts'
             or saga_runtime.get('types') != './dist/runtime/wasm/index.d.ts'
+            or saga_runtime.get('node') != './dist/runtime/wasm/index-node.js'
             or saga_runtime.get('import') != './dist/runtime/wasm/index.js'):
         raise ValueError('SDK_BUILD Rust root export routing mismatch')
     if manifest.get('api', {}).get('sagaRuntime') != './runtime/wasm':
