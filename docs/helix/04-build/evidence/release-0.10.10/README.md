@@ -17,3 +17,8 @@ source join and common input map preserve the actual native source identity.
 Mac and Linux SDKs use the same captured source closure and differ in the
 native addon and corresponding manifests. The full source archive matches all
 70,600 tracked Git members.
+
+[Public verification](public-publication.json) binds the GitHub latest release
+and both PyPI publications to the exact local products. The public consumer
+receipts record a fresh local CPython 3.11 install of the pair from PyPI.
+The publisher receipts record registry byte verification for all five archives.

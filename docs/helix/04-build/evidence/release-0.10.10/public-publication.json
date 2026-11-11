@@ -1,0 +1,100 @@
+{
+  "github": {
+    "assets": {
+      "SHA256SUMS": {
+        "digest": "sha256:dc7913cca273ab61da50b80d16fc4f434a4f40a7f5be3e0584460d97ea0dd5d2",
+        "id": 733755967,
+        "size": 1116
+      },
+      "release-pins.json": {
+        "digest": "sha256:32721d561351117092c50226cb2d0d9de01549ca683bd91f4b55832b5d4cd512",
+        "id": 733755969,
+        "size": 1272
+      },
+      "umf-sdk-0.10.10-linux-x86_64.tgz": {
+        "digest": "sha256:4a97933f82819f76bf4da79245e919b3541558a889da3b0420c88ccf6dccbdec",
+        "id": 733755968,
+        "size": 66374947
+      },
+      "umf-sdk-0.10.10-macos-aarch64.tgz": {
+        "digest": "sha256:70a24705d51bfb67e68c78daf762e8fde9faaf193df93b4cc934b6e40cf67f22",
+        "id": 733755963,
+        "size": 64521832
+      },
+      "umf-v0.10.10-aarch64-apple-darwin.tar.gz": {
+        "digest": "sha256:d86da780955ff9e890dcb25ca71dde3c23c9315bee4bee2678bc4208f417e22c",
+        "id": 733755971,
+        "size": 14907232
+      },
+      "umf-v0.10.10-source.tar.gz": {
+        "digest": "sha256:8569740fe813fca57a20d5c2a3e49ac596a3abfea0a7c40b70c26c67e815ffc5",
+        "id": 733715772,
+        "size": 1677414614
+      },
+      "umf-v0.10.10-x86_64-unknown-linux-gnu.tar.gz": {
+        "digest": "sha256:23b24f298b0a84d6a1c923c6c432098127fd2ffed714d2d841eb8b664de76084",
+        "id": 733755996,
+        "size": 16463728
+      },
+      "umf_codegen-0.10.10-py3-none-any.whl": {
+        "digest": "sha256:80010b59719fdcb9bb793e1f3ef54449f557f8903fc71c8cb29735d0bc73e702",
+        "id": 733755998,
+        "size": 66283
+      },
+      "umf_codegen-0.10.10.tar.gz": {
+        "digest": "sha256:d23d00be700ced33af9b4c73309bb47ece2aaa14799f5ed424ca10e2ee4c5c13",
+        "id": 733756041,
+        "size": 53180
+      },
+      "umf_core-0.10.10-cp311-abi3-macosx_11_0_arm64.whl": {
+        "digest": "sha256:994702131472a24a999a7bd1dde83feafbdef63c7fc88d81ff881a95f9c57ca4",
+        "id": 733756081,
+        "size": 30419736
+      },
+      "umf_core-0.10.10-cp311-abi3-manylinux_2_34_x86_64.whl": {
+        "digest": "sha256:c884a88ee01da2e948e926d2d94de1244e739b371c46a77b115db9dca197ebec",
+        "id": 733756404,
+        "size": 33927466
+      },
+      "umf_core-0.10.10.tar.gz": {
+        "digest": "sha256:8f83bf9fdac4dc880d645eadc41485f8a06f3524fa78ed2f8d2b433e3dc86812",
+        "id": 733756650,
+        "size": 7626568
+      }
+    },
+    "immutable": true,
+    "latest": true,
+    "publicSumsSha256": "dc7913cca273ab61da50b80d16fc4f434a4f40a7f5be3e0584460d97ea0dd5d2",
+    "publishedAt": "2026-11-11T02:12:04Z",
+    "releaseId": 441142581,
+    "source": "85504b0913261c208a53010a5a67aa6fa54c3a59",
+    "tag": "umf-v0.10.10",
+    "url": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.10"
+  },
+  "profile": "umf.public-release-verification/1",
+  "pypi": {
+    "umf-codegen": {
+      "consumer": "public-codegen-consumer.json",
+      "files": {
+        "umf_codegen-0.10.10-py3-none-any.whl": "80010b59719fdcb9bb793e1f3ef54449f557f8903fc71c8cb29735d0bc73e702",
+        "umf_codegen-0.10.10.tar.gz": "d23d00be700ced33af9b4c73309bb47ece2aaa14799f5ed424ca10e2ee4c5c13"
+      },
+      "publication": "public-codegen-publication.json",
+      "run": "42945408207",
+      "version": "0.10.10"
+    },
+    "umf-core": {
+      "consumer": "public-core-consumer.json",
+      "files": {
+        "umf_core-0.10.10-cp311-abi3-macosx_11_0_arm64.whl": "994702131472a24a999a7bd1dde83feafbdef63c7fc88d81ff881a95f9c57ca4",
+        "umf_core-0.10.10-cp311-abi3-manylinux_2_34_x86_64.whl": "c884a88ee01da2e948e926d2d94de1244e739b371c46a77b115db9dca197ebec",
+        "umf_core-0.10.10.tar.gz": "8f83bf9fdac4dc880d645eadc41485f8a06f3524fa78ed2f8d2b433e3dc86812"
+      },
+      "publication": "core-publication-receipt.json",
+      "run": "42944416034",
+      "version": "0.10.10"
+    }
+  },
+  "status": "passed",
+  "version": "0.10.10"
+}
