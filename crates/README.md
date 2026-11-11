@@ -58,4 +58,46 @@ let exported = export_rdf_nquads(&runtime, &document, Some(true), &mut context)
 assert_eq!(exported.to_utf8().expect("UTF-8 source"), source);
 ```
 
+## Using the codegen engine from another crate
+
+`umf-codegen` is not published to crates.io. Depend on it by release tag rather than a branch. The fixed-resource accessor described below is not in any released tag yet: `umf-v0.10.9` and `umf-v0.10.10` do not contain it, so use the first release tag that includes it (`<tag>` below), or a pinned `rev` until then:
+
+```toml
+[dependencies]
+umf-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+umf-codegen = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+```
+
+Depending on `umf-codegen` enables `umf-core`'s default features, including `embedded-adapters` (the JSON-LD/RDF stack), because `umf-codegen` depends on `umf-core` with default features and Cargo unifies features. A downstream `default-features = false` on `umf-core` therefore has no effect once `umf-codegen` is in the graph. That is why the vendored-crate patch table below is required.
+
+UMF owns the fixed resource cohort the engine compiles against, so the caller supplies no resource files. `CodegenResources::release` builds the nine-resource baseline (what `CodegenResources::new` receives from callers that do not use sagas) from the exact bytes embedded in this UMF source; `CodegenResources::release_with_sagas` additionally opts into the saga package, as `umf codegen` does:
+
+```rust
+use umf_codegen::{release_manifest_sha256, release_resource_digests, CodegenEngine, CodegenResources};
+use umf_core::Context;
+
+let mut ctx = Context::catalog();
+let resources = CodegenResources::release(&mut ctx).expect("UMF's fixed resources");
+let engine = CodegenEngine::new(&resources);
+// Record exactly which cohort this build compiled with.
+let cohort = release_manifest_sha256();
+let files = release_resource_digests(); // (name, sha256) for all ten resources
+```
+
+The cohort is ten resources: nine source resources (`core.schema.json`, `core.reference-schema.json`, `core.package-schema.json`, `core.constraints.json`, `core.domain-policy.json`, and the `tables`, `actions`, `binding` and `stable-binding` `*.package.json` files) plus `saga.package.json`. `umf_codegen::release_resources()` returns all ten as named raw bytes (`ReleaseResource { name, source_path, bytes }`, with `sha256()`), and `release_manifest_json()` is the canonical manifest whose SHA-256 is `release_manifest_sha256()`; both cover all ten whichever constructor is used. These names and digests are the same ones reported by `umf codegen --version` and the Python `umf_codegen` wheel manifest. The accessor uses no filesystem, clock or thread.
+
+UMF builds against patched copies of `hashbrown` 0.12 and 0.13, `json-ld-core`, `json-ld-syntax`, `json-syntax` and `xsd-types`, applied through the `[patch.crates-io]` table in the repository's root `Cargo.toml` (sources under `crates/umf-core/vendor`; see `VENDOR-NOTES.md` there). Cargo does not apply a dependency's `[patch]` table transitively, so a downstream workspace must repeat that table, pointing at the same UMF release tag:
+
+```toml
+[patch.crates-io]
+hashbrown-012 = { package = "hashbrown", version = "=0.12.3", git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+hashbrown-013 = { package = "hashbrown", version = "=0.13.2", git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+json-ld-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+json-ld-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+json-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+xsd-types = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+```
+
+The two `hashbrown` entries need their exact `version` pins: the UMF repository holds both 0.12.3 and 0.13.2, and Cargo rejects a git patch that matches more than one version. (Checked by resolving a scratch crate with these dependencies and this patch table against a UMF commit.)
+
 The public support boundary is expressed by each operation's API and capability checks. Callers provide explicit external parser/compiler callbacks where required; Rust owns UMF validation, admission, projection, receipt and recovery decisions. See the [host binding guide](../bindings/core/README.md) for Python, Node/Bun, WASM and CLI entry points.

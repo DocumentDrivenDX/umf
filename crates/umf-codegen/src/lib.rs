@@ -14,9 +14,14 @@ pub(crate) mod grant_columns;
 pub mod inventory;
 pub mod migration;
 pub mod pack_tools;
+pub mod release_resources;
 pub mod resources;
 pub mod row_scope;
 pub mod tables;
 pub mod value;
 
+pub use release_resources::{
+    release_manifest_json, release_manifest_sha256, release_resource, release_resource_digests,
+    release_resources, ReleaseResource,
+};
 pub use resources::{CodegenEngine, CodegenResources};
