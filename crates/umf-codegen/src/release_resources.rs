@@ -4,7 +4,9 @@
 //! UMF owns the ten resources a codegen engine needs: nine source resources
 //! (the core schema, reference schema, package schema, constraints, domain
 //! policy and the tables, actions, binding and stable-binding extension
-//! packages) plus the saga package as the tenth. The bytes are embedded at
+//! packages) plus the saga package as the tenth. `CodegenResources::release`
+//! builds the nine-resource baseline; `release_with_sagas` adds the saga
+//! package. The bytes are embedded at
 //! compile time from UMF's own `spec/` tree, so a downstream crate that
 //! depends on this crate needs no resource files of its own.
 //!
@@ -177,13 +179,16 @@ fn schema_of(package: &Value) -> Result<Value, EngineError> {
 }
 
 impl CodegenResources {
-    /// Build the engine resources from UMF's own fixed cohort, including the
-    /// saga package as the tenth resource. The cohort is identified by
-    /// [`release_manifest_sha256`] and the per-resource digests.
+    /// Build the engine resources from UMF's own fixed cohort: the nine source
+    /// resources, without the saga package. This is exactly what
+    /// [`CodegenResources::new`] receives from callers that do not opt into
+    /// sagas, so engines built this way gain no new semantics.
     ///
+    /// Use [`CodegenResources::release_with_sagas`] for all ten resources.
     /// `ctx` meters the admission and compilation work, as for
-    /// [`CodegenResources::new`]; `Context::catalog()` is the context UMF's
-    /// own CLI uses.
+    /// [`CodegenResources::new`]; `Context::catalog()` is the context UMF's own
+    /// CLI uses. The cohort is identified by [`release_manifest_sha256`], which
+    /// covers all ten resources whichever constructor is used.
     pub fn release(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         let tables = parse("tables.package.json", ctx)?;
         let actions = parse("actions.package.json", ctx)?;
@@ -198,7 +203,7 @@ impl CodegenResources {
             parse("core.constraints.json", ctx)?,
             parse("core.domain-policy.json", ctx)?,
         );
-        let resources = Self::new(
+        Self::new(
             core,
             tables,
             tables_schema,
@@ -207,7 +212,13 @@ impl CodegenResources {
             binding,
             stable_binding,
             ctx,
-        )?;
+        )
+    }
+
+    /// Like [`CodegenResources::release`], then opt into the saga package, the
+    /// tenth resource (as `umf codegen` does).
+    pub fn release_with_sagas(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        let resources = Self::release(ctx)?;
         let saga = parse("saga.package.json", ctx)?;
         let saga_schema = schema_of(&saga)?;
         resources.with_sagas(saga, saga_schema, ctx)

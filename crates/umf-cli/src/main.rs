@@ -471,7 +471,7 @@ fn codegen_operation(
         return umf_codegen::pack_tools::generate_pack_tools(request, ctx);
     }
     let mut resource_ctx = Context::catalog();
-    let resources = umf_codegen::CodegenResources::release(&mut resource_ctx)?;
+    let resources = umf_codegen::CodegenResources::release_with_sagas(&mut resource_ctx)?;
     let engine = umf_codegen::CodegenEngine::new(&resources);
     match operation {
         "generate" => engine.generate_python_client(request, ctx),

@@ -917,9 +917,15 @@ fn bootstrap_refuses_unknown_record_key_and_field_meaning_but_retains_unrelated_
 }
 
 #[test]
-fn release_accessor_engine_matches_the_explicitly_built_engine() {
+fn release_accessor_engines_match_the_explicitly_built_engines() {
     let explicit = resources();
+    let saga = parse(include_str!("../../../spec/extensions/saga/package.json"));
+    let saga_schema = get(&saga, "schema").unwrap().clone();
+    let explicit_sagas = resources()
+        .with_sagas(saga, saga_schema, &mut Context::catalog())
+        .unwrap();
     let release = CodegenResources::release(&mut Context::catalog()).unwrap();
+    let release_sagas = CodegenResources::release_with_sagas(&mut Context::catalog()).unwrap();
     let request = preparation_request();
     let run = |resources: &CodegenResources| {
         let engine = CodegenEngine::new(resources);
@@ -933,4 +939,5 @@ fn release_accessor_engine_matches_the_explicitly_built_engine() {
         )
     };
     assert_eq!(run(&release), run(&explicit));
+    assert_eq!(run(&release_sagas), run(&explicit_sagas));
 }
