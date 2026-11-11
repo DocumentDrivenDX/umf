@@ -3464,33 +3464,65 @@ impl CompiledSchema {
                 }
                 continue;
             }
-            ctx.charge_work((std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>()+std::mem::size_of::<Option<owner_locations::BorrowedChild<'binding,'a>>>()+std::mem::size_of::<Option<Option<owner_locations::FusedChildren<'binding,'a>>>>()).div_ceil(std::mem::size_of::<usize>())+3,Utf16::default())?;
             ctx.charge_work(
-                std::mem::size_of::<Option<OwnerCursor>>().div_ceil(std::mem::size_of::<usize>())
-                    +std::mem::size_of::<bool>().div_ceil(std::mem::size_of::<usize>())
-                    +std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>().div_ceil(std::mem::size_of::<usize>())
-                    +std::mem::size_of::<Option<construction_index::ScopedPreflightMark>>().div_ceil(std::mem::size_of::<usize>())
-                    +4,
+                std::mem::size_of::<Option<construction_index::ScopedPreflightMark>>().div_ceil(std::mem::size_of::<usize>())+1,
                 Utf16::default(),
             )?;
-            let mut keyword_cursor:Option<OwnerCursor>=None;
-            let mut keyword_selected=false;
-            let mut keyword_checked=None;
-            let mut keyword_ordered=None;
-            let mut keyword_borrowed=None;
-            let mut keyword_fused_ordered:Option<Option<owner_locations::FusedChildren<'binding,'a>>>=None;
-            macro_rules! ensure_keyword_cursor { () => {{
-                if !keyword_selected {
-                    let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(cursor.as_ref(),&mut checked,&mut ordered,borrowed.as_ref(),&mut fused_ordered,member_index,ctx)?;
-                    keyword_cursor=selected; keyword_checked=selected_checked; keyword_borrowed=selected_borrowed; keyword_selected=true;
-                }
-            }}; }
             let mut child_mark:Option<construction_index::ScopedPreflightMark>=None;
             macro_rules! child_path { () => {{
                 if child_mark.is_none() { let mark=path.mark(ctx)?; if let Err(error)=path.append(key,PathKind::RawSchemaStep,ctx){path.restore_after_failure(mark);return Err(error);} child_mark=Some(mark); }
                 path.text()
             }}; }
             macro_rules! child_schema_error { ($message:expr) => {{ child_path!(); let diagnostic=path.diagnostic_snapshot(ctx)?; schema_error(&diagnostic,$message) }}; }
+            macro_rules! start_keyword_owner {
+                ($cursor:ident,$checked:ident,$borrowed:ident,$extra:expr) => {
+                    const OWNER_WORD:usize=std::mem::size_of::<usize>();
+                    ctx.charge_work(
+                        std::mem::size_of::<Option<OwnerCursor>>().div_ceil(OWNER_WORD)
+                            +std::mem::size_of::<Option<owner_locations::CheckedLocation<'a>>>().div_ceil(OWNER_WORD)
+                            +std::mem::size_of::<Option<owner_locations::BorrowedChild<'binding,'a>>>().div_ceil(OWNER_WORD)
+                            +3+$extra,
+                        Utf16::default(),
+                    )?;
+                    let ($cursor,mut $checked,$borrowed)=self.preflight_ordered_child(cursor.as_ref(),&mut checked,&mut ordered,borrowed.as_ref(),&mut fused_ordered,member_index,ctx)?;
+                };
+            }
+            macro_rules! ordered_keyword_child {
+                ($edge:ident,$cursor:ident,$checked:ident,$borrowed:ident,$ordered:ident,$fused:ident,
+                 ($selected:ident,$selected_checked:ident,$selected_borrowed:ident),$visit:block) => {{
+                    let ($selected,$selected_checked,$selected_borrowed)=self.preflight_ordered_child($cursor.as_ref(),&mut $checked,&mut $ordered,$borrowed.as_ref(),&mut $fused,$edge,ctx)?;
+                    $visit
+                }};
+            }
+            macro_rules! walk_keyword_children {
+                ($iter:expr,($edge:ident,$child:pat),$skip:expr,$before:block,
+                 ($selected:ident,$selected_checked:ident,$selected_borrowed:ident),$visit:block) => {{
+                    let mut remaining=$iter;
+                    while let Some(($edge,$child))=remaining.next() {
+                        if $skip { continue; }
+                        $before
+                        // Only the first real child opens the walk. The two
+                        // extra control steps cover entry into the remainder
+                        // loop and leaving the search after it finishes.
+                        const WORD:usize=std::mem::size_of::<usize>();
+                        start_keyword_owner!(keyword_cursor,keyword_checked,keyword_borrowed,
+                            std::mem::size_of::<Option<owner_locations::OrderedOwnerChildren<'a>>>().div_ceil(WORD)
+                                +std::mem::size_of::<Option<Option<owner_locations::FusedChildren<'binding,'a>>>>().div_ceil(WORD)
+                                +4);
+                        let mut keyword_ordered=None;
+                        let mut keyword_fused_ordered=None;
+                        ordered_keyword_child!($edge,keyword_cursor,keyword_checked,keyword_borrowed,keyword_ordered,keyword_fused_ordered,
+                            ($selected,$selected_checked,$selected_borrowed),$visit);
+                        while let Some(($edge,$child))=remaining.next() {
+                            if $skip { continue; }
+                            $before
+                            ordered_keyword_child!($edge,keyword_cursor,keyword_checked,keyword_borrowed,keyword_ordered,keyword_fused_ordered,
+                                ($selected,$selected_checked,$selected_borrowed),$visit);
+                        }
+                        break;
+                    }
+                }};
+            }
             match text.as_str() {
                 "$ref" | "$dynamicRef" | "$recursiveRef" => {
                     if !matches!(val, Value::String(_)) {
@@ -3530,20 +3562,18 @@ impl CompiledSchema {
                     if self.dialect == SchemaDialect::Draft3 {
                         match val {
                             Value::Object(_) => {
-                                ensure_keyword_cursor!();
+                                start_keyword_owner!(keyword_cursor,keyword_checked,keyword_borrowed,0);
                                 let (selected,selected_checked,selected_borrowed)=self.preflight_duplicate_child(keyword_cursor.as_ref(),&mut keyword_checked,keyword_borrowed.as_ref(),ctx)?;
                                 child_path!();
                                 self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)?;
                             }
                             Value::Array(items) => {
-                                for (index, branch) in items.iter().enumerate() {
-                                    if matches!(branch, Value::Object(_)) {
-                                        ensure_keyword_cursor!();
-                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,index,ctx)?;
+                                walk_keyword_children!(items.iter().enumerate(),(index,branch),
+                                    !matches!(branch,Value::Object(_)),{},
+                                    (selected,selected_checked,selected_borrowed),{
                                         child_path!();
                                         self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(branch,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
-                                    }
-                                }
+                                    });
                             }
                             _ => (),
                         }
@@ -3578,15 +3608,13 @@ impl CompiledSchema {
                         continue;
                     }
                     if let Value::Object(children) = val {
-                        for (child_index, (name, child_schema)) in children.iter().enumerate() {
-                            child_path!();
-                            ensure_keyword_cursor!();
-                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,child_index,ctx)?;
-                            self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{
-                                if text == "patternProperties" { let diagnostic=path.diagnostic_snapshot(ctx)?; self.compile_pattern(name,&diagnostic,ctx)?; }
-                                self.preflight_carried_checked(child_schema,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)
-                            })?;
-                        }
+                        walk_keyword_children!(children.iter().enumerate(),(child_index,(name,child_schema)),
+                            false,{child_path!();},(selected,selected_checked,selected_borrowed),{
+                                self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{
+                                    if text == "patternProperties" { let diagnostic=path.diagnostic_snapshot(ctx)?; self.compile_pattern(name,&diagnostic,ctx)?; }
+                                    self.preflight_carried_checked(child_schema,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)
+                                })?;
+                            });
                     } else {
                         return Err(child_schema_error!("Keyword value must be an object"));
                     }
@@ -3618,15 +3646,13 @@ impl CompiledSchema {
                         continue;
                     }
                     if let Value::Array(items) = val {
-                        for (i, x) in items.iter().enumerate() {
-                            child_path!();
-                            ensure_keyword_cursor!();
-                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,i,ctx)?;
-                            self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
-                        }
+                        walk_keyword_children!(items.iter().enumerate(),(i,x),
+                            false,{child_path!();},(selected,selected_checked,selected_borrowed),{
+                                self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
+                            });
                     } else {
                         child_path!();
-                        ensure_keyword_cursor!();
+                        start_keyword_owner!(keyword_cursor,keyword_checked,keyword_borrowed,0);
                         let (selected,selected_checked,selected_borrowed)=self.preflight_duplicate_child(keyword_cursor.as_ref(),&mut keyword_checked,keyword_borrowed.as_ref(),ctx)?;
                         self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)?;
                     }
@@ -3636,27 +3662,23 @@ impl CompiledSchema {
                         if items.is_empty() && text != "prefixItems" {
                             return Err(child_schema_error!("Applicator array must not be empty"));
                         }
-                        for (i, x) in items.iter().enumerate() {
-                            child_path!();
-                            ensure_keyword_cursor!();
-                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,i,ctx)?;
-                            self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
-                        }
+                        walk_keyword_children!(items.iter().enumerate(),(i,x),
+                            false,{child_path!();},(selected,selected_checked,selected_borrowed),{
+                                self.with_scoped_preflight_index(path,i,ctx,|path,ctx|self.preflight_carried_checked(x,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
+                            });
                     } else {
                         return Err(child_schema_error!("Applicator must be an array"));
                     }
                 }
                 "extends" if self.dialect == SchemaDialect::Draft3 => {
                     if let Value::Array(items) = val {
-                        for (index, item) in items.iter().enumerate() {
-                            child_path!();
-                            ensure_keyword_cursor!();
-                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,index,ctx)?;
-                            self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(item,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
-                        }
+                        walk_keyword_children!(items.iter().enumerate(),(index,item),
+                            false,{child_path!();},(selected,selected_checked,selected_borrowed),{
+                                self.with_scoped_preflight_index(path,index,ctx,|path,ctx|self.preflight_carried_checked(item,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
+                            });
                     } else {
                         child_path!();
-                        ensure_keyword_cursor!();
+                        start_keyword_owner!(keyword_cursor,keyword_checked,keyword_borrowed,0);
                         let (selected,selected_checked,selected_borrowed)=self.preflight_duplicate_child(keyword_cursor.as_ref(),&mut keyword_checked,keyword_borrowed.as_ref(),ctx)?;
                         self.preflight_carried_checked(val,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed)?;
                     }
@@ -3709,19 +3731,18 @@ impl CompiledSchema {
                 }
                 "dependencies" => {
                     if let Value::Object(deps) = val {
-                        for (child_index,(name, dep)) in deps.iter().enumerate() {
-                            if matches!(dep, Value::Array(_)) {
+                        walk_keyword_children!(deps.iter().enumerate(),(child_index,(name,dep)),{
+                            if matches!(dep,Value::Array(_)) {
                                 child_path!();
                                 self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|{let diagnostic=path.diagnostic_snapshot(ctx)?;validate_string_array(dep,&diagnostic,true)})?;
-                            } else if self.dialect == SchemaDialect::Draft3 && matches!(dep, Value::String(_)) {
-                                // Draft 3 permits a string dependency naming a peer property.
+                                true
                             } else {
-                                child_path!();
-                                ensure_keyword_cursor!();
-                                        let (selected,selected_checked,selected_borrowed)=self.preflight_ordered_child(keyword_cursor.as_ref(),&mut keyword_checked,&mut keyword_ordered,keyword_borrowed.as_ref(),&mut keyword_fused_ordered,child_index,ctx)?;
-                                self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|self.preflight_carried_checked(dep,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
+                                // Draft 3 permits a string dependency naming a peer property.
+                                self.dialect == SchemaDialect::Draft3 && matches!(dep,Value::String(_))
                             }
-                        }
+                        },{child_path!();},(selected,selected_checked,selected_borrowed),{
+                            self.with_scoped_preflight_child(path,name,PathKind::SchemaPointer,ctx,|path,ctx|self.preflight_carried_checked(dep,path,&scope,depth+1,policy,ctx,seen,selected,selected_checked,selected_borrowed))?;
+                        });
                     } else { return Err(child_schema_error!("dependencies must be an object")); }
                 }
                 "dependentRequired" => {

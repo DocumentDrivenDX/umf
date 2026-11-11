@@ -123,6 +123,11 @@ impl Utf16 {
     pub(crate) fn push_owned_preflight_segment_observed(&mut self,segment:&Utf16,slash:bool,escape:bool,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
         self.push_owned_path_segment_mode(segment,slash,escape,false,ctx,observer)
     }
+    /// Scoped preflight has already measured the escaped suffix before this
+    /// storage effect. Reuse its checked width instead of scanning twice.
+    pub(crate) fn push_owned_preflight_segment_with_width_observed(&mut self,segment:&Utf16,slash:bool,escape:bool,suffix_width:usize,old:usize,wanted:usize,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
+        self.push_owned_path_segment_with_suffix_mode(segment,slash,escape,false,suffix_width,old,wanted,ctx,observer)
+    }
     #[cfg(test)]
     pub(crate) fn push_owned_preflight_segment_with_events(&mut self,segment:&Utf16,slash:bool,escape:bool,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
         self.push_owned_preflight_segment_observed(segment,slash,escape,ctx,observer)
@@ -137,6 +142,29 @@ impl Utf16 {
         let mut suffix=usize::from(slash);
         for unit in segment.units(){suffix=suffix.checked_add(if escape&&matches!(unit,0x7e|0x2f){2}else{1}).ok_or_else(||EngineError::new("LIMIT",if current_path_diagnostics{std::mem::take(self)}else{Utf16::default()},"Owned JSON path size overflow"))?;}
         let wanted=old.checked_add(suffix).ok_or_else(||EngineError::new("LIMIT",if current_path_diagnostics{std::mem::take(self)}else{Utf16::default()},"Owned JSON path size overflow"))?;
+        let capacity=match &self.0{TextStorage::Owned(v)=>v.capacity(),TextStorage::Shared(_)|TextStorage::Static(_)=>0};
+        if wanted>capacity {
+            // Includes relocation of the existing prefix, including a shared
+            // source's actual detach. No Arc::make_mut hides an unpaid copy.
+            let requested=capacity.checked_mul(2).unwrap_or(usize::MAX).max(wanted);
+            charge!(old.saturating_add(requested))?;
+            observer(if current_path_diagnostics{"path-growth"}else{"sp1-pre-effect-growth-admitted"});
+            let mut next=Vec::new();next.try_reserve_exact(requested).map_err(|_|EngineError::new("LIMIT",if current_path_diagnostics{std::mem::take(self)}else{Utf16::default()},"Owned JSON path allocation unavailable"))?;
+            observer(if current_path_diagnostics{"path-relocation"}else{"sp1-effect-capacity-reserved-before-prefix-relocation"});
+            next.extend_from_slice(self.units());self.0=TextStorage::Owned(next);
+        }
+        charge!(suffix)?;
+        observer(if current_path_diagnostics{"path-write"}else{"sp1-pre-effect-suffix-write-admitted"});
+        let TextStorage::Owned(units)=&mut self.0 else {unreachable!("shared path has zero mutable capacity")};
+        if slash { units.push(0x2f); }
+        for unit in segment.units(){match (escape,*unit) {(true,0x7e)=>units.extend([0x7e,0x30]),(true,0x2f)=>units.extend([0x7e,0x31]),(_,other)=>units.push(other)}}
+        observer(if current_path_diagnostics{"path-write-complete"}else{"sp1-effect-suffix-written"});
+        Ok(old)
+    }
+    fn push_owned_path_segment_with_suffix_mode(&mut self,segment:&Utf16,slash:bool,escape:bool,current_path_diagnostics:bool,suffix:usize,old:usize,wanted:usize,ctx:&mut Context<'_>,observer:&mut dyn FnMut(&'static str))->Result<usize,EngineError>{
+        macro_rules! charge { ($amount:expr) => {{
+            if current_path_diagnostics {ctx.charge_work_with_path($amount,self)} else {ctx.charge_work($amount,Utf16::default())}
+        }}; }
         let capacity=match &self.0{TextStorage::Owned(v)=>v.capacity(),TextStorage::Shared(_)|TextStorage::Static(_)=>0};
         if wanted>capacity {
             // Includes relocation of the existing prefix, including a shared

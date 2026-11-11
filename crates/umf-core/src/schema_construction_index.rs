@@ -129,7 +129,14 @@ pub(crate) struct CarriedPath { text:Utf16, syntax:Option<PathSyntax> }
 /// Invocation-local mutable path custody for indexed construction preflight.
 /// Evaluator paths continue to use immutable `CarriedPath` as their oracle.
 pub(super) struct ScopedPreflightPath { text:Utf16, first_hash:Option<usize>, surrogate:bool, origin:std::rc::Rc<std::cell::RefCell<OriginState>>, poisoned:bool }
-pub(super) struct ScopedPreflightMark { length:usize, first_hash:Option<usize>, surrogate:bool, origin:std::rc::Rc<std::cell::RefCell<OriginState>> }
+pub(super) enum ScopedPreflightMark {
+    // Once a fragment exists, descendants cannot establish a new origin.
+    // Keep the live origin in place and checkpoint only mutable path metadata.
+    Compact { length:usize, first_hash:usize, surrogate:bool },
+    // Before the first fragment, appending `#` can replace the origin. Retain
+    // the original binding so rollback restores its exact identity.
+    Full { length:usize, first_hash:Option<usize>, surrogate:bool, origin:std::rc::Rc<std::cell::RefCell<OriginState>> },
+}
 #[cfg(test)]
 #[derive(Debug,PartialEq,Eq)]
 pub(super) struct ScopedPreflightObservation { pub text:Vec<u16>,pub length:usize,pub capacity:usize,pub owned:bool,pub first_hash:Option<usize>,pub surrogate:bool,pub poisoned:bool,pub origin_epoch:u64,pub has_origin_binding:bool,pub selections:[Option<Option<usize>>;3] }
@@ -171,14 +178,19 @@ impl ScopedPreflightPath {
         ScopedPreflightObservation{text:self.text.units().to_vec(),length:self.text.len(),capacity,owned,first_hash:self.first_hash,surrogate:self.surrogate,poisoned:self.poisoned,origin_epoch,has_origin_binding,selections}
     }
     #[cfg(test)]
-    pub(super) fn mark_shares_origin(&self,mark:&ScopedPreflightMark)->bool{std::rc::Rc::ptr_eq(&self.origin,&mark.origin)}
+    pub(super) fn mark_shares_origin(&self,mark:&ScopedPreflightMark)->bool{match mark{ScopedPreflightMark::Compact{first_hash,..}=>self.first_hash==Some(*first_hash),ScopedPreflightMark::Full{origin,..}=>std::rc::Rc::ptr_eq(&self.origin,origin)}}
+    #[cfg(test)]
+    pub(super) fn mark_is_compact(mark:&ScopedPreflightMark)->bool{matches!(mark,ScopedPreflightMark::Compact{..})}
+    #[cfg(test)]
+    pub(super) fn origin_identity(&self)->usize{std::rc::Rc::as_ptr(&self.origin) as usize}
     pub(super) fn mark(&mut self,ctx:&mut Context<'_>)->Result<ScopedPreflightMark,EngineError>{
         if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
-        // Includes one reserved local cleanup unit, usable without callbacks
-        // if recursive work or restoration admission refuses.
-        let admission=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||ctx.charge_work(path_words::<ScopedPreflightMark>()+path_words::<ScopedPreflightPath>()+path_words::<std::rc::Rc<std::cell::RefCell<OriginState>>>()+9,Utf16::default())));
+        // The fixed 9 covers variant routing and reserves local cleanup work
+        // usable without callbacks if recursive work/restoration refuses.
+        let retains_origin=self.first_hash.is_none();
+        let admission=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||ctx.charge_work(path_words::<ScopedPreflightMark>()+path_words::<ScopedPreflightPath>()+(if retains_origin{path_words::<std::rc::Rc<std::cell::RefCell<OriginState>>>()}else{0})+9,Utf16::default())));
         match admission{Ok(Ok(()))=>(),Ok(Err(error))=>{self.poisoned=true;return Err(error);},Err(payload)=>{self.poisoned=true;std::panic::resume_unwind(payload);}}
-        Ok(ScopedPreflightMark{length:self.text.len(),first_hash:self.first_hash,surrogate:self.surrogate,origin:std::rc::Rc::clone(&self.origin)})
+        Ok(match self.first_hash{Some(first_hash)=>ScopedPreflightMark::Compact{length:self.text.len(),first_hash,surrogate:self.surrogate},None=>ScopedPreflightMark::Full{length:self.text.len(),first_hash:None,surrogate:self.surrogate,origin:std::rc::Rc::clone(&self.origin)}})
     }
     pub(super) fn append(&mut self,segment:&Utf16,kind:PathKind,ctx:&mut Context<'_>)->Result<(),EngineError>{
         if self.poisoned{return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));}
@@ -202,13 +214,21 @@ impl ScopedPreflightPath {
         event("sp1-metadata-admission-complete-before-read");
         let slash=kind==PathKind::InstancePointer||self.text.units().last()!=Some(&47);
         let escape=kind!=PathKind::RawSchemaStep;
-        ctx.charge_work(segment.len().saturating_mul(5).saturating_add(8),Utf16::default())?;
-        let mut escaped=0usize;let mut first_hash=self.first_hash;let mut surrogate=self.surrogate;
-        for &u in segment.units(){if first_hash.is_none()&&u==35{first_hash=self.text.len().checked_add(usize::from(slash)).and_then(|n|n.checked_add(escaped));}surrogate|=(0xd800..=0xdfff).contains(&u);escaped=escaped.saturating_add(if escape&&(u==47||u==126){2}else{1});}
+        // The fixed 9 includes overflow-state setup and checked/legacy routing.
+        ctx.charge_work(segment.len().saturating_mul(5).saturating_add(9),Utf16::default())?;
+        let mut escaped=0usize;let mut escaped_overflow=false;let mut first_hash=self.first_hash;let mut surrogate=self.surrogate;
+        for &u in segment.units(){if first_hash.is_none()&&u==35{first_hash=self.text.len().checked_add(usize::from(slash)).and_then(|n|n.checked_add(escaped));}surrogate|=(0xd800..=0xdfff).contains(&u);match escaped.checked_add(if escape&&(u==47||u==126){2}else{1}){Some(width)=>escaped=width,None=>{escaped_overflow=true;escaped=usize::MAX;}}}
         let new_origin=self.first_hash.is_none()&&first_hash.is_some();
         ctx.charge_work(if new_origin{CarriedPath::origin_work()+path_words::<OriginState>()+4}else{0},Utf16::default())?;
         event("sp1-suffix-scan-and-metadata-admission-complete-before-buffer-effect");
-        self.text.push_owned_preflight_segment_observed(segment,slash,escape,ctx,event)?;
+        if segment.len()>2&&!escaped_overflow {
+            // Admit checked suffix and final-length arithmetic before evaluating it.
+            ctx.charge_work(2,Utf16::default())?;
+            if let Some(width)=usize::from(slash).checked_add(escaped){
+                let old=self.text.len();
+                if let Some(wanted)=old.checked_add(width){ctx.charge_work(3,Utf16::default())?;self.text.push_owned_preflight_segment_with_width_observed(segment,slash,escape,width,old,wanted,ctx,event)?;}else{self.text.push_owned_preflight_segment_observed(segment,slash,escape,ctx,event)?;}
+            }else{self.text.push_owned_preflight_segment_observed(segment,slash,escape,ctx,event)?;}
+        }else{self.text.push_owned_preflight_segment_observed(segment,slash,escape,ctx,event)?;}
         if new_origin{self.origin=std::rc::Rc::new(std::cell::RefCell::new(OriginState::default()));}
         self.first_hash=first_hash;self.surrogate=surrogate;event("sp1-buffer-after-append");Ok(())
     }
@@ -224,7 +244,9 @@ impl ScopedPreflightPath {
             self.restore_after_failure(mark);
             return Err(EngineError::new("LIMIT",Utf16::default(),"Scoped preflight path is poisoned"));
         }
-        let cleanup=path_words::<ScopedPreflightMark>()+path_words::<std::rc::Rc<std::cell::RefCell<OriginState>>>()+5;
+        let retains_origin=matches!(&mark,ScopedPreflightMark::Full{..});
+        // The fixed 5 includes mark-variant dispatch and restoration control.
+        let cleanup=path_words::<ScopedPreflightMark>()+(if retains_origin{path_words::<std::rc::Rc<std::cell::RefCell<OriginState>>>()}else{0})+5;
         if let Err(payload)=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||event("sp1-before-restoration-admission"))){self.restore_after_failure(mark);std::panic::resume_unwind(payload);}
         let admission=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||ctx.charge_work(cleanup,Utf16::default())));
         let admission=match admission {
@@ -232,14 +254,13 @@ impl ScopedPreflightPath {
             Ok(Err(error))=>{self.restore_after_failure(mark);return Err(error);},
             Err(payload)=>{self.restore_after_failure(mark);std::panic::resume_unwind(payload);}
         };
-        self.text.truncate_owned_preflight_path(mark.length);
-        self.first_hash=mark.first_hash;self.surrogate=mark.surrogate;self.origin=mark.origin;
+        match mark{ScopedPreflightMark::Compact{length,first_hash,surrogate}=>{debug_assert_eq!(self.first_hash,Some(first_hash));self.text.truncate_owned_preflight_path(length);self.first_hash=Some(first_hash);self.surrogate=surrogate;},ScopedPreflightMark::Full{length,first_hash,surrogate,origin}=>{self.text.truncate_owned_preflight_path(length);self.first_hash=first_hash;self.surrogate=surrogate;self.origin=origin;}}
         if let Err(payload)=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||event("sp1-effect-restoration-after-admission"))){self.poisoned=true;std::panic::resume_unwind(payload);}
         admission
     }
     pub(super) fn restore_after_failure(&mut self,mark:ScopedPreflightMark){
-        self.text.truncate_owned_preflight_path(mark.length);
-        self.first_hash=mark.first_hash;self.surrogate=mark.surrogate;self.origin=mark.origin;self.poisoned=true;
+        match mark{ScopedPreflightMark::Compact{length,first_hash,surrogate}=>{debug_assert_eq!(self.first_hash,Some(first_hash));self.text.truncate_owned_preflight_path(length);self.first_hash=Some(first_hash);self.surrogate=surrogate;},ScopedPreflightMark::Full{length,first_hash,surrogate,origin}=>{self.text.truncate_owned_preflight_path(length);self.first_hash=first_hash;self.surrogate=surrogate;self.origin=origin;}}
+        self.poisoned=true;
     }
 }
 impl std::ops::Deref for ScopedPreflightPath { type Target=Utf16; fn deref(&self)->&Utf16{&self.text} }

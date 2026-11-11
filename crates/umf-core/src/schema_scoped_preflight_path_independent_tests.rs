@@ -155,7 +155,11 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
     let mut ctx = Context::catalog();
     let mut path =
         ScopedPreflightPath::new(&Utf16::from("https://sp.test/root#"), &mut ctx).unwrap();
+    let compact_origin = path.origin_identity();
     let mark = path.mark(&mut ctx).unwrap();
+    assert!(ScopedPreflightPath::mark_is_compact(&mark));
+    assert_eq!(path.origin_identity(), compact_origin);
+    assert!(path.mark_shares_origin(&mark), "known fragment uses the compact shared-origin mark");
     assert!(!path.observe().has_origin_binding);
     path.append(
         &Utf16::from("properties"),
@@ -163,6 +167,7 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
         &mut ctx,
     )
     .unwrap();
+    assert_eq!(path.origin_identity(), compact_origin, "compact append keeps the actual origin allocation");
     let expected = sp_generic(&owner, path.text(), PathSelector::Policy, &mut ctx);
     assert_eq!(
         index
@@ -174,6 +179,7 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
     assert!(published.origin_epoch > 0);
     assert_eq!(published.selections[0], Some(expected));
     path.restore(mark, &mut ctx).unwrap();
+    assert_eq!(path.origin_identity(), compact_origin, "compact rollback keeps the actual origin allocation");
     let restored = path.observe();
     assert_eq!(restored.text, Utf16::from("https://sp.test/root#").units());
     assert_eq!(restored.origin_epoch, published.origin_epoch);
@@ -194,10 +200,15 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
     );
 
     let mut path = ScopedPreflightPath::new(&Utf16::default(), &mut ctx).unwrap();
+    let parent_origin = path.origin_identity();
     let parent = path.mark(&mut ctx).unwrap();
+    assert!(!ScopedPreflightPath::mark_is_compact(&parent));
+    assert!(path.mark_shares_origin(&parent), "full pre-fragment mark initially shares the origin");
     path.append(&Utf16::from("#"), PathKind::RawSchemaStep, &mut ctx)
         .unwrap();
-    assert!(!path.mark_shares_origin(&parent));
+    let child_origin = path.origin_identity();
+    assert_ne!(child_origin, parent_origin, "first # creates a new origin allocation");
+    assert!(!path.mark_shares_origin(&parent), "introducing # installs a distinct origin");
     assert_eq!(
         index
             .select_scoped(&owner, &mut path, PathSelector::Common, &mut ctx)
@@ -205,6 +216,7 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
         sp_generic(&owner, path.text(), PathSelector::Common, &mut ctx)
     );
     assert!(path.observe().origin_epoch > 0);
+    assert!(path.observe().has_origin_binding);
     let first_hash = path.observe().first_hash;
     let child = path.mark(&mut ctx).unwrap();
     path.append(
@@ -219,8 +231,12 @@ fn sp04_nested_restore_first_hash_surrogate_and_origin_custody() {
     path.restore(child, &mut ctx).unwrap();
     assert!(!path.observe().surrogate);
     path.restore(parent, &mut ctx).unwrap();
+    assert_eq!(path.origin_identity(), parent_origin, "full rollback restores the actual retained origin");
+    assert_ne!(path.origin_identity(), child_origin);
     assert_eq!(path.text(), &Utf16::default());
     assert_eq!(path.observe().first_hash, None);
+    assert_eq!(path.observe().origin_epoch, 0, "full rollback returns to the retained parent origin");
+    assert!(!path.observe().has_origin_binding, "child-origin selection does not leak to parent");
     assert!(
         !path.observe().has_origin_binding,
         "child-created selector updates cannot leak to sibling"
