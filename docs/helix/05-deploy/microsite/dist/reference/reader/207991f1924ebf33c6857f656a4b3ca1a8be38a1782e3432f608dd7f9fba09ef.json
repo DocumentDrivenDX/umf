@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectCoreCardinality\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -24,9 +24,9 @@
       "type": "CoreCardinalityIdentity"
     }
   ],
-  "purpose": "Inspect ideal container/item meaning without inferring native shape or author provenance.",
+  "purpose": "inspectCoreCardinality accepts source, identity and returns CoreCardinalityInspection.",
   "related": [],
   "returns": "CoreCardinalityInspection",
   "task": "Inspect and select",
-  "type": "(input: Document, identity: CoreCardinalityIdentity) => CoreCardinalityInspection"
+  "type": "(source: Document, identity: CoreCardinalityIdentity) => CoreCardinalityInspection"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4372,
-        "line": 37,
-        "path": "src/projections/bit128-model.ts",
-        "sha256": "10f9bbd6ecef4dcc40c2a8994e272fdab1a3413433d1860043aa6cd154f47e8a"
+        "bytes": 84809,
+        "line": 439,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverBit128ModelProjection",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Bit128ModelProjection, current: string): { logical: Document; binding: Document; }"
+      "(report: Bit128ModelProjection, text: string): { logical: Document; binding: Document; }"
     ]
   },
   "id": "[\"api\",\".\",\"recoverBit128ModelProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4372,
-      "line": 37,
-      "path": "src/projections/bit128-model.ts",
-      "sha256": "10f9bbd6ecef4dcc40c2a8994e272fdab1a3413433d1860043aa6cd154f47e8a"
+      "bytes": 84809,
+      "line": 439,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/projections/bit128-model.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverBit128ModelProjection"
 }

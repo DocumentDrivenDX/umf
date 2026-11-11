@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6052,
-        "line": 14,
-        "path": "src/adapters/protobuf/index.ts",
-        "sha256": "536611edddd620f8bb67ea3a2a7cd785fad55cafc03b24f0d6d46e04e7ff3bd9"
+        "bytes": 312,
+        "line": 4,
+        "path": "src/adapters/protobuf/document-types.ts",
+        "sha256": "fb5016bfb96bfcf5e5f80b14de80fe332675faa40973f0d0db583513f5dbb93d"
       }
     ],
     "entrypoint": ".",
     "exportName": "ProtobufPayload",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ProtobufPayload {descriptorProfile:'protobuf-es-2.15.0';descriptorSet:DescriptorNode;sourceArchive?:{role:'original';compiler:string;files:Record<string,string>;roots:string[]};}"
+      "export interface ProtobufPayload {\n  descriptorProfile: 'protobuf-es-2.15.0';\n  descriptorSet: DescriptorNode;\n  sourceArchive?: {role:'original';compiler:string;files:Record<string,string>;roots:string[]};\n}"
     ]
   },
   "id": "[\"api\",\".\",\"ProtobufPayload\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6052,
-      "line": 14,
-      "path": "src/adapters/protobuf/index.ts",
-      "sha256": "536611edddd620f8bb67ea3a2a7cd785fad55cafc03b24f0d6d46e04e7ff3bd9"
+      "bytes": 312,
+      "line": 4,
+      "path": "src/adapters/protobuf/document-types.ts",
+      "sha256": "fb5016bfb96bfcf5e5f80b14de80fe332675faa40973f0d0db583513f5dbb93d"
     }
   ],
-  "summary": "Type declaration · src/adapters/protobuf/index.ts",
+  "summary": "Type declaration · src/adapters/protobuf/document-types.ts",
   "title": "ProtobufPayload"
 }

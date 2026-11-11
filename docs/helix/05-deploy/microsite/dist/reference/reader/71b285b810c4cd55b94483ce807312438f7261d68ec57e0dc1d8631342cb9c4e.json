@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "value",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -29,5 +29,5 @@
   ],
   "returns": "string",
   "task": "Serialize",
-  "type": "(value: Document, format?: \"json\" | \"yaml\") => string"
+  "type": "(document: Document, format?: \"json\" | \"yaml\") => string"
 }

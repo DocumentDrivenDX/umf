@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"exportPostgresqlCatalogCapture\"]",
   "kind": "Function",
   "members": [],
@@ -15,7 +15,7 @@
       "type": "Document"
     }
   ],
-  "purpose": "Export the entire native capture, preserving unknown fields and exact numbers.",
+  "purpose": "exportPostgresqlCatalogCapture accepts document and returns { state: \"captured\" | \"modified\"; json: string; complete: false; }.",
   "related": [],
   "returns": "{ state: \"captured\" | \"modified\"; json: string; complete: false; }",
   "task": "Import and export",

@@ -1,0 +1,52 @@
+{
+  "profile": "umf.microsite.local-release-candidate/1",
+  "version": "0.10.11",
+  "status": "unsigned_local_candidate_not_deployed",
+  "source": {
+    "releaseCommit": "f402d9a6c9471bde63f0693518745ea036def18a",
+    "mergeCommit": "09bbf7c447d5749fcf07010ea736d133f96264ff",
+    "tree": "817fff25ba17e69e483f5b106157f71eac61ec02",
+    "mergeTreeMatchesReleaseCommit": true
+  },
+  "sdkBuild": {
+    "profile": "umf.rust-sdk-default/1",
+    "version": "0.10.11",
+    "manifestSha256": "a2876ed6487a88a4e6b41ab296806d4b17b5924083e40c20a078c7b3a5d7e278",
+    "sourceClosureSha256": "55c4de1e1664b8413a1b54acf688fcf61306522b8e81dee2eb286c6143855c74",
+    "nodeAddonSha256": "aa120c5b0ef122cde280deb034bfc330629e65ba71a606c336df8912b2ff159d",
+    "coreWasmSha256": "333f49d5b649abb5efe2b393459820d6ee93c86577c3ca62245a4bfedcd81e2b",
+    "packToolsWasmSha256": "1724de84d0d2a4517a93ed9afffefdb9204984a6c974c421f0e4c777a99e536a",
+    "postgresqlParserWasmSha256": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1"
+  },
+  "siteBuild": {
+    "bun": "1.4.2",
+    "schemaBrowserVersion": "2.1.0",
+    "referenceInputDigest": "2079f78412345ec8bf2c04bdf45db00503806cff2e527ce7976e18019ed599b9",
+    "packToolsProvenanceSha256": "4dcefdec44be4acde724e9d5a04c223d2330de1652f236d92f659cf7926c94e2",
+    "packToolsVerification": "verified before signing",
+    "browser": "151.0.7922.34"
+  },
+  "archive": {
+    "file": "umf-microsite-0.10.11.tar.gz",
+    "sha256": "f8447cd91d56c6fe4c210bca708d4579b0ea996e31ad6848d0449e3be49d29b8",
+    "bytes": 74388261,
+    "manifest": "site-manifest.json",
+    "manifestSha256": "550a1a1566db62d9baeba5f928911f0109811748072b99e17186c0d818b04b1f",
+    "fileCount": 6614,
+    "uncompressedBytes": 333772589,
+    "deterministicTarMetadata": true
+  },
+  "signatureStatus": {
+    "signed": false,
+    "staleReferenceClaimsRemoved": 7,
+    "evidence": "evidence/signature-gaps.json",
+    "noPrivateKeyRead": true
+  },
+  "checks": "evidence/local-build-checks.json",
+  "publication": {
+    "githubActionsStarted": false,
+    "githubReleaseAssetUploaded": false,
+    "pagesDeployed": false,
+    "reason": "The user requires zero GitHub Actions. Both documented GitHub Pages deployment paths use Actions and the registered build signer is available only there."
+  }
+}

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipSqlServerProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RelationshipSqlServerProjection"
     },
@@ -22,9 +22,9 @@
       "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
     }
   ],
-  "purpose": "recoverRelationshipSqlServerBinding accepts input, current and returns Document.",
+  "purpose": "recoverRelationshipSqlServerBinding accepts receipt, current and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: RelationshipSqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }) => Document"
+  "type": "(receipt: RelationshipSqlServerProjection, current: NonNullable<RelationshipSqlServerProjection[\"target\"]>) => Document"
 }

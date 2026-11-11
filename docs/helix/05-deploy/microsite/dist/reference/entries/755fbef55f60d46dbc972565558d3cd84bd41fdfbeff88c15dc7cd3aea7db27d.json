@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11451,
-        "line": 7,
-        "path": "src/projections/arrow-spark.ts",
-        "sha256": "86b1eec8778a75f301b813c6b9bcc5bf06a9d9885a5f73d4d273e2b0e5f0ff27"
+        "bytes": 531,
+        "line": 12,
+        "path": "src/projections/arrow-spark-types.ts",
+        "sha256": "289bdb0d7f22816197dfd473024972c112832f7ec0d83ba05bdad182337eb9bf"
       }
     ],
     "entrypoint": ".",
     "exportName": "ArrowSparkProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ArrowSparkProjection {status:'blocked'|'projected';complete:false;source:Document;policy:ArrowSparkPolicy;issues:SparkArrowIssue[];target?:Document}"
+      "export interface ArrowSparkProjection {\n  status: 'blocked' | 'projected';\n  complete: false;\n  source: Document;\n  policy: ArrowSparkPolicy;\n  issues: SparkArrowIssue[];\n  target?: Document;\n}"
     ]
   },
   "id": "[\"api\",\".\",\"ArrowSparkProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11451,
-      "line": 7,
-      "path": "src/projections/arrow-spark.ts",
-      "sha256": "86b1eec8778a75f301b813c6b9bcc5bf06a9d9885a5f73d4d273e2b0e5f0ff27"
+      "bytes": 531,
+      "line": 12,
+      "path": "src/projections/arrow-spark-types.ts",
+      "sha256": "289bdb0d7f22816197dfd473024972c112832f7ec0d83ba05bdad182337eb9bf"
     }
   ],
-  "summary": "Type declaration · src/projections/arrow-spark.ts",
+  "summary": "Type declaration · src/projections/arrow-spark-types.ts",
   "title": "ArrowSparkProjection"
 }

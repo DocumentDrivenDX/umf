@@ -1,0 +1,95 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SparkDelta4DDLRealization\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "targetProfile",
+      "optional": false,
+      "type": "\"spark-delta4/0.1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "realizationProfile",
+      "optional": false,
+      "type": "\"umf.delta.spark-realization/0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": false,
+      "type": "{ profile: \"spark-delta4/0.1\"; kind: \"relation\"; relation: string[]; location: string; identitySha256: string; } | { profile: \"spark-delta4/0.1\"; kind: \"delta-path\"; path: string; identitySha256: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sql",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaDefinition\"]"
+      ],
+      "name": "definition",
+      "optional": false,
+      "type": "DeltaDefinition"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schemaJson",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceSha256",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schemaSha256",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "writerSettings",
+      "optional": false,
+      "type": "{ key: string; value: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SparkDelta4Disposition\"]"
+      ],
+      "name": "dispositions",
+      "optional": false,
+      "type": "SparkDelta4Disposition[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "qualification",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SparkDelta4DDLRealization is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SparkDelta4DDLRealization"
+}

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"proposeSmithyNodeEdit\"]",
   "kind": "Function",
   "members": [],
@@ -36,9 +36,9 @@
       "type": "string | undefined"
     }
   ],
-  "purpose": "Candidate only: native semantic validation remains required.",
+  "purpose": "proposeSmithyNodeEdit accepts document, path, text, dependencyId and returns SmithyEditResult.",
   "related": [],
-  "returns": "{ document: Document; validation: Validation; }",
+  "returns": "SmithyEditResult",
   "task": "Author and edit",
-  "type": "(document: Document, path: string, text: string, dependencyId?: string) => { document: Document; validation: Validation; }"
+  "type": "(document: Document, path: string, text: string, dependencyId?: string) => SmithyEditResult"
 }

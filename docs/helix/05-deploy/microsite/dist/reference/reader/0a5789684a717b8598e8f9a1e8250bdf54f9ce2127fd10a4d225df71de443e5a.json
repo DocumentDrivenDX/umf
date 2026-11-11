@@ -8,23 +8,21 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityResolution\"]"
-      ],
-      "name": "resolutionInput",
+      "links": [],
+      "name": "resolution",
       "optional": true,
-      "type": "SecurityResolution | undefined"
+      "type": "unknown"
     }
   ],
-  "purpose": "inspectSecurityPolicy accepts input, resolutionInput and returns SecurityInspection.",
+  "purpose": "inspectSecurityPolicy accepts source, resolution and returns SecurityInspection.",
   "related": [],
   "returns": "SecurityInspection",
   "task": "Inspect and select",
-  "type": "(input: unknown, resolutionInput?: SecurityResolution) => SecurityInspection"
+  "type": "(source: unknown, resolution?: unknown) => SecurityInspection"
 }

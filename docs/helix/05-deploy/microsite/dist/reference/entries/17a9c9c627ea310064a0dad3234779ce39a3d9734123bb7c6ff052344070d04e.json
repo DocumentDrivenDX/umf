@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8206,
-        "line": 20,
-        "path": "src/core-ideals/postgresql-ddl-kinds.ts",
-        "sha256": "a05de50bc2613bdeba9b59355faa47d01e5f21643298614031aa873c787f5f5a"
+        "bytes": 84809,
+        "line": 286,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyPostgresqlDdlRecord",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: PostgresqlDdlKindRequest, backend: PostgresqlBackend): Promise<PostgresqlDdlKinds>"
+      "(source: Document, request: PostgresqlDdlKindRequest, backend: PostgresqlBackend): Promise<PostgresqlDdlKinds>"
     ]
   },
   "id": "[\"api\",\".\",\"classifyPostgresqlDdlRecord\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8206,
-      "line": 20,
-      "path": "src/core-ideals/postgresql-ddl-kinds.ts",
-      "sha256": "a05de50bc2613bdeba9b59355faa47d01e5f21643298614031aa873c787f5f5a"
+      "bytes": 84809,
+      "line": 286,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/postgresql-ddl-kinds.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyPostgresqlDdlRecord"
 }

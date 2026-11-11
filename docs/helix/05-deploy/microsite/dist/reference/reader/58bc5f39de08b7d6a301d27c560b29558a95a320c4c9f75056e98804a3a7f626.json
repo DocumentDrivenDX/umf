@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyPostgresqlFieldClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlFieldClassification\"]"
+      ],
+      "name": "receipt",
+      "optional": false,
+      "type": "PostgresqlFieldClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifyPostgresqlFieldClassification accepts receipt, current and returns PostgresqlFieldClassification.",
+  "related": [],
+  "returns": "PostgresqlFieldClassification",
+  "task": "Other APIs",
+  "type": "(receipt: PostgresqlFieldClassification, current: Document) => PostgresqlFieldClassification"
+}

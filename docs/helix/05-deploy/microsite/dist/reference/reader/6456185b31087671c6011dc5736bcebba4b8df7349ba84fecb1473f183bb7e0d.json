@@ -33,14 +33,14 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "slots",
       "optional": false,
       "type": "Record<string, string | null>"
     }
   ],
-  "purpose": "decodeBit128CarrierValue accepts binding, logical, identity, input and returns CoreLiteral.",
+  "purpose": "decodeBit128CarrierValue accepts binding, logical, identity, slots and returns Literal.",
   "related": [],
-  "returns": "CoreLiteral",
+  "returns": "Literal",
   "task": "Serialize",
-  "type": "(binding: Document, logical: Document, identity: { module: string; element: string; }, input: Record<string, string | null>) => CoreLiteral"
+  "type": "(binding: Document, logical: Document, identity: { module: string; element: string; }, slots: Record<string, string | null>) => Literal"
 }

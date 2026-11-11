@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"KeySqlServerProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "KeySqlServerProjection"
     },
@@ -22,9 +22,9 @@
       "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
     }
   ],
-  "purpose": "recoverKeysSqlServerIdeal accepts input, current and returns Document.",
+  "purpose": "recoverKeysSqlServerIdeal accepts receipt, current and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: KeySqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }) => Document"
+  "type": "(receipt: KeySqlServerProjection, current: NonNullable<KeySqlServerProjection[\"target\"]>) => Document"
 }

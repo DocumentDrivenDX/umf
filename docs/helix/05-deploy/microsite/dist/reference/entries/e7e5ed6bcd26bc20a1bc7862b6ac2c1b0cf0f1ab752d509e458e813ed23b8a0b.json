@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3802,
-        "line": 12,
-        "path": "src/adapters/parquet/arrow-schema.ts",
-        "sha256": "e06ae36af58da50a98656ccdb492055e109089860700e8f236a29dc04b11c6a8"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "getParquetArrowSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document): ParquetArrowSchema"
+      "(document: Document): ParquetArrowSchema"
     ]
   },
   "id": "[\"api\",\".\",\"getParquetArrowSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3802,
-      "line": 12,
-      "path": "src/adapters/parquet/arrow-schema.ts",
-      "sha256": "e06ae36af58da50a98656ccdb492055e109089860700e8f236a29dc04b11c6a8"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Decode the optional ARROW:schema declaration; never infer correspondence to physical data.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "getParquetArrowSchema"
 }

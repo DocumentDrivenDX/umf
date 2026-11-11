@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6084,
-        "line": 43,
-        "path": "src/core-ideals/key-parquet.ts",
-        "sha256": "3f4adad3eb5e9e893dbfc49be2d47a7155ccc3c3780a24ebf207f0f409a2f708"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverParquetKeySource",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: ParquetKeyClassification, current: Document): Uint8Array<ArrayBufferLike>"
+      "(receipt: ParquetKeyClassification, current: Document): Uint8Array<ArrayBufferLike>"
     ]
   },
   "id": "[\"api\",\".\",\"recoverParquetKeySource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6084,
-      "line": 43,
-      "path": "src/core-ideals/key-parquet.ts",
-      "sha256": "3f4adad3eb5e9e893dbfc49be2d47a7155ccc3c3780a24ebf207f0f409a2f708"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/key-parquet.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverParquetKeySource"
 }

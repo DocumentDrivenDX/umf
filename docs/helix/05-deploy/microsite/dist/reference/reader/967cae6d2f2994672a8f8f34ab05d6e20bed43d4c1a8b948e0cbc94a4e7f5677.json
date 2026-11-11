@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyTableSpecRelationships\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"TableSpecRelationshipRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "TableSpecRelationshipRequest"
     }
   ],
-  "purpose": "Observe native declarations without upgrading the envelope or creating authored relationships.",
+  "purpose": "classifyTableSpecRelationships accepts document, request and returns TableSpecRelationshipClassification.",
   "related": [],
   "returns": "TableSpecRelationshipClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: TableSpecRelationshipRequest) => TableSpecRelationshipClassification"
+  "type": "(document: Document, request: TableSpecRelationshipRequest) => TableSpecRelationshipClassification"
 }

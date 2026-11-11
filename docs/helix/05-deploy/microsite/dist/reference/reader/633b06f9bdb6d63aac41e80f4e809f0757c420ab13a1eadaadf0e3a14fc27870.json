@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBit128CarrierSchema\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "bindingInput",
+      "name": "binding",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "logicalInput",
+      "name": "logical",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [],
-      "name": "identityInput",
+      "name": "identity",
       "optional": false,
       "type": "{ module: string; element: string; }"
     },
@@ -35,14 +35,14 @@
       "links": [
         "[\"api\",\".\",\"Bit128ProjectionPolicy\"]"
       ],
-      "name": "policyInput",
+      "name": "policy",
       "optional": false,
       "type": "Bit128ProjectionPolicy"
     }
   ],
-  "purpose": "Bounded one-Field native schema proposal; native execution/adoption is separately qualified.",
+  "purpose": "projectBit128CarrierSchema accepts binding, logical, identity, policy and returns Bit128NativeProjection.",
   "related": [],
   "returns": "Bit128NativeProjection",
   "task": "Import and export",
-  "type": "(bindingInput: Document, logicalInput: Document, identityInput: { module: string; element: string; }, policyInput: Bit128ProjectionPolicy) => Bit128NativeProjection"
+  "type": "(binding: Document, logical: Document, identity: { module: string; element: string; }, policy: Bit128ProjectionPolicy) => Bit128NativeProjection"
 }

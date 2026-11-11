@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyParquetKeys\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"ParquetKeyRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "ParquetKeyRequest"
     }
   ],
-  "purpose": "Observe physical schema only. Sorting, field IDs, statistics and metadata never assert identity.",
+  "purpose": "classifyParquetKeys accepts source, request and returns ParquetKeyClassification.",
   "related": [],
   "returns": "ParquetKeyClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: ParquetKeyRequest) => ParquetKeyClassification"
+  "type": "(source: Document, request: ParquetKeyRequest) => ParquetKeyClassification"
 }

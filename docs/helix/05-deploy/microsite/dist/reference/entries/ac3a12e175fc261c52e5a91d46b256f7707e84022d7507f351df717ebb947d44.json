@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5942,
+        "line": 14,
+        "path": "src/extensions/actions/bulk-state.ts",
+        "sha256": "577ea9f8faa3d3d3dc798fdb7cda349b446f5a771f7bceffadd086b506af0412"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "BulkDecisionInput",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface BulkDecisionInput {delegation:'valid'|'missing'|'expired'|'human-lost';guards:'pass'|'changed'|'deleted'|'rebound';guardItem?:number;tx1:{decision:'committed'|'conflict'|'rejected'|'entity-missing';code?:string;item?:number}|null}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"BulkDecisionInput\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5942,
+      "line": 14,
+      "path": "src/extensions/actions/bulk-state.ts",
+      "sha256": "577ea9f8faa3d3d3dc798fdb7cda349b446f5a771f7bceffadd086b506af0412"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/bulk-state.ts",
+  "title": "BulkDecisionInput"
+}

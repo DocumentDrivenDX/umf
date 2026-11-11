@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11556,
-        "line": 11,
-        "path": "src/adapters/shacl/index.ts",
-        "sha256": "c4a764f7c265d1c8ca0fb568e47d5e14eb94b5427e2b6fe67e68357827401107"
+        "bytes": 300,
+        "line": 3,
+        "path": "src/adapters/shacl/path-types.ts",
+        "sha256": "817ce284944f691347226375b5bf836d800abf7ea0f3d0e0da3428399c76762b"
       }
     ],
     "entrypoint": ".",
     "exportName": "ShaclPath",
     "runtime": "type-only",
     "signatureText": [
-      "export type ShaclPath={kind:'predicate';iri:string}|{kind:'sequence'|'alternative';paths:ShaclPath[]}|{kind:'inverse'|'zeroOrMore'|'oneOrMore'|'zeroOrOne';path:ShaclPath};"
+      "export type ShaclPath=\n | {kind:'predicate';iri:string}\n | {kind:'sequence'|'alternative';paths:ShaclPath[]}\n | {kind:'inverse'|'zeroOrMore'|'oneOrMore'|'zeroOrOne';path:ShaclPath};"
     ]
   },
   "id": "[\"api\",\".\",\"ShaclPath\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11556,
-      "line": 11,
-      "path": "src/adapters/shacl/index.ts",
-      "sha256": "c4a764f7c265d1c8ca0fb568e47d5e14eb94b5427e2b6fe67e68357827401107"
+      "bytes": 300,
+      "line": 3,
+      "path": "src/adapters/shacl/path-types.ts",
+      "sha256": "817ce284944f691347226375b5bf836d800abf7ea0f3d0e0da3428399c76762b"
     }
   ],
-  "summary": "Type declaration · src/adapters/shacl/index.ts",
+  "summary": "A property-path description returned by the native SHACL subset.",
   "title": "ShaclPath"
 }

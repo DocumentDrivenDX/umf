@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7333,
-        "line": 20,
-        "path": "src/core-ideals/field-tablespec-projection.ts",
-        "sha256": "b7d552d9bfbaecb7dc9c66e796126894170b8ad80725dacdff3b06cb9db674de"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectFieldToTableSpec",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreKindDeclaration, options: FieldTableSpecRequest): FieldTableSpecProjection & { diagnostics: Diagnostic[]; }"
+      "(author: CoreKindDeclaration, request: FieldTableSpecRequest): FieldTableSpecProjection & { diagnostics: Diagnostic[]; }"
     ]
   },
   "id": "[\"api\",\".\",\"projectFieldToTableSpec\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7333,
-      "line": 20,
-      "path": "src/core-ideals/field-tablespec-projection.ts",
-      "sha256": "b7d552d9bfbaecb7dc9c66e796126894170b8ad80725dacdff3b06cb9db674de"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/field-tablespec-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectFieldToTableSpec"
 }

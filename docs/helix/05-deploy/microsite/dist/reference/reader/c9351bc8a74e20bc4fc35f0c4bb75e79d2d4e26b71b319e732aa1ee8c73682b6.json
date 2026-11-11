@@ -57,7 +57,7 @@
       "links": [],
       "name": "binding",
       "optional": false,
-      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+      "type": "{ id: \"umf.avro.keys\"; version: \"1.0.0\"; nativeVersion: \"1.12.0\"; subset: \"Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence\"; }"
     },
     {
       "description": "",
@@ -75,7 +75,7 @@
       ],
       "name": "residuals",
       "optional": false,
-      "type": "{ path: string; value: Json; outcome: \"not-expressible\"; reason: string; recovery: typeof recovery; }[]"
+      "type": "{ path: string; value: Json; outcome: \"not-expressible\"; reason: string; recovery: \"Original native archive retained; no authored key inferred\"; }[]"
     },
     {
       "description": "",

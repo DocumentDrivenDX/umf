@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectDddToGraphql\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "logical",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"DddGraphqlPolicy\"]"
       ],
-      "name": "options",
+      "name": "policy",
       "optional": false,
       "type": "DddGraphqlPolicy"
     },
@@ -31,9 +31,9 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Complete schema-only projection. Endpoint identity is always explicitly paired.",
+  "purpose": "projectDddToGraphql accepts logical, policy, lossPolicy and returns DddGraphqlProjection.",
   "related": [],
   "returns": "DddGraphqlProjection",
   "task": "Import and export",
-  "type": "(input: Document, options: DddGraphqlPolicy, lossPolicy: \"strict\" | \"report\") => DddGraphqlProjection"
+  "type": "(logical: Document, policy: import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").DddGraphqlPolicy, lossPolicy: \"strict\" | \"report\") => import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").DddGraphqlProjection"
 }

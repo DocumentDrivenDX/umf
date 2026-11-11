@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createDocumentComparisonEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "{ snapshot: (value: unknown) => unknown; profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }"
+    }
+  ],
+  "purpose": "createDocumentComparisonEngine accepts module, options and returns DocumentComparisonEngine.",
+  "related": [],
+  "returns": "DocumentComparisonEngine",
+  "task": "Author and edit",
+  "type": "(module: any, options: { snapshot: (value: unknown) => unknown; profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }) => DocumentComparisonEngine"
+}

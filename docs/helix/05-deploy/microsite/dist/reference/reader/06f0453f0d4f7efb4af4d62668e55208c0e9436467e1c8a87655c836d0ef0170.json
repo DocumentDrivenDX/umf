@@ -1,0 +1,20 @@
+{
+  "alternatives": [
+    "{ kind: \"deny\" | \"allow\"; }",
+    "{ kind: \"owner\" | \"memberOf\"; field: TableRef; }",
+    "{ kind: \"memberOfRole\"; role: string; }",
+    "{ kind: \"any\" | \"all\"; rules: TableRowRule[]; }",
+    "{ kind: \"via\"; path: TableRelationshipStep[]; rule: TableRowRule; }",
+    "{ kind: \"related\"; record: TableRef; matches: { source: TableRef; target: TableRef; }[]; rule: TableRowRule; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableRowRule\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "TableRowRule is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableRowRule"
+}

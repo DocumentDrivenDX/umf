@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8731,
-        "line": 10,
-        "path": "src/adapters/parquet/arrow-rename.ts",
-        "sha256": "f05e39a83c93693952fc10267f1f1962476fffbd0889c57e8cd76201cecaf541"
+        "bytes": 881,
+        "line": 6,
+        "path": "src/adapters/parquet/arrow-types.ts",
+        "sha256": "f076d97c0f69f08807ef57dd0e8a5245610a025f564c754e58a030b982646db4"
       }
     ],
     "entrypoint": ".",
     "exportName": "ParquetArrowRenamePolicy",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ParquetArrowRenamePolicy {parquetIndex:number;arrowFieldPath:number[];name:string;parquetName?:string;uninterpretedMetadata:'preserve-and-report'}"
+      "export interface ParquetArrowRenamePolicy {parquetIndex:number;arrowFieldPath:number[];name:string;parquetName?:string;uninterpretedMetadata:'preserve-and-report';}"
     ]
   },
   "id": "[\"api\",\".\",\"ParquetArrowRenamePolicy\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8731,
-      "line": 10,
-      "path": "src/adapters/parquet/arrow-rename.ts",
-      "sha256": "f05e39a83c93693952fc10267f1f1962476fffbd0889c57e8cd76201cecaf541"
+      "bytes": 881,
+      "line": 6,
+      "path": "src/adapters/parquet/arrow-types.ts",
+      "sha256": "f076d97c0f69f08807ef57dd0e8a5245610a025f564c754e58a030b982646db4"
     }
   ],
-  "summary": "Type declaration · src/adapters/parquet/arrow-rename.ts",
+  "summary": "Type declaration · src/adapters/parquet/arrow-types.ts",
   "title": "ParquetArrowRenamePolicy"
 }

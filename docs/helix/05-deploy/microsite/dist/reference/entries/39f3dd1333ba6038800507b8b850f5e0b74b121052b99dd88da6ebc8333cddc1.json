@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7001,
-        "line": 41,
-        "path": "src/adapters/iceberg/table.ts",
-        "sha256": "178bd46e14d001689f80581f3df2b547e84b02cd2df76e0b6d11f05d87d9fcae"
+        "bytes": 84809,
+        "line": 236,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "proposeIcebergTableNodeEdit",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, path: string, text: string): { document: Document; validation: Validation; }"
+      "(document: Document, path: string, replacementJson: string): { document: Document; validation: Validation; }"
     ]
   },
   "id": "[\"api\",\".\",\"proposeIcebergTableNodeEdit\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7001,
-      "line": 41,
-      "path": "src/adapters/iceberg/table.ts",
-      "sha256": "178bd46e14d001689f80581f3df2b547e84b02cd2df76e0b6d11f05d87d9fcae"
+      "bytes": 84809,
+      "line": 236,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/adapters/iceberg/table.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "proposeIcebergTableNodeEdit"
 }

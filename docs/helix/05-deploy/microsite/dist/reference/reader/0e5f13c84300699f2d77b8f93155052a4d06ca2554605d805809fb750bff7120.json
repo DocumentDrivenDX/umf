@@ -1,0 +1,98 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"SmithySessionOperations\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "inspect",
+      "optional": false,
+      "type": "(fields: { document: unknown; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectPayload",
+      "optional": false,
+      "type": "(fields: { payload: unknown; }) => unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importJson",
+      "optional": false,
+      "type": "(fields: { source: string; id: string; dependencies?: { id: string; schema: string; }[]; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importSources",
+      "optional": false,
+      "type": "(fields: { files: Record<string, string>; id: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportJson",
+      "optional": false,
+      "type": "(fields: { document: unknown; }) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportSources",
+      "optional": false,
+      "type": "(fields: { document: unknown; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportBundle",
+      "optional": false,
+      "type": "(fields: { document: unknown; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getNode",
+      "optional": false,
+      "type": "(fields: { document: unknown; path: string; dependencyId?: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "editNode",
+      "optional": false,
+      "type": "(fields: { document: unknown; path: string; replacement: string; dependencyId?: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "editSource",
+      "optional": false,
+      "type": "(fields: { document: unknown; path: string; source: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "assembleSmithyDocument",
+      "optional": false,
+      "type": "(document: unknown, backend: unknown, options: { id: string; signal?: AbortSignal; }) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "selectSmithyShapes",
+      "optional": false,
+      "type": "(document: unknown, backend: unknown, selector: string, options: { id: string; signal?: AbortSignal; }) => Promise<unknown>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SmithySessionOperations is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SmithySessionOperations"
+}

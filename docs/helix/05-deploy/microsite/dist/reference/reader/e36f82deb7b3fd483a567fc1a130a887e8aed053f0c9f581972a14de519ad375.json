@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipPostgresqlProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RelationshipPostgresqlProjection"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "recoverRelationshipPostgresqlIdeal accepts input, current, backend and returns Promise<Document>.",
+  "purpose": "recoverRelationshipPostgresqlIdeal accepts receipt, current, backend and returns Promise<Document>.",
   "related": [],
   "returns": "Promise<Document>",
   "task": "Import and export",
-  "type": "(input: RelationshipPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<Document>"
+  "type": "(receipt: RelationshipPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<Document>"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11358,
-        "line": 26,
-        "path": "src/core-ideals/cardinality-avro-projection.ts",
-        "sha256": "c3b7c3f3417583f4b00e483d1afafb42a30b1724a6697e484778bd36e15934e7"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectCardinalityToAvro",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreCardinalityDeclaration, options: CardinalityAvroRequest): CardinalityAvroProjection"
+      "(author: CoreCardinalityDeclaration, request: CardinalityAvroRequest): CardinalityAvroProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectCardinalityToAvro\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11358,
-      "line": 26,
-      "path": "src/core-ideals/cardinality-avro-projection.ts",
-      "sha256": "c3b7c3f3417583f4b00e483d1afafb42a30b1724a6697e484778bd36e15934e7"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/cardinality-avro-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectCardinalityToAvro"
 }

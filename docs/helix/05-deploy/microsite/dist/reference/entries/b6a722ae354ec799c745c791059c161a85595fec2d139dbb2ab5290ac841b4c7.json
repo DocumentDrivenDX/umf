@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6206,
-        "line": 11,
-        "path": "src/adapters/parquet/pages.ts",
-        "sha256": "d9389c85de0bfc672e83dc3905bdad754339f8fc1c4e059a72f6e573719d1072"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectParquetPages",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document): ParquetPageInspection"
+      "(document: Document): ParquetPageInspection"
     ]
   },
   "id": "[\"api\",\".\",\"inspectParquetPages\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6206,
-      "line": 11,
-      "path": "src/adapters/parquet/pages.ts",
-      "sha256": "d9389c85de0bfc672e83dc3905bdad754339f8fc1c4e059a72f6e573719d1072"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Validates declared page boundaries/budgets without decompressing or decoding data.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectParquetPages"
 }

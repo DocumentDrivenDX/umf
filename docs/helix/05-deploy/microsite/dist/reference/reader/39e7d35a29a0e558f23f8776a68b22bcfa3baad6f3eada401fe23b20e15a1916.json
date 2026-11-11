@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"SecurityReadHandle\"]",
   "kind": "Interface",
   "members": [
@@ -13,7 +13,7 @@
     }
   ],
   "parameters": [],
-  "purpose": "Opaque in-process selection handle; never a native authorization credential.",
+  "purpose": "SecurityReadHandle is a interface in Other APIs. Its exact structure is documented below.",
   "related": [],
   "returns": "",
   "task": "Other APIs",

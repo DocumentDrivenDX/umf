@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"DddDocumentBindings\"]"
       ],
-      "name": "input",
+      "name": "bindings",
       "optional": false,
       "type": "DddDocumentBindings"
     }
   ],
-  "purpose": "projectDddToJsonSchema accepts source, input and returns DddDocumentProjection.",
+  "purpose": "projectDddToJsonSchema accepts source, bindings and returns DddDocumentProjection.",
   "related": [],
   "returns": "DddDocumentProjection",
   "task": "Import and export",
-  "type": "(source: Document, input: DddDocumentBindings) => DddDocumentProjection"
+  "type": "(source: Document, bindings: DddDocumentBindings) => DddDocumentProjection"
 }

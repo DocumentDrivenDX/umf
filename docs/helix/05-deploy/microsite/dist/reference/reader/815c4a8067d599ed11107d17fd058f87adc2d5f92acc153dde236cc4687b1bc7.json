@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -24,9 +24,9 @@
       "type": "CoreSchemaPropertyIdentity"
     }
   ],
-  "purpose": "inspectCoreSchemaProperties accepts input, identity and returns { operation: \"inspect-core-schema-properties\"; version: \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }.",
+  "purpose": "inspectCoreSchemaProperties accepts source, identity and returns CoreSchemaPropertyInspection.",
   "related": [],
-  "returns": "{ operation: \"inspect-core-schema-properties\"; version: \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }",
+  "returns": "CoreSchemaPropertyInspection",
   "task": "Inspect and select",
-  "type": "(input: Document, identity: CoreSchemaPropertyIdentity) => { operation: \"inspect-core-schema-properties\"; version: \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }"
+  "type": "(source: Document, identity: CoreSchemaPropertyIdentity) => CoreSchemaPropertyInspection"
 }

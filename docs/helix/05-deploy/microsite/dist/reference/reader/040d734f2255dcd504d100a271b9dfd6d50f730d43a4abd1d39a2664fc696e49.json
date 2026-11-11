@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyAvroCardinalityClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"AvroCardinalityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "AvroCardinalityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Consistency checking, not receipt authentication.",
+  "purpose": "verifyAvroCardinalityClassification accepts receipt, current and returns AvroCardinalityClassification.",
   "related": [],
-  "returns": "AvroCardinalityClassification & { [x: string]: {}; }",
+  "returns": "AvroCardinalityClassification",
   "task": "Other APIs",
-  "type": "(input: AvroCardinalityClassification, current: Document) => AvroCardinalityClassification & { [x: string]: {}; }"
+  "type": "(receipt: AvroCardinalityClassification, current: Document) => AvroCardinalityClassification"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyDddGraphqlProjection\"]",
   "kind": "Function",
   "members": [],
@@ -24,9 +24,9 @@
       "type": "Document | undefined"
     }
   ],
-  "purpose": "Verify the complete retained report by recomputation, including unknown content.",
+  "purpose": "verifyDddGraphqlProjection accepts input, currentTarget and returns DddGraphqlProjection.",
   "related": [],
   "returns": "DddGraphqlProjection",
   "task": "Other APIs",
-  "type": "(input: DddGraphqlProjection, currentTarget?: Document) => DddGraphqlProjection"
+  "type": "(input: import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").DddGraphqlProjection, currentTarget?: Document) => import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").DddGraphqlProjection"
 }

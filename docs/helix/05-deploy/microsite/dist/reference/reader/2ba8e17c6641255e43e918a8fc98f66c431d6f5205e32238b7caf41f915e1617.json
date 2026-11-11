@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifySqlServerFieldClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerFieldClassification\"]"
+      ],
+      "name": "receipt",
+      "optional": false,
+      "type": "SqlServerFieldClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifySqlServerFieldClassification accepts receipt, current and returns SqlServerFieldClassification.",
+  "related": [],
+  "returns": "SqlServerFieldClassification",
+  "task": "Other APIs",
+  "type": "(receipt: SqlServerFieldClassification, current: Document) => SqlServerFieldClassification"
+}

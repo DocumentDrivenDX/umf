@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyTableSpecKeyClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"TableSpecKeyClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "TableSpecKeyClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Check retained input consistency, not authenticity or runtime enforcement.",
+  "purpose": "verifyTableSpecKeyClassification accepts receipt, current and returns TableSpecKeyClassification.",
   "related": [],
   "returns": "TableSpecKeyClassification",
   "task": "Other APIs",
-  "type": "(input: TableSpecKeyClassification, current: Document) => TableSpecKeyClassification"
+  "type": "(receipt: TableSpecKeyClassification, current: Document) => TableSpecKeyClassification"
 }

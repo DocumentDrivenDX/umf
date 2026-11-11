@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6795,
-        "line": 14,
-        "path": "src/core-ideals/structured-report.ts",
-        "sha256": "fbd9d03dadf7f02bfff1cb2de447b2ac5072e61784198513bf3efce2d79d1059"
+        "bytes": 84809,
+        "line": 471,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectStructuredClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: NativeStructuredClassification, backend?: PostgresqlBackend | undefined): Promise<StructuredClassificationInspection>"
+      "(receipt: NativeStructuredClassification, backend?: PostgresqlBackend | undefined): Promise<StructuredClassificationInspection>"
     ]
   },
   "id": "[\"api\",\".\",\"inspectStructuredClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6795,
-      "line": 14,
-      "path": "src/core-ideals/structured-report.ts",
-      "sha256": "fbd9d03dadf7f02bfff1cb2de447b2ac5072e61784198513bf3efce2d79d1059"
+      "bytes": 84809,
+      "line": 471,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/structured-report.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectStructuredClassification"
 }

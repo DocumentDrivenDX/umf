@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "doc",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -29,9 +29,9 @@
       "type": "string"
     }
   ],
-  "purpose": "getDashboardDefinition accepts doc, module, element and returns DashboardDefinition.",
+  "purpose": "getDashboardDefinition accepts document, module, element and returns DashboardDefinition.",
   "related": [],
   "returns": "DashboardDefinition",
   "task": "Inspect and select",
-  "type": "(doc: Document, module: string, element: string) => DashboardDefinition"
+  "type": "(document: Document, module: string, element: string) => DashboardDefinition"
 }

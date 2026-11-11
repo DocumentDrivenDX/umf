@@ -24,5 +24,5 @@
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(text: string, options: { id: string; format: \"json\" | \"yaml\"; metamodelVersion?: string; }) => Document"
+  "type": "(text: string, options: Parameters<ImportLinkmlDocument>[1]) => ReturnType<ImportLinkmlDocument>"
 }

@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6422,
-        "line": 10,
-        "path": "src/adapters/postgresql/declarations.ts",
-        "sha256": "e47ebd6366fee86fb8ccaf1270555bcd338957bff511f30cdcae22a088c6d8d9"
+        "bytes": 84809,
+        "line": 286,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6422,
-      "line": 10,
-      "path": "src/adapters/postgresql/declarations.ts",
-      "sha256": "e47ebd6366fee86fb8ccaf1270555bcd338957bff511f30cdcae22a088c6d8d9"
+      "bytes": 84809,
+      "line": 286,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Declaration inventory, never an executed catalog or replay of DDL state changes.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "getPostgresqlDdlDeclarations"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getTypeSpecSemanticGraph\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "{ roots: string[]; }"
     }
   ],
-  "purpose": "Selected compiled graph snapshot; source remains authoritative for omitted compiler state.",
+  "purpose": "getTypeSpecSemanticGraph accepts document, input and returns Promise<TypeSpecGraphReport>.",
   "related": [],
-  "returns": "Promise<{ status: \"available\" | \"blocked\"; source: Document; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; roots: { expression: string; target: string; }[]; nodes: TypeSpecSemanticNode[]; complete: false; limitations: string[]; issues: { code: string; detail: string; }[]; }>",
+  "returns": "Promise<TypeSpecGraphReport>",
   "task": "Inspect and select",
-  "type": "(document: Document, input: { roots: string[]; }) => Promise<{ status: \"available\" | \"blocked\"; source: Document; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; roots: { expression: string; target: string; }[]; nodes: TypeSpecSemanticNode[]; complete: false; limitations: string[]; issues: { code: string; detail: string; }[]; }>"
+  "type": "(document: Document, input: { roots: string[]; }) => Promise<TypeSpecGraphReport>"
 }

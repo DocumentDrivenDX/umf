@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10689,
-        "line": 87,
-        "path": "src/core-ideals/cardinality-tablespec.ts",
-        "sha256": "02179b61cbcde1fe5d820c9143241bf28f8a2561d3ff43145380265bb5fd1c20"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyTableSpecCardinalityClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: TableSpecCardinalityClassification, current: Document): TableSpecCardinalityClassification"
+      "(receipt: TableSpecCardinalityClassification, current: Document): TableSpecCardinalityClassification"
     ]
   },
   "id": "[\"api\",\".\",\"verifyTableSpecCardinalityClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10689,
-      "line": 87,
-      "path": "src/core-ideals/cardinality-tablespec.ts",
-      "sha256": "02179b61cbcde1fe5d820c9143241bf28f8a2561d3ff43145380265bb5fd1c20"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyTableSpecCardinalityClassification"
 }

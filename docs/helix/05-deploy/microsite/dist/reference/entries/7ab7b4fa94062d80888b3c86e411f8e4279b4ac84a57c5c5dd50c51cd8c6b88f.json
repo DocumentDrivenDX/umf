@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4043,
-        "line": 13,
-        "path": "src/adapters/iceberg/table-context.ts",
-        "sha256": "46b0d780e1ed3b07d1125179c3fa0c6d002e2407a854e6f5a74b33c58f134c66"
+        "bytes": 84809,
+        "line": 236,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4043,
-      "line": 13,
-      "path": "src/adapters/iceberg/table-context.ts",
-      "sha256": "46b0d780e1ed3b07d1125179c3fa0c6d002e2407a854e6f5a74b33c58f134c66"
+      "bytes": 84809,
+      "line": 236,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Checks only retained identities and current selections; never mutates or normalizes metadata.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectIcebergTableContext"
 }

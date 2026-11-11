@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableOperationAssignment\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "field",
+      "optional": false,
+      "type": "TableRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableOperationValue\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "TableOperationValue"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableOperationAssignment is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableOperationAssignment"
+}

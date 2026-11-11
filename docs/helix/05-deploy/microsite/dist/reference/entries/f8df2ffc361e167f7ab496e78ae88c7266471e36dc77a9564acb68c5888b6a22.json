@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10620,
+        "line": 22,
+        "path": "src/table-migration/inventory-types.ts",
+        "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableInventoryTableIntent",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type TableInventoryTableIntent=\n |{kind:'create';table:string;record:TableInventoryReference}\n |{kind:'remove';table:string;record:TableInventoryReference;disposition:{mode:'irreversible-purge';reviewMarker:string}};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableInventoryTableIntent\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10620,
+      "line": 22,
+      "path": "src/table-migration/inventory-types.ts",
+      "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/inventory-types.ts",
+  "title": "TableInventoryTableIntent"
+}

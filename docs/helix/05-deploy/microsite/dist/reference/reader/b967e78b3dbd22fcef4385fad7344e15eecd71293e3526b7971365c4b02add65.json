@@ -23,7 +23,7 @@
       "links": [],
       "name": "status",
       "optional": false,
-      "type": "\"blocked\" | \"projected\""
+      "type": "\"projected\" | \"blocked\""
     },
     {
       "description": "",
@@ -37,7 +37,7 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyDeclaration\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyDeclaration\"]"
       ],
       "name": "authors",
       "optional": false,

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"decodeArrowFlatbuffer\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "{ id: string; rootType: ArrowFlatbufferRoot; }"
     }
   ],
-  "purpose": "Decodes a raw, non-size-prefixed FlatBuffer metadata root, not an IPC container.",
+  "purpose": "decodeArrowFlatbuffer accepts bytes, options and returns ArrowFlatbufferDecodeResult.",
   "related": [],
-  "returns": "{ source: Document; model?: Document; complete: false; status: \"decoded\" | \"uninterpreted\"; diagnostics: Diagnostic[]; }",
+  "returns": "ArrowFlatbufferDecodeResult",
   "task": "Serialize",
-  "type": "(bytes: Uint8Array, options: { id: string; rootType: ArrowFlatbufferRoot; }) => { source: Document; model?: Document; complete: false; status: \"decoded\" | \"uninterpreted\"; diagnostics: Diagnostic[]; }"
+  "type": "(bytes: Uint8Array, options: { id: string; rootType: ArrowFlatbufferRoot; }) => ArrowFlatbufferDecodeResult"
 }

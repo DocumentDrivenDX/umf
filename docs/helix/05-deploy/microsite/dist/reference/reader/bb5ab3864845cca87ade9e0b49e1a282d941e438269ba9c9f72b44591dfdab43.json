@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyTableSpecFacets\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"TableSpecFacetRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "TableSpecFacetRequest"
     }
   ],
-  "purpose": "Qualified interpretation, never native validation or execution. No implicit migration.",
+  "purpose": "classifyTableSpecFacets accepts document, request and returns TableSpecFacetClassification.",
   "related": [],
   "returns": "TableSpecFacetClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: TableSpecFacetRequest) => TableSpecFacetClassification"
+  "type": "(document: Document, request: TableSpecFacetRequest) => TableSpecFacetClassification"
 }

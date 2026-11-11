@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "unknown"
     },
@@ -41,9 +41,9 @@
       "type": "\"json\" | \"yaml\""
     }
   ],
-  "purpose": "encodeSecurityDisclosureV2 accepts input, policy, catalog, closure, format and returns string.",
+  "purpose": "encodeSecurityDisclosureV2 accepts source, policy, catalog, closure, format and returns string.",
   "related": [],
   "returns": "string",
   "task": "Serialize",
-  "type": "(input: unknown, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\") => string"
+  "type": "(source: unknown, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\") => string"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"exportJsonSchemaBundle\"]",
   "kind": "Function",
   "members": [],
@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Complete export bundle: source metadata and interpretation limits accompany native output.",
+  "purpose": "exportJsonSchemaBundle accepts document and returns { schema: string; resources: Record<string, string>; source: Document; diagnostics: Diagnostic[]; }.",
   "related": [],
   "returns": "{ schema: string; resources: Record<string, string>; source: Document; diagnostics: Diagnostic[]; }",
   "task": "Import and export",
-  "type": "(document: Document) => { schema: string; resources: Record<string, string>; source: Document; diagnostics: Diagnostic[]; }"
+  "type": "ExportJsonSchemaBundle"
 }

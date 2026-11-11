@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"reviewedValueDigest\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "value",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "reviewedValueDigest accepts value and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(value: unknown) => string"
+}

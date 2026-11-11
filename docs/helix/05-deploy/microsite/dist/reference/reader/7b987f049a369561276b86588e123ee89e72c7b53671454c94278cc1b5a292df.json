@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"importArrowFlatbufferModel\"]",
   "kind": "Function",
   "members": [],
@@ -20,7 +20,7 @@
       "type": "{ id: string; }"
     }
   ],
-  "purpose": "Imports the documented logical JSON profile, not native FlatBuffers bytes or flatc JSON.",
+  "purpose": "importArrowFlatbufferModel accepts text, options and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",

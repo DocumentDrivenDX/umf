@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6989,
-        "line": 56,
-        "path": "src/core-ideals/parquet-field.ts",
-        "sha256": "f504a7343daf9eb6b257d471c432ff99f0718e57eef83ac6a9eeb07e6d42df67"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyParquetFieldClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: ParquetFieldClassification, current: Document): ParquetFieldClassification"
+      "(receipt: ParquetFieldClassification, current: Document): ParquetFieldClassification"
     ]
   },
   "id": "[\"api\",\".\",\"verifyParquetFieldClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6989,
-      "line": 56,
-      "path": "src/core-ideals/parquet-field.ts",
-      "sha256": "f504a7343daf9eb6b257d471c432ff99f0718e57eef83ac6a9eeb07e6d42df67"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recompute the native basis and reject classification receipts after any target edit.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyParquetFieldClassification"
 }

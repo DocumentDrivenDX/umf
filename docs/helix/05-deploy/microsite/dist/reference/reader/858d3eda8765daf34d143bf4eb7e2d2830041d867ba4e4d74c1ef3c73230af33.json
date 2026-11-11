@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreKindDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreKindDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"FieldParquetRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "FieldParquetRequest"
     }
   ],
-  "purpose": "projectFieldToParquet accepts input, options and returns FieldParquetProjection & { diagnostics: Diagnostic[]; }.",
+  "purpose": "projectFieldToParquet accepts author, request and returns FieldParquetProjection.",
   "related": [],
-  "returns": "FieldParquetProjection & { diagnostics: Diagnostic[]; }",
+  "returns": "FieldParquetProjection",
   "task": "Import and export",
-  "type": "(input: CoreKindDeclaration, options: FieldParquetRequest) => FieldParquetProjection & { diagnostics: Diagnostic[]; }"
+  "type": "(author: CoreKindDeclaration, request: FieldParquetRequest) => FieldParquetProjection"
 }

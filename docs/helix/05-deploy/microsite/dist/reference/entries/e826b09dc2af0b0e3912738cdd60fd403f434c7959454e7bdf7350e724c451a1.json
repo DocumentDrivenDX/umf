@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10034,
-        "line": 85,
-        "path": "src/core-ideals/nullability-avro.ts",
-        "sha256": "dd3b3b867b8f70cdb19fcbc10f559b2444a04cd325f1971c68fe3e857c00b2ce"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverAvroNullabilityBundle",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: AvroNullabilityClassification, current: Document): { schema: string; dependencies: { id: string; schema: string; }[]; }"
+      "(receipt: AvroNullabilityClassification, current: Document): { schema: string; dependencies: { id: string; schema: string; }[]; }"
     ]
   },
   "id": "[\"api\",\".\",\"recoverAvroNullabilityBundle\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10034,
-      "line": 85,
-      "path": "src/core-ideals/nullability-avro.ts",
-      "sha256": "dd3b3b867b8f70cdb19fcbc10f559b2444a04cd325f1971c68fe3e857c00b2ce"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recover exact original schema bundle text, including unclaimed native content.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverAvroNullabilityBundle"
 }

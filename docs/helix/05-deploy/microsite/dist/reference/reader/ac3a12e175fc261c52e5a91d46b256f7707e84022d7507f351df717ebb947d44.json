@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"BulkDecisionInput\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "delegation",
+      "optional": false,
+      "type": "\"missing\" | \"valid\" | \"expired\" | \"human-lost\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "guards",
+      "optional": false,
+      "type": "\"pass\" | \"changed\" | \"deleted\" | \"rebound\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "guardItem",
+      "optional": true,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tx1",
+      "optional": false,
+      "type": "{ decision: \"committed\" | \"conflict\" | \"rejected\" | \"entity-missing\"; code?: string; item?: number; } | null"
+    }
+  ],
+  "parameters": [],
+  "purpose": "BulkDecisionInput is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "BulkDecisionInput"
+}

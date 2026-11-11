@@ -1,0 +1,156 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"RdfEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-r9-rdf-preservation/0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"RDF_PROFILE\"]"
+      ],
+      "name": "capabilities",
+      "optional": false,
+      "type": "Readonly<{ profile: typeof RDF_PROFILE; rdf11: true; generalizedJson: true; complete: false; }>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectRdfPayload",
+      "optional": false,
+      "type": "(payload: unknown, family?: \"rdf\" | \"generalized-rdf\") => unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectRdfDocument",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importRdfNQuads",
+      "optional": false,
+      "type": "(source: string, options: { id: string; blankNodeScope?: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getRdfQuads",
+      "optional": false,
+      "type": "(document: unknown) => unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportRdfNQuads",
+      "optional": false,
+      "type": "(document: unknown, options?: { preserveSource?: boolean; }) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeRdfQuadEdit",
+      "optional": false,
+      "type": "(document: unknown, index: number, replacement: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeRdfIriRename",
+      "optional": false,
+      "type": "(document: unknown, options: { from: string; to: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importRdfTurtle",
+      "optional": false,
+      "type": "(source: string, options: { id: string; baseIRI: string; blankNodeScope?: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportRdfTurtle",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getRdfNamedGraphs",
+      "optional": false,
+      "type": "(document: unknown) => unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importRdfTriG",
+      "optional": false,
+      "type": "(source: string, options: { id: string; baseIRI: string; blankNodeScope?: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportRdfTriG",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeRdfDatasetMerge",
+      "optional": false,
+      "type": "(documents: unknown[], options: { id: string; graphPolicy: \"union-by-name\"; blankNodePolicy: \"disjoint-inputs\"; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectGeneralizedRdfDocument",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importGeneralizedRdfDataset",
+      "optional": false,
+      "type": "(source: string, options: { id: string; blankNodeScope?: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportGeneralizedRdfDataset",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getGeneralizedRdfQuads",
+      "optional": false,
+      "type": "(document: unknown) => unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeGeneralizedRdfQuadEdit",
+      "optional": false,
+      "type": "(document: unknown, index: number, replacement: unknown) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RdfEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RdfEngine"
+}

@@ -2,7 +2,7 @@
   "alternatives": [],
   "authored": false,
   "id": "[\"api\",\".\",\"ShaclEngineReport\"]",
-  "kind": "Interface",
+  "kind": "Type alias",
   "members": [
     {
       "description": "",
@@ -23,7 +23,7 @@
       "links": [],
       "name": "engine",
       "optional": false,
-      "type": "\"rdf-validate-shacl@0.6.5\""
+      "type": "\"umf-shacl-native-subset/2\""
     },
     {
       "description": "",
@@ -91,7 +91,7 @@
     }
   ],
   "parameters": [],
-  "purpose": "ShaclEngineReport is a interface in Other APIs. Its exact structure is documented below.",
+  "purpose": "ShaclEngineReport is a type alias in Other APIs. Its exact structure is documented below.",
   "related": [],
   "returns": "",
   "task": "Other APIs",

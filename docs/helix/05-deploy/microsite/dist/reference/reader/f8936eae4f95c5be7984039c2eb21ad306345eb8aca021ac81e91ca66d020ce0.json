@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlDdlKinds\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "PostgresqlDdlKinds"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "recoverPostgresqlDdlKinds accepts input, current, backend and returns Promise<string>.",
+  "purpose": "recoverPostgresqlDdlKinds accepts receipt, current, backend and returns Promise<string>.",
   "related": [],
   "returns": "Promise<string>",
   "task": "Import and export",
-  "type": "(input: PostgresqlDdlKinds, current: Document, backend: PostgresqlBackend) => Promise<string>"
+  "type": "(receipt: PostgresqlDdlKinds, current: Document, backend: PostgresqlBackend) => Promise<string>"
 }

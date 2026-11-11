@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"composeSecurityRules\"]",
   "kind": "Function",
   "members": [],
@@ -8,9 +8,9 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"EvaluatedSecurityRule\"]"
+        "[\"api\",\"./runtime/wasm\",\"EvaluatedSecurityRule\"]"
       ],
-      "name": "input",
+      "name": "rules",
       "optional": false,
       "type": "readonly EvaluatedSecurityRule[]"
     },
@@ -22,9 +22,9 @@
       "type": "readonly string[]"
     }
   ],
-  "purpose": "Compose already scoped, evaluated rules under CONTRACT-062. This does not\nauthenticate a subject, admit a fact cut, resolve types, or authorize a backend.\nUnknown content remains preservable by core; this interpretation entrypoint refuses it.",
+  "purpose": "composeSecurityRules accepts rules, protectedFields and returns SecurityComposition.",
   "related": [],
   "returns": "SecurityComposition",
   "task": "Other APIs",
-  "type": "(input: readonly EvaluatedSecurityRule[], protectedFields?: readonly string[]) => SecurityComposition"
+  "type": "(rules: readonly EvaluatedSecurityRule[], protectedFields?: readonly string[]) => SecurityComposition"
 }

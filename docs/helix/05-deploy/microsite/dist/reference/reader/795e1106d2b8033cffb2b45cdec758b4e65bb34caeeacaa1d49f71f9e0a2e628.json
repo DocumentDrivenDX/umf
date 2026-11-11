@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectKeysToPostgresql\"]",
   "kind": "Function",
   "members": [],
@@ -10,16 +10,16 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyDeclaration\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyDeclaration\"]"
       ],
-      "name": "authorInput",
+      "name": "authors",
       "optional": false,
       "type": "CoreKeyDeclaration[]"
     },
@@ -28,7 +28,7 @@
       "links": [
         "[\"api\",\".\",\"KeyPostgresqlRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "KeyPostgresqlRequest"
     },
@@ -42,9 +42,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "Consume verified declarations by stable ID. Native names never supply authored identity.",
+  "purpose": "projectKeysToPostgresql accepts source, authors, request, backend and returns Promise<KeyPostgresqlProjection>.",
   "related": [],
   "returns": "Promise<KeyPostgresqlProjection>",
   "task": "Import and export",
-  "type": "(input: Document, authorInput: CoreKeyDeclaration[], options: KeyPostgresqlRequest, backend: PostgresqlBackend) => Promise<KeyPostgresqlProjection>"
+  "type": "(source: Document, authors: CoreKeyDeclaration[], request: KeyPostgresqlRequest, backend: PostgresqlBackend) => Promise<KeyPostgresqlProjection>"
 }

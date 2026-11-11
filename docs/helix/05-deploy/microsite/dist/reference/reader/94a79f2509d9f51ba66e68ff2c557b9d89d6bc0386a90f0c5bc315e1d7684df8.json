@@ -7,17 +7,15 @@
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityTruth\"]"
-      ],
+      "links": [],
       "name": "value",
       "optional": false,
-      "type": "SecurityTruth"
+      "type": "unknown"
     }
   ],
   "purpose": "securityNot accepts value and returns SecurityTruth.",
   "related": [],
   "returns": "SecurityTruth",
   "task": "Other APIs",
-  "type": "(value: SecurityTruth) => SecurityTruth"
+  "type": "(value: unknown) => SecurityTruth"
 }

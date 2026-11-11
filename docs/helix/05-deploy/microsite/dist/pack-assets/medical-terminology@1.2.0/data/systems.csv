@@ -1,0 +1,7 @@
+system_key,system,release,availability,description
+icd10cm,http://hl7.org/fhir/sid/icd-10-cm,FY2026-2025-10-01,bundled-subset,US diagnosis classification
+icd10pcs,http://www.cms.gov/Medicare/Coding/ICD10,\N,reference-only,US inpatient procedure classification
+hcpcs2,urn:oid:2.16.840.1.113883.6.285,\N,reference-only,HCPCS Level II quarterly files; distinct from CPT Level I
+snomed,http://snomed.info/sct,\N,consumer-local-licensed,Clinical terminology; edition and territory required
+cpt,http://www.ama-assn.org/go/cpt,\N,consumer-local-licensed,AMA licensed procedure terminology
+icd10,http://hl7.org/fhir/sid/icd-10,\N,reference-only,International classification used by mortality groups; distinct from ICD-10-CM

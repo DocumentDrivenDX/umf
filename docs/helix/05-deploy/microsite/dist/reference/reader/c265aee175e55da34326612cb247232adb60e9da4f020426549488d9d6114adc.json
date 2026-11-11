@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "text",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -20,9 +20,9 @@
       "type": "\"json\" | \"yaml\""
     }
   ],
-  "purpose": "readDddDocument accepts text, format and returns Document.",
+  "purpose": "readDddDocument accepts source, format and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Read and validate",
-  "type": "(text: string, format?: \"json\" | \"yaml\") => Document"
+  "type": "(source: string, format?: \"json\" | \"yaml\") => Document"
 }

@@ -27,7 +27,7 @@
       ],
       "name": "target",
       "optional": false,
-      "type": "{ subject: RdfNode; predicate: RdfNode; object: Term; }"
+      "type": "{ subject: RdfNode; predicate: RdfNode; object: OwlValue; }"
     },
     {
       "description": "",

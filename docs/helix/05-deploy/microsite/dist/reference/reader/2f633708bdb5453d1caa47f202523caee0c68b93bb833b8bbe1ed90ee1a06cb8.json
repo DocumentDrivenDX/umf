@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"JsonSchemaStagedImportEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "Private finite host-coercion profile; unsupported non-string inputs fail closed.",
+      "links": [],
+      "name": "importJsonSchemaHostCoercion",
+      "optional": false,
+      "type": "(source: unknown, options: { id: string; baseUri: string; resources?: Record<string, unknown>; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importJsonSchema",
+      "optional": false,
+      "type": "(source: string, options: { id: string; baseUri: string; resources?: Record<string, string>; }) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "JsonSchemaStagedImportEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "JsonSchemaStagedImportEngine"
+}

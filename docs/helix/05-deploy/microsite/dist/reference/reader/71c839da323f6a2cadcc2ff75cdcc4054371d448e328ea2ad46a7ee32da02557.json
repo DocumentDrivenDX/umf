@@ -7,12 +7,10 @@
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityDisclosureBatch\"]"
-      ],
-      "name": "input",
+      "links": [],
+      "name": "batch",
       "optional": false,
-      "type": "SecurityDisclosureBatch"
+      "type": "unknown"
     },
     {
       "description": "",
@@ -33,9 +31,9 @@
       "type": "SecurityResolution"
     }
   ],
-  "purpose": "encodeSecurityDisclosure accepts input, policy, resolution and returns string.",
+  "purpose": "encodeSecurityDisclosure accepts batch, policy, resolution and returns string.",
   "related": [],
   "returns": "string",
   "task": "Serialize",
-  "type": "(input: SecurityDisclosureBatch, policy: SecurityPolicy, resolution: SecurityResolution) => string"
+  "type": "(batch: unknown, policy: SecurityPolicy, resolution: SecurityResolution) => string"
 }

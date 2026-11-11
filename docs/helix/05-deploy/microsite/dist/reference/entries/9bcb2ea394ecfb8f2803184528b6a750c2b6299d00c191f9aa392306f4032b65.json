@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7379,
+        "line": 74,
+        "path": "src/table-migration/types.ts",
+        "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableMigrationPlan",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableMigrationPlan extends TableMigrationRequest {\n version:'umf.table-migration/0.1'|'umf.table-migration/0.2'|'umf.table-migration/0.3'|'umf.table-migration/0.4'|'umf.table-migration/0.5'|'umf.table-migration/0.6'|'umf.table-migration/0.7';canonicalization:'RFC8785';\n fromBundleDigest:string|null;toBundleDigest:string;steps:TableMigrationStep[];\n phases?:TableMigrationPhase[];executionProfile?:TableMigrationExecutionProfile;\n approvalProfile?:{version:'umf.table-migration-approval/0.1';relation:'umf_lifecycle_approvals';ownerOnly:true};\n seedExecution:'none'|{version:'umf.table-seed-execution/0.1';sets:string[]};\n requiresApproval:true;nativeQualified:false;digest:string;review?:MigrationReview[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableMigrationPlan\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7379,
+      "line": 74,
+      "path": "src/table-migration/types.ts",
+      "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/types.ts",
+  "title": "TableMigrationPlan"
+}

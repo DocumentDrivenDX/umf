@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"reconcileDeltaCheckpointSidecars\"]",
   "kind": "Function",
   "members": [],
@@ -33,7 +33,7 @@
       "type": "DeltaSidecar[]"
     }
   ],
-  "purpose": "Exact caller-bound paths, no filesystem/network lookup or URI alias resolution.",
+  "purpose": "reconcileDeltaCheckpointSidecars accepts checkpoint, commits, sidecars and returns DeltaSidecarReconciliation.",
   "related": [],
   "returns": "DeltaSidecarReconciliation",
   "task": "Other APIs",

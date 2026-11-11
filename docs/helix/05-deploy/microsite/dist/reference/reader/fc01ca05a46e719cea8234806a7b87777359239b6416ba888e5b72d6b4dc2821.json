@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerFacetClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerFacetClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverSqlServerFacetSource accepts input, current and returns string.",
+  "purpose": "recoverSqlServerFacetSource accepts receipt, current and returns string.",
   "related": [],
   "returns": "string",
   "task": "Import and export",
-  "type": "(input: SqlServerFacetClassification, current: Document) => string"
+  "type": "(receipt: SqlServerFacetClassification, current: Document) => string"
 }

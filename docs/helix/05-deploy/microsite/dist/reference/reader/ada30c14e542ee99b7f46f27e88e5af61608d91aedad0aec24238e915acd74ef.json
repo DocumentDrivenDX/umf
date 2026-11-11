@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"importTableSpecBundle\"]",
   "kind": "Function",
   "members": [],
@@ -20,9 +20,9 @@
       "type": "{ id: string; }"
     }
   ],
-  "purpose": "Captures all files; the metadata view does not execute loader migrations.",
+  "purpose": "importTableSpecBundle accepts files, options and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(files: Record<string, string>, options: { id: string; }) => Document"
+  "type": "(files: Parameters<ImportTableSpecBundle>[0], options: Parameters<ImportTableSpecBundle>[1]) => ReturnType<ImportTableSpecBundle>"
 }

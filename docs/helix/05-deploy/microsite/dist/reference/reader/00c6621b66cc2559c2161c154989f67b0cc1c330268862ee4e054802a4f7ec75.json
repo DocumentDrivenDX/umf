@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreCardinalityDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"CardinalitySqlServerRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "CardinalitySqlServerRequest"
     }
   ],
-  "purpose": "projectCardinalityToSqlServer accepts input, options and returns CardinalitySqlServerProjection.",
+  "purpose": "projectCardinalityToSqlServer accepts author, request and returns CardinalitySqlServerProjection.",
   "related": [],
   "returns": "CardinalitySqlServerProjection",
   "task": "Import and export",
-  "type": "(input: CoreCardinalityDeclaration, options: CardinalitySqlServerRequest) => CardinalitySqlServerProjection"
+  "type": "(author: CoreCardinalityDeclaration, request: CardinalitySqlServerRequest) => CardinalitySqlServerProjection"
 }

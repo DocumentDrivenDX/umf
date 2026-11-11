@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"ParquetNullabilityRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "ParquetNullabilityRequest"
     }
   ],
-  "purpose": "classifyParquetNullability accepts input, options and returns ParquetNullabilityClassification.",
+  "purpose": "classifyParquetNullability accepts source, request and returns ParquetNullabilityClassification.",
   "related": [],
   "returns": "ParquetNullabilityClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: ParquetNullabilityRequest) => ParquetNullabilityClassification"
+  "type": "(source: Document, request: ParquetNullabilityRequest) => ParquetNullabilityClassification"
 }

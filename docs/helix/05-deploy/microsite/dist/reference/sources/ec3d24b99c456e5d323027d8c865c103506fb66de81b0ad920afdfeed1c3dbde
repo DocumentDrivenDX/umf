@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:avro:rust-candidate-edit-report:0.1.0",
+  "title": "R5 Rust Avro candidate edit report",
+  "description": "Separate UMF/payload admission from bounded native structural inspection. This report does not certify Avro 1.12 semantic validity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "status",
+    "source",
+    "document",
+    "edit",
+    "admission",
+    "nativeInspection"
+  ],
+  "properties": {
+    "profile": {
+      "const": "umf-r5-avro-candidate/0.1.0"
+    },
+    "status": {
+      "const": "candidate"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.10.0"
+    },
+    "document": {
+      "$ref": "urn:umf:core:0.10.0"
+    },
+    "edit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "replacement"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "dependencyId": {
+          "type": "string"
+        },
+        "replacement": {
+          "$ref": "urn:umf:avro:0.1.0#/$defs/node"
+        }
+      }
+    },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "candidate"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/admissionResult"
+        },
+        "candidate": {
+          "$ref": "#/$defs/admissionResult"
+        }
+      }
+    },
+    "nativeInspection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "candidate"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/nativeInspectionResult"
+        },
+        "candidate": {
+          "$ref": "#/$defs/nativeInspectionResult"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "path",
+        "message",
+        "severity"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ]
+        }
+      }
+    },
+    "admissionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "complete": {
+          "const": true
+        },
+        "diagnostics": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "nativeInspectionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "const": false
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/diagnostic"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"irreversiblePurgeDisclosure\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryReviewedChangeCandidate\"]"
+      ],
+      "name": "candidate",
+      "optional": false,
+      "type": "TableInventoryReviewedChangeCandidate"
+    }
+  ],
+  "purpose": "irreversiblePurgeDisclosure accepts candidate and returns { code: \"IRREVERSIBLE_TABLE_PURGE\"; path: string; markerId: string; message: string; }.",
+  "related": [],
+  "returns": "{ code: \"IRREVERSIBLE_TABLE_PURGE\"; path: string; markerId: string; message: string; }",
+  "task": "Other APIs",
+  "type": "(candidate: TableInventoryReviewedChangeCandidate) => { code: \"IRREVERSIBLE_TABLE_PURGE\"; path: string; markerId: string; message: string; }"
+}

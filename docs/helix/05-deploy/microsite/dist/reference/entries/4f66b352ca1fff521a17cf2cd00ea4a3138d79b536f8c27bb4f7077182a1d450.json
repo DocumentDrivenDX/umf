@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1330,
+        "line": 8,
+        "path": "src/core-ideals/tablespec-record-package.ts",
+        "sha256": "1c0f2179d147895b84d63a8a08f11fed959ab39f986850a5ec3a85ba245606e3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecRecordMapping",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type TableSpecRecordMapping={origin:'classified';kind:'field'|'record';idealPath:string;nativePath:string;nativeFragment:Json;basis:'checked-native-column-membership'|'checked-native-table-members';outcome:'exact'|'unknown'};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecRecordMapping\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1330,
+      "line": 8,
+      "path": "src/core-ideals/tablespec-record-package.ts",
+      "sha256": "1c0f2179d147895b84d63a8a08f11fed959ab39f986850a5ec3a85ba245606e3"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/tablespec-record-package.ts",
+  "title": "TableSpecRecordMapping"
+}

@@ -1,0 +1,72 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"CoreKeyLookup\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"lookup-core-key\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"4.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "source",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreKeyIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "key",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "uninterpretedPaths",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreKeyLookup is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreKeyLookup"
+}

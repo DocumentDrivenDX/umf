@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 24721,
-        "line": 41,
-        "path": "src/core-ideals/relationship-postgresql.ts",
-        "sha256": "a4a1024fb993a68df2d03df3e0131884760bfd7846b5b4affc5f014e47eba822"
+        "bytes": 84809,
+        "line": 289,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyPostgresqlRelationships",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: PostgresqlRelationshipRequest, backend: PostgresqlBackend): Promise<PostgresqlRelationshipClassification>"
+      "(source: Document, request: PostgresqlRelationshipRequest, backend: PostgresqlBackend): Promise<PostgresqlRelationshipClassification>"
     ]
   },
   "id": "[\"api\",\".\",\"classifyPostgresqlRelationships\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 24721,
-      "line": 41,
-      "path": "src/core-ideals/relationship-postgresql.ts",
-      "sha256": "a4a1024fb993a68df2d03df3e0131884760bfd7846b5b4affc5f014e47eba822"
+      "bytes": 84809,
+      "line": 289,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Native declarations/observations remain distinct from authored association intent.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyPostgresqlRelationships"
 }

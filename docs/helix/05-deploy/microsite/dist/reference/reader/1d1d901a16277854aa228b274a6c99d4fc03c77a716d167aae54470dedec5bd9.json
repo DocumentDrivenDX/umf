@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableFieldValue\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "field",
+      "optional": false,
+      "type": "TableRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "CoreLiteral"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableFieldValue is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableFieldValue"
+}

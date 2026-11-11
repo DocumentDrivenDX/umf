@@ -19,5 +19,5 @@
   "related": [],
   "returns": "RdfQuad[]",
   "task": "Inspect and select",
-  "type": "(document: Document) => RdfQuad[]"
+  "type": "(document: Parameters<typeof getOwlQuads>[0]) => ReturnType<typeof getOwlQuads>"
 }

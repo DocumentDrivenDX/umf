@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createSecurityProtectionDomainsEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    }
+  ],
+  "purpose": "createSecurityProtectionDomainsEngine accepts module and returns UmfSecurityProtectionDomainsEngine.",
+  "related": [],
+  "returns": "UmfSecurityProtectionDomainsEngine",
+  "task": "Author and edit",
+  "type": "(module: any) => UmfSecurityProtectionDomainsEngine"
+}

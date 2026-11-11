@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getPostgresqlDdlDeclarations\"]",
   "kind": "Function",
   "members": [],
@@ -15,7 +15,7 @@
       "type": "Document"
     }
   ],
-  "purpose": "Declaration inventory, never an executed catalog or replay of DDL state changes.",
+  "purpose": "getPostgresqlDdlDeclarations accepts document and returns PostgresqlDdlDeclarations.",
   "related": [],
   "returns": "PostgresqlDdlDeclarations",
   "task": "Inspect and select",

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7603,
-        "line": 28,
-        "path": "src/core-ideals/cardinality-parquet.ts",
-        "sha256": "735f70ed570f457e8fd8ce84d606dbd8d2ea89bfdc1fb3556613962b2d330631"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyParquetCardinality",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: ParquetCardinalityRequest): ParquetCardinalityClassification"
+      "(source: Document, request: ParquetCardinalityRequest): ParquetCardinalityClassification"
     ]
   },
   "id": "[\"api\",\".\",\"classifyParquetCardinality\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7603,
-      "line": 28,
-      "path": "src/core-ideals/cardinality-parquet.ts",
-      "sha256": "735f70ed570f457e8fd8ce84d606dbd8d2ea89bfdc1fb3556613962b2d330631"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Publish logical Fields while retaining the physical archive and all existing meaning.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyParquetCardinality"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2865,
-        "line": 4,
-        "path": "src/adapters/arrow/ipc.ts",
-        "sha256": "090f18dbbcbda0297ade9b6e9217ba92decca462a6af98117d85cfb26d3bda01"
+        "bytes": 1840,
+        "line": 5,
+        "path": "src/adapters/arrow/api-types.ts",
+        "sha256": "54e0e0842bc4b901c3c867258534ee8961df8442958fe7eb76f72e50cfb52405"
       }
     ],
     "entrypoint": ".",
     "exportName": "ArrowSchemaIpcBackend",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ArrowSchemaIpcBackend {\n identity:'apache-arrow@21.2.0';\n encode(schema:unknown):{before:unknown;after:unknown;bytes:Uint8Array};\n}"
+      "export interface ArrowSchemaIpcBackend {identity:'apache-arrow@21.2.0';encode(schema:unknown):{before:unknown;after:unknown;bytes:Uint8Array};}"
     ]
   },
   "id": "[\"api\",\".\",\"ArrowSchemaIpcBackend\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2865,
-      "line": 4,
-      "path": "src/adapters/arrow/ipc.ts",
-      "sha256": "090f18dbbcbda0297ade9b6e9217ba92decca462a6af98117d85cfb26d3bda01"
+      "bytes": 1840,
+      "line": 5,
+      "path": "src/adapters/arrow/api-types.ts",
+      "sha256": "54e0e0842bc4b901c3c867258534ee8961df8442958fe7eb76f72e50cfb52405"
     }
   ],
-  "summary": "Type declaration · src/adapters/arrow/ipc.ts",
+  "summary": "Type declaration · src/adapters/arrow/api-types.ts",
   "title": "ArrowSchemaIpcBackend"
 }

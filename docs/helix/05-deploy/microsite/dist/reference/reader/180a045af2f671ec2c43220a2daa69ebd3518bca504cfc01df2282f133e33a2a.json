@@ -28,5 +28,5 @@
   "related": [],
   "returns": "{ source: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; complete: false; limitations: string[]; }",
   "task": "Inspect and select",
-  "type": "(document: Document, input: { pointer: string; reference: string; resourceUri?: string; schemaResources?: string[]; }) => { source: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; complete: false; limitations: string[]; }"
+  "type": "(document: Parameters<ResolveOpenapiSchemaReference>[0], input: Parameters<ResolveOpenapiSchemaReference>[1]) => ReturnType<ResolveOpenapiSchemaReference>"
 }

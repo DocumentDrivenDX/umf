@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"evaluateProtectionValue\"]",
   "kind": "Function",
   "members": [],
@@ -8,35 +8,14 @@
     {
       "description": "",
       "links": [],
-      "name": "policy",
+      "name": "args",
       "optional": false,
-      "type": "unknown"
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "catalog",
-      "optional": false,
-      "type": "unknown"
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "closure",
-      "optional": false,
-      "type": "unknown"
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "selection",
-      "optional": false,
-      "type": "unknown"
+      "type": "[policy: unknown, catalog: unknown, closure: unknown, selection: unknown]"
     }
   ],
-  "purpose": "Present typed input only; no row authorization or canonical mutation.",
+  "purpose": "evaluateProtectionValue accepts args and returns ProtectionFunctionResult.",
   "related": [],
   "returns": "ProtectionFunctionResult",
   "task": "Other APIs",
-  "type": "(policy: unknown, catalog: unknown, closure: unknown, selection: unknown) => ProtectionFunctionResult"
+  "type": "(policy: unknown, catalog: unknown, closure: unknown, selection: unknown) => ReturnType<ProtectionValueEvaluator>"
 }

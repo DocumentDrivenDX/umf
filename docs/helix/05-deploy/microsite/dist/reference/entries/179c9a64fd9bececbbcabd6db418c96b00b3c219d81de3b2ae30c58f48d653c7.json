@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5414,
-        "line": 11,
-        "path": "src/extensions/binding/model-dataset.ts",
-        "sha256": "71f2ee0c35f87d6325ca804d66235350f4f060ac2e1f8366c443618da55a2ad4"
+        "bytes": 84809,
+        "line": 525,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateBit128Dataset",
     "runtime": "unassessed",
     "signatureText": [
-      "(bindingInput: Document, sourceInput: Document, input: Bit128DatasetRecord[]): Bit128DatasetRecord[]"
+      "(binding: Document, source: Document, input: Bit128DatasetRecord[]): Bit128DatasetRecord[]"
     ]
   },
   "id": "[\"api\",\".\",\"validateBit128Dataset\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5414,
-      "line": 11,
-      "path": "src/extensions/binding/model-dataset.ts",
-      "sha256": "71f2ee0c35f87d6325ca804d66235350f4f060ac2e1f8366c443618da55a2ad4"
+      "bytes": 84809,
+      "line": 525,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Complete finite snapshot validation. This does not authorize concurrent mutations.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "validateBit128Dataset"
 }

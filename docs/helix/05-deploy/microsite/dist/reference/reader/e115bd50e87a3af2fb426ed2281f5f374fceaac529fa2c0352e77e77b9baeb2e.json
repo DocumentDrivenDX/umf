@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "recoverBindingSqlServerNative accepts input, current and returns { catalog?: string; sql: string; }.",
+  "purpose": "recoverBindingSqlServerNative accepts input, current and returns { sql: string; catalog?: string; }.",
   "related": [],
-  "returns": "{ catalog?: string; sql: string; }",
+  "returns": "{ sql: string; catalog?: string; }",
   "task": "Import and export",
-  "type": "(input: SqlServerPhysicalProjection, current: string) => { catalog?: string; sql: string; }"
+  "type": "(input: SqlServerPhysicalProjection, current: string) => { sql: string; catalog?: string; }"
 }

@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"PostgresqlParserRequest\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "token",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "backend",
+      "optional": false,
+      "type": "\"@libpg-query/parser@17.6.10\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "astVersion",
+      "optional": false,
+      "type": "170004"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "work",
+      "optional": false,
+      "type": "\"parse\" | \"deparse\" | \"codecRoundTrip\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sql",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tree",
+      "optional": true,
+      "type": "unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlParserRequest is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlParserRequest"
+}

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11556,
-        "line": 64,
-        "path": "src/adapters/shacl/index.ts",
-        "sha256": "c4a764f7c265d1c8ca0fb568e47d5e14eb94b5427e2b6fe67e68357827401107"
+        "bytes": 84809,
+        "line": 338,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "evaluateShaclPropertyPath",
     "runtime": "unassessed",
     "signatureText": [
-      "(shapes: Document, shape: RdfNode, data: Document, focus: Value): Value[]"
+      "(shapes: Document, shape: RdfNode, data: Document, focus: RdfNode | RdfLiteral): (RdfNode | RdfLiteral)[]"
     ]
   },
   "id": "[\"api\",\".\",\"evaluateShaclPropertyPath\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11556,
-      "line": 64,
-      "path": "src/adapters/shacl/index.ts",
-      "sha256": "c4a764f7c265d1c8ca0fb568e47d5e14eb94b5427e2b6fe67e68357827401107"
+      "bytes": 84809,
+      "line": 338,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Focus blank labels are local to data. Named datasets require explicit graph selection before this call.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "evaluateShaclPropertyPath"
 }

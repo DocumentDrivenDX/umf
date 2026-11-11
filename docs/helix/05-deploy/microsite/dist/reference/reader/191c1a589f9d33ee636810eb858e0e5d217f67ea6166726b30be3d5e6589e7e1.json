@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingTablesAndIndexesToSqlServer\"]",
   "kind": "Function",
   "members": [],
@@ -47,7 +47,7 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Relationship-independent SQL Server table/index stage, checked against an explicit native catalog.",
+  "purpose": "projectBindingTablesAndIndexesToSqlServer accepts logical, binding, policy, nativeSource, lossPolicy and returns SqlServerTableProjection.",
   "related": [],
   "returns": "SqlServerTableProjection",
   "task": "Import and export",

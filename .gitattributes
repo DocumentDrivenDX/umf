@@ -18,6 +18,8 @@ spec/domain-packs/medical-carrier/sources/cms-*.csv -text whitespace=cr-at-eol
 spec/domain-packs/medical-imaging/sources/*.dcm binary
 
 # Generated bundles may contain literal trailing spaces in dependency strings.
+# The verified microsite also contains verbatim upstream pack data with CRLF.
+docs/helix/05-deploy/microsite/dist/** -text
 docs/helix/05-deploy/microsite/dist/*.js whitespace=-blank-at-eol
 docs/helix/05-deploy/microsite/dist/actions/*.js whitespace=-blank-at-eol
 # Qualification receipt hashes cover exact checker stdout, including final blank lines.

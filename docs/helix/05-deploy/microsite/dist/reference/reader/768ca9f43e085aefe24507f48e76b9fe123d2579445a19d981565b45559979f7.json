@@ -1,0 +1,95 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventorySeedReview\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf.table-inventory-seed-retirement-review/0.1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "side",
+      "optional": false,
+      "type": "\"previous\" | \"next\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "source",
+      "optional": false,
+      "type": "{ format: \"json\"; sha256: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "configuration",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "definition",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "definitionDigest",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalSourceDigest",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "execution",
+      "optional": false,
+      "type": "\"confirmed\" | \"not-run\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "retired",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "effects",
+      "optional": false,
+      "type": "readonly [] | readonly [\"original-definition-and-execution-retained-in-history\", \"no-data-replay\"]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableInventorySeedReview is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventorySeedReview"
+}

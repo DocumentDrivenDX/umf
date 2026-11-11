@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyCoreKindDeclaration\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreKindDeclaration\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "CoreKindDeclaration"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration.",
+  "purpose": "verifyCoreKindDeclaration accepts receipt, current and returns CoreKindDeclaration.",
   "related": [],
   "returns": "CoreKindDeclaration",
   "task": "Other APIs",
-  "type": "(input: CoreKindDeclaration, current: Document) => CoreKindDeclaration"
+  "type": "(receipt: CoreKindDeclaration, current: Document) => CoreKindDeclaration"
 }

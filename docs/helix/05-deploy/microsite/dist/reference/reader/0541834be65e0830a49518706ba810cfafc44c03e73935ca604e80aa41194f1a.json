@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"exactDecimal\"]",
   "kind": "Function",
   "members": [],
@@ -15,14 +15,14 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"JavascriptNumericContext\"]"
+        "[\"api\",\"./runtime/wasm\",\"JavascriptNumericContext\"]"
       ],
       "name": "context",
       "optional": true,
       "type": "JavascriptNumericContext | undefined"
     }
   ],
-  "purpose": "Exact text constructor. Spelling is retained; optional Field constraints are checked.",
+  "purpose": "exactDecimal accepts token, context and returns { decimalToken: string; }.",
   "related": [],
   "returns": "{ decimalToken: string; }",
   "task": "Other APIs",

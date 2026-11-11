@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2796,
+        "line": 13,
+        "path": "src/adapters/lakeview/index.ts",
+        "sha256": "ec12be1a004a4118db5f420cd47df2bdd84c328db97294ea17f34482b9e78407"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LakeviewRuntime",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface LakeviewRuntime extends ExtensionKindRuntime {\n  importLakeviewDashboard(source:string,options:LakeviewOptions):unknown;\n  exportLakeviewDashboard(document:unknown):string;\n  lakeviewDiagnostics(document:unknown):Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LakeviewRuntime\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2796,
+      "line": 13,
+      "path": "src/adapters/lakeview/index.ts",
+      "sha256": "ec12be1a004a4118db5f420cd47df2bdd84c328db97294ea17f34482b9e78407"
+    }
+  ],
+  "summary": "Host capability only: all native retention and data-shape semantics run in Rust.",
+  "title": "LakeviewRuntime"
+}

@@ -32,6 +32,12 @@ https://documentdrivendx.github.io/umf/; the first publication requires this
 workflow and site source to reach `main`. The existing private Sites preview
 remains separate.
 
+The manual deployment workflow defaults to its existing locked renderer build.
+For the locally qualified 0.10.11 candidate, select **Deploy exact 0.10.11**;
+that route verifies every committed pre-seal file against the pinned local
+manifest and receipt, then uses the same build signer and publication checks.
+It skips renderer assembly because that command rebuilds and mutates site files.
+
 To revert a site change, revert its commit on `main`; the next workflow run
 publishes the previous source. Review the Actions run and the published pages
 after a deployment. No separate hosting token is required; the existing

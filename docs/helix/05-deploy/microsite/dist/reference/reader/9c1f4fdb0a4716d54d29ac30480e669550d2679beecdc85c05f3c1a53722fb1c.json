@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createAccessTemporalEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    }
+  ],
+  "purpose": "createAccessTemporalEngine accepts module and returns AccessTemporalEngine.",
+  "related": [],
+  "returns": "AccessTemporalEngine",
+  "task": "Author and edit",
+  "type": "(module: any) => AccessTemporalEngine"
+}

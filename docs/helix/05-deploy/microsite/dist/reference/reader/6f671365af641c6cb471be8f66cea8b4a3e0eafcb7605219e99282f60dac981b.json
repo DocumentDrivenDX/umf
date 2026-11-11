@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifySqlServerKeys\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SqlServerKeyRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "SqlServerKeyRequest"
     }
   ],
-  "purpose": "Captured facts are observations, not authenticated state or authored identity.",
+  "purpose": "classifySqlServerKeys accepts source, request and returns SqlServerKeyClassification.",
   "related": [],
   "returns": "SqlServerKeyClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: SqlServerKeyRequest) => SqlServerKeyClassification"
+  "type": "(source: Document, request: SqlServerKeyRequest) => SqlServerKeyClassification"
 }

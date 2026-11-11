@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 489,
-        "line": 7,
-        "path": "src/extensions/security/protection/source.ts",
-        "sha256": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb"
+        "bytes": 84809,
+        "line": 416,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "writeProtectionSource",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown, format?: \"json\" | \"yaml\"): string"
+      "(value: unknown, format?: \"json\" | \"yaml\"): string"
     ]
   },
   "id": "[\"api\",\".\",\"writeProtectionSource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 489,
-      "line": 7,
-      "path": "src/extensions/security/protection/source.ts",
-      "sha256": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb"
+      "bytes": 84809,
+      "line": 416,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/security/protection/source.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "writeProtectionSource"
 }

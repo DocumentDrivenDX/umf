@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [],
-      "name": "fieldInput",
+      "name": "identity",
       "optional": false,
       "type": "{ module: string; element: string; }"
     },
@@ -26,14 +26,14 @@
       "links": [
         "[\"api\",\".\",\"CoreLiteral\"]"
       ],
-      "name": "valueInput",
+      "name": "value",
       "optional": false,
       "type": "CoreLiteral"
     }
   ],
-  "purpose": "validateCoreFieldValue accepts input, fieldInput, valueInput and returns Validation.",
+  "purpose": "validateCoreFieldValue accepts source, identity, value and returns Validation.",
   "related": [],
   "returns": "Validation",
   "task": "Read and validate",
-  "type": "(input: Document, fieldInput: { module: string; element: string; }, valueInput: CoreLiteral) => Validation"
+  "type": "(source: Document, identity: { module: string; element: string; }, value: Literal) => Validation"
 }

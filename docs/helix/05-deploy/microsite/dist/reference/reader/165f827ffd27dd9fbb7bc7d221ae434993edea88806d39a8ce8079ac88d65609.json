@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventoryRestoration\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "table",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "field",
+      "optional": false,
+      "type": "TableInventoryReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "archive",
+      "optional": false,
+      "type": "{ profile: \"umf.retired-field-archive-ref/0.1\"; providerId: string; archiveId: string; tableToken: string; targetCustody: import(\"../model/types\").Json; retirementPlanDigest: string; retirementSourceDigest: string; fieldMeaningDigest: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "newInstances",
+      "optional": false,
+      "type": "{ mode: \"refuse\"; } | { mode: \"null\"; } | { mode: \"fill\"; expression: import(\"../model/types\").Json; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableInventoryRestoration is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventoryRestoration"
+}

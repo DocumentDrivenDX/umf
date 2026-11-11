@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfSecurityProtectionDomainsEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityProtectionDomainsResult\"]"
+      ],
+      "name": "resolveSecurityProtectionDomains",
+      "optional": false,
+      "type": "(policy: unknown, catalog: unknown, closure: unknown) => SecurityProtectionDomainsResult"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfSecurityProtectionDomainsEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfSecurityProtectionDomainsEngine"
+}

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3846,
-        "line": 11,
-        "path": "src/adapters/parquet/physical.ts",
-        "sha256": "54b96c7f92a49a15b3b45c08a1f7e990ce955413f64a3da398d0f72e6f225bf0"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "decodeParquetPhysical",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document): ParquetPhysical"
+      "(document: Document): ParquetPhysical"
     ]
   },
   "id": "[\"api\",\".\",\"decodeParquetPhysical\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3846,
-      "line": 11,
-      "path": "src/adapters/parquet/physical.ts",
-      "sha256": "54b96c7f92a49a15b3b45c08a1f7e990ce955413f64a3da398d0f72e6f225bf0"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Bounded PLAIN and dictionary carriers; scalar semantics and row assembly are separate.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "decodeParquetPhysical"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11899,
-        "line": 106,
-        "path": "src/core-ideals/facets-tablespec-projection.ts",
-        "sha256": "08157ca5b4e8e823cf787b519353965f20aea615adca206cba415a341b067e5c"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverFacetsFromTableSpec",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: FacetsTableSpecProjection, nativeText: string): Document"
+      "(receipt: FacetsTableSpecProjection, nativeText: string): Document"
     ]
   },
   "id": "[\"api\",\".\",\"recoverFacetsFromTableSpec\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11899,
-      "line": 106,
-      "path": "src/core-ideals/facets-tablespec-projection.ts",
-      "sha256": "08157ca5b4e8e823cf787b519353965f20aea615adca206cba415a341b067e5c"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Verify the entire operation and exact native text before recovering retained ideal meaning.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverFacetsFromTableSpec"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingToParquet\"]",
   "kind": "Function",
   "members": [],
@@ -40,7 +40,7 @@
       "type": "Document | undefined"
     }
   ],
-  "purpose": "Parquet's initial file-schema profile preserves physical choices as residuals.",
+  "purpose": "projectBindingToParquet accepts logical, binding, lossPolicy, nativeArchive and returns ParquetBindingReport.",
   "related": [],
   "returns": "ParquetBindingReport",
   "task": "Import and export",

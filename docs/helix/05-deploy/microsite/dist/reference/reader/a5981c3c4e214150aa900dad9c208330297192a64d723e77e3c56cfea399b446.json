@@ -19,5 +19,5 @@
   "related": [],
   "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }",
   "task": "Import and export",
-  "type": "(document: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }"
+  "type": "(document: Parameters<ExportAvroBundle>[0]) => ReturnType<ExportAvroBundle>"
 }

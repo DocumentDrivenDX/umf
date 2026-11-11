@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverCardinalityFromPostgresql\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CardinalityPostgresqlProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "CardinalityPostgresqlProjection"
     },
@@ -31,9 +31,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "purpose": "recoverCardinalityFromPostgresql accepts receipt, nativeText, backend and returns Promise<Document>.",
   "related": [],
   "returns": "Promise<Document>",
   "task": "Import and export",
-  "type": "(input: CardinalityPostgresqlProjection, nativeText: string, backend: PostgresqlBackend) => Promise<Document>"
+  "type": "(receipt: CardinalityPostgresqlProjection, nativeText: string, backend: PostgresqlBackend) => Promise<Document>"
 }

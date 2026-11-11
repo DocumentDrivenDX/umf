@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 14708,
-        "line": 113,
-        "path": "src/core-ideals/key-postgresql-projection.ts",
-        "sha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+        "bytes": 84809,
+        "line": 270,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverKeysPostgresqlIdeal",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend): Promise<Document>"
+      "(receipt: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend): Promise<Document>"
     ]
   },
   "id": "[\"api\",\".\",\"recoverKeysPostgresqlIdeal\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 14708,
-      "line": 113,
-      "path": "src/core-ideals/key-postgresql-projection.ts",
-      "sha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+      "bytes": 84809,
+      "line": 270,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/key-postgresql-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverKeysPostgresqlIdeal"
 }

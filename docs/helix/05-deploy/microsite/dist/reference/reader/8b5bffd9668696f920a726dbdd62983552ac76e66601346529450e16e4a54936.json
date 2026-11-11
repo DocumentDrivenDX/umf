@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"indexOpenapiSchemas\"]",
   "kind": "Function",
   "members": [],
@@ -19,12 +19,12 @@
       "links": [],
       "name": "input",
       "optional": true,
-      "type": "{ schemaResources?: string[]; }"
+      "type": "{ schemaResources?: string[]; } | undefined"
     }
   ],
-  "purpose": "Index supplied descriptions and explicitly declared standalone schema documents.",
+  "purpose": "indexOpenapiSchemas accepts document, input and returns OpenapiSchemaIndex.",
   "related": [],
   "returns": "OpenapiSchemaIndex",
   "task": "Other APIs",
-  "type": "(document: Document, input?: { schemaResources?: string[]; }) => OpenapiSchemaIndex"
+  "type": "(document: Parameters<IndexOpenapiSchemas>[0], input?: Parameters<IndexOpenapiSchemas>[1]) => ReturnType<IndexOpenapiSchemas>"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3862,
-        "line": 8,
+        "bytes": 368,
+        "line": 6,
         "path": "src/extensions/security/disclosure.ts",
-        "sha256": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec"
+        "sha256": "631541395fbd48f832b08ae2e94cf49612564dd2a2ed18ee448df71371ffe9ba"
       }
     ],
     "entrypoint": ".",
     "exportName": "SecurityDisclosureBatch",
     "runtime": "type-only",
     "signatureText": [
-      "export interface SecurityDisclosureBatch {\n  version:'umf.security.disclosure/0.1.0';\n  target:SecurityRef;fields:SecurityRef[];rows:SecurityOutput[][];\n}"
+      "export interface SecurityDisclosureBatch {\n version:'umf.security.disclosure/0.1.0';\n target:SecurityRef;fields:SecurityRef[];rows:SecurityOutput[][];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"SecurityDisclosureBatch\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3862,
-      "line": 8,
+      "bytes": 368,
+      "line": 6,
       "path": "src/extensions/security/disclosure.ts",
-      "sha256": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec"
+      "sha256": "631541395fbd48f832b08ae2e94cf49612564dd2a2ed18ee448df71371ffe9ba"
     }
   ],
   "summary": "Type declaration · src/extensions/security/disclosure.ts",

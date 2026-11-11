@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"declareSaga\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SagaDefinition\"]"
+      ],
+      "name": "definition",
+      "optional": false,
+      "type": "SagaDefinition"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "registry",
+      "optional": true,
+      "type": "RegistryBase | undefined"
+    }
+  ],
+  "purpose": "declareSaga accepts source, module, definition, registry and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Other APIs",
+  "type": "(source: Document, module: string, definition: SagaDefinition, registry?: Registry) => Document"
+}

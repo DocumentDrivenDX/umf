@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5463,
-        "line": 7,
-        "path": "src/adapters/protobuf/descriptor.ts",
-        "sha256": "4abbe2929268b0f0c6480470da0874ba514abbe2026c16f2b75f519cfbfb1aaf"
+        "bytes": 230,
+        "line": 4,
+        "path": "src/adapters/protobuf/descriptor-types.ts",
+        "sha256": "de6840fe47fee20aa10a1cc73e313e461fcde55cfcee1677de7b5727d96e6788"
       }
     ],
     "entrypoint": ".",
     "exportName": "DescriptorNode",
     "runtime": "type-only",
     "signatureText": [
-      "export interface DescriptorNode {\n type:string;\n fields:Record<string,Json>;\n unknown:{number:number;wireType:number;data:string}[];\n}"
+      "export interface DescriptorNode {\n  type:string;\n  fields:Record<string,Json>;\n  unknown:{number:number;wireType:number;data:string}[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"DescriptorNode\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5463,
-      "line": 7,
-      "path": "src/adapters/protobuf/descriptor.ts",
-      "sha256": "4abbe2929268b0f0c6480470da0874ba514abbe2026c16f2b75f519cfbfb1aaf"
+      "bytes": 230,
+      "line": 4,
+      "path": "src/adapters/protobuf/descriptor-types.ts",
+      "sha256": "de6840fe47fee20aa10a1cc73e313e461fcde55cfcee1677de7b5727d96e6788"
     }
   ],
-  "summary": "Type declaration · src/adapters/protobuf/descriptor.ts",
+  "summary": "Type declaration · src/adapters/protobuf/descriptor-types.ts",
   "title": "DescriptorNode"
 }

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreDatasetValueCheck\"]"
       ],
-      "name": "receiptInput",
+      "name": "receipt",
       "optional": false,
       "type": "CoreDatasetValueCheck"
     },
@@ -33,9 +33,9 @@
       "type": "CoreDatasetInput"
     }
   ],
-  "purpose": "verifyCoreDatasetValues accepts receiptInput, current, expectedInput and returns CoreDatasetValueCheck.",
+  "purpose": "verifyCoreDatasetValues accepts receipt, current, expectedInput and returns CoreDatasetValueCheck.",
   "related": [],
   "returns": "CoreDatasetValueCheck",
   "task": "Other APIs",
-  "type": "(receiptInput: CoreDatasetValueCheck, current: Document, expectedInput: CoreDatasetInput) => CoreDatasetValueCheck"
+  "type": "(receipt: CoreDatasetValueCheck, current: Document, expectedInput: CoreDatasetInput) => CoreDatasetValueCheck"
 }

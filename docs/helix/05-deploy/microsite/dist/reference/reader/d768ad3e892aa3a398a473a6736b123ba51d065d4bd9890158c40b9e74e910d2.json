@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifySqlServerCardinality\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SqlServerCardinalityRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "SqlServerCardinalityRequest"
     }
   ],
-  "purpose": "Create a separately identified logical Field; never relabel a native text column.",
+  "purpose": "classifySqlServerCardinality accepts source, request and returns SqlServerCardinalityClassification.",
   "related": [],
   "returns": "SqlServerCardinalityClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: SqlServerCardinalityRequest) => SqlServerCardinalityClassification"
+  "type": "(source: Document, request: SqlServerCardinalityRequest) => SqlServerCardinalityClassification"
 }

@@ -1,0 +1,114 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"JsonLdOperations\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf.jsonld-wire/1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"JSONLD_PROFILE\"]"
+      ],
+      "name": "capabilities",
+      "optional": false,
+      "type": "Readonly<{ profile: typeof JSONLD_PROFILE; source: true; transformations: true; complete: false; }>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importJsonLdDocument",
+      "optional": false,
+      "type": "(source: string, options: Record<string, unknown>) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectJsonLdDocument",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportJsonLdDocument",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getJsonLdNode",
+      "optional": false,
+      "type": "(document: unknown, path: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeJsonLdNodeEdit",
+      "optional": false,
+      "type": "(document: unknown, path: string, replacementJson: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeJsonLdExpansion",
+      "optional": false,
+      "type": "(document: unknown, options: Record<string, unknown>) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeJsonLdFlatten",
+      "optional": false,
+      "type": "(document: unknown, options: Record<string, unknown>) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeJsonLdCompaction",
+      "optional": false,
+      "type": "(document: unknown, options: Record<string, unknown>) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeJsonLdFraming",
+      "optional": false,
+      "type": "(document: unknown, options: Record<string, unknown>) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeJsonLdToRdf",
+      "optional": false,
+      "type": "(document: unknown, options: Record<string, unknown>) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeRdfToJsonLd",
+      "optional": false,
+      "type": "(document: unknown, options: Record<string, unknown>) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeGeneralizedRdfToJsonLd",
+      "optional": false,
+      "type": "(document: unknown, options: Record<string, unknown>) => Promise<unknown>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "JsonLdOperations is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "JsonLdOperations"
+}

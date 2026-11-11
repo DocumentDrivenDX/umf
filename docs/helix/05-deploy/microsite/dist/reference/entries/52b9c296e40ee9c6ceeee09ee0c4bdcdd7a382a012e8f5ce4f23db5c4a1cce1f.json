@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4634,
-        "line": 12,
-        "path": "src/adapters/linkml/imports.ts",
-        "sha256": "a299280cb72967eb70909665854566bc7b92664edba1b528cb8b3be1faf4d411"
+        "bytes": 84809,
+        "line": 332,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4634,
-      "line": 12,
-      "path": "src/adapters/linkml/imports.ts",
-      "sha256": "a299280cb72967eb70909665854566bc7b92664edba1b528cb8b3be1faf4d411"
+      "bytes": 84809,
+      "line": 332,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Traverse only caller-supplied import bindings. Does not guess retrieval paths or merge declarations.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectLinkmlImportContext"
 }

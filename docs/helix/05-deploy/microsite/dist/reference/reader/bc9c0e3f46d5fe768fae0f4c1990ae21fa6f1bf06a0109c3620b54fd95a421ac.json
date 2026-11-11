@@ -1,0 +1,107 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"JsonSchemaEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "importJsonSchema",
+      "optional": false,
+      "type": "(source: string, options: { id: string; baseUri: string; resources?: Record<string, string>; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"JsonSchemaValidation\"]"
+      ],
+      "name": "inspectJsonSchema",
+      "optional": false,
+      "type": "(document: unknown) => JsonSchemaValidation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"JsonSchemaValidation\"]"
+      ],
+      "name": "inspectJsonSchemaPayload",
+      "optional": false,
+      "type": "(payload: unknown, path: string) => JsonSchemaValidation[\"diagnostics\"]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportJsonSchema",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportJsonSchemaResources",
+      "optional": false,
+      "type": "(document: unknown) => Record<string, string>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"JsonSchemaValidation\"]"
+      ],
+      "name": "exportJsonSchemaBundle",
+      "optional": false,
+      "type": "(document: unknown) => { schema: string; resources: Record<string, string>; source: unknown; diagnostics: JsonSchemaValidation[\"diagnostics\"]; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "getJsonSchemaNode",
+      "optional": false,
+      "type": "(document: unknown, pointer: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "walkJsonSchema",
+      "optional": false,
+      "type": "(document: unknown) => { pointer: string; node: unknown; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"JsonSchemaNativeJson\"]"
+      ],
+      "name": "parseNativeJson",
+      "optional": false,
+      "type": "(source: string) => JsonSchemaNativeJson"
+    },
+    {
+      "description": "Parse bounded JSON-compatible YAML profiles; YAML 1.1 options cover only the separately qualified subset.",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"JsonSchemaNativeJson\"]"
+      ],
+      "name": "parseNativeYaml",
+      "optional": false,
+      "type": "(source: string, options?: { version?: \"1.1\" | \"1.2\"; dateOnly?: \"string\"; booleanLexicon?: \"pyyaml\"; }) => JsonSchemaNativeJson"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "editJsonSchemaNode",
+      "optional": false,
+      "type": "(document: unknown, pointer: string, replacement: string) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "JsonSchemaEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "JsonSchemaEngine"
+}

@@ -7,17 +7,15 @@
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"ActionReference\"]"
-      ],
+      "links": [],
       "name": "reference",
       "optional": false,
-      "type": "ActionReference"
+      "type": "{ module: string; element: string; }"
     }
   ],
   "purpose": "actionFieldValueKey accepts reference and returns string.",
   "related": [],
   "returns": "string",
   "task": "Other APIs",
-  "type": "(reference: ActionReference) => string"
+  "type": "(reference: { module: string; element: string; }) => string"
 }

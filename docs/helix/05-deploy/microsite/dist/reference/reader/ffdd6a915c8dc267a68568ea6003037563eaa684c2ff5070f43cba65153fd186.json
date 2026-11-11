@@ -1,0 +1,126 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableMigrationStep\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"policy\" | \"index\" | \"conversion\" | \"table\" | \"comment\" | \"foreignKey\" | \"grant\" | \"backfill\" | \"seed\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "transaction",
+      "optional": false,
+      "type": "\"required\" | \"forbidden\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "constraintKind",
+      "optional": true,
+      "type": "\"check\" | \"foreignKey\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "seedSets",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "phaseOperation",
+      "optional": true,
+      "type": "\"drop-column\" | \"tighten-not-null\" | \"change-default\" | \"backfill\" | \"add-column\" | \"target-check\" | \"install-default\" | \"dependency-drop\" | \"dependency-add\" | \"capture-originals\" | \"convert-field\" | \"validate-conversion\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "phaseTarget",
+      "optional": true,
+      "type": "{ table: string; field: { module: string; element: string; }; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "phaseDependency",
+      "optional": true,
+      "type": "{ table: string; kind: \"check\" | \"foreignKey\" | \"index\" | \"key\" | \"policy\" | \"grant\"; id: string; sourcePath: string; meaningDigest: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "conversionBinding",
+      "optional": true,
+      "type": "{ profile: \"umf.field-conversion-step/0.1\"; selectionIndex: number; intentDigest: string; beforeDomainDigest: string; afterDomainDigest: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "preconditions",
+      "optional": false,
+      "type": "{ phase: \"before-plan\"; kind: \"empty-private-schema\" | \"installed-source-cohort\"; bundleDigest: string | null; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "expectedOutcome",
+      "optional": false,
+      "type": "{ phase: \"before-commit\"; kind: \"complete-next-source-catalog\"; bundleDigest: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verification",
+      "optional": false,
+      "type": "\"native-catalog-privileges-and-role-scope\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recovery",
+      "optional": false,
+      "type": "\"rollback-transaction\" | \"inspect-index\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sql",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourcePath",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableMigrationStep is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableMigrationStep"
+}

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerKeyClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerKeyClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "verifySqlServerKeyClassification accepts input, current and returns SqlServerKeyClassification.",
+  "purpose": "verifySqlServerKeyClassification accepts receipt, current and returns SqlServerKeyClassification.",
   "related": [],
   "returns": "SqlServerKeyClassification",
   "task": "Other APIs",
-  "type": "(input: SqlServerKeyClassification, current: Document) => SqlServerKeyClassification"
+  "type": "(receipt: SqlServerKeyClassification, current: Document) => SqlServerKeyClassification"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6053,
-        "line": 39,
-        "path": "src/model/field-kind.ts",
-        "sha256": "b3ba0db55ec8ed5a466e8b116b9311035505457a060c59fa93512b9220e7b670"
+        "bytes": 84809,
+        "line": 395,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "declareCoreElementKind",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identity: CoreKindIdentity, kind: \"record\" | \"group\" | \"field\"): CoreKindDeclaration"
+      "(source: Document, identity: CoreKindIdentity, kind: \"record\" | \"group\" | \"field\"): CoreKindDeclaration"
     ]
   },
   "id": "[\"api\",\".\",\"declareCoreElementKind\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6053,
-      "line": 39,
-      "path": "src/model/field-kind.ts",
-      "sha256": "b3ba0db55ec8ed5a466e8b116b9311035505457a060c59fa93512b9220e7b670"
+      "bytes": 84809,
+      "line": 395,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Explicit author action; archives previous meaning and makes no native classification claim.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "declareCoreElementKind"
 }

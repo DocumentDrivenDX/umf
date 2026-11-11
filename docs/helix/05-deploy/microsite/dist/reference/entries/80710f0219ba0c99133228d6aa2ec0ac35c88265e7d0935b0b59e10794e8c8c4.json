@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10799,
-        "line": 22,
-        "path": "src/core-ideals/cardinality-avro.ts",
-        "sha256": "32623f8e74a885c41d33becca81a715e31e7dc10c80540b98eeaf2a23932e91f"
+        "bytes": 1396,
+        "line": 14,
+        "path": "src/core-ideals/avro-cardinality-types.ts",
+        "sha256": "e3ca18238eeeaedc8924c817c731a86159bb189952538d4dfc5101e5e99e15f9"
       }
     ],
     "entrypoint": ".",
     "exportName": "AvroCardinalityClassification",
     "runtime": "type-only",
     "signatureText": [
-      "export interface AvroCardinalityClassification {\n operation:'classify-avro-cardinality';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:AvroCardinalityRequest;binding:typeof binding;\n mapping:{origin:'classified';cardinality:Cardinality;outcome:'exact'|'unknown'|'not-expressible';basis:typeof basis;nodes:Node[]};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+      "export interface AvroCardinalityClassification {\n operation:'classify-avro-cardinality';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;\n request:AvroCardinalityRequest;\n binding:{id:'umf.avro.cardinality';version:'1.0.0';nativeVersion:'1.12.0';subset:'Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate'};\n mapping:{origin:'classified';cardinality:Cardinality;outcome:'exact'|'unknown'|'not-expressible';basis:string;nodes:AvroCardinalityNode[]};\n residuals:{path:string;value:Json;reason:string;recovery:string}[];diagnostics:Diagnostic[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"AvroCardinalityClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10799,
-      "line": 22,
-      "path": "src/core-ideals/cardinality-avro.ts",
-      "sha256": "32623f8e74a885c41d33becca81a715e31e7dc10c80540b98eeaf2a23932e91f"
+      "bytes": 1396,
+      "line": 14,
+      "path": "src/core-ideals/avro-cardinality-types.ts",
+      "sha256": "e3ca18238eeeaedc8924c817c731a86159bb189952538d4dfc5101e5e99e15f9"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/cardinality-avro.ts",
+  "summary": "Type declaration · src/core-ideals/avro-cardinality-types.ts",
   "title": "AvroCardinalityClassification"
 }

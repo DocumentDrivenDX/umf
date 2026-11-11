@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7001,
-        "line": 12,
-        "path": "src/adapters/iceberg/table.ts",
-        "sha256": "178bd46e14d001689f80581f3df2b547e84b02cd2df76e0b6d11f05d87d9fcae"
+        "bytes": 315,
+        "line": 5,
+        "path": "src/adapters/iceberg/table-package.ts",
+        "sha256": "ed45b4f631e64c4311f10c6b00c466556aeff664868ce62b28423a43a3aacf46"
       }
     ],
     "entrypoint": ".",
     "exportName": "icebergTablePackage",
     "runtime": "unassessed",
     "signatureText": [
-      "icebergTablePackage=manifest as unknown as ExtensionPackage"
+      "icebergTablePackage = manifest as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"icebergTablePackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7001,
-      "line": 12,
-      "path": "src/adapters/iceberg/table.ts",
-      "sha256": "178bd46e14d001689f80581f3df2b547e84b02cd2df76e0b6d11f05d87d9fcae"
+      "bytes": 315,
+      "line": 5,
+      "path": "src/adapters/iceberg/table-package.ts",
+      "sha256": "ed45b4f631e64c4311f10c6b00c466556aeff664868ce62b28423a43a3aacf46"
     }
   ],
-  "summary": "Public export · src/adapters/iceberg/table.ts",
+  "summary": "Public export · src/adapters/iceberg/table-package.ts",
   "title": "icebergTablePackage"
 }

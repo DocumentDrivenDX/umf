@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyParquetRelationships\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"ParquetRelationshipRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "ParquetRelationshipRequest"
     }
   ],
-  "purpose": "Observe physical schema only. Sorting, field IDs, statistics and metadata never assert identity.",
+  "purpose": "classifyParquetRelationships accepts source, request and returns ParquetRelationshipClassification.",
   "related": [],
   "returns": "ParquetRelationshipClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: ParquetRelationshipRequest) => ParquetRelationshipClassification"
+  "type": "(source: Document, request: ParquetRelationshipRequest) => ParquetRelationshipClassification"
 }

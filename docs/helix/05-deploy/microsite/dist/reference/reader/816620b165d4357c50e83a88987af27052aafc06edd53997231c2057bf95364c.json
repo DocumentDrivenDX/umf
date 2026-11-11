@@ -19,12 +19,12 @@
       "links": [],
       "name": "options",
       "optional": true,
-      "type": "{ preserveSource?: boolean; }"
+      "type": "{ preserveSource?: boolean; } | undefined"
     }
   ],
   "purpose": "exportRdfNQuads accepts document, options and returns string.",
   "related": [],
   "returns": "string",
   "task": "Import and export",
-  "type": "(document: Document, options?: { preserveSource?: boolean; }) => string"
+  "type": "(document: Parameters<ExportRdfNQuads>[0], options?: Parameters<ExportRdfNQuads>[1]) => ReturnType<ExportRdfNQuads>"
 }

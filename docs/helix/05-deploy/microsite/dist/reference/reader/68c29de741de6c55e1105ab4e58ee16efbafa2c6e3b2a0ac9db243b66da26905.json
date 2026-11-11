@@ -1,0 +1,220 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfBit128Engine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128NativeTypeInput\"]",
+        "[\"api\",\"./runtime/wasm\",\"Bit128NativeTypeClassification\"]"
+      ],
+      "name": "classifyNativeType",
+      "optional": false,
+      "type": "(input: Bit128NativeTypeInput) => Bit128NativeTypeClassification"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectBit128Binding",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "encodeBit128CarrierValue",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown, identity: unknown, literal: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "decodeBit128CarrierValue",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown, identity: unknown, slots: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128RecordValue\"]"
+      ],
+      "name": "encodeBit128Record",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown, identity: { module: string; element: string; }, values: Bit128RecordValue[]) => Record<string, string | null>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128RecordValue\"]"
+      ],
+      "name": "decodeBit128Record",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown, identity: { module: string; element: string; }, slots: Record<string, string | null>) => Bit128RecordValue[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128ModelProjection\"]"
+      ],
+      "name": "projectBit128Model",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown, lossPolicy: \"strict\" | \"report\") => Bit128ModelProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128ModelProjection\"]"
+      ],
+      "name": "recoverBit128ModelProjection",
+      "optional": false,
+      "type": "(report: Bit128ModelProjection, text: string) => { logical: unknown; binding: unknown; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128RecordValue\"]",
+        "[\"api\",\"./runtime/wasm\",\"UmfJson\"]"
+      ],
+      "name": "encodeBit128FileRecord",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown, identity: { module: string; element: string; }, values: Bit128RecordValue[]) => Record<string, UmfJson>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfJson\"]",
+        "[\"api\",\"./runtime/wasm\",\"Bit128RecordValue\"]"
+      ],
+      "name": "decodeBit128FileRecord",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown, identity: { module: string; element: string; }, datum: Record<string, UmfJson>) => Bit128RecordValue[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128NativeProjection\"]"
+      ],
+      "name": "projectBit128CarrierSchema",
+      "optional": false,
+      "type": "(binding: unknown, logical: unknown, identity: { module: string; element: string; }, policy: unknown) => Bit128NativeProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128NativeProjection\"]"
+      ],
+      "name": "recoverBit128CarrierProjection",
+      "optional": false,
+      "type": "(report: Bit128NativeProjection, text: string) => { logical: unknown; binding: unknown; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "parseBits128",
+      "optional": false,
+      "type": "(text: string) => Bit128Value"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UuidValue\"]"
+      ],
+      "name": "parseUuid",
+      "optional": false,
+      "type": "(text: string) => UuidValue"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "bits128FromBytes",
+      "optional": false,
+      "type": "(bytes: Uint8Array) => Bit128Value"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "bits128ToBytes",
+      "optional": false,
+      "type": "(value: Bit128Value) => Uint8Array"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]",
+        "[\"api\",\"./runtime/wasm\",\"UuidValue\"]"
+      ],
+      "name": "uuidFromBits128",
+      "optional": false,
+      "type": "(value: Bit128Value) => UuidValue"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UuidValue\"]",
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "uuidToBits128",
+      "optional": false,
+      "type": "(value: UuidValue) => Bit128Value"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "compareBits128",
+      "optional": false,
+      "type": "(left: Bit128Value, right: Bit128Value) => -1 | 0 | 1"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "bits128ToWords",
+      "optional": false,
+      "type": "(value: Bit128Value, signed: boolean) => { high: string; low: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "bits128FromWords",
+      "optional": false,
+      "type": "(words: { high: string; low: string; }, signed: boolean) => Bit128Value"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "bits128ToInteger",
+      "optional": false,
+      "type": "(value: Bit128Value, signed: boolean) => { integerToken: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"Bit128Value\"]"
+      ],
+      "name": "bits128FromInteger",
+      "optional": false,
+      "type": "(literal: { integerToken: string; }, signed: boolean) => Bit128Value"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfBit128Engine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfBit128Engine"
+}

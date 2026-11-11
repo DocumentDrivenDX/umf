@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3980,
-        "line": 11,
-        "path": "src/adapters/arrow/flatbuffer-model.ts",
-        "sha256": "04e5b3af0ec15dbb18414119cbf0c5b234f4e71456922ea043da1537b0f5c15a"
+        "bytes": 84809,
+        "line": 246,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectArrowFlatbufferModel",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document): { complete: boolean; diagnostics: Diagnostic[]; valid: boolean; }"
+      "(document: Document): Validation"
     ]
   },
   "id": "[\"api\",\".\",\"inspectArrowFlatbufferModel\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3980,
-      "line": 11,
-      "path": "src/adapters/arrow/flatbuffer-model.ts",
-      "sha256": "04e5b3af0ec15dbb18414119cbf0c5b234f4e71456922ea043da1537b0f5c15a"
+      "bytes": 84809,
+      "line": 246,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/adapters/arrow/flatbuffer-model.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectArrowFlatbufferModel"
 }

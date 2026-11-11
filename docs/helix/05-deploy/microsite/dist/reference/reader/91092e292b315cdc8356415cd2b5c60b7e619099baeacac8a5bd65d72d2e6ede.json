@@ -57,7 +57,7 @@
       "links": [],
       "name": "binding",
       "optional": false,
-      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+      "type": "{ id: \"umf.avro.nullability\"; version: \"1.0.0\"; nativeVersion: \"1.12.0\"; subset: \"Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements\"; }"
     },
     {
       "description": "",
@@ -77,7 +77,7 @@
       ],
       "name": "residuals",
       "optional": false,
-      "type": "{ path: string; value: Json; reason: string; recovery: typeof recovery; }[]"
+      "type": "{ path: string; value: Json; reason: string; recovery: \"Retain the complete source and native archive; unknown native meaning is not replaced by the core label\"; }[]"
     },
     {
       "description": "",

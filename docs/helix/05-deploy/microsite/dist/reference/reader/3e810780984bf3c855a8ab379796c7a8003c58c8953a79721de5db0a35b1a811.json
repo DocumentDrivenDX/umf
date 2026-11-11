@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"nextBulkFence\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "fence",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "nextBulkFence accepts fence and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(fence: string) => string"
+}

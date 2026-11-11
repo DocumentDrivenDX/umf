@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10705,
-        "line": 95,
-        "path": "src/extensions/binding/bit128.ts",
-        "sha256": "b335e8db71b682abb6098b776d5b3985e18a5acb504da267ee063aa7cddac7de"
+        "bytes": 84809,
+        "line": 439,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "decodeBit128CarrierValue",
     "runtime": "unassessed",
     "signatureText": [
-      "(binding: Document, logical: Document, identity: { module: string; element: string; }, input: Record<string, string | null>): Literal"
+      "(binding: Document, logical: Document, identity: { module: string; element: string; }, slots: Record<string, string | null>): Literal"
     ]
   },
   "id": "[\"api\",\".\",\"decodeBit128CarrierValue\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10705,
-      "line": 95,
-      "path": "src/extensions/binding/bit128.ts",
-      "sha256": "b335e8db71b682abb6098b776d5b3985e18a5acb504da267ee063aa7cddac7de"
+      "bytes": 84809,
+      "line": 439,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/binding/bit128.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "decodeBit128CarrierValue"
 }

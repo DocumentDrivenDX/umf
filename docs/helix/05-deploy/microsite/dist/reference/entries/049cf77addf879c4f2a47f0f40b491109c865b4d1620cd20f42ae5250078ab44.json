@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 18045,
-        "line": 14,
-        "path": "src/projections/binding-sqlserver/index.ts",
-        "sha256": "658cb772c1320c12ab2a74e8c5157944fecbc1da536fb2d1d21a3e23d06845b6"
+        "bytes": 4356,
+        "line": 27,
+        "path": "src/projections/binding-sqlserver-types.ts",
+        "sha256": "c5d459bc333ae0b9b3fcf31812af8b157350fc45e4074ab7d894f044d3047339"
       }
     ],
     "entrypoint": ".",
     "exportName": "SqlServerPhysicalProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface SqlServerPhysicalProjection {operation:'project-binding-sqlserver';version:'1.0.0';status:'reported'|'blocked';logical:Document;binding:Document;policy:SqlServerPhysicalPolicy;lossPolicy:'strict'|'report';nativeSource?:string;nativeArchive?:Document;candidate?:string;residuals:{source:'logical'|'binding'|'policy'|'native';path:string;reason:string;value:Json}[];mappings:{sourcePath:string;target:string;kind:'table'|'column'|'key'|'relationship'|'index';outcome:'approximated'|'unknown'}[];diagnostics:Diagnostic[]}"
+      "export interface SqlServerPhysicalProjection {\n  operation:'project-binding-sqlserver';version:'1.0.0';status:'reported'|'blocked';logical:Document;binding:Document;\n  policy:SqlServerPhysicalPolicy;lossPolicy:'strict'|'report';nativeSource?:string;nativeArchive?:Document;candidate?:string;\n  residuals:{source:'logical'|'binding'|'policy'|'native';path:string;reason:string;value:Json}[];\n  mappings:{sourcePath:string;target:string;kind:'table'|'column'|'key'|'relationship'|'index';outcome:'approximated'|'unknown'}[];\n  diagnostics:Diagnostic[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"SqlServerPhysicalProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 18045,
-      "line": 14,
-      "path": "src/projections/binding-sqlserver/index.ts",
-      "sha256": "658cb772c1320c12ab2a74e8c5157944fecbc1da536fb2d1d21a3e23d06845b6"
+      "bytes": 4356,
+      "line": 27,
+      "path": "src/projections/binding-sqlserver-types.ts",
+      "sha256": "c5d459bc333ae0b9b3fcf31812af8b157350fc45e4074ab7d894f044d3047339"
     }
   ],
-  "summary": "Type declaration · src/projections/binding-sqlserver/index.ts",
+  "summary": "Type declaration · src/projections/binding-sqlserver-types.ts",
   "title": "SqlServerPhysicalProjection"
 }

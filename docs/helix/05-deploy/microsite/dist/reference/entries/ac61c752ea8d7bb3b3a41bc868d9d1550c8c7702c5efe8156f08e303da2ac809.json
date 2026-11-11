@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8449,
-        "line": 104,
-        "path": "src/core-ideals/key-tablespec.ts",
-        "sha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverTableSpecKeySource",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: TableSpecKeyClassification, current: Document): string | Record<string, string>"
+      "(receipt: TableSpecKeyClassification, current: Document): string | Record<string, string>"
     ]
   },
   "id": "[\"api\",\".\",\"recoverTableSpecKeySource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8449,
-      "line": 104,
-      "path": "src/core-ideals/key-tablespec.ts",
-      "sha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/key-tablespec.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverTableSpecKeySource"
 }

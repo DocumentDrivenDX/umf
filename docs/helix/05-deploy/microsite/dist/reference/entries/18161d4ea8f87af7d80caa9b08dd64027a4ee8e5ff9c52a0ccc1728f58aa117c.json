@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11528,
-        "line": 125,
-        "path": "src/extensions/security/protection/disclosure.ts",
-        "sha256": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+        "bytes": 84809,
+        "line": 198,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "decodeSecurityDisclosureV2",
     "runtime": "unassessed",
     "signatureText": [
-      "(text: string, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\"): SecurityDisclosureBatchV2"
+      "(source: string, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\"): SecurityDisclosureBatchV2"
     ]
   },
   "id": "[\"api\",\".\",\"decodeSecurityDisclosureV2\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11528,
-      "line": 125,
-      "path": "src/extensions/security/protection/disclosure.ts",
-      "sha256": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+      "bytes": 84809,
+      "line": 198,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/security/protection/disclosure.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "decodeSecurityDisclosureV2"
 }

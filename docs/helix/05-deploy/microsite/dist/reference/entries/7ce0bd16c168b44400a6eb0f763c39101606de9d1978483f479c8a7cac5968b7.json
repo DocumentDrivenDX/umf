@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11705,
-        "line": 87,
-        "path": "src/core-ideals/key-postgresql.ts",
-        "sha256": "e186e5918f65b4406a31e1c384c97577b69c037d332cec57b8a1a5a64a7e2af6"
+        "bytes": 84809,
+        "line": 290,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyPostgresqlKeyClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: PostgresqlKeyClassification, current: Document, backend: PostgresqlBackend): Promise<PostgresqlKeyClassification>"
+      "(receipt: PostgresqlKeyClassification, current: Document, backend: PostgresqlBackend): Promise<PostgresqlKeyClassification>"
     ]
   },
   "id": "[\"api\",\".\",\"verifyPostgresqlKeyClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11705,
-      "line": 87,
-      "path": "src/core-ideals/key-postgresql.ts",
-      "sha256": "e186e5918f65b4406a31e1c384c97577b69c037d332cec57b8a1a5a64a7e2af6"
+      "bytes": 84809,
+      "line": 290,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/key-postgresql.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyPostgresqlKeyClassification"
 }

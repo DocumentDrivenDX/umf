@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10620,
+        "line": 62,
+        "path": "src/table-migration/inventory-types.ts",
+        "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableInventoryReviewedChangeCandidate",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type TableInventoryReviewedChangeCandidate=\n |(TableInventoryCandidateBase&{kind:'create-table';oldValue:TableInventoryTableReview|null;newValue:TableInventoryTableReview;oldPath:null;newPath:string})\n |(TableInventoryCandidateBase&{kind:'remove-table'|'table-removal-effects';oldValue:TableInventoryTableReview;newValue:TableInventoryTableReview;oldPath:string;newPath:null})\n |(TableInventoryCandidateBase&{kind:'retire-seed-history';oldValue:TableInventorySeedReview;newValue:TableInventorySeedReview;oldPath:string;newPath:null})\n |(TableInventoryCandidateBase&{kind:TableInventoryLegacyReviewKind;oldValue:import('../model/types').Json|null;newValue:import('../model/types').Json|null;oldPath?:string|null;newPath?:string|null});"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableInventoryReviewedChangeCandidate\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10620,
+      "line": 62,
+      "path": "src/table-migration/inventory-types.ts",
+      "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/inventory-types.ts",
+  "title": "TableInventoryReviewedChangeCandidate"
+}

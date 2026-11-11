@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5204,
-        "line": 5,
-        "path": "src/core-ideals/field-report.ts",
-        "sha256": "1f5ca8e099eca9278c3584d8ac1e64e4ed03bbc26d39dd8d582b8a3d7ccbca68"
+        "bytes": 5369,
+        "line": 32,
+        "path": "src/core-ideals/report-types.ts",
+        "sha256": "1f709683a84748990e75dd5b745ec8c894e47571339c1dc57dc7a3a6d67de020"
       }
     ],
     "entrypoint": ".",
     "exportName": "AuthoredFieldProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export type AuthoredFieldProjection=FieldTableSpecProjection|FieldPostgresqlProjection|FieldSqlServerProjection|FieldAvroProjection|FieldParquetProjection;"
+      "export type AuthoredFieldProjection = FieldTableSpecProjection | FieldPostgresqlProjection | FieldSqlServerProjection | FieldAvroProjection | FieldParquetProjection;"
     ]
   },
   "id": "[\"api\",\".\",\"AuthoredFieldProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5204,
-      "line": 5,
-      "path": "src/core-ideals/field-report.ts",
-      "sha256": "1f5ca8e099eca9278c3584d8ac1e64e4ed03bbc26d39dd8d582b8a3d7ccbca68"
+      "bytes": 5369,
+      "line": 32,
+      "path": "src/core-ideals/report-types.ts",
+      "sha256": "1f709683a84748990e75dd5b745ec8c894e47571339c1dc57dc7a3a6d67de020"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/field-report.ts",
+  "summary": "Type declaration · src/core-ideals/report-types.ts",
   "title": "AuthoredFieldProjection"
 }

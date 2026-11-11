@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11495,
-        "line": 15,
-        "path": "src/core-ideals/relationship-parquet-projection.ts",
-        "sha256": "310e246a7573b10c07d474963f775153ed726b7f4541bd3a8a1e5f9072f70e85"
+        "bytes": 1708,
+        "line": 6,
+        "path": "src/core-ideals/relationship-parquet-projection-types.ts",
+        "sha256": "40780dd59275921ba8acaf08984221770d27fa486752fb8eae1f0b794132505a"
       }
     ],
     "entrypoint": ".",
     "exportName": "RelationshipParquetRequest",
     "runtime": "type-only",
     "signatureText": [
-      "export interface RelationshipParquetRequest extends Omit<ParquetRelationshipCarrier,'components'> {id:string;profile:'target-key-record';relationship:CoreRelationshipIdentity;mode:'strict'|'report';components:(ParquetRelationshipCarrier['components'][number]&{targetField:RelationshipEndpoint})[]}"
+      "export interface RelationshipParquetRequest extends Omit<ParquetRelationshipCarrier,'components'> {\n id:string;profile:'target-key-record';relationship:CoreRelationshipIdentity;mode:'strict'|'report';\n components:(ParquetRelationshipCarrier['components'][number]&{targetField:RelationshipEndpoint})[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"RelationshipParquetRequest\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11495,
-      "line": 15,
-      "path": "src/core-ideals/relationship-parquet-projection.ts",
-      "sha256": "310e246a7573b10c07d474963f775153ed726b7f4541bd3a8a1e5f9072f70e85"
+      "bytes": 1708,
+      "line": 6,
+      "path": "src/core-ideals/relationship-parquet-projection-types.ts",
+      "sha256": "40780dd59275921ba8acaf08984221770d27fa486752fb8eae1f0b794132505a"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/relationship-parquet-projection.ts",
+  "summary": "Type declaration · src/core-ideals/relationship-parquet-projection-types.ts",
   "title": "RelationshipParquetRequest"
 }

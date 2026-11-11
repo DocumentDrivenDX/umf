@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"AvroRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "AvroRelationshipClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverAvroRelationshipSource accepts input, current and returns AvroRelationshipArchive.",
+  "purpose": "recoverAvroRelationshipSource accepts receipt, current and returns AvroRelationshipArchive.",
   "related": [],
   "returns": "AvroRelationshipArchive",
   "task": "Import and export",
-  "type": "(input: AvroRelationshipClassification, current: Document) => AvroRelationshipArchive"
+  "type": "(receipt: AvroRelationshipClassification, current: Document) => AvroRelationshipArchive"
 }

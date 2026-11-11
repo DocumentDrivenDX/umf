@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5416,
-        "line": 8,
-        "path": "src/adapters/parquet/schema.ts",
-        "sha256": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectParquetSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document): ParquetSchemaInspection"
+      "(document: Document): ParquetSchemaInspection"
     ]
   },
   "id": "[\"api\",\".\",\"inspectParquetSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5416,
-      "line": 8,
-      "path": "src/adapters/parquet/schema.ts",
-      "sha256": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Checks physical schema topology and available row-group column links, not logical semantics.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectParquetSchema"
 }

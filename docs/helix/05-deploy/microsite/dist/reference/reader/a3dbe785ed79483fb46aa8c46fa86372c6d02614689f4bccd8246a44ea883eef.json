@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"DddPostgresqlProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "DddPostgresqlProjection"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "current",
+      "name": "currentTarget",
       "optional": false,
       "type": "Document"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "recoverDddPostgresqlIdeal accepts input, current, backend and returns Promise<{ logical: Document; binding: Document; policy: DddPostgresqlPolicy; }>.",
+  "purpose": "recoverDddPostgresqlIdeal accepts receipt, currentTarget, backend and returns Promise<{ logical: Document; binding: Document; policy: DddPostgresqlPolicy; }>.",
   "related": [],
   "returns": "Promise<{ logical: Document; binding: Document; policy: DddPostgresqlPolicy; }>",
   "task": "Import and export",
-  "type": "(input: DddPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<{ logical: Document; binding: Document; policy: DddPostgresqlPolicy; }>"
+  "type": "(receipt: DddPostgresqlProjection, currentTarget: Document, backend: PostgresqlBackend) => Promise<{ logical: Document; binding: Document; policy: DddPostgresqlPolicy; }>"
 }

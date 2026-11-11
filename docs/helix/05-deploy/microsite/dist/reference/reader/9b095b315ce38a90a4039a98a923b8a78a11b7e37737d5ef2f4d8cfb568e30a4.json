@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,23 +19,21 @@
       "links": [
         "[\"api\",\".\",\"CoreRelationshipQuery\"]"
       ],
-      "name": "queryInput",
+      "name": "query",
       "optional": false,
       "type": "CoreRelationshipQuery"
     },
     {
-      "description": "Default: new Registry().",
-      "links": [
-        "[\"api\",\".\",\"Registry\"]"
-      ],
+      "description": "",
+      "links": [],
       "name": "registry",
       "optional": true,
-      "type": "Registry"
+      "type": "RegistryBase | undefined"
     }
   ],
-  "purpose": "selectCoreRelationships accepts input, queryInput, registry and returns CoreRelationshipSelection.",
+  "purpose": "selectCoreRelationships accepts source, query, registry and returns CoreRelationshipSelection.",
   "related": [],
   "returns": "CoreRelationshipSelection",
   "task": "Inspect and select",
-  "type": "(input: Document, queryInput: CoreRelationshipQuery, registry?: Registry) => CoreRelationshipSelection"
+  "type": "(source: Document, query: CoreRelationshipQuery, registry?: Registry) => CoreRelationshipSelection"
 }

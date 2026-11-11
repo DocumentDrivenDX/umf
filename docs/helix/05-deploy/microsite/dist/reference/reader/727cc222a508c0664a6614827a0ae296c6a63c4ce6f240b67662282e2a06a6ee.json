@@ -1,0 +1,88 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RowScopeBindingContext\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "record",
+      "optional": false,
+      "type": "TableRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "ownerColumns",
+      "optional": false,
+      "type": "Readonly<Record<string, TableRef>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RowScopeViaBinding\"]"
+      ],
+      "name": "via",
+      "optional": false,
+      "type": "readonly RowScopeViaBinding[]"
+    },
+    {
+      "description": "Source group name to preapproved native-role alias.",
+      "links": [],
+      "name": "groups",
+      "optional": true,
+      "type": "Readonly<Record<string, string>>"
+    },
+    {
+      "description": "Explicitly identifies a public reference table; open read requires this.",
+      "links": [],
+      "name": "openReferenceRead",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "Run canonical lifecycle/dependency admission against the host document.",
+      "links": [
+        "[\"api\",\".\",\"TablePolicy\"]",
+        "[\"api\",\".\",\"RowScopeDiagnostic\"]"
+      ],
+      "name": "admitPolicy",
+      "optional": false,
+      "type": "(policy: TablePolicy) => readonly RowScopeDiagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "lifecycleDocument",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableId",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "deploymentConfiguration",
+      "optional": true,
+      "type": "unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RowScopeBindingContext is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RowScopeBindingContext"
+}

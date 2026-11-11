@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10620,
+        "line": 51,
+        "path": "src/table-migration/inventory-types.ts",
+        "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableInventoryMigrationRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableInventoryMigrationRequest {id:string;predecessor:{id:string;digest:string}|null;previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options:TableInventoryMigrationOptions;history:TableInventorySourceHistory}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableInventoryMigrationRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10620,
+      "line": 51,
+      "path": "src/table-migration/inventory-types.ts",
+      "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/inventory-types.ts",
+  "title": "TableInventoryMigrationRequest"
+}

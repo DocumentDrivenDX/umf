@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4215,
-        "line": 7,
-        "path": "src/adapters/parquet/containers.ts",
-        "sha256": "27465b92962eae9e52ec10d7795d782394e6785d8e4d22cd99493fb4e63486aa"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectParquetContainers",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document): ParquetContainerInspection"
+      "(document: Document): ParquetContainerInspection"
     ]
   },
   "id": "[\"api\",\".\",\"inspectParquetContainers\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4215,
-      "line": 7,
-      "path": "src/adapters/parquet/containers.ts",
-      "sha256": "27465b92962eae9e52ec10d7795d782394e6785d8e4d22cd99493fb4e63486aa"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Native reading interpretation only; source structure, names and annotations remain authoritative.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectParquetContainers"
 }

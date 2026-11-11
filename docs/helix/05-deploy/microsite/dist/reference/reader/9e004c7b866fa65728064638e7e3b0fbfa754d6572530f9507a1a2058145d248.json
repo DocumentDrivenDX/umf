@@ -19,5 +19,5 @@
   "related": [],
   "returns": "AvroFieldMetadata[]",
   "task": "Inspect and select",
-  "type": "(document: Document) => AvroFieldMetadata[]"
+  "type": "(document: Parameters<GetAvroFieldMetadata>[0]) => AvroFieldMetadata[]"
 }

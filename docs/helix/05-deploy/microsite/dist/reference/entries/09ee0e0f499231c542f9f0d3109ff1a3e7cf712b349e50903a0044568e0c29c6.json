@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 95940,
+        "line": 209,
+        "path": "bindings/core/wasm/index.d.ts",
+        "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+      }
+    ],
+    "entrypoint": "./runtime/wasm",
+    "exportName": "Bit128ModelProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Bit128ModelProjection { operation:'project-bit128-model'; version:'1.0.0'; source:unknown; binding:unknown; lossPolicy:'strict'|'report'; status:'projected'|'reported'|'blocked'; nativeRequirements:{scope:'connection';statements:string[]}[]; residuals:{path:string;reason:string}[]; mappings:{record:{module:string;element:string};table:string;fields:{identity:{module:string;element:string};slots:string[];paths:string[][]}[]}[]; compositeMappings?:{record:{module:string;element:string};root:{module:string;element:string};field:{module:string;element:string};column:string;storage:'json-column'|'native-nested';path:({kind:'member';name:string}|{kind:'array-item'}|{kind:'map-value'})[];slots:string[]}[]; candidate?:{format:'sql'|'avro'|'parquet'|'tablespec';text:string} }"
+    ]
+  },
+  "id": "[\"api\",\"./runtime/wasm\",\"Bit128ModelProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 95940,
+      "line": 209,
+      "path": "bindings/core/wasm/index.d.ts",
+      "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+    }
+  ],
+  "summary": "Type declaration · bindings/core/wasm/index.d.ts",
+  "title": "Bit128ModelProjection"
+}

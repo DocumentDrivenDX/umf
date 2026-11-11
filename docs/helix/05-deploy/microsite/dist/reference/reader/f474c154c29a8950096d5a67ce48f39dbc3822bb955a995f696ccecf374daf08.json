@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "compileTypeSpecDocument accepts document and returns Promise<{ compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }>.",
+  "purpose": "compileTypeSpecDocument accepts document and returns Promise<TypeSpecCompilerReport>.",
   "related": [],
-  "returns": "Promise<{ compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }>",
+  "returns": "Promise<TypeSpecCompilerReport>",
   "task": "Other APIs",
-  "type": "(document: Document) => Promise<{ compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }>"
+  "type": "(document: Document) => Promise<TypeSpecCompilerReport>"
 }

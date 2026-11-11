@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"editTableSpecColumn\"]",
   "kind": "Function",
   "members": [],
@@ -31,9 +31,9 @@
       "type": "Record<string, NativeJson>"
     }
   ],
-  "purpose": "Merge explicit native field changes on a copy, retaining unspecified fields.",
+  "purpose": "editTableSpecColumn accepts document, index, changes and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Author and edit",
-  "type": "(document: Document, index: number, changes: Record<string, NativeJson>) => Document"
+  "type": "(document: Parameters<EditTableSpecColumn>[0], index: Parameters<EditTableSpecColumn>[1], changes: Parameters<EditTableSpecColumn>[2]) => ReturnType<EditTableSpecColumn>"
 }

@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TypeSpecCompilerReport\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "compiler",
+      "optional": false,
+      "type": "\"@typespec/compiler@1.16.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "libraries",
+      "optional": false,
+      "type": "Record<string, string>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "valid",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "TypeSpecDiagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "limitations",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TypeSpecCompilerReport is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TypeSpecCompilerReport"
+}

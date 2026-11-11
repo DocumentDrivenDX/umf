@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyTableInventoryMigration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "plan",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventorySourceHistory\"]"
+      ],
+      "name": "originalHistory",
+      "optional": false,
+      "type": "TableInventorySourceHistory"
+    }
+  ],
+  "purpose": "verifyTableInventoryMigration accepts plan, originalHistory and returns TableInventoryMigrationPlan.",
+  "related": [],
+  "returns": "TableInventoryMigrationPlan",
+  "task": "Other APIs",
+  "type": "(plan: unknown, originalHistory: TableInventorySourceHistory) => TableInventoryMigrationPlan"
+}

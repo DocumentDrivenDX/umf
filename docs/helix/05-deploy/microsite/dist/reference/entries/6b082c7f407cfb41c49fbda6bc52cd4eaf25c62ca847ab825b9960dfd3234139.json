@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 18927,
-        "line": 153,
-        "path": "src/core-ideals/relationship-tablespec-projection.ts",
-        "sha256": "8786f0f4815e314e286fdbcebf874c91b48cd2f13f8ef658f5876d9097f552cd"
+        "bytes": 84809,
+        "line": 244,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverRelationshipTableSpecNativeSources",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: RelationshipTableSpecProjection, current: Document): { source: string | Record<string, string>; target: string | Record<string, string>; }"
+      "(receipt: RelationshipTableSpecProjection, current: Document): { source: string | Record<string, string>; target: string | Record<string, string>; }"
     ]
   },
   "id": "[\"api\",\".\",\"recoverRelationshipTableSpecNativeSources\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 18927,
-      "line": 153,
-      "path": "src/core-ideals/relationship-tablespec-projection.ts",
-      "sha256": "8786f0f4815e314e286fdbcebf874c91b48cd2f13f8ef658f5876d9097f552cd"
+      "bytes": 84809,
+      "line": 244,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/relationship-tablespec-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverRelationshipTableSpecNativeSources"
 }

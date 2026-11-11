@@ -7,10 +7,12 @@
   "parameters": [
     {
       "description": "",
-      "links": [],
-      "name": "input",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
       "optional": false,
-      "type": "Source"
+      "type": "Document"
     },
     {
       "description": "",
@@ -22,9 +24,9 @@
       "type": "RelationshipModuleIdentity"
     }
   ],
-  "purpose": "inspectCoreRelationships accepts input, identity and returns CoreRelationshipInspection.",
+  "purpose": "inspectCoreRelationships accepts source, identity and returns CoreRelationshipInspection.",
   "related": [],
   "returns": "CoreRelationshipInspection",
   "task": "Inspect and select",
-  "type": "(input: Source, identity: RelationshipModuleIdentity) => CoreRelationshipInspection"
+  "type": "(source: Document, identity: RelationshipModuleIdentity) => CoreRelationshipInspection"
 }

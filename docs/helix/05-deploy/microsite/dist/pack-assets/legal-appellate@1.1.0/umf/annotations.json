@@ -1,0 +1,90 @@
+{
+  "version": "1.0",
+  "table_name": "annotations",
+  "description": "CONTRACT-058 bounded appellate fixture: annotations.",
+  "columns": [
+    {
+      "name": "annotation_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.annotation_id; preserve source scope and qualification."
+    },
+    {
+      "name": "document_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.document_id; preserve source scope and qualification."
+    },
+    {
+      "name": "issue_group_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.issue_group_id; preserve source scope and qualification."
+    },
+    {
+      "name": "screening_class",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.screening_class; preserve source scope and qualification."
+    },
+    {
+      "name": "disputed_issue",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.disputed_issue; preserve source scope and qualification."
+    },
+    {
+      "name": "outcome_effect",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.outcome_effect; preserve source scope and qualification."
+    },
+    {
+      "name": "opinion_voice",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.opinion_voice; preserve source scope and qualification."
+    },
+    {
+      "name": "annotator",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.annotator; preserve source scope and qualification."
+    },
+    {
+      "name": "method",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.method; preserve source scope and qualification."
+    },
+    {
+      "name": "review_state",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.review_state; preserve source scope and qualification."
+    },
+    {
+      "name": "historical_qualification",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "annotations.historical_qualification; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "annotation_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "document_id",
+        "references_table": "decisions",
+        "references_column": "document_id"
+      },
+      {
+        "column": "issue_group_id",
+        "references_table": "issue_groups",
+        "references_column": "issue_group_id"
+      }
+    ]
+  }
+}

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlCompositeRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "PostgresqlCompositeRequest"
     }
   ],
-  "purpose": "classifyPostgresqlComposite accepts input, options and returns PostgresqlCompositeClassification.",
+  "purpose": "classifyPostgresqlComposite accepts source, request and returns PostgresqlCompositeClassification.",
   "related": [],
   "returns": "PostgresqlCompositeClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: PostgresqlCompositeRequest) => PostgresqlCompositeClassification"
+  "type": "(source: Document, request: PostgresqlCompositeRequest) => PostgresqlCompositeClassification"
 }

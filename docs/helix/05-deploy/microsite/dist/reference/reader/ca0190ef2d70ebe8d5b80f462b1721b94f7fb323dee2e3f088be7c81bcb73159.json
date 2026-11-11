@@ -1,23 +1,21 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectArrowIpcConsistency\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Document\"]"
-      ],
+      "links": [],
       "name": "document",
       "optional": false,
-      "type": "Document"
+      "type": "unknown"
     }
   ],
-  "purpose": "Compares file footer declarations to observed embedded-stream metadata and extents.",
+  "purpose": "inspectArrowIpcConsistency accepts document and returns ArrowIpcConsistency.",
   "related": [],
   "returns": "ArrowIpcConsistency",
   "task": "Inspect and select",
-  "type": "(document: Document) => ArrowIpcConsistency"
+  "type": "(document: unknown) => ArrowIpcConsistency"
 }

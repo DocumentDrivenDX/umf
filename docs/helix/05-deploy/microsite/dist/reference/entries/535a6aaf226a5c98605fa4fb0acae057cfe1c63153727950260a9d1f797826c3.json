@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10346,
-        "line": 67,
-        "path": "src/core-ideals/cardinality-postgresql-projection.ts",
-        "sha256": "27b310cfd7c47e81bc6417fcf9cdfade198a88b711d47425ee78fbc5df26bb83"
+        "bytes": 84809,
+        "line": 273,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverCardinalityFromPostgresql",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CardinalityPostgresqlProjection, nativeText: string, backend: PostgresqlBackend): Promise<Document>"
+      "(receipt: CardinalityPostgresqlProjection, nativeText: string, backend: PostgresqlBackend): Promise<Document>"
     ]
   },
   "id": "[\"api\",\".\",\"recoverCardinalityFromPostgresql\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10346,
-      "line": 67,
-      "path": "src/core-ideals/cardinality-postgresql-projection.ts",
-      "sha256": "27b310cfd7c47e81bc6417fcf9cdfade198a88b711d47425ee78fbc5df26bb83"
+      "bytes": 84809,
+      "line": 273,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverCardinalityFromPostgresql"
 }

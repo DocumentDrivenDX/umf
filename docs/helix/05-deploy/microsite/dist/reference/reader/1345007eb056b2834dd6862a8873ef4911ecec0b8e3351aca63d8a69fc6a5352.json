@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectRelationshipToSqlServer\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"CoreRelationshipDeclaration\"]"
       ],
-      "name": "authorInput",
+      "name": "author",
       "optional": false,
       "type": "CoreRelationshipDeclaration"
     },
@@ -28,7 +28,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "bindingInput",
+      "name": "bindingSource",
       "optional": false,
       "type": "Document"
     },
@@ -37,14 +37,14 @@
       "links": [
         "[\"api\",\".\",\"RelationshipSqlServerRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "RelationshipSqlServerRequest"
     }
   ],
-  "purpose": "New endpoint-key tables plus declared FK/junction; never mutates existing tables.",
+  "purpose": "projectRelationshipToSqlServer accepts source, author, bindingSource, request and returns RelationshipSqlServerProjection.",
   "related": [],
   "returns": "RelationshipSqlServerProjection",
   "task": "Import and export",
-  "type": "(input: Document, authorInput: CoreRelationshipDeclaration, bindingInput: Document, options: RelationshipSqlServerRequest) => RelationshipSqlServerProjection"
+  "type": "(source: Document, author: import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").CoreRelationshipDeclaration, bindingSource: Document, request: RelationshipSqlServerRequest) => RelationshipSqlServerProjection"
 }

@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createTypeSpecSessionEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "{ executeCompilerRequest: (request: never) => Promise<unknown>; executeParserRequest: (request: never) => unknown; profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }"
+    }
+  ],
+  "purpose": "createTypeSpecSessionEngine accepts module, options and returns TypeSpecSessionOperations.",
+  "related": [],
+  "returns": "TypeSpecSessionOperations",
+  "task": "Author and edit",
+  "type": "(module: unknown, options: { executeCompilerRequest: (request: never) => Promise<unknown>; executeParserRequest: (request: never) => unknown; profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }) => TypeSpecSessionOperations"
+}

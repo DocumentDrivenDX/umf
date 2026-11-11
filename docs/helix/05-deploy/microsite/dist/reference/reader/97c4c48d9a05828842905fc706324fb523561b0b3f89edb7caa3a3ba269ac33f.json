@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyCoreKeyOperation\"]",
   "kind": "Function",
   "members": [],
@@ -24,7 +24,7 @@
       "type": "Document"
     }
   ],
-  "purpose": "Recomputes retained meaning and current context; not cryptographic authorship.",
+  "purpose": "verifyCoreKeyOperation accepts input, current and returns CoreKeyOperation.",
   "related": [],
   "returns": "CoreKeyOperation",
   "task": "Other APIs",

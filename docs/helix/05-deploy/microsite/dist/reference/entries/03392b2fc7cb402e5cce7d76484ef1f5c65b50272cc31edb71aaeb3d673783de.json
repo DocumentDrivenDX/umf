@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7379,
+        "line": 20,
+        "path": "src/table-migration/types.ts",
+        "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "G04ReviewedCandidate",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type G04ReviewedCandidate=Omit<ReviewedChangeCandidate,'kind'|'conversion'>&{kind:ReviewedChangeCandidate['kind']|'conversion-effects'};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"G04ReviewedCandidate\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7379,
+      "line": 20,
+      "path": "src/table-migration/types.ts",
+      "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/types.ts",
+  "title": "G04ReviewedCandidate"
+}

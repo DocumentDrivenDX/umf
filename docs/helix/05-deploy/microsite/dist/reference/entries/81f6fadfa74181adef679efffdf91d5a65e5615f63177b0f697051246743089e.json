@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7176,
-        "line": 9,
-        "path": "src/extensions/semantic-types/index.ts",
-        "sha256": "fed62c5627f8412d0e7d852932c8003d5c96acdb19b9ff74cf76eebefedae4ec"
+        "bytes": 451,
+        "line": 7,
+        "path": "src/extensions/semantic-types/package.ts",
+        "sha256": "3b514b9c71d84ee495056dd00aebf061b3b0c40d2e7547b2393b49abe7cd1231"
       }
     ],
     "entrypoint": ".",
     "exportName": "semanticTypesPackage",
     "runtime": "unassessed",
     "signatureText": [
-      "semanticTypesPackage=manifest as unknown as ExtensionPackage"
+      "semanticTypesPackage = copyJson(manifest) as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"semanticTypesPackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7176,
-      "line": 9,
-      "path": "src/extensions/semantic-types/index.ts",
-      "sha256": "fed62c5627f8412d0e7d852932c8003d5c96acdb19b9ff74cf76eebefedae4ec"
+      "bytes": 451,
+      "line": 7,
+      "path": "src/extensions/semantic-types/package.ts",
+      "sha256": "3b514b9c71d84ee495056dd00aebf061b3b0c40d2e7547b2393b49abe7cd1231"
     }
   ],
-  "summary": "Public export · src/extensions/semantic-types/index.ts",
+  "summary": "Inert package metadata for Rust-owned semantic type registry admission.",
   "title": "semanticTypesPackage"
 }

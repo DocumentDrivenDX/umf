@@ -19,5 +19,5 @@
   "related": [],
   "returns": "string",
   "task": "Import and export",
-  "type": "(document: Document) => string"
+  "type": "(document: Parameters<ExportDbtManifest>[0]) => ReturnType<ExportDbtManifest>"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11134,
-        "line": 91,
-        "path": "src/core-ideals/key-avro-projection.ts",
-        "sha256": "ff7ee2aa3d799c7c9543f0411bdc207e08f1d542bba1559b9badaac02f142141"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyKeysAvroProjection",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: KeyAvroProjection, current: Document): KeyAvroProjection"
+      "(receipt: KeyAvroProjection, current: Document): KeyAvroProjection"
     ]
   },
   "id": "[\"api\",\".\",\"verifyKeysAvroProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11134,
-      "line": 91,
-      "path": "src/core-ideals/key-avro-projection.ts",
-      "sha256": "ff7ee2aa3d799c7c9543f0411bdc207e08f1d542bba1559b9badaac02f142141"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recompute projection and match current native representation; not source authentication.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyKeysAvroProjection"
 }

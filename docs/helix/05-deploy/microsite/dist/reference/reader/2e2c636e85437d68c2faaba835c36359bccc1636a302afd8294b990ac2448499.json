@@ -8,9 +8,9 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleReceipt\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "CoreKeyTupleReceipt"
     },
@@ -22,9 +22,9 @@
       "type": "unknown"
     }
   ],
-  "purpose": "readCoreKeyTupleBytes accepts input, current and returns Uint8Array<ArrayBufferLike>.",
+  "purpose": "readCoreKeyTupleBytes accepts receipt, current and returns Uint8Array<ArrayBufferLike>.",
   "related": [],
   "returns": "Uint8Array<ArrayBufferLike>",
   "task": "Read and validate",
-  "type": "(input: CoreKeyTupleReceipt, current: unknown) => Uint8Array"
+  "type": "(receipt: CoreKeyTupleReceipt, current: unknown) => Uint8Array"
 }

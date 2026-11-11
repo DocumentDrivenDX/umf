@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 95940,
+        "line": 211,
+        "path": "bindings/core/wasm/index.d.ts",
+        "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+      }
+    ],
+    "entrypoint": "./runtime/wasm",
+    "exportName": "UmfBit128Engine",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface UmfBit128Engine {\n  classifyNativeType(input: Bit128NativeTypeInput): Bit128NativeTypeClassification;\n  inspectBit128Binding(binding: unknown, logical: unknown): unknown;\n  encodeBit128CarrierValue(binding: unknown, logical: unknown, identity: unknown, literal: unknown): unknown;\n  decodeBit128CarrierValue(binding: unknown, logical: unknown, identity: unknown, slots: unknown): unknown;\n  encodeBit128Record(binding: unknown, logical: unknown, identity: {module:string;element:string}, values: Bit128RecordValue[]): Record<string,string|null>;\n  decodeBit128Record(binding: unknown, logical: unknown, identity: {module:string;element:string}, slots: Record<string,string|null>): Bit128RecordValue[];\n  projectBit128Model(binding: unknown, logical: unknown, lossPolicy: 'strict'|'report'): Bit128ModelProjection;\n  recoverBit128ModelProjection(report: Bit128ModelProjection, text: string): {logical:unknown;binding:unknown};\n  encodeBit128FileRecord(binding: unknown, logical: unknown, identity: {module:string;element:string}, values: Bit128RecordValue[]): Record<string,UmfJson>;\n  decodeBit128FileRecord(binding: unknown, logical: unknown, identity: {module:string;element:string}, datum: Record<string,UmfJson>): Bit128RecordValue[];\n  projectBit128CarrierSchema(binding: unknown, logical: unknown, identity: {module:string;element:string}, policy: unknown): Bit128NativeProjection;\n  recoverBit128CarrierProjection(report: Bit128NativeProjection, text: string): {logical:unknown;binding:unknown};\n  parseBits128(text: string): Bit128Value;\n  parseUuid(text: string): UuidValue;\n  bits128FromBytes(bytes: Uint8Array): Bit128Value;\n  bits128ToBytes(value: Bit128Value): Uint8Array;\n  uuidFromBits128(value: Bit128Value): UuidValue;\n  uuidToBits128(value: UuidValue): Bit128Value;\n  compareBits128(left: Bit128Value, right: Bit128Value): -1 | 0 | 1;\n  bits128ToWords(value: Bit128Value, signed: boolean): {high: string; low: string};\n  bits128FromWords(words: {high: string; low: string}, signed: boolean): Bit128Value;\n  bits128ToInteger(value: Bit128Value, signed: boolean): {integerToken: string};\n  bits128FromInteger(literal: {integerToken: string}, signed: boolean): Bit128Value;\n}"
+    ]
+  },
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfBit128Engine\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 95940,
+      "line": 211,
+      "path": "bindings/core/wasm/index.d.ts",
+      "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+    }
+  ],
+  "summary": "Type declaration · bindings/core/wasm/index.d.ts",
+  "title": "UmfBit128Engine"
+}

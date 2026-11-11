@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5095,
-        "line": 15,
-        "path": "src/adapters/shacl/engine.ts",
-        "sha256": "92f774a95bc52fe5f68ec13c36c2cb22b69bb64ea7a47a063285b409728733fe"
+        "bytes": 84809,
+        "line": 338,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "proposeShaclEngineValidation",
     "runtime": "unassessed",
     "signatureText": [
-      "(shapes: Document, data: Document, options: { id: string; blankNodePolicy: \"disjoint-inputs\" | \"shared-scope\"; }): Promise<ShaclEngineReport>"
+      "(shapes: Document, data: Document, options: ShaclEngineValidationOptions): Promise<ShaclEngineReport>"
     ]
   },
   "id": "[\"api\",\".\",\"proposeShaclEngineValidation\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5095,
-      "line": 15,
-      "path": "src/adapters/shacl/engine.ts",
-      "sha256": "92f774a95bc52fe5f68ec13c36c2cb22b69bb64ea7a47a063285b409728733fe"
+      "bytes": 84809,
+      "line": 338,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Engine evidence, NOT a UMF conformance verdict. All input meaning remains recoverable.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "proposeShaclEngineValidation"
 }

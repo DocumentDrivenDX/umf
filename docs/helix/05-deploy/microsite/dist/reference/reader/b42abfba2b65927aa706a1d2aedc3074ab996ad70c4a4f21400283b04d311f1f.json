@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverPostgresqlCardinalitySource\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlCardinalityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "PostgresqlCardinalityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Recover both exact native texts, including unclaimed content.",
+  "purpose": "recoverPostgresqlCardinalitySource accepts receipt, current and returns { nativeSource: string; supplement: string; }.",
   "related": [],
   "returns": "{ nativeSource: string; supplement: string; }",
   "task": "Import and export",
-  "type": "(input: PostgresqlCardinalityClassification, current: Document) => { nativeSource: string; supplement: string; }"
+  "type": "(receipt: PostgresqlCardinalityClassification, current: Document) => { nativeSource: string; supplement: string; }"
 }

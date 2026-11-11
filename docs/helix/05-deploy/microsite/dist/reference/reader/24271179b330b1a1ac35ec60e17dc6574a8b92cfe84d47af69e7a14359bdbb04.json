@@ -40,5 +40,5 @@
   "related": [],
   "returns": "Document",
   "task": "Author and edit",
-  "type": "(document: Document, path: string, text: string, dependencyId?: string) => Document"
+  "type": "(document: Parameters<EditAvroNode>[0], path: Parameters<EditAvroNode>[1], text: Parameters<EditAvroNode>[2], dependencyId?: Parameters<EditAvroNode>[3]) => ReturnType<EditAvroNode>"
 }

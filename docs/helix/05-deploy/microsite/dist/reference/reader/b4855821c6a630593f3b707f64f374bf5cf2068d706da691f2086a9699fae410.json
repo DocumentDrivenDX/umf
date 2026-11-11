@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreRecordIdentity\"]"
       ],
       "name": "identity",
       "optional": false,
@@ -26,16 +26,16 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreRecordIdentity\"]"
       ],
-      "name": "requestInput",
+      "name": "request",
       "optional": false,
       "type": "CoreRecordIdentity[]"
     }
   ],
-  "purpose": "declareCoreRecordMembers accepts input, identity, requestInput and returns CoreRecordMembersDeclaration.",
+  "purpose": "declareCoreRecordMembers accepts source, identity, request and returns CoreRecordMembersDeclaration.",
   "related": [],
   "returns": "CoreRecordMembersDeclaration",
   "task": "Other APIs",
-  "type": "(input: Document, identity: CoreRecordIdentity, requestInput: CoreRecordIdentity[]) => CoreRecordMembersDeclaration"
+  "type": "(source: Document, identity: CoreRecordIdentity, request: CoreRecordIdentity[]) => CoreRecordMembersDeclaration"
 }

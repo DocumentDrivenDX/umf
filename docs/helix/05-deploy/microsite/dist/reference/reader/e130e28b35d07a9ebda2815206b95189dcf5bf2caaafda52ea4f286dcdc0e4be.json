@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"resolveSecurityProtectionDomains\"]",
   "kind": "Function",
   "members": [],
@@ -8,28 +8,28 @@
     {
       "description": "",
       "links": [],
-      "name": "policyInput",
+      "name": "policy",
       "optional": false,
       "type": "unknown"
     },
     {
       "description": "",
       "links": [],
-      "name": "catalogInput",
+      "name": "catalog",
       "optional": false,
       "type": "unknown"
     },
     {
       "description": "",
       "links": [],
-      "name": "closureInput",
+      "name": "closure",
       "optional": false,
       "type": "unknown"
     }
   ],
-  "purpose": "Exact pins qualify only the supplied immutable core definitions, not their provenance.",
+  "purpose": "resolveSecurityProtectionDomains accepts policy, catalog, closure and returns SecurityProtectionDomainResolution.",
   "related": [],
   "returns": "SecurityProtectionDomainResolution",
   "task": "Inspect and select",
-  "type": "(policyInput: unknown, catalogInput: unknown, closureInput: unknown) => SecurityProtectionDomainResolution"
+  "type": "(policy: unknown, catalog: unknown, closure: unknown) => SecurityProtectionDomainResolution"
 }

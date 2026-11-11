@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6870,
-        "line": 54,
-        "path": "src/model/semantic-types.ts",
-        "sha256": "cee78fcebbdaeeffc573ad75b6e6aa586603eaa3401fca96f8f1d3dd4bb2962f"
+        "bytes": 84809,
+        "line": 402,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateCoreSemanticTypeValue",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identity: CoreSemanticTypeIdentity, valueInput: Json, registry: SemanticTypeRegistry): CoreSemanticTypeValueResult"
+      "(source: Document, identity: CoreSemanticTypeIdentity, value: Json, registry: SemanticTypeRegistry): CoreSemanticTypeValueResult"
     ]
   },
   "id": "[\"api\",\".\",\"validateCoreSemanticTypeValue\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6870,
-      "line": 54,
-      "path": "src/model/semantic-types.ts",
-      "sha256": "cee78fcebbdaeeffc573ad75b6e6aa586603eaa3401fca96f8f1d3dd4bb2962f"
+      "bytes": 84809,
+      "line": 402,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Conjunction of exact external checks only; no other field/native constraints are evaluated.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "validateCoreSemanticTypeValue"
 }

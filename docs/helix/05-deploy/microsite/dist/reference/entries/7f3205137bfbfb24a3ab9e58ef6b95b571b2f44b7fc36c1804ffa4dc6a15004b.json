@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 430,
+        "line": 9,
+        "path": "src/extensions/tables/package.ts",
+        "sha256": "a5373f689f43cee5586b949b899da4e057f46e01f81647ff50623714851cdec6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "tableLifecyclePackage",
+    "runtime": "unassessed",
+    "signatureText": [
+      "tableLifecyclePackage = copyJson(manifest) as unknown as ExtensionPackage"
+    ]
+  },
+  "id": "[\"api\",\".\",\"tableLifecyclePackage\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 430,
+      "line": 9,
+      "path": "src/extensions/tables/package.ts",
+      "sha256": "a5373f689f43cee5586b949b899da4e057f46e01f81647ff50623714851cdec6"
+    }
+  ],
+  "summary": "Inert package metadata for Rust-owned table lifecycle registry admission.",
+  "title": "tableLifecyclePackage"
+}

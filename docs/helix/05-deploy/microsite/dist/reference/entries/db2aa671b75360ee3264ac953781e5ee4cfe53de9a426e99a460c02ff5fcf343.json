@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3356,
-        "line": 19,
-        "path": "src/projections/tablespec-via-avro.ts",
-        "sha256": "50431169c1b38692976dd9307b8ffc756485feaf05e87a5d098c6ff058fd2483"
+        "bytes": 84809,
+        "line": 251,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectToTableSpecViaAvro",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: TableSpecViaAvroPolicy): TableSpecViaAvroProjection"
+      "(source: Document, policy: TableSpecViaAvroPolicy): TableSpecViaAvroProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectToTableSpecViaAvro\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3356,
-      "line": 19,
-      "path": "src/projections/tablespec-via-avro.ts",
-      "sha256": "50431169c1b38692976dd9307b8ffc756485feaf05e87a5d098c6ff058fd2483"
+      "bytes": 84809,
+      "line": 251,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Preserve every native source and stage-specific loss across the two explicit schema bindings.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectToTableSpecViaAvro"
 }

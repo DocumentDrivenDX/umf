@@ -8,14 +8,14 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "unknown"
     }
   ],
-  "purpose": "inspectSecurityPolicyV2Source accepts input and returns SecurityPolicyV2Inspection.",
+  "purpose": "inspectSecurityPolicyV2Source accepts source and returns SecurityPolicyV2Inspection.",
   "related": [],
   "returns": "SecurityPolicyV2Inspection",
   "task": "Inspect and select",
-  "type": "(input: unknown) => SecurityPolicyV2Inspection"
+  "type": "(source: unknown) => SecurityPolicyV2Inspection"
 }

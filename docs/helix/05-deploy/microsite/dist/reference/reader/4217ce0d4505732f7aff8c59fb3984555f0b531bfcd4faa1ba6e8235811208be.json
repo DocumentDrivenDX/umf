@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyPostgresqlFacets\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlFacetRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "PostgresqlFacetRequest"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "Qualified interpretation, never native validation or execution. No implicit migration.",
+  "purpose": "classifyPostgresqlFacets accepts source, request, backend and returns Promise<PostgresqlFacetClassification>.",
   "related": [],
   "returns": "Promise<PostgresqlFacetClassification>",
   "task": "Other APIs",
-  "type": "(input: Document, options: PostgresqlFacetRequest, backend: PostgresqlBackend) => Promise<PostgresqlFacetClassification>"
+  "type": "(source: Document, request: PostgresqlFacetRequest, backend: PostgresqlBackend) => Promise<PostgresqlFacetClassification>"
 }

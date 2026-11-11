@@ -73,22 +73,19 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityRef\"]"
-      ],
+      "links": [],
       "name": "coverage",
       "optional": false,
-      "type": "{ type: SecurityRef; complete: boolean; fields: SecurityRef[]; }[]"
+      "type": "{ type: SecurityTypeRef; complete: boolean; fields: SecurityTypeRef[]; }[]"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"SecurityRef\"]",
         "[\"api\",\".\",\"CoreLiteral\"]"
       ],
       "name": "context",
       "optional": false,
-      "type": "{ field: SecurityRef; value: CoreLiteral; }[]"
+      "type": "{ field: SecurityTypeRef; value: CoreLiteral; }[]"
     },
     {
       "description": "",

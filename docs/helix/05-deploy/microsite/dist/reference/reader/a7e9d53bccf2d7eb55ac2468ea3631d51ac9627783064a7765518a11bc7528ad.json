@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -33,9 +33,9 @@
       "type": "CoreSchemaPropertyPatch"
     }
   ],
-  "purpose": "declareCoreSchemaProperties accepts input, identity, patch and returns Document.",
+  "purpose": "declareCoreSchemaProperties accepts source, identity, patch and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Other APIs",
-  "type": "(input: Document, identity: CoreSchemaPropertyIdentity, patch: CoreSchemaPropertyPatch) => Document"
+  "type": "(source: Document, identity: CoreSchemaPropertyIdentity, patch: CoreSchemaPropertyPatch) => Document"
 }

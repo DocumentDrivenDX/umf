@@ -33,5 +33,5 @@
   "related": [],
   "returns": "NativeJson",
   "task": "Inspect and select",
-  "type": "(document: Document, path: string, resourceUri?: string) => NativeJson"
+  "type": "(document: Parameters<GetOpenapiNode>[0], path: Parameters<GetOpenapiNode>[1], resourceUri?: Parameters<GetOpenapiNode>[2]) => ReturnType<GetOpenapiNode>"
 }

@@ -57,7 +57,7 @@
       "links": [],
       "name": "binding",
       "optional": false,
-      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+      "type": "{ id: \"umf.avro.cardinality\"; version: \"1.0.0\"; nativeVersion: \"1.12.0\"; subset: \"Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate\"; }"
     },
     {
       "description": "",
@@ -66,7 +66,7 @@
       ],
       "name": "mapping",
       "optional": false,
-      "type": "{ origin: \"classified\"; cardinality: Cardinality; outcome: \"exact\" | \"unknown\" | \"not-expressible\"; basis: typeof basis; nodes: Node[]; }"
+      "type": "{ origin: \"classified\"; cardinality: Cardinality; outcome: \"exact\" | \"unknown\" | \"not-expressible\"; basis: string; nodes: AvroCardinalityNode[]; }"
     },
     {
       "description": "",
@@ -75,7 +75,7 @@
       ],
       "name": "residuals",
       "optional": false,
-      "type": "{ path: string; value: Json; reason: string; recovery: typeof recovery; }[]"
+      "type": "{ path: string; value: Json; reason: string; recovery: string; }[]"
     },
     {
       "description": "",

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"resolveOpenapiDynamicReference\"]",
   "kind": "Function",
   "members": [],
@@ -24,9 +24,9 @@
       "type": "{ pointer: string; resourceUri?: string; schemaResources?: string[]; evaluationScope: string[]; }"
     }
   ],
-  "purpose": "Resolve one $dynamicRef against an explicit outermost-to-innermost resource stack.",
+  "purpose": "resolveOpenapiDynamicReference accepts document, input and returns { source: OpenapiSchemaLocation; initialTarget: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; evaluationScope: string[]; resolution: \"static\" | \"dynamic\"; complete: false; limitations: string[]; }.",
   "related": [],
   "returns": "{ source: OpenapiSchemaLocation; initialTarget: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; evaluationScope: string[]; resolution: \"static\" | \"dynamic\"; complete: false; limitations: string[]; }",
   "task": "Inspect and select",
-  "type": "(document: Document, input: { pointer: string; resourceUri?: string; schemaResources?: string[]; evaluationScope: string[]; }) => { source: OpenapiSchemaLocation; initialTarget: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; evaluationScope: string[]; resolution: \"static\" | \"dynamic\"; complete: false; limitations: string[]; }"
+  "type": "(document: Parameters<ResolveOpenapiDynamicReference>[0], input: Parameters<ResolveOpenapiDynamicReference>[1]) => ReturnType<ResolveOpenapiDynamicReference>"
 }

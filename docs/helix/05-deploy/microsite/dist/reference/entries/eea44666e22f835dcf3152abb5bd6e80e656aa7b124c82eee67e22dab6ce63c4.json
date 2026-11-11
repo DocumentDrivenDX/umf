@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6616,
-        "line": 39,
-        "path": "src/core-ideals/relationship-parquet.ts",
-        "sha256": "433b15c1347bfb338c1202835766c5154c640d945e9732647a8ed1df1cba66dd"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyParquetRelationshipClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: ParquetRelationshipClassification, current: Document): ParquetRelationshipClassification"
+      "(receipt: ParquetRelationshipClassification, current: Document): ParquetRelationshipClassification"
     ]
   },
   "id": "[\"api\",\".\",\"verifyParquetRelationshipClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6616,
-      "line": 39,
-      "path": "src/core-ideals/relationship-parquet.ts",
-      "sha256": "433b15c1347bfb338c1202835766c5154c640d945e9732647a8ed1df1cba66dd"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/relationship-parquet.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyParquetRelationshipClassification"
 }

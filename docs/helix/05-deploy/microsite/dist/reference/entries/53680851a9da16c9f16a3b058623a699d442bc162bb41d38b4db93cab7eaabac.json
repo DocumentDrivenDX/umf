@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 15824,
-        "line": 96,
-        "path": "src/model/key-tuple.ts",
-        "sha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
+        "bytes": 84809,
+        "line": 383,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "encodeCoreKeyTuple",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown, identityInput: CoreKeyIdentity, valuesInput: CoreKeyTupleValue[], options?: { profile: \"umf-key-tuple-v1\" | \"umf-key-tuple-v2\"; } | undefined): CoreKeyTupleReceipt"
+      "(input: unknown, identity: CoreKeyIdentity, values: CoreKeyTupleValue[], options?: { profile: \"umf-key-tuple-v1\" | \"umf-key-tuple-v2\"; } | undefined): CoreKeyTupleReceipt"
     ]
   },
   "id": "[\"api\",\".\",\"encodeCoreKeyTuple\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 15824,
-      "line": 96,
-      "path": "src/model/key-tuple.ts",
-      "sha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
+      "bytes": 84809,
+      "line": 383,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Exact current-core encoding; no native uniqueness or author provenance is inferred.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "encodeCoreKeyTuple"
 }

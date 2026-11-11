@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverNullabilityFromTableSpec\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"NullabilityTableSpecProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "NullabilityTableSpecProjection"
     },
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "purpose": "recoverNullabilityFromTableSpec accepts receipt, nativeText and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: NullabilityTableSpecProjection, nativeText: string) => Document"
+  "type": "(receipt: NullabilityTableSpecProjection, nativeText: string) => Document"
 }

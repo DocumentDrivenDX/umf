@@ -1,0 +1,31 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"ProtobufSourceExportEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "callbackControl",
+      "optional": false,
+      "type": "\"boundary-only\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"ProtobufSourceEmitter\"]",
+        "[\"api\",\"./runtime/wasm\",\"ProtobufSourceEmitterResult\"]"
+      ],
+      "name": "exportProtobufSources",
+      "optional": false,
+      "type": "(document: unknown, emitter: ProtobufSourceEmitter) => Promise<ProtobufSourceEmitterResult & { source: unknown; diagnostics: unknown[]; }>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ProtobufSourceExportEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProtobufSourceExportEngine"
+}

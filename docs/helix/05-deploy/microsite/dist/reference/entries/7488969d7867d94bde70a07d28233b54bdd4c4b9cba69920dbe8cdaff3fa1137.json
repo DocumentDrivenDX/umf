@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7481,
-        "line": 20,
-        "path": "src/core-ideals/postgresql-composite.ts",
-        "sha256": "9331bc1b538e6c8d078264adf931a770c996c68eb8a4d377bc6f31d096960d9c"
+        "bytes": 84809,
+        "line": 290,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyPostgresqlComposite",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: PostgresqlCompositeRequest): PostgresqlCompositeClassification"
+      "(source: Document, request: PostgresqlCompositeRequest): PostgresqlCompositeClassification"
     ]
   },
   "id": "[\"api\",\".\",\"classifyPostgresqlComposite\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7481,
-      "line": 20,
-      "path": "src/core-ideals/postgresql-composite.ts",
-      "sha256": "9331bc1b538e6c8d078264adf931a770c996c68eb8a4d377bc6f31d096960d9c"
+      "bytes": 84809,
+      "line": 290,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/postgresql-composite.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyPostgresqlComposite"
 }

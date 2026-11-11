@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parseBulkItemToken\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "key",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "parseBulkItemToken accepts key and returns { namespace: string; id: string; batch: number; item: number; }.",
+  "related": [],
+  "returns": "{ namespace: string; id: string; batch: number; item: number; }",
+  "task": "Read and validate",
+  "type": "(key: string) => { namespace: string; id: string; batch: number; item: number; }"
+}

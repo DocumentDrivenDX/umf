@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6938,
-        "line": 54,
-        "path": "src/core-ideals/tablespec-record.ts",
-        "sha256": "a35f2b4388568de12b7f41323c7ee6132860aef09430beb5c30321794c7f0c5b"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyTableSpecRecordClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: TableSpecRecordClassification, current: Document): TableSpecRecordClassification"
+      "(receipt: TableSpecRecordClassification, current: Document): TableSpecRecordClassification"
     ]
   },
   "id": "[\"api\",\".\",\"verifyTableSpecRecordClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6938,
-      "line": 54,
-      "path": "src/core-ideals/tablespec-record.ts",
-      "sha256": "a35f2b4388568de12b7f41323c7ee6132860aef09430beb5c30321794c7f0c5b"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Whole-record receipt verification; native or authored changes require recomputation.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyTableSpecRecordClassification"
 }

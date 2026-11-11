@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5899,
-        "line": 42,
-        "path": "src/adapters/typespec/index.ts",
-        "sha256": "f08e7c5312f0195233a44cd224b2c55608f1ec1a6a88528de6b16e9e471475ee"
+        "bytes": 84809,
+        "line": 305,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "proposeTypeSpecSourceEdit",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, path: string, text: string): { document: Document; validation: Validation; }"
+      "(document: Document, path: string, text: string): { document: Document; validation: TypeSpecValidation; }"
     ]
   },
   "id": "[\"api\",\".\",\"proposeTypeSpecSourceEdit\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5899,
-      "line": 42,
-      "path": "src/adapters/typespec/index.ts",
-      "sha256": "f08e7c5312f0195233a44cd224b2c55608f1ec1a6a88528de6b16e9e471475ee"
+      "bytes": 84809,
+      "line": 305,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/adapters/typespec/index.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "proposeTypeSpecSourceEdit"
 }

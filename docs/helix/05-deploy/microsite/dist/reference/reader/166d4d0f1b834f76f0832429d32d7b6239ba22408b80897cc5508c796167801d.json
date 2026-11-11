@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreCardinalityDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"CardinalityParquetRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "CardinalityParquetRequest"
     }
   ],
-  "purpose": "projectCardinalityToParquet accepts input, options and returns CardinalityParquetProjection.",
+  "purpose": "projectCardinalityToParquet accepts author, request and returns CardinalityParquetProjection.",
   "related": [],
   "returns": "CardinalityParquetProjection",
   "task": "Import and export",
-  "type": "(input: CoreCardinalityDeclaration, options: CardinalityParquetRequest) => CardinalityParquetProjection"
+  "type": "(author: CoreCardinalityDeclaration, request: CardinalityParquetRequest) => CardinalityParquetProjection"
 }

@@ -61,6 +61,15 @@
     },
     {
       "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
       "links": [],
       "name": "status",
       "optional": false,
@@ -74,15 +83,6 @@
       "name": "residuals",
       "optional": false,
       "type": "{ path: string; value: Json; reason: string; recovery: \"Source and native fragments retained; resolve conflict then recompute whole record classification\"; }[]"
-    },
-    {
-      "description": "",
-      "links": [
-        "[\"api\",\".\",\"Diagnostic\"]"
-      ],
-      "name": "diagnostics",
-      "optional": false,
-      "type": "Diagnostic[]"
     }
   ],
   "parameters": [],

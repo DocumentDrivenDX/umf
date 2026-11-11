@@ -1,0 +1,78 @@
+{
+  "version": "1.0",
+  "table_name": "adjudications",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+  "columns": [
+    {
+      "name": "adjudication_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "adjudication key"
+    },
+    {
+      "name": "resource_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "resource key"
+    },
+    {
+      "name": "line_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "line key"
+    },
+    {
+      "name": "category_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "category json"
+    },
+    {
+      "name": "reason_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "reason json"
+    },
+    {
+      "name": "amount",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "amount"
+    },
+    {
+      "name": "currency",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "currency"
+    },
+    {
+      "name": "value",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "value"
+    },
+    {
+      "name": "native_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "native json"
+    }
+  ],
+  "primary_key": [
+    "adjudication_key"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "resource_key",
+        "references_table": "resources",
+        "references_column": "resource_key"
+      },
+      {
+        "column": "line_key",
+        "references_table": "claim_lines",
+        "references_column": "line_key"
+      }
+    ]
+  }
+}

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreKindDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreKindDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"RecordAvroRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "RecordAvroRequest"
     }
   ],
-  "purpose": "projectRecordToAvro accepts input, options and returns RecordAvroProjection.",
+  "purpose": "projectRecordToAvro accepts author, request and returns RecordAvroProjection.",
   "related": [],
   "returns": "RecordAvroProjection",
   "task": "Import and export",
-  "type": "(input: CoreKindDeclaration, options: RecordAvroRequest) => RecordAvroProjection"
+  "type": "(author: CoreKindDeclaration, request: RecordAvroRequest) => RecordAvroProjection"
 }

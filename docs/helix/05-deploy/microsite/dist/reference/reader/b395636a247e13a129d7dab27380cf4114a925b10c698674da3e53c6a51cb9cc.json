@@ -33,5 +33,5 @@
   "related": [],
   "returns": "{ document: Document; validation: Validation; }",
   "task": "Author and edit",
-  "type": "(document: Document, path: string, text: string) => { document: Document; validation: Validation; }"
+  "type": "(document: Parameters<ProposeDbtArtifactNodeEdit>[0], path: string, text: string) => ReturnType<ProposeDbtArtifactNodeEdit>"
 }

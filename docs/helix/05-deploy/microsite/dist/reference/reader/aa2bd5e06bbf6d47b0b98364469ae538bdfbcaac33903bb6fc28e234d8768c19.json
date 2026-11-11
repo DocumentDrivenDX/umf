@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getPostgresqlCatalogReconstruction\"]",
   "kind": "Function",
   "members": [],
@@ -15,7 +15,7 @@
       "type": "Document"
     }
   ],
-  "purpose": "Original archive only; the caller must still verify correspondence and server prerequisites.",
+  "purpose": "getPostgresqlCatalogReconstruction accepts document and returns { sql: string; complete: false; provenance: \"original-capture-archive\"; }.",
   "related": [],
   "returns": "{ sql: string; complete: false; provenance: \"original-capture-archive\"; }",
   "task": "Inspect and select",

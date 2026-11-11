@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11185,
-        "line": 87,
-        "path": "src/core-ideals/facets-parquet-projection.ts",
-        "sha256": "1cc8bde733bdc1cc316601021186288dd0b86b91e11d3ca049d3a20cabcb7243"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverFacetsFromParquet",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: FacetsParquetProjection, nativeBytes: Uint8Array<ArrayBufferLike>): Document"
+      "(receipt: FacetsParquetProjection, native: Uint8Array<ArrayBufferLike>): Document"
     ]
   },
   "id": "[\"api\",\".\",\"recoverFacetsFromParquet\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11185,
-      "line": 87,
-      "path": "src/core-ideals/facets-parquet-projection.ts",
-      "sha256": "1cc8bde733bdc1cc316601021186288dd0b86b91e11d3ca049d3a20cabcb7243"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recompute the complete author projection and compare exact emitted bytes.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverFacetsFromParquet"
 }

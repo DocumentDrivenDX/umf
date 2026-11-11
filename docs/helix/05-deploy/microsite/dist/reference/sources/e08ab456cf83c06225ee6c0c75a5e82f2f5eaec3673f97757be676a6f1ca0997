@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-seed-retirement-review:0.1",
+  "title": "G10 execution-aware seed retirement review side",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profile", "side", "source", "configuration", "id", "definition", "definitionDigest", "originalSourceDigest", "execution", "retired", "effects"],
+  "properties": {
+    "profile": {"const": "umf.table-inventory-seed-retirement-review/0.1"},
+    "side": {"enum": ["previous", "next"]},
+    "source": {"type": "object", "additionalProperties": false, "required": ["format", "sha256"], "properties": {"format": {"const": "json"}, "sha256": {"$ref": "#/$defs/digest"}}},
+    "configuration": {},
+    "id": {"type": "string", "minLength": 1},
+    "definition": {"$ref": "urn:umf:tables:0.1.0#/$defs/seedSet"},
+    "definitionDigest": {"$ref": "#/$defs/digest"},
+    "originalSourceDigest": {"$ref": "#/$defs/digest"},
+    "execution": {"enum": ["not-run", "confirmed"]},
+    "retired": {"type": "boolean"},
+    "effects": {"oneOf": [{"const": []}, {"const": ["original-definition-and-execution-retained-in-history", "no-data-replay"]}]}
+  },
+  "allOf": [
+    {"if": {"properties": {"side": {"const": "previous"}}, "required": ["side"]}, "then": {"properties": {"retired": {"const": false}, "effects": {"const": []}}}},
+    {"if": {"properties": {"side": {"const": "next"}}, "required": ["side"]}, "then": {"properties": {"retired": {"const": true}, "effects": {"const": ["original-definition-and-execution-retained-in-history", "no-data-replay"]}}}}
+  ],
+  "$defs": {"digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

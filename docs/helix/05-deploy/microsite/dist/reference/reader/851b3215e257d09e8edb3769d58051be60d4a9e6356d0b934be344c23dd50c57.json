@@ -1,0 +1,788 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperations\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"generatePackTools\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "pack-tools",
+      "optional": false,
+      "type": "Readonly<Record<\"generatePackTools\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"applyBulkEvent\"]",
+        "[\"api\",\".\",\"bulkDecisionOrder\"]",
+        "[\"api\",\".\",\"nextBulkFence\"]",
+        "[\"api\",\".\",\"bulkItemToken\"]",
+        "[\"api\",\".\",\"parseBulkItemToken\"]",
+        "[\"api\",\".\",\"isReservedBulkKey\"]",
+        "[\"api\",\".\",\"checkBulkKeyUse\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "bulk-actions",
+      "optional": false,
+      "type": "Readonly<Record<\"applyBulkEvent\" | \"bulkDecisionOrder\" | \"nextBulkFence\" | \"bulkItemToken\" | \"parseBulkItemToken\" | \"isReservedBulkKey\" | \"checkBulkKeyUse\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectLakeviewToLegacyDashboard\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "lakeview-legacy-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectLakeviewToLegacyDashboard\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"inspectActions\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "delta-log",
+      "optional": false,
+      "type": "Readonly<Record<\"export\" | \"inspectActions\" | \"inspect\" | \"capture\" | \"reconcileCommits\" | \"reconcileCheckpoint\" | \"reconcileCheckpointSidecars\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"inspectFieldClassification\"]",
+        "[\"api\",\".\",\"verifyFieldClassificationInspection\"]",
+        "[\"api\",\".\",\"inspectFieldProjection\"]",
+        "[\"api\",\".\",\"verifyFieldProjectionInspection\"]",
+        "[\"api\",\".\",\"inspectRecordProjection\"]",
+        "[\"api\",\".\",\"verifyRecordProjectionInspection\"]",
+        "[\"api\",\".\",\"inspectStructuredClassification\"]",
+        "[\"api\",\".\",\"verifyStructuredClassificationInspection\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "core-ideal-reports",
+      "optional": false,
+      "type": "Readonly<Record<\"inspectFieldClassification\" | \"verifyFieldClassificationInspection\" | \"inspectFieldProjection\" | \"verifyFieldProjectionInspection\" | \"inspectRecordProjection\" | \"verifyRecordProjectionInspection\" | \"inspectStructuredClassification\" | \"verifyStructuredClassificationInspection\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectFieldToParquet\"]",
+        "[\"api\",\".\",\"recoverFieldFromParquet\"]",
+        "[\"api\",\".\",\"projectRecordToParquet\"]",
+        "[\"api\",\".\",\"recoverRecordFromParquet\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "field-record-parquet-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectFieldToParquet\" | \"recoverFieldFromParquet\" | \"projectRecordToParquet\" | \"recoverRecordFromParquet\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"inspectBinding\"]",
+        "[\"api\",\".\",\"inspectRawTableBinding\"]",
+        "[\"api\",\".\",\"getBinding\"]",
+        "[\"api\",\".\",\"readBindingDocument\"]",
+        "[\"api\",\".\",\"writeBindingDocument\"]",
+        "[\"api\",\".\",\"projectBindingIndexes\"]",
+        "[\"api\",\".\",\"migrateBindingRelationships\"]",
+        "[\"api\",\".\",\"rollbackBindingRelationships\"]",
+        "[\"api\",\".\",\"validateBit128Dataset\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "binding-public",
+      "optional": false,
+      "type": "Readonly<Record<\"inspectBinding\" | \"inspectRawTableBinding\" | \"getBinding\" | \"readBindingDocument\" | \"writeBindingDocument\" | \"projectBindingIndexes\" | \"migrateBindingRelationships\" | \"rollbackBindingRelationships\" | \"validateBit128Dataset\" | \"validateBindingSemantics\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"inspectDashboard\"]",
+        "[\"api\",\".\",\"readDashboardDocument\"]",
+        "[\"api\",\".\",\"writeDashboardDocument\"]",
+        "[\"api\",\".\",\"getDashboardDefinition\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "dashboard-public",
+      "optional": false,
+      "type": "Readonly<Record<\"inspectDashboard\" | \"readDashboardDocument\" | \"writeDashboardDocument\" | \"getDashboardDefinition\" | \"validateDashboardSemantics\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectMedicalFhir\"]",
+        "[\"api\",\".\",\"projectCdcMortality\"]",
+        "[\"api\",\".\",\"projectDicomMetadata\"]",
+        "[\"api\",\".\",\"lookupMedicalTerminology\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "medical-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectMedicalFhir\" | \"projectCdcMortality\" | \"projectDicomMetadata\" | \"lookupMedicalTerminology\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"importRelationshipExtraArchive\"]",
+        "[\"api\",\".\",\"classifyRelationshipExtra\"]",
+        "[\"api\",\".\",\"verifyRelationshipExtra\"]",
+        "[\"api\",\".\",\"recoverRelationshipExtraIdeal\"]",
+        "[\"api\",\".\",\"recoverRelationshipExtraNative\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "relationship-extra-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"importRelationshipExtraArchive\" | \"classifyRelationshipExtra\" | \"verifyRelationshipExtra\" | \"recoverRelationshipExtraIdeal\" | \"recoverRelationshipExtraNative\" | \"prepareRelationshipToExtra\" | \"completeRelationshipToExtra\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectRelationshipToParquet\"]",
+        "[\"api\",\".\",\"verifyRelationshipParquetProjection\"]",
+        "[\"api\",\".\",\"recoverRelationshipParquetIdeal\"]",
+        "[\"api\",\".\",\"recoverRelationshipParquetNative\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "relationship-parquet-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectRelationshipToParquet\" | \"verifyRelationshipParquetProjection\" | \"recoverRelationshipParquetIdeal\" | \"recoverRelationshipParquetNative\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectCardinalityToSqlServer\"]",
+        "[\"api\",\".\",\"recoverCardinalityFromSqlServer\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "cardinality-sqlserver-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectCardinalityToSqlServer\" | \"recoverCardinalityFromSqlServer\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectFieldToSqlServer\"]",
+        "[\"api\",\".\",\"recoverFieldFromSqlServer\"]",
+        "[\"api\",\".\",\"projectRecordToSqlServer\"]",
+        "[\"api\",\".\",\"recoverRecordFromSqlServer\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "field-record-sqlserver-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectFieldToSqlServer\" | \"recoverFieldFromSqlServer\" | \"projectRecordToSqlServer\" | \"recoverRecordFromSqlServer\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectFieldToAvro\"]",
+        "[\"api\",\".\",\"recoverFieldFromAvro\"]",
+        "[\"api\",\".\",\"projectRecordToAvro\"]",
+        "[\"api\",\".\",\"recoverRecordFromAvro\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "field-record-avro-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectFieldToAvro\" | \"recoverFieldFromAvro\" | \"projectRecordToAvro\" | \"recoverRecordFromAvro\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectCardinalityToAvro\"]",
+        "[\"api\",\".\",\"recoverCardinalityFromAvro\"]",
+        "[\"api\",\".\",\"classifyAvroCardinality\"]",
+        "[\"api\",\".\",\"verifyAvroCardinalityClassification\"]",
+        "[\"api\",\".\",\"recoverAvroCardinalityBundle\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "avro-cardinality",
+      "optional": false,
+      "type": "Readonly<Record<\"projectCardinalityToAvro\" | \"recoverCardinalityFromAvro\" | \"classifyAvroCardinality\" | \"verifyAvroCardinalityClassification\" | \"recoverAvroCardinalityBundle\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"classifyAvroField\"]",
+        "[\"api\",\".\",\"recoverAvroFieldBundle\"]",
+        "[\"api\",\".\",\"classifyAvroRecord\"]",
+        "[\"api\",\".\",\"recoverAvroRecordBundle\"]",
+        "[\"api\",\".\",\"classifyAvroKeys\"]",
+        "[\"api\",\".\",\"verifyAvroKeyClassification\"]",
+        "[\"api\",\".\",\"recoverAvroKeySource\"]",
+        "[\"api\",\".\",\"classifyAvroRelationships\"]",
+        "[\"api\",\".\",\"verifyAvroRelationshipClassification\"]",
+        "[\"api\",\".\",\"recoverAvroRelationshipSource\"]",
+        "[\"api\",\".\",\"classifyAvroNullability\"]",
+        "[\"api\",\".\",\"verifyAvroNullabilityClassification\"]",
+        "[\"api\",\".\",\"recoverAvroNullabilityBundle\"]",
+        "[\"api\",\".\",\"classifyAvroFacets\"]",
+        "[\"api\",\".\",\"verifyAvroFacetClassification\"]",
+        "[\"api\",\".\",\"recoverAvroFacetSource\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "avro-classification",
+      "optional": false,
+      "type": "Readonly<Record<\"classifyAvroField\" | \"recoverAvroFieldBundle\" | \"classifyAvroRecord\" | \"recoverAvroRecordBundle\" | \"classifyAvroKeys\" | \"verifyAvroKeyClassification\" | \"recoverAvroKeySource\" | \"classifyAvroRelationships\" | \"verifyAvroRelationshipClassification\" | \"recoverAvroRelationshipSource\" | \"classifyAvroNullability\" | \"verifyAvroNullabilityClassification\" | \"recoverAvroNullabilityBundle\" | \"classifyAvroFacets\" | \"verifyAvroFacetClassification\" | \"recoverAvroFacetSource\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"classifyAvroRecordType\"]",
+        "[\"api\",\".\",\"recoverAvroRecordTypeBundle\"]",
+        "[\"api\",\".\",\"classifyParquetRecordType\"]",
+        "[\"api\",\".\",\"classifyParquetRecord\"]",
+        "[\"api\",\".\",\"recoverParquetRecordBytes\"]",
+        "[\"api\",\".\",\"classifyParquetRelationships\"]",
+        "[\"api\",\".\",\"verifyParquetRelationshipClassification\"]",
+        "[\"api\",\".\",\"classifyParquetNullability\"]",
+        "[\"api\",\".\",\"verifyParquetNullabilityClassification\"]",
+        "[\"api\",\".\",\"recoverParquetNullabilityBytes\"]",
+        "[\"api\",\".\",\"classifyParquetField\"]",
+        "[\"api\",\".\",\"verifyParquetFieldClassification\"]",
+        "[\"api\",\".\",\"recoverParquetFieldBytes\"]",
+        "[\"api\",\".\",\"projectFacetsToParquet\"]",
+        "[\"api\",\".\",\"recoverFacetsFromParquet\"]",
+        "[\"api\",\".\",\"projectNullabilityToParquet\"]",
+        "[\"api\",\".\",\"recoverNullabilityFromParquet\"]",
+        "[\"api\",\".\",\"projectKeysToParquet\"]",
+        "[\"api\",\".\",\"verifyKeysParquetProjection\"]",
+        "[\"api\",\".\",\"recoverKeysParquetIdeal\"]",
+        "[\"api\",\".\",\"projectCardinalityToParquet\"]",
+        "[\"api\",\".\",\"recoverCardinalityFromParquet\"]",
+        "[\"api\",\".\",\"classifyParquetCardinality\"]",
+        "[\"api\",\".\",\"verifyParquetCardinalityClassification\"]",
+        "[\"api\",\".\",\"recoverParquetCardinalityBytes\"]",
+        "[\"api\",\".\",\"classifyParquetFacets\"]",
+        "[\"api\",\".\",\"verifyParquetFacetClassification\"]",
+        "[\"api\",\".\",\"recoverParquetFacetSource\"]",
+        "[\"api\",\".\",\"classifyParquetKeys\"]",
+        "[\"api\",\".\",\"verifyParquetKeyClassification\"]",
+        "[\"api\",\".\",\"recoverParquetKeySource\"]",
+        "[\"api\",\".\",\"recoverParquetRelationshipSource\"]",
+        "[\"api\",\".\",\"recoverParquetRecordTypeBytes\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "record-type",
+      "optional": false,
+      "type": "Readonly<Record<\"classifyAvroRecordType\" | \"recoverAvroRecordTypeBundle\" | \"classifyParquetRecordType\" | \"classifyParquetRecord\" | \"recoverParquetRecordBytes\" | \"classifyParquetRelationships\" | \"verifyParquetRelationshipClassification\" | \"classifyParquetNullability\" | \"verifyParquetNullabilityClassification\" | \"recoverParquetNullabilityBytes\" | \"classifyParquetField\" | \"verifyParquetFieldClassification\" | \"recoverParquetFieldBytes\" | \"projectFacetsToParquet\" | \"recoverFacetsFromParquet\" | \"projectNullabilityToParquet\" | \"recoverNullabilityFromParquet\" | \"projectKeysToParquet\" | \"verifyKeysParquetProjection\" | \"recoverKeysParquetIdeal\" | \"projectCardinalityToParquet\" | \"recoverCardinalityFromParquet\" | \"classifyParquetCardinality\" | \"verifyParquetCardinalityClassification\" | \"recoverParquetCardinalityBytes\" | \"classifyParquetFacets\" | \"verifyParquetFacetClassification\" | \"recoverParquetFacetSource\" | \"classifyParquetKeys\" | \"verifyParquetKeyClassification\" | \"recoverParquetKeySource\" | \"recoverParquetRelationshipSource\" | \"recoverParquetRecordTypeBytes\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectNullabilityToAvro\"]",
+        "[\"api\",\".\",\"recoverNullabilityFromAvro\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "nullability-avro-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectNullabilityToAvro\" | \"recoverNullabilityFromAvro\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectNullabilityToSqlServer\"]",
+        "[\"api\",\".\",\"recoverNullabilityFromSqlServer\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "nullability-sqlserver-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectNullabilityToSqlServer\" | \"recoverNullabilityFromSqlServer\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectFacetsToAvro\"]",
+        "[\"api\",\".\",\"recoverFacetsFromAvro\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "facets-avro-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectFacetsToAvro\" | \"recoverFacetsFromAvro\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectFacetsToSqlServer\"]",
+        "[\"api\",\".\",\"recoverFacetsFromSqlServer\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "facets-sqlserver-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectFacetsToSqlServer\" | \"recoverFacetsFromSqlServer\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectKeysToAvro\"]",
+        "[\"api\",\".\",\"verifyKeysAvroProjection\"]",
+        "[\"api\",\".\",\"recoverKeysAvroIdeal\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "key-avro-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectKeysToAvro\" | \"verifyKeysAvroProjection\" | \"recoverKeysAvroIdeal\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectKeysToSqlServer\"]",
+        "[\"api\",\".\",\"verifyKeysSqlServerProjection\"]",
+        "[\"api\",\".\",\"recoverKeysSqlServerIdeal\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "key-sqlserver-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectKeysToSqlServer\" | \"verifyKeysSqlServerProjection\" | \"recoverKeysSqlServerIdeal\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectRelationshipToAvro\"]",
+        "[\"api\",\".\",\"verifyRelationshipAvroProjection\"]",
+        "[\"api\",\".\",\"recoverRelationshipAvroIdeal\"]",
+        "[\"api\",\".\",\"recoverRelationshipAvroNative\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "avro-relationship-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectRelationshipToAvro\" | \"verifyRelationshipAvroProjection\" | \"recoverRelationshipAvroIdeal\" | \"recoverRelationshipAvroNative\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectRelationshipToSqlServer\"]",
+        "[\"api\",\".\",\"verifyRelationshipSqlServerProjection\"]",
+        "[\"api\",\".\",\"recoverRelationshipSqlServerIdeal\"]",
+        "[\"api\",\".\",\"recoverRelationshipSqlServerBinding\"]",
+        "[\"api\",\".\",\"recoverRelationshipSqlServerNative\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "relationship-sqlserver-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectRelationshipToSqlServer\" | \"verifyRelationshipSqlServerProjection\" | \"recoverRelationshipSqlServerIdeal\" | \"recoverRelationshipSqlServerBinding\" | \"recoverRelationshipSqlServerNative\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "relationship-postgresql-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"prepareProjectRelationshipsToPostgresql\" | \"completeProjectRelationshipsToPostgresql\" | \"blockProjectRelationshipsToPostgresql\" | \"verifyRelationshipsPostgresqlProjection\" | \"recoverRelationshipsPostgresqlIdeal\" | \"recoverRelationshipsPostgresqlNative\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectRelationshipToTableSpec\"]",
+        "[\"api\",\".\",\"verifyRelationshipTableSpecProjection\"]",
+        "[\"api\",\".\",\"recoverRelationshipTableSpecIdeal\"]",
+        "[\"api\",\".\",\"recoverRelationshipTableSpecNativeSources\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "tablespec-relationship-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectRelationshipToTableSpec\" | \"verifyRelationshipTableSpecProjection\" | \"recoverRelationshipTableSpecIdeal\" | \"recoverRelationshipTableSpecNativeSources\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectToTableSpecViaAvro\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "tablespec-via-avro-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectToTableSpecViaAvro\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectParquetToAvro\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "parquet-avro-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectParquetToAvro\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectArrowToSpark\"]",
+        "[\"api\",\".\",\"projectSparkToArrow\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "arrow-spark-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectArrowToSpark\" | \"projectSparkToArrow\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"importArrowFlatbufferModel\"]",
+        "[\"api\",\".\",\"inspectArrowFlatbufferModel\"]",
+        "[\"api\",\".\",\"exportArrowFlatbufferModel\"]",
+        "[\"api\",\".\",\"proposeArrowFlatbufferEdit\"]",
+        "[\"api\",\".\",\"decodeArrowFlatbuffer\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "arrow-flatbuffer-model",
+      "optional": false,
+      "type": "Readonly<Record<\"importArrowFlatbufferModel\" | \"inspectArrowFlatbufferModel\" | \"exportArrowFlatbufferModel\" | \"proposeArrowFlatbufferEdit\" | \"decodeArrowFlatbuffer\" | \"prepareArrowFlatbufferEncoding\" | \"verifyArrowFlatbufferEncoding\" | \"encodeArrowFlatbufferNative\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectAvroToTableSpec\"]",
+        "[\"api\",\".\",\"projectTableSpecToAvro\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "avro-tablespec-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectAvroToTableSpec\" | \"projectTableSpecToAvro\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectPostgresqlToAvro\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "postgresql-avro-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectPostgresqlToAvro\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectPostgresqlRowToJsonSchema\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "postgresql-json-schema-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectPostgresqlRowToJsonSchema\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectJsonSchemaToProtobuf\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "json-schema-protobuf-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectJsonSchemaToProtobuf\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectSqlServerToAvro\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "sqlserver-avro-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectSqlServerToAvro\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectSqlServerToDdl\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "sqlserver-ddl-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectSqlServerToDdl\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectBindingToIceberg\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "binding-iceberg-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectBindingToIceberg\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectBindingIndexesAgainstSqlServerPlan\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "binding-sqlserver-planned-index-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectBindingIndexesAgainstSqlServerPlan\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectBindingIndexesToSqlServer\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "binding-index-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"prepareBindingIndexesToPostgresql\" | \"completeBindingIndexesToPostgresql\" | \"projectBindingIndexesToSqlServer\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectBindingToParquet\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "binding-parquet-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectBindingToParquet\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectBindingToDelta\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "binding-delta-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectBindingToDelta\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectBindingTablesToSqlServer\"]",
+        "[\"api\",\".\",\"projectBindingTablesAndIndexesFromPlanToSqlServer\"]",
+        "[\"api\",\".\",\"projectBindingTablesAndIndexesToSqlServer\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "binding-sqlserver-tables",
+      "optional": false,
+      "type": "Readonly<Record<\"projectBindingTablesToSqlServer\" | \"projectBindingTablesAndIndexesFromPlanToSqlServer\" | \"projectBindingTablesAndIndexesToSqlServer\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectBindingToSqlServer\"]",
+        "[\"api\",\".\",\"verifyBindingSqlServerProjection\"]",
+        "[\"api\",\".\",\"recoverBindingSqlServerSources\"]",
+        "[\"api\",\".\",\"recoverBindingSqlServerNative\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "binding-sqlserver-physical",
+      "optional": false,
+      "type": "Readonly<Record<\"projectBindingToSqlServer\" | \"verifyBindingSqlServerProjection\" | \"recoverBindingSqlServerSources\" | \"recoverBindingSqlServerNative\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "avro",
+      "optional": false,
+      "type": "Readonly<Record<\"fields\" | \"import\" | \"export\" | \"inspect\" | \"inspectPayload\" | \"exportBundle\" | \"getNode\" | \"editNode\" | \"proposeNodeEdit\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectAvroToJsonSchema\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "avro-json-schema-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectAvroToJsonSchema\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"inspectDdd\"]",
+        "[\"api\",\".\",\"getDddDefinition\"]",
+        "[\"api\",\".\",\"editDddDefinition\"]",
+        "[\"api\",\".\",\"projectDddToJsonSchema\"]",
+        "[\"api\",\".\",\"dddFieldBinding\"]",
+        "[\"api\",\".\",\"projectDddEntitiesToGraphql\"]",
+        "[\"api\",\".\",\"projectDddToGraphql\"]",
+        "[\"api\",\".\",\"verifyDddGraphqlProjection\"]",
+        "[\"api\",\".\",\"recoverDddFromGraphql\"]",
+        "[\"api\",\".\",\"recoverDddGraphqlNative\"]",
+        "[\"api\",\".\",\"validateSqlServerRelationshipLayout\"]",
+        "[\"api\",\".\",\"validatePostgresqlRelationshipLayout\"]",
+        "[\"api\",\".\",\"verifyDddPostgresqlProjection\"]",
+        "[\"api\",\".\",\"recoverDddPostgresqlIdeal\"]",
+        "[\"api\",\".\",\"recoverDddPostgresqlNative\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "ddd-json-schema-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"inspectDdd\" | \"getDddDefinition\" | \"editDddDefinition\" | \"validateDddPayload\" | \"projectDddToJsonSchema\" | \"dddFieldBinding\" | \"projectDddEntitiesToGraphql\" | \"projectDddToGraphql\" | \"verifyDddGraphqlProjection\" | \"recoverDddFromGraphql\" | \"recoverDddGraphqlNative\" | \"validateSqlServerRelationshipLayout\" | \"validatePostgresqlRelationshipLayout\" | \"verifyDddPostgresqlProjection\" | \"recoverDddPostgresqlIdeal\" | \"recoverDddPostgresqlNative\" | \"prepareDddPostgresqlProjection\" | \"completeDddPostgresqlProjection\" | \"blockDddPostgresqlProjection\" | \"prepareDddPostgresqlTables\" | \"completeDddPostgresqlTables\" | \"blockDddPostgresqlTables\" | \"prepareDddPostgresqlTablesAndIndexes\" | \"completeDddPostgresqlTablesAndIndexes\" | \"prepareDddPostgresqlTablesAndIndexesCombined\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"projectOpenapiToJsonSchema\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "openapi-json-schema-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"projectOpenapiToJsonSchema\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "typespec-smithy-jsonschema-projection",
+      "optional": false,
+      "type": "Readonly<Record<\"prepareTypeSpecJsonSchema\" | \"completeTypeSpecJsonSchema\" | \"prepareSmithyJsonSchema\" | \"completeSmithyJsonSchema\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "openapi",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"validate\" | \"inspectPayload\" | \"exportBundle\" | \"getNode\" | \"lookupResource\" | \"extractSchema\" | \"indexSchemas\" | \"resolveSchemaReference\" | \"resolveDynamicReference\" | \"resolveObjectReference\" | \"edit\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "linkml",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"inspect\" | \"inspectPayload\" | \"getNode\" | \"editNode\" | \"classSlots\" | \"slotValues\" | \"importContext\" | \"importMerge\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "odcs",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"relationships\" | \"inspect\" | \"inspectPayload\" | \"getNode\" | \"editNode\" | \"resolveReference\" | \"renameElement\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"importTableSpec\"]",
+        "[\"api\",\".\",\"exportTableSpec\"]",
+        "[\"api\",\".\",\"inspectTableSpec\"]",
+        "[\"api\",\".\",\"getTableSpecColumn\"]",
+        "[\"api\",\".\",\"getTableSpecTable\"]",
+        "[\"api\",\".\",\"editTableSpecColumn\"]",
+        "[\"api\",\".\",\"editTableSpecTable\"]",
+        "[\"api\",\".\",\"importTableSpecBundle\"]",
+        "[\"api\",\".\",\"exportTableSpecBundle\"]",
+        "[\"api\",\".\",\"projectFieldToTableSpec\"]",
+        "[\"api\",\".\",\"recoverFieldFromTableSpec\"]",
+        "[\"api\",\".\",\"projectRecordToTableSpec\"]",
+        "[\"api\",\".\",\"recoverRecordFromTableSpec\"]",
+        "[\"api\",\".\",\"projectCardinalityToTableSpec\"]",
+        "[\"api\",\".\",\"recoverCardinalityFromTableSpec\"]",
+        "[\"api\",\".\",\"projectNullabilityToTableSpec\"]",
+        "[\"api\",\".\",\"recoverNullabilityFromTableSpec\"]",
+        "[\"api\",\".\",\"classifyTableSpecField\"]",
+        "[\"api\",\".\",\"verifyTableSpecFieldClassification\"]",
+        "[\"api\",\".\",\"classifyTableSpecRecord\"]",
+        "[\"api\",\".\",\"verifyTableSpecRecordClassification\"]",
+        "[\"api\",\".\",\"classifyTableSpecCardinality\"]",
+        "[\"api\",\".\",\"verifyTableSpecCardinalityClassification\"]",
+        "[\"api\",\".\",\"recoverTableSpecCardinalitySource\"]",
+        "[\"api\",\".\",\"classifyTableSpecNullability\"]",
+        "[\"api\",\".\",\"verifyTableSpecNullabilityClassification\"]",
+        "[\"api\",\".\",\"recoverTableSpecNullabilitySource\"]",
+        "[\"api\",\".\",\"classifyTableSpecKeys\"]",
+        "[\"api\",\".\",\"verifyTableSpecKeyClassification\"]",
+        "[\"api\",\".\",\"recoverTableSpecKeySource\"]",
+        "[\"api\",\".\",\"projectKeysToTableSpec\"]",
+        "[\"api\",\".\",\"verifyKeysTableSpecProjection\"]",
+        "[\"api\",\".\",\"recoverKeysTableSpecIdeal\"]",
+        "[\"api\",\".\",\"classifyTableSpecFacets\"]",
+        "[\"api\",\".\",\"verifyTableSpecFacetClassification\"]",
+        "[\"api\",\".\",\"recoverTableSpecFacetSource\"]",
+        "[\"api\",\".\",\"projectFacetsToTableSpec\"]",
+        "[\"api\",\".\",\"recoverFacetsFromTableSpec\"]",
+        "[\"api\",\".\",\"classifyTableSpecRelationships\"]",
+        "[\"api\",\".\",\"verifyTableSpecRelationshipClassification\"]",
+        "[\"api\",\".\",\"recoverTableSpecRelationshipSource\"]",
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "tablespec",
+      "optional": false,
+      "type": "Readonly<Record<\"importTableSpec\" | \"exportTableSpec\" | \"inspectTableSpec\" | \"getTableSpecColumn\" | \"getTableSpecTable\" | \"editTableSpecColumn\" | \"editTableSpecTable\" | \"importTableSpecBundle\" | \"exportTableSpecBundle\" | \"projectFieldToTableSpec\" | \"recoverFieldFromTableSpec\" | \"projectRecordToTableSpec\" | \"recoverRecordFromTableSpec\" | \"projectCardinalityToTableSpec\" | \"recoverCardinalityFromTableSpec\" | \"projectNullabilityToTableSpec\" | \"recoverNullabilityFromTableSpec\" | \"classifyTableSpecField\" | \"verifyTableSpecFieldClassification\" | \"classifyTableSpecRecord\" | \"verifyTableSpecRecordClassification\" | \"classifyTableSpecCardinality\" | \"verifyTableSpecCardinalityClassification\" | \"recoverTableSpecCardinalitySource\" | \"classifyTableSpecNullability\" | \"verifyTableSpecNullabilityClassification\" | \"recoverTableSpecNullabilitySource\" | \"classifyTableSpecKeys\" | \"verifyTableSpecKeyClassification\" | \"recoverTableSpecKeySource\" | \"projectKeysToTableSpec\" | \"verifyKeysTableSpecProjection\" | \"recoverKeysTableSpecIdeal\" | \"classifyTableSpecFacets\" | \"verifyTableSpecFacetClassification\" | \"recoverTableSpecFacetSource\" | \"projectFacetsToTableSpec\" | \"recoverFacetsFromTableSpec\" | \"classifyTableSpecRelationships\" | \"verifyTableSpecRelationshipClassification\" | \"recoverTableSpecRelationshipSource\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "jsonld",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"flatten\" | \"frame\" | \"compact\" | \"validate\" | \"inspectPayload\" | \"getNode\" | \"editNode\" | \"expand\" | \"toRdf\" | \"fromRdf\" | \"fromGeneralizedRdf\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "postgresql",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"columns\" | \"dependencies\" | \"reconstruction\" | \"inspect\" | \"inspectPayload\" | \"getNode\" | \"edit\" | \"prepareFacetsProjection\" | \"completeFacetsProjection\" | \"prepareFacetsRecovery\" | \"verifyFacetsProjection\" | \"recoverFacetsProjection\" | \"projectFacetsWithNativeBackend\" | \"recoverFacetsWithNativeBackend\" | \"findRelation\" | \"proposeCatalogEdit\" | \"facetCatalog\" | \"cardinalityCatalog\" | \"cardinalityType\" | \"cardinalityCorrelate\" | \"keyCatalog\" | \"prepareKeyCorrelation\" | \"keyCorrelate\" | \"facetCorrelate\" | \"classifyComposite\" | \"verifyCompositeClassification\" | \"recoverCompositeCapture\" | \"getDdlDeclarations\" | \"prepareDdlParserRequest\" | \"classifyDdlRecord\" | \"verifyDdlKinds\" | \"recoverDdlKinds\" | \"prepareFieldProjection\" | \"completeFieldProjection\" | \"recoverFieldProjection\" | \"prepareRecordProjection\" | \"completeRecordProjection\" | \"recoverRecordProjection\" | \"prepareFieldRecovery\" | \"prepareCardinalityProjection\" | \"completeCardinalityProjection\" | \"prepareCardinalityRecovery\" | \"recoverCardinalityProjection\" | \"projectFieldWithNativeBackend\" | \"recoverFieldWithNativeBackend\" | \"projectRecordWithNativeBackend\" | \"recoverRecordWithNativeBackend\" | \"projectCardinalityWithNativeBackend\" | \"recoverCardinalityWithNativeBackend\" | \"prepareNullabilityProjection\" | \"completeNullabilityProjection\" | \"prepareNullabilityRecovery\" | \"recoverNullabilityProjection\" | \"prepareKeysProjection\" | \"completeKeysProjection\" | \"prepareKeysRecovery\" | \"verifyKeysProjection\" | \"recoverKeysProjection\" | \"projectKeysWithNativeBackend\" | \"recoverKeysWithNativeBackend\" | \"projectNullabilityWithNativeBackend\" | \"recoverNullabilityWithNativeBackend\" | \"prepareRecordRecovery\" | \"classifyField\" | \"verifyFieldClassification\" | \"recoverFieldCapture\" | \"classifyRecord\" | \"verifyRecordClassification\" | \"recoverRecordCapture\" | \"classifyCardinality\" | \"verifyCardinalityClassification\" | \"recoverCardinalitySource\" | \"classifyNullability\" | \"verifyNullabilityClassification\" | \"recoverNullabilitySource\" | \"prepareKeyParserRequests\" | \"classifyKeys\" | \"verifyKeyClassification\" | \"recoverKeySource\" | \"prepareFacetParserRequests\" | \"classifyFacets\" | \"verifyFacetClassification\" | \"recoverFacetSource\" | \"prepareRelationshipParserRequests\" | \"classifyRelationships\" | \"verifyRelationshipClassification\" | \"recoverRelationshipSource\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "sqlserver",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"columns\" | \"indexes\" | \"constraints\" | \"inspect\" | \"inspectPayload\" | \"edit\" | \"classifyField\" | \"verifyFieldClassification\" | \"recoverFieldCapture\" | \"classifyRecord\" | \"verifyRecordClassification\" | \"recoverRecordCapture\" | \"classifyCardinality\" | \"verifyCardinalityClassification\" | \"recoverCardinalitySource\" | \"classifyNullability\" | \"verifyNullabilityClassification\" | \"recoverNullabilitySource\" | \"classifyKeys\" | \"verifyKeyClassification\" | \"recoverKeySource\" | \"classifyFacets\" | \"verifyFacetClassification\" | \"recoverFacetSource\" | \"classifyRelationships\" | \"verifyRelationshipClassification\" | \"recoverRelationshipSource\" | \"facetType\" | \"facetPredicate\" | \"facetConstraints\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "shacl",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"validate\" | \"inspect\" | \"inspectPayload\" | \"getQuads\" | \"editQuad\" | \"getPropertyPath\" | \"evaluatePropertyPath\" | \"getTargetNodes\" | \"getShapeMetadata\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "owl",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"inspect\" | \"inspectPayload\" | \"getQuads\" | \"editQuad\" | \"getOntologyHeaders\" | \"getExpressionView\" | \"getListAxioms\" | \"getSpecialAxioms\" | \"getAxiomAnnotations\" | \"getDeclarations\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "delta-ddl",
+      "optional": false,
+      "type": "Readonly<Record<\"inspectPayload\" | \"defineTable\" | \"generate\" | \"generateBundle\" | \"realizeSparkDelta4\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "delta-parquet",
+      "optional": false,
+      "type": "Readonly<Record<\"reconcileCheckpoint\" | \"projectActions\" | \"reconcileMultipart\", NativeFamilyOperation>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"NativeFamilyOperation\"]"
+      ],
+      "name": "spark",
+      "optional": false,
+      "type": "Readonly<Record<\"import\" | \"export\" | \"inspect\" | \"inspectPayload\" | \"getNode\" | \"editNode\" | \"renameField\", NativeFamilyOperation>>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "NativeFamilyOperations is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "NativeFamilyOperations"
+}

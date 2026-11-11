@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"StructuredClassificationInspection\"]"
       ],
-      "name": "input",
+      "name": "report",
       "optional": false,
       "type": "StructuredClassificationInspection"
     },
@@ -24,9 +24,9 @@
       "type": "PostgresqlBackend | undefined"
     }
   ],
-  "purpose": "verifyStructuredClassificationInspection accepts input, backend and returns Promise<StructuredClassificationInspection>.",
+  "purpose": "verifyStructuredClassificationInspection accepts report, backend and returns Promise<StructuredClassificationInspection>.",
   "related": [],
   "returns": "Promise<StructuredClassificationInspection>",
   "task": "Other APIs",
-  "type": "(input: StructuredClassificationInspection, backend?: PostgresqlBackend) => Promise<StructuredClassificationInspection>"
+  "type": "(report: StructuredClassificationInspection, backend?: PostgresqlBackend) => Promise<StructuredClassificationInspection>"
 }

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreNullabilityDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"NullabilitySqlServerRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "NullabilitySqlServerRequest"
     }
   ],
-  "purpose": "projectNullabilityToSqlServer accepts input, options and returns NullabilitySqlServerProjection.",
+  "purpose": "projectNullabilityToSqlServer accepts author, request and returns NullabilitySqlServerProjection.",
   "related": [],
   "returns": "NullabilitySqlServerProjection",
   "task": "Import and export",
-  "type": "(input: CoreNullabilityDeclaration, options: NullabilitySqlServerRequest) => NullabilitySqlServerProjection"
+  "type": "(author: CoreNullabilityDeclaration, request: NullabilitySqlServerRequest) => NullabilitySqlServerProjection"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11037,
-        "line": 30,
-        "path": "src/core-ideals/relationship-avro-projection.ts",
-        "sha256": "697e300741ea2cd80f1e8f14fc45d618f678161ce3a88fc6e388bbbaa8887148"
+        "bytes": 84809,
+        "line": 243,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectRelationshipToAvro",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, authorInput: CoreRelationshipDeclaration, options: RelationshipAvroRequest): RelationshipAvroProjection"
+      "(source: Document, author: CoreRelationshipDeclaration, request: RelationshipAvroRequest): RelationshipAvroProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectRelationshipToAvro\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11037,
-      "line": 30,
-      "path": "src/core-ideals/relationship-avro-projection.ts",
-      "sha256": "697e300741ea2cd80f1e8f14fc45d618f678161ce3a88fc6e388bbbaa8887148"
+      "bytes": 84809,
+      "line": 243,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Explicit reference-value lowering with retained authored meaning; no native identity inference.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectRelationshipToAvro"
 }

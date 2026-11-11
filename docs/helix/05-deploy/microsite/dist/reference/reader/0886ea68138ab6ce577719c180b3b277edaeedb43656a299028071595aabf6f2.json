@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"SecurityAuthorityGuardSession\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "beginRead",
+      "optional": false,
+      "type": "() => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "beginChange",
+      "optional": false,
+      "type": "(generation: string) => number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "completeChange",
+      "optional": false,
+      "type": "(token: number, committed: boolean) => void"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "close",
+      "optional": false,
+      "type": "() => void"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityAuthorityGuardSession is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityAuthorityGuardSession"
+}

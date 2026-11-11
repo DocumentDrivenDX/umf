@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"queryPostgresqlCatalogDependencies\"]",
   "kind": "Function",
   "members": [],
@@ -16,17 +16,15 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"PostgresqlCatalogObjectIdentity\"]"
-      ],
+      "links": [],
       "name": "filter",
       "optional": true,
-      "type": "{ side: \"dependent\" | \"referenced\"; object: PostgresqlCatalogObjectIdentity; } | undefined"
+      "type": "Filter | undefined"
     }
   ],
-  "purpose": "Observed pg_depend edges only. Missing coverage is distinct from no matches.\nNative dependency kinds and multiplicity are retained; this is not a DDL plan.",
+  "purpose": "queryPostgresqlCatalogDependencies accepts document, filter and returns { available: boolean; complete: false; state: \"captured\" | \"modified\"; edges: NativeJson[]; }.",
   "related": [],
   "returns": "{ available: boolean; complete: false; state: \"captured\" | \"modified\"; edges: NativeJson[]; }",
   "task": "Other APIs",
-  "type": "(document: Document, filter?: { side: \"dependent\" | \"referenced\"; object: PostgresqlCatalogObjectIdentity; }) => { available: boolean; complete: false; state: \"captured\" | \"modified\"; edges: NativeJson[]; }"
+  "type": "(document: Document, filter?: Filter) => { available: boolean; complete: false; state: \"captured\" | \"modified\"; edges: NativeJson[]; }"
 }

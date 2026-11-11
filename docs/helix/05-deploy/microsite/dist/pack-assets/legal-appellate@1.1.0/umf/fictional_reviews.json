@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "table_name": "fictional_reviews",
+  "description": "CONTRACT-058 bounded appellate fixture: fictional_reviews.",
+  "columns": [
+    {
+      "name": "review_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "fictional_reviews.review_id; preserve source scope and qualification."
+    },
+    {
+      "name": "fictional_case",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "fictional_reviews.fictional_case; preserve source scope and qualification."
+    },
+    {
+      "name": "fictional_party",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "fictional_reviews.fictional_party; preserve source scope and qualification."
+    },
+    {
+      "name": "qualification",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "fictional_reviews.qualification; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "review_id"
+  ]
+}

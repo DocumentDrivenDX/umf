@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": false,
+  "authored": true,
   "id": "[\"api\",\".\",\"ProtobufSourceEmitter\"]",
   "kind": "Interface",
   "members": [
@@ -13,7 +13,7 @@
     }
   ],
   "parameters": [],
-  "purpose": "ProtobufSourceEmitter is a interface in Other APIs. Its exact structure is documented below.",
+  "purpose": "Explicit source emitter; current descriptor bytes are passed as the sole argument.",
   "related": [],
   "returns": "",
   "task": "Other APIs",

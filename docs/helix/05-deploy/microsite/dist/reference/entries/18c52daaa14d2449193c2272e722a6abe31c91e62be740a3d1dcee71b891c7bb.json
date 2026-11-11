@@ -2,30 +2,32 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9533,
-        "line": 14,
-        "path": "src/model/evolution.ts",
-        "sha256": "9aecd37678f89343c6330bd5e075f2ba1dc5da5980948c14f0f0c156cd5e843c"
+        "bytes": 349,
+        "line": 1,
+        "path": "spec/core/evolution-policy.schema.json",
+        "sha256": "356de4ee53a9725a06484ebc2ecdcd61a37da7950db4e8654665665416af1807"
       }
     ],
     "entrypoint": ".",
     "exportName": "coreEvolutionPolicySchema",
     "runtime": "unassessed",
     "signatureText": [
-      "coreEvolutionPolicySchema=policyInput"
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:evolution-policy:1.0.0\",\n  \"title\": \"Core evolution preservation policy\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"profile\"\n  ],\n  \"properties\": {\n    \"profile\": {\n      \"const\": \"core-0.8-absent-string-additions/0.1\"\n    }\n  }\n}\n"
     ]
   },
   "id": "[\"api\",\".\",\"coreEvolutionPolicySchema\"]",
   "kind": "api",
-  "links": [],
+  "links": [
+    "[\"schema\",\"spec/core/evolution-policy.schema.json\",\"\"]"
+  ],
   "sources": [
     {
-      "bytes": 9533,
-      "line": 14,
-      "path": "src/model/evolution.ts",
-      "sha256": "9aecd37678f89343c6330bd5e075f2ba1dc5da5980948c14f0f0c156cd5e843c"
+      "bytes": 349,
+      "line": 1,
+      "path": "spec/core/evolution-policy.schema.json",
+      "sha256": "356de4ee53a9725a06484ebc2ecdcd61a37da7950db4e8654665665416af1807"
     }
   ],
-  "summary": "Public export · src/model/evolution.ts",
+  "summary": "Public export · spec/core/evolution-policy.schema.json",
   "title": "coreEvolutionPolicySchema"
 }

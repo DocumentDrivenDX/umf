@@ -33,5 +33,5 @@
   "related": [],
   "returns": "LinkmlSlotValuesReport",
   "task": "Inspect and select",
-  "type": "(document: Document, className: string, slotName: string) => LinkmlSlotValuesReport"
+  "type": "(document: Parameters<InspectLinkmlSlotValues>[0], className: string, slotName: string) => LinkmlSlotValuesReport"
 }

@@ -10,23 +10,23 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyIdentity\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyIdentity\"]"
       ],
-      "name": "identityInput",
+      "name": "identity",
       "optional": false,
       "type": "CoreKeyIdentity"
     }
   ],
-  "purpose": "lookupCoreKey accepts input, identityInput and returns CoreKeyLookup.",
+  "purpose": "lookupCoreKey accepts source, identity and returns CoreKeyLookup.",
   "related": [],
   "returns": "CoreKeyLookup",
   "task": "Other APIs",
-  "type": "(input: Document, identityInput: CoreKeyIdentity) => CoreKeyLookup"
+  "type": "(source: Document, identity: CoreKeyIdentity) => CoreKeyLookup"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyTableSpecRelationshipClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"TableSpecRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "TableSpecRelationshipClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Check retained input consistency, not authenticity or runtime enforcement.",
+  "purpose": "verifyTableSpecRelationshipClassification accepts receipt, current and returns TableSpecRelationshipClassification.",
   "related": [],
   "returns": "TableSpecRelationshipClassification",
   "task": "Other APIs",
-  "type": "(input: TableSpecRelationshipClassification, current: Document) => TableSpecRelationshipClassification"
+  "type": "(receipt: TableSpecRelationshipClassification, current: Document) => TableSpecRelationshipClassification"
 }

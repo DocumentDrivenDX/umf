@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"ParquetRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "ParquetRelationshipClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "verifyParquetRelationshipClassification accepts input, current and returns ParquetRelationshipClassification.",
+  "purpose": "verifyParquetRelationshipClassification accepts receipt, current and returns ParquetRelationshipClassification.",
   "related": [],
   "returns": "ParquetRelationshipClassification",
   "task": "Other APIs",
-  "type": "(input: ParquetRelationshipClassification, current: Document) => ParquetRelationshipClassification"
+  "type": "(receipt: ParquetRelationshipClassification, current: Document) => ParquetRelationshipClassification"
 }

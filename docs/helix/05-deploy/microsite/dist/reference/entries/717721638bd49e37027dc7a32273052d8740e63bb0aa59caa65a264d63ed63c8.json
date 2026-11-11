@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 18737,
-        "line": 36,
-        "path": "src/model/dataset-values.ts",
-        "sha256": "29f8dfe12f7e57d59320c0d31c78d1439355eac1c809924c80990a805e25478f"
+        "bytes": 84809,
+        "line": 383,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateCoreDatasetValues",
     "runtime": "unassessed",
     "signatureText": [
-      "(sourceInput: Document, inputInput: CoreDatasetInput): CoreDatasetValueCheck"
+      "(source: Document, input: CoreDatasetInput): CoreDatasetValueCheck"
     ]
   },
   "id": "[\"api\",\".\",\"validateCoreDatasetValues\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 18737,
-      "line": 36,
-      "path": "src/model/dataset-values.ts",
-      "sha256": "29f8dfe12f7e57d59320c0d31c78d1439355eac1c809924c80990a805e25478f"
+      "bytes": 84809,
+      "line": 383,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Finite supplied dataset only; no global/native coverage or execution authority.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "validateCoreDatasetValues"
 }

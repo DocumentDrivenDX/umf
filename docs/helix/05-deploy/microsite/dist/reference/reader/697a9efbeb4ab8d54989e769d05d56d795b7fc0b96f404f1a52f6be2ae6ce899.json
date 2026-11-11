@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PackToolsRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf.pack-tools/1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "pack",
+      "optional": false,
+      "type": "{ id: string; version: string; text: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PackToolsSource\"]"
+      ],
+      "name": "sources",
+      "optional": false,
+      "type": "PackToolsSource[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ schema: string; package: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PackToolsTarget\"]"
+      ],
+      "name": "targets",
+      "optional": false,
+      "type": "PackToolsTarget[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PackToolsRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PackToolsRequest"
+}

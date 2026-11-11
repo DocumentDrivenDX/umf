@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 1962,
-        "line": 16,
-        "path": "src/model/record-values.ts",
-        "sha256": "8c26c0b32953d370b72a7aa7a0a089a35035c5cba0a54ebc9908da2537233be0"
+        "bytes": 84809,
+        "line": 401,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateCoreRecordValues",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identityInput: CoreRecordValueIdentity, valuesInput: CoreRecordFieldValue[]): CoreRecordValueCheck"
+      "(source: unknown, identity: CoreRecordValueIdentity, values: CoreRecordFieldValue[]): CoreRecordValueCheck"
     ]
   },
   "id": "[\"api\",\".\",\"validateCoreRecordValues\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 1962,
-      "line": 16,
-      "path": "src/model/record-values.ts",
-      "sha256": "8c26c0b32953d370b72a7aa7a0a089a35035c5cba0a54ebc9908da2537233be0"
+      "bytes": 84809,
+      "line": 401,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Logical membership/presence/field checks, never native rows, defaults or dataset uniqueness.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "validateCoreRecordValues"
 }

@@ -9,6 +9,7 @@
         ],
         "evidence": [
           "tests/protobuf/descriptor.test.ts",
+          "tests/protobuf/schema.test.ts",
           "tests/protobuf/source.test.ts",
           "tests/protobuf/emission.test.ts",
           "tests/protobuf/behavior.test.ts",
@@ -535,6 +536,104 @@
             ],
             "type": "object"
           },
+          "google.protobuf.FeatureSet.VisibilityFeature": {
+            "properties": {
+              "fields": {
+                "properties": {},
+                "type": "object"
+              },
+              "type": {
+                "const": "google.protobuf.FeatureSet.VisibilityFeature"
+              },
+              "unknown": {
+                "items": {
+                  "$ref": "#/$defs/unknown"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "type",
+              "fields",
+              "unknown"
+            ],
+            "type": "object"
+          },
+          "google.protobuf.FeatureSetDefaults": {
+            "properties": {
+              "fields": {
+                "properties": {
+                  "defaults": {
+                    "items": {
+                      "$ref": "#/$defs/google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault"
+                    },
+                    "type": "array"
+                  },
+                  "maximum_edition": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "minimum_edition": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  }
+                },
+                "type": "object"
+              },
+              "type": {
+                "const": "google.protobuf.FeatureSetDefaults"
+              },
+              "unknown": {
+                "items": {
+                  "$ref": "#/$defs/unknown"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "type",
+              "fields",
+              "unknown"
+            ],
+            "type": "object"
+          },
+          "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault": {
+            "properties": {
+              "fields": {
+                "properties": {
+                  "edition": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "fixed_features": {
+                    "$ref": "#/$defs/google.protobuf.FeatureSet"
+                  },
+                  "overridable_features": {
+                    "$ref": "#/$defs/google.protobuf.FeatureSet"
+                  }
+                },
+                "type": "object"
+              },
+              "type": {
+                "const": "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault"
+              },
+              "unknown": {
+                "items": {
+                  "$ref": "#/$defs/unknown"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "type",
+              "fields",
+              "unknown"
+            ],
+            "type": "object"
+          },
           "google.protobuf.FieldDescriptorProto": {
             "properties": {
               "fields": {
@@ -963,6 +1062,86 @@
               },
               "type": {
                 "const": "google.protobuf.FileOptions"
+              },
+              "unknown": {
+                "items": {
+                  "$ref": "#/$defs/unknown"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "type",
+              "fields",
+              "unknown"
+            ],
+            "type": "object"
+          },
+          "google.protobuf.GeneratedCodeInfo": {
+            "properties": {
+              "fields": {
+                "properties": {
+                  "annotation": {
+                    "items": {
+                      "$ref": "#/$defs/google.protobuf.GeneratedCodeInfo.Annotation"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              },
+              "type": {
+                "const": "google.protobuf.GeneratedCodeInfo"
+              },
+              "unknown": {
+                "items": {
+                  "$ref": "#/$defs/unknown"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "type",
+              "fields",
+              "unknown"
+            ],
+            "type": "object"
+          },
+          "google.protobuf.GeneratedCodeInfo.Annotation": {
+            "properties": {
+              "fields": {
+                "properties": {
+                  "begin": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "end": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "path": {
+                    "items": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "type": "array"
+                  },
+                  "semantic": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "source_file": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": {
+                "const": "google.protobuf.GeneratedCodeInfo.Annotation"
               },
               "unknown": {
                 "items": {
@@ -1527,9 +1706,9 @@
   ],
   "sources": [
     {
-      "bytes": 40986,
+      "bytes": 45748,
       "path": "spec/extensions/protobuf/package.json",
-      "sha256": "ae68a6756e0e7901578ef93f13b6544c4eb2af011a3de8ed2e4d11ea3382f0cf"
+      "sha256": "98e148ae4664a3ad42b1ff94cd0e939fbfe1dab17fa83956fe5e676191af9a96"
     }
   ],
   "summary": "Native Protobuf descriptors with explicit presence and retained unknown wire fields",

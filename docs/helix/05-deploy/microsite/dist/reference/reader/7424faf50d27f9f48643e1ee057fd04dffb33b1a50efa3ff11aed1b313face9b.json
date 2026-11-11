@@ -7,44 +7,36 @@
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityPolicy\"]"
-      ],
+      "links": [],
       "name": "policy",
       "optional": false,
-      "type": "SecurityPolicy"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityResolution\"]"
-      ],
+      "links": [],
       "name": "resolution",
       "optional": false,
-      "type": "SecurityResolution"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityFactCut\"]"
-      ],
+      "links": [],
       "name": "cut",
       "optional": false,
-      "type": "SecurityFactCut"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityEvaluationRequest\"]"
-      ],
+      "links": [],
       "name": "request",
       "optional": false,
-      "type": "SecurityEvaluationRequest"
+      "type": "unknown"
     }
   ],
   "purpose": "evaluateSecurityCollection accepts policy, resolution, cut, request and returns SecurityCollectionResult.",
   "related": [],
   "returns": "SecurityCollectionResult",
   "task": "Other APIs",
-  "type": "(policy: SecurityPolicy, resolution: SecurityResolution, cut: SecurityFactCut, request: SecurityEvaluationRequest) => SecurityCollectionResult"
+  "type": "(policy: unknown, resolution: unknown, cut: unknown, request: unknown) => SecurityCollectionResult"
 }

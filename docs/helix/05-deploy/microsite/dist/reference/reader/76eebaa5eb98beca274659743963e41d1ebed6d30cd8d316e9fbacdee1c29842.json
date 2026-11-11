@@ -1,0 +1,117 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventoryMigrationOptions\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"umf.table-inventory-migration-options/0.1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryTableIntent\"]"
+      ],
+      "name": "tableIntents",
+      "optional": false,
+      "type": "TableInventoryTableIntent[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "backfills",
+      "optional": false,
+      "type": "{ table: string; column: TableInventoryReference; operation: string; scopedRows: true; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "defaultChanges",
+      "optional": false,
+      "type": "{ table: string; field: TableInventoryReference; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryConversion\"]"
+      ],
+      "name": "conversions",
+      "optional": false,
+      "type": "TableInventoryConversion[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "concurrentIndexes",
+      "optional": false,
+      "type": "{ table: string; index: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "validations",
+      "optional": false,
+      "type": "{ table: string; constraint: string; kind: \"check\" | \"foreignKey\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryMigrationMarker\"]"
+      ],
+      "name": "reviewedChanges",
+      "optional": false,
+      "type": "TableInventoryMigrationMarker[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "seedSets",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "retiredSeedSets",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryRetirement\"]"
+      ],
+      "name": "retirements",
+      "optional": false,
+      "type": "TableInventoryRetirement[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryRestoration\"]"
+      ],
+      "name": "restorations",
+      "optional": false,
+      "type": "TableInventoryRestoration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryArchiveSource\"]"
+      ],
+      "name": "archiveSources",
+      "optional": false,
+      "type": "TableInventoryArchiveSource[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableInventoryMigrationOptions is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventoryMigrationOptions"
+}

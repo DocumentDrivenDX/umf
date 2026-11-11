@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10583,
-        "line": 87,
-        "path": "src/core-ideals/nullability-tablespec.ts",
-        "sha256": "28ab733e3f40d8894194be2b636c3fceb2d98e7525034445f08632cff07392f8"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyTableSpecNullabilityClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: TableSpecNullabilityClassification, current: Document): TableSpecNullabilityClassification"
+      "(receipt: TableSpecNullabilityClassification, current: Document): TableSpecNullabilityClassification"
     ]
   },
   "id": "[\"api\",\".\",\"verifyTableSpecNullabilityClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10583,
-      "line": 87,
-      "path": "src/core-ideals/nullability-tablespec.ts",
-      "sha256": "28ab733e3f40d8894194be2b636c3fceb2d98e7525034445f08632cff07392f8"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyTableSpecNullabilityClassification"
 }

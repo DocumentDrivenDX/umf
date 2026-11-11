@@ -1,0 +1,941 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-discovery-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/ref"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-request-0.1.schema.json\",\"\"]",
+        "target": "urn:umf:g10:proposal:request-options-history#/$defs/conversion/properties/recovery/oneOf/1"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-request-0.1.schema.json\",\"\"]",
+        "target": "urn:umf:g10:proposal:request-options-history#/$defs/conversion/properties/recovery/oneOf/2"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-discovery-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/ref"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-discovery-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/ref"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-discovery-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/conversion"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-request-0.1.schema.json\",\"\"]",
+        "target": "urn:umf:g10:proposal:request-options-history#/$defs/retirement"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-request-0.1.schema.json\",\"\"]",
+        "target": "urn:umf:g10:proposal:request-options-history#/$defs/restoration"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-request-0.1.schema.json\",\"\"]",
+        "target": "urn:umf:g10:proposal:request-options-history#/$defs/archiveSource"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-discovery-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/createIntentCount"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-discovery-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/removeIntentCount"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/tables/inventory-discovery-0.1.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "conversion": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "field": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/ref"
+                        }
+                      }
+                    },
+                    "invalid": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "abort"
+                        }
+                      }
+                    },
+                    "nulls": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "preserve"
+                        }
+                      }
+                    },
+                    "recipe": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": false
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "enum": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "numeric-exact"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "numeric-rescale"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "text-date"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "date-text"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "text-instant"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "instant-text"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "date-instant"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "instant-date"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "text-uuid"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "uuid-text"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "text-boolean"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "boolean-text"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            },
+                            "parameters": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "version": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "umf.conversion-recipe/0.1"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "version"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "parameters"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "recovery": {
+                      "kind": "object",
+                      "members": {
+                        "oneOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "mode": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "irreversible"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "mode"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:g10:proposal:request-options-history#/$defs/conversion/properties/recovery/oneOf/1"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:g10:proposal:request-options-history#/$defs/conversion/properties/recovery/oneOf/2"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "table": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "table"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "field"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "recipe"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "nulls"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "invalid"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "recovery"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "createIntentCount": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "kind": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "create"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "kind"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "ref": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "module"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "element"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "removeIntentCount": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "kind": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "remove"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "kind"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:table-inventory-discovery:0.1"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "allOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "tableIntents": {
+                      "kind": "object",
+                      "members": {
+                        "contains": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/createIntentCount"
+                            }
+                          }
+                        },
+                        "maxContains": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minContains": {
+                          "kind": "number",
+                          "value": "0"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "tableIntents": {
+                      "kind": "object",
+                      "members": {
+                        "contains": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/removeIntentCount"
+                            }
+                          }
+                        },
+                        "maxContains": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minContains": {
+                          "kind": "number",
+                          "value": "0"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "archiveSources": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "$ref": {
+                      "kind": "string",
+                      "value": "urn:umf:g10:proposal:request-options-history#/$defs/archiveSource"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "64"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "conversions": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "$ref": {
+                      "kind": "string",
+                      "value": "#/$defs/conversion"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "256"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "restorations": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "$ref": {
+                      "kind": "string",
+                      "value": "urn:umf:g10:proposal:request-options-history#/$defs/restoration"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "256"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "retiredSeedSets": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "maxLength": {
+                      "kind": "number",
+                      "value": "256"
+                    },
+                    "minLength": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "256"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                },
+                "uniqueItems": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            },
+            "retirements": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "$ref": {
+                      "kind": "string",
+                      "value": "urn:umf:g10:proposal:request-options-history#/$defs/retirement"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "256"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "tableIntents": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "oneOf": {
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "kind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "create"
+                                    }
+                                  }
+                                },
+                                "record": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/ref"
+                                    }
+                                  }
+                                },
+                                "table": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maxLength": {
+                                      "kind": "number",
+                                      "value": "256"
+                                    },
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "kind"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "table"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "record"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "disposition": {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "boolean",
+                                      "value": false
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "mode": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "irreversible-purge"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "mode"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "kind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "remove"
+                                    }
+                                  }
+                                },
+                                "record": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/ref"
+                                    }
+                                  }
+                                },
+                                "table": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maxLength": {
+                                      "kind": "number",
+                                      "value": "256"
+                                    },
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "kind"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "table"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "record"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "disposition"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "512"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "version": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "umf.table-inventory-discovery/0.1"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "version"
+            },
+            {
+              "kind": "string",
+              "value": "tableIntents"
+            },
+            {
+              "kind": "string",
+              "value": "conversions"
+            },
+            {
+              "kind": "string",
+              "value": "retiredSeedSets"
+            },
+            {
+              "kind": "string",
+              "value": "retirements"
+            },
+            {
+              "kind": "string",
+              "value": "restorations"
+            },
+            {
+              "kind": "string",
+              "value": "archiveSources"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "G10 cycle-free source review selector"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/tables/inventory-discovery-0.1.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/extensions/tables/inventory-request-0.1.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3885,
+      "path": "spec/extensions/tables/inventory-discovery-0.1.schema.json",
+      "sha256": "47308adece6c322c06ed835946b117680d54aa4dda9254affaf3ed6abb64ac18"
+    }
+  ],
+  "summary": "spec/extensions/tables/inventory-discovery-0.1.schema.json",
+  "title": "G10 cycle-free source review selector"
+}

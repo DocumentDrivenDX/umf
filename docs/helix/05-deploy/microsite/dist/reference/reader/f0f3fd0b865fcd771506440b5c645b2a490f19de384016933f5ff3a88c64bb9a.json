@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectOpenapiToJsonSchema\"]",
   "kind": "Function",
   "members": [],
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"OpenapiJsonSchemaPolicy\"]"
       ],
-      "name": "input",
+      "name": "policy",
       "optional": false,
       "type": "OpenapiJsonSchemaPolicy"
     }
   ],
-  "purpose": "Project static JSON instance constraints with explicit API/annotation losses.",
+  "purpose": "projectOpenapiToJsonSchema accepts source, policy and returns OpenapiJsonSchemaProjection.",
   "related": [],
   "returns": "OpenapiJsonSchemaProjection",
   "task": "Import and export",
-  "type": "(source: Document, input: OpenapiJsonSchemaPolicy) => OpenapiJsonSchemaProjection"
+  "type": "(source: Document, policy: OpenapiJsonSchemaPolicy) => OpenapiJsonSchemaProjection"
 }

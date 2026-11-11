@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifySqlServerRelationships\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SqlServerRelationshipRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "SqlServerRelationshipRequest"
     }
   ],
-  "purpose": "Permission-limited catalog observations; trust flags never establish authored relationship meaning.",
+  "purpose": "classifySqlServerRelationships accepts source, request and returns SqlServerRelationshipClassification.",
   "related": [],
   "returns": "SqlServerRelationshipClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: SqlServerRelationshipRequest) => SqlServerRelationshipClassification"
+  "type": "(source: Document, request: SqlServerRelationshipRequest) => SqlServerRelationshipClassification"
 }

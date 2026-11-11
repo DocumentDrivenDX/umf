@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"AvroKeyRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "AvroKeyRequest"
     }
@@ -32,5 +32,5 @@
   ],
   "returns": "AvroKeyClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: AvroKeyRequest) => AvroKeyClassification"
+  "type": "(source: Document, request: AvroKeyRequest) => AvroKeyClassification"
 }

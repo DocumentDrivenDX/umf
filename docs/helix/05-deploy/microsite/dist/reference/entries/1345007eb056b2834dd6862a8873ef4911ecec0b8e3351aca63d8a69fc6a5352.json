@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 17873,
-        "line": 23,
-        "path": "src/core-ideals/relationship-sqlserver-projection.ts",
-        "sha256": "e39914f71aaef4806cacbcf64171fa152048b02cecc8320a4a2f6bf76357f39a"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectRelationshipToSqlServer",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, authorInput: CoreRelationshipDeclaration, bindingInput: Document, options: RelationshipSqlServerRequest): RelationshipSqlServerProjection"
+      "(source: Document, author: CoreRelationshipDeclaration, bindingSource: Document, request: RelationshipSqlServerRequest): RelationshipSqlServerProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectRelationshipToSqlServer\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 17873,
-      "line": 23,
-      "path": "src/core-ideals/relationship-sqlserver-projection.ts",
-      "sha256": "e39914f71aaef4806cacbcf64171fa152048b02cecc8320a4a2f6bf76357f39a"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "New endpoint-key tables plus declared FK/junction; never mutates existing tables.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectRelationshipToSqlServer"
 }

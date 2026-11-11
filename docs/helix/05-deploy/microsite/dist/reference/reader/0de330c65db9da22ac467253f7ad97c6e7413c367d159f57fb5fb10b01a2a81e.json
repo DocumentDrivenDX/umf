@@ -23,7 +23,7 @@
       "links": [],
       "name": "status",
       "optional": false,
-      "type": "\"blocked\" | \"projected\""
+      "type": "\"projected\" | \"blocked\""
     },
     {
       "description": "",
@@ -66,7 +66,7 @@
       "links": [],
       "name": "binding",
       "optional": false,
-      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+      "type": "{ id: \"umf.postgresql.relationships\"; version: \"1.0.0\"; nativeVersion: \"17.4\"; subset: string; }"
     },
     {
       "description": "",

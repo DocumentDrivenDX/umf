@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 95940,
+        "line": 765,
+        "path": "bindings/core/wasm/index.d.ts",
+        "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+      }
+    ],
+    "entrypoint": "./runtime/wasm",
+    "exportName": "GraphqlEngine",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface GraphqlEngine {\n readonly profile: typeof GRAPHQL_PROFILE;\n readonly capabilities: Readonly<{profile: typeof GRAPHQL_PROFILE; sdl: true; ast: true; callbackEdits: true; complete: false}>;\n importGraphqlSchema(source: string, options: {id: string; mode?: 'schema' | 'fragment'}): any;\n inspectGraphql(document: unknown): {valid: boolean; complete: boolean; diagnostics: any[]};\n exportGraphqlSchema(document: unknown): string;\n getGraphqlAst(document: unknown): any;\n editGraphqlAst(document: unknown, edit: (ast: any) => any): unknown;\n exportGraphqlBundle(document: unknown): {schema: string; source: any; diagnostics: any[]};\n inspectGraphqlPayload(payload: unknown): any[];\n projectGraphqlInputToJsonSchema(document: unknown, bindings: unknown): unknown;\n}"
+    ]
+  },
+  "id": "[\"api\",\"./runtime/wasm\",\"GraphqlEngine\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 95940,
+      "line": 765,
+      "path": "bindings/core/wasm/index.d.ts",
+      "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+    }
+  ],
+  "summary": "Type declaration · bindings/core/wasm/index.d.ts",
+  "title": "GraphqlEngine"
+}

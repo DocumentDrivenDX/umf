@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerCardinalityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerCardinalityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverSqlServerCardinalitySource accepts input, current and returns string.",
+  "purpose": "recoverSqlServerCardinalitySource accepts receipt, current and returns string.",
   "related": [],
   "returns": "string",
   "task": "Import and export",
-  "type": "(input: SqlServerCardinalityClassification, current: Document) => string"
+  "type": "(receipt: SqlServerCardinalityClassification, current: Document) => string"
 }

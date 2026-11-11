@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2492,
-        "line": 11,
-        "path": "src/extensions/security/protection/references.ts",
-        "sha256": "91b2997951f493e17097fb4cda982d92505ceae3d2902ce974455bec25f3cdd9"
+        "bytes": 84809,
+        "line": 193,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "resolveSecurityProtectionSources",
     "runtime": "unassessed",
     "signatureText": [
-      "(policyInput: unknown, catalogInput: unknown): SecurityProtectionSourceResolution"
+      "(policy: unknown, catalog: unknown): SecurityProtectionSourceResolution"
     ]
   },
   "id": "[\"api\",\".\",\"resolveSecurityProtectionSources\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2492,
-      "line": 11,
-      "path": "src/extensions/security/protection/references.ts",
-      "sha256": "91b2997951f493e17097fb4cda982d92505ceae3d2902ce974455bec25f3cdd9"
+      "bytes": 84809,
+      "line": 193,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/security/protection/references.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "resolveSecurityProtectionSources"
 }

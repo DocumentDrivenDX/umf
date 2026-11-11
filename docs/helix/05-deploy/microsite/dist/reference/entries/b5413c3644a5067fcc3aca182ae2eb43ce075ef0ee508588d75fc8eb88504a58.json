@@ -261,9 +261,18 @@
             "engine": {
               "kind": "object",
               "members": {
-                "const": {
-                  "kind": "string",
-                  "value": "rdf-validate-shacl@0.6.5"
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "rdf-validate-shacl@0.6.5"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "umf-shacl-native-subset/2"
+                    }
+                  ],
+                  "kind": "array"
                 }
               }
             },
@@ -387,9 +396,9 @@
   ],
   "sources": [
     {
-      "bytes": 2137,
+      "bytes": 2191,
       "path": "spec/extensions/shacl/engine-report-schema.json",
-      "sha256": "151dc70a44d74936d9663e15f3bc5a51f871a3b215ade5a7a261d2742aa1c415"
+      "sha256": "9d87ac301675c6ed695011b0bdfe64fcd4509d1a5567b4101a8413a88a06339c"
     }
   ],
   "summary": "spec/extensions/shacl/engine-report-schema.json",

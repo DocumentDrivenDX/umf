@@ -1,25 +1,23 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"validateCoreRecordValues\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Document\"]"
-      ],
-      "name": "input",
+      "links": [],
+      "name": "source",
       "optional": false,
-      "type": "Document"
+      "type": "unknown"
     },
     {
       "description": "",
       "links": [
         "[\"api\",\".\",\"CoreRecordValueIdentity\"]"
       ],
-      "name": "identityInput",
+      "name": "identity",
       "optional": false,
       "type": "CoreRecordValueIdentity"
     },
@@ -28,14 +26,14 @@
       "links": [
         "[\"api\",\".\",\"CoreRecordFieldValue\"]"
       ],
-      "name": "valuesInput",
+      "name": "values",
       "optional": false,
       "type": "CoreRecordFieldValue[]"
     }
   ],
-  "purpose": "Logical membership/presence/field checks, never native rows, defaults or dataset uniqueness.",
+  "purpose": "validateCoreRecordValues accepts source, identity, values and returns CoreRecordValueCheck.",
   "related": [],
   "returns": "CoreRecordValueCheck",
   "task": "Read and validate",
-  "type": "(input: Document, identityInput: CoreRecordValueIdentity, valuesInput: CoreRecordFieldValue[]) => CoreRecordValueCheck"
+  "type": "(source: unknown, identity: CoreRecordValueIdentity, values: CoreRecordFieldValue[]) => CoreRecordValueCheck"
 }

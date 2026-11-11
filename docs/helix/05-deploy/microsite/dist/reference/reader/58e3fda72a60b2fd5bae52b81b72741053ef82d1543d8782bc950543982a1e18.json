@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectCoreNullability\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -24,9 +24,9 @@
       "type": "CoreNullabilityIdentity"
     }
   ],
-  "purpose": "Inspect availability without inferring a native absence carrier or provenance.",
+  "purpose": "inspectCoreNullability accepts source, identity and returns CoreNullabilityInspection.",
   "related": [],
   "returns": "CoreNullabilityInspection",
   "task": "Inspect and select",
-  "type": "(input: Document, identity: CoreNullabilityIdentity) => CoreNullabilityInspection"
+  "type": "(source: Document, identity: CoreNullabilityIdentity) => CoreNullabilityInspection"
 }

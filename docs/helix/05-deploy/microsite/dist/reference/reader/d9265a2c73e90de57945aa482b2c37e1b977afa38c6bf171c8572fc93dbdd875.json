@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": false,
+  "authored": true,
   "id": "[\"api\",\".\",\"TypeSpecJsonSchemaPolicy\"]",
   "kind": "Interface",
   "members": [
@@ -50,7 +50,7 @@
     }
   ],
   "parameters": [],
-  "purpose": "TypeSpecJsonSchemaPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "purpose": "Policy passed to the native TypeSpec JSON Schema emitter adapter.",
   "related": [],
   "returns": "",
   "task": "Other APIs",

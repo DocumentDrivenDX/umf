@@ -1,0 +1,461 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-seed-review-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/digest"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/schema.json\",\"\"]",
+        "target": "urn:umf:tables:0.1.0#/$defs/seedSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-seed-review-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/digest"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/tables/inventory-seed-review-0.1.schema.json\",\"\"]",
+        "target": "#/$defs/digest"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/tables/inventory-seed-review-0.1.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "digest": {
+              "kind": "object",
+              "members": {
+                "pattern": {
+                  "kind": "string",
+                  "value": "^[0-9a-f]{64}$"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:table-inventory-seed-retirement-review:0.1"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "allOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "side": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "previous"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "side"
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "effects": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "items": [],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "retired": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "boolean",
+                              "value": false
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "side": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "next"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "side"
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "effects": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "original-definition-and-execution-retained-in-history"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "no-data-replay"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "retired": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "configuration": {
+              "kind": "object",
+              "members": {}
+            },
+            "definition": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:tables:0.1.0#/$defs/seedSet"
+                }
+              }
+            },
+            "definitionDigest": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/digest"
+                }
+              }
+            },
+            "effects": {
+              "kind": "object",
+              "members": {
+                "oneOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "items": [],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "original-definition-and-execution-retained-in-history"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "no-data-replay"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "execution": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "not-run"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "confirmed"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "id": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "originalSourceDigest": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/digest"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "umf.table-inventory-seed-retirement-review/0.1"
+                }
+              }
+            },
+            "retired": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "boolean"
+                }
+              }
+            },
+            "side": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "previous"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "next"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "format": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "json"
+                        }
+                      }
+                    },
+                    "sha256": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/digest"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "format"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "sha256"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "side"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "configuration"
+            },
+            {
+              "kind": "string",
+              "value": "id"
+            },
+            {
+              "kind": "string",
+              "value": "definition"
+            },
+            {
+              "kind": "string",
+              "value": "definitionDigest"
+            },
+            {
+              "kind": "string",
+              "value": "originalSourceDigest"
+            },
+            {
+              "kind": "string",
+              "value": "execution"
+            },
+            {
+              "kind": "string",
+              "value": "retired"
+            },
+            {
+              "kind": "string",
+              "value": "effects"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "G10 execution-aware seed retirement review side"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/tables/inventory-seed-review-0.1.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/extensions/tables/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1678,
+      "path": "spec/extensions/tables/inventory-seed-review-0.1.schema.json",
+      "sha256": "e08ab456cf83c06225ee6c0c75a5e82f2f5eaec3673f97757be676a6f1ca0997"
+    }
+  ],
+  "summary": "spec/extensions/tables/inventory-seed-review-0.1.schema.json",
+  "title": "G10 execution-aware seed retirement review side"
+}

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"NativeStructuredClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "NativeStructuredClassification"
     },
@@ -24,9 +24,9 @@
       "type": "PostgresqlBackend | undefined"
     }
   ],
-  "purpose": "inspectStructuredClassification accepts input, backend and returns Promise<StructuredClassificationInspection>.",
+  "purpose": "inspectStructuredClassification accepts receipt, backend and returns Promise<StructuredClassificationInspection>.",
   "related": [],
   "returns": "Promise<StructuredClassificationInspection>",
   "task": "Inspect and select",
-  "type": "(input: NativeStructuredClassification, backend?: PostgresqlBackend) => Promise<StructuredClassificationInspection>"
+  "type": "(receipt: NativeStructuredClassification, backend?: PostgresqlBackend) => Promise<StructuredClassificationInspection>"
 }

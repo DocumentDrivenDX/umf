@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "text",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -41,9 +41,9 @@
       "type": "\"json\" | \"yaml\""
     }
   ],
-  "purpose": "decodeSecurityDisclosureV2 accepts text, policy, catalog, closure, format and returns SecurityDisclosureBatchV2.",
+  "purpose": "decodeSecurityDisclosureV2 accepts source, policy, catalog, closure, format and returns SecurityDisclosureBatchV2.",
   "related": [],
   "returns": "SecurityDisclosureBatchV2",
   "task": "Serialize",
-  "type": "(text: string, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\") => SecurityDisclosureBatchV2"
+  "type": "(source: string, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\") => SecurityDisclosureBatchV2"
 }

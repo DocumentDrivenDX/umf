@@ -1,0 +1,643 @@
+{
+  "data": {
+    "extensionId": "umf.actions.saga",
+    "manifest": {
+      "capabilities": {
+        "directions": [],
+        "evidence": [],
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Sequential saga declarations; host execution requires independent qualification.",
+      "id": "umf.actions.saga",
+      "schema": {
+        "$defs": {
+          "actionRef": {
+            "additionalProperties": true,
+            "properties": {
+              "action": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "module": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "module",
+              "action"
+            ],
+            "type": "object"
+          },
+          "assessment": {
+            "additionalProperties": false,
+            "properties": {
+              "complete": {
+                "type": "boolean"
+              },
+              "coordination": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "declarationCompatible": {
+                "type": "boolean"
+              },
+              "diagnostics": {
+                "items": {
+                  "$ref": "#/$defs/diagnostic"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array"
+              },
+              "executionVerified": {
+                "const": false
+              },
+              "outcomes": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "evidence": {
+                      "items": {
+                        "maxLength": 256,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "maxItems": 32,
+                      "minItems": 0,
+                      "type": "array"
+                    },
+                    "obligation": {
+                      "maxLength": 256,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "supported",
+                        "unsupported",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "obligation",
+                    "status",
+                    "evidence"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array"
+              },
+              "valid": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "valid",
+              "complete",
+              "declarationCompatible",
+              "executionVerified",
+              "coordination",
+              "outcomes",
+              "diagnostics"
+            ],
+            "type": "object"
+          },
+          "capabilities": {
+            "additionalProperties": false,
+            "properties": {
+              "claims": {
+                "items": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "evidence": {
+                      "items": {
+                        "maxLength": 256,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "maxItems": 32,
+                      "minItems": 0,
+                      "type": "array"
+                    },
+                    "obligation": {
+                      "maxLength": 256,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "supported",
+                        "unsupported",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "obligation",
+                    "status",
+                    "evidence"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array"
+              },
+              "coordination": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "coreVersion": {
+                "const": "0.10.0"
+              },
+              "id": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "identity": {
+                "$ref": "#/$defs/identity"
+              },
+              "sagaVersion": {
+                "const": "0.1.0"
+              },
+              "source": {
+                "type": "object"
+              },
+              "version": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "coreVersion",
+              "sagaVersion",
+              "coordination",
+              "claims",
+              "source",
+              "identity"
+            ],
+            "type": "object"
+          },
+          "compensation": {
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "action": {
+                    "$ref": "#/$defs/actionRef"
+                  },
+                  "binding": {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "inputs": {
+                    "items": {
+                      "$ref": "#/$defs/mapping"
+                    },
+                    "maxItems": 32,
+                    "minItems": 0,
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "action"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "action",
+                  "binding",
+                  "inputs"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "kind": {
+                    "const": "unnecessary"
+                  },
+                  "profile": {
+                    "$ref": "urn:umf:actions:0.1.0#/$defs/profile"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "profile"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "kind": {
+                    "const": "irreversible"
+                  },
+                  "reason": {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "reason"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "kind": {
+                    "minLength": 1,
+                    "not": {
+                      "enum": [
+                        "action",
+                        "unnecessary",
+                        "irreversible"
+                      ]
+                    },
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "definition": {
+            "additionalProperties": true,
+            "properties": {
+              "description": {
+                "maxLength": 4096,
+                "type": "string"
+              },
+              "id": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "outputBindings": {
+                "items": {
+                  "$ref": "#/$defs/mapping"
+                },
+                "maxItems": 32,
+                "minItems": 0,
+                "type": "array"
+              },
+              "outputs": {
+                "items": {
+                  "$ref": "urn:umf:actions:0.1.0#/$defs/parameter"
+                },
+                "maxItems": 32,
+                "minItems": 0,
+                "type": "array"
+              },
+              "parameters": {
+                "items": {
+                  "$ref": "urn:umf:actions:0.1.0#/$defs/parameter"
+                },
+                "maxItems": 32,
+                "minItems": 0,
+                "type": "array"
+              },
+              "profile": {
+                "$ref": "urn:umf:actions:0.1.0#/$defs/profile"
+              },
+              "steps": {
+                "items": {
+                  "$ref": "#/$defs/step"
+                },
+                "maxItems": 32,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "description",
+              "profile",
+              "parameters",
+              "outputs",
+              "outputBindings",
+              "steps"
+            ],
+            "type": "object"
+          },
+          "diagnostic": {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "message": {
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "path": {
+                "maxLength": 4096,
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "path",
+              "severity",
+              "message"
+            ],
+            "type": "object"
+          },
+          "identity": {
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "saga": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "module",
+              "saga"
+            ],
+            "type": "object"
+          },
+          "inspection": {
+            "additionalProperties": false,
+            "properties": {
+              "entries": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "definition": {
+                      "$ref": "#/$defs/definition"
+                    },
+                    "module": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "obligations": {
+                      "items": {
+                        "$ref": "#/$defs/obligation"
+                      },
+                      "maxItems": 4096,
+                      "type": "array"
+                    },
+                    "path": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "module",
+                    "path",
+                    "definition",
+                    "obligations"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 4096,
+                "type": "array"
+              },
+              "source": {
+                "type": "object"
+              },
+              "validation": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "source",
+              "validation",
+              "entries"
+            ],
+            "type": "object"
+          },
+          "mapping": {
+            "additionalProperties": true,
+            "properties": {
+              "from": {
+                "$ref": "#/$defs/source"
+              },
+              "parameter": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "parameter",
+              "from"
+            ],
+            "type": "object"
+          },
+          "obligation": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "model",
+                  "binding",
+                  "action",
+                  "coordination",
+                  "recovery",
+                  "unknown"
+                ]
+              },
+              "path": {
+                "maxLength": 4096,
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "checked",
+                  "unchecked"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "path",
+              "kind",
+              "status"
+            ],
+            "type": "object"
+          },
+          "source": {
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "not": {
+                  "required": [
+                    "step"
+                  ]
+                },
+                "properties": {
+                  "input": {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "input"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": true,
+                "not": {
+                  "required": [
+                    "input"
+                  ]
+                },
+                "properties": {
+                  "output": {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "step": {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "step",
+                  "output"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "step": {
+            "additionalProperties": true,
+            "properties": {
+              "action": {
+                "$ref": "#/$defs/actionRef"
+              },
+              "binding": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "compensation": {
+                "$ref": "#/$defs/compensation"
+              },
+              "id": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "inputs": {
+                "items": {
+                  "$ref": "#/$defs/mapping"
+                },
+                "maxItems": 32,
+                "minItems": 0,
+                "type": "array"
+              }
+            },
+            "required": [
+              "id",
+              "action",
+              "binding",
+              "inputs",
+              "compensation"
+            ],
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:actions:saga:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "sagas": {
+            "items": {
+              "$ref": "#/$defs/definition"
+            },
+            "maxItems": 64,
+            "minItems": 0,
+            "type": "array"
+          }
+        },
+        "required": [
+          "sagas"
+        ],
+        "title": "Proposed UMF saga 0.1.0 declarations",
+        "type": "object"
+      },
+      "scopes": [
+        "module"
+      ],
+      "semantics": "CONTRACT-908; portable analysis only; registration grants no execution authority.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/saga/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.actions.saga\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/saga/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 14864,
+      "path": "spec/extensions/saga/package.json",
+      "sha256": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940"
+    }
+  ],
+  "summary": "Sequential saga declarations; host execution requires independent qualification.",
+  "title": "umf.actions.saga · 0.1.0"
+}

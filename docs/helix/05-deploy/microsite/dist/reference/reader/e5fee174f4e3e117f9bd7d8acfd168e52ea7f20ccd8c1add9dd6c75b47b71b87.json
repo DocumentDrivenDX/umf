@@ -1,0 +1,127 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventoryMigrationStep\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"policy\" | \"index\" | \"conversion\" | \"table\" | \"metadata\" | \"comment\" | \"foreignKey\" | \"grant\" | \"backfill\" | \"seed\" | \"retirement\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourcePath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "transaction",
+      "optional": false,
+      "type": "\"required\" | \"forbidden\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sql",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"drop-column\" | \"rename-column\" | \"tighten-not-null\" | \"relax-not-null\" | \"change-default\" | \"add-column\" | \"target-check\" | \"install-default\" | \"dependency-drop\" | \"dependency-add\" | \"capture-originals\" | \"convert-field\" | \"validate-conversion\" | \"create-table\" | \"remove-table\" | \"enable-rls\" | \"force-rls\" | \"apply-backfill\" | \"apply-seeds\" | \"capture-retired-values\" | \"retire-field\" | \"restore-field\" | \"validate-restoration\" | \"create-concurrent-index\" | \"add-not-valid\" | \"validate\" | \"set-comment\" | \"prepare-inventory-metadata\" | \"record-inventory-approval\" | \"publish-inventory\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "inventorySubject",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "preconditions",
+      "optional": false,
+      "type": "{ kind: \"inventory-prefix\"; prefixDigest: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "expectedOutcome",
+      "optional": false,
+      "type": "{ kind: \"inventory-prefix\"; prefixDigest: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verification",
+      "optional": false,
+      "type": "\"native-catalog-privileges-and-role-scope\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recovery",
+      "optional": false,
+      "type": "\"rollback-transaction\" | \"inspect-index\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "dataBinding",
+      "optional": true,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "seedSets",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "conversionBinding",
+      "optional": true,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "retirementBinding",
+      "optional": true,
+      "type": "Json"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableInventoryMigrationStep is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventoryMigrationStep"
+}

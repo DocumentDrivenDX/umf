@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfSecurityFunctionsEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityProtectionFunctionResult\"]"
+      ],
+      "name": "inspectProtectionFunction",
+      "optional": false,
+      "type": "(policy: unknown, catalog: unknown, closure: unknown, selection: unknown) => SecurityProtectionFunctionResult"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityProtectionFunctionResult\"]"
+      ],
+      "name": "evaluateProtectionValue",
+      "optional": false,
+      "type": "(policy: unknown, catalog: unknown, closure: unknown, selection: unknown) => SecurityProtectionFunctionResult"
+    },
+    {
+      "description": "Internal candidate support; not re-exported by either UMF SDK root.",
+      "links": [],
+      "name": "inspectCandidateLiteral",
+      "optional": false,
+      "type": "(source: unknown, field: { documentId: string; moduleId: string; elementId: string; }, value: unknown, limits: { includeIdentity: boolean; workLimit: number; textLimit: number; }) => { identity: string | null; identityUnits: number; textUnits: number; workUnits: number; }"
+    },
+    {
+      "description": "Private actions-reference comparison under ordinary core value limits.",
+      "links": [],
+      "name": "inspectCoreCandidateLiteral",
+      "optional": false,
+      "type": "(source: unknown, field: { documentId: string; moduleId: string; elementId: string; }, value: unknown, limits: { includeIdentity: boolean; workLimit: number; textLimit: number; }) => { identity: string | null; identityUnits: number; textUnits: number; workUnits: number; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfSecurityFunctionsEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfSecurityFunctionsEngine"
+}

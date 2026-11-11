@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"registerDdd\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "registry",
+      "optional": false,
+      "type": "T"
+    }
+  ],
+  "purpose": "registerDdd accepts registry and returns T.",
+  "related": [],
+  "returns": "T",
+  "task": "Extensions",
+  "type": "<T extends InstanceType<typeof Registry>>(registry: T) => T"
+}

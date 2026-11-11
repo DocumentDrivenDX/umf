@@ -1,0 +1,107 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"CoreDatasetCompactReceipt\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"validate-core-dataset-values-compact\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"supplied-dataset-only\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "source",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetCompactInput\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreDatasetCompactInput"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "documentValidation",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "records",
+      "optional": false,
+      "type": "unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "keys",
+      "optional": false,
+      "type": "unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "relationships",
+      "optional": false,
+      "type": "unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "datasetValidation",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligations",
+      "optional": false,
+      "type": "unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "residuals",
+      "optional": false,
+      "type": "unknown[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreDatasetCompactReceipt is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreDatasetCompactReceipt"
+}

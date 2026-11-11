@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getPostgresqlSource\"]",
   "kind": "Function",
   "members": [],
@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Original source archive; it deliberately remains the pre-edit source.",
+  "purpose": "getPostgresqlSource accepts document and returns string.",
   "related": [],
   "returns": "string",
   "task": "Inspect and select",
-  "type": "(document: Document) => string"
+  "type": "(document: Document) => ReturnType<GetPostgresqlSource>"
 }

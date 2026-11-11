@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getOwlAxiomAnnotations\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "number"
     }
   ],
-  "purpose": "Match RDF reification terms exactly, retaining nested annotation links as a finite graph.",
+  "purpose": "getOwlAxiomAnnotations accepts document, quadIndex and returns OwlAxiomAnnotations.",
   "related": [],
   "returns": "OwlAxiomAnnotations",
   "task": "Inspect and select",
-  "type": "(document: Document, quadIndex: number) => OwlAxiomAnnotations"
+  "type": "(document: Parameters<typeof getOwlAxiomAnnotations>[0], quadIndex: Parameters<typeof getOwlAxiomAnnotations>[1]) => OwlAxiomAnnotations"
 }

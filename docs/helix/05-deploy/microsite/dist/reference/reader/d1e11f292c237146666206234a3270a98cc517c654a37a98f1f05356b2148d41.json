@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"extractOpenapiSchema\"]",
   "kind": "Function",
   "members": [],
@@ -24,9 +24,9 @@
       "type": "{ pointer: string; resourceUri?: string; }"
     }
   ],
-  "purpose": "Extract one declared Schema Object while retaining its entire owning context.",
+  "purpose": "extractOpenapiSchema accepts document, input and returns OpenapiSchemaExtraction.",
   "related": [],
   "returns": "OpenapiSchemaExtraction",
   "task": "Other APIs",
-  "type": "(document: Document, input: { pointer: string; resourceUri?: string; }) => OpenapiSchemaExtraction"
+  "type": "(document: Parameters<ExtractOpenapiSchema>[0], input: Parameters<ExtractOpenapiSchema>[1]) => ReturnType<ExtractOpenapiSchema>"
 }

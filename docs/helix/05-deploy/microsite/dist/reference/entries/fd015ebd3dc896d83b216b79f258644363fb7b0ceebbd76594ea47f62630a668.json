@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7884,
-        "line": 15,
-        "path": "src/adapters/postgresql/index.ts",
-        "sha256": "2fc7d43f7d4ebe141833440c26c113079fa85ff41be1056e0bca158edea69b9d"
+        "bytes": 84809,
+        "line": 283,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "validatePostgresqlAst",
     "runtime": "unassessed",
     "signatureText": [
-      "(tree: unknown): { valid: boolean | Promise<unknown>; complete: boolean; errors: Json; }"
+      "(ast: unknown): { valid: boolean | Promise<unknown>; complete: boolean; errors: Json; }"
     ]
   },
   "id": "[\"api\",\".\",\"validatePostgresqlAst\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7884,
-      "line": 15,
-      "path": "src/adapters/postgresql/index.ts",
-      "sha256": "2fc7d43f7d4ebe141833440c26c113079fa85ff41be1056e0bca158edea69b9d"
+      "bytes": 84809,
+      "line": 283,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Validate the known native JSON vocabulary without removing unknown fields.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "validatePostgresqlAst"
 }

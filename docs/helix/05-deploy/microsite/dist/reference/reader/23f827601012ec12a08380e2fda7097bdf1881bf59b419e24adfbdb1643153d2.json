@@ -1,0 +1,43 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"compileTableMigration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableMigrationRequest\"]",
+        "[\"api\",\".\",\"G04MigrationOptions\"]"
+      ],
+      "name": "Overload 1 · request",
+      "optional": false,
+      "type": "Omit<TableMigrationRequest, \"options\"> & { options: G04MigrationOptions; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableMigrationRequest\"]",
+        "[\"api\",\".\",\"LegacyTableMigrationOptions\"]"
+      ],
+      "name": "Overload 2 · request",
+      "optional": false,
+      "type": "Omit<TableMigrationRequest, \"options\"> & { options?: LegacyTableMigrationOptions; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableMigrationRequest\"]"
+      ],
+      "name": "Overload 3 · request",
+      "optional": false,
+      "type": "TableMigrationRequest"
+    }
+  ],
+  "purpose": "compileTableMigration accepts Overload 1 · request, Overload 2 · request, Overload 3 · request and returns G04TableMigrationResult | LegacyTableMigrationResult | TableMigrationResult.",
+  "related": [],
+  "returns": "G04TableMigrationResult | LegacyTableMigrationResult | TableMigrationResult",
+  "task": "Other APIs",
+  "type": "{ (request: Omit<TableMigrationRequest, \"options\"> & { options: G04MigrationOptions; }): G04TableMigrationResult; (request: Omit<TableMigrationRequest, \"options\"> & { options?: LegacyTableMigrationOptions; }): LegacyTableMigrationResult; (request: TableMigrationRequest): TableMigrationResult; }"
+}

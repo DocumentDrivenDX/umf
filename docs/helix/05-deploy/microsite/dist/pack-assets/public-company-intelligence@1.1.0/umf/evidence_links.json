@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "table_name": "evidence_links",
+  "description": "Public-company intelligence evidence_links; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "evidence_links.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "signal_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "evidence_links.signal_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "filing_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "evidence_links.filing_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "snapshot_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "evidence_links.snapshot_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "native_path",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "evidence_links.native_path; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "citation_kind",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "evidence_links.citation_kind; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "signal_id",
+        "references_table": "signal_observations",
+        "references_column": "id"
+      },
+      {
+        "column": "filing_id",
+        "references_table": "filings",
+        "references_column": "id"
+      },
+      {
+        "column": "snapshot_id",
+        "references_table": "source_snapshots",
+        "references_column": "id"
+      }
+    ]
+  }
+}

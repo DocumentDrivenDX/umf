@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "documentInput",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Action\"]"
       ],
-      "name": "actionInput",
+      "name": "action",
       "optional": false,
       "type": "Action"
     },
@@ -28,14 +28,14 @@
       "links": [
         "[\"api\",\".\",\"ActionFrame\"]"
       ],
-      "name": "frameInput",
+      "name": "frame",
       "optional": false,
       "type": "ActionFrame"
     }
   ],
-  "purpose": "compileActionSelector accepts documentInput, actionInput, frameInput and returns CompiledActionSelector.",
+  "purpose": "compileActionSelector accepts document, action, frame and returns CompiledActionSelector.",
   "related": [],
   "returns": "CompiledActionSelector",
   "task": "Other APIs",
-  "type": "(documentInput: Document, actionInput: Action, frameInput: ActionFrame) => CompiledActionSelector"
+  "type": "(document: Document, action: Action, frame: ActionFrame) => CompiledActionSelector"
 }

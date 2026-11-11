@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10705,
-        "line": 12,
-        "path": "src/extensions/binding/bit128.ts",
-        "sha256": "b335e8db71b682abb6098b776d5b3985e18a5acb504da267ee063aa7cddac7de"
+        "bytes": 614,
+        "line": 10,
+        "path": "src/extensions/binding/package.ts",
+        "sha256": "ab9b6115eee6e8b9bdd5e9150e591a706c3e9e54c3de9326adc82d8cfecb761a"
       }
     ],
     "entrypoint": ".",
     "exportName": "bit128BindingPackage",
     "runtime": "unassessed",
     "signatureText": [
-      "bit128BindingPackage=manifest as unknown as ExtensionPackage"
+      "bit128BindingPackage=bit128Manifest as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"bit128BindingPackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10705,
-      "line": 12,
-      "path": "src/extensions/binding/bit128.ts",
-      "sha256": "b335e8db71b682abb6098b776d5b3985e18a5acb504da267ee063aa7cddac7de"
+      "bytes": 614,
+      "line": 10,
+      "path": "src/extensions/binding/package.ts",
+      "sha256": "ab9b6115eee6e8b9bdd5e9150e591a706c3e9e54c3de9326adc82d8cfecb761a"
     }
   ],
-  "summary": "Public export · src/extensions/binding/bit128.ts",
+  "summary": "Public export · src/extensions/binding/package.ts",
   "title": "bit128BindingPackage"
 }

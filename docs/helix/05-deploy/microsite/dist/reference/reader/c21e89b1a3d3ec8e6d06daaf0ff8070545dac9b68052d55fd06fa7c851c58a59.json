@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"initializeTemporalWasm\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "loader",
+      "optional": true,
+      "type": "(() => Promise<any>) | undefined"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "host",
+      "optional": true,
+      "type": "typeof globalThis | undefined"
+    }
+  ],
+  "purpose": "initializeTemporalWasm accepts loader, host and returns Promise<UmfTemporalEngine>.",
+  "related": [],
+  "returns": "Promise<UmfTemporalEngine>",
+  "task": "Other APIs",
+  "type": "(loader?: () => Promise<any>, host?: typeof globalThis) => Promise<UmfTemporalEngine>"
+}

@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"DefaultSemanticTypeRegistry\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "register",
+      "optional": false,
+      "type": "(reference: unknown, definition: unknown, validator?: (value: unknown, definition: unknown) => unknown) => DefaultSemanticTypeRegistry"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lookup",
+      "optional": false,
+      "type": "(reference: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "check",
+      "optional": false,
+      "type": "(reference: unknown, value: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreResources\"]"
+      ],
+      "name": "validateCoreSemanticTypeValue",
+      "optional": false,
+      "type": "(resources: UmfCoreResources, source: unknown, identity: unknown, value: unknown) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DefaultSemanticTypeRegistry is a interface in Extensions. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Extensions",
+  "type": "DefaultSemanticTypeRegistry"
+}

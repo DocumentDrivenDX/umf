@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11723,
-        "line": 14,
-        "path": "src/adapters/postgresql/catalog.ts",
-        "sha256": "7dfac2004e731abc89012227d0d69adb4507a9ad11be0e390eced62305e58213"
+        "bytes": 431,
+        "line": 6,
+        "path": "src/adapters/postgresql/catalog-package.ts",
+        "sha256": "7d1a5becaa7a7e34b8e8810a353105634918d0a5e90ae210dc8db8856cf9e053"
       }
     ],
     "entrypoint": ".",
     "exportName": "postgresqlCatalogPackage",
     "runtime": "unassessed",
     "signatureText": [
-      "postgresqlCatalogPackage=manifest as unknown as ExtensionPackage"
+      "postgresqlCatalogPackage = manifest as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"postgresqlCatalogPackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11723,
-      "line": 14,
-      "path": "src/adapters/postgresql/catalog.ts",
-      "sha256": "7dfac2004e731abc89012227d0d69adb4507a9ad11be0e390eced62305e58213"
+      "bytes": 431,
+      "line": 6,
+      "path": "src/adapters/postgresql/catalog-package.ts",
+      "sha256": "7d1a5becaa7a7e34b8e8810a353105634918d0a5e90ae210dc8db8856cf9e053"
     }
   ],
-  "summary": "Public export · src/adapters/postgresql/catalog.ts",
+  "summary": "Public export · src/adapters/postgresql/catalog-package.ts",
   "title": "postgresqlCatalogPackage"
 }

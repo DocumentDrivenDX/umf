@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"proposeIcebergTablePromotion\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "{ fieldId: number; targetType: string; nextSchemaId: number; }"
     }
   ],
-  "purpose": "Metadata candidate for the v1/v2 primitive widening rules, carried in v2/v3 tables.",
+  "purpose": "proposeIcebergTablePromotion accepts document, options and returns { document: Document; report: IcebergTablePromotionReport; }.",
   "related": [],
   "returns": "{ document: Document; report: IcebergTablePromotionReport; }",
   "task": "Author and edit",
-  "type": "(document: Document, options: { fieldId: number; targetType: string; nextSchemaId: number; }) => { document: Document; report: IcebergTablePromotionReport; }"
+  "type": "(document: Parameters<ProposeIcebergTablePromotion>[0], options: Parameters<ProposeIcebergTablePromotion>[1]) => ReturnType<ProposeIcebergTablePromotion>"
 }

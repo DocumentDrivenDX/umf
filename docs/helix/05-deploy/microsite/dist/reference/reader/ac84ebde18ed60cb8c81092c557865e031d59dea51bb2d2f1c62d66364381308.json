@@ -15,23 +15,17 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"RdfNode\"]",
-        "[\"api\",\".\",\"RdfLiteral\"]"
-      ],
+      "links": [],
       "name": "versionIRIs",
       "optional": false,
-      "type": "(RdfNode | RdfLiteral)[]"
+      "type": "OwlValue[]"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"RdfNode\"]",
-        "[\"api\",\".\",\"RdfLiteral\"]"
-      ],
+      "links": [],
       "name": "imports",
       "optional": false,
-      "type": "(RdfNode | RdfLiteral)[]"
+      "type": "OwlValue[]"
     }
   ],
   "parameters": [],

@@ -26,5 +26,5 @@
   "related": [],
   "returns": "NativeJson",
   "task": "Inspect and select",
-  "type": "(document: Document, path: string) => NativeJson"
+  "type": "(document: Parameters<GetLinkmlDocumentNode>[0], path: Parameters<GetLinkmlDocumentNode>[1]) => ReturnType<GetLinkmlDocumentNode>"
 }

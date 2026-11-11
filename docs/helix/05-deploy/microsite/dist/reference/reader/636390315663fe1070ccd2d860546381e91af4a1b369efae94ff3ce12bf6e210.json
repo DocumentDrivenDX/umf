@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"KeyParquetProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "KeyParquetProjection"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverKeysParquetIdeal accepts input, current and returns Document.",
+  "purpose": "recoverKeysParquetIdeal accepts receipt, current and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: KeyParquetProjection, current: Document) => Document"
+  "type": "(receipt: KeyParquetProjection, current: Document) => Document"
 }

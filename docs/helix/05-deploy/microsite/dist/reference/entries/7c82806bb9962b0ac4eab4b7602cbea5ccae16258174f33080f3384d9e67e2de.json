@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7167,
-        "line": 63,
-        "path": "src/adapters/postgresql/cardinality-catalog.ts",
-        "sha256": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+        "bytes": 84809,
+        "line": 280,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "correlatePostgresqlCardinalityCatalog",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, text: string): { matches: { column: string; path: string; identity: { schema: string; relation: string; name: string; }; type: PostgresqlTypeIdentity; }[]; qualifiedVersion: boolean; sameSnapshotVerified: false; nativeSupplement: string; }"
+      "(document: Document, text: string): CardinalityCorrelation"
     ]
   },
   "id": "[\"api\",\".\",\"correlatePostgresqlCardinalityCatalog\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7167,
-      "line": 63,
-      "path": "src/adapters/postgresql/cardinality-catalog.ts",
-      "sha256": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+      "bytes": 84809,
+      "line": 280,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Cross-check overlapping observations. Agreement is not proof of a shared\ndatabase snapshot; capture provenance must establish that separately.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "correlatePostgresqlCardinalityCatalog"
 }

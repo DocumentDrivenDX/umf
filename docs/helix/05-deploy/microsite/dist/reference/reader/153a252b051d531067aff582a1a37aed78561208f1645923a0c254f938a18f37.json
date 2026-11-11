@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"discoverTableInventoryMigrationChanges\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableDeploymentBundle\"]"
+      ],
+      "name": "previous",
+      "optional": false,
+      "type": "TableDeploymentBundle | null"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableDeploymentBundle\"]"
+      ],
+      "name": "next",
+      "optional": false,
+      "type": "TableDeploymentBundle"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryDiscoverySelector\"]"
+      ],
+      "name": "selector",
+      "optional": false,
+      "type": "TableInventoryDiscoverySelector"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventorySourceHistory\"]"
+      ],
+      "name": "originalHistory",
+      "optional": false,
+      "type": "TableInventorySourceHistory"
+    }
+  ],
+  "purpose": "discoverTableInventoryMigrationChanges accepts previous, next, selector, originalHistory and returns TableInventoryReviewedChangeCandidate[].",
+  "related": [],
+  "returns": "TableInventoryReviewedChangeCandidate[]",
+  "task": "Other APIs",
+  "type": "(previous: TableDeploymentBundle | null, next: TableDeploymentBundle, selector: TableInventoryDiscoverySelector, originalHistory: TableInventorySourceHistory) => TableInventoryReviewedChangeCandidate[]"
+}

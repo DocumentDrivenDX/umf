@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"declareCoreFacets\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -33,9 +33,9 @@
       "type": "CoreFacetPatch"
     }
   ],
-  "purpose": "Patch known groups only; omitted groups and unknown nested qualifiers remain attached.",
+  "purpose": "declareCoreFacets accepts source, identity, options and returns CoreFacetDeclaration.",
   "related": [],
   "returns": "CoreFacetDeclaration",
   "task": "Other APIs",
-  "type": "(input: Document, identity: CoreFacetIdentity, options: CoreFacetPatch) => CoreFacetDeclaration"
+  "type": "(source: Document, identity: CoreFacetIdentity, options: CoreFacetPatch) => CoreFacetDeclaration"
 }

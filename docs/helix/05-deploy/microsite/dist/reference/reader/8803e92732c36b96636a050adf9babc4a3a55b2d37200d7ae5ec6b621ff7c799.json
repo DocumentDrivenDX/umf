@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyTableMigration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "plan",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "verifyTableMigration accepts plan and returns TableMigrationPlan.",
+  "related": [],
+  "returns": "TableMigrationPlan",
+  "task": "Other APIs",
+  "type": "(plan: unknown) => TableMigrationPlan"
+}

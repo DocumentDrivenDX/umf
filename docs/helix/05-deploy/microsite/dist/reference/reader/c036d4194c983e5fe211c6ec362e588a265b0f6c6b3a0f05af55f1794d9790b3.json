@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"compileTableInventoryMigration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryMigrationRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "TableInventoryMigrationRequest"
+    }
+  ],
+  "purpose": "compileTableInventoryMigration accepts request and returns TableInventoryMigrationResult.",
+  "related": [],
+  "returns": "TableInventoryMigrationResult",
+  "task": "Other APIs",
+  "type": "(request: TableInventoryMigrationRequest) => TableInventoryMigrationResult"
+}

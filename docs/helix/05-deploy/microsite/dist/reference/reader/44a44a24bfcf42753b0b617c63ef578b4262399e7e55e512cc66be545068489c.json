@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreKindDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreKindDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"FieldSqlServerRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "FieldSqlServerRequest"
     }
   ],
-  "purpose": "projectFieldToSqlServer accepts input, options and returns FieldSqlServerProjection.",
+  "purpose": "projectFieldToSqlServer accepts author, request and returns FieldSqlServerProjection.",
   "related": [],
   "returns": "FieldSqlServerProjection",
   "task": "Import and export",
-  "type": "(input: CoreKindDeclaration, options: FieldSqlServerRequest) => FieldSqlServerProjection"
+  "type": "(author: CoreKindDeclaration, request: FieldSqlServerRequest) => FieldSqlServerProjection"
 }

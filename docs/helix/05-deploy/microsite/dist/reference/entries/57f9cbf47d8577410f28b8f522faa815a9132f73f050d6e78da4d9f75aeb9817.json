@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5463,
-        "line": 79,
-        "path": "src/adapters/protobuf/descriptor.ts",
-        "sha256": "4abbe2929268b0f0c6480470da0874ba514abbe2026c16f2b75f519cfbfb1aaf"
+        "bytes": 84809,
+        "line": 343,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "writeDescriptorSet",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: DescriptorNode): Uint8Array<ArrayBufferLike>"
+      "(descriptorSet: DescriptorNode): Uint8Array<ArrayBufferLike>"
     ]
   },
   "id": "[\"api\",\".\",\"writeDescriptorSet\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5463,
-      "line": 79,
-      "path": "src/adapters/protobuf/descriptor.ts",
-      "sha256": "4abbe2929268b0f0c6480470da0874ba514abbe2026c16f2b75f519cfbfb1aaf"
+      "bytes": 84809,
+      "line": 343,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/adapters/protobuf/descriptor.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "writeDescriptorSet"
 }

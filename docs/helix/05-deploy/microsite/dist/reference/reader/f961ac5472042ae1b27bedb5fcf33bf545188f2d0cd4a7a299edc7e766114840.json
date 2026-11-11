@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipAvroProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RelationshipAvroProjection"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverRelationshipAvroIdeal accepts input, current and returns Document.",
+  "purpose": "recoverRelationshipAvroIdeal accepts receipt, current and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: RelationshipAvroProjection, current: Document) => Document"
+  "type": "(receipt: RelationshipAvroProjection, current: Document) => Document"
 }

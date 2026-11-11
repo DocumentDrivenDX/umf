@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerKeyClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerKeyClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverSqlServerKeySource accepts input, current and returns string.",
+  "purpose": "recoverSqlServerKeySource accepts receipt, current and returns string.",
   "related": [],
   "returns": "string",
   "task": "Import and export",
-  "type": "(input: SqlServerKeyClassification, current: Document) => string"
+  "type": "(receipt: SqlServerKeyClassification, current: Document) => string"
 }

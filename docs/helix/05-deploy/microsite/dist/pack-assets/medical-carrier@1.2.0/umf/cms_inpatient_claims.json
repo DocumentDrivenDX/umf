@@ -1,0 +1,518 @@
+{
+  "version": "1.0",
+  "table_name": "cms_inpatient_claims",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+  "columns": [
+    {
+      "name": "DESYNPUF_ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "DESYNPUF ID"
+    },
+    {
+      "name": "CLM_ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM ID"
+    },
+    {
+      "name": "SEGMENT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SEGMENT"
+    },
+    {
+      "name": "CLM_FROM_DT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM FROM DT"
+    },
+    {
+      "name": "CLM_THRU_DT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM THRU DT"
+    },
+    {
+      "name": "PRVDR_NUM",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRVDR NUM"
+    },
+    {
+      "name": "CLM_PMT_AMT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM PMT AMT"
+    },
+    {
+      "name": "NCH_PRMRY_PYR_CLM_PD_AMT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "NCH PRMRY PYR CLM PD AMT"
+    },
+    {
+      "name": "AT_PHYSN_NPI",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "AT PHYSN NPI"
+    },
+    {
+      "name": "OP_PHYSN_NPI",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "OP PHYSN NPI"
+    },
+    {
+      "name": "OT_PHYSN_NPI",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "OT PHYSN NPI"
+    },
+    {
+      "name": "CLM_ADMSN_DT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM ADMSN DT"
+    },
+    {
+      "name": "ADMTNG_ICD9_DGNS_CD",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ADMTNG ICD9 DGNS CD"
+    },
+    {
+      "name": "CLM_PASS_THRU_PER_DIEM_AMT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM PASS THRU PER DIEM AMT"
+    },
+    {
+      "name": "NCH_BENE_IP_DDCTBL_AMT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "NCH BENE IP DDCTBL AMT"
+    },
+    {
+      "name": "NCH_BENE_PTA_COINSRNC_LBLTY_AM",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "NCH BENE PTA COINSRNC LBLTY AM"
+    },
+    {
+      "name": "NCH_BENE_BLOOD_DDCTBL_LBLTY_AM",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "NCH BENE BLOOD DDCTBL LBLTY AM"
+    },
+    {
+      "name": "CLM_UTLZTN_DAY_CNT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM UTLZTN DAY CNT"
+    },
+    {
+      "name": "NCH_BENE_DSCHRG_DT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "NCH BENE DSCHRG DT"
+    },
+    {
+      "name": "CLM_DRG_CD",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM DRG CD"
+    },
+    {
+      "name": "ICD9_DGNS_CD_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 1"
+    },
+    {
+      "name": "ICD9_DGNS_CD_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 2"
+    },
+    {
+      "name": "ICD9_DGNS_CD_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 3"
+    },
+    {
+      "name": "ICD9_DGNS_CD_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 4"
+    },
+    {
+      "name": "ICD9_DGNS_CD_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 5"
+    },
+    {
+      "name": "ICD9_DGNS_CD_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 6"
+    },
+    {
+      "name": "ICD9_DGNS_CD_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 7"
+    },
+    {
+      "name": "ICD9_DGNS_CD_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 8"
+    },
+    {
+      "name": "ICD9_DGNS_CD_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 9"
+    },
+    {
+      "name": "ICD9_DGNS_CD_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 10"
+    },
+    {
+      "name": "ICD9_PRCDR_CD_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 PRCDR CD 1"
+    },
+    {
+      "name": "ICD9_PRCDR_CD_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 PRCDR CD 2"
+    },
+    {
+      "name": "ICD9_PRCDR_CD_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 PRCDR CD 3"
+    },
+    {
+      "name": "ICD9_PRCDR_CD_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 PRCDR CD 4"
+    },
+    {
+      "name": "ICD9_PRCDR_CD_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 PRCDR CD 5"
+    },
+    {
+      "name": "ICD9_PRCDR_CD_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 PRCDR CD 6"
+    },
+    {
+      "name": "HCPCS_CD_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 1"
+    },
+    {
+      "name": "HCPCS_CD_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 2"
+    },
+    {
+      "name": "HCPCS_CD_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 3"
+    },
+    {
+      "name": "HCPCS_CD_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 4"
+    },
+    {
+      "name": "HCPCS_CD_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 5"
+    },
+    {
+      "name": "HCPCS_CD_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 6"
+    },
+    {
+      "name": "HCPCS_CD_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 7"
+    },
+    {
+      "name": "HCPCS_CD_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 8"
+    },
+    {
+      "name": "HCPCS_CD_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 9"
+    },
+    {
+      "name": "HCPCS_CD_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 10"
+    },
+    {
+      "name": "HCPCS_CD_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 11"
+    },
+    {
+      "name": "HCPCS_CD_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 12"
+    },
+    {
+      "name": "HCPCS_CD_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 13"
+    },
+    {
+      "name": "HCPCS_CD_14",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 14"
+    },
+    {
+      "name": "HCPCS_CD_15",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 15"
+    },
+    {
+      "name": "HCPCS_CD_16",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 16"
+    },
+    {
+      "name": "HCPCS_CD_17",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 17"
+    },
+    {
+      "name": "HCPCS_CD_18",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 18"
+    },
+    {
+      "name": "HCPCS_CD_19",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 19"
+    },
+    {
+      "name": "HCPCS_CD_20",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 20"
+    },
+    {
+      "name": "HCPCS_CD_21",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 21"
+    },
+    {
+      "name": "HCPCS_CD_22",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 22"
+    },
+    {
+      "name": "HCPCS_CD_23",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 23"
+    },
+    {
+      "name": "HCPCS_CD_24",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 24"
+    },
+    {
+      "name": "HCPCS_CD_25",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 25"
+    },
+    {
+      "name": "HCPCS_CD_26",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 26"
+    },
+    {
+      "name": "HCPCS_CD_27",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 27"
+    },
+    {
+      "name": "HCPCS_CD_28",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 28"
+    },
+    {
+      "name": "HCPCS_CD_29",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 29"
+    },
+    {
+      "name": "HCPCS_CD_30",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 30"
+    },
+    {
+      "name": "HCPCS_CD_31",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 31"
+    },
+    {
+      "name": "HCPCS_CD_32",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 32"
+    },
+    {
+      "name": "HCPCS_CD_33",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 33"
+    },
+    {
+      "name": "HCPCS_CD_34",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 34"
+    },
+    {
+      "name": "HCPCS_CD_35",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 35"
+    },
+    {
+      "name": "HCPCS_CD_36",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 36"
+    },
+    {
+      "name": "HCPCS_CD_37",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 37"
+    },
+    {
+      "name": "HCPCS_CD_38",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 38"
+    },
+    {
+      "name": "HCPCS_CD_39",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 39"
+    },
+    {
+      "name": "HCPCS_CD_40",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 40"
+    },
+    {
+      "name": "HCPCS_CD_41",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 41"
+    },
+    {
+      "name": "HCPCS_CD_42",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 42"
+    },
+    {
+      "name": "HCPCS_CD_43",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 43"
+    },
+    {
+      "name": "HCPCS_CD_44",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 44"
+    },
+    {
+      "name": "HCPCS_CD_45",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 45"
+    },
+    {
+      "name": "native_record_number",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native record number"
+    },
+    {
+      "name": "native_csv_record",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native csv record"
+    }
+  ],
+  "primary_key": [
+    "CLM_ID",
+    "SEGMENT"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "DESYNPUF_ID",
+        "references_table": "cms_beneficiaries",
+        "references_column": "DESYNPUF_ID"
+      }
+    ]
+  }
+}

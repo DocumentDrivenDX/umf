@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5559,
-        "line": 5,
-        "path": "src/core-ideals/record-report.ts",
-        "sha256": "1c80851a00c3fdb8dd4e55b73e5ff5a18632b59341ca84d10db555c1531851f2"
+        "bytes": 5369,
+        "line": 36,
+        "path": "src/core-ideals/report-types.ts",
+        "sha256": "1f709683a84748990e75dd5b745ec8c894e47571339c1dc57dc7a3a6d67de020"
       }
     ],
     "entrypoint": ".",
     "exportName": "AuthoredRecordProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export type AuthoredRecordProjection=RecordTableSpecProjection|RecordPostgresqlProjection|RecordSqlServerProjection|RecordAvroProjection|RecordParquetProjection;"
+      "export type AuthoredRecordProjection = RecordTableSpecProjection | RecordPostgresqlProjection | RecordSqlServerProjection | RecordAvroProjection | RecordParquetProjection;"
     ]
   },
   "id": "[\"api\",\".\",\"AuthoredRecordProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5559,
-      "line": 5,
-      "path": "src/core-ideals/record-report.ts",
-      "sha256": "1c80851a00c3fdb8dd4e55b73e5ff5a18632b59341ca84d10db555c1531851f2"
+      "bytes": 5369,
+      "line": 36,
+      "path": "src/core-ideals/report-types.ts",
+      "sha256": "1f709683a84748990e75dd5b745ec8c894e47571339c1dc57dc7a3a6d67de020"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/record-report.ts",
+  "summary": "Type declaration · src/core-ideals/report-types.ts",
   "title": "AuthoredRecordProjection"
 }

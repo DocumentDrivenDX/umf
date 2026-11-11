@@ -1,0 +1,56 @@
+{
+  "resourceType": "CoverageEligibilityResponse",
+  "id": "negative",
+  "status": "active",
+  "purpose": [
+    "validation",
+    "benefits"
+  ],
+  "patient": {
+    "reference": "Patient/member"
+  },
+  "created": "2026-01-02",
+  "request": {
+    "reference": "CoverageEligibilityRequest/negative"
+  },
+  "outcome": "complete",
+  "insurer": {
+    "reference": "Organization/payer"
+  },
+  "insurance": [
+    {
+      "coverage": {
+        "reference": "Coverage/inactive"
+      },
+      "inforce": false,
+      "item": [
+        {
+          "category": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "benefit"
+              }
+            ]
+          },
+          "benefit": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "urn:umf:medical:synthetic-codes",
+                    "code": "annual-limit"
+                  }
+                ]
+              },
+              "allowedMoney": {
+                "value": 1000,
+                "currency": "USD"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

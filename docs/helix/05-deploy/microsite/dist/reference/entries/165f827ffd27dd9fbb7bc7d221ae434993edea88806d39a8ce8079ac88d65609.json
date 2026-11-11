@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10620,
+        "line": 32,
+        "path": "src/table-migration/inventory-types.ts",
+        "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableInventoryRestoration",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableInventoryRestoration {table:string;field:TableInventoryReference;archive:{profile:'umf.retired-field-archive-ref/0.1';providerId:string;archiveId:string;tableToken:string;targetCustody:import('../model/types').Json;retirementPlanDigest:string;retirementSourceDigest:string;fieldMeaningDigest:string};newInstances:{mode:'refuse'}|{mode:'null'}|{mode:'fill';expression:import('../model/types').Json}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableInventoryRestoration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10620,
+      "line": 32,
+      "path": "src/table-migration/inventory-types.ts",
+      "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/inventory-types.ts",
+  "title": "TableInventoryRestoration"
+}

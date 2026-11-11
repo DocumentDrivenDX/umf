@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 18719,
-        "line": 15,
-        "path": "src/extensions/security/policy.ts",
-        "sha256": "dc3775fd133994835bde80e3b3d6d6c2ac860c0831f686cdcc8070e99e461d0c"
+        "bytes": 586,
+        "line": 10,
+        "path": "src/extensions/security/policy-package.ts",
+        "sha256": "067e2ea319616c9dafb50454224200b0178364204ef375935607d416f4ae40d1"
       }
     ],
     "entrypoint": ".",
     "exportName": "securityPackage",
     "runtime": "unassessed",
     "signatureText": [
-      "securityPackage=copyJson(manifest) as unknown as ExtensionPackage"
+      "securityPackage = copyJson(manifest) as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"securityPackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 18719,
-      "line": 15,
-      "path": "src/extensions/security/policy.ts",
-      "sha256": "dc3775fd133994835bde80e3b3d6d6c2ac860c0831f686cdcc8070e99e461d0c"
+      "bytes": 586,
+      "line": 10,
+      "path": "src/extensions/security/policy-package.ts",
+      "sha256": "067e2ea319616c9dafb50454224200b0178364204ef375935607d416f4ae40d1"
     }
   ],
-  "summary": "Public export · src/extensions/security/policy.ts",
+  "summary": "Inert package metadata for Rust-owned Security registry admission.",
   "title": "securityPackage"
 }

@@ -19,12 +19,12 @@
       "links": [],
       "name": "options",
       "optional": false,
-      "type": "{ id: string; produceGeneralizedRdf?: boolean; numericPolicy?: \"strict\" | \"binary64\"; lossPolicy: \"report\" | \"reject\"; rdfDirection?: null | \"i18n-datatype\" | \"compound-literal\"; }"
+      "type": "{ id: string; produceGeneralizedRdf?: boolean; numericPolicy?: \"strict\" | \"binary64\"; lossPolicy: \"report\" | \"reject\"; rdfDirection?: \"i18n-datatype\" | \"compound-literal\" | null; }"
     }
   ],
   "purpose": "proposeJsonLdToRdf accepts document, options and returns Promise<JsonLdToRdfReport>.",
   "related": [],
   "returns": "Promise<JsonLdToRdfReport>",
   "task": "Author and edit",
-  "type": "(document: Document, options: { id: string; produceGeneralizedRdf?: boolean; numericPolicy?: \"strict\" | \"binary64\"; lossPolicy: \"report\" | \"reject\"; rdfDirection?: null | \"i18n-datatype\" | \"compound-literal\"; }) => Promise<JsonLdToRdfReport>"
+  "type": "(document: Parameters<ProposeJsonLdToRdf>[0], options: Parameters<ProposeJsonLdToRdf>[1]) => ReturnType<ProposeJsonLdToRdf>"
 }

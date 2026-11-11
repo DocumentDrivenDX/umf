@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3759,
-        "line": 9,
-        "path": "src/adapters/arrow/capture.ts",
-        "sha256": "6e8e973d07e8b3ad2f7796d68d9b08ccd637e10d2a52f08a4562b37e0aecb231"
+        "bytes": 763,
+        "line": 11,
+        "path": "src/adapters/arrow/package.ts",
+        "sha256": "c78e8232ca66a897a95f289428401d586d6d16a6dd9cc9c4f692f28154e4e8a7"
       }
     ],
     "entrypoint": ".",
     "exportName": "arrowIpcPackage",
     "runtime": "unassessed",
     "signatureText": [
-      "arrowIpcPackage=manifest as unknown as ExtensionPackage"
+      "arrowIpcPackage=ipcManifest as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"arrowIpcPackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3759,
-      "line": 9,
-      "path": "src/adapters/arrow/capture.ts",
-      "sha256": "6e8e973d07e8b3ad2f7796d68d9b08ccd637e10d2a52f08a4562b37e0aecb231"
+      "bytes": 763,
+      "line": 11,
+      "path": "src/adapters/arrow/package.ts",
+      "sha256": "c78e8232ca66a897a95f289428401d586d6d16a6dd9cc9c4f692f28154e4e8a7"
     }
   ],
-  "summary": "Public export · src/adapters/arrow/capture.ts",
+  "summary": "Public export · src/adapters/arrow/package.ts",
   "title": "arrowIpcPackage"
 }

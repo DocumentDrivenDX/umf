@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 95940,
+        "line": 439,
+        "path": "bindings/core/wasm/index.d.ts",
+        "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+      }
+    ],
+    "entrypoint": "./runtime/wasm",
+    "exportName": "initializeCoreKeyTupleWasm",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(resources: UmfCoreResources, loader?: (() => Promise<any>) | undefined, host?: typeof globalThis | undefined, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; resourceControls?: UmfCoreControls; } | undefined): Promise<Pick<UmfCoreModelEngine, \"encodeCoreKeyTuple\" | \"readCoreKeyTupleBytes\" | \"prepareCoreKeyTuples\" | \"verifyCoreKeyTuple\">>"
+    ]
+  },
+  "id": "[\"api\",\"./runtime/wasm\",\"initializeCoreKeyTupleWasm\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 95940,
+      "line": 439,
+      "path": "bindings/core/wasm/index.d.ts",
+      "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+    }
+  ],
+  "summary": "Public export · bindings/core/wasm/index.d.ts",
+  "title": "initializeCoreKeyTupleWasm"
+}

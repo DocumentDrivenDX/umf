@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyTableSpecNullability\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"TableSpecNullabilityRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "TableSpecNullabilityRequest"
     }
   ],
-  "purpose": "Read exact declarations under the caller's profile/context/carrier. Never use native coercion or defaults as ideal meaning.",
+  "purpose": "classifyTableSpecNullability accepts document, request and returns TableSpecNullabilityClassification.",
   "related": [],
   "returns": "TableSpecNullabilityClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: TableSpecNullabilityRequest) => TableSpecNullabilityClassification"
+  "type": "(document: Document, request: TableSpecNullabilityRequest) => TableSpecNullabilityClassification"
 }

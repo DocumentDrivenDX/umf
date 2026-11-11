@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "PostgresqlRelationshipClassification"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "verifyPostgresqlRelationshipClassification accepts input, current, backend and returns Promise<PostgresqlRelationshipClassification & { [x: string]: {}; }>.",
+  "purpose": "verifyPostgresqlRelationshipClassification accepts receipt, current, backend and returns Promise<PostgresqlRelationshipClassification>.",
   "related": [],
-  "returns": "Promise<PostgresqlRelationshipClassification & { [x: string]: {}; }>",
+  "returns": "Promise<PostgresqlRelationshipClassification>",
   "task": "Other APIs",
-  "type": "(input: PostgresqlRelationshipClassification, current: Document, backend: PostgresqlBackend) => Promise<PostgresqlRelationshipClassification & { [x: string]: {}; }>"
+  "type": "(receipt: PostgresqlRelationshipClassification, current: Document, backend: PostgresqlBackend) => Promise<PostgresqlRelationshipClassification>"
 }

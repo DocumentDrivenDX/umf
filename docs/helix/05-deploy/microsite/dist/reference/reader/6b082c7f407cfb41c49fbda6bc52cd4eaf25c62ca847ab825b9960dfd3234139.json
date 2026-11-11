@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipTableSpecProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RelationshipTableSpecProjection"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverRelationshipTableSpecNativeSources accepts input, current and returns { source: string | Record<string, string>; target: string | Record<string, string>; }.",
+  "purpose": "recoverRelationshipTableSpecNativeSources accepts receipt, current and returns { source: string | Record<string, string>; target: string | Record<string, string>; }.",
   "related": [],
   "returns": "{ source: string | Record<string, string>; target: string | Record<string, string>; }",
   "task": "Import and export",
-  "type": "(input: RelationshipTableSpecProjection, current: Document) => { source: string | Record<string, string>; target: string | Record<string, string>; }"
+  "type": "(receipt: RelationshipTableSpecProjection, current: Document) => { source: string | Record<string, string>; target: string | Record<string, string>; }"
 }

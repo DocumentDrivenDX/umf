@@ -1,23 +1,21 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectArrowIpcLayout\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Document\"]"
-      ],
+      "links": [],
       "name": "document",
       "optional": false,
-      "type": "Document"
+      "type": "unknown"
     }
   ],
-  "purpose": "Inspects encapsulated metadata/body boundaries; does not execute array or dictionary semantics.",
+  "purpose": "inspectArrowIpcLayout accepts document and returns ArrowIpcLayout.",
   "related": [],
   "returns": "ArrowIpcLayout",
   "task": "Inspect and select",
-  "type": "(document: Document) => ArrowIpcLayout"
+  "type": "(document: unknown) => ArrowIpcLayout"
 }

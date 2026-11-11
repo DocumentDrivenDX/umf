@@ -1,0 +1,120 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"DeltaSchemaTableEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "importSchema",
+      "optional": false,
+      "type": "(source: string, id: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectSchema",
+      "optional": false,
+      "type": "(document: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectSchemaPayload",
+      "optional": false,
+      "type": "(payload: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportSchema",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "getSchemaNode",
+      "optional": false,
+      "type": "(document: unknown, pointer: string) => any"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "editSchemaNode",
+      "optional": false,
+      "type": "(document: unknown, pointer: string, replacement: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importTable",
+      "optional": false,
+      "type": "(source: string, id: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectTable",
+      "optional": false,
+      "type": "(document: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectTablePayload",
+      "optional": false,
+      "type": "(payload: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportTable",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "getTableNode",
+      "optional": false,
+      "type": "(document: unknown, pointer: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getTableSchema",
+      "optional": false,
+      "type": "(document: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "editTableNode",
+      "optional": false,
+      "type": "(document: unknown, pointer: string, replacement: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "renameMappedField",
+      "optional": false,
+      "type": "(document: unknown, options: unknown) => any"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DeltaSchemaTableEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DeltaSchemaTableEngine"
+}

@@ -19,5 +19,5 @@
   "related": [],
   "returns": "GeneralizedRdfQuad[]",
   "task": "Inspect and select",
-  "type": "(document: Document) => GeneralizedRdfQuad[]"
+  "type": "(document: Parameters<GetGeneralizedRdfQuads>[0]) => GeneralizedRdfQuad[]"
 }

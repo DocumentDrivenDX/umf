@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifySqlServerNullability\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SqlServerNullabilityRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "SqlServerNullabilityRequest"
     }
   ],
-  "purpose": "Native absence is classified only for explicitly scoped stored-relation declarations.",
+  "purpose": "classifySqlServerNullability accepts source, request and returns SqlServerNullabilityClassification.",
   "related": [],
   "returns": "SqlServerNullabilityClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: SqlServerNullabilityRequest) => SqlServerNullabilityClassification"
+  "type": "(source: Document, request: SqlServerNullabilityRequest) => SqlServerNullabilityClassification"
 }

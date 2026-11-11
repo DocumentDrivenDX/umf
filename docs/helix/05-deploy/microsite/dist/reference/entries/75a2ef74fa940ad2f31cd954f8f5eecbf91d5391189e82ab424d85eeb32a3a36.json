@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 18927,
-        "line": 34,
-        "path": "src/core-ideals/relationship-tablespec-projection.ts",
-        "sha256": "8786f0f4815e314e286fdbcebf874c91b48cd2f13f8ef658f5876d9097f552cd"
+        "bytes": 84809,
+        "line": 244,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectRelationshipToTableSpec",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, authorInput: CoreRelationshipDeclaration, nativeSourceInput: Document, nativeTargetInput: Document, options: RelationshipTableSpecRequest): RelationshipTableSpecProjection"
+      "(source: Document, author: CoreRelationshipDeclaration, nativeSource: Document, nativeTarget: Document, request: RelationshipTableSpecRequest): RelationshipTableSpecProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectRelationshipToTableSpec\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 18927,
-      "line": 34,
-      "path": "src/core-ideals/relationship-tablespec-projection.ts",
-      "sha256": "8786f0f4815e314e286fdbcebf874c91b48cd2f13f8ef658f5876d9097f552cd"
+      "bytes": 84809,
+      "line": 244,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Explicit metadata lowering; no native execution or author-intent inference.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectRelationshipToTableSpec"
 }

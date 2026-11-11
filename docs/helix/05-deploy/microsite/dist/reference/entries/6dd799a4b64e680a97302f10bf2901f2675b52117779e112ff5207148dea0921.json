@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11096,
-        "line": 21,
-        "path": "src/core-ideals/cardinality-tablespec-projection.ts",
-        "sha256": "0374b5ef84a307bacc0d40e25e527534e4bf0f35495846042f266c1457d4a03a"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectCardinalityToTableSpec",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreCardinalityDeclaration, options: CardinalityTableSpecRequest): CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }"
+      "(author: CoreCardinalityDeclaration, request: CardinalityTableSpecRequest): CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }"
     ]
   },
   "id": "[\"api\",\".\",\"projectCardinalityToTableSpec\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11096,
-      "line": 21,
-      "path": "src/core-ideals/cardinality-tablespec-projection.ts",
-      "sha256": "0374b5ef84a307bacc0d40e25e527534e4bf0f35495846042f266c1457d4a03a"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/cardinality-tablespec-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectCardinalityToTableSpec"
 }

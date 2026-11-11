@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RowExpressionAssignment\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "field",
+      "optional": false,
+      "type": "TableRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RowExpression\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "{ kind: \"rowExpression\"; expression: RowExpression; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RowExpressionAssignment is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RowExpressionAssignment"
+}

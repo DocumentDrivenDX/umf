@@ -31,19 +31,19 @@
     },
     {
       "description": "",
-      "links": [],
-      "name": "target",
-      "optional": false,
-      "type": "{ system: string; version: string; subset: string; }"
-    },
-    {
-      "description": "",
       "links": [
         "[\"api\",\".\",\"SqlServerTablePolicy\"]"
       ],
       "name": "policy",
       "optional": false,
       "type": "SqlServerTablePolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": false,
+      "type": "{ system: string; version: string; subset: string; }"
     },
     {
       "description": "",

@@ -17,14 +17,14 @@
     {
       "description": "",
       "links": [],
-      "name": "path",
+      "name": "pointer",
       "optional": false,
       "type": "string"
     }
   ],
-  "purpose": "getSparkNode accepts document, path and returns NativeJson.",
+  "purpose": "getSparkNode accepts document, pointer and returns NativeJson.",
   "related": [],
   "returns": "NativeJson",
   "task": "Inspect and select",
-  "type": "(document: Document, path: string) => NativeJson"
+  "type": "(document: Document, pointer: string) => NativeJson"
 }

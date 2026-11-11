@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectCoreElementKind\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -24,9 +24,9 @@
       "type": "CoreKindIdentity"
     }
   ],
-  "purpose": "Read a role without inventing author/classifier provenance or interpreting legacy collisions.",
+  "purpose": "inspectCoreElementKind accepts source, identity and returns CoreKindInspection.",
   "related": [],
   "returns": "CoreKindInspection",
   "task": "Inspect and select",
-  "type": "(input: Document, identity: CoreKindIdentity) => CoreKindInspection"
+  "type": "(source: Document, identity: CoreKindIdentity) => CoreKindInspection"
 }

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1528,
+        "line": 5,
+        "path": "src/table-authoring/row-scope-types.ts",
+        "sha256": "d936ba5a87f9edf79302868a57a3f7f944162be3904c7027ed3bad107c605bb4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RowScopeViaBinding",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RowScopeViaBinding {\n  /** Name used in source row_scope.via[].table. */\n  name:string;\n  /** Exact UMF table Record and relationship path from the protected Record. */\n  record:TableRef;\n  /** Exact source spelling bound by the host to these UMF Fields. */\n  personColumnName:string;\n  keyColumnName:string;\n  /** Explicit source/current-row to related-row equality pair. */\n  sourceField:TableRef;\n  keyField:TableRef;\n  /** Person identity field on the related association Record. */\n  personField:TableRef;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RowScopeViaBinding\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1528,
+      "line": 5,
+      "path": "src/table-authoring/row-scope-types.ts",
+      "sha256": "d936ba5a87f9edf79302868a57a3f7f944162be3904c7027ed3bad107c605bb4"
+    }
+  ],
+  "summary": "Type declaration · src/table-authoring/row-scope-types.ts",
+  "title": "RowScopeViaBinding"
+}

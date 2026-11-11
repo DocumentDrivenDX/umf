@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-migration-phases:0.2",
+  "title": "Source-bound migration phase profile with required existing-field fill and NOT NULL pair",
+  "type": "object",
+  "properties": {
+    "executionProfile": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "umf.table-migration-execution/0.2"
+        },
+        "progressRelation": {
+          "const": "umf_lifecycle_progress"
+        },
+        "ownerOnly": {
+          "const": true
+        }
+      },
+      "required": [
+        "version",
+        "progressRelation",
+        "ownerOnly"
+      ],
+      "additionalProperties": false
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 8192,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^phase-[0-9]{5}$"
+          },
+          "kind": {
+            "enum": [
+              "transaction",
+              "backfill",
+              "concurrent-index",
+              "constraint-add",
+              "constraint-validation",
+              "seed",
+              "backfill-tighten"
+            ]
+          },
+          "transaction": {
+            "enum": [
+              "required",
+              "forbidden"
+            ]
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8192,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^step-[0-9]{5}$"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "transaction",
+          "steps"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "backfill-tighten"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "transaction": {
+                  "const": "required"
+                },
+                "steps": {
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "executionProfile",
+    "phases"
+  ],
+  "additionalProperties": false
+}

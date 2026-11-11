@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"DddPostgresqlProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "DddPostgresqlProjection"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "current",
+      "name": "currentTarget",
       "optional": false,
       "type": "Document"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "recoverDddPostgresqlNative accepts input, current, backend and returns Promise<string>.",
+  "purpose": "recoverDddPostgresqlNative accepts receipt, currentTarget, backend and returns Promise<string>.",
   "related": [],
   "returns": "Promise<string>",
   "task": "Import and export",
-  "type": "(input: DddPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<string>"
+  "type": "(receipt: DddPostgresqlProjection, currentTarget: Document, backend: PostgresqlBackend) => Promise<string>"
 }

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerRelationshipClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "verifySqlServerRelationshipClassification accepts input, current and returns SqlServerRelationshipClassification & { [x: string]: {}; }.",
+  "purpose": "verifySqlServerRelationshipClassification accepts receipt, current and returns SqlServerRelationshipClassification.",
   "related": [],
-  "returns": "SqlServerRelationshipClassification & { [x: string]: {}; }",
+  "returns": "SqlServerRelationshipClassification",
   "task": "Other APIs",
-  "type": "(input: SqlServerRelationshipClassification, current: Document) => SqlServerRelationshipClassification & { [x: string]: {}; }"
+  "type": "(receipt: SqlServerRelationshipClassification, current: Document) => SqlServerRelationshipClassification"
 }

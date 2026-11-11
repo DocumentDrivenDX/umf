@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfSecurityProtectionParametersEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityProtectionParametersResult\"]"
+      ],
+      "name": "validateProtectionParameters",
+      "optional": false,
+      "type": "(policy: unknown, catalog: unknown, closure: unknown) => SecurityProtectionParametersResult"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfSecurityProtectionParametersEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfSecurityProtectionParametersEngine"
+}

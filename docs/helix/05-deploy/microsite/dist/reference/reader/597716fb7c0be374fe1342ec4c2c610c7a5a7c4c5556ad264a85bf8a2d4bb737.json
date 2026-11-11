@@ -1,23 +1,21 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"registerActions\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Registry\"]"
-      ],
+      "links": [],
       "name": "registry",
       "optional": false,
-      "type": "Registry"
+      "type": "RegistryBase"
     }
   ],
-  "purpose": "Extends the caller's registry without discarding any installed callback.",
+  "purpose": "registerActions accepts registry and returns RegistryBase.",
   "related": [],
-  "returns": "Registry",
+  "returns": "RegistryBase",
   "task": "Extensions",
   "type": "(registry: Registry) => Registry"
 }

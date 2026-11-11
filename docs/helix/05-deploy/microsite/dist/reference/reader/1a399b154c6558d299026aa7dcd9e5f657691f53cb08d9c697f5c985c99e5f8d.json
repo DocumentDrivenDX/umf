@@ -8,35 +8,14 @@
     {
       "description": "",
       "links": [],
-      "name": "policy",
+      "name": "args",
       "optional": false,
-      "type": "unknown"
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "catalog",
-      "optional": false,
-      "type": "unknown"
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "closure",
-      "optional": false,
-      "type": "unknown"
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "useInput",
-      "optional": false,
-      "type": "unknown"
+      "type": "[policy: unknown, catalog: unknown, closure: unknown, use: unknown]"
     }
   ],
-  "purpose": "inspectProtectionQueryProperties accepts policy, catalog, closure, useInput and returns ProtectionQueryPropertyInspection.",
+  "purpose": "inspectProtectionQueryProperties accepts args and returns ProtectionQueryPropertyInspection.",
   "related": [],
   "returns": "ProtectionQueryPropertyInspection",
   "task": "Inspect and select",
-  "type": "(policy: unknown, catalog: unknown, closure: unknown, useInput: unknown) => ProtectionQueryPropertyInspection"
+  "type": "(policy: unknown, catalog: unknown, closure: unknown, use: unknown) => ReturnType<ProtectionQueryPropertyInspector>"
 }

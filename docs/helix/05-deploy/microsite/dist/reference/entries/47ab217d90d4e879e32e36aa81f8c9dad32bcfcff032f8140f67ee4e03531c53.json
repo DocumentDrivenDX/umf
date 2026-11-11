@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5074,
-        "line": 13,
-        "path": "src/adapters/smithy/assembly.ts",
-        "sha256": "e6aed852e88f125202a9ff5ffb1694d5da3ef636db50667b71807ce66f4ac05d"
+        "bytes": 4540,
+        "line": 7,
+        "path": "src/adapters/smithy/host-backends.ts",
+        "sha256": "18f7cbc1d21086aa074eda17d66fcc31c938fb2811fda18a5c2d51766d844028"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5074,
-      "line": 13,
-      "path": "src/adapters/smithy/assembly.ts",
-      "sha256": "e6aed852e88f125202a9ff5ffb1694d5da3ef636db50667b71807ce66f4ac05d"
+      "bytes": 4540,
+      "line": 7,
+      "path": "src/adapters/smithy/host-backends.ts",
+      "sha256": "18f7cbc1d21086aa074eda17d66fcc31c938fb2811fda18a5c2d51766d844028"
     }
   ],
-  "summary": "Explicit opt-in adapter for the pinned generated JavaScript module, not arbitrary native code discovery.",
+  "summary": "Public export · src/adapters/smithy/host-backends.ts",
   "title": "createSmithyJavaScriptBackend"
 }

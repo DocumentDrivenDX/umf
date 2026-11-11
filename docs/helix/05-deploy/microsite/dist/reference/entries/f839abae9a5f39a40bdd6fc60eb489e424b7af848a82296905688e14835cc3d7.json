@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3281,
-        "line": 13,
-        "path": "src/adapters/parquet/bodies.ts",
-        "sha256": "05976bb07a14b777772157c7bd261952e2390cb623ea5780a6bd0b5c31b54b53"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "decodeParquetPageBodies",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document): ParquetPageBodies"
+      "(document: Document): ParquetPageBodies"
     ]
   },
   "id": "[\"api\",\".\",\"decodeParquetPageBodies\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3281,
-      "line": 13,
-      "path": "src/adapters/parquet/bodies.ts",
-      "sha256": "05976bb07a14b777772157c7bd261952e2390cb623ea5780a6bd0b5c31b54b53"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Bounded physical page-body decoding only; encodings, levels and scalar values are separate.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "decodeParquetPageBodies"
 }

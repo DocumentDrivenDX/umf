@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"AvroFieldClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "AvroFieldClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverAvroFieldBundle accepts input, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
+  "purpose": "recoverAvroFieldBundle accepts receipt, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
   "related": [],
   "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; }",
   "task": "Import and export",
-  "type": "(input: AvroFieldClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
+  "type": "(receipt: AvroFieldClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
 }

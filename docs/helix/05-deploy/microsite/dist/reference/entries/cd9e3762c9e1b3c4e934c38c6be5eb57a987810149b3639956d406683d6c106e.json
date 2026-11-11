@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6215,
+        "line": 27,
+        "path": "src/extensions/tables/types.ts",
+        "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableOperationPredicate",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type TableOperationPredicate={op:'all'}|{op:'related';table:string;matches:{source:TableRef;target:TableRef}[];where:TableOperationPredicate}|{op:'and';args:TableOperationPredicate[]}|{op:'or';args:TableOperationPredicate[]}|{op:'not';arg:TableOperationPredicate}|{op:'isNull';field:TableRef}|{op:'in';field:TableRef;values:TableOperationValue[]}|{op:'eq'|'ne'|'lt'|'le'|'gt'|'ge'|'startsWith';field:TableRef;value:TableOperationValue};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableOperationPredicate\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6215,
+      "line": 27,
+      "path": "src/extensions/tables/types.ts",
+      "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/tables/types.ts",
+  "title": "TableOperationPredicate"
+}

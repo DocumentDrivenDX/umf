@@ -26,5 +26,5 @@
   "related": [],
   "returns": "Promise<JsonLdFlattenReport>",
   "task": "Author and edit",
-  "type": "(document: Document, options: { lossPolicy: \"report\" | \"reject\"; context?: string; compactArrays?: boolean; }) => Promise<JsonLdFlattenReport>"
+  "type": "(document: Parameters<ProposeJsonLdFlatten>[0], options: Parameters<ProposeJsonLdFlatten>[1]) => ReturnType<ProposeJsonLdFlatten>"
 }

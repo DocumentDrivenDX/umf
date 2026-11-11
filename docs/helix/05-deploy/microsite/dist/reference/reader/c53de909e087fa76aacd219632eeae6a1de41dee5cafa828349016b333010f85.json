@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"appendParquetKeyValueMetadata\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "source",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -24,9 +24,9 @@
       "type": "ParquetKeyValue[]"
     }
   ],
-  "purpose": "Append new file-level keys. Refuse replacement, unknown metadata, encryption and footer trailers.",
+  "purpose": "appendParquetKeyValueMetadata accepts document, entries and returns ParquetMetadataTransform.",
   "related": [],
   "returns": "ParquetMetadataTransform",
   "task": "Other APIs",
-  "type": "(source: Document, entries: ParquetKeyValue[]) => ParquetMetadataTransform"
+  "type": "(document: Document, entries: ParquetKeyValue[]) => ReturnType<AppendParquetKeyValueMetadata>"
 }

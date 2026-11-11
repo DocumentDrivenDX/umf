@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 18737,
-        "line": 161,
-        "path": "src/model/dataset-values.ts",
-        "sha256": "29f8dfe12f7e57d59320c0d31c78d1439355eac1c809924c80990a805e25478f"
+        "bytes": 84809,
+        "line": 383,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyCoreDatasetValues",
     "runtime": "unassessed",
     "signatureText": [
-      "(receiptInput: CoreDatasetValueCheck, current: Document, expectedInput: CoreDatasetInput): CoreDatasetValueCheck"
+      "(receipt: CoreDatasetValueCheck, current: Document, expectedInput: CoreDatasetInput): CoreDatasetValueCheck"
     ]
   },
   "id": "[\"api\",\".\",\"verifyCoreDatasetValues\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 18737,
-      "line": 161,
-      "path": "src/model/dataset-values.ts",
-      "sha256": "29f8dfe12f7e57d59320c0d31c78d1439355eac1c809924c80990a805e25478f"
+      "bytes": 84809,
+      "line": 383,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/model/dataset-values.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyCoreDatasetValues"
 }

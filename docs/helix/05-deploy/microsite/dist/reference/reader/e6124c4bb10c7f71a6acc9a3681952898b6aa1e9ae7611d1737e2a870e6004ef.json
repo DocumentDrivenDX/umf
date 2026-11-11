@@ -1,0 +1,105 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"SecurityQueryPropertiesResult\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"prohibited\" | \"refused\" | \"compatible-properties\" | \"requires-original-action\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authority",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "use",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authoredProperties",
+      "optional": false,
+      "type": "readonly unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "impliedProperties",
+      "optional": false,
+      "type": "readonly unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "effectiveProperties",
+      "optional": false,
+      "type": "readonly unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "requiredProperties",
+      "optional": false,
+      "type": "readonly unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "missingProperties",
+      "optional": false,
+      "type": "readonly unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "readonly { readonly code: string; readonly path: string; readonly message: string; readonly severity: \"error\" | \"warning\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityQueryPropertiesResult is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityQueryPropertiesResult"
+}

@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "text",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -20,9 +20,9 @@
       "type": "{ id: string; blankNodeScope?: string; }"
     }
   ],
-  "purpose": "importGeneralizedRdfDataset accepts text, options and returns Document.",
+  "purpose": "importGeneralizedRdfDataset accepts source, options and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(text: string, options: { id: string; blankNodeScope?: string; }) => Document"
+  "type": "(source: string, options: Parameters<ImportGeneralizedRdfDataset>[1]) => ReturnType<ImportGeneralizedRdfDataset>"
 }

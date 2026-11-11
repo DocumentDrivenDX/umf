@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 12786,
-        "line": 83,
-        "path": "src/extensions/actions/index.ts",
-        "sha256": "a05e2cc23deb42edbda7cb28ec51e8bf22175b4ae39f587abf649f45e2538a5f"
+        "bytes": 84809,
+        "line": 173,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "editAction",
     "runtime": "unassessed",
     "signatureText": [
-      "(sourceInput: Document, identity: ActionIdentity, replacementInput: Action, registry: Registry): Document"
+      "(source: Document, identity: ActionIdentity, replacement: Action, registry: RegistryBase): Document"
     ]
   },
   "id": "[\"api\",\".\",\"editAction\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 12786,
-      "line": 83,
-      "path": "src/extensions/actions/index.ts",
-      "sha256": "a05e2cc23deb42edbda7cb28ec51e8bf22175b4ae39f587abf649f45e2538a5f"
+      "bytes": 84809,
+      "line": 173,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/actions/index.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "editAction"
 }

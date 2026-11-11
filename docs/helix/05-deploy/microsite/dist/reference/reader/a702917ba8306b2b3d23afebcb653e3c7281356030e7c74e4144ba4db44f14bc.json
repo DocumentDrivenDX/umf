@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingIndexesToSqlServer\"]",
   "kind": "Function",
   "members": [],
@@ -47,7 +47,7 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "SQL Server 2022 disk-based rowstore index proposal; native server oracle proves the pinned corpus.",
+  "purpose": "projectBindingIndexesToSqlServer accepts logical, binding, nativeArchive, nativeSource, lossPolicy and returns SqlServerIndexProjection.",
   "related": [],
   "returns": "SqlServerIndexProjection",
   "task": "Import and export",

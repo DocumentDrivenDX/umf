@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyAvroFacetClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"AvroFacetClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "AvroFacetClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Verify retained receipt consistency, not source authenticity.",
+  "purpose": "verifyAvroFacetClassification accepts receipt, current and returns AvroFacetClassification.",
   "related": [],
   "returns": "AvroFacetClassification",
   "task": "Other APIs",
-  "type": "(input: AvroFacetClassification, current: Document) => AvroFacetClassification"
+  "type": "(receipt: AvroFacetClassification, current: Document) => AvroFacetClassification"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyParquetNullabilityClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"ParquetNullabilityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "ParquetNullabilityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "purpose": "verifyParquetNullabilityClassification accepts receipt, current and returns ParquetNullabilityClassification.",
   "related": [],
   "returns": "ParquetNullabilityClassification",
   "task": "Other APIs",
-  "type": "(input: ParquetNullabilityClassification, current: Document) => ParquetNullabilityClassification"
+  "type": "(receipt: ParquetNullabilityClassification, current: Document) => ParquetNullabilityClassification"
 }

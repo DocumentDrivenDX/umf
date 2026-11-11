@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createJavascriptNumericEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreResources\"]"
+      ],
+      "name": "resources",
+      "optional": true,
+      "type": "UmfCoreResources | undefined"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": true,
+      "type": "{ controls?: UmfCoreControls; setupControls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "createJavascriptNumericEngine accepts module, resources, options and returns UmfJavascriptNumericEngine.",
+  "related": [],
+  "returns": "UmfJavascriptNumericEngine",
+  "task": "Author and edit",
+  "type": "(module: any, resources?: UmfCoreResources, options?: { controls?: UmfCoreControls; setupControls?: UmfCoreControls; }) => UmfJavascriptNumericEngine"
+}

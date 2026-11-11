@@ -7,10 +7,12 @@
   "parameters": [
     {
       "description": "",
-      "links": [],
-      "name": "input",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
       "optional": false,
-      "type": "Source"
+      "type": "Document"
     },
     {
       "description": "",
@@ -26,14 +28,14 @@
       "links": [
         "[\"api\",\".\",\"CoreRelationshipRequest\"]"
       ],
-      "name": "requestInput",
+      "name": "request",
       "optional": false,
       "type": "CoreRelationshipRequest"
     }
   ],
-  "purpose": "declareCoreRelationship accepts input, identity, requestInput and returns CoreRelationshipDeclaration.",
+  "purpose": "declareCoreRelationship accepts source, identity, request and returns CoreRelationshipDeclaration.",
   "related": [],
   "returns": "CoreRelationshipDeclaration",
   "task": "Other APIs",
-  "type": "(input: Source, identity: RelationshipModuleIdentity, requestInput: CoreRelationshipRequest) => CoreRelationshipDeclaration"
+  "type": "(source: Document, identity: RelationshipModuleIdentity, request: CoreRelationshipRequest) => CoreRelationshipDeclaration"
 }

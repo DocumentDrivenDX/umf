@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11037,
-        "line": 17,
-        "path": "src/core-ideals/relationship-avro-projection.ts",
-        "sha256": "697e300741ea2cd80f1e8f14fc45d618f678161ce3a88fc6e388bbbaa8887148"
+        "bytes": 1663,
+        "line": 10,
+        "path": "src/core-ideals/relationship-avro-projection-types.ts",
+        "sha256": "9c796f23f142dd26080d6f9a1c3d3b515715476539c0238c7f1726ca22d84a6b"
       }
     ],
     "entrypoint": ".",
     "exportName": "RelationshipAvroProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface RelationshipAvroProjection {\n operation:'project-relationship-avro';version:'1.0.0';status:'projected'|'blocked';outcome:'approximated'|'not-expressible'|'unknown';\n source:Document;author:CoreRelationshipDeclaration;request:RelationshipAvroRequest;binding:typeof binding;target?:Document;nativeArchive?:{schema:string;dependencies:[]};\n mappings:{idealPath:string;nativePath:string;outcome:'approximated';targetKey:string;componentPaths:string[]}[];\n residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+      "export interface RelationshipAvroProjection {\n operation:'project-relationship-avro';version:'1.0.0';status:'projected'|'blocked';outcome:'approximated'|'not-expressible'|'unknown';\n source:Document;author:CoreRelationshipDeclaration;request:RelationshipAvroRequest;\n binding:{id:'umf.avro.relationships';version:'1.0.0';nativeVersion:'1.12.0';subset:'Explicit single-source/single-target named key-record value carrier, tested with Apache Avro 1.12.0 and fastavro 1.12.2; no target existence, participation, lifecycle or authored intent inferred from native import'};\n target?:Document;nativeArchive?:{schema:string;dependencies:[]};\n mappings:{idealPath:string;nativePath:string;outcome:'approximated';targetKey:string;componentPaths:string[]}[];\n residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string;recovery:'Retained receipt recovers authored source and emitted native archive; native-only import does not establish authored intent'}[];\n diagnostics:Diagnostic[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"RelationshipAvroProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11037,
-      "line": 17,
-      "path": "src/core-ideals/relationship-avro-projection.ts",
-      "sha256": "697e300741ea2cd80f1e8f14fc45d618f678161ce3a88fc6e388bbbaa8887148"
+      "bytes": 1663,
+      "line": 10,
+      "path": "src/core-ideals/relationship-avro-projection-types.ts",
+      "sha256": "9c796f23f142dd26080d6f9a1c3d3b515715476539c0238c7f1726ca22d84a6b"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/relationship-avro-projection.ts",
+  "summary": "Type declaration · src/core-ideals/relationship-avro-projection-types.ts",
   "title": "RelationshipAvroProjection"
 }

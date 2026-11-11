@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 288,
-        "line": 2,
+        "bytes": 334,
+        "line": 3,
         "path": "src/model/errors.ts",
-        "sha256": "66ce08de12f9bbf0d19da058d70a9be645fe1c8ca5ee1a666b0289281a0ee08c"
+        "sha256": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6"
       }
     ],
     "entrypoint": ".",
     "exportName": "UmfError",
     "runtime": "unassessed",
     "signatureText": [
-      "export class UmfError extends Error {constructor(readonly code:string,message:string,readonly path=''){super(message);this.name='UmfError';}}"
+      "new (code: string, message: string, path?: string): UmfError"
     ]
   },
   "id": "[\"api\",\".\",\"UmfError\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 288,
-      "line": 2,
+      "bytes": 334,
+      "line": 3,
       "path": "src/model/errors.ts",
-      "sha256": "66ce08de12f9bbf0d19da058d70a9be645fe1c8ca5ee1a666b0289281a0ee08c"
+      "sha256": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6"
     }
   ],
   "summary": "Generic errors have no generated/core-language dependency.",

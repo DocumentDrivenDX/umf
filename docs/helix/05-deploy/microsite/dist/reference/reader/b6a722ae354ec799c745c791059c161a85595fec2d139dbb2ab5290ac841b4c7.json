@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectParquetPages\"]",
   "kind": "Function",
   "members": [],
@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "source",
+      "name": "document",
       "optional": false,
       "type": "Document"
     }
   ],
-  "purpose": "Validates declared page boundaries/budgets without decompressing or decoding data.",
+  "purpose": "inspectParquetPages accepts document and returns ParquetPageInspection.",
   "related": [],
   "returns": "ParquetPageInspection",
   "task": "Inspect and select",
-  "type": "(source: Document) => ParquetPageInspection"
+  "type": "(document: Document) => ReturnType<InspectParquetPages>"
 }

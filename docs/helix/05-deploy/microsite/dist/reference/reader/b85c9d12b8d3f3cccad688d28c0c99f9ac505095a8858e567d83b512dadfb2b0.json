@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"observeArrowIpcCapture\"]",
   "kind": "Function",
   "members": [],
@@ -24,9 +24,9 @@
       "type": "ArrowIpcObservationBackend"
     }
   ],
-  "purpose": "A pinned native schema observation; does not assert complete byte consumption.",
+  "purpose": "observeArrowIpcCapture accepts document, backend and returns ArrowIpcObservationResult.",
   "related": [],
-  "returns": "{ source: Document; backend: string; complete: false; status: \"observed\" | \"uninterpreted\"; schema?: Json; message?: string; }",
+  "returns": "ArrowIpcObservationResult",
   "task": "Other APIs",
-  "type": "(document: Document, backend: ArrowIpcObservationBackend) => { source: Document; backend: string; complete: false; status: \"observed\" | \"uninterpreted\"; schema?: Json; message?: string; }"
+  "type": "(document: Document, backend: ArrowIpcObservationBackend) => ArrowIpcObservationResult"
 }

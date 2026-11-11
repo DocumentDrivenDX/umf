@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6137,
+        "bytes": 185,
         "line": 3,
         "path": "src/domain-packs/public-company.ts",
-        "sha256": "3e228ec8f965e40bc140ec2a5453202898a22aef177ac94b2a1529329367f513"
+        "sha256": "c2d7f87b3c721a8d639fa529ce919f8fea36d970dde5d171a57c028a2c333465"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6137,
+      "bytes": 185,
       "line": 3,
       "path": "src/domain-packs/public-company.ts",
-      "sha256": "3e228ec8f965e40bc140ec2a5453202898a22aef177ac94b2a1529329367f513"
+      "sha256": "c2d7f87b3c721a8d639fa529ce919f8fea36d970dde5d171a57c028a2c333465"
     }
   ],
-  "summary": "Type declaration · src/domain-packs/public-company.ts",
+  "summary": "Public row shape shared by the Rust-backed Node and browser SEC APIs.",
   "title": "PublicCompanyRow"
 }

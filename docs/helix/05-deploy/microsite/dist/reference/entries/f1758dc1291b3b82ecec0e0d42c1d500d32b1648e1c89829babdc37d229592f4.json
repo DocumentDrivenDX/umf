@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6215,
+        "line": 54,
+        "path": "src/extensions/tables/types.ts",
+        "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RowExpressionOperation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RowExpressionOperation {\n version:'umf.table-operation/0.2';id:string;parameters:[];consistency:'transaction';replay:'caller-key-required';\n body:{kind:'update';table:string;values:[RowExpressionAssignment];where:{op:'isNull';field:TableRef};returning:[];maxRows:number};\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RowExpressionOperation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6215,
+      "line": 54,
+      "path": "src/extensions/tables/types.ts",
+      "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/tables/types.ts",
+  "title": "RowExpressionOperation"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"SecurityComposition\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityDecision\"]"
+      ],
+      "name": "decision",
+      "optional": false,
+      "type": "SecurityDecision"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityDisposition\"]"
+      ],
+      "name": "disclosure",
+      "optional": false,
+      "type": "Record<string, SecurityDisposition>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityComposition is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityComposition"
+}

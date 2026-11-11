@@ -1,10 +1,10 @@
 {
   "alternatives": [
     "{ kind: \"reference\"; node: RdfNode; }",
-    "{ kind: \"intersectionOf\" | \"unionOf\" | \"oneOf\"; node: RdfNode; members: Term[]; }",
-    "{ kind: \"complementOf\" | \"datatypeComplementOf\" | \"inverseOf\"; node: RdfNode; operand: Term; }",
-    "{ kind: \"restriction\"; node: RdfNode; properties: Term[]; facets: { predicate: string; values: Term[]; }[]; }",
-    "{ kind: \"datatypeRestriction\"; node: RdfNode; datatype: Term; facets: { node: RdfNode; statements: { predicate: string; values: Term[]; }[]; }[]; }",
+    "{ kind: \"intersectionOf\" | \"unionOf\" | \"oneOf\"; node: RdfNode; members: OwlValue[]; }",
+    "{ kind: \"complementOf\" | \"datatypeComplementOf\" | \"inverseOf\"; node: RdfNode; operand: OwlValue; }",
+    "{ kind: \"restriction\"; node: RdfNode; properties: OwlValue[]; facets: { predicate: string; values: OwlValue[]; }[]; }",
+    "{ kind: \"datatypeRestriction\"; node: RdfNode; datatype: OwlValue; facets: { node: RdfNode; statements: { predicate: string; values: OwlValue[]; }[]; }[]; }",
     "{ kind: \"unrecognized\"; node: RdfNode; }"
   ],
   "authored": false,

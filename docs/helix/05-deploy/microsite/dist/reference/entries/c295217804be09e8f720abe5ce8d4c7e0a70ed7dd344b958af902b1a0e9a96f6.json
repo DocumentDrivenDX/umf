@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1713,
+        "line": 18,
+        "path": "src/adapters/delta/ddl.ts",
+        "sha256": "8bd9ed621b4861e08be3931938637b829035619d8b47dee87361ffc7e979eaee"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SparkDelta4DDLRealization",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SparkDelta4DDLRealization {\n  targetProfile:'spark-delta4/0.1';\n  realizationProfile:'umf.delta.spark-realization/0.1.0';\n  target:{profile:'spark-delta4/0.1';kind:'relation';relation:string[];location:string;identitySha256:string}\n    | {profile:'spark-delta4/0.1';kind:'delta-path';path:string;identitySha256:string};\n  sql:string;\n  definition:DeltaDefinition;\n  schemaJson:string;\n  sourceSha256:string;\n  schemaSha256:string;\n  writerSettings:{key:string;value:string}[];\n  dispositions:SparkDelta4Disposition[];\n  qualification:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SparkDelta4DDLRealization\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1713,
+      "line": 18,
+      "path": "src/adapters/delta/ddl.ts",
+      "sha256": "8bd9ed621b4861e08be3931938637b829035619d8b47dee87361ffc7e979eaee"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/ddl.ts",
+  "title": "SparkDelta4DDLRealization"
+}

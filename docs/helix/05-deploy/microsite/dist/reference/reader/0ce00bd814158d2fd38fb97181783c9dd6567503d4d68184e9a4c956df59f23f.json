@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipPostgresqlProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RelationshipPostgresqlProjection"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "verifyRelationshipPostgresqlProjection accepts input, current, backend and returns Promise<RelationshipPostgresqlProjection>.",
+  "purpose": "verifyRelationshipPostgresqlProjection accepts receipt, current, backend and returns Promise<RelationshipPostgresqlProjection>.",
   "related": [],
   "returns": "Promise<RelationshipPostgresqlProjection>",
   "task": "Other APIs",
-  "type": "(input: RelationshipPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<RelationshipPostgresqlProjection>"
+  "type": "(receipt: RelationshipPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<RelationshipPostgresqlProjection>"
 }

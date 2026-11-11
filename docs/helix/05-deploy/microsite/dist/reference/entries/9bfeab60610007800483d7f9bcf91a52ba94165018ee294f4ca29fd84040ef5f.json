@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6147,
-        "line": 9,
-        "path": "src/adapters/arrow/ipc-rename.ts",
-        "sha256": "8688bbe9865f8eecf7bec636cc5861666aafa1896a8b4ce60c8be4bd875d8e3b"
+        "bytes": 84809,
+        "line": 445,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "renameArrowIpcField",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, options: { fieldPath: number[]; name: string; uninterpretedMetadata: \"preserve-and-report\"; }, backend: ArrowFlatbufferEncodingBackend): ArrowIpcRenameResult"
+      "(document: Document, request: { fieldPath: number[]; name: string; uninterpretedMetadata: \"preserve-and-report\"; }, backend?: ArrowFlatbufferEncodingBackend | undefined): ArrowIpcRenameResult"
     ]
   },
   "id": "[\"api\",\".\",\"renameArrowIpcField\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6147,
-      "line": 9,
-      "path": "src/adapters/arrow/ipc-rename.ts",
-      "sha256": "8688bbe9865f8eecf7bec636cc5861666aafa1896a8b4ce60c8be4bd875d8e3b"
+      "bytes": 84809,
+      "line": 445,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Renames a positional field without changing physical types or record/dictionary messages.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "renameArrowIpcField"
 }

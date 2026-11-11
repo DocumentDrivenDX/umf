@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6215,
+        "line": 8,
+        "path": "src/extensions/tables/types.ts",
+        "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableColumn",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableColumn {field:TableRef;name:string;nativeType:TableNativeType;default?:TableDefault;generated?:{kind:'identity';generation:'always'|'byDefault'};immutable?:boolean}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableColumn\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6215,
+      "line": 8,
+      "path": "src/extensions/tables/types.ts",
+      "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/tables/types.ts",
+  "title": "TableColumn"
+}

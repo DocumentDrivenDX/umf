@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getOwlDeclarations\"]",
   "kind": "Function",
   "members": [],
@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Explicit graph declarations only; multiple roles remain separate and unvalidated.",
+  "purpose": "getOwlDeclarations accepts document and returns OwlDeclarationView.",
   "related": [],
   "returns": "OwlDeclarationView",
   "task": "Inspect and select",
-  "type": "(document: Document) => OwlDeclarationView"
+  "type": "(document: Parameters<typeof getOwlDeclarations>[0]) => OwlDeclarationView"
 }

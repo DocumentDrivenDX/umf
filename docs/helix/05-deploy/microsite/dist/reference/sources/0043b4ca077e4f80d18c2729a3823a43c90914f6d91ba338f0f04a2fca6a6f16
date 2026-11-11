@@ -1,0 +1,297 @@
+{
+  "id": "umf.lakeview",
+  "version": "0.2.0",
+  "coreVersion": "0.10.0",
+  "description": "Lakeview dashboard composition with extension-defined kinds, explicit core Records/Fields, and byte-identical untouched UTF-8 source recovery",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:lakeview:0.2.0",
+    "oneOf": [
+      {
+        "$ref": "#/$defs/dashboard"
+      },
+      {
+        "$ref": "#/$defs/page"
+      },
+      {
+        "$ref": "#/$defs/data"
+      },
+      {
+        "$ref": "#/$defs/dataset"
+      },
+      {
+        "$ref": "#/$defs/layout-item"
+      },
+      {
+        "$ref": "#/$defs/query-result"
+      },
+      {
+        "$ref": "#/$defs/field"
+      }
+    ],
+    "$defs": {
+      "dashboard": {
+        "type": "object",
+        "required": [
+          "kind",
+          "native",
+          "order",
+          "originalText",
+          "title"
+        ],
+        "properties": {
+          "kind": {
+            "const": "dashboard"
+          },
+          "native": {
+            "$ref": "#/$defs/node"
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "originalText": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "page": {
+        "type": "object",
+        "required": [
+          "kind",
+          "native",
+          "order"
+        ],
+        "properties": {
+          "kind": {
+            "const": "page"
+          },
+          "native": {
+            "$ref": "#/$defs/node"
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "data": {
+        "type": "object",
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "const": "data"
+          }
+        },
+        "additionalProperties": false
+      },
+      "dataset": {
+        "type": "object",
+        "required": [
+          "kind",
+          "native",
+          "schemaCoverage"
+        ],
+        "properties": {
+          "kind": {
+            "const": "dataset"
+          },
+          "native": {
+            "$ref": "#/$defs/node"
+          },
+          "schemaCoverage": {
+            "const": "partial-native-declarations"
+          }
+        },
+        "additionalProperties": false
+      },
+      "layout-item": {
+        "type": "object",
+        "required": [
+          "kind",
+          "native"
+        ],
+        "properties": {
+          "kind": {
+            "const": "layout-item"
+          },
+          "native": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "additionalProperties": false
+      },
+      "node": {
+        "type": "object",
+        "required": [
+          "kind",
+          "members"
+        ],
+        "properties": {
+          "kind": {
+            "const": "object"
+          },
+          "members": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "reference": {
+        "type": "object",
+        "required": [
+          "module",
+          "element"
+        ],
+        "properties": {
+          "module": {
+            "type": "string",
+            "minLength": 1
+          },
+          "element": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "query-result": {
+        "type": "object",
+        "required": [
+          "kind",
+          "sourcePath",
+          "schemaCoverage"
+        ],
+        "properties": {
+          "kind": {
+            "const": "query-result"
+          },
+          "sourcePath": {
+            "type": "string"
+          },
+          "schemaCoverage": {
+            "const": "declared-query-output"
+          },
+          "dataset": {
+            "$ref": "#/$defs/reference"
+          }
+        },
+        "additionalProperties": false
+      },
+      "field": {
+        "type": "object",
+        "required": [
+          "kind",
+          "sourcePath",
+          "role"
+        ],
+        "properties": {
+          "kind": {
+            "const": "field"
+          },
+          "sourcePath": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "declared-column",
+              "query-output"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "semantics": "CONTRACT-082 revision 0.2 and CONTRACT-906. Native retention, shape derivation and untouched-only export consistency are owned by shared Rust. Original UTF-8 text (including optional BOM, whitespace, escape spelling and line endings) is retained. Named dataset columns and widget query outputs use core Records/Fields and references; no parallel field dictionary or SQL/type inference. Changes without a qualified native rewrite fail export. Native rendering and Databricks acceptance remain unverified. The PR42 umf.dashboard 0.1 projection is a separate legacy compatibility view.",
+  "scopes": [
+    "document",
+    "module",
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Databricks AI/BI (Lakeview)",
+      "version": "unversioned observed lvdash.json exports",
+      "subset": "Committed marketing campaign fixture and synthetic UTF-8 fixtures; untouched source-byte recovery only. No live Databricks acceptance, SQL execution or edited-source rewrite qualification."
+    },
+    "evidence": [
+      "tests/lakeview/interchange.test.ts",
+      "scripts/lakeview-browser.ts",
+      "crates/umf-core/tests/lakeview.rs"
+    ]
+  },
+  "kindCatalog": {
+    "profile": "1.0.0",
+    "definitions": {
+      "dashboard": {
+        "title": "Lakeview dashboard",
+        "description": "A native composition of pages, dataset/query declarations and layout items. Kind discovery certifies classification, not rendering or Databricks acceptance.",
+        "scopes": [
+          "document"
+        ]
+      },
+      "data": {
+        "title": "Lakeview data module",
+        "description": "An identity container for native datasets and explicitly declared core data shapes; no table/storage equivalence is asserted.",
+        "scopes": [
+          "module"
+        ]
+      },
+      "page": {
+        "title": "Lakeview page",
+        "description": "An ordered native layout container, attached to a UMF module; native layout semantics remain Lakeview-owned.",
+        "scopes": [
+          "module"
+        ]
+      },
+      "dataset": {
+        "title": "Lakeview dataset",
+        "description": "A native query/dataset declaration on a core Record. Members are only explicit native column declarations, including context-dependent calculations; the row schema, grain and types remain unverified.",
+        "scopes": [
+          "element"
+        ]
+      },
+      "layout-item": {
+        "title": "Lakeview layout item",
+        "description": "An opaque native widget/layout composition with references to named query-result Records. Widget, chart, filter and rendering semantics are not core meanings.",
+        "scopes": [
+          "element"
+        ]
+      },
+      "query-result": {
+        "title": "Lakeview query result",
+        "description": "A core Record of explicitly named widget query outputs, with an exact dataset reference only when unambiguous. Expressions and aggregation remain opaque.",
+        "scopes": [
+          "element"
+        ]
+      },
+      "field": {
+        "title": "Lakeview named field",
+        "description": "A core Field for an explicit dataset column or query-output name. Its native source pointer defines provenance, not inferred type, nullability, storage or evaluation context.",
+        "scopes": [
+          "element"
+        ]
+      }
+    }
+  }
+}

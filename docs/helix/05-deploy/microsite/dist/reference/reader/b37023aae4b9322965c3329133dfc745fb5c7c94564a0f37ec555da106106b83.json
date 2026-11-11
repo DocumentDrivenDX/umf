@@ -19,5 +19,5 @@
   "related": [],
   "returns": "{ resources: { uri: string; text: string; format: \"json\" | \"yaml\"; }[]; source: Document; diagnostics: Diagnostic[]; baseUri?: string; schema: string; format: \"json\" | \"yaml\"; }",
   "task": "Import and export",
-  "type": "(document: Document) => { resources: { uri: string; text: string; format: \"json\" | \"yaml\"; }[]; source: Document; diagnostics: Diagnostic[]; baseUri?: string; schema: string; format: \"json\" | \"yaml\"; }"
+  "type": "(document: Parameters<ExportOpenapiBundle>[0]) => ReturnType<ExportOpenapiBundle>"
 }

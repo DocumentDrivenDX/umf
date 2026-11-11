@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyTableSpecFacetClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"TableSpecFacetClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "TableSpecFacetClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Receipt consistency with retained input and current target, not source authentication.",
+  "purpose": "verifyTableSpecFacetClassification accepts receipt, current and returns TableSpecFacetClassification.",
   "related": [],
   "returns": "TableSpecFacetClassification",
   "task": "Other APIs",
-  "type": "(input: TableSpecFacetClassification, current: Document) => TableSpecFacetClassification"
+  "type": "(receipt: TableSpecFacetClassification, current: Document) => TableSpecFacetClassification"
 }

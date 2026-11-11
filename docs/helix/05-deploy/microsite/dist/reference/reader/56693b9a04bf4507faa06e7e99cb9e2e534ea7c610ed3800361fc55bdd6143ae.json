@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SagaInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "validation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SagaDefinition\"]",
+        "[\"api\",\".\",\"SagaObligation\"]"
+      ],
+      "name": "entries",
+      "optional": false,
+      "type": "{ module: string; path: string; definition: SagaDefinition; obligations: SagaObligation[]; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SagaInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SagaInspection"
+}

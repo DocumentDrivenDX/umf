@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 12426,
-        "line": 15,
-        "path": "src/projections/parquet-avro.ts",
-        "sha256": "474628d9ff9ce2a94d88d1179b27c2439b4b82e79d9241fcaef890a74fdc559b"
+        "bytes": 84809,
+        "line": 252,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectParquetToAvro",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document, input: ParquetAvroPolicy): ParquetAvroProjection"
+      "(source: Document, policy: ParquetAvroPolicy): ParquetAvroProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectParquetToAvro\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 12426,
-      "line": 15,
-      "path": "src/projections/parquet-avro.ts",
-      "sha256": "474628d9ff9ce2a94d88d1179b27c2439b4b82e79d9241fcaef890a74fdc559b"
+      "bytes": 84809,
+      "line": 252,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Schema lowering only; never decodes or silently coerces stored page values.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectParquetToAvro"
 }

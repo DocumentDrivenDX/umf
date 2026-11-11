@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "table_name": "universes",
+  "description": "Public-company intelligence universes; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "universes.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "title",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "universes.title; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "membership_basis",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "universes.membership_basis; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "window_start",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "universes.window_start; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "window_end",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "universes.window_end; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ]
+}

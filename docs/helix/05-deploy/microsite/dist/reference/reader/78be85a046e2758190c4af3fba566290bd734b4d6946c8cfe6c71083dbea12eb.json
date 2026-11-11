@@ -33,9 +33,9 @@
       "type": "CoreEvolutionPolicy"
     }
   ],
-  "purpose": "inspectCoreEvolution accepts before, after, policy and returns Json.",
+  "purpose": "inspectCoreEvolution accepts before, after, policy and returns unknown.",
   "related": [],
-  "returns": "Json",
+  "returns": "unknown",
   "task": "Inspect and select",
-  "type": "(before: Document, after: Document, policy: CoreEvolutionPolicy) => Json"
+  "type": "(before: Document, after: Document, policy: CoreEvolutionPolicy) => unknown"
 }

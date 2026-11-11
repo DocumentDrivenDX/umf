@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"isNativeUmfCoreError\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "error",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "isNativeUmfCoreError accepts error and returns boolean.",
+  "related": [],
+  "returns": "boolean",
+  "task": "Read and validate",
+  "type": "(error: unknown) => boolean"
+}

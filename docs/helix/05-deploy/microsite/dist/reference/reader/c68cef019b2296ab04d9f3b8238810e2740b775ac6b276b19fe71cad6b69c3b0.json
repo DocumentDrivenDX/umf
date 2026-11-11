@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RecordAvroProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RecordAvroProjection"
     },
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "recoverRecordFromAvro accepts input, nativeText and returns Document.",
+  "purpose": "recoverRecordFromAvro accepts receipt, nativeText and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: RecordAvroProjection, nativeText: string) => Document"
+  "type": "(receipt: RecordAvroProjection, nativeText: string) => Document"
 }

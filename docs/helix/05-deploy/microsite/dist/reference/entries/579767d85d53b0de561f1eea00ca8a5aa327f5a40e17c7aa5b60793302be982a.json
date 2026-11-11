@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6494,
-        "line": 14,
-        "path": "src/projections/graphql-input-json-schema.ts",
-        "sha256": "8bbd7aa2e384449744d916b820b6eb1b1f93f8571d3015524160c302819b8ae9"
+        "bytes": 84809,
+        "line": 179,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectGraphqlInputToJsonSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document, input: GraphqlInputBindings): GraphqlInputProjection"
+      "(document: Document, bindings: GraphqlInputBindings): GraphqlInputProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectGraphqlInputToJsonSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6494,
-      "line": 14,
-      "path": "src/projections/graphql-input-json-schema.ts",
-      "sha256": "8bbd7aa2e384449744d916b820b6eb1b1f93f8571d3015524160c302819b8ae9"
+      "bytes": 84809,
+      "line": 179,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/projections/graphql-input-json-schema.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectGraphqlInputToJsonSchema"
 }

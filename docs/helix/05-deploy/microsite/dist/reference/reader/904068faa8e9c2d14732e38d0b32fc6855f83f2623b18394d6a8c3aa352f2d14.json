@@ -14,12 +14,10 @@
     },
     {
       "description": "Default: new Registry().",
-      "links": [
-        "[\"api\",\".\",\"Registry\"]"
-      ],
+      "links": [],
       "name": "registry",
       "optional": true,
-      "type": "Registry"
+      "type": "BaseRegistry"
     },
     {
       "description": "",
@@ -36,5 +34,5 @@
   ],
   "returns": "Validation",
   "task": "Read and validate",
-  "type": "(input: unknown, registry?: Registry, meter?: ConstraintMeter) => Validation"
+  "type": "(input: unknown, registry?: RegistryBase, meter?: ConstraintMeter) => Validation"
 }

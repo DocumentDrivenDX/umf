@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6084,
-        "line": 22,
-        "path": "src/core-ideals/key-parquet.ts",
-        "sha256": "3f4adad3eb5e9e893dbfc49be2d47a7155ccc3c3780a24ebf207f0f409a2f708"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyParquetKeys",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: ParquetKeyRequest): ParquetKeyClassification"
+      "(source: Document, request: ParquetKeyRequest): ParquetKeyClassification"
     ]
   },
   "id": "[\"api\",\".\",\"classifyParquetKeys\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6084,
-      "line": 22,
-      "path": "src/core-ideals/key-parquet.ts",
-      "sha256": "3f4adad3eb5e9e893dbfc49be2d47a7155ccc3c3780a24ebf207f0f409a2f708"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Observe physical schema only. Sorting, field IDs, statistics and metadata never assert identity.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyParquetKeys"
 }

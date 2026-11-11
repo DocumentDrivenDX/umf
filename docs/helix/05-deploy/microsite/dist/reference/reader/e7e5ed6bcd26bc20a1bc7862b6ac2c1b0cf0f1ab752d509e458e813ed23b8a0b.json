@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getParquetArrowSchema\"]",
   "kind": "Function",
   "members": [],
@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "source",
+      "name": "document",
       "optional": false,
       "type": "Document"
     }
   ],
-  "purpose": "Decode the optional ARROW:schema declaration; never infer correspondence to physical data.",
+  "purpose": "getParquetArrowSchema accepts document and returns ParquetArrowSchema.",
   "related": [],
   "returns": "ParquetArrowSchema",
   "task": "Inspect and select",
-  "type": "(source: Document) => ParquetArrowSchema"
+  "type": "(document: Document) => ParquetArrowSchema"
 }

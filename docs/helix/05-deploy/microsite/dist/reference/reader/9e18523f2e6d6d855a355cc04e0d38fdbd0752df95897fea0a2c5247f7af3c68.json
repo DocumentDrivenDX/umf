@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableCommandRules\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRowRule\"]"
+      ],
+      "name": "delete",
+      "optional": false,
+      "type": "TableRowRule"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRowRule\"]"
+      ],
+      "name": "update",
+      "optional": false,
+      "type": "TableRowRule"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRowRule\"]"
+      ],
+      "name": "select",
+      "optional": false,
+      "type": "TableRowRule"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRowRule\"]"
+      ],
+      "name": "insert",
+      "optional": false,
+      "type": "TableRowRule"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableCommandRules is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableCommandRules"
+}

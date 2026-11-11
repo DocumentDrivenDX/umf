@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"lookupMedicalTerminology\"]",
   "kind": "Function",
   "members": [],
@@ -22,7 +22,7 @@
       "type": "MedicalTerminologyRecord[] | undefined"
     }
   ],
-  "purpose": "Exact local lookup; an unavailable dictionary is not evidence that a code is invalid.",
+  "purpose": "lookupMedicalTerminology accepts query, records and returns { status: \"matched\" | \"not-in-subset\" | \"source-unavailable\"; matches: MedicalTerminologyRecord[]; }.",
   "related": [],
   "returns": "{ status: \"matched\" | \"not-in-subset\" | \"source-unavailable\"; matches: MedicalTerminologyRecord[]; }",
   "task": "Other APIs",

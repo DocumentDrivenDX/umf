@@ -1,0 +1,60 @@
+{
+  "release": "DE-SynPUF 1.0 Sample 1; 2008 beneficiary and 2008–2010 claims",
+  "retrieved_at": "2026-10-08",
+  "data_kind": "fabricated",
+  "files": {
+    "beneficiaries": {
+      "url": "https://www.cms.gov/research-statistics-data-and-systems/downloadable-public-use-files/synpufs/downloads/de1_0_2008_beneficiary_summary_file_sample_1.zip",
+      "archive_sha256": "2b0c9cbfb07a6eb46d5f96472c0891275a390b686c3fa34daae8d3e53d70b18b",
+      "member": "DE1_0_2008_Beneficiary_Summary_File_Sample_1.csv",
+      "member_sha256": "3a8ca1a6540f5ffa1666e6f051ec0756e2212cda9ff9b4c18f0c1a1594f70fbe",
+      "selected_record_numbers": [
+        1,
+        2,
+        5
+      ],
+      "subset_sha256": "500f5a2040cb17376c130884bfafa81bcc8d5acb0a44f89aa2af8701cc2d7349",
+      "rows": 3
+    },
+    "inpatient": {
+      "url": "https://www.cms.gov/research-statistics-data-and-systems/downloadable-public-use-files/synpufs/downloads/de1_0_2008_to_2010_inpatient_claims_sample_1.zip",
+      "archive_sha256": "ac25124184d22863aff538607097d2d0c880d19f7d58f882f9d31129c492d893",
+      "member": "DE1_0_2008_to_2010_Inpatient_Claims_Sample_1.csv",
+      "member_sha256": "8e3e8469f7e68d9cb8db0642aa4a7f2fa78004973c28973458a07f122a568681",
+      "selected_record_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "subset_sha256": "064973be1b23e48c9df9f4163502282ffc01b1094710cba588beb6d581f6d8b4",
+      "rows": 5
+    },
+    "carrier": {
+      "url": "https://downloads.cms.gov/files/DE1_0_2008_to_2010_Carrier_Claims_Sample_1A.zip",
+      "archive_sha256": "4b4038b5f6cd9c524fa3a655a3f467aef01af56c3cae0f08902a35a9945bed97",
+      "member": "DE1_0_2008_to_2010_Carrier_Claims_Sample_1A.csv",
+      "member_sha256": "bb4f7ffe7187741e049c6a0234410df309be9fe644ec63437070ca6f4d7132d3",
+      "selected_record_numbers": [
+        24,
+        54,
+        56,
+        66,
+        68
+      ],
+      "subset_sha256": "91d44f48211ffe3a0176bcc3fc980672de5db48de1d79783935db703ed0f456d",
+      "rows": 5
+    }
+  },
+  "selection": "First five inpatient rows and first five complete carrier rows without numeric CPT/Level I HCPCS tokens; all matching 2008 beneficiaries. The second carrier file (1B) is outside this tiny subset. Native columns and bytes unchanged. No ICD-9 conversion, clinical validity or longitudinal completeness claimed.",
+  "rights": {
+    "basis": "CMS public-domain website declaration and unrestricted DE-SynPUF software-development public release; no CPT code/descriptor vocabulary bundled.",
+    "references": [
+      "https://www.cms.gov/about-cms/web-policies-important-links/about-website/link-to-us",
+      "https://www.cms.gov/data-research/statistics-trends-and-reports/medicare-claims-synthetic-public-use-files",
+      "https://www.cms.gov/files/document/de-10-frequently-asked-questions.pdf"
+    ],
+    "limit": "Applies to this selected subset, not other CMS files or licensed codebooks."
+  }
+}

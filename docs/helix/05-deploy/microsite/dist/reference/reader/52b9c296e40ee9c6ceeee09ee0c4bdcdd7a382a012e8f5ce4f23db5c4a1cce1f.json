@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectLinkmlImportContext\"]",
   "kind": "Function",
   "members": [],
@@ -15,7 +15,7 @@
       "type": "LinkmlImportContext"
     }
   ],
-  "purpose": "Traverse only caller-supplied import bindings. Does not guess retrieval paths or merge declarations.",
+  "purpose": "inspectLinkmlImportContext accepts input and returns LinkmlImportReport.",
   "related": [],
   "returns": "LinkmlImportReport",
   "task": "Inspect and select",

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverAvroNullabilityBundle\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"AvroNullabilityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "AvroNullabilityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Recover exact original schema bundle text, including unclaimed native content.",
+  "purpose": "recoverAvroNullabilityBundle accepts receipt, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
   "related": [],
   "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; }",
   "task": "Import and export",
-  "type": "(input: AvroNullabilityClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
+  "type": "(receipt: AvroNullabilityClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
 }

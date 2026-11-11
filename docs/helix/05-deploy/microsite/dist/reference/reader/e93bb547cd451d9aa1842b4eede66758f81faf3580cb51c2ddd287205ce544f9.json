@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"emitTypeSpecJsonSchema\"]",
   "kind": "Function",
   "members": [],
@@ -16,17 +16,15 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"JsonObject\"]"
-      ],
+      "links": [],
       "name": "input",
       "optional": false,
-      "type": "{ options: JsonObject; }"
+      "type": "{ options: Record<string, unknown>; }"
     }
   ],
-  "purpose": "Native emitter output is evidence for a projection, not a lossless type-model conversion.",
+  "purpose": "emitTypeSpecJsonSchema accepts document, input and returns Promise<TypeSpecJsonSchemaEmission>.",
   "related": [],
-  "returns": "Promise<{ status: \"blocked\" | \"empty\" | \"emitted\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }>",
+  "returns": "Promise<TypeSpecJsonSchemaEmission>",
   "task": "Serialize",
-  "type": "(document: Document, input: { options: JsonObject; }) => Promise<{ status: \"blocked\" | \"empty\" | \"emitted\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }>"
+  "type": "(document: Document, input: { options: Record<string, unknown>; }) => Promise<TypeSpecJsonSchemaEmission>"
 }

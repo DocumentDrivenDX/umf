@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getOwlExpressionView\"]",
   "kind": "Function",
   "members": [],
@@ -24,9 +24,9 @@
       "type": "RdfNode"
     }
   ],
-  "purpose": "Local RDF constructor view, not a recursive OWL DL parse or a reasoning result.",
+  "purpose": "getOwlExpressionView accepts document, node and returns OwlExpressionView.",
   "related": [],
   "returns": "OwlExpressionView",
   "task": "Inspect and select",
-  "type": "(document: Document, node: RdfNode) => OwlExpressionView"
+  "type": "(document: Parameters<typeof getOwlExpressionView>[0], node: Parameters<typeof getOwlExpressionView>[1]) => OwlExpressionView"
 }

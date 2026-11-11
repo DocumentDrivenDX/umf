@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8291,
-        "line": 14,
-        "path": "src/projections/smithy-json-schema.ts",
-        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+        "bytes": 84809,
+        "line": 330,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectSmithyToJsonSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document, backend: SmithyJsonSchemaBackend, input: SmithyJsonSchemaPolicy): Promise<SmithyJsonSchemaProjection>"
+      "(source: Document, backend: SmithyJsonSchemaBackend, policy: SmithyJsonSchemaPolicy): Promise<SmithyJsonSchemaProjection>"
     ]
   },
   "id": "[\"api\",\".\",\"projectSmithyToJsonSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8291,
-      "line": 14,
-      "path": "src/projections/smithy-json-schema.ts",
-      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      "bytes": 84809,
+      "line": 330,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Native emission with explicit policy; does not certify Smithy instance or protocol equivalence.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectSmithyToJsonSchema"
 }

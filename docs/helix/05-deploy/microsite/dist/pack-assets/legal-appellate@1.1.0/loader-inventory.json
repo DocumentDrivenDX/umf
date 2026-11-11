@@ -1,0 +1,636 @@
+{
+  "version": "1.0.0",
+  "id": "legal-appellate-selected-originals",
+  "allowed_hosts": [
+    "cases.justia.com",
+    "cdn.ca9.uscourts.gov",
+    "ecf.ca8.uscourts.gov",
+    "ww3.ca2.uscourts.gov",
+    "www.ca4.uscourts.gov",
+    "www.ca5.uscourts.gov",
+    "www.opn.ca6.uscourts.gov",
+    "www.supremecourt.gov",
+    "www.uschamber.com",
+    "www2.ca3.uscourts.gov"
+  ],
+  "request_interval_ms": 1000,
+  "max_bytes": 10485760,
+  "max_total_bytes": 104857600,
+  "max_documents": 100,
+  "timeout_ms": 30000,
+  "retries": 1,
+  "entries": [
+    {
+      "id": "castillo",
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2023/05/31/21-50054.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Castillo",
+        "court_id": "ca9",
+        "docket_number": "21-50054",
+        "decision_date": "2023-05-31",
+        "document_kind": "opinion",
+        "sha256": "4ac55069b34a20fa8f18603f3b6a8f5daae2a8126923af0e683a02b40929196a",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "4ac55069b34a20fa8f18603f3b6a8f5daae2a8126923af0e683a02b40929196a"
+    },
+    {
+      "id": "nasir",
+      "url": "https://www2.ca3.uscourts.gov/opinarch/182888p1.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Nasir",
+        "court_id": "ca3",
+        "docket_number": "18-2888",
+        "decision_date": "2021-11-08",
+        "document_kind": "en_banc_opinion",
+        "sha256": "589fcce5ce5378d3a1286d00805a14ebaa0502903451cd79aa4a34c10a2015b3",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "589fcce5ce5378d3a1286d00805a14ebaa0502903451cd79aa4a34c10a2015b3"
+    },
+    {
+      "id": "havis-reconsideration",
+      "url": "https://www.opn.ca6.uscourts.gov/opinions.pdf/19a0156p-06.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Havis",
+        "court_id": "ca6",
+        "docket_number": "17-5772",
+        "decision_date": "2019-07-12",
+        "document_kind": "reconsideration_order",
+        "sha256": "69896d5f95bb5d26d446db793511a29e2c7511c7de51dad9708dec91c04bf342",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "69896d5f95bb5d26d446db793511a29e2c7511c7de51dad9708dec91c04bf342"
+    },
+    {
+      "id": "brown",
+      "url": "https://www.ca4.uscourts.gov/opinions/published/131779.p.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Brown v. Nucor Corporation",
+        "court_id": "ca4",
+        "docket_number": "13-1779",
+        "decision_date": "2015-05-11",
+        "document_kind": "opinion",
+        "sha256": "2a9e18730263415e4dbd8f07ede4a921f56d4b19d816e68c848e5a4afa6455b7",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "2a9e18730263415e4dbd8f07ede4a921f56d4b19d816e68c848e5a4afa6455b7"
+    },
+    {
+      "id": "bennett",
+      "url": "https://ecf.ca8.uscourts.gov/opndir/11/09/093831P.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Bennett v. Nucor Corporation",
+        "court_id": "ca8",
+        "docket_number": "09-3831/3834;10-1332",
+        "decision_date": "2011-09-22",
+        "document_kind": "opinion",
+        "sha256": "d5c8f9d04fec08fca3ee1924af298e515b663b8f9f5590fae4248c5c6f09671b",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "d5c8f9d04fec08fca3ee1924af298e515b663b8f9f5590fae4248c5c6f09671b"
+    },
+    {
+      "id": "chatrie",
+      "url": "https://www.ca4.uscourts.gov/opinions/224489.p.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Chatrie",
+        "court_id": "ca4",
+        "docket_number": "22-4489",
+        "decision_date": "2025-04-30",
+        "document_kind": "en_banc_opinion",
+        "sha256": "07cbd8d9762f63697f62405d33eea936f647d8d7340945bf7abcf61499fd9e7c",
+        "historical_status": "source_stamped_certiorari_granted_2026-01-20; later_treatment_not_checked"
+      },
+      "expected_sha256": "07cbd8d9762f63697f62405d33eea936f647d8d7340945bf7abcf61499fd9e7c"
+    },
+    {
+      "id": "chatrie-rehearing",
+      "url": "https://www.ca4.uscourts.gov/opinions/224489R1.U.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Chatrie",
+        "court_id": "ca4",
+        "docket_number": "22-4489",
+        "decision_date": "2024-11-01",
+        "document_kind": "rehearing_order",
+        "sha256": "0ea59a45cb9b3e0b8d6c6be1b7dc375a0ddfcd1ac921391a48102e69bd1d48df",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "0ea59a45cb9b3e0b8d6c6be1b7dc375a0ddfcd1ac921391a48102e69bd1d48df"
+    },
+    {
+      "id": "smith",
+      "url": "https://www.ca5.uscourts.gov/opinions/pub/23/23-60321-CR0.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Smith",
+        "court_id": "ca5",
+        "docket_number": "23-60321",
+        "decision_date": "2024-08-09",
+        "document_kind": "opinion",
+        "sha256": "10ccf222239ec1c11b9805d76db7b1f511e5ed9bd24ef730773ee46e2e9a1eb4",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "10ccf222239ec1c11b9805d76db7b1f511e5ed9bd24ef730773ee46e2e9a1eb4"
+    },
+    {
+      "id": "munoz-panel",
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2022/10/05/21-55365.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Mu\u00f1oz v. U.S. Department of State",
+        "court_id": "ca9",
+        "docket_number": "21-55365",
+        "decision_date": "2022-10-05",
+        "document_kind": "opinion",
+        "sha256": "f718e41e39b3a672f4131da9393d8a0f197cb186afd7896eeb76a3935bd8eff1",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "f718e41e39b3a672f4131da9393d8a0f197cb186afd7896eeb76a3935bd8eff1"
+    },
+    {
+      "id": "munoz-rehearing",
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2023/07/14/21-55365.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Mu\u00f1oz v. U.S. Department of State",
+        "court_id": "ca9",
+        "docket_number": "21-55365",
+        "decision_date": "2023-07-14",
+        "document_kind": "rehearing_order",
+        "sha256": "f03a42fb2f3584ada229ee5c3e48524e295e3d26cfe3b4b7a7ed0b745aa28fa5",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "f03a42fb2f3584ada229ee5c3e48524e295e3d26cfe3b4b7a7ed0b745aa28fa5"
+    },
+    {
+      "id": "munoz-scotus",
+      "url": "https://www.supremecourt.gov/opinions/23pdf/23-334_e18f.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Department of State v. Mu\u00f1oz",
+        "court_id": "scotus",
+        "docket_number": "23-334",
+        "decision_date": "2024-06-21",
+        "document_kind": "resolution_opinion",
+        "sha256": "c73eef0f9a0aaf412deb0e3fe059ce442671367c71819c9e3c2e8710b37e7118",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "c73eef0f9a0aaf412deb0e3fe059ce442671367c71819c9e3c2e8710b37e7118"
+    },
+    {
+      "id": "hansen-panel",
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2022/02/10/17-10548.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Hansen",
+        "court_id": "ca9",
+        "docket_number": "17-10548",
+        "decision_date": "2022-02-10",
+        "document_kind": "opinion",
+        "sha256": "454071cfe97007edea0fb2855f65bd2967b86f64352dcdefd6ab683f7e270337",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "454071cfe97007edea0fb2855f65bd2967b86f64352dcdefd6ab683f7e270337"
+    },
+    {
+      "id": "hansen-rehearing",
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2022/07/25/17-10548.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Hansen",
+        "court_id": "ca9",
+        "docket_number": "17-10548",
+        "decision_date": "2022-07-25",
+        "document_kind": "rehearing_order",
+        "sha256": "41fcc79538f708e882d30b5e187cf3fbcb5f943c72a4c21e864fc3cfb925a611",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "41fcc79538f708e882d30b5e187cf3fbcb5f943c72a4c21e864fc3cfb925a611"
+    },
+    {
+      "id": "hansen-scotus",
+      "url": "https://www.supremecourt.gov/opinions/22pdf/22-179_o75q.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Hansen",
+        "court_id": "scotus",
+        "docket_number": "22-179",
+        "decision_date": "2023-06-23",
+        "document_kind": "resolution_opinion",
+        "sha256": "c296e8fa5012bb9a432ad8fadae65f68f7f2f08abfe9eabe927a0370e1070bea",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "c296e8fa5012bb9a432ad8fadae65f68f7f2f08abfe9eabe927a0370e1070bea"
+    },
+    {
+      "id": "kennedy-panel",
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2021/03/18/20-35222.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Kennedy v. Bremerton School District",
+        "court_id": "ca9",
+        "docket_number": "20-35222",
+        "decision_date": "2021-03-18",
+        "document_kind": "opinion",
+        "sha256": "eb23db0b5a1ee8940194a610412d5e2870d5b7a66f0f8959d040c6fa4aaca458",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "eb23db0b5a1ee8940194a610412d5e2870d5b7a66f0f8959d040c6fa4aaca458"
+    },
+    {
+      "id": "kennedy-rehearing",
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2021/07/19/20-35222.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Kennedy v. Bremerton School District",
+        "court_id": "ca9",
+        "docket_number": "20-35222",
+        "decision_date": "2021-07-19",
+        "document_kind": "rehearing_order",
+        "sha256": "74dfe4be33e9493f54ce9ce298c8ceaa6f804063acac3303393d323ea517d6f7",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "74dfe4be33e9493f54ce9ce298c8ceaa6f804063acac3303393d323ea517d6f7"
+    },
+    {
+      "id": "kennedy-scotus",
+      "url": "https://www.supremecourt.gov/opinions/21pdf/21-418_new_onkq.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Kennedy v. Bremerton School District",
+        "court_id": "scotus",
+        "docket_number": "21-418",
+        "decision_date": "2022-06-27",
+        "document_kind": "resolution_opinion",
+        "sha256": "5558f7c8ac3950b41a3b17dd3871e28881f420359ab829915a5f271f18f12cad",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "5558f7c8ac3950b41a3b17dd3871e28881f420359ab829915a5f271f18f12cad"
+    },
+    {
+      "id": "aybar",
+      "url": "https://www.uschamber.com/assets/documents/Opinion20-20Aybar20v.20Aybar2028N.Y.20Court20of20Appeals29.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Aybar v. Aybar",
+        "court_id": "nycoa",
+        "docket_number": "54;APL-2019-00239",
+        "decision_date": "2021-10-07",
+        "document_kind": "opinion",
+        "sha256": "c15a09ba9be22fae3939002d813930ca2ec4cd8ea61b3d7debe23ebca02a5733",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "c15a09ba9be22fae3939002d813930ca2ec4cd8ea61b3d7debe23ebca02a5733"
+    },
+    {
+      "id": "mallory-scotus",
+      "url": "https://www.supremecourt.gov/opinions/22pdf/21-1168_f2ah.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Mallory v. Norfolk Southern Railway Co.",
+        "court_id": "scotus",
+        "docket_number": "21-1168",
+        "decision_date": "2023-06-27",
+        "document_kind": "resolution_opinion",
+        "sha256": "12ddc400ca2ad226567acd03d1b79a9a5aff458d1cb7bf71552ace5d2511103a",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "12ddc400ca2ad226567acd03d1b79a9a5aff458d1cb7bf71552ace5d2511103a"
+    },
+    {
+      "id": "black-rehearing",
+      "url": "https://ww3.ca2.uscourts.gov/decisions/OPN/20-3224_22-70_complete_opn.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Black v. Almodovar; G.M. v. Almodovar",
+        "court_id": "ca2",
+        "docket_number": "20-3224;22-70",
+        "decision_date": "2025-10-24",
+        "document_kind": "rehearing_order",
+        "sha256": "e05252c3c394f9b011af47e6c208616b8c40416fa94ef828f7e369174ac6002a",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "e05252c3c394f9b011af47e6c208616b8c40416fa94ef828f7e369174ac6002a"
+    },
+    {
+      "id": "ny-doj-rehearing",
+      "url": "https://ww3.ca2.uscourts.gov/decisions/OPN/19-267_complete_enbanc-Opinion.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "State of New York v. U.S. Department of Justice",
+        "court_id": "ca2",
+        "docket_number": "19-267",
+        "decision_date": "2020-07-13",
+        "document_kind": "rehearing_order",
+        "sha256": "bac2d06a1fcf18a07b6489caf486b03ab7c13d32e879cf19192e892b27a30d3e",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "bac2d06a1fcf18a07b6489caf486b03ab7c13d32e879cf19192e892b27a30d3e"
+    },
+    {
+      "id": "graham",
+      "url": "https://www.ca4.uscourts.gov/opinions/20221.P.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "In re Graham",
+        "court_id": "ca4",
+        "docket_number": "20-221",
+        "decision_date": "2023-03-08",
+        "document_kind": "opinion",
+        "sha256": "1e923dce485b245ac6788eb60b6d762c6f66ae2ffcb0ac3cbd1e1e58b92a4db2",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "1e923dce485b245ac6788eb60b6d762c6f66ae2ffcb0ac3cbd1e1e58b92a4db2"
+    },
+    {
+      "id": "taylor",
+      "url": "https://www.supremecourt.gov/opinions/21pdf/596us2r52_886a.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Taylor",
+        "court_id": "scotus",
+        "docket_number": "20-1459",
+        "decision_date": "2022-06-21",
+        "document_kind": "controlling_opinion",
+        "sha256": "85269f114e4eedd14fa0d0c0562975f5819ae1c053f7a9a650567906ec04bef2",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "85269f114e4eedd14fa0d0c0562975f5819ae1c053f7a9a650567906ec04bef2"
+    },
+    {
+      "id": "cobra-amended",
+      "url": "https://www.ca4.uscourts.gov/opinions/published/131406.p.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Cobra Natural Resources, LLC v. Federal Mine Safety and Health Review Commission",
+        "court_id": "ca4",
+        "docket_number": "13-1406",
+        "decision_date": "2014-01-29",
+        "document_kind": "amendment_order_and_opinion",
+        "sha256": "14b40a92ac24d11079a5feb5cc20ef1e96ef5da72c488e04b87fcd1846830405",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "14b40a92ac24d11079a5feb5cc20ef1e96ef5da72c488e04b87fcd1846830405"
+    },
+    {
+      "id": "hirschfeld-vacatur",
+      "url": "https://www.ca4.uscourts.gov/opinions/192250A.P.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Hirschfeld v. ATF",
+        "court_id": "ca4",
+        "docket_number": "19-2250",
+        "decision_date": "2021-09-22",
+        "document_kind": "vacatur_order",
+        "sha256": "ffb4c9fb3b5ddb0d3119c67804756f13765c3ff809abb7ffc660fc9688936366",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "ffb4c9fb3b5ddb0d3119c67804756f13765c3ff809abb7ffc660fc9688936366"
+    },
+    {
+      "id": "hirschfeld-panel",
+      "url": "https://www.ca4.uscourts.gov/opinions/192250.P.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Hirschfeld v. ATF",
+        "court_id": "ca4",
+        "docket_number": "19-2250",
+        "decision_date": "2021-07-15",
+        "document_kind": "amended_opinion",
+        "sha256": "24baec571773440a5cb8bec0a9ac6cd79f2756a95c5e720289b06a4505f7085a",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "24baec571773440a5cb8bec0a9ac6cd79f2756a95c5e720289b06a4505f7085a"
+    },
+    {
+      "id": "tabb",
+      "url": "https://ww3.ca2.uscourts.gov/decisions/OPN/18-338_opn.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "United States v. Tabb",
+        "court_id": "ca2",
+        "docket_number": "18-338",
+        "decision_date": "2020-02-06",
+        "document_kind": "opinion",
+        "sha256": "fb38d54657231f26b07099b85f44c3bf0632a94206e69752f30d0a1b69a53ed2",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "fb38d54657231f26b07099b85f44c3bf0632a94206e69752f30d0a1b69a53ed2"
+    },
+    {
+      "id": "vmg",
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2016/06/02/13-57104.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "VMG Salsoul, LLC v. Ciccone",
+        "court_id": "ca9",
+        "docket_number": "13-57104;14-55837",
+        "decision_date": "2016-06-02",
+        "document_kind": "opinion",
+        "sha256": "a90580a7f4e48e4e8a3beacedb7fe019f8b57be455c1c96bb29c5b0805344f60",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "a90580a7f4e48e4e8a3beacedb7fe019f8b57be455c1c96bb29c5b0805344f60"
+    },
+    {
+      "id": "bridgeport",
+      "url": "https://www.opn.ca6.uscourts.gov/opinions.pdf/05a0243a-06.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Bridgeport Music, Inc. v. Dimension Films",
+        "court_id": "ca6",
+        "docket_number": "02-6521;03-5738",
+        "decision_date": "2005-06-03",
+        "document_kind": "opinion",
+        "sha256": "126f6439b34eba600d2ec79a6f9c58f0c6224dca7f4cede19b75d1f9c0c07f55",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "126f6439b34eba600d2ec79a6f9c58f0c6224dca7f4cede19b75d1f9c0c07f55"
+    },
+    {
+      "id": "philadelphia",
+      "url": "https://www2.ca3.uscourts.gov/opinarch/182648p.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "City of Philadelphia v. Attorney General",
+        "court_id": "ca3",
+        "docket_number": "18-2648",
+        "decision_date": "2019-02-15",
+        "document_kind": "opinion",
+        "sha256": "ec3b619a420e7467e28be924f1013aa81c840e51a038858bab769147d09d78ec",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "ec3b619a420e7467e28be924f1013aa81c840e51a038858bab769147d09d78ec"
+    },
+    {
+      "id": "ny-doj-panel",
+      "url": "https://ww3.ca2.uscourts.gov/decisions/OPN/19-267_opn.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "State of New York v. U.S. Department of Justice",
+        "court_id": "ca2",
+        "docket_number": "19-267",
+        "decision_date": "2020-02-26",
+        "document_kind": "opinion",
+        "sha256": "23181252c3e6d2ab1fc0322d538a58464e35ab48896d8e8d661b461fee6e120b",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "23181252c3e6d2ab1fc0322d538a58464e35ab48896d8e8d661b461fee6e120b"
+    },
+    {
+      "id": "cobra-original",
+      "url": "https://cases.justia.com/federal/appellate-courts/ca4/13-1406/404820379/0.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Cobra Natural Resources, LLC v. Federal Mine Safety and Health Review Commission",
+        "court_id": "ca4",
+        "docket_number": "13-1406",
+        "decision_date": "2014-01-27",
+        "document_kind": "opinion",
+        "sha256": "f9d9369286682c1c78791798a1572bfa8cd72438ac92b3f60641ee07ac9e2c7a",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "f9d9369286682c1c78791798a1572bfa8cd72438ac92b3f60641ee07ac9e2c7a"
+    },
+    {
+      "id": "german-santos",
+      "url": "https://www2.ca3.uscourts.gov/opinarch/192663p.pdf",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "German Santos v. Warden Pike County Correctional Facility",
+        "court_id": "ca3",
+        "docket_number": "19-2663",
+        "decision_date": "2020-07-07",
+        "document_kind": "opinion",
+        "sha256": "fff8a4f5caa330cef6bc2f05b0afa4f35c17f47557c816b4a692f3ba29ae72b8",
+        "historical_status": "not_currently_shepardized"
+      },
+      "expected_sha256": "fff8a4f5caa330cef6bc2f05b0afa4f35c17f47557c816b4a692f3ba29ae72b8"
+    },
+    {
+      "id": "mallory-pa",
+      "url": "https://cases.justia.com/pennsylvania/supreme-court/2021-3-eap-2021.pdf?ts=1640205590",
+      "media_type": "application/pdf",
+      "license": {
+        "redistribution": "allowed"
+      },
+      "metadata": {
+        "case_name": "Mallory v. Norfolk Southern Railway Co.",
+        "court_id": "pasc",
+        "docket_number": "3 EAP 2021",
+        "decision_date": "2021-12-22",
+        "document_kind": "opinion",
+        "sha256": "49ca8169128b9936cfb6e5e83af080b9f2f5d33a5996ece2b72915d2a61e2663",
+        "historical_status": "subsequently_vacated_by_supreme_court"
+      },
+      "expected_sha256": "49ca8169128b9936cfb6e5e83af080b9f2f5d33a5996ece2b72915d2a61e2663"
+    }
+  ]
+}

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4785,
-        "line": 7,
-        "path": "src/core-ideals/classification-report.ts",
-        "sha256": "e22e1509b29546bc1940faa930a984ac96a9c072701711e591f17bbb1fd01ddb"
+        "bytes": 5369,
+        "line": 30,
+        "path": "src/core-ideals/report-types.ts",
+        "sha256": "1f709683a84748990e75dd5b745ec8c894e47571339c1dc57dc7a3a6d67de020"
       }
     ],
     "entrypoint": ".",
     "exportName": "FieldClassificationInspection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface FieldClassificationInspection {operation:'inspect-field-classification';version:'1.0.0';status:'classified'|'blocked';receipt:NativeFieldClassification;mapping:NativeFieldClassification['mapping']&{binding:Binding};residuals:{sourcePath:string;sourceValue:Json;targetPath:null;outcome:'unknown';reason:string;binding:Binding;recovery:{strategy:'retained-source-and-receipt';receiptPath:'/receipt/source';instruction:string}}[];diagnostics:Diagnostic[]}"
+      "export interface FieldClassificationInspection {operation:'inspect-field-classification';version:'1.0.0';status:'classified'|'blocked';receipt:NativeFieldClassification;mapping:NativeFieldClassification['mapping']&{binding:FieldBinding};residuals:{sourcePath:string;sourceValue:Json;targetPath:null;outcome:'unknown';reason:string;binding:FieldBinding;recovery:{strategy:'retained-source-and-receipt';receiptPath:'/receipt/source';instruction:string}}[];diagnostics:Diagnostic[]}"
     ]
   },
   "id": "[\"api\",\".\",\"FieldClassificationInspection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4785,
-      "line": 7,
-      "path": "src/core-ideals/classification-report.ts",
-      "sha256": "e22e1509b29546bc1940faa930a984ac96a9c072701711e591f17bbb1fd01ddb"
+      "bytes": 5369,
+      "line": 30,
+      "path": "src/core-ideals/report-types.ts",
+      "sha256": "1f709683a84748990e75dd5b745ec8c894e47571339c1dc57dc7a3a6d67de020"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/classification-report.ts",
+  "summary": "Type declaration · src/core-ideals/report-types.ts",
   "title": "FieldClassificationInspection"
 }

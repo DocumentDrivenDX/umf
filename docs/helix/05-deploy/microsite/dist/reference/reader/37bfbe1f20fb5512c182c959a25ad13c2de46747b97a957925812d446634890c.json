@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "sourceInput",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -28,23 +28,21 @@
       "links": [
         "[\"api\",\".\",\"Action\"]"
       ],
-      "name": "replacementInput",
+      "name": "replacement",
       "optional": false,
       "type": "Action"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Registry\"]"
-      ],
+      "links": [],
       "name": "registry",
       "optional": false,
-      "type": "Registry"
+      "type": "RegistryBase"
     }
   ],
-  "purpose": "editAction accepts sourceInput, identity, replacementInput, registry and returns Document.",
+  "purpose": "editAction accepts source, identity, replacement, registry and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Author and edit",
-  "type": "(sourceInput: Document, identity: ActionIdentity, replacementInput: Action, registry: Registry) => Document"
+  "type": "(source: Document, identity: ActionIdentity, replacement: Action, registry: RegistryBase) => Document"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"exportProtobufSources\"]",
   "kind": "Function",
   "members": [],
@@ -17,16 +17,16 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"ProtobufSourceEmitter\"]"
+        "[\"api\",\"./runtime/wasm\",\"ProtobufSourceEmitter\"]"
       ],
       "name": "emitter",
       "optional": false,
       "type": "ProtobufSourceEmitter"
     }
   ],
-  "purpose": "Emit current descriptors; the original source archive is never replayed.",
+  "purpose": "exportProtobufSources accepts document, emitter and returns Promise<ProtobufSourceExportResult>.",
   "related": [],
-  "returns": "Promise<{ source: Document; diagnostics: Diagnostic[]; files: Record<string, string>; compiler: string; printer: string; }>",
+  "returns": "Promise<ProtobufSourceExportResult>",
   "task": "Import and export",
-  "type": "(document: Document, emitter: ProtobufSourceEmitter) => Promise<{ source: Document; diagnostics: Diagnostic[]; files: Record<string, string>; compiler: string; printer: string; }>"
+  "type": "(document: Document, emitter: ProtobufSourceEmitter) => Promise<ProtobufSourceExportResult>"
 }

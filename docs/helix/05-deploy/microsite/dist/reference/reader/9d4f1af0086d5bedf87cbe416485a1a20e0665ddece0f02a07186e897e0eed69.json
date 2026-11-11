@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectSagas\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "registry",
+      "optional": true,
+      "type": "RegistryBase | undefined"
+    }
+  ],
+  "purpose": "inspectSagas accepts source, registry and returns SagaInspection.",
+  "related": [],
+  "returns": "SagaInspection",
+  "task": "Inspect and select",
+  "type": "(source: Document, registry?: Registry) => SagaInspection"
+}

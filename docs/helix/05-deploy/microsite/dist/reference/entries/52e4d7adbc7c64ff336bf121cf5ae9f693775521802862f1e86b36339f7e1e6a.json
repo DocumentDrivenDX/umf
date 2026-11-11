@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 1949,
-        "line": 6,
-        "path": "src/model/bit128-field.ts",
-        "sha256": "52da5a775232db094dea1d476c9124c16d0749aaf9e774f7b69a5c99eceecdd8"
+        "bytes": 84809,
+        "line": 374,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "declareCoreBit128Field",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identityInput: { module: string; element: string; }, scalarType: \"bits128\" | \"uuid\"): Document"
+      "(source: unknown, identity: { module: string; element: string; }, scalarType: \"bits128\" | \"uuid\"): Document"
     ]
   },
   "id": "[\"api\",\".\",\"declareCoreBit128Field\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 1949,
-      "line": 6,
-      "path": "src/model/bit128-field.ts",
-      "sha256": "52da5a775232db094dea1d476c9124c16d0749aaf9e774f7b69a5c99eceecdd8"
+      "bytes": 84809,
+      "line": 374,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Explicit copied metadata declaration; never converts stored values or issues a receipt.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "declareCoreBit128Field"
 }

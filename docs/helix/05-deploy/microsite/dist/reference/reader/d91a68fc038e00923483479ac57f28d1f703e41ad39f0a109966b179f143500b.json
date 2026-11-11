@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectLinkmlClassSlots\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "Local class-slot membership only; import merge and induced slot values are separate operations.",
+  "purpose": "inspectLinkmlClassSlots accepts document, className and returns LinkmlClassSlotsReport.",
   "related": [],
   "returns": "LinkmlClassSlotsReport",
   "task": "Inspect and select",
-  "type": "(document: Document, className: string) => LinkmlClassSlotsReport"
+  "type": "(document: Parameters<InspectLinkmlClassSlots>[0], className: string) => LinkmlClassSlotsReport"
 }

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CardinalityParquetProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "CardinalityParquetProjection"
     },
@@ -22,9 +22,9 @@
       "type": "Uint8Array<ArrayBufferLike>"
     }
   ],
-  "purpose": "recoverCardinalityFromParquet accepts input, native and returns Document.",
+  "purpose": "recoverCardinalityFromParquet accepts receipt, native and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: CardinalityParquetProjection, native: Uint8Array) => Document"
+  "type": "(receipt: CardinalityParquetProjection, native: Uint8Array) => Document"
 }

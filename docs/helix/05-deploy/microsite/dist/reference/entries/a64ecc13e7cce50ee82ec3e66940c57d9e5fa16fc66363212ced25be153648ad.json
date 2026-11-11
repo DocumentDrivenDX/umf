@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5942,
+        "line": 8,
+        "path": "src/extensions/actions/bulk-state.ts",
+        "sha256": "577ea9f8faa3d3d3dc798fdb7cda349b446f5a771f7bceffadd086b506af0412"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "BulkEvent",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type BulkEvent=\n |{kind:'submit';batchCount:number}|{kind:'claim'}|{kind:'execute';batch:number;fence:string}|{kind:'commit'}\n |{kind:'failure';failure:'conflict'|'rejected'|'authorization-loss'|'known-failure';code:string}\n |{kind:'lose-custody'}|{kind:'reconcile';evidence:BulkReconcileEvidence}\n |{kind:'expire-claim';confirmedNoExecution:boolean}|{kind:'cancel'}|{kind:'resume'};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"BulkEvent\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5942,
+      "line": 8,
+      "path": "src/extensions/actions/bulk-state.ts",
+      "sha256": "577ea9f8faa3d3d3dc798fdb7cda349b446f5a771f7bceffadd086b506af0412"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/bulk-state.ts",
+  "title": "BulkEvent"
+}

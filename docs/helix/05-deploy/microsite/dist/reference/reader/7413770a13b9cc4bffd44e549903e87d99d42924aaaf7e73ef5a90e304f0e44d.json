@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"decodeParquetValues\"]",
   "kind": "Function",
   "members": [],
@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "source",
+      "name": "document",
       "optional": false,
       "type": "Document"
     }
   ],
-  "purpose": "Logical views retain physical scalars and authoritative source; unsupported meanings stay opaque.",
+  "purpose": "decodeParquetValues accepts document and returns ParquetValues.",
   "related": [],
   "returns": "ParquetValues",
   "task": "Serialize",
-  "type": "(source: Document) => ParquetValues"
+  "type": "(document: Document) => ReturnType<DecodeParquetValues>"
 }

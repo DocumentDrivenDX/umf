@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "text",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -20,9 +20,9 @@
       "type": "{ id: string; }"
     }
   ],
-  "purpose": "importSparkSchema accepts text, options and returns Document.",
+  "purpose": "importSparkSchema accepts source, options and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(text: string, options: { id: string; }) => Document"
+  "type": "(source: string, options: { id: string; }) => Document"
 }

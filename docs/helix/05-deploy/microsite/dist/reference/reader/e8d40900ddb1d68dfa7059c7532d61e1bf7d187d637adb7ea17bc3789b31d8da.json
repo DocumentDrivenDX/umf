@@ -1,6 +1,6 @@
 {
   "alternatives": [
-    "{ kind: \"recipe\"; profile: { id: \"graph-write\"; version: \"1\"; [key: string]: unknown; }; effects: ActionEffect[]; } & { [key: string]: unknown; }",
+    "{ kind: \"recipe\"; profile: { id: \"graph-write\"; version: \"1\" | \"2\"; [key: string]: unknown; }; effects: ActionEffect[]; } & { [key: string]: unknown; }",
     "{ kind: \"handler\"; profile: ActionProfileIdentity; handler: ActionProfileIdentity; } & { [key: string]: unknown; }"
   ],
   "authored": false,

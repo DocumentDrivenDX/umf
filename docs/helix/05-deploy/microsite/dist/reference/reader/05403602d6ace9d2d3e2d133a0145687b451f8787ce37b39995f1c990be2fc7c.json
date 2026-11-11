@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"serializeTableInventoryMigration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "plan",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventorySourceHistory\"]"
+      ],
+      "name": "originalHistory",
+      "optional": false,
+      "type": "TableInventorySourceHistory"
+    }
+  ],
+  "purpose": "serializeTableInventoryMigration accepts plan, originalHistory and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Serialize",
+  "type": "(plan: unknown, originalHistory: TableInventorySourceHistory) => string"
+}

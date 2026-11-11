@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 30583,
-        "line": 25,
-        "path": "src/adapters/jsonld/index.ts",
-        "sha256": "df7e73156be5314a3b3118d9d3b21ba8c28f254fe5ea38c25036e0892b839eb7"
+        "bytes": 84809,
+        "line": 324,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "jsonldRegistry",
     "runtime": "unassessed",
     "signatureText": [
-      "(): Registry"
+      "(): RegistryBase"
     ]
   },
   "id": "[\"api\",\".\",\"jsonldRegistry\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 30583,
-      "line": 25,
-      "path": "src/adapters/jsonld/index.ts",
-      "sha256": "df7e73156be5314a3b3118d9d3b21ba8c28f254fe5ea38c25036e0892b839eb7"
+      "bytes": 84809,
+      "line": 324,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/adapters/jsonld/index.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "jsonldRegistry"
 }

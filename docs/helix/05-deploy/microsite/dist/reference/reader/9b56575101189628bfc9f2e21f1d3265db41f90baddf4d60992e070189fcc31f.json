@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventorySourceHistory\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf.table-inventory-source-history/0.1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryHistoryPlan\"]"
+      ],
+      "name": "plans",
+      "optional": false,
+      "type": "TableInventoryHistoryPlan[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryHistoryExecution\"]"
+      ],
+      "name": "executions",
+      "optional": false,
+      "type": "TableInventoryHistoryExecution[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableInventorySourceHistory is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventorySourceHistory"
+}

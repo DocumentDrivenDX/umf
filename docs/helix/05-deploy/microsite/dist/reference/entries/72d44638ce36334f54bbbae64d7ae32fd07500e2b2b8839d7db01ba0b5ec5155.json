@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3149,
-        "line": 15,
-        "path": "src/model/scalar-type.ts",
-        "sha256": "88aeb627523b02b91e778e011dc4aca858fe310c94ce0427f45ec5806580761a"
+        "bytes": 84809,
+        "line": 419,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectCoreScalarType",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identityInput: CoreScalarTypeIdentity): CoreScalarTypeInspection"
+      "(source: Document, identity: CoreScalarTypeIdentity): CoreScalarTypeInspection"
     ]
   },
   "id": "[\"api\",\".\",\"inspectCoreScalarType\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3149,
-      "line": 15,
-      "path": "src/model/scalar-type.ts",
-      "sha256": "88aeb627523b02b91e778e011dc4aca858fe310c94ce0427f45ec5806580761a"
+      "bytes": 84809,
+      "line": 419,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Inspect a value-family label without inferring role, native domain or container item type.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectCoreScalarType"
 }

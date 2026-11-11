@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7379,
+        "line": 29,
+        "path": "src/table-migration/types.ts",
+        "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableMigrationOptions",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type TableMigrationOptions=LegacyTableMigrationOptions|G04MigrationOptions;"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableMigrationOptions\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7379,
+      "line": 29,
+      "path": "src/table-migration/types.ts",
+      "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/types.ts",
+  "title": "TableMigrationOptions"
+}

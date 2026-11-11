@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "table_name": "collection_windows",
+  "description": "CONTRACT-058 bounded appellate fixture: collection_windows.",
+  "columns": [
+    {
+      "name": "window_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "collection_windows.window_id; preserve source scope and qualification."
+    },
+    {
+      "name": "court_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "collection_windows.court_id; preserve source scope and qualification."
+    },
+    {
+      "name": "starts_at",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "collection_windows.starts_at; preserve source scope and qualification."
+    },
+    {
+      "name": "ends_at",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "collection_windows.ends_at; preserve source scope and qualification."
+    },
+    {
+      "name": "expected_source",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "collection_windows.expected_source; preserve source scope and qualification."
+    },
+    {
+      "name": "qualification",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "collection_windows.qualification; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "window_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "court_id",
+        "references_table": "courts",
+        "references_column": "court_id"
+      }
+    ]
+  }
+}

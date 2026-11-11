@@ -24,5 +24,5 @@
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(text: string, options: { id: string; baseIRI: string; processingMode?: \"json-ld-1.0\" | \"json-ld-1.1\"; contexts?: { url: string; documentUrl?: string; text: string; }[]; expandContext?: string; }) => Document"
+  "type": "(text: string, options: Parameters<ImportJsonLdDocument>[1]) => ReturnType<ImportJsonLdDocument>"
 }

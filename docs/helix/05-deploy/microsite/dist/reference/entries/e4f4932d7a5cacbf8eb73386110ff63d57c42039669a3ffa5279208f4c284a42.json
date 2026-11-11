@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 22939,
-        "line": 54,
-        "path": "src/projections/ddd-postgresql/relationship-layout.ts",
-        "sha256": "b8bc072daaa0fa2b7d97adebc163faae18cd5e1c8c2e8cc0eec65fc8d999f7ce"
+        "bytes": 84809,
+        "line": 263,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "validatePostgresqlRelationshipLayout",
     "runtime": "unassessed",
     "signatureText": [
-      "(logicalInput: Document, bindingInput: Document, policyInput: PostgresqlRelationshipLayoutPolicy, lossPolicy: \"strict\" | \"report\"): PostgresqlRelationshipLayoutResult"
+      "(logical: Document, binding: Document, policy: PostgresqlRelationshipLayoutPolicy, lossPolicy: \"strict\" | \"report\"): PostgresqlRelationshipLayoutResult"
     ]
   },
   "id": "[\"api\",\".\",\"validatePostgresqlRelationshipLayout\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 22939,
-      "line": 54,
-      "path": "src/projections/ddd-postgresql/relationship-layout.ts",
-      "sha256": "b8bc072daaa0fa2b7d97adebc163faae18cd5e1c8c2e8cc0eec65fc8d999f7ce"
+      "bytes": 84809,
+      "line": 263,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Validate retained metadata only. A candidate is a policy, never SQL or native enforcement.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "validatePostgresqlRelationshipLayout"
 }

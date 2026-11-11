@@ -1,0 +1,78 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"initializeWasm\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "Overload 1 · loader",
+      "optional": false,
+      "type": "(() => Promise<any>) | undefined"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "Overload 1 · host",
+      "optional": false,
+      "type": "typeof globalThis | undefined"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreResources\"]"
+      ],
+      "name": "Overload 1 · resources",
+      "optional": false,
+      "type": "UmfCoreResources"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "Overload 1 · options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; } | undefined"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "Overload 2 · loader",
+      "optional": true,
+      "type": "(() => Promise<any>) | undefined"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "Overload 2 · host",
+      "optional": true,
+      "type": "typeof globalThis | undefined"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreResources\"]"
+      ],
+      "name": "Overload 2 · resources",
+      "optional": true,
+      "type": "UmfCoreResources | undefined"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "Overload 2 · options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "initializeWasm accepts Overload 1 · loader, Overload 1 · host, Overload 1 · resources, Overload 1 · options, Overload 2 · loader, Overload 2 · host, Overload 2 · resources, Overload 2 · options and returns Promise<UmfCoreDocumentEngine> | Promise<UmfCoreEngine>.",
+  "related": [],
+  "returns": "Promise<UmfCoreDocumentEngine> | Promise<UmfCoreEngine>",
+  "task": "Other APIs",
+  "type": "{ (loader: (() => Promise<any>) | undefined, host: typeof globalThis | undefined, resources: UmfCoreResources, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }): Promise<UmfCoreDocumentEngine>; (loader?: () => Promise<any>, host?: typeof globalThis, resources?: UmfCoreResources, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }): Promise<UmfCoreEngine>; }"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 95940,
+        "line": 418,
+        "path": "bindings/core/wasm/index.d.ts",
+        "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+      }
+    ],
+    "entrypoint": "./runtime/wasm",
+    "exportName": "createCoreBit128FieldEngine",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(module: any, resources: UmfCoreResources, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; } | undefined): { declareCoreBit128Field(source: unknown, identity: { module: string; element: string; }, scalarType: \"bits128\" | \"uuid\"): unknown; }"
+    ]
+  },
+  "id": "[\"api\",\"./runtime/wasm\",\"createCoreBit128FieldEngine\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 95940,
+      "line": 418,
+      "path": "bindings/core/wasm/index.d.ts",
+      "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+    }
+  ],
+  "summary": "Opt-in only; authors bits128/uuid meaning on one singular Field in current core 0.10.0.",
+  "title": "createCoreBit128FieldEngine"
+}

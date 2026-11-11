@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3802,
-        "line": 7,
-        "path": "src/adapters/parquet/arrow-schema.ts",
-        "sha256": "e06ae36af58da50a98656ccdb492055e109089860700e8f236a29dc04b11c6a8"
+        "bytes": 881,
+        "line": 5,
+        "path": "src/adapters/parquet/arrow-types.ts",
+        "sha256": "f076d97c0f69f08807ef57dd0e8a5245610a025f564c754e58a030b982646db4"
       }
     ],
     "entrypoint": ".",
     "exportName": "ParquetArrowSchema",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ParquetArrowSchema {\n source:Document;status:'absent'|'decoded'|'blocked';complete:false;diagnostics:Diagnostic[];\n metadataIndex?:number;ipcHex?:string;message?:Document;schema?:Document;\n}"
+      "export interface ParquetArrowSchema {source:Document;status:'absent'|'decoded'|'blocked';complete:false;diagnostics:Diagnostic[];metadataIndex?:number;ipcHex?:string;message?:Document;schema?:Document;}"
     ]
   },
   "id": "[\"api\",\".\",\"ParquetArrowSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3802,
-      "line": 7,
-      "path": "src/adapters/parquet/arrow-schema.ts",
-      "sha256": "e06ae36af58da50a98656ccdb492055e109089860700e8f236a29dc04b11c6a8"
+      "bytes": 881,
+      "line": 5,
+      "path": "src/adapters/parquet/arrow-types.ts",
+      "sha256": "f076d97c0f69f08807ef57dd0e8a5245610a025f564c754e58a030b982646db4"
     }
   ],
-  "summary": "Type declaration · src/adapters/parquet/arrow-schema.ts",
+  "summary": "Type declaration · src/adapters/parquet/arrow-types.ts",
   "title": "ParquetArrowSchema"
 }

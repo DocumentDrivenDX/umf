@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectLakeview\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"LakeviewRuntime\"]"
+      ],
+      "name": "runtime",
+      "optional": false,
+      "type": "LakeviewRuntime"
+    }
+  ],
+  "purpose": "inspectLakeview accepts document, runtime and returns Validation.",
+  "related": [],
+  "returns": "Validation",
+  "task": "Inspect and select",
+  "type": "(document: Document, runtime: LakeviewRuntime) => Validation"
+}

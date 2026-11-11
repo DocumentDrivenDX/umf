@@ -7,24 +7,26 @@
   "parameters": [
     {
       "description": "",
-      "links": [],
-      "name": "input",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
       "optional": false,
-      "type": "Source"
+      "type": "Document"
     },
     {
       "description": "",
       "links": [
         "[\"api\",\".\",\"CoreRelationshipIdentity\"]"
       ],
-      "name": "identityInput",
+      "name": "identity",
       "optional": false,
       "type": "CoreRelationshipIdentity"
     }
   ],
-  "purpose": "lookupCoreRelationship accepts input, identityInput and returns CoreRelationshipLookup.",
+  "purpose": "lookupCoreRelationship accepts source, identity and returns CoreRelationshipLookup.",
   "related": [],
   "returns": "CoreRelationshipLookup",
   "task": "Other APIs",
-  "type": "(input: Source, identityInput: CoreRelationshipIdentity) => CoreRelationshipLookup"
+  "type": "(source: Document, identity: CoreRelationshipIdentity) => CoreRelationshipLookup"
 }

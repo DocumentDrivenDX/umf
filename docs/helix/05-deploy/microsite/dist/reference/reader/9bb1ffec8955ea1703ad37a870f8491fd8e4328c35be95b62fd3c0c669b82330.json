@@ -26,5 +26,5 @@
   "related": [],
   "returns": "Promise<GeneralizedRdfToJsonLdReport>",
   "task": "Author and edit",
-  "type": "(document: Document, options: { id: string; baseIRI: string; processingMode: \"json-ld-1.0\" | \"json-ld-1.1\"; lossPolicy: \"report\" | \"reject\"; }) => Promise<GeneralizedRdfToJsonLdReport>"
+  "type": "(document: Parameters<ProposeGeneralizedRdfToJsonLd>[0], options: Parameters<ProposeGeneralizedRdfToJsonLd>[1]) => ReturnType<ProposeGeneralizedRdfToJsonLd>"
 }

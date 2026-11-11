@@ -1,32 +1,28 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"securityPolicyDependencies\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityPolicy\"]"
-      ],
-      "name": "policyInput",
+      "links": [],
+      "name": "source",
       "optional": false,
-      "type": "SecurityPolicy"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityResolution\"]"
-      ],
-      "name": "resolutionInput",
+      "links": [],
+      "name": "resolution",
       "optional": false,
-      "type": "SecurityResolution"
+      "type": "unknown"
     }
   ],
-  "purpose": "Conservative dependency closure over complete typed meaning; no label-based ownership inference.",
+  "purpose": "securityPolicyDependencies accepts source, resolution and returns SecurityDependencies.",
   "related": [],
   "returns": "SecurityDependencies",
   "task": "Other APIs",
-  "type": "(policyInput: SecurityPolicy, resolutionInput: SecurityResolution) => SecurityDependencies"
+  "type": "(source: unknown, resolution: unknown) => SecurityDependencies"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4810,
-        "line": 30,
-        "path": "src/adapters/postgresql/key-catalog.ts",
-        "sha256": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46"
+        "bytes": 84809,
+        "line": 280,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectPostgresqlKeyCatalog",
     "runtime": "unassessed",
     "signatureText": [
-      "(text: string): { root: NativeJson; nativeSource: string; serverVersion: 170004; encoding: \"UTF8\"; query: string; indexes: PostgresqlKeyIndex[]; provenance: \"unverified\"; }"
+      "(text: string): KeyInspection"
     ]
   },
   "id": "[\"api\",\".\",\"inspectPostgresqlKeyCatalog\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4810,
-      "line": 30,
-      "path": "src/adapters/postgresql/key-catalog.ts",
-      "sha256": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46"
+      "bytes": 84809,
+      "line": 280,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Validate observations without inferring authored keys, equivalent equality or trusted provenance.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectPostgresqlKeyCatalog"
 }

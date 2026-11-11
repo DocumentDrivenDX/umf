@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2258,
-        "line": 9,
-        "path": "src/model/prepared-inspection.ts",
-        "sha256": "e36c7765ed46668dccdb07240ab98340f1e499f001721300a10e0c3a4ee56ab9"
+        "bytes": 84809,
+        "line": 370,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "prepareCoreInspection",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document): Readonly<{ operation: \"prepare-core-inspection\"; version: \"1.0.0\"; source: Document; provenance: \"unverified\"; keys: (identity: CoreRecordIdentity) => CoreKeyMeaning; facets: (identity: CoreRecordIdentity) => CoreFacetMeaning; schemaProperties: (identity: CoreRecordIdentity) => Record<string, Json>; }>"
+      "(input: Document): PreparedCoreInspection"
     ]
   },
   "id": "[\"api\",\".\",\"prepareCoreInspection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2258,
-      "line": 9,
-      "path": "src/model/prepared-inspection.ts",
-      "sha256": "e36c7765ed46668dccdb07240ab98340f1e499f001721300a10e0c3a4ee56ab9"
+      "bytes": 84809,
+      "line": 370,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Invocation-owned metadata only; snapshot reference identifies the exact retained source.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "prepareCoreInspection"
 }

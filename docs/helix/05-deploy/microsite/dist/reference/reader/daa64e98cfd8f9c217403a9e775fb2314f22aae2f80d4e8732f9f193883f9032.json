@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"readSecuritySource\"]",
   "kind": "Function",
   "members": [],
@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "text",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -20,9 +20,9 @@
       "type": "\"json\" | \"yaml\""
     }
   ],
-  "purpose": "Preservation is independent of interpretation; unfamiliar policy versions/operators remain data.",
+  "purpose": "readSecuritySource accepts source, format and returns Json.",
   "related": [],
   "returns": "Json",
   "task": "Read and validate",
-  "type": "(text: string, format?: \"json\" | \"yaml\") => Json"
+  "type": "(source: string, format?: \"json\" | \"yaml\") => Json"
 }

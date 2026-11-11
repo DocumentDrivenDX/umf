@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8291,
-        "line": 8,
-        "path": "src/projections/smithy-json-schema.ts",
-        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+        "bytes": 1193,
+        "line": 17,
+        "path": "src/projections/smithy-json-schema-types.ts",
+        "sha256": "30891b1618a30b6a3ac744ac346eb0c38b91eaf5c7ff72e016dda746398913c6"
       }
     ],
     "entrypoint": ".",
     "exportName": "SmithyJsonSchemaProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface SmithyJsonSchemaProjection {status:'blocked'|'projected';source:Document;converter:string;assembly:SmithyAssemblyResult;policy:SmithyJsonSchemaPolicy;complete:false;issues:ProjectionIssue[];nativeSchema?:string;adaptedSchema?:string;target?:Document;}"
+      "export interface SmithyJsonSchemaProjection {\n status:'blocked'|'projected';source:Document;converter:string;assembly:SmithyAssemblyResult;\n policy:SmithyJsonSchemaPolicy;complete:false;issues:ProjectionIssue[];\n nativeSchema?:string;adaptedSchema?:string;target?:Document;\n}"
     ]
   },
   "id": "[\"api\",\".\",\"SmithyJsonSchemaProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8291,
-      "line": 8,
-      "path": "src/projections/smithy-json-schema.ts",
-      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      "bytes": 1193,
+      "line": 17,
+      "path": "src/projections/smithy-json-schema-types.ts",
+      "sha256": "30891b1618a30b6a3ac744ac346eb0c38b91eaf5c7ff72e016dda746398913c6"
     }
   ],
-  "summary": "Type declaration · src/projections/smithy-json-schema.ts",
+  "summary": "Type declaration · src/projections/smithy-json-schema-types.ts",
   "title": "SmithyJsonSchemaProjection"
 }

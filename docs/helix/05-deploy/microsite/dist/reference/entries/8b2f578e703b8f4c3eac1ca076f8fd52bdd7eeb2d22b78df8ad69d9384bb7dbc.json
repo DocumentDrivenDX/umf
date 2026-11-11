@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10620,
+        "line": 47,
+        "path": "src/table-migration/inventory-types.ts",
+        "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableInventoryHistoryExecution",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableInventoryHistoryExecution {planDigest:string;entryDigest:string;seedOutcomes:TableInventorySeedOutcome[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableInventoryHistoryExecution\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10620,
+      "line": 47,
+      "path": "src/table-migration/inventory-types.ts",
+      "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/inventory-types.ts",
+  "title": "TableInventoryHistoryExecution"
+}

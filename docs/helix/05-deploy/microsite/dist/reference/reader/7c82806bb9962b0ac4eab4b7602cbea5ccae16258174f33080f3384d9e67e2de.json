@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"correlatePostgresqlCardinalityCatalog\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "Cross-check overlapping observations. Agreement is not proof of a shared\ndatabase snapshot; capture provenance must establish that separately.",
+  "purpose": "correlatePostgresqlCardinalityCatalog accepts document, text and returns CardinalityCorrelation.",
   "related": [],
-  "returns": "{ matches: { column: string; path: string; identity: { schema: string; relation: string; name: string; }; type: PostgresqlTypeIdentity; }[]; qualifiedVersion: boolean; sameSnapshotVerified: false; nativeSupplement: string; }",
+  "returns": "CardinalityCorrelation",
   "task": "Other APIs",
-  "type": "(document: Document, text: string) => { matches: { column: string; path: string; identity: { schema: string; relation: string; name: string; }; type: PostgresqlTypeIdentity; }[]; qualifiedVersion: boolean; sameSnapshotVerified: false; nativeSupplement: string; }"
+  "type": "(document: Document, text: string) => CardinalityCorrelation"
 }

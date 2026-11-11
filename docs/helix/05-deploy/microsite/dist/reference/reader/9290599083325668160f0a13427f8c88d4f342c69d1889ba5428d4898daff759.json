@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"realizeSparkDelta4DDL\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SparkDelta4TargetBinding\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "SparkDelta4TargetBinding"
+    }
+  ],
+  "purpose": "realizeSparkDelta4DDL accepts document, target and returns SparkDelta4DDLRealization.",
+  "related": [],
+  "returns": "SparkDelta4DDLRealization",
+  "task": "Other APIs",
+  "type": "(document: Document, target: SparkDelta4TargetBinding) => SparkDelta4DDLRealization"
+}

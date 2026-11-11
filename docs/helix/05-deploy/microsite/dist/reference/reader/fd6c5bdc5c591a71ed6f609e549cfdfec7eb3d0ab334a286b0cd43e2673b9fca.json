@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RecordParquetProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RecordParquetProjection"
     },
@@ -22,9 +22,9 @@
       "type": "Uint8Array<ArrayBufferLike>"
     }
   ],
-  "purpose": "recoverRecordFromParquet accepts input, nativeBytes and returns Document.",
+  "purpose": "recoverRecordFromParquet accepts receipt, nativeBytes and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: RecordParquetProjection, nativeBytes: Uint8Array) => Document"
+  "type": "(receipt: RecordParquetProjection, nativeBytes: Uint8Array) => Document"
 }

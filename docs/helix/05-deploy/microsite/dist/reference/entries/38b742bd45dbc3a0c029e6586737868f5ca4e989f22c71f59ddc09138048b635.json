@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7556,
-        "line": 57,
-        "path": "src/model/cardinality.ts",
-        "sha256": "9b1c89d0528af524a56d115c3f0471250b9b9ecf04d020d8d9e132c3f90f3541"
+        "bytes": 84809,
+        "line": 425,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyCoreCardinalityDeclaration",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreCardinalityDeclaration, current: Document): CoreCardinalityDeclaration"
+      "(receipt: CoreCardinalityDeclaration, current: Document): CoreCardinalityDeclaration"
     ]
   },
   "id": "[\"api\",\".\",\"verifyCoreCardinalityDeclaration\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7556,
-      "line": 57,
-      "path": "src/model/cardinality.ts",
-      "sha256": "9b1c89d0528af524a56d115c3f0471250b9b9ecf04d020d8d9e132c3f90f3541"
+      "bytes": 84809,
+      "line": 425,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyCoreCardinalityDeclaration"
 }

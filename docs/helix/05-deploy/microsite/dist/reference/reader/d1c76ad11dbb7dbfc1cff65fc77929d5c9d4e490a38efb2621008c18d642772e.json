@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "text",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -20,9 +20,9 @@
       "type": "{ id: string; blankNodeScope?: string; }"
     }
   ],
-  "purpose": "importRdfNQuads accepts text, options and returns Document.",
+  "purpose": "importRdfNQuads accepts source, options and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(text: string, options: { id: string; blankNodeScope?: string; }) => Document"
+  "type": "(source: string, options: Parameters<ImportRdfNQuads>[1]) => ReturnType<ImportRdfNQuads>"
 }

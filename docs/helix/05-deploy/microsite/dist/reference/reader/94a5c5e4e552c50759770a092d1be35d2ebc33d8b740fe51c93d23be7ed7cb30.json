@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyPostgresqlNullability\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlNullabilityRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "PostgresqlNullabilityRequest"
     }
   ],
-  "purpose": "Native absence is classified only for explicitly scoped stored-relation declarations.",
+  "purpose": "classifyPostgresqlNullability accepts source, request and returns PostgresqlNullabilityClassification.",
   "related": [],
   "returns": "PostgresqlNullabilityClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: PostgresqlNullabilityRequest) => PostgresqlNullabilityClassification"
+  "type": "(source: Document, request: PostgresqlNullabilityRequest) => PostgresqlNullabilityClassification"
 }

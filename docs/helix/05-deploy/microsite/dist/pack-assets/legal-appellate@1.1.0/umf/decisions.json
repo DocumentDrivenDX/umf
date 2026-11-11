@@ -1,0 +1,85 @@
+{
+  "version": "1.0",
+  "table_name": "decisions",
+  "description": "CONTRACT-058 bounded appellate fixture: decisions.",
+  "columns": [
+    {
+      "name": "document_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.document_id; preserve source scope and qualification."
+    },
+    {
+      "name": "case_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.case_id; preserve source scope and qualification."
+    },
+    {
+      "name": "document_kind",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.document_kind; preserve source scope and qualification."
+    },
+    {
+      "name": "decision_date",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.decision_date; preserve source scope and qualification."
+    },
+    {
+      "name": "source_url",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.source_url; preserve source scope and qualification."
+    },
+    {
+      "name": "retrieved_at",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.retrieved_at; preserve source scope and qualification."
+    },
+    {
+      "name": "original_file",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.original_file; preserve source scope and qualification."
+    },
+    {
+      "name": "sha256",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.sha256; preserve source scope and qualification."
+    },
+    {
+      "name": "page_count",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "decisions.page_count; preserve source scope and qualification."
+    },
+    {
+      "name": "historical_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "decisions.historical_status; preserve source scope and qualification."
+    },
+    {
+      "name": "publisher_qualification",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "decisions.publisher_qualification; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "document_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "case_id",
+        "references_table": "cases",
+        "references_column": "case_id"
+      }
+    ]
+  }
+}

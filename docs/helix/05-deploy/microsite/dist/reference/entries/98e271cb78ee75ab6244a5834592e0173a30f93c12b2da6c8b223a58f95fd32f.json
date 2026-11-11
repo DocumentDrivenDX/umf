@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 13184,
-        "line": 137,
-        "path": "src/domain-packs/medical.ts",
-        "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+        "bytes": 84809,
+        "line": 188,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectDicomMetadata",
     "runtime": "unassessed",
     "signatureText": [
-      "(textSource: string, sourceId: string): MedicalTables"
+      "(source: string, sourceId: string): MedicalTables"
     ]
   },
   "id": "[\"api\",\".\",\"projectDicomMetadata\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 13184,
-      "line": 137,
-      "path": "src/domain-packs/medical.ts",
-      "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+      "bytes": 84809,
+      "line": 188,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "DICOM JSON metadata only. Does not read binaries, dereference BulkDataURI or decode pixels.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectDicomMetadata"
 }

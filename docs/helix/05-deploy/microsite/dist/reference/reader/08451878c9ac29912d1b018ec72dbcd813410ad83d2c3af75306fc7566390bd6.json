@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "verifyBindingSqlServerProjection accepts input, current and returns SqlServerPhysicalProjection & { [x: string]: {}; }.",
+  "purpose": "verifyBindingSqlServerProjection accepts input, current and returns SqlServerPhysicalProjection.",
   "related": [],
-  "returns": "SqlServerPhysicalProjection & { [x: string]: {}; }",
+  "returns": "SqlServerPhysicalProjection",
   "task": "Other APIs",
-  "type": "(input: SqlServerPhysicalProjection, current: string) => SqlServerPhysicalProjection & { [x: string]: {}; }"
+  "type": "(input: SqlServerPhysicalProjection, current: string) => SqlServerPhysicalProjection"
 }
