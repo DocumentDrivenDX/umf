@@ -1,0 +1,27 @@
+{
+  "profile": "umf.codegen-source-correspondence/1",
+  "status": "matched",
+  "builtSource": {
+    "commit": "bef6756f13ffb7ad8146d5fc9c2ebc61c2a639b2",
+    "tree": "d523a5e0ef4f4d2bf08b1e67bb0230283a3fdac9"
+  },
+  "releaseSource": {
+    "commit": "85504b0913261c208a53010a5a67aa6fa54c3a59",
+    "tree": "4770fa46ef6a0b7f7d45758daab73af74d47f061"
+  },
+  "unchangedSourcePaths": [
+    "python/umf_codegen"
+  ],
+  "wheelPackageFilesCompared": 18,
+  "files": {
+    "umf_codegen-0.10.10.tar.gz": {
+      "sha256": "d23d00be700ced33af9b4c73309bb47ece2aaa14799f5ed424ca10e2ee4c5c13",
+      "bytes": 53180
+    },
+    "umf_codegen-0.10.10-py3-none-any.whl": {
+      "sha256": "80010b59719fdcb9bb793e1f3ef54449f557f8903fc71c8cb29735d0bc73e702",
+      "bytes": 66283
+    }
+  },
+  "pureSdistWheelReproducible": true
+}
