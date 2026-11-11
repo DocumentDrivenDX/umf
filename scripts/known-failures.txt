@@ -283,3 +283,10 @@ tests/uuid-file-model.test.ts
 tests/uuid-model.test.ts
 # assertion failure
 tests/uuid-native-projection.test.ts
+
+# Third CI run after the Rust-port merge (same criteria):
+tests/binding/postgresql-indexes.test.ts
+tests/uuid-mixed-model.test.ts
+tests/sqlserver/indexes.test.ts
+tests/core-ideals/relationship-extras.test.ts
+tests/shacl/targets.test.ts
