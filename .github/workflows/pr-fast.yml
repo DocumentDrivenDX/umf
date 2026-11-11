@@ -53,6 +53,8 @@ jobs:
             /crates/umf-metamodel/Cargo.toml
             /crates/umf-cli/Cargo.toml
             /crates/umf-graphql/Cargo.toml
+            /bindings/core/node/*.js
+            /bindings/core/node/src/
             /bindings/core/node/package.json
             /bindings/core/wasm/package.json
             /package.json
