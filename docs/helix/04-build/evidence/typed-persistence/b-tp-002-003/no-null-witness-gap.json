@@ -1,9 +1,0 @@
-{
-  "kind": "CONTRACT-070 allow-table upstream witness gap",
-  "status": "Explicit qualification limit; no core changes",
-  "policyRow": "non-Key / absent-allowed / Null=no / generated=false",
-  "finding": "Core 0.8 checkSchemaLiteral returns on null whenever nullability is absent-allowed, before scalar allowedValues/range checks. A non-null allowed-value set therefore cannot author Null=no. The attempted full-document witness selected Null=yes and caused eight expected-outcome mismatches; no compiler defect is inferred from those wrong expectations.",
-  "authority": "src/model/schema-literals.ts checkSchemaLiteral null branch and validateCoreFieldValue; CONTRACT-049 treats null availability independently of non-null allowed-value equality.",
-  "evidence": "document-matrix-attempt-1.log preserves 344 pass / 8 failed assumptions; direct fact-policy matrix covers the hypothetical row; corrected full-document matrix asserts the actual upstream Null=yes fact.",
-  "remainingGate": "Do not claim a positive core 0.8 document witness for the hypothetical Null=no row. Parent may qualify it as unreachable under current core or govern a future authoring mechanism; this subproject does not invent one."
-}

@@ -1,8 +1,0 @@
-{
-  "gate": "STP-080 US-080-AC3 report-mode known safe approximation",
-  "status": "Contract readiness gap, not acceptance",
-  "finding": "CONTRACT-067 describes admission of known approximations that neither broaden inputs nor claim enforcement, but defines neither a concrete approximation nor a trusted-profile execution hook that could supply one. Current profile argument is inert metadata. Source retention and engine obligations are exact preservation/external duties, not approximation evidence.",
-  "smallestDecisionProposal": "Parent selects and governs one specific narrowing profile rule plus its input-domain and non-enforcement proof, or amends AC3 to test mode-policy mechanics separately until such a profile exists. Do not invent a fallback or label retention approximate solely to turn tests green.",
-  "currentBehavior": "Unknown relevant semantics refuse in both modes; unsupported carrier shapes refuse LOSS; strict/report currently share only exact supported candidates. Safe-approximation positive and broadening-approximation negative remain UNTESTED.",
-  "otherScope": "Continue generator closure, schemas, names, native declaration checks, writer integration and browser/runtime evidence independently."
-}

@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/private/tmp/sdk-nonread-probe-native.py", line 20, in <module>
-    if packet.get('version')!='weft.native-privilege-probes/0.1':continue
-       ^^^^^^^^^^
-AttributeError: 'list' object has no attribute 'get'

@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/private/tmp/run-r25-filter-native-r3.py", line 14, in <module>
-    runtime_archive=subprocess.run(['git','archive',proof['commit'],'python/umf_access/src'],cwd='/Users/erik/.codex/worktrees/typed-sdk-recovery/umf',capture_output=True,check=True).stdout;(OUT/'runtime-source.tar',OUT/'host-scripts-source.tar',OUT/'host-source-manifest.json').write_bytes(runtime_archive);shutil.copytree('/private/tmp/sdk-r25-filter-generated',GENERATED);SITE=ENV/'lib/python3.14/site-packages'
-                                                                                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'tuple' object has no attribute 'write_bytes'

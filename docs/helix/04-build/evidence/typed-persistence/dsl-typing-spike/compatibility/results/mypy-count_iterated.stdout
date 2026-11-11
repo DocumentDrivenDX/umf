@@ -1,1 +1,0 @@
-{"file": "negative/count_iterated.py", "line": 7, "column": 0, "end_line": 7, "end_column": 20, "message": "No overload variant of \"list\" matches argument type \"int\"", "hint": "Possible overload variants:\n    def [_T] list() -> list[_T]\n    def [_T] list(Iterable[_T], /) -> list[_T]", "code": "call-overload", "severity": "error"}

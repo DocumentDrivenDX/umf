@@ -1,9 +1,0 @@
-{"status": "fail", "ownedServerStopped": true}
-Traceback (most recent call last):
-  File "/private/tmp/pg-mutation-index-race-witness.py", line 38, in <module>
-    before=counter();old_guard=guard('old');effect_result=execute_effect();after=counter();post_guard=guard('old');result['red']={'indexReadyValid':ready,'ddlStillRunningAtReady':thread.is_alive(),'guardBeforeEffect':old_guard,'effect':effect_result,'guardAfterEffect':post_guard,'sequenceBefore':before,'sequenceAfter':after,'originalEffectSqlSha256':hashlib.sha256(effect['sql'].encode()).hexdigest()}
-                                                          ~~~~~~~~~~~~~~^^
-  File "/private/tmp/pg-mutation-index-race-witness.py", line 21, in execute_effect
-    response=actor.pgconn.exec_params(effect['sql'].encode(),[b'approved',b'one'],param_types=[25,25]);return {'status':response.status.name,'sqlstate':response.error_field(pq.DiagnosticField.SQLSTATE).decode() if response.error_field(pq.DiagnosticField.SQLSTATE) else None,'error':response.error_message.decode(),'rows':[[response.get_value(i,j).decode() for j in range(response.nfields)] for i in range(response.ntuples)]}
-                                                                                                                        ^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'int' object has no attribute 'name'

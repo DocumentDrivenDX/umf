@@ -1,7 +1,0 @@
-{
-  "snapshot": "f2d45059b29ce70425809631de25b91276fb60d7b87fecdd20dbe73633404e39",
-  "failingTest": "test_command_keeps_action_and_explicit_mutable_field_map",
-  "finding": "Installed capture reads reference.id; installed ActionRef exposes reference.action. Command capture refuses generated action identity.",
-  "currentCheckoutObservation": "Capture owner has already changed current source to isinstance(ActionRef) and reference.action; fresh wheel required, no source edited by packaging owner.",
-  "generatedStaticFinding": "Six strict pyright emitter diagnostics remain on this generated snapshot; mypy passes."
-}

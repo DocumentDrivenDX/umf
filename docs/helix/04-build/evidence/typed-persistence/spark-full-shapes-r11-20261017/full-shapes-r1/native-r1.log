@@ -1,14 +1,0 @@
-WARNING: Using incubator modules: jdk.incubator.vector
-26/10/17 02:48:08 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-[Stage 0:>                                                          (0 + 1) / 1]                                                                                Traceback (most recent call last):
-  File "/private/tmp/sdk-spark-snapshot-pages-20261017/full-shapes-r1/e2e.py", line 66, in <module>
-    prepare(root/'generated',request,root/'binding.json',schema,versions);sys.path.insert(0,str(root/'generated'))
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/private/tmp/sdk-spark-snapshot-pages-20261017/full-shapes-r1/prepare_generated.py", line 28, in prepare
-    assert done.returncode==0,done.stdout+done.stderr
-           ^^^^^^^^^^^^^^^^^^
-AssertionError: {"reason":"CAPTURE_UNSUPPORTED: select requires one to eight scalar expressions","status":"refused"}
-
