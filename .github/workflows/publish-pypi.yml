@@ -14,6 +14,10 @@ on:
         description: SHA-256 of the public release SHA256SUMS file
         required: true
         type: string
+      expected_admission_sha256:
+        description: Reviewed local 0.10.10 qualification admission digest
+        required: false
+        type: string
       locally_qualified:
         description: Skip only the publisher unit test and installed-consumer qualification steps
         required: false
@@ -32,11 +36,12 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     outputs:
-      version: ${{ steps.source.outputs.version }}
+      version: ${{ steps.local-source.outputs.version || steps.source.outputs.version }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.workflow_sha }}
+          fetch-depth: ${{ inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true && 64 || 1 }}
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -50,12 +55,17 @@ jobs:
           TARGET_TAG: ${{ inputs.tag }}
           SOURCE_SHA: ${{ inputs.source_sha }}
           MANUAL_SUMS_SHA256: ${{ inputs.expected_sums_sha256 }}
+          LOCAL_ADMISSION_SHA256: ${{ inputs.expected_admission_sha256 }}
+          LOCALLY_QUALIFIED: ${{ inputs.locally_qualified }}
         shell: bash
         run: |
           set -euo pipefail
           [[ "$TARGET_TAG" =~ ^(umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
           [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
           [[ "$MANUAL_SUMS_SHA256" =~ ^[0-9a-f]{64}$ ]]
+          if [[ "$LOCALLY_QUALIFIED" == true && "$TARGET_TAG" == umf-v0.10.10 ]]; then
+            [[ "$LOCAL_ADMISSION_SHA256" =~ ^[0-9a-f]{64}$ ]]
+          fi
           printf 'tag=%s\nsource_sha=%s\nsums_sha256=%s\n' \
             "$TARGET_TAG" "$SOURCE_SHA" "$MANUAL_SUMS_SHA256" >> "$GITHUB_OUTPUT"
       - name: Read the immutable public release and tag objects
@@ -89,6 +99,7 @@ jobs:
             --archive incoming/assets/umf-v0.10.8-source.tar.gz --receipt incoming/source-archive.json
       - name: Verify tag source, checksum manifest, pins and package metadata
         id: source
+        if: ${{ !(inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true) }}
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.identity.outputs.tag }}
@@ -106,9 +117,28 @@ jobs:
           python scripts/publish_core_pypi_release.py "${ARGS[@]}"
           if [ "$TAG" = umf-v0.10.8 ]; then cp incoming/source-archive.json dist/source-archive.json; fi
           printf 'version=%s\n' "$(jq -r .version dist/source-receipt.json)" >> "$GITHUB_OUTPUT"
+      - name: Verify the exact locally qualified 0.10.10 Core cohort
+        id: local-source
+        if: inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.identity.outputs.tag }}
+          SOURCE_SHA: ${{ steps.identity.outputs.source_sha }}
+          SUMS_SHA: ${{ steps.identity.outputs.sums_sha256 }}
+          ADMISSION_SHA: ${{ inputs.expected_admission_sha256 }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=2 --filter=blob:none origin "$SOURCE_SHA"
+          ARGS=(prepare --distribution umf-core --tag "$TAG" --source-sha "$SOURCE_SHA"
+            --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA"
+            --assets-dir incoming/assets --release-json incoming/release.json
+            --tag-ref-json incoming/tag-ref.json --output-dir dist)
+          if [[ -f incoming/tag-object.json ]]; then ARGS+=(--tag-object-json incoming/tag-object.json); fi
+          python scripts/publish_local_pypi_01010.py "${ARGS[@]}"
+          printf 'version=0.10.10\n' >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
-          name: umf-core-pypi-release-${{ steps.source.outputs.version }}
+          name: umf-core-pypi-release-${{ steps.local-source.outputs.version || steps.source.outputs.version }}
           path: dist/*
           if-no-files-found: error
           retention-days: 90
@@ -126,6 +156,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.workflow_sha }}
+          fetch-depth: ${{ inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true && 64 || 1 }}
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -134,17 +165,35 @@ jobs:
         with:
           name: umf-core-pypi-release-${{ needs.verify-release.outputs.version }}
           path: dist
+      - name: Revalidate local 0.10.10 admission before collision check
+        if: inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true
+        id: local-preflight
+        env:
+          TAG: ${{ inputs.tag }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          SUMS_SHA: ${{ inputs.expected_sums_sha256 }}
+          ADMISSION_SHA: ${{ inputs.expected_admission_sha256 }}
+        run: |
+          git fetch --no-tags --depth=2 --filter=blob:none origin "$SOURCE_SHA"
+          python scripts/publish_local_pypi_01010.py check-pypi --distribution umf-core \
+            --assets-dir dist --tag "$TAG" --source-sha "$SOURCE_SHA" \
+            --expected-sums-sha256 "$SUMS_SHA" --expected-admission-sha256 "$ADMISSION_SHA"
       - name: Refuse PyPI collisions and require exact archive bytes
         id: preflight
+        if: ${{ !(inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true) }}
         run: python scripts/publish_core_pypi_release.py check-pypi --receipt dist/source-receipt.json --dist-dir dist
       - name: Publish only the verified archives through PyPI OIDC
-        if: steps.preflight.outputs.status == 'absent'
+        if: >-
+          (inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true && steps.local-preflight.outputs.status == 'absent') ||
+          (!(inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true) && steps.preflight.outputs.status == 'absent')
         run: |
           mkdir .verified-pypi-packages
           cp dist/umf_core-*.whl dist/umf_core-*.tar.gz .verified-pypi-packages/
       - uses: pypa/gh-action-pypi-publish@release/v1
         id: pypi-upload
-        if: steps.preflight.outputs.status == 'absent'
+        if: >-
+          (inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true && steps.local-preflight.outputs.status == 'absent') ||
+          (!(inputs.tag == 'umf-v0.10.10' && inputs.locally_qualified == true) && steps.preflight.outputs.status == 'absent')
         with:
           packages-dir: .verified-pypi-packages/
       - name: Verify PyPI-served bytes after publication
