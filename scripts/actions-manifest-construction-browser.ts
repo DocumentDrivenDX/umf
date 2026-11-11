@@ -15,5 +15,5 @@ try{
  const actual=await page.evaluate(async()=>{const a='/umf.js',c='/corpus.js',api=await import(a),{runConstructionCorpus}=await import(c),result=runConstructionCorpus(api);const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(result.artifact.utf8));if([...new Uint8Array(bytes)].map(b=>b.toString(16).padStart(2,'0')).join('')!==result.artifact.sha256)throw Error('Native browser SHA256 mismatch');return result;});
  if(JSON.stringify(actual)!==JSON.stringify(expected)||errors.length||external.length)throw Error('Browser constructor parity/error/request mismatch');
  const evidence={scope:'US-903-AC7 pure unsealed constructor in actual Chromium',browser:browser.version(),passed:true,nativeExecution:false,externalRequests:external,errors,sourceDigest:createHash('sha256').update(await Bun.file('dist/umf.js').bytes()).digest('hex'),results:actual};
- await Bun.write('docs/helix/04-build/evidence/bulk-update/us903-construction-browser.json',JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify({passed:true,browser:evidence.browser,refusals:actual.refusals}));
+ await Bun.write('out/bulk-update/us903-construction-browser.json',JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify({passed:true,browser:evidence.browser,refusals:actual.refusals}));
 }finally{await browser?.close();server.stop(true);}

@@ -3,7 +3,7 @@ import {chromium} from 'playwright';
 import {resolve,join} from 'node:path';
 import {mkdir} from 'node:fs/promises';
 import {readDocument,readJsonValue,writeDocument,validateDocument,inspectCoreSchemaProperties,resolveCoreDefault} from '../../src/index';
-const root=resolve(import.meta.dir,'../..'),site=join(root,'docs/helix/05-deploy/microsite/dist'),evidence=join(root,'docs/helix/04-build/evidence/generated-reference');
+const root=resolve(import.meta.dir,'../..'),site=join(root,'docs/helix/05-deploy/microsite/dist'),evidence=join(root,'out/generated-reference');
 await mkdir(evidence,{recursive:true});
 const server=Bun.serve({hostname:'127.0.0.1',port:0,async fetch(req){const url=new URL(req.url);if(!url.pathname.startsWith('/umf/'))return new Response('Not found',{status:404});let rel:string;try{rel=decodeURIComponent(url.pathname.slice(5));}catch{return new Response('Bad path',{status:400});}const path=resolve(site,rel||'index.html');if(!path.startsWith(site+'/'))return new Response('Not found',{status:404});const file=Bun.file(path);return await file.exists()?new Response(file):new Response('Not found',{status:404});}});
 const expected=await Bun.file(join(root,'docs/helix/05-deploy/reference/examples/expected.json')).json();

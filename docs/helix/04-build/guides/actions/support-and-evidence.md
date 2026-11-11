@@ -39,13 +39,10 @@ The retained qualification records identify the source revision and profile they
 - Final snapshot regression and admission: 2,314 distinct tests, zero failures; the certificate records the exact disjoint gates and inputs.
 
 <!-- generated:evidence-links:start -->
-- [Final scoped certificate](../../evidence/actions-certification.md)
-- [Machine-readable certificate](../../evidence/actions-certification.json)
-- [Documentation execution evidence](../../evidence/actions-documentation-execution.md)
 - [Original prior-art decisions](../../../02-design/actions-prior-art-decisions.md)
 <!-- generated:evidence-links:end -->
 
-These results describe the frozen replay source and recorded inputs. This guide and subsequent integration have their own dated verification evidence; neither silently changes the historic certificate nor claims it binds newly changed bytes.
+These results describe the frozen replay source and recorded inputs; the original certificate lives in the `evidence-archive-2026-11` release and in git history.
 
 ## Important boundaries
 

@@ -26,6 +26,6 @@ try{
  const mismatched=expected.filter((e,i)=>JSON.stringify(e)!==JSON.stringify(actual[i])).map(e=>e.id);
  if(actual.length!==expected.length||mismatched.length||errors.length||external.length)throw Error('Browser/in-process mismatch: '+JSON.stringify({mismatched:mismatched.slice(0,10),errors,external,counts:[expected.length,actual.length]}));
  const evidence={scope:'US-907 public built ESM in actual Chromium; pure reference model only',criteria:['US-907-AC8'],browser:browser.version(),bun:Bun.version,cases:actual.length,passed:true,nativeExecution:false,externalRequests:external,fixtureSha256:createHash('sha256').update(fxText).digest('hex'),sourceDigest:createHash('sha256').update(await Bun.file('dist/umf.js').bytes()).digest('hex')};
- await Bun.write('docs/helix/04-build/evidence/bulk-update/us907-browser.json',JSON.stringify(evidence,null,2)+'\n');
+ await Bun.write('out/bulk-update/us907-browser.json',JSON.stringify(evidence,null,2)+'\n');
  console.log(JSON.stringify({browser:evidence.browser,cases:evidence.cases,passed:true,nativeExecution:false}));
 }finally{await browser?.close();server.stop(true);}

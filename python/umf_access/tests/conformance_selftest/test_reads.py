@@ -164,11 +164,7 @@ class SharedReadSelftests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Actual current compiler, complete original source/binding request.
-        root = Path(__file__).resolve().parents[4]
-        evidence = (
-            root
-            / "docs/helix/04-build/evidence/typed-persistence/main-consolidation-20261016/truss"
-        )
+        evidence = Path(__file__).resolve().parents[1] / "fixtures"
         request = json.loads((evidence / "original-engine-request.json").read_bytes())
         page_request = json.loads(
             (evidence / "original-engine-page-request.json").read_bytes()

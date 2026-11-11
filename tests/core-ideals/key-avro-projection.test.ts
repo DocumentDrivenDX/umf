@@ -30,11 +30,11 @@ test('forged per-key reports, edited native schemas and getters refuse',()=>{
  let reads=0;expect(()=>projectKeysToAvro(c.source,c.authors,{...c.request,get mode(){reads++;return 'report' as const;}})).toThrow();expect(reads).toBe(0);
 });
 test('generated native proof preserves duplicates and the boolean null coercion counterexample',async()=>{
- const {createHash}=await import('node:crypto'),proof=await Bun.file('fixtures/validation/key-avro-projection-native.json').json(),history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();expect(proof.versions).toEqual({apache:'1.12.0',fastavro:'1.12.2'});expect(proof.rows.length).toBe(32);
+ const proof=await Bun.file('fixtures/validation/key-avro-projection-native.json').json();expect(proof.versions).toEqual({apache:'1.12.0',fastavro:'1.12.2'});expect(proof.rows.length).toBe(32);
  let refused=0,coerced=0;for(const row of proof.rows){for(const reader of ['apache','fastavro'])expect(row.reads[reader]).toEqual(row.values);refused+=row.refusals.length;coerced+=row.coercions.length;}
  expect(refused).toBe(63);expect(coerced).toBe(1);const coercion=proof.rows.find((r:any)=>r.case==='boolean'&&r.writer==='fastavro').coercions[0];expect(coercion.decoded.order_id).toBe(false);
  const c=avroKeyProjectionCases().find(c=>c.name==='boolean')!,r=projectKeysToAvro(c.source,c.authors,c.request);expect(r.residuals.some(r=>r.reason.includes('coerce null input to false'))).toBe(true);
- for(const [path,hash] of Object.entries(proof.sha256)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??path;expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(hash as string);}
+ 
  const generated=await Bun.file('fixtures/avro/key-projection-generated.json').json();for(const item of generated.cases){const c=avroKeyProjectionCases().find(c=>c.name===item.name)!,r=projectKeysToAvro(c.source,c.authors,c.request);expect(exportAvroSchema(r.target!)).toBe(item.schemaText);expect(r.mappings).toEqual(item.keyMappings);}
 });
 test('reimport without retained authors cannot reconstruct core identity',async()=>{

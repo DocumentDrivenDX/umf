@@ -62,5 +62,5 @@ try{
  assert(errors.length===0,'Browser errors or CSP violations: '+errors.join('\n'));
  assert(external.length===0,'Rendering fetched external resources: '+external.join('\n'));
  const receipt={profile:'umf.site.visual-browser/1',rendererPackage:await visualPackageIdentity(),browser:browser.version(),bun:Bun.version,checks,csp:'Main document denies JavaScript eval and inline styles; trusted same-origin rendering worker has its own execution context.',scope:'Lini visual projection, source identity, escaping, focus/full model, directed/headless/self/parallel edges, async lifecycle and 32-record browser rendering; no schema/native execution equivalence.'};
- await Bun.write('docs/helix/04-build/evidence/visual-rendering-browser.json',JSON.stringify(receipt,null,2)+'\n');console.log(receipt);
+ await Bun.write('out/visual-rendering-browser.json',JSON.stringify(receipt,null,2)+'\n');console.log(receipt);
 }finally{await browser.close();server.stop(true);}

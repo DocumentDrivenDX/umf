@@ -6,7 +6,7 @@ import {canonical,selfModelGraph,type SelfModelCatalog} from '../../docs/helix/0
 import {readDocument} from '../../src/index';
 import {parse as parseYaml} from 'yaml';
 const site=resolve('docs/helix/05-deploy/microsite/dist'),live=process.env.UMF_SITE_URL;
-const evidence=resolve(process.env.UMF_ONTOLOGY_EVIDENCE_DIR??('docs/helix/04-build/evidence/generated-reference/ontology/'+(live?'live':'local')));await mkdir(evidence,{recursive:true});
+const evidence=resolve(process.env.UMF_ONTOLOGY_EVIDENCE_DIR??('out/generated-reference/ontology/'+(live?'live':'local')));await mkdir(evidence,{recursive:true});
 const server=live?undefined:Bun.serve({hostname:'127.0.0.1',port:0,async fetch(req){const path=resolve(site,new URL(req.url).pathname.replace(/^\/umf\//,''));if(!path.startsWith(site+'/'))return new Response('Not found',{status:404});const file=Bun.file(path);return await file.exists()?new Response(file):new Response('Not found',{status:404});}});
 const origin=live??`http://127.0.0.1:${server!.port}/umf/`,browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});
 const page=await browser.newPage({viewport:{width:1280,height:960}}),errors:string[]=[],external:string[]=[],checks:string[]=[];

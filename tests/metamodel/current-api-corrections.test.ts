@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import casesInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/cases.json';
-import beforeInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/before.json';
-import afterInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/after.json';
+import casesInput from '../../fixtures/metamodel/api-corrections/cases.json';
+import beforeInput from '../../fixtures/metamodel/api-corrections/before.json';
+import afterInput from '../../fixtures/metamodel/api-corrections/after.json';
 import {resolveCoreDefault} from '../../src/model/schema-properties';
 import {checkSchemaLiteral} from '../../src/model/schema-literals';
 import {validateDocument} from '../../src/validation/document';

@@ -5,7 +5,7 @@ import {chromium} from 'playwright';
 import {inspectRawTableBinding} from '../../src/extensions/binding/raw-profiles';
 import {readBindingDocument,writeBindingDocument} from '../../src/extensions/binding';
 import type {Document} from '../../src/model/types';
-const root='docs/helix/04-build/evidence/typed-persistence/raw-binding-profiles/';
+const root='out/raw-binding-profiles/';
 const logical=await Bun.file('fixtures/binding/raw-profiles/logical.json').json() as Document;
 const cases:{id:string;binding:Document;logical:Document;target:{platform:string;majorVersion:string};module:string}[]=[];
 for(const system of ['lakebase','unity-catalog','spark-delta']){

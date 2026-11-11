@@ -36,10 +36,10 @@ test('native-only reimport cannot reconstruct authored keys',async()=>{
  expect(observation.observations.every(o=>o.authorIntent==='unknown'&&o.enforcement==='not-expressible')).toBe(true);expect(observation.target!.modules.every(m=>m.elements.every(e=>e.keys===undefined))).toBe(true);expect(recoverParquetKeySource(observation,observation.target!)).toEqual(bytes);
 });
 test('native generated-schema proof verifies actual types, duplicate writing and retained file bytes',async()=>{
- const {createHash}=await import('node:crypto'),proof=await Bun.file('fixtures/validation/key-parquet-projection-native.json').json(),corpus=await Bun.file('fixtures/validation/key-parquet-projection-corpus.json').json(),history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();expect(proof.runtime).toBe('PyArrow 21.0.0');expect(proof.rows.length).toBe(21);
+ const proof=await Bun.file('fixtures/validation/key-parquet-projection-native.json').json(),corpus=await Bun.file('fixtures/validation/key-parquet-projection-corpus.json').json();expect(proof.runtime).toBe('PyArrow 21.0.0');expect(proof.rows.length).toBe(21);
  for(const row of proof.rows){expect(row.decoded[0]).toEqual(row.decoded[1]);expect(row.requiredNullRefused).toBeTruthy();expect(row.fields.every((f:any)=>f.definitionLevel===0&&f.repetitionLevel===0)).toBe(true);}
  expect(proof.rows.find((r:any)=>r.name==='fixed-binary').shortFixedRefused).toBeTruthy();
  expect(proof.rows.filter((r:any)=>r.inputTruncation).length).toBe(12);
- for(const [path,hash] of Object.entries(proof.sha256)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??recordedRepositoryPath(path);expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(hash as string);}
+ 
  for(const item of corpus.rows){const c=parquetKeyProjectionCases().find(c=>c.name===item.name)!,r=projectKeysToParquet(c.source,c.authors,c.request);expect(exportParquetCapture(r.target!)).toEqual(new Uint8Array(await Bun.file(item.path).arrayBuffer()));expect(r.mappings).toEqual(item.mappings);}
 });

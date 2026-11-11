@@ -1,0 +1,469 @@
+{
+  "runtime": "1.4.3",
+  "results": [
+    {
+      "id": "defaults/missing/missing",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/missing/null",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/missing/value",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/null/missing",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/null/null",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/null/value",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/missing-or-null/missing",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/missing-or-null/null",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/missing-or-null/value",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/undeclared/missing",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/undeclared/value",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/invalid-allowed",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/unknown-qualifier",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_FACET",
+            "path": "/modules/0/elements/0/facets/future",
+            "message": "Facet member retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+            "path": "/modules/0/elements/0/allowedValues/facets/future",
+            "message": "Unknown relevant qualifier: future",
+            "severity": "warning"
+          },
+          {
+            "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+            "path": "/modules/0/elements/0/default/value/facets/future",
+            "message": "Unknown relevant qualifier: future",
+            "severity": "warning"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/unknown-default-member",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_SCHEMA_PROPERTY",
+            "path": "/modules/0/elements/0/default/future",
+            "message": "Qualifier retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "literals/uuid/valid",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "128-bit domains require core 0.9.0"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "literals/uuid/invalid",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "128-bit domains require core 0.9.0"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "literals/bits128/valid",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "128-bit domains require core 0.9.0"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "literals/bits128/invalid",
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "error": "128-bit domains require core 0.9.0"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+            "path": "/umf",
+            "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/depth-budget",
+      "outcome": {
+        "accepted": false,
+        "code": "LIMIT",
+        "path": "/extensions/umf.future/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0",
+        "error": "JSON structural limit exceeded"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "LIMIT",
+            "path": "/extensions/umf.future/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0",
+            "message": "JSON structural limit exceeded",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "defaults/value-budget",
+      "outcome": {
+        "accepted": false,
+        "code": "LIMIT",
+        "path": "/extensions/umf.future/99965",
+        "error": "JSON structural limit exceeded"
+      },
+      "inputUnchanged": true,
+      "document": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "LIMIT",
+            "path": "/extensions/umf.future/99965",
+            "message": "JSON structural limit exceeded",
+            "severity": "error"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -14,5 +14,5 @@ try{
  const actual=await page.evaluate(async()=>{const a='/umf.js',c='/corpus.js',api=await import(a),{runLocalProfileCorpus}=await import(c);return runLocalProfileCorpus(api);});
  if(JSON.stringify(actual)!==JSON.stringify(expected)||errors.length||external.length)throw Error('Local profile browser output/error/request mismatch');
  const evidence={scope:'Exact local action declaration/preparation/manifest/companion meanings in built public ESM; no local database or native execution qualification',passed:true,browser:browser.version(),sourceDigest:createHash('sha256').update(await Bun.file('dist/umf.js').bytes()).digest('hex'),externalRequests:external,results:actual};
- await Bun.write('docs/helix/04-build/evidence/bulk-update/local-profile-browser.json',JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify({passed:true,browser:evidence.browser,results:actual}));
+ await Bun.write('out/bulk-update/local-profile-browser.json',JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify({passed:true,browser:evidence.browser,results:actual}));
 }finally{await browser?.close();server.stop(true);}

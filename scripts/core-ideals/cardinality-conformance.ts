@@ -32,87 +32,6 @@ export function replayCurrentCardinalityAuthor(row:any):u.CoreCardinalityDeclara
  const options:u.CoreCardinalityRequest={cardinality:row.author.provenance.cardinality,...(Object.hasOwn(authoredField,'itemType')?{itemType:u.copyJson(authoredField.itemType) as u.CoreItemTypeReference|null}:{})};
  return u.declareCoreCardinality(source,row.author.identity,options);
 }
-let archivedDigests:Promise<Map<string,string>>|undefined;
-async function historyDigests(){
- archivedDigests??=(async()=>{const out=new Map<string,string>(),root='docs/helix/04-build/evidence/metamodel-authority/history';
-  for await(const path of new Bun.Glob('**/*').scan({cwd:root,onlyFiles:true})){const bytes=new Uint8Array(await Bun.file(`${root}/${path}`).arrayBuffer()),sha=digest(bytes);if(!out.has(sha))out.set(sha,`${root}/${path}`);}
-  return out;
- })();return archivedDigests;
-}
-/** Retained proof consistency, not authentication or a fresh native execution. */
-export async function verifyCardinalityEvidence(reader:Reader=read){
- const hashes=new Map<string,string>(),records:{path:string;sha256:string}[]=[],pending:{record:any;name:string}[]=[],archived=await historyDigests(),unqualified:{evidence:string;path:string;expected:string;observed:string}[]=[],archivedMatches:{evidence:string;path:string;sha256:string;archive:string}[]=[],byEvidence=new Map<string,{pinned:number;liveMatches:number;archivedMatches:number;unqualified:number}>();let fingerprints=0,liveMatches=0;
- async function hash(path:string){if(!hashes.has(path))hashes.set(path,digest(await reader(path)));return hashes.get(path)!;}
- async function load(path:string){return JSON.parse(new TextDecoder().decode(await reader(path)));}
- async function verify(record:any,label:string){
-  assert.ok(record.sha256&&Object.keys(record.sha256).length,`${label}: missing fingerprints`);
-  for(const [path,expected] of Object.entries(record.sha256)){
-   const rel=recordedRepositoryPath(path),local=relative(process.cwd(),resolve(rel)).split(sep).join('/');
-   assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${label}: unsafe evidence path`);
-   assert.match(String(expected),/^[0-9a-f]{64}$/);let observed:string;try{observed=await hash(rel);}catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;observed='missing';}fingerprints++;const tally=byEvidence.get(label)??{pinned:0,liveMatches:0,archivedMatches:0,unqualified:0};tally.pinned++;byEvidence.set(label,tally);
-   const archive=archived.get(String(expected));if(archive){archivedMatches.push({evidence:label,path,sha256:String(expected),archive});tally.archivedMatches++;continue;}
-   if(observed===expected){liveMatches++;tally.liveMatches++;continue;}
-   unqualified.push({evidence:label,path,expected:String(expected),observed});tally.unqualified++;
-  }
- }
- const refresh=await load(file('field-gate-refresh-evidence'));
- const required=(record:any,path:string)=>assert.ok(Object.hasOwn(record.sha256??{},path),`missing required proof ${path}`);
- for(const name of ['cardinality-core-acceptance-evidence',...cardinalitySystems.map(s=>`${s}-cardinality-acceptance-evidence`)]){
-  const path=file(name),r=await load(path);assert.equal(r.results.failures,0,`${name}: failures`);assert.equal(r.results.typecheck,'passed');assert.equal(r.nativeEquivalence,false);
-  assert.equal(name.startsWith('cardinality-core')?r.coreTaskAccepted:r.bindingAccepted,true,`${name}: not accepted`);
-  for(const p of ['src/index.ts','spec/core/cardinality-document.schema.json','src/model/cardinality.ts','src/model/cardinality-transition.ts'])required(r,p);
-  if(name.startsWith('cardinality-core')){
-   for(const p of ['spec/core/cardinality-operation.schema.json','spec/core/cardinality-transition.schema.json','spec/core/cardinality-selection.schema.json','spec/core/kind-operation-v3.schema.json','spec/core/record-type-operation-v3.schema.json','spec/core/nullability-operation-v2.schema.json'])required(r,p);
-   for(const proof of ['core-cardinality-browser','core-cardinality-operations-browser','cardinality-field-operations-browser','cardinality-selection-browser']){
-    required(r,file(proof));const browser=await load(file(proof));assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assertNativeRepresentationEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
-   }
-  }
-  if(!name.startsWith('cardinality-core')){
-   const system=name.replace('-cardinality-acceptance-evidence','');
-   for(const part of ['native','browser'])required(r,file(`cardinality-${system}-${part}`));
-  }
-  pending.push({record:r,name});records.push({path,sha256:await hash(path)});
- }
- assert.equal(refresh.regression.failures,0);assert.ok(refresh.regression.tests>=407);assert.equal(refresh.typecheck,'passed');
- for(const run of refresh.runs)assert.equal(run.exitCode,0,`Failed command ${run.command}`);
- for(const system of cardinalitySystems)for(const part of ['native','browser']){
-  const script=`scripts/core-ideals/cardinality-${system}-${part==='native'?'oracle':'browser'}.ts`;
-  assert.ok(refresh.runs.some((r:any)=>Array.isArray(r.command)&&r.command.includes(script)),`Missing command ${script}`);
-  const path=file(`cardinality-${system}-${part}`);required(refresh,path);const r=await load(path);
-  assert.ok(r.runs?.length,`${path}: missing child commands`);for(const run of r.runs)assert.equal(run.exitCode,0,`${path}: failed child command`);
-  if(part==='browser'){
-   assert.equal(r.browser,refresh.browser??'148.0.7778.0');assert.ok(Object.keys(r.checks).length);
-   if(Object.hasOwn(r,'externalRequests'))assertNativeRepresentationEqual(r.externalRequests,[]);
-   const children=Object.keys(r.sha256??{}).filter(p=>p.endsWith('-browser.json'));assert.ok(children.length);
-   for(const child of children){
-    const rel=recordedRepositoryPath(child),local=relative(process.cwd(),resolve(rel)).split(sep).join('/');
-    assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${path}: unsafe evidence path`);
-    const browser=await load(rel);assert.equal(browser.browser,r.browser);assertNativeRepresentationEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length);
-   }
-  }
-  else {
-   assert.equal(r.nativeEquivalence,false);
-   if(system==='tablespec')assert.equal(r.nativeVersion,'647e8e566ad78b864282ec65c0b0b2237aa63084');
-   if(system==='postgresql')assert.equal(r.nativeVersion,'17.4');
-   if(system==='sqlserver')assert.equal(r.nativeVersion,'16.0.4295.3');
-   if(system==='avro')assertNativeRepresentationEqual(r.nativeVersions,{apache:'1.12.0',fastavro:'1.12.2'});
-   if(system==='parquet')assertNativeRepresentationEqual(r.nativeVersions,{pyarrow:'21.0.0'});
-  }
-  await verify(r,path);
- }
- for(const {record,name} of pending)await verify(record,name);
- await verify(refresh,'refresh');
- return {systems:[...cardinalitySystems],records,fingerprints,qualification:{status:unqualified.length?'historical-partial':'historical-resources-verified',liveMatches,archivedMatches,unqualified,byEvidence:Object.fromEntries(byEvidence)},refreshSha256:await hash(file('field-gate-refresh-evidence'))};
-}
-/** Current source and receipt behavior is verified separately from historical native qualification. */
-export function cardinalityCurrentStatus(evidence:Awaited<ReturnType<typeof verifyCardinalityEvidence>>){
- return {
-  historicalQualification:evidence.qualification.status,
-  currentNativeQualification:'UNQUALIFIED' as const,
-  idealAdmission:{outcome:'source-functional-only; native qualification UNQUALIFIED',sourceOperationsVerified:true,idealAdmitted:false,requiredBindings:2,sourceUsefulBindings:5,systems:[...cardinalitySystems],meaning:'CONTRACT-040 / Element.cardinality and itemType',nativeEquivalence:false},
-  delivery:{outcome:'unqualified',priorityDelivery:false,qualifiedBindings:0,sourceBindingsVerified:[...cardinalitySystems],systems:[...cardinalitySystems],scope:'Current authored/round-trip behavior remains covered; historical native delivery is not promoted without a fresh current-native qualification.'}
- };
-}
 const upgrade=(source:u.Document)=>source;
 function retained(before:u.Document,after:u.Document){
  for(const [key,value] of Object.entries(before.extensions??{}))assertNativeRepresentationEqual(after.extensions?.[key],value);
@@ -220,10 +139,4 @@ export async function verifyCardinalityRoundTrips(){
  }
  for(const system of cardinalitySystems)assert.ok(coverage[system].nativeBlocks&&coverage[system].nativeRecoveries);
  return coverage;
-}
-if(import.meta.main){
- const evidence=await verifyCardinalityEvidence(),roundTrips=await verifyCardinalityRoundTrips();
- const paths=['scripts/core-ideals/cardinality-conformance.ts','tests/core-ideals/cardinality-conformance.test.ts'];
- const status=cardinalityCurrentStatus(evidence),result={scope:'Current Cardinality source behavior and retained native meaning pass; historical evidence consistency does not establish current native qualification',...status,evidence,roundTrips,fingerprints:Object.fromEntries(await Promise.all(paths.map(async p=>[p,digest(await read(p))])))};
- await Bun.write(file('cardinality-conformance'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({systems:5,fingerprints:evidence.fingerprints,roundTrips,nativeEquivalence:false}));
 }
