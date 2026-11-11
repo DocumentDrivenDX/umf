@@ -1,7 +1,7 @@
 {
   "profile": "umf.metamodel.compile/1",
   "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-  "compilerSha256": "e6c901c448fff3dbac8e716bfea19b88618a2e50c2c827d82eb8128a1ef99d22",
+  "compilerSha256": "2e5a095e418dff1b063d3c395b9c2954131b9f125f046df8527abd393fabe4ff",
   "sourceAttestation": {
     "sources": {
       ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
@@ -66,7 +66,7 @@
       "crates/umf-core/src/bit128.rs": "68e9548b89450d56299358b1f60b0898253b9140a52640df90da157184446ce2",
       "crates/umf-core/src/bit128_binding.rs": "0dca89e2fa547c00c89e50e371a8fbfe42b04b3ae66314835394681a12e362fe",
       "crates/umf-core/src/bit128_dataset.rs": "4fc7f58a9ef72fd403721307380a577b6a8da41139b8bce337fcf64bde88e548",
-      "crates/umf-core/src/canonical_codegen_literals.rs": "74022667f60018a2bae8ef07dcc57bed5946c5675bc995fe8a7f50fcced9e657",
+      "crates/umf-core/src/canonical_codegen_literals.rs": "0280b6a6d602eac87c069e8fadf9484dbaad4089e78bfc4f5bf4b560117c92a6",
       "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "d528ef296f9cd6d433146c9f8421cd01d0205272e1d6e3cc539b91c91168aac3",
       "crates/umf-core/src/canonical_codegen_resources.rs": "9db20de06daee9b642e4c994a3ac5e4d9d7d520bde6f87c73e4b32e807019eec",
       "crates/umf-core/src/canonical_static_text_independent_tests.rs": "9b619dca3aae22919a59988093004b8eac23cb1395e6ecfc16df78add51caf43",
@@ -232,7 +232,7 @@
       "crates/umf-core/src/reviewed_parameters.rs": "074ee122216855ea5ee39d7b0709435458eb4f921f28b5d34cd161f883ded6da",
       "crates/umf-core/src/rfc3339_exact_instant.rs": "822debe5dbcf9dceec7dd0ffb73b89d9c090265128879c629e52601ac0b046f7",
       "crates/umf-core/src/scalar_type_inspection.rs": "9078192e60c3031a793beb6151002ed3a3f1a990a8d98b667b128026621ba57e",
-      "crates/umf-core/src/schema.rs": "5833e512f0a66764a577fc2f69c15ba3a88ab316f8029d3cdd87f6111da898fe",
+      "crates/umf-core/src/schema.rs": "77aa1f5587892a7280f3bbf4e1fccc63608517a5a459c52e7b40d3485def54c2",
       "crates/umf-core/src/schema_admitted_bank.rs": "4edf4247b865da889313808fa2eef130a8e2f942a7e15d9d111aa14068400223",
       "crates/umf-core/src/schema_admitted_bank_independent_tests.rs": "c19045813ffb66de43e83371894835ef2a671de04a140efcfc930e268a8e6d47",
       "crates/umf-core/src/schema_admitted_structure.rs": "3171d0fb790b9a48dcf9e05459b2ee4da855760f8561deb8f15409b440ccb12d",
@@ -1094,28 +1094,28 @@
       "spec/core/nullability-operation-v7.schema.json": "6f0d20390165d2da79f22a69b3fec0126512c9f870a49445a5c33e55d68ff2d9",
       "spec/extensions/tables/operation.schema.json": "af217abc87d2f4a5205d82c2146040ef986d29252c78a4ec76d59787828578cc"
     },
-    "binarySha256": "00f4ffe03f5e29e6f5c28492495c404c26f179229ee34a90948b78e7eabf8ae8"
+    "binarySha256": "865aaaa35ebfba2758e51906cdbc32f5731f3b37bb3555a78bb87112fcdd7f2b"
   },
   "executable": {
-    "path": "/home/runner/work/umf/umf/target/metamodel-compiler/executable-ZHPnTb/umf",
-    "bytes": 42808832,
-    "sha256": "00f4ffe03f5e29e6f5c28492495c404c26f179229ee34a90948b78e7eabf8ae8"
+    "path": "/home/runner/work/umf/umf/target/metamodel-compiler/executable-1IU364/umf",
+    "bytes": 42822408,
+    "sha256": "865aaaa35ebfba2758e51906cdbc32f5731f3b37bb3555a78bb87112fcdd7f2b"
   },
   "compilerArtifact": {
     "path": "compiler-evidence/umf-metamodel-cli",
-    "bytes": 42808832,
-    "sha256": "00f4ffe03f5e29e6f5c28492495c404c26f179229ee34a90948b78e7eabf8ae8"
+    "bytes": 42822408,
+    "sha256": "865aaaa35ebfba2758e51906cdbc32f5731f3b37bb3555a78bb87112fcdd7f2b"
   },
   "portableOutputs": {
-    "spec/core/schema.json": "8391a9a4b83277e3f51d97cde9f68c24f815356f873cc4ab7cfe3625022ae601",
-    "spec/core/semantic-type-reference.schema.json": "e267005dff23f9f236f5d84482b42c55be413df547250f2cf3bfd9859a702400",
-    "spec/core/extension-package.schema.json": "4f2ee3adae92e67502fd26322a2100c3ef9029fab62fbfbfed3f33423148f263",
+    "spec/core/schema.json": "46f3cee834cabafa33b1e4eac27a0adf2ea7c56d72977ed5bdb13d207c1de627",
+    "spec/core/semantic-type-reference.schema.json": "890faebacc9efbc7a5d6e11c9929392b09a9b971a9410b976dffdbf1e94209f1",
+    "spec/core/extension-package.schema.json": "d6b0999b967eb6e6fcab00e091a23b1535ff77ea1c46b4ab9997649b7d388b29",
     "spec/metamodel/package.json": "8c193403146173a328611bee864392777b798a13c491ef8bed0bcc4e43b2d16f",
-    "spec/metamodel/generated/core-constraints.json": "8a9f62bbb2166df48b0c62b3028cf539eb74ad8bbf2de0550ae9d4c89396fd05",
-    "spec/metamodel/generated/domain-policy.json": "a7cf58d5a52b225e64896aaf8375934212dc3264767ba0da053e0be7c808b40f",
-    "spec/metamodel/generated/python-shapes.json": "aed492ffaa898de7e65286f404bcdc1cbc191bc9f34bbc85bf1b178cb509aaa9",
-    "python/umf_access/src/umf_access/generated_core.py": "356a523b612e554396f825b889a2454b85da946f4beddf41b66007929909ba74",
-    "src/generated/core-model.ts": "30c16ba08f0dcd3c28399193d1214c1f5b561d9e96bb3c4a847f2d0d8863f999",
+    "spec/metamodel/generated/core-constraints.json": "8694d5215f8147e68daa47ef48639bb38df0a90c5b568a330827727a7036fa19",
+    "spec/metamodel/generated/domain-policy.json": "319273368f4e9d167a398347caf959a81009c7eca400b63ef0d8a06435569fd8",
+    "spec/metamodel/generated/python-shapes.json": "a138f29d496a341ada4071e18d06623982e1cadc954a8b752500cccbcc26f4b7",
+    "python/umf_access/src/umf_access/generated_core.py": "870dcc5a78048d2cff456d56adbb912f2fe1a61becb7068d094d19f5e47296aa",
+    "src/generated/core-model.ts": "af0f30dc408f98dc9513026fe16da61d26f3132cc2f3afb8083d6a43455d7c4f",
     "spec/core/facet-operation-v3.schema.json": "74c1ca75e2bac44afd0010292b82741618e9cb031cc37159667fa4f4ff95fd9f",
     "spec/core/cardinality-operation-v4.schema.json": "c2562ad726b58306c18332512f2b5388ddc625abb7494c532794682492300d45",
     "spec/core/kind-operation-v6.schema.json": "e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8",

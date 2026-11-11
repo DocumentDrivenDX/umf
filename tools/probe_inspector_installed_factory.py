@@ -163,21 +163,21 @@ GEN1_FIELDS=('sourceCommit','sourceTree','workflowPath','workflowSHA256',
              'finalAttestationSHA256','compilerSHA256','compilerBinarySHA256')
 
 # Populated only after independent custody review of an actual selected GEN1.
-CANDIDATE_ADMISSION={'fixtureSHA256': 'd32465648a86344c44934200fd5834e939a0f36dffc7e180666b552c2b2fe129',
- 'generation': {'sourceCommit': 'c660f38072665eb32daab1a14292067cc7fcd970',
-                'sourceTree': 'eff19ebb37069037a9f1391796b554204848c99c',
+CANDIDATE_ADMISSION={'fixtureSHA256': '91e767491951ef4a916967644ab655f3a6ce0debb8d74e65b566d8a74dbf2ca6',
+ 'generation': {'sourceCommit': 'dd8fce652b6cf10f3a273361a93e8f68e196fe76',
+                'sourceTree': '45e36b4835a4ed96e6023022ad3fe2e412e85353',
                 'workflowPath': '.github/workflows/merged-source-generation.yml',
                 'workflowSHA256': 'b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f',
-                'runId': '43050600180',
+                'runId': '43060243401',
                 'attempt': '1',
-                'jobId': '130626347614',
-                'artifactId': '13869705267',
-                'artifactDigest': 'a55fe0de79207261a9f1e31c8567c69a51151954bd3cc55a683a3370c8423c55',
-                'outputManifestSHA256': '763f5e2438395c40aaecc85e225f103eda008bfc2bc24568bfd1d5c2ebd51244',
-                'correspondenceReceiptSHA256': '59dcb72065913582367340ccf34ec4e9a5e3c96eb39a5dc4d66d40ffa3aa09d6',
-                'finalAttestationSHA256': '452b90bcd0a60124d76c7035646fa74ec386dddf8d7c4424ee008e9a9de4e80d',
-                'compilerSHA256': 'e6c901c448fff3dbac8e716bfea19b88618a2e50c2c827d82eb8128a1ef99d22',
-                'compilerBinarySHA256': '00f4ffe03f5e29e6f5c28492495c404c26f179229ee34a90948b78e7eabf8ae8'}}
+                'jobId': '130660529072',
+                'artifactId': '13873332393',
+                'artifactDigest': 'e69b452ea9786f5f718a92ccaa2a2490a50afe8e93a48ddec1b071b7c779cde5',
+                'outputManifestSHA256': '8034df65d9fc64945b24a83b84c4856e93e81de90a2e36c6f0e261e92409d697',
+                'correspondenceReceiptSHA256': '9b8428eb328e65c93e298eb491b9978377626fe39a93a6c2519a88c271579b85',
+                'finalAttestationSHA256': 'a5d0ef5a1f9e204d9553af9a442a3e5ead7b068a0ec0693b16a57fe072db6b0e',
+                'compilerSHA256': '2e5a095e418dff1b063d3c395b9c2954131b9f125f046df8527abd393fabe4ff',
+                'compilerBinarySHA256': '865aaaa35ebfba2758e51906cdbc32f5731f3b37bb3555a78bb87112fcdd7f2b'}}
 
 def candidate_generation(root,selected,binding,value):
     admission=CANDIDATE_ADMISSION

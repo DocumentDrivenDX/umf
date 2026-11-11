@@ -17,11 +17,11 @@ from unittest import mock
 REPO = Path(os.environ.get("UMF_LITERAL_TEST_REPO", Path(__file__).resolve().parents[2]))
 GENERATOR_SHA = "23b788c916e8a57ca102bb714b17edd87e3749062f4beddc656953afdc67dbb9"
 DATA_SHA = "586c67c832f86ae27b2dc5d83c9d7e73c8aa9f4437b2e7fe296e367737599e76"
-# Full GEN1 run 43050600180, original artifact 13869705267. The DATA digest
+# Full GEN1 run 43060243401, original artifact 13873332393. The DATA digest
 # joins output-receipt.json to stages/C.oracle.json. The ordered raw roster
 # digest is over that oracle's roots, as compact JSON with sorted object keys.
-CANDIDATE_01011_DATA_SHA = "74022667f60018a2bae8ef07dcc57bed5946c5675bc995fe8a7f50fcced9e657"
-CANDIDATE_01011_RAW_ROSTER_SHA = "fd94bed7df7701b278007b889be7c0761f37f01b61032af3aa3ff30f40acf022"
+CANDIDATE_01011_DATA_SHA = "0280b6a6d602eac87c069e8fadf9484dbaad4089e78bfc4f5bf4b560117c92a6"
+CANDIDATE_01011_RAW_ROSTER_SHA = "2887fd91b27095973966c483b18b3f705d0c34cd7791b24f58329f3e6ead89c8"
 INPUTS = (
     ("coreSchema", "spec/core/schema.json"),
     ("referenceSchema", "spec/core/semantic-type-reference.schema.json"),

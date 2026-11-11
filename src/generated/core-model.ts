@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-// Generated from spec/metamodel/umf.yaml; model fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f; compiler e6c901c448fff3dbac8e716bfea19b88618a2e50c2c827d82eb8128a1ef99d22
+// Generated from spec/metamodel/umf.yaml; model fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f; compiler 2e5a095e418dff1b063d3c395b9c2954131b9f125f046df8527abd393fabe4ff
 export const CURRENT_CORE_VERSION="0.10.0" as const;
 export {default as coreSchema} from '../../spec/core/schema.json';
 export {default as semanticTypeReferenceSchema} from '../../spec/core/semantic-type-reference.schema.json';
