@@ -10,19 +10,21 @@ import {availableParallelism} from 'node:os';
 // Options:
 //   --jobs N             run N files at once (default: number of CPUs; 1 = serial)
 //   --keep-going         run every file and report all failures (default: stop at the first)
-//   --exclude-file PATH  skip test files matching any glob listed in PATH (one per line, # comments)
+//   --exclude-file PATH  skip test files matching any glob listed in PATH (one per line, # comments); repeatable
+//   --only-file PATH     run only the test files matching a glob listed in PATH
 //   --shard I/N          run only the I-th of N deterministic shards of the selected files
 // Per-test default timeout: UMF_TEST_TIMEOUT_MS (default 120000); tests that set their own timeout keep it.
 const args=Bun.argv.slice(2),selections:string[]=[];
-let jobs=availableParallelism(),keepGoing=false,excludeFile:string|undefined,shard:[number,number]|undefined;
+let jobs=availableParallelism(),keepGoing=false,excludeFiles:string[]=[],onlyFile:string|undefined,shard:[number,number]|undefined;
 for(let i=0;i<args.length;i++){
  const arg=args[i]!;
  if(arg==='--')continue;
  if(arg==='--keep-going')keepGoing=true;
- else if(arg==='--jobs'||arg==='--exclude-file'||arg==='--shard'){
+ else if(arg==='--jobs'||arg==='--exclude-file'||arg==='--only-file'||arg==='--shard'){
   const value=args[++i];if(!value)throw Error(arg+' needs a value');
   if(arg==='--jobs'){jobs=Number(value);if(!Number.isInteger(jobs)||jobs<1)throw Error('--jobs needs a positive integer');}
-  else if(arg==='--exclude-file')excludeFile=value;
+  else if(arg==='--exclude-file')excludeFiles.push(value);
+  else if(arg==='--only-file')onlyFile=value;
   else{const m=value.match(/^(\d+)\/(\d+)$/);if(!m||Number(m[1])<1||Number(m[1])>Number(m[2]))throw Error('--shard needs I/N with 1<=I<=N');shard=[Number(m[1]),Number(m[2])];}
  }
  else if(arg.startsWith('-'))throw Error('Unknown option '+arg);
@@ -41,11 +43,16 @@ for(const selection of selections.length?selections:['tests']){
 }
 files.sort();
 if(!files.length||new Set(files).size!==files.length)throw Error('Empty or overlapping test inventory');
-if(excludeFile){
- const globs=(await readFile(excludeFile,'utf8')).split('\n').map(l=>l.trim()).filter(l=>l&&!l.startsWith('#')).map(g=>new Bun.Glob(g));
- const before=files.length;
+const globsOf=async(path:string)=>(await readFile(path,'utf8')).split('\n').map(l=>l.trim()).filter(l=>l&&!l.startsWith('#')).map(g=>new Bun.Glob(g));
+for(const excludeFile of excludeFiles){
+ const globs=await globsOf(excludeFile),before=files.length;
  files=files.filter(f=>!globs.some(g=>g.match(f)));
  console.error(`excluded ${before-files.length} of ${before} files via ${excludeFile}`);
+}
+if(onlyFile){
+ const globs=await globsOf(onlyFile);
+ files=files.filter(f=>globs.some(g=>g.match(f)));
+ console.error(`selected ${files.length} files via ${onlyFile}`);
 }
 if(shard)files=files.filter((_,index)=>index%shard![1]===shard![0]-1);
 if(!files.length)throw Error('No test files selected');
