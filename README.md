@@ -6,7 +6,7 @@ The current document and core semantic version is **0.10.0**. The Rust workspace
 
 ## Use UMF
 
-Download the [unified UMF 0.10.9 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.9) for macOS arm64 and Linux x86_64. It includes the `umf-v0.10.9` source release, `umf-v0.10.9-aarch64-apple-darwin.tar.gz` and `umf-v0.10.9-x86_64-unknown-linux-gnu.tar.gz` Rust CLI assets, and the SDK archives `umf-sdk-0.10.9-macos-aarch64.tgz` and `umf-sdk-0.10.9-linux-x86_64.tgz`. Install the matching pair from PyPI with `python -m pip install 'umf-codegen==0.10.9'`; Codegen requires exactly `umf-core==0.10.9`. The same wheel and source archives are included in the GitHub release. The document/core format remains 0.10.0.
+Download the [unified UMF 0.10.11 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.11) for macOS arm64 and Linux x86_64. It includes the `umf-v0.10.11` source release, `umf-v0.10.11-aarch64-apple-darwin.tar.gz` and `umf-v0.10.11-x86_64-unknown-linux-gnu.tar.gz` Rust CLI assets, and the SDK archives `umf-sdk-0.10.11-macos-aarch64.tgz` and `umf-sdk-0.10.11-linux-x86_64.tgz`. The matching Python wheels and source archives are in the GitHub release. Codegen requires exactly `umf-core==0.10.11`. The document/core format remains 0.10.0.
 
 - [Rust library and CLI](crates/README.md)
 - [Python distribution](python/README.md)
