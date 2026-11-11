@@ -22,7 +22,7 @@ const sourceArchivePath=process.env.UMF_SAGA_PYTHON_SOURCE_ARCHIVE?resolve(proce
 if(!wheelPath||!rebuiltWheelPath||!sourceArchivePath)throw Error('Set UMF_SAGA_PYTHON_WHEEL, UMF_SAGA_PYTHON_REBUILT_WHEEL, and UMF_SAGA_PYTHON_SOURCE_ARCHIVE to the exact tested Python artifacts');
 const artifacts={
  native:{nativeAddon:'bindings/core/node/umf_core_node.node',nativeBinding:'bindings/core/node/index.js'},
- browser:{'dist/runtime/wasm/index.js':'dist/runtime/wasm/index.js','dist/runtime/wasm/pkg/umf_core_wasm.js':'dist/runtime/wasm/pkg/umf_core_wasm.js','dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm':'dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm'},
+ browser:{'dist/runtime/wasm/index.js':'dist/runtime/wasm/index.js','dist/runtime/wasm/loader.js':'dist/runtime/wasm/loader.js','dist/runtime/wasm/pkg/umf_core_wasm.js':'dist/runtime/wasm/pkg/umf_core_wasm.js','dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm':'dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm'},
  cli:{cliBinary:cliPath},
  python:{pythonWheel:wheelPath},
  'python-rebuilt':{pythonWheel:rebuiltWheelPath,pythonSourceArchive:sourceArchivePath}

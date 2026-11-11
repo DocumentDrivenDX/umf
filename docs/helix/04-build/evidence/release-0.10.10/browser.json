@@ -1,0 +1,36 @@
+{
+  "archiveSha256": "70a24705d51bfb67e68c78daf762e8fde9faaf193df93b4cc934b6e40cf67f22",
+  "assets": {
+    "dist/runtime/wasm/index.js": "c48ceaff38c2591ceb4c1d4cc9a090c54c178d24fbb31a9111653bb61796a342",
+    "dist/runtime/wasm/loader.js": "cccf6d7d75343011a458584ad0bca8b91cdf04db9d576062a5b4bb2dc41e6515",
+    "dist/runtime/wasm/pkg/umf_core_wasm.js": "b062ac46876432644a54e2788a72938cae02ca205f8d8d97adb128f5307107fa",
+    "dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm": "bd27c2dd0d397a38fb909d8406f102ba2375a2d6fb8d1e597cdc8e25d68476ab",
+    "dist/umf-browser.js": "8e01dcae917b4269c90e5653eb57302ea484595245fc0fcfa135d7b5dd063b67",
+    "dist/umf_core_wasm_bg.wasm": "bd27c2dd0d397a38fb909d8406f102ba2375a2d6fb8d1e597cdc8e25d68476ab"
+  },
+  "browser": "153.0.8010.12",
+  "browserProcessAbsent": true,
+  "externalRequests": [],
+  "packageVersion": "0.10.10",
+  "pageErrors": [],
+  "profile": "umf.node-file-loader-browser-probe/1",
+  "result": {
+    "browserGlobalsAbsent": true,
+    "browserRootExportCount": 1155,
+    "copyJson": {
+      "profile": "umf-browser-file-loader/1",
+      "unicode": "μ🙂",
+      "values": [
+        0,
+        false,
+        null
+      ]
+    },
+    "runtimeEngineVersion": "umf-core-r2"
+  },
+  "status": "passed",
+  "wasmRequests": [
+    "/dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm",
+    "/dist/umf_core_wasm_bg.wasm"
+  ]
+}
