@@ -4,7 +4,7 @@ import {join} from 'node:path';
 import {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,type MedicalTables,type MedicalRow} from '../src/domain-packs/medical';
 import {createValidator} from '../src/validation/schema';
 import {generateDomainPackSchema} from '../src/domain-packs/schema';
-import {importTableSpec,exportTableSpec} from '../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../src/index-node-v4";
 import {ontology} from './domain-packs/ontology';
 
 const packVersion='1.2.0';

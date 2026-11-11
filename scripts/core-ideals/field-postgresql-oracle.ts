@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {classifyPostgresqlComposite, recoverPostgresqlCompositeCapture} from '../../src/core-ideals/postgresql-composite';
-import {classifyPostgresqlRecord, recoverPostgresqlRecordCapture} from '../../src/core-ideals/postgresql-record';
+import {classifyPostgresqlComposite,recoverPostgresqlCompositeCapture} from "../../src/index-node-v4";
+import {classifyPostgresqlRecord,recoverPostgresqlRecordCapture} from "../../src/index-node-v4";
 import {randomUUID,createHash} from 'node:crypto';
-import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from "../../src/index-node-v4";
 
-import {classifyPostgresqlField, recoverPostgresqlFieldCapture} from '../../src/core-ideals/postgresql-field';
+import {classifyPostgresqlField,recoverPostgresqlFieldCapture} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 const name='umf-field-postgresql-'+randomUUID();let created=false;

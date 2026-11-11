@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,inspectPostgresqlCatalog,findPostgresqlCatalogRelation,proposePostgresqlCatalogEdit,getPostgresqlCatalogReconstruction,getPostgresqlCatalogNode,queryPostgresqlCatalogDependencies,readDocument,writeDocument} from '../../src';
+import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,inspectPostgresqlCatalog,findPostgresqlCatalogRelation,proposePostgresqlCatalogEdit,getPostgresqlCatalogReconstruction,getPostgresqlCatalogNode,queryPostgresqlCatalogDependencies,readDocument,writeDocument} from '../../src/index-node-v4';
 const source=await Bun.file('fixtures/postgresql/catalog-capture.json').text();
 test('US-015-AC6: captured PostgreSQL metadata, exact unknowns and reconstruction archives survive both UMF formats',()=>{
  const extended=source.trim().slice(0,-1)+',"future":{"exact":9007199254740993.000000001}}';

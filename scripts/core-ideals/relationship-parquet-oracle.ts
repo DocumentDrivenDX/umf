@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {relationshipParquetCases} from './relationship-parquet-cases';
 import {projectRelationshipToParquet} from '../../src/index-node-v4';
-import {exportParquetCapture} from '../../src/adapters/parquet';
+import {exportParquetCapture} from "../../src/index-node-v4";
 import {createHash} from 'node:crypto';
 const cases=[];
 for(const c of relationshipParquetCases()){

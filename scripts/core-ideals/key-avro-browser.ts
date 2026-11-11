@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {importAvroSchema} from '../../src/adapters/avro';
+import {importAvroSchema} from "../../src/index-node-v4";
 import {classifyAvroKeys} from '../../src/index-node-v4';
 import type {AvroKeyRequest} from '../../src/core-ideals/key-avro-types';
 const fixtures=(await Bun.file('fixtures/avro/key-discovery-cases.json').json()).cases;

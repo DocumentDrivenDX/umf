@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {equalJsonLdText} from './jsonld-compare';
-import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFlatten,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../src';
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFlatten,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const results=[];
 for(const c of await Bun.file('native/jsonld/examples/flatten-cases.json').json()){
  const inputs={id:c.id,baseIRI:'https://example.org/source',...c.inputs},options={lossPolicy:'report',...c.options},d=importJsonLdDocument(c.source,inputs),r=await proposeJsonLdFlatten(d,options),exports=[],edits=[];

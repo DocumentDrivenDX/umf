@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {securityPolicyDependencies} from '../../src/extensions/security/dependencies';
+import {securityPolicyDependencies,evaluateSecurityWrite} from '../../src/index-node-v4';
 import {securityFixture,ref} from './fixture';
 import {writeFixture} from './write-fixture';
-import {evaluateSecurityWrite} from '../../src/extensions/security/write';
 // @covers US-079-AC3
 // @covers US-057-AC1
 test('typed dependency closure includes endpoint components and exact identity keys',()=>{

@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/to-rdf-schema.json';
-import {importJsonLdDocument,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeJsonLdNodeEdit,exportJsonLdDocument,exportRdfNQuads,getRdfQuads,readDocument,writeDocument} from '../../src';
+import {importJsonLdDocument,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeJsonLdNodeEdit,exportJsonLdDocument,exportRdfNQuads,getRdfQuads,readDocument,writeDocument} from '../../src/index-node-v4';
 import {equalJsonLdText} from '../../scripts/jsonld-compare';
 const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC13: complete toRDF corpus retains sources, candidates and every gap',async()=>{

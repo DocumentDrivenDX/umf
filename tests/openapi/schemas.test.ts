@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importOpenapiDocument,inspectOpenapi} from '../../src';
+import {importOpenapiDocument,inspectOpenapi} from '../../src/index-node-v4';
 function native(schema:any,extra:any={}){return {openapi:'3.1.2',info:{title:'Schemas',version:'1'},components:{schemas:{Value:schema}},...extra};}
 test('US-011-AC10: embedded dialect boundaries and literal examples remain distinct',async()=>{
  const cases=[

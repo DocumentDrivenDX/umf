@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {buildASTSchema,validateSchema,version as graphqlJsVersion} from 'graphql';
-import {exportGraphqlSchema,getGraphqlAst,type Document} from '../../src';
+import {exportGraphqlSchema,getGraphqlAst,type Document} from '../../src/index-node-v4';
 import {projectDddEntitiesToGraphql} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/projections/ddd-graphql-entities/case.json').json();

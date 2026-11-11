@@ -4,7 +4,7 @@ import {chromium} from 'playwright';
 import {mkdir} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {readDocument,validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact} from '../src/index';
+import {readDocument,validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact} from '../src/index-node-v4';
 import {supplyChainDataset} from '../tests/helpers/supply-chain-dataset';
 const directory=resolve(process.argv[2]??'');if(!process.argv[2])throw Error('Explicit fresh output required');await mkdir(directory);
 for(const [entry,name] of [['src/index.ts','umf.js'],['tests/helpers/supply-chain-dataset.ts','consumer.js']]){const build=await Bun.build({entrypoints:[entry!],outdir:directory,naming:name!,target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));}

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreCardinality} from '../../src/model/cardinality';
+import {declareCoreCardinality} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
 import type {CardinalityPostgresqlRequest} from '../../src/core-ideals/cardinality-postgresql-projection';
 export function postgresqlCardinalityProjectionCases(){

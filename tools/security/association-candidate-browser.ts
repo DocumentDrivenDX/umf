@@ -1,5 +1,6 @@
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
+import {buildBindingBrowserRuntime} from '../../scripts/binding/browser-runtime';
 import {securityFixture} from '../../tests/security/fixture';
 import {resolveCandidateRecordAssociation} from '../../src/extensions/security/association-candidate';
 const paths=['src/extensions/security/association-candidate.ts','src/model/json.ts','src/model/types.ts','src/extensions/security/types.ts','tests/security/fixture.ts','tools/security/association-candidate-browser.ts'];
@@ -7,7 +8,7 @@ const graphCompilerPath='docs/helix/04-build/evidence/security/truss-graph-compi
 paths.push('docs/helix/02-design/spikes/security/policy-v0.2.schema.json','docs/helix/02-design/spikes/security/ontology-v0.2.schema.json',graphCompilerPath,graphSelectorPath,'tools/security/association-browser-entry.ts');
 const graphCompiler=await Bun.file(graphCompilerPath).json(),graphSelection=await Bun.file(graphSelectorPath).json(),graphOntology=JSON.parse(graphCompiler.request.ontologyJson);
 const graph={document:graphCompiler.transition.target,selector:graphSelection.original,bare:graphSelection.bare,entities:graphSelection.entities,classifications:[...graphOntology.entities,...graphOntology.associations].map((e:any)=>({type:e.type,fields:e.fields}))};
-paths.push(...new Bun.Glob('src/**/*').scanSync({onlyFiles:true}),...new Bun.Glob('spec/**/*').scanSync({onlyFiles:true}));
+paths.push(...new Bun.Glob('src/**/*').scanSync({onlyFiles:true}),...new Bun.Glob('spec/**/*').scanSync({onlyFiles:true}),'scripts/binding/browser-runtime.ts','bindings/core/wasm/pkg/umf_core_wasm.js','bindings/core/wasm/pkg/umf_core_wasm_bg.wasm');
 const hash=async(p:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex');
 const pins=Object.fromEntries(await Promise.all(paths.map(async p=>[p,await hash(p)])));
 const {resolution,policy}=securityFixture(),a=resolution.ontology.associations[1]!,model=resolution.documents[0]!.document;
@@ -16,11 +17,12 @@ const classifications=[...resolution.ontology.entities.filter(e=>['Staff','Proje
 const expressionPacket={policy,ontology:resolution.ontology,expression:policy.rules[1]!.condition,selectors:resolution.ontology.associations.map(a=>({kind:'record-members',type:a.type,keyId:a.keyId,endpoints:a.endpoints})),views:[...resolution.ontology.entities,...resolution.ontology.associations].map(e=>({type:e.type,fields:e.fields}))};
 const build=await Bun.build({entrypoints:[paths[0]!],target:'browser',format:'esm'});if(!build.success)throw Error('Build failed');const js=await build.outputs[0]!.text();
 const checksBuild=await Bun.build({entrypoints:['tools/security/association-browser-entry.ts'],target:'browser',format:'esm'});if(!checksBuild.success)throw Error('Checks build failed');const checksJs=await checksBuild.outputs[0]!.text();
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch:r=>new URL(r.url).pathname==='/checks.js'?new Response(checksJs,{headers:{'content-type':'text/javascript'}}):new URL(r.url).pathname==='/candidate.js'?new Response(js,{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html>')});let browser;
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch:r=>{const path=new URL(r.url).pathname;if(path==='/checks.js')return new Response(checksJs,{headers:{'content-type':'text/javascript'}});if(path==='/candidate.js')return new Response(js,{headers:{'content-type':'text/javascript'}});if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});return new Response('<!doctype html>');}});let browser;
 try{
  browser=await chromium.launch({headless:true,executablePath:Bun.env.UMF_CHROMIUM_PATH});const page=await browser.newPage();let external=0;await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():(external++,r.abort()));await page.goto(`http://127.0.0.1:${server.port}`);
  const observations=await page.evaluate(async (p:any)=>{
-  const url='/candidate.js',m=await import(url),run=(s:any)=>m.resolveCandidateRecordAssociation(s,p.model,p.entities),refuses=(s:any)=>{try{run(s);return false;}catch{return true;}};
+  const url='/candidate.js',m=await import(url),checks=await import('/checks.js'),runtime=await import('/umf.js');checks.configureSecurityRuntime(runtime);const run=(s:any)=>m.resolveCandidateRecordAssociation(s,p.model,p.entities),refuses=(s:any)=>{try{run(s);return false;}catch{return true;}};
   const original=run(p.selector);const rows:{id:string;expected:unknown;observed:unknown}[]=[{id:'original-plan',expected:p.plan,observed:original}];
   for(const mutation of ['duplicate-role','wrong-owner','foreign-document','arity','missing-key']){
    const s=structuredClone(p.selector);

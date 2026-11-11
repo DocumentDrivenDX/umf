@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+import {importParquetSchema,getParquetFieldMetadata} from "../../src/index-node-v4";
 
 
-import {classifyParquetField} from '../../src/core-ideals/parquet-field';
+import {classifyParquetField} from "../../src/index-node-v4";
 import type {Nullability} from '../../src/model/types';
 import type {ParquetNullabilityRequest} from '../../src/core-ideals/nullability-parquet';
 export function parquetAvailabilitySource(bytes:Uint8Array,index:number){

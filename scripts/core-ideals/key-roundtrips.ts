@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {tableSpecKeyProjectionCases} from './key-tablespec-projection-cases';
 import {postgresqlKeyProjectionCases} from './key-postgresql-projection-cases';

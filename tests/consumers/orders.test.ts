@@ -3,7 +3,7 @@ import {test,expect} from 'bun:test';
 import {ordersModel,generateOrdersConsumers,compileOrdersTransform} from '../../scripts/examples/orders-consumers';
 import {projectAvroToJsonSchema,projectTableSpecToAvro} from '../../src/index-node-v4';
 const projectors={projectAvroToJsonSchema,projectTableSpecToAvro};
-import {readDocument,writeDocument,editTableSpecColumn,exportTableSpec,exportOpenapiDocument,getDddDefinition} from '../../src';
+import {readDocument,writeDocument,editTableSpecColumn,exportTableSpec,exportOpenapiDocument,getDddDefinition} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 
 test('CONTRACT-036 seven authored consumers retain mixed native context across both UMF formats',async()=>{

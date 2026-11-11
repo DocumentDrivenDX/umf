@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importDbtArtifact,exportDbtArtifact,proposeDbtArtifactNodeEdit,readDocument,writeDocument} from '../../src';
+import {importDbtArtifact,exportDbtArtifact,proposeDbtArtifactNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/dbt/failure/';
 test('US-022-AC9: native errors, failed tests and skipped dependents retain distinct meanings',async()=>{
  const raw=await Bun.file(base+'run-results.json').text(),artifact=JSON.parse(raw),manifest=await Bun.file(base+'manifest.json').json(),p=await Bun.file(base+'provenance.json').json();

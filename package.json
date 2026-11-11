@@ -25,8 +25,14 @@
       "import": "./dist/runtime/wasm/index.js"
     },
     "./loader-contract": {
-      "types": "./dist/src/domain-packs/loader-contract.d.ts",
-      "import": "./dist/loader-contract.js"
+      "types": {
+        "node": "./dist/src/domain-packs/loader-contract-node.d.ts",
+        "default": "./dist/src/domain-packs/loader-contract-browser.d.ts"
+      },
+      "browser": "./dist/loader-contract.js",
+      "node": "./dist/loader-contract.node.js",
+      "import": "./dist/loader-contract.js",
+      "default": "./dist/loader-contract.js"
     }
   },
   "scripts": {

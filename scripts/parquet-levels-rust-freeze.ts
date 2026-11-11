@@ -1,5 +1,5 @@
 import {createHash} from 'node:crypto';
-import {captureParquet,decodeParquetLevels} from '../src';
+import {captureParquet,decodeParquetLevels} from '../src/index-node-v4';
 const root='fixtures/parquet/levels/';
 const upstream=await Bun.file(root+'results.json').json();
 const authored=await Bun.file(root+'authored/manifest.json').json();

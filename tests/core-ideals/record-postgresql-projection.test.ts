@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlRecordCase,postgresqlRecordProjectionCases} from '../../scripts/core-ideals/record-postgresql-projection-cases';
-import {projectRecordToPostgresql, recoverRecordFromPostgresql} from '../../src/core-ideals/record-postgresql-projection';
-import {getPostgresqlDdlDeclarations} from '../../src/adapters/postgresql/declarations';
-import {getPostgresqlSource, exportPostgresqlSql} from '../../src/adapters/postgresql';
+import {projectRecordToPostgresql,recoverRecordFromPostgresql} from "../../src/index-node-v4";
+import {getPostgresqlDdlDeclarations} from "../../src/index-node-v4";
+import {getPostgresqlSource,exportPostgresqlSql} from "../../src/index-node-v4";
 import {backend} from '../../native/postgresql/runtime';
 import {copyJson} from '../../src/model/json';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';

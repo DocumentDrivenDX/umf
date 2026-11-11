@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {cardinalityTableSpecCases,tableSpecCardinalitySource} from '../../scripts/core-ideals/cardinality-tablespec-cases';
 const text=JSON.stringify({version:'1.0',table_name:'Vectors',columns:[{name:'value',data_type:'EMBEDDING',dimension:3,future_shape:{unknown:9007199254740991}}]});
 const request={column:0,mode:'strict',profile:'runtime-model'} as const;

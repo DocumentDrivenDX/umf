@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient} from '../src/index-node-v4';
 import {domainSource} from './unified/table-domain-fixture';
 import {legalDomainAuthoringSource} from './unified/legal-domain-authoring-fixture';
 test('generated domain constructors validate exact enums, ranges, widths and Unicode lengths',async()=>{

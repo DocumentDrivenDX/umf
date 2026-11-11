@@ -5,7 +5,7 @@ import {mkdir} from 'node:fs/promises';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {evaluateCandidateCatalogReadDisclosureBatchWithinOperation as produce} from '../../src/extensions/security/catalog-runtime-candidate';
 import {CandidateSecurityOperationBudget} from '../../src/extensions/security/operation-budget-candidate';
-import {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from '../../src/extensions/security/protection/disclosure';
+import {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from '../../src/index-node-v4';
 const output=process.argv[2];
 if(!output||await Bun.file(output).exists())throw Error('Fresh output directory required');
 await mkdir(output,{recursive:false});

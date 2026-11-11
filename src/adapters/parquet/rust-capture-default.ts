@@ -16,26 +16,30 @@ import type {ParquetContainerInspection} from './containers';
 import type {ParquetFieldMetadataResult} from './field-metadata';
 import type {ParquetKeyValue,ParquetMetadataTransform} from './transform';
 import type {ParquetRenameResult} from './rename';
-import type {captureParquet,exportParquetCapture,inspectParquetFraming} from './index';
-import type {importParquetSchema} from './field-metadata';
-import type {encodeParquetWire} from './encode';
-import type {decodeParquetFooter} from './footer';
-import type {inspectParquetMetadata} from './metadata';
-import type {inspectParquetSchema} from './schema';
-import type {inspectParquetPages} from './pages';
-import type {decodeParquetPageBodies} from './bodies';
-import type {decodeParquetLevels} from './levels';
-import type {decodeParquetPhysical} from './physical';
-import type {decodeParquetValues} from './values';
-import type {assembleParquetRows} from './rows';
-import type {repairParquetDictionaryOffsets} from './repair-offsets';
-import type {inspectParquetLogicalTypes} from './logical';
-import type {inspectParquetContainers} from './containers';
-import type {getParquetFieldMetadata} from './field-metadata';
-import type {appendParquetKeyValueMetadata} from './transform';
-import type {renameParquetField} from './rename';
+
 import type {ParquetArrowSchema,ParquetArrowRenamePolicy,ParquetArrowRenameResult} from './arrow-types';
 import type {ArrowFlatbufferEncodingBackend} from '../arrow/api-types';
+
+type CaptureParquet = (bytes: Uint8Array<ArrayBufferLike>, options: { id: string; }) => Document;
+type ExportParquetCapture = (doc: Document) => Uint8Array<ArrayBufferLike>;
+type InspectParquetFraming = (doc: Document) => ParquetFraming;
+type ImportParquetSchema = (bytes: Uint8Array<ArrayBufferLike>, options: { id: string; }) => Document;
+type EncodeParquetWire = (value: ParquetWireValue) => Uint8Array<ArrayBufferLike>;
+type DecodeParquetFooter = (document: Document) => ParquetFooterDecode;
+type InspectParquetMetadata = (source: Document) => ParquetMetadataInspection;
+type InspectParquetSchema = (source: Document) => ParquetSchemaInspection;
+type InspectParquetPages = (source: Document) => ParquetPageInspection;
+type DecodeParquetPageBodies = (source: Document) => ParquetPageBodies;
+type DecodeParquetLevels = (source: Document) => ParquetLevels;
+type DecodeParquetPhysical = (source: Document) => ParquetPhysical;
+type DecodeParquetValues = (source: Document) => ParquetValues;
+type AssembleParquetRows = (source: Document) => ParquetRows;
+type RepairParquetDictionaryOffsets = (source: Document) => ParquetOffsetRepair;
+type InspectParquetLogicalTypes = (source: Document) => ParquetLogicalInspection;
+type InspectParquetContainers = (source: Document) => ParquetContainerInspection;
+type GetParquetFieldMetadata = (source: Document) => ParquetFieldMetadataResult;
+type AppendParquetKeyValueMetadata = (source: Document, entries: ParquetKeyValue[]) => ParquetMetadataTransform;
+type RenameParquetField = (source: Document, index: number, name: string) => ParquetRenameResult;
 
 type ErrorGuard=(error:unknown)=>boolean;
 
@@ -91,13 +95,13 @@ export function bindParquetCaptureRust(
  return Object.freeze({
   profile:engine.profile,
   capabilities:engine.capabilities,
-  captureParquet(bytes:Uint8Array,options:{id:string}):ReturnType<typeof captureParquet>{return call(()=>engine.captureParquet(bytes,options)) as ReturnType<typeof captureParquet>;},
-  importParquetSchema(bytes:Uint8Array,options:{id:string}):ReturnType<typeof importParquetSchema>{return call(()=>engine.importParquetSchema(bytes,options)) as ReturnType<typeof importParquetSchema>;},
-  encodeParquetWire(value:ParquetWireValue):ReturnType<typeof encodeParquetWire>{return call(()=>engine.encodeParquetWire(value)) as ReturnType<typeof encodeParquetWire>;},
-  exportParquetCapture(document:Document):ReturnType<typeof exportParquetCapture>{return call(()=>engine.exportParquetCapture(document)) as ReturnType<typeof exportParquetCapture>;},
-  inspectParquetFraming(document:Document):ReturnType<typeof inspectParquetFraming>{return call(()=>engine.inspectParquetFraming(document)) as ParquetFraming;},
-  decodeParquetFooter(document:Document):ReturnType<typeof decodeParquetFooter>{return call(()=>engine.decodeParquetFooter(document)) as ParquetFooterDecode;},
-  inspectParquetMetadata(document:Document):ReturnType<typeof inspectParquetMetadata>{return call(()=>engine.inspectParquetMetadata(document)) as ParquetMetadataInspection;},
+  captureParquet(bytes:Uint8Array,options:{id:string}):ReturnType<CaptureParquet>{return call(()=>engine.captureParquet(bytes,options)) as ReturnType<CaptureParquet>;},
+  importParquetSchema(bytes:Uint8Array,options:{id:string}):ReturnType<ImportParquetSchema>{return call(()=>engine.importParquetSchema(bytes,options)) as ReturnType<ImportParquetSchema>;},
+  encodeParquetWire(value:ParquetWireValue):ReturnType<EncodeParquetWire>{return call(()=>engine.encodeParquetWire(value)) as ReturnType<EncodeParquetWire>;},
+  exportParquetCapture(document:Document):ReturnType<ExportParquetCapture>{return call(()=>engine.exportParquetCapture(document)) as ReturnType<ExportParquetCapture>;},
+  inspectParquetFraming(document:Document):ReturnType<InspectParquetFraming>{return call(()=>engine.inspectParquetFraming(document)) as ParquetFraming;},
+  decodeParquetFooter(document:Document):ReturnType<DecodeParquetFooter>{return call(()=>engine.decodeParquetFooter(document)) as ParquetFooterDecode;},
+  inspectParquetMetadata(document:Document):ReturnType<InspectParquetMetadata>{return call(()=>engine.inspectParquetMetadata(document)) as ParquetMetadataInspection;},
   getParquetArrowSchema(document:Document):ParquetArrowSchema{return call(()=>engine.getParquetArrowSchema(document)) as ParquetArrowSchema;},
   renameParquetFieldWithArrowSchema(document:Document,policy:ParquetArrowRenamePolicy,backend?:ArrowFlatbufferEncodingBackend):ParquetArrowRenameResult{
    if(backend===undefined)return call(()=>engine.renameParquetFieldWithArrowSchema(document,policy)) as ParquetArrowRenameResult;
@@ -118,18 +122,18 @@ export function bindParquetCaptureRust(
    let flatbufferHex='';for(const byte of bytes)flatbufferHex+=byte.toString(16).padStart(2,'0');
    return call(()=>engine.completeRenameParquetFieldWithArrowSchema(document,policy,flatbufferHex)) as ParquetArrowRenameResult;
   },
-  inspectParquetSchema(document:Document):ReturnType<typeof inspectParquetSchema>{return call(()=>engine.inspectParquetSchema(document)) as ParquetSchemaInspection;},
-  inspectParquetPages(document:Document):ReturnType<typeof inspectParquetPages>{return call(()=>engine.inspectParquetPages(document)) as ParquetPageInspection;},
-  decodeParquetPageBodies(document:Document):ReturnType<typeof decodeParquetPageBodies>{return call(()=>engine.decodeParquetPageBodies(document)) as ParquetPageBodies;},
-  decodeParquetLevels(document:Document):ReturnType<typeof decodeParquetLevels>{return call(()=>engine.decodeParquetLevels(document)) as ParquetLevels;},
-  decodeParquetPhysical(document:Document):ReturnType<typeof decodeParquetPhysical>{return call(()=>engine.decodeParquetPhysical(document)) as ParquetPhysical;},
-  decodeParquetValues(document:Document):ReturnType<typeof decodeParquetValues>{return call(()=>engine.decodeParquetValues(document)) as ParquetValues;},
-  assembleParquetRows(document:Document):ReturnType<typeof assembleParquetRows>{return call(()=>engine.assembleParquetRows(document)) as ParquetRows;},
-  repairParquetDictionaryOffsets(document:Document):ReturnType<typeof repairParquetDictionaryOffsets>{return call(()=>engine.repairParquetDictionaryOffsets(document)) as ParquetOffsetRepair;},
-  inspectParquetLogicalTypes(document:Document):ReturnType<typeof inspectParquetLogicalTypes>{return call(()=>engine.inspectParquetLogicalTypes(document)) as ParquetLogicalInspection;},
-  inspectParquetContainers(document:Document):ReturnType<typeof inspectParquetContainers>{return call(()=>engine.inspectParquetContainers(document)) as ParquetContainerInspection;},
-  getParquetFieldMetadata(document:Document):ReturnType<typeof getParquetFieldMetadata>{return call(()=>engine.getParquetFieldMetadata(document)) as ParquetFieldMetadataResult;},
-  appendParquetKeyValueMetadata(document:Document,entries:ParquetKeyValue[]):ReturnType<typeof appendParquetKeyValueMetadata>{return call(()=>engine.appendParquetKeyValueMetadata(document,entries)) as ParquetMetadataTransform;},
-  renameParquetField(document:Document,index:number,name:string):ReturnType<typeof renameParquetField>{return call(()=>engine.renameParquetField(document,index,name)) as ParquetRenameResult;},
+  inspectParquetSchema(document:Document):ReturnType<InspectParquetSchema>{return call(()=>engine.inspectParquetSchema(document)) as ParquetSchemaInspection;},
+  inspectParquetPages(document:Document):ReturnType<InspectParquetPages>{return call(()=>engine.inspectParquetPages(document)) as ParquetPageInspection;},
+  decodeParquetPageBodies(document:Document):ReturnType<DecodeParquetPageBodies>{return call(()=>engine.decodeParquetPageBodies(document)) as ParquetPageBodies;},
+  decodeParquetLevels(document:Document):ReturnType<DecodeParquetLevels>{return call(()=>engine.decodeParquetLevels(document)) as ParquetLevels;},
+  decodeParquetPhysical(document:Document):ReturnType<DecodeParquetPhysical>{return call(()=>engine.decodeParquetPhysical(document)) as ParquetPhysical;},
+  decodeParquetValues(document:Document):ReturnType<DecodeParquetValues>{return call(()=>engine.decodeParquetValues(document)) as ParquetValues;},
+  assembleParquetRows(document:Document):ReturnType<AssembleParquetRows>{return call(()=>engine.assembleParquetRows(document)) as ParquetRows;},
+  repairParquetDictionaryOffsets(document:Document):ReturnType<RepairParquetDictionaryOffsets>{return call(()=>engine.repairParquetDictionaryOffsets(document)) as ParquetOffsetRepair;},
+  inspectParquetLogicalTypes(document:Document):ReturnType<InspectParquetLogicalTypes>{return call(()=>engine.inspectParquetLogicalTypes(document)) as ParquetLogicalInspection;},
+  inspectParquetContainers(document:Document):ReturnType<InspectParquetContainers>{return call(()=>engine.inspectParquetContainers(document)) as ParquetContainerInspection;},
+  getParquetFieldMetadata(document:Document):ReturnType<GetParquetFieldMetadata>{return call(()=>engine.getParquetFieldMetadata(document)) as ParquetFieldMetadataResult;},
+  appendParquetKeyValueMetadata(document:Document,entries:ParquetKeyValue[]):ReturnType<AppendParquetKeyValueMetadata>{return call(()=>engine.appendParquetKeyValueMetadata(document,entries)) as ParquetMetadataTransform;},
+  renameParquetField(document:Document,index:number,name:string):ReturnType<RenameParquetField>{return call(()=>engine.renameParquetField(document,index,name)) as ParquetRenameResult;},
  });
 }

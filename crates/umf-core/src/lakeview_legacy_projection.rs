@@ -132,12 +132,12 @@ fn issue(
         used.insert(path);
     }
 }
-fn issue_utf16(out: &mut Vec<Value>, path: Utf16, code: &str, class: &str, detail: String) {
+fn issue_utf16(out: &mut Vec<Value>, path: Utf16, code: &str, class: &str, detail: Utf16) {
     out.push(obj(vec![
         ("path", Value::String(path)),
         ("code", s(code)),
         ("classification", s(class)),
-        ("detail", s(&detail)),
+        ("detail", Value::String(detail)),
         ("retainedInSource", Value::Bool(true)),
     ]))
 }
@@ -727,28 +727,39 @@ fn widget(
             && matches!(lines,Value::Array(a) if a.iter().all(|x|matches!(x,Value::String(_))))
         {
             usep(used, &at(&at(&wp, "multilineTextboxSpec"), "lines"));
-            let text_value = arr(Some(lines))
+            let text_units = arr(Some(lines))
                 .iter()
-                .filter_map(|x| text(Some(x)))
-                .collect::<String>();
+                .filter_map(|value| match value {
+                    Value::String(text) => Some(text.units()),
+                    _ => None,
+                })
+                .flatten()
+                .copied()
+                .collect::<Vec<_>>();
             return Ok(Some(obj(vec![
                 ("kind", s("text")),
                 (
                     "content",
-                    obj(vec![("format", s("markdown")), ("text", q(&text_value))]),
+                    obj(vec![
+                        ("format", s("markdown")),
+                        ("text", Value::String(Utf16::new(text_units))),
+                    ]),
                 ),
                 ("position", position.unwrap()),
             ])));
         }
     }
-    if let Some(txt) = text(get(w, "textbox_spec")) {
+    if let Some(Value::String(txt)) = get(w, "textbox_spec") {
         if let Some(p) = position {
             usep(used, &at(&wp, "textbox_spec"));
             return Ok(Some(obj(vec![
                 ("kind", s("text")),
                 (
                     "content",
-                    obj(vec![("format", s("markdown")), ("text", q(&txt))]),
+                    obj(vec![
+                        ("format", s("markdown")),
+                        ("text", Value::String(txt.clone())),
+                    ]),
                 ),
                 ("position", p),
             ])));
@@ -1662,16 +1673,7 @@ pub fn project(
             touched.insert(q.to_owned());
         }
     }
-    let mut scan_consumed = BTreeSet::new();
-    scan_unknown(
-        view,
-        "",
-        &used,
-        &touched,
-        &mut issues,
-        &mut scan_consumed,
-        ctx,
-    )?;
+    scan_unknown(view, "", &used, &touched, &mut issues, ctx)?;
     let pair_array = |v: Vec<(String, Value)>| {
         Value::Array(
             v.into_iter()
@@ -1726,57 +1728,43 @@ fn scan_unknown(
     used: &BTreeSet<String>,
     touched: &BTreeSet<String>,
     issues: &mut Vec<Value>,
-    used_mut: &mut BTreeSet<String>,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     if used.contains(path) {
         return Ok(());
     }
     if !touched.contains(path) {
-        let mut snippet = json(value);
-        if snippet.chars().count() > 120 {
-            snippet = snippet.chars().take(120).collect()
-        }
-        issue(
-            issues,
-            used_mut,
-            path.to_owned(),
-            "LAKEVIEW_UNMAPPED",
-            "unsupported",
-            format!(
-                "Native content {snippet} is retained but not expressed by the neutral declaration"
-            ),
-            true,
-        );
+        unmapped_issue(issues, Utf16::from(path), value);
         return Ok(());
     }
     for (k, v) in pairs(value) {
         ctx.charge_work(1, Utf16::default())?;
         let child = pointer_utf16(&Utf16::from(path), k);
         match child.to_utf8() {
-            Ok(child) => scan_unknown(v, &child, used, touched, issues, used_mut, ctx)?,
-            Err(_) => {
-                let mut snippet = json(v);
-                if snippet.chars().count() > 120 {
-                    snippet = snippet.chars().take(120).collect()
-                }
-                issue_utf16(issues,child,"LAKEVIEW_UNMAPPED","unsupported",format!("Native content {snippet} is retained but not expressed by the neutral declaration"));
-            }
+            Ok(child) => scan_unknown(v, &child, used, touched, issues, ctx)?,
+            Err(_) => unmapped_issue(issues, child, v),
         }
     }
     if let Value::Array(a) = value {
         for (i, v) in a.iter().enumerate() {
             ctx.charge_work(1, Utf16::default())?;
-            scan_unknown(
-                v,
-                &at(path, &i.to_string()),
-                used,
-                touched,
-                issues,
-                used_mut,
-                ctx,
-            )?
+            scan_unknown(v, &at(path, &i.to_string()), used, touched, issues, ctx)?
         }
     }
     Ok(())
+}
+
+fn unmapped_issue(issues: &mut Vec<Value>, path: Utf16, value: &Value) {
+    let detail = "Native content "
+        .encode_utf16()
+        .chain(json(value).encode_utf16().take(120))
+        .chain(" is retained but not expressed by the neutral declaration".encode_utf16())
+        .collect();
+    issue_utf16(
+        issues,
+        path,
+        "LAKEVIEW_UNMAPPED",
+        "unsupported",
+        Utf16::new(detail),
+    );
 }

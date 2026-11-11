@@ -1,5 +1,5 @@
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
-import {inspectCoreScalarType} from '../../src/model/scalar-type';
+import {inspectCoreScalarType} from "../../src/index-node-v4";
 import {SCALAR_TYPES,type Document} from '../../src/model/types';
 import sourceSchema from '../../spec/core/schema.json';
 import resultSchema from '../../spec/core/scalar-type-inspection-v0.3.schema.json';

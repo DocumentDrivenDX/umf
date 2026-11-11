@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {createManifestCorpusFixture} from './actions-manifest-corpus';
 import {sha256Text} from '../src/extensions/actions/plan-artifacts';
-import type {ActionManifestConstruction} from '../src/extensions/actions/manifest-construction';
+import type {ActionManifestConstruction} from '../src/extensions/actions/manifest-construction-types';
 const artifact=(value:unknown)=>{const utf8=typeof value==='string'?value:JSON.stringify(value);return {mediaType:'application/json',utf8,sha256:sha256Text(utf8)};};
 export function constructionFixture(){
  const f=createManifestCorpusFixture(api);

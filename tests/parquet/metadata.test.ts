@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,inspectParquetMetadata,parquetMetadataInspectionSchema,coreSchema} from '../../src';
+import {captureParquet,exportParquetCapture,inspectParquetMetadata,parquetMetadataInspectionSchema,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(parquetMetadataInspectionSchema);
 function wrap(footer:number[]){const b=new Uint8Array(footer.length+12);b.set([80,65,82,49]);b.set(footer,4);new DataView(b.buffer).setUint32(b.length-8,footer.length,true);b.set([80,65,82,49],b.length-4);return b;}

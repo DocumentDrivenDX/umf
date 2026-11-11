@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient} from '../src/index-node-v4';
 import {createPythonClientRustCandidateV4} from '../src/node-v4';
 
 const source=await Bun.file(new URL('../tests/unified/commerce.json',import.meta.url)).text();

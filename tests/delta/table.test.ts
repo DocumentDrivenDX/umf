@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importDeltaTable,exportDeltaTable,inspectDeltaTable,getDeltaTableSchema,exportDeltaSchema,proposeDeltaTableNodeEdit,readDocument,writeDocument} from '../../src';
+import {importDeltaTable,exportDeltaTable,inspectDeltaTable,getDeltaTableSchema,exportDeltaSchema,proposeDeltaTableNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 const schema='{ "type": "struct", "fields": [{"name":"at","type":"timestamp_ntz","nullable":true,"metadata":{}}] }';
 const context=()=>({protocol:{minReaderVersion:3,minWriterVersion:7,readerFeatures:['timestampNtz'],writerFeatures:['timestampNtz']},metaData:{id:'table',format:{provider:'parquet',options:{}},schemaString:schema,partitionColumns:[],configuration:{}}});
 test('US-018-AC4: context preserves embedded spelling, exact integers and future declarations',()=>{

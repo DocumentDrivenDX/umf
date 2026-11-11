@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {importIcebergSchema,exportIcebergSchema,inspectIceberg} from '../src';
+import {importIcebergSchema,exportIcebergSchema,inspectIceberg} from '../src/index-node-v4';
 const base='fixtures/iceberg/',cases=[];for(const c of (await Bun.file(base+'manifest.json').json()).cases){const raw=await Bun.file(c.path).text();cases.push({...c,raw,...(c.umfValid?{output:exportIcebergSchema(importIcebergSchema(raw,{id:c.id})),diagnostics:inspectIceberg(importIcebergSchema(raw,{id:c.id})).diagnostics}:{})});}
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/iceberg-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/iceberg-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Iceberg schema interchange</title>');}});let browser;

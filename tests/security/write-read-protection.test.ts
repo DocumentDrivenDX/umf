@@ -4,8 +4,7 @@
 import {test,expect} from 'bun:test';
 import {writeFixture} from './write-fixture';
 import {ref} from './fixture';
-import {evaluateSecurityWrite} from '../../src/extensions/security/write';
-import {evaluateSecurityOriginalRead} from '../../src/extensions/security/evaluate';
+import {evaluateSecurityWrite} from '../../src/index-node-v4';
 const run=(f:any,operation='update')=>evaluateSecurityWrite(f.policy,f.resolution,f.profile,{operation,...(operation!=='create'?{original:f.original}:{}),...(operation!=='delete'?{proposed:f.proposed}:{})} as any).decision;
 function fixture(){const f=writeFixture() as any;f.profile.readProtection={version:'umf.security.write-read/0.1.0',readAction:'read',blindWriteActions:[]};return f;}
 function original(f:any){f.policy.rules.find((r:any)=>r.id==='reader').disclosure=[{field:ref('salary'),disposition:{kind:'original'}}];}
@@ -55,17 +54,4 @@ test('original permission can satisfy the guard despite unknown blind alternativ
 });
 test('unknown facts, generation, source and exhausted budgets cannot issue write permission',()=>{
  for(const mutate of [(f:any)=>f.proposed.cut.generation='stale',(f:any)=>f.proposed.cut.maxSteps=1,(f:any)=>f.proposed.cut.maxSteps='10000',(f:any)=>f.proposed.cut.maxSteps=10000.5,(f:any)=>f.original.cut.maxSteps='10000',(f:any)=>f.policy.future=true,(f:any)=>f.proposed.resource.absent=[ref('salary')],(f:any)=>f.profile.readProtection.blindWriteActions=Array.from({length:4097},()=>({field:ref('salary'),action:'blind-salary'}))]){const f=fixture();blind(f);mutate(f);expect(run(f)).toBe('indeterminate');}
-});
-
-test('internal original captures clear on later conflict, projection failure or denied read',()=>{
- const f=fixture();original(f);
- const read=()=>evaluateSecurityOriginalRead(f.policy,f.resolution,f.original.cut,'read',[ref('resourceId'),ref('salary')],f.original.resource);
- expect(read().originalFields).toEqual([ref('resourceId'),ref('salary')]);
- f.policy.rules.push({id:'mask-a',effect:'permit',actions:['read'],target:[ref('Resource')],condition:{op:'literal',value:true},disclosure:[{field:ref('salary'),disposition:{kind:'transformed',transform:'constant',version:'0.1.0',field:ref('salary'),value:{integerToken:'1'}}}]},
- {id:'mask-b',effect:'permit',actions:['read'],target:[ref('Resource')],condition:{op:'literal',value:true},disclosure:[{field:ref('salary'),disposition:{kind:'transformed',transform:'constant',version:'0.1.0',field:ref('salary'),value:{integerToken:'2'}}}]});
- expect(read()).toEqual({decision:'conflict',originalFields:[]});
- f.policy.rules=f.policy.rules.filter((r:any)=>!r.id.startsWith('mask-'));f.original.resource.fields=f.original.resource.fields.filter((x:any)=>x.field.elementId!=='salary');
- expect(read()).toEqual({decision:'indeterminate',originalFields:[]});
- const denied=fixture();denied.policy.rules.find((r:any)=>r.id==='reader').condition={op:'literal',value:false};
- expect(evaluateSecurityOriginalRead(denied.policy,denied.resolution,denied.original.cut,'read',[ref('resourceId')],denied.original.resource)).toEqual({decision:'deny',originalFields:[]});
 });

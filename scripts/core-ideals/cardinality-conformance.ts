@@ -4,7 +4,7 @@ import {assertNativeRepresentationEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import {isAbsolute,relative,resolve,sep} from 'node:path';
 import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {classifyAvroCardinality,recoverAvroCardinalityBundle} from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {cardinalityTableSpecCases,tableSpecCardinalitySource} from './cardinality-tablespec-cases';

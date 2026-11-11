@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importIcebergTable,exportIcebergTable,inspectIcebergTableTransforms,proposeIcebergTableNodeEdit,writeDocument,readDocument} from '../src';
+import {importIcebergTable,exportIcebergTable,inspectIcebergTableTransforms,proposeIcebergTableNodeEdit,writeDocument,readDocument} from '../src/index-node-v4';
 const base='fixtures/iceberg/table-binding/',minimal=await Bun.file('fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2ValidMinimal.json').json();
 const nested=structuredClone(minimal);nested['last-column-id']=4;nested.schemas[0].fields[0]={id:4,name:'nested',required:true,type:{type:'struct',fields:[{id:1,name:'a.b',required:true,type:'long'}]}};
 const multi=structuredClone(minimal);multi['format-version']=3;multi['next-row-id']=0;for(const field of [multi['partition-specs'][0].fields[0],multi['sort-orders'][0].fields[0]]){delete field['source-id'];field['source-ids']=[1,2];field.transform='future_pair';}

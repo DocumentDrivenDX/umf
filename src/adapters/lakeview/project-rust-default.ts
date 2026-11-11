@@ -12,9 +12,15 @@ export interface LakeviewLegacyProjectionNativeFamily {
 export function createLakeviewLegacyProjectionRustDefault(engine:LakeviewLegacyProjectionNativeFamily) {
   return Object.freeze({
     projectLakeviewToLegacyDashboard(view:unknown,ids:LakeviewIds,options:{title:string}):LakeviewProjection {
-      const result=engine['lakeview-legacy-projection'].projectLakeviewToLegacyDashboard({view,ids,title:options.title}) as {
+      const result=structuredClone(engine['lakeview-legacy-projection'].projectLakeviewToLegacyDashboard({view,ids,title:options.title})) as {
         root:Json;modules:[string,Json][];elements:[string,Json][];issues:LakeviewProjection['issues'];
       };
+      for(const [,payload] of result.elements){
+        if(payload&&typeof payload==='object'&&!Array.isArray(payload)&&payload.kind==='dataset'
+          &&payload.fields&&typeof payload.fields==='object'&&!Array.isArray(payload.fields)){
+          Object.setPrototypeOf(payload.fields,null);
+        }
+      }
       return {root:result.root,modules:new Map(result.modules),elements:new Map(result.elements),issues:result.issues};
     },
   });

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {postgresqlRecordProjectionCases} from './record-postgresql-projection-cases';
-import {projectRecordToPostgresql, recoverRecordFromPostgresql} from '../../src/core-ideals/record-postgresql-projection';
+import {projectRecordToPostgresql,recoverRecordFromPostgresql} from "../../src/index-node-v4";
 import {randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlProjectionCases} from './field-postgresql-projection-cases';
-import {projectFieldToPostgresql, recoverFieldFromPostgresql} from '../../src/core-ideals/field-postgresql-projection';
-import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+import {projectFieldToPostgresql,recoverFieldFromPostgresql} from "../../src/index-node-v4";
+import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from "../../src/index-node-v4";
 
-import {classifyPostgresqlField} from '../../src/core-ideals/postgresql-field';
+import {classifyPostgresqlField} from "../../src/index-node-v4";
 const name='umf-field-down-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});if(input!==undefined){p.stdin!.write(input);p.stdin!.end();}const [stdout,stderr,status]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(status)throw Error(stderr);return stdout;}
 const exec=(args:string[],input?:string)=>run(['docker','exec',...(input===undefined?[]:['-i']),name,...args],input);

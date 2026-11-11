@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog,exportSqlServerCatalog,proposeSqlServerCatalogEdit,readDocument,writeDocument,type SqlServerDdlPolicy,coreSchema} from '../../src';
+import {importSqlServerCatalog,exportSqlServerCatalog,proposeSqlServerCatalogEdit,readDocument,writeDocument,type SqlServerDdlPolicy,coreSchema} from '../../src/index-node-v4';
 import {projectSqlServerToDdl} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/projections/sqlserver-ddl.schema.json';

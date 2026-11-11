@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {parquetCardinalityFile, type ParquetCardinalityCarrier} from '../../src/core-ideals/parquet-cardinality-carrier';
+import {type ParquetCardinalityCarrier} from "../../scripts/core-ideals/parquet-cardinality-carrier";
+import {parquetCardinalityFile} from "../../scripts/core-ideals/parquet-cardinality-carrier";
 import {parquetCardinalityCarrierCases} from '../../scripts/core-ideals/cardinality-parquet-carrier-cases';
-import {captureParquet, exportParquetCapture, writeDocument, readDocument, inspectParquetContainers} from '../../src';
-import {inspectParquetCardinalityShape} from '../../src/core-ideals/parquet-cardinality-shape';
+import {captureParquet, exportParquetCapture, writeDocument, readDocument, inspectParquetContainers} from '../../src/index-node-v4';
+import {inspectParquetCardinalityShape} from "../../scripts/core-ideals/parquet-cardinality-shape";
 test('native nested schema carriers preserve exact bytes and match checked logical roles',()=>{
  for(const row of parquetCardinalityCarrierCases()){
   const before=structuredClone(row.carrier),bytes=parquetCardinalityFile('NativeRecord','value',row.carrier);

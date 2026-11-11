@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-081-AC2
 import {describe,expect,test} from 'bun:test';
-import {ACCESS_TEMPORAL_PROFILE,parseAccessTemporal} from '../src/adapters/access-temporal';
+import {ACCESS_TEMPORAL_PROFILE} from "../src/adapters/access-temporal";
+import {parseAccessTemporal} from "../src/index-node-v4";
 import vectors from '../fixtures/access/golden-vectors/temporal-profile.json';
 describe('explicit typed-access temporal profile',()=>{
  for(const v of vectors.cases)test(v.id,()=>{

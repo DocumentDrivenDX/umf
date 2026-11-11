@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {existsSync} from 'node:fs';
-import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,type Document} from '../../src';
+import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,type Document} from '../../src/index-node-v4';
 import {projectBindingToDelta} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/delta/case.json').json();

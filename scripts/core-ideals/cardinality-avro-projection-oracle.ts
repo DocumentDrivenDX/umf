@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {avroCardinalityProjectionCases} from './cardinality-avro-projection-cases';
-import {projectCardinalityToAvro} from '../../src/core-ideals/cardinality-avro-projection';
+import {projectCardinalityToAvro} from "../../src/index-node-v4";
 import {verifyAvroCardinalityComposition} from './cardinality-avro-composition';
 const rows=[];let blocked=0,recoveries=0,nativeRecoveries=0;
 for(const c of avroCardinalityProjectionCases()){

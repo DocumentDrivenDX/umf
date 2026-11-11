@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,expect,test} from 'bun:test';
-import {classifyTableSpecKeys, verifyTableSpecKeyClassification, recoverTableSpecKeySource, tableSpecKeysPackage, TABLESPEC_KEYS_EXTENSION} from '../../src/core-ideals/key-tablespec';
-import {importTableSpec, importTableSpecBundle} from '../../src/adapters/tablespec';
+import {tableSpecKeysPackage,TABLESPEC_KEYS_EXTENSION} from "../../src/core-ideals/key-tablespec";
+import {classifyTableSpecKeys,verifyTableSpecKeyClassification,recoverTableSpecKeySource} from "../../src/index-node-v4";
+import {importTableSpec,importTableSpecBundle} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import {Registry} from '../../src/registry/registry';

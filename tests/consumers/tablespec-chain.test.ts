@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {exportTableSpec,readDocument,writeDocument,type Document} from '../../src';
+import {exportTableSpec,readDocument,writeDocument,type Document} from '../../src/index-node-v4';
 import {projectToTableSpecViaAvro,type TableSpecViaAvroPolicy,type AvroTableSpecRepresentation} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const bindings:Record<string,Record<string,AvroTableSpecRepresentation>>={

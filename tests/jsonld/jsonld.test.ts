@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import reportSchema from '../../spec/extensions/jsonld/expansion-schema.json';
-import {importJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,readDocument,writeDocument} from '../../src';
+import {importJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,readDocument,writeDocument} from '../../src/index-node-v4';
 const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(reportSchema);
 test('US-026-AC1–3: complete pinned expansion corpus source preservation and qualified native comparisons',async()=>{
  const manifest=await Bun.file('native/jsonld/sources/manifest.json').json(),fixture=await Bun.file('fixtures/jsonld/expansion/results.json').json(),oracle=await Bun.file('fixtures/jsonld/expansion/oracle-results.json').json();expect(fixture.cases.map((c:any)=>c.id)).toEqual(manifest.cases.map((c:any)=>c['@id'].slice(1)));expect(fixture.cases).toHaveLength(385);let candidates=0;

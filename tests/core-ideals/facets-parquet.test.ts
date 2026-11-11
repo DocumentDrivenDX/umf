@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
-import {classifyParquetFacets as classify, recoverParquetFacetSource as recover, parquetFacetsPackage, PARQUET_FACETS_EXTENSION, type ParquetFacetRequest} from '../../src';
+import * as u from '../../src/index-node-v4';
+import {classifyParquetFacets as classify, recoverParquetFacetSource as recover, parquetFacetsPackage, PARQUET_FACETS_EXTENSION, type ParquetFacetRequest} from '../../src/index-node-v4';
 async function sample(id='int8-min-plain',family:u.ScalarType='integer',options:Partial<ParquetFacetRequest>={}){
  const bytes=new Uint8Array(await Bun.file(`fixtures/parquet/facets/${id}.parquet`).arrayBuffer());
  const native=u.importParquetSchema(bytes,{id:'parquet-facets'});

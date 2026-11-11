@@ -2,10 +2,10 @@
 import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata, classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource} from '../../src';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata, classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource} from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlCardinalityProjectionCases} from './cardinality-postgresql-projection-cases';
-import {projectCardinalityToPostgresql, recoverCardinalityFromPostgresql} from '../../src/core-ideals/cardinality-postgresql-projection';
+import {projectCardinalityToPostgresql,recoverCardinalityFromPostgresql} from "../../src/index-node-v4";
 const name='umf-cardinality-down-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){
  const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});

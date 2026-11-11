@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {type CoreRecordValueCheck,validateCoreRecordValues} from '../src/model/record-values';
+import {type CoreRecordValueCheck} from '../src/model/record-values-types';
+import {validateCoreRecordValues} from '../src/index-node-v4';
 
 type Equal<Left,Right> = (<T>()=>T extends Left?1:2) extends (<T>()=>T extends Right?1:2) ? true : false;
 type Expect<Condition extends true> = Condition;

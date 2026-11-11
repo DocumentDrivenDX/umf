@@ -7,7 +7,11 @@ import type {CoreElementQuery,CoreElementSelection} from './selection-types';
 import type {CoreRelationshipQuery,CoreRelationshipSelection} from './relationship-selection-types';
 import type {CoreEvolutionPolicy} from './evolution-types';
 
-type DatasetMethods=Pick<typeof import('./dataset-values'),'validateCoreDatasetValues'|'verifyCoreDatasetValues'>;
+import type {CoreDatasetInput,CoreDatasetValueCheck} from './dataset-values-types';
+type DatasetMethods={
+ validateCoreDatasetValues(source:Document,input:CoreDatasetInput):CoreDatasetValueCheck;
+ verifyCoreDatasetValues(receipt:CoreDatasetValueCheck,current:Document,expectedInput:CoreDatasetInput):CoreDatasetValueCheck;
+};
 type EvolutionMethods={
  inspectCoreEvolution(before:Document,after:Document,policy:CoreEvolutionPolicy):unknown;
  verifyCoreEvolution(receipt:unknown,before:Document,after:Document,policy:CoreEvolutionPolicy):unknown;

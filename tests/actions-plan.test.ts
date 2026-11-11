@@ -3,9 +3,7 @@ import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import fixture from '../docs/helix/03-test/fixtures/bulk-update/model.json';
-import {Registry} from '../src/registry/registry';
-import {registerActions,inspectActions} from '../src/extensions/actions';
-import {inspectActionPlan,prepareActionPlanModel,assessActionPlan} from '../src/extensions/actions/plans';
+import {Registry,registerActions,inspectActions,inspectActionPlan,prepareActionPlanModel,assessActionPlan} from '../src/index-node-v4';
 import type {ActionPlanArtifact,ActionPlanInspectionContext,ActionPlanCapabilities,PortableActionPlan} from '../src/extensions/actions/plan-types';
 import type {Document} from '../src/model/types';
 const artifact=(v:unknown):ActionPlanArtifact=>{const utf8=typeof v==='string'?v:JSON.stringify(v);return {mediaType:'application/json',utf8,sha256:createHash('sha256').update(utf8).digest('hex')};};
@@ -55,7 +53,7 @@ test('@covers US-902-AC5 portable_boundary: API result copies cannot mutate call
 });
 export {setup,artifact,capabilities};
 
-import * as publicApi from '../src/index';
+import * as publicApi from '../src/index-node-v4';
 import {runActionPlanCorpus} from './actions-plan-corpus';
 import {sha256Text,parsePlanJson} from '../src/extensions/actions/plan-artifacts';
 import {checkActionPlan,checkPreparedActionPlanModel,checkActionPlanCapabilities,checkActionPlanInspection,checkActionPlanAssessment} from '../src/extensions/actions/plan-structure';

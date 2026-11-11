@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {avroKeyAuthors,avroKeyProjectionCases} from '../../scripts/core-ideals/key-avro-projection-cases';
-import {projectKeysToAvro, verifyKeysAvroProjection, recoverKeysAvroIdeal} from '../../src/core-ideals/key-avro-projection';
-import {importAvroSchema, exportAvroSchema} from '../../src/adapters/avro';
+import {projectKeysToAvro,verifyKeysAvroProjection,recoverKeysAvroIdeal} from "../../src/index-node-v4";
+import {importAvroSchema,exportAvroSchema} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 for(const c of avroKeyProjectionCases())test('Avro authored Key: '+c.name,()=>{
  const before=JSON.stringify(c),r=projectKeysToAvro(c.source,c.authors,c.request);expect(JSON.stringify(c)).toBe(before);expect(r.status).toBe(c.expected);expect(r.mappings.length).toBe(c.authors.length);expect(r.residuals.filter(r=>r.path.includes('/keys/')).length).toBe(c.authors.length);expect(r.mappings.every(m=>m.enforcement==='not-expressible')).toBe(true);

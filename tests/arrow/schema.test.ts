@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importArrowSchema,exportArrowSchema,getArrowNode,proposeArrowNodeEdit,inspectArrow,readDocument,writeDocument} from '../../src';
+import {importArrowSchema,exportArrowSchema,getArrowNode,proposeArrowNodeEdit,inspectArrow,readDocument,writeDocument} from '../../src/index-node-v4';
 const cases=await Bun.file('fixtures/arrow/schema-cases.json').json();
 test('US-016-AC1: every authored Arrow schema survives exact UMF JSON/YAML round trips',()=>{
  for(const c of cases){const doc=importArrowSchema(JSON.stringify(c.input),{id:c.id});expect(inspectArrow(doc).complete).toBe(false);for(const format of ['json','yaml'] as const)expect(exportArrowSchema(readDocument(writeDocument(doc,format),format))).toBe(exportArrowSchema(doc));}

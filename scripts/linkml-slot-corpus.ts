@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importLinkmlDocument,inspectLinkmlClassSlots,inspectLinkmlSlotValues,exportLinkmlDocument} from '../src';
+import {importLinkmlDocument,inspectLinkmlClassSlots,inspectLinkmlSlotValues,exportLinkmlDocument} from '../src/index-node-v4';
 import {parseNativeJson} from '../src/model/native-json';
 const oracle=await Bun.file('fixtures/linkml/slot-corpus/oracle-results.json').json(),cases=[],counts:Record<string,number>={};
 for(const c of oracle.cases){const format=c.path.endsWith('.json')?'json':'yaml',raw=await Bun.file(c.path).text(),d=importLinkmlDocument(raw,{id:c.path,format}),queries=[];

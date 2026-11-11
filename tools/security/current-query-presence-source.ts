@@ -2,7 +2,7 @@
 import {createHash} from 'node:crypto';
 import {resolve,dirname,relative,extname} from 'node:path';
 import {validateDocument} from '../../src/validation/document';
-import {validateCoreRecordValues} from '../../src/model/record-values';
+import {validateCoreRecordValues} from '../../src/index-node-v4';
 const output=process.argv[2];if(!output||await Bun.file(output).exists())throw Error('Fresh explicit output path required');
 const names=['tests/security/protection/current-query-source.json','tests/security/protection/current-query-presence-source.json','tests/security/protection/disclosure-fixtures.json'];
 const bytes=await Promise.all(names.map(n=>Bun.file(n).text()));const [old,f,disclosure]=bytes.map(JSON.parse);

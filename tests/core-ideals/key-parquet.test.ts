@@ -2,9 +2,9 @@
 import {recordedRepositoryPath} from '../helpers/recorded-repository-path';
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {classifyParquetKeys, verifyParquetKeyClassification, recoverParquetKeySource} from '../../src/core-ideals/key-parquet';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
-import {captureParquet, exportParquetCapture} from '../../src/adapters/parquet';
+import {classifyParquetKeys,verifyParquetKeyClassification,recoverParquetKeySource} from "../../src/index-node-v4";
+import {importParquetSchema} from "../../src/index-node-v4";
+import {captureParquet,exportParquetCapture} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const proof=await Bun.file('fixtures/validation/key-parquet-discovery-native.json').json();
 for(const row of proof.cases)test('Parquet Key observation: '+row.id,async()=>{

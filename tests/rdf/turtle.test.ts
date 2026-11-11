@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importRdfTurtle,exportRdfTurtle,exportRdfNQuads,importRdfNQuads,getRdfQuads,proposeRdfQuadEdit,proposeRdfIriRename,readDocument,writeDocument} from '../../src';
+import {importRdfTurtle,exportRdfTurtle,exportRdfNQuads,importRdfNQuads,getRdfQuads,proposeRdfQuadEdit,proposeRdfIriRename,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/rdf/turtle/';
 test('US-025-AC5: full official Turtle corpus, expected graphs and candidate exports',async()=>{
  const fixture=await Bun.file(base+'results.json').json(),oracle=await Bun.file(base+'oracle-results.json').json(),manifest=await Bun.file('native/rdf/turtle-sources/manifest.json').json();expect(fixture.results.map((c:any)=>c.id)).toEqual(manifest.cases.map((c:any)=>c.id));expect(fixture.results).toHaveLength(313);expect(oracle.results.filter((r:any)=>r.native==='accepted-negative')).toHaveLength(39);expect(oracle.results.filter((r:any)=>r.nativeSourceIsomorphic===false)).toHaveLength(11);expect(oracle.results.filter((r:any)=>r.officialExpectedGraph)).toHaveLength(145);let accepted=0,edits=0;

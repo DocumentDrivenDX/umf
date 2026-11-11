@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importAvroSchema,getAvroFieldMetadata,exportAvroSchema,proposeAvroNodeEdit,readDocument,writeDocument} from '../../src';
+import {importAvroSchema,getAvroFieldMetadata,exportAvroSchema,proposeAvroNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 test('CONTRACT-007 decimal metadata never promotes rounded precision, scale or fixed size',async()=>{
  const cases=[];
  for(const key of ['precision','scale','size'])for(const token of ['1.0000000000000000001','1e-400','9007199254740993','-0','1.00e0']){

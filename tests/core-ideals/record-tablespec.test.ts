@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {classifyTableSpecRecord, verifyTableSpecRecordClassification} from '../../src/core-ideals/tablespec-record';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {classifyTableSpecRecord,verifyTableSpecRecordClassification} from "../../src/index-node-v4";
+import {declareCoreElementKind} from "../../src/index-node-v4";
 
-import {importTableSpec, importTableSpecBundle, exportTableSpec, exportTableSpecBundle} from '../../src/adapters/tablespec';
+import {importTableSpec,importTableSpecBundle,exportTableSpec,exportTableSpecBundle} from "../../src/index-node-v4";
 import {selectCoreElements} from '../../src/index-node-v4';
 import {copyJson} from '../../src/model/json';
 import {readDocument, writeDocument} from '../../src/model/document';

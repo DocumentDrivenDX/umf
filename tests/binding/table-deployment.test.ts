@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
+import {compileTableDeployment,verifyTableDeployment} from '../../src/index-node-v4';
 import {hashCanonical} from '../../src/compilation/bundle/hash';
 import fixture from './fixtures/table-lifecycle-note.json';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';

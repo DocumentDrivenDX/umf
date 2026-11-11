@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importAvroSchema, exportAvroBundle} from '../../src/adapters/avro';
+import {importAvroSchema,exportAvroBundle} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import type {Document} from '../../src/model/types';
 import corpus from '../../fixtures/avro/relationship-discovery-cases.json';

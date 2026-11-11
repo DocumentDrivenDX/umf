@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,DELTA_DEFINITION_EXTENSION} from '../../src/adapters/delta/ddl';
+import {DELTA_DEFINITION_EXTENSION} from "../../src/adapters/delta/ddl";
+import {defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL} from "../../src/index-node-v4";
 import {readDocument,writeDocument} from '../../src/model/document';
-import {exportDeltaSchema} from '../../src/adapters/delta';
+import {exportDeltaSchema} from "../../src/index-node-v4";
 import {hashCanonical} from '../../src/compilation/bundle/hash';
 
 const schema=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:false,metadata:{}},{name:'caption',type:'string',nullable:true,metadata:{}}]});

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import jsonld from 'jsonld';
 import {equalCompactJsonLdText} from './jsonld-compare';
-import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFraming,readDocument,writeDocument} from '../src';
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFraming,readDocument,writeDocument} from '../src/index-node-v4';
 const manifest=await Bun.file('native/jsonld/framing-sources/manifest.json').json(),cases=[];
 for(const c of manifest.cases){
  const id=c['@id'].slice(1),path='native/jsonld/framing-sources/'+c.input,raw=await Bun.file(path).text(),frame=await Bun.file('native/jsonld/framing-sources/'+c.frame).text(),baseIRI=c.option?.base??manifest.baseIRI+c.input,processingMode=c.option?.processingMode??c.option?.specVersion??'json-ld-1.1',contexts=new Map<string,{url:string;text:string}>();

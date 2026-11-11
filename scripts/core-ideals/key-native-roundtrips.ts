@@ -2,7 +2,7 @@
 import {classifyAvroKeys,recoverAvroKeySource} from '../../src/index-node-v4';
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual,assertNativeRepresentationEqual} from './json-data-assert';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 
 type NativeCase = {system:string; name:string; source:u.Document; native:unknown; classify:(source:u.Document, mode:'strict'|'report')=>any; recover:(r:any,target:any)=>any; blocked?:boolean};

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
-import {decodeBit128FileRecord} from '../../src/projections/bit128-file-values';
+import {decodeBit128FileRecord} from "../../src/index-node-v4";
 import artifacts from '../../fixtures/validation/uuid/file-model-artifacts.json';
 import oracle from '../../fixtures/validation/uuid/bit128-oracle.json';
 let checks=0,refusals=0;

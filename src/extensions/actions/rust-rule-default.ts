@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
-import type {evaluateActionRule} from './evaluation';
+import type {ActionRuleState, ActionRulePhase} from './runtime-types';
+import type {Action,ActionRule} from './types';
 interface NativeActionRuleEngine {
- evaluateActionRule(...args:Parameters<typeof evaluateActionRule>):boolean;
+ evaluateActionRule(document:unknown,action:unknown,rule:unknown,phase:unknown,state:unknown):boolean;
 }
 /** Host presentation only: the Rust evaluator compiles and evaluates the rule. */
 export function createActionRuleRustDefault(createEngine:()=>NativeActionRuleEngine,isNativeError:(error:unknown)=>boolean){
  let engine:NativeActionRuleEngine|undefined;
- return function evaluate(...args:Parameters<typeof evaluateActionRule>):boolean{
-  try{return (engine??=createEngine()).evaluateActionRule(...args);}
+ return function evaluate(document:unknown,action:Action,rule:ActionRule,phase:ActionRulePhase,state:ActionRuleState):boolean{
+  try{return (engine??=createEngine()).evaluateActionRule(document,action,rule,phase,state);}
   catch(error){
    if(!isNativeError(error))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};

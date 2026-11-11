@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {projectRelationshipToTableSpec, verifyRelationshipTableSpecProjection, recoverRelationshipTableSpecIdeal, recoverRelationshipTableSpecNativeSources} from '../../src/index-node-v4';
-import {classifyTableSpecRelationships, recoverTableSpecRelationshipSource} from '../../src/core-ideals/relationship-tablespec';
-import {importTableSpec, exportTableSpec, importTableSpecBundle, exportTableSpecBundle, getTableSpecTable} from '../../src/adapters/tablespec';
+import {classifyTableSpecRelationships,recoverTableSpecRelationshipSource} from "../../src/index-node-v4";
+import {importTableSpec,exportTableSpec,importTableSpecBundle,exportTableSpecBundle,getTableSpecTable} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {relationshipTableSpecProjectionCases,relationshipTableSpecCase} from '../../scripts/core-ideals/relationship-tablespec-projection-cases';
 const archive=(d:any)=>d.extensions['umf.tablespec'].splitFiles?exportTableSpecBundle(d):exportTableSpec(d);

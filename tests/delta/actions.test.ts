@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,coreSchema} from '../../src';
+import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,coreSchema} from '../../src/index-node-v4';
 import schema from '../../spec/extensions/delta-log/action-inspection.schema.json';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(schema);

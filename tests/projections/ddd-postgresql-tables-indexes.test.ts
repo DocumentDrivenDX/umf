@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
-import {getPostgresqlSource,type Document} from '../../src';
+import {getPostgresqlSource,type Document} from '../../src/index-node-v4';
 import {projectDddTablesAndIndexesToPostgresql} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/projections/ddd-postgresql-tables/case.json').json();

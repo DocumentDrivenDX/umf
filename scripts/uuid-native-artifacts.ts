@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import oracle from '../fixtures/validation/uuid/bit128-oracle.json';
-import {encodeBit128CarrierValue} from '../src/extensions/binding/bit128';
+import {encodeBit128CarrierValue} from "../src/index-node-v4";
 import {uuidBinding,uuidDocument,FIELD} from '../tests/helpers/uuid-fixtures';
-import {projectBit128CarrierSchema} from '../src/projections/bit128';
+import {projectBit128CarrierSchema} from "../src/index-node-v4";
 const rows=[];
 for(const [system,version] of [['postgresql','17'],['sqlserver','2022'],['avro','1.12.0'],['parquet','2.11.0'],['tablespec','1.0']] as const){
  for(const kind of ['native-uuid','bytes16','uuid-text','words64']){

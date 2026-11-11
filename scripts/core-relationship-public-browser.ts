@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {relationshipOperationCases,relationshipRequest} from './core-relationship-operation-cases';
 import {relationshipCandidate} from './core-relationship-cases';
-import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship} from '../src/model/relationships';
+import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship} from "../src/index-node-v4";
 import {selectCoreRelationships} from '../src/index-node-v4';
 const bundle=await Bun.file('dist/umf.js').text();
 const rows=relationshipOperationCases(),source=relationshipCandidate(),old=source.modules[0].relationships[0];

@@ -15,7 +15,6 @@ export * from './model/serialization';
 export * from './model/document';
 export type {CoreElementQuery,CoreElementSelection,CoreElementSelectionEntry} from './model/selection-types';
 export * from './registry/registry';
-export {createUmfRegistry} from './registry/builtins';
 export {validateDocument} from './validation/document';
 export { default as coreSchema } from '../spec/core/schema.json';
 export { default as extensionPackageSchema } from '../spec/core/extension-package.schema.json';
@@ -61,7 +60,6 @@ export {default as openapiSchemaIndexSchema} from '../spec/extensions/openapi/sc
 export {default as openapiSchemaReferenceSchema} from '../spec/extensions/openapi/schema-reference.schema.json';
 export type {OpenapiJsonSchemaPolicy,OpenapiJsonSchemaProjection} from './projections/openapi-json-schema-types';
 export {default as openapiJsonSchemaProjectionSchema} from '../spec/projections/openapi-json-schema.schema.json';
-export * from './adapters/openapi/dynamic';
 export {default as openapiDynamicReferenceSchema} from '../spec/extensions/openapi/dynamic-reference.schema.json';
 export * from './adapters/typespec';
 export {default as typespecCompilerReportSchema} from '../spec/extensions/typespec/compiler-report.schema.json';
@@ -111,7 +109,6 @@ export {default as arrowIpcConsistencySchema} from '../spec/extensions/arrow-ipc
 export {default as arrowIpcRenameSchema} from '../spec/extensions/arrow-ipc/rename-result.schema.json';
 export * from './adapters/spark';
 export {default as sparkDataTypeSchema} from '../spec/extensions/spark/datatype-schema.json';
-export * from './adapters/spark/rename';
 
 export {default as sparkRenameSchema} from '../spec/extensions/spark/rename-result.schema.json';
 
@@ -123,24 +120,20 @@ export type * from "./projections/arrow-spark-types";
 
 export {default as arrowSparkProjectionSchema} from "../spec/projections/arrow-spark.schema.json";
 
-export * from "./adapters/delta";
 export * from "./adapters/delta/ddl";
 export {default as deltaDataTypeSchema} from "../spec/extensions/delta/datatype-schema.json";
 
-export * from "./adapters/delta/table";
 export {default as deltaTableContextSchema} from "../spec/extensions/delta-table/context-schema.json";
 
-export * from "./adapters/delta/rename";
 
 export {default as deltaMappedRenameSchema} from "../spec/extensions/delta-table/rename-result.schema.json";
 
 export * from "./adapters/delta/log";
 export {default as deltaLogInspectionSchema} from "../spec/extensions/delta-log/inspection.schema.json";
-export * from './adapters/delta/actions';
 export {default as deltaActionSchema} from '../spec/extensions/delta-log/action-schema.json';
 export * from './adapters/delta/reconcile';
 export * from './adapters/parquet';
-export {getParquetFieldMetadata,importParquetSchema,type ParquetFieldMetadata,type ParquetFieldMetadataResult} from './adapters/parquet/field-metadata';
+export type {ParquetFieldMetadata,ParquetFieldMetadataResult} from './adapters/parquet/field-metadata';
 export {default as parquetFramingSchema} from '../spec/extensions/parquet/framing.schema.json';
 export * from './adapters/parquet/footer';
 export {default as parquetFooterDecodeSchema} from '../spec/extensions/parquet/footer-decode.schema.json';
@@ -154,7 +147,6 @@ export * from './adapters/parquet/logical';
 export {default as parquetLogicalInspectionSchema} from '../spec/extensions/parquet/logical-inspection.schema.json';
 export * from './adapters/parquet/containers';
 export {default as parquetContainerInspectionSchema} from '../spec/extensions/parquet/container-inspection.schema.json';
-export * from './adapters/parquet/encode';
 export * from './adapters/parquet/transform';
 export {default as parquetMetadataTransformSchema} from '../spec/extensions/parquet/metadata-transform.schema.json';
 export * from './adapters/parquet/rename';
@@ -280,7 +272,7 @@ export * from './core-ideals/nullability-avro-projection';
 export * from './core-ideals/nullability-parquet';
 export * from './core-ideals/nullability-parquet-projection';
 
-export {coreCardinalityOperationV4Schema,coreCardinalityOperationSchema,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration} from './model/cardinality';
+export {coreCardinalityOperationV4Schema,coreCardinalityOperationSchema} from './model/cardinality';
 export type {CoreCardinalityIdentity,CoreCardinalityMeaning,CoreCardinalityInspection,CoreCardinalityRequest,CoreCardinalityDeclaration} from './model/cardinality';
 
 export * from './core-ideals/cardinality-tablespec';
@@ -344,7 +336,6 @@ export * from './core-ideals/key-parquet-projection';
 
 export {validateRelationshipCandidate} from './validation/relationships';
 export type {RelationshipCandidate,CoreRelationship,RelationshipEndpoint,RelationshipTarget,RelationshipMultiplicity} from './validation/relationships';
-export {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,verifyCoreRelationshipOperation} from './model/relationships';
 export type {CoreRelationshipRequest,CoreRelationshipIdentity,RelationshipModuleIdentity,CoreRelationshipOperation,CoreRelationshipDeclaration,CoreRelationshipInspection,CoreRelationshipLookup,CoreRelationshipMeaning} from './model/relationships';
 export {default as coreRelationshipOperationSchema} from '../spec/core/relationship-operation.schema.json';
 export {default as coreKeyOperationV2Schema} from '../spec/core/key-operation-v2.schema.json';
@@ -375,15 +366,11 @@ export {type CoreLiteral} from './model/schema-literals';
 export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';
 
 // Declarative action metadata; execution requires a separately qualified consumer.
-export {registerActions,declareAction,inspectActions,editAction,assessAction,actionsPackage} from './extensions/actions';
-export type {Action,ActionIdentity,ActionParameter,ActionReference,ActionKeyReference,ActionRelationshipReference,ActionRule,ActionRuleReference,ActionFrame,ActionCondition,ActionEffect,ActionBinding,ActionAssignment,ActionEntityBinding,ActionValueBinding,ActionAuthorization,ActionObligation,ActionObligationKind,ActionInspection,InspectedAction,ActionExecutorProfile,ActionAssessment} from './extensions/actions';
+export {actionsPackage} from './extensions/actions/package';
+export type {Action,ActionIdentity,ActionParameter,ActionReference,ActionKeyReference,ActionRelationshipReference,ActionRule,ActionRuleReference,ActionFrame,ActionCondition,ActionEffect,ActionBinding,ActionAssignment,ActionEntityBinding,ActionValueBinding,ActionAuthorization,ActionObligation,ActionObligationKind,ActionInspection,InspectedAction,ActionExecutorProfile,ActionAssessment} from './extensions/actions/types';
 // Explicit bounded consumer interpretation, separate from inert metadata inspection.
-export {compileActionRule,actionExpressionLimits} from './extensions/actions/expression';
-export type {ActionExpression,ActionRulePhase,CompiledActionRule,ActionExpressionType} from './extensions/actions/expression';
-export {compileActionSelector,selectActionIdentity,admitActionInputs,prepareActionIdentities} from './extensions/actions/selector';
-export type {ActionInputs,ActionEntityInput,CompiledActionSelector,SelectedActionIdentity} from './extensions/actions/selector';
-export {evaluateActionRule,actionFieldValueKey} from './extensions/actions/evaluation';
-export type {ActionFrameState,ActionBusinessState,ActionRuleState} from './extensions/actions/evaluation';
+export type {ActionExpression,ActionRulePhase,CompiledActionRule,ActionExpressionType,ActionInputs,ActionEntityInput,CompiledActionSelector,SelectedActionIdentity,ActionFrameState,ActionBusinessState,ActionRuleState} from './extensions/actions/runtime-types';
+export {actionExpressionLimits} from './extensions/actions/expression-limits';
 export {generateDomainPackSchema} from './domain-packs/schema';
 export {default as domainPackSchema} from '../spec/extensions/domain-pack/schema.json';
 export {default as domainPackPackage} from '../spec/extensions/domain-pack/package.json';
@@ -395,13 +382,12 @@ export {default as datasetSourceSchema} from '../spec/extensions/dataset-source/
 export {default as datasetSourcePackage} from '../spec/extensions/dataset-source/package.json';
 export {inspectDomainPack,requireDomainPackProfile} from './domain-packs/profile';
 
-export {validateCoreRecordValues} from './model/record-values';
-export type {CoreRecordValueIdentity,CoreRecordFieldValue,CoreRecordValueCheck} from './model/record-values';
-export {validateCoreDatasetValues,verifyCoreDatasetValues,coreDatasetValueOperationSchema} from './model/dataset-values';
-export type {CoreDatasetInput,CoreDatasetRecord,CoreDatasetRelationship,CoreDatasetValueCheck} from './model/dataset-values';
+export type {CoreRecordValueIdentity,CoreRecordFieldValue,CoreRecordValueCheck} from './model/record-values-types';
+export {coreDatasetValueOperationSchema} from './model/dataset-values';
+export type {CoreDatasetInput,CoreDatasetRecord,CoreDatasetRelationship,CoreDatasetValueCheck} from './model/dataset-values-types';
 
-export {validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,coreDatasetValueCompactOperationSchema} from './model/dataset-values-compact';
-export type {CoreCompactRecordValueCheck,CoreCompactKeyTupleReceipt,CoreDatasetCompactValueCheck} from './model/dataset-values-compact';
+export {coreDatasetValueCompactOperationSchema} from './model/dataset-values-compact';
+export type {CoreCompactRecordValueCheck,CoreCompactKeyTupleReceipt,CoreDatasetCompactValueCheck} from './model/dataset-values-compact-types';
 
 export * from './model/csv-boolean-lexical';
 
@@ -412,21 +398,15 @@ export {generateArtifactCollectionSchema} from './domain-packs/artifacts';
 export type {CoreEvolutionPolicy} from './model/evolution-types';
 export {default as coreEvolutionOperationSchema} from '../spec/core/evolution-operation.schema.json';
 export {default as coreEvolutionPolicySchema} from '../spec/core/evolution-policy.schema.json';
-export {securityNot,securityAnd,securityOr,composeSecurityRules} from './extensions/security/logic';
 export type {SecurityTruth,SecurityDecision,SecurityDisposition,EvaluatedSecurityRule,SecurityComposition} from './extensions/security/logic';
 export * from './extensions/security/types';
-export {SECURITY_EXTENSION,securityPackage,readSecuritySource,writeSecuritySource,inspectSecurityPolicy,securityRegistry,requireSecurityInterpretation} from './extensions/security/policy';
+export {SECURITY_EXTENSION,securityPackage} from './extensions/security/policy-package';
 export type {SecurityInspection} from './extensions/security/policy';
-export {evaluateSecurityAccess,evaluateSecurityCollection} from './extensions/security/evaluate';
 export type {SecurityFact,SecurityFactCut,SecurityEvaluationRequest,SecurityOutput,SecurityAccessResult,SecurityCollectionResult} from './extensions/security/evaluate';
-export {SecurityReadRegistration} from './extensions/security/registration';
-export type {SecurityReadHandle} from './extensions/security/registration';
+export type {SecurityReadRegistration,SecurityReadHandle} from './extensions/security/registration';
 export {SecurityAuthorityGuard} from './extensions/security/authority-guard';
-export {evaluateSecurityWrite} from './extensions/security/write';
 export type {SecurityWriteProfile,SecurityWriteState,SecurityWriteRequest,SecurityWriteResult} from './extensions/security/write';
-export {securityPolicyDependencies,securityIdentityTransportDependencies,type SecurityIdentityTransportDependencies} from './extensions/security/dependencies';
-export type {SecurityDependencies} from './extensions/security/dependencies';
-export {validateSecurityDisclosure,encodeSecurityDisclosure,decodeSecurityDisclosure} from './extensions/security/disclosure';
+export type {SecurityIdentityTransportDependencies,SecurityDependencies} from './extensions/security/dependencies';
 export type {SecurityDisclosureBatch} from './extensions/security/disclosure';
 
 // Protection wire metadata only; complete interpretation remains closed.
@@ -435,43 +415,35 @@ export {protectionPackage,inspectProtectionCatalog,requireProtectionInterpretati
 export type {ProtectionCatalogInspection} from './extensions/security/protection/catalog';
 
 // Proposed security0.2 source representation, never policy/native activation.
-export {securityV2Package,inspectSecurityPolicyV2Source,upgradeSecurityPolicySource,downgradeSecurityPolicySource} from './extensions/security/policy-representation-v2';
+export {securityV2Package} from './extensions/security/policy-package';
 export type {SecurityPolicyV2Inspection,SecurityPolicySourceMigration} from './extensions/security/policy-representation-v2';
 export {resolveSecurityProtectionSources} from './extensions/security/protection/references';
 export type {SecurityProtectionSourceResolution} from './extensions/security/protection/references';
 
-export {evaluateSecurityPolicyV2LegacyAccess} from './extensions/security/policy-v2-legacy-access';
 export type {SecurityPolicyV2LegacyAccess} from './extensions/security/policy-v2-legacy-access';
-export {resolveSecurityProtectionDomains} from './extensions/security/protection/domains';
 export type {ProtectionCoreClosure,ProtectionDomainOccurrence,SecurityProtectionDomainResolution} from './extensions/security/protection/domains';
-export {validateProtectionParameters} from './extensions/security/protection/parameters';
 export type {ProtectionParameterValidation} from './extensions/security/protection/parameters';
-export {inspectProtectionQueryProperties} from './extensions/security/protection/queries';
 export type {ProtectionQueryPropertyInspection} from './extensions/security/protection/queries';
 
 export * from './adapters/gregorian-date';
-export {inspectProtectionFunction,evaluateProtectionValue,type ProtectionFunctionResult} from './extensions/security/protection/functions';
-export {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from './extensions/security/protection/disclosure';
+export type {ProtectionFunctionResult} from './extensions/security/protection/functions';
 export type {SecurityDisclosureBatchV2,SecurityDisclosureColumnV2,SecurityDisclosureCellV2,SecurityDisclosureInspectionV2} from './extensions/security/protection/disclosure';
 
 export {inspectSecurityActionPurposes,type SecurityActionPurposeInspection} from './extensions/security/action-purposes';
 export type {SecurityActionPurpose,SecurityActionPurposeDeclaration} from './extensions/security/action-purpose-declarations';
 export {inspectProtectionObligations,type ProtectionDeclarationInspection,type ProtectionDeclarationObligation,type ProtectionDeclarationObligationKind} from './extensions/security/protection/obligations';
 
-export {inspectActionPlan,assessActionPlan,prepareActionPlanModel} from './extensions/actions/plans';
 export type {BulkJobStatus,BulkClaim,BulkJobState,BulkReconcileEvidence,BulkEvent,BulkTransitionResult,BulkDecisionInput,BulkDecision} from './extensions/actions/bulk-state';
 export type {ActionPlanArtifact,ActionPlanModelPin,PortableActionPin,PortableActionPlan,ActionPlanDiagnostic,ActionPlanSelectionInspector,ActionPlanInspectionContext,ActionPlanInspection,ActionPlanCapability,ActionPlanCapabilities,ActionPlanAssessment,PreparedActionPlanModel} from './extensions/actions/plan-types';
 
-export {inspectActionManifest,assessActionManifest} from './extensions/actions/manifests';
 export type {ActionManifest,ActionManifestInspection} from './extensions/actions/manifest-types';
 
 export {validateBulkOutcome} from './extensions/actions/bulk';
 export type {BulkOutcomeValidation} from './extensions/actions/bulk';
 
-export {constructActionManifest} from './extensions/actions/manifest-construction';
-export type {SelectedActionRow,ActionManifestConstruction,ConstructedActionManifest} from './extensions/actions/manifest-construction';
+export type {SelectedActionRow,ActionManifestConstruction,ConstructedActionManifest} from './extensions/actions/manifest-construction-types';
 
-export type {PreparedActionIdentities} from './extensions/actions/selector';
+export type {PreparedActionIdentities} from './extensions/actions/runtime-types';
 export * from './adapters/access-temporal';
 export { RAW_TABLE_BINDING_SUBSET, rawTableBindingProfiles } from './extensions/binding/raw-profiles';
 export type { RawTableBindingTarget } from './extensions/binding/raw-profiles';
@@ -482,7 +454,6 @@ export * from './model/scalar-type';
 export * from './model/record-members';
 export * from './model/reference-links';
 export * from './projections/bit128';
-export * from './model/bit128-field';
 export {default as coreKindOperationV8Schema} from '../spec/core/kind-operation-v8.schema.json';
 export {default as coreNullabilityOperationV7Schema} from '../spec/core/nullability-operation-v7.schema.json';
 export {default as coreCardinalityOperationV6Schema} from '../spec/core/cardinality-operation-v6.schema.json';
@@ -491,35 +462,84 @@ export {default as coreKeyOperationV4Schema} from '../spec/core/key-operation-v4
 export {default as coreRelationshipOperationV3Schema} from '../spec/core/relationship-operation-v3.schema.json';
 export {default as coreBit128SelectionSchema} from '../spec/core/bit128-selection.schema.json';
 export {default as coreBit128RelationshipSelectionSchema} from '../spec/core/relationship-metadata-selection-v2.schema.json';
-export {projectBit128Model,recoverBit128ModelProjection,type Bit128ModelProjection} from './projections/bit128-model';
+export type {Bit128ModelProjection} from './projections/bit128-model';
 export * from './extensions/binding/bit128-record';
-export * from './projections/bit128-file-values';
 export {default as bit128ModelProjectionSchema} from '../spec/projections/bit128-model.schema.json';
 
-export {validateBit128Dataset,type Bit128DatasetRecord} from './extensions/binding/model-dataset';
+export type {Bit128DatasetRecord} from './extensions/binding/model-dataset';
 export type {ModelLiteral} from './extensions/binding/model-shape-values';
 
-export {prepareCoreInspection} from './model/prepared-inspection';
 
 // Core0.10 semantic reference metadata; term validators remain caller-installed.
 export * from './extensions/semantic-types';
 export * from './model/semantic-types';
 export {default as coreSemanticTypeReferenceSchema} from '../spec/core/semantic-type-reference.schema.json';
 export {default as coreSemanticTypesOperationSchema} from '../spec/core/semantic-types-operation.schema.json';
-export {generatePythonClient,type PythonClientRequest,type PythonClientResult} from './access';
+export type {PythonClientRequest,PythonClientResult} from './access/rust-candidate';
 
 // Explicit native table declaration inspection; no native deployment authority.
-export {TABLES_EXTENSION,tableLifecyclePackage,tableLifecycleRegistry,inspectTableLifecycle} from './extensions/tables';
-export type {TableLifecycleInspection} from './extensions/tables';
+export {TABLES_EXTENSION,tableLifecyclePackage} from './extensions/tables/package';
+export type {TableLifecycleInspection} from './extensions/tables/types';
 export type {TableRef,TableKeyRef,TableNativeType,TableDefault,TableColumn,TableExpression,TableRelationshipRef,TableRelationshipStep,TableRowRule,TableCommand,TableCommandRules,TablePolicy,TableIndex,TableCheck,TableForeignKey,TableDeclaration,TableFieldValue,TableSeedRow,TableSeedSet,TableLifecyclePayload,TableOperationValue,TableOperationPredicate,TableOperationAssignment,TableOperationBody,TableOperationV1,RowExpression,RowExpressionLiteralValue,RowExpressionPredicate,RowExpressionAssignment,RowExpressionOperation,TableOperation} from './extensions/tables/types';
 // Inert initial deployment compilation; hosts retain native admission authority.
-export {compileTableDeployment,verifyTableDeployment} from './table-deployment';
-export type {TableDeploymentConfiguration,TableDeploymentBundle,TableDeploymentResult,TableDeploymentStep} from './table-deployment';
+export type {TableDeploymentConfiguration,TableDeploymentBundle,TableDeploymentResult,TableDeploymentStep} from './table-deployment/types';
 // Inert source-bound forward plans; no ledger or execution authority.
-export * from './table-migration';
+export type {
+ G04ConversionSelection,
+ G04DiscoverySelector,
+ G04MigrationOptions,
+ G04Recipe,
+ G04RecipeKind,
+ G04Recovery,
+ G04ReviewedCandidate,
+ G04ReviewMarker,
+ G04TableMigrationPlan,
+ G04TableMigrationResult,
+ LegacyTableMigrationOptions,
+ LegacyTableMigrationPlan,
+ LegacyTableMigrationResult,
+ LegacyTableMigrationStep,
+ ReviewedChangeCandidate,
+ ReviewedChangeKind,
+ ReviewedChangeMarker,
+ TableMigrationOptions,
+ TableMigrationPlan,
+ TableMigrationRequest,
+ TableMigrationResult,
+ TableMigrationStep,
+} from './table-migration/types';
+export type {
+ TableInventoryArchiveSource,
+ TableInventoryConversion,
+ TableInventoryDiscoveryConversion,
+ TableInventoryDiscoveryIntent,
+ TableInventoryDiscoverySelector,
+ TableInventoryExecutionProfile,
+ TableInventoryHistoryExecution,
+ TableInventoryHistoryPlan,
+ TableInventoryMigrationMarker,
+ TableInventoryMigrationOptions,
+ TableInventoryMigrationPhase,
+ TableInventoryMigrationPlan,
+ TableInventoryMigrationRequest,
+ TableInventoryMigrationResult,
+ TableInventoryMigrationStep,
+ TableInventoryPlanInventory,
+ TableInventoryRestoration,
+ TableInventoryRetirement,
+ TableInventoryReviewedChangeCandidate,
+ TableInventoryReviewedChangeKind,
+ TableInventoryReviewValue,
+ TableInventorySeedOutcome,
+ TableInventorySeedReview,
+ TableInventorySourceHistory,
+ TableInventoryTableIntent,
+ TableInventoryTableReview,
+ TableInventoryTableReviewEffects,
+} from './table-migration/inventory-types';
 
-// Portable table lifecycle row_scope authoring; emitted policies remain subject to lifecycle admission.
-export * from './table-authoring/row-scope';
+// Row Scope contracts. Runtime normalization is owned by the Node/Browser V4 roots.
+export type {RowScopeBindingContext,RowScopeDiagnostic,RowScopeResult,RowScopeViaBinding} from './table-authoring/row-scope-types';
 
 export * from './extensions/actions/saga';
 export {createSagaResources} from './extensions/actions/saga-resources';

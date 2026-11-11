@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import type {Element} from '../../../src/model/types';
 import {domainFixture,domainRef} from './domain-fixture';
-import {evaluateProtectionValue,inspectProtectionFunction} from '../../../src/extensions/security/protection/functions';
+import {evaluateProtectionValue,inspectProtectionFunction} from '../../../src/index-node-v4';
 import {GREGORIAN_DATE_PROFILE} from '../../../src/adapters/gregorian-date';
 const field=(id:string,scalarType:string,extra:any={})=>({id,kind:'field',scalarType,cardinality:'one',nullability:'required',extensions:{},...extra});
 function fixture(operation:string,input='string',output='string'){

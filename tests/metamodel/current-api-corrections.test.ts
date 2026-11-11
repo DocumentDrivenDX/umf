@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import casesInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/cases.json';
 import beforeInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/before.json';
 import afterInput from '../../docs/helix/04-build/evidence/metamodel-authority/api-corrections/after.json';
-import {resolveCoreDefault} from '../../src/model/schema-properties';
+import {resolveCoreDefault} from "../../src/index-node-v4";
 import {checkSchemaLiteral} from '../../src/model/schema-literals';
 import {validateDocument} from '../../src/validation/document';
 import {executeConstraints} from '../../src/validation/constraint-kernel';

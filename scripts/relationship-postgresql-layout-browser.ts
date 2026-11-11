@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {postgresqlLayoutCases} from './relationship-postgresql-layout-cases';
-import {validatePostgresqlRelationshipLayout} from '../src';
+import {validatePostgresqlRelationshipLayout} from '../src/index-node-v4';
 import {buildBindingBrowserRuntime} from './binding/browser-runtime';
 const cases=postgresqlLayoutCases().map(row=>({...row,report:validatePostgresqlRelationshipLayout(row.logical,row.binding,row.policy,'report'),strict:validatePostgresqlRelationshipLayout(row.logical,row.binding,row.policy,'strict')}));
 const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();

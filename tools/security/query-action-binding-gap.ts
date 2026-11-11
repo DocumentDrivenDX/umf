@@ -4,7 +4,7 @@
  */
 import {evaluationFixture} from '../../tests/security/evaluation-fixture';
 import {ref} from '../../tests/security/fixture';
-import {evaluateSecurityAccess} from '../../src/extensions/security/evaluate';
+import {evaluateSecurityAccess} from '../../src/index-node-v4';
 const observations=[];
 for(const operator of ['predicate','order','group','join','aggregate'] as const){
  const f=evaluationFixture(),salary=f.resolution.ontology.entities[2]!.fields.find(x=>x.ref.elementId==='salary')!;

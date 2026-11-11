@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {localPlanFixture,localCapabilities,runLocalProfileCorpus} from './actions-local-profile-corpus';
 import {createPlanCorpusFixture,corpusCapabilities} from './actions-plan-corpus';
 import {sha256Text} from '../src/extensions/actions/plan-artifacts';

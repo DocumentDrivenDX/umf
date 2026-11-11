@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importSparkSchema,exportSparkSchema,renameSparkField} from '../src';
+import {importSparkSchema,exportSparkSchema,renameSparkField} from '../src/index-node-v4';
 import {parseNativeJson,renderTree} from '../src/model/native-json';
 const source=parseNativeJson(await Bun.file('fixtures/spark/rename-cases.json').text());if(source.kind!=='array')throw Error('Expected cases');
 for(const item of source.items){if(item.kind!=='object')throw Error('Expected case');const c=item.members;if(c.id?.kind!=='string'||c.fieldPointer?.kind!=='string'||c.name?.kind!=='string')throw Error('Invalid case');

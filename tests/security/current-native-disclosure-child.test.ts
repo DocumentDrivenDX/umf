@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {CurrentNativeDisclosureChildSession,NATIVE_DISCLOSURE_CHILD_VERSION as version,NATIVE_DISCLOSURE_CHILD_LIMITS as limits} from '../../tools/security/current-native-disclosure-child';
 import {CurrentDisclosureChildSession,DISCLOSURE_CHILD_VERSION,encodeDisclosureChildFrame as encode} from '../../tools/security/current-disclosure-child';
-import {inspectSecurityDisclosureV2} from '../../src/extensions/security/protection/disclosure';
+import {inspectSecurityDisclosureV2} from '../../src/index-node-v4';
 import vectors from './protection/native-disclosure-child-vectors.json';
 const packets:any[]=vectors.packets,sources:any[]=structuredClone(vectors.sources);
 for(const source of sources)for(const entry of source.closure.documents)entry.document.umf='0.10.0';

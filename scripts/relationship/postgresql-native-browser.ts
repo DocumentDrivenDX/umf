@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql} from '../../src';
+import {importPostgresqlSql} from '../../src/index-node-v4';
 
 const directory='fixtures/relationship/postgresql-native';
 const source=await Bun.file(`${directory}/constraints.sql`).text();

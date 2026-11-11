@@ -9,8 +9,8 @@ import {copyJson} from './json';
 import {UmfError,type Document,type Json} from './types';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import {verifyCoreKindDeclaration,type CoreKindDeclaration} from './field-kind';
-import {verifyCoreRecordTypeDeclaration,type CoreRecordTypeDeclaration} from './record-type';
+import type {CoreKindDeclaration} from './field-kind';
+import type {CoreRecordTypeDeclaration} from './record-type-types';
 import {inspectCoreReferenceLinks,type CoreReferenceLink} from './reference-links';
 export type CoreRecordTypeJournalEvent=CoreKindDeclaration|CoreRecordTypeDeclaration;
 export interface CoreRecordTypeJournal {
@@ -18,11 +18,15 @@ export interface CoreRecordTypeJournal {
  types:{eventIndex:number;identity:{module:string;element:string};path:string;recordPath:string;link:CoreReferenceLink;receipt:CoreRecordTypeDeclaration}[];
  receiptConsistency:'verified';issuerAuthority:'unverified';enforcement:'none';
 }
+export interface CoreRecordTypeJournalVerifier {
+ verifyCoreKindDeclaration(input:CoreKindDeclaration,current:Document):CoreKindDeclaration;
+ verifyCoreRecordTypeDeclaration(input:CoreRecordTypeDeclaration,current:Document):CoreRecordTypeDeclaration;
+}
 const validator=createValidator();validator.addSchema(sourceSchema);validator.addSchema(kindsSchema);validator.addSchema(receiptSchema);const check=validator.compile(resultSchema);
 function canonical(v:Json):string{return Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v)}
 function same(a:unknown,b:unknown){return canonical(a as Json)===canonical(b as Json)}
 /** No arbitrary edit events. Complete source continuity is checked before returning any type. */
-export function inspectCoreRecordTypeJournal(baseInput:Document,currentInput:Document,eventsInput:readonly CoreRecordTypeJournalEvent[]):CoreRecordTypeJournal{
+export function inspectCoreRecordTypeJournal(baseInput:Document,currentInput:Document,eventsInput:readonly CoreRecordTypeJournalEvent[],verifier:CoreRecordTypeJournalVerifier):CoreRecordTypeJournal{
  const packet=copyJson({base:baseInput,current:currentInput,events:eventsInput}) as unknown as {base:Document;current:Document;events:CoreRecordTypeJournalEvent[]};
  const {base,current,events}=packet;
  if(!Array.isArray(events)||events.length<1||events.length>32)throw new UmfError('CORE_TYPE_JOURNAL_CAPACITY','One to32 explicit events required');
@@ -31,7 +35,7 @@ export function inspectCoreRecordTypeJournal(baseInput:Document,currentInput:Doc
  const verified:CoreRecordTypeJournalEvent[]=[];
  for(const event of events){
   if(event?.version!=='6.0.0'||!['declare-core-kind','declare-core-record-type'].includes(event.operation))throw new UmfError('CORE_TYPE_JOURNAL_EVENT','Only supported v6 kind and record-type events admitted');
-  const receipt=event.operation==='declare-core-kind'?verifyCoreKindDeclaration(event,event.target):verifyCoreRecordTypeDeclaration(event,event.target);
+  const receipt=event.operation==='declare-core-kind'?verifier.verifyCoreKindDeclaration(event,event.target):verifier.verifyCoreRecordTypeDeclaration(event,event.target);
   if(!same(receipt.source,previous))throw new UmfError('CORE_TYPE_JOURNAL_GAP','Full event source must equal previous target');
   verified.push(receipt);previous=receipt.target;
  }

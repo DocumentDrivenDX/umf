@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {inspectTableLifecycle} from '../../src/extensions/tables';
-import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
-import {generatePythonClient} from '../../src/access';
+import {inspectTableLifecycle,compileTableDeployment,verifyTableDeployment,generatePythonClient} from '../../src/index-node-v4';
 import {relatedSource} from '../unified/table-related-fixture';
 const configuration={module:'demo',schema:'related_schema',ownerRole:'related_owner',personRole:'related_person',batchRole:'related_batch',groupRoles:{}};
 const payload=(source:any)=>source.modules[0].extensions['umf.tables'];

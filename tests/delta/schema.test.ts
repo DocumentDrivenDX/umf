@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importDeltaSchema,exportDeltaSchema,inspectDelta,getDeltaNode,proposeDeltaNodeEdit,readDocument,writeDocument} from '../../src';
+import {importDeltaSchema,exportDeltaSchema,inspectDelta,getDeltaNode,proposeDeltaNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 test('US-018-AC1: Delta source cases preserve exact schema through JSON/YAML',async()=>{
  const base='fixtures/delta/',cases=await Bun.file(base+'cases.json').json();expect(cases.length).toBe(39);
  for(const c of cases){const text=await Bun.file(base+c.id+'.json').text();if(['missing-field-defaults','array-missing-nullability'].includes(c.id)){expect(()=>importDeltaSchema(text,{id:c.id})).toThrow();continue;}const doc=importDeltaSchema(text,{id:c.id});expect(inspectDelta(doc).complete).toBe(false);for(const f of ['json','yaml'] as const)expect(exportDeltaSchema(readDocument(writeDocument(doc,f),f))).toBe(text);}

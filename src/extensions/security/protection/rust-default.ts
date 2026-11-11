@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../../model/errors';
-import type {inspectProtectionFunction,evaluateProtectionValue} from './functions';
-import type {inspectProtectionQueryProperties} from './queries';
+import type {ProtectionFunctionInspector,ProtectionValueEvaluator} from './functions';
+import type {ProtectionQueryPropertyInspector} from './queries';
 
 export interface ProtectionNativeEngine {
  inspectProtectionFunction(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):unknown;
@@ -30,8 +30,8 @@ export function createProtectionRustDefault(engine:ProtectionNativeEngine,isNati
   }
  };
  return Object.freeze({
-  inspectProtectionFunction(...args:Parameters<typeof inspectProtectionFunction>):ReturnType<typeof inspectProtectionFunction>{return call(()=>engine.inspectProtectionFunction(...args));},
-  evaluateProtectionValue(...args:Parameters<typeof evaluateProtectionValue>):ReturnType<typeof evaluateProtectionValue>{return call(()=>engine.evaluateProtectionValue(...args));},
-  inspectProtectionQueryProperties(...args:Parameters<typeof inspectProtectionQueryProperties>):ReturnType<typeof inspectProtectionQueryProperties>{return call(()=>engine.inspectProtectionQueryProperties(...args));},
+  inspectProtectionFunction(...args:Parameters<ProtectionFunctionInspector>):ReturnType<ProtectionFunctionInspector>{return call(()=>engine.inspectProtectionFunction(...args));},
+  evaluateProtectionValue(...args:Parameters<ProtectionValueEvaluator>):ReturnType<ProtectionValueEvaluator>{return call(()=>engine.evaluateProtectionValue(...args));},
+  inspectProtectionQueryProperties(...args:Parameters<ProtectionQueryPropertyInspector>):ReturnType<ProtectionQueryPropertyInspector>{return call(()=>engine.inspectProtectionQueryProperties(...args));},
  });
 }

@@ -1,14 +1,13 @@
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
-import {inspectCoreRecordTypeReceipt} from '../../src/model/record-type-inspection';
-import {declareCoreElementKind} from '../../src/model/field-kind';
-import {declareCoreRecordType} from '../../src/model/record-type';
-import {inspectCoreReferenceLinks} from '../../src/model/reference-links';
+import {inspectCoreRecordTypeReceipt as inspectCoreRecordTypeReceiptModel} from '../../src/model/record-type-inspection';
+import {inspectCoreElementKind,declareCoreElementKind,declareCoreRecordType,verifyCoreRecordTypeDeclaration,inspectCoreReferenceLinks} from '../../src/index-node-v4';
 import type {Document} from '../../src/model/types';
 import sourceSchema from '../../spec/core/schema.json';
 import kindsSchema from '../../spec/core/kind-operation-v6.schema.json';
 import receiptSchema from '../../spec/core/record-type-operation-v6.schema.json';
 import resultSchema from '../../spec/core/record-type-inspection.schema.json';
 import {createValidator} from '../../src/validation/schema';
+const inspectCoreRecordTypeReceipt=(source:Document,identity:{module:string;element:string},receipt:any)=>inspectCoreRecordTypeReceiptModel(source,identity,receipt,verifyCoreRecordTypeDeclaration);
 export function recordTypeOwnerFixture(){
  const source:Document={umf:CURRENT_CORE_VERSION,id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',kind:'field',extensions:{},'future/field':{values:['b','a']},references:[{role:'future-role',module:'m',element:'R','future/qualifier':{values:['b','a']}}]},{id:'R',kind:'record',members:[],extensions:{}}]},{id:'other',namespace:'other',elements:[{id:'R',kind:'record',members:[{module:'m',element:'v'}],extensions:{}},{id:'v',kind:'field',extensions:{}}]}]};
  const identity={module:'m',element:'v'},field=declareCoreElementKind(source,identity,'field'),record=declareCoreElementKind(field.target,{module:'other',element:'R'},'record'),receipt=declareCoreRecordType(field,record);

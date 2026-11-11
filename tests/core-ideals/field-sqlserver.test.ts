@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {classifySqlServerField, recoverSqlServerFieldCapture} from '../../src/core-ideals/sqlserver-field';
-import {importSqlServerCatalog, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
-import {declareCoreElementKind} from '../../src/model/field-kind';import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
+import {classifySqlServerField,recoverSqlServerFieldCapture} from "../../src/index-node-v4";
+import {importSqlServerCatalog,getSqlServerColumnMetadata} from "../../src/index-node-v4";
+import {declareCoreElementKind} from "../../src/index-node-v4";import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const nativeSource=await Bun.file('fixtures/sqlserver/catalog.json').text();const source=()=>importSqlServerCatalog(nativeSource,{id:'sqlserver'});
 test('SQL Server captured members classify independently of scalar/alias/index semantics',()=>{
  const document=source();for(const c of getSqlServerColumnMetadata(document)){const result=classifySqlServerField(document,{column:c.path,nativeSource,mode:'strict'});expect(result.status).toBe('classified');expect(result.mapping.nativeFragment).toEqual(c.nativeColumn);expect(result.target!.modules[0]!.elements.find(e=>e.id===c.path)!.kind).toBe('field');expect(result.source).toEqual(document);

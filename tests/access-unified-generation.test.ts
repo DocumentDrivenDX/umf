@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {mkdtemp,readFile,writeFile,realpath} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient} from '../src/index-node-v4';
 import {checkAccessPackage,writeAccessPackage} from '../scripts/umf-access-generate';
 
 const original=await Bun.file(new URL('./unified/commerce.json',import.meta.url)).text();

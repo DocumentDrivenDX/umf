@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,proposeSqlServerCatalogEdit,inspectSqlServer,readDocument,writeDocument} from '../../src';
+import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,proposeSqlServerCatalogEdit,inspectSqlServer,readDocument,writeDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/sqlserver/column-metadata.schema.json';
 const source=await Bun.file('fixtures/sqlserver/catalog.json').text();

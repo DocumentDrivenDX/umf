@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {recordCase} from '../../scripts/core-ideals/record-tablespec-cases';
-import {projectRecordToTableSpec, recoverRecordFromTableSpec} from '../../src/core-ideals/record-tablespec-projection';
-import {classifyTableSpecRecord} from '../../src/core-ideals/tablespec-record';
-import {importTableSpec, exportTableSpec} from '../../src/adapters/tablespec';
+import {projectRecordToTableSpec,recoverRecordFromTableSpec} from "../../src/index-node-v4";
+import {classifyTableSpecRecord} from "../../src/index-node-v4";
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {declareCoreElementKind} from "../../src/index-node-v4";
 import {type Document} from '../../src/model/types';
 test('record projection orders columns by declared membership and recovers the complete ideal',()=>{
  const {source,author,request}=recordCase();expect(projectRecordToTableSpec(author,request).status).toBe('blocked');const result=projectRecordToTableSpec(author,{...request,mode:'report'});expect(result.status).toBe('projected');expect(result.residuals.map(r=>r.path)).toEqual(['/modules/0/namespace','/modules/1/namespace']);

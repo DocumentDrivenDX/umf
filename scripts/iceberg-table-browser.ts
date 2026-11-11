@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {importIcebergTable,exportIcebergTable,inspectIcebergTable,inspectIcebergTableContext,inspectIcebergTableTransforms} from '../src';
+import {importIcebergTable,exportIcebergTable,inspectIcebergTable,inspectIcebergTableContext,inspectIcebergTableTransforms} from '../src/index-node-v4';
 const base='fixtures/iceberg/table/',cases=[];for(const c of (await Bun.file(base+'results.json').json()).results){const raw=await Bun.file(c.path).text(),umfValid=c.status==='roundtripped';cases.push({...c,raw,umfValid,...(umfValid?{output:exportIcebergTable(importIcebergTable(raw,{id:c.id})),diagnostics:inspectIcebergTable(importIcebergTable(raw,{id:c.id})).diagnostics,context:inspectIcebergTableContext(importIcebergTable(raw,{id:c.id})),bindings:inspectIcebergTableTransforms(importIcebergTable(raw,{id:c.id}))}:{})});}
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/iceberg-table-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/iceberg-table-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Iceberg schema interchange</title>');}});let browser;

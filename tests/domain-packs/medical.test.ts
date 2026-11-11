@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {createValidator} from '../../src/validation/schema';
 import {generateDomainPackSchema} from '../../src/domain-packs/schema';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 
 const root='spec/domain-packs/medical';
 test('medical pack shares canonical structure, pins original bytes and retains external reference-only rights',async()=>{

@@ -2,10 +2,10 @@
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {facetsAvroProjectionCases} from './facets-avro-projection-cases';
 import {avroFacetCase} from './facets-avro-cases';
-import {projectFacetsToAvro, recoverFacetsFromAvro} from '../../src/core-ideals/facets-avro-projection';
+import {projectFacetsToAvro,recoverFacetsFromAvro} from "../../src/index-node-v4";
 const hash=async(path:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex');
 const native=await Bun.file('fixtures/validation/facets-avro-projection-native.json').json();
 for(const [path,sha] of Object.entries(native.sha256))assert.equal(await hash(path),sha,'Stale native evidence: '+path);

@@ -224,19 +224,30 @@ dependencies are unchanged.
 
 ### Remaining source closure
 
-- Retire the source-only Actions analysis, evaluation and plan engines after
-  routing their remaining callers through the Rust Action API. Keep transport
-  callbacks, public types and the independent execution examples.
-- Remove the TypeScript row-scope engine and the obsolete codegen bridge.
-  Extract the migration and inventory contracts together because inventory
-  calls the old migration renderer. Remove the deployment implementation
-  after the callers of that renderer have moved.
-- Remove remaining TypeScript model authoring and validation engines as the
-  adapters and tooling that still call them move to Rust. Then remove the
-  source-only registry admission, document constraint and literal engines.
-- Finish removing source-only classifiers, adapter implementations and their
-  old projector factories. Keep schema and package data, explicit compiler
-  interop and independent native oracles.
+- The old row-scope, deployment, migration, inventory, table lifecycle and
+  Python client generation engines have been removed. Their public contracts
+  now reference Rust wrappers and type modules. Chromium compiled and verified
+  a deployment and compiled its initial migration. Python generation produced
+  exact matching files in Node V4 and Chromium WASM across four packs.
+- Removed duplicated Core authoring, prepared inspection, record and dataset
+  value implementations. Local baselines cover current authoring, owned
+  inspection snapshots, dataset receipt isolation and host admission order.
+- Removed duplicate adapter and classifier bodies for Arrow, Avro, Parquet,
+  PostgreSQL, SQL Server, TableSpec, JSON Schema, OpenAPI, RDF, JSON-LD,
+  Spark, Delta, Iceberg, dbt, GraphQL, LinkML and ODCS. Native checks exercise
+  projection, refusal, recovery, archive retention and catalog inspection.
+  The two current generalized RDF cases exercise forward quad deduplication
+  and reverse projection with retained blank predicates in JSON-LD 1.0
+  report mode.
+- Finish the Actions and Security source closure, including private callers
+  of superseded entry points. Keep explicit host callbacks, public types and
+  independent executable examples. Replace any current semantic operation
+  still missing a Rust owner.
+- Retire the source-only registry admission, document constraint and literal
+  engines after moving their last model and tooling consumers. Audit remaining
+  private source barrel consumers and browser tools for obsolete engine
+  imports. Keep package and schema data, explicit compiler interop and
+  independent native oracles.
 
 ## Completed verification
 

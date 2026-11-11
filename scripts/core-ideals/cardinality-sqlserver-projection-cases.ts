@@ -2,7 +2,7 @@
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
 import {sqlServerCarriers} from '../../src/core-ideals/sqlserver-syntax';
-import {declareCoreCardinality} from '../../src/model/cardinality';
+import {declareCoreCardinality} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
 import type {CardinalitySqlServerRequest} from '../../src/core-ideals/cardinality-sqlserver-projection';
 export function sqlserverCardinalityProjectionCases(){

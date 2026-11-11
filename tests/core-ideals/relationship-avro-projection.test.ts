@@ -3,7 +3,7 @@ import {test,expect} from 'bun:test';
 import {relationshipAvroCase,relationshipAvroProjectionCases} from '../../scripts/core-ideals/relationship-avro-projection-cases';
 import {projectRelationshipToAvro, verifyRelationshipAvroProjection, recoverRelationshipAvroIdeal, recoverRelationshipAvroNative} from '../../src/index-node-v4';
 import {classifyAvroRelationships, recoverAvroRelationshipSource} from '../../src/index-node-v4';
-import {importAvroSchema} from '../../src/adapters/avro';
+import {importAvroSchema} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 // @covers US-045-AC4 @covers US-045-AC5 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipAvroProjectionCases())test('authored Avro relationship: '+c.name,()=>{

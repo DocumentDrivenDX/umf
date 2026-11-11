@@ -2,7 +2,7 @@
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 import corpus from '../../fixtures/relationship/authored/corpus.json';
 import {relationshipCurrentBase} from './relationship-current-base';
-import {declareCoreRelationship, type CoreRelationshipDeclaration, type Document, type RelationshipExtraRequest, type RelationshipExtraSystem} from '../../src';
+import {declareCoreRelationship, type CoreRelationshipDeclaration, type Document, type RelationshipExtraRequest, type RelationshipExtraSystem} from '../../src/index-node-v4';
 export interface ExtraCase {name:string;source:Document;author:CoreRelationshipDeclaration;request:RelationshipExtraRequest;expected:'projected'|'blocked'}
 export function relationshipExtraCases():ExtraCase[]{
  const result:ExtraCase[]=[];

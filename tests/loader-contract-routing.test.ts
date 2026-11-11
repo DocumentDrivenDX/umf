@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {expect,test} from 'bun:test';
+import {mkdtemp,readFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join,resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {writeLoaderContractRuntimeAssets} from '../scripts/loader-contract-assets';
+
+test('loader-contract package assets route Rust operations to the matching V4 root',async()=>{
+ const destination=await mkdtemp(join(tmpdir(),'umf-loader-contract-'));
+ try{
+  await writeLoaderContractRuntimeAssets(destination);
+  const browser=await readFile(join(destination,'loader-contract.js'),'utf8'),node=await readFile(join(destination,'loader-contract.node.js'),'utf8'),validator=await readFile(join(destination,'loader-contract-validator.js'),'utf8');
+  const pkg=JSON.parse(await readFile(resolve('package.json'),'utf8')),route=pkg.exports['./loader-contract'];
+  expect(route).toEqual({types:{node:'./dist/src/domain-packs/loader-contract-node.d.ts',default:'./dist/src/domain-packs/loader-contract-browser.d.ts'},browser:'./dist/loader-contract.js',node:'./dist/loader-contract.node.js',import:'./dist/loader-contract.js',default:'./dist/loader-contract.js'});
+  for(const asset of [browser,node])expect(asset).toContain("export {createValidator} from './loader-contract-validator.js';");
+  expect(validator).toContain('createValidator');expect(validator).not.toContain('checkCore');expect(validator).not.toContain('checkPackage');
+  expect(browser).toContain("from './umf-browser.js'");expect(browser).not.toContain("from './umf-node.js'");
+  expect(node).toContain("from './umf-node.js'");expect(node).not.toContain("from './umf-browser.js'");
+  for(const name of ['readJsonValue','inspectDomainPackLoader','generateDomainPackLoaderSchema','generateLoaderInventorySchema']){expect(browser).toContain(name);expect(node).toContain(name);}
+  expect(browser).not.toContain("domain-packs/loader.ts");expect(node).not.toContain("domain-packs/loader.ts");
+  await Bun.write(join(destination,'package.json'),'{"type":"module"}');
+  const rustExports=`export const readJsonValue=(text)=>JSON.parse(text);export const inspectDomainPackLoader=(x)=>({valid:x.entrypoint==='run.ts'});export const generateDomainPackLoaderSchema=()=>({$id:'urn:umf:domain-pack-loader:1.0.0'});export const generateLoaderInventorySchema=()=>({$id:'urn:umf:loader-inventory:1.0.0'});`;
+  await Bun.write(join(destination,'umf-node.js'),rustExports);await Bun.write(join(destination,'umf-browser.js'),rustExports);
+  const api=await import(pathToFileURL(join(destination,'loader-contract.node.js')).href);
+  const validate=api.createValidator().compile({type:'object',required:['ok'],properties:{ok:{type:'boolean'}},additionalProperties:false});
+  expect(validate({ok:true})).toBe(true);expect(validate({ok:'true'})).toBe(false);expect(api.readJsonValue('{"ok":true}','json')).toEqual({ok:true});
+  expect(api.inspectDomainPackLoader({entrypoint:'run.ts'}).valid).toBe(true);expect(api.inspectDomainPackLoader({entrypoint:'../run.ts'}).valid).toBe(false);
+  const nodeCheck=Bun.spawnSync(['node','--input-type=module','-e',`const api=await import(${JSON.stringify(pathToFileURL(join(destination,'loader-contract.node.js')).href)});const valid=api.createValidator().compile({type:'object',required:['ok'],properties:{ok:{type:'boolean'}},additionalProperties:false});if(!valid({ok:true})||valid({ok:'true'})||api.readJsonValue('{"ok":true}','json').ok!==true||!api.inspectDomainPackLoader({entrypoint:'run.ts'}).valid||api.inspectDomainPackLoader({entrypoint:'../run.ts'}).valid)throw Error('Node loader-contract runtime probe failed');`]);
+  expect(nodeCheck.exitCode).toBe(0);expect(nodeCheck.stderr.toString()).toBe('');
+ }finally{await rm(destination,{recursive:true,force:true});}
+},30_000);

@@ -1,19 +1,20 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
 import type {Diagnostic, Document, ExtensionPackage} from '../../model/types';
-import type {
-  PostgresqlBackend,
-  exportPostgresqlSql,
-  getPostgresqlNode,
-  getPostgresqlSource,
-  importPostgresqlSql,
-  inspectPostgresql,
-  postgresqlRegistry,
-  proposePostgresqlNodeEdit,
-  validatePostgresqlAst,
-} from './index';
+import type {PostgresqlBackend} from './index';
 import type {Registry} from '../../registry/registry';
 import {postgresqlPackage} from './package';
+import type {NativeJson} from "../../model/native-json";
+import type {Json,Validation} from "../../model/types";
+
+type ExportPostgresqlSql = (document: Document, backend: PostgresqlBackend) => Promise<string>;
+type GetPostgresqlNode = (document: Document, path: string) => NativeJson;
+type GetPostgresqlSource = (document: Document) => string;
+type ImportPostgresqlSql = (source: string, backend: PostgresqlBackend, options: { id: string; }) => Promise<Document>;
+type InspectPostgresql = (document: Document) => Validation;
+type PostgresqlRegistry = () => Registry;
+type ProposePostgresqlNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+type ValidatePostgresqlAst = (tree: unknown) => { valid: boolean | Promise<unknown>; complete: boolean; errors: Json; };
 
 type ParserRequest = {
   token: string;
@@ -77,13 +78,13 @@ export function createPostgresqlRustDefault(
   createRegistry:()=>Registry,
 ) {
   return Object.freeze({
-    postgresqlRegistry():ReturnType<typeof postgresqlRegistry> {
+    postgresqlRegistry():ReturnType<PostgresqlRegistry> {
       return createRegistry().register(postgresqlPackage as unknown as ExtensionPackage,(payload) => {
         try{return engine.inspectPayload({payload}) as Diagnostic[];}
         catch(error){publicError(error,isNativeUmfCoreError);}
       });
     },
-    async importPostgresqlSql(source:string,backend:PostgresqlBackend,options:Parameters<typeof importPostgresqlSql>[2]):Promise<Document> {
+    async importPostgresqlSql(source:string,backend:PostgresqlBackend,options:Parameters<ImportPostgresqlSql>[2]):Promise<Document> {
       requireBackend(backend);
       let request:ParserRequest;
       try{request=engine.prepareImport({source,id:options.id});}
@@ -97,7 +98,7 @@ export function createPostgresqlRustDefault(
       catch(error){cancel(engine,request.token);publicError(error,isNativeUmfCoreError);}
       return completed.document as Document;
     },
-    async exportPostgresqlSql(document:Document,backend:PostgresqlBackend):ReturnType<typeof exportPostgresqlSql> {
+    async exportPostgresqlSql(document:Document,backend:PostgresqlBackend):ReturnType<ExportPostgresqlSql> {
       requireBackend(backend);
       let request:ParserRequest;
       try{request=engine.prepareExport({document});}
@@ -126,14 +127,14 @@ export function createPostgresqlRustDefault(
       cancel(engine,request?.token);
       throw new UmfError('POSTGRESQL_BACKEND','Rust parser continuation exceeded its closed stage count');
     },
-    proposePostgresqlNodeEdit(document:Document,pointer:string,text:string):ReturnType<typeof proposePostgresqlNodeEdit> {
-      try{return engine.editNode({document,pointer,text}) as ReturnType<typeof proposePostgresqlNodeEdit>;}
+    proposePostgresqlNodeEdit(document:Document,pointer:string,text:string):ReturnType<ProposePostgresqlNodeEdit> {
+      try{return engine.editNode({document,pointer,text}) as ReturnType<ProposePostgresqlNodeEdit>;}
       catch(error){publicError(error,isNativeUmfCoreError);}
     },
-    inspectPostgresql(document:Document):ReturnType<typeof inspectPostgresql> { try{return engine.inspect({document}) as ReturnType<typeof inspectPostgresql>;}catch(error){publicError(error,isNativeUmfCoreError);} },
-    getPostgresqlSource(document:Document):ReturnType<typeof getPostgresqlSource> { try{return engine.getSource({document}) as ReturnType<typeof getPostgresqlSource>;}catch(error){publicError(error,isNativeUmfCoreError);} },
-    getPostgresqlNode(document:Document,pointer:string):ReturnType<typeof getPostgresqlNode> { try{return engine.getNode({document,pointer}) as ReturnType<typeof getPostgresqlNode>;}catch(error){publicError(error,isNativeUmfCoreError);} },
+    inspectPostgresql(document:Document):ReturnType<InspectPostgresql> { try{return engine.inspect({document}) as ReturnType<InspectPostgresql>;}catch(error){publicError(error,isNativeUmfCoreError);} },
+    getPostgresqlSource(document:Document):ReturnType<GetPostgresqlSource> { try{return engine.getSource({document}) as ReturnType<GetPostgresqlSource>;}catch(error){publicError(error,isNativeUmfCoreError);} },
+    getPostgresqlNode(document:Document,pointer:string):ReturnType<GetPostgresqlNode> { try{return engine.getNode({document,pointer}) as ReturnType<GetPostgresqlNode>;}catch(error){publicError(error,isNativeUmfCoreError);} },
     inspectPostgresqlPayload(payload:unknown) { try{return engine.inspectPayload({payload});}catch(error){publicError(error,isNativeUmfCoreError);} },
-    validatePostgresqlAst(ast:unknown):ReturnType<typeof validatePostgresqlAst> { try{return engine.validateAst({ast}) as ReturnType<typeof validatePostgresqlAst>;}catch(error){publicError(error,isNativeUmfCoreError);} },
+    validatePostgresqlAst(ast:unknown):ReturnType<ValidatePostgresqlAst> { try{return engine.validateAst({ast}) as ReturnType<ValidatePostgresqlAst>;}catch(error){publicError(error,isNativeUmfCoreError);} },
   });
 }

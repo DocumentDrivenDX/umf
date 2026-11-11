@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {projectFieldToTableSpec, recoverFieldFromTableSpec, type FieldTableSpecRequest} from '../../src/core-ideals/field-tablespec-projection';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {type FieldTableSpecRequest} from "../../src/core-ideals/field-tablespec-projection";
+import {projectFieldToTableSpec,recoverFieldFromTableSpec} from "../../src/index-node-v4";
+import {declareCoreElementKind} from "../../src/index-node-v4";
 
-import {classifyTableSpecField} from '../../src/core-ideals/tablespec-field';
-import {exportTableSpec, importTableSpec} from '../../src/adapters/tablespec';
+import {classifyTableSpecField} from "../../src/index-node-v4";
+import {exportTableSpec,importTableSpec} from "../../src/index-node-v4";
 import {copyJson} from '../../src/model/json';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {type Document} from '../../src/model/types';

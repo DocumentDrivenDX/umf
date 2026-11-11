@@ -4,13 +4,23 @@ import type {NativeJson} from '../../model/native-json';
 import {UmfError} from '../../model/errors';
 import type {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/openapi/package.json';
-import type {
- exportOpenapiBundle,exportOpenapiDocument,getOpenapiNode,importOpenapiDocument,inspectOpenapi,lookupOpenapiResource,proposeOpenapiEdit,
-} from './index';
-import type {extractOpenapiSchema} from './extraction';
-import type {indexOpenapiSchemas,resolveOpenapiSchemaReference} from './scope';
-import type {resolveOpenapiDynamicReference} from './dynamic';
-import type {resolveOpenapiObjectReference} from './references';
+import type {Validation} from "../../model/types";
+import type {OpenapiSchemaExtraction} from "./extraction";
+import type {OpenapiSchemaIndex,OpenapiSchemaLocation} from "./scope";
+import type {OpenapiReferenceRequest,OpenapiReferenceResolution} from "./references";
+
+type ExportOpenapiBundle = (document: Document) => { resources: { uri: string; text: string; format: "json" | "yaml"; }[]; source: Document; diagnostics: Diagnostic[]; baseUri?: string; schema: string; format: "json" | "yaml"; };
+type ExportOpenapiDocument = (document: Document, format?: "json" | "yaml" | undefined) => string;
+type GetOpenapiNode = (document: Document, path: string, resourceUri?: string | undefined) => NativeJson;
+type ImportOpenapiDocument = (text: string, options: { id: string; format: "json" | "yaml"; baseUri?: string; resources?: { uri: string; text: string; format: "json" | "yaml"; }[]; }) => Document;
+type InspectOpenapi = (document: Document) => Validation;
+type LookupOpenapiResource = (document: Document, reference: string, fromUri?: string | undefined) => { uri: string; pointer: string; node: NativeJson; interpretation: "literal-document-pointer-only"; };
+type ProposeOpenapiEdit = (document: Document, path: string, json: string, resourceUri?: string | undefined) => { document: Document; validation: Validation; };
+type ExtractOpenapiSchema = (document: Document, input: { pointer: string; resourceUri?: string; }) => OpenapiSchemaExtraction;
+type IndexOpenapiSchemas = (document: Document, input?: { schemaResources?: string[]; }) => OpenapiSchemaIndex;
+type ResolveOpenapiSchemaReference = (document: Document, input: { pointer: string; reference: string; resourceUri?: string; schemaResources?: string[]; }) => { source: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; complete: false; limitations: string[]; };
+type ResolveOpenapiDynamicReference = (document: Document, input: { pointer: string; resourceUri?: string; schemaResources?: string[]; evaluationScope: string[]; }) => { source: OpenapiSchemaLocation; initialTarget: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; evaluationScope: string[]; resolution: "static" | "dynamic"; complete: false; limitations: string[]; };
+type ResolveOpenapiObjectReference = (document: Document, input: OpenapiReferenceRequest) => OpenapiReferenceResolution;
 
 export interface OpenapiNativeFamilyEngine {
  openapi: {
@@ -49,47 +59,47 @@ export function createOpenapiRustDefault(engine:OpenapiNativeFamilyEngine,isNati
   openapiRegistry():Registry{
    return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.openapi.inspectPayload({payload})));
   },
-  importOpenapiDocument(text:string,options:Parameters<typeof importOpenapiDocument>[1]):ReturnType<typeof importOpenapiDocument>{
+  importOpenapiDocument(text:string,options:Parameters<ImportOpenapiDocument>[1]):ReturnType<ImportOpenapiDocument>{
    const {id,format,baseUri,resources}=options;
-   return call(()=>engine.openapi.import({source:text,id,format,...(baseUri===undefined?{}:{baseUri}),...(resources===undefined?{}:{resources})}) as ReturnType<typeof importOpenapiDocument>);
+   return call(()=>engine.openapi.import({source:text,id,format,...(baseUri===undefined?{}:{baseUri}),...(resources===undefined?{}:{resources})}) as ReturnType<ImportOpenapiDocument>);
   },
-  inspectOpenapi(document:Parameters<typeof inspectOpenapi>[0]):ReturnType<typeof inspectOpenapi>{
-   return call(()=>engine.openapi.validate({document}) as ReturnType<typeof inspectOpenapi>);
+  inspectOpenapi(document:Parameters<InspectOpenapi>[0]):ReturnType<InspectOpenapi>{
+   return call(()=>engine.openapi.validate({document}) as ReturnType<InspectOpenapi>);
   },
-  exportOpenapiDocument(document:Parameters<typeof exportOpenapiDocument>[0],format?:Parameters<typeof exportOpenapiDocument>[1]):ReturnType<typeof exportOpenapiDocument>{
-   return call(()=>engine.openapi.export({document,...(format===undefined?{}:{format})}) as ReturnType<typeof exportOpenapiDocument>);
+  exportOpenapiDocument(document:Parameters<ExportOpenapiDocument>[0],format?:Parameters<ExportOpenapiDocument>[1]):ReturnType<ExportOpenapiDocument>{
+   return call(()=>engine.openapi.export({document,...(format===undefined?{}:{format})}) as ReturnType<ExportOpenapiDocument>);
   },
-  getOpenapiNode(document:Parameters<typeof getOpenapiNode>[0],path:Parameters<typeof getOpenapiNode>[1],resourceUri?:Parameters<typeof getOpenapiNode>[2]):ReturnType<typeof getOpenapiNode>{
-   return call(()=>engine.openapi.getNode({document,pointer:path,...(resourceUri===undefined?{}:{resourceUri})}) as NativeJson as ReturnType<typeof getOpenapiNode>);
+  getOpenapiNode(document:Parameters<GetOpenapiNode>[0],path:Parameters<GetOpenapiNode>[1],resourceUri?:Parameters<GetOpenapiNode>[2]):ReturnType<GetOpenapiNode>{
+   return call(()=>engine.openapi.getNode({document,pointer:path,...(resourceUri===undefined?{}:{resourceUri})}) as NativeJson as ReturnType<GetOpenapiNode>);
   },
-  lookupOpenapiResource(document:Parameters<typeof lookupOpenapiResource>[0],reference:Parameters<typeof lookupOpenapiResource>[1],fromUri?:Parameters<typeof lookupOpenapiResource>[2]):ReturnType<typeof lookupOpenapiResource>{
-   return call(()=>engine.openapi.lookupResource({document,reference,...(fromUri===undefined?{}:{fromUri})}) as ReturnType<typeof lookupOpenapiResource>);
+  lookupOpenapiResource(document:Parameters<LookupOpenapiResource>[0],reference:Parameters<LookupOpenapiResource>[1],fromUri?:Parameters<LookupOpenapiResource>[2]):ReturnType<LookupOpenapiResource>{
+   return call(()=>engine.openapi.lookupResource({document,reference,...(fromUri===undefined?{}:{fromUri})}) as ReturnType<LookupOpenapiResource>);
   },
-  extractOpenapiSchema(document:Parameters<typeof extractOpenapiSchema>[0],input:Parameters<typeof extractOpenapiSchema>[1]):ReturnType<typeof extractOpenapiSchema>{
+  extractOpenapiSchema(document:Parameters<ExtractOpenapiSchema>[0],input:Parameters<ExtractOpenapiSchema>[1]):ReturnType<ExtractOpenapiSchema>{
    const {pointer,resourceUri}=input;
-   return call(()=>engine.openapi.extractSchema({document,pointer,...(resourceUri===undefined?{}:{resourceUri})}) as ReturnType<typeof extractOpenapiSchema>);
+   return call(()=>engine.openapi.extractSchema({document,pointer,...(resourceUri===undefined?{}:{resourceUri})}) as ReturnType<ExtractOpenapiSchema>);
   },
-  indexOpenapiSchemas(document:Parameters<typeof indexOpenapiSchemas>[0],input:Parameters<typeof indexOpenapiSchemas>[1]={}):ReturnType<typeof indexOpenapiSchemas>{
+  indexOpenapiSchemas(document:Parameters<IndexOpenapiSchemas>[0],input:Parameters<IndexOpenapiSchemas>[1]={}):ReturnType<IndexOpenapiSchemas>{
    const {schemaResources}=input;
-   return call(()=>engine.openapi.indexSchemas({document,...(schemaResources===undefined?{}:{schemaResources})}) as ReturnType<typeof indexOpenapiSchemas>);
+   return call(()=>engine.openapi.indexSchemas({document,...(schemaResources===undefined?{}:{schemaResources})}) as ReturnType<IndexOpenapiSchemas>);
   },
-  resolveOpenapiSchemaReference(document:Parameters<typeof resolveOpenapiSchemaReference>[0],input:Parameters<typeof resolveOpenapiSchemaReference>[1]):ReturnType<typeof resolveOpenapiSchemaReference>{
+  resolveOpenapiSchemaReference(document:Parameters<ResolveOpenapiSchemaReference>[0],input:Parameters<ResolveOpenapiSchemaReference>[1]):ReturnType<ResolveOpenapiSchemaReference>{
    const {pointer,reference,resourceUri,schemaResources}=input;
-   return call(()=>engine.openapi.resolveSchemaReference({document,pointer,reference,...(resourceUri===undefined?{}:{resourceUri}),...(schemaResources===undefined?{}:{schemaResources})}) as ReturnType<typeof resolveOpenapiSchemaReference>);
+   return call(()=>engine.openapi.resolveSchemaReference({document,pointer,reference,...(resourceUri===undefined?{}:{resourceUri}),...(schemaResources===undefined?{}:{schemaResources})}) as ReturnType<ResolveOpenapiSchemaReference>);
   },
-  resolveOpenapiDynamicReference(document:Parameters<typeof resolveOpenapiDynamicReference>[0],input:Parameters<typeof resolveOpenapiDynamicReference>[1]):ReturnType<typeof resolveOpenapiDynamicReference>{
+  resolveOpenapiDynamicReference(document:Parameters<ResolveOpenapiDynamicReference>[0],input:Parameters<ResolveOpenapiDynamicReference>[1]):ReturnType<ResolveOpenapiDynamicReference>{
    const {pointer,resourceUri,schemaResources,evaluationScope}=input;
-   return call(()=>engine.openapi.resolveDynamicReference({document,pointer,...(resourceUri===undefined?{}:{resourceUri}),...(schemaResources===undefined?{}:{schemaResources}),evaluationScope}) as ReturnType<typeof resolveOpenapiDynamicReference>);
+   return call(()=>engine.openapi.resolveDynamicReference({document,pointer,...(resourceUri===undefined?{}:{resourceUri}),...(schemaResources===undefined?{}:{schemaResources}),evaluationScope}) as ReturnType<ResolveOpenapiDynamicReference>);
   },
-  resolveOpenapiObjectReference(document:Parameters<typeof resolveOpenapiObjectReference>[0],input:Parameters<typeof resolveOpenapiObjectReference>[1]):ReturnType<typeof resolveOpenapiObjectReference>{
+  resolveOpenapiObjectReference(document:Parameters<ResolveOpenapiObjectReference>[0],input:Parameters<ResolveOpenapiObjectReference>[1]):ReturnType<ResolveOpenapiObjectReference>{
    const {pointer,kind,resourceUri}=input;
-   return call(()=>engine.openapi.resolveObjectReference({document,pointer,kind,...(resourceUri===undefined?{}:{resourceUri})}) as ReturnType<typeof resolveOpenapiObjectReference>);
+   return call(()=>engine.openapi.resolveObjectReference({document,pointer,kind,...(resourceUri===undefined?{}:{resourceUri})}) as ReturnType<ResolveOpenapiObjectReference>);
   },
-  exportOpenapiBundle(document:Parameters<typeof exportOpenapiBundle>[0]):ReturnType<typeof exportOpenapiBundle>{
-   return call(()=>engine.openapi.exportBundle({document}) as ReturnType<typeof exportOpenapiBundle>);
+  exportOpenapiBundle(document:Parameters<ExportOpenapiBundle>[0]):ReturnType<ExportOpenapiBundle>{
+   return call(()=>engine.openapi.exportBundle({document}) as ReturnType<ExportOpenapiBundle>);
   },
-  proposeOpenapiEdit(document:Parameters<typeof proposeOpenapiEdit>[0],path:Parameters<typeof proposeOpenapiEdit>[1],json:Parameters<typeof proposeOpenapiEdit>[2],resourceUri?:Parameters<typeof proposeOpenapiEdit>[3]):ReturnType<typeof proposeOpenapiEdit>{
-   return call(()=>engine.openapi.edit({document,pointer:path,replacementJson:json,...(resourceUri===undefined?{}:{resourceUri})}) as ReturnType<typeof proposeOpenapiEdit>);
+  proposeOpenapiEdit(document:Parameters<ProposeOpenapiEdit>[0],path:Parameters<ProposeOpenapiEdit>[1],json:Parameters<ProposeOpenapiEdit>[2],resourceUri?:Parameters<ProposeOpenapiEdit>[3]):ReturnType<ProposeOpenapiEdit>{
+   return call(()=>engine.openapi.edit({document,pointer:path,replacementJson:json,...(resourceUri===undefined?{}:{resourceUri})}) as ReturnType<ProposeOpenapiEdit>);
   },
  });
 }

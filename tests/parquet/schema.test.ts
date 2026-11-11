@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,inspectParquetSchema,coreSchema,parquetSchemaInspectionSchema} from '../../src';
+import {captureParquet,exportParquetCapture,inspectParquetSchema,coreSchema,parquetSchemaInspectionSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(parquetSchemaInspectionSchema);
 test('US-019-AC7: physical schema trees and levels match native columns',async()=>{

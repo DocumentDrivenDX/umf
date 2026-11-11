@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {avroKeyProjectionCases} from './key-avro-projection-cases';
 import type {KeyParquetRequest} from '../../src/core-ideals/key-parquet-projection';
-import type {ParquetFacetCarrier} from '../../src/core-ideals/parquet-facet-carrier';
+import type {ParquetFacetCarrier} from './parquet-facet-carrier';
 /** Shared authored-key vectors; Parquet's physical choices are explicit and independent. */
 export function parquetKeyProjectionCases(){
  const rows=avroKeyProjectionCases().map(c=>{

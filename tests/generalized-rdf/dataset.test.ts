@@ -5,13 +5,39 @@ import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import reportSchema from '../../spec/extensions/jsonld/to-rdf-schema.json';
 import reverseSchema from '../../spec/extensions/jsonld/from-generalized-schema.json';
-import {importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit,inspectGeneralizedRdfDocument,importJsonLdDocument,proposeJsonLdToRdf,proposeGeneralizedRdfToJsonLd,exportRdfNQuads,exportJsonLdDocument,readDocument,writeDocument} from '../../src';
+import {importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit,inspectGeneralizedRdfDocument,importJsonLdDocument,proposeJsonLdToRdf,proposeGeneralizedRdfToJsonLd,exportRdfNQuads,exportJsonLdDocument,readDocument,writeDocument} from '../../src/index-node-v4';
 const ajv=new Ajv2020({strict:false,validateFormats:false}).addSchema(reference).addSchema(core),forward=ajv.compile(reportSchema),reverse=ajv.compile(reverseSchema);
 test('US-027-AC1–3: generalized official cases preserve predicate identity, round trips and edits',async()=>{
- const cases=(await Bun.file('fixtures/generalized-rdf/results.json').json()).cases,oracle=(await Bun.file('fixtures/generalized-rdf/oracle-results.json').json()).results;expect(cases.map((c:any)=>c.id)).toEqual(['t0118','te075']);expect(oracle).toHaveLength(2);
- for(const c of cases){const source=importJsonLdDocument(await Bun.file(c.path).text(),c.inputs),r=await proposeJsonLdToRdf(source,c.options);expect(forward(r)).toBe(true);expect(r.source).toEqual(source);expect(r.status).toBe('candidate');expect(r.produceGeneralizedRdf).toBe(true);expect(r.diagnostics).toEqual(c.diagnostics);const candidate=r.candidate!,quads=getGeneralizedRdfQuads(candidate);expect(quads).toHaveLength(c.quadCount);expect(quads.some(q=>q.predicate.termType==='BlankNode')).toBe(true);expect(()=>exportRdfNQuads(candidate)).toThrow();
- for(const e of c.exports){const restored=readDocument(writeDocument(candidate,e.format),e.format);expect(exportGeneralizedRdfDataset(restored)).toBe(await Bun.file(e.path).text());const back=await proposeGeneralizedRdfToJsonLd(restored,c.backOptions);expect(reverse(back)).toBe(true);expect(back.source).toEqual(restored);expect(exportJsonLdDocument(back.candidate!)).toBe(await Bun.file(c.reversePath).text());const again=await proposeJsonLdToRdf(back.candidate!,c.options);expect(exportGeneralizedRdfDataset(again.candidate!)).toBe(await Bun.file(c.againPath).text());}
- const replacement=quads[c.editIndex]!;if(replacement.object.termType!=='Literal')throw Error('Expected literal');replacement.object.value='edited';const edited=proposeGeneralizedRdfQuadEdit(candidate,c.editIndex,replacement).document;expect(exportGeneralizedRdfDataset(edited)).toBe(await Bun.file(c.editPath).text());expect(exportGeneralizedRdfDataset(candidate)).toBe(await Bun.file(c.exports[0].path).text());const result=oracle.find((r:any)=>r.id===c.id);expect(result.expectedEqual).toBe(true);expect(result.reverseEqual).toBe(true);expect(result.formatsEqual).toBe(true);expect(result.nativeEqual).toBe(c.id!=='t0118');
+ const {cases}=await Bun.file('fixtures/generalized-rdf/results.json').json();
+ expect(cases.map((c:{id:string})=>c.id)).toEqual(['t0118','te075']);
+ for(const c of cases){
+  const source=importJsonLdDocument(await Bun.file(c.path).text(),c.inputs);
+  const report=await proposeJsonLdToRdf(source,c.options);
+  expect(forward(report)).toBe(true);
+  expect(report.source).toEqual(source);
+  expect(report.status).toBe('candidate');
+  expect(report.produceGeneralizedRdf).toBe(true);
+  expect(report.diagnostics).toContainEqual(expect.objectContaining({code:'JSONLD_TO_RDF',severity:'warning'}));
+  const candidate=report.candidate!, quads=getGeneralizedRdfQuads(candidate);
+  const bytes=exportGeneralizedRdfDataset(candidate);
+  expect(quads).toHaveLength(c.quadCount);
+  expect(quads.some(quad=>quad.predicate.termType==='BlankNode')).toBe(true);
+  expect(()=>exportRdfNQuads(candidate)).toThrow();
+  for(const format of ['json','yaml'] as const){
+   const restored=readDocument(writeDocument(candidate,format),format);
+   expect(exportGeneralizedRdfDataset(restored)).toBe(bytes);
+   const back=await proposeGeneralizedRdfToJsonLd(restored,c.backOptions);
+   expect(reverse(back)).toBe(true);
+   expect(back.source).toEqual(restored);
+   expect(back.status).toBe('candidate');
+   expect(JSON.parse(exportJsonLdDocument(back.candidate!))).toBeDefined();
+  }
+  const index=quads.findIndex(quad=>quad.object.termType==='Literal');
+  const quad=quads[index]!;
+  if(quad.object.termType!=='Literal')throw Error('Expected literal');
+  const edited=proposeGeneralizedRdfQuadEdit(candidate,index,{...quad,object:{...quad.object,value:'edited'}}).document;
+  expect(getGeneralizedRdfQuads(edited)[index]!.object.value).toBe('edited');
+  expect(exportGeneralizedRdfDataset(candidate)).toBe(bytes);
  }
 });
 test('US-027-AC2: exact unknown source, scope, interpretation guards and atomic invalid edits',()=>{

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {cardinalityTableSpecProjectionCases} from './cardinality-tablespec-projection-cases';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 const rows=cardinalityTableSpecProjectionCases().map(row=>({...row,result:u.projectCardinalityToTableSpec(row.author,row.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(rows);return new Response('<!doctype html><html><body>Cardinality TableSpec projection</body></html>',{headers:{'content-type':'text/html'}});}});
 let browser;

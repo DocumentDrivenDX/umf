@@ -2,7 +2,7 @@
 /** Native scalar facet discovery and byte retention, not ideal/binding acceptance. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {importParquetSchema, exportParquetCapture, getParquetFieldMetadata, readDocument, writeDocument} from '../../src';
+import {importParquetSchema, exportParquetCapture, getParquetFieldMetadata, readDocument, writeDocument} from '../../src/index-node-v4';
 const child=Bun.spawn(['.venv/bin/python','scripts/core-ideals/facets-parquet-discovery-native.py'],{stdout:'inherit',stderr:'inherit'});
 assert.equal(await child.exited,0,'Pinned Parquet discovery failed');
 const path='fixtures/validation/facets-parquet-discovery-native.json',proof=await Bun.file(path).json();

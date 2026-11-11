@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
-import {importTableSpec, exportTableSpec, getTableSpecColumn, classifyTableSpecField, inspectCoreNullability, readDocument, writeDocument, writeJsonValue} from '../../src';
+import {importTableSpec, exportTableSpec, getTableSpecColumn, classifyTableSpecField, inspectCoreNullability, readDocument, writeDocument, writeJsonValue} from '../../src/index-node-v4';
 const native=await Bun.file('fixtures/validation/nullability-tablespec-profile-native.json').json(),rows=[];
 for(const row of native.rows)for(const nativeFormat of ['json','yaml'] as const)for(const variant of ['native','unknown-root'] as const){
  const original=nativeFormat==='json'?JSON.stringify(row.source)+'\n':writeJsonValue(row.source,'yaml');

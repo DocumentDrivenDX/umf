@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createValidator} from '../../src/validation/schema';
-import {classifyTableSpecKeys,recoverTableSpecKeySource} from '../../src/core-ideals/key-tablespec';
-import {projectKeysToTableSpec,recoverKeysTableSpecIdeal} from '../../src/core-ideals/key-tablespec-projection';
-import {importTableSpec} from '../../src/adapters/tablespec';
+import {classifyTableSpecKeys,recoverTableSpecKeySource} from "../../src/index-node-v4";
+import {projectKeysToTableSpec,recoverKeysTableSpecIdeal} from "../../src/index-node-v4";
+import {importTableSpec} from "../../src/index-node-v4";
 import {tableSpecKeyAuthors} from '../../scripts/core-ideals/key-tablespec-projection-cases';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 function deep(){let value:any={quoted:'"\\',array:['a','b']};for(let i=0;i<40;i++)value={nested:value};return value;}

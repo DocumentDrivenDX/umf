@@ -1,6 +1,6 @@
 /** Observation-only source reports; no competing query compiler or admission. */
 import {compilePg18ProtectionCatalog} from '../../../tools/security/protection-pg18-catalog';
-import {inspectProtectionQueryProperties} from '../../../src/extensions/security/protection/queries';
+import {inspectProtectionQueryProperties} from '../../../src/index-node-v4';
 const f=JSON.parse(await Bun.stdin.text());
 const policy:any={vocabulary:'umf.security',version:'0.2.0',id:'pg18-query-observation',revision:'1',ontology:{documentId:'unqualified-query-ontology',revision:'1'},protection:{id:f.catalog.id,revision:f.catalog.revision},rules:[{id:'observation',effect:'permit',actions:['read'],target:[f.profile.resource.type],condition:{op:'literal',value:true},disclosure:f.catalog.transforms.map((t:any)=>({field:t.inputDomain,disposition:{kind:'transformed',vocabulary:'umf.security.protection',transform:t.id,version:t.version,field:t.outputDomain}}))}]};
 const reports=[];

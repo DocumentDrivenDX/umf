@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {classifyParquetCardinality,verifyParquetCardinalityClassification,recoverParquetCardinalityBytes} from '../../src/index-node-v4';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
+import {importParquetSchema} from "../../src/index-node-v4";
 
 test('Node V4 Parquet cardinality classify, verify, recover, and refuse through Rust',async()=>{
  const bytes=new Uint8Array(await Bun.file('fixtures/parquet/cardinality/array-nested-1.parquet').arrayBuffer());

@@ -3,8 +3,8 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {tableSpecKeyProjectionCases} from './key-tablespec-projection-cases';
-import {projectKeysToTableSpec} from '../../src/core-ideals/key-tablespec-projection';
-import {exportTableSpec} from '../../src/adapters/tablespec';
+import {projectKeysToTableSpec} from "../../src/index-node-v4";
+import {exportTableSpec} from "../../src/index-node-v4";
 const discovery=Bun.spawn(['bun','scripts/core-ideals/key-tablespec-discovery-oracle.ts'],{stdout:'inherit',stderr:'inherit'});assert.equal(await discovery.exited,0);
 const rows=[];
 for(const c of tableSpecKeyProjectionCases()){const r=projectKeysToTableSpec(c.source,c.authors,c.request);assert.equal(r.status,c.expected);if(r.target)rows.push({name:c.name,nativeText:exportTableSpec(r.target)});}

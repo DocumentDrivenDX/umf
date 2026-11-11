@@ -4,7 +4,7 @@ import {mkdtemp,rm,cp} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {inspectDomainPack} from '../../src/domain-packs/profile';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 
 const root='spec/domain-packs/legal-appellate';
 const hash=(bytes:ArrayBuffer)=>new Bun.CryptoHasher('sha256').update(bytes).digest('hex');

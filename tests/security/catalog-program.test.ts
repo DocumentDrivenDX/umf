@@ -5,7 +5,8 @@ import {securityFixture,ref} from './fixture';
 import {migrateCandidateSecurityOntology} from '../../src/extensions/security/ontology-migration-candidate';
 import {compileCandidateCatalogProgram,readCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {inspectProtectionCatalog} from '../../src/extensions/security/protection/catalog';
-import {checkProtectionFunctionDefinitions,inspectProtectionFunction} from '../../src/extensions/security/protection/functions';
+import {checkProtectionFunctionDefinitions} from '../../src/extensions/security/protection/functions';
+import {inspectProtectionFunction} from '../../src/index-node-v4';
 function fixture(){
  const f=securityFixture(),ontology:any=structuredClone(migrateCandidateSecurityOntology(f.resolution.ontology,'logical-v2').target),policy:any={...structuredClone(f.policy),version:'0.2.0',ontology:{documentId:'domain',revision:'logical-v2'}};
  ontology.actionPurposes=[{action:'read',purposes:['read']},{action:'update',purposes:['field']}];

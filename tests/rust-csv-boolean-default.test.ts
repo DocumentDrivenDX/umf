@@ -5,7 +5,7 @@ import {AdmissionError} from '../bindings/core/node/src/wire.js';
 import {CORE_MODEL_RESOURCES} from '../src/access/core-model-resources';
 import {bindCsvBooleanLexicalRust} from '../src/access/rust-csv-boolean-default';
 import {readDocument} from '../src/model/document';
-import {validateCsvBooleanLexical as referenceValidateCsvBooleanLexical,verifyCsvBooleanLexical as referenceVerifyCsvBooleanLexical} from '../src/model/csv-boolean-lexical';
+import {validateCsvBooleanLexical as referenceValidateCsvBooleanLexical,verifyCsvBooleanLexical as referenceVerifyCsvBooleanLexical} from "../src/index-node-v4";
 import type {CsvBooleanLexicalRequest} from '../src/model/csv-boolean-lexical';
 import packet from './rust-core/fixtures/r5/csv-boolean-default-route/predecessor.json';
 

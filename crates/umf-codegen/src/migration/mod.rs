@@ -3046,6 +3046,7 @@ impl CodegenEngine<'_> {
                 ("version", s("umf.table-migration-execution/0.5")),
                 ("progressRelation", s("umf_lifecycle_progress")),
                 ("ownerOnly", Value::Bool(true)),
+                ("ingressProfile", s("umf.table-generation-ingress/0.1")),
             ]));
         } else if plan_version_is_v2(options.as_ref()) {
             let g02 = get(options.as_ref().unwrap_or(&Value::Null), "version")
@@ -3243,18 +3244,9 @@ impl CodegenEngine<'_> {
                                 ("progressRelation", s("umf_lifecycle_progress")),
                                 ("ownerOnly", Value::Bool(true)),
                             ])
-                        } else if plan_version == "umf.table-migration/0.4"
-                            || plan_version == "umf.table-migration/0.6"
-                        {
+                        } else if plan_version == "umf.table-migration/0.4" {
                             object(vec![
-                                (
-                                    "version",
-                                    s(if plan_version == "umf.table-migration/0.6" {
-                                        "umf.table-migration-execution/0.5"
-                                    } else {
-                                        "umf.table-migration-execution/0.3"
-                                    }),
-                                ),
+                                ("version", s("umf.table-migration-execution/0.3")),
                                 ("progressRelation", s("umf_lifecycle_progress")),
                                 ("ownerOnly", Value::Bool(true)),
                             ])

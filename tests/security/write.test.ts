@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {evaluateSecurityWrite} from '../../src/extensions/security/write';
+import {evaluateSecurityWrite} from '../../src/index-node-v4';
 import {writeFixture} from './write-fixture';
 const run=(f:ReturnType<typeof writeFixture>)=>evaluateSecurityWrite(f.policy,f.resolution,f.profile,{operation:'update',original:f.original,proposed:f.proposed}).decision;
 // @covers US-057-AC1

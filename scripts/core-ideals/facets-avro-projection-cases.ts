@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreFacets, declareCoreElementKind, type Document, type CoreFacetPatch, type CoreFacetDeclaration, type CoreKindDeclaration} from '../../src';
+import {declareCoreFacets, declareCoreElementKind, type Document, type CoreFacetPatch, type CoreFacetDeclaration, type CoreKindDeclaration} from '../../src/index-node-v4';
 import type {FacetsAvroRequest} from '../../src/core-ideals/facets-avro-projection';
 export const avroFacetIdeal=(scalarType:string):Document=>({umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]});
 export function facetsAvroProjectionCases(){

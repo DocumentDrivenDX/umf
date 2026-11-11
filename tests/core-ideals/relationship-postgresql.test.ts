@@ -43,7 +43,7 @@ test('public classification and projection do not invoke getters',async()=>{
 
 test('captured native FK actions, alternate UNIQUE candidates and exact unknown numbers survive classification',async()=>{
  const native=await Bun.file('fixtures/postgresql/relationships/native-counterexamples.catalog.json').text();
- const {importPostgresqlCatalogCapture}=await import('../../src');const archive=importPostgresqlCatalogCapture(native,{id:'catalog'});
+ const {importPostgresqlCatalogCapture}=await import('../../src/index-node-v4');const archive=importPostgresqlCatalogCapture(native,{id:'catalog'});
  const r=await classifyPostgresqlRelationships(archive,{profile:'captured-catalog',mode:'report',nativeSource:native},backend);
  expect(r.observations.find(o=>o.name==='fk_alt')?.validated).toBe(false);expect(r.observations.find(o=>o.name==='fk_alt')?.targetKeyCandidates).toEqual(['parent_alt_key']);
  const actions=r.observations.find(o=>o.sourceTable==='rel.actions')!;expect(actions.onUpdate).toBe('cascade');expect(actions.onDelete).toBe('set-null');expect(actions.initiallyDeferred).toBe(true);

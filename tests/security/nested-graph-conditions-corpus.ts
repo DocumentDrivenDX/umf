@@ -4,7 +4,7 @@
 import vectors from './nested-graph-condition-vectors.json';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {evaluateCandidateCatalogReadDisclosureBatch as produce} from '../../src/extensions/security/catalog-runtime-candidate';
-import {inspectSecurityDisclosureV2} from '../../src/extensions/security/protection/disclosure';
+import {inspectSecurityDisclosureV2} from '../../src/index-node-v4';
 import {securityAnd,securityOr} from '../../src/extensions/security/logic';
 const equal=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
 export function runNestedGraphConditionsCorpus(){

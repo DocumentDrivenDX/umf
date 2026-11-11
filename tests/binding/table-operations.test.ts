@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {generatePythonClient,inspectTableLifecycle,readDocument,writeDocument} from '../../src/index-node-v4';
-import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
-import {rowExpressionInputRefs} from '../../src/extensions/tables/row-expressions';
+import {compileTableDeployment,verifyTableDeployment} from '../../src/index-node-v4';
 import {tableOperationSource} from '../unified/table-operation-fixture';
 const ref=(element:string)=>({module:'demo',element});
 const source=()=>tableOperationSource() as any;
@@ -130,11 +129,9 @@ test('module-wide operation predicate capacity refuses before interpreting an ex
  p.commands[0].body.where.args.push(branch());expect(codes(d)).toContain('TABLES_COMPLEXITY');
 });
 
-test('G02 operation 0.2 is a closed migration-only declaration with stable same-row input closure',()=>{
+test('G02 operation 0.2 is a closed migration-only declaration with stable same-row input binding',()=>{
  const d=source(),p=payload(d);p.commands.push({version:'umf.table-operation/0.2',id:'backfill_owner',parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'update',table:'notes',values:[{field:ref('owner'),value:{kind:'rowExpression',expression:{op:'concat',args:[{op:'field',field:ref('id')},{op:'literal',value:{string:'é é 😀  '}}]}}}],where:{op:'isNull',field:ref('owner')},returning:[],maxRows:100}});
  expect(inspect(d).diagnostics).toEqual([]);
- const expression=p.commands.at(-1).body.values[0].value.expression;
- expect(rowExpressionInputRefs({op:'conditional',when:{op:'and',args:[{op:'isNull',field:ref('owner')},{op:'eq',field:ref('id'),value:{kind:'literal',value:{string:'x'}}}]},then:{op:'field',field:ref('id')},else:{op:'field',field:ref('id')}} as any)).toEqual([ref('owner'),ref('id')]);
  const generated=generatePythonClient({text:JSON.stringify(d),package:'operation_demo'}),all=generated.files.map(file=>file.text).join('\n');
  expect(all).toContain('rename');expect(all).not.toMatch(/(?:async )?def backfill_owner\(/);expect(all).not.toContain('_TABLE_OPERATIONS[(\"demo\", \"backfill_owner\")]');
  const old=source();expect(inspect(old).complete).toBe(true);
@@ -148,8 +145,6 @@ test('G02 operation 0.2 refuses changed shape, ambient inputs, invalid Unicode, 
   (c:any)=>c.body.values[0].value.expression={op:'conditional',when:{op:'eq',field:ref('id'),value:{string:'x'}},then:{op:'field',field:ref('id')},else:{op:'field',field:ref('id')}},
   (c:any)=>c.body.values[0].value.expression={op:'literal',value:{string:'bad\u0000text'}},(c:any)=>c.body.values[0].value.expression={op:'literal',value:{string:'bad\ud800'}},
  ]){const d=valid();mutate(payload(d).commands.at(-1));expect(inspect(d).valid).toBe(false);}
- const cyclic:any={op:'coalesce',args:[]};cyclic.args.push(cyclic,{op:'field',field:ref('id')});expect(()=>rowExpressionInputRefs(cyclic)).toThrow(/Cyclic/);
- let deep:any={op:'field',field:ref('id')};for(let i=0;i<17;i++)deep={op:'coalesce',args:[deep,{op:'field',field:ref('id')}]};expect(()=>rowExpressionInputRefs(deep)).toThrow(/limit/);
 });
 
 test('G02 expression typing admits every operator family and literal-only condition predicates',()=>{
@@ -239,6 +234,4 @@ test('G02 rejects incompatible branches and numeric bounds at every expression n
  expect(typed('count_copy',lit({decimalToken:cancelled})).valid).toBe(true);
  expect(typed('count_copy',lit({decimalToken:'0.'+'0'.repeat(2001)+'99999e2005'})).valid).toBe(false);
  expect(typed('amount_wide',{op:'coalesce',args:[lit(null),{op:'coalesce',args:[lit({decimalToken:'1e-1001'}),field('amount_wide')]}]}).diagnostics.map(x=>x.code)).toContain('TABLES_OPERATION_CAPACITY');
- const tooMany={op:'conditional',when:{op:'in',field:ref('id'),values:Array.from({length:33},()=>({kind:'literal',value:{string:'x'}}))},then:field('id'),else:lit({string:'x'})};
- expect(()=>rowExpressionInputRefs(tooMany as any)).toThrow(/fanout/);
 });

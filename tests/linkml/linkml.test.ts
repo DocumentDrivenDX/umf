@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importLinkmlDocument,exportLinkmlDocument,inspectLinkmlDocument,proposeLinkmlDocumentNodeEdit,getLinkmlDocumentNode,readDocument,writeDocument,LINKML_EXTENSION} from '../../src';
+import {importLinkmlDocument,exportLinkmlDocument,inspectLinkmlDocument,proposeLinkmlDocumentNodeEdit,getLinkmlDocumentNode,readDocument,writeDocument,LINKML_EXTENSION} from '../../src/index-node-v4';
 const base='fixtures/linkml/',sha=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 test('US-024-AC1/3: all upstream contracts preserve original bytes and native candidate outcomes',async()=>{
  const cases=(await Bun.file(base+'results.json').json()).results,oracle=await Bun.file(base+'oracle-results.json').json();expect(cases).toHaveLength(11);expect(oracle.results).toHaveLength(22);expect(oracle.outcomes.filter((r:any)=>r.native==='accepted')).toHaveLength(10);expect(oracle.outcomes.filter((r:any)=>r.normalizedSchemaErrors.length)).toHaveLength(1);

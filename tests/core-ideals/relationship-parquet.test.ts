@@ -2,9 +2,9 @@
 import {test,expect} from 'bun:test';
 import {relationshipParquetCases} from '../../scripts/core-ideals/relationship-parquet-cases';
 import {projectRelationshipToParquet, recoverRelationshipParquetIdeal, recoverRelationshipParquetNative, verifyRelationshipParquetProjection} from '../../src/index-node-v4';
-import {classifyParquetRelationships, recoverParquetRelationshipSource} from '../../src/core-ideals/relationship-parquet';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
-import {exportParquetCapture} from '../../src/adapters/parquet';
+import {classifyParquetRelationships,recoverParquetRelationshipSource} from "../../src/index-node-v4";
+import {importParquetSchema} from "../../src/index-node-v4";
+import {exportParquetCapture} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 // @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipParquetCases())test('Parquet relationship '+c.name,()=>{

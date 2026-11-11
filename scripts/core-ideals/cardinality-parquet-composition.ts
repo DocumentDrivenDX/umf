@@ -2,8 +2,9 @@
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';
 import type {Element} from '../../src/model/types';
-import {importParquetSchema, exportParquetCapture, classifyParquetCardinality, recoverParquetCardinalityBytes, readJsonValue, writeJsonValue} from '../../src';
-import {recoverCardinalityFromParquet, type CardinalityParquetProjection} from '../../src/core-ideals/cardinality-parquet-projection';
+import {importParquetSchema, exportParquetCapture, classifyParquetCardinality, recoverParquetCardinalityBytes, readJsonValue, writeJsonValue} from '../../src/index-node-v4';
+import {type CardinalityParquetProjection} from "../../src/core-ideals/cardinality-parquet-projection";
+import {recoverCardinalityFromParquet} from "../../src/index-node-v4";
 /** Fresh ingestion uses only native bytes, never retained author metadata. */
 export function verifyParquetCardinalityComposition(projection:CardinalityParquetProjection){
  assert.ok(projection.target);const bytes=exportParquetCapture(projection.target);

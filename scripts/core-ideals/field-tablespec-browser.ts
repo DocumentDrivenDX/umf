@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {importTableSpec, exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 
-import {classifyTableSpecRecord, verifyTableSpecRecordClassification} from '../../src/core-ideals/tablespec-record';
-import {classifyTableSpecField} from '../../src/core-ideals/tablespec-field';
+import {classifyTableSpecRecord,verifyTableSpecRecordClassification} from "../../src/index-node-v4";
+import {classifyTableSpecField} from "../../src/index-node-v4";
 import {readDocument, writeDocument} from '../../src/model/document';
 const corpus=await Bun.file('fixtures/tablespec/roundtrip.json').json();const rows:any[]=[];
 for(const sample of corpus.results){

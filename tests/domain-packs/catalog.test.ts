@@ -4,7 +4,7 @@ import {domains} from '../../scripts/domain-packs/catalog';
 import {inspectDomainPack} from '../../src/domain-packs/profile';
 import {readDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 import {join} from 'node:path';
 for(const domain of domains){
  // Domain-specific schema/inventory assertions. AC5/7 explicitly partial in STPs.

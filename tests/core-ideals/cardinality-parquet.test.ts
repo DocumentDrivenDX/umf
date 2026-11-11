@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importParquetSchema, exportParquetCapture, writeJsonValue, readJsonValue, validateDocument} from '../../src';
-import {classifyParquetCardinality, recoverParquetCardinalityBytes, type ParquetCardinalityRequest} from '../../src/core-ideals/cardinality-parquet';
+import {importParquetSchema, exportParquetCapture, writeJsonValue, readJsonValue, validateDocument} from '../../src/index-node-v4';
+import {type ParquetCardinalityRequest} from "../../src/core-ideals/cardinality-parquet";
+import {classifyParquetCardinality,recoverParquetCardinalityBytes} from "../../src/index-node-v4";
 const prepare=async(path:string)=>{
  const bytes=new Uint8Array(await Bun.file(path).arrayBuffer());
  const source=importParquetSchema(bytes,{id:path});

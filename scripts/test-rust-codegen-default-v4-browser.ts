@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient} from '../src/index-node-v4';
 
 const bundlePath=process.env.UMF_ROOT_V4_BROWSER_BUNDLE;
 const wasmPath=process.env.UMF_ROOT_V4_WASM;

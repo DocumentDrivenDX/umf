@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {
-  exportIcebergSchema,
-  getIcebergNode,
-  importIcebergSchema,
-  inspectIceberg,
-  proposeIcebergNodeEdit,
-} from './index';
+
 import type {Diagnostic, Document, ExtensionPackage, Json, Validation} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import {ICEBERG_EXTENSION, icebergPackage} from './package';
+
+type ExportIcebergSchema = (document: Document) => string;
+type GetIcebergNode = (document: Document, path: string) => NativeJson;
+type ImportIcebergSchema = (text: string, options: { id: string; }) => Document;
+type InspectIceberg = (document: Document) => Validation;
+type ProposeIcebergNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
 
 type NativeErrorGuard = (error: unknown) => boolean;
 
@@ -55,30 +55,30 @@ export function createIcebergSchemaRustDefault(
     icebergRegistry(): Registry {
       return createRegistry().register(icebergPackage as unknown as ExtensionPackage, inspectPayload);
     },
-    inspectIceberg(document: Parameters<typeof inspectIceberg>[0]): ReturnType<typeof inspectIceberg> {
-      return call<ReturnType<typeof inspectIceberg>>(() => engine.inspect(document));
+    inspectIceberg(document: Parameters<InspectIceberg>[0]): ReturnType<InspectIceberg> {
+      return call<ReturnType<InspectIceberg>>(() => engine.inspect(document));
     },
     importIcebergSchema(
-      text: Parameters<typeof importIcebergSchema>[0],
-      options: Parameters<typeof importIcebergSchema>[1],
-    ): ReturnType<typeof importIcebergSchema> {
-      return call<ReturnType<typeof importIcebergSchema>>(() => engine.importSchema(text, options.id));
+      text: Parameters<ImportIcebergSchema>[0],
+      options: Parameters<ImportIcebergSchema>[1],
+    ): ReturnType<ImportIcebergSchema> {
+      return call<ReturnType<ImportIcebergSchema>>(() => engine.importSchema(text, options.id));
     },
-    exportIcebergSchema(document: Parameters<typeof exportIcebergSchema>[0]): ReturnType<typeof exportIcebergSchema> {
-      return call<ReturnType<typeof exportIcebergSchema>>(() => engine.exportSchema(document));
+    exportIcebergSchema(document: Parameters<ExportIcebergSchema>[0]): ReturnType<ExportIcebergSchema> {
+      return call<ReturnType<ExportIcebergSchema>>(() => engine.exportSchema(document));
     },
     getIcebergNode(
-      document: Parameters<typeof getIcebergNode>[0],
-      pointer: Parameters<typeof getIcebergNode>[1],
-    ): ReturnType<typeof getIcebergNode> {
-      return call<NativeJson>(() => engine.getNode(document, pointer)) as ReturnType<typeof getIcebergNode>;
+      document: Parameters<GetIcebergNode>[0],
+      pointer: Parameters<GetIcebergNode>[1],
+    ): ReturnType<GetIcebergNode> {
+      return call<NativeJson>(() => engine.getNode(document, pointer)) as ReturnType<GetIcebergNode>;
     },
     proposeIcebergNodeEdit(
-      document: Parameters<typeof proposeIcebergNodeEdit>[0],
-      pointer: Parameters<typeof proposeIcebergNodeEdit>[1],
-      replacementJson: Parameters<typeof proposeIcebergNodeEdit>[2],
-    ): ReturnType<typeof proposeIcebergNodeEdit> {
-      return call<ReturnType<typeof proposeIcebergNodeEdit>>(() => engine.proposeNodeEdit(document, pointer, replacementJson));
+      document: Parameters<ProposeIcebergNodeEdit>[0],
+      pointer: Parameters<ProposeIcebergNodeEdit>[1],
+      replacementJson: Parameters<ProposeIcebergNodeEdit>[2],
+    ): ReturnType<ProposeIcebergNodeEdit> {
+      return call<ReturnType<ProposeIcebergNodeEdit>>(() => engine.proposeNodeEdit(document, pointer, replacementJson));
     },
   });
 }

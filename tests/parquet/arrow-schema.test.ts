@@ -1,13 +1,24 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,getParquetArrowSchema,exportArrowFlatbufferModel,appendParquetKeyValueMetadata,decodeParquetFooter,coreSchema,readDocument,writeDocument} from '../../src/index-node-v4';
-import {rewriteParquetFooter} from '../../src/adapters/parquet/rewrite';
+import {captureParquet,exportParquetCapture,getParquetArrowSchema,exportArrowFlatbufferModel,appendParquetKeyValueMetadata,decodeParquetFooter,encodeParquetWire,inspectParquetFraming,coreSchema,readDocument,writeDocument,type Document,type ParquetWireValue} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/parquet/arrow-schema.schema.json';
 import {encodeArrowFlatbuffer,proposeArrowFlatbufferEdit} from '../../src/index-node-v4';
 import {flatbufferBackend} from '../../native/arrow/flatbuffer-runtime';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(schema);
 const load=async(path:string)=>captureParquet(new Uint8Array(await Bun.file(path).arrayBuffer()),{id:path});
+function captureFixtureWithFooter(source:Document,tree:ParquetWireValue):Document{
+ const framing=inspectParquetFraming(source);
+ if(!framing.footerRegion)throw Error('Expected fixture footer');
+ const prefix=exportParquetCapture(source).subarray(0,framing.footerRegion.offset);
+ const footer=encodeParquetWire(tree);
+ const bytes=new Uint8Array(prefix.length+footer.length+8);
+ bytes.set(prefix);
+ bytes.set(footer,prefix.length);
+ new DataView(bytes.buffer).setUint32(bytes.length-8,footer.length,true);
+ bytes.set([80,65,82,49],bytes.length-4);
+ return captureParquet(bytes,{id:source.id});
+}
 test('CONTRACT-019 embedded Arrow schema preserves meanings absent from physical Parquet',async()=>{
  const oracle=await Bun.file('fixtures/parquet/arrow-schema/native.json').json(),cases=[];
  for(const c of oracle.cases){
@@ -37,7 +48,7 @@ test('CONTRACT-019 embedded schema rejects ambiguity and malformed framing witho
  for(const [id,value] of controls){if(id==='unpadded'&&value===encoded)continue;const source=embedded(value),result=getParquetArrowSchema(source);expect(check(result)).toBe(true);expect(result.status).toBe('blocked');expect(result.schema).toBeUndefined();expect(result.source).toEqual(source);cases.push({id,source,result});}
  const legacy=Buffer.concat([bytes.subarray(4,8),bytes.subarray(8)]),legacySource=embedded(legacy.toString('base64')),legacyResult=getParquetArrowSchema(legacySource);expect(legacyResult.status).toBe('decoded');expect(check(legacyResult)).toBe(true);cases.push({id:'legacy-prefix',source:legacySource,result:legacyResult});
  const source=embedded(encoded),tree=decodeParquetFooter(source).value!;if(tree.kind!=='struct')throw Error();const kv=tree.fields.find(f=>f.id===5)!.value;if(kv.kind!=='list')throw Error();kv.items.push(structuredClone(kv.items.find((x:any)=>x.fields?.some((f:any)=>f.id===1&&f.value.hex===Buffer.from('ARROW:schema').toString('hex')))!));
- const duplicate=rewriteParquetFooter(source,tree).output,result=getParquetArrowSchema(duplicate);expect(result.status).toBe('blocked');expect(result.diagnostics.at(-1)!.message).toContain('Duplicate');expect(check(result)).toBe(true);cases.push({id:'duplicate',source:duplicate,result});
+ const duplicate=captureFixtureWithFooter(source,tree),result=getParquetArrowSchema(duplicate);expect(result.status).toBe('blocked');expect(result.diagnostics.at(-1)!.message).toContain('Duplicate');expect(check(result)).toBe(true);cases.push({id:'duplicate',source:duplicate,result});
  await Bun.write('fixtures/parquet/arrow-schema/boundaries.json',JSON.stringify({cases},null,2)+'\n');
 },30000);
 

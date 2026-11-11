@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {cardinalityFieldOperationsCases} from '../../scripts/core-ideals/cardinality-field-operations-cases';
-import {declareCoreElementKind, inspectCoreElementKind, verifyCoreKindDeclaration} from '../../src/model/field-kind';
-import {declareCoreRecordType, verifyCoreRecordTypeDeclaration} from '../../src/model/record-type';
-import {declareCoreNullability, inspectCoreNullability, verifyCoreNullabilityDeclaration} from '../../src/model/nullability';
-import {declareCoreCardinality} from '../../src/model/cardinality';
+import {declareCoreElementKind,inspectCoreElementKind,verifyCoreKindDeclaration,declareCoreRecordType,verifyCoreRecordTypeDeclaration} from '../../src/index-node-v4';
+import {declareCoreNullability,inspectCoreNullability,verifyCoreNullabilityDeclaration} from "../../src/index-node-v4";
+import {declareCoreCardinality} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import {type Document} from '../../src/model/types';

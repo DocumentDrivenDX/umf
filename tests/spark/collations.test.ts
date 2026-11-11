@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSparkSchema,inspectSpark,exportSparkSchema} from '../../src';
+import {importSparkSchema,inspectSpark,exportSparkSchema} from '../../src/index-node-v4';
 test('US-017-AC2: field-local collation warnings distinguish target, path, value and provider risks',async()=>{
  const cases=await Bun.file('fixtures/spark/collation-cases.json').json();
  const expected:Record<string,string[]>={valid:[],stale:['UNRESOLVED'],'non-string':['TARGET'],'value-number':['VALUE'],'map-null':['MAP'],'map-array':['MAP'],'bad-provider':['PROVIDER'],'missing-provider':['PROVIDER'],'unknown-name':[],'empty-generated':['UNRESOLVED'],'empty-parser':[],dotted:[],'array-target':['TARGET'],'child-owned':['UNRESOLVED']};

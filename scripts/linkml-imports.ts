@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importLinkmlDocument,inspectLinkmlImportContext,readDocument,writeDocument,type LinkmlImportContext} from '../src';
+import {importLinkmlDocument,inspectLinkmlImportContext,readDocument,writeDocument,type LinkmlImportContext} from '../src/index-node-v4';
 const definitions=[
  {id:'diamond',graph:{root:['left','right'],left:['shared'],right:['shared'],shared:[],unused:[]}},
  {id:'cycle-repeat',graph:{root:['left','left'],left:['root']}},

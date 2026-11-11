@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {captureParquet,type Document} from '../../src';
+import {captureParquet,type Document} from '../../src/index-node-v4';
 import {projectBindingToParquet} from '../../src/index-node-v4';
 import {buildBindingBrowserRuntime} from './browser-runtime';
 

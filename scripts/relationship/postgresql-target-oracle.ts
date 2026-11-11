@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
-import {exportPostgresqlSql,getPostgresqlSource,importPostgresqlSql,readDocument,writeDocument} from '../../src';
+import {exportPostgresqlSql,getPostgresqlSource,importPostgresqlSql,readDocument,writeDocument} from '../../src/index-node-v4';
 
 const base='fixtures/projections/ddd-authored-relationships/';
 const source=await Bun.file(base+'expected-postgresql-relationships.sql').text();

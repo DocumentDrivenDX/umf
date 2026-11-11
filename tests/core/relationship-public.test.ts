@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {selectCoreElements} from '../../src/index-node-v4';
 import {relationshipCandidate} from '../../scripts/core-relationship-cases';
 

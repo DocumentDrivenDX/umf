@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parquetFieldPaths} from '../../scripts/core-ideals/parquet-field-cases';
-import {classifyParquetRecord, recoverParquetRecordBytes} from '../../src/core-ideals/parquet-record';
-import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+import {classifyParquetRecord,recoverParquetRecordBytes} from "../../src/index-node-v4";
+import {importParquetSchema,getParquetFieldMetadata} from "../../src/index-node-v4";
 
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {declareCoreElementKind} from "../../src/index-node-v4";
 import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 async function load(path:string){const bytes=new Uint8Array(await Bun.file(path).arrayBuffer());return {bytes,source:importParquetSchema(bytes,{id:path})};}
 test('Parquet root records keep ordered value slots separate from container and struct definitions',async()=>{

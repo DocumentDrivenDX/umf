@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,type Document} from '../../src';
+import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,type Document} from '../../src/index-node-v4';
 import {projectBindingToDelta} from '../../src/index-node-v4';
 
 const base='fixtures/projections/ddd-postgresql-tables/';

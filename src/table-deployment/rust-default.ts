@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../model/errors';
-import type {compileTableDeployment,verifyTableDeployment} from './index';
+import type {TableDeploymentBundle,TableDeploymentRequest,TableDeploymentResult} from './types';
 
 export interface TableDeploymentNativeEngine {
  compileTableDeployment(request:unknown):unknown;
@@ -25,7 +25,7 @@ export function createTableDeploymentRustDefault(
   }
  };
  return Object.freeze({
-  compileTableDeployment(request:Parameters<typeof compileTableDeployment>[0]):ReturnType<typeof compileTableDeployment>{return call(engine=>engine.compileTableDeployment(request));},
-  verifyTableDeployment(bundle:Parameters<typeof verifyTableDeployment>[0]):ReturnType<typeof verifyTableDeployment>{return call(engine=>engine.verifyTableDeployment(bundle));},
+  compileTableDeployment(request:TableDeploymentRequest):TableDeploymentResult{return call(engine=>engine.compileTableDeployment(request));},
+  verifyTableDeployment(bundle:unknown):TableDeploymentBundle{return call(engine=>engine.verifyTableDeployment(bundle));},
  });
 }

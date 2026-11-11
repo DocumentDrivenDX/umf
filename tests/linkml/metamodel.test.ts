@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importLinkmlDocument,exportLinkmlDocument,inspectLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,readDocument,writeDocument} from '../../src';
+import {importLinkmlDocument,exportLinkmlDocument,inspectLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/linkml/metamodel/',sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 test('US-024-AC4: every pinned metamodel source and metadata candidate retains native outcomes',async()=>{
  const cases=(await Bun.file(base+'results.json').json()).results,oracle=await Bun.file(base+'oracle-results.json').json(),upstream=await Bun.file('native/linkml/sources/manifest.json').json();

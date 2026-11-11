@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {createCandidateCoreExtensionClosure,requireCandidateCoreExtensionRegistry} from '../../src/extensions/security/core-extension-closure-candidate';
-import {captureCandidateCoreSource,readCandidateCoreSource} from '../../src/extensions/security/core-source-candidate';
+import {createUmfRegistry} from '../../src/index-node-v4';
+import {createCandidateCoreExtensionClosure,requireCandidateCoreExtensionRegistry as requireNativeRegistry} from '../../src/extensions/security/core-extension-closure-candidate';
+import {captureCandidateCoreSource as captureNativeSource,readCandidateCoreSource} from '../../src/extensions/security/core-source-candidate';
 import {compileCandidateCatalogProgram,readCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {currentProductsSourceFixture} from './core-extension-closure-fixture';
-import {actionsPackage} from '../../src/extensions/actions';
+import {actionsPackage} from '../../src/extensions/actions/package';
 const issue=()=>createCandidateCoreExtensionClosure([{id:'umf.actions',version:'0.1.0'}]);
+const requireCandidateCoreExtensionRegistry=(handle:unknown)=>requireNativeRegistry(handle,createUmfRegistry());
+const captureCandidateCoreSource=(input:unknown,handle?:unknown)=>captureNativeSource(input,handle,createUmfRegistry());
 test('current products action extension survives explicit source custody and real policy compilation',()=>{
  const f=currentProductsSourceFixture(),extensions=issue(),source=readCandidateCoreSource(captureCandidateCoreSource(f.model,extensions));
  expect(source).toEqual(f.model);expect(()=>captureCandidateCoreSource(JSON.parse(f.original.request.model.utf8),extensions)).toThrow('SECURITY_CANDIDATE_CORE_SOURCE_UNRESOLVED');expect(source.modules[0].extensions['umf.actions'].actions[0].authorization.roles).toEqual(['bulk-editor']);
@@ -36,7 +39,7 @@ test('selection accessors never execute and mutable public package cannot drift 
  expect(()=>requireCandidateCoreExtensionRegistry(extensions)).not.toThrow();
 });
 test('actions metadata cannot be widened before the closure module loads in a fresh process',()=>{
- const actionUrl=new URL('../../src/extensions/actions/index.ts',import.meta.url).href,closureUrl=new URL('../../src/extensions/security/core-extension-closure-candidate.ts',import.meta.url).href,sourceUrl=new URL('../../src/extensions/security/core-source-candidate.ts',import.meta.url).href,fixturePath=new URL('./fixtures/current-products-model.json',import.meta.url).pathname;
+ const actionUrl=new URL('../../src/extensions/actions/package.ts',import.meta.url).href,closureUrl=new URL('../../src/extensions/security/core-extension-closure-candidate.ts',import.meta.url).href,sourceUrl=new URL('../../src/extensions/security/core-source-candidate.ts',import.meta.url).href,fixturePath=new URL('./fixtures/current-products-model.json',import.meta.url).pathname;
  const code=`const {actionsPackage}=await import(${JSON.stringify(actionUrl)});let blocked=false;try{actionsPackage.scopes.push('document');}catch{blocked=true;}const {createCandidateCoreExtensionClosure}=await import(${JSON.stringify(closureUrl)});const {captureCandidateCoreSource}=await import(${JSON.stringify(sourceUrl)});const m=await Bun.file(${JSON.stringify(fixturePath)}).json();m.extensions={'umf.actions':m.modules[0].extensions['umf.actions']};delete m.modules[0].extensions['umf.actions'];let refused=false;try{captureCandidateCoreSource(m,createCandidateCoreExtensionClosure([{id:'umf.actions',version:'0.1.0'}]));}catch{refused=true;}if(!blocked||!refused)throw Error('Pre-import scope bypass');console.log('original-scope-preserved');`;
  const result=Bun.spawnSync([process.execPath,'-e',code]);expect(result.exitCode).toBe(0);expect(result.stdout.toString().trim()).toBe('original-scope-preserved');
 });

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {avroCardinalityProjectionCases} from './cardinality-avro-projection-cases';
-import {projectCardinalityToAvro} from '../../src/core-ideals/cardinality-avro-projection';
+import {projectCardinalityToAvro} from "../../src/index-node-v4";
 const cases=avroCardinalityProjectionCases().map(c=>({...c,expected:projectCardinalityToAvro(c.author,c.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(cases);return new Response('<!doctype html><html><body>Avro Cardinality projection</body></html>',{headers:{'content-type':'text/html'}});}});
 let browser;

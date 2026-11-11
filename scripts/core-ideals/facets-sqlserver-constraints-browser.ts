@@ -2,15 +2,22 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
-import {inspectSqlServerFacetConstraints as inspect} from '../../src/adapters/sqlserver/facet-constraints';
+import {buildBindingBrowserRuntime} from '../binding/browser-runtime';
+import {importSqlServerCatalog} from "../../src/index-node-v4";
+import {inspectSqlServerFacetConstraints as inspect} from "../../src/index-node-v4";
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-discovery-native.json').json();
 assert.equal(proof.observational,false);assert.equal(proof.serverVersion,'16.0.4295.3');
 for(const [path,sha] of Object.entries(proof.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),sha);
 const native=JSON.parse(proof.sourceText),document=importSqlServerCatalog(proof.sourceText,{id:'facet-constraint-browser'});
 const rows=native.tables.flatMap((t:any,i:number)=>t.columns.map((_:any,j:number)=>{const path=`/tables/${i}/columns/${j}`;return {path,expected:inspect(document,path)};}));
-const build=await Bun.build({entrypoints:['src/adapters/sqlserver/facet-constraints.ts'],target:'browser',format:'esm'});assert.ok(build.success,JSON.stringify(build.logs));await Bun.write('dist/sqlserver-facet-constraints.js',build.outputs[0]!);
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){return new URL(request.url).pathname==='/constraints.js'?new Response(Bun.file('dist/sqlserver-facet-constraints.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>SQL Server CHECK interpretation</title>',{headers:{'content-type':'text/html'}});}});
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
+await Bun.write('dist/sqlserver-facet-constraints.js',browserJs);
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){
+ const path=new URL(request.url).pathname;
+ if(path==='/constraints.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});
+ if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});
+ return new Response('<!doctype html><title>SQL Server CHECK interpretation</title>',{headers:{'content-type':'text/html'}});
+}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage(),externalRequests:string[]=[];

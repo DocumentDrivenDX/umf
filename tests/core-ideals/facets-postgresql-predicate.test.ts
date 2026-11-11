@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {copyJson} from '../../src/model/json';
 import {backend} from '../../native/postgresql/runtime';
-import {inspectPostgresqlFacetPredicate as inspect} from '../../src/adapters/postgresql/facet-predicate';
+import {inspectPostgresqlFacetPredicate as inspect} from '../../scripts/core-ideals/postgresql-facet-predicate';
 const parse=(sql:string)=>backend.parse('SELECT '+sql);
 test('closed predicate syntax retains exact bounds without claiming resolved enforcement',async()=>{
  const ast=await parse("value >= '-999.99'::numeric AND value <= 999.99 AND value = pg_catalog.trunc(value, 2)");

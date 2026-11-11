@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importSqlServerCatalog, getSqlServerColumnMetadata, parseNativeJson} from '../../src';
+import {importSqlServerCatalog, getSqlServerColumnMetadata, parseNativeJson} from '../../src/index-node-v4';
 import {inspectSqlServerFacetType as inspect} from '../../src/adapters/sqlserver/facet-type';
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-discovery-native.json').json();
 const source=importSqlServerCatalog(proof.sourceText,{id:'sqlserver-facets'}),columns=getSqlServerColumnMetadata(source);

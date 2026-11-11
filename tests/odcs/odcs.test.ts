@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importOdcsDocument,exportOdcsDocument,inspectOdcsDocument,proposeOdcsDocumentNodeEdit,getOdcsDocumentNode,readDocument,writeDocument,ODCS_EXTENSION} from '../../src';
+import {importOdcsDocument,exportOdcsDocument,inspectOdcsDocument,proposeOdcsDocumentNodeEdit,getOdcsDocumentNode,readDocument,writeDocument,ODCS_EXTENSION} from '../../src/index-node-v4';
 const base='fixtures/odcs/',sha=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 test('US-023-AC1/3: all upstream contracts preserve original bytes and native candidate outcomes',async()=>{
  const cases=(await Bun.file(base+'results.json').json()).results,oracle=await Bun.file(base+'oracle-results.json').json();expect(cases).toHaveLength(42);expect(oracle.results).toHaveLength(84);expect(oracle.results.filter((r:any)=>r.nativeValid)).toHaveLength(78);

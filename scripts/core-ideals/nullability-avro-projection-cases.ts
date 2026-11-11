@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreNullability} from '../../src/model/nullability';
+import {declareCoreNullability} from "../../src/index-node-v4";
 import {avroCarriers} from '../../src/core-ideals/avro-carriers';
 import type {Document, Nullability, ScalarType} from '../../src/model/types';
 import type {NullabilityAvroRequest} from '../../src/core-ideals/nullability-avro-projection';

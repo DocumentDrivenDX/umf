@@ -2,7 +2,7 @@
 import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
-import {readDddDocument,writeDddDocument,exportJsonSchema,importJsonSchema,inspectDdd,coreSchema,type DddDocumentBindings} from '../../src';
+import {readDddDocument,writeDddDocument,exportJsonSchema,importJsonSchema,inspectDdd,coreSchema,type DddDocumentBindings} from '../../src/index-node-v4';
 import {projectDddToJsonSchema} from '../../src/index-node-v4';
 import reportSchema from '../../spec/projections/ddd-json-schema.schema.json';
 const checkReport=new Ajv2020({strict:false}).addSchema(reference).addSchema(coreSchema).compile(reportSchema);

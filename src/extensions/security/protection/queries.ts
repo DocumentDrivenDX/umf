@@ -1,39 +1,15 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-/** Conditional property comparison, never query/compiler admission. */
-import wire from '../../../../spec/extensions/security-protection/schema.json';
-import {copyJson} from '../../../model/json';
+/** Private candidate property comparison; public query inspection is Rust-owned. */
 import {canonicalSchemaJson} from '../../../model/schema-literals';
 import {UmfError,type Json,type Diagnostic} from '../../../model/types';
-import {createValidator} from '../../../validation/schema';
-import {checkProtectionParametersWithinBudget,protectionFieldIndex,type ProtectionParameterValidation} from './parameters';
+import {protectionFieldIndex,type ProtectionParameterValidation} from './parameters';
 import {ProtectionLiteralBudget} from './literals';
-const defs:any=copyJson(wire.$defs);
-function close(v:any):void{if(v&&typeof v==='object'){if(v.properties)v.additionalProperties=false;for(const x of Object.values(v))close(x);}}
-close(defs);
-const check=createValidator().compile({type:'object',properties:{ruleIndex:{type:'integer',minimum:0},disclosureIndex:{type:'integer',minimum:0},operator:{enum:['predicate','join','group','order','aggregate']},required:{type:'array',minItems:1,maxItems:32,items:{$ref:'#/$defs/property'}}},required:['ruleIndex','disclosureIndex','operator','required'],additionalProperties:false,$defs:defs});
 export interface ProtectionQueryPropertyInspection extends Omit<ProtectionParameterValidation,'status'|'validated'> {
  status:'compatible-properties'|'prohibited'|'requires-original-action'|'refused';use:Json;
  authoredProperties:readonly Json[];impliedProperties:readonly Json[];effectiveProperties:readonly Json[];
  requiredProperties:readonly Json[];missingProperties:readonly Json[];
 }
-function freeze<T>(v:T):T{if(v!==null&&typeof v==='object'){for(const child of Object.values(v))freeze(child);Object.freeze(v);}return v;}
-function bounded(v:Json):boolean{let text=0;const pending=[v];while(pending.length){const x=pending.pop()!;if(typeof x==='string')text+=x.length;else if(x!==null&&typeof x==='object'){if(Array.isArray(x)){for(const item of x)pending.push(item);}else for(const k of Object.keys(x)){text+=k.length;if(text>4_000_000)return false;pending.push(x[k]!);}}if(text>4_000_000)return false;}return true;}
-export function inspectProtectionQueryProperties(policy:unknown,catalog:unknown,closure:unknown,useInput:unknown):ProtectionQueryPropertyInspection {
- const budget=new ProtectionLiteralBudget(),parameters=checkProtectionParametersWithinBudget(policy,catalog,closure,budget),diagnostics:Diagnostic[]=[...parameters.diagnostics];
- let use:Json=null;const authoredProperties:Json[]=[],impliedProperties:Json[]=[],effectiveProperties:Json[]=[],requiredProperties:Json[]=[],missingProperties:Json[]=[];
- const finish=(status:ProtectionQueryPropertyInspection['status'])=>freeze<ProtectionQueryPropertyInspection>({status,complete:false,authority:false,policy:parameters.policy,catalog:parameters.catalog,closure:parameters.closure,use,authoredProperties,impliedProperties,effectiveProperties,requiredProperties,missingProperties,diagnostics});
- const add=(code:string,path:string,message:string)=>diagnostics.push({code,path,message,severity:'error'});
- try{use=copyJson(useInput);}catch(error){if(!(error instanceof UmfError))throw error;add(error.code,error.path,error.message);return finish('refused');}
- if(!bounded(use)){add('PROTECTION_QUERY_BOUND','/use','resource-exhausted: use key/string text exceeds4000000 UTF-16 units');return finish('refused');}
- if(!check(use)){for(const e of check.errors??[])add('PROTECTION_QUERY_STRUCTURE','/use'+e.instancePath,e.message??'Invalid property requirement');return finish('refused');}
- if(parameters.status==='refused')return finish('refused');
- const u=use as any,p=parameters.policy as any,c=parameters.catalog as any;
- const disposition=p.rules[u.ruleIndex]?.disclosure?.[u.disclosureIndex]?.disposition;
- if(disposition?.kind!=='transformed'||disposition.vocabulary!=='umf.security.protection'){add('PROTECTION_QUERY_SELECTION','/use','Actual catalog disposition required');return finish('refused');}
- const transform=c.transforms.find((t:any)=>t.id===disposition.transform&&t.version===disposition.version);
- if(!transform){add('PROTECTION_QUERY_SELECTION','/use','Exact selected transform missing');return finish('refused');}
- return compareSelectedProtectionQueryProperties(parameters,use,transform,budget,diagnostics);
-}
+export type ProtectionQueryPropertyInspector=(policy:unknown,catalog:unknown,closure:unknown,use:unknown)=>ProtectionQueryPropertyInspection;
 /** Internal conditional kernel. Selection must be resolved by its source owner; no admission. */
 export function compareSelectedProtectionQueryProperties(parameters:ProtectionParameterValidation,use:Json,transform:any,budget:ProtectionLiteralBudget,diagnostics:Diagnostic[]):ProtectionQueryPropertyInspection {
  const u=use as any,authoredProperties:Json[]=[],impliedProperties:Json[]=[],effectiveProperties:Json[]=[],requiredProperties:Json[]=[],missingProperties:Json[]=[];

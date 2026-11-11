@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../src/model/json';
 import {UmfError} from '../../src/model/types';
-import type {Action} from '../../src/extensions/actions';
-import type {ActionInputs} from '../../src/extensions/actions/selector';
+import type {Action} from '../../src/index-node-v4';
+import type {ActionInputs} from '../../src/index-node-v4';
 export interface RevisionReference {module:string;action:string;revision:string}
 export interface ExpectedActionVersion {frame:string;version:string}
 export interface ReferenceInvokeRequest {protocol:'umf.actions.tx/1';target:RevisionReference;inputs:ActionInputs;key?:string;expectedVersions?:ExpectedActionVersion[];correlation?:string}

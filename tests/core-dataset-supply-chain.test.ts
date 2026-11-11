@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
-import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues,validateCoreRecordValues} from '../src/index';
+import {readDocument} from '../src/index';
+import {validateCoreDatasetValues,verifyCoreDatasetValues,validateCoreRecordValues} from '../src/index-node-v4';
 import {supplyChainDataset} from './helpers/supply-chain-dataset';
 const source=readDocument(readFileSync('spec/domain-packs/supply-chain/ontology.json','utf8'),'json');
 const graph=JSON.parse(readFileSync('spec/domain-packs/supply-chain/graph/fixture.json','utf8'));

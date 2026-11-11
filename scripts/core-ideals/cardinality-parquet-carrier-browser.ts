@@ -10,7 +10,7 @@ const rows=await Promise.all((await Bun.file(corpus).json()).rows.map(async(r:an
  const bytes=new Uint8Array(await Bun.file(r.path).arrayBuffer());assert.equal(createHash('sha256').update(bytes).digest('hex'),r.sha256);return {...r,bytes:Array.from(bytes)};
 }));
 const entry='.cache/cardinality-parquet-carrier-entry.ts';
-await Bun.write(entry,"export * from '../src';\nexport {parquetCardinalityFile} from '../src/core-ideals/parquet-cardinality-carrier';\n");
+await Bun.write(entry,"export * from '../src';\nexport {parquetCardinalityFile} from './parquet-cardinality-carrier';\n");
 const build=await Bun.build({entrypoints:[entry],target:'browser',format:'esm'});assert.ok(build.success,JSON.stringify(build.logs));const bundle=await build.outputs[0]!.text();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){
  const p=new URL(request.url).pathname;

@@ -2,8 +2,7 @@
 import {createHash} from 'node:crypto';
 import {writeFixture} from '../../tests/security/write-fixture';
 import {ref} from '../../tests/security/fixture';
-import {evaluateSecurityAccess} from '../../src/extensions/security/evaluate';
-import {evaluateSecurityWrite} from '../../src/extensions/security/write';
+import {evaluateSecurityAccess,evaluateSecurityWrite} from '../../src/index-node-v4';
 const rows=[];
 for(const kind of ['withheld','mask-equal','mask-different','original'] as const){
  const f=writeFixture(),reader=f.policy.rules.find(r=>r.id==='reader')!;

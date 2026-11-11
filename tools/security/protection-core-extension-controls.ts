@@ -2,7 +2,7 @@ import {createCandidateCoreExtensionClosure} from '../../src/extensions/security
 import {captureCandidateCoreSource,readCandidateCoreSource} from '../../src/extensions/security/core-source-candidate';
 import {compileCandidateCatalogProgram,readCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {currentProductsSourceFixture} from '../../tests/security/core-extension-closure-fixture';
-import {actionsPackage} from '../../src/extensions/actions';
+import {actionsPackage} from '../../src/extensions/actions/package';
 export function run(){
  const rows:{id:string;pass:boolean}[]=[],add=(id:string,pass:boolean)=>rows.push({id,pass}),refuses=(fn:()=>unknown)=>{try{fn();return false;}catch{return true;}},f=currentProductsSourceFixture(),extensions=createCandidateCoreExtensionClosure([{id:'umf.actions',version:'0.1.0'}]);
  add('authored-current-model-preserved',JSON.stringify(readCandidateCoreSource(captureCandidateCoreSource(f.model,extensions)))===JSON.stringify(f.model));

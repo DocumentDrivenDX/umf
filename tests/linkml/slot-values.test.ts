@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/linkml/slot-values-schema.json';
-import {importLinkmlDocument,inspectLinkmlSlotValues,exportLinkmlDocument,readDocument,writeDocument,LINKML_SCALAR_SLOT_FIELDS} from '../../src';
+import {importLinkmlDocument,inspectLinkmlSlotValues,exportLinkmlDocument,readDocument,writeDocument,LINKML_SCALAR_SLOT_FIELDS} from '../../src/index-node-v4';
 import {parseNativeJson} from '../../src/model/native-json';
 const base='fixtures/linkml/slot-values/',fixture=await Bun.file(base+'results.json').json(),raw=await Bun.file(fixture.path).text();
 const document=()=>importLinkmlDocument(raw,{id:fixture.path,format:'json'});

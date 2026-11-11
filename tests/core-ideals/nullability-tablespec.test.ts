@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {nullabilityTableSpecCases,tableSpecAvailabilitySource} from '../../scripts/core-ideals/nullability-tablespec-cases';
-import {classifyTableSpecNullability, verifyTableSpecNullabilityClassification, recoverTableSpecNullabilitySource, declareCoreNullability, writeJsonValue, readJsonValue, copyJson, importTableSpecBundle, classifyTableSpecField, TABLESPEC_NULLABILITY_EXTENSION, tableSpecNullabilityPackage, Registry, validateDocument} from '../../src';
-import type {TableSpecNullabilityRequest} from '../../src';
+import {classifyTableSpecNullability, verifyTableSpecNullabilityClassification, recoverTableSpecNullabilitySource, declareCoreNullability, writeJsonValue, readJsonValue, copyJson, importTableSpecBundle, classifyTableSpecField, TABLESPEC_NULLABILITY_EXTENSION, tableSpecNullabilityPackage, Registry, validateDocument} from '../../src/index-node-v4';
+import type {TableSpecNullabilityRequest} from '../../src/index-node-v4';
 const request:TableSpecNullabilityRequest={column:0,profile:'runtime-model',context:null,carrier:'null-value',mode:'strict'};
 const source=()=>tableSpecAvailabilitySource('{"version":"1.0","table_name":"Orders","columns":[{"name":"id","data_type":"INTEGER","nullable":false}]}\n');
 test('selected profile/context classification separates exact declarations, coercions and unknowns',()=>{

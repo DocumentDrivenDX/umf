@@ -7,10 +7,10 @@ import {sqlserverPackage,sqlserverCardinalityPackage} from './package';
 import {sqlserverNullabilityPackage} from '../../core-ideals/nullability-sqlserver-package';
 import {sqlserverKeysPackage} from '../../core-ideals/key-sqlserver-package';
 import {sqlserverRelationshipsPackage} from '../../core-ideals/relationship-sqlserver-package';
-import type {importSqlServerCatalog,inspectSqlServer,exportSqlServerCatalog,proposeSqlServerCatalogEdit,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,getSqlServerIndexMetadata,SqlServerColumnMetadata,SqlServerConstraintMetadata,SqlServerIndexMetadata} from './index';
+import type {SqlServerColumnMetadata,SqlServerConstraintMetadata,SqlServerIndexMetadata} from './index';
 import type {SqlServerFacetTypeInspection,inspectSqlServerFacetType} from './facet-type';
 import type {SqlServerFacetPredicateInspection,inspectSqlServerFacetPredicate} from './facet-predicate';
-import type {SqlServerFacetConstraintsInspection,inspectSqlServerFacetConstraints} from './facet-constraints';
+import type {SqlServerFacetConstraintsInspection} from './facet-constraints';
 import type {SqlServerFieldClassification,SqlServerFieldRequest} from '../../core-ideals/sqlserver-field';
 import type {SqlServerRecordClassification,SqlServerRecordRequest} from '../../core-ideals/sqlserver-record';
 import type {SqlServerCardinalityClassification,SqlServerCardinalityRequest} from '../../core-ideals/cardinality-sqlserver';
@@ -20,6 +20,16 @@ import type {SqlServerKeyClassification,SqlServerKeyRequest} from '../../core-id
 import type {SqlServerRelationshipClassification,SqlServerRelationshipRequest} from '../../core-ideals/relationship-sqlserver';
 import type {SqlServerFacetClassification,SqlServerFacetRequest} from '../../core-ideals/facets-sqlserver';
 import {sqlserverFacetsPackage} from '../../core-ideals/facets-sqlserver-package';
+import type {Validation} from "../../model/types";
+
+type ImportSqlServerCatalog = (text: string, options: { id: string; }) => Document;
+type InspectSqlServer = (document: Document) => Validation;
+type ExportSqlServerCatalog = (document: Document) => string;
+type ProposeSqlServerCatalogEdit = (document: Document, path: string, text: string) => Document;
+type GetSqlServerColumnMetadata = (document: Document) => SqlServerColumnMetadata[];
+type GetSqlServerConstraintMetadata = (document: Document) => SqlServerConstraintMetadata;
+type GetSqlServerIndexMetadata = (document: Document) => SqlServerIndexMetadata;
+type InspectSqlServerFacetConstraints = (input: Document, columnPath: string) => SqlServerFacetConstraintsInspection;
 
 export interface SqlServerNativeFamilyEngine {
  sqlserver:{
@@ -74,18 +84,18 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
  };
  return Object.freeze({
   sqlserverRegistry():Registry{return createRegistry().register(sqlserverPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload}))).register(sqlserverCardinalityPackage).register(sqlserverNullabilityPackage).register(sqlserverKeysPackage).register(sqlserverRelationshipsPackage).register(sqlserverFacetsPackage);},
-  importSqlServerCatalog(text:string,options:Parameters<typeof importSqlServerCatalog>[1]):ReturnType<typeof importSqlServerCatalog>{return call(()=>engine.sqlserver.import({source:text,id:options.id}) as ReturnType<typeof importSqlServerCatalog>);},
-  inspectSqlServer(document:Parameters<typeof inspectSqlServer>[0]):ReturnType<typeof inspectSqlServer>{return call(()=>engine.sqlserver.inspect({document}) as ReturnType<typeof inspectSqlServer>);},
-  exportSqlServerCatalog(document:Parameters<typeof exportSqlServerCatalog>[0]):ReturnType<typeof exportSqlServerCatalog>{return call(()=>engine.sqlserver.export({document}) as ReturnType<typeof exportSqlServerCatalog>);},
-  getSqlServerColumnMetadata(document:Parameters<typeof getSqlServerColumnMetadata>[0]):SqlServerColumnMetadata[]{return call(()=>engine.sqlserver.columns({document}) as SqlServerColumnMetadata[]);},
-  getSqlServerConstraintMetadata(document:Parameters<typeof getSqlServerConstraintMetadata>[0]):SqlServerConstraintMetadata{return call(()=>engine.sqlserver.constraints({document}) as SqlServerConstraintMetadata);},
-  getSqlServerIndexMetadata(document:Parameters<typeof getSqlServerIndexMetadata>[0]):SqlServerIndexMetadata{return call(()=>engine.sqlserver.indexes({document}) as SqlServerIndexMetadata);},
-  proposeSqlServerCatalogEdit(document:Parameters<typeof proposeSqlServerCatalogEdit>[0],path:Parameters<typeof proposeSqlServerCatalogEdit>[1],text:Parameters<typeof proposeSqlServerCatalogEdit>[2]):ReturnType<typeof proposeSqlServerCatalogEdit>{return call(()=>engine.sqlserver.edit({document,path,text}) as ReturnType<typeof proposeSqlServerCatalogEdit>);},
+  importSqlServerCatalog(text:string,options:Parameters<ImportSqlServerCatalog>[1]):ReturnType<ImportSqlServerCatalog>{return call(()=>engine.sqlserver.import({source:text,id:options.id}) as ReturnType<ImportSqlServerCatalog>);},
+  inspectSqlServer(document:Parameters<InspectSqlServer>[0]):ReturnType<InspectSqlServer>{return call(()=>engine.sqlserver.inspect({document}) as ReturnType<InspectSqlServer>);},
+  exportSqlServerCatalog(document:Parameters<ExportSqlServerCatalog>[0]):ReturnType<ExportSqlServerCatalog>{return call(()=>engine.sqlserver.export({document}) as ReturnType<ExportSqlServerCatalog>);},
+  getSqlServerColumnMetadata(document:Parameters<GetSqlServerColumnMetadata>[0]):SqlServerColumnMetadata[]{return call(()=>engine.sqlserver.columns({document}) as SqlServerColumnMetadata[]);},
+  getSqlServerConstraintMetadata(document:Parameters<GetSqlServerConstraintMetadata>[0]):SqlServerConstraintMetadata{return call(()=>engine.sqlserver.constraints({document}) as SqlServerConstraintMetadata);},
+  getSqlServerIndexMetadata(document:Parameters<GetSqlServerIndexMetadata>[0]):SqlServerIndexMetadata{return call(()=>engine.sqlserver.indexes({document}) as SqlServerIndexMetadata);},
+  proposeSqlServerCatalogEdit(document:Parameters<ProposeSqlServerCatalogEdit>[0],path:Parameters<ProposeSqlServerCatalogEdit>[1],text:Parameters<ProposeSqlServerCatalogEdit>[2]):ReturnType<ProposeSqlServerCatalogEdit>{return call(()=>engine.sqlserver.edit({document,path,text}) as ReturnType<ProposeSqlServerCatalogEdit>);},
   inspectSqlServerFacetType(input:Parameters<typeof inspectSqlServerFacetType>[0]):SqlServerFacetTypeInspection{return call(()=>engine.sqlserver.facetType({native:input}) as SqlServerFacetTypeInspection);},
   inspectSqlServerFacetPredicate(input:Parameters<typeof inspectSqlServerFacetPredicate>[0],columnName:Parameters<typeof inspectSqlServerFacetPredicate>[1]):SqlServerFacetPredicateInspection{
    return call(()=>engine.sqlserver.facetPredicate({source:input,columnName}) as SqlServerFacetPredicateInspection);
   },
-  inspectSqlServerFacetConstraints(document:Parameters<typeof inspectSqlServerFacetConstraints>[0],columnPath:Parameters<typeof inspectSqlServerFacetConstraints>[1]):SqlServerFacetConstraintsInspection{return call(()=>engine.sqlserver.facetConstraints({document,columnPath}) as SqlServerFacetConstraintsInspection);},
+  inspectSqlServerFacetConstraints(document:Parameters<InspectSqlServerFacetConstraints>[0],columnPath:Parameters<InspectSqlServerFacetConstraints>[1]):SqlServerFacetConstraintsInspection{return call(()=>engine.sqlserver.facetConstraints({document,columnPath}) as SqlServerFacetConstraintsInspection);},
   classifySqlServerField(source:Document,request:SqlServerFieldRequest):SqlServerFieldClassification{return call(()=>engine.sqlserver.classifyField({source,request}) as SqlServerFieldClassification);},
   verifySqlServerFieldClassification(receipt:SqlServerFieldClassification,current:Document):SqlServerFieldClassification{return call(()=>engine.sqlserver.verifyFieldClassification({receipt,current}) as SqlServerFieldClassification);},
   recoverSqlServerFieldCapture(receipt:SqlServerFieldClassification,current:Document):string{return call(()=>engine.sqlserver.recoverFieldCapture({receipt,current}) as string);},

@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {buildAvroRelationshipCarrier, type AvroRelationshipCarrier} from '../../src/core-ideals/relationship-avro-carrier';
-import {importAvroSchema} from '../../src/adapters/avro';
+import {importAvroSchema} from "../../src/index-node-v4";
 import {classifyAvroRelationships, recoverAvroRelationshipSource} from '../../src/index-node-v4';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const corpus=await Bun.file('fixtures/avro/relationship-carrier-cases.json').json();

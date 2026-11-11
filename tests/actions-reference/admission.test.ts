@@ -4,7 +4,7 @@ import {encodeReferenceJson,encodeReferenceIdentity,decodeReferenceJson} from '.
 import {ReferenceActionIssuer} from '../../scripts/actions-reference/authentication';
 import {admitReferenceRequest,canonicalReferenceVersions} from '../../scripts/actions-reference/protocol';
 import fixture from '../../fixtures/actions/approve.json';
-import type {Action} from '../../src/extensions/actions';
+import type {Action} from '../../src/index-node-v4';
 // Partial protocol/issuer witnesses; complete US-901 end-to-end criteria remain unqualified.
 test('trusted issuer authenticates human and service independently and refuses credential tampering',()=>{
  const issuer=new ReferenceActionIssuer(),identity={tenant:'tenant',principal:'human',service:'service'},credential=issuer.issue(identity);

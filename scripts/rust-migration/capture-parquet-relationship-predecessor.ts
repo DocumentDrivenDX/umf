@@ -2,8 +2,8 @@
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
-import {classifyParquetRelationships} from '../../src/core-ideals/relationship-parquet';
+import {importParquetSchema} from "../../src/index-node-v4";
+import {classifyParquetRelationships} from "../../src/index-node-v4";
 
 const root=resolve(import.meta.dir,'../..');
 const fixturePath='fixtures/parquet/arrow-nested/map-key-counterexample.parquet';

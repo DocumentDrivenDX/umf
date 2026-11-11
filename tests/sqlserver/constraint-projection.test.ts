@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog,getSqlServerColumnMetadata,exportAvroSchema,writeDocument,readDocument,coreSchema} from '../../src';
+import {importSqlServerCatalog,getSqlServerColumnMetadata,exportAvroSchema,writeDocument,readDocument,coreSchema} from '../../src/index-node-v4';
 import {projectSqlServerToAvro,type SqlServerAvroPolicy} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/projections/sqlserver-avro.schema.json';

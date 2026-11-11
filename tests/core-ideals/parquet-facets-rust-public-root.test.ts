@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {classifyParquetFacets,verifyParquetFacetClassification,recoverParquetFacetSource,type ParquetFacetRequest} from '../../src/index-node-v4';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
+import {importParquetSchema} from "../../src/index-node-v4";
 
 test('Node V4 Parquet facets classify, verify, recover, and refuse through Rust',async()=>{
  const bytes=new Uint8Array(await Bun.file('fixtures/parquet/facets/int8-min-plain.parquet').arrayBuffer());

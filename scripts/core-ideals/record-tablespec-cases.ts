@@ -2,7 +2,7 @@
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
 import {copyJson} from '../../src/model/json';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {declareCoreElementKind} from "../../src/index-node-v4";
 import {type Document} from '../../src/model/types';
 import {type RecordTableSpecRequest} from '../../src/core-ideals/record-tablespec-projection';
 export function recordCase(){

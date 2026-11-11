@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {CoreDatasetInput} from '../model/dataset-values';
-import type {CoreDatasetCompactValueCheck} from '../model/dataset-values-compact';
+import type {CoreDatasetInput} from '../model/dataset-values-types';
+import type {CoreDatasetCompactValueCheck} from '../model/dataset-values-compact-types';
 import type {Document} from '../model/types';
 import {UmfError} from '../model/errors';
 

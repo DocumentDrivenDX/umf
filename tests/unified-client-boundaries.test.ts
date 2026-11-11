@@ -54,17 +54,17 @@ test('the Record Type facade has only its exact audited model imports', () => {
 test('the Record Type facade cannot restore a predecessor value import', () => {
 	const allowed = checkAccessSource(
 		'rust-record-type-default.ts',
-		"import type {CoreRecordTypeDeclaration} from '../model/record-type';\n",
+		"import type {CoreRecordTypeDeclaration} from '../model/record-type-types';\n",
 	);
 	const denied = checkAccessSource(
 		'rust-record-type-default.ts',
-		"import {declareCoreRecordType} from '../model/record-type';\n",
+		"import {declareCoreRecordType} from '../model/record-type-types';\n",
 	);
 
 	expect(allowed).toEqual([]);
-	expect(denied).toContain('rust-record-type-default.ts: value import from type-only module ../model/record-type');
-	expect(checkAccessSource('rust-record-type-default.ts', "export * from '../model/record-type';\n"))
-		.toContain('rust-record-type-default.ts: value re-export from type-only module ../model/record-type');
+	expect(denied).toContain('rust-record-type-default.ts: value import from type-only module ../model/record-type-types');
+	expect(checkAccessSource('rust-record-type-default.ts', "export * from '../model/record-type-types';\n"))
+		.toContain('rust-record-type-default.ts: value re-export from type-only module ../model/record-type-types');
 });
 
 test('the Record Values facade keeps its predecessor import type-only and isolated', () => {
@@ -150,14 +150,19 @@ test('the Core Bit128 Field facade allows only its audited error adapter import'
 	expect(deniedHook).toContain('rust-core-bit128-field-default.ts: host or executable hook fetch');
 });
 
-test('the Core Semantic Types Rust facade preserves predecessor public signatures', () => {
+test('the Core Semantic Types Rust facade implements the public signatures', () => {
 	type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
 	type Assert<T extends true> = T;
 	type Bound = ReturnType<typeof import('../src/access/rust-core-semantic-types-default').bindCoreSemanticTypesRust>;
-	type _Inspect = Assert<Equal<Bound['inspectCoreSemanticTypes'], typeof import('../src/model/semantic-types').inspectCoreSemanticTypes>>;
-	type _Get = Assert<Equal<Bound['getCoreSemanticTypes'], typeof import('../src/model/semantic-types').getCoreSemanticTypes>>;
-	type _Declare = Assert<Equal<Bound['declareCoreSemanticTypes'], typeof import('../src/model/semantic-types').declareCoreSemanticTypes>>;
-	type _Verify = Assert<Equal<Bound['verifyCoreSemanticTypeDeclaration'], typeof import('../src/model/semantic-types').verifyCoreSemanticTypeDeclaration>>;
+	type Document = import('../src/model/types').Document;
+	type Reference = import('../src/model/types').CoreSemanticTypeReference;
+	type Identity = import('../src/model/semantic-types').CoreSemanticTypeIdentity;
+	type Inspection = import('../src/model/semantic-types').CoreSemanticTypeInspection;
+	type Declaration = import('../src/model/semantic-types').CoreSemanticTypeDeclaration;
+	type _Inspect = Assert<Equal<Bound['inspectCoreSemanticTypes'], (source: Document, identity: Identity) => Inspection>>;
+	type _Get = Assert<Equal<Bound['getCoreSemanticTypes'], (source: Document, identity: Identity) => Reference[] | undefined>>;
+	type _Declare = Assert<Equal<Bound['declareCoreSemanticTypes'], (source: Document, identity: Identity, types: Reference[] | null) => Declaration>>;
+	type _Verify = Assert<Equal<Bound['verifyCoreSemanticTypeDeclaration'], (receipt: Declaration, current: Document) => Declaration>>;
 	expect(true).toBe(true);
 });
 

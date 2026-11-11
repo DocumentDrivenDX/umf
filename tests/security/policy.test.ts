@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource,securityRegistry,securityPackage} from '../../src/extensions/security/policy';
+import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource,securityRegistry,securityPackage} from '../../src/index-node-v4';
 import {validateDocument} from '../../src/validation/document';
 import {securityFixture,ref} from './fixture';
 import type {SecurityExpr} from '../../src/extensions/security/types';
 import {copyJson} from '../../src/model/json';
 import {securityPolicyCorpus} from './browser-corpus';
+import * as securityRuntime from '../../src/index-node-v4';
+import {configureSecurityRuntime} from './browser-corpus';
+configureSecurityRuntime(securityRuntime);
 
 test('Staff/Project nested correlated policy resolves exact qualified types and keys',()=>{
   // @covers US-079-AC1
@@ -83,7 +86,7 @@ test('registered policy preserves extension but core inspection requires explici
   // @covers US-079-AC9
   const {policy,resolution}=securityFixture();const doc=resolution.documents[0]!.document;
   doc.vocabularies['umf.security']={version:'0.1.0'};doc.extensions={'umf.security':policy as any};
-  const result=validateDocument(doc,securityRegistry());
+  const result=validateDocument(doc,securityRegistry);
   expect(result.valid).toBe(true);expect(result.complete).toBe(false);
   expect(result.diagnostics.some(d=>d.code==='SECURITY_RESOLUTION_REQUIRED')).toBe(true);
 });
@@ -102,7 +105,7 @@ test('browser corpus has independent valid/incomplete/refusal and preservation e
 test('editing public package metadata cannot change the built-in registry',()=>{
   // @covers US-079-AC3
   const prior=securityPackage.version;
-  try {securityPackage.version='future';expect(securityRegistry().get('umf.security','0.1.0')).toBeDefined();}
+  try {securityPackage.version='future';expect(securityRegistry.get('umf.security','0.1.0')).toBeDefined();}
   finally {securityPackage.version=prior;}
 });
 

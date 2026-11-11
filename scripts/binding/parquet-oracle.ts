@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {existsSync} from 'node:fs';
-import {captureParquet,exportParquetCapture,type Document} from '../../src';
+import {captureParquet,exportParquetCapture,type Document} from '../../src/index-node-v4';
 import {projectBindingToParquet} from '../../src/index-node-v4';
 
 const candidates=[process.env.UMF_PYTHON,'.venv/bin/python','../umf/.venv/bin/python'].filter((x):x is string=>!!x);

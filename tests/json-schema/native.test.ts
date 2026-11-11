@@ -2,7 +2,7 @@
 // @covers US-002-AC1 US-002-AC2 US-002-AC3 US-002-AC4
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
-import {importJsonSchema,exportJsonSchema,exportJsonSchemaBundle,exportJsonSchemaResources,inspectJsonSchema,getJsonSchemaNode,editJsonSchemaNode,walkJsonSchema,readDocument,writeDocument,JSON_SCHEMA_EXTENSION,parseNativeJson} from '../../src';
+import {importJsonSchema,exportJsonSchema,exportJsonSchemaBundle,exportJsonSchemaResources,inspectJsonSchema,getJsonSchemaNode,editJsonSchemaNode,walkJsonSchema,readDocument,writeDocument,JSON_SCHEMA_EXTENSION,parseNativeJson} from '../../src/index-node-v4';
 const options={id:'native-test',baseUri:'https://example.test/order'};
 import order from "../../fixtures/json-schema/order.schema.json";
 test('US-002-AC1: full native schema survives editable UMF tree and YAML serialization',()=>{

@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {importParquetSchema, classifyParquetCardinality} from '../../src';
+import {importParquetSchema, classifyParquetCardinality} from '../../src/index-node-v4';
 const proof='fixtures/validation/cardinality-parquet-profile-native.json',native=await Bun.file(proof).json();
 const cases:any[]=[];
 for(const row of native.cases){

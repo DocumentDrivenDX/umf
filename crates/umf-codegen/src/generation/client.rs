@@ -655,9 +655,16 @@ fn build_table_modules(
             }
         }
         let commands = list(payload, "commands").unwrap_or(&[]);
+        let ordinary_version = Utf16::from("umf.table-operation/0.1");
+        let migration_version = Utf16::from("umf.table-operation/0.2");
+        let mut has_migration_commands = false;
         let mut selected_commands = Vec::new();
         for command in commands {
             ctx.charge_work(1, Utf16::default())?;
+            let version = raw::string_member(command, "version");
+            if version != Some(&ordinary_version) && version != Some(&migration_version) {
+                continue;
+            }
             let body = raw::member(command, "body").unwrap_or(&Value::Null);
             let kind = string_at(body, "kind").unwrap_or_default();
             let selected = if kind == "query" {
@@ -666,10 +673,14 @@ fn build_table_modules(
                 string_at(body, "table").is_some_and(|id| selected_table_ids.contains(&id))
             };
             if selected {
-                selected_commands.push(command);
+                if version == Some(&migration_version) {
+                    has_migration_commands = true;
+                } else {
+                    selected_commands.push(command);
+                }
             }
         }
-        if selected_commands.is_empty() {
+        if selected_commands.is_empty() && !has_migration_commands {
             return Err(fail(
                 module_id.as_str(),
                 "Native table lifecycle client requires declared operations",

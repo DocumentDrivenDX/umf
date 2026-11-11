@@ -7,7 +7,7 @@ import {projectSecSubmissions,projectSecCompanyFacts} from '../../src/domain-pac
 import {inspectDomainPack} from '../../src/domain-packs/profile';
 import {validateDocument} from '../../src/validation/document';
 import {readDocument} from '../../src/model/document';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 import {Database} from 'bun:sqlite';
 const root='spec/domain-packs/public-company-intelligence';
 const load=()=>Bun.file(root+'/pack.json').json();

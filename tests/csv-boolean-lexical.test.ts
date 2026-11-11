@@ -2,9 +2,10 @@
 import {test,expect} from 'bun:test';
 import {boundedJsonBytes} from '../src/model/internal/json-byte-budget';
 import {readDocument} from '../src/model/document';
-import {validateCsvBooleanLexical,verifyCsvBooleanLexical,csvBooleanLexicalOperationSchema,type CsvBooleanLexicalRequest} from '../src/model/csv-boolean-lexical';
-import {validateCoreFieldValue} from '../src/model/schema-properties';
-import {validateCoreRecordValues} from '../src/model/record-values';
+import {csvBooleanLexicalOperationSchema,type CsvBooleanLexicalRequest} from "../src/model/csv-boolean-lexical";
+import {validateCsvBooleanLexical,verifyCsvBooleanLexical} from "../src/index-node-v4";
+import {validateCoreFieldValue} from "../src/index-node-v4";
+import {validateCoreRecordValues} from '../src/index-node-v4';
 const source=readDocument(await Bun.file('spec/domain-packs/medical/ontology.json').text(),'json');
 const field={module:'domain',element:'patients.active'};
 const request=(token:CsvBooleanLexicalRequest['token']):CsvBooleanLexicalRequest=>({profile:'umf.csv-boolean-lexical/1.0.0',field,token,sourceContext:{source:'original.csv',row:1,column:'active',unknown:{retained:['雪',null]}}});

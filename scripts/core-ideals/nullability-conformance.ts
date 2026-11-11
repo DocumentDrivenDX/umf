@@ -4,7 +4,7 @@ import {assertJsonDataEqual,assertNativeRepresentationEqual} from './json-data-a
 import {createHash} from 'node:crypto';
 import {relative,resolve,isAbsolute,sep} from 'node:path';
 import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {classifyAvroNullability,recoverAvroNullabilityBundle,verifyAvroNullabilityClassification} from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {nullabilityTableSpecCases} from './nullability-tablespec-cases';
@@ -12,7 +12,7 @@ import {postgresqlAvailabilitySource} from './nullability-postgresql-cases';
 import {sqlserverAvailabilitySource} from './nullability-sqlserver-cases';
 import {avroAvailabilitySource} from './nullability-avro-cases';
 import {parquetAvailabilitySource} from './nullability-parquet-cases';
-import type {Document, CoreNullabilityDeclaration, Nullability} from '../../src';
+import type {Document, CoreNullabilityDeclaration, Nullability} from '../../src/index-node-v4';
 export const nullabilitySystems=['tablespec','postgresql','sqlserver','avro','parquet'] as const;
 type System=typeof nullabilitySystems[number];
 type Reader=(path:string)=>Promise<Uint8Array>;

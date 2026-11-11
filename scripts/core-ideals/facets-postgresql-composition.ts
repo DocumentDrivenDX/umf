@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {facetsPostgresqlProjectionCases} from './facets-postgresql-projection-cases';
 const proof=await Bun.file('fixtures/validation/facets-postgresql-projection-native.json').json();
@@ -36,7 +36,7 @@ for(const [index,row] of facetsPostgresqlProjectionCases().entries()){
  results.push({name:row.name,table:row.request.tableName,encoding:row.request.encoding,mode:row.request.mode,obligation:row.request.obligation,authored,emitted:projection.mapping.facets,classified:classification.mapping.facets,recoversAuthoredFacets:same,nativeRefinements,residuals:residuals.map(r=>({reason:r.reason,outcome:r.outcome}))});
 }
 assert.equal(results.length,proof.counts.emitted);assert.equal(idealRecoveries,results.length);assert.equal(nativeRecoveries,results.length);
-const paths=['scripts/core-ideals/facets-postgresql-composition.ts','scripts/core-ideals/facets-postgresql-projection-cases.ts','src/core-ideals/facets-postgresql.ts','src/core-ideals/facets-postgresql-projection.ts','src/adapters/postgresql/facet-catalog.ts','src/adapters/postgresql/facet-resolved-predicate.ts','src/adapters/postgresql/facet-node-tree.ts','src/adapters/postgresql/facet-typmod.ts','fixtures/validation/facets-postgresql-projection-native.json'];
+const paths=['scripts/core-ideals/facets-postgresql-composition.ts','scripts/core-ideals/facets-postgresql-projection-cases.ts','src/core-ideals/facets-postgresql.ts','src/core-ideals/facets-postgresql-projection.ts','scripts/core-ideals/postgresql-facet-catalog.ts','scripts/core-ideals/postgresql-facet-resolved-predicate.ts','scripts/core-ideals/postgresql-facet-node-tree.ts','scripts/core-ideals/postgresql-facet-typmod.ts','fixtures/validation/facets-postgresql-projection-native.json'];
 const sha256=Object.fromEntries(await Promise.all(paths.map(async path=>[path,createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')])));
 const counts={cases:results.length,idealRecoveries,nativeRecoveries,exactFacetRecoveries,explicitResiduals};
 await Bun.write('fixtures/validation/facets-postgresql-composition.json',JSON.stringify({scope:'PostgreSQL 17.4 emitted DDL composed with native stored-value classification; retained recovery is not native equivalence',serverVersion:170004,bindingAccepted:false,counts,results,sha256},null,2)+'\n');console.log(JSON.stringify(counts));

@@ -1,16 +1,27 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {encodeSecurityDisclosure,decodeSecurityDisclosure,type SecurityDisclosureBatch} from '../../src/extensions/security/disclosure';
-import {composeSecurityRules,type SecurityTruth,type SecurityDisposition} from '../../src/extensions/security/logic';
-import {inspectSecurityPolicy,readSecuritySource,writeSecuritySource} from '../../src/extensions/security/policy';
+import type * as Umf from '../../src/index-browser-v4';
+import type {SecurityDisclosureBatch} from '../../src/extensions/security/disclosure';
+import type {SecurityTruth,SecurityDisposition} from '../../src/extensions/security/logic';
+type SecurityRuntime=Pick<typeof Umf,'encodeSecurityDisclosure'|'decodeSecurityDisclosure'|'composeSecurityRules'|'inspectSecurityPolicy'|'readSecuritySource'|'writeSecuritySource'|'securityPolicyDependencies'|'evaluateSecurityWrite'|'SecurityReadRegistration'|'evaluateSecurityAccess'|'evaluateSecurityCollection'>;
+let securityRuntime:SecurityRuntime|undefined;
+export function configureSecurityRuntime(runtime:SecurityRuntime):void{securityRuntime=runtime;}
+function runtime():SecurityRuntime{if(!securityRuntime)throw Error('Security V4 runtime was not injected');return securityRuntime;}
+const encodeSecurityDisclosure:SecurityRuntime['encodeSecurityDisclosure']=(...args)=>runtime().encodeSecurityDisclosure(...args);
+const decodeSecurityDisclosure:SecurityRuntime['decodeSecurityDisclosure']=(...args)=>runtime().decodeSecurityDisclosure(...args);
+const composeSecurityRules:SecurityRuntime['composeSecurityRules']=(...args)=>runtime().composeSecurityRules(...args);
+const inspectSecurityPolicy:SecurityRuntime['inspectSecurityPolicy']=(...args)=>runtime().inspectSecurityPolicy(...args);
+const readSecuritySource:SecurityRuntime['readSecuritySource']=(...args)=>runtime().readSecuritySource(...args);
+const writeSecuritySource:SecurityRuntime['writeSecuritySource']=(...args)=>runtime().writeSecuritySource(...args);
+const securityPolicyDependencies:SecurityRuntime['securityPolicyDependencies']=(...args)=>runtime().securityPolicyDependencies(...args);
+const evaluateSecurityWrite:SecurityRuntime['evaluateSecurityWrite']=(...args)=>runtime().evaluateSecurityWrite(...args);
+const evaluateSecurityAccess:SecurityRuntime['evaluateSecurityAccess']=(...args)=>runtime().evaluateSecurityAccess(...args);
+const evaluateSecurityCollection:SecurityRuntime['evaluateSecurityCollection']=(...args)=>runtime().evaluateSecurityCollection(...args);
 import {securityFixture,ref} from './fixture';
 import {canonicalSchemaJson} from '../../src/model/schema-literals';
-import {securityPolicyDependencies} from '../../src/extensions/security/dependencies';
-import {evaluateSecurityWrite} from '../../src/extensions/security/write';
 import {writeFixture} from './write-fixture';
-import {SecurityAuthorityGuard} from '../../src/index-browser-v4';
-import {SecurityReadRegistration} from '../../src/extensions/security/registration';
+import {SecurityAuthorityGuard} from '../../src/extensions/security/authority-guard';
+const SecurityReadRegistration=function(this:unknown){return new runtime().SecurityReadRegistration();} as unknown as SecurityRuntime['SecurityReadRegistration'];
 import {evaluationFixture} from './evaluation-fixture';
-import {evaluateSecurityAccess,evaluateSecurityCollection} from '../../src/extensions/security/evaluate';
 
 /** Independent explicit expectations; no native/backend admission is inferred. */
 export function securityLogicCorpus():{cases:number;mismatches:number} {

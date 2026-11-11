@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {buildASTSchema,validateSchema,version as graphqlJsVersion} from 'graphql';
-import {exportGraphqlSchema,getGraphqlAst,importGraphqlSchema,readDocument,writeDocument} from '../../src';
+import {exportGraphqlSchema,getGraphqlAst,importGraphqlSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 
 const directory='fixtures/relationship/graphql-native';
 const source=await Bun.file(`${directory}/schema.graphql`).text();

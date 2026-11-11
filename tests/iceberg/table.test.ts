@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importIcebergTable,exportIcebergTable,inspectIcebergTable,getIcebergTableNode,proposeIcebergTableNodeEdit,writeDocument,readDocument,ICEBERG_TABLE_EXTENSION} from '../../src';
+import {importIcebergTable,exportIcebergTable,inspectIcebergTable,getIcebergTableNode,proposeIcebergTableNodeEdit,writeDocument,readDocument,ICEBERG_TABLE_EXTENSION} from '../../src/index-node-v4';
 const base='fixtures/iceberg/table/',report=await Bun.file(base+'results.json').json(),minimal=await Bun.file('fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2ValidMinimal.json').text();
 test('US-021-AC1: known table fields and embedded schemas survive JSON/YAML without native defaults',async()=>{
  for(const c of report.results){const raw=await Bun.file(c.path).text();if(c.status==='rejected'){expect(()=>importIcebergTable(raw,{id:c.id})).toThrow();continue;}const d=importIcebergTable(raw,{id:c.id});for(const f of ['json','yaml'] as const)expect(exportIcebergTable(readDocument(writeDocument(d,f),f))).toBe(await Bun.file(base+c.id+'.'+f+'.json').text());const edited=proposeIcebergTableNodeEdit(d,'/location',JSON.stringify('s3://umf-fixture/relocated/'+c.id));expect(exportIcebergTable(edited.document)).toBe(await Bun.file(base+c.id+'.edited.json').text());expect(getIcebergTableNode(d,'/location')).not.toEqual(getIcebergTableNode(edited.document,'/location'));}

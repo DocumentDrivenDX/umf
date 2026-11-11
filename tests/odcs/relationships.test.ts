@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importOdcsDocument,exportOdcsDocument,inspectOdcsRelationships,readDocument,writeDocument} from '../../src';
+import {importOdcsDocument,exportOdcsDocument,inspectOdcsRelationships,readDocument,writeDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/odcs/relationship-schema.json';

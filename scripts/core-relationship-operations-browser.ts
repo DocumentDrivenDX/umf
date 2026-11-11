@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {relationshipOperationCases,relationshipRequest} from './core-relationship-operation-cases';
 import {relationshipCandidate} from './core-relationship-cases';
-import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship} from '../src/model/relationships';
+import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship} from "../src/index-node-v4";
 const entry='.cache/core-relationship-operations-browser-entry.ts';
 await Bun.write(entry,"export * from '../src/model/relationships';export {readJsonValue,writeJsonValue} from '../src/model/serialization';\n");
 const built=await Bun.build({entrypoints:[entry],target:'browser',format:'esm'});assert.ok(built.success,JSON.stringify(built.logs));const bundle=await built.outputs[0]!.text();

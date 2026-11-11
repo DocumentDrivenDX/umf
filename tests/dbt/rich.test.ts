@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importDbtManifest,exportDbtManifest,inspectDbtManifest,proposeDbtManifestNodeEdit,writeDocument,readDocument} from '../../src';
+import {importDbtManifest,exportDbtManifest,inspectDbtManifest,proposeDbtManifestNodeEdit,writeDocument,readDocument} from '../../src/index-node-v4';
 const base='fixtures/dbt/rich/',sha=(b:string|Uint8Array)=>createHash('sha256').update(b).digest('hex');
 test('US-022-AC4: richer native build retains resource collections and distinguishes no-op outcomes',async()=>{
  const source=await Bun.file(base+'manifest.json').json(),r=await Bun.file(base+'oracle-results.json').json(),provenance=await Bun.file(base+'provenance.json').json();

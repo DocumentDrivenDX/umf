@@ -2,7 +2,7 @@
 import {expect,test} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {buildASTSchema,type GraphQLObjectType,validateSchema} from 'graphql';
-import {exportGraphqlSchema,getGraphqlAst,importGraphqlSchema,readDocument,writeDocument} from '../../src';
+import {exportGraphqlSchema,getGraphqlAst,importGraphqlSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 
 const base='fixtures/projections/ddd-authored-relationships/';
 

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {selectCoreElements} from '../../src/index-node-v4';
 const record={module:'m',element:'record'},field={module:'m',element:'id'};
 const source=():u.Document=>({umf:'0.10.0',id:'keys',vocabularies:{},modules:[{id:'m',namespace:'sales',elements:[{id:'record',kind:'record',extensions:{}},{id:'id',kind:'field',scalarType:'integer',nullability:'required',cardinality:'one',extensions:{}}]}]});

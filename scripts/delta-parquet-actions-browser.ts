@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {captureParquet,projectDeltaParquetActions} from '../src';
+import {captureParquet,projectDeltaParquetActions} from '../src/index-node-v4';
 const base='fixtures/delta/parquet-actions/',report=await Bun.file(base+'results.json').json(),negative=await Bun.file(base+'authored/manifest.json').json(),cases:any[]=[];
 for(const c of [...report.results,...negative.cases]){const bytes=new Uint8Array(await Bun.file(c.path).arrayBuffer()),r=projectDeltaParquetActions(captureParquet(bytes,{id:c.id}));cases.push({id:c.id,bytes:Array.from(bytes),status:r.status,rows:r.actions,omitted:r.omittedNullFields,conversions:r.scalarConversions,diagnostics:r.diagnostics});}
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/delta-parquet-actions-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

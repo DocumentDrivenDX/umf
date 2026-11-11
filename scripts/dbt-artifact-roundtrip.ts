@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,proposeDbtArtifactNodeEdit,writeDocument,readDocument} from '../src';
+import {importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,proposeDbtArtifactNodeEdit,writeDocument,readDocument} from '../src/index-node-v4';
 const base='fixtures/dbt/artifacts/',results=[];
 const failurePath='fixtures/dbt/failure/run-results.json';
 const failureIndex=(await Bun.file(failurePath).json()).results.findIndex((r:any)=>r.unique_id==='model.umf_failure.broken');

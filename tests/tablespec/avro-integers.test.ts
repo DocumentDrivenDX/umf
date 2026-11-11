@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importTableSpec,readDocument,writeDocument,exportTableSpec} from '../../src';
+import {importTableSpec,readDocument,writeDocument,exportTableSpec} from '../../src/index-node-v4';
 import {projectTableSpecToAvro,type TableSpecAvroPolicy} from '../../src/index-node-v4';
 test('CONTRACT-033 interpreted numeric qualifiers cannot round into supported decimal or vector shapes',async()=>{
  const cases=[];

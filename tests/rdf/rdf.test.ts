@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importRdfNQuads,exportRdfNQuads,getRdfQuads,proposeRdfQuadEdit,inspectRdfDocument,readDocument,writeDocument} from '../../src';
+import {importRdfNQuads,exportRdfNQuads,getRdfQuads,proposeRdfQuadEdit,inspectRdfDocument,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/rdf/nquads/';
 test('US-025-AC1/3: complete official syntax corpus, native graph evidence and candidate round trips',async()=>{
  const fixture=await Bun.file(base+'results.json').json(),oracle=await Bun.file(base+'oracle-results.json').json(),manifest=await Bun.file('native/rdf/sources/manifest.json').json();expect(manifest.cases).toHaveLength(87);expect(fixture.results).toHaveLength(88);expect(oracle.results.filter((r:any)=>r.native==='accepted-negative')).toHaveLength(9);let accepted=0,edits=0;

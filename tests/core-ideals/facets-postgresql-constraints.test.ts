@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import evidence from '../../fixtures/validation/facets-postgresql-constraints-native.json';
-import {inspectPostgresqlFacetPredicate} from '../../src/adapters/postgresql/facet-predicate';
+import {inspectPostgresqlFacetPredicate} from '../../scripts/core-ideals/postgresql-facet-predicate';
 import {copyJson} from '../../src/model/json';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const find=(schema:string,relation:string)=>evidence.capture.constraints.find(c=>c.schema===schema&&c.relation===relation)!;

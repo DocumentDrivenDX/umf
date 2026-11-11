@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSparkSchema,exportSparkSchema,inspectSpark,getSparkNode,proposeSparkNodeEdit,readDocument,writeDocument} from '../../src';
+import {importSparkSchema,exportSparkSchema,inspectSpark,getSparkNode,proposeSparkNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 const cases=await Bun.file('fixtures/spark/schema-cases.json').json();
 test('US-017-AC1: native schema cases preserve exact source through both UMF serializations',()=>{
  let passed=0;for(const c of cases){if(['array-default','map-default'].includes(c.id)){expect(()=>importSparkSchema(JSON.stringify(c.input),{id:c.id})).toThrow();continue;}

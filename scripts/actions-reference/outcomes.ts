@@ -4,8 +4,7 @@ import type {SQL} from 'bun';
 import type {ReferenceCommittedResult} from './executor';
 import {copyJson} from '../../src/model/json';
 import {UmfError} from '../../src/model/types';
-import {inspectActions,registerActions,type Action} from '../../src/extensions/actions';
-import {Registry} from '../../src/registry/registry';
+import {createUmfRegistry,inspectActions,type Action} from '../../src/index-node-v4';
 import {ReferenceActionPolicy} from './policy';
 import {ReferenceRevisionRepository,type RetainedActionRevision} from './revisions';
 import type {ReferenceStoreControl} from './store';
@@ -16,7 +15,7 @@ import {encodeReferenceIdentity,encodeReferenceJson,decodeReferenceJson} from '.
 export type ReferenceTerminalDecision={status:'rejected'|'conflict';code:string};
 export type ReferenceLookupDecision=ReferenceCommittedResult|ReferenceTerminalDecision|{status:'not-found'}|{status:'denied'|'unsupported'|'expired';code:string};
 function retainedAction(revision:RetainedActionRevision):Action {
- const inspection=inspectActions(revision.source,registerActions(new Registry())),selected=inspection.actions.find(a=>a.module===revision.target.module&&a.action.id===revision.target.action);
+  const inspection=inspectActions(revision.source,createUmfRegistry()),selected=inspection.actions.find(a=>a.module===revision.target.module&&a.action.id===revision.target.action);
  if(!inspection.validation.valid||!selected)throw Error('Invalid retained source');return selected.action;
 }
 function namespace(control:ReferenceStoreControl,session:TrustedActionSession,request:ReferenceInvokeRequest):string {

@@ -6,7 +6,7 @@ import {ReferenceRevisionRepository} from '../../scripts/actions-reference/revis
 import {prepareReferenceAction} from '../../scripts/actions-reference/preparation';
 import {seedReferenceEntity,freezeReferenceState,referenceAliasIdentity} from '../../scripts/actions-reference/state';
 import {encodeReferenceJson} from '../../scripts/actions-reference/codec';
-import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
+import {actionFieldValueKey} from '../../src/index-node-v4';
 import {withReferenceStore} from './native-harness';
 /** @covers US-901-AC8 */
 test('native frozen frames resolve primary/alternate Keys to one resource and reject duplicate alias writes atomically',async()=>{

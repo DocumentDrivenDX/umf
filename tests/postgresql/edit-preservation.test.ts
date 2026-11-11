@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql,proposePostgresqlNodeEdit,getPostgresqlNode,importPostgresqlCatalogCapture,proposePostgresqlCatalogEdit,getPostgresqlCatalogNode,exportPostgresqlCatalogCapture,readDocument,writeDocument} from '../../src';
+import {importPostgresqlSql,proposePostgresqlNodeEdit,getPostgresqlNode,importPostgresqlCatalogCapture,proposePostgresqlCatalogEdit,getPostgresqlCatalogNode,exportPostgresqlCatalogCapture,readDocument,writeDocument} from '../../src/index-node-v4';
 
 test('CONTRACT-015 candidate edits cannot erase unknown tagged representation content',async()=>{
  const ast=await importPostgresqlSql('CREATE TABLE original (id integer);',backend,{id:'ast-guard'});

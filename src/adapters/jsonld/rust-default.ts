@@ -4,11 +4,21 @@ import type {NativeJson} from '../../model/native-json';
 import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import manifest from '../../../spec/extensions/jsonld/package.json';
-import type {
- importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,
- proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,
- proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd,
-} from './index';
+import type {Validation} from "../../model/types";
+import type {GeneralizedRdfToJsonLdReport,JsonLdCompactionReport,JsonLdExpansionReport,JsonLdFlattenReport,JsonLdFramingOptions,JsonLdFramingReport,JsonLdToRdfReport,RdfToJsonLdReport} from "./index";
+
+type ImportJsonLdDocument = (text: string, options: { id: string; baseIRI: string; processingMode?: "json-ld-1.0" | "json-ld-1.1"; contexts?: { url: string; documentUrl?: string; text: string; }[]; expandContext?: string; }) => Document;
+type InspectJsonLdDocument = (document: Document) => Validation;
+type ExportJsonLdDocument = (document: Document) => string;
+type GetJsonLdNode = (document: Document, path: string) => NativeJson;
+type ProposeJsonLdNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+type ProposeJsonLdExpansion = (document: Document, options: { lossPolicy: "report" | "reject"; }) => Promise<JsonLdExpansionReport>;
+type ProposeJsonLdFlatten = (document: Document, options: { lossPolicy: "report" | "reject"; context?: string; compactArrays?: boolean; }) => Promise<JsonLdFlattenReport>;
+type ProposeJsonLdCompaction = (document: Document, options: { lossPolicy: "report" | "reject"; context: string; compactArrays?: boolean; compactToRelative?: boolean; }) => Promise<JsonLdCompactionReport>;
+type ProposeJsonLdFraming = (document: Document, options: Omit<JsonLdFramingOptions, "embed"> & { embed?: boolean | "@once" | "@always" | "@never" | "@first" | "@last" | undefined; frame: string; lossPolicy: "report" | "reject"; }) => Promise<JsonLdFramingReport>;
+type ProposeJsonLdToRdf = (document: Document, options: { id: string; produceGeneralizedRdf?: boolean; numericPolicy?: "strict" | "binary64"; lossPolicy: "report" | "reject"; rdfDirection?: "i18n-datatype" | "compound-literal" | null; }) => Promise<JsonLdToRdfReport>;
+type ProposeRdfToJsonLd = (document: Document, options: { id: string; baseIRI: string; processingMode?: "json-ld-1.0" | "json-ld-1.1"; lossPolicy: "report" | "reject"; useNativeTypes?: boolean; useRdfType?: boolean; rdfDirection?: "i18n-datatype" | "compound-literal" | null; }) => Promise<RdfToJsonLdReport>;
+type ProposeGeneralizedRdfToJsonLd = (document: Document, options: { id: string; baseIRI: string; processingMode: "json-ld-1.0" | "json-ld-1.1"; lossPolicy: "report" | "reject"; }) => Promise<GeneralizedRdfToJsonLdReport>;
 
 export interface JsonLdNativeFamilyEngine {
  jsonld: {
@@ -47,42 +57,42 @@ export function createJsonLdRustDefault(engine:JsonLdNativeFamilyEngine,isNative
   jsonldRegistry():Registry{
    return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.jsonld.inspectPayload({payload})));
   },
-  importJsonLdDocument(text:string,options:Parameters<typeof importJsonLdDocument>[1]):ReturnType<typeof importJsonLdDocument>{
+  importJsonLdDocument(text:string,options:Parameters<ImportJsonLdDocument>[1]):ReturnType<ImportJsonLdDocument>{
    const {id,baseIRI,processingMode,contexts,expandContext}=options;
-   return call(()=>engine.jsonld.import({source:text,id,baseIRI,...(processingMode===undefined?{}:{processingMode}),...(contexts===undefined?{}:{contexts}),...(expandContext===undefined?{}:{expandContext})}) as ReturnType<typeof importJsonLdDocument>);
+   return call(()=>engine.jsonld.import({source:text,id,baseIRI,...(processingMode===undefined?{}:{processingMode}),...(contexts===undefined?{}:{contexts}),...(expandContext===undefined?{}:{expandContext})}) as ReturnType<ImportJsonLdDocument>);
   },
-  inspectJsonLdDocument(document:Parameters<typeof inspectJsonLdDocument>[0]):ReturnType<typeof inspectJsonLdDocument>{
-   return call(()=>engine.jsonld.validate({document}) as ReturnType<typeof inspectJsonLdDocument>);
+  inspectJsonLdDocument(document:Parameters<InspectJsonLdDocument>[0]):ReturnType<InspectJsonLdDocument>{
+   return call(()=>engine.jsonld.validate({document}) as ReturnType<InspectJsonLdDocument>);
   },
-  exportJsonLdDocument(document:Parameters<typeof exportJsonLdDocument>[0]):ReturnType<typeof exportJsonLdDocument>{
-   return call(()=>engine.jsonld.export({document}) as ReturnType<typeof exportJsonLdDocument>);
+  exportJsonLdDocument(document:Parameters<ExportJsonLdDocument>[0]):ReturnType<ExportJsonLdDocument>{
+   return call(()=>engine.jsonld.export({document}) as ReturnType<ExportJsonLdDocument>);
   },
-  getJsonLdNode(document:Parameters<typeof getJsonLdNode>[0],path:Parameters<typeof getJsonLdNode>[1]):ReturnType<typeof getJsonLdNode>{
-   return call(()=>engine.jsonld.getNode({document,pointer:path}) as NativeJson as ReturnType<typeof getJsonLdNode>);
+  getJsonLdNode(document:Parameters<GetJsonLdNode>[0],path:Parameters<GetJsonLdNode>[1]):ReturnType<GetJsonLdNode>{
+   return call(()=>engine.jsonld.getNode({document,pointer:path}) as NativeJson as ReturnType<GetJsonLdNode>);
   },
-  proposeJsonLdNodeEdit(document:Parameters<typeof proposeJsonLdNodeEdit>[0],path:Parameters<typeof proposeJsonLdNodeEdit>[1],text:Parameters<typeof proposeJsonLdNodeEdit>[2]):ReturnType<typeof proposeJsonLdNodeEdit>{
-   return call(()=>engine.jsonld.editNode({document,pointer:path,replacementJson:text}) as ReturnType<typeof proposeJsonLdNodeEdit>);
+  proposeJsonLdNodeEdit(document:Parameters<ProposeJsonLdNodeEdit>[0],path:Parameters<ProposeJsonLdNodeEdit>[1],text:Parameters<ProposeJsonLdNodeEdit>[2]):ReturnType<ProposeJsonLdNodeEdit>{
+   return call(()=>engine.jsonld.editNode({document,pointer:path,replacementJson:text}) as ReturnType<ProposeJsonLdNodeEdit>);
   },
-  proposeJsonLdExpansion(document:Parameters<typeof proposeJsonLdExpansion>[0],options:Parameters<typeof proposeJsonLdExpansion>[1]):ReturnType<typeof proposeJsonLdExpansion>{
-   return Promise.resolve().then(()=>call(()=>engine.jsonld.expand({...options,document}) as Awaited<ReturnType<typeof proposeJsonLdExpansion>>)) as ReturnType<typeof proposeJsonLdExpansion>;
+  proposeJsonLdExpansion(document:Parameters<ProposeJsonLdExpansion>[0],options:Parameters<ProposeJsonLdExpansion>[1]):ReturnType<ProposeJsonLdExpansion>{
+   return Promise.resolve().then(()=>call(()=>engine.jsonld.expand({...options,document}) as Awaited<ReturnType<ProposeJsonLdExpansion>>)) as ReturnType<ProposeJsonLdExpansion>;
   },
-  proposeJsonLdFlatten(document:Parameters<typeof proposeJsonLdFlatten>[0],options:Parameters<typeof proposeJsonLdFlatten>[1]):ReturnType<typeof proposeJsonLdFlatten>{
-   return Promise.resolve().then(()=>call(()=>engine.jsonld.flatten({...options,document}) as Awaited<ReturnType<typeof proposeJsonLdFlatten>>)) as ReturnType<typeof proposeJsonLdFlatten>;
+  proposeJsonLdFlatten(document:Parameters<ProposeJsonLdFlatten>[0],options:Parameters<ProposeJsonLdFlatten>[1]):ReturnType<ProposeJsonLdFlatten>{
+   return Promise.resolve().then(()=>call(()=>engine.jsonld.flatten({...options,document}) as Awaited<ReturnType<ProposeJsonLdFlatten>>)) as ReturnType<ProposeJsonLdFlatten>;
   },
-  proposeJsonLdCompaction(document:Parameters<typeof proposeJsonLdCompaction>[0],options:Parameters<typeof proposeJsonLdCompaction>[1]):ReturnType<typeof proposeJsonLdCompaction>{
-   return Promise.resolve().then(()=>call(()=>engine.jsonld.compact({...options,document}) as Awaited<ReturnType<typeof proposeJsonLdCompaction>>)) as ReturnType<typeof proposeJsonLdCompaction>;
+  proposeJsonLdCompaction(document:Parameters<ProposeJsonLdCompaction>[0],options:Parameters<ProposeJsonLdCompaction>[1]):ReturnType<ProposeJsonLdCompaction>{
+   return Promise.resolve().then(()=>call(()=>engine.jsonld.compact({...options,document}) as Awaited<ReturnType<ProposeJsonLdCompaction>>)) as ReturnType<ProposeJsonLdCompaction>;
   },
-  proposeJsonLdFraming(document:Parameters<typeof proposeJsonLdFraming>[0],options:Parameters<typeof proposeJsonLdFraming>[1]):ReturnType<typeof proposeJsonLdFraming>{
-   return Promise.resolve().then(()=>call(()=>engine.jsonld.frame({...options,document}) as Awaited<ReturnType<typeof proposeJsonLdFraming>>)) as ReturnType<typeof proposeJsonLdFraming>;
+  proposeJsonLdFraming(document:Parameters<ProposeJsonLdFraming>[0],options:Parameters<ProposeJsonLdFraming>[1]):ReturnType<ProposeJsonLdFraming>{
+   return Promise.resolve().then(()=>call(()=>engine.jsonld.frame({...options,document}) as Awaited<ReturnType<ProposeJsonLdFraming>>)) as ReturnType<ProposeJsonLdFraming>;
   },
-  proposeJsonLdToRdf(document:Parameters<typeof proposeJsonLdToRdf>[0],options:Parameters<typeof proposeJsonLdToRdf>[1]):ReturnType<typeof proposeJsonLdToRdf>{
-   return Promise.resolve().then(()=>call(()=>engine.jsonld.toRdf({...options,document}) as Awaited<ReturnType<typeof proposeJsonLdToRdf>>)) as ReturnType<typeof proposeJsonLdToRdf>;
+  proposeJsonLdToRdf(document:Parameters<ProposeJsonLdToRdf>[0],options:Parameters<ProposeJsonLdToRdf>[1]):ReturnType<ProposeJsonLdToRdf>{
+   return Promise.resolve().then(()=>call(()=>engine.jsonld.toRdf({...options,document}) as Awaited<ReturnType<ProposeJsonLdToRdf>>)) as ReturnType<ProposeJsonLdToRdf>;
   },
-  proposeRdfToJsonLd(document:Parameters<typeof proposeRdfToJsonLd>[0],options:Parameters<typeof proposeRdfToJsonLd>[1]):ReturnType<typeof proposeRdfToJsonLd>{
-   return Promise.resolve().then(()=>call(()=>engine.jsonld.fromRdf({...options,document}) as Awaited<ReturnType<typeof proposeRdfToJsonLd>>)) as ReturnType<typeof proposeRdfToJsonLd>;
+  proposeRdfToJsonLd(document:Parameters<ProposeRdfToJsonLd>[0],options:Parameters<ProposeRdfToJsonLd>[1]):ReturnType<ProposeRdfToJsonLd>{
+   return Promise.resolve().then(()=>call(()=>engine.jsonld.fromRdf({...options,document}) as Awaited<ReturnType<ProposeRdfToJsonLd>>)) as ReturnType<ProposeRdfToJsonLd>;
   },
-  proposeGeneralizedRdfToJsonLd(document:Parameters<typeof proposeGeneralizedRdfToJsonLd>[0],options:Parameters<typeof proposeGeneralizedRdfToJsonLd>[1]):ReturnType<typeof proposeGeneralizedRdfToJsonLd>{
-   return Promise.resolve().then(()=>call(()=>engine.jsonld.fromGeneralizedRdf({...options,document}) as Awaited<ReturnType<typeof proposeGeneralizedRdfToJsonLd>>)) as ReturnType<typeof proposeGeneralizedRdfToJsonLd>;
+  proposeGeneralizedRdfToJsonLd(document:Parameters<ProposeGeneralizedRdfToJsonLd>[0],options:Parameters<ProposeGeneralizedRdfToJsonLd>[1]):ReturnType<ProposeGeneralizedRdfToJsonLd>{
+   return Promise.resolve().then(()=>call(()=>engine.jsonld.fromGeneralizedRdf({...options,document}) as Awaited<ReturnType<ProposeGeneralizedRdfToJsonLd>>)) as ReturnType<ProposeGeneralizedRdfToJsonLd>;
   },
  });
 }

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importDeltaTable,exportDeltaTable,inspectDeltaTable} from '../../src';
+import {importDeltaTable,exportDeltaTable,inspectDeltaTable} from '../../src/index-node-v4';
 const field=(name:string,id:number,physical:string,type:any='string')=>({name,type,nullable:true,metadata:{'delta.columnMapping.id':id,'delta.columnMapping.physicalName':physical}});
 const context=(fields:any[])=>({protocol:{minReaderVersion:2,minWriterVersion:5},metaData:{id:'mapped',format:{provider:'parquet'},schemaString:JSON.stringify({type:'struct',fields}),partitionColumns:[],configuration:{'delta.columnMapping.mode':'name','delta.columnMapping.maxColumnId':'5'}}});
 const codes=(c:any)=>inspectDeltaTable(importDeltaTable(JSON.stringify(c),{id:'mapping'})).diagnostics.filter(d=>d.code.startsWith('DELTA_MAPPING_')).map(d=>d.code);

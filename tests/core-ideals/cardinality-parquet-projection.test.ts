@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {declareCoreCardinality, exportParquetCapture, readJsonValue, writeJsonValue, type Document, type Cardinality} from '../../src';
-import {projectCardinalityToParquet, recoverCardinalityFromParquet, type CardinalityParquetRequest, type ParquetCardinalityCarrier} from '../../src/core-ideals/cardinality-parquet-projection';
+import {declareCoreCardinality, exportParquetCapture, readJsonValue, writeJsonValue, type Document, type Cardinality} from '../../src/index-node-v4';
+import {type CardinalityParquetRequest,type ParquetCardinalityCarrier} from "../../src/core-ideals/cardinality-parquet-projection";
+import {projectCardinalityToParquet,recoverCardinalityFromParquet} from "../../src/index-node-v4";
 import {verifyParquetCardinalityComposition} from '../../scripts/core-ideals/cardinality-parquet-composition';
 const scalar:ParquetCardinalityCarrier={kind:'scalar',nativeType:'int64',nullable:false};
 const base:CardinalityParquetRequest={id:'projection',recordName:'Example',fieldName:'value',nativeType:scalar,availability:'definition-level',requireExactValues:false,mode:'strict'};

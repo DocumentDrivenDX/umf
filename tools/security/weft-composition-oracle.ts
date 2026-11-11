@@ -1,6 +1,7 @@
 // Independent portable-model oracle for the owner Rust composition tests.
 // No authenticated facts or native authorization are established here.
-import {securityAnd,securityOr,securityNot,composeSecurityRules,type SecurityTruth} from '../../src/extensions/security/logic';
+import {composeSecurityRules} from '../../src/index-node-v4';
+import {securityAnd,securityOr,securityNot,type SecurityTruth} from '../../src/extensions/security/logic';
 const values:SecurityTruth[]=['T','F','U'];
 const truthVectors:{args:SecurityTruth[];and:SecurityTruth;or:SecurityTruth;not:SecurityTruth[]}[]=[];
 function enumerate(args:SecurityTruth[],remaining:number):void {

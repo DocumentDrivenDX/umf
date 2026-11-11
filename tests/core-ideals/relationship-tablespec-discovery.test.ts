@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,test,expect} from 'bun:test';
-import {importTableSpec, exportTableSpec, importTableSpecBundle, exportTableSpecBundle} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec,importTableSpecBundle,exportTableSpecBundle} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import type {Document} from '../../src/model/types';
 import proof from '../../fixtures/validation/relationship-tablespec-discovery-native.json';

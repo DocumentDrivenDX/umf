@@ -6,8 +6,8 @@ import keys from '../../spec/core/schema.json';
 import relationships from '../../spec/core/schema.json';
 import keyResult from '../../spec/core/key-operation-v4.schema.json';
 import relationshipResult from '../../spec/core/relationship-operation-v3.schema.json';
-import {inspectCoreKeys} from '../../src/model/keys';
-import {inspectCoreRelationships} from '../../src/model/relationships';
+import {inspectCoreKeys} from "../../src/index-node-v4";
+import {inspectCoreRelationships} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
 test('current read-only Key and relationship result schemas preserve core meaning',()=>{
  const validator=createValidator();for(const schema of [properties,keys,relationships])validator.addSchema(schema);

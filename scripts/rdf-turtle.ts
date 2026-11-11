@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importRdfTurtle,exportRdfTurtle,exportRdfNQuads,getRdfQuads,proposeRdfQuadEdit,readDocument,writeDocument} from '../src';
+import {importRdfTurtle,exportRdfTurtle,exportRdfNQuads,getRdfQuads,proposeRdfQuadEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const manifest=await Bun.file('native/rdf/turtle-sources/manifest.json').json(),results=[];
 for(const c of manifest.cases){const raw=await Bun.file(c.path).text();let d;try{d=importRdfTurtle(raw,{id:c.id,baseIRI:c.baseIRI});}catch(e){if(c.positive)throw Error(c.id+': '+String(e));results.push({...c,status:'rejected'});continue;}if(!c.positive)throw Error('Negative accepted: '+c.id);
  const quads=getRdfQuads(d),index=quads.findIndex(q=>q.object.kind==='literal'),exports=[];let candidate;if(index>=0)candidate=proposeRdfQuadEdit(d,index,{...quads[index]!,object:{kind:'literal',value:'UMF reviewed literal',datatype:'http://www.w3.org/2001/XMLSchema#string'}}).document;

@@ -1,22 +1,19 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {
-  AvroFieldMetadata,
-  AvroNodeEditProposal,
-  AvroPayload,
-  editAvroNode,
-  exportAvroBundle,
-  exportAvroSchema,
-  getAvroFieldMetadata,
-  getAvroNode,
-  importAvroSchema,
-  inspectAvro,
-  proposeAvroNodeEdit,
-} from './index';
+import type {AvroFieldMetadata,AvroNodeEditProposal,AvroPayload} from './index';
 import type {Diagnostic, Document, ExtensionPackage, Json, Validation} from '../../model/types';
 import type {NativeJson} from '../json-schema/tree';
 import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import {AVRO_EXTENSION, avroPackage} from './package';
+
+type EditAvroNode = (document: Document, path: string, text: string, dependencyId?: string | undefined) => Document;
+type ExportAvroBundle = (document: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; };
+type ExportAvroSchema = (document: Document) => string;
+type GetAvroFieldMetadata = (document: Document) => AvroFieldMetadata[];
+type GetAvroNode = (document: Document, path: string, dependencyId?: string | undefined) => NativeJson;
+type ImportAvroSchema = (text: string, options: { id: string; dependencies?: { id: string; schema: string; }[]; }) => Document;
+type InspectAvro = (document: Document) => Validation;
+type ProposeAvroNodeEdit = (input: Document, path: string, text: string, dependencyId?: string | undefined) => AvroNodeEditProposal;
 
 export interface AvroNativeFamilyEngine {
   avro: {
@@ -79,56 +76,56 @@ export function createAvroRustDefault(
         call<Diagnostic[]>(() => engine.avro.inspectPayload({payload})),
       );
     },
-    inspectAvro(document: Parameters<typeof inspectAvro>[0]): ReturnType<typeof inspectAvro> {
-      return call<ReturnType<typeof inspectAvro>>(() => engine.avro.inspect({document}));
+    inspectAvro(document: Parameters<InspectAvro>[0]): ReturnType<InspectAvro> {
+      return call<ReturnType<InspectAvro>>(() => engine.avro.inspect({document}));
     },
     importAvroSchema(
-      text: Parameters<typeof importAvroSchema>[0],
-      options: Parameters<typeof importAvroSchema>[1],
-    ): ReturnType<typeof importAvroSchema> {
+      text: Parameters<ImportAvroSchema>[0],
+      options: Parameters<ImportAvroSchema>[1],
+    ): ReturnType<ImportAvroSchema> {
       const {id, dependencies} = options;
-      const document = call<ReturnType<typeof importAvroSchema>>(() => engine.avro.import({source: text, id, ...(dependencies === undefined ? {} : {dependencies})}));
+      const document = call<ReturnType<ImportAvroSchema>>(() => engine.avro.import({source: text, id, ...(dependencies === undefined ? {} : {dependencies})}));
       admittedPayload(document);
       return document;
     },
-    getAvroFieldMetadata(document: Parameters<typeof getAvroFieldMetadata>[0]): AvroFieldMetadata[] {
+    getAvroFieldMetadata(document: Parameters<GetAvroFieldMetadata>[0]): AvroFieldMetadata[] {
       const payload = admittedPayload(document);
       return call<AvroFieldMetadata[]>(() => engine.avro.fields({
         root: payload.root,
         ...(payload.dependencies === undefined ? {} : {dependencies: payload.dependencies}),
       }));
     },
-    exportAvroSchema(document: Parameters<typeof exportAvroSchema>[0]): ReturnType<typeof exportAvroSchema> {
+    exportAvroSchema(document: Parameters<ExportAvroSchema>[0]): ReturnType<ExportAvroSchema> {
       admittedPayload(document);
-      return call<ReturnType<typeof exportAvroSchema>>(() => engine.avro.export({document}));
+      return call<ReturnType<ExportAvroSchema>>(() => engine.avro.export({document}));
     },
-    exportAvroBundle(document: Parameters<typeof exportAvroBundle>[0]): ReturnType<typeof exportAvroBundle> {
+    exportAvroBundle(document: Parameters<ExportAvroBundle>[0]): ReturnType<ExportAvroBundle> {
       admittedPayload(document);
-      return call<ReturnType<typeof exportAvroBundle>>(() => engine.avro.exportBundle({document}));
+      return call<ReturnType<ExportAvroBundle>>(() => engine.avro.exportBundle({document}));
     },
     getAvroNode(
-      document: Parameters<typeof getAvroNode>[0],
-      path: Parameters<typeof getAvroNode>[1],
-      dependencyId?: Parameters<typeof getAvroNode>[2],
-    ): ReturnType<typeof getAvroNode> {
+      document: Parameters<GetAvroNode>[0],
+      path: Parameters<GetAvroNode>[1],
+      dependencyId?: Parameters<GetAvroNode>[2],
+    ): ReturnType<GetAvroNode> {
       admittedPayload(document);
-      return call<ReturnType<typeof getAvroNode>>(() => engine.avro.getNode({document, path, ...(dependencyId === undefined ? {} : {dependencyId})}) as NativeJson);
+      return call<ReturnType<GetAvroNode>>(() => engine.avro.getNode({document, path, ...(dependencyId === undefined ? {} : {dependencyId})}) as NativeJson);
     },
     editAvroNode(
-      document: Parameters<typeof editAvroNode>[0],
-      path: Parameters<typeof editAvroNode>[1],
-      text: Parameters<typeof editAvroNode>[2],
-      dependencyId?: Parameters<typeof editAvroNode>[3],
-    ): ReturnType<typeof editAvroNode> {
+      document: Parameters<EditAvroNode>[0],
+      path: Parameters<EditAvroNode>[1],
+      text: Parameters<EditAvroNode>[2],
+      dependencyId?: Parameters<EditAvroNode>[3],
+    ): ReturnType<EditAvroNode> {
       admittedPayload(document);
-      return call<ReturnType<typeof editAvroNode>>(() => engine.avro.editNode({document, path, replacementJson: text, ...(dependencyId === undefined ? {} : {dependencyId})}));
+      return call<ReturnType<EditAvroNode>>(() => engine.avro.editNode({document, path, replacementJson: text, ...(dependencyId === undefined ? {} : {dependencyId})}));
     },
     proposeAvroNodeEdit(
-      document: Parameters<typeof proposeAvroNodeEdit>[0],
-      path: Parameters<typeof proposeAvroNodeEdit>[1],
-      text: Parameters<typeof proposeAvroNodeEdit>[2],
-      dependencyId?: Parameters<typeof proposeAvroNodeEdit>[3],
-    ): ReturnType<typeof proposeAvroNodeEdit> {
+      document: Parameters<ProposeAvroNodeEdit>[0],
+      path: Parameters<ProposeAvroNodeEdit>[1],
+      text: Parameters<ProposeAvroNodeEdit>[2],
+      dependencyId?: Parameters<ProposeAvroNodeEdit>[3],
+    ): ReturnType<ProposeAvroNodeEdit> {
       admittedPayload(document);
       return call<AvroNodeEditProposal>(() => engine.avro.proposeNodeEdit({document, path, replacementJson: text, ...(dependencyId === undefined ? {} : {dependencyId})}));
     },

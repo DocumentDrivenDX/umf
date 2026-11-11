@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../src/index';
+import * as u from '../src/index-node-v4';
 import {uuidBinding,uuidDocument,FIELD} from './helpers/uuid-fixtures';
 function binding(system:string,version:string,kind:string){const b=uuidBinding(kind);(b.extensions!['umf.binding'] as any).target={system,version,subset:'uuid-carrier1'};return b;}
 test('explicit five-target carrier proposals and full retained-source recovery',()=>{

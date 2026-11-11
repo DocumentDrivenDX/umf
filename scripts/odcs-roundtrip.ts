@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importOdcsDocument,exportOdcsDocument,inspectOdcsDocument,proposeOdcsDocumentNodeEdit,readDocument,writeDocument} from '../src';
+import {importOdcsDocument,exportOdcsDocument,inspectOdcsDocument,proposeOdcsDocumentNodeEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const source=await Bun.file('native/odcs/sources/manifest.json').json(),base='fixtures/odcs/',results=[];
 for(const [i,f] of source.files.filter((f:any)=>f.upstreamPath.endsWith('.yaml')).entries()){
  const id=String(i).padStart(3,'0'),raw=await Bun.file(f.path).text();

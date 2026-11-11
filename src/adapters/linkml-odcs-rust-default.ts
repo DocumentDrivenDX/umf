@@ -1,19 +1,35 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {Document,Diagnostic,ExtensionPackage,Json} from '../model/types';
+import type {Document,Diagnostic,ExtensionPackage,Json,Validation} from '../model/types';
 import type {NativeJson} from '../model/native-json';
 import {UmfError} from '../model/errors';
 import type {Registry} from '../registry/registry';
 import linkmlManifest from '../../spec/extensions/linkml/package.json';
 import odcsManifest from '../../spec/extensions/odcs/package.json';
-import type {importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit} from './linkml';
-import type {LinkmlImportContext,LinkmlImportReport,inspectLinkmlImportContext} from './linkml/imports';
-import type {LinkmlImportMergeReport,proposeLinkmlImportMerge} from './linkml/merge';
-import type {LinkmlClassSlotsReport,inspectLinkmlClassSlots} from './linkml/class-slots';
-import type {LinkmlSlotValuesReport,inspectLinkmlSlotValues} from './linkml/slot-values';
-import type {importOdcsDocument,inspectOdcsDocument,exportOdcsDocument,getOdcsDocumentNode,proposeOdcsDocumentNodeEdit} from './odcs';
-import type {OdcsReferenceResult,resolveOdcsReference} from './odcs/references';
-import type {OdcsRelationshipReport,inspectOdcsRelationships} from './odcs/relationships';
-import type {OdcsRenameResult,proposeOdcsElementRename} from './odcs/rename';
+
+import type {LinkmlImportContext,LinkmlImportReport} from './linkml/imports';
+import type {LinkmlImportMergeReport} from './linkml/merge';
+import type {LinkmlClassSlotsReport} from './linkml/class-slots';
+import type {LinkmlSlotValuesReport} from './linkml/slot-values';
+
+import type {OdcsReferenceResult} from './odcs/references';
+import type {OdcsRelationshipReport} from './odcs/relationships';
+import type {OdcsRenameResult} from './odcs/rename';
+
+type ImportLinkmlDocument = (text: string, options: { id: string; format: "json" | "yaml"; metamodelVersion?: string; }) => Document;
+type InspectLinkmlDocument = (document: Document) => Validation;
+type ExportLinkmlDocument = (document: Document, format?: "json" | "yaml" | undefined) => string;
+type GetLinkmlDocumentNode = (document: Document, path: string) => NativeJson;
+type ProposeLinkmlDocumentNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+type InspectLinkmlClassSlots = (document: Document, className: string) => LinkmlClassSlotsReport;
+type InspectLinkmlSlotValues = (document: Document, className: string, slotName: string) => LinkmlSlotValuesReport;
+type ImportOdcsDocument = (text: string, options: { id: string; format: "json" | "yaml"; }) => Document;
+type InspectOdcsDocument = (document: Document) => Validation;
+type ExportOdcsDocument = (document: Document, format?: "json" | "yaml" | undefined) => string;
+type GetOdcsDocumentNode = (document: Document, path: string) => NativeJson;
+type ProposeOdcsDocumentNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+type ResolveOdcsReference = (document: Document, options: { reference: string; usage: "element" | "foreignKey"; }) => OdcsReferenceResult;
+type InspectOdcsRelationships = (document: Document, options?: { maxRelationships?: number; }) => OdcsRelationshipReport;
+type ProposeOdcsElementRename = (document: Document, options: { reference: string; name: string; }) => OdcsRenameResult;
 
 export interface LinkmlOdcsNativeFamilyEngine {
  linkml:{
@@ -52,23 +68,23 @@ export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,
  };
  return Object.freeze({
   linkmlRegistry():Registry{return createRegistry().register(linkmlManifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.linkml.inspectPayload({payload})));},
-  importLinkmlDocument(text:string,options:Parameters<typeof importLinkmlDocument>[1]):ReturnType<typeof importLinkmlDocument>{const {id,format,metamodelVersion}=options;return call(()=>engine.linkml.import({source:text,id,format,...(metamodelVersion===undefined?{}:{metamodelVersion})}) as ReturnType<typeof importLinkmlDocument>);},
-  inspectLinkmlDocument(document:Parameters<typeof inspectLinkmlDocument>[0]):ReturnType<typeof inspectLinkmlDocument>{return call(()=>engine.linkml.inspect({document}) as ReturnType<typeof inspectLinkmlDocument>);},
-  exportLinkmlDocument(document:Parameters<typeof exportLinkmlDocument>[0],format?:Parameters<typeof exportLinkmlDocument>[1]):ReturnType<typeof exportLinkmlDocument>{return call(()=>engine.linkml.export({document,...(format===undefined?{}:{format})}) as ReturnType<typeof exportLinkmlDocument>);},
-  getLinkmlDocumentNode(document:Parameters<typeof getLinkmlDocumentNode>[0],path:Parameters<typeof getLinkmlDocumentNode>[1]):ReturnType<typeof getLinkmlDocumentNode>{return call(()=>engine.linkml.getNode({document,pointer:path}) as NativeJson as ReturnType<typeof getLinkmlDocumentNode>);},
-  proposeLinkmlDocumentNodeEdit(document:Parameters<typeof proposeLinkmlDocumentNodeEdit>[0],path:Parameters<typeof proposeLinkmlDocumentNodeEdit>[1],text:Parameters<typeof proposeLinkmlDocumentNodeEdit>[2]):ReturnType<typeof proposeLinkmlDocumentNodeEdit>{return call(()=>engine.linkml.editNode({document,pointer:path,jsonText:text}) as ReturnType<typeof proposeLinkmlDocumentNodeEdit>);},
+  importLinkmlDocument(text:string,options:Parameters<ImportLinkmlDocument>[1]):ReturnType<ImportLinkmlDocument>{const {id,format,metamodelVersion}=options;return call(()=>engine.linkml.import({source:text,id,format,...(metamodelVersion===undefined?{}:{metamodelVersion})}) as ReturnType<ImportLinkmlDocument>);},
+  inspectLinkmlDocument(document:Parameters<InspectLinkmlDocument>[0]):ReturnType<InspectLinkmlDocument>{return call(()=>engine.linkml.inspect({document}) as ReturnType<InspectLinkmlDocument>);},
+  exportLinkmlDocument(document:Parameters<ExportLinkmlDocument>[0],format?:Parameters<ExportLinkmlDocument>[1]):ReturnType<ExportLinkmlDocument>{return call(()=>engine.linkml.export({document,...(format===undefined?{}:{format})}) as ReturnType<ExportLinkmlDocument>);},
+  getLinkmlDocumentNode(document:Parameters<GetLinkmlDocumentNode>[0],path:Parameters<GetLinkmlDocumentNode>[1]):ReturnType<GetLinkmlDocumentNode>{return call(()=>engine.linkml.getNode({document,pointer:path}) as NativeJson as ReturnType<GetLinkmlDocumentNode>);},
+  proposeLinkmlDocumentNodeEdit(document:Parameters<ProposeLinkmlDocumentNodeEdit>[0],path:Parameters<ProposeLinkmlDocumentNodeEdit>[1],text:Parameters<ProposeLinkmlDocumentNodeEdit>[2]):ReturnType<ProposeLinkmlDocumentNodeEdit>{return call(()=>engine.linkml.editNode({document,pointer:path,jsonText:text}) as ReturnType<ProposeLinkmlDocumentNodeEdit>);},
   inspectLinkmlImportContext(input:LinkmlImportContext):LinkmlImportReport{return call(()=>engine.linkml.importContext({input}) as LinkmlImportReport);},
   proposeLinkmlImportMerge(input:LinkmlImportContext,options:{mode:'view'|'merge-imports'}):LinkmlImportMergeReport{const {mode}=options;return call(()=>engine.linkml.importMerge({input,mode}) as LinkmlImportMergeReport);},
-  inspectLinkmlClassSlots(document:Parameters<typeof inspectLinkmlClassSlots>[0],className:string):LinkmlClassSlotsReport{return call(()=>engine.linkml.classSlots({document,className}) as LinkmlClassSlotsReport);},
-  inspectLinkmlSlotValues(document:Parameters<typeof inspectLinkmlSlotValues>[0],className:string,slotName:string):LinkmlSlotValuesReport{return call(()=>engine.linkml.slotValues({document,className,slotName}) as LinkmlSlotValuesReport);},
-  importOdcsDocument(text:string,options:Parameters<typeof importOdcsDocument>[1]):ReturnType<typeof importOdcsDocument>{const {id,format}=options;return call(()=>engine.odcs.import({source:text,id,format}) as ReturnType<typeof importOdcsDocument>);},
+  inspectLinkmlClassSlots(document:Parameters<InspectLinkmlClassSlots>[0],className:string):LinkmlClassSlotsReport{return call(()=>engine.linkml.classSlots({document,className}) as LinkmlClassSlotsReport);},
+  inspectLinkmlSlotValues(document:Parameters<InspectLinkmlSlotValues>[0],className:string,slotName:string):LinkmlSlotValuesReport{return call(()=>engine.linkml.slotValues({document,className,slotName}) as LinkmlSlotValuesReport);},
+  importOdcsDocument(text:string,options:Parameters<ImportOdcsDocument>[1]):ReturnType<ImportOdcsDocument>{const {id,format}=options;return call(()=>engine.odcs.import({source:text,id,format}) as ReturnType<ImportOdcsDocument>);},
   odcsRegistry():Registry{return createRegistry().register(odcsManifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.odcs.inspectPayload({payload})));},
-  inspectOdcsDocument(document:Parameters<typeof inspectOdcsDocument>[0]):ReturnType<typeof inspectOdcsDocument>{return call(()=>engine.odcs.inspect({document}) as ReturnType<typeof inspectOdcsDocument>);},
-  exportOdcsDocument(document:Parameters<typeof exportOdcsDocument>[0],format?:Parameters<typeof exportOdcsDocument>[1]):ReturnType<typeof exportOdcsDocument>{return call(()=>engine.odcs.export({document,...(format===undefined?{}:{format})}) as ReturnType<typeof exportOdcsDocument>);},
-  getOdcsDocumentNode(document:Parameters<typeof getOdcsDocumentNode>[0],path:Parameters<typeof getOdcsDocumentNode>[1]):ReturnType<typeof getOdcsDocumentNode>{return call(()=>engine.odcs.getNode({document,pointer:path}) as NativeJson as ReturnType<typeof getOdcsDocumentNode>);},
-  proposeOdcsDocumentNodeEdit(document:Parameters<typeof proposeOdcsDocumentNodeEdit>[0],path:Parameters<typeof proposeOdcsDocumentNodeEdit>[1],text:Parameters<typeof proposeOdcsDocumentNodeEdit>[2]):ReturnType<typeof proposeOdcsDocumentNodeEdit>{return call(()=>engine.odcs.editNode({document,pointer:path,jsonText:text}) as ReturnType<typeof proposeOdcsDocumentNodeEdit>);},
-  resolveOdcsReference(document:Parameters<typeof resolveOdcsReference>[0],options:Parameters<typeof resolveOdcsReference>[1]):OdcsReferenceResult{const {reference,usage}=options;return call(()=>engine.odcs.resolveReference({document,reference,usage}) as OdcsReferenceResult);},
-  inspectOdcsRelationships(document:Parameters<typeof inspectOdcsRelationships>[0],options:Parameters<typeof inspectOdcsRelationships>[1]={}):OdcsRelationshipReport{const {maxRelationships}=options;return call(()=>engine.odcs.relationships({document,...(maxRelationships===undefined?{}:{maxRelationships})}) as OdcsRelationshipReport);},
-  proposeOdcsElementRename(document:Parameters<typeof proposeOdcsElementRename>[0],options:Parameters<typeof proposeOdcsElementRename>[1]):OdcsRenameResult{const {reference,name}=options;return call(()=>engine.odcs.renameElement({document,reference,name}) as OdcsRenameResult);},
+  inspectOdcsDocument(document:Parameters<InspectOdcsDocument>[0]):ReturnType<InspectOdcsDocument>{return call(()=>engine.odcs.inspect({document}) as ReturnType<InspectOdcsDocument>);},
+  exportOdcsDocument(document:Parameters<ExportOdcsDocument>[0],format?:Parameters<ExportOdcsDocument>[1]):ReturnType<ExportOdcsDocument>{return call(()=>engine.odcs.export({document,...(format===undefined?{}:{format})}) as ReturnType<ExportOdcsDocument>);},
+  getOdcsDocumentNode(document:Parameters<GetOdcsDocumentNode>[0],path:Parameters<GetOdcsDocumentNode>[1]):ReturnType<GetOdcsDocumentNode>{return call(()=>engine.odcs.getNode({document,pointer:path}) as NativeJson as ReturnType<GetOdcsDocumentNode>);},
+  proposeOdcsDocumentNodeEdit(document:Parameters<ProposeOdcsDocumentNodeEdit>[0],path:Parameters<ProposeOdcsDocumentNodeEdit>[1],text:Parameters<ProposeOdcsDocumentNodeEdit>[2]):ReturnType<ProposeOdcsDocumentNodeEdit>{return call(()=>engine.odcs.editNode({document,pointer:path,jsonText:text}) as ReturnType<ProposeOdcsDocumentNodeEdit>);},
+  resolveOdcsReference(document:Parameters<ResolveOdcsReference>[0],options:Parameters<ResolveOdcsReference>[1]):OdcsReferenceResult{const {reference,usage}=options;return call(()=>engine.odcs.resolveReference({document,reference,usage}) as OdcsReferenceResult);},
+  inspectOdcsRelationships(document:Parameters<InspectOdcsRelationships>[0],options:Parameters<InspectOdcsRelationships>[1]={}):OdcsRelationshipReport{const {maxRelationships}=options;return call(()=>engine.odcs.relationships({document,...(maxRelationships===undefined?{}:{maxRelationships})}) as OdcsRelationshipReport);},
+  proposeOdcsElementRename(document:Parameters<ProposeOdcsElementRename>[0],options:Parameters<ProposeOdcsElementRename>[1]):OdcsRenameResult{const {reference,name}=options;return call(()=>engine.odcs.renameElement({document,reference,name}) as OdcsRenameResult);},
  });
 }

@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {Type} from 'avsc/etc/browser/avsc-types';
-import {captureParquet,exportAvroSchema,exportParquetCapture,getAvroFieldMetadata,importAvroSchema,inspectParquetSchema,readDocument,writeDocument} from '../../src';
+import {captureParquet,exportAvroSchema,exportParquetCapture,getAvroFieldMetadata,importAvroSchema,inspectParquetSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 
 const base='fixtures/relationship-native/';
 const avscPackage=await Bun.file('node_modules/avsc/package.json').json();

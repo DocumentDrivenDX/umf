@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {tableSpecKeyAuthors,keyRecord,keyId,keyCode} from './key-tablespec-projection-cases';
-import {declareCoreKey, type CoreKeyDeclaration} from '../../src/model/keys';
+import {type CoreKeyDeclaration} from "../../src/model/keys";
+import {declareCoreKey} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
 import type {KeySqlServerRequest} from '../../src/core-ideals/key-sqlserver-projection';
 export function sqlserverKeyAuthors(primary=true){

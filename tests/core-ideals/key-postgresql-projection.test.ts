@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlKeyAuthors,postgresqlKeyProjectionCases} from '../../scripts/core-ideals/key-postgresql-projection-cases';
-import {projectKeysToPostgresql, verifyKeysPostgresqlProjection, recoverKeysPostgresqlIdeal} from '../../src/core-ideals/key-postgresql-projection';
+import {projectKeysToPostgresql,verifyKeysPostgresqlProjection,recoverKeysPostgresqlIdeal} from "../../src/index-node-v4";
 import {backend} from '../../native/postgresql/runtime';
-import {getPostgresqlSource, importPostgresqlSql} from '../../src/adapters/postgresql';
+import {getPostgresqlSource,importPostgresqlSql} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 for(const row of postgresqlKeyProjectionCases())test('PostgreSQL authored keys: '+row.name,async()=>{
  const before=JSON.stringify(row),r=await projectKeysToPostgresql(row.source,row.authors,row.request,backend);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);expect(r.mappings.length).toBe(row.authors.length);expect(r.residuals.filter(x=>/\/keys\//.test(x.path)).length).toBeGreaterThanOrEqual(row.authors.length);if(row.expectedEquality)expect(r.mappings[0]!.equality).toBe(row.expectedEquality);
@@ -37,7 +37,7 @@ test('forged receipts, edited SQL and omitted per-key residuals cannot recover',
  const edited=await importPostgresqlSql(r.nativeSql!.replace('PRIMARY KEY','UNIQUE'),backend,{id:c.request.id});await expect(recoverKeysPostgresqlIdeal(r,edited,backend)).rejects.toThrow();
 });
 test('unknown key, membership and component qualifiers recover without becoming native semantics',async()=>{
- const {declareCoreKey}=await import('../../src/model/keys'),{keyRecord,keyId,keyCode}=await import('../../scripts/core-ideals/key-tablespec-projection-cases');
+ const {declareCoreKey}=await import('../../src/index-node-v4'),{keyRecord,keyId,keyCode}=await import('../../scripts/core-ideals/key-tablespec-projection-cases');
  const c=postgresqlKeyAuthors(),d=structuredClone(c.source),record=d.modules[0]!.elements[0]!;(record.members as any[])[0].future={owner:'opaque'};(record.keys as any[])[0].future={meaning:'not interpreted'};(record.keys as any[])[0].fields[0].future={component:'retained'};
  const a=declareCoreKey(d,keyRecord,{id:'stable-id',name:'Order identity',fields:[keyId]}),b=declareCoreKey(a.target,keyRecord,{id:'stable-code',name:'External code',fields:[keyCode]}),r=await projectKeysToPostgresql(b.target,[a,b],c.request,backend);
  expect(r.mappings[0]!.equality).toBe('unknown');expect(r.mappings[1]!.equality).toBe('exact-on-representable-values');
@@ -45,7 +45,7 @@ test('unknown key, membership and component qualifiers recover without becoming 
  for(const format of ['json','yaml'] as const){const stored=readJsonValue(writeJsonValue(r,format),format) as unknown as typeof r;expect(await recoverKeysPostgresqlIdeal(stored,stored.target!,backend)).toEqual(b.target);}
 });
 test('oversized key tuple blocks atomically and preserves all components as residual',async()=>{
- const {declareCoreKey,declareCoreRecordMembers}=await import('../../src/model/keys'),c=postgresqlKeyAuthors(),d=structuredClone(c.authors[0]!.source),record=d.modules[0]!.elements[0]!;delete record.keys;delete record.members;d.modules[0]!.elements=d.modules[0]!.elements.slice(0,1);
+ const {declareCoreKey,declareCoreRecordMembers}=await import('../../src/index-node-v4'),c=postgresqlKeyAuthors(),d=structuredClone(c.authors[0]!.source),record=d.modules[0]!.elements[0]!;delete record.keys;delete record.members;d.modules[0]!.elements=d.modules[0]!.elements.slice(0,1);
  const refs=Array.from({length:33},(_,i)=>({module:'m',element:'c'+i}));for(const ref of refs)d.modules[0]!.elements.push({id:ref.element,kind:'field',scalarType:'integer',cardinality:'one',nullability:'required',extensions:{}});
  const members=declareCoreRecordMembers(d,c.request.record,refs),author=declareCoreKey(members.target,c.request.record,{id:'wide',name:'Wide key',fields:refs});
  for(const mode of ['strict','report'] as const){const r=await projectKeysToPostgresql(author.target,[author],{...c.request,mode,columns:refs.map(field=>({field,name:field.element,nativeType:'integer'})),keyNames:[{keyId:'wide',name:'wide_identity'}]},backend);expect(r.status).toBe('blocked');expect(r.nativeSql).toBeUndefined();expect(r.residuals.some(l=>l.reason.includes('32 columns'))).toBe(true);}

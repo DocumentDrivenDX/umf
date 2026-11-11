@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource,getPostgresqlNode,proposePostgresqlNodeEdit,inspectPostgresql,readDocument,writeDocument} from '../../src';
+import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource,getPostgresqlNode,proposePostgresqlNodeEdit,inspectPostgresql,readDocument,writeDocument} from '../../src/index-node-v4';
 test('US-015-AC1: PostgreSQL DDL source and native AST survive UMF and native round trips',async()=>{
  for(const file of ['domain.sql','advanced.sql']){
   const source=await Bun.file('fixtures/postgresql/'+file).text();const doc=await importPostgresqlSql(source,backend,{id:file});
@@ -22,7 +22,7 @@ test('US-015-AC3: unknown AST and representation fields cannot disappear through
  await expect(importPostgresqlSql('CREATE TABLE',backend,{id:'bad'})).rejects.toThrow();await expect(importPostgresqlSql('SELECT 1;\0DROP TABLE x;',backend,{id:'nul'})).rejects.toThrow('NUL');
 });
 test('US-015-AC3: typed AST schema covers native samples, unions and known field types without stripping unknowns',async()=>{
- const {validatePostgresqlAst}=await import('../../src');
+ const {validatePostgresqlAst}=await import('../../src/index-node-v4');
  for(const file of ['domain.sql','advanced.sql'])expect(validatePostgresqlAst(await backend.parse(await Bun.file('fixtures/postgresql/'+file).text())).valid).toBe(true);
  const tree=await backend.parse('CREATE TABLE original (id integer);') as any;
  tree.future={retain:true};expect(validatePostgresqlAst(tree).valid).toBe(true);expect(tree.future).toEqual({retain:true});

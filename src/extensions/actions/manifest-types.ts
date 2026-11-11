@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {ActionEntityInput,ActionInputs} from './selector';
+import type {ActionEntityInput,ActionInputs} from './runtime-types';
 import type {ActionProfileIdentity} from './types';
 import type {ActionPlanArtifact,ActionPlanInspection,ActionPlanDiagnostic} from './plan-types';
 export interface ActionManifest {

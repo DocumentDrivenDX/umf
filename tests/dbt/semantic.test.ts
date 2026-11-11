@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,readDocument,writeDocument,DBT_SEMANTIC_MANIFEST_EXTENSION} from '../../src';
+import {importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,readDocument,writeDocument,DBT_SEMANTIC_MANIFEST_EXTENSION} from '../../src/index-node-v4';
 const base='fixtures/dbt/semantic/',sha=(s:string|Uint8Array)=>createHash('sha256').update(s).digest('hex');
 test('US-022-AC10: semantic manifest source and independent edits match native parser evidence',async()=>{
  const cases=(await Bun.file(base+'results.json').json()).results,native=await Bun.file(base+'oracle-results.json').json();expect(cases).toHaveLength(3);expect(native.results).toHaveLength(6);

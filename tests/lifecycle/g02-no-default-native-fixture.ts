@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Separate G02 case: appending a required derived target without a default. */
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
-import {compileTableDeployment} from '../../src/table-deployment';
+import {compileTableDeployment} from '../../src/index-node-v4';
 const ref=(element:string)=>({module:'demo',element});
 const configuration={module:'demo',schema:'g02_no_default',ownerRole:'g02_nd_owner',personRole:'g02_nd_person',batchRole:'g02_nd_batch',groupRoles:{}};
 const rows=[{id:'a',owner:'g02_alice',amount:'10.25',tax:2},{id:'b',owner:'g02_bob',amount:'1.75',tax:3},{id:'c',owner:'g02_alice',amount:'0.50',tax:10}];

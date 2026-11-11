@@ -3,8 +3,8 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {importParquetSchema, inspectParquetContainers} from '../../src';
-import {inspectParquetCardinalityShape} from '../../src/core-ideals/parquet-cardinality-shape';
+import {importParquetSchema, inspectParquetContainers} from '../../src/index-node-v4';
+import {inspectParquetCardinalityShape} from "./parquet-cardinality-shape";
 
 const proof='fixtures/validation/cardinality-parquet-profile-native.json';
 const native=await Bun.file(proof).json();
@@ -17,7 +17,7 @@ const rows=await Promise.all(native.cases.map(async(row:any)=>{
  return {...row,sourceBytes:Array.from(bytes),containers:inspection.containers,shape:inspectParquetCardinalityShape(inspection.source,1)};
 }));
 const entry='.cache/cardinality-parquet-profile-entry.ts';
-await Bun.write(entry,"export * from '../src';\nexport {inspectParquetCardinalityShape} from '../src/core-ideals/parquet-cardinality-shape';\n");
+await Bun.write(entry,"export * from '../src/index-node-v4';\nexport {inspectParquetCardinalityShape} from './parquet-cardinality-shape';\n");
 const build=await Bun.build({entrypoints:[entry],target:'browser',format:'esm'});
 assert.ok(build.success,JSON.stringify(build.logs));
 const bundle=await build.outputs[0]!.text();

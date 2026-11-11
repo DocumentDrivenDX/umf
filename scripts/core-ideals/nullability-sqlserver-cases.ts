@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importSqlServerCatalog, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
+import {importSqlServerCatalog,getSqlServerColumnMetadata} from "../../src/index-node-v4";
 
 
-import {classifySqlServerField} from '../../src/core-ideals/sqlserver-field';
+import {classifySqlServerField} from "../../src/index-node-v4";
 import type {SqlServerNullabilityRequest} from '../../src/core-ideals/nullability-sqlserver';
 import type {Nullability} from '../../src/model/types';
 export function sqlserverAvailabilitySource(nativeSource:string,table:string,column='value'){

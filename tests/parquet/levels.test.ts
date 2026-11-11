@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,decodeParquetLevels,coreSchema,parquetLevelsSchema} from '../../src';
+import {captureParquet,exportParquetCapture,decodeParquetLevels,coreSchema,parquetLevelsSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(parquetLevelsSchema);
 test('US-019-AC16: bounded page-level integration covers existing native files',async()=>{

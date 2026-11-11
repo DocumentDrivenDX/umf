@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {classifyAvroRelationships, recoverAvroRelationshipSource, verifyAvroRelationshipClassification} from '../../src/index-node-v4';
-import {importAvroSchema, exportAvroBundle} from '../../src/adapters/avro';
+import {importAvroSchema,exportAvroBundle} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const cases=(await Bun.file('fixtures/avro/relationship-discovery-cases.json').json()).cases as {id:string;schemaText:string}[];
 for(const c of cases)test('Avro relationship classification: '+c.id,()=>{

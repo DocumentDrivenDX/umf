@@ -5,8 +5,8 @@ import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {relationshipSqlServerCases} from './relationship-sqlserver-cases';
 import {projectRelationshipToSqlServer, recoverRelationshipSqlServerIdeal} from '../../src/index-node-v4';
-import {classifySqlServerRelationships, recoverSqlServerRelationshipSource} from '../../src/core-ideals/relationship-sqlserver';
-import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
+import {classifySqlServerRelationships,recoverSqlServerRelationshipSource} from "../../src/index-node-v4";
+import {importSqlServerCatalog} from "../../src/index-node-v4";
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-relationship-'+randomUUID(),password='Umf!'+randomUUID()+'A9';
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [stdout,stderr,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,stderr||stdout);return {stdout,stderr};}

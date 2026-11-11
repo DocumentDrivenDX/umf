@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {backend} from '../native/postgresql/runtime';
-import {importPostgresqlSql,exportPostgresqlSql,writeDocument,readDocument,getPostgresqlNode,getPostgresqlSource,validatePostgresqlAst} from '../src';
+import {importPostgresqlSql,exportPostgresqlSql,writeDocument,readDocument,getPostgresqlNode,getPostgresqlSource,validatePostgresqlAst} from '../src/index-node-v4';
 const base='fixtures/postgresql/upstream/';const manifest=await Bun.file(base+'manifest.json').json();
 for(const f of manifest.files)if(createHash('sha256').update(await Bun.file(base+f.file).bytes()).digest('hex')!==f.sha256)throw Error('Fixture hash mismatch '+f.file);
 const cases=await Bun.file(base+'deparse-cases.json').json();if(cases.length!==416||manifest.cases!==416)throw Error('Incomplete upstream corpus');const results=[];

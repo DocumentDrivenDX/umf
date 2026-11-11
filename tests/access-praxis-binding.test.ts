@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient} from '../src/index-node-v4';
 
 test.skipIf(!process.env.UMF_UNIFIED_POSTGRES_DSN)(
  'real current Praxis fixture runs generated read/list/single action through installed host and Weft046',async()=>{

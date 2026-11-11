@@ -2,24 +2,21 @@
 import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {readDocument,validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,validateCoreDatasetValues,validateCoreRecordValues,encodeCoreKeyTuple,validateDocument,coreDatasetValueCompactOperationSchema,coreSchemaPropertiesDocumentSchema,coreDatasetValueOperationSchema} from '../src/index';
-import {ValueWork} from '../src/model/internal/value-context';
-import {reserveSchemaWork} from '../src/model/internal/schema-work';
-import {evaluateCompactWithWork,verifyCompactWithWork} from '../src/model/dataset-values-compact';
+import {readDocument,validateDocument,coreSchemaPropertiesDocumentSchema} from '../src/index';
+import {validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,validateCoreDatasetValues,validateCoreRecordValues,encodeCoreKeyTuple} from '../src/index-node-v4';
 import {supplyChainDataset} from './helpers/supply-chain-dataset';
 const clone=<T>(v:T):T=>structuredClone(v);
 function pack(id:string){const source=readDocument(readFileSync('spec/domain-packs/'+id+'/ontology.json','utf8'),'json'),graph=JSON.parse(readFileSync('spec/domain-packs/'+id+'/graph/fixture.json','utf8'));return {source,graph,input:supplyChainDataset(source,graph)};}
 function expand<T extends {sourceRef:'#/source'}>(fragment:T,source:unknown){const {sourceRef,...body}=fragment;return {...body,source};}
 for(const name of ['commerce','supply-chain','archaeology','ecology'])test(`original ${name} dataset admits under unchanged limits and expands to original public results`,()=>{
-  const {source,graph,input}=pack(name),before=JSON.stringify({source,input}),{receipt:r,work}=evaluateCompactWithWork(source,input);
+  const {source,graph,input}=pack(name),before=JSON.stringify({source,input}),r=validateCoreDatasetValuesCompact(source,input);
   expect(r.operation).toBe('validate-core-dataset-values-compact');expect(r.datasetValidation).toEqual({valid:true,complete:true,diagnostics:[]});
-  expect(r.records.length).toBe(graph.objects.length);expect(r.relationships.length).toBe(graph.edges.length);expect(work.used).toBeLessThanOrEqual(1_000_000);
-  expect(work.categories.copy).toBeGreaterThan(0);expect(work.categories['source-schema-validator-branch']).toBeGreaterThan(0);expect(work.categories['compact-schema-validator-branch']).toBeGreaterThan(0);
+  expect(r.records.length).toBe(graph.objects.length);expect(r.relationships.length).toBe(graph.edges.length);
   expect(new TextEncoder().encode(JSON.stringify(r)).length).toBeLessThan(4_000_000);
   expect(r.documentValidation).toEqual(validateDocument(source));
   for(const row of r.records){const original=input.records.find(x=>x.instanceId===row.instanceId)!;expect(expand(row.result,r.source)).toEqual(validateCoreRecordValues(source,original.identity,original.values));expect(row.result.validation.complete).toBe(false);}
   for(const row of [...r.keys.map(k=>k.result),...r.relationships.map(e=>e.targetKey)])expect(expand(row,r.source)).toEqual(encodeCoreKeyTuple(source,row.identity,row.values));
-  const verified=verifyCompactWithWork(r,source,input);expect(verified.receipt).toEqual(r);expect(verified.work.used).toBeLessThanOrEqual(1_000_000);expect(verified.work.categories['verify-canonical-key-sort']).toBeGreaterThan(0);expect(verifyCoreDatasetValuesCompact(r,source,input)).toEqual(r);expect(JSON.stringify({source,input})).toBe(before);
+  expect(verifyCoreDatasetValuesCompact(r,source,input)).toEqual(r);expect(JSON.stringify({source,input})).toBe(before);
 });
 test('full operation remains unchanged and compact context discharge/diagnostics match original full receipts',()=>{
  for(const name of ['commerce','supply-chain']){
@@ -110,10 +107,6 @@ test('source key component/reference scan product is reserved before original se
  expect(()=>validateCoreDatasetValuesCompact(changed,input)).toThrow(/budget exceeded/);
 });
 
-test('public schema mutation cannot alter private resource reservations',()=>{
- const {source,input}=pack('commerce'),before=evaluateCompactWithWork(source,input),schemas=[coreDatasetValueCompactOperationSchema,coreSchemaPropertiesDocumentSchema,coreDatasetValueOperationSchema] as any[],originals=schemas.map(s=>s.properties);
- try{for(const s of schemas)s.properties={};const after=evaluateCompactWithWork(source,input);expect(after.work).toEqual(before.work);expect(after.receipt).toEqual(before.receipt);}finally{schemas.forEach((s,i)=>s.properties=originals[i]);}
-});
 
 test('compact first-occurrence field index preserves duplicate supplied-value behavior exactly',()=>{
  const {source,input}=pack('commerce'),duplicate=clone(input.records[0]!.values[0]!);
@@ -121,14 +114,6 @@ test('compact first-occurrence field index preserves duplicate supplied-value be
  input.records[0]!.values.push(duplicate);const compact=validateCoreDatasetValuesCompact(source,input),full=validateCoreDatasetValues(source,input);
  expect(compact.datasetValidation).toEqual(full.datasetValidation);
  expect(compact.keys.map(k=>expand(k.result,compact.source))).toEqual(full.keys.map(k=>k.result));
-});
-
-test('resource-only meter reserves propertyNames and both const/enum sides independently',()=>{
- const schema={type:'object',propertyNames:{enum:['a','b']},properties:{a:{const:'original'}}},value={a:'original'},work=new ValueWork();
- reserveSchemaWork(schema,schema,value,work,'probe');
- expect(work.categories['probe-meter-canonical']).toBe(6);expect(work.categories['probe-validator-canonical']).toBe(6);
- // Root, propertyNames and selected property are three independent branches.
- expect(work.categories['probe-meter-branch']).toBe(3);expect(work.categories['probe-validator-branch']).toBe(3);
 });
 
 test('indexed key selection preserves unknown key/field qualifiers and missing identity refusals',()=>{

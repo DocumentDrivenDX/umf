@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 import {mkdir,copyFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {canonicalSchemaJson} from '../../src/model/schema-literals';
-import {projectBit128Model} from '../../src/projections/bit128-model';
+import {projectBit128Model} from "../../src/index-node-v4";
 const base='fixtures/validation/uuid/',stages=['mixed','containers','associations','associations-polymorphic'],systems=['postgresql','sqlserver','avro','parquet','tablespec'];
 const hash=async(path:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex');
 const requireTrue=(value:unknown,message:string)=>{if(!value)throw Error(message);};

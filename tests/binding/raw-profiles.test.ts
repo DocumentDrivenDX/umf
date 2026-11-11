@@ -4,7 +4,7 @@ import logicalSource from '../../fixtures/binding/raw-profiles/logical.json';
 import lakebase from '../../fixtures/binding/raw-profiles/lakebase.json';
 import unity from '../../fixtures/binding/raw-profiles/unity-catalog.json';
 import spark from '../../fixtures/binding/raw-profiles/spark-delta.json';
-import {getBinding,inspectBinding,projectBindingIndexes,readBindingDocument,writeBindingDocument} from '../../src/extensions/binding';
+import {getBinding,inspectBinding,projectBindingIndexes,readBindingDocument,writeBindingDocument} from "../../src/index-node-v4";
 import {RAW_TABLE_BINDING_SUBSET,rawTableBindingProfiles} from '../../src/extensions/binding/raw-profiles';
 import {inspectRawTableBinding} from '../../src/index-node-v4';
 import type {Document} from '../../src/model/types';

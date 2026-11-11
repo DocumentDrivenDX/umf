@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../src/index';
+import * as u from '../src/index-node-v4';
 import {selectCoreElements,selectCoreRelationships} from '../src/index-node-v4';
 import {uuidDocument,FIELD,UUID,HEX} from './helpers/uuid-fixtures';
 test('version-scoped validation, copied authoring, allowed values, defaults and serialization',()=>{

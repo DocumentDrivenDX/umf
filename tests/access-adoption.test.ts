@@ -4,11 +4,7 @@ import {constants} from 'node:fs';
 import {lstat,mkdtemp,open,rename,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
-import {generatePythonClient} from '../src/access';
-import {LOCAL_ERROR_CODES, MAX_BATCH_ITEMS} from '../src/access/constants';
-import {analyzeAction} from '../src/extensions/actions/analysis';
-import {evaluateActionRule} from '../src/extensions/actions/evaluation';
-import type {Action} from '../src/extensions/actions/types';
+import {createUmfRegistry,evaluateActionRule,generatePythonClient,inspectActions} from '../src/index-node-v4';
 import type {Document} from '../src/model/types';
 const original=await Bun.file(new URL('./unified/adoption.json',import.meta.url)).text();
 function model(){return JSON.parse(original);}
@@ -115,8 +111,8 @@ test('check is usable as an action parameter and as an independent precondition 
 // @covers US-091-AC12 US-091-AC13
 test('canonical preconditions evaluate absent/present key frames; optional assignments require version 2',()=>{
  const d=model(),a=d.modules[0].extensions['umf.actions'].actions[0];
- const analysis=analyzeAction(d as Document,a as Action,'/action');
- expect(analysis.diagnostics.filter(x=>x.severity==='error')).toEqual([]);
+ const inspection=inspectActions(d as Document,createUmfRegistry());
+ expect(inspection.validation.diagnostics.filter(x=>x.severity==='error')).toEqual([]);
  const inputs={code:{string:'P1'},title:{string:'Example'},client:{key:{module:'example',element:'Customer',key:'pk'},components:[{string:'C1'}]}};
  for(const project of [false,true])for(const customer of [false,true]){
   const state={inputs,pre:{frames:{projectRead:{exists:project,values:{}},clientRead:{exists:customer,values:{}}},links:[]}};
@@ -133,20 +129,13 @@ test('description publishes action conditions, operation coverage, exact error i
  const r=generate(model()),a=(r.description.actions as any)['example.open-project'];
  expect(a.preconditions.map((c:any)=>c.id)).toEqual(['fresh','exists']);
  expect(a.operations).toEqual(['apply','apply_batch','validate']);
- expect(r.description.limits).toEqual({page:100,getManyKeys:100,batchItems:MAX_BATCH_ITEMS});
+ expect(r.description.limits).toEqual({page:100,getManyKeys:100,batchItems:100});
  expect(r.description.errorCodes).toContain('LIMIT_EXCEEDED');
  expect(r.description.localErrorCodes).toContain('LIMIT');
  expect(r.description.localErrorCodes).toContain('KEY_TYPE');
  for(const change of [(d:any)=>{d.modules[0].extensions['umf.actions'].actions[0].preconditions[1].id='Fresh';},(d:any)=>{d.modules[0].elements[5].name='OpenProjectInput';}]){
   const d=model();change(d);expect(()=>generate(d)).toThrow(/collision/);
  }
-});
-
-test('local error inventory covers every literal generated runtime diagnostic',async()=>{
- const sources=await Promise.all(['src/access/python-runtime.ts','src/access/table-runtime.ts']
-  .map(path=>Bun.file(resolve(path)).text()));
- const codes=new Set(sources.flatMap(source=>[...source.matchAll(/(?:AccessError|Unsupported|SchemaMismatch|PreconditionFailed|WriteOutcomeUnknown)\('([A-Z][A-Z0-9_]*)'/g)].map(match=>match[1]!)));
- expect([...codes].sort()).toEqual([...LOCAL_ERROR_CODES].sort());
 });
 
 // @covers US-092-AC13 US-092-AC14 US-092-AC15

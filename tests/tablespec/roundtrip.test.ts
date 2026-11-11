@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importTableSpec,exportTableSpec,getTableSpecColumn,editTableSpecColumn,inspectTableSpec,readDocument,writeDocument} from '../../src';
+import {importTableSpec,exportTableSpec,getTableSpecColumn,editTableSpecColumn,inspectTableSpec,readDocument,writeDocument} from '../../src/index-node-v4';
 test('CONTRACT-030 TableSpec ingestion exposes core scalars and preserves contextual and unknown native metadata',async()=>{
  const source=await Bun.file('native/tablespec/sources/examples/providers.yaml').text(),d=importTableSpec(source,{id:'providers',format:'yaml'});
  expect(d.modules[0]!.elements[0]!.scalarType).toBe('string');expect(inspectTableSpec(d).complete).toBe(false);

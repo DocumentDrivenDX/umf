@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
-import {exportPostgresqlSql,getPostgresqlDdlDeclarations,getPostgresqlSource,importPostgresqlSql,readDocument,writeDocument} from '../../src';
+import {exportPostgresqlSql,getPostgresqlDdlDeclarations,getPostgresqlSource,importPostgresqlSql,readDocument,writeDocument} from '../../src/index-node-v4';
 
 const directory='fixtures/relationship/postgresql-native';
 const source=await Bun.file(`${directory}/constraints.sql`).text();

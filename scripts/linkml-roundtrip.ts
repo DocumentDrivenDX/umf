@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importLinkmlDocument,exportLinkmlDocument,inspectLinkmlDocument,proposeLinkmlDocumentNodeEdit,readDocument,writeDocument} from '../src';
+import {importLinkmlDocument,exportLinkmlDocument,inspectLinkmlDocument,proposeLinkmlDocumentNodeEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const metamodel=process.argv.includes('--metamodel');
 const source=await Bun.file('native/linkml/sources/manifest.json').json(),base=metamodel?'fixtures/linkml/metamodel/':'fixtures/linkml/',results=[];
 const files=metamodel?source.files.filter((f:any)=>f.upstreamPath.startsWith('linkml_model/model/schema/')&&f.upstreamPath.endsWith('.yaml')):[...source.files.filter((f:any)=>f.upstreamPath.startsWith('tests/input/examples/')&&f.upstreamPath.endsWith('.yaml')),{path:'native/linkml/examples/people.yaml'}];

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureDeltaLog,exportDeltaLog,inspectDeltaLog,readDocument,writeDocument,coreSchema,deltaLogInspectionSchema} from '../../src';
+import {captureDeltaLog,exportDeltaLog,inspectDeltaLog,readDocument,writeDocument,coreSchema,deltaLogInspectionSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(deltaLogInspectionSchema);
 test('US-018-AC9: full log text preserves line endings, exact numbers, future actions and invalid lines',()=>{

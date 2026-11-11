@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importTableSpecBundle,exportTableSpecBundle,exportTableSpec,editTableSpecColumn,editTableSpecTable,getTableSpecColumn,readDocument,writeDocument} from '../../src';
+import {importTableSpecBundle,exportTableSpecBundle,exportTableSpec,editTableSpecColumn,editTableSpecTable,getTableSpecColumn,readDocument,writeDocument} from '../../src/index-node-v4';
 const files={
  'table.yaml':'version: "1.0"\ntable_name: t\nfuture: 9007199254740993\n',
  'columns/z.yaml':'column:\n  name: z\n  data_type: INTEGER\n  future: keep\n  derivation: {strategy: inline}\nderivation: {strategy: base_column}\nvalidations: []\nfutureSibling: true\n',

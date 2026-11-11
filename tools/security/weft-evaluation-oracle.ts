@@ -1,7 +1,7 @@
 // Pure cross-language logical oracle; no authenticated native fact provider.
 import {evaluationFixture} from '../../tests/security/evaluation-fixture';
 import {ref} from '../../tests/security/fixture';
-import {evaluateSecurityCollection} from '../../src/extensions/security/evaluate';
+import {evaluateSecurityCollection} from '../../src/index-node-v4';
 const cases=[];
 for(const name of ['valid','inactive','missing','sibling','other-staff','ownerless','trust','generation','policy','subject','ambiguous','coverage','attribute','duplicate','budget','empty-complete','empty-incomplete','unknown-branch','invalid-action-empty','original-missing'] as const){
  const f=evaluationFixture();const request={action:'read',resources:[f.resource],output:[ref('salary')],targets:[ref('Resource')]};

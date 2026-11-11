@@ -10,6 +10,17 @@ function project(view:any){return projectLakeviewToLegacyDashboard(view,ids,{tit
 const filter=(result:ReturnType<typeof project>)=>result.elements.get(elementKey('page','filter')) as any;
 const dataset=(result:ReturnType<typeof project>)=>result.elements.get(elementKey('data','dataset')) as any;
 
+test('legacy projection preserves host objects and UTF-16 diagnostic text',()=>{
+  const view=fixture('__proto__');
+  const opaque='🎨'.repeat(70);
+  const result=project({...view,future:opaque});
+  expect(Object.getPrototypeOf(result.root)).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(dataset(result))).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(dataset(result).fields)).toBeNull();
+  expect(Object.getPrototypeOf(result.issues[0])).toBe(Object.prototype);
+  expect(result.issues[0]?.detail).toBe(`Native content ${JSON.stringify(opaque).slice(0,120)} is retained but not expressed by the neutral declaration`);
+});
+
 for(const name of ['constructor','toString','__proto__'])test('legacy field names are own data: '+name,()=>{
   const result=project(fixture(name));
   expect(result.issues).toEqual([]);

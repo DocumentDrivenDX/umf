@@ -4,11 +4,11 @@ import {encodeReferenceIdentity} from './codec';
 import {referenceEntityAliases} from './aliases';
 import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../src/model/key-tuple';
 import {referenceAliasIdentity} from './state';
-import {checkActionLiteral} from '../../src/extensions/actions/structure';
+import {isCoreLiteralShape} from './literal';
 import {copyJson} from '../../src/model/json';
 import {UmfError,type Document} from '../../src/model/types';
 import {knownActionModel,knownActionRelationship} from '../../src/extensions/actions/known-model';
-import {actionFieldValueKey,type ActionBusinessState} from '../../src/extensions/actions/evaluation';
+import {actionFieldValueKey,type ActionBusinessState} from '../../src/index-node-v4';
 import {literalIdentity,type CoreLiteral} from '../../src/model/schema-literals';
 import {validateReferenceFields,type FrozenReferenceState,type NativeReferenceEntity,type NativeReferenceLink} from './state';
 /** Candidate state only. Persistence, other primitives and terminal commit remain executor responsibilities. */
@@ -112,7 +112,7 @@ export class ReferenceMutationGateway {
    if(!primary||frame.identity.key.key!==primary.id)return this.fail('FRAME_ACCESS','Absent creation requires qualified primary Key');
    if(!Array.isArray(assignments)||!assignments.length||assignments.length>256)return this.fail('LIMIT','Bounded nonempty assignment list required');
    const fields:Record<string,CoreLiteral>=Object.create(null);
-   for(const assignment of assignments){if(!assignment||typeof assignment!=='object'||Object.keys(assignment).some(key=>!['field','value'].includes(key))||!Object.hasOwn(assignment,'value')||!assignment.field||typeof assignment.field!=='object'||Object.keys(assignment.field).some(key=>!['module','element'].includes(key)))return this.fail('FRAME_ACCESS','Exact assignment required');const field=actionFieldValueKey(assignment.field);if(Object.hasOwn(fields,field))return this.fail('FRAME_ACCESS','Duplicate create assignment');if(!checkActionLiteral(assignment.value))return this.fail('PARAMETER','Expected exact typed literal');fields[field]=assignment.value;}
+   for(const assignment of assignments){if(!assignment||typeof assignment!=='object'||Object.keys(assignment).some(key=>!['field','value'].includes(key))||!Object.hasOwn(assignment,'value')||!assignment.field||typeof assignment.field!=='object'||Object.keys(assignment.field).some(key=>!['module','element'].includes(key)))return this.fail('FRAME_ACCESS','Exact assignment required');const field=actionFieldValueKey(assignment.field);if(Object.hasOwn(fields,field))return this.fail('FRAME_ACCESS','Duplicate create assignment');if(!isCoreLiteralShape(assignment.value))return this.fail('PARAMETER','Expected exact typed literal');fields[field]=assignment.value;}
    validateReferenceFields(this.#source,record,fields);
    const aliases=referenceEntityAliases(this.#source,{record,fields}),createdPrimary=aliases.find(alias=>alias.primary)!;
    const selected=referenceAliasIdentity(frame.identity,encodeCoreKeyTuple(this.#source,frame.identity.key,frame.identity.components as CoreKeyTupleValue[]).bytesHex);
@@ -139,7 +139,7 @@ export class ReferenceMutationGateway {
    const record=knownActionModel(this.#source,entity.record,'record'),keys=(record.keys??[]) as {fields:{module:string;element:string}[]}[],candidate=copyJson(entity.fields) as unknown as Record<string,CoreLiteral>,seen=new Set<string>();let changed=false;
    for(const assignment of assignments){if(!assignment||typeof assignment!=='object'||Object.keys(assignment).some(key=>!['field','value'].includes(key))||!Object.hasOwn(assignment,'value')||!assignment.field||typeof assignment.field!=='object'||Object.keys(assignment.field).some(key=>!['module','element'].includes(key)))return this.fail('FRAME_ACCESS','Exact assignment required');const field=actionFieldValueKey(assignment.field);if(seen.has(field)||!writableFields.has(field))return this.fail('FRAME_ACCESS','Field outside frozen write permission');seen.add(field);
     if(keys.some(key=>key.fields.some(component=>actionFieldValueKey(component)===field)))return this.fail('FRAME_ACCESS','Every Key component is immutable');
-    if(!checkActionLiteral(assignment.value))return this.fail('PARAMETER','Expected exact typed literal');
+    if(!isCoreLiteralShape(assignment.value))return this.fail('PARAMETER','Expected exact typed literal');
     const definition=knownActionModel(this.#source,assignment.field,'field'),old=candidate[field],value=assignment.value;
     const equal=Object.hasOwn(candidate,field)&&(old===null||value===null?old===value:literalIdentity(definition,old!)===literalIdentity(definition,value));if(!equal){candidate[field]=value;changed=true;}
    }

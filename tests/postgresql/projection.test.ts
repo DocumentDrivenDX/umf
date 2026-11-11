@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
 import {createValidator} from '../../src/validation/schema';
-import {importPostgresqlCatalogCapture,proposePostgresqlCatalogEdit,readDocument,writeDocument,exportJsonSchema,exportPostgresqlCatalogCapture,coreSchema,postgresqlRowProjectionSchema} from '../../src';
+import {importPostgresqlCatalogCapture,proposePostgresqlCatalogEdit,readDocument,writeDocument,exportJsonSchema,exportPostgresqlCatalogCapture,coreSchema,postgresqlRowProjectionSchema} from '../../src/index-node-v4';
 import {projectPostgresqlRowToJsonSchema,type PostgresqlRowPolicy} from '../../src/index-node-v4';
 const source=importPostgresqlCatalogCapture(await Bun.file('fixtures/postgresql/catalog-capture.json').text(),{id:'rows'});
 const policy:PostgresqlRowPolicy={id:'orders',schemaId:'urn:test:orders',relation:{schema:'sales',name:'orders'},columns:{id:'sql-text',total:'sql-text',details:'json-value'},lossPolicy:'allow-reported-loss'};

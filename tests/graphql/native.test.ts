@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parse,print,buildSchema,graphqlSync} from 'graphql';
-import {importGraphqlSchema,exportGraphqlSchema,exportGraphqlBundle,inspectGraphql,getGraphqlAst,editGraphqlAst,writeDocument,readDocument} from '../../src';
+import {importGraphqlSchema,exportGraphqlSchema,exportGraphqlBundle,inspectGraphql,getGraphqlAst,editGraphqlAst,writeDocument,readDocument} from '../../src/index-node-v4';
 const text=await Bun.file('fixtures/graphql/shop.graphql').text();
 const basic='# Keep this comment\ntype Query { greet(name: String = "world"): String! }';
 test('US-009-AC1: complete SDL declarations, extensions and original layout round-trip',async()=>{

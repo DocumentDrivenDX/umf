@@ -5,7 +5,7 @@ import {readJsonValue} from '../../src/model/serialization';
 import {requireDomainPackProfile} from '../../src/domain-packs/profile';
 import {readDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 import {verifyCompanion} from './companion';
 import {hash} from './state';
 import {readBounded} from './bytes';

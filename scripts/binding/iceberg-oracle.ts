@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {existsSync} from 'node:fs';
-import {exportIcebergTable,importIcebergTable,inspectIcebergTableContext,type Document} from '../../src';
+import {exportIcebergTable,importIcebergTable,inspectIcebergTableContext,type Document} from '../../src/index-node-v4';
 import {projectBindingToIceberg} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/iceberg/case.json').json();

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {parse,print,buildASTSchema,validateSchema} from 'graphql';
-import {importGraphqlSchema,exportGraphqlSchema,readJsonValue,writeJsonValue,type Document,type DddGraphqlProjection} from '../../src';
+import {importGraphqlSchema,exportGraphqlSchema,readJsonValue,writeJsonValue,type Document,type DddGraphqlProjection} from '../../src/index-node-v4';
 import {projectDddToGraphql,recoverDddFromGraphql,recoverDddGraphqlNative,verifyDddGraphqlProjection} from '../../src/index-node-v4';
 import {graphqlCases} from '../../scripts/projections/ddd-graphql-cases';
 const base=()=>graphqlCases()[0]!;
@@ -79,7 +79,7 @@ test('@covers US-049-AC1 @covers US-049-AC6: generated shared authored graph mat
 
 test('@covers US-049-AC4 @covers US-049-AC7: complete result schema rejects partial targets and missing policy/source contracts',async()=>{
   const {createValidator}=await import('../../src/validation/schema');
-  const {dddGraphqlProjectionSchema}=await import('../../src');
+  const {dddGraphqlProjectionSchema}=await import('../../src/index-node-v4');
   const current=await Bun.file('spec/core/schema.json').json();
   const validator=createValidator(false);validator.addSchema(current);const check=validator.compile(dddGraphqlProjectionSchema);
   const p=project();expect(check(p)).toBe(true);expect(check(project(base(),'strict'))).toBe(true);

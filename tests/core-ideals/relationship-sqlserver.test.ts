@@ -2,8 +2,8 @@
 import {test,expect} from 'bun:test';
 import {relationshipSqlServerCases,relationshipSqlServerCase} from '../../scripts/core-ideals/relationship-sqlserver-cases';
 import {projectRelationshipToSqlServer, recoverRelationshipSqlServerIdeal, recoverRelationshipSqlServerBinding, recoverRelationshipSqlServerNative, verifyRelationshipSqlServerProjection} from '../../src/index-node-v4';
-import {classifySqlServerRelationships, recoverSqlServerRelationshipSource} from '../../src/core-ideals/relationship-sqlserver';
-import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
+import {classifySqlServerRelationships,recoverSqlServerRelationshipSource} from "../../src/index-node-v4";
+import {importSqlServerCatalog} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 // @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipSqlServerCases())test('SQL Server relationship '+c.name,()=>{

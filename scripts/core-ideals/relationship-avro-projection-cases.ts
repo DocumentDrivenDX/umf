@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {relationshipCandidate} from '../core-relationship-cases';
-import {declareCoreRelationship} from '../../src/model/relationships';
+import {declareCoreRelationship} from "../../src/index-node-v4";
 import {projectRelationshipToAvro} from '../../src/index-node-v4';
 import type {RelationshipAvroRequest} from '../../src/core-ideals/relationship-avro-projection-types';
 export function relationshipAvroCase(name='many-to-one'){

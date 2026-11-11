@@ -118,7 +118,7 @@ import {bindParquetCaptureRust} from './adapters/parquet/rust-capture-default';
 import {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage} from './adapters/parquet/package';
 import {createIcebergSchemaRustDefault} from './adapters/iceberg/rust-default';
 import {createIcebergTableRustDefault} from './adapters/iceberg/table-rust-default';
-import {createDeltaRustDefault} from './adapters/delta/rust-default';
+import {createDeltaRustDefault,type DeltaNativeEngine} from './adapters/delta/rust-default';
 import {createTypeSpecRustDefault} from './adapters/typespec/rust-default';
 import {createSmithyRustDefault} from './adapters/smithy/rust-default';
 import {createSparkRustDefault} from './adapters/spark/rust-default';
@@ -220,13 +220,13 @@ const deltaParquetOperations=nativeFamilyDispatcher['delta-parquet'];
 const deltaEngine=Object.assign({},createDeltaSchemaTableEngine(),createDeltaLogEngine(),{
   inspectDefinitionPayload:(payload:Json)=>deltaDdlOperations.inspectPayload({payload}) as Diagnostic[],
   defineTable:(source:string,definition:import('./adapters/delta/ddl').DeltaDefinition,id:string)=>deltaDdlOperations.defineTable({source,definition,id}) as Document,
-  generateDdl:(document:Document)=>deltaDdlOperations.generate({document}) as ReturnType<typeof import('./adapters/delta/ddl').generateDeltaDDL>,
-  generateDdlBundle:(documents:readonly Document[])=>deltaDdlOperations.generateBundle({documents}) as ReturnType<typeof import('./adapters/delta/ddl').generateDeltaDDLBundle>,
-  realizeSparkDelta4:(document:Document,target:Parameters<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>[1])=>deltaDdlOperations.realizeSparkDelta4({document,target}) as ReturnType<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>,
-  projectParquetActions:(document:Document)=>deltaParquetOperations.projectActions({document}) as ReturnType<typeof import('./adapters/delta/parquet').projectDeltaParquetActions>,
-  reconcileCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2')=>nativeFamilyDispatcher['delta-log'].reconcileCheckpoint({checkpoint,commits,spec}) as ReturnType<typeof import('./adapters/delta/reconcile').reconcileDeltaCheckpoint>,
-  reconcileParquetCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2',sidecars:import('./adapters/delta/sidecars').DeltaSidecar[])=>deltaParquetOperations.reconcileCheckpoint({checkpoint,commits,spec,sidecars}) as ReturnType<typeof import('./adapters/delta/parquet-checkpoint').reconcileDeltaParquetCheckpoint>,
-  reconcileMultipart:(version:string,partCount:number,parts:import('./adapters/delta/multipart').DeltaCheckpointPart[],commits:import('./adapters/delta/reconcile').DeltaCommit[])=>deltaParquetOperations.reconcileMultipart({version,partCount,parts,commits}) as ReturnType<typeof import('./adapters/delta/multipart').reconcileDeltaMultipartCheckpoint>,
+  generateDdl:(document:Document)=>deltaDdlOperations.generate({document}) as ReturnType<DeltaNativeEngine['generateDdl']>,
+  generateDdlBundle:(documents:readonly Document[])=>deltaDdlOperations.generateBundle({documents}) as ReturnType<DeltaNativeEngine['generateDdlBundle']>,
+  realizeSparkDelta4:(document:Document,target:Parameters<DeltaNativeEngine['realizeSparkDelta4']>[1])=>deltaDdlOperations.realizeSparkDelta4({document,target}) as ReturnType<DeltaNativeEngine['realizeSparkDelta4']>,
+  projectParquetActions:(document:Document)=>deltaParquetOperations.projectActions({document}) as ReturnType<DeltaNativeEngine['projectParquetActions']>,
+  reconcileCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2')=>nativeFamilyDispatcher['delta-log'].reconcileCheckpoint({checkpoint,commits,spec}) as ReturnType<DeltaNativeEngine['reconcileCheckpoint']>,
+  reconcileParquetCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2',sidecars:import('./adapters/delta/sidecars').DeltaSidecar[])=>deltaParquetOperations.reconcileCheckpoint({checkpoint,commits,spec,sidecars}) as import('./adapters/delta/parquet-checkpoint').DeltaParquetCheckpointRecovery,
+  reconcileMultipart:(version:string,partCount:number,parts:import('./adapters/delta/multipart').DeltaCheckpointPart[],commits:import('./adapters/delta/reconcile').DeltaCommit[])=>deltaParquetOperations.reconcileMultipart({version,partCount,parts,commits}) as ReturnType<DeltaNativeEngine['reconcileMultipart']>,
 });
 const delta=createDeltaRustDefault(deltaEngine,error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,reconcileDeltaCheckpoint,reconcileDeltaCheckpointSidecars,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint,reconcileDeltaMultipartCheckpoint}=delta;

@@ -4,7 +4,7 @@ import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {runActionsCorpus} from '../tests/actions/browser-corpus';
 import approve from '../fixtures/actions/approve.json';
 import create from '../fixtures/actions/create-link.json';

@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient} from '../src/index-node-v4';
 import {tableOperationSource} from './unified/table-operation-fixture';
 
 test('declared tables generate module-only typed APIs and closed result/outcome codecs',async()=>{

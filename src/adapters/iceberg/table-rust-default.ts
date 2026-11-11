@@ -1,15 +1,25 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {importIcebergTable, inspectIcebergTable, exportIcebergTable, getIcebergTableNode, proposeIcebergTableNodeEdit} from './table';
-import type {inspectIcebergTableContext, IcebergTableContext} from './table-context';
-import type {inspectIcebergTableTransforms, IcebergTableTransforms} from './table-transforms';
+
+import type {IcebergTableContext} from './table-context';
+import type {IcebergTableTransforms} from './table-transforms';
 import type {inspectIcebergTransformType} from './transforms';
-import type {proposeIcebergTableRename, IcebergTableRenameReport} from './table-rename';
-import type {proposeIcebergTablePromotion, IcebergTablePromotionReport} from './table-promotion';
+import type {IcebergTableRenameReport} from './table-rename';
+import type {IcebergTablePromotionReport} from './table-promotion';
 import type {Diagnostic, Document, ExtensionPackage, Json, Validation} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import {icebergTablePackage} from './table-package';
+
+type ImportIcebergTable = (text: string, options: { id: string; }) => Document;
+type InspectIcebergTable = (document: Document) => Validation;
+type ExportIcebergTable = (document: Document) => string;
+type GetIcebergTableNode = (document: Document, path: string) => NativeJson;
+type ProposeIcebergTableNodeEdit = (document: Document, path: string, text: string) => { document: Document; validation: Validation; };
+type InspectIcebergTableContext = (document: Document) => IcebergTableContext;
+type InspectIcebergTableTransforms = (document: Document) => IcebergTableTransforms;
+type ProposeIcebergTableRename = (document: Document, options: { fieldId: number; newName: string; nextSchemaId: number; }) => { document: Document; report: IcebergTableRenameReport; };
+type ProposeIcebergTablePromotion = (document: Document, options: { fieldId: number; targetType: string; nextSchemaId: number; }) => { document: Document; report: IcebergTablePromotionReport; };
 
 type NativeErrorGuard = (error: unknown) => boolean;
 export interface IcebergTableNativeEngine {
@@ -18,7 +28,7 @@ export interface IcebergTableNativeEngine {
   inspectPayload(payload: Json): Diagnostic[];
   exportTable(document: Document): string;
   getNode(document: Document, path: string): NativeJson;
-  editNode(document: Document, path: string, replacementJson: string): ReturnType<typeof proposeIcebergTableNodeEdit>;
+  editNode(document: Document, path: string, replacementJson: string): ReturnType<ProposeIcebergTableNodeEdit>;
   inspectContext(document: Document): IcebergTableContext;
   inspectTransforms(document: Document): IcebergTableTransforms;
   inspectTransformType(sourceType: string, transform: string): ReturnType<typeof inspectIcebergTransformType>;
@@ -49,15 +59,15 @@ export function createIcebergTableRustDefault(
   const inspectPayload = (payload: Json): Diagnostic[] => call(() => engine.inspectPayload(payload));
   return Object.freeze({
     icebergTableRegistry(): Registry { return createRegistry().register(icebergTablePackage, inspectPayload); },
-    inspectIcebergTable(document: Parameters<typeof inspectIcebergTable>[0]): ReturnType<typeof inspectIcebergTable> { return call(() => engine.inspect(document)); },
-    importIcebergTable(text: Parameters<typeof importIcebergTable>[0], options: Parameters<typeof importIcebergTable>[1]): ReturnType<typeof importIcebergTable> { return call(() => engine.importTable(text, options.id)); },
-    exportIcebergTable(document: Parameters<typeof exportIcebergTable>[0]): ReturnType<typeof exportIcebergTable> { return call(() => engine.exportTable(document)); },
-    getIcebergTableNode(document: Parameters<typeof getIcebergTableNode>[0], path: Parameters<typeof getIcebergTableNode>[1]): ReturnType<typeof getIcebergTableNode> { return call(() => engine.getNode(document, path)); },
-    proposeIcebergTableNodeEdit(document: Parameters<typeof proposeIcebergTableNodeEdit>[0], path: Parameters<typeof proposeIcebergTableNodeEdit>[1], replacementJson: Parameters<typeof proposeIcebergTableNodeEdit>[2]): ReturnType<typeof proposeIcebergTableNodeEdit> { return call(() => engine.editNode(document, path, replacementJson)); },
-    inspectIcebergTableContext(document: Parameters<typeof inspectIcebergTableContext>[0]): ReturnType<typeof inspectIcebergTableContext> { return call(() => engine.inspectContext(document)); },
-    inspectIcebergTableTransforms(document: Parameters<typeof inspectIcebergTableTransforms>[0]): ReturnType<typeof inspectIcebergTableTransforms> { return call(() => engine.inspectTransforms(document)); },
+    inspectIcebergTable(document: Parameters<InspectIcebergTable>[0]): ReturnType<InspectIcebergTable> { return call(() => engine.inspect(document)); },
+    importIcebergTable(text: Parameters<ImportIcebergTable>[0], options: Parameters<ImportIcebergTable>[1]): ReturnType<ImportIcebergTable> { return call(() => engine.importTable(text, options.id)); },
+    exportIcebergTable(document: Parameters<ExportIcebergTable>[0]): ReturnType<ExportIcebergTable> { return call(() => engine.exportTable(document)); },
+    getIcebergTableNode(document: Parameters<GetIcebergTableNode>[0], path: Parameters<GetIcebergTableNode>[1]): ReturnType<GetIcebergTableNode> { return call(() => engine.getNode(document, path)); },
+    proposeIcebergTableNodeEdit(document: Parameters<ProposeIcebergTableNodeEdit>[0], path: Parameters<ProposeIcebergTableNodeEdit>[1], replacementJson: Parameters<ProposeIcebergTableNodeEdit>[2]): ReturnType<ProposeIcebergTableNodeEdit> { return call(() => engine.editNode(document, path, replacementJson)); },
+    inspectIcebergTableContext(document: Parameters<InspectIcebergTableContext>[0]): ReturnType<InspectIcebergTableContext> { return call(() => engine.inspectContext(document)); },
+    inspectIcebergTableTransforms(document: Parameters<InspectIcebergTableTransforms>[0]): ReturnType<InspectIcebergTableTransforms> { return call(() => engine.inspectTransforms(document)); },
     inspectIcebergTransformType(sourceType: Parameters<typeof inspectIcebergTransformType>[0], transform: Parameters<typeof inspectIcebergTransformType>[1]): ReturnType<typeof inspectIcebergTransformType> { return call(() => engine.inspectTransformType(sourceType, transform)); },
-    proposeIcebergTableRename(document: Parameters<typeof proposeIcebergTableRename>[0], options: Parameters<typeof proposeIcebergTableRename>[1]): ReturnType<typeof proposeIcebergTableRename> { return call(() => engine.proposeRename(document, options.fieldId, options.newName, options.nextSchemaId)); },
-    proposeIcebergTablePromotion(document: Parameters<typeof proposeIcebergTablePromotion>[0], options: Parameters<typeof proposeIcebergTablePromotion>[1]): ReturnType<typeof proposeIcebergTablePromotion> { return call(() => engine.proposePromotion(document, options.fieldId, options.targetType, options.nextSchemaId)); },
+    proposeIcebergTableRename(document: Parameters<ProposeIcebergTableRename>[0], options: Parameters<ProposeIcebergTableRename>[1]): ReturnType<ProposeIcebergTableRename> { return call(() => engine.proposeRename(document, options.fieldId, options.newName, options.nextSchemaId)); },
+    proposeIcebergTablePromotion(document: Parameters<ProposeIcebergTablePromotion>[0], options: Parameters<ProposeIcebergTablePromotion>[1]): ReturnType<ProposeIcebergTablePromotion> { return call(() => engine.proposePromotion(document, options.fieldId, options.targetType, options.nextSchemaId)); },
   });
 }

@@ -2,19 +2,11 @@
 // Freeze the complete predecessor outcomes that the source-only Rust candidate
 // intends to preserve. Run from the repository root with Bun when qualification
 // is authorized; this script intentionally writes only to stdout.
-import {
-  exportOpenapiBundle,
-  exportOpenapiDocument,
-  getOpenapiNode,
-  importOpenapiDocument,
-  inspectOpenapi,
-  lookupOpenapiResource,
-  proposeOpenapiEdit,
-} from '../../src/adapters/openapi';
-import { extractOpenapiSchema } from '../../src/adapters/openapi/extraction';
-import { indexOpenapiSchemas, resolveOpenapiSchemaReference } from '../../src/adapters/openapi/scope';
-import { resolveOpenapiDynamicReference } from '../../src/adapters/openapi/dynamic';
-import { resolveOpenapiObjectReference } from '../../src/adapters/openapi/references';
+import {exportOpenapiBundle,exportOpenapiDocument,getOpenapiNode,importOpenapiDocument,inspectOpenapi,lookupOpenapiResource,proposeOpenapiEdit} from "../../src/index-node-v4";
+import {extractOpenapiSchema} from "../../src/index-node-v4";
+import {indexOpenapiSchemas,resolveOpenapiSchemaReference} from "../../src/index-node-v4";
+import {resolveOpenapiDynamicReference} from "../../src/index-node-v4";
+import {resolveOpenapiObjectReference} from "../../src/index-node-v4";
 
 const yaml = await Bun.file('fixtures/openapi/orders.yaml').text();
 const document = importOpenapiDocument(yaml, { id: 'rust-openapi-source', format: 'yaml' });

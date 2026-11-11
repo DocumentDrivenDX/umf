@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {facetsAvroProjectionCases} from './facets-avro-projection-cases';
-import {projectFacetsToAvro} from '../../src/core-ideals/facets-avro-projection';
+import {projectFacetsToAvro} from "../../src/index-node-v4";
 const bundle='dist/umf.js';
 const rows=facetsAvroProjectionCases().filter(row=>row.request.nativeType==='float').map(row=>{const request={...row.request,obligation:'exact-input' as const};return {...row,request,expected:projectFacetsToAvro(row.author,request)};});
 const targets=await Bun.file('fixtures/validation/facets-avro-projection-targets.json').json();

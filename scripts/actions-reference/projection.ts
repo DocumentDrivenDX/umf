@@ -2,7 +2,7 @@
 import type {SQL} from 'bun';
 import {copyJson} from '../../src/model/json';
 import {UmfError,type Json} from '../../src/model/types';
-import {checkActionLiteral} from '../../src/extensions/actions/structure';
+import {isCoreLiteralShape} from './literal';
 import {ReferenceActionPolicy} from './policy';
 import {ReferenceActionAudit} from './audit';
 import type {ReferenceStoreControl} from './store';
@@ -16,14 +16,14 @@ const position=(value:unknown,zero=false):value is string=>typeof value==='strin
 const knownProfile=(value:unknown,id:string)=>exact(value,['id','version'])&&value.id===id&&value.version==='1';
 const refuse=():never=>{throw new UmfError('PROJECTION_PROFILE','Unknown or inconsistent native graph meaning');};
 export interface ReferenceProjectionGraph {profile:{id:string;version:string};entities:NativeReferenceEntity[];links:NativeReferenceLink[]}
-function entity(value:unknown):value is NativeReferenceEntity{return exact(value,['id','record','fields','version'])&&position(value.id)&&exact(value.record,['module','element'])&&name(value.record.module)&&name(value.record.element)&&name(value.version)&&!!value.fields&&typeof value.fields==='object'&&!Array.isArray(value.fields)&&Object.values(value.fields).every(value=>checkActionLiteral(value));}
+function entity(value:unknown):value is NativeReferenceEntity{return exact(value,['id','record','fields','version'])&&position(value.id)&&exact(value.record,['module','element'])&&name(value.record.module)&&name(value.record.element)&&name(value.version)&&!!value.fields&&typeof value.fields==='object'&&!Array.isArray(value.fields)&&Object.values(value.fields).every(value=>isCoreLiteralShape(value));}
 function link(value:unknown):value is NativeReferenceLink{return exact(value,['relationship','sourceEntity','targetEntity'])&&exact(value.relationship,['module','relationship'])&&name(value.relationship.module)&&name(value.relationship.relationship)&&position(value.sourceEntity)&&position(value.targetEntity);}
 function sorted(entities:Map<string,NativeReferenceEntity>,links:Map<string,NativeReferenceLink>):ReferenceProjectionGraph{return {profile:{...profile},entities:[...entities.values()].sort((a,b)=>BigInt(a.id)<BigInt(b.id)?-1:BigInt(a.id)>BigInt(b.id)?1:0),links:[...links.values()].sort((a,b)=>encodeReferenceIdentity(a)<encodeReferenceIdentity(b)?-1:encodeReferenceIdentity(a)>encodeReferenceIdentity(b)?1:0)};}
 export function referenceProjectionGraph(input:unknown):ReferenceProjectionGraph {
  const value:unknown=copyJson(input);if(!exact(value,['profile','entities','links'])||!knownProfile(value.profile,profile.id)||!Array.isArray(value.entities)||!Array.isArray(value.links)||!value.entities.every(entity)||!value.links.every(link))return refuse();
  const entities=new Map<string,NativeReferenceEntity>(),links=new Map<string,NativeReferenceLink>();for(const item of value.entities){if(entities.has(item.id))return refuse();entities.set(item.id,item);}for(const item of value.links){const id=encodeReferenceIdentity(item);if(links.has(id)||!entities.has(item.sourceEntity)||!entities.has(item.targetEntity))return refuse();links.set(id,item);}return sorted(entities,links);
 }
-function resultEntity(value:unknown):boolean{return exact(value,['key','components'])&&exact(value.key,['module','element','key'])&&Object.values(value.key).every(name)&&Array.isArray(value.components)&&value.components.length>0&&value.components.every(value=>checkActionLiteral(value));}
+function resultEntity(value:unknown):boolean{return exact(value,['key','components'])&&exact(value.key,['module','element','key'])&&Object.values(value.key).every(name)&&Array.isArray(value.components)&&value.components.length>0&&value.components.every(value=>isCoreLiteralShape(value));}
 function change(value:unknown):boolean{return !!value&&typeof value==='object'&&!Array.isArray(value)&&(['created','updated','deleted'].includes((value as any).kind)?exact(value,['kind','entity'])&&resultEntity(value.entity):exact(value,['kind','relationship','source','target'])&&['linked','unlinked'].includes(value.kind)&&exact(value.relationship,['module','relationship'])&&Object.values(value.relationship).every(name)&&resultEntity(value.source)&&resultEntity(value.target));}
 /** Qualified facts are complete touched-entity snapshots plus directed set deltas. Unknown content is never discarded. */
 export function foldReferenceProjection(graphInput:unknown,factsInput:unknown):ReferenceProjectionGraph {

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 const identity={module:'m',element:'value'};
 function source():u.Document{return {umf:'0.10.0',id:'facets',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',kind:'field',scalarType:'integer',facets:{integerWidth:{bits:64,signed:true,future:'retained'}},extensions:{}},{id:'record',kind:'record',extensions:{}},{id:'object',kind:'field',extensions:{}}]}]};}
 test('current author APIs preserve facets and both receipt serializations',()=>{

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Deterministic inputs for native v0.2 reviewed-evolution acceptance. */
 import {legalSource,ownerViaLegalSource,evolvedLegalSource} from './legal-fixture';
-import {compileTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration,discoverTableMigrationChanges} from '../../src/table-migration';
+import {compileTableDeployment} from '../../src/index-node-v4';
+import {compileTableMigration,discoverTableMigrationChanges} from '../../src/index-node-v4';
 
 const moduleId='legal_lifecycle',nativePrefix=Bun.env.REVIEW_NATIVE_PREFIX??'review',alice=nativePrefix+'_alice',bob=nativePrefix+'_bob';
 const ref=(element:string)=>({module:moduleId,element});

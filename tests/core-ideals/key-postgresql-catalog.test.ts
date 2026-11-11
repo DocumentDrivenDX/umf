@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {inspectPostgresqlKeyCatalog} from '../../src/adapters/postgresql/key-catalog';
+import {inspectPostgresqlKeyCatalog} from "../../src/index-node-v4";
 import proof from '../../fixtures/validation/key-postgresql-discovery-native.json';
 const query=await Bun.file('native/postgresql/keys/query.sql').text();
 const capture=()=>({profile:'umf-postgresql-key-observations-17-v1',serverVersion:170004,encoding:'UTF8',query,indexes:structuredClone(proof.indexes)});

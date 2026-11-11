@@ -6,7 +6,7 @@ import {join} from 'node:path';
 import {projectMedicalFhir,projectCdcMortality,projectDicomMetadata,lookupMedicalTerminology} from '../../src/domain-packs/medical';
 import {createValidator} from '../../src/validation/schema';
 import {generateDomainPackSchema} from '../../src/domain-packs/schema';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 const packs=['medical-carrier','medical-epidemiology','medical-imaging','medical-terminology'];
 const root='spec/domain-packs';
 const read=(pack:string,name:string)=>Bun.file(`${root}/${pack}/sources/${name}`).text();

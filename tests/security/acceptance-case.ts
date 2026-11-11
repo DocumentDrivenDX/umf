@@ -9,12 +9,12 @@
 // @covers US-079-AC5
 // @covers US-079-AC2
 import {createHash} from 'node:crypto';
-import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource} from '../../src/extensions/security/policy';
+import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource} from '../../src/index-node-v4';
 import {canonicalSchemaJson} from '../../src/model/schema-literals';
 import {securityFixture,ref} from './fixture';
-import {SecurityReadRegistration} from '../../src/extensions/security/registration';
 import {evaluationFixture} from './evaluation-fixture';
-import {evaluateSecurityAccess,evaluateSecurityCollection,type SecurityEvaluationRequest} from '../../src/extensions/security/evaluate';
+import {SecurityReadRegistration,evaluateSecurityAccess,evaluateSecurityCollection} from '../../src/index-node-v4';
+import type {SecurityEvaluationRequest} from '../../src/extensions/security/evaluate';
 import {invalidPolicyCases,refusalExpectation,nativeArchive,accessExpectations,disclosureExpectations,queryOperators,ownershipExpectations,identityExpectations,generatedPolicyCases,registrationExpectations} from './acceptance-oracle';
 
 const id=Bun.argv[2],runId=Bun.env.UMF_SECURITY_RUN_ID;

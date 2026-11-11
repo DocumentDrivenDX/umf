@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,importParquetSchema,getParquetFieldMetadata,exportParquetCapture,renameParquetField,readDocument,writeDocument} from '../../src';
+import {captureParquet,importParquetSchema,getParquetFieldMetadata,exportParquetCapture,renameParquetField,readDocument,writeDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/parquet/field-metadata.schema.json';
 test('CONTRACT-019 core field families respect native logical and physical meanings',async()=>{

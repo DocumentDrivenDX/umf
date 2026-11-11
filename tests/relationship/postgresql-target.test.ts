@@ -2,7 +2,7 @@
 import {expect,test} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
-import {exportPostgresqlSql,getPostgresqlSource,importPostgresqlSql,readDocument,writeDocument} from '../../src';
+import {exportPostgresqlSql,getPostgresqlSource,importPostgresqlSql,readDocument,writeDocument} from '../../src/index-node-v4';
 
 const base='fixtures/projections/ddd-authored-relationships/';
 

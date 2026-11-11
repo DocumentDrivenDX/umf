@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,proposeDbtArtifactNodeEdit,readDocument,writeDocument} from '../../src';
+import {importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,proposeDbtArtifactNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/dbt/freshness/',sha=(s:string|Uint8Array)=>createHash('sha256').update(s).digest('hex');
 test('US-022-AC8: emitted and runner artifacts retain distinct outcomes and native diagnostic edits',async()=>{
  const cases=(await Bun.file(base+'results.json').json()).results,native=await Bun.file(base+'oracle-results.json').json();

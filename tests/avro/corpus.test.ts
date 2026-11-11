@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importAvroSchema,exportAvroSchema,inspectAvro,readDocument,writeDocument} from '../../src';
+import {importAvroSchema,exportAvroSchema,inspectAvro,readDocument,writeDocument} from '../../src/index-node-v4';
 import manifest from '../../fixtures/avro/upstream/manifest.json';
 
 test('US-007-AC6: pinned Apache schema corpus survives with per-file interpretation status',async()=>{

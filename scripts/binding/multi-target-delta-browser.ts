@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {captureDeltaLog,type Document} from '../../src';
+import {captureDeltaLog,type Document} from '../../src/index-node-v4';
 import {projectBindingToDelta} from '../../src/index-node-v4';
 import {buildBindingBrowserRuntime} from './browser-runtime';
 

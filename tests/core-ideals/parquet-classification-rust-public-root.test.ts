@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {classifyParquetRecord,recoverParquetRecordBytes,classifyParquetRecordType,recoverParquetRecordTypeBytes} from '../../src/index-node-v4';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
+import {importParquetSchema} from "../../src/index-node-v4";
 
 test('Node V4 Parquet Record classifier defaults classify and recover source bytes through Rust',async()=>{
  const bytes=new Uint8Array(await Bun.file('fixtures/parquet/containers/list-tuple.parquet').arrayBuffer());
@@ -16,7 +16,7 @@ test('Node V4 Parquet Record classifier defaults classify and recover source byt
 test('Node V4 Parquet Record classifier admits nested unannotated struct groups through Rust',async()=>{
  const bytes=new Uint8Array(await Bun.file('fixtures/parquet/nullability/struct-1-1-child-null-0.parquet').arrayBuffer());
  const source=importParquetSchema(bytes,{id:'nested-struct'});
- const {inspectParquetContainers}=await import('../../src/adapters/parquet/containers');
+ const {inspectParquetContainers}=await import('../../src/index-node-v4');
  const view=inspectParquetContainers(source),schema=(view.metadata as any).schema as any[],containers=view.containers??[];
  const index=schema.findIndex((entry,i)=>i>0&&entry.num_children>0&&entry.type===undefined&&entry.logicalType===undefined&&entry.converted_type===undefined&&!containers.some(c=>c.index===i||c.repeatedIndex===i&&(c.kind==='map'||c.layout==='three-level')));
  expect(index).toBeGreaterThan(0);

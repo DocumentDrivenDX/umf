@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {readDddDocument,writeDddDocument,inspectDdd,getDddDefinition,editDddDefinition,copyJson,type Document} from '../../src';
+import {readDddDocument,writeDddDocument,inspectDdd,getDddDefinition,editDddDefinition,copyJson,type Document} from '../../src/index-node-v4';
 const input=await Bun.file('fixtures/ddd/sales.json').text();
 const fresh=()=>JSON.parse(input) as Document;
 const payload=(doc:Document,module:string,element:string)=>doc.modules.find(m=>m.id===module)!.elements.find(e=>e.id===element)!.extensions['umf.ddd'] as any;

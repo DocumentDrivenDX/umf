@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {facetTableSpecCases} from './facets-tablespec-cases';
-import {classifyTableSpecFacets, copyJson, writeJsonValue, readJsonValue, recoverTableSpecFacetSource, type TableSpecFacetClassification} from '../../src';
+import {classifyTableSpecFacets, copyJson, writeJsonValue, readJsonValue, recoverTableSpecFacetSource, type TableSpecFacetClassification} from '../../src/index-node-v4';
 const rows=[];let recoveries=0;
 for(const row of facetTableSpecCases()){
  const r=classifyTableSpecFacets(row.source,row.request),recovered=[];
