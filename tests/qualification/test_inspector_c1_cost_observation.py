@@ -182,4 +182,90 @@ class SourceArchiveModeSemantics(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'regular and non-executable'):
                 m.verify_source_tar(self.archive(payloads,0o664),root,selected,pins)
 
+
+class IdentityEntryDryPath(unittest.TestCase):
+    def test_identity_entry_resolves_only_through_stubbed_primitives(self):
+        import importlib.metadata
+        import os
+        import sys
+        import types
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        m=load_module();pins=m.fixture(ROOT)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=root/'owner';out=root/'out';owner.mkdir();out.mkdir()
+            wheel=root/'retained.whl';wheel.write_bytes(b'test retained wheel placeholder')
+            controller=ROOT
+            census_path=owner/'tests/qualification/fixtures/inspector-construction-batch.json'
+            census_path.parent.mkdir(parents=True);census_path.write_text('{}')
+            identity=pins['producer']['currentInputIdentity']
+            (out/'intake.json').write_text(json.dumps({'runtimeSource':pins['runtimeSource'],
+              'observerController':'c'*40,'observerRun':'12345','observerAttempt':'1','wheelPath':str(wheel),
+              'currentInputIdentity':identity}))
+            dependencies={k.lower().replace('_','-'):v for k,v in pins['producer']['dependencies'].items()}
+            dependencies['umf-core']='0.10.11'
+            install=[{'metadata':{'name':name,'version':version},'download_info':{
+              'url':wheel.as_uri(),'archive_info':{'hashes':{'sha256':pins['wheel']['sha256']}}}}
+              for name,version in dependencies.items()]
+            (out/'install-report.json').write_text(json.dumps({'install':install}))
+            for name in ('pip-check.log','freeze.txt'):(out/name).write_text('ok\n')
+            platlib=(root/'site-packages').resolve();package=platlib/'umf';package.mkdir(parents=True)
+            module_paths={'umf/__init__.py':package/'__init__.py','umf/_rust.py':package/'_rust.py',
+              'umf/_rust_core.abi3.so':package/'_rust_core.abi3.so','umf/rust_codegen.py':package/'rust_codegen.py'}
+            for path in module_paths.values():path.write_bytes(b'stub')
+            dist=SimpleNamespace(version='0.10.11',files=[Path(name) for name in module_paths])
+            expected_members={name:'a'*64 for name in module_paths}
+            expected_members['umf/_rust_core.abi3.so']=pins['wheel']['nativeMember']['sha256']
+            calls={'selection':0,'current_inputs':0,'pip_metadata':0,'installed_wheel':0,'loaded_owner':[],'verify':0}
+            helper=SimpleNamespace(CENSUS='tests/qualification/fixtures/inspector-construction-batch.json')
+            def selection(owner_path,census):calls['selection']+=1;return object()
+            def current_inputs(owner_path,selected):calls['current_inputs']+=1;return ({},identity)
+            def installed_wheel(wheel_arg,dist_arg,version):
+                calls['installed_wheel']+=1;self.assertEqual((wheel_arg,dist_arg,version),(wheel,dist,'0.10.11'))
+                return [{'name':name,'sha256':value} for name,value in expected_members.items()]
+            helper.selection=selection;helper.current_inputs=current_inputs;helper.installed_wheel=installed_wheel
+            driver=SimpleNamespace()
+            def pip_generated_metadata(platlib_arg,wheel_arg,sha_arg,version):
+                calls['pip_metadata']+=1;self.assertEqual((platlib_arg,wheel_arg,sha_arg,version),
+                  (platlib,wheel,pins['wheel']['sha256'],'0.10.11'))
+            def loaded_owner(name,path,base,distribution,owned,sha_arg):
+                calls['loaded_owner'].append(name);self.assertEqual((base,distribution,sha_arg),(platlib,dist,expected_members[name]))
+                return {'sha256':sha_arg}
+            driver.pip_generated_metadata=pip_generated_metadata;driver.loaded_owner=loaded_owner
+            def write(path,value):Path(path).write_text(json.dumps(value))
+            def fake_load(path,name):
+                if name=='c8_identity_helpers':return SimpleNamespace(write=write)
+                if name=='candidate_identity_source':return helper
+                if name=='candidate_identity_primitives':return driver
+                raise AssertionError('Unexpected loaded helper '+name)
+            fake_umf=types.ModuleType('umf');fake_umf.__file__=str(module_paths['umf/__init__.py']);fake_umf.__version__='0.10.11'
+            fake_modules={}
+            for name,path in module_paths.items():
+                dotted=name[:-3].replace('/','.') if name.endswith('.py') else 'umf._rust_core'
+                mod=types.ModuleType(dotted);mod.__file__=str(path);fake_modules[dotted]=mod
+            fake_umf._rust=fake_modules['umf._rust'];fake_umf._rust_core=fake_modules['umf._rust_core']
+            fake_umf.rust_codegen=fake_modules['umf.rust_codegen'];fake_modules['umf']=fake_umf
+            def run_stub(command,check):
+                calls['verify']+=1;self.assertTrue(check)
+                receipt=Path(command[command.index('--receipt')+1])
+                receipt.write_text(json.dumps({'status':'passed','wheel_sha256':pins['wheel']['sha256'],
+                  'native_sha256':pins['wheel']['nativeMember']['sha256']}))
+                return SimpleNamespace(returncode=0)
+            args=SimpleNamespace(controller=controller,owner=owner,out=out,wheel=wheel,controller_sha='c'*40,
+              observer_run='12345',observer_attempt='1')
+            real_sha=m.sha
+            def sha(path):return pins['wheel']['sha256'] if Path(path)==wheel else real_sha(path)
+            with patch.object(m,'load',side_effect=fake_load),patch.object(m,'sha',side_effect=sha),\
+                 patch.object(m.subprocess,'run',side_effect=run_stub),\
+                 patch.object(importlib.metadata,'distribution',return_value=dist),\
+                 patch('sysconfig.get_path',return_value=str(platlib)),\
+                 patch('platform.python_version',return_value='3.11.17'),patch('platform.system',return_value='Linux'),\
+                 patch('platform.machine',return_value='x86_64'),patch.dict(sys.modules,fake_modules):
+                m.identity(args,'before')
+            receipt=json.loads((out/'identity-before.json').read_text())
+            self.assertTrue(receipt['completeWheelAndInstalledRecordVerified'])
+            self.assertTrue(receipt['distributionOwnershipVerified'])
+            self.assertEqual(calls,{'selection':1,'current_inputs':1,'pip_metadata':1,'installed_wheel':1,
+              'loaded_owner':list(module_paths),'verify':1})
+
 if __name__=='__main__':unittest.main()

@@ -8,6 +8,7 @@ import os
 from pathlib import Path, PurePosixPath
 import shutil
 import stat
+import sys
 import subprocess
 import tarfile
 import zipfile
