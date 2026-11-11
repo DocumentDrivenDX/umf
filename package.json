@@ -7,7 +7,7 @@
     "dist/",
     "spec/"
   ],
-  "packageManager": "bun@1.4.2",
+  "packageManager": "bun@1.4.3",
   "exports": {
     ".": {
       "types": {
@@ -32,6 +32,7 @@
   "scripts": {
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
     "test": "bun run test:prepare && bun scripts/run-tests.ts",
+    "test:fast": "bun scripts/run-tests.ts --keep-going --exclude-file scripts/slow-tests.txt",
     "build": "bun scripts/build.ts",
     "build:schema-browser": "bun scripts/build-schema-browser.ts",
     "test:schema-browser": "bun scripts/schema-browser-package-browser.ts",

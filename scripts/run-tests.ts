@@ -1,15 +1,35 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {lstat,realpath} from 'node:fs/promises';
+import {lstat,readFile,realpath} from 'node:fs/promises';
 import {relative,resolve,sep} from 'node:path';
-import {createHash} from 'node:crypto';
+import {availableParallelism} from 'node:os';
 
-// Every file gets a new Bun process. No VM reset, cross-file globals, or parallel
-// native ownership. Explicit selections support qualification's disjoint shards;
-// no selections means every live test under tests/.
-const root=await realpath(resolve('tests')),selections=Bun.argv.slice(2);
-const files:string[]=[];
+// Runs every selected test file in its own Bun process (no cross-file globals, no shared native state).
+//
+//   bun scripts/run-tests.ts [options] [file-or-dir ...]     (default: tests/)
+//
+// Options:
+//   --jobs N             run N files at once (default: number of CPUs; 1 = serial)
+//   --keep-going         run every file and report all failures (default: stop at the first)
+//   --exclude-file PATH  skip test files matching any glob listed in PATH (one per line, # comments)
+//   --shard I/N          run only the I-th of N deterministic shards of the selected files
+const args=Bun.argv.slice(2),selections:string[]=[];
+let jobs=availableParallelism(),keepGoing=false,excludeFile:string|undefined,shard:[number,number]|undefined;
+for(let i=0;i<args.length;i++){
+ const arg=args[i]!;
+ if(arg==='--')continue;
+ if(arg==='--keep-going')keepGoing=true;
+ else if(arg==='--jobs'||arg==='--exclude-file'||arg==='--shard'){
+  const value=args[++i];if(!value)throw Error(arg+' needs a value');
+  if(arg==='--jobs'){jobs=Number(value);if(!Number.isInteger(jobs)||jobs<1)throw Error('--jobs needs a positive integer');}
+  else if(arg==='--exclude-file')excludeFile=value;
+  else{const m=value.match(/^(\d+)\/(\d+)$/);if(!m||Number(m[1])<1||Number(m[1])>Number(m[2]))throw Error('--shard needs I/N with 1<=I<=N');shard=[Number(m[1]),Number(m[2])];}
+ }
+ else if(arg.startsWith('-'))throw Error('Unknown option '+arg);
+ else selections.push(arg);
+}
+const root=await realpath(resolve('tests'));
+let files:string[]=[];
 for(const selection of selections.length?selections:['tests']){
- if(selection.startsWith('-'))throw Error('Only test file/directory selections are accepted');
  const path=await realpath(resolve(selection)),inside=relative(root,path);
  if(inside.startsWith('..'+sep)||inside==='..'||inside.startsWith(sep))throw Error('Test selection escapes tests/');
  const info=await lstat(path);
@@ -20,31 +40,32 @@ for(const selection of selections.length?selections:['tests']){
 }
 files.sort();
 if(!files.length||new Set(files).size!==files.length)throw Error('Empty or overlapping test inventory');
-let passed=0,failed=0,skipped=0,assertions=0,completed=0;
-const started=performance.now();
-for(const file of files){
- const command=[process.execPath,'test','--timeout','30000','./'+file];
- console.log(JSON.stringify({testProcess:file,command}));
- const child=Bun.spawn(command,{stdout:'pipe',stderr:'pipe',stdin:'ignore',env:{...process.env}});
- const forward=async(stream:ReadableStream<Uint8Array>,output:typeof Bun.stdout)=>{
-  const chunks:Uint8Array[]=[];
-  for await(const chunk of stream){chunks.push(chunk);await output.write(chunk);}
-  return Buffer.concat(chunks).toString('utf8');
- };
- const [stdout,stderr,exitCode]=await Promise.all([forward(child.stdout,Bun.stdout),forward(child.stderr,Bun.stderr),child.exited]);
- const text=stdout+'\n'+stderr,summary=text.match(/Ran (\d+) tests? across (\d+) files?\./);
- const pass=Number(text.match(/(?:^|\n)\s*(\d+) pass(?:\r?\n|$)/)?.[1]??0);
- const fail=Number(text.match(/(?:^|\n)\s*(\d+) fail(?:\r?\n|$)/)?.[1]??0);
- const skip=Number(text.match(/(?:^|\n)\s*(\d+) skip(?:\r?\n|$)/)?.[1]??0);
- const checks=Number(text.match(/(?:^|\n)\s*(\d+) expect\(\) calls(?:\r?\n|$)/)?.[1]??0);
- const valid=!!summary&&Number(summary[1])===pass+fail+skip&&Number(summary[2])===1;
- console.log(JSON.stringify({testProcess:file,exitCode,pass,fail,skip,assertions:checks,completeSummary:valid,logSha256:createHash('sha256').update(text).digest('hex')}));
- passed+=pass;failed+=fail;skipped+=skip;assertions+=checks;completed++;
- if(exitCode!==0||!valid||fail){
-  console.error('Complete test file failed or terminated: '+file);
-  process.exitCode=exitCode===0?1:Math.abs(exitCode);
-  break;
- }
+if(excludeFile){
+ const globs=(await readFile(excludeFile,'utf8')).split('\n').map(l=>l.trim()).filter(l=>l&&!l.startsWith('#')).map(g=>new Bun.Glob(g));
+ const before=files.length;
+ files=files.filter(f=>!globs.some(g=>g.match(f)));
+ console.error(`excluded ${before-files.length} of ${before} files via ${excludeFile}`);
 }
-console.error(`\n ${passed} pass\n ${skipped} skip\n ${failed} fail\n ${assertions} expect() calls\nRan ${passed+skipped+failed} tests across ${completed} files. [${((performance.now()-started)/1000).toFixed(2)}s]`);
-if(completed!==files.length)process.exitCode=1;
+if(shard)files=files.filter((_,index)=>index%shard![1]===shard![0]-1);
+if(!files.length)throw Error('No test files selected');
+
+let passed=0,failed=0,skipped=0,assertions=0,completed=0,next=0,stop=false;
+const failures:string[]=[],started=performance.now();
+async function runOne(file:string){
+ const child=Bun.spawn([process.execPath,'test','--timeout','30000','./'+file],{stdout:'pipe',stderr:'pipe',stdin:'ignore',env:{...process.env}});
+ const [stdout,stderr,exitCode]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
+ const text=stdout+'\n'+stderr,summary=text.match(/Ran (\d+) tests? across (\d+) files?\./);
+ const count=(label:string)=>Number(text.match(new RegExp(`(?:^|\\n)\\s*(\\d+) ${label}(?:\\r?\\n|$)`))?.[1]??0);
+ const pass=count('pass'),fail=count('fail'),skip=count('skip'),todo=count('todo'),checks=count('expect\\(\\) calls');
+ const valid=!!summary&&Number(summary[1])===pass+fail+skip+todo&&Number(summary[2])===1;
+ passed+=pass;failed+=fail;skipped+=skip;assertions+=checks;completed++;
+ const bad=exitCode!==0||!valid||fail>0;
+ if(bad){failures.push(file);console.log(`FAIL ${file} (exit ${exitCode}, ${pass} pass, ${fail} fail)\n${text.trim().split('\n').slice(-60).join('\n')}\n`);if(!keepGoing)stop=true;}
+ else console.log(`ok   ${file} (${pass} pass${skip?`, ${skip} skip`:''})`);
+}
+await Promise.all(Array.from({length:Math.min(jobs,files.length)},async()=>{
+ while(!stop&&next<files.length)await runOne(files[next++]!);
+}));
+console.log(`\n ${passed} pass\n ${skipped} skip\n ${failed} fail\n ${assertions} expect() calls\nRan ${passed+skipped+failed} tests across ${completed} of ${files.length} files. [${((performance.now()-started)/1000).toFixed(2)}s]`);
+if(failures.length){console.log('\nFailed files:\n'+failures.sort().map(f=>'  '+f).join('\n'));process.exitCode=1;}
+else if(completed!==files.length)process.exitCode=1;

@@ -1,0 +1,18 @@
+# Test files that the fast CI job (bun run test:fast) skips. The nightly job runs every file.
+# A file belongs here when it needs build output beyond the Node addon (WASM, the SDK in dist/,
+# the built reference site, PostgreSQL WASM, smithy, action prerequisites) or takes minutes.
+# One glob per line, relative to the repository root.
+
+# Read the built reference site / catalog (bun run build:reference).
+tests/reference/**
+tests/domain-packs/ontology-browser.test.ts
+
+# Need the action prerequisites from scripts/prepare-action-tests.ts.
+tests/actions-reference/sandbox*.test.ts
+tests/actions-reference/handler-executor.test.ts
+tests/actions-reference/launch-owner.test.ts
+
+# Several minutes each (conformance round trips over every binding).
+tests/rust-inventory/**
+tests/core-ideals/*-conformance.test.ts
+tests/core-ideals/nullability-parquet.test.ts

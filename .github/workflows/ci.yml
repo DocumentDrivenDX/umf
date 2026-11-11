@@ -1,0 +1,186 @@
+name: ci
+
+# Tests the software, nothing else. Fast jobs run on every push to main and every
+# pull request; the slow suites run in the nightly job (schedule or manual dispatch).
+# Run output is uploaded as workflow artifacts, never committed.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: never
+  CARGO_INCREMENTAL: '0'
+
+jobs:
+  size-guard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python3 scripts/check-repo-size.py
+
+  native-addon:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.90.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: native-addon
+      # opt-level 2 without debug info: unoptimized addon builds time out the native tests,
+      # full release builds take twice as long to compile.
+      - run: cargo build --locked -p umf-core-node --features native-postgresql
+        env:
+          CARGO_PROFILE_DEV_OPT_LEVEL: '2'
+          CARGO_PROFILE_DEV_DEBUG: '0'
+      - run: cp target/debug/libumf_core_node.so bindings/core/node/umf_core_node.node
+      - uses: actions/upload-artifact@v4
+        with:
+          name: umf-core-node-addon
+          path: bindings/core/node/umf_core_node.node
+          retention-days: 3
+
+  rust:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.90.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: rust-test
+      - run: >-
+          cargo test --locked
+          -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen
+          -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql
+
+  ts:
+    needs: native-addon
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: umf-core-node-addon
+          path: bindings/core/node
+      - name: Coupled release versions
+        if: matrix.shard == 1
+        run: |
+          python3 scripts/check-release-versions.py
+          python3 -m unittest discover -s tests/release -v
+      - name: Tests (shard ${{ matrix.shard }} of 4)
+        run: bun scripts/run-tests.ts --jobs 4 --keep-going --exclude-file scripts/slow-tests.txt --shard ${{ matrix.shard }}/4
+
+  python:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.90.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: python-${{ matrix.python }}
+      - name: Install the three Python packages from source
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest 'ruff==0.17.1' packaging 'hatchling>=1.27,<2'
+          python -m pip install ./python ./python/umf_codegen
+          # umf-access still pins its umf-core release; install it against the source-built core.
+          python -m pip install --no-deps ./python/umf_access
+          python -m pip install 'pydantic>=2.13,<3' 'typing-extensions>=4.16,<5'
+      - run: ruff check python
+      - run: python -m pytest -q -p no:cacheprovider python/tests python/umf_codegen/tests python/umf_access/tests tools/tests
+
+  # Slow suites: the full Bun inventory, browsers, WASM/SDK packaging, every Rust test.
+  nightly:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.90.0
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: nightly
+      - run: cargo install wasm-bindgen-cli --locked --version 0.2.100
+      - run: bun install --frozen-lockfile
+      - name: Build everything the slow tests need (WASM, SDK, PostgreSQL WASM, smithy, action prerequisites)
+        run: bun run test:prepare
+      - run: bun run typecheck
+      - name: Reference site (the reference tests read the built site)
+        run: bun run build:reference && bun run build:docs
+      - name: Every Bun test file
+        run: bun scripts/run-tests.ts --jobs 4 --keep-going
+      - name: Browser suites
+        run: |
+          bunx playwright install --with-deps chromium
+          bun run test:browser
+          bun run test:reference:browser
+          bun run test:visuals:browser
+      - run: bun run test:sdk
+      - run: cargo test --locked --workspace
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-output
+          path: out/
+          if-no-files-found: ignore
+          retention-days: 7
