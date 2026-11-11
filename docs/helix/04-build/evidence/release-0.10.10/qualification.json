@@ -1,0 +1,136 @@
+{
+  "artifacts": {
+    "umf-sdk-0.10.10-linux-x86_64.tgz": {
+      "sha256": "4a97933f82819f76bf4da79245e919b3541558a889da3b0420c88ccf6dccbdec",
+      "size": 66374947
+    },
+    "umf-sdk-0.10.10-macos-aarch64.tgz": {
+      "sha256": "70a24705d51bfb67e68c78daf762e8fde9faaf193df93b4cc934b6e40cf67f22",
+      "size": 64521832
+    },
+    "umf-v0.10.10-aarch64-apple-darwin.tar.gz": {
+      "sha256": "d86da780955ff9e890dcb25ca71dde3c23c9315bee4bee2678bc4208f417e22c",
+      "size": 14907232
+    },
+    "umf-v0.10.10-source.tar.gz": {
+      "sha256": "8569740fe813fca57a20d5c2a3e49ac596a3abfea0a7c40b70c26c67e815ffc5",
+      "size": 1677414614
+    },
+    "umf-v0.10.10-x86_64-unknown-linux-gnu.tar.gz": {
+      "sha256": "23b24f298b0a84d6a1c923c6c432098127fd2ffed714d2d841eb8b664de76084",
+      "size": 16463728
+    },
+    "umf_codegen-0.10.10-py3-none-any.whl": {
+      "sha256": "80010b59719fdcb9bb793e1f3ef54449f557f8903fc71c8cb29735d0bc73e702",
+      "size": 66283
+    },
+    "umf_codegen-0.10.10.tar.gz": {
+      "sha256": "d23d00be700ced33af9b4c73309bb47ece2aaa14799f5ed424ca10e2ee4c5c13",
+      "size": 53180
+    },
+    "umf_core-0.10.10-cp311-abi3-macosx_11_0_arm64.whl": {
+      "sha256": "994702131472a24a999a7bd1dde83feafbdef63c7fc88d81ff881a95f9c57ca4",
+      "size": 30419736
+    },
+    "umf_core-0.10.10-cp311-abi3-manylinux_2_34_x86_64.whl": {
+      "sha256": "c884a88ee01da2e948e926d2d94de1244e739b371c46a77b115db9dca197ebec",
+      "size": 33927466
+    },
+    "umf_core-0.10.10.tar.gz": {
+      "sha256": "8f83bf9fdac4dc880d645eadc41485f8a06f3524fa78ed2f8d2b433e3dc86812",
+      "size": 7626568
+    }
+  },
+  "nativeSourceJoin": {
+    "path": "docs/helix/04-build/evidence/release-0.10.10/native-s4-source-join.json",
+    "sha256": "a56f4232c99733bf250207b7b7dc18f9e2771e9cbe5bc292a271b3147c3aa0b9"
+  },
+  "platforms": {
+    "linux-x86_64": {
+      "sourceSnapshot": {
+        "afterSha256": "a538d29f6824eb4d9e1db77bd01753df7637fd6ea388767bc16c17b4259c9eab",
+        "beforeSha256": "a538d29f6824eb4d9e1db77bd01753df7637fd6ea388767bc16c17b4259c9eab",
+        "commit": "96a44ddcf19d530d79674ba5134dfc7d4cb88055",
+        "tree": "7362e273e2afe13e62da0bf353ab4783deda9c14"
+      },
+      "toolchain": {
+        "buildTools": [
+          "clang-devel-21.1.8-2.el9.x86_64",
+          "llvm-devel-21.1.8-2.el9.x86_64",
+          "protobuf-compiler-3.14.0-17.el9_7.x86_64",
+          "protobuf-devel-3.14.0-17.el9_7.x86_64"
+        ],
+        "image": "sha256:c4c5dd267c66fb5d646b0b36610306bd859d687ce7a199f54bb8dfce53aff8ff",
+        "runtimeGlibc": "glibc 2.34",
+        "rustAndPython": [
+          "rustc 1.90.0 (1159e78c4 2025-09-14)",
+          "Python 3.11.18"
+        ]
+      }
+    },
+    "macos-arm64": {
+      "sourceSnapshot": {
+        "afterSha256": "55ff406544df7ba050651d9320f3a78ae4189e8100fd9e46131a146f6c3849af",
+        "beforeSha256": "55ff406544df7ba050651d9320f3a78ae4189e8100fd9e46131a146f6c3849af",
+        "commit": "96a44ddcf19d530d79674ba5134dfc7d4cb88055",
+        "tree": "7362e273e2afe13e62da0bf353ab4783deda9c14"
+      },
+      "toolchain": {
+        "bun": "1.4.3",
+        "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+        "cargoCacheMode": "external-cargo-managed",
+        "cargoLockSha256": "c7777063f16762bea888aacefdf74fe6628ae65fbeae9db9cd907e0fd412145f",
+        "python": "3.11.17",
+        "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+        "wasmBindgen": "0.2.100"
+      }
+    }
+  },
+  "probes": {
+    "browser": {
+      "path": "docs/helix/04-build/evidence/release-0.10.10/browser.json",
+      "sha256": "471ce0dcc72d87c035c31f8d4a154b5adec1e8c42f093bc3860d72dac98a64af"
+    },
+    "bun": {
+      "path": "docs/helix/04-build/evidence/release-0.10.10/bun.json",
+      "sha256": "ea3af2a0fb25ddb39991cf94957ff10624d06a722daa1411dbf28d8d41fc63f4"
+    },
+    "nodeFileLoader": {
+      "path": "docs/helix/04-build/evidence/release-0.10.10/nodeFileLoader.json",
+      "sha256": "9178e772046f15e5aacd7ef7ee05a7bdd2a33acc085f3a8ce8e19e49c9e91dd2"
+    },
+    "python": {
+      "path": "docs/helix/04-build/evidence/release-0.10.10/python.json",
+      "sha256": "a176ff2b402967cdd3253920008f87e6e9d10a8dc024685c2ab8d12c4a84d649"
+    }
+  },
+  "profile": "umf.local-release-qualification/1",
+  "resources": {
+    "files": {
+      "actions.package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
+      "binding.package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+      "core.constraints.json": "409e2775da2fb69e4f5c51873318216e080bdf77744c48ed6686b1ed226a5395",
+      "core.domain-policy.json": "2848a19e21cf25f8a1c52b63687d2313cb0a6b0763efafb3ca4d93ce2b2bbf91",
+      "core.package-schema.json": "2dba928e885fae04dfde1eb91e3d01aa1e2c39071eee7d1fd032594dbf382586",
+      "core.reference-schema.json": "a07ab2335531735c636effef3b04f03074a0f8d0a10b6877b83ded5ce78d72d0",
+      "core.schema.json": "b37b9e49072cc89c9d4b1c8fe7c2587e3f0e374ea579e7f608a44e05028346ea",
+      "saga.package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
+      "stable-binding.package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+      "tables.package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+    },
+    "manifest": "519a3fc7254d57ba8dfec6d483c36cbea0b221d96afd720831cf133998f2e09b",
+    "protocols": {
+      "cli": "umf.codegen-cli/1",
+      "engine": "umf-core-r2",
+      "native": "umf-codegen-r3-seven-ops-nine-resources/1",
+      "resources": "umf.codegen-resources/1"
+    },
+    "releaseAuthority": "8bceb64540c8b00c39b27d3637969a89507694e6247698023bbad4ba38714577"
+  },
+  "source": {
+    "commit": "85504b0913261c208a53010a5a67aa6fa54c3a59",
+    "tree": "4770fa46ef6a0b7f7d45758daab73af74d47f061"
+  },
+  "status": "passed",
+  "version": "0.10.10"
+}
