@@ -5,6 +5,13 @@
 //! filesystem, network, process, clock, or JavaScript runtime.
 #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 include!("full_modules.rs");
+pub(crate) mod resource_set;
+// The reduced metamodel-compiler closure has no full engine, but admitted
+// schema banks only need its plain resource bundles.
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
+pub(crate) mod engine {
+    pub use crate::resource_set::{OwnedResourceSet, ResourceSet};
+}
 pub mod read_json_value_host;
 #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 pub mod semantic_type_accessors_host_json;
@@ -50,3 +57,6 @@ pub use python_value::{
 #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 pub use registry::Registry;
 pub use value::{Utf16, Value, copy_json, ecma_number_to_string};
+
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+pub mod canonical_codegen_resources;

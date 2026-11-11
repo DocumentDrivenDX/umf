@@ -39,7 +39,8 @@ test('native schema names and custom relationship metadata do not enforce record
    expect(r.reads[reader]!.bytesConsumed).toBe(r.write!.hex!.length/2);
   }
  }
- for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(hash);
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
+ for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(history.entries.find((entry:any)=>entry.path===path)?.archive??path).arrayBuffer())).digest('hex')).toBe(hash);
 });
 
 test('unknown metadata number lexemes and named dependencies survive native/UMF recovery',()=>{

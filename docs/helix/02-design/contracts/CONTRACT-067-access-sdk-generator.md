@@ -86,6 +86,111 @@ against the existing TypeScript inspector, including duplicate/foreign refs,
 refinements, presence, Key and temporal diagnostics and budget/cancel refusals.
 The public exposure does not select a backend, generate SQL or authorize I/O.
 
+### Explicit retained Python resources
+
+The Python constructor MAY select `resource_mode="retained-native/1"` explicitly.
+Omission or `None` MUST preserve the existing resource transport and accounting.
+Other mode values, including non-string values, MUST refuse. The inspection
+signature, dispatcher payload, result structure, ordering and semantic rules above
+MUST remain unchanged. Resource profiles and their availability remain unchanged.
+
+The selected mode MUST admit and copy the complete explicitly supplied resources
+before publishing an engine-owned immutable native handle. It MUST reuse the
+shared resource compiler and inspector. A caller-supplied handle, unknown resource
+name or incomplete resource set MUST NOT substitute for resource admission.
+Artifact data MUST NOT install code or capabilities. The handle MUST retain no
+host callbacks or mutable Python resource references. Later caller mutation MUST
+NOT change the engine's resources or previously returned results.
+
+Construction MUST use one cumulative work allowance across host admission/copies,
+native conversion, resource compilation and final handle publication. Each complete
+invocation MUST use a separate cumulative allowance across request conversion,
+serialization, native decoding/inspection/result encoding and host result copies.
+When `max_work=1_000_000` is selected, neither lifetime may exceed that ceiling.
+Counters MUST NOT reset between phases or resources, and no result or handle may
+escape before all applicable charges and controls pass.
+
+Resources MAY avoid repeated encoding or compilation only when that work is
+actually absent. Work still performed MUST remain charged. Existing numeric,
+unknown-content, raw transport, per-resource depth/value, semantic tree and output
+limits MUST remain in force. Cancellation, deadline and callback failures MUST
+remain terminal during native entry, result conversion and failure unwinding.
+Private diagnostic phase labels MUST NOT change public meter arguments or grant
+work credits. Hard-isolated unavailability MUST NOT fall back to this mode.
+
+Retained construction MAY eliminate the Python tagged-value round trip only
+when that intermediate snapshot is not constructed. One native-owned admission
+MUST preserve the facade's exact built-ins, safe integer interval
+`[-(2^53-1), 2^53-1]`, inherited core-number admission for floats (including
+negative-zero, nonfinite and unsafe integral-float refusals), bits of admitted
+binary64 values, UTF-16 projection and projected-key collision refusal, complete unknown annotation content, and per-resource depth128
+and value-count1,000,000. The broader Python Schema consumer integer or source
+origin profile MUST NOT silently replace this facade profile. Remaining native
+conversion, text normalization, owned container-reference snapshots, projection,
+resource checks, compilation and publication MUST remain charged. Legacy mode
+MUST retain its existing admission/transport. A container whose size changes
+across a conversion admission callback MAY refuse as `REQUEST`; no partially
+converted value or handle may escape. Completed conversion MUST retain no caller
+container references when compilation callbacks run.
+
+Cold retained construction MAY consume already owned admitted trees rather than
+allocate duplicate copies, and MAY share an immutable admitted catalogue or a
+completed schema compilation within that same construction. Such reuse MUST be
+owner-created, scoped to the existing cumulative Context, and authoritative for
+the complete effective content, ordered catalogue, numeric/source-origin profile,
+dialect, regex, strictness, keyword/reference policy and effective limits. A
+matching root ID, caller digest, pointer coincidence or prior request MUST NOT
+establish equivalence. A non-equivalent profile MUST retain the original metered
+admission/compilation. All remaining comparisons, allocations, validation and
+publication MUST be charged before their work; failed construction MUST expose
+neither a handle nor reusable successful state. Scoped state MUST restore on
+return, error and unwind without resetting counters or terminal controls.
+Cold retained metaschema UTF-8-to-UTF-16 materialization MUST be precharged before
+conversion/allocation. Its conversion charge MUST remain separate from the shared
+reader's parsing charges in that same cumulative construction lifetime; a denied
+conversion charge MUST enter neither materialization nor parsing.
+
+This internal reuse MUST NOT omit package/registry validation or substitute old
+ID/version/scopes/token/source data for a new registration. Generic Python Schema
+source-origin behavior, legacy construction, all required resource families and
+explicit optional Saga validation remain governed by their existing contracts.
+A supplied optional Saga package MUST be validated eagerly in that construction;
+a malformed optional package MUST NOT yield a native resource handle.
+A private completed-publication mechanism MUST retain its existing eligibility
+and returned-winner guarantees; it MUST NOT grant global warm-up authority.
+
+Private owner attribution MAY use fixed nested Context labels around existing
+work. It MUST preserve every charge amount and callback order, cumulative Context,
+first denied charge and semantic result. Labels MUST restore on return, refusal
+and unwind. No document may enable attribution. The ordinary retained method's
+phase protocol MUST remain unchanged; an explicit private diagnostic entry may
+expose subphase labels without changing admission or execution. Bounded observer
+storage, phase sums and rolling charge-sequence hashes MUST reconcile copies,
+validation/compilation, shared inspection and inner/outer encoding. Private
+component observations without the public1M allowance MUST remain diagnostic;
+they MUST NOT be reported as public cold construction or call qualification.
+
+A bounded support claim MUST identify the actual owner source/native bytes, mode
+and allowance, and demonstrate cold construction as well as each invocation.
+The same invocation allowance MUST include outer response-envelope sizing,
+allocation and serialization, including error envelopes, before publication.
+Distinct Python-side copies MUST retain their separate charges. The outer
+boundary MUST remain distinguishable from the shared inspector/inner-result
+phase in diagnostics. A first terminal control denial MUST retain its original
+code, message, path and denied charge; it MUST NOT trigger a second error
+serialization or another control invocation during unwinding.
+
+Warm reuse or a proof with omitted `max_work` MUST NOT qualify a bounded profile.
+Failure to fit the selected allowance MUST remain `RESOURCE_LIMIT`; it MUST NOT
+increase a limit, split one operation or relabel an older binary's capabilities.
+
+```python
+engine = CodegenEngine(resources, resource_mode="retained-native/1",
+                       max_work=1_000_000)
+result = engine.inspect_access_views(document, selected, bindings=(),
+                                     source_id="logical")
+```
+
 `generateAccessPackage(request, profile)` is synchronous, pure and deterministic.
 Inputs are copied; caller-owned data MUST NOT be mutated. All records below are
 closed except preserved UMF source content. Unknown contract fields refuse.
@@ -292,3 +397,338 @@ with an `unselected` disposition.
 - [ ] Bun and Chromium produce identical bytes, including digests.
 - [ ] Hostile names, collisions, hand edits and drift checks refuse as specified.
 - [ ] B-TP-001 imports and type-checks generated output against the exact `umf_access` runtime named by `runtimeAbi`; a runtime with a different protocol ABI fails.
+
+## Private constructor site observation — source proposal, no support claim
+
+The private native create_codegen_resources_attributed(resources, control)
+diagnostic delegates to the ordinary factory implementation and Context.
+Its callback is (amount, site_phase, root_role); the ordinary factory keeps
+(amount, coarse_phase). Fixed constructor metadata uses the existing scoped
+phase observer and a similarly scoped static root observer. Both restore on
+return, refusal, reentrancy and unwind. Metadata boundaries do not notify, charge,
+reset counters, change semantic policy or authorize admission. Constructor-site
+metadata is disabled for the existing attributed-call observer.
+
+The closed roster in tools/inspector_constructor_observation.py contains125
+site/root slots, never more than128. Roots are fixed owner call-site roles, not
+authored IDs or caller proof. Work without an identified compile root is
+unassigned; it must not be presented as a measured schema identity. Known but
+unclassified compilation/constraint-semantic work uses the explicit
+unassigned/other slot. The outer compilation scope is other; admission-copy
+labels only identified admission/copy work. Unknown labels/roles still refuse.
+Conversion
+and compilation labels describe charged sites; allocations without a separate
+charge are not newly measured merely by assigning a label.
+
+The proposed diagnostic is limited to two independent cold canonical constructor
+prefixes, ordinary then attributed. Each begins at its own initial state with the
+same1000000-event cap, and both share one300-second deadline. Neither resumes a
+refused constructor. Each must reproduce the authenticated adbd prefix's amount
+digest, count, total, last/first denied charge and terminal failure; all site
+counters must reconcile. Differences refuse the observation. A matched capped
+refusal is partial diagnostic evidence only, never public1M fit, complete
+construction attribution, enrollment or release qualification.
+
+Original adbd components and completed private constructor counters retain their
+original source/native identities. A newly built observation candidate is
+separate and unpublishable. No limits, versions, canonical resources, compiler
+eligibility, public API semantics or support claims change under this proposal.
+Source/controller and actual dispatch binding review precede any execution.
+
+## Combined cold-owner reduction — private source proposal
+
+This proposal preserves the retained constructor and inspection surfaces above.
+It makes no measured fit, native support, enrollment or publication claim.
+The authoritative recovery plan selects CR1–CR4 at SHA-256
+`d7756a1d49b67cf3b3b8200ba760d9877c2ee8e801e18fcc1ce50ec4acf8e999`.
+
+A construction-owned index MAY replace repeated resource discovery only after
+its complete cold admission in the existing Context. Root identity MUST be
+owner-relative, not an address surviving a move. Ordered catalogues, retrieval
+aliases, nested identifiers, policy, effective limits and original resolution
+precedence MUST remain distinguishable. An unsupported index shape MUST select
+the original compiler/interpreter; it MUST NOT reject previously admitted data,
+interpret unknown content as a schema, or omit ordinary preflight/metaschema work.
+Completed index/schema sharing MUST satisfy the existing exact construction
+eligibility and ordered input equality. Registry registration authority remains
+fresh for every package, ID, version, scope, capability and token.
+
+The shared interpreter MAY borrow an unchanged admitted schema path and share
+immutable dynamic ancestry. Branch changes MUST be separately admitted and
+scoped restoration MUST occur on success, refusal and unwind. Annotation sets
+remain branch-local and their existing ordered merge/validation charges remain.
+AllErrors order, dynamic-reference scope and full semantic validation MUST remain
+identical to the unindexed path. No pinned resource hash is validation authority.
+
+`Context::charge_work_with_path(amount, &mut path)` uses the owned-path charging
+state machine unchanged, including cumulative debit, overflow, zero/wide chunks,
+meter → host control → cancellation → deadline. On success the buffer MUST remain
+unchanged without cloning. A Context-generated refusal MUST take its existing
+owned storage; a host error MUST preserve its own fields and provenance without
+consuming the scratch path. Existing fixed terminal code/message construction
+remains allowed. No later callback, unadmitted input-dependent path materialization
+or result-envelope work follows terminal denial. Buffer growth MUST admit both
+new storage and possible prefix relocation before reserve; suffix escape and
+append MUST be admitted before mutation. The exact missing-clock diagnostic is
+`Host clock capability is required for deadline requests` for both APIs.
+
+The historical125-slot observation and its authenticated old prefix remain
+unchanged evidence. The combined controller extends that closed roster with
+one fixed `unassigned/index-build` slot (126 total, at most128). Unknown labels
+and roles still refuse; unclassified semantic compilation remains `other`, never
+`admission-copy`. This new controller MUST compare the changed source's ordinary
+and attributed constructors against each other, not demand the removed work's
+old amount digest. It permits at most two independent cold lifetimes, each with
+the unchanged1000000-event diagnostic cap and a combined300-second deadline.
+Completed diagnostic constructors still do not establish public1M support.
+
+Before supplementary attribution, the reviewed affected controls and fresh
+installed ownership MUST pass, and strict public construction/call measurement
+MUST run independently. An authentic public RESOURCE_LIMIT refusal MAY permit
+bounded attribution while required qualification remains failed. Arbitrary
+assertion, crash, identity failure or first-denial regression MUST NOT be
+reclassified as a budget refusal. Full fresh native selection, compiled-list
+correspondence, all51 cold calls, terminal/resource refusal and cleanup are still
+execution gates. The source-only charge and reachability map is recorded in
+[the combined batch packet](../../04-build/evidence/inspector-combined-budget-source.md).
+
+### Distinct resource identities in the combined index
+
+The combined construction index MUST preserve retrieval URI, authored ID and
+resolved embedded-root identity separately, including empty or named fragments.
+Their mismatch MUST NOT disable an otherwise supported complete canonical
+metaschema catalogue. Reference, policy and dynamic-scope lookup MUST preserve
+those selectors' respective original ordered precedence; a single normalized
+alias map is insufficient. A carried frame MAY be used only where the selectors
+agree for that exact incoming base. Ambiguous keys MUST use selector-specific
+lookup or the original qualified resolver, not assume a previous frame's owner.
+The full twenty pinned metaschemas, including the Draft3/4 trailing-`#` aliases,
+MUST remain present and must exercise actual indexed evaluation in qualification.
+No resource IDs or source bytes are relabeled to establish this eligibility.
+
+## Owned evaluation plans — private source proposal
+
+The selected recovery plan's ER1–ER3 owner work is source preparation, governed
+by plan SHA-256 `3ea92388d753cf3a36f7caeb573fb7ec9ef2474755ab040d2e53f2156e8ecb16`.
+The current combined scope and cost-first ordering are governed by
+`651fa2adc05318526949ed27ccd5b1507f7ef3bec5309a5b85f694ee9f185239`.
+ER0 is NOT selected for this batch; the current converter and its controls remain
+byte-identical. Neither
+selection establishes a measured cold-construction or complete-call allowance.
+The constructor, inspection surface, resources and cumulative1M limits above
+remain unchanged. Published assets and their original source identities remain
+immutable.
+
+An exact immutable admitted catalogue MAY back both a compiled root and its
+completed compilation proof. Selecting that backing MUST follow full ordered,
+bit-preserving root equality and the existing complete compiler/profile/limits
+eligibility. Ownership by itself MUST NOT replace numeric, duplicate-key,
+unknown-keyword, metaschema, policy or registration validation. Copies still
+required to assemble another catalogue or expose a public snapshot MUST remain
+in the charge inventory; they MUST NOT be described as eliminated.
+
+A private owner plan MAY retain the original resolver's successful static result
+as a root ordinal plus structural child indices and its exact diagnostic path.
+The key MUST distinguish the complete reference text, source path and explicit
+scope override, and reuse MUST check effective limits and the immutable owner
+lineage. Move-stable ordinals MUST name nodes in that owner; addresses, IDs,
+caller hashes and diagnostic spelling alone MUST NOT establish target identity.
+First resolution, target location, member/keyword metadata, frame normalization,
+all map comparisons, capacity, allocation and publication MUST remain charged
+before effect. A missing or unsupported target MUST retain the original resolver's
+ordered refusal; an unsuccessful plan MUST NOT be published as success. Distinct
+retrieval/authored/resolved identities and selector precedence MUST remain exact.
+
+Static fallback metadata MAY be reused for dynamic or recursive references, but
+the active target MUST still be selected from the current evaluation scope.
+Inherited policy and branch ancestry MUST remain live. Changed catalogues,
+profiles, source origins or limits MUST NOT acquire another owner's proof.
+Generic Python source-origin evaluation retains its qualified path.
+
+An Engine-owned document snapshot produced by its existing checked admission
+MAY enter the same interpreter without another identical instance copy. Only the
+private owned-snapshot call sites may select this path; public values, arbitrary
+`InstanceView` implementations and request fields MUST NOT grant it. Core
+numeric/profile and structural checks remain necessary before this borrowed
+entry. Public raw-value validation retains its ordinary admission.
+
+Evaluator path storage MAY share exact immutable UTF-16 buffers and reuse an
+invocation-local escaped-path arena. Equality, ordering and hashing MUST remain
+code-unit based for owned and shared storage, including lone surrogates. Raw
+schema segments and escaped schema/instance pointer segments MUST remain distinct.
+Lookup keys, prefix relocation, escaping, storage and publication MUST be admitted
+before their effects; cache exhaustion MUST use the exact original path builder,
+not reject otherwise admitted data or increase an allowance. State MUST restore
+on return, failure, nested invocation and unwind. Refusal uses already admitted
+path storage; no lazy input-dependent path reconstruction, callback or envelope
+work may follow terminal denial. The existing fixed terminal-header exception
+remains unchanged.
+
+Branch annotations MAY use invocation-owned exact-name symbols and empty
+branch-local deltas for genuinely owned `Value` evaluation. Every symbol MUST be
+established by full authored UTF-16 content, not an object ordinal or hash alone.
+Separate symbol universes MUST re-admit exact text before merging. Generic or
+mutable views retain their qualified annotation path. Child branches already
+start empty; this proposal MUST NOT claim to remove a parent annotation clone.
+Only the existing interpreter's explicit successful merge sites may commit a
+delta. Failed alternatives, `not`, `if`, contains/unevaluated behavior, recursive
+and dynamic scope, error order and authored diagnostic names MUST remain exact.
+All symbol projection/storage, membership, insertion, commit and rollback work
+still performed MUST remain admitted within the same operation.
+
+This candidate adds one closed `unassigned/plan-work` observation slot after the
+historical125 slots and `index-build`:127 total, at most128. It attributes both
+owner-plan lookup and first construction; it MUST NOT imply copying or an
+unmeasured saving. Unknown labels/roles still refuse. Diagnostic event/deadline
+caps and required failure aggregation remain unchanged. A producer proposal MUST
+retain the actual wheel/source before expensive selected-target compilation and
+bound expensive stages against one job clock with retention/cleanup reserve.
+No source parsing, pure control or partial diagnostic substitutes for genuine
+changed-source native controls and all51 cold public combinations at1M.
+
+
+The selected cost-first controller MUST run genuine production, early producer
+retention, normal resolver/pip checks, complete installed RECORD/loaded ownership,
+then unchanged strict cold1M construction and the full public51 cost coverage
+BEFORE compiling test targets. A cost failure MUST retain exact partial receipt,
+identity, first-denial and unexecuted-case evidence, then upload/clean up without
+expensive semantic-target compilation. Only the existing narrowly classified
+public RESOURCE_LIMIT may enter the separately bounded diagnostic; assertion,
+crash or identity failures MUST NOT grant that observation. Diagnostic success
+cannot grant fit or compilation. A cost pass MUST remain explicitly unqualified.
+After it, all217 selected Rust cases,47 Python methods including the51 cold
+combinations, installed Saga19, identities and final required aggregation remain
+mandatory. A later stage consumes authenticated original same-job cost receipts,
+not a public-case replay. Missing/failed semantic results MUST preserve overall
+failure. A missing-only continuation requires separate original-material/source
+review; no automatic retry or implicit target-cache reuse is authorized.
+
+Root/catalogue backing sharing MUST preserve diagnostic and dynamic resource
+roles as well as content. The present conservative sharing gate excludes raw
+anchors/nested identifiers and requires an exact unfragmented authored/retrieval
+role. Unsupported sharing keeps separate backing and full original validation;
+it MUST NOT broaden the existing resource-index eligibility. Root admission MUST
+still precede catalogue admission. Borrowing and copying use one schema admission
+visitor with identical numeric, duplicate, depth/node and diagnostic rules;
+removing the output tree does not authorize removing its required validation.
+
+`Utf16` retains its public method signatures and exact code-unit equality/order/
+hash. Its private storage changes from a vector to owned-or-shared storage; Rust
+layout/size and implementation cost may change. This proposal supplies no binary
+ABI compatibility or old-native-byte reuse claim. Owned constructors, generic
+Python source admission and the protected retained converter still create owned
+storage. Ordinary copy/clone/detach charging behavior on those routes remains
+unchanged. Only selected owner-generated evaluator paths use shared storage.
+A shared clone retains existing storage; explicit `into_units` may detach an
+aliased buffer and allocate, so it is NOT a universally allocation-free API and
+has no new implicit Context allowance. Selected plan publication uses the
+pre-admitted `into_shared` move instead. No selected terminal-control path calls
+`into_units`; Context moves existing path storage and native refusal bypasses
+input-dependent envelope work. Callers composing shared error paths into other
+Rust APIs do not acquire qualification or free detach/append work from this claim.
+
+### Admission precharge correction to the owned-plan proposal
+
+Borrowed schema admission MUST charge the full UTF-16 duplicate-set key copy and
+storage independently of tree-comparison work, including the first key in an
+empty set. Admission MUST precede key materialization, lookup and insertion; a
+refused charge MUST enter neither the key materializer nor a child admission.
+The existing comparison bound remains unchanged; it MUST NOT serve as implicit
+permission for copying the key.
+
+Node work, value-count/overflow and depth refusal MUST use an already admitted
+movable diagnostic path. Neither owned nor shared storage may hide an eager
+input-dependent path clone before control admission. Generic copying and owned
+borrowed admission keep their original callback amounts, first-error precedence,
+messages and host provenance while transferring local error-path custody rather
+than reconstructing it. Count checking uses the same Context predicate for owned
+and movable paths. Private wide movable charging uses the existing work state
+machine and chunk/zero/control ordering without changing the public API.
+
+The selected source census now includes three reachable owner controls for first
+key materialization refusal, a genuinely owned node path at cancellation, and an
+owned count/overflow path after a successful node charge. All217 selected Rust
+cases,47 Python methods,51 cold combinations and Saga19 remain native-unexecuted
+in this source proposal. No source-only control establishes a1M fit. The
+cost-first controller, dependency closure, canonical resources and other limits
+remain unchanged.
+
+### Owner-relative locations — private source proposal after run41830979128
+
+The next private source batch MAY replace repeated reverse whole-owner discovery
+with a bounded structural table over the actual admitted immutable owner. A
+cursor MUST contain the private owner lineage and a structural node ordinal;
+root role and object-member/array edges remain explicit, including distinct
+root/catalogue roles over shared backing. No persistent node address, caller
+hash, external ID or diagnostic path may establish identity or admission.
+Transient readback checks only verify a coordinate already selected by the
+actual owner traversal. Public clones discard lineage/table/plan authority.
+
+The structural traversal replaces the selected cold resource index's raw-tree
+scan; all new descriptors, edges, root facts, header storage, capacity relocation,
+comparisons, cursor copies, lookups and publication MUST be admitted before their
+effects. Table/node/depth bounds are conservative optional representation bounds:
+unavailability retains original uncached semantics. Context refusal is terminal,
+not an occasion to retry or fall back. Only a complete owner-bound table may be
+published; reentry observes no partial descriptors or expanded-cache search under
+an old bound. Fixed terminal-error-header handling remains unchanged.
+
+First preflight and the original resolver MUST carry coordinates from their
+actual root/member/array/anchor selection. Static success may retain that result;
+frame/node metadata MUST verify both lineage/ordinal role and actual readback,
+not merely an equal diagnostic spelling or aliased address. Authored/retrieval
+identities, catalogue order, fragments, nested resource fallback and failure
+order remain authoritative. Dynamic/recursive retargeting remains live and
+abandons static location metadata where its selected location is unavailable.
+No location lookup proves schema validity or removes first metaschema evaluation.
+
+Within the same compilation, the completed source root-role ordinal MAY be kept
+across exact catalogue admission without repeating the same role/content scan.
+The borrowed root, ordered catalogue, origin, effective Context and complete
+compiler policy/flags remain the same immutable inputs. Catalogue deduplication
+that changes ordinal correspondence uses separate root backing and original
+validation. Duplicate/numeric/UTF-16/depth/node checks, opaque data custody and
+all fresh package/Registry/token checks remain required. This applies to the
+existing shared wire construction scope as well as retained construction;
+generic and Python-source compilation keep their original admission route.
+
+The closed observation roster adds only `unassigned/location-lookup`:128 slots
+including the previous127. Index build, cursor lookup and remaining plan/admission
+work stay distinct; unknown labels/roles still refuse. Charge amounts and control
+order do not change merely to attach a label. The caps remain1M events per
+independent prefix and300 seconds combined; a matching partial refusal is never a
+completed constructor or support proof. The selected native census is229 Rust
+cases (old217 plus nine independent location controls and three owner integration
+controls),47 Python methods,51 strict cold public combinations and Saga19.
+All new cases are source-only until actual execution. The cost-first producer,
+EARLY wheel retention, normal resolver/observed ownership, strict cold1M/public51,
+conditional semantic compilation, failure aggregation and cleanup gates remain
+mandatory and unchanged in scope. No fit, version, release, enrollment or PG
+claim follows from this source proposal.
+
+## Proposed installed canonical-source input (unapplied review addition)
+
+The additive `CodegenEngine.from_installed` factory selects the distinct
+`installed-canonical/1` input profile described in the accompanying factory
+contract proposal. It accepts only the existing control keywords and no resource
+argument, path, digest, override or Saga package. The explicit constructor and
+`retained-native/1` behavior and refusal evidence remain unchanged.
+
+Its exact nine bundled literal DATA roots MUST reconstruct the original ordered
+canonical values, including unknown content, UTF16 and numeric representation.
+Generated DATA MUST NOT contain successful admission, schema, reference, index
+or registration state. Runtime construction, complete CoreJSON/profile and
+semantic resource compilation MUST finish under one cumulative constructor
+allowance before handle publication. Inspection keeps the existing shared
+operation, result, custody, limits and separate cumulative per-call allowance.
+
+The source-manifest report is provenance only. Installed cohort absence or
+mismatch MUST refuse without checkout/legacy/CLI fallback. Source-to-DATA
+correspondence, distribution/native ownership and actual factory construction
+and all51 public inspection cases require separately scoped qualification.
+A factory pass MUST NOT relabel the explicit constructor's earlier1M refusal.
+The closed installed route requires independently qualified raw9-to-actual-DATA
+correspondence and exact artifact/native/DATA/manifest ownership. Constructor
+raw-byte rehash is not required; the report never replaces runtime admission.
+Mutable/external files are outside this profile. No implementation is admitted
+by this draft.

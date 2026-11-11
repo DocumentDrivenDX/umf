@@ -161,4 +161,49 @@ exit 1 is retained; a separate navigation-only CDP trace confirms the initiating
 homepage document and stylesheet. Every external request was blocked, with zero
 compiler requests or page errors. Public/local download bytes match. The
 [combined proof](evidence/release-0.10.9/site-public-completion.json) keeps these
-sources separate and leaves global release completion false pending Linux.
+sources separate and records the release state at deployment.
+
+## Linux installed qualification
+
+The draft's Linux x86_64 SDK, CLI, manylinux Core wheel and Codegen wheel matched
+the draft `SHA256SUMS` and were exercised from a fresh read-only directory in
+linux/amd64 containers (emulated on an arm64 host). Installed Core/Codegen keyed
+and unkeyed requests, ten resource hashes and `pip check` passed on CPython
+3.11.18. The SDK passed Node 22 and Bun 1.4.4 keyed/unkeyed probes, the installed
+consumer and declaration checks, with a Pack Tools digest identical across
+Python, Node and Bun. The Linux SDK manifest declares the same source closure digest as the Mac record (read from the manifest, not recomputed). The Node
+explicit WASM file-URL loader probe fails as it did on the Mac and remains an
+excluded, retained failure. The CLI check covered only the `--version`/`codegen --version` handshake and byte equality with the wheel's embedded CLI. `linux-core-wheel-verification.json` was produced on macOS arm64 with Python 3.14, not on Linux. The Node image digest is recorded in the receipt. Receipts are in
+[`evidence/release-0.10.9/`](evidence/release-0.10.9/linux-qualification-0109.json).
+
+The [producer recovery](evidence/release-0.10.9/linux-producer-recovery.json)
+connects the original Linux build, repair and upload to the released bytes.
+The retained build source matches all 2,962 regular files from the release sdist.
+The raw and repaired wheels match across 72 payload files outside `.dist-info`.
+Auditwheel reported GLIBC 2.34 as the highest referenced symbol version and
+repaired the wheel to `cp311-abi3-manylinux_2_34_x86_64`. The original CLI and
+Node addon match the released archives. The two public SDKs share 2,074 files
+byte for byte. The native addon and two manifests account for the differences.
+Linux runtime qualification used amd64 emulation. The recovered producer scripts
+allowed Cargo network access and configured four compiler jobs. They establish
+retained inputs and outputs. Historical before/after maps and an independent
+rebuild remain unverified.
+
+## Release completion
+
+GitHub lists immutable `umf-v0.10.9` at the frozen production commit as the
+latest release. All 12 public download hashes match the staged manifest and
+GitHub digests. The release supplies the full source archive, both CLIs, both platform SDKs,
+two Core wheels, the Core sdist, the Codegen wheel and sdist, pins and checksums.
+
+The trusted Core and Codegen publishers uploaded the three Core and two Codegen
+archives through the locally qualified routes. A fresh local CPython 3.11 install
+resolved the pinned pair from public PyPI and passed the Pack Tools and resource
+checks. Node and Bun reproduced the exact keyed and unkeyed results from the
+public Mac SDK. The public Mac CLI confirmed the version and resource manifest.
+The signed microsite still serves the qualified WASM and provenance bytes.
+
+The [publication receipt](evidence/release-0.10.9/public-publication.json) records
+public artifact digests, upload runs, and local consumer results. The recorded
+Node file-URL WASM loader failure remains outside the verified native Node/Bun
+and browser/WASM paths.

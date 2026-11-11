@@ -568,6 +568,45 @@ pub(super) fn build_resources(
     })
 }
 
+fn take_owned(raw:&mut Vec<(Utf16,umf_core::value::OwnedCoreJson)>,name:&str,ctx:&mut Context<'_>)->Result<Option<umf_core::value::OwnedCoreJson>,EngineError>{
+    for index in 0..raw.len(){
+        ctx.charge_work(raw[index].0.len().min(name.len()).saturating_add(1),Utf16::default())?;
+        if raw[index].0.units().iter().copied().eq(name.encode_utf16()){
+            ctx.charge_work(raw.len().saturating_sub(index).saturating_mul(std::mem::size_of::<(Utf16,umf_core::value::OwnedCoreJson)>().div_ceil(std::mem::size_of::<usize>())),Utf16::default())?;
+            return Ok(Some(raw.remove(index).1));
+        }
+    }
+    Ok(None)
+}
+fn required_owned(raw:&mut Vec<(Utf16,umf_core::value::OwnedCoreJson)>,name:&str,ctx:&mut Context<'_>)->Result<umf_core::value::OwnedCoreJson,EngineError>{
+    take_owned(raw,name,ctx)?.ok_or_else(||EngineError::new("REQUEST",name.into(),"Explicit codegen resource is required"))
+}
+pub(super) fn build_owned_resources(raw:&mut Vec<(Utf16,umf_core::value::OwnedCoreJson)>,operation:&umf_core::value::OwnedCoreOperation,ctx:&mut Context<'_>)->Result<CodegenResources,EngineError>{
+    ctx.with_catalog_value_limit(|catalog|{
+        let core_schema=required_owned(raw,"coreSchema",catalog)?;
+        let reference_schema=required_owned(raw,"referenceSchema",catalog)?;
+        let package_schema=required_owned(raw,"packageSchema",catalog)?;
+        let constraints=required_owned(raw,"constraints",catalog)?;
+        let domain_policy=required_owned(raw,"domainPolicy",catalog)?;
+        catalog.charge_work(5,Utf16::default())?;
+        let core=umf_core::engine::OwnedResourceSet{core_schema,reference_schema,package_schema,constraints,domain_policy};
+        let tables=required_owned(raw,"tablesPackage",catalog)?;
+        let actions=required_owned(raw,"actionsPackage",catalog)?;
+        let binding=required_owned(raw,"bindingPackage",catalog)?;
+        let stable_binding=required_owned(raw,"stableBindingPackage",catalog)?;
+        let tables_schema=tables.copy_schema_member(operation,catalog,"Table package schema is required")?;
+        let actions_schema=actions.copy_schema_member(operation,catalog,"Action package schema is required")?;
+        let base=CodegenResources::from_owned_resources(core,tables,tables_schema,actions,actions_schema,binding,stable_binding,operation,catalog)?;
+        if let Some(saga)=take_owned(raw,"sagaPackage",catalog)?{
+            // Saga is outside this bounded fast handoff. Destroy custody and
+            // retain every original explicit copy/validation/Registry guard.
+            let saga=saga.into_raw();
+            let schema=umf_core::copy_json(field(&saga,"schema").ok_or_else(missing_argument)?,catalog)?;
+            base.with_sagas(saga,schema,catalog)
+        }else{Ok(base)}
+    })
+}
+
 pub(super) fn execute_with_resources(
     operation: &str,
     request: &mut Value,
@@ -577,11 +616,11 @@ pub(super) fn execute_with_resources(
     let payload = field(request, "request").ok_or_else(|| {
         EngineError::new("REQUEST", Utf16::default(), "Codegen request is required")
     })?;
-    let result = match invoke(&CodegenEngine::new(resources), operation, payload, ctx) {
+    let result = match ctx.with_work_phase("native-request-model-admission", |ctx| invoke(&CodegenEngine::new(resources), operation, payload, ctx)) {
         Ok(result) => object(vec![("ok", Value::Bool(true)), ("result", result)]),
         Err(error) => semantic_error(error, operation, ctx)?,
     };
-    ctx.with_tagged_transport_limit(|ctx| encode(&result, ctx))
+    ctx.with_work_phase("native-inner-result-encoding", |ctx| ctx.with_tagged_transport_limit(|ctx| encode(&result, ctx)))
 }
 
 pub(super) fn execute_host_read_v3(

@@ -402,12 +402,41 @@ pub use umf_codegen::generation::PythonClientHostReadV3;
 /// Opt-in owner for compiled codegen resources. Construction and each call
 /// receive separate host-control contexts; this handle contains no callbacks.
 #[cfg(feature = "codegen")]
+#[derive(Clone, Copy)]
+enum CodegenResourceOrigin { Ordinary, InstalledCanonical }
+
+#[cfg(feature = "codegen")]
 pub struct CodegenResourcesHandle {
     resources: umf_codegen::CodegenResources,
+    origin: CodegenResourceOrigin,
+}
+
+// Read-only cfg-only stage observations, not admission or authority flags.
+#[cfg(all(test, feature = "codegen"))]
+#[derive(Debug)]
+enum InstalledFactoryStage<'a> {
+    AdmissionStart(&'a Utf16),
+    AdmissionComplete(&'a Utf16),
+    CompilationStart,
+    CompilationComplete,
+    OriginPublicationAttempt,
 }
 
 #[cfg(feature = "codegen")]
 impl CodegenResourcesHandle {
+    pub const RESOURCE_NAMES: &'static [&'static str] = &[
+            "coreSchema",
+            "referenceSchema",
+            "packageSchema",
+            "constraints",
+            "domainPolicy",
+            "tablesPackage",
+            "actionsPackage",
+            "bindingPackage",
+            "stableBindingPackage",
+            "sagaPackage",
+    ];
+
     pub fn new_with_control(
         wire_json: &str,
         control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
@@ -423,9 +452,157 @@ impl CodegenResourcesHandle {
         let mut resources = take_field(&mut value, "resources")
             .ok_or_else(|| fail("REQUEST", "Explicit codegen resources are required"))?;
         let compiled = codegen::build_resources(&mut resources, &mut ctx)?;
+        ctx.charge_work(1, Utf16::default())?;
         Ok(Self {
             resources: compiled,
+            origin: CodegenResourceOrigin::Ordinary,
         })
+    }
+
+    /// Construct from owner-admitted values without a tagged JSON resource
+    /// re-encoding. The caller keeps conversion and compilation in one Context.
+    pub fn from_resources_with_context(
+        mut raw: Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        let Value::Object(fields) = &raw else {
+            return Err(fail(
+                "REQUEST",
+                "Explicit codegen resources must be an object",
+            ));
+        };
+        Self::check_resource_names(fields.iter().map(|(key,_)|key),ctx)?;
+        let resources = ctx.with_codegen_construction(|ctx| codegen::build_resources(&mut raw, ctx))?;
+        if !matches!(&raw, Value::Object(fields) if fields.is_empty()) {
+            return Err(fail("REQUEST", "Duplicate explicit codegen resource"));
+        }
+        ctx.charge_work(1, Utf16::default())?;
+        ctx.charge_work(0, Utf16::default())?;
+        Ok(Self { resources, origin: CodegenResourceOrigin::Ordinary })
+    }
+
+    fn check_resource_names<'k>(keys:impl IntoIterator<Item=&'k Utf16>,ctx:&mut Context<'_>)->Result<(),EngineError>{
+        for key in keys {
+            let mut known = false;
+            for name in Self::RESOURCE_NAMES {
+                ctx.charge_work(1, Utf16::default())?;
+                // Fixed ASCII names compare in place; no uncharged temporary
+                // UTF-16 name copies are constructed during admission.
+                if key.len() == name.len() {
+                    ctx.charge_work(key.len(), Utf16::default())?;
+                    if key.units().iter().copied().eq(name.encode_utf16()) {
+                        known = true;
+                        break;
+                    }
+                }
+            }
+            if !known {
+                return Err(fail("REQUEST", "Unknown explicit codegen resource"));
+            }
+        }
+        Ok(())
+    }
+    #[doc(hidden)]
+    pub fn from_owned_resources_with_context(mut fields:Vec<(Utf16,umf_core::value::OwnedCoreJson)>,operation:&umf_core::value::OwnedCoreOperation,ctx:&mut Context<'_>)->Result<Self,EngineError>{
+        Self::check_resource_names(fields.iter().map(|(key,_)|key),ctx)?;
+        let resources=ctx.with_codegen_construction(|ctx|codegen::build_owned_resources(&mut fields,operation,ctx))?;
+        if !fields.is_empty(){return Err(fail("REQUEST","Duplicate explicit codegen resource"));}
+        ctx.charge_work(1,Utf16::default())?;
+        ctx.charge_work(0,Utf16::default())?;
+        Ok(Self{resources,origin:CodegenResourceOrigin::Ordinary})
+    }
+
+    /// Distinct closed installed input. DATA is never admission proof.
+    /// Schedule: all9 materialize -> all9 full admission -> shared compilation.
+    /// The supplied Context owns every phase; no counter reset or CLI defaults.
+    pub fn from_installed_with_context(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        Self::from_installed_impl(ctx, #[cfg(test)] None)
+    }
+
+    // The fixed DATA source and sole installed-origin write remain here, outside
+    // the shared admission/compile body and every authored-fixture entry.
+    fn from_installed_impl(ctx: &mut Context<'_>, #[cfg(test)] mut observe: Option<&mut dyn FnMut(InstalledFactoryStage<'_>)>) -> Result<Self, EngineError> {
+        ctx.with_catalog_value_limit(|ctx| {
+            umf_core::value::OwnedCoreOperation::with_context(ctx, |ctx, operation| {
+                let raw = ctx.with_work_phase("native-installed-materialization", |ctx| {
+                    umf_core::canonical_codegen_resources::materialize_installed_codegen_resources(ctx)
+                })?;
+                let mut handle = Self::admit_and_compile_installed_bundle(raw, operation, ctx,
+                    #[cfg(test)] &mut observe)?;
+                // Only this closed factory may mark completed installed origin.
+                // Initial ordinary construction and this real write are both paid.
+                ctx.charge_work(1, Utf16::default())?;
+                #[cfg(test)]
+                if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::OriginPublicationAttempt); }
+                handle.origin = CodegenResourceOrigin::InstalledCanonical;
+                Ok(handle)
+            })
+        })
+    }
+
+    // Unadmitted Value input, complete original ordered admission and compilation.
+    // Successful completion is still Ordinary; this helper cannot set origin.
+    fn admit_and_compile_installed_bundle(raw: Value, operation: &umf_core::value::OwnedCoreOperation, ctx: &mut Context<'_>, #[cfg(test)] observe: &mut Option<&mut dyn FnMut(InstalledFactoryStage<'_>)>) -> Result<Self, EngineError> {
+        ctx.charge_work(std::mem::size_of::<Value>().div_ceil(std::mem::size_of::<usize>()).saturating_add(1), Utf16::default())?;
+        let Value::Object(raw) = raw else {
+            return Err(fail("REQUEST", "Installed canonical resource bundle is invalid"));
+        };
+        let count = raw.len();
+        let pair_words = std::mem::size_of::<(Utf16, umf_core::value::OwnedCoreJson)>().div_ceil(std::mem::size_of::<usize>());
+        let raw_pair_words = std::mem::size_of::<(Utf16, Value)>().div_ceil(std::mem::size_of::<usize>());
+        // Reserve storage, iterator state and all raw-pair moves before
+        // the iterator consumes its first item. Real publication writes
+        // below are separately paid; generated values mint nothing.
+        ctx.charge_work(count.saturating_mul(pair_words.saturating_add(raw_pair_words)).saturating_add(6), Utf16::default())?;
+        let mut admitted = Vec::new();
+        admitted.try_reserve_exact(count).map_err(|_| fail("LIMIT", "Installed admitted resource storage unavailable"))?;
+        ctx.with_work_phase("native-installed-full-admission", |ctx| {
+            for (key, value) in raw {
+                #[cfg(test)]
+                if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::AdmissionStart(&key)); }
+                let value = umf_core::value::OwnedCoreJson::admit_factory_resource(value, &key, operation, ctx)?;
+                #[cfg(test)]
+                if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::AdmissionComplete(&key)); }
+                ctx.charge_work(pair_words.saturating_add(1), Utf16::default())?;
+                admitted.push((key, value));
+            }
+            Ok::<(), EngineError>(())
+        })?;
+        #[cfg(test)]
+        if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::CompilationStart); }
+        let handle = ctx.with_work_phase("native-resource-compilation", |ctx| {
+            Self::from_owned_resources_with_context(admitted, operation, ctx)
+        })?;
+        #[cfg(test)]
+        if let Some(observer) = observe.as_deref_mut() { observer(InstalledFactoryStage::CompilationComplete); }
+        Ok(handle)
+    }
+
+    #[cfg(test)]
+    fn from_installed_with_stage_events(ctx: &mut Context<'_>, observer: &mut dyn FnMut(InstalledFactoryStage<'_>)) -> Result<Self, EngineError> {
+        Self::from_installed_impl(ctx, Some(observer))
+    }
+
+    // Authored test fixtures can reach only the same paid ordinary completion.
+    // There is no public resource selector, generated DATA override or origin flag.
+    #[cfg(test)]
+    fn from_installed_fixture_with_stage_events(raw: Value, ctx: &mut Context<'_>, observer: &mut dyn FnMut(InstalledFactoryStage<'_>)) -> Result<Self, EngineError> {
+        let mut observe = Some(observer);
+        ctx.with_catalog_value_limit(|ctx| {
+            umf_core::value::OwnedCoreOperation::with_context(ctx, |ctx, operation| {
+                Self::admit_and_compile_installed_bundle(raw, operation, ctx, &mut observe)
+            })
+        })
+    }
+
+    /// Provenance must belong to this actual completed handle. A Python mode
+    /// string, supplied manifest or ordinary custom-resource handle cannot mint it.
+    pub fn resource_source_manifest_with_context(&self, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
+        if !matches!(self.origin, CodegenResourceOrigin::InstalledCanonical) {
+            return Err(fail("REQUEST", "Installed canonical source manifest is unavailable on this handle"));
+        }
+        umf_core::canonical_codegen_resources::installed_resource_source_manifest(ctx)
     }
 
     pub fn execute_with_control(
@@ -435,16 +612,26 @@ impl CodegenResourcesHandle {
     ) -> String {
         let result = (|| {
             let mut ctx = Context::ordinary().with_host_control(control);
-            let mut request = decode(wire_json, &mut ctx)?;
-            let operation = text_field(&request, "op")
-                .and_then(|op| op.strip_prefix("codegen/").map(str::to_owned))
-                .ok_or_else(|| fail("REQUEST", "Codegen operation is required"))?;
-            if operation == "createResources" || operation == "generatePythonClientHostV3" {
-                return Err(fail("REQUEST", "Operation is not available on this handle"));
-            }
-            codegen::execute_with_resources(&operation, &mut request, &self.resources, &mut ctx)
+            let request = decode(wire_json, &mut ctx)?;
+            self.execute_request_with_context(request, &mut ctx)
         })();
         result_envelope(result)
+    }
+
+    /// Execute an owner-decoded request with its existing cumulative Context.
+    /// Transport adapters own only conversion; the shared dispatcher owns semantics.
+    pub fn execute_request_with_context(
+        &self,
+        mut request: Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<String, EngineError> {
+        let operation = text_field(&request, "op")
+            .and_then(|op| op.strip_prefix("codegen/").map(str::to_owned))
+            .ok_or_else(|| fail("REQUEST", "Codegen operation is required"))?;
+        if operation == "createResources" || operation == "generatePythonClientHostV3" {
+            return Err(fail("REQUEST", "Operation is not available on this handle"));
+        }
+        codegen::execute_with_resources(&operation, &mut request, &self.resources, ctx)
     }
 
     pub fn execute_host_read_v3_with_control(
@@ -593,6 +780,9 @@ pub fn copy_wire(wire_json: &str) -> Result<String, EngineError> {
     let value = copy_json(&value, &mut Context::ordinary())?;
     encode(&value, &mut transport)
 }
+
+pub mod controlled_envelope;
+pub use controlled_envelope::result_envelope_with_context;
 
 /// Serialize a closed host-independent result envelope. Error path/message are
 /// UTF-16 code units so lone surrogates survive every binding boundary.
@@ -4976,3 +5166,7 @@ pub mod gregorian_date_binding;
 
 #[cfg(feature = "embedded-adapters")]
 pub mod core_ideal_reports_binding;
+
+#[cfg(all(test, feature = "codegen"))]
+#[path = "installed_codegen_factory_independent_tests.rs"]
+mod installed_codegen_factory_independent_tests;

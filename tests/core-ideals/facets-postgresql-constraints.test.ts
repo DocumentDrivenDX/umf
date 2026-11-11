@@ -9,7 +9,8 @@ const find=(schema:string,relation:string)=>evidence.capture.constraints.find(c=
 test('native supplement is pinned, fingerprinted and preserves resolved identities separately from syntax',async()=>{
  expect(evidence.capture.serverVersion).toBe(170004);expect(evidence.capture.encoding).toBe('UTF8');
  expect(evidence.capture.constraints).toHaveLength(12);
- for(const [path,hash] of Object.entries(evidence.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(hash);
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
+ for(const [path,hash] of Object.entries(evidence.sha256)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;expect(createHash('sha256').update(new Uint8Array(await Bun.file(archived??path).arrayBuffer())).digest('hex'),path).toBe(hash);}
  for(const relation of ['decimal_exact','text_bound','binary_bound']){
   const row=find('facet',relation);expect(row.validated).toBe(true);expect(row.columnNumbers).toEqual([1]);expect(row.nodeTree).toContain(':varattno 1');
   expect(row.operatorLookups.length).toBeGreaterThan(0);

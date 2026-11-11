@@ -33,6 +33,7 @@ impl CodegenEngine<'_> {
         source_id: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
+    ctx.with_work_phase("native-request-model-admission", |ctx| {
         let invalid = |path: &str| {
             EngineError::new(
                 "REQUEST",
@@ -89,7 +90,9 @@ impl CodegenEngine<'_> {
             ]),
             ctx,
         )
-    }
+
+    })
+}
 
     /// Build one typed Python access package from explicit request/profile values.
     pub fn generate_access_package(

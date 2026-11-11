@@ -33,5 +33,6 @@ test('two pinned codecs preserve duplicates and expose narrowing instead of prov
  for(const c of proof.cases){expect(c.write.ok).toBe(c.expectedWrite);if(c.write.ok)for(const reader of ['apache','fastavro'])expect(c.reads[reader].bytesConsumed).toBe(c.write.hex.length/2);}
  for(const c of proof.containers)for(const reader of ['apache','fastavro'])expect(c.reads[reader]).toEqual([{id:1,code:'a'},{id:1,code:'a'}]);
  for(const c of proof.cases.filter((c:any)=>c.id==='float-narrowing'))for(const reader of ['apache','fastavro'])expect(c.reads[reader].values).toEqual([{value:1},{value:1}]);
- for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(hash as string);
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
+ for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(history.entries.find((entry:any)=>entry.path===path)?.archive??path).arrayBuffer())).digest('hex')).toBe(hash as string);
 });
