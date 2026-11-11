@@ -38,6 +38,7 @@ try {
   await copyFile(join(wasmOut, 'umf_core_wasm.js'), join(wasmOut, 'pkg/umf_core_wasm.js'));
   await copyFile(join(wasmOut, 'umf_core_wasm_bg.wasm'), join(wasmOut, 'pkg/umf_core_wasm_bg.wasm'));
   await copyFile(join(root, 'bindings/core/wasm/index.js'), join(wasmOut, 'index.js'));
+  await copyFile(join(root, 'bindings/core/wasm/loader.js'), join(wasmOut, 'loader.js'));
   await copyFile(join(root, 'bindings/core/wasm/index.d.ts'), join(wasmOut, 'index.d.ts'));
   await Bun.$`cp -R ${join(root, 'bindings/core/wasm/src')} ${wasmOut}`;
   const entry = join(temp, 'entry.js');
